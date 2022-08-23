@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy } from "@angular/core";
-import { HttpStatusCode, IDataSourceOutput } from "@nova-ui/dashboards";
 import { Subject } from "rxjs";
+
+import { HttpStatusCode, IDataSourceOutput } from "@nova-ui/dashboards";
 
 import {
     IProportionalWidgetData,
@@ -30,11 +31,15 @@ export class TestProportionalDataSource2 implements OnDestroy {
     public static providerId = "TestProportionalDataSource2";
     public static mockError = false;
 
-    public outputsSubject = new Subject<IDataSourceOutput<IProportionalWidgetData[]>>();
+    public outputsSubject = new Subject<
+        IDataSourceOutput<IProportionalWidgetData[]>
+    >();
 
     public applyFilters(): void {
         if (!TestProportionalDataSource2.mockError) {
-            this.outputsSubject.next({ result: PROPORTIONAL_WIDGET_DATA_MEDIUM });
+            this.outputsSubject.next({
+                result: PROPORTIONAL_WIDGET_DATA_MEDIUM,
+            });
         } else {
             this.outputsSubject.next({
                 // @ts-ignore: Mock

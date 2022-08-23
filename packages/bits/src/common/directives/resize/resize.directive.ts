@@ -1,4 +1,11 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, OnDestroy, Output } from "@angular/core";
+import {
+    AfterViewInit,
+    Directive,
+    ElementRef,
+    EventEmitter,
+    OnDestroy,
+    Output,
+} from "@angular/core";
 import filter from "lodash/filter";
 import forEach from "lodash/forEach";
 
@@ -64,11 +71,14 @@ export class ResizeDirective implements AfterViewInit, OnDestroy {
         }
 
         public call() {
-            forEach(this.events, event => event.call());
+            forEach(this.events, (event) => event.call());
         }
 
         public remove(event: Function) {
-            this.events = filter(this.events, (item: Function) => item !== event);
+            this.events = filter(
+                this.events,
+                (item: Function) => item !== event
+            );
         }
     };
 
@@ -96,12 +106,15 @@ export class ResizeDirective implements AfterViewInit, OnDestroy {
      */
     private resizeEmit = (): void => {
         this.elementResize.emit(true);
-    }
+    };
 
     /**
      * Add resize event which will be done by default
      */
-    private attachResizeEvent(targetElement: IResizeElement, resizeCallback: Function): void {
+    private attachResizeEvent(
+        targetElement: IResizeElement,
+        resizeCallback: Function
+    ): void {
         if (targetElement.resizedAttached) {
             targetElement.resizedAttached.add(resizeCallback);
             return;
@@ -113,13 +126,14 @@ export class ResizeDirective implements AfterViewInit, OnDestroy {
         // This elements is hidden and helping to trigger scroll event when user resize element with nuiResize.
         targetElement.resizeSensor = document.createElement("div");
         targetElement.resizeSensor.className = "resize-sensor";
-        const style = "position: absolute; left: 0; top: 0; right: 0; " +
+        const style =
+            "position: absolute; left: 0; top: 0; right: 0; " +
             "bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;";
-        const styleChild = "position: absolute; left: 0; top: 0; transition: 0s;";
+        const styleChild =
+            "position: absolute; left: 0; top: 0; transition: 0s;";
 
         targetElement.resizeSensor.style.cssText = style;
-        targetElement.resizeSensor.innerHTML =
-            `<div class="resize-sensor-expand" style="${style}">
+        targetElement.resizeSensor.innerHTML = `<div class="resize-sensor-expand" style="${style}">
                 <div style="${styleChild}"></div>
               </div>
               <div class="resize-sensor-shrink" style="${style}">
@@ -182,7 +196,11 @@ export class ResizeDirective implements AfterViewInit, OnDestroy {
             reset();
         }
 
-        function addEvent(element: IResizeElement, event: string, callback: EventListener): void {
+        function addEvent(
+            element: IResizeElement,
+            event: string,
+            callback: EventListener
+        ): void {
             element.addEventListener(event, callback);
         }
 
@@ -193,7 +211,10 @@ export class ResizeDirective implements AfterViewInit, OnDestroy {
     /**
      * Removing resize listener from target element
      */
-    private detachResizeEvent = (targetElement: IResizeElement, event: Function) => {
+    private detachResizeEvent = (
+        targetElement: IResizeElement,
+        event: Function
+    ) => {
         if (targetElement.resizedAttached && typeof event === "function") {
             targetElement.resizedAttached.remove(event);
         }
@@ -203,5 +224,5 @@ export class ResizeDirective implements AfterViewInit, OnDestroy {
 
         delete targetElement.resizeSensor;
         delete targetElement.resizedAttached;
-    }
+    };
 }

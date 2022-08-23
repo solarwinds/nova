@@ -6,7 +6,6 @@ import moment, { Moment } from "moment/moment";
     selector: "nui-date-time-picker-reactive-forms-example",
     templateUrl: "./date-time-picker-reactive-form.example.component.html",
 })
-
 export class DateTimePickerReactiveFormExampleComponent {
     public dt: Moment = moment();
     public selectedDate: Date = new Date(this.dt.valueOf());

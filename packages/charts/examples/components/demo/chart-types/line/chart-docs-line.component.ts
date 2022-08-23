@@ -1,5 +1,10 @@
 import { Component } from "@angular/core";
-import { IEnhancedLineCapConfig, ILineRendererConfig, LineRenderer } from "@nova-ui/charts";
+
+import {
+    IEnhancedLineCapConfig,
+    ILineRendererConfig,
+    LineRenderer,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-chart-docs-line",

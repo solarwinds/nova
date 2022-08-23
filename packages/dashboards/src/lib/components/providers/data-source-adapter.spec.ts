@@ -1,29 +1,39 @@
 import { fakeAsync, flush } from "@angular/core/testing";
-import { EventBus, IDataSource, IEvent, IFilteringOutputs, IFilteringParticipants } from "@nova-ui/bits";
 import { Subject } from "rxjs";
+
+import {
+    EventBus,
+    IDataSource,
+    IEvent,
+    IFilteringOutputs,
+    IFilteringParticipants,
+} from "@nova-ui/bits";
 
 import { DATA_SOURCE_OUTPUT } from "../../configurator/types";
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { REFRESH } from "../../services/types";
 import { IConfigurable, IProperties, PizzagnaLayer } from "../../types";
-
 import { DataSourceAdapter } from "./data-source-adapter";
 import { IDataSourceOutput } from "./types";
 
 class MockDataSource implements IDataSource, IConfigurable {
-    public outputsSubject = new Subject<IDataSourceOutput<IFilteringOutputs> | IFilteringOutputs>();
+    public outputsSubject = new Subject<
+        IDataSourceOutput<IFilteringOutputs> | IFilteringOutputs
+    >();
 
     public async applyFilters(): Promise<void> {
         // @ts-ignore: Suppressed for testing purposes
         return null;
     }
 
-    public registerComponent(components: Partial<IFilteringParticipants>): void { }
+    public registerComponent(
+        components: Partial<IFilteringParticipants>
+    ): void {}
 
-    public deregisterComponent(componentKey: string) { }
+    public deregisterComponent(componentKey: string) {}
 
-    public updateConfiguration(properties: IProperties): void { }
+    public updateConfiguration(properties: IProperties): void {}
 }
 
 describe("DataSourceAdapter > ", () => {
@@ -37,7 +47,10 @@ describe("DataSourceAdapter > ", () => {
         eventBus = new EventBus();
         dataSource = new MockDataSource();
         dynamicComponentCreator = new DynamicComponentCreator();
-        pizzagnaService = new PizzagnaService(eventBus, dynamicComponentCreator);
+        pizzagnaService = new PizzagnaService(
+            eventBus,
+            dynamicComponentCreator
+        );
         adapter = new DataSourceAdapter(eventBus, dataSource, pizzagnaService);
         (<any>adapter).componentId = "testId";
     });
@@ -55,11 +68,14 @@ describe("DataSourceAdapter > ", () => {
         const dsOutput = { test: {} };
 
         dataSource.outputsSubject.next(dsOutput);
-        expect(spy).toHaveBeenCalledWith({
-            pizzagnaKey: PizzagnaLayer.Data,
-            componentId: (<any>adapter).componentId,
-            propertyPath: [undefined] as never,
-        }, dsOutput);
+        expect(spy).toHaveBeenCalledWith(
+            {
+                pizzagnaKey: PizzagnaLayer.Data,
+                componentId: (<any>adapter).componentId,
+                propertyPath: [undefined] as never,
+            },
+            dsOutput
+        );
     });
 
     it("should invoke pizzagnaService.setProperty on dataSource.outputsSubject.next with the event.result value if it exists", () => {
@@ -70,11 +86,14 @@ describe("DataSourceAdapter > ", () => {
         const dsOutput = { result: testFilteringOutput };
 
         dataSource.outputsSubject.next(dsOutput);
-        expect(spy).toHaveBeenCalledWith({
-            pizzagnaKey: PizzagnaLayer.Data,
-            componentId: (<any>adapter).componentId,
-            propertyPath: [undefined] as never,
-        }, testFilteringOutput);
+        expect(spy).toHaveBeenCalledWith(
+            {
+                pizzagnaKey: PizzagnaLayer.Data,
+                componentId: (<any>adapter).componentId,
+                propertyPath: [undefined] as never,
+            },
+            testFilteringOutput
+        );
     });
 
     describe("updateConfiguration > ", () => {
@@ -88,11 +107,14 @@ describe("DataSourceAdapter > ", () => {
             const testFilteringOutput = { test: {} };
             const dsOutput = { result: testFilteringOutput };
             dataSource.outputsSubject.next(dsOutput);
-            expect(spy).toHaveBeenCalledWith({
-                pizzagnaKey: PizzagnaLayer.Data,
-                componentId: testProperties.componentId,
-                propertyPath: [testProperties.propertyPath],
-            }, testFilteringOutput);
+            expect(spy).toHaveBeenCalledWith(
+                {
+                    pizzagnaKey: PizzagnaLayer.Data,
+                    componentId: testProperties.componentId,
+                    propertyPath: [testProperties.propertyPath],
+                },
+                testFilteringOutput
+            );
         });
 
         it("should update the dataSourceConfiguration if there's a change in the data source properties", () => {
@@ -105,7 +127,9 @@ describe("DataSourceAdapter > ", () => {
                 },
             };
             adapter.updateConfiguration(testProperties);
-            expect((<any>adapter).dataSourceConfiguration).toEqual(testDSProperties);
+            expect((<any>adapter).dataSourceConfiguration).toEqual(
+                testDSProperties
+            );
         });
 
         it("should invoke updateConfiguration on the data source if there's a change in the data source properties", () => {
@@ -117,7 +141,10 @@ describe("DataSourceAdapter > ", () => {
                     properties: testDSProperties,
                 },
             };
-            const spy = spyOn(adapter.dataSource as unknown as IConfigurable, "updateConfiguration");
+            const spy = spyOn(
+                adapter.dataSource as unknown as IConfigurable,
+                "updateConfiguration"
+            );
             adapter.updateConfiguration(testProperties);
             expect(spy).toHaveBeenCalledWith(testDSProperties);
         });
@@ -136,7 +163,7 @@ describe("DataSourceAdapter > ", () => {
             expect(spy).toHaveBeenCalled();
         });
 
-        it("should emit a REFRESH on the pizzagna event bus if the data source properties is undefined", fakeAsync( () => {
+        it("should emit a REFRESH on the pizzagna event bus if the data source properties is undefined", fakeAsync(() => {
             const testProperties: IProperties = {};
             const spy = spyOn(adapter.eventBus.getStream(REFRESH), "next");
             adapter.updateConfiguration(testProperties);
@@ -147,7 +174,10 @@ describe("DataSourceAdapter > ", () => {
 
         it("should emit a DATA_SOURCE_OUTPUT on the pizzagna event bus if there's a change in the data source properties", () => {
             const testFilteringOutput = { result: { test: {} } };
-            const spy = spyOn(adapter.eventBus.getStream(DATA_SOURCE_OUTPUT), "next");
+            const spy = spyOn(
+                adapter.eventBus.getStream(DATA_SOURCE_OUTPUT),
+                "next"
+            );
             dataSource.outputsSubject.next(testFilteringOutput);
             expect(spy).toHaveBeenCalledWith({
                 payload: {
@@ -157,5 +187,4 @@ describe("DataSourceAdapter > ", () => {
             });
         });
     });
-
 });

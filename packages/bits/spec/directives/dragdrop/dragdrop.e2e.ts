@@ -12,6 +12,12 @@ describe("USERCONTROL drag & drop", () => {
         const dragElement = element(by.id("nui-demo-src-object"));
         const dropElement = element(by.id("nui-demo-dest-object"));
 
-        await browser.actions().dragAndDrop(await dragElement.getWebElement(), await dropElement.getWebElement()).perform();
+        await browser
+            .actions()
+            .dragAndDrop(
+                await dragElement.getWebElement(),
+                await dropElement.getWebElement()
+            )
+            .perform();
     });
 });

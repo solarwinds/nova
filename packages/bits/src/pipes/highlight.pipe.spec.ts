@@ -2,16 +2,17 @@ import { HighlightPipe } from "./highlight.pipe";
 
 describe("pipes >", () => {
     describe("highlight pipe >", () => {
-
         const parametererizedTest = [
             {
-                description: "should highlight search text in case of concurrency",
+                description:
+                    "should highlight search text in case of concurrency",
                 text: `Hello darkness my old friend`,
                 search: `old friend`,
                 expectedText: `Hello darkness my <span class="nui-highlighted">old friend</span>`,
             },
             {
-                description: "shouldn't highlight search text in case of discrepancy",
+                description:
+                    "shouldn't highlight search text in case of discrepancy",
                 text: `Within the sound of silence`,
                 search: `old friend`,
                 expectedText: `Within the sound of silence`,
@@ -27,7 +28,9 @@ describe("pipes >", () => {
         parametererizedTest.forEach((paramter) => {
             it(paramter.description, () => {
                 const subject = new HighlightPipe();
-                expect(subject.transform(paramter.text, paramter.search)).toBe(paramter.expectedText);
+                expect(subject.transform(paramter.text, paramter.search)).toBe(
+                    paramter.expectedText
+                );
             });
         });
     });

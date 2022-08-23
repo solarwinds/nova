@@ -1,18 +1,19 @@
 <div class="app-item-picker-composite">
     <ng-template #listRepeatDefaultItemTemplate let-item="item">
-        <div>{{item.displayValue}}</div>
+        <div>{{ item.displayValue }}</div>
     </ng-template>
 
     <div>
         <div class="d-flex flex-row">
-            <nui-repeat class="app-list-repeat"
-                        [selectionMode]="selectionMode"
-                        [repeatItemTemplateRef]="listRepeatDefaultItemTemplate"
-                        [selection]="selectedOptions"
-                        [itemsSource]="itemPickerOptions"
-                        (selectionChange)="onSelection($event)">
+            <nui-repeat
+                class="app-list-repeat"
+                [selectionMode]="selectionMode"
+                [repeatItemTemplateRef]="listRepeatDefaultItemTemplate"
+                [selection]="selectedOptions"
+                [itemsSource]="itemPickerOptions"
+                (selectionChange)="onSelection($event)"
+            >
             </nui-repeat>
         </div>
     </div>
-
 </div>

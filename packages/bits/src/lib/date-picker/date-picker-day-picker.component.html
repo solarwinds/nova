@@ -1,39 +1,50 @@
-<table *ngIf="datePicker.datepickerMode === 'day'"
-       role="grid"
-       [attr.aria-labelledby]="datePicker.uniqueId + '-title'"
-       aria-activedescendant="activeDateId">
+<table
+    *ngIf="datePicker.datepickerMode === 'day'"
+    role="grid"
+    [attr.aria-labelledby]="datePicker.uniqueId + '-title'"
+    aria-activedescendant="activeDateId"
+>
     <thead>
         <tr>
             <th>
-                <button nui-button
-                        type="button"
-                        displayStyle="action"
-                        icon="caret-left"
-                        (click)="datePicker.move(-1, $event)"
-                        tabindex="-1">
-                </button>
+                <button
+                    nui-button
+                    type="button"
+                    displayStyle="action"
+                    icon="caret-left"
+                    (click)="datePicker.move(-1, $event)"
+                    tabindex="-1"
+                ></button>
             </th>
             <th [attr.colspan]="5 + (datePicker.showWeeks ? 1 : 0)">
-                <button nui-button
-                        type="button"
-                        [id]="datePicker.uniqueId + '-title'"
-                        displayStyle="action"
-                        [disabled]="datePicker.datepickerMode === datePicker.maxMode"
-                        class="change-mode-button"
-                        [ngClass]="{disabled: datePicker.datepickerMode === datePicker.maxMode}"
-                        (click)="datePicker.toggleMode($event)"
-                        tabindex="-1">
+                <button
+                    nui-button
+                    type="button"
+                    [id]="datePicker.uniqueId + '-title'"
+                    displayStyle="action"
+                    [disabled]="
+                        datePicker.datepickerMode === datePicker.maxMode
+                    "
+                    class="change-mode-button"
+                    [ngClass]="{
+                        disabled:
+                            datePicker.datepickerMode === datePicker.maxMode
+                    }"
+                    (click)="datePicker.toggleMode($event)"
+                    tabindex="-1"
+                >
                     <span>{{ title }}</span>
                 </button>
             </th>
             <th>
-                <button nui-button
-                        type="button"
-                        displayStyle="action"
-                        icon="caret-right"
-                        (click)="datePicker.move(1, $event)"
-                        tabindex="-1">
-                </button>
+                <button
+                    nui-button
+                    type="button"
+                    displayStyle="action"
+                    icon="caret-right"
+                    (click)="datePicker.move(1, $event)"
+                    tabindex="-1"
+                ></button>
             </th>
         </tr>
         <tr>
@@ -46,36 +57,57 @@
         </tr>
     </thead>
     <tbody>
-        <ng-template ngFor [ngForOf]="rows" let-row="$implicit" let-index="index">
+        <ng-template
+            ngFor
+            [ngForOf]="rows"
+            let-row="$implicit"
+            let-index="index"
+        >
             <tr *ngIf="row.isRowVisible">
                 <td *ngIf="datePicker.showWeeks" class="h6 text-center">
                     <em>{{ weekNumbers[index] }}</em>
                 </td>
-                <td *ngFor="let cell of (row.days)"
+                <td
+                    *ngFor="let cell of row.days"
                     class="text-center day"
-                    [id]="cell.uid">
-                    <button *ngIf="cell.isCellVisible"
-                            nui-button
-                            type="button"
-                            displayStyle="action"
-                            [ngClass]="{'selected': cell.selected, disabled: cell.disabled}"
-                            [disabled]="cell.disabled"
-                            (click)="datePicker.select(cell.date, $event)"
-                            tabindex="-1">
-                        <span [ngClass]="{'text-muted': cell.secondary, 'text-info': cell.current, 'today': cell.today}">{{ cell.label }}</span>
+                    [id]="cell.uid"
+                >
+                    <button
+                        *ngIf="cell.isCellVisible"
+                        nui-button
+                        type="button"
+                        displayStyle="action"
+                        [ngClass]="{
+                            selected: cell.selected,
+                            disabled: cell.disabled
+                        }"
+                        [disabled]="cell.disabled"
+                        (click)="datePicker.select(cell.date, $event)"
+                        tabindex="-1"
+                    >
+                        <span
+                            [ngClass]="{
+                                'text-muted': cell.secondary,
+                                'text-info': cell.current,
+                                today: cell.today
+                            }"
+                            >{{ cell.label }}</span
+                        >
                     </button>
                 </td>
             </tr>
         </ng-template>
         <tr>
             <td [attr.colspan]="7 + (datePicker.showWeeks ? 1 : 0)">
-                <button nui-button
-                        type="button"
-                        class="today-button"
-                        displayStyle="action"
-                        [disabled]="datePicker.isTodayButtonDisabled"
-                        (click)="datePicker.select(todayDate, $event)"
-                        i18n>
+                <button
+                    nui-button
+                    type="button"
+                    class="today-button"
+                    displayStyle="action"
+                    [disabled]="datePicker.isTodayButtonDisabled"
+                    (click)="datePicker.select(todayDate, $event)"
+                    i18n
+                >
                     Today
                 </button>
             </td>

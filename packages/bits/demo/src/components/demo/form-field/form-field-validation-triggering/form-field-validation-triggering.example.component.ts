@@ -8,8 +8,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 export class FormFieldValidationTriggeringxampleComponent implements OnInit {
     public reactiveForm: FormGroup;
 
-    constructor(private formBuilder: FormBuilder) {
-    }
+    constructor(private formBuilder: FormBuilder) {}
 
     public ngOnInit() {
         this.reactiveForm = this.formBuilder.group({
@@ -18,26 +17,32 @@ export class FormFieldValidationTriggeringxampleComponent implements OnInit {
     }
 
     public onAddValidators() {
-        this.reactiveForm.get("email")?.setValidators([
-            Validators.required,
-            Validators.email,
-        ]);
+        this.reactiveForm
+            .get("email")
+            ?.setValidators([Validators.required, Validators.email]);
     }
 
     public onTouch() {
-        if (this.reactiveForm.get("email")?.value === "" &&  this.reactiveForm.get("email")?.errors === null && this.reactiveForm.get("email")?.validator) {
+        if (
+            this.reactiveForm.get("email")?.value === "" &&
+            this.reactiveForm.get("email")?.errors === null &&
+            this.reactiveForm.get("email")?.validator
+        ) {
             this.reactiveForm.get("email")?.setErrors({ required: true });
         }
         this.reactiveForm.get("email")?.markAsTouched();
     }
 
     public onValueChange() {
-        const text = this.reactiveForm.get("email")?.value === "" ? "some text here" : "";
+        const text =
+            this.reactiveForm.get("email")?.value === ""
+                ? "some text here"
+                : "";
         this.reactiveForm.get("email")?.setValue(text);
     }
 
     public onStatusChange() {
-        const errors = this.reactiveForm.valid ? { hasError: true} : null;
+        const errors = this.reactiveForm.valid ? { hasError: true } : null;
         this.reactiveForm.get("email")?.setErrors(errors);
     }
 

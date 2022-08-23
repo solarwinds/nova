@@ -1,7 +1,6 @@
 import { by, element, ElementFinder } from "protractor";
 
 import { Atom } from "../../../atom";
-
 import { TimeFrameBarAtom } from "./time-frame-bar.atom";
 
 export class TimeFrameBarTestPage {

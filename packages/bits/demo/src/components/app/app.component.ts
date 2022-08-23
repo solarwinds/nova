@@ -9,5 +9,5 @@ import { ThemeSwitchService } from "../../../../src/services/theme-switch.servic
     encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
-    constructor(public themeSwitcherService: ThemeSwitchService) { }
+    constructor(public themeSwitcherService: ThemeSwitchService) {}
 }

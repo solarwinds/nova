@@ -1,5 +1,13 @@
 import { DOCUMENT } from "@angular/common";
-import { Directive, EventEmitter, HostListener, Inject, Input, OnInit, Output } from "@angular/core";
+import {
+    Directive,
+    EventEmitter,
+    HostListener,
+    Inject,
+    Input,
+    OnInit,
+    Output,
+} from "@angular/core";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import isString from "lodash/isString";
@@ -47,12 +55,16 @@ export class ClipboardDirective implements OnInit {
             return this.copyText();
         } else {
             this.clipboardError.emit();
-            return this.logger.error("document copy operation is not supported");
+            return this.logger.error(
+                "document copy operation is not supported"
+            );
         }
     }
 
-    constructor(private logger: LoggerService,
-                @Inject(DOCUMENT) private document: Document) {}
+    constructor(
+        private logger: LoggerService,
+        @Inject(DOCUMENT) private document: Document
+    ) {}
 
     public ngOnInit(): void {
         try {
@@ -64,7 +76,10 @@ export class ClipboardDirective implements OnInit {
 
     private copyText(): void {
         if (isEmpty(this.textToCopy) || !isString(this.textToCopy)) {
-            return this.logger.warn("notext", "nuiClipboard text is empty or not a string");
+            return this.logger.warn(
+                "notext",
+                "nuiClipboard text is empty or not a string"
+            );
         }
 
         const node = this.createNode(this.textToCopy);
@@ -92,5 +107,5 @@ export class ClipboardDirective implements OnInit {
         node.textContent = text;
 
         return node;
-    }
+    };
 }

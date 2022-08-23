@@ -5,5 +5,5 @@ import { Component } from "@angular/core";
     templateUrl: "filter-group-schematic.example.component.html",
 })
 export class FilterGroupSchematicExampleComponent {
-    constructor() { }
+    constructor() {}
 }

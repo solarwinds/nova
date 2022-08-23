@@ -5,13 +5,17 @@
     [class.disabled]="isDisabled"
 >
     <ng-container *ngIf="itemsSource; else transclusionContent">
-        <nui-menu #menu
+        <nui-menu
+            #menu
             [class.has-error]="isInErrorState"
             [title]="displayedValue()"
             [isDisabled]="isDisabled"
             [appendToBody]="appendToBody"
             [widthOfPopup]="getWidth()"
-            [contextClass]="(justified ? 'nui-select--justified ' : '') + 'nui-select-popup-host'"
+            [contextClass]="
+                (justified ? 'nui-select--justified ' : '') +
+                'nui-select-popup-host'
+            "
             [attr.aria-label]="ariaLabel"
         >
             <nui-menu-action
@@ -26,23 +30,22 @@
                     [class.item-selected]="isItemSelected(item)"
                     (actionDone)="select(item)"
                 >
-                    <ng-container *ngIf="!customTemplate">{{getItemDisplay(item)}}</ng-container>
+                    <ng-container *ngIf="!customTemplate">{{
+                        getItemDisplay(item)
+                    }}</ng-container>
                     <ng-container
                         [ngTemplateOutlet]="customTemplate"
-                        [ngTemplateOutletContext]="{context: item}"
+                        [ngTemplateOutletContext]="{ context: item }"
                     >
                     </ng-container>
                 </nui-menu-action>
-                <nui-menu-group
-                    *ngIf="item.items"
-                    [header]="item.header"
-                >
+                <nui-menu-group *ngIf="item.items" [header]="item.header">
                     <nui-menu-action
                         *ngFor="let groupedItem of item.items"
                         [class.item-selected]="isItemSelected(groupedItem)"
                         (actionDone)="select(groupedItem)"
                     >
-                        {{getItemDisplay(groupedItem)}}
+                        {{ getItemDisplay(groupedItem) }}
                     </nui-menu-action>
                 </nui-menu-group>
             </ng-container>

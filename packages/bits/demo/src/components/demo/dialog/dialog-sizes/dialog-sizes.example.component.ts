@@ -1,4 +1,5 @@
 import { Component, Inject, TemplateRef } from "@angular/core";
+
 import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
 
 @Component({
@@ -8,12 +9,13 @@ import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
 export class DialogSizesExampleComponent {
     private activeDialog: NuiDialogRef;
 
-    constructor(@Inject(DialogService) private dialogService: DialogService,
-                @Inject(ToastService) private toastService: ToastService) {
-    }
+    constructor(
+        @Inject(DialogService) private dialogService: DialogService,
+        @Inject(ToastService) private toastService: ToastService
+    ) {}
 
     public open(content: TemplateRef<string>, size: any) {
-        this.activeDialog = this.dialogService.open(content, {size});
+        this.activeDialog = this.dialogService.open(content, { size });
     }
 
     public onButtonClick(title: string) {
@@ -22,10 +24,16 @@ export class DialogSizesExampleComponent {
     }
 
     private actionDone(): void {
-        this.toastService.success({message: $localize `Action Done!`, title: $localize `Event`});
+        this.toastService.success({
+            message: $localize`Action Done!`,
+            title: $localize`Event`,
+        });
     }
 
     private actionCanceled(): void {
-        this.toastService.info({message: $localize `Action Cancelled!`, title: $localize `Event`});
+        this.toastService.info({
+            message: $localize`Action Cancelled!`,
+            title: $localize`Event`,
+        });
     }
 }

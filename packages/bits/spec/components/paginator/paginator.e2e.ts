@@ -10,7 +10,11 @@ describe("USERCONTROL paginator", () => {
     const expectedItemsPerPage = "25";
     const pageTwenty = 20;
 
-    const getDisplayingText = (itemsPerPage: number, page: number, totalItems: number): string => {
+    const getDisplayingText = (
+        itemsPerPage: number,
+        page: number,
+        totalItems: number
+    ): string => {
         const endItem = Math.min(itemsPerPage * page, totalItems);
         const startItem = itemsPerPage * (page - 1) + 1;
         return `${startItem}-${endItem} of ${totalItems}`;
@@ -19,11 +23,16 @@ describe("USERCONTROL paginator", () => {
     beforeAll(async () => {
         await Helpers.prepareBrowser("paginator/paginator-test");
         basicPaginator = Atom.find(PaginatorAtom, "nui-demo-basic-paginator");
-        adjacentPaginator = Atom.find(PaginatorAtom, "nui-demo-adjacent-paginator");
+        adjacentPaginator = Atom.find(
+            PaginatorAtom,
+            "nui-demo-adjacent-paginator"
+        );
     });
 
     it("should be " + itemCount + " items in paginator component", async () => {
-        expect(await basicPaginator.getStatusText()).toContain(itemCount.toString());
+        expect(await basicPaginator.getStatusText()).toContain(
+            itemCount.toString()
+        );
     });
 
     it("should correctly report items per page", async () => {
@@ -48,27 +57,39 @@ describe("USERCONTROL paginator", () => {
     it("should honor 'Items per Page'", async () => {
         await basicPaginator.setItemsPerPage(10);
         expect(await basicPaginator.pageCount()).toEqual(102);
-        expect(await basicPaginator.getStatusText()).toBe(getDisplayingText(10, 1, itemCount));
+        expect(await basicPaginator.getStatusText()).toBe(
+            getDisplayingText(10, 1, itemCount)
+        );
 
         await basicPaginator.popup.open();
         await basicPaginator.pageLinkClick(5);
-        expect(await basicPaginator.getStatusText()).toBe(getDisplayingText(10, 5, itemCount));
+        expect(await basicPaginator.getStatusText()).toBe(
+            getDisplayingText(10, 5, itemCount)
+        );
 
         await basicPaginator.popup.open();
         await basicPaginator.pageLinkClick(6);
-        expect(await basicPaginator.getStatusText()).toBe(getDisplayingText(10, 6, itemCount));
+        expect(await basicPaginator.getStatusText()).toBe(
+            getDisplayingText(10, 6, itemCount)
+        );
 
         await basicPaginator.setItemsPerPage(25);
         expect(await basicPaginator.pageCount()).toEqual(41);
-        expect(await basicPaginator.getStatusText()).toBe(getDisplayingText(25, 1, itemCount));
+        expect(await basicPaginator.getStatusText()).toBe(
+            getDisplayingText(25, 1, itemCount)
+        );
 
         await basicPaginator.popup.open();
         await basicPaginator.pageLinkClick(5);
-        expect(await basicPaginator.getStatusText()).toBe(getDisplayingText(25, 5, itemCount));
+        expect(await basicPaginator.getStatusText()).toBe(
+            getDisplayingText(25, 5, itemCount)
+        );
 
         // Return to initial state
         await basicPaginator.pageLinkClick(1);
-        expect(await basicPaginator.getStatusText()).toBe(getDisplayingText(25, 1, itemCount));
+        expect(await basicPaginator.getStatusText()).toBe(
+            getDisplayingText(25, 1, itemCount)
+        );
     });
 
     it("should display ellipsed page links on ellipsis click", async () => {
@@ -99,46 +120,69 @@ describe("USERCONTROL paginator", () => {
         expect(await basicPaginator.activePage()).toBe(1);
     });
 
-    it("should display 'adjacent' page links on each side of the active page, " +
-        "when the active page is not an endpoint link in adjacent paginator", async () => {
-        const pageCountAdjacent = await adjacentPaginator.pageCount();
+    it(
+        "should display 'adjacent' page links on each side of the active page, " +
+            "when the active page is not an endpoint link in adjacent paginator",
+        async () => {
+            const pageCountAdjacent = await adjacentPaginator.pageCount();
 
-        expect(await adjacentPaginator.activePage()).toEqual(10);
-        await adjacentPaginator.ellipsisLink(1).click();
-        await adjacentPaginator.ellipsedPageLinkClick(pageTwenty);
+            expect(await adjacentPaginator.activePage()).toEqual(10);
+            await adjacentPaginator.ellipsisLink(1).click();
+            await adjacentPaginator.ellipsedPageLinkClick(pageTwenty);
 
-        expect(await adjacentPaginator.isActivePage(pageTwenty)).toBe(true);
-        expect(await adjacentPaginator.pageLinkVisible(pageTwenty)).toBe(true);
+            expect(await adjacentPaginator.isActivePage(pageTwenty)).toBe(true);
+            expect(await adjacentPaginator.pageLinkVisible(pageTwenty)).toBe(
+                true
+            );
 
-        // left adjacent
-        expect(await adjacentPaginator.pageLinkVisible(pageTwenty - adjacent)).toBe(true);
-        expect(await adjacentPaginator.pageLinkVisible(1)).toBe(true);
-        for (let i = pageTwenty - adjacent - 1; i > 1; --i) {
-            expect(await adjacentPaginator.pageLinkVisible(i)).toBe(false);
+            // left adjacent
+            expect(
+                await adjacentPaginator.pageLinkVisible(pageTwenty - adjacent)
+            ).toBe(true);
+            expect(await adjacentPaginator.pageLinkVisible(1)).toBe(true);
+            for (let i = pageTwenty - adjacent - 1; i > 1; --i) {
+                expect(await adjacentPaginator.pageLinkVisible(i)).toBe(false);
+            }
+            // right adjacent
+            expect(
+                await adjacentPaginator.pageLinkVisible(pageTwenty + adjacent)
+            ).toBe(true);
+            expect(
+                await adjacentPaginator.pageLinkVisible(pageCountAdjacent)
+            ).toBe(true);
+            for (
+                let i = pageTwenty + adjacent + 1;
+                i < pageCountAdjacent;
+                ++i
+            ) {
+                expect(await adjacentPaginator.pageLinkVisible(i)).toBe(false);
+            }
+
+            // Return to initial state
+            await adjacentPaginator.ellipsisLink(0).click();
+            await adjacentPaginator.ellipsedPageLinkClick(10);
+            expect(await adjacentPaginator.isActivePage(10)).toBe(true);
         }
-        // right adjacent
-        expect(await adjacentPaginator.pageLinkVisible(pageTwenty + adjacent)).toBe(true);
-        expect(await adjacentPaginator.pageLinkVisible(pageCountAdjacent)).toBe(true);
-        for (let i = pageTwenty + adjacent + 1; i < pageCountAdjacent; ++i) {
-            expect(await adjacentPaginator.pageLinkVisible(i)).toBe(false);
-        }
-
-        // Return to initial state
-        await adjacentPaginator.ellipsisLink(0).click();
-        await adjacentPaginator.ellipsedPageLinkClick(10);
-        expect(await adjacentPaginator.isActivePage(10)).toBe(true);
-    });
+    );
 
     it(`should click page number 15 from popup dialog and pages
-        ${getDisplayingText(10, 15, itemCount)} should be displayed`, async () => {
+        ${getDisplayingText(
+            10,
+            15,
+            itemCount
+        )} should be displayed`, async () => {
         await basicPaginator.setItemsPerPage(10);
         await basicPaginator.ellipsisLink(0).click();
         await basicPaginator.ellipsedPageLinkClick(15);
-        expect(await basicPaginator.getStatusText()).toBe(getDisplayingText(10, 15, itemCount));
+        expect(await basicPaginator.getStatusText()).toBe(
+            getDisplayingText(10, 15, itemCount)
+        );
 
         // Return to initial state
         await basicPaginator.setItemsPerPage(25);
-        expect(await basicPaginator.getStatusText()).toBe(getDisplayingText(25, 1, itemCount));
+        expect(await basicPaginator.getStatusText()).toBe(
+            getDisplayingText(25, 1, itemCount)
+        );
     });
 
     it("should set the correct page on prev/next click", async () => {
@@ -156,6 +200,8 @@ describe("USERCONTROL paginator", () => {
 
         // Return to initial state
         await basicPaginator.setItemsPerPage(25);
-        expect(await basicPaginator.getStatusText()).toBe(getDisplayingText(25, 1, itemCount));
+        expect(await basicPaginator.getStatusText()).toBe(
+            getDisplayingText(25, 1, itemCount)
+        );
     });
 });

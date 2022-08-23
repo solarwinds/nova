@@ -1,7 +1,20 @@
 import { ListRange } from "@angular/cdk/collections";
 import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { DataSourceService, IconService, IDataField, INovaFilteringOutputs, INovaFilters, ISorterFilter, LoggerService } from "@nova-ui/bits";
+import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import isEqual from "lodash/isEqual";
+import orderBy from "lodash/orderBy";
+import { BehaviorSubject } from "rxjs";
+
+import {
+    DataSourceService,
+    IconService,
+    IDataField,
+    INovaFilteringOutputs,
+    INovaFilters,
+    ISorterFilter,
+    LoggerService,
+} from "@nova-ui/bits";
 import {
     ComponentRegistryService,
     ConfiguratorHeadingService,
@@ -23,10 +36,6 @@ import {
     WellKnownProviders,
     WidgetTypesService,
 } from "@nova-ui/dashboards";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
-import isEqual from "lodash/isEqual";
-import orderBy from "lodash/orderBy";
-import { BehaviorSubject } from "rxjs";
 
 export const BREW_API_URL = "https://api.punkapi.com/v2/beers";
 
@@ -34,28 +43,31 @@ export const BREW_API_URL = "https://api.punkapi.com/v2/beers";
     selector: "custom-formatter",
     host: { class: "d-flex" },
     template: `
-<div class="d-inline-flex w-100">
-    <div class="mr-2 d-flex align-items-center" *ngIf="icon && isAboveThreshold()">
-        <nui-icon [icon]="icon"></nui-icon>
-    </div>
-    <div [attr.data-value]="data.value">
-        {{ data.value }}
-    </div>
-</div>
-`,
+        <div class="d-inline-flex w-100">
+            <div
+                class="mr-2 d-flex align-items-center"
+                *ngIf="icon && isAboveThreshold()"
+            >
+                <nui-icon [icon]="icon"></nui-icon>
+            </div>
+            <div [attr.data-value]="data.value">
+                {{ data.value }}
+            </div>
+        </div>
+    `,
     styleUrls: ["./custom-formatter-example.component.less"],
 })
 export class CustomFormatterComponent implements IHasChangeDetector {
     public static lateLoadKey = "CustomFormatterComponent";
 
-    constructor(public changeDetector: ChangeDetectorRef) { }
+    constructor(public changeDetector: ChangeDetectorRef) {}
 
     @Input() public data: any;
     @Input() public icon: string;
     @Input() public threshold: string;
 
     public isAboveThreshold(): boolean {
-        return (parseFloat(this.threshold) <= this.data.value);
+        return parseFloat(this.threshold) <= this.data.value;
     }
 }
 
@@ -63,89 +75,132 @@ export class CustomFormatterComponent implements IHasChangeDetector {
     selector: "custom-formatter-configurator",
     styleUrls: ["./custom-formatter-example.component.less"],
     template: `
-<form [formGroup]="form">
-    <div class="mt-4" formGroupName="dataFieldIds">
-        <nui-form-field caption="Value"
-                        i18n-caption
-                        [control]="dataFieldIds.controls['value']">
-            <nui-select-v2 placeholder="Select value"
-                           i18n-placeholder
-                           [popupViewportMargin]="configuratorHeading.height$ | async"
-                           formControlName="value">
-                <nui-select-v2-option
-                    *ngFor="let item of dropdownItems.value"
-                    [value]="item.id">
-                    {{item.label}}
-                </nui-select-v2-option>
-            </nui-select-v2>
-            <nui-validation-message for="required" i18n>
-                This field is required
-            </nui-validation-message>
-        </nui-form-field>
-    </div>
-    <div class="mt-4">
-        <nui-form-field caption="Icon"
-                        i18n-caption="caption | displayed above the icon selection field"
-                        [control]="form.controls['icon']">
-            <nui-select-v2 placeholder="Select icon"
-                           i18n-placeholder
-                           [popupViewportMargin]="configuratorHeading.height$ | async"
-                           [displayValueTemplate]="iconSelectTemplate"
-                           formControlName="icon"
-                           [overlayConfig]="{width: 36}">
-                <nui-select-v2-option class="d-flex align-items-center" *ngFor="let item of options" [value]="item" i18n>
+        <form [formGroup]="form">
+            <div class="mt-4" formGroupName="dataFieldIds">
+                <nui-form-field
+                    caption="Value"
+                    i18n-caption
+                    [control]="dataFieldIds.controls['value']"
+                >
+                    <nui-select-v2
+                        placeholder="Select value"
+                        i18n-placeholder
+                        [popupViewportMargin]="
+                            configuratorHeading.height$ | async
+                        "
+                        formControlName="value"
+                    >
+                        <nui-select-v2-option
+                            *ngFor="let item of dropdownItems.value"
+                            [value]="item.id"
+                        >
+                            {{ item.label }}
+                        </nui-select-v2-option>
+                    </nui-select-v2>
+                    <nui-validation-message for="required" i18n>
+                        This field is required
+                    </nui-validation-message>
+                </nui-form-field>
+            </div>
+            <div class="mt-4">
+                <nui-form-field
+                    caption="Icon"
+                    i18n-caption="
+                        caption | displayed above the icon selection field
+                    "
+                    [control]="form.controls['icon']"
+                >
+                    <nui-select-v2
+                        placeholder="Select icon"
+                        i18n-placeholder
+                        [popupViewportMargin]="
+                            configuratorHeading.height$ | async
+                        "
+                        [displayValueTemplate]="iconSelectTemplate"
+                        formControlName="icon"
+                        [overlayConfig]="{ width: 36 }"
+                    >
+                        <nui-select-v2-option
+                            class="d-flex align-items-center"
+                            *ngFor="let item of options"
+                            [value]="item"
+                            i18n
+                        >
+                            <nui-icon [icon]="item"></nui-icon>
+                        </nui-select-v2-option>
+                    </nui-select-v2>
+                    <nui-validation-message
+                        for="required"
+                        i18n="
+                            error message | displayed on blur when icon
+                            selection is empty
+                        "
+                    >
+                        This field is required
+                    </nui-validation-message>
+                </nui-form-field>
+            </div>
+            <div class="mt-4">
+                <nui-form-field
+                    caption="A.B.V. Threshold"
+                    i18n-caption="
+                        caption | displayed above the threshold textbox
+                    "
+                    [control]="form.controls['threshold']"
+                >
+                    <nui-textbox
+                        type="number"
+                        formControlName="threshold"
+                        placeholder="Set threshold"
+                        i18n-placeholder
+                    >
+                    </nui-textbox>
+                    <nui-validation-message
+                        for="required"
+                        i18n="
+                            error message | displayed on blur when threshold
+                            selection is empty
+                        "
+                    >
+                        This field is required
+                    </nui-validation-message>
+                </nui-form-field>
+            </div>
+        </form>
+        <ng-template #iconSelectTemplate let-item let-open="open">
+            <div class="nui-select-v2__value">
+                <div
+                    *ngIf="item; else empty"
+                    class="d-flex align-items-center nui-select-v2__value-content"
+                >
                     <nui-icon [icon]="item"></nui-icon>
-                </nui-select-v2-option>
-            </nui-select-v2>
-            <nui-validation-message for="required"
-                                    i18n="error message | displayed on blur when icon selection is empty">
-                    This field is required
-            </nui-validation-message>
-        </nui-form-field>
-    </div>
-    <div class="mt-4">
-        <nui-form-field caption="A.B.V. Threshold"
-                        i18n-caption="caption | displayed above the threshold textbox"
-                        [control]="form.controls['threshold']">
-                        <nui-textbox
-                            type="number"
-                            formControlName="threshold"
-                            placeholder="Set threshold"
-                            i18n-placeholder>
-                        </nui-textbox>
-            <nui-validation-message for="required"
-                                    i18n="error message | displayed on blur when threshold selection is empty">
-                    This field is required
-            </nui-validation-message>
-        </nui-form-field>
-    </div>
-</form>
-<ng-template #iconSelectTemplate let-item let-open="open">
-    <div class="nui-select-v2__value">
-        <div *ngIf="item else empty" class="d-flex align-items-center nui-select-v2__value-content">
-        <nui-icon [icon]="item"></nui-icon>
-        </div>
+                </div>
 
-        <nui-icon  [style.transform]="open ? 'rotate(180deg)' : ''"
-            icon="caret-down"></nui-icon>
-    </div>
+                <nui-icon
+                    [style.transform]="open ? 'rotate(180deg)' : ''"
+                    icon="caret-down"
+                ></nui-icon>
+            </div>
 
-    <ng-template #empty>
-        <span class="nui-select-v2__placeholder">Select Item</span>
-    </ng-template>
-
-</ng-template>
-`,
+            <ng-template #empty>
+                <span class="nui-select-v2__placeholder">Select Item</span>
+            </ng-template>
+        </ng-template>
+    `,
 })
-
-export class CustomFormatterConfiguratorComponent extends FormatterConfiguratorComponent implements OnInit, IHasChangeDetector {
+export class CustomFormatterConfiguratorComponent
+    extends FormatterConfiguratorComponent
+    implements OnInit, IHasChangeDetector
+{
     public static lateLoadKey = "CustomFormatterConfiguratorComponent";
 
-    constructor(changeDetector: ChangeDetectorRef,
-                configuratorHeading: ConfiguratorHeadingService,
-                formBuilder: FormBuilder,
-                logger: LoggerService,
-                public iconService: IconService) {
+    constructor(
+        changeDetector: ChangeDetectorRef,
+        configuratorHeading: ConfiguratorHeadingService,
+        formBuilder: FormBuilder,
+        logger: LoggerService,
+        public iconService: IconService
+    ) {
         super(changeDetector, configuratorHeading, formBuilder, logger);
     }
 
@@ -162,8 +217,14 @@ export class CustomFormatterConfiguratorComponent extends FormatterConfiguratorC
     }
 
     protected addCustomFormControls(form: FormGroup): void {
-        form.addControl("icon", this.formBuilder.control("", Validators.required));
-        form.addControl("threshold", this.formBuilder.control(null, Validators.required));
+        form.addControl(
+            "icon",
+            this.formBuilder.control("", Validators.required)
+        );
+        form.addControl(
+            "threshold",
+            this.formBuilder.control(null, Validators.required)
+        );
     }
 }
 
@@ -194,11 +255,12 @@ export class CustomFormatterExampleComponent implements OnInit {
         private componentRegistry: ComponentRegistryService,
         private tableFormatterRegistryService: TableFormatterRegistryService,
         private changeDetectorRef: ChangeDetectorRef
-
     ) {
         // Register the custom configurator component with the component registry to make it available
         // for late loading by the dashboard framework.
-        this.componentRegistry.registerByLateLoadKey(CustomFormatterConfiguratorComponent);
+        this.componentRegistry.registerByLateLoadKey(
+            CustomFormatterConfiguratorComponent
+        );
         // Register the custom formatter component with the component registry to make it available
         // for late loading by the dashboard framework.
         this.componentRegistry.registerByLateLoadKey(CustomFormatterComponent);
@@ -222,7 +284,8 @@ export class CustomFormatterExampleComponent implements OnInit {
                 componentType: CustomFormatterComponent.lateLoadKey,
                 label: $localize`:table formatter|:Custom formatter`,
                 // This is a custom configurator that will pop up below the formatter once it gets selected
-                configurationComponent: CustomFormatterConfiguratorComponent.lateLoadKey,
+                configurationComponent:
+                    CustomFormatterConfiguratorComponent.lateLoadKey,
                 // This says what data types the formatter supports.
                 // In this case, it supports abv values only.
                 // If you look below in the table data source you'll see where we define our column's data types.
@@ -236,7 +299,12 @@ export class CustomFormatterExampleComponent implements OnInit {
         this.tableFormatterRegistryService.addItems(tableFormatters);
 
         // This sets the table's datasource to have the BeerDataSource so the drop down is filled similar to the line above.
-        this.widgetTypesService.setNode(table, "configurator", WellKnownPathKey.DataSourceProviders, [BeerDataSource.providerId]);
+        this.widgetTypesService.setNode(
+            table,
+            "configurator",
+            WellKnownPathKey.DataSourceProviders,
+            [BeerDataSource.providerId]
+        );
 
         // Registering the data source for injection into the widget.
         this.providerRegistry.setProviders({
@@ -268,7 +336,8 @@ export class CustomFormatterExampleComponent implements OnInit {
         const tableWidget = widgetConfig;
         const widgetIndex: IWidgets = {
             // Enhance the widget with information coming from it's type definition
-            [tableWidget.id]: this.widgetTypesService.mergeWithWidgetType(tableWidget),
+            [tableWidget.id]:
+                this.widgetTypesService.mergeWithWidgetType(tableWidget),
         };
 
         // Setting the widget dimensions and position (this is for gridster)
@@ -331,7 +400,9 @@ export class BeerDataSource extends DataSourceService<IBrewInfo> {
         super();
     }
 
-    public async getFilteredData(filters: INovaFilters): Promise<IDataSourceOutput<INovaFilteringOutputs>> {
+    public async getFilteredData(
+        filters: INovaFilters
+    ): Promise<IDataSourceOutput<INovaFilteringOutputs>> {
         const start = filters.virtualScroll?.value?.start ?? 0;
         const end = filters.virtualScroll?.value?.end ?? 0;
         const delta = end - start;
@@ -344,18 +415,31 @@ export class BeerDataSource extends DataSourceService<IBrewInfo> {
         // This condition handles sorting. We want to sort columns without fetching another chunk of data.
         // Since the data is being fetched when scrolled, we compare virtual scroll indexes here in the condition as well.
         if (filters.sorter?.value) {
-            if (!isEqual(this.lastSortValue, filters.sorter.value) && filters.virtualScroll?.value.start === 0 && !!this.lastVirtualScroll) {
-                const totalPages = Math.ceil(delta ? this.totalItems / delta : 1);
-                const itemsPerPage: number = Math.max(delta < 80 ? delta : 80, 1);
+            if (
+                !isEqual(this.lastSortValue, filters.sorter.value) &&
+                filters.virtualScroll?.value.start === 0 &&
+                !!this.lastVirtualScroll
+            ) {
+                const totalPages = Math.ceil(
+                    delta ? this.totalItems / delta : 1
+                );
+                const itemsPerPage: number = Math.max(
+                    delta < 80 ? delta : 80,
+                    1
+                );
                 let response: Array<IBrewInfo> | null = null;
                 let map: IBrewDatasourceResponse;
 
                 if (filters.sorter?.value?.direction === "desc") {
                     this.cache = [];
                     for (let i = 0; i < this.page; ++i) {
-
-                        response = await
-                        (await fetch(`${BREW_API_URL}/?page=${totalPages - i || 1}&per_page=${itemsPerPage}`)).json();
+                        response = await (
+                            await fetch(
+                                `${BREW_API_URL}/?page=${
+                                    totalPages - i || 1
+                                }&per_page=${itemsPerPage}`
+                            )
+                        ).json();
 
                         // since the last page contains only 5 items we need to fetch another page to give virtual scroll enough space to work
                         if (response && response.length < itemsPerPage) {
@@ -372,15 +456,23 @@ export class BeerDataSource extends DataSourceService<IBrewInfo> {
                             })),
                             total: response?.length,
                         } as IBrewDatasourceResponse;
-                        this.cache = totalPages - i !== 0 ? this.cache.concat(map.brewInfo) : this.cache;
+                        this.cache =
+                            totalPages - i !== 0
+                                ? this.cache.concat(map.brewInfo)
+                                : this.cache;
                     }
                 }
 
                 if (filters.sorter?.value?.direction === "asc") {
                     this.cache = [];
                     for (let i = 0; i < this.page; i++) {
-                        response = await
-                        (await fetch(`${BREW_API_URL}/?page=${i + 1}&per_page=${itemsPerPage}`)).json();
+                        response = await (
+                            await fetch(
+                                `${BREW_API_URL}/?page=${
+                                    i + 1
+                                }&per_page=${itemsPerPage}`
+                            )
+                        ).json();
                         map = {
                             brewInfo: response?.map((result: IBrewInfo) => ({
                                 id: result.id,
@@ -401,7 +493,9 @@ export class BeerDataSource extends DataSourceService<IBrewInfo> {
 
                 return {
                     result: {
-                        repeat: { itemsSource: this.sortData(this.cache, filters) },
+                        repeat: {
+                            itemsSource: this.sortData(this.cache, filters),
+                        },
                         paginator: { total: this.totalItems },
                         dataFields: this.dataFields,
                     },
@@ -410,33 +504,44 @@ export class BeerDataSource extends DataSourceService<IBrewInfo> {
         }
 
         this.busy.next(true);
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             setTimeout(() => {
-                this.getData(start, end, filters).then((response: INovaFilteringOutputs) => {
-                    if (!response) {
-                        return;
+                this.getData(start, end, filters).then(
+                    (response: INovaFilteringOutputs) => {
+                        if (!response) {
+                            return;
+                        }
+
+                        this.cache = this.cache.concat(response.brewInfo);
+
+                        this.dataSubject.next(this.cache);
+                        resolve({
+                            result: {
+                                repeat: {
+                                    itemsSource: this.sortData(
+                                        this.cache,
+                                        filters
+                                    ),
+                                },
+                                paginator: { total: this.totalItems },
+                                dataFields: this.dataFields,
+                            },
+                        });
+
+                        this.lastSortValue = filters.sorter?.value;
+                        this.lastVirtualScroll = filters.virtualScroll?.value;
+                        this.busy.next(false);
                     }
-
-                    this.cache = this.cache.concat(response.brewInfo);
-
-                    this.dataSubject.next(this.cache);
-                    resolve({
-                        result: {
-                            repeat: { itemsSource: this.sortData(this.cache, filters) },
-                            paginator: { total: this.totalItems },
-                            dataFields: this.dataFields,
-                        },
-                    });
-
-                    this.lastSortValue = filters.sorter?.value;
-                    this.lastVirtualScroll = filters.virtualScroll?.value;
-                    this.busy.next(false);
-                });
+                );
             }, 500);
         });
     }
 
-    public async getData(start: number = 0, end: number = 20, filters: INovaFilters): Promise<INovaFilteringOutputs> {
+    public async getData(
+        start: number = 0,
+        end: number = 20,
+        filters: INovaFilters
+    ): Promise<INovaFilteringOutputs> {
         const delta = end - start;
         const totalPages = Math.ceil(delta ? this.totalItems / delta : 1);
         let response: Array<IBrewInfo> | null = null;
@@ -444,15 +549,29 @@ export class BeerDataSource extends DataSourceService<IBrewInfo> {
         const itemsPerPage: number = Math.max(delta < 80 ? delta : 80, 1);
 
         if (filters.sorter?.value?.direction === "asc") {
-            response = await (await fetch(`${BREW_API_URL}/?page=${this.page}&per_page=${itemsPerPage}`)).json();
+            response = await (
+                await fetch(
+                    `${BREW_API_URL}/?page=${this.page}&per_page=${itemsPerPage}`
+                )
+            ).json();
         }
 
         if (filters.sorter?.value?.direction === "desc") {
-            response = await (await fetch(`${BREW_API_URL}/?page=${totalPages - this.page}&per_page=${itemsPerPage}`)).json();
+            response = await (
+                await fetch(
+                    `${BREW_API_URL}/?page=${
+                        totalPages - this.page
+                    }&per_page=${itemsPerPage}`
+                )
+            ).json();
         }
 
         if (!filters.sorter) {
-            response = await (await fetch(`${BREW_API_URL}/?page=${this.page}&per_page=${itemsPerPage}`)).json();
+            response = await (
+                await fetch(
+                    `${BREW_API_URL}/?page=${this.page}&per_page=${itemsPerPage}`
+                )
+            ).json();
         }
         return {
             brewInfo: response?.map((result: IBrewInfo, i: number) => ({
@@ -469,7 +588,11 @@ export class BeerDataSource extends DataSourceService<IBrewInfo> {
     }
 
     private sortData(data: IBrewInfo[], filters: INovaFilters) {
-        return orderBy(data, filters.sorter?.value?.sortBy, filters.sorter?.value?.direction as "desc" | "asc");
+        return orderBy(
+            data,
+            filters.sorter?.value?.sortBy,
+            filters.sorter?.value?.direction as "desc" | "asc"
+        );
     }
 }
 
@@ -478,13 +601,13 @@ export const widgetConfig: IWidget = {
     type: "table",
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
-            "header": {
+            header: {
                 properties: {
                     title: "Stupendous Suds",
                     subtitle: "Try These Brilliant Brews",
                 },
             },
-            "table": {
+            table: {
                 providers: {
                     [WellKnownProviders.DataSource]: {
                         providerId: BeerDataSource.providerId,
@@ -499,7 +622,8 @@ export const widgetConfig: IWidget = {
                                 isActive: true,
                                 width: 185,
                                 formatter: {
-                                    componentType: RawFormatterComponent.lateLoadKey,
+                                    componentType:
+                                        RawFormatterComponent.lateLoadKey,
                                     properties: {
                                         dataFieldIds: {
                                             value: "name",
@@ -513,7 +637,8 @@ export const widgetConfig: IWidget = {
                                 isActive: true,
                                 width: 250,
                                 formatter: {
-                                    componentType: RawFormatterComponent.lateLoadKey,
+                                    componentType:
+                                        RawFormatterComponent.lateLoadKey,
                                     properties: {
                                         dataFieldIds: {
                                             value: "tagline",
@@ -527,7 +652,8 @@ export const widgetConfig: IWidget = {
                                 isActive: true,
                                 width: 150,
                                 formatter: {
-                                    componentType: CustomFormatterComponent.lateLoadKey,
+                                    componentType:
+                                        CustomFormatterComponent.lateLoadKey,
                                     properties: {
                                         dataFieldIds: {
                                             value: "abv",
@@ -542,7 +668,8 @@ export const widgetConfig: IWidget = {
                                 label: "Description",
                                 isActive: true,
                                 formatter: {
-                                    componentType: RawFormatterComponent.lateLoadKey,
+                                    componentType:
+                                        RawFormatterComponent.lateLoadKey,
                                     properties: {
                                         dataFieldIds: {
                                             value: "description",

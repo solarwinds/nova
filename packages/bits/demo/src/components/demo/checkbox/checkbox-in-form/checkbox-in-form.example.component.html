@@ -1,12 +1,20 @@
-<form [formGroup]="myForm"
-      (submit)="onSubmit()">
+<form [formGroup]="myForm" (submit)="onSubmit()">
     <div class="form-group">
-        <nui-checkbox name="nui-checkbox-validation-example"
-                      formControlName="checkbox"
-                      required
-                      i18n>
+        <nui-checkbox
+            name="nui-checkbox-validation-example"
+            formControlName="checkbox"
+            required
+            i18n
+        >
             Validation
         </nui-checkbox>
     </div>
-    <button nui-button type="submit" [disabled]="myForm.controls['checkbox'].invalid" i18n>Submit</button>
+    <button
+        nui-button
+        type="submit"
+        [disabled]="myForm.controls['checkbox'].invalid"
+        i18n
+    >
+        Submit
+    </button>
 </form>

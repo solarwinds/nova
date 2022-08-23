@@ -1,10 +1,26 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { ThemeSwitchService } from "@nova-ui/bits";
-import { DATA_SOURCE, IDashboard, IWidget, ProviderRegistryService, WidgetTypesService } from "@nova-ui/dashboards";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    OnInit,
+    ViewEncapsulation,
+} from "@angular/core";
 import keyBy from "lodash/keyBy";
 
-import { TestKpiDataSource, TestKpiDataSource2, TestKpiDataSourceBigNumber, TestKpiDataSourceSmallNumber } from "../../data/kpi-data-sources";
+import { ThemeSwitchService } from "@nova-ui/bits";
+import {
+    DATA_SOURCE,
+    IDashboard,
+    IWidget,
+    ProviderRegistryService,
+    WidgetTypesService,
+} from "@nova-ui/dashboards";
 
+import {
+    TestKpiDataSource,
+    TestKpiDataSource2,
+    TestKpiDataSourceBigNumber,
+    TestKpiDataSourceSmallNumber,
+} from "../../data/kpi-data-sources";
 import { positions, widgets } from "./widgets";
 
 /**
@@ -31,9 +47,11 @@ export class KpiDashboardComponent implements OnInit {
 
     public editMode = false;
 
-    constructor(private providerRegistry: ProviderRegistryService,
+    constructor(
+        private providerRegistry: ProviderRegistryService,
         public themeSwitcherService: ThemeSwitchService,
-        private widgetTypesService: WidgetTypesService) {
+        private widgetTypesService: WidgetTypesService
+    ) {
         this.providerRegistry.setProviders({
             [TestKpiDataSource.providerId]: {
                 provide: DATA_SOURCE,
@@ -59,10 +77,11 @@ export class KpiDashboardComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        const widgetsWithStructure = widgets.map(w => ({
+        const widgetsWithStructure = widgets.map((w) => ({
             ...w,
             pizzagna: {
-                ...this.widgetTypesService.getWidgetType(w.type, w.version).widget,
+                ...this.widgetTypesService.getWidgetType(w.type, w.version)
+                    .widget,
                 ...w.pizzagna,
             },
         }));

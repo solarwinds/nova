@@ -1,6 +1,23 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Component, EventEmitter, Injectable, OnDestroy, OnInit, Output, ViewChild } from "@angular/core";
-import { DataSourceService, IFilteringOutputs, ToastService, uuid } from "@nova-ui/bits";
+import {
+    Component,
+    EventEmitter,
+    Injectable,
+    OnDestroy,
+    OnInit,
+    Output,
+    ViewChild,
+} from "@angular/core";
+import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
+import { finalize, take, takeUntil } from "rxjs/operators";
+
+import {
+    DataSourceService,
+    IFilteringOutputs,
+    ToastService,
+    uuid,
+} from "@nova-ui/bits";
 import {
     DashboardComponent,
     DATA_SOURCE,
@@ -24,9 +41,6 @@ import {
     WidgetClonerService,
     WidgetTypesService,
 } from "@nova-ui/dashboards";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
-import { BehaviorSubject, Observable, Subject } from "rxjs";
-import { finalize, take, takeUntil } from "rxjs/operators";
 
 // Interface of a widget item
 interface IWidgetItem {
@@ -41,30 +55,36 @@ interface IWidgetItem {
     selector: "widget-template-selection",
     styleUrls: ["./widget-creation.component.less"],
     template: `
-<div class="nui-widget-cloner">
-    <nui-repeat [itemsSource]="widgetItems"
+        <div class="nui-widget-cloner">
+            <nui-repeat
+                [itemsSource]="widgetItems"
                 [selection]="widgetSelection"
                 selectionMode="singleWithRequiredSelection"
                 (selectionChange)="onSelect($event)"
-                [repeatItemTemplateRef]="widgetClonerItem">
-    </nui-repeat>
-</div>
+                [repeatItemTemplateRef]="widgetClonerItem"
+            >
+            </nui-repeat>
+        </div>
 
-<ng-template #widgetClonerItem let-item="item">
-    <div class="nui-widget-cloner__item d-flex pt-2 pb-2 align-items-center">
-        <div class="text-info ml-3">{{ item.name }}</div>
-    </div>
-</ng-template>
+        <ng-template #widgetClonerItem let-item="item">
+            <div
+                class="nui-widget-cloner__item d-flex pt-2 pb-2 align-items-center"
+            >
+                <div class="text-info ml-3">{{ item.name }}</div>
+            </div>
+        </ng-template>
     `,
 })
-export class WidgetTemplateSelectionComponent implements IWidgetTemplateSelector, OnInit {
+export class WidgetTemplateSelectionComponent
+    implements IWidgetTemplateSelector, OnInit
+{
     // This output will notify the wizard that a widget has been selected.
     @Output() public widgetSelected = new EventEmitter<IWidget>();
 
     public widgetItems: IWidgetItem[] = [];
     public widgetSelection: IWidgetItem[];
 
-    constructor(private widgetTypesService: WidgetTypesService) { }
+    constructor(private widgetTypesService: WidgetTypesService) {}
 
     public ngOnInit() {
         // Here we combine the widget structure from the WidgetTypesService with the corresponding widget
@@ -72,14 +92,18 @@ export class WidgetTemplateSelectionComponent implements IWidgetTemplateSelector
         this.widgetItems = [
             {
                 name: "Fully Configured KPI Widget",
-                widget: this.widgetTypesService.mergeWithWidgetType(fullKpiWidgetConfig),
+                widget: this.widgetTypesService.mergeWithWidgetType(
+                    fullKpiWidgetConfig
+                ),
             },
             {
                 name: "Unconfigured Proportional Widget",
                 // Note that 'partialPropWidgetConfig' sets 'metadata.needsConfiguration' to true.
                 // When this widget is selected in the wizard, the 'Create Widget' button will be hidden
                 // to guide the user to the second step where they can complete the configuration.
-                widget: this.widgetTypesService.mergeWithWidgetType(partialPropWidgetConfig),
+                widget: this.widgetTypesService.mergeWithWidgetType(
+                    partialPropWidgetConfig
+                ),
             },
         ];
 
@@ -94,14 +118,12 @@ export class WidgetTemplateSelectionComponent implements IWidgetTemplateSelector
     }
 }
 
-
 /**
  * A simple persistence handler that is tied to the widget editor directive
  */
 @Injectable()
 // The realizer of IDashboardPersistenceHandler may implement a trySubmit and/or a tryRemove method.
 export class PersistenceHandler implements IDashboardPersistenceHandler {
-
     // This variable is just to show how to handle error handling.
     private persistenceSucceeded: boolean = true;
 
@@ -133,7 +155,9 @@ export class PersistenceHandler implements IDashboardPersistenceHandler {
                 // Passes along the new widget after one second.
                 subject.next(widget);
                 // Toast on the page on success.
-                this.toastService.success({ title: $localize`Submit succeeded.` });
+                this.toastService.success({
+                    title: $localize`Submit succeeded.`,
+                });
             } else {
                 const errorText = $localize`Submit failed.`;
                 // Toast on the page on failure.
@@ -147,7 +171,7 @@ export class PersistenceHandler implements IDashboardPersistenceHandler {
 
         // Returns the subject as an observable.
         return subject.asObservable();
-    }
+    };
 
     // This method will be invoked anytime there's a widget removal attempt.
     public tryRemove = (widgetId: string): Observable<string> => {
@@ -157,7 +181,9 @@ export class PersistenceHandler implements IDashboardPersistenceHandler {
             if (this.persistenceSucceeded) {
                 // Pass through the id of the widget that was removed.
                 subject.next(widgetId);
-                this.toastService.success({ title: $localize`Removal success` });
+                this.toastService.success({
+                    title: $localize`Removal success`,
+                });
             } else {
                 const errorText = $localize`Removal failed.`;
                 this.toastService.error({ title: errorText });
@@ -167,7 +193,7 @@ export class PersistenceHandler implements IDashboardPersistenceHandler {
         }, 1000);
 
         return subject.asObservable();
-    }
+    };
 }
 
 /**
@@ -182,7 +208,8 @@ export class PersistenceHandler implements IDashboardPersistenceHandler {
 })
 export class WidgetCreationComponent implements OnInit {
     // The WidgetClonerService will need this for updating the dashboard
-    @ViewChild(DashboardComponent, { static: true }) dashboardComponent: DashboardComponent;
+    @ViewChild(DashboardComponent, { static: true })
+    dashboardComponent: DashboardComponent;
     // This variable will hold all the data needed to define the layout and behavior of the widgets.
     // Pass this to the dashboard component's dashboard input in the template.
     public dashboard: IDashboard;
@@ -215,12 +242,15 @@ export class WidgetCreationComponent implements OnInit {
 
         // Injecting the cloner service which is needed for opening up the cloner wizard.
         private widgetClonerService: WidgetClonerService
-    ) { }
+    ) {}
 
     public ngOnInit(): void {
         // Grabbing the widget's default template which will be needed as a parameter for setNode
         const kpiTemplate = this.widgetTypesService.getWidgetType("kpi", 1);
-        const proportionalTemplate = this.widgetTypesService.getWidgetType("proportional", 1);
+        const proportionalTemplate = this.widgetTypesService.getWidgetType(
+            "proportional",
+            1
+        );
 
         // Registering our data sources as dropdown options in the widget editor/configurator
         // Note: This could also be done in the parent module's constructor so that
@@ -242,7 +272,10 @@ export class WidgetCreationComponent implements OnInit {
             kpiTemplate,
             "configurator",
             WellKnownPathKey.DataSourceProviders,
-            [AverageRatingKpiDataSource.providerId, RatingsCountKpiDataSource.providerId]
+            [
+                AverageRatingKpiDataSource.providerId,
+                RatingsCountKpiDataSource.providerId,
+            ]
         );
 
         // Registering the data sources available for injection into the KPI tiles and proportional widget.
@@ -278,7 +311,8 @@ export class WidgetCreationComponent implements OnInit {
             // WidgetTemplateSelectionComponent will act as step one of the wizard to allow the user to select which widget will be cloned.
             widgetSelectionComponentType: WidgetTemplateSelectionComponent,
         };
-        this.widgetClonerService.open(widgetSelector)
+        this.widgetClonerService
+            .open(widgetSelector)
             .pipe(
                 // Auto-unsubscribe after one emission or on component destruction
                 take(1),
@@ -293,7 +327,8 @@ export class WidgetCreationComponent implements OnInit {
         const kpiWidget = fullKpiWidgetConfig;
         const widgetIndex: IWidgets = {
             // Complete the KPI widget with information coming from its type definition
-            [kpiWidget.id]: this.widgetTypesService.mergeWithWidgetType(kpiWidget),
+            [kpiWidget.id]:
+                this.widgetTypesService.mergeWithWidgetType(kpiWidget),
         };
 
         // Setting the widget dimensions and position (this is for gridster)
@@ -330,12 +365,16 @@ interface IProportionalWidgetData {
 export class RandomCitiesProportionalDataSource implements OnDestroy {
     public static providerId = "RandomCitiesProportionalDataSource";
 
-    public outputsSubject = new Subject<IDataSourceOutput<IProportionalWidgetData[]>>();
+    public outputsSubject = new Subject<
+        IDataSourceOutput<IProportionalWidgetData[]>
+    >();
 
     // Every time applyFilters gets ran we are changing the data source.
     public applyFilters() {
         setTimeout(() => {
-            this.outputsSubject.next({ result: this.getRandomProportionalWidgetData() });
+            this.outputsSubject.next({
+                result: this.getRandomProportionalWidgetData(),
+            });
         }, 1000);
     }
 
@@ -401,7 +440,10 @@ export class RandomCitiesProportionalDataSource implements OnDestroy {
  * A simple KPI data source to retrieve the average rating of Harry Potter and the Sorcerer's Stone (book) via googleapis
  */
 @Injectable()
-export class AverageRatingKpiDataSource extends DataSourceService<IKpiData> implements OnDestroy {
+export class AverageRatingKpiDataSource
+    extends DataSourceService<IKpiData>
+    implements OnDestroy
+{
     // This is the ID we'll use to identify the provider
     public static providerId = "AverageRatingKpiDataSource";
 
@@ -418,7 +460,8 @@ export class AverageRatingKpiDataSource extends DataSourceService<IKpiData> impl
         this.busy.next(true);
         return new Promise((resolve) => {
             // *** Make a resource request to an external API (if needed)
-            this.http.get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
+            this.http
+                .get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
                 .pipe(finalize(() => this.busy.next(false)))
                 .subscribe({
                     next: (data: any) => {
@@ -449,7 +492,10 @@ export class AverageRatingKpiDataSource extends DataSourceService<IKpiData> impl
  * A simple KPI data source to retrieve the ratings count of Harry Potter and the Sorcerer's Stone (book) via googleapis
  */
 @Injectable()
-export class RatingsCountKpiDataSource extends DataSourceService<IKpiData> implements OnDestroy {
+export class RatingsCountKpiDataSource
+    extends DataSourceService<IKpiData>
+    implements OnDestroy
+{
     public static providerId = "RatingsCountKpiDataSource";
 
     // Use this subject to communicate the data source's busy state
@@ -462,7 +508,8 @@ export class RatingsCountKpiDataSource extends DataSourceService<IKpiData> imple
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
         return new Promise((resolve) => {
-            this.http.get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
+            this.http
+                .get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
                 .pipe(finalize(() => this.busy.next(false)))
                 .subscribe({
                     next: (data: any) => {
@@ -495,46 +542,46 @@ const fullKpiWidgetConfig: IWidget = {
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
             [DEFAULT_PIZZAGNA_ROOT]: {
-                "providers": {
+                providers: {
                     [WellKnownProviders.Refresher]: {
-                        "properties": {
+                        properties: {
                             // Configuring the refresher interval so that our data source is invoked every ten minutes
-                            "interval": 60 * 10,
-                            "enabled": true,
+                            interval: 60 * 10,
+                            enabled: true,
                         } as IRefresherProperties,
                     } as Partial<IProviderConfiguration>,
                 },
             },
-            "header": {
-                "properties": {
-                    "title": "Harry Potter and the Sorcerer's Stone",
-                    "subtitle": "By J. K. Rowling",
+            header: {
+                properties: {
+                    title: "Harry Potter and the Sorcerer's Stone",
+                    subtitle: "By J. K. Rowling",
                 },
             },
-            "tiles": {
-                "properties": {
-                    "nodes": ["kpi1"],
+            tiles: {
+                properties: {
+                    nodes: ["kpi1"],
                 },
             },
-            "kpi1": {
-                "id": "kpi1",
-                "componentType": KpiComponent.lateLoadKey,
-                "properties": {
-                    "widgetData": {
-                        "units": `out of 5 Stars`,
-                        "label": `Average Rating`,
+            kpi1: {
+                id: "kpi1",
+                componentType: KpiComponent.lateLoadKey,
+                properties: {
+                    widgetData: {
+                        units: `out of 5 Stars`,
+                        label: `Average Rating`,
                     },
                 },
-                "providers": {
+                providers: {
                     [WellKnownProviders.DataSource]: {
                         // Setting the data source providerId for the tile with id "kpi1"
-                        "providerId": AverageRatingKpiDataSource.providerId,
+                        providerId: AverageRatingKpiDataSource.providerId,
                     } as IProviderConfiguration,
                     [WellKnownProviders.Adapter]: {
-                        "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
-                        "properties": {
-                            "componentId": "kpi1",
-                            "propertyPath": "widgetData",
+                        providerId: NOVA_KPI_DATASOURCE_ADAPTER,
+                        properties: {
+                            componentId: "kpi1",
+                            propertyPath: "widgetData",
                         },
                     } as IProviderConfiguration,
                 },
@@ -554,9 +601,9 @@ const partialPropWidgetConfig: IWidget = {
     },
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
-            "header": {
-                "properties": {
-                    "title": "*New Proportional Widget*",
+            header: {
+                properties: {
+                    title: "*New Proportional Widget*",
                 },
             },
         },

@@ -1,6 +1,16 @@
 import { Component, OnInit } from "@angular/core";
+
 import {
-    Chart, ChartAssist, ChartPalette, CHART_PALETTE_CS_S, MappedValueProvider, radial, RadialAccessors, radialGrid, RadialRenderer, radialScales,
+    Chart,
+    ChartAssist,
+    ChartPalette,
+    CHART_PALETTE_CS_S,
+    MappedValueProvider,
+    radial,
+    RadialAccessors,
+    radialGrid,
+    RadialRenderer,
+    radialScales,
     RadialTooltipsPlugin,
 } from "@nova-ui/charts";
 
@@ -9,8 +19,11 @@ import {
     templateUrl: "./donut-chart-with-tooltips.example.component.html",
 })
 export class DonutChartWithTooltipsExampleComponent implements OnInit {
-    public chartAssist = new ChartAssist(new Chart(radialGrid()), radial,
-                                         new ChartPalette(createStatusColorProvider()));
+    public chartAssist = new ChartAssist(
+        new Chart(radialGrid()),
+        radial,
+        new ChartPalette(createStatusColorProvider())
+    );
 
     // RadialTooltipsPlugin handles specific positioning requirements for tooltips on a donut chart
     public tooltipsPlugin = new RadialTooltipsPlugin();
@@ -20,17 +33,21 @@ export class DonutChartWithTooltipsExampleComponent implements OnInit {
         this.chartAssist.chart.addPlugin(this.tooltipsPlugin);
 
         // accessors setup for colors
-        const accessors = new RadialAccessors(this.chartAssist.palette.standardColors);
+        const accessors = new RadialAccessors(
+            this.chartAssist.palette.standardColors
+        );
 
         const scales = radialScales();
         const renderer = new RadialRenderer();
 
-        this.chartAssist.update(getData().map(s => ({
-            ...s,
-            accessors,
-            scales,
-            renderer,
-        })));
+        this.chartAssist.update(
+            getData().map((s) => ({
+                ...s,
+                accessors,
+                scales,
+                renderer,
+            }))
+        );
     }
 }
 
@@ -52,7 +69,7 @@ function getData() {
         { status: Status.Down, value: 7 },
         { status: Status.Unmanaged, value: 5 },
         { status: Status.Unknown, value: 3 },
-    ].map(d => ({ id: d.status, name: d.status, data: [d.value] }));
+    ].map((d) => ({ id: d.status, name: d.status, data: [d.value] }));
 }
 
 function createStatusColorProvider() {

@@ -41,16 +41,18 @@ import { TimeFramePickerComponent } from "../../time-frame-picker/time-frame-pic
     templateUrl: "./time-frame-bar.component.html",
     styleUrls: ["./time-frame-bar.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    host: { "role": "spinbutton" },
+    host: { role: "spinbutton" },
 })
-export class TimeFrameBarComponent implements AfterContentInit, OnChanges, OnDestroy {
+export class TimeFrameBarComponent
+    implements AfterContentInit, OnChanges, OnDestroy
+{
     /** Earliest selectable date */
     @Input() minDate: Moment;
     /** Latest selectable date */
     @Input() maxDate: Moment;
 
     /** Current time frame value */
-    @Input() timeFrame: ITimeframe = <any> {
+    @Input() timeFrame: ITimeframe = <any>{
         startDatetime: undefined,
         endDatetime: undefined,
     };
@@ -64,7 +66,8 @@ export class TimeFrameBarComponent implements AfterContentInit, OnChanges, OnDes
     /** Emits an event when "Clear" is clicked */
     @Output() clear = new EventEmitter();
 
-    @ContentChild(TimeFramePickerComponent) timeFramePicker: TimeFramePickerComponent;
+    @ContentChild(TimeFramePickerComponent)
+    timeFramePicker: TimeFramePickerComponent;
     @ContentChild(QuickPickerComponent) quickPicker: QuickPickerComponent;
 
     public presets = this.timeframeService.getDefaultPresets();
@@ -74,7 +77,7 @@ export class TimeFrameBarComponent implements AfterContentInit, OnChanges, OnDes
     public isLeftmostRange = false;
     public isRightmostRange = false;
     public humanizedTimeframe: string;
-    public readonly defaultPickerTitle = $localize `:Label indicating that the user can select a custom start date and/or end date:Custom Range`;
+    public readonly defaultPickerTitle = $localize`:Label indicating that the user can select a custom start date and/or end date:Custom Range`;
 
     private destroy$ = new Subject();
 
@@ -86,33 +89,55 @@ export class TimeFrameBarComponent implements AfterContentInit, OnChanges, OnDes
 
     public ngAfterContentInit() {
         if (!this.timeFramePicker) {
-            throw new Error("TimeFramePickerComponent must be present in 'timeFrameSelection' slot");
+            throw new Error(
+                "TimeFramePickerComponent must be present in 'timeFrameSelection' slot"
+            );
         }
 
-        if (this.timeFramePicker.minDate || this.timeFramePicker.maxDate || this.timeFramePicker.startModel) {
-            this.logger.warn(`minDate, maxDate, and startModel inputs set on the TimeFramePickerComponent will be ignored. Use the minDate,
+        if (
+            this.timeFramePicker.minDate ||
+            this.timeFramePicker.maxDate ||
+            this.timeFramePicker.startModel
+        ) {
+            this.logger
+                .warn(`minDate, maxDate, and startModel inputs set on the TimeFramePickerComponent will be ignored. Use the minDate,
 maxDate, and timeFrame inputs on the TimeFrameBarComponent instead.`);
         }
 
         this.timeFramePicker.model = this.pickerTimeframe;
         this.timeFramePicker.minDate = this.minDate;
         this.timeFramePicker.maxDate = this.maxDate;
-        this.timeFramePicker.changed.pipe(takeUntil(this.destroy$)).subscribe((tf: ITimeframe) => this.updatePickerTf(tf));
+        this.timeFramePicker.changed
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((tf: ITimeframe) => this.updatePickerTf(tf));
 
         if (this.quickPicker) {
-            this.quickPicker.presets = this.quickPicker.presets || this.timeframeService.getDefaultPresets();
-            this.quickPicker.pickerTitle = undefined === this.quickPicker.pickerTitle ? this.defaultPickerTitle : this.quickPicker.pickerTitle;
-            this.quickPicker.presetSelected.pipe(takeUntil(this.destroy$)).subscribe((presetKey: string) => this.handlePresetSelection(presetKey));
+            this.quickPicker.presets =
+                this.quickPicker.presets ||
+                this.timeframeService.getDefaultPresets();
+            this.quickPicker.pickerTitle =
+                undefined === this.quickPicker.pickerTitle
+                    ? this.defaultPickerTitle
+                    : this.quickPicker.pickerTitle;
+            this.quickPicker.presetSelected
+                .pipe(takeUntil(this.destroy$))
+                .subscribe((presetKey: string) =>
+                    this.handlePresetSelection(presetKey)
+                );
         }
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes["timeFrame"]) {
             const value = changes["timeFrame"].currentValue;
-            this.isLeftmostRange = this.minDate && this.minDate.diff(value.startDatetime) >= 0;
-            this.isRightmostRange = this.maxDate && this.maxDate.diff(value.endDatetime) <= 0;
+            this.isLeftmostRange =
+                this.minDate && this.minDate.diff(value.startDatetime) >= 0;
+            this.isRightmostRange =
+                this.maxDate && this.maxDate.diff(value.endDatetime) <= 0;
             this.pickerTimeframe = TimeframeService.cloneTimeFrame(value);
-            this.humanizedTimeframe = this.timeframeService.getDuration(this.timeFrame).humanize();
+            this.humanizedTimeframe = this.timeframeService
+                .getDuration(this.timeFrame)
+                .humanize();
         }
     }
 
@@ -136,12 +161,16 @@ maxDate, and timeFrame inputs on the TimeFrameBarComponent instead.`);
 
     public updatePickerTf(value: ITimeframe) {
         this.pickerTimeframe = value;
-        this.changed = !this.timeframeService.isEqual(this.pickerTimeframe, this.timeFrame);
+        this.changed = !this.timeframeService.isEqual(
+            this.pickerTimeframe,
+            this.timeFrame
+        );
         this.changeDetectorRef.markForCheck();
     }
 
     public handlePresetSelection(presetKey: string) {
-        this.pickerTimeframe = this.timeframeService.getTimeframeByPresetId(presetKey);
+        this.pickerTimeframe =
+            this.timeframeService.getTimeframeByPresetId(presetKey);
 
         this.quickPicker.selectedPreset = presetKey;
         this.quickPicker.changeDetector.markForCheck();
@@ -151,7 +180,9 @@ maxDate, and timeFrame inputs on the TimeFrameBarComponent instead.`);
 
     public closePopover(confirmed = false) {
         if (confirmed) {
-            this.changeTimeFrame(TimeframeService.cloneTimeFrame(this.pickerTimeframe));
+            this.changeTimeFrame(
+                TimeframeService.cloneTimeFrame(this.pickerTimeframe)
+            );
         }
         this.closePopoverSubject.next();
         this.changed = false;
@@ -159,8 +190,12 @@ maxDate, and timeFrame inputs on the TimeFrameBarComponent instead.`);
 
     public shiftRange(factor: number) {
         const tf = this.timeFrame;
-        const shiftDuration = moment.duration(factor * tf.endDatetime.diff(tf.startDatetime));
-        this.changeTimeFrame(this.timeframeService.shiftTimeFrame(tf, shiftDuration));
+        const shiftDuration = moment.duration(
+            factor * tf.endDatetime.diff(tf.startDatetime)
+        );
+        this.changeTimeFrame(
+            this.timeframeService.shiftTimeFrame(tf, shiftDuration)
+        );
     }
 
     public ngOnDestroy() {

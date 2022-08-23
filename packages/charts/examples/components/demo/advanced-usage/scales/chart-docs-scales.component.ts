@@ -10,5 +10,4 @@ export class ChartDocsScalesComponent {
 
     scaleWithId = `const yScale = new LinearScale("percentile");
 ...`;
-
 }

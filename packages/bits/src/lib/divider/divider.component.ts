@@ -14,8 +14,8 @@ import { DividerSize } from "./public-api";
     selector: "nui-divider",
     template: "",
     host: {
-        "class": "nui-divider",
-        "role": "separator",
+        class: "nui-divider",
+        role: "separator",
     },
     styleUrls: ["./divider.component.less"],
     encapsulation: ViewEncapsulation.Emulated,
@@ -35,7 +35,8 @@ export class DividerComponent {
         return this.isVertical;
     }
 
-    @HostBinding("class.nui-divider--horizontal") public get isHorizontalDivider() {
+    @HostBinding("class.nui-divider--horizontal")
+    public get isHorizontalDivider() {
         return !this.isVertical;
     }
 

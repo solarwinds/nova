@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component } from "@angular/core";
 
 @Component({
     selector: "nui-dnd-docs",
@@ -17,9 +17,7 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
     declarations: [ /* our module declaration */],
     exports:      [ /* our exports */ ],
 })
-export class MyModule {}`
-        .replace("\r\n", "<br/>") // nice rendering
-        ;
+export class MyModule {}`.replace("\r\n", "<br/>"); // nice rendering
 
     public hideHandleWhileDragging = `
 .dnd-drag-preview .drag-handle {

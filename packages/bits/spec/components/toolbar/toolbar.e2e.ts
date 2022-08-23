@@ -5,7 +5,6 @@ import { Helpers } from "../../helpers";
 import { ButtonAtom } from "../button/button.atom";
 import { SwitchAtom } from "../public_api";
 import { TextboxAtom } from "../textbox/textbox.atom";
-
 import { ToolbarAtom } from "./toolbar.atom";
 
 describe("USERCONTROL toolbar: ", () => {

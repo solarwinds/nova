@@ -1,6 +1,7 @@
 import { CdkTreeModule } from "@angular/cdk/tree";
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+
 import {
     NuiBusyModule,
     NuiButtonModule,
@@ -38,14 +39,7 @@ import { FilteredViewWithTreeComponent } from "./filtered-view-with-tree.compone
         NuiPopoverModule,
         CdkTreeModule,
     ],
-    declarations: [
-        FilteredViewWithTreeComponent,
-        FilteredViewTreeComponent,
-    ],
-    exports: [
-        FilteredViewWithTreeComponent,
-        FilteredViewTreeComponent,
-    ],
+    declarations: [FilteredViewWithTreeComponent, FilteredViewTreeComponent],
+    exports: [FilteredViewWithTreeComponent, FilteredViewTreeComponent],
 })
-
 export class FilteredViewWithTreeModule {}

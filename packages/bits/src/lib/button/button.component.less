@@ -6,14 +6,16 @@
 @nui-button-max-width: 250px;
 
 .busy-variant(@variableName) {
-    .ripple-1, .ripple-2 {
+    .ripple-1,
+    .ripple-2 {
         .setCssVariable(background, @variableName);
     }
 }
 
 .fill-icon(@variableName) {
     .nui-icon:not(.custom-icon-color) {
-        path, polygon {
+        path,
+        polygon {
             .setCssVariable(fill, @variableName);
         }
     }
@@ -31,7 +33,7 @@
     vertical-align: middle;
     transition: transform 0.1s ease-in-out;
     //it fixes button's text-color changes inside iframe at chrome.
-    .backface-visibility(~'hidden');
+    .backface-visibility(~"hidden");
 
     &.unlimited-width {
         max-width: unset;
@@ -87,22 +89,22 @@
             transform: scale(0.01);
 
             &.ripple-1 {
-                animation: ripple 1.2s ease-in-out .1s infinite;
+                animation: ripple 1.2s ease-in-out 0.1s infinite;
             }
 
             &.ripple-2 {
-                animation: ripple 1.2s ease-in-out .32s infinite;
+                animation: ripple 1.2s ease-in-out 0.32s infinite;
             }
         }
 
         @media print {
-            display:none;
+            display: none;
         }
-
     }
 
     @keyframes ripple {
-        50%, 100% {
+        50%,
+        100% {
             opacity: 0;
             transform: scale(2);
         }

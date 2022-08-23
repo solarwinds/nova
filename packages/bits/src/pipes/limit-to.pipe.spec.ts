@@ -14,12 +14,18 @@ describe("pipes >", () => {
         });
 
         it("should return a new array when reducing size to the length of existing array", () => {
-            const limitedArray = limitToPipe.transform(exampleArray, exampleArray.length);
+            const limitedArray = limitToPipe.transform(
+                exampleArray,
+                exampleArray.length
+            );
             expect(limitedArray).not.toBe(exampleArray);
         });
 
         it("should return a new array of the initial size when reducing to size larger than existing array", () => {
-            const limitedArray = limitToPipe.transform(exampleArray, exampleArray.length * 2);
+            const limitedArray = limitToPipe.transform(
+                exampleArray,
+                exampleArray.length * 2
+            );
             expect(limitedArray).not.toBe(exampleArray);
             expect(limitedArray.length).toEqual(exampleArray.length);
         });

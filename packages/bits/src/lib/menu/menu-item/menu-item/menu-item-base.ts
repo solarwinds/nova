@@ -23,7 +23,9 @@ import { MenuGroupComponent } from "../menu-group/menu-group.component";
  */
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export abstract class MenuItemBaseComponent implements OnChanges, Highlightable {
+export abstract class MenuItemBaseComponent
+    implements OnChanges, Highlightable
+{
     /**
      * Disables action, link and option components
      */
@@ -31,23 +33,27 @@ export abstract class MenuItemBaseComponent implements OnChanges, Highlightable 
 
     @HostBinding("class.nui-menu-item") public setDefaultClass = true;
 
-    @HostBinding("class.nui-menu-item--disabled") public setDisabledClass: boolean;
+    @HostBinding("class.nui-menu-item--disabled")
+    public setDisabledClass: boolean;
 
     @HostBinding("class.nui-menu-item--active") get active() {
         return this.isActive;
     }
 
-    @Output() public actionDone = new EventEmitter<boolean|undefined>();
+    @Output() public actionDone = new EventEmitter<boolean | undefined>();
 
     public isActive: boolean;
 
     abstract menuItem: ElementRef;
 
-    constructor(@Optional() readonly group: MenuGroupComponent, private cd: ChangeDetectorRef) {
-    }
+    constructor(
+        @Optional() readonly group: MenuGroupComponent,
+        private cd: ChangeDetectorRef
+    ) {}
 
     public ngOnChanges(changes: SimpleChanges): void {
-        const disabled = changes["disabled"] && changes["disabled"].currentValue || false;
+        const disabled =
+            (changes["disabled"] && changes["disabled"].currentValue) || false;
 
         this.setDisabledClass = disabled;
     }

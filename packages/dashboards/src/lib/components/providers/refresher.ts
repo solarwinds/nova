@@ -1,12 +1,12 @@
 import { Inject, Injectable, NgZone, OnDestroy } from "@angular/core";
-import { EventBus, EventDefinition } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+
+import { EventBus, EventDefinition } from "@nova-ui/bits";
 
 import { REFRESH } from "../../services/types";
 import { IWidgetEvent } from "../../services/widget-to-dashboard-event-proxy.service";
 import { IConfigurable, IProperties, PIZZAGNA_EVENT_BUS } from "../../types";
-
 import { RefresherSettingsService } from "./refresher-settings.service";
 import { DEFAULT_REFRESH_INTERVAL } from "./types";
 
@@ -32,10 +32,13 @@ export class Refresher implements OnDestroy, IConfigurable {
 
     public destroy$ = new Subject();
 
-    constructor(@Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IWidgetEvent>,
-                protected ngZone: NgZone,
-                protected refresherSettings: RefresherSettingsService) {
-        this.refresherSettings.refreshRateSeconds$.pipe(takeUntil(this.destroy$))
+    constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IWidgetEvent>,
+        protected ngZone: NgZone,
+        protected refresherSettings: RefresherSettingsService
+    ) {
+        this.refresherSettings.refreshRateSeconds$
+            .pipe(takeUntil(this.destroy$))
             .subscribe((systemRefreshRate) => {
                 if (!this.overrideDefaultSettings) {
                     this.initializeInterval();
@@ -46,7 +49,8 @@ export class Refresher implements OnDestroy, IConfigurable {
     public updateConfiguration(properties: IRefresherProperties) {
         this.interval = properties.interval ?? DEFAULT_REFRESH_INTERVAL;
         this.enabled = properties.enabled ?? true;
-        this.overrideDefaultSettings = properties.overrideDefaultSettings ?? true;
+        this.overrideDefaultSettings =
+            properties.overrideDefaultSettings ?? true;
         this.eventDef = properties.event ?? REFRESH;
 
         this.initializeInterval();
@@ -61,7 +65,11 @@ export class Refresher implements OnDestroy, IConfigurable {
     private initializeInterval() {
         this.clearInterval();
 
-        if (typeof this.interval === "undefined" || this.getInterval() <= 0 || this.enabled === false) {
+        if (
+            typeof this.interval === "undefined" ||
+            this.getInterval() <= 0 ||
+            this.enabled === false
+        ) {
             return;
         }
 
@@ -81,7 +89,9 @@ export class Refresher implements OnDestroy, IConfigurable {
     }
 
     private getInterval() {
-        return this.overrideDefaultSettings ? this.interval : this.refresherSettings.refreshRateSeconds;
+        return this.overrideDefaultSettings
+            ? this.interval
+            : this.refresherSettings.refreshRateSeconds;
     }
 
     private clearInterval() {

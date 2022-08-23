@@ -5,5 +5,4 @@ import { Component } from "@angular/core";
     templateUrl: "./layout-resize.example.component.html",
     styleUrls: ["./layout-resize.example.component.less"],
 })
-export class LayoutResizeExampleComponent {
-}
+export class LayoutResizeExampleComponent {}

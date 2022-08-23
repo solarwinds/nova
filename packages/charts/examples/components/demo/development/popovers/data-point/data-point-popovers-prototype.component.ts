@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import moment from "moment/moment";
+
 import {
     Chart,
     ChartAssist,
@@ -17,14 +19,15 @@ import {
     TimeScale,
     XYGrid,
 } from "@nova-ui/charts";
-import moment from "moment/moment";
 
 @Component({
     templateUrl: "./data-point-popovers-prototype.component.html",
 })
 export class DataPointPopoversPrototypeComponent implements OnInit {
     public chart: Chart;
-    public renderer = new LineRenderer({ markerInteraction: { enabled: true } });
+    public renderer = new LineRenderer({
+        markerInteraction: { enabled: true },
+    });
     public scales: IXYScales = {
         x: new TimeScale(),
         y: new LinearScale(),
@@ -41,8 +44,14 @@ export class DataPointPopoversPrototypeComponent implements OnInit {
 
     public onReset() {
         // send INTERACTION_DATA_POINT_EVENT with index DATA_POINT_INTERACTION_RESET to hide popover if its displayed
-        const data: IInteractionDataPointEvent = { interactionType: InteractionType.Click, dataPoint: { index: DATA_POINT_INTERACTION_RESET } as IDataPoint };
-        this.chart.getEventBus().getStream(INTERACTION_DATA_POINT_EVENT).next({ data });
+        const data: IInteractionDataPointEvent = {
+            interactionType: InteractionType.Click,
+            dataPoint: { index: DATA_POINT_INTERACTION_RESET } as IDataPoint,
+        };
+        this.chart
+            .getEventBus()
+            .getStream(INTERACTION_DATA_POINT_EVENT)
+            .next({ data });
     }
 
     public onToggleClickHandling(enable: boolean) {
@@ -55,7 +64,9 @@ export class DataPointPopoversPrototypeComponent implements OnInit {
         this.updateChart();
     }
 
-    private buildChart(dataPointInteractionType: InteractionType = InteractionType.Hover) {
+    private buildChart(
+        dataPointInteractionType: InteractionType = InteractionType.Hover
+    ) {
         // set the desired interaction type for popover handling
         this.popoverPlugin = new ChartPopoverPlugin({
             eventStreamId: INTERACTION_DATA_POINT_EVENT,
@@ -64,17 +75,22 @@ export class DataPointPopoversPrototypeComponent implements OnInit {
 
         this.chart = new Chart(new XYGrid());
         this.chartAssist = new ChartAssist(this.chart);
-        this.accessors = new LineAccessors(this.chartAssist.palette.standardColors, this.chartAssist.markers);
+        this.accessors = new LineAccessors(
+            this.chartAssist.palette.standardColors,
+            this.chartAssist.markers
+        );
         this.chart.addPlugin(this.popoverPlugin);
     }
 
     private updateChart() {
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(s => ({
-            ...s,
-            scales: this.scales,
-            renderer: this.renderer,
-            accessors: this.accessors,
-        }));
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
+            (s) => ({
+                ...s,
+                scales: this.scales,
+                renderer: this.renderer,
+                accessors: this.accessors,
+            })
+        );
 
         this.chartAssist.update(seriesSet);
     }

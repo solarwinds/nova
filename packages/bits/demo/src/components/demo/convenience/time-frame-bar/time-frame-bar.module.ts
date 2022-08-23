@@ -1,8 +1,21 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
+
 import {
-    DEMO_PATH_TOKEN, NuiButtonModule, NuiCommonModule, NuiDatePickerModule, NuiDialogModule, NuiDocsModule, NuiIconModule, NuiMessageModule,
-    NuiPopoverModule, NuiTimeFrameBarModule, NuiTimeFramePickerModule, NuiTimePickerModule, NuiTooltipModule, SrlcStage,
+    DEMO_PATH_TOKEN,
+    NuiButtonModule,
+    NuiCommonModule,
+    NuiDatePickerModule,
+    NuiDialogModule,
+    NuiDocsModule,
+    NuiIconModule,
+    NuiMessageModule,
+    NuiPopoverModule,
+    NuiTimeFrameBarModule,
+    NuiTimeFramePickerModule,
+    NuiTimePickerModule,
+    NuiTooltipModule,
+    SrlcStage,
 } from "@nova-ui/bits";
 
 import { TimeFrameBarBasicExampleComponent } from "./time-frame-bar-basic/time-frame-bar-basic.example.component";
@@ -16,8 +29,8 @@ const routes = [
         path: "",
         component: TimeFrameBarDocsExampleComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.beta,
+            srlc: {
+                stage: SrlcStage.beta,
             },
             showThemeSwitcher: true,
         },
@@ -34,8 +47,8 @@ const routes = [
         path: "test",
         component: TimeFrameBarTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -43,8 +56,8 @@ const routes = [
         path: "visual",
         component: TimeFrameBarVisualTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -74,10 +87,16 @@ const routes = [
         TimeFrameBarVisualTestComponent,
     ],
     providers: [
-        { provide: DEMO_PATH_TOKEN, useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/) },
+        {
+            provide: DEMO_PATH_TOKEN,
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
+        },
     ],
-    exports: [
-        RouterModule,
-    ],
+    exports: [RouterModule],
 })
-export class TimeFrameBarModule { }
+export class TimeFrameBarModule {}

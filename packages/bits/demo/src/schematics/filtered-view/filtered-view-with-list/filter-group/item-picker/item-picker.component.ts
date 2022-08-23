@@ -9,6 +9,7 @@ import {
     OnInit,
     Output,
 } from "@angular/core";
+
 import {
     ClientSideDataSource,
     DataSourceService,
@@ -27,10 +28,12 @@ export interface IItemPickerOption {
 @Component({
     selector: "app-item-picker",
     templateUrl: "./item-picker.component.html",
-    providers: [{
-        provide: DataSourceService,
-        useClass: ClientSideDataSource,
-    }],
+    providers: [
+        {
+            provide: DataSourceService,
+            useClass: ClientSideDataSource,
+        },
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemPickerComponent implements OnInit, AfterViewInit {
@@ -52,12 +55,16 @@ export class ItemPickerComponent implements OnInit, AfterViewInit {
         exclude: [],
     };
 
-    constructor(@Inject(DataSourceService) public dataSource: DataSourceService<IFilterGroupOption>,
-                public changeDetection: ChangeDetectorRef) {
-    }
+    constructor(
+        @Inject(DataSourceService)
+        public dataSource: DataSourceService<IFilterGroupOption>,
+        public changeDetection: ChangeDetectorRef
+    ) {}
 
     ngOnInit() {
-        (this.dataSource as ClientSideDataSource<IFilterGroupOption>).setData(this.itemPickerOptions);
+        (this.dataSource as ClientSideDataSource<IFilterGroupOption>).setData(
+            this.itemPickerOptions
+        );
         this.selection = {
             isAllPages: false,
             include: this.getSelectedOptions(),
@@ -81,6 +88,8 @@ export class ItemPickerComponent implements OnInit, AfterViewInit {
     }
 
     public getSelectedOptions(): IFilterGroupOption[] {
-        return this.itemPickerOptions.filter(item => this.selectedValues.indexOf(item.value) !== -1);
+        return this.itemPickerOptions.filter(
+            (item) => this.selectedValues.indexOf(item.value) !== -1
+        );
     }
 }

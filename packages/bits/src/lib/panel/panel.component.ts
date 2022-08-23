@@ -64,7 +64,6 @@ const panelMap: any = {
             opened: "double-caret-left",
         },
     },
-
 };
 
 @Component({
@@ -73,7 +72,9 @@ const panelMap: any = {
     styleUrls: ["./panel.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
-export class PanelComponent implements AfterViewInit, OnChanges, OnInit, OnDestroy {
+export class PanelComponent
+    implements AfterViewInit, OnChanges, OnInit, OnDestroy
+{
     public static ANIMATION_TIME = 300;
     public static RESIZE_DIRECTIVE_WIDTH = "8px";
     public static SIZE_VALUES: any = {
@@ -100,13 +101,13 @@ export class PanelComponent implements AfterViewInit, OnChanges, OnInit, OnDestr
     @Input() panelMode = PanelModes.static;
 
     /**
-    * Use this attribute to set the text for the header if transclusion of custom header content is not being used.
-    */
+     * Use this attribute to set the text for the header if transclusion of custom header content is not being used.
+     */
     @Input() heading: string;
 
     /**
-    * Set this to true in order to set the collapsed state of the side pane
-    */
+     * Set this to true in order to set the collapsed state of the side pane
+     */
     @Input() set isCollapsed(value: boolean) {
         // used to catch first ngOnChanges
         if (!isUndefined(this._isCollapsed)) {
@@ -141,7 +142,7 @@ export class PanelComponent implements AfterViewInit, OnChanges, OnInit, OnDestr
 
     /**
      * Define orientation of a panel. Possible values are: "right", "left", "top", "bottom"
-    */
+     */
     @Input() orientation: string = "left";
 
     /**
@@ -169,7 +170,8 @@ export class PanelComponent implements AfterViewInit, OnChanges, OnInit, OnDestr
      */
     @Input() paneSize: string;
 
-    @Input() panelBackgroundColor: PanelBackgroundColor = PanelBackgroundColor.colorBgLight;
+    @Input() panelBackgroundColor: PanelBackgroundColor =
+        PanelBackgroundColor.colorBgLight;
 
     @Input() paneCollapsedSize: string;
     @Input() paneMinSize: string;
@@ -178,10 +180,14 @@ export class PanelComponent implements AfterViewInit, OnChanges, OnInit, OnDestr
     @Output() collapsed: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() hidden: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    @ViewChild("mainContent", { read: ViewContainerRef }) private panelMainContent: ViewContainerRef;
-    @ViewChild("headerContent", { read: ViewContainerRef }) private headerContent: ViewContainerRef;
-    @ViewChild("footerContent", { read: ViewContainerRef }) private footerContent: ViewContainerRef;
-    @ViewChild("sidePaneContainer", {static: true, read: ViewContainerRef }) private sidePaneContainer: ViewContainerRef;
+    @ViewChild("mainContent", { read: ViewContainerRef })
+    private panelMainContent: ViewContainerRef;
+    @ViewChild("headerContent", { read: ViewContainerRef })
+    private headerContent: ViewContainerRef;
+    @ViewChild("footerContent", { read: ViewContainerRef })
+    private footerContent: ViewContainerRef;
+    @ViewChild("sidePaneContainer", { static: true, read: ViewContainerRef })
+    private sidePaneContainer: ViewContainerRef;
 
     public displayFooter = true;
     public displayPanelHeader = true;
@@ -198,20 +204,20 @@ export class PanelComponent implements AfterViewInit, OnChanges, OnInit, OnDestr
     private _collapseAnimationFactory?: AnimationFactory;
     private lastAnimationPlayer?: AnimationPlayer;
 
-    constructor(private renderer: Renderer2,
+    constructor(
+        private renderer: Renderer2,
         private builder: AnimationBuilder,
-        private changeDetectorRef: ChangeDetectorRef) {
-    }
+        private changeDetectorRef: ChangeDetectorRef
+    ) {}
 
     ngOnInit() {
         this.defineSizes();
         this.defineState();
         this.togglesSubscription = this.toggles
-            .pipe(filter(toggle => toggle === this._isCollapsed))
+            .pipe(filter((toggle) => toggle === this._isCollapsed))
             .pipe(distinctUntilChanged())
             .pipe(debounceTime(PanelComponent.ANIMATION_TIME))
-            .subscribe(toggle =>
-                this.toggleHideOrCollapsed());
+            .subscribe((toggle) => this.toggleHideOrCollapsed());
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -257,7 +263,10 @@ export class PanelComponent implements AfterViewInit, OnChanges, OnInit, OnDestr
     }
 
     public get paneDirectionHorizontal(): boolean {
-        return this.orientation === panelMap.top.orientation || this.orientation === panelMap.bottom.orientation;
+        return (
+            this.orientation === panelMap.top.orientation ||
+            this.orientation === panelMap.bottom.orientation
+        );
     }
 
     public get mainIcon(): string {
@@ -290,20 +299,32 @@ export class PanelComponent implements AfterViewInit, OnChanges, OnInit, OnDestr
     }
 
     private toggleCollapsed() {
-        const animationFactory = this._isCollapsed ? this.expandAnimationFactory : this.collapseAnimationFactory;
-        const sizeValue = this._isCollapsed ? this.paneSize : this.paneCollapsedSize;
-        const animationPlayer = animationFactory.create(this.getPaneContainerElement());
+        const animationFactory = this._isCollapsed
+            ? this.expandAnimationFactory
+            : this.collapseAnimationFactory;
+        const sizeValue = this._isCollapsed
+            ? this.paneSize
+            : this.paneCollapsedSize;
+        const animationPlayer = animationFactory.create(
+            this.getPaneContainerElement()
+        );
         animationPlayer.play();
         this.isAnimating = true;
         animationPlayer.onDone(() => {
             this.lastAnimationPlayer = animationPlayer;
-            this.renderer.setStyle(this.getPaneContainerElement(), this.sizeParameter, sizeValue);
+            this.renderer.setStyle(
+                this.getPaneContainerElement(),
+                this.sizeParameter,
+                sizeValue
+            );
             this.destroyLastAnimationPlayer();
             this._isCollapsed = !this._isCollapsed;
             this.collapsed.emit(this._isCollapsed);
             this.isAnimating = false;
             if (this.isResizable) {
-                this.isCollapsed ? this.removeMinSize() : this.applyBoundarySizes();
+                this.isCollapsed
+                    ? this.removeMinSize()
+                    : this.applyBoundarySizes();
             }
             this.changeDetectorRef.detectChanges();
         });
@@ -345,20 +366,36 @@ export class PanelComponent implements AfterViewInit, OnChanges, OnInit, OnDestr
 
     public handleContentMargin(): void {
         if (!this.displacePrimaryContent && !this.isClosable) {
-            this.renderer.setStyle(this.getPanelMainContentElement(), "margin-" + this.orientation, this.paneCollapsedSize);
+            this.renderer.setStyle(
+                this.getPanelMainContentElement(),
+                "margin-" + this.orientation,
+                this.paneCollapsedSize
+            );
         }
     }
 
     public applyBoundarySizes() {
         if (this.isResizable) {
-            this.renderer.setStyle(this.getPaneContainerElement(), "min-" + this.sizeParameter, this.paneMinSize);
-            this.renderer.setStyle(this.getPaneContainerElement(), "max-" + this.sizeParameter, this.paneMaxSize);
+            this.renderer.setStyle(
+                this.getPaneContainerElement(),
+                "min-" + this.sizeParameter,
+                this.paneMinSize
+            );
+            this.renderer.setStyle(
+                this.getPaneContainerElement(),
+                "max-" + this.sizeParameter,
+                this.paneMaxSize
+            );
         }
     }
 
     public removeMinSize() {
         if (this.isResizable) {
-            this.renderer.setStyle(this.getPaneContainerElement(), "min-" + this.sizeParameter, "0");
+            this.renderer.setStyle(
+                this.getPaneContainerElement(),
+                "min-" + this.sizeParameter,
+                "0"
+            );
         }
     }
 
@@ -371,7 +408,9 @@ export class PanelComponent implements AfterViewInit, OnChanges, OnInit, OnDestr
     }
 
     public get sizeParameter(): string {
-        return this.paneDirectionHorizontal ? SizeParameters.height : SizeParameters.width;
+        return this.paneDirectionHorizontal
+            ? SizeParameters.height
+            : SizeParameters.width;
     }
 
     public get showDefaultIcon(): boolean {
@@ -389,10 +428,18 @@ export class PanelComponent implements AfterViewInit, OnChanges, OnInit, OnDestr
     }
 
     private defineSizes(): void {
-        this.paneSize = this.paneSize || PanelComponent.SIZE_VALUES[this.sizeParameter].DEFAULT_VALUE;
-        this.paneCollapsedSize = !this.paneCollapsedSize ? PanelComponent.SIZE_VALUES[this.sizeParameter].COLLAPSED_VALUE : this.paneCollapsedSize;
-        this.paneMinSize = !this.paneMinSize ? PanelComponent.SIZE_VALUES[this.sizeParameter].MIN_VALUE : this.paneMinSize;
-        this.paneMaxSize = !this.paneMaxSize ? PanelComponent.SIZE_VALUES[this.sizeParameter].MAX_VALUE : this.paneMaxSize;
+        this.paneSize =
+            this.paneSize ||
+            PanelComponent.SIZE_VALUES[this.sizeParameter].DEFAULT_VALUE;
+        this.paneCollapsedSize = !this.paneCollapsedSize
+            ? PanelComponent.SIZE_VALUES[this.sizeParameter].COLLAPSED_VALUE
+            : this.paneCollapsedSize;
+        this.paneMinSize = !this.paneMinSize
+            ? PanelComponent.SIZE_VALUES[this.sizeParameter].MIN_VALUE
+            : this.paneMinSize;
+        this.paneMaxSize = !this.paneMaxSize
+            ? PanelComponent.SIZE_VALUES[this.sizeParameter].MAX_VALUE
+            : this.paneMaxSize;
     }
 
     private get panelState(): string {
@@ -400,20 +447,32 @@ export class PanelComponent implements AfterViewInit, OnChanges, OnInit, OnDestr
     }
 
     private checkPanelEmbeddedContent(): void {
-        this.displayPanelHeader = this.headerContent.element.nativeElement.children.length !== 0;
+        this.displayPanelHeader =
+            this.headerContent.element.nativeElement.children.length !== 0;
         this.changeDetectorRef.detectChanges();
     }
 
     private updatePaneContainerSizeWithoutAnimation(): void {
         // Manually update width of left pane container only if it is expanded.
-        if ((!this.isCollapsible || !this._isCollapsed) && this.sidePaneContainer) {
+        if (
+            (!this.isCollapsible || !this._isCollapsed) &&
+            this.sidePaneContainer
+        ) {
             this.applyBoundarySizes();
             this.destroyLastAnimationPlayer();
-            this.renderer.setStyle(this.getPaneContainerElement(), this.sizeParameter, this.paneSize);
+            this.renderer.setStyle(
+                this.getPaneContainerElement(),
+                this.sizeParameter,
+                this.paneSize
+            );
         } else if (this._isCollapsed) {
             this.removeMinSize();
             this.destroyLastAnimationPlayer();
-            this.renderer.setStyle(this.getPaneContainerElement(), this.sizeParameter, this.paneCollapsedSize);
+            this.renderer.setStyle(
+                this.getPaneContainerElement(),
+                this.sizeParameter,
+                this.paneCollapsedSize
+            );
         }
     }
 
@@ -427,40 +486,52 @@ export class PanelComponent implements AfterViewInit, OnChanges, OnInit, OnDestr
 
     private get expandAnimationFactory(): AnimationFactory {
         if (!this._expandAnimationFactory || this.isResizable) {
-            this._expandAnimationFactory =
-                this.buildAnimationFactory(this.paneCollapsedSize, this.paneSize);
+            this._expandAnimationFactory = this.buildAnimationFactory(
+                this.paneCollapsedSize,
+                this.paneSize
+            );
         }
         return this._expandAnimationFactory;
     }
 
     private get collapseAnimationFactory(): AnimationFactory {
         this.removeMinSize();
-        if (!this._collapseAnimationFactory  || this.isResizable) {
-            this._collapseAnimationFactory =
-                this.buildAnimationFactory(this.paneSize, this.paneCollapsedSize);
+        if (!this._collapseAnimationFactory || this.isResizable) {
+            this._collapseAnimationFactory = this.buildAnimationFactory(
+                this.paneSize,
+                this.paneCollapsedSize
+            );
         }
         return this._collapseAnimationFactory;
     }
 
-    private buildAnimationFactory(startSize: string, endSize: string): AnimationFactory {
+    private buildAnimationFactory(
+        startSize: string,
+        endSize: string
+    ): AnimationFactory {
         if (this.paneDirectionHorizontal) {
             return this.builder.build([
                 style({
                     height: startSize,
                 }),
-                animate(`${PanelComponent.ANIMATION_TIME}ms ease-in-out`, style({
-                    height: endSize,
-                })),
-
+                animate(
+                    `${PanelComponent.ANIMATION_TIME}ms ease-in-out`,
+                    style({
+                        height: endSize,
+                    })
+                ),
             ]);
         }
         return this.builder.build([
             style({
                 width: startSize,
             }),
-            animate(`${PanelComponent.ANIMATION_TIME}ms ease-in-out`, style({
-                width: endSize,
-            })),
+            animate(
+                `${PanelComponent.ANIMATION_TIME}ms ease-in-out`,
+                style({
+                    width: endSize,
+                })
+            ),
         ]);
     }
 

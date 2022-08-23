@@ -1,10 +1,27 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { combineLatest, Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
 
-import { chartPaletteColorMap, DEFAULT_KPI_TILE_COLOR } from "../../../../../constants/default-palette";
-import { IHasChangeDetector, IHasForm, IPaletteColor } from "../../../../../types";
+import {
+    chartPaletteColorMap,
+    DEFAULT_KPI_TILE_COLOR,
+} from "../../../../../constants/default-palette";
+import {
+    IHasChangeDetector,
+    IHasForm,
+    IPaletteColor,
+} from "../../../../../types";
 
 @Component({
     selector: "nui-kpi-description-configuration",
@@ -12,9 +29,14 @@ import { IHasChangeDetector, IHasForm, IPaletteColor } from "../../../../../type
     styleUrls: ["./kpi-description-configuration.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class KpiDescriptionConfigurationComponent implements OnInit, OnChanges, IHasChangeDetector, IHasForm {
+export class KpiDescriptionConfigurationComponent
+    implements OnInit, OnChanges, IHasChangeDetector, IHasForm
+{
     public static lateLoadKey = "KpiDescriptionConfigurationComponent";
-    public defaultColor = { label: $localize`Default color`, color: DEFAULT_KPI_TILE_COLOR};
+    public defaultColor = {
+        label: $localize`Default color`,
+        color: DEFAULT_KPI_TILE_COLOR,
+    };
 
     @Input() componentId: string;
     @Input() configurableUnits: boolean;
@@ -29,7 +51,10 @@ export class KpiDescriptionConfigurationComponent implements OnInit, OnChanges, 
     public form: FormGroup;
     public subtitle$: Observable<string>;
 
-    constructor(public changeDetector: ChangeDetectorRef, private formBuilder: FormBuilder) {}
+    constructor(
+        public changeDetector: ChangeDetectorRef,
+        private formBuilder: FormBuilder
+    ) {}
 
     public ngOnInit(): void {
         this.backgroundColors = [...this.backgroundColors];
@@ -48,12 +73,15 @@ export class KpiDescriptionConfigurationComponent implements OnInit, OnChanges, 
         const labelValue = label?.valueChanges.pipe(startWith(label.value));
 
         const backgroundColor = this.form.get("backgroundColor");
-        const backgroundColorValue = backgroundColor?.valueChanges.pipe(startWith(backgroundColor?.value));
+        const backgroundColorValue = backgroundColor?.valueChanges.pipe(
+            startWith(backgroundColor?.value)
+        );
         this.subtitle$ = combineLatest([
-            labelValue?.pipe(map(t => t || $localize `no label`)),
-            backgroundColorValue?.pipe(map(t => chartPaletteColorMap[t] || $localize `Default Color`)),
-        ])
-            .pipe(map((labels) => labels.join(", ")));
+            labelValue?.pipe(map((t) => t || $localize`no label`)),
+            backgroundColorValue?.pipe(
+                map((t) => chartPaletteColorMap[t] || $localize`Default Color`)
+            ),
+        ]).pipe(map((labels) => labels.join(", ")));
 
         this.formReady.emit(this.form);
     }
@@ -63,7 +91,9 @@ export class KpiDescriptionConfigurationComponent implements OnInit, OnChanges, 
             this.form?.patchValue({ label: changes.label.currentValue });
         }
         if (changes.backgroundColor) {
-            this.form?.patchValue({ backgroundColor: changes.backgroundColor.currentValue });
+            this.form?.patchValue({
+                backgroundColor: changes.backgroundColor.currentValue,
+            });
         }
         if (changes.units) {
             this.form?.patchValue({ units: changes.units.currentValue });

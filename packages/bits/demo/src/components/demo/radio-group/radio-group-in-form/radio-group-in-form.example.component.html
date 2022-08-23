@@ -1,16 +1,20 @@
 <form [formGroup]="fancyForm">
-    <nui-form-field caption="Radio Group"
-                    i18n-caption
-                    hint="Some pretty long text with hint"
-                    i18n-hint
-                    info="text"
-                    [control]="fancyForm.controls['radioGroup']">
-        <nui-radio-group id="input-radioGroup"
-                         formControlName="radioGroup"
-                         name="vegetable" required>
-            <nui-radio *ngFor="let vegetable of vegetables"
-                       [value]="vegetable">
-                {{vegetable}}
+    <nui-form-field
+        caption="Radio Group"
+        i18n-caption
+        hint="Some pretty long text with hint"
+        i18n-hint
+        info="text"
+        [control]="fancyForm.controls['radioGroup']"
+    >
+        <nui-radio-group
+            id="input-radioGroup"
+            formControlName="radioGroup"
+            name="vegetable"
+            required
+        >
+            <nui-radio *ngFor="let vegetable of vegetables" [value]="vegetable">
+                {{ vegetable }}
             </nui-radio>
         </nui-radio-group>
         <nui-validation-message for="required" i18n>

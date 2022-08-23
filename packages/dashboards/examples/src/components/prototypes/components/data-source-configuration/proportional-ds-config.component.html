@@ -1,24 +1,41 @@
-<nui-widget-editor-accordion [formGroup]="form"
-                             [state]="form | nuiWidgetEditorAccordionFormState | async">
-    <div accordionHeader
-         class="d-flex align-items-center pl-4 py-2">
-        <nui-icon class="align-self-start pt-2" [icon]="form | nuiFormHeaderIconPipe:'database' | async"></nui-icon>
+<nui-widget-editor-accordion
+    [formGroup]="form"
+    [state]="form | nuiWidgetEditorAccordionFormState | async"
+>
+    <div accordionHeader class="d-flex align-items-center pl-4 py-2">
+        <nui-icon
+            class="align-self-start pt-2"
+            [icon]="form | nuiFormHeaderIconPipe: 'database' | async"
+        ></nui-icon>
         <div class="d-flex flex-column ml-4 pt1">
             <span class="nui-text-label" i18n>Data Source</span>
-            <div class="nui-text-secondary" [title]="form.get('providerId')?.value">
-                {{form.get('providerId')?.value}}
+            <div
+                class="nui-text-secondary"
+                [title]="form.get('providerId')?.value"
+            >
+                {{ form.get("providerId")?.value }}
             </div>
         </div>
     </div>
     <div class="datasource-configuration__accordion-content">
         <div class="mb-4">
-            <nui-form-field caption="Select Data Source" i18n-caption [control]="form.get('providerId')">
-                <nui-select-v2 placeholder="Data Sources" i18n-placeholder
-                                formControlName="providerId"
-                                [popupViewportMargin]="configuratorHeading.height$ | async"
-                                (valueSelected)="onDataSourceChange($event)">
-                    <nui-select-v2-option *ngFor="let dataSourceProvider of dataSourceProviders" [value]="dataSourceProvider">
-                        {{dataSourceProvider}}
+            <nui-form-field
+                caption="Select Data Source"
+                i18n-caption
+                [control]="form.get('providerId')"
+            >
+                <nui-select-v2
+                    placeholder="Data Sources"
+                    i18n-placeholder
+                    formControlName="providerId"
+                    [popupViewportMargin]="configuratorHeading.height$ | async"
+                    (valueSelected)="onDataSourceChange($event)"
+                >
+                    <nui-select-v2-option
+                        *ngFor="let dataSourceProvider of dataSourceProviders"
+                        [value]="dataSourceProvider"
+                    >
+                        {{ dataSourceProvider }}
                     </nui-select-v2-option>
                 </nui-select-v2>
                 <nui-validation-message for="required" i18n>
@@ -28,7 +45,10 @@
         </div>
         <div formGroupName="properties">
             <nui-form-field [control]="form.get('properties.isEuropeOnly')">
-                <nui-checkbox formControlName="isEuropeOnly" class="nui-checkbox--justified">
+                <nui-checkbox
+                    formControlName="isEuropeOnly"
+                    class="nui-checkbox--justified"
+                >
                     <div class="datasource-configuration__checkbox-label" i18n>
                         Show Europe Only
                     </div>

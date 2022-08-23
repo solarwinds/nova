@@ -8,13 +8,12 @@ import { Directive, ElementRef } from "@angular/core";
 @Directive({
     selector: "nui-footer-cell, td[nuiFooterCell]",
     host: {
-        "class": "mat-footer-cell",
-        "role": "gridcell",
+        class: "mat-footer-cell",
+        role: "gridcell",
     },
 })
 export class TableFooterCellDirective extends CdkFooterCell {
-    constructor(columnDef: CdkColumnDef,
-                elementRef: ElementRef) {
+    constructor(columnDef: CdkColumnDef, elementRef: ElementRef) {
         super(columnDef, elementRef);
     }
 }

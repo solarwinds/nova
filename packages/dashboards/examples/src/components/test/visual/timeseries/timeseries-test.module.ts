@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
+
 import {
     NuiBusyModule,
     NuiButtonModule,
@@ -18,8 +19,13 @@ import {
 } from "@nova-ui/dashboards";
 
 import { TestCommonModule } from "../../common/common.module";
-import { TestTimeseriesDataSource, TestTimeseriesDataSource2, TestTimeseriesEventsDataSource, TestTimeseriesStatusDataSource, TestTimeseriesStatusIntervalDataSource } from "../../data/timeseries-data-sources";
-
+import {
+    TestTimeseriesDataSource,
+    TestTimeseriesDataSource2,
+    TestTimeseriesEventsDataSource,
+    TestTimeseriesStatusDataSource,
+    TestTimeseriesStatusIntervalDataSource,
+} from "../../data/timeseries-data-sources";
 import { AcmeDashboardComponent } from "./timeseries-test.component";
 
 const routes = [
@@ -27,8 +33,8 @@ const routes = [
         path: "",
         component: AcmeDashboardComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -48,12 +54,8 @@ const routes = [
         NuiIconModule,
         RouterModule.forChild(routes),
     ],
-    declarations: [
-        AcmeDashboardComponent,
-    ],
-    providers: [
-        ProviderRegistryService,
-    ],
+    declarations: [AcmeDashboardComponent],
+    providers: [ProviderRegistryService],
 })
 export class TimeseriesTestModule {
     constructor(private widgetTypesService: WidgetTypesService) {
@@ -66,11 +68,17 @@ export class TimeseriesTestModule {
             TestTimeseriesDataSource.providerId,
             TestTimeseriesDataSource2.providerId,
             TestTimeseriesStatusDataSource.providerId,
-            TestTimeseriesStatusIntervalDataSource.providerId]);
+            TestTimeseriesStatusIntervalDataSource.providerId,
+        ]);
     }
 
     private setDataSourceProviders(type: string, providers: string[]) {
         const widgetTemplate = this.widgetTypesService.getWidgetType(type, 1);
-        this.widgetTypesService.setNode(widgetTemplate, "configurator", WellKnownPathKey.DataSourceProviders, providers);
+        this.widgetTypesService.setNode(
+            widgetTemplate,
+            "configurator",
+            WellKnownPathKey.DataSourceProviders,
+            providers
+        );
     }
 }

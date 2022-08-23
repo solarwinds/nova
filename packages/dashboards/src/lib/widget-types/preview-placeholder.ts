@@ -1,17 +1,16 @@
 import { StackComponent } from "../components/layouts/stack/stack.component";
+import { IWidgetTypeDefinition } from "../components/widget/types";
 import { PreviewPlaceholderComponent } from "../configurator/components/preview-placeholder/preview-placeholder.component";
 import { DEFAULT_PIZZAGNA_ROOT } from "../services/types";
 import { PizzagnaLayer, WellKnownPathKey } from "../types";
-import { IWidgetTypeDefinition } from "../components/widget/types";
-
 import { WIDGET_BODY, WIDGET_HEADER } from "./common/widget/components";
 
 export const previewPlaceholder: IWidgetTypeDefinition = {
     paths: {
-        "widget": {
+        widget: {
             [WellKnownPathKey.Root]: DEFAULT_PIZZAGNA_ROOT,
         },
-        "configurator": {
+        configurator: {
             [WellKnownPathKey.Root]: DEFAULT_PIZZAGNA_ROOT,
         },
     },
@@ -21,10 +20,7 @@ export const previewPlaceholder: IWidgetTypeDefinition = {
                 id: DEFAULT_PIZZAGNA_ROOT,
                 componentType: StackComponent.lateLoadKey,
                 properties: {
-                    nodes: [
-                        "header",
-                        "body",
-                    ],
+                    nodes: ["header", "body"],
                 },
             },
             header: WIDGET_HEADER,

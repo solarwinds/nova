@@ -30,18 +30,39 @@ describe(`Visual tests: ${name}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("form-field/form-field-visual-test");
-        nickname = Atom.find(TextboxAtom, "nui-form-field-visual-test-nickname");
+        nickname = Atom.find(
+            TextboxAtom,
+            "nui-form-field-visual-test-nickname"
+        );
         city = Atom.find(TextboxAtom, "nui-form-field-visual-test-city");
         textbox = Atom.find(TextboxAtom, "nui-form-field-visual-test-textbox");
-        checkbox = Atom.find(CheckboxAtom, "nui-form-field-visual-test-checkbox");
-        switchElement = Atom.find(SwitchAtom, "nui-form-field-visual-test-switch");
-        checkboxGroup = Atom.find(CheckboxGroupAtom, "nui-form-field-visual-test-checkbox-group");
-        radioGroup = Atom.find(RadioGroupAtom, "nui-form-field-visual-test-radio");
-        combobox = Atom.find(ComboboxAtom, "nui-form-field-visual-test-combobox");
+        checkbox = Atom.find(
+            CheckboxAtom,
+            "nui-form-field-visual-test-checkbox"
+        );
+        switchElement = Atom.find(
+            SwitchAtom,
+            "nui-form-field-visual-test-switch"
+        );
+        checkboxGroup = Atom.find(
+            CheckboxGroupAtom,
+            "nui-form-field-visual-test-checkbox-group"
+        );
+        radioGroup = Atom.find(
+            RadioGroupAtom,
+            "nui-form-field-visual-test-radio"
+        );
+        combobox = Atom.find(
+            ComboboxAtom,
+            "nui-form-field-visual-test-combobox"
+        );
         select = Atom.find(SelectAtom, "nui-form-field-visual-test-select");
-        timepicker = Atom.find(TimepickerAtom, "nui-form-field-visual-test-timepicker");
+        timepicker = Atom.find(
+            TimepickerAtom,
+            "nui-form-field-visual-test-timepicker"
+        );
         markAsDirty = element(by.id("nui-demo-mark-as-touched-button"));
-        
+
         camera = new Camera().loadFilm(browser, name);
     });
 
@@ -53,7 +74,7 @@ describe(`Visual tests: ${name}`, () => {
 
         await Helpers.switchDarkTheme("on");
         await camera.say.cheese("Dark theme test 1");
-        
+
         await Helpers.switchDarkTheme("off");
         await nickname.acceptText("John Wick");
         await city.acceptText("New York");

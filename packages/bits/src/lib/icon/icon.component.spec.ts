@@ -1,10 +1,10 @@
-import {SimpleChange} from "@angular/core";
-import {ComponentFixture, TestBed} from "@angular/core/testing";
-import {DomSanitizer} from "@angular/platform-browser";
+import { SimpleChange } from "@angular/core";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { DomSanitizer } from "@angular/platform-browser";
 
-import {IconComponent} from "./icon.component";
-import {IconService} from "./icon.service";
-import {IconData, IconStatus} from "./types";
+import { IconComponent } from "./icon.component";
+import { IconService } from "./icon.service";
+import { IconData, IconStatus } from "./types";
 
 describe("components >", () => {
     describe("icon >", () => {
@@ -19,21 +19,21 @@ describe("components >", () => {
         const COUNTER = "5";
         const ICON_CODE = "<svg></svg>";
 
-        const ICONS: IconData[] = [{
-            "svgFile": "printer.svg",
-            "name": PRINTER,
-            "cat_namespace": undefined,
-            "category": "object",
-            "code": ICON_CODE,
-        }];
+        const ICONS: IconData[] = [
+            {
+                svgFile: "printer.svg",
+                name: PRINTER,
+                cat_namespace: undefined,
+                category: "object",
+                code: ICON_CODE,
+            },
+        ];
 
         (IconService as any).ICONS = ICONS;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [
-                    IconComponent,
-                ],
+                declarations: [IconComponent],
                 providers: [
                     IconService,
                     {
@@ -44,7 +44,6 @@ describe("components >", () => {
                         },
                     },
                 ],
-
             });
             fixture = TestBed.createComponent(IconComponent);
             subject = fixture.componentInstance;
@@ -87,13 +86,17 @@ describe("components >", () => {
             subject.cssClass = CSS_CLASS;
 
             expect(subject.iconClass).toContain(`${ICON_COLOR}-icon`);
-            expect(subject.iconClass).toContain(`${ICON_HOVER_COLOR}-hover-icon`);
+            expect(subject.iconClass).toContain(
+                `${ICON_HOVER_COLOR}-hover-icon`
+            );
             expect(subject.iconClass).toContain(CSS_CLASS);
         });
 
         it("should not have iconColor, iconHoverColor, cssClass classes", () => {
             expect(subject.iconClass).not.toContain(`${ICON_COLOR}-icon`);
-            expect(subject.iconClass).not.toContain(`${ICON_HOVER_COLOR}-hover-icon`);
+            expect(subject.iconClass).not.toContain(
+                `${ICON_HOVER_COLOR}-hover-icon`
+            );
             expect(subject.iconClass).not.toContain(CSS_CLASS);
         });
 
@@ -101,7 +104,9 @@ describe("components >", () => {
             for (const key in IconComponent.SIZE_MAP) {
                 if (IconComponent.SIZE_MAP.hasOwnProperty(key)) {
                     subject.iconSize = key;
-                    expect(subject.iconClass).toContain(IconComponent.SIZE_MAP[key]);
+                    expect(subject.iconClass).toContain(
+                        IconComponent.SIZE_MAP[key]
+                    );
                 }
             }
         });
@@ -128,7 +133,11 @@ describe("components >", () => {
             subject.childStatus = IconStatus.Unmanaged;
             subject.ngOnChanges({
                 status: new SimpleChange(undefined, IconStatus.Critical, false),
-                childStatus: new SimpleChange(undefined, IconStatus.Unmanaged, false),
+                childStatus: new SimpleChange(
+                    undefined,
+                    IconStatus.Unmanaged,
+                    false
+                ),
             });
             const result = subject.resultingSvg.toString();
             expect(result.includes("nui-icon-item__child")).toBeTruthy();

@@ -1,5 +1,19 @@
-import { ChangeDetectorRef, Component, HostBinding, Inject, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
-import { ControlContainer, FormGroup, FormGroupDirective } from "@angular/forms";
+import {
+    ChangeDetectorRef,
+    Component,
+    HostBinding,
+    Inject,
+    Input,
+    OnChanges,
+    OnInit,
+    SimpleChanges,
+} from "@angular/core";
+import {
+    ControlContainer,
+    FormGroup,
+    FormGroupDirective,
+} from "@angular/forms";
+
 import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
 
 import { BaseLayout } from "../../../components/layouts/base-layout";
@@ -16,9 +30,13 @@ import { PIZZAGNA_EVENT_BUS } from "../../../types";
         {
             provide: ControlContainer,
             useExisting: FormGroupDirective,
-        }],
+        },
+    ],
 })
-export class FormStackComponent extends BaseLayout implements OnInit, OnChanges {
+export class FormStackComponent
+    extends BaseLayout
+    implements OnInit, OnChanges
+{
     static lateLoadKey = "FormStackComponent";
 
     @Input() nodes: [];
@@ -28,11 +46,13 @@ export class FormStackComponent extends BaseLayout implements OnInit, OnChanges 
 
     public form: FormGroup;
 
-    constructor(changeDetector: ChangeDetectorRef,
-                pizzagnaService: PizzagnaService,
-                logger: LoggerService,
-                public formDirective: FormGroupDirective,
-                @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>) {
+    constructor(
+        changeDetector: ChangeDetectorRef,
+        pizzagnaService: PizzagnaService,
+        logger: LoggerService,
+        public formDirective: FormGroupDirective,
+        @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>
+    ) {
         super(changeDetector, pizzagnaService, logger);
     }
 
@@ -57,5 +77,4 @@ export class FormStackComponent extends BaseLayout implements OnInit, OnChanges 
     public getNodes(): string[] {
         return this.nodes;
     }
-
 }

@@ -8,13 +8,12 @@ import { IconAtom } from "../icon/icon.atom";
 const name: string = "Icon";
 
 describe(`Visual tests: ${name}`, () => {
-    let camera: Camera,
-        iconBasic: IconAtom;
+    let camera: Camera, iconBasic: IconAtom;
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("icon/icon-visual-test");
         iconBasic = Atom.find(IconAtom, "nui-icon-test-basic-usage");
-        
+
         camera = new Camera().loadFilm(browser, name);
     });
 

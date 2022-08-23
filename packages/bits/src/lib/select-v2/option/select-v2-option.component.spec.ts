@@ -10,7 +10,6 @@ import { SelectV2Component } from "../select/select-v2.component";
 @Component({
     selector: "select-mock",
 })
-
 class SelectMockComponent {
     public multiselect: boolean = false;
 
@@ -32,10 +31,7 @@ describe("components >", () => {
 
         beforeEach(waitForAsync(() => {
             TestBed.configureTestingModule({
-                declarations: [
-                    SelectV2OptionComponent,
-                    SelectV2Component,
-                ],
+                declarations: [SelectV2OptionComponent, SelectV2Component],
                 providers: [
                     {
                         provide: NUI_SELECT_V2_OPTION_PARENT_COMPONENT,
@@ -43,15 +39,16 @@ describe("components >", () => {
                     },
                 ],
                 imports: [],
-                schemas: [ NO_ERRORS_SCHEMA ],
-            })
-                .compileComponents();
+                schemas: [NO_ERRORS_SCHEMA],
+            }).compileComponents();
         }));
 
         beforeEach(() => {
             fixture = TestBed.createComponent(SelectV2OptionComponent);
             component = fixture.componentInstance;
-            component["select"] = TestBed.inject(NUI_SELECT_V2_OPTION_PARENT_COMPONENT);
+            component["select"] = TestBed.inject(
+                NUI_SELECT_V2_OPTION_PARENT_COMPONENT
+            );
             debug = fixture.debugElement;
             fixture.detectChanges();
         });
@@ -67,17 +64,20 @@ describe("components >", () => {
                 component.active = false;
             });
 
-            ["hidden", "selected"]
-                .forEach(className => {
-                    it(`is not have ${className} class name by default`, () => {
-                        expect(debug.nativeElement.classList.value.includes(className)).toBe(false);
-                    });
+            ["hidden", "selected"].forEach((className) => {
+                it(`is not have ${className} class name by default`, () => {
+                    expect(
+                        debug.nativeElement.classList.value.includes(className)
+                    ).toBe(false);
                 });
+            });
 
             it(`the "hidden" class is added`, () => {
                 component.outfiltered = true;
                 fixture.detectChanges();
-                expect(debug.nativeElement.classList.value.includes("hidden")).toBe(true);
+                expect(
+                    debug.nativeElement.classList.value.includes("hidden")
+                ).toBe(true);
             });
 
             describe("selected", () => {
@@ -95,16 +95,21 @@ describe("components >", () => {
                     component["select"].selectedOptions.push(component);
                     fixture.detectChanges();
                     expect(component.selected).toBe(true);
-                    expect(debug.nativeElement.classList.value.includes("selected")).toBe(true);
+                    expect(
+                        debug.nativeElement.classList.value.includes("selected")
+                    ).toBe(true);
                 });
 
                 it("should NOT select if current option is NOT the one being selected", () => {
-                    component["select"]
-                        .selectedOptions
-                        .push(TestBed.createComponent(SelectV2OptionComponent).componentInstance);
+                    component["select"].selectedOptions.push(
+                        TestBed.createComponent(SelectV2OptionComponent)
+                            .componentInstance
+                    );
                     fixture.detectChanges();
                     expect(component.selected).toBe(false);
-                    expect(debug.nativeElement.classList.value.includes("selected")).toBe(false);
+                    expect(
+                        debug.nativeElement.classList.value.includes("selected")
+                    ).toBe(false);
                 });
 
                 it("should select if current option is the one being selected", () => {
@@ -112,11 +117,15 @@ describe("components >", () => {
                     component["select"].selectedOptions.push(component);
                     fixture.detectChanges();
                     expect(component.selected).toBe(true);
-                    expect(debug.nativeElement.classList.value.includes("selected")).toBe(true);
+                    expect(
+                        debug.nativeElement.classList.value.includes("selected")
+                    ).toBe(true);
                 });
 
                 it("should NOT select if current option is NOT the one being selected", () => {
-                    const anotherComponent = TestBed.createComponent(SelectV2OptionComponent).componentInstance;
+                    const anotherComponent = TestBed.createComponent(
+                        SelectV2OptionComponent
+                    ).componentInstance;
 
                     component.index = 0;
                     anotherComponent.index = 1;
@@ -124,7 +133,9 @@ describe("components >", () => {
                     fixture.detectChanges();
 
                     expect(component.selected).toBe(false);
-                    expect(debug.nativeElement.classList.value.includes("selected")).toBe(false);
+                    expect(
+                        debug.nativeElement.classList.value.includes("selected")
+                    ).toBe(false);
                 });
             });
         });
@@ -161,4 +172,3 @@ describe("components >", () => {
         });
     });
 });
-

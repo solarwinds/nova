@@ -6,11 +6,10 @@ import { IScale } from "./types";
 
 /** @ignore */
 export class PointScale extends Scale<string> {
-
     constructor(id?: string) {
         super(id);
 
-        this.formatters.tick = value => value;
+        this.formatters.tick = (value) => value;
     }
 
     protected createD3Scale(): any {
@@ -23,7 +22,10 @@ export class PointScale extends Scale<string> {
 
     public invert(coordinate: number): string {
         const domain = this._d3Scale.domain();
-        const rangeMidPoints = domain.map(this._d3Scale).slice(0, -1).map((d: number) => d + this._d3Scale.step() / 2);
+        const rangeMidPoints = domain
+            .map(this._d3Scale)
+            .slice(0, -1)
+            .map((d: number) => d + this._d3Scale.step() / 2);
         return domain[bisect(rangeMidPoints, coordinate)];
     }
 
@@ -48,7 +50,6 @@ export class PointScale extends Scale<string> {
             return this._d3Scale.round();
         }
     }
-
 
     /**
      * A convenience method for setting the inner and outer padding.

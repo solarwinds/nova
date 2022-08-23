@@ -25,10 +25,13 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
 @Component({
     selector: "nui-menu-switch",
     template: `
-        <div class="nui-menu-item__switch" tabindex="0" #menuSwitch tabIndex="-1">
-            <nui-switch
-                [value]="checked"
-                [disabled]="disabled">
+        <div
+            class="nui-menu-item__switch"
+            tabindex="0"
+            #menuSwitch
+            tabIndex="-1"
+        >
+            <nui-switch [value]="checked" [disabled]="disabled">
                 <ng-content></ng-content>
             </nui-switch>
         </div>
@@ -41,10 +44,9 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     ],
     styleUrls: ["./menu-switch.component.less"],
     encapsulation: ViewEncapsulation.None,
-    host: { "role": "menuitemcheckbox" },
+    host: { role: "menuitemcheckbox" },
 })
 export class MenuSwitchComponent extends MenuItemBaseComponent {
-
     /**
      * Is needed to predefine item state, sets nui-checkbox [checked] property
      */
@@ -68,7 +70,10 @@ export class MenuSwitchComponent extends MenuItemBaseComponent {
         return this.checked;
     }
 
-    constructor(@Optional() readonly group: MenuGroupComponent, cd: ChangeDetectorRef) {
+    constructor(
+        @Optional() readonly group: MenuGroupComponent,
+        cd: ChangeDetectorRef
+    ) {
         super(group, cd);
         this.checked = false;
 

@@ -7,7 +7,11 @@ import _parseInt from "lodash/parseInt";
 
 import { DomUtilService } from "./dom-util.service";
 import { LoggerService } from "./log-service";
-import { IEdgeDefinerMeasurements, IEdgeDetectionProperties, IEdgeDetectionResult } from "./public-api";
+import {
+    IEdgeDefinerMeasurements,
+    IEdgeDetectionProperties,
+    IEdgeDetectionResult,
+} from "./public-api";
 
 /**
  * <example-url>./../examples/index.html#/common/edge-detection-service</example-url>
@@ -25,7 +29,7 @@ import { IEdgeDefinerMeasurements, IEdgeDetectionProperties, IEdgeDetectionResul
  * Edge Detection Service
  */
 
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class EdgeDetectionService {
     public edgeDefinerSelector = ".nui-edge-definer";
     public initialEdgeDetectionResult: IEdgeDetectionResult;
@@ -51,16 +55,22 @@ export class EdgeDetectionService {
         };
     }
 
-    public canBe = (basePoint: HTMLElement,
-                    placed: HTMLElement,
-                    edgeDefinerElement?: Element): IEdgeDetectionResult | undefined => {
+    public canBe = (
+        basePoint: HTMLElement,
+        placed: HTMLElement,
+        edgeDefinerElement?: Element
+    ): IEdgeDetectionResult | undefined => {
         if (!basePoint || !placed) {
-            this.logger.error("basePoint: Element and placed: Element arguments are required!");
+            this.logger.error(
+                "basePoint: Element and placed: Element arguments are required!"
+            );
             return;
         }
 
         const result = this.initialEdgeDetectionResult;
-        const edgeDefiner = edgeDefinerElement || this.domUtilService.getClosest(basePoint, this.edgeDefinerSelector);
+        const edgeDefiner =
+            edgeDefinerElement ||
+            this.domUtilService.getClosest(basePoint, this.edgeDefinerSelector);
         const basePosition = this.offset(basePoint).position;
         const baseWidth = this.outer(basePoint, "width");
         const baseHeight = this.outer(basePoint, "height");
@@ -72,25 +82,48 @@ export class EdgeDetectionService {
             throw new Error("Document defaultView is not available");
         }
 
-        result.placed.top = basePosition.top - container.position.top - depositHeight > this.document.defaultView.pageYOffset;
-        result.placed.right = basePosition.left - container.position.left + baseWidth + depositWidth
-            < container.width + this.document.defaultView.pageXOffset;
+        result.placed.top =
+            basePosition.top - container.position.top - depositHeight >
+            this.document.defaultView.pageYOffset;
+        result.placed.right =
+            basePosition.left -
+                container.position.left +
+                baseWidth +
+                depositWidth <
+            container.width + this.document.defaultView.pageXOffset;
         result.placed.bottom = edgeDefiner
-            ? basePosition.top + baseHeight + depositHeight < container.position.top + container.height
-            : basePosition.top - container.position.top + baseHeight + depositHeight < container.height + this.document.defaultView.pageYOffset;
-        result.placed.left = basePosition.left - container.position.left - depositWidth > this.document.defaultView.pageXOffset;
+            ? basePosition.top + baseHeight + depositHeight <
+              container.position.top + container.height
+            : basePosition.top -
+                  container.position.top +
+                  baseHeight +
+                  depositHeight <
+              container.height + this.document.defaultView.pageYOffset;
+        result.placed.left =
+            basePosition.left - container.position.left - depositWidth >
+            this.document.defaultView.pageXOffset;
 
-        result.aligned.top = basePosition.top - container.position.top + depositHeight <
-                             this.document.defaultView.pageYOffset + container.height;
-        result.aligned.right = basePosition.left - container.position.left + baseWidth - depositWidth >
-                               this.document.defaultView.pageXOffset;
-        result.aligned.bottom = basePosition.top - container.position.top + baseHeight - depositHeight >
-                                this.document.defaultView.pageYOffset;
-        result.aligned.left = basePosition.left - container.position.left + depositWidth <
-                              this.document.defaultView.pageXOffset + container.width;
+        result.aligned.top =
+            basePosition.top - container.position.top + depositHeight <
+            this.document.defaultView.pageYOffset + container.height;
+        result.aligned.right =
+            basePosition.left -
+                container.position.left +
+                baseWidth -
+                depositWidth >
+            this.document.defaultView.pageXOffset;
+        result.aligned.bottom =
+            basePosition.top -
+                container.position.top +
+                baseHeight -
+                depositHeight >
+            this.document.defaultView.pageYOffset;
+        result.aligned.left =
+            basePosition.left - container.position.left + depositWidth <
+            this.document.defaultView.pageXOffset + container.width;
 
         return result;
-    }
+    };
 
     private outer(element: HTMLElement, dimension: "width" | "height"): number {
         const clientValue = _get(element, `offset${_capitalize(dimension)}`);
@@ -102,13 +135,25 @@ export class EdgeDetectionService {
 
     private offset(element: HTMLElement): IEdgeDetectionProperties {
         const rect = element.getBoundingClientRect();
-        const scrollLeft = this.document.defaultView?.pageXOffset || this.document.documentElement.scrollLeft;
-        const scrollTop = this.document.defaultView?.pageYOffset || this.document.documentElement.scrollTop;
+        const scrollLeft =
+            this.document.defaultView?.pageXOffset ||
+            this.document.documentElement.scrollLeft;
+        const scrollTop =
+            this.document.defaultView?.pageYOffset ||
+            this.document.documentElement.scrollTop;
         const rectHeight = rect.top < 0 ? rect.height + rect.top : rect.height;
-        return {position: { top: rect.top + scrollTop, left: rect.left + scrollLeft}, height: rectHeight};
+        return {
+            position: {
+                top: rect.top + scrollTop,
+                left: rect.left + scrollLeft,
+            },
+            height: rectHeight,
+        };
     }
 
-    private getEdgeDefinerMeasurements(edgeDefiner: Element): IEdgeDefinerMeasurements {
+    private getEdgeDefinerMeasurements(
+        edgeDefiner: Element
+    ): IEdgeDefinerMeasurements {
         if (edgeDefiner) {
             return {
                 position: this.offset(edgeDefiner as HTMLElement).position,
@@ -124,7 +169,7 @@ export class EdgeDetectionService {
         }
 
         return {
-            position: {top: 0, left: 0},
+            position: { top: 0, left: 0 },
             width: this.document.defaultView.innerWidth,
             height: this.document.defaultView.innerHeight,
             scrollY: this.document.defaultView.pageYOffset,

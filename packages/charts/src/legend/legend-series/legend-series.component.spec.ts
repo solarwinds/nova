@@ -4,8 +4,10 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { RenderState } from "../../renderers/types";
 import { LegendComponent } from "../legend.component";
 import { LegendOrientation } from "../types";
-
-import { LegendSeriesComponent, LEGEND_SERIES_CLASS_NAME } from "./legend-series.component";
+import {
+    LegendSeriesComponent,
+    LEGEND_SERIES_CLASS_NAME,
+} from "./legend-series.component";
 
 interface IMockLegendInput {
     seriesIcon?: string;
@@ -30,10 +32,11 @@ describe("LegendSeries >", () => {
     let hostElement: HTMLElement;
 
     const prepareComponent = (mockLegend: MockLegendComponent) => {
-        TestBed.overrideComponent(
-            LegendSeriesComponent,
-            { set: { providers: [{ provide: LegendComponent, useValue: mockLegend }] } }
-        );
+        TestBed.overrideComponent(LegendSeriesComponent, {
+            set: {
+                providers: [{ provide: LegendComponent, useValue: mockLegend }],
+            },
+        });
         fixture = TestBed.createComponent(LegendSeriesComponent);
         series = fixture.debugElement.componentInstance;
         hostElement = fixture.debugElement.nativeElement;
@@ -41,10 +44,7 @@ describe("LegendSeries >", () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [
-                LegendSeriesComponent,
-                LegendComponent,
-            ],
+            declarations: [LegendSeriesComponent, LegendComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
         });
     });
@@ -70,14 +70,16 @@ describe("LegendSeries >", () => {
                 expect(hostElement.classList).toContain(activeClass);
 
                 mockLegend.active = false;
-                mockLegend.ngOnChanges({ active: new SimpleChange(null, null, mockLegend.active) });
+                mockLegend.ngOnChanges({
+                    active: new SimpleChange(null, null, mockLegend.active),
+                });
                 fixture.detectChanges();
                 expect(hostElement.classList).not.toContain(activeClass);
             });
 
             it("should be applied if the legend is active and the series render state is anything but 'hidden'", () => {
                 prepareComponent(new MockLegendComponent({ active: true }));
-                Object.keys(RenderState).forEach(state => {
+                Object.keys(RenderState).forEach((state) => {
                     if (state !== RenderState.hidden) {
                         series.seriesRenderState = <RenderState>state;
                         fixture.detectChanges();
@@ -103,20 +105,26 @@ describe("LegendSeries >", () => {
             });
 
             it("should be applied when the legend is interactive", () => {
-                prepareComponent(new MockLegendComponent({ interactive: true }));
+                prepareComponent(
+                    new MockLegendComponent({ interactive: true })
+                );
                 fixture.detectChanges();
                 expect(hostElement.classList).toContain(interactiveClass);
             });
 
             it("should not be overridden when the legend is interactive", () => {
-                prepareComponent(new MockLegendComponent({ interactive: true }));
+                prepareComponent(
+                    new MockLegendComponent({ interactive: true })
+                );
                 series.interactive = false;
                 fixture.detectChanges();
                 expect(hostElement.classList).not.toContain(interactiveClass);
             });
 
             it("should not be overridden when the legend is not interactive", () => {
-                prepareComponent(new MockLegendComponent({ interactive: false }));
+                prepareComponent(
+                    new MockLegendComponent({ interactive: false })
+                );
                 series.interactive = true;
                 fixture.detectChanges();
                 expect(hostElement.classList).toContain(interactiveClass);
@@ -131,7 +139,11 @@ describe("LegendSeries >", () => {
             });
 
             it("should be applied when the legend's orientation is horizontal", () => {
-                prepareComponent(new MockLegendComponent({ orientation: LegendOrientation.horizontal }));
+                prepareComponent(
+                    new MockLegendComponent({
+                        orientation: LegendOrientation.horizontal,
+                    })
+                );
                 fixture.detectChanges();
                 expect(hostElement.classList).toContain(horizontalClass);
             });
@@ -142,20 +154,25 @@ describe("LegendSeries >", () => {
                 prepareComponent(new MockLegendComponent());
                 series.isSelected = false;
                 fixture.detectChanges();
-                expect(hostElement.children[0].classList).toContain(deselectedClass);
+                expect(hostElement.children[0].classList).toContain(
+                    deselectedClass
+                );
             });
 
             it("should not be applied when the series is selected", () => {
-                prepareComponent(new MockLegendComponent({ interactive: true }));
+                prepareComponent(
+                    new MockLegendComponent({ interactive: true })
+                );
                 series.isSelected = true;
                 fixture.detectChanges();
-                expect(hostElement.children[0].classList).not.toContain(deselectedClass);
+                expect(hostElement.children[0].classList).not.toContain(
+                    deselectedClass
+                );
             });
         });
     });
 
     describe("template conditionals", () => {
-
         beforeEach(() => {
             prepareComponent(new MockLegendComponent());
         });
@@ -165,7 +182,6 @@ describe("LegendSeries >", () => {
             series.descriptionPrimary = "";
             series.descriptionSecondary = "";
             expect(fixture.componentInstance.hasInputDescription()).toBe(false);
-
         });
 
         it("should not hide descriptions if the descriptionPrimary is set", () => {
@@ -183,7 +199,9 @@ describe("LegendSeries >", () => {
         const legendSeriesIcon = "fallback-series-icon";
 
         beforeEach(() => {
-            prepareComponent(new MockLegendComponent({ seriesIcon: legendSeriesIcon }));
+            prepareComponent(
+                new MockLegendComponent({ seriesIcon: legendSeriesIcon })
+            );
             fixture.detectChanges();
         });
 

@@ -1,7 +1,7 @@
-import {ComponentFixture, TestBed} from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import {ToolbarItemType} from "./public-api";
-import {ToolbarItemComponent} from "./toolbar-item.component";
+import { ToolbarItemType } from "./public-api";
+import { ToolbarItemComponent } from "./toolbar-item.component";
 
 describe("components >", () => {
     describe("toolbar-item >", () => {
@@ -10,9 +10,7 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [
-                    ToolbarItemComponent,
-                ],
+                declarations: [ToolbarItemComponent],
             });
             fixture = TestBed.createComponent(ToolbarItemComponent);
             fixture.detectChanges();

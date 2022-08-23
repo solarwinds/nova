@@ -22,7 +22,7 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        transition: visibility .25s;
+        transition: visibility 0.25s;
         padding: @nui-space-xs 0;
 
         &__embedded {
@@ -32,7 +32,7 @@
                 // Since it overflows, what matters is the min-content contribution of the flex items.
                 // However, the flex items are being sized using their max-content as their hypothetical main size.
                 // Usage of nowrap will make the min-content contributions the same as the max-content.
-                white-space: nowrap
+                white-space: nowrap;
             }
         }
         &__dynamic {
@@ -41,7 +41,9 @@
             flex-shrink: 0;
             .nui-button.btn-destructive {
                 border-color: transparent;
-                &:hover, &:active, &:focus {
+                &:hover,
+                &:active,
+                &:focus {
                     border-color: transparent;
                     .setCssVariable(background-color, nui-color-bg-transparent-hover);
                 }

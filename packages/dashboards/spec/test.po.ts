@@ -1,5 +1,6 @@
-import { Atom } from "@nova-ui/bits/sdk/atoms";
 import { browser, by, element, ElementFinder } from "protractor";
+
+import { Atom } from "@nova-ui/bits/sdk/atoms";
 
 import { DashboardAtom } from "./dashboard.atom";
 
@@ -49,10 +50,15 @@ export class TestPage {
     }
 
     public async editWidget(title: string): Promise<void> {
-        return (await this.dashboard.getWidgetByHeaderTitleText(title))?.header.clickEdit();
+        return (
+            await this.dashboard.getWidgetByHeaderTitleText(title)
+        )?.header.clickEdit();
     }
 
-    private async updateSelectable(input: ElementFinder, value: boolean): Promise<void> {
+    private async updateSelectable(
+        input: ElementFinder,
+        value: boolean
+    ): Promise<void> {
         const currentValue = await input.isSelected();
         if (currentValue === value) {
             return;

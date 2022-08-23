@@ -4,6 +4,4 @@ import { Component } from "@angular/core";
     selector: "waterfall-chart-test-component",
     templateUrl: "./waterfall-chart-test.component.html",
 })
-
-export class WaterfallChartTestComponent {
-}
+export class WaterfallChartTestComponent {}

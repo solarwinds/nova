@@ -3,17 +3,18 @@ import cloneDeep from "lodash/cloneDeep";
 import { Subject } from "rxjs";
 
 import { LinearScale } from "../../../core/common/scales/linear-scale";
-import { D3Selection, IDataSeries, IRenderContainers, IRendererEventPayload } from "../../../core/common/types";
-import { IRenderSeries, RenderLayerName } from "../../types";
-import {ILineAccessors, LineAccessors} from "../line-accessors";
-import { LineRenderer } from "../line-renderer";
-
 import {
-    LineSelectSeriesInteractionStrategy,
-} from "./line-select-series-interaction-strategy";
+    D3Selection,
+    IDataSeries,
+    IRenderContainers,
+    IRendererEventPayload,
+} from "../../../core/common/types";
+import { IRenderSeries, RenderLayerName } from "../../types";
+import { ILineAccessors, LineAccessors } from "../line-accessors";
+import { LineRenderer } from "../line-renderer";
+import { LineSelectSeriesInteractionStrategy } from "./line-select-series-interaction-strategy";
 
 describe("LineSelectSeriesInteractionStrategy", () => {
-
     let renderer: LineRenderer;
     let accessors: ILineAccessors;
 
@@ -37,7 +38,10 @@ describe("LineSelectSeriesInteractionStrategy", () => {
             dataSeries = {
                 id: "1",
                 name: "Series 1",
-                data: [{ x: 0, y: 0 }, { x: 1, y: 1 }],
+                data: [
+                    { x: 0, y: 0 },
+                    { x: 1, y: 1 },
+                ],
                 accessors: accessors,
             };
             renderSeries = {
@@ -45,7 +49,11 @@ describe("LineSelectSeriesInteractionStrategy", () => {
                 containers,
                 scales: { x: new LinearScale(), y: new LinearScale() },
             };
-            strategy.draw(renderer, renderSeries, new Subject<IRendererEventPayload>());
+            strategy.draw(
+                renderer,
+                renderSeries,
+                new Subject<IRendererEventPayload>()
+            );
             path = containers[RenderLayerName.data].select("path.interaction");
         });
 
@@ -53,7 +61,9 @@ describe("LineSelectSeriesInteractionStrategy", () => {
             expect(path.node()).toBeTruthy();
             expect(path.attr("d")).toBe("M0,0L1,1");
             expect(path.attr("stroke")).toBe("transparent");
-            expect(path.attr("stroke-width")).toBe((2 + 2 * strategy.INTERACTION_MARGIN).toString());
+            expect(path.attr("stroke-width")).toBe(
+                (2 + 2 * strategy.INTERACTION_MARGIN).toString()
+            );
             expect(path.attr("fill")).toBe("none");
         });
 
@@ -70,11 +80,17 @@ describe("LineSelectSeriesInteractionStrategy", () => {
 
         it("should update the path with new data", () => {
             const newSeries = cloneDeep(renderSeries);
-            newSeries.dataSeries.data = [{ x: 1, y: 1 }, { x: 0, y: 0 }];
-            strategy.draw(renderer, newSeries, new Subject<IRendererEventPayload>());
+            newSeries.dataSeries.data = [
+                { x: 1, y: 1 },
+                { x: 0, y: 0 },
+            ];
+            strategy.draw(
+                renderer,
+                newSeries,
+                new Subject<IRendererEventPayload>()
+            );
 
             expect(path.attr("d")).toBe("M1,1L0,0");
         });
-
     });
 });

@@ -1,9 +1,30 @@
 import { OverlayConfig } from "@angular/cdk/overlay";
-import { AfterViewInit, Component, Inject, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { DialogService, ISelectGroup, NuiDialogRef, OVERLAY_WITH_POPUP_STYLES_CLASS, SelectV2Component } from "@nova-ui/bits";
+import {
+    AfterViewInit,
+    Component,
+    Inject,
+    OnDestroy,
+    OnInit,
+    TemplateRef,
+    ViewChild,
+    ViewEncapsulation,
+} from "@angular/core";
+import {
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators,
+} from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+
+import {
+    DialogService,
+    ISelectGroup,
+    NuiDialogRef,
+    OVERLAY_WITH_POPUP_STYLES_CLASS,
+    SelectV2Component,
+} from "@nova-ui/bits";
 
 interface IExampleItem {
     id: string;
@@ -19,10 +40,13 @@ interface IExampleItem {
     encapsulation: ViewEncapsulation.None,
     host: { class: "select-container" },
 })
-export class SelectV2TestExampleComponent implements OnInit, AfterViewInit, OnDestroy {
-
-    constructor(@Inject(DialogService) private dialogService: DialogService,
-                                       private formBuilder: FormBuilder) {}
+export class SelectV2TestExampleComponent
+    implements OnInit, AfterViewInit, OnDestroy
+{
+    constructor(
+        @Inject(DialogService) private dialogService: DialogService,
+        private formBuilder: FormBuilder
+    ) {}
     public selectedItem: IExampleItem;
     public handleClicksOutside: boolean = false;
     public iconItems = [
@@ -38,33 +62,38 @@ export class SelectV2TestExampleComponent implements OnInit, AfterViewInit, OnDe
     ];
 
     // Datasources
-    public items = Array.from({ length : 50 }).map((_, i) => $localize `Item ${i}`);
-    public itemsDisplayValue: IExampleItem[] = Array.from({ length: 100 }).map((_, i) =>
-        ({
+    public items = Array.from({ length: 50 }).map(
+        (_, i) => $localize`Item ${i}`
+    );
+    public itemsDisplayValue: IExampleItem[] = Array.from({ length: 100 }).map(
+        (_, i) => ({
             id: `value-${i}`,
-            name: $localize `Item ${i}`,
+            name: $localize`Item ${i}`,
             icon: "status_warning",
             disabled: !!(i % 2),
-        }));
+        })
+    );
 
-    public itemsWithIconsOnly: IExampleItem[] = this.iconItems.map((icon, i) =>
-        ({
+    public itemsWithIconsOnly: IExampleItem[] = this.iconItems.map(
+        (icon, i) => ({
             id: `value-${i}`,
             icon: icon,
-        }));
+        })
+    );
 
-    public groupedItems: ISelectGroup[] = Array.from({ length: 10 }).map((_, i) => ({
-        header: $localize `Header line ${i + 1}`,
-        items: Array.from({ length: 5 }).map((v, n) => ({
-            id: `value-${i}`,
-            name: $localize `Item ${n + 1}`,
-        })),
-    }));
+    public groupedItems: ISelectGroup[] = Array.from({ length: 10 }).map(
+        (_, i) => ({
+            header: $localize`Header line ${i + 1}`,
+            items: Array.from({ length: 5 }).map((v, n) => ({
+                id: `value-${i}`,
+                name: $localize`Item ${n + 1}`,
+            })),
+        })
+    );
 
     // Form
     public selectControl = new FormControl();
     public fancyForm: FormGroup;
-
 
     // Test
     public customStylesOverlayConfig: OverlayConfig = {
@@ -78,7 +107,7 @@ export class SelectV2TestExampleComponent implements OnInit, AfterViewInit, OnDe
 
     // Dialog
     public open(content: TemplateRef<string>) {
-        this.activeDialog = this.dialogService.open(content, {size: "sm"});
+        this.activeDialog = this.dialogService.open(content, { size: "sm" });
     }
 
     public isInErrorState() {
@@ -108,17 +137,17 @@ export class SelectV2TestExampleComponent implements OnInit, AfterViewInit, OnDe
         });
 
         this.selectControl.valueChanges
-            .pipe(
-                takeUntil(this.destroy$)
-            )
-            .subscribe(value => {
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((value) => {
                 this.selectedItem = value;
             });
     }
 
     ngAfterViewInit() {
         this.select.clickOutsideDropdown.subscribe(() => {
-            if (this.handleClicksOutside) { this.select.hideDropdown(); }
+            if (this.handleClicksOutside) {
+                this.select.hideDropdown();
+            }
         });
     }
 

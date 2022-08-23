@@ -2,7 +2,9 @@
 @import (reference) "../../styles/mixins.less";
 @import (reference) "../../styles/nui-framework-colors.less";
 
-@nui-panel-header-height: (@icon-size-default + @nui-space-sm + (@nui-space-xs * 2));
+@nui-panel-header-height: (
+    @icon-size-default + @nui-space-sm + (@nui-space-xs * 2)
+);
 @nui-panel-side-pane-stack-order: 100;
 @nui-panel-animation-duration: 0.3s;
 
@@ -73,8 +75,12 @@
         }
 
         &__side-pane {
-            --nui-color-bg-panel-side-pane: var(--nui-color-bg-content); // local css variable to be modified
-            --nui-color-bg-scroll: var(--nui-color-bg-content); // Setting the matching value in case it was already changed somewhere
+            --nui-color-bg-panel-side-pane: var(
+                --nui-color-bg-content
+            ); // local css variable to be modified
+            --nui-color-bg-scroll: var(
+                --nui-color-bg-content
+            ); // Setting the matching value in case it was already changed somewhere
             background-color: var(--nui-color-bg-panel-side-pane);
 
             display: flex;
@@ -123,7 +129,8 @@
 
         [nuiPanelEmbeddedFooter] {
             border-top: 1px solid @nui-color-line-default;
-            border-top: solid 1px var(--nui-color-line-default, @nui-color-line-default);
+            border-top: solid 1px
+                var(--nui-color-line-default, @nui-color-line-default);
             padding: @nui-space-sm @nui-space-md;
         }
 

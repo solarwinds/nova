@@ -49,7 +49,7 @@ import { ISelectGroup } from "../public-api";
  */
 @Component({
     selector: "nui-combobox",
-    host: { "class": "nui-combobox" },
+    host: { class: "nui-combobox" },
     templateUrl: "./combobox.component.html",
     providers: [
         {
@@ -67,7 +67,10 @@ import { ISelectGroup } from "../public-api";
     styleUrls: ["./combobox.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
-export class ComboboxComponent extends BaseSelect implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+export class ComboboxComponent
+    extends BaseSelect
+    implements OnInit, OnChanges, OnDestroy, AfterViewInit
+{
     /**
      * The option to clear the combobox if the value entered is not in array.
      */
@@ -80,12 +83,17 @@ export class ComboboxComponent extends BaseSelect implements OnInit, OnChanges, 
     public isOpened: boolean;
     public openControl: Subject<Event> = new Subject<Event>();
 
-    @ViewChildren(MenuActionComponent) public menuItems: QueryList<MenuActionComponent>;
-    @ViewChild("comboboxToggle", { read: ElementRef }) comboboxToggle: ElementRef;
-    @ViewChild("scrollContainer", { read: ElementRef }) scrollContainer: ElementRef;
-    @ViewChildren(MenuGroupComponent) public menuGroups: QueryList<MenuGroupComponent>;
+    @ViewChildren(MenuActionComponent)
+    public menuItems: QueryList<MenuActionComponent>;
+    @ViewChild("comboboxToggle", { read: ElementRef })
+    comboboxToggle: ElementRef;
+    @ViewChild("scrollContainer", { read: ElementRef })
+    scrollContainer: ElementRef;
+    @ViewChildren(MenuGroupComponent)
+    public menuGroups: QueryList<MenuGroupComponent>;
     @ViewChild(PopupComponent) popup: PopupComponent;
-    @ViewChild(PopupComponent, { read: ElementRef, static: true }) popupRef: ElementRef; // static: true because of getWidth
+    @ViewChild(PopupComponent, { read: ElementRef, static: true })
+    popupRef: ElementRef; // static: true because of getWidth
 
     private debouncedBlur = _debounce(() => {
         this.handleBlur();
@@ -105,13 +113,15 @@ export class ComboboxComponent extends BaseSelect implements OnInit, OnChanges, 
         return this.inline;
     }
 
-    constructor(utilService: UtilService,
-                private elRef: ElementRef,
-                private renderer: Renderer2,
-                private changeDetector: ChangeDetectorRef,
-                private keyControlService: MenuKeyControlService,
-                private focusMonitor: FocusMonitor,
-                private logger: LoggerService) {
+    constructor(
+        utilService: UtilService,
+        private elRef: ElementRef,
+        private renderer: Renderer2,
+        private changeDetector: ChangeDetectorRef,
+        private keyControlService: MenuKeyControlService,
+        private focusMonitor: FocusMonitor,
+        private logger: LoggerService
+    ) {
         super(utilService);
         // Blur is debounced cause when you click on menu item blur is triggered twice: from textbox and when popup is closed.
         this.comboboxEventListeners.push(
@@ -120,12 +130,13 @@ export class ComboboxComponent extends BaseSelect implements OnInit, OnChanges, 
             })
         );
 
-        this.logger.warn("<nui-combobox> is deprecated as of Nova v11. Please use <nui-combobox-v2> instead.");
+        this.logger.warn(
+            "<nui-combobox> is deprecated as of Nova v11. Please use <nui-combobox-v2> instead."
+        );
     }
 
     ngOnInit() {
         super.ngOnInit();
-
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -160,9 +171,13 @@ export class ComboboxComponent extends BaseSelect implements OnInit, OnChanges, 
 
         // listening to events for key-control
         this.comboboxEventListeners.push(
-            this.renderer.listen(this.elRef.nativeElement, "keydown", (event: KeyboardEvent) => {
-                this.keyControlService.handleKeydown(event);
-            })
+            this.renderer.listen(
+                this.elRef.nativeElement,
+                "keydown",
+                (event: KeyboardEvent) => {
+                    this.keyControlService.handleKeydown(event);
+                }
+            )
         );
 
         // listen to focus event to open popup using tab key
@@ -171,23 +186,26 @@ export class ComboboxComponent extends BaseSelect implements OnInit, OnChanges, 
         // (via mouse, keyboard, touch, or programmatically).
         // It also allows listening for focus on descendant elements if desired as it is done below by passing second
         // argument with value true in the monitor method of FocusMonitor.
-        this.focusMonitorSubscription = this.focusMonitor.monitor(this.comboboxToggle.nativeElement, true).subscribe((origin: FocusOrigin) => {
-            if (origin === "keyboard") {
-                if (!this.popup.popupToggle.disabled) {
-                    if (!this.isOpened) {
-                        this.openControl.next(new FocusEvent("focusin"));
+        this.focusMonitorSubscription = this.focusMonitor
+            .monitor(this.comboboxToggle.nativeElement, true)
+            .subscribe((origin: FocusOrigin) => {
+                if (origin === "keyboard") {
+                    if (!this.popup.popupToggle.disabled) {
+                        if (!this.isOpened) {
+                            this.openControl.next(new FocusEvent("focusin"));
+                        }
                     }
                 }
-            }
-        });
+            });
 
         // when datasource change we need to re-initialize key control stuff
-        this.itemsChangeSubscription = this.menuItems.changes
-            .subscribe((changes: QueryList<MenuItemBaseComponent>) => {
+        this.itemsChangeSubscription = this.menuItems.changes.subscribe(
+            (changes: QueryList<MenuItemBaseComponent>) => {
                 this.keyControlService.initKeyboardManager();
                 this.keyControlService.setActiveItem(0);
                 this.changeDetector.detectChanges();
-            });
+            }
+        );
 
         // when appendToBody is set width of the popup element should be calculated
         // To get actual value detectChanges() call afterViewInit is needed
@@ -208,23 +226,35 @@ export class ComboboxComponent extends BaseSelect implements OnInit, OnChanges, 
 
     public onInputChange(value: any) {
         const oldValue = this.selectedItem;
-        const newValue = this.displayValue ? this.findObjectByValue(value) : value;
+        const newValue = this.displayValue
+            ? this.findObjectByValue(value)
+            : value;
 
         this.changeValue(newValue);
         this.changed.emit({ newValue, oldValue });
     }
 
     public handleBlur() {
-        const newValue = this.displayValue ? this.findObjectByValue(_unescape(this.inputValue)) : _unescape(this.inputValue);
+        const newValue = this.displayValue
+            ? this.findObjectByValue(_unescape(this.inputValue))
+            : _unescape(this.inputValue);
         const isGroupedData = this.isGroupedData(this.itemsSource);
         let isInArray: boolean;
         if (isGroupedData) {
-            const flattenedData = _flatMap(this.itemsSource, (group) => group.items);
-            isInArray = this.displayValue ? _some(flattenedData, newValue) : _includes(flattenedData, newValue);
+            const flattenedData = _flatMap(
+                this.itemsSource,
+                (group) => group.items
+            );
+            isInArray = this.displayValue
+                ? _some(flattenedData, newValue)
+                : _includes(flattenedData, newValue);
         } else {
-            isInArray = this.displayValue ? _some(this.itemsSource, newValue) : _includes(this.itemsSource, newValue);
+            isInArray = this.displayValue
+                ? _some(this.itemsSource, newValue)
+                : _includes(this.itemsSource, newValue);
         }
-        const valueToSelect = this.clearOnBlur && !isInArray ? "" : this.selectedItem;
+        const valueToSelect =
+            this.clearOnBlur && !isInArray ? "" : this.selectedItem;
         this.select(valueToSelect);
     }
 
@@ -247,7 +277,9 @@ export class ComboboxComponent extends BaseSelect implements OnInit, OnChanges, 
         return foundObject ? foundObject : value;
     }
 
-    public isGroupedData(itemsSource: any[] | ISelectGroup[]): itemsSource is ISelectGroup[] {
+    public isGroupedData(
+        itemsSource: any[] | ISelectGroup[]
+    ): itemsSource is ISelectGroup[] {
         return _every(itemsSource, (group) => _isArray(group.items));
     }
 
@@ -268,7 +300,7 @@ export class ComboboxComponent extends BaseSelect implements OnInit, OnChanges, 
             this.itemsChangeSubscription.unsubscribe();
         }
         if (this.comboboxEventListeners.length > 0) {
-            this.comboboxEventListeners.forEach(listener => listener());
+            this.comboboxEventListeners.forEach((listener) => listener());
         }
         if (this.focusMonitorSubscription) {
             this.focusMonitorSubscription.unsubscribe();
@@ -276,11 +308,15 @@ export class ComboboxComponent extends BaseSelect implements OnInit, OnChanges, 
     }
 
     public getWidth(): string {
-        return this.customTemplate ? "auto" : this.popupRef.nativeElement.getBoundingClientRect().width;
+        return this.customTemplate
+            ? "auto"
+            : this.popupRef.nativeElement.getBoundingClientRect().width;
     }
 
     public getPopupContextClass(): string {
-        return `${this.justified ? "nui-combobox--justified " : ""}nui-combobox-popup-host`;
+        return `${
+            this.justified ? "nui-combobox--justified " : ""
+        }nui-combobox-popup-host`;
     }
 
     public clearValue(event: Event) {

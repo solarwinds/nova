@@ -5,7 +5,6 @@ import { Component } from "@angular/core";
     templateUrl: "./tab-content-about.example.component.html",
 })
 export class TabContentAboutExampleComponent {
-
     public content: string = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sed erat eget
     velit elementum ultricies vitae vel mauris. Nam egestas fermentum ex id interdum.
     In in dignissim libero. Suspendisse commodo pellentesque purus, sit amet tempor enim

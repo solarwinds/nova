@@ -1,5 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+
 import {
     NuiBusyModule,
     NuiChipsModule,
@@ -39,5 +40,4 @@ import { FilteredViewListComponent } from "./filtered-view-list/filtered-view-li
         FilteredViewListComponent,
     ],
 })
-
 export class FilteredViewListWithVirtualScrollModule {}

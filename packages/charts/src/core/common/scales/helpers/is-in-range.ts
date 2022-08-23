@@ -7,7 +7,7 @@ import { IScale } from "../types";
  * @param px
  */
 export function isInRange(scale: IScale<any>, px: number): boolean {
-    const r = scale.range().map(a => a);
+    const r = scale.range().map((a) => a);
     const min = Math.min(r[0], r[1]);
     const max = Math.max(r[0], r[1]);
 

@@ -1,16 +1,21 @@
 import { fakeAsync, tick } from "@angular/core/testing";
 
-import { INTERACTION_DATA_POINTS_EVENT, SERIES_STATE_CHANGE_EVENT } from "../../../constants";
+import {
+    INTERACTION_DATA_POINTS_EVENT,
+    SERIES_STATE_CHANGE_EVENT,
+} from "../../../constants";
 import { RenderState } from "../../../renderers/types";
 import { Chart } from "../../chart";
-import { IDataPointsPayload, InteractionType, IRenderStateData } from "../../common/types";
+import {
+    IDataPointsPayload,
+    InteractionType,
+    IRenderStateData,
+} from "../../common/types";
 import { IGrid, IGridConfig } from "../../grid/types";
 import { XYGrid } from "../../grid/xy-grid";
-
 import { ChartTooltipsPlugin } from "./chart-tooltips-plugin";
 
 describe("ChartTooltipsPlugin >", () => {
-
     let grid: IGrid;
     let chart: Chart;
     let plugin: ChartTooltipsPlugin;
@@ -32,13 +37,23 @@ describe("ChartTooltipsPlugin >", () => {
 
         const element = document.createElement("div");
         offsetParentSpy = spyOnProperty(element, "offsetParent");
-        offsetParentSpy.and.returnValue({ getBoundingClientRect: () => ({ top: 0, left: 0 }) });
+        offsetParentSpy.and.returnValue({
+            getBoundingClientRect: () => ({ top: 0, left: 0 }),
+        });
         chart.build(element);
     });
 
     it("should not attempt to process data points for an interaction type other than mousemove", () => {
         spyOn(plugin, "processHighlightedDataPoints");
-        chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next({ data: { interactionType: InteractionType.Click, dataPoints: {} } });
+        chart
+            .getEventBus()
+            .getStream(INTERACTION_DATA_POINTS_EVENT)
+            .next({
+                data: {
+                    interactionType: InteractionType.Click,
+                    dataPoints: {},
+                },
+            });
 
         expect(plugin.processHighlightedDataPoints).not.toHaveBeenCalled();
     });
@@ -64,15 +79,36 @@ describe("ChartTooltipsPlugin >", () => {
         };
 
         const testOffsetParentValue = 5;
-        offsetParentSpy.and.returnValue({ getBoundingClientRect: () => ({ top: testOffsetParentValue, left: testOffsetParentValue }) });
+        offsetParentSpy.and.returnValue({
+            getBoundingClientRect: () => ({
+                top: testOffsetParentValue,
+                left: testOffsetParentValue,
+            }),
+        });
 
-        chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next({ data: { interactionType: InteractionType.MouseMove, dataPoints } });
+        chart
+            .getEventBus()
+            .getStream(INTERACTION_DATA_POINTS_EVENT)
+            .next({
+                data: {
+                    interactionType: InteractionType.MouseMove,
+                    dataPoints,
+                },
+            });
 
         const pointPosition = plugin.dataPointPositions["series-1"];
 
         expect(pointPosition).toBeDefined();
-        expect(pointPosition.x).toBe(x + chart.getGrid().config().dimension.margin.left - testOffsetParentValue);
-        expect(pointPosition.y).toBe(y + chart.getGrid().config().dimension.margin.top - testOffsetParentValue);
+        expect(pointPosition.x).toBe(
+            x +
+                chart.getGrid().config().dimension.margin.left -
+                testOffsetParentValue
+        );
+        expect(pointPosition.y).toBe(
+            y +
+                chart.getGrid().config().dimension.margin.top -
+                testOffsetParentValue
+        );
 
         expect(pointPosition.overlayPositions.length).toBe(2);
     });
@@ -98,26 +134,57 @@ describe("ChartTooltipsPlugin >", () => {
         };
 
         const testOffsetParentValue = 5;
-        offsetParentSpy.and.returnValue({ getBoundingClientRect: () => ({ top: testOffsetParentValue, left: testOffsetParentValue }) });
+        offsetParentSpy.and.returnValue({
+            getBoundingClientRect: () => ({
+                top: testOffsetParentValue,
+                left: testOffsetParentValue,
+            }),
+        });
 
-        chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next({ data: { interactionType: InteractionType.MouseMove, dataPoints } });
+        chart
+            .getEventBus()
+            .getStream(INTERACTION_DATA_POINTS_EVENT)
+            .next({
+                data: {
+                    interactionType: InteractionType.MouseMove,
+                    dataPoints,
+                },
+            });
 
         const pointPosition = pluginTopOriented.dataPointPositions["series-1"];
 
         expect(pointPosition).toBeDefined();
-        expect(pointPosition.overlayPositions)
-            .toEqual([
-                { "originX": "end", "originY": "top", "overlayX": "center", "overlayY": "bottom", "offsetY": -50 },
-                { "originX": "end", "originY": "bottom", "overlayX": "center", "overlayY": "top", "offsetY": 50 },
-            ]);
-        expect(pointPosition.x).toBe(x + chart.getGrid().config().dimension.margin.left - testOffsetParentValue);
-        expect(pointPosition.y).toBe(y + chart.getGrid().config().dimension.margin.top - testOffsetParentValue);
+        expect(pointPosition.overlayPositions).toEqual([
+            {
+                originX: "end",
+                originY: "top",
+                overlayX: "center",
+                overlayY: "bottom",
+                offsetY: -50,
+            },
+            {
+                originX: "end",
+                originY: "bottom",
+                overlayX: "center",
+                overlayY: "top",
+                offsetY: 50,
+            },
+        ]);
+        expect(pointPosition.x).toBe(
+            x +
+                chart.getGrid().config().dimension.margin.left -
+                testOffsetParentValue
+        );
+        expect(pointPosition.y).toBe(
+            y +
+                chart.getGrid().config().dimension.margin.top -
+                testOffsetParentValue
+        );
 
         expect(pointPosition.overlayPositions.length).toBe(2);
     });
 
     describe("INTERACTION_DATA_POINTS_EVENT", () => {
-
         it("does not trigger show subject if the chart is not in view", fakeAsync(() => {
             const dataPoints: IDataPointsPayload = {
                 "series-1": {
@@ -138,7 +205,15 @@ describe("ChartTooltipsPlugin >", () => {
             const showSpy = spyOn(plugin.showSubject, "next");
             (<any>plugin).isChartInView = false;
 
-            chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next({ data: { interactionType: InteractionType.MouseMove, dataPoints } });
+            chart
+                .getEventBus()
+                .getStream(INTERACTION_DATA_POINTS_EVENT)
+                .next({
+                    data: {
+                        interactionType: InteractionType.MouseMove,
+                        dataPoints,
+                    },
+                });
 
             tick();
 
@@ -165,7 +240,15 @@ describe("ChartTooltipsPlugin >", () => {
             const showSpy = spyOn(plugin.showSubject, "next");
             (<any>plugin).isChartInView = true;
 
-            chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next({ data: { interactionType: InteractionType.MouseMove, dataPoints } });
+            chart
+                .getEventBus()
+                .getStream(INTERACTION_DATA_POINTS_EVENT)
+                .next({
+                    data: {
+                        interactionType: InteractionType.MouseMove,
+                        dataPoints,
+                    },
+                });
 
             tick();
 
@@ -187,7 +270,15 @@ describe("ChartTooltipsPlugin >", () => {
             const showSpy = spyOn(plugin.hideSubject, "next");
             (<any>plugin).isChartInView = false;
 
-            chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next({ data: { interactionType: InteractionType.MouseMove, dataPoints } });
+            chart
+                .getEventBus()
+                .getStream(INTERACTION_DATA_POINTS_EVENT)
+                .next({
+                    data: {
+                        interactionType: InteractionType.MouseMove,
+                        dataPoints,
+                    },
+                });
 
             tick();
 
@@ -209,7 +300,15 @@ describe("ChartTooltipsPlugin >", () => {
             const showSpy = spyOn(plugin.hideSubject, "next");
             (<any>plugin).isChartInView = true;
 
-            chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next({ data: { interactionType: InteractionType.MouseMove, dataPoints } });
+            chart
+                .getEventBus()
+                .getStream(INTERACTION_DATA_POINTS_EVENT)
+                .next({
+                    data: {
+                        interactionType: InteractionType.MouseMove,
+                        dataPoints,
+                    },
+                });
 
             tick();
 
@@ -260,13 +359,23 @@ describe("ChartTooltipsPlugin >", () => {
 
             (<any>plugin).isChartInView = true;
 
-            chart.getEventBus().getStream(SERIES_STATE_CHANGE_EVENT).next({ data: seriesStates });
+            chart
+                .getEventBus()
+                .getStream(SERIES_STATE_CHANGE_EVENT)
+                .next({ data: seriesStates });
 
-            chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next({ data: { interactionType: InteractionType.MouseMove, dataPoints } });
+            chart
+                .getEventBus()
+                .getStream(INTERACTION_DATA_POINTS_EVENT)
+                .next({
+                    data: {
+                        interactionType: InteractionType.MouseMove,
+                        dataPoints,
+                    },
+                });
 
             expect(plugin.dataPoints[visibleId]).toBeTruthy();
             expect(plugin.dataPoints[hiddenId]).toBeUndefined();
         });
     });
-
 });

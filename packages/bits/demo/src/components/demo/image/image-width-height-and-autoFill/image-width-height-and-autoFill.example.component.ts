@@ -5,6 +5,4 @@ import { Component } from "@angular/core";
     templateUrl: "./image-width-height-and-autoFill.example.component.html",
     styleUrls: ["image-width-height-and-autoFill.example.component.less"],
 })
-
-export class ImageWidthHeightAndAutoFillExampleComponent {
-}
+export class ImageWidthHeightAndAutoFillExampleComponent {}

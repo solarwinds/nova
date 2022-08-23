@@ -4,28 +4,28 @@ import { LinkFormatterComponent } from "../../configurator/components/formatters
 import { RawFormatterComponent } from "../../configurator/components/formatters/raw-formatter/raw-formatter.component";
 
 export const DEFAULT_TABLE_FORMATTERS: IFormatterDefinition[] = [
-  {
-      componentType: RawFormatterComponent.lateLoadKey,
-      label: $localize`No Formatter`,
-      dataTypes: {
-          // @ts-ignore
-          value: null,
-      },
-  },
-  {
-      componentType: LinkFormatterComponent.lateLoadKey,
-      label: $localize`Link`,
-      configurationComponent: "LinkConfiguratorComponent",
-      dataTypes: {
-          value: "label",
-          link: "link",
-      },
-  },
-  {
-      componentType: IconFormatterComponent.lateLoadKey,
-      label: $localize`Icon`,
-      dataTypes: {
-          value: "string",
-      },
-  },
+    {
+        componentType: RawFormatterComponent.lateLoadKey,
+        label: $localize`No Formatter`,
+        dataTypes: {
+            // @ts-ignore
+            value: null,
+        },
+    },
+    {
+        componentType: LinkFormatterComponent.lateLoadKey,
+        label: $localize`Link`,
+        configurationComponent: "LinkConfiguratorComponent",
+        dataTypes: {
+            value: "label",
+            link: "link",
+        },
+    },
+    {
+        componentType: IconFormatterComponent.lateLoadKey,
+        label: $localize`Icon`,
+        dataTypes: {
+            value: "string",
+        },
+    },
 ];

@@ -1,9 +1,7 @@
 import { LinearScale } from "../linear-scale";
-
 import { isInRange } from "./is-in-range";
 
 describe("isInRange", () => {
-
     it("works one way", () => {
         const scale = new LinearScale();
         scale.range([0, 100]);
@@ -17,5 +15,4 @@ describe("isInRange", () => {
 
         expect(isInRange(scale, 50)).toBe(true);
     });
-
 });

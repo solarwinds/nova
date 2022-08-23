@@ -1,7 +1,25 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { ChangeDetectorRef, Component, Inject, Injectable, Injector, OnDestroy, OnInit } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    Component,
+    Inject,
+    Injectable,
+    Injector,
+    OnDestroy,
+    OnInit,
+} from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
-import { DataSourceService, EventBus, IEvent, IFilteringOutputs, LoggerService } from "@nova-ui/bits";
+import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { BehaviorSubject } from "rxjs";
+import { finalize } from "rxjs/operators";
+
+import {
+    DataSourceService,
+    EventBus,
+    IEvent,
+    IFilteringOutputs,
+    LoggerService,
+} from "@nova-ui/bits";
 import {
     ComponentRegistryService,
     ConfiguratorHeadingService,
@@ -25,9 +43,6 @@ import {
     WellKnownProviders,
     WidgetTypesService,
 } from "@nova-ui/dashboards";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
-import { BehaviorSubject } from "rxjs";
-import { finalize } from "rxjs/operators";
 
 /**
  * This component will serve as the data source accordion in the configurator.
@@ -36,47 +51,86 @@ import { finalize } from "rxjs/operators";
     selector: "harry-potter-data-source-configurator",
     styleUrls: ["./custom-data-source-configurator-example.component.less"],
     template: `
-<nui-widget-editor-accordion [formGroup]="form"
-                             [state]="form | nuiWidgetEditorAccordionFormState | async">
-    <div accordionHeader
-         class="d-flex align-items-center pl-4 py-2">
-        <nui-icon class="align-self-start pt-2" [icon]="form | nuiFormHeaderIconPipe:'database' | async"></nui-icon>
-        <div class="d-flex flex-column ml-4 pt1">
-            <span class="nui-text-label" i18n>Data Source</span>
-            <div class="nui-text-secondary" title="Harry Potter Books" i18n-title i18n>
-                Harry Potter Books
+        <nui-widget-editor-accordion
+            [formGroup]="form"
+            [state]="form | nuiWidgetEditorAccordionFormState | async"
+        >
+            <div accordionHeader class="d-flex align-items-center pl-4 py-2">
+                <nui-icon
+                    class="align-self-start pt-2"
+                    [icon]="form | nuiFormHeaderIconPipe: 'database' | async"
+                ></nui-icon>
+                <div class="d-flex flex-column ml-4 pt1">
+                    <span class="nui-text-label" i18n>Data Source</span>
+                    <div
+                        class="nui-text-secondary"
+                        title="Harry Potter Books"
+                        i18n-title
+                        i18n
+                    >
+                        Harry Potter Books
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="datasource-configuration__accordion-content" formGroupName="properties">
-        <nui-form-field caption="Books" [control]="form.get('properties')?.get('bookId')">
-                <nui-select-v2 placeholder="Select book"
-                               i18n-placeholder
-                               [popupViewportMargin]="configuratorHeading.height$ | async"
-                               formControlName="bookId">
-                <nui-select-v2-option *ngFor="let book of books" [value]="book.id" [displayValueContext]="book">
-                    {{book.title}}
-                </nui-select-v2-option>
-            </nui-select-v2>
-        </nui-form-field>
-    </div>
-    <div class="datasource-configuration__accordion-content" formGroupName="properties">
-        <nui-form-field caption="Metrics" [control]="form.get('properties')?.get('metric')">
-                <nui-select-v2 placeholder="Select metric"
-                               [popupViewportMargin]="configuratorHeading.height$ | async"
-                               i18n-placeholder
-                               formControlName="metric">
-                <nui-select-v2-option *ngFor="let metric of metrics" [value]="metric.id">
-                    {{metric.label}}
-                </nui-select-v2-option>
-            </nui-select-v2>
-        </nui-form-field>
-    </div>
-</nui-widget-editor-accordion>
-`,
+            <div
+                class="datasource-configuration__accordion-content"
+                formGroupName="properties"
+            >
+                <nui-form-field
+                    caption="Books"
+                    [control]="form.get('properties')?.get('bookId')"
+                >
+                    <nui-select-v2
+                        placeholder="Select book"
+                        i18n-placeholder
+                        [popupViewportMargin]="
+                            configuratorHeading.height$ | async
+                        "
+                        formControlName="bookId"
+                    >
+                        <nui-select-v2-option
+                            *ngFor="let book of books"
+                            [value]="book.id"
+                            [displayValueContext]="book"
+                        >
+                            {{ book.title }}
+                        </nui-select-v2-option>
+                    </nui-select-v2>
+                </nui-form-field>
+            </div>
+            <div
+                class="datasource-configuration__accordion-content"
+                formGroupName="properties"
+            >
+                <nui-form-field
+                    caption="Metrics"
+                    [control]="form.get('properties')?.get('metric')"
+                >
+                    <nui-select-v2
+                        placeholder="Select metric"
+                        [popupViewportMargin]="
+                            configuratorHeading.height$ | async
+                        "
+                        i18n-placeholder
+                        formControlName="metric"
+                    >
+                        <nui-select-v2-option
+                            *ngFor="let metric of metrics"
+                            [value]="metric.id"
+                        >
+                            {{ metric.label }}
+                        </nui-select-v2-option>
+                    </nui-select-v2>
+                </nui-form-field>
+            </div>
+        </nui-widget-editor-accordion>
+    `,
 })
 @Injectable()
-export class HarryPotterDataSourceConfiguratorComponent extends DataSourceConfigurationV2Component implements OnInit {
+export class HarryPotterDataSourceConfiguratorComponent
+    extends DataSourceConfigurationV2Component
+    implements OnInit
+{
     // This lateLoadKey allows the component to be able to be registered by the componentRegistry
     public static lateLoadKey = "HarryPotterDataSourceConfiguratorComponent";
 
@@ -105,14 +159,24 @@ export class HarryPotterDataSourceConfiguratorComponent extends DataSourceConfig
     ];
 
     // These need to be injected because DataSourceConfigurationV2Component uses them
-    constructor(changeDetector: ChangeDetectorRef,
-                configuratorHeading: ConfiguratorHeadingService,
-                formBuilder: FormBuilder,
-                providerRegistryService: ProviderRegistryService,
+    constructor(
+        changeDetector: ChangeDetectorRef,
+        configuratorHeading: ConfiguratorHeadingService,
+        formBuilder: FormBuilder,
+        providerRegistryService: ProviderRegistryService,
         @Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
-                injector: Injector,
-                logger: LoggerService) {
-        super(changeDetector, configuratorHeading, formBuilder, providerRegistryService, eventBus, injector, logger);
+        injector: Injector,
+        logger: LoggerService
+    ) {
+        super(
+            changeDetector,
+            configuratorHeading,
+            formBuilder,
+            providerRegistryService,
+            eventBus,
+            injector,
+            logger
+        );
     }
 
     // Overriding 'ngOnInit' to add custom controls to the 'properties' form group
@@ -128,27 +192,27 @@ export class HarryPotterDataSourceConfiguratorComponent extends DataSourceConfig
             })
         );
         // The default data source control has a required validator we're removing that validator here since we aren't using it.
-        this.form.setControl(
-            "dataSource", this.formBuilder.control(null)
-        );
+        this.form.setControl("dataSource", this.formBuilder.control(null));
         // Here we set the providerId to our only data source so when a new tile gets created it will default to it.
         this.form.get("providerId")?.setValue(AcmeKpiDataSource.providerId);
         // Here we subscribe to the form and if there are any changes we invoke the data source
-        this.form.valueChanges.subscribe(value => {
+        this.form.valueChanges.subscribe((value) => {
             if (!value.providerId) {
                 return;
             }
             this.invokeDataSource(value);
         });
     }
-
 }
 
 /**
  * A simple KPI data source to retrieve the average rating of Harry Potter and the Sorcerer's Stone (book) via googleapis
  */
 @Injectable()
-export class AcmeKpiDataSource extends DataSourceService<IKpiData> implements OnDestroy, IConfigurable {
+export class AcmeKpiDataSource
+    extends DataSourceService<IKpiData>
+    implements OnDestroy, IConfigurable
+{
     // This is the ID we'll use to identify the provider
     public static providerId = "AcmeKpiDataSource";
 
@@ -174,7 +238,10 @@ export class AcmeKpiDataSource extends DataSourceService<IKpiData> implements On
         this.busy.next(true);
         return new Promise((resolve) => {
             // *** Make a resource request to an external API (if needed)
-            this.http.get(`https://www.googleapis.com/books/v1/volumes/${this.properties?.bookId}`)
+            this.http
+                .get(
+                    `https://www.googleapis.com/books/v1/volumes/${this.properties?.bookId}`
+                )
                 // For loading indicator to be hidden
                 .pipe(finalize(() => this.busy.next(false)))
                 .subscribe({
@@ -231,11 +298,13 @@ export class CustomDataSourceConfiguratorExampleComponent implements OnInit {
 
         // Inject the ComponentRegistryService to make our custom component available for late loading by the dashboards framework
         private componentRegistry: ComponentRegistryService
-    ) { }
+    ) {}
 
     public ngOnInit(): void {
         // Registering the new data source configurator so it can be used.
-        this.componentRegistry.registerByLateLoadKey(HarryPotterDataSourceConfiguratorComponent);
+        this.componentRegistry.registerByLateLoadKey(
+            HarryPotterDataSourceConfiguratorComponent
+        );
         // Registering the data source for injection into the KPI tile.
         // Note: Each tile of a KPI widget is assigned its own instance of the data source
         this.providerRegistry.setProviders({
@@ -247,7 +316,10 @@ export class CustomDataSourceConfiguratorExampleComponent implements OnInit {
             },
         });
 
-        const kpiWidgetTemplate = this.widgetTypesService.getWidgetType("kpi", 1);
+        const kpiWidgetTemplate = this.widgetTypesService.getWidgetType(
+            "kpi",
+            1
+        );
 
         this.widgetTypesService.setNode(
             // This is the template we grabbed above with getWidgetType
@@ -265,7 +337,8 @@ export class CustomDataSourceConfiguratorExampleComponent implements OnInit {
         const kpiWidget = widgetConfig;
         const widgetIndex: IWidgets = {
             // Complete the KPI widget with information coming from its type definition
-            [kpiWidget.id]: this.widgetTypesService.mergeWithWidgetType(kpiWidget),
+            [kpiWidget.id]:
+                this.widgetTypesService.mergeWithWidgetType(kpiWidget),
         };
 
         // Setting the widget dimensions and position (this is for gridster)
@@ -284,7 +357,6 @@ export class CustomDataSourceConfiguratorExampleComponent implements OnInit {
             widgets: widgetIndex,
         };
     }
-
 }
 
 const widgetConfig: IWidget = {
@@ -293,50 +365,50 @@ const widgetConfig: IWidget = {
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
             [DEFAULT_PIZZAGNA_ROOT]: {
-                "providers": {
+                providers: {
                     [WellKnownProviders.Refresher]: {
-                        "properties": {
+                        properties: {
                             // Configuring the refresher interval so that our data source is invoked every ten minutes
-                            "interval": 60 * 10,
-                            "enabled": true,
+                            interval: 60 * 10,
+                            enabled: true,
                         } as IRefresherProperties,
                     } as Partial<IProviderConfiguration>,
                 },
             },
-            "header": {
-                "properties": {
-                    "title": "Harry Potter and the Sorcerer's Stone",
-                    "subtitle": "By J. K. Rowling",
+            header: {
+                properties: {
+                    title: "Harry Potter and the Sorcerer's Stone",
+                    subtitle: "By J. K. Rowling",
                 },
             },
-            "tiles": {
-                "properties": {
-                    "nodes": ["kpi1"],
+            tiles: {
+                properties: {
+                    nodes: ["kpi1"],
                 },
             },
-            "kpi1": {
-                "id": "kpi1",
-                "componentType": KpiComponent.lateLoadKey,
-                "properties": {
-                    "widgetData": {
-                        "units": "out of 5 Stars",
-                        "label": "Average Rating",
+            kpi1: {
+                id: "kpi1",
+                componentType: KpiComponent.lateLoadKey,
+                properties: {
+                    widgetData: {
+                        units: "out of 5 Stars",
+                        label: "Average Rating",
                     },
                 },
-                "providers": {
+                providers: {
                     [WellKnownProviders.DataSource]: {
                         // Setting the data source providerId for the tile with id "kpi1"
-                        "providerId": AcmeKpiDataSource.providerId,
-                        "properties": {
-                            "bookId": "5MQFrgEACAAJ",
-                            "metric": "averageRating",
+                        providerId: AcmeKpiDataSource.providerId,
+                        properties: {
+                            bookId: "5MQFrgEACAAJ",
+                            metric: "averageRating",
                         },
                     } as IProviderConfiguration,
                     [WellKnownProviders.Adapter]: {
-                        "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
-                        "properties": {
-                            "componentId": "kpi1",
-                            "propertyPath": "widgetData",
+                        providerId: NOVA_KPI_DATASOURCE_ADAPTER,
+                        properties: {
+                            componentId: "kpi1",
+                            propertyPath: "widgetData",
                         },
                     } as IProviderConfiguration,
                 },

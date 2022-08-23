@@ -5,11 +5,7 @@ import {
     TestBed,
     tick,
 } from "@angular/core/testing";
-import {
-    FormBuilder,
-    FormsModule,
-    ReactiveFormsModule,
-} from "@angular/forms";
+import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 import momentTz from "moment-timezone";
 import moment from "moment/moment";
@@ -33,7 +29,6 @@ import { OverlayComponent } from "../overlay/overlay-component/overlay.component
 import { NuiOverlayModule } from "../overlay/overlay.module";
 import { PopoverComponent } from "../popover/popover.component";
 import { ValidationMessageComponent } from "../validation-message/validation-message.component";
-
 import { DayPickerComponent } from "./date-picker-day-picker.component";
 import { DatePickerInnerComponent } from "./date-picker-inner.component";
 import { MonthPickerComponent } from "./date-picker-month-picker.component";
@@ -87,14 +82,16 @@ describe("components >", () => {
         it("should contain nui-overlay when not inline option", () => {
             componentInstance.inline = false;
             fixture.detectChanges();
-            const overlayExists = debugElement.queryAll(By.css("nui-overlay")).length > 0;
+            const overlayExists =
+                debugElement.queryAll(By.css("nui-overlay")).length > 0;
             expect(overlayExists).toBeTruthy();
         });
 
         it("should NOT contain nui-overlay when inline option is set", () => {
             componentInstance.inline = true;
             fixture.detectChanges();
-            const noOverlay = debugElement.queryAll(By.css("nui-overlay")).length === 0;
+            const noOverlay =
+                debugElement.queryAll(By.css("nui-overlay")).length === 0;
             expect(noOverlay).toBeTruthy();
         });
 
@@ -104,7 +101,9 @@ describe("components >", () => {
             fixture.detectChanges();
             componentInstance.overlay.toggle();
             fixture.detectChanges();
-            const numberOfYearTiles = debugElement.queryAll(By.css("table .year")).length;
+            const numberOfYearTiles = debugElement.queryAll(
+                By.css("table .year")
+            ).length;
             expect(numberOfYearTiles).toBe(10);
         });
 
@@ -113,8 +112,11 @@ describe("components >", () => {
             componentInstance.writeValue(activeDate);
             componentInstance.overlay.toggle();
             fixture.detectChanges();
-            const activeDateTile = debugElement.query(By.css("table button.selected"));
-            const activeDateValue = activeDateTile.nativeElement.innerText.trim();
+            const activeDateTile = debugElement.query(
+                By.css("table button.selected")
+            );
+            const activeDateValue =
+                activeDateTile.nativeElement.innerText.trim();
             const activeDateDay = moment(activeDate).format("D");
             expect(activeDateValue).toBe(activeDateDay);
         });
@@ -129,7 +131,9 @@ describe("components >", () => {
             spyOn(componentInstance.selectionDone, "emit");
             const newSelectedDate = moment();
             componentInstance.onUpdate(newSelectedDate);
-            expect(componentInstance.selectionDone.emit).toHaveBeenCalledWith(newSelectedDate);
+            expect(componentInstance.selectionDone.emit).toHaveBeenCalledWith(
+                newSelectedDate
+            );
         });
 
         it("should emit Moment object with invalid date if input value is cleared", fakeAsync(() => {
@@ -137,7 +141,8 @@ describe("components >", () => {
             componentInstance.onInputActiveDateChanged("");
             tick(501);
             componentInstance.valueChange.subscribe((value: any) =>
-                expect(value).toEqual(moment("")));
+                expect(value).toEqual(moment(""))
+            );
         }));
 
         it("should set innerDatePicker.value to 'undefined' if popup is closed", () => {
@@ -151,12 +156,20 @@ describe("components >", () => {
         it("should notify if calendar is moved", () => {
             componentInstance.ngOnInit();
             fixture.detectChanges();
-            spyOn(componentInstance.calendarNavigated, "emit").and.callThrough();
-            spyOn(componentInstance._datePicker.calendarMoved, "next").and.callThrough();
+            spyOn(
+                componentInstance.calendarNavigated,
+                "emit"
+            ).and.callThrough();
+            spyOn(
+                componentInstance._datePicker.calendarMoved,
+                "next"
+            ).and.callThrough();
 
             componentInstance._datePicker.calendarMoved.next();
 
-            expect(componentInstance._datePicker.calendarMoved.next).toHaveBeenCalled();
+            expect(
+                componentInstance._datePicker.calendarMoved.next
+            ).toHaveBeenCalled();
             expect(componentInstance.calendarNavigated.emit).toHaveBeenCalled();
         });
 
@@ -184,9 +197,12 @@ describe("components >", () => {
             componentInstance._datePicker.select(dateISO, eventMock);
 
             expect(moment.isMoment(componentInstance.value)).toBeTruthy();
-            expect(componentInstance.value.utcOffset()).toEqual(moment.parseZone(dateISO).utcOffset());
-            expect(componentInstance.value.toString()).toEqual("Wed Mar 18 2020 00:00:00 GMT+1100");
-
+            expect(componentInstance.value.utcOffset()).toEqual(
+                moment.parseZone(dateISO).utcOffset()
+            );
+            expect(componentInstance.value.toString()).toEqual(
+                "Wed Mar 18 2020 00:00:00 GMT+1100"
+            );
         });
 
         it("should react properly on selection change", () => {
@@ -203,8 +219,10 @@ describe("components >", () => {
         });
 
         describe("date validation", () => {
-            const validDatesTestCases = DatePickerSpecHelpers.getValidDatesTestCases();
-            const invalidDatesTestCases = DatePickerSpecHelpers.getInvalidDatesTestCases();
+            const validDatesTestCases =
+                DatePickerSpecHelpers.getValidDatesTestCases();
+            const invalidDatesTestCases =
+                DatePickerSpecHelpers.getInvalidDatesTestCases();
             const inputChangeDebounceTime = 500;
 
             // Proxying date-picker.component isDateDisabled method, as it tries to get and trigger date-picker-inner.component isDisabled method,
@@ -220,17 +238,25 @@ describe("components >", () => {
                 componentInstance.ngOnInit();
             });
 
-            validDatesTestCases.forEach(date => {
+            validDatesTestCases.forEach((date) => {
                 it(`${date} should be a valid date`, fakeAsync(() => {
-                    const dateMoment = moment(date, datePickerDateFormats, true).format(componentInstance.dateFormat);
+                    const dateMoment = moment(
+                        date,
+                        datePickerDateFormats,
+                        true
+                    ).format(componentInstance.dateFormat);
                     componentInstance.onInputActiveDateChanged(date);
                     tick(inputChangeDebounceTime);
-                    expect(componentInstance.value.format(componentInstance.dateFormat)).toEqual(dateMoment);
+                    expect(
+                        componentInstance.value.format(
+                            componentInstance.dateFormat
+                        )
+                    ).toEqual(dateMoment);
                     expect(componentInstance.isInErrorState).toEqual(false);
                 }));
             });
 
-            invalidDatesTestCases.forEach(date => {
+            invalidDatesTestCases.forEach((date) => {
                 it(`${date} should be an invalid date`, fakeAsync(() => {
                     componentInstance.onInputActiveDateChanged(date);
                     tick(inputChangeDebounceTime);
@@ -241,23 +267,31 @@ describe("components >", () => {
         });
 
         describe("date format validation", () => {
-            const validDateFormatsTestCases = DatePickerSpecHelpers.getValidDateFormatsTestCases();
-            const invalidDateFormatsTestCases = DatePickerSpecHelpers.getInvalidDateFormatsTestCases();
+            const validDateFormatsTestCases =
+                DatePickerSpecHelpers.getValidDateFormatsTestCases();
+            const invalidDateFormatsTestCases =
+                DatePickerSpecHelpers.getInvalidDateFormatsTestCases();
 
-            validDateFormatsTestCases.forEach(format => {
+            validDateFormatsTestCases.forEach((format) => {
                 it(`${format} should be a valid date format`, () => {
                     componentInstance.dateFormat = format;
                     componentInstance.ngOnInit();
-                    expect(componentInstance["momentDateFormat"]).toEqual(format);
+                    expect(componentInstance["momentDateFormat"]).toEqual(
+                        format
+                    );
                 });
             });
 
-            invalidDateFormatsTestCases.forEach(format => {
+            invalidDateFormatsTestCases.forEach((format) => {
                 it(`${format} should be an invalid date format`, () => {
                     componentInstance.dateFormat = format;
                     componentInstance.ngOnInit();
-                    expect(componentInstance["momentDateFormat"]).not.toEqual(format);
-                    expect(componentInstance["momentDateFormat"]).toEqual(datePickerDefaults.dateFormat);
+                    expect(componentInstance["momentDateFormat"]).not.toEqual(
+                        format
+                    );
+                    expect(componentInstance["momentDateFormat"]).toEqual(
+                        datePickerDefaults.dateFormat
+                    );
                 });
             });
         });

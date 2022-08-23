@@ -12,14 +12,27 @@ export class ComboboxV2Atom extends BaseSelectV2Atom {
         return browser.actions().sendKeys(text).perform();
     }
 
-    public popup: OverlayAtom = Atom.findIn(OverlayAtom, element(by.className("combobox-v2-test-pane")));
-    public removeAllButton = this.getElement().element(by.className("nui-combobox-v2__remove-value"));
-    public createOption = this.getPopupElement().element(by.className("nui-combobox-v2__create-option"));
-    public toggleButton = this.getElement().element(by.className("nui-combobox-v2__toggle"));
-    public input = this.getElement().element(by.className("nui-combobox-v2__input"));
+    public popup: OverlayAtom = Atom.findIn(
+        OverlayAtom,
+        element(by.className("combobox-v2-test-pane"))
+    );
+    public removeAllButton = this.getElement().element(
+        by.className("nui-combobox-v2__remove-value")
+    );
+    public createOption = this.getPopupElement().element(
+        by.className("nui-combobox-v2__create-option")
+    );
+    public toggleButton = this.getElement().element(
+        by.className("nui-combobox-v2__toggle")
+    );
+    public input = this.getElement().element(
+        by.className("nui-combobox-v2__input")
+    );
     public chips = this.getElement().all(by.css("nui-chip"));
     public activeChip = this.getElement().element(by.css("nui-chip.active"));
-    public activeOption = this.getPopupElement().element(by.css("nui-select-v2-option.active"));
+    public activeOption = this.getPopupElement().element(
+        by.css("nui-select-v2-option.active")
+    );
 
     public async removeAll(): Promise<void> {
         return this.removeAllButton.click();
@@ -59,14 +72,22 @@ export class ComboboxV2Atom extends BaseSelectV2Atom {
     }
 
     public async getSelectionStart(): Promise<number> {
-        return await browser.executeScript("return arguments[0].selectionStart", await this.input.getWebElement());
+        return await browser.executeScript(
+            "return arguments[0].selectionStart",
+            await this.input.getWebElement()
+        );
     }
 
     public async getSelectionEnd(): Promise<number> {
-        return await browser.executeScript("return arguments[0].selectionEnd", await this.input.getWebElement());
+        return await browser.executeScript(
+            "return arguments[0].selectionEnd",
+            await this.input.getWebElement()
+        );
     }
 
     public async getSelectionRange(): Promise<number> {
-        return (await this.getSelectionEnd()) - (await this.getSelectionStart());
+        return (
+            (await this.getSelectionEnd()) - (await this.getSelectionStart())
+        );
     }
 }

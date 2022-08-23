@@ -1,4 +1,11 @@
-import { ITableWidgetColumnConfig, ITableWidgetSorterConfig, IWidget, PizzagnaLayer, RawFormatterComponent, WellKnownProviders } from "@nova-ui/dashboards";
+import {
+    ITableWidgetColumnConfig,
+    ITableWidgetSorterConfig,
+    IWidget,
+    PizzagnaLayer,
+    RawFormatterComponent,
+    WellKnownProviders,
+} from "@nova-ui/dashboards";
 
 import { BeerDataSource } from "../data/table/beer-data-source";
 
@@ -7,13 +14,13 @@ export const tableConfig: IWidget = {
     type: "table",
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
-            "header": {
+            header: {
                 properties: {
                     title: "Stupendous Suds",
                     subtitle: "Try These Brilliant Brews",
                 },
             },
-            "table": {
+            table: {
                 providers: {
                     [WellKnownProviders.DataSource]: {
                         providerId: BeerDataSource.providerId,
@@ -28,7 +35,8 @@ export const tableConfig: IWidget = {
                                 isActive: true,
                                 width: 185,
                                 formatter: {
-                                    componentType: RawFormatterComponent.lateLoadKey,
+                                    componentType:
+                                        RawFormatterComponent.lateLoadKey,
                                     properties: {
                                         dataFieldIds: {
                                             value: "name",
@@ -42,7 +50,8 @@ export const tableConfig: IWidget = {
                                 isActive: true,
                                 width: 250,
                                 formatter: {
-                                    componentType: RawFormatterComponent.lateLoadKey,
+                                    componentType:
+                                        RawFormatterComponent.lateLoadKey,
                                     properties: {
                                         dataFieldIds: {
                                             value: "tagline",
@@ -55,7 +64,8 @@ export const tableConfig: IWidget = {
                                 label: "First Brewed",
                                 isActive: true,
                                 formatter: {
-                                    componentType: RawFormatterComponent.lateLoadKey,
+                                    componentType:
+                                        RawFormatterComponent.lateLoadKey,
                                     properties: {
                                         dataFieldIds: {
                                             value: "first_brewed",
@@ -69,7 +79,8 @@ export const tableConfig: IWidget = {
                                 isActive: true,
                                 width: 275,
                                 formatter: {
-                                    componentType: RawFormatterComponent.lateLoadKey,
+                                    componentType:
+                                        RawFormatterComponent.lateLoadKey,
                                     properties: {
                                         dataFieldIds: {
                                             value: "description",

@@ -1,5 +1,4 @@
 {
-    "extends": "../../tsconfig.main.json",
     "compileOnSave": true,
     "compilerOptions": {
         "baseUrl": ".",
@@ -16,5 +15,6 @@
         "lib": ["ES2019", "DOM"],
         "importHelpers": true
     },
-    "exclude": ["node_modules", "atoms.d.ts"]
+    "exclude": ["node_modules", "atoms.d.ts"],
+    "extends": "../../tsconfig.main.json"
 }

@@ -1,4 +1,4 @@
-import {ContentComponent} from "./content.component";
+import { ContentComponent } from "./content.component";
 
 describe("components >", () => {
     describe("content >", () => {

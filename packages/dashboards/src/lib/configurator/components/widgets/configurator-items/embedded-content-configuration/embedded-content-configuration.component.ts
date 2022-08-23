@@ -1,10 +1,23 @@
-
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    SimpleChanges,
+} from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { EmbeddedContentMode, IInfoMessage } from "../../../../../components/types";
+import {
+    EmbeddedContentMode,
+    IInfoMessage,
+} from "../../../../../components/types";
 import { IHasChangeDetector, IHasForm } from "../../../../../types";
 
 @Component({
@@ -13,8 +26,9 @@ import { IHasChangeDetector, IHasForm } from "../../../../../types";
     styleUrls: ["./embedded-content-configuration.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
-export class EmbeddedContentConfigurationComponent implements OnInit, OnChanges, IHasChangeDetector, IHasForm, OnDestroy {
+export class EmbeddedContentConfigurationComponent
+    implements OnInit, OnChanges, IHasChangeDetector, IHasForm, OnDestroy
+{
     public static lateLoadKey = "EmbeddedContentConfigurationComponent";
 
     @Input() mode = EmbeddedContentMode.URL;
@@ -59,7 +73,10 @@ export class EmbeddedContentConfigurationComponent implements OnInit, OnChanges,
         return this.form.get("customEmbeddedContent");
     }
 
-    constructor(public changeDetector: ChangeDetectorRef, private formBuilder: FormBuilder) { }
+    constructor(
+        public changeDetector: ChangeDetectorRef,
+        private formBuilder: FormBuilder
+    ) {}
 
     public ngOnInit(): void {
         this.initializeForm();
@@ -86,30 +103,34 @@ export class EmbeddedContentConfigurationComponent implements OnInit, OnChanges,
     }
 
     private initializeForm() {
-        this.modeValue?.valueChanges.pipe(
-            takeUntil(this.destroyed$)
-        ).subscribe((value) => {
-            if (value === EmbeddedContentMode.URL) {
-                this.customEmbeddedContentValue?.setValue(this.form.get("urlCustomContent")?.value);
-                this.htmlCustomContent?.disable();
-                this.urlCustomContent?.enable();
-            } else if (value === EmbeddedContentMode.HTML) {
-                this.customEmbeddedContentValue?.setValue(this.form.get("htmlCustomContent")?.value);
-                this.urlCustomContent?.disable();
-                this.htmlCustomContent?.enable();
-            }
-        });
+        this.modeValue?.valueChanges
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe((value) => {
+                if (value === EmbeddedContentMode.URL) {
+                    this.customEmbeddedContentValue?.setValue(
+                        this.form.get("urlCustomContent")?.value
+                    );
+                    this.htmlCustomContent?.disable();
+                    this.urlCustomContent?.enable();
+                } else if (value === EmbeddedContentMode.HTML) {
+                    this.customEmbeddedContentValue?.setValue(
+                        this.form.get("htmlCustomContent")?.value
+                    );
+                    this.urlCustomContent?.disable();
+                    this.htmlCustomContent?.enable();
+                }
+            });
 
-        this.urlCustomContent?.valueChanges.pipe(
-            takeUntil(this.destroyed$)
-        ).subscribe((value) => {
-            this.customEmbeddedContentValue?.setValue(value);
-        });
+        this.urlCustomContent?.valueChanges
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe((value) => {
+                this.customEmbeddedContentValue?.setValue(value);
+            });
 
-        this.htmlCustomContent?.valueChanges.pipe(
-            takeUntil(this.destroyed$)
-        ).subscribe((value) => {
-            this.customEmbeddedContentValue?.setValue(value);
-        });
+        this.htmlCustomContent?.valueChanges
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe((value) => {
+                this.customEmbeddedContentValue?.setValue(value);
+            });
     }
 }

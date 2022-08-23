@@ -1,12 +1,11 @@
 // Contextual backgrounds
 
 .bg-variant(@color, @colorName, @hoverColor, @hoverColorName) {
-  background-color: @color;
-  background-color: ~"var(--@{colorName},@{color})";
-  a&:hover,
-  a&:focus {
-    background-color: @hoverColor;
-    background-color: ~"var(--@{hoverColorName},@{hoverColor})";
-  }
+    background-color: @color;
+    background-color: ~"var(--@{colorName},@{color})";
+    a&:hover,
+    a&:focus {
+        background-color: @hoverColor;
+        background-color: ~"var(--@{hoverColorName},@{hoverColor})";
+    }
 }
-

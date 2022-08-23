@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, Inject, Optional } from "@angular/core";
+
 import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
 import {
     barAccessors,
@@ -29,18 +30,26 @@ import { XYChartComponent } from "../xy-chart.component";
 export class StackedBarChartComponent extends XYChartComponent {
     public static lateLoadKey = "StackedBarChartComponent";
 
-    constructor(@Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
-                @Optional() @Inject(DATA_SOURCE) dataSource: IDataSource,
-                                            timeseriesScalesService: TimeseriesScalesService,
-                                            changeDetector: ChangeDetectorRef) {
+    constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
+        @Optional() @Inject(DATA_SOURCE) dataSource: IDataSource,
+        timeseriesScalesService: TimeseriesScalesService,
+        changeDetector: ChangeDetectorRef
+    ) {
         super(eventBus, dataSource, timeseriesScalesService, changeDetector);
 
         this.valueAccessorKey = "value";
         // disable pointer events on bars to ensure the zoom drag target is the mouse interactive area rather than the bars
-        this.renderer = new BarRenderer({ highlightStrategy: new BarHighlightStrategy("x"), pointerEvents: false });
+        this.renderer = new BarRenderer({
+            highlightStrategy: new BarHighlightStrategy("x"),
+            pointerEvents: false,
+        });
     }
 
-    public mapSeriesSet(data: any[], scales: IXYScales): IChartAssistSeries<IAccessors>[] {
+    public mapSeriesSet(
+        data: any[],
+        scales: IXYScales
+    ): IChartAssistSeries<IAccessors>[] {
         if (scales.x instanceof TimeIntervalScale) {
             // @ts-ignore
             this.accessors.data.thickness = undefined; // allow the renderer to calculate thickness
@@ -52,7 +61,9 @@ export class StackedBarChartComponent extends XYChartComponent {
         return super.mapSeriesSet(data, scales);
     }
 
-    protected createAccessors(colorProvider: IValueProvider<string>): IAccessors {
+    protected createAccessors(
+        colorProvider: IValueProvider<string>
+    ): IAccessors {
         const accessors = barAccessors({ horizontal: false }, colorProvider);
         accessors.data.category = (d) => d.x;
         accessors.data.value = (d) => d.y;
@@ -65,5 +76,4 @@ export class StackedBarChartComponent extends XYChartComponent {
         chart.addPlugin(new InteractionLabelPlugin());
         return new ChartAssist(chart, stack, palette);
     }
-
 }

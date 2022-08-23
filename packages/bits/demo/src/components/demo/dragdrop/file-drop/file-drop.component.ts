@@ -1,4 +1,11 @@
-import { Component, EventEmitter, HostBinding, HostListener, Input, Output } from "@angular/core";
+import {
+    Component,
+    EventEmitter,
+    HostBinding,
+    HostListener,
+    Input,
+    Output,
+} from "@angular/core";
 
 import { FileDropState } from "./public-api";
 
@@ -12,7 +19,7 @@ import { FileDropState } from "./public-api";
     templateUrl: "./file-drop.component.html",
     styleUrls: ["./file-drop.component.less"],
     host: {
-        "class": "d-inline-flex align-items-center justify-content-center",
+        class: "d-inline-flex align-items-center justify-content-center",
     },
 })
 export class FileDropExampleComponent {
@@ -27,8 +34,12 @@ export class FileDropExampleComponent {
     // Drop is handled as regular JS event in parent component.
     // enter and leave can't be since dragenter and dragleave for parent component are different
 
-    @HostBinding("class.nui-file-drop--active") get hasActiveClass() { return this.state === FileDropState.active; }
-    @HostBinding("class.nui-file-drop--error") get hasErrorClass() { return this.state === FileDropState.error; }
+    @HostBinding("class.nui-file-drop--active") get hasActiveClass() {
+        return this.state === FileDropState.active;
+    }
+    @HostBinding("class.nui-file-drop--error") get hasErrorClass() {
+        return this.state === FileDropState.error;
+    }
 
     // this solves problem with opening the file since browser fires dragover by default
     @HostListener("window:dragover", ["$event"])

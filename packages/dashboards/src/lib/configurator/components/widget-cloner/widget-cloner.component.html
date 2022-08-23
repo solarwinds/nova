@@ -1,35 +1,47 @@
-<nui-configurator-heading configuratorTitle="Creating Widget" i18n-configuratorTitle
-                          (close)="onCancel()"
-                          [disableCloseButton]="busy"></nui-configurator-heading>
-<nui-dashwiz [hideHeader]="true"
-             [canProceed]="!!widgetTemplate"
-             [canFinish]="canFinish()"
-             finishText="Create Widget" i18n-finishText
-             [navigationControl]="navigationControl"
-             (finish)="onFinish()"
-             (cancel)="onCancel()"
-             (stepNavigated)="onStepNavigated($event)">
-    <nui-dashwiz-step [stepTemplate]="step1"
-                      nextText="Customize" i18n-nextText>
+<nui-configurator-heading
+    configuratorTitle="Creating Widget"
+    i18n-configuratorTitle
+    (close)="onCancel()"
+    [disableCloseButton]="busy"
+></nui-configurator-heading>
+<nui-dashwiz
+    [hideHeader]="true"
+    [canProceed]="!!widgetTemplate"
+    [canFinish]="canFinish()"
+    finishText="Create Widget"
+    i18n-finishText
+    [navigationControl]="navigationControl"
+    (finish)="onFinish()"
+    (cancel)="onCancel()"
+    (stepNavigated)="onStepNavigated($event)"
+>
+    <nui-dashwiz-step [stepTemplate]="step1" nextText="Customize" i18n-nextText>
     </nui-dashwiz-step>
     <nui-dashwiz-step [stepTemplate]="step2"></nui-dashwiz-step>
 </nui-dashwiz>
 
 <ng-template #step1>
     <div class="p-4 h-100">
-        <ng-container nuiComponentPortal
-                      [componentType]="cloneSelectionComponentType"
-                      [outputs]="['widgetSelected']"
-                      (output)="onSelect($event.payload)"
-                      #componentPortal="nuiComponentPortal">
-            <ng-template [cdkPortalOutlet]="componentPortal.portal"
-                         (attached)="componentPortal.attached($event)"></ng-template>
+        <ng-container
+            nuiComponentPortal
+            [componentType]="cloneSelectionComponentType"
+            [outputs]="['widgetSelected']"
+            (output)="onSelect($event.payload)"
+            #componentPortal="nuiComponentPortal"
+        >
+            <ng-template
+                [cdkPortalOutlet]="componentPortal.portal"
+                (attached)="componentPortal.attached($event)"
+            ></ng-template>
         </ng-container>
     </div>
 </ng-template>
 
 <ng-template #step2>
     <div [formGroup]="form">
-        <nui-pizzagna #formPizzagnaComponent [(pizzagna)]="formPizzagna"></nui-pizzagna>
+        <nui-pizzagna
+            #formPizzagnaComponent
+            [(pizzagna)]="formPizzagna"
+        ></nui-pizzagna>
     </div>
 </ng-template>

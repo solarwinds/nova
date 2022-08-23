@@ -7,7 +7,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-toolbar-splitter",
     template: "",
-    host: { "class" : "nui-toolbar-splitter nui-flex-item-grow" },
+    host: { class: "nui-toolbar-splitter nui-flex-item-grow" },
 })
-
 export class ToolbarSplitterComponent {}

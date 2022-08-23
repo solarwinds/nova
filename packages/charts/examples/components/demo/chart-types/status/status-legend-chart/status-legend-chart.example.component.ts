@@ -1,11 +1,25 @@
 import { Component, OnInit } from "@angular/core";
-import { IconService } from "@nova-ui/bits";
-import {
-    BandScale, BarHighlightStrategy, BarRenderer, BarStatusGridConfig, Chart, ChartAssist, ChartPalette, CHART_PALETTE_CS_S, IXYScales, MappedValueProvider,
-    statusAccessors, StatusAccessors, SvgMarker, TimeScale, XYGrid,
-} from "@nova-ui/charts";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
+
+import { IconService } from "@nova-ui/bits";
+import {
+    BandScale,
+    BarHighlightStrategy,
+    BarRenderer,
+    BarStatusGridConfig,
+    Chart,
+    ChartAssist,
+    ChartPalette,
+    CHART_PALETTE_CS_S,
+    IXYScales,
+    MappedValueProvider,
+    statusAccessors,
+    StatusAccessors,
+    SvgMarker,
+    TimeScale,
+    XYGrid,
+} from "@nova-ui/charts";
 
 enum Status {
     Unknown = "unknown",
@@ -29,8 +43,7 @@ export class StatusLegendChartExampleComponent implements OnInit {
     public legendIcon$: Observable<any>;
     public legendBackground$: Observable<any>;
 
-    constructor(private iconService: IconService) {
-    }
+    constructor(private iconService: IconService) {}
 
     public ngOnInit() {
         const chart = new Chart(new XYGrid(new BarStatusGridConfig()));
@@ -39,16 +52,19 @@ export class StatusLegendChartExampleComponent implements OnInit {
         const statusColors = createColorProvider();
         const accessors = statusAccessors(statusColors);
         // Thickness accessor should be used to specify which status corresponds to a thin bar or thick
-        accessors.data.thickness = (data: any) => data.status === Status.Up ? BarRenderer.THIN : BarRenderer.THICK;
+        accessors.data.thickness = (data: any) =>
+            data.status === Status.Up ? BarRenderer.THIN : BarRenderer.THICK;
 
-        const renderer = new BarRenderer({ highlightStrategy: new BarHighlightStrategy("x") });
+        const renderer = new BarRenderer({
+            highlightStrategy: new BarHighlightStrategy("x"),
+        });
 
         const scales: IXYScales = {
             x: new TimeScale(),
             y: new BandScale().fixDomain(StatusAccessors.STATUS_DOMAIN),
         };
 
-        const seriesSet = getData().map(d => ({
+        const seriesSet = getData().map((d) => ({
             ...d,
             accessors,
             renderer,
@@ -58,22 +74,19 @@ export class StatusLegendChartExampleComponent implements OnInit {
         this.chartAssist.chart.update(seriesSet);
 
         const statusMarkers = createMarkerProvider(this.iconService);
-        const palette = new ChartPalette(statusColors, { backgroundOpacity: OPACITY_BACKGROUND_EMPHASIZED });
+        const palette = new ChartPalette(statusColors, {
+            backgroundOpacity: OPACITY_BACKGROUND_EMPHASIZED,
+        });
         // legendLabelData$ is a stream of data that can be used to display data in legend
         // (last value while user does not interact with chart and current value while interacting).
         // This can help to generate stream of labels/icons/backgrounds:
-        this.legendLabel$ = this.chartAssist.legendLabelData$(seriesSet[0])
-            .pipe(
-                map(d => d.status)
-            );
-        this.legendIcon$ = this.legendLabel$
-            .pipe(
-                map(statusMarkers.get)
-            );
-        this.legendBackground$ = this.legendLabel$
-            .pipe(
-                map(palette.backgroundColors.get)
-            );
+        this.legendLabel$ = this.chartAssist
+            .legendLabelData$(seriesSet[0])
+            .pipe(map((d) => d.status));
+        this.legendIcon$ = this.legendLabel$.pipe(map(statusMarkers.get));
+        this.legendBackground$ = this.legendLabel$.pipe(
+            map(palette.backgroundColors.get)
+        );
     }
 }
 
@@ -88,7 +101,8 @@ function createColorProvider() {
 }
 
 function createMarkerProvider(iconService: IconService) {
-    const getStatusMarker = (status: string) => new SvgMarker(iconService.getStatusIcon(status));
+    const getStatusMarker = (status: string) =>
+        new SvgMarker(iconService.getStatusIcon(status));
 
     return new MappedValueProvider({
         [Status.Unknown]: getStatusMarker(Status.Unknown),
@@ -101,30 +115,32 @@ function createMarkerProvider(iconService: IconService) {
 
 /* Chart data */
 function getData() {
-    return [{
-        id: "series-1",
-        name: "Series 1",
-        data: [
-            {
-                status: Status.Up,
-                start: new Date(2012, 5, 3),
-                end: new Date(2012, 5, 6),
-            },
-            {
-                status: Status.Down,
-                start: new Date(2012, 5, 6),
-                end: new Date(2012, 5, 17),
-            },
-            {
-                status: Status.Warning,
-                start: new Date(2012, 5, 17),
-                end: new Date(2012, 5, 18),
-            },
-        ].map(d => ({
-            value: d.end,
-            status: d.status,
-            start: d.start,
-            end: d.end,
-        })),
-    }];
+    return [
+        {
+            id: "series-1",
+            name: "Series 1",
+            data: [
+                {
+                    status: Status.Up,
+                    start: new Date(2012, 5, 3),
+                    end: new Date(2012, 5, 6),
+                },
+                {
+                    status: Status.Down,
+                    start: new Date(2012, 5, 6),
+                    end: new Date(2012, 5, 17),
+                },
+                {
+                    status: Status.Warning,
+                    start: new Date(2012, 5, 17),
+                    end: new Date(2012, 5, 18),
+                },
+            ].map((d) => ({
+                value: d.end,
+                status: d.status,
+                start: d.start,
+                end: d.end,
+            })),
+        },
+    ];
 }

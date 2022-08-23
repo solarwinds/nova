@@ -17,14 +17,14 @@ export class PathMarker implements IChartMarker {
         this.element = document.createElement("path");
 
         this.setAttributes({
-            "class": "nui-chart-element-marker nui-chart--path__outline",
+            class: "nui-chart-element-marker nui-chart--path__outline",
             "vector-effect": "non-scaling-stroke",
-            "d": d,
+            d: d,
         });
     }
 
     public setColor(color: string): void {
-        this.setAttributes({"fill": color});
+        this.setAttributes({ fill: color });
     }
 
     private setAttributes(attrs: { [key: string]: string }) {
@@ -42,5 +42,4 @@ export class PathMarker implements IChartMarker {
     protected updateSvg() {
         this.svg = this.element.outerHTML;
     }
-
 }

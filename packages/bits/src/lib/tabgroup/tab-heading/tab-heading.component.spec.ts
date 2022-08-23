@@ -9,9 +9,7 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [
-                    TabHeadingComponent,
-                ],
+                declarations: [TabHeadingComponent],
             });
             componentFixture = TestBed.createComponent(TabHeadingComponent);
             subject = componentFixture.componentInstance;

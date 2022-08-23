@@ -18,7 +18,6 @@ import {
     host: { "[attr.role]": "role" },
 })
 export class RepeatItemComponent {
-
     @Input() public clickable = false;
 
     @Input() public nowrap = false;
@@ -29,5 +28,7 @@ export class RepeatItemComponent {
 
     @Output() public rowClicked = new EventEmitter<MouseEvent>();
 
-    get role(): string { return this.selectable ? "option" : "listitem"; }
+    get role(): string {
+        return this.selectable ? "option" : "listitem";
+    }
 }

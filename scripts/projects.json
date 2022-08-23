@@ -1,26 +1,26 @@
 [
     {
-        "path": ".",
-        "dependencies": []
+        "dependencies": [],
+        "path": "."
     },
     {
-        "path": "packages/bits",
-        "dependencies": []
+        "dependencies": [],
+        "path": "packages/bits"
     },
     {
-        "path": "packages/bits/schematics",
-        "dependencies": []
+        "dependencies": [],
+        "path": "packages/bits/schematics"
     },
     {
-        "path": "packages/dashboards",
-        "dependencies": ["@nova-ui/bits", "@nova-ui/charts"]
+        "dependencies": ["@nova-ui/bits", "@nova-ui/charts"],
+        "path": "packages/dashboards"
     },
     {
-        "path": "packages/dashboards/schematics",
-        "dependencies": []
+        "dependencies": [],
+        "path": "packages/dashboards/schematics"
     },
     {
-        "path": "packages/charts",
-        "dependencies": ["@nova-ui/bits"]
+        "dependencies": ["@nova-ui/bits"],
+        "path": "packages/charts"
     }
 ]

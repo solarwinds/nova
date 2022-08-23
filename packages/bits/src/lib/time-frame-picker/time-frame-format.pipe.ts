@@ -30,6 +30,11 @@ import { ITimeframe } from "./public-api";
 })
 export class TimeFrameFormatPipe implements PipeTransform {
     transform(timeFrame: ITimeframe, momentFormat: string = "LLL"): string {
-        return timeFrame ? timeFrame.title || `${timeFrame.startDatetime.format(momentFormat)} - ${timeFrame.endDatetime.format(momentFormat)}` : "";
+        return timeFrame
+            ? timeFrame.title ||
+                  `${timeFrame.startDatetime.format(
+                      momentFormat
+                  )} - ${timeFrame.endDatetime.format(momentFormat)}`
+            : "";
     }
 }

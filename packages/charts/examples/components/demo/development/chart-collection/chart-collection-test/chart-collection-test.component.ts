@@ -1,6 +1,25 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChildren } from "@angular/core";
 import {
-    Chart, ChartAssist, ChartComponent, IAccessors, IChart, IChartAssistSeries, LineAccessors, LinearScale, LineRenderer, Scales, TimeScale, XYGrid,
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    OnInit,
+    QueryList,
+    ViewChildren,
+} from "@angular/core";
+
+import {
+    Chart,
+    ChartAssist,
+    ChartComponent,
+    IAccessors,
+    IChart,
+    IChartAssistSeries,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    Scales,
+    TimeScale,
+    XYGrid,
 } from "@nova-ui/charts";
 
 import { DataGenerator } from "../../../../../data-generator";
@@ -43,20 +62,28 @@ export class ChartCollectionTestComponent implements OnInit, AfterViewInit {
         }
     }
 
-    public ngOnInit() {
-    }
+    public ngOnInit() {}
 
     public ngAfterViewInit() {
         this.myCharts.forEach((myChart, index: number) => {
-            myChart.chartAssist.update(this.generateChartAssistSeriesSet(myChart, 4, index));
+            myChart.chartAssist.update(
+                this.generateChartAssistSeriesSet(myChart, 4, index)
+            );
         });
         this.changeDetection.detectChanges();
     }
 
-    private generateChartAssistSeriesSet(myChart: IMyChart, dataSeriesCount: number, index: number): IChartAssistSeries<IAccessors>[] {
-        const timeLineSeriesSet = this.generateDataSeriesSet(dataSeriesCount, index);
+    private generateChartAssistSeriesSet(
+        myChart: IMyChart,
+        dataSeriesCount: number,
+        index: number
+    ): IChartAssistSeries<IAccessors>[] {
+        const timeLineSeriesSet = this.generateDataSeriesSet(
+            dataSeriesCount,
+            index
+        );
 
-        return timeLineSeriesSet.map(dataSeries => ({
+        return timeLineSeriesSet.map((dataSeries) => ({
             ...dataSeries,
             scales: myChart.scales,
             renderer: myChart.renderer,

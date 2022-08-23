@@ -18,33 +18,36 @@ interface IApiResponse {
 @Injectable()
 export class HttpMockService {
     private fruitsList = [
-        $localize `apple`,
-        $localize `orange`,
-        $localize `banana`,
-        $localize `watermelon`,
-        $localize `peach`,
-        $localize `pineapple`,
-        $localize `lemon`,
-        $localize `mango`,
+        $localize`apple`,
+        $localize`orange`,
+        $localize`banana`,
+        $localize`watermelon`,
+        $localize`peach`,
+        $localize`pineapple`,
+        $localize`lemon`,
+        $localize`mango`,
     ];
     private vegetablesList = [
-        $localize `tomato`,
-        $localize `cucumber`,
-        $localize `cabbage`,
-        $localize `pepper`,
-        $localize `carrot`,
-        $localize `onion`,
-        $localize `broccoli`,
-        $localize `corn`,
+        $localize`tomato`,
+        $localize`cucumber`,
+        $localize`cabbage`,
+        $localize`pepper`,
+        $localize`carrot`,
+        $localize`onion`,
+        $localize`broccoli`,
+        $localize`corn`,
     ];
 
     private totalItems = 1337;
 
-    getNodeItems(nodeId: string, page: number, pageSize: number): Observable<IApiResponse> {
+    getNodeItems(
+        nodeId: string,
+        page: number,
+        pageSize: number
+    ): Observable<IApiResponse> {
         // nodeId can be handled on API depending on app needs
-        const itemList = nodeId === "Vegetables"
-            ? this.vegetablesList
-            : this.fruitsList;
+        const itemList =
+            nodeId === "Vegetables" ? this.vegetablesList : this.fruitsList;
 
         const items: FoodNode[] = Array.from({ length: pageSize }).map(() => ({
             name: this.getRandomFrom(itemList),

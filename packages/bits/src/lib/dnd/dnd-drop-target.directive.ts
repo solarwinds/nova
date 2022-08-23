@@ -10,7 +10,16 @@ import {
     Renderer2,
 } from "@angular/core";
 import { combineLatest, fromEvent, merge, Observable, of, Subject } from "rxjs";
-import { distinctUntilChanged, map, mapTo, shareReplay, startWith, switchMap, takeUntil, tap } from "rxjs/operators";
+import {
+    distinctUntilChanged,
+    map,
+    mapTo,
+    shareReplay,
+    startWith,
+    switchMap,
+    takeUntil,
+    tap,
+} from "rxjs/operators";
 
 @Directive({
     selector: "[cdkDropList][nuiDndDropTarget]",
@@ -20,13 +29,15 @@ import { distinctUntilChanged, map, mapTo, shareReplay, startWith, switchMap, ta
         // to let the user customize drop zone only via css
         "[class.nui-dnd-dropzone]": "true",
         "[class.nui-dnd-dropzone--active]": "isDropZoneActive",
-        "[class.nui-dnd-dropzone--drop-allowed]": "isDropZoneActive && canLastDragItemBeDropped",
-        "[class.nui-dnd-dropzone--drop-not-allowed]": "isDropZoneActive && canLastDragItemBeDropped === false",
+        "[class.nui-dnd-dropzone--drop-allowed]":
+            "isDropZoneActive && canLastDragItemBeDropped",
+        "[class.nui-dnd-dropzone--drop-not-allowed]":
+            "isDropZoneActive && canLastDragItemBeDropped === false",
     },
 })
 export class DndDropTargetDirective implements AfterContentInit, OnDestroy {
-
-    @ContentChildren(CdkDrag, {descendants: true}) draggables: QueryList<CdkDrag>;
+    @ContentChildren(CdkDrag, { descendants: true })
+    draggables: QueryList<CdkDrag>;
 
     @Input() canBeDropped: (item: any, dropListRef?: CdkDropList) => boolean;
 
@@ -40,7 +51,10 @@ export class DndDropTargetDirective implements AfterContentInit, OnDestroy {
     public get isDropZoneActive(): boolean {
         // Using cdk default isReceiving and isDragging (When the item is assigned without drop to dropList,
         // isReceiving returns false, and we replace it with isDragging to maintain the expected behavior.)
-        return this.targetDropList._dropListRef.isReceiving() || this.targetDropList._dropListRef.isDragging();
+        return (
+            this.targetDropList._dropListRef.isReceiving() ||
+            this.targetDropList._dropListRef.isDragging()
+        );
     }
 
     private _canLastDragItemBeDropped: boolean;
@@ -51,17 +65,34 @@ export class DndDropTargetDirective implements AfterContentInit, OnDestroy {
     }
 
     // canDrop primitive value is used for the host element class binding
-    constructor(private targetDropList: CdkDropList, private renderer: Renderer2, hostElement: ElementRef) {
-
-        const mouseEnter$: Observable<unknown> = fromEvent(hostElement.nativeElement, "mouseenter");
+    constructor(
+        private targetDropList: CdkDropList,
+        private renderer: Renderer2,
+        hostElement: ElementRef
+    ) {
+        const mouseEnter$: Observable<unknown> = fromEvent(
+            hostElement.nativeElement,
+            "mouseenter"
+        );
         // Cdk bug fix: When an item is dragged outside of the container but not into another container,
         // the placeholder is not removed. So, to fix this, we're removing the placeholder if the user's mouse
         // cursor leaves the container.
-        const mouseLeave$: Observable<unknown> = fromEvent(hostElement.nativeElement, "mouseleave");
+        const mouseLeave$: Observable<unknown> = fromEvent(
+            hostElement.nativeElement,
+            "mouseleave"
+        );
 
         // Events streams for switching the drop zone state.
-        const showDropZoneTrigger$: Observable<unknown> = merge(mouseEnter$, this.itemDragStarted$, this.targetDropList.entered);
-        const hideDropZoneTrigger$: Observable<unknown> = merge(mouseLeave$, this.targetDropList.dropped, this.targetDropList.exited);
+        const showDropZoneTrigger$: Observable<unknown> = merge(
+            mouseEnter$,
+            this.itemDragStarted$,
+            this.targetDropList.entered
+        );
+        const hideDropZoneTrigger$: Observable<unknown> = merge(
+            mouseLeave$,
+            this.targetDropList.dropped,
+            this.targetDropList.exited
+        );
 
         // Main placeholder stream that decides to show/hide drop zone
         this.showDropZone$ = merge(
@@ -71,18 +102,23 @@ export class DndDropTargetDirective implements AfterContentInit, OnDestroy {
 
         // Merging observables to obtain reliable draggedItem reference
         const draggedItem$: Observable<CdkDrag> = merge(
-            this.targetDropList.entered.pipe(map(event => event.item)),
+            this.targetDropList.entered.pipe(map((event) => event.item)),
             this.itemDragStarted$
         ).pipe(shareReplay());
 
         // Drop zone state stream used to return the result of the predicate provided by user.
         // Here we're taking the current moving item in case the drop zone is active to be able to execute the callback.
-        this.canLastDragItemBeDropped$ = combineLatest<Observable<boolean>, Observable<CdkDrag>>([this.showDropZone$, draggedItem$]).pipe(
+        this.canLastDragItemBeDropped$ = combineLatest<
+            Observable<boolean>,
+            Observable<CdkDrag>
+        >([this.showDropZone$, draggedItem$]).pipe(
             switchMap(([showDropZone, drag]) => {
                 let result: boolean = false;
                 if (showDropZone) {
                     const ACCEPT_ALL_ITEMS: boolean = true;
-                    result = this.canBeDropped?.(drag.data, this.targetDropList) ?? ACCEPT_ALL_ITEMS;
+                    result =
+                        this.canBeDropped?.(drag.data, this.targetDropList) ??
+                        ACCEPT_ALL_ITEMS;
                 }
                 this._canLastDragItemBeDropped = result;
                 return of(result);
@@ -93,18 +129,28 @@ export class DndDropTargetDirective implements AfterContentInit, OnDestroy {
 
         // If consumer will not subscribe in the template to canDrop$ we should set proper classes anyway.
         // That's why we're subscribing also here, the number of observables will remain the same because of shareReplay
-        this.canLastDragItemBeDropped$.pipe(takeUntil(this._destroy$)).subscribe();
+        this.canLastDragItemBeDropped$
+            .pipe(takeUntil(this._destroy$))
+            .subscribe();
     }
 
     public ngAfterContentInit(): void {
         // Using this to provide current draggable item reference that is needed for predicate validation
         // cdkDropList is not throwing any event on dragStart, then we should subscribe to dragStartEventEmitter from item
-        this.draggables.changes.pipe(
-            startWith(this.draggables.toArray()),
-            switchMap((items: CdkDrag[]) => merge<CdkDragStart>(...items.map((drag: CdkDrag) => drag.started))),
-            tap((item: CdkDragStart) => this.itemDragStarted$.next(item.source)),
-            takeUntil(this._destroy$)
-        ).subscribe();
+        this.draggables.changes
+            .pipe(
+                startWith(this.draggables.toArray()),
+                switchMap((items: CdkDrag[]) =>
+                    merge<CdkDragStart>(
+                        ...items.map((drag: CdkDrag) => drag.started)
+                    )
+                ),
+                tap((item: CdkDragStart) =>
+                    this.itemDragStarted$.next(item.source)
+                ),
+                takeUntil(this._destroy$)
+            )
+            .subscribe();
     }
 
     public ngOnDestroy(): void {

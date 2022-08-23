@@ -1,7 +1,8 @@
 import { Directive, OnDestroy } from "@angular/core";
-import { LoggerService, uuid } from "@nova-ui/bits";
 import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
+
+import { LoggerService, uuid } from "@nova-ui/bits";
 
 import { IRegistryAddOptions } from "./types";
 
@@ -10,10 +11,12 @@ type IRegistryMap<T> = Record<string, T>;
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class RegistryService<T = Object> implements OnDestroy {
-    protected state$: BehaviorSubject<IRegistryMap<T>> =
-        new BehaviorSubject<IRegistryMap<T>>({});
+    protected state$: BehaviorSubject<IRegistryMap<T>> = new BehaviorSubject<
+        IRegistryMap<T>
+    >({});
 
-    public stateChanged$: Observable<T[]> = this.state$.asObservable()
+    public stateChanged$: Observable<T[]> = this.state$
+        .asObservable()
         .pipe(map(() => this.getItems()));
 
     private _stateVersion: string;
@@ -27,18 +30,25 @@ export abstract class RegistryService<T = Object> implements OnDestroy {
         return this._isEmpty;
     }
 
-    protected constructor(private logger: LoggerService,
-        private className?: string) {
-    }
+    protected constructor(
+        private logger: LoggerService,
+        private className?: string
+    ) {}
 
     public addItems(
         items: T[],
-        options: IRegistryAddOptions = { overrideExisting: true }): void {
+        options: IRegistryAddOptions = { overrideExisting: true }
+    ): void {
         const storageValue: IRegistryMap<T> = this.state$.value;
 
         items.forEach((item: T) => {
-            if (storageValue[this.getItemKey(item)] && !options.overrideExisting) {
-                this.logger.warn(`Logger - ${this.className}: item with ${ this.getItemKey(item) }
+            if (
+                storageValue[this.getItemKey(item)] &&
+                !options.overrideExisting
+            ) {
+                this.logger.warn(`Logger - ${
+                    this.className
+                }: item with ${this.getItemKey(item)}
                     is already registered. Skipping.`);
 
                 return;
@@ -78,4 +88,3 @@ export abstract class RegistryService<T = Object> implements OnDestroy {
         this._stateVersion = uuid();
     }
 }
-

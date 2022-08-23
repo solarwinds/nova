@@ -11,7 +11,7 @@
     height: @nui-tag-height;
     border-radius: @nui-tag-border-radius;
     font-size: @nui-font-size-small;
-    border: @nui-line-default solid  gray;
+    border: @nui-line-default solid gray;
     .setCssVariable(border-color, gray);
 }
 
@@ -42,29 +42,27 @@
         .setCssVariable(color, nui-color-text-light);
     }
 
-
     &-with-border {
         &-info {
-            .setCssVariable(background, nui-color-semantic-info-bg); 
-            .setCssVariable(border-color, nui-color-line-info); 
+            .setCssVariable(background, nui-color-semantic-info-bg);
+            .setCssVariable(border-color, nui-color-line-info);
         }
-    
+
         &-ok {
             .setCssVariable(background, nui-color-semantic-ok-bg);
-            .setCssVariable(border-color, nui-color-line-ok); 
+            .setCssVariable(border-color, nui-color-line-ok);
         }
-    
+
         &-warning {
             .setCssVariable(background, nui-color-semantic-warning-bg);
-            .setCssVariable(border-color, nui-color-line-warning); 
+            .setCssVariable(border-color, nui-color-line-warning);
         }
-    
+
         &-critical {
-            .setCssVariable(background, nui-color-semantic-critical-bg); 
-            .setCssVariable(border-color, nui-color-line-critical); 
+            .setCssVariable(background, nui-color-semantic-critical-bg);
+            .setCssVariable(border-color, nui-color-line-critical);
         }
     }
-
 
     // classes for hover
     &-with-hover-styles {
@@ -117,5 +115,5 @@
         nui-icon {
             padding-right: 6px;
         }
-    }    
+    }
 }

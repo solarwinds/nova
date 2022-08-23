@@ -1,4 +1,5 @@
 import { browser, by, element, ElementFinder, Key } from "protractor";
+
 import { Atom } from "../../atom";
 import { assertA11y, Helpers } from "../../helpers";
 import { ComboboxV2Atom } from "../public_api";
@@ -78,5 +79,3 @@ describe("a11y: combobox-v2", () => {
         await assertA11y(browser, ComboboxV2Atom.CSS_CLASS, rulesToDisable);
     }, 100000);
 });
-
-

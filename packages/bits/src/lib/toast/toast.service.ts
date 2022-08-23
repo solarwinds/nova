@@ -1,20 +1,25 @@
-import {Injectable, Injector, SecurityContext} from "@angular/core";
-import {DomSanitizer} from "@angular/platform-browser";
+import { Injectable, Injector, SecurityContext } from "@angular/core";
+import { DomSanitizer } from "@angular/platform-browser";
 import _assign from "lodash/assign";
 import _cloneDeep from "lodash/cloneDeep";
 import _isArray from "lodash/isArray";
 import _toInteger from "lodash/toInteger";
-import {take} from "rxjs/operators";
+import { take } from "rxjs/operators";
 
-import {SwitchState} from "../../services/notification-args";
-import {NotificationService} from "../../services/notification-service";
-
-import {IActiveToast, IToastConfig, IToastDeclaration, IToastService, ToastPositionClass} from "./public-api";
-import {ToastContainerService} from "./toast-container.service";
-import {ToastInjector} from "./toast-injector";
-import {ToastPackage} from "./toast-package";
-import {ToastRef} from "./toast-ref";
-import {ToastComponent} from "./toast.component";
+import { SwitchState } from "../../services/notification-args";
+import { NotificationService } from "../../services/notification-service";
+import {
+    IActiveToast,
+    IToastConfig,
+    IToastDeclaration,
+    IToastService,
+    ToastPositionClass,
+} from "./public-api";
+import { ToastContainerService } from "./toast-container.service";
+import { ToastInjector } from "./toast-injector";
+import { ToastPackage } from "./toast-package";
+import { ToastRef } from "./toast-ref";
+import { ToastComponent } from "./toast.component";
 
 /**
  * __Name : __
@@ -26,7 +31,7 @@ import {ToastComponent} from "./toast.component";
 /**
  * @ignore
  */
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class ToastService implements IToastService {
     private index = 0;
     private currentlyActive = 0;
@@ -50,10 +55,12 @@ export class ToastService implements IToastService {
     private toastConfig: IToastConfig;
     private itemIdentificator: string | undefined;
 
-    constructor(private notificationService: NotificationService,
-                private toastContainerService: ToastContainerService,
-                private _injector: Injector,
-                private sanitizer: DomSanitizer) {
+    constructor(
+        private notificationService: NotificationService,
+        private toastContainerService: ToastContainerService,
+        private _injector: Injector,
+        private sanitizer: DomSanitizer
+    ) {
         this.toastConfig = _assign({}, this.defaultToastConfig);
     }
 
@@ -79,39 +86,75 @@ export class ToastService implements IToastService {
      * @return void
      */
     public success(toastDeclaration: IToastDeclaration): IActiveToast {
-        const toastInstance = this.buildNotification("success", toastDeclaration.message, toastDeclaration.title, this.applyConfig(toastDeclaration.options));
+        const toastInstance = this.buildNotification(
+            "success",
+            toastDeclaration.message,
+            toastDeclaration.title,
+            this.applyConfig(toastDeclaration.options)
+        );
         this.notifyHighlights(toastDeclaration.itemsToHighlight, "success");
-        this.toastRemoveHighlight(toastInstance, toastDeclaration.itemsToHighlight);
+        this.toastRemoveHighlight(
+            toastInstance,
+            toastDeclaration.itemsToHighlight
+        );
         return toastInstance;
     }
 
     public warning(toastDeclaration: IToastDeclaration): IActiveToast {
-        const toastInstance = this.buildNotification("warning", toastDeclaration.message, toastDeclaration.title, this.applyConfig(toastDeclaration.options));
+        const toastInstance = this.buildNotification(
+            "warning",
+            toastDeclaration.message,
+            toastDeclaration.title,
+            this.applyConfig(toastDeclaration.options)
+        );
         this.notifyHighlights(toastDeclaration.itemsToHighlight, "warning");
-        this.toastRemoveHighlight(toastInstance, toastDeclaration.itemsToHighlight);
+        this.toastRemoveHighlight(
+            toastInstance,
+            toastDeclaration.itemsToHighlight
+        );
         return toastInstance;
     }
 
     public error(toastDeclaration: IToastDeclaration): IActiveToast {
         const config = _cloneDeep(toastDeclaration.options);
 
-        if (toastDeclaration.options && toastDeclaration.options.stickyError && config) {
+        if (
+            toastDeclaration.options &&
+            toastDeclaration.options.stickyError &&
+            config
+        ) {
             config.timeOut = 0;
             config.extendedTimeOut = 0;
             config.progressBar = false;
             config.closeButton = false;
         }
 
-        const toastInstance = this.buildNotification("error", toastDeclaration.message, toastDeclaration.title, this.applyConfig(config));
+        const toastInstance = this.buildNotification(
+            "error",
+            toastDeclaration.message,
+            toastDeclaration.title,
+            this.applyConfig(config)
+        );
         this.notifyHighlights(toastDeclaration.itemsToHighlight, "error");
-        this.toastRemoveHighlight(toastInstance, toastDeclaration.itemsToHighlight);
+        this.toastRemoveHighlight(
+            toastInstance,
+            toastDeclaration.itemsToHighlight
+        );
         return toastInstance;
     }
 
     public info(toastDeclaration: IToastDeclaration): IActiveToast {
-        const toastInstance = this.buildNotification("info", toastDeclaration.message, toastDeclaration.title, this.applyConfig(toastDeclaration.options));
+        const toastInstance = this.buildNotification(
+            "info",
+            toastDeclaration.message,
+            toastDeclaration.title,
+            this.applyConfig(toastDeclaration.options)
+        );
         this.notifyHighlights(toastDeclaration.itemsToHighlight, "info");
-        this.toastRemoveHighlight(toastInstance, toastDeclaration.itemsToHighlight);
+        this.toastRemoveHighlight(
+            toastInstance,
+            toastDeclaration.itemsToHighlight
+        );
         return toastInstance;
     }
 
@@ -157,7 +200,10 @@ export class ToastService implements IToastService {
             return false;
         }
 
-        if (this.currentlyActive <= +this.toastConfig.maxOpened && this.toasts[this.currentlyActive]) {
+        if (
+            this.currentlyActive <= +this.toastConfig.maxOpened &&
+            this.toasts[this.currentlyActive]
+        ) {
             const activeToastRef = this.toasts[this.currentlyActive].toastRef;
             if (!activeToastRef.isInactive()) {
                 this.currentlyActive = this.currentlyActive + 1;
@@ -168,17 +214,22 @@ export class ToastService implements IToastService {
         return true;
     }
 
-    private toastRemoveHighlight(toastInstance: IActiveToast | null, itemsToRemoveHighlight?: any[]): void {
+    private toastRemoveHighlight(
+        toastInstance: IActiveToast | null,
+        itemsToRemoveHighlight?: any[]
+    ): void {
         if (toastInstance) {
-            toastInstance?.onHidden?.pipe(take(1))
-                .subscribe(() => {
-                    if (_isArray(itemsToRemoveHighlight) && itemsToRemoveHighlight.length > 0) {
-                        this.notificationService.post("Highlight", {
-                            highlightState: SwitchState.off,
-                            items: itemsToRemoveHighlight,
-                        });
-                    }
-                });
+            toastInstance?.onHidden?.pipe(take(1)).subscribe(() => {
+                if (
+                    _isArray(itemsToRemoveHighlight) &&
+                    itemsToRemoveHighlight.length > 0
+                ) {
+                    this.notificationService.post("Highlight", {
+                        highlightState: SwitchState.off,
+                        items: itemsToRemoveHighlight,
+                    });
+                }
+            });
         }
     }
 
@@ -189,11 +240,12 @@ export class ToastService implements IToastService {
         return resultConfig;
     }
 
-    private buildNotification(toastType: string,
-                              body: string | undefined,
-                              title: string | undefined,
-                              config: IToastConfig): IActiveToast {
-
+    private buildNotification(
+        toastType: string,
+        body: string | undefined,
+        title: string | undefined,
+        config: IToastConfig
+    ): IActiveToast {
         // max opened and auto dismiss = true
         if (body && config.preventDuplicates && this.isDuplicate(body)) {
             // TODO: Update buildNotification return type in V10 in the scope of NUI-5824
@@ -201,7 +253,9 @@ export class ToastService implements IToastService {
             return null;
         }
 
-        const toastContainer = this.toastContainerService.getContainerElement(config.positionClass);
+        const toastContainer = this.toastContainerService.getContainerElement(
+            config.positionClass
+        );
         let keepInactive = false;
         let sanitizedBody: string | undefined = body;
         let toastRef: ToastRef<ToastComponent>;
@@ -209,7 +263,10 @@ export class ToastService implements IToastService {
         let toastInjector: ToastInjector;
         let toastInstance: IActiveToast;
 
-        if (this.toastConfig.maxOpened && this.currentlyActive >= this.toastConfig.maxOpened) {
+        if (
+            this.toastConfig.maxOpened &&
+            this.currentlyActive >= this.toastConfig.maxOpened
+        ) {
             keepInactive = true;
             if (this.toastConfig.autoDismiss) {
                 this.clear(this.toasts[this.toasts.length - 1].toastId);
@@ -219,7 +276,9 @@ export class ToastService implements IToastService {
         this.index = this.index + 1;
 
         if (body && config.enableHtml) {
-            sanitizedBody = <string>this.sanitizer.sanitize(SecurityContext.HTML, body);
+            sanitizedBody = <string>(
+                this.sanitizer.sanitize(SecurityContext.HTML, body)
+            );
         }
 
         toastRef = new ToastRef(this.toastContainerService);
@@ -232,7 +291,11 @@ export class ToastService implements IToastService {
             toastRef
         );
         toastInjector = new ToastInjector(toastPackage, this._injector);
-        toastRef.componentInstance = this.toastContainerService.attachToast(ToastComponent, toastInjector, !!config.newestOnTop);
+        toastRef.componentInstance = this.toastContainerService.attachToast(
+            ToastComponent,
+            toastInjector,
+            !!config.newestOnTop
+        );
         toastInstance = {
             toastId: this.index,
             body: sanitizedBody,
@@ -266,7 +329,9 @@ export class ToastService implements IToastService {
         return false;
     }
 
-    private findToast(toastId: number): { index: number, activeToast: IActiveToast } | null {
+    private findToast(
+        toastId: number
+    ): { index: number; activeToast: IActiveToast } | null {
         for (let i = 0; i < this.toasts.length; i++) {
             if (this.toasts[i].toastId === toastId) {
                 return { index: i, activeToast: this.toasts[i] };
@@ -276,7 +341,10 @@ export class ToastService implements IToastService {
         return null;
     }
 
-    private notifyHighlights = (itemsToHighlight: any[] | null | undefined, status: string): void => {
+    private notifyHighlights = (
+        itemsToHighlight: any[] | null | undefined,
+        status: string
+    ): void => {
         if (itemsToHighlight) {
             this.notificationService.post("Highlight", {
                 highlightState: SwitchState.on,
@@ -285,5 +353,5 @@ export class ToastService implements IToastService {
                 itemIdentificator: this.itemIdentificator,
             });
         }
-    }
+    };
 }

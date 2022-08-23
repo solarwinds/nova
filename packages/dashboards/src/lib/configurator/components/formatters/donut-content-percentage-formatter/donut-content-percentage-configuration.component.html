@@ -1,14 +1,17 @@
-
 <div [formGroup]="form">
     <div class="mt-4">
-        <nui-form-field caption="Metrics"
-                        i18n-caption
-                        class="mb-3"
-                        [control]="currentMetric">
+        <nui-form-field
+            caption="Metrics"
+            i18n-caption
+            class="mb-3"
+            [control]="currentMetric"
+        >
             <nui-select-v2 formControlName="currentMetric">
-                <nui-select-v2-option *ngFor="let itemValue of dsOutput?.result"
-                                      [value]="itemValue?.id">
-                    {{itemValue?.name}}
+                <nui-select-v2-option
+                    *ngFor="let itemValue of dsOutput?.result"
+                    [value]="itemValue?.id"
+                >
+                    {{ itemValue?.name }}
                 </nui-select-v2-option>
             </nui-select-v2>
             <nui-validation-message for="required" i18n>

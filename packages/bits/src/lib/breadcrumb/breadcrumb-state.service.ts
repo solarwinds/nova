@@ -8,27 +8,38 @@ import { BreadcrumbItem } from "./public-api";
 /**
  * @ignore
  */
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class BreadcrumbStateService {
     // Recursively fill the state for breadcrumb component using data from routes
-    public getBreadcrumbState(routerState: ActivatedRoute, url: string = "",
-                              breadcrumbs: BreadcrumbItem[] = []): BreadcrumbItem[] {
+    public getBreadcrumbState(
+        routerState: ActivatedRoute,
+        url: string = "",
+        breadcrumbs: BreadcrumbItem[] = []
+    ): BreadcrumbItem[] {
         const breadcrumb: string = routerState.snapshot.data["breadcrumb"];
         const newUrl = `${url}${routerState.routeConfig?.path}/`;
         const externalUrl = routerState.snapshot.data["url"];
-        const newBreadcrumbs = [...breadcrumbs, {
-            title: breadcrumb,
-            routerState: newUrl,
-            url: externalUrl,
-        }];
+        const newBreadcrumbs = [
+            ...breadcrumbs,
+            {
+                title: breadcrumb,
+                routerState: newUrl,
+                url: externalUrl,
+            },
+        ];
 
-        return routerState.firstChild ? this.getBreadcrumbState(routerState.firstChild, newUrl, newBreadcrumbs) :
-            newBreadcrumbs;
+        return routerState.firstChild
+            ? this.getBreadcrumbState(
+                  routerState.firstChild,
+                  newUrl,
+                  newBreadcrumbs
+              )
+            : newBreadcrumbs;
     }
 
     public getNavigationSubscription(router: Router): Observable<Event> {
         return router.events.pipe(
-            filter(event => event instanceof NavigationEnd)
+            filter((event) => event instanceof NavigationEnd)
         );
     }
 }

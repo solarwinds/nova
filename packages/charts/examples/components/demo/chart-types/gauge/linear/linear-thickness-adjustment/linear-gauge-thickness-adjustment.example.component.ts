@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+
 import {
     ChartAssist,
     GaugeMode,
@@ -27,22 +28,37 @@ export class LinearGaugeThicknessAdjustmentExampleComponent implements OnInit {
     private horizontalSeriesSet: IChartAssistSeries<IAccessors>[];
     private verticalSeriesSet: IChartAssistSeries<IAccessors>[];
 
-    private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(50, 79);
+    private thresholds: IGaugeThresholdsConfig =
+        GaugeUtil.createStandardThresholdsConfig(50, 79);
 
     public ngOnInit(): void {
         // Setting the initial threshold marker radius
-        this.thresholds.markerRadius = this.compact ? StandardGaugeThresholdMarkerRadius.Small : StandardGaugeThresholdMarkerRadius.Large;
+        this.thresholds.markerRadius = this.compact
+            ? StandardGaugeThresholdMarkerRadius.Small
+            : StandardGaugeThresholdMarkerRadius.Large;
 
         this.gaugeConfig = this.getGaugeConfig();
 
         // Creating the horizontal gauge
-        this.horizontalChartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Horizontal);
-        this.horizontalSeriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Horizontal);
+        this.horizontalChartAssist = GaugeUtil.createChartAssist(
+            this.gaugeConfig,
+            GaugeMode.Horizontal
+        );
+        this.horizontalSeriesSet = GaugeUtil.assembleSeriesSet(
+            this.gaugeConfig,
+            GaugeMode.Horizontal
+        );
         this.horizontalChartAssist.update(this.horizontalSeriesSet);
 
         // Creating the vertical gauge
-        this.verticalChartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Vertical);
-        this.verticalSeriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Vertical);
+        this.verticalChartAssist = GaugeUtil.createChartAssist(
+            this.gaugeConfig,
+            GaugeMode.Vertical
+        );
+        this.verticalSeriesSet = GaugeUtil.assembleSeriesSet(
+            this.gaugeConfig,
+            GaugeMode.Vertical
+        );
         this.verticalChartAssist.update(this.verticalSeriesSet);
     }
 
@@ -55,7 +71,9 @@ export class LinearGaugeThicknessAdjustmentExampleComponent implements OnInit {
         this.compact = compact;
 
         // Adjusting the threshold marker radius
-        this.thresholds.markerRadius = this.compact ? StandardGaugeThresholdMarkerRadius.Small : StandardGaugeThresholdMarkerRadius.Large;
+        this.thresholds.markerRadius = this.compact
+            ? StandardGaugeThresholdMarkerRadius.Small
+            : StandardGaugeThresholdMarkerRadius.Large;
         this.updateGauges();
 
         // Updating the thickness
@@ -64,15 +82,21 @@ export class LinearGaugeThicknessAdjustmentExampleComponent implements OnInit {
 
     private updateThickness() {
         // Using standard thicknesses based on whether the gauge is in compact mode
-        const thickness = this.compact ? StandardLinearGaugeThickness.Small : StandardLinearGaugeThickness.Large;
+        const thickness = this.compact
+            ? StandardLinearGaugeThickness.Small
+            : StandardLinearGaugeThickness.Large;
 
         // Updating the horizontal gauge height with the desired gauge thickness in pixels
-        const horizontalGridConfig = this.horizontalChartAssist.chart.getGrid().config();
+        const horizontalGridConfig = this.horizontalChartAssist.chart
+            .getGrid()
+            .config();
         horizontalGridConfig.dimension.height(thickness);
         this.horizontalChartAssist.chart.updateDimensions();
 
         // Updating the vertical gauge width with the desired gauge thickness in pixels
-        const verticalGridConfig = this.verticalChartAssist.chart.getGrid().config();
+        const verticalGridConfig = this.verticalChartAssist.chart
+            .getGrid()
+            .config();
         verticalGridConfig.dimension.width(thickness);
         this.verticalChartAssist.chart.updateDimensions();
     }
@@ -81,11 +105,17 @@ export class LinearGaugeThicknessAdjustmentExampleComponent implements OnInit {
         this.gaugeConfig = this.getGaugeConfig();
 
         // Updating the horizontal gauge
-        this.horizontalSeriesSet = GaugeUtil.update(this.horizontalSeriesSet, this.gaugeConfig);
+        this.horizontalSeriesSet = GaugeUtil.update(
+            this.horizontalSeriesSet,
+            this.gaugeConfig
+        );
         this.horizontalChartAssist.update(this.horizontalSeriesSet);
 
         // Updating the vertical gauge
-        this.verticalSeriesSet = GaugeUtil.update(this.verticalSeriesSet, this.gaugeConfig);
+        this.verticalSeriesSet = GaugeUtil.update(
+            this.verticalSeriesSet,
+            this.gaugeConfig
+        );
         this.verticalChartAssist.update(this.verticalSeriesSet);
     }
 
@@ -97,7 +127,9 @@ export class LinearGaugeThicknessAdjustmentExampleComponent implements OnInit {
 
             // Setting the initial thickness based on whether the gauge is in compact mode
             // The 'createChartAssist' function uses this to configure the grid's dimensions
-            linearThickness: this.compact ? StandardLinearGaugeThickness.Small : StandardLinearGaugeThickness.Large,
+            linearThickness: this.compact
+                ? StandardLinearGaugeThickness.Small
+                : StandardLinearGaugeThickness.Large,
         };
     }
 }

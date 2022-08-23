@@ -1,4 +1,5 @@
 import { by, element, ElementFinder, Key } from "protractor";
+
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { RepeatAtom, SwitchAtom, TabHeadingAtom } from "../public_api";
@@ -9,17 +10,27 @@ describe("USERCONTROL Repeat", () => {
         await Helpers.prepareBrowser("repeat/repeat-test");
     });
 
-    const getTabByText = async (text: string): Promise<TabHeadingAtom> => Atom.find(TabHeadingGroupAtom, "repeat-test-tab-group").getTabByText(text);
+    const getTabByText = async (text: string): Promise<TabHeadingAtom> =>
+        Atom.find(TabHeadingGroupAtom, "repeat-test-tab-group").getTabByText(
+            text
+        );
     const getList = (id: string) => Atom.find(RepeatAtom, id);
 
-    const expectSelection = async (element: ElementFinder, text: string): Promise<void> => {
+    const expectSelection = async (
+        element: ElementFinder,
+        text: string
+    ): Promise<void> => {
         expect(await element.getText()).toBe(text);
-    }
+    };
 
     it("should render enough content to fill the full height of the virtual scroll viewport", async () => {
         await (await getTabByText("Repeat VScroll")).click();
         const vScrollList = getList("repeat-test-vscroll");
-        expect(parseInt(await vScrollList.getVScrollViewportHeight(), 10)).toBeLessThan(parseInt(await vScrollList.getVScrollViewportContentHeight(), 10));
+        expect(
+            parseInt(await vScrollList.getVScrollViewportHeight(), 10)
+        ).toBeLessThan(
+            parseInt(await vScrollList.getVScrollViewportContentHeight(), 10)
+        );
         // Return to initial state
         await (await getTabByText("No Content")).click();
     });
@@ -47,10 +58,11 @@ describe("USERCONTROL Repeat", () => {
                 expect(await list.isCompact()).toEqual(true);
             });
 
-            const expectOriginalSelection = async () => expectSelection(
-                selection,
-                `[ { "color": "yellow" }, { "color": "black" } ]`
-            );
+            const expectOriginalSelection = async () =>
+                expectSelection(
+                    selection,
+                    `[ { "color": "yellow" }, { "color": "black" } ]`
+                );
 
             it("should allow multi selection of items by clicking on checkbox", async () => {
                 await list.selectCheckboxes(2, 5);
@@ -77,7 +89,10 @@ describe("USERCONTROL Repeat", () => {
                     await list.selectRows(0, 0);
                     await Helpers.pressKey(Key.TAB);
                     await Helpers.pressKey(Key.ENTER);
-                    await expectSelection(selection, `[ { "color": "yellow" }, { "color": "black" }, { "color": "blue" } ]`);
+                    await expectSelection(
+                        selection,
+                        `[ { "color": "yellow" }, { "color": "black" }, { "color": "blue" } ]`
+                    );
 
                     await Helpers.pressKey(Key.ENTER);
                 });
@@ -86,7 +101,10 @@ describe("USERCONTROL Repeat", () => {
                     await list.selectRows(0, 0);
                     await Helpers.pressKey(Key.TAB);
                     await Helpers.pressKey(Key.SPACE);
-                    await expectSelection(selection, `[ { "color": "yellow" }, { "color": "black" }, { "color": "blue" } ]`);
+                    await expectSelection(
+                        selection,
+                        `[ { "color": "yellow" }, { "color": "black" }, { "color": "blue" } ]`
+                    );
 
                     await Helpers.pressKey(Key.SPACE);
                 });
@@ -96,20 +114,26 @@ describe("USERCONTROL Repeat", () => {
                 let preventRowClickSwitch: SwitchAtom;
 
                 beforeAll(async () => {
-                    preventRowClickSwitch = Atom.find(SwitchAtom, "nui-demo-multi-repeat-switch");
+                    preventRowClickSwitch = Atom.find(
+                        SwitchAtom,
+                        "nui-demo-multi-repeat-switch"
+                    );
                     await preventRowClickSwitch.toggle();
                 });
 
                 afterAll(async () => {
                     await preventRowClickSwitch.toggle();
-                })
+                });
 
                 it("should allow multi selection of items by clicking on checkbox", async () => {
                     await list.selectCheckboxes(2, 5);
                     await expectSelection(selection, `[]`);
 
                     await list.selectCheckboxes(1);
-                    await expectSelection(selection, `[ { "color": "green" } ]`);
+                    await expectSelection(
+                        selection,
+                        `[ { "color": "green" } ]`
+                    );
 
                     // Return to initial state
                     await list.selectCheckboxes(2, 5, 1);
@@ -130,13 +154,16 @@ describe("USERCONTROL Repeat", () => {
 
             beforeAll(() => {
                 list = getList("nui-demo-multi-repeat-disabled");
-                colorSelection = element(by.id("nui-demo-multi-repeat-disabled-values"));
+                colorSelection = element(
+                    by.id("nui-demo-multi-repeat-disabled-values")
+                );
             });
 
-            const expectOriginalSelection = async () => expectSelection(
-                colorSelection,
-                `[ { "color": "blue", "disabled": true }, { "color": "black" } ]`
-            );
+            const expectOriginalSelection = async () =>
+                expectSelection(
+                    colorSelection,
+                    `[ { "color": "blue", "disabled": true }, { "color": "black" } ]`
+                );
 
             it("should not allow multi selection of disabled items by clicking on checkbox", async () => {
                 await expectOriginalSelection();
@@ -154,7 +181,6 @@ describe("USERCONTROL Repeat", () => {
                 await expectOriginalSelection();
             });
         });
-
     });
 
     describe("in single select mode", () => {
@@ -188,7 +214,6 @@ describe("USERCONTROL Repeat", () => {
         });
 
         describe("should work properly with disabled items", async () => {
-
             it("should not select a disabled item", async () => {
                 await list.selectRow(0);
                 await expectSelection(selection, valueJo);
@@ -199,7 +224,9 @@ describe("USERCONTROL Repeat", () => {
             it("should change the cursor type to a correct one on hover", async () => {
                 const disabledItem: ElementFinder = list.getItem(1);
                 await list.hover(disabledItem);
-                expect(await disabledItem.getCssValue("cursor")).toBe("not-allowed");
+                expect(await disabledItem.getCssValue("cursor")).toBe(
+                    "not-allowed"
+                );
             });
         });
     });
@@ -226,9 +253,13 @@ describe("USERCONTROL Repeat", () => {
         });
 
         it("should detect itemSource change and display new items", async () => {
-            expect(await element(by.id("add-color")).getText()).toContain("Add color");
+            expect(await element(by.id("add-color")).getText()).toContain(
+                "Add color"
+            );
             await element(by.id("add-color")).click();
-            expect(await list.getItems().last().getText()).toContain("new color");
+            expect(await list.getItems().last().getText()).toContain(
+                "new color"
+            );
         });
     });
 
@@ -238,7 +269,9 @@ describe("USERCONTROL Repeat", () => {
 
         beforeAll(() => {
             list = getList("nui-demo-radio-non-required-selection-repeat");
-            selection = element(by.id("nui-demo-radio-non-required-selection-repeat-value"));
+            selection = element(
+                by.id("nui-demo-radio-non-required-selection-repeat-value")
+            );
         });
 
         it("should allow select/unselect by clicking row", async () => {
@@ -260,14 +293,19 @@ describe("USERCONTROL Repeat", () => {
         it("should show not-allowed cursor on hover over disabled items", async () => {
             const disabledNonRequiredItem = list.getItem(0);
             await list.hover(disabledNonRequiredItem);
-            expect(await disabledNonRequiredItem.getCssValue("cursor")).toBe("not-allowed");
+            expect(await disabledNonRequiredItem.getCssValue("cursor")).toBe(
+                "not-allowed"
+            );
         });
 
         describe("when preventRowClick set", () => {
             let preventRowClickSwitch: SwitchAtom;
 
             beforeAll(async () => {
-                preventRowClickSwitch = Atom.find(SwitchAtom, "nui-demo-radio-non-required-selection-repeat-switch");
+                preventRowClickSwitch = Atom.find(
+                    SwitchAtom,
+                    "nui-demo-radio-non-required-selection-repeat-switch"
+                );
                 await preventRowClickSwitch.toggle();
             });
 

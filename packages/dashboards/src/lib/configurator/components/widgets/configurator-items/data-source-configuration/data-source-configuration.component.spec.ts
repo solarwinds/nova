@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+
 import { EventBus } from "@nova-ui/bits";
 
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
 import { PIZZAGNA_EVENT_BUS } from "../../../../../types";
-
 import { DataSourceConfigurationComponent } from "./data-source-configuration.component";
 
 describe("DataSourceConfigurationComponent", () => {
@@ -21,8 +21,7 @@ describe("DataSourceConfigurationComponent", () => {
                     useClass: EventBus,
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -39,6 +38,8 @@ describe("DataSourceConfigurationComponent", () => {
 
     it("should setup the form when providerId is given", () => {
         fixture.detectChanges();
-        expect(component.form.get("providerId")?.value).toEqual(component.dataSourceProviders[0]);
+        expect(component.form.get("providerId")?.value).toEqual(
+            component.dataSourceProviders[0]
+        );
     });
 });

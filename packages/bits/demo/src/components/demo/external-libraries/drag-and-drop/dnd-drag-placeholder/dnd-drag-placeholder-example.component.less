@@ -23,7 +23,8 @@
 }
 
 // drag & drop styling
-.draggable-item:extend(.item), .draggable-placeholder:extend(.item) {
+.draggable-item:extend(.item),
+.draggable-placeholder:extend(.item) {
     height: @box-height;
     .transition(box-shadow 0.4s);
 
@@ -40,4 +41,5 @@
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.dnd-drag-preview:extend(.item, .nui-dnd-preview) {}
+.dnd-drag-preview:extend(.item, .nui-dnd-preview) {
+}

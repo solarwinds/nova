@@ -1,5 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+
 import {
     NuiBusyModule,
     NuiChipsModule,
@@ -45,5 +46,4 @@ import { FilteredViewTableComponent } from "./filtered-view-table/filtered-view-
         FilteredViewTableComponent,
     ],
 })
-
 export class FilteredViewTableWithSelectionModule {}

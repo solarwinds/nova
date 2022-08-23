@@ -1,10 +1,11 @@
 <div class="nui-copy-text__overlay">
-    <button nui-button
-            type="button"
-            [nuiTooltip]="copyTooltip"
-            icon="copy"
-            iconColor="primary-blue"
-            (clipboardSuccess)="onSnippetCopied()"
-            nuiClipboard={{fileContent}}>
-    </button>
+    <button
+        nui-button
+        type="button"
+        [nuiTooltip]="copyTooltip"
+        icon="copy"
+        iconColor="primary-blue"
+        (clipboardSuccess)="onSnippetCopied()"
+        nuiClipboard="{{ fileContent }}"
+    ></button>
 </div>

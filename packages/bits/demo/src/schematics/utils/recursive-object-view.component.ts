@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, TemplateRef} from "@angular/core";
+import { Component, Input, OnInit, TemplateRef } from "@angular/core";
 import _isObject from "lodash/isObject";
 import _sortBy from "lodash/sortBy";
 
@@ -8,17 +8,23 @@ import _sortBy from "lodash/sortBy";
         <div class="ml-5" *ngFor="let key of orderOfKeys">
             <div *ngIf="checkInstance(key); else notObject">
                 <nui-expander [header]="key" icon="group">
-                    <nui-recursive-object-view [object]="object[key]"
-                                               [objectTemplate]="objectTemplate"
-                                               [notObjectTemplate]="notObjectTemplate">
-                        <ng-container [ngTemplateOutlet]="objectTemplate"
-                                      [ngTemplateOutletContext]="{item: object[key]}"></ng-container>
+                    <nui-recursive-object-view
+                        [object]="object[key]"
+                        [objectTemplate]="objectTemplate"
+                        [notObjectTemplate]="notObjectTemplate"
+                    >
+                        <ng-container
+                            [ngTemplateOutlet]="objectTemplate"
+                            [ngTemplateOutletContext]="{ item: object[key] }"
+                        ></ng-container>
                     </nui-recursive-object-view>
                 </nui-expander>
             </div>
             <ng-template #notObject>
-                <ng-container [ngTemplateOutlet]="notObjectTemplate"
-                              [ngTemplateOutletContext]="{item: key}"></ng-container>
+                <ng-container
+                    [ngTemplateOutlet]="notObjectTemplate"
+                    [ngTemplateOutletContext]="{ item: key }"
+                ></ng-container>
             </ng-template>
         </div>
     `,
@@ -31,7 +37,10 @@ export class RecursiveObjectViewComponent implements OnInit {
     public orderOfKeys: Array<string>;
 
     ngOnInit() {
-        this.orderOfKeys = _sortBy(Object.keys(this.object), (key: string) => key.length);
+        this.orderOfKeys = _sortBy(
+            Object.keys(this.object),
+            (key: string) => key.length
+        );
     }
 
     public checkInstance(key: string) {

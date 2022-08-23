@@ -1,12 +1,26 @@
-import { ChangeDetectorRef, TRANSLATIONS, TRANSLATIONS_FORMAT } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    TRANSLATIONS,
+    TRANSLATIONS_FORMAT,
+} from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
-import { EventBus, IEvent, LoggerService, NuiBusyModule, NuiButtonModule, NuiIconModule, NuiSpinnerModule } from "@nova-ui/bits";
 import set from "lodash/set";
 import { Subject } from "rxjs";
 
+import {
+    EventBus,
+    IEvent,
+    LoggerService,
+    NuiBusyModule,
+    NuiButtonModule,
+    NuiIconModule,
+    NuiSpinnerModule,
+} from "@nova-ui/bits";
+
 import { TemplateLoadErrorComponent } from "../../../components/template-load-error/template-load-error.component";
+import { IWidget } from "../../../components/widget/types";
 import { mockLoggerService } from "../../../mocks";
 import { NuiPizzagnaModule } from "../../../pizzagna/pizzagna.module";
 import { ProviderRegistryService } from "../../../services/provider-registry.service";
@@ -18,8 +32,6 @@ import { ConfiguratorHeadingComponent } from "../heading/configurator-heading.co
 import { DashwizStepComponent } from "../wizard/dashwiz-step/dashwiz-step.component";
 import { DashwizButtonsComponent } from "../wizard/dashwiz/dashwiz-buttons.component";
 import { DashwizComponent } from "../wizard/dashwiz/dashwiz.component";
-import { IWidget } from "../../../components/widget/types";
-
 import { WidgetEditorComponent } from "./widget-editor.component";
 
 class MockConfiguratorComponent {
@@ -74,23 +86,24 @@ describe("WidgetEditorComponent", () => {
                 { provide: TRANSLATIONS_FORMAT, useValue: "xlf" },
                 { provide: TRANSLATIONS, useValue: "" },
                 {
-                    provide: ConfiguratorComponent, useClass: MockConfiguratorComponent,
+                    provide: ConfiguratorComponent,
+                    useClass: MockConfiguratorComponent,
                 },
                 {
                     provide: LoggerService,
                     useValue: mockLoggerService,
                 },
             ],
-        }).overrideModule(BrowserDynamicTestingModule,
-                          {
-                              set: {
-                                  entryComponents: [
-                                      DashwizButtonsComponent,
-                                      TemplateLoadErrorComponent,
-                                  ],
-                              },
-                          }
-        ).compileComponents();
+        })
+            .overrideModule(BrowserDynamicTestingModule, {
+                set: {
+                    entryComponents: [
+                        DashwizButtonsComponent,
+                        TemplateLoadErrorComponent,
+                    ],
+                },
+            })
+            .compileComponents();
     }));
 
     beforeEach(() => {
@@ -108,7 +121,11 @@ describe("WidgetEditorComponent", () => {
 
     it("should update the widget title when the preview changes", () => {
         const testTitle = "Test Title";
-        previewService.preview = set(previewService.preview, WidgetEditorComponent.TITLE_PATH, testTitle);
+        previewService.preview = set(
+            previewService.preview,
+            WidgetEditorComponent.TITLE_PATH,
+            testTitle
+        );
         expect(component.configuratorTitle).toContain(testTitle);
     });
 });

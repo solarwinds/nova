@@ -1,11 +1,21 @@
-import { ChangeDetectionStrategy, Component, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, SimpleChanges } from "@angular/core";
-import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Inject,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Optional,
+    SimpleChanges,
+} from "@angular/core";
 import { Subject, Subscription } from "rxjs";
 import { debounceTime, takeUntil } from "rxjs/operators";
 
+import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
+
 import { REFRESH, WIDGET_SEARCH } from "../../services/types";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../types";
-
 import { ISearchOnKeyUp, IWidgetSearchConfiguration } from "./types";
 
 @Component({
@@ -30,7 +40,7 @@ export class WidgetSearchComponent implements OnInit, OnDestroy, OnChanges {
     constructor(
         @Optional() @Inject(DATA_SOURCE) private dataSource: IDataSource,
         @Inject(PIZZAGNA_EVENT_BUS) public eventBus: EventBus<IEvent>
-    ) { }
+    ) {}
 
     public ngOnInit(): void {
         if (this.dataSource.features?.getSupportedFeatures()?.search?.enabled) {
@@ -79,12 +89,17 @@ export class WidgetSearchComponent implements OnInit, OnDestroy, OnChanges {
         });
     }
 
-    private handleSearchTermSubscription(searchOnKeyUpCfg: ISearchOnKeyUp | undefined) {
+    private handleSearchTermSubscription(
+        searchOnKeyUpCfg: ISearchOnKeyUp | undefined
+    ) {
         this.searchTermSubscription?.unsubscribe();
         this.searchTermSubscription = this.searchTerm$
             .pipe(
                 takeUntil(this.onDestroy$),
-                debounceTime(searchOnKeyUpCfg?.debounceTime || WidgetSearchComponent.defaultSearchDebounce)
+                debounceTime(
+                    searchOnKeyUpCfg?.debounceTime ||
+                        WidgetSearchComponent.defaultSearchDebounce
+                )
             )
             .subscribe((searchTerm) => {
                 this.eventBus.getStream(REFRESH).next();

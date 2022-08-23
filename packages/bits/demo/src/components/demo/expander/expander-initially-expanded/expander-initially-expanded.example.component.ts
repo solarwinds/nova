@@ -4,6 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-expander-initially-expanded-example",
     templateUrl: "expander-initially-expanded.example.component.html",
 })
-
-export class ExpanderInitiallyExpandedExampleComponent {
-}
+export class ExpanderInitiallyExpandedExampleComponent {}

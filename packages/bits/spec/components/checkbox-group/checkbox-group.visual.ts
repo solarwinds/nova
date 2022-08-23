@@ -3,7 +3,6 @@ import { browser } from "protractor";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-
 import { CheckboxGroupAtom } from "./checkbox-group.atom";
 
 const name: string = "Checkbox Group";
@@ -13,9 +12,14 @@ describe(`Visual tests: ${name}`, () => {
     let checkboxJustified: CheckboxGroupAtom;
 
     beforeAll(async () => {
-        await Helpers.prepareBrowser("checkbox-group/checkbox-group-visual-test");
-        checkboxJustified = Atom.find(CheckboxGroupAtom, "nui-demo-checkbox-group-justified");
-        
+        await Helpers.prepareBrowser(
+            "checkbox-group/checkbox-group-visual-test"
+        );
+        checkboxJustified = Atom.find(
+            CheckboxGroupAtom,
+            "nui-demo-checkbox-group-justified"
+        );
+
         camera = new Camera().loadFilm(browser, name);
     });
 
@@ -24,7 +28,9 @@ describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese(`Default`);
 
         await checkboxJustified.getFirst().hover();
-        await camera.say.cheese(`First Checkbox in Justified Checkbox-Group is hovered`);
+        await camera.say.cheese(
+            `First Checkbox in Justified Checkbox-Group is hovered`
+        );
 
         await Helpers.switchDarkTheme("on");
         await camera.say.cheese(`Dark theme`);

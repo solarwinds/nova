@@ -27,21 +27,25 @@ import { Subject, Subscription } from "rxjs";
     animations: [
         trigger("dismiss", [
             state("initial", style({})),
-            state("dismissed", style({
-                opacity: 0,
-            })),
+            state(
+                "dismissed",
+                style({
+                    opacity: 0,
+                })
+            ),
             transition("initial <=> dismissed", animate(`0.3s linear`)),
-        ])],
+        ]),
+    ],
     styleUrls: ["./message.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: { "[attr.role]": "role" },
 })
 export class MessageComponent implements OnInit, OnDestroy {
     public static ICON_MAP: { [id: string]: string } = {
-        "ok": "severity_ok",
-        "warning": "severity_warning",
-        "critical": "severity_critical",
-        "info": "severity_info",
+        ok: "severity_ok",
+        warning: "severity_warning",
+        critical: "severity_critical",
+        info: "severity_info",
     };
     public static UNKNOWN_ICON = "severity_unknown";
 
@@ -59,16 +63,19 @@ export class MessageComponent implements OnInit, OnDestroy {
     public dismissState: "initial" | "dismissed" = "initial";
     private dismissSubscription: Subscription;
 
-    get role(): string { return this.type === "ok" || this.type === "info" ? "status" : "alert"; }
+    get role(): string {
+        return this.type === "ok" || this.type === "info" ? "status" : "alert";
+    }
 
-    constructor(private element: ElementRef,
-                private renderer: Renderer2) { }
+    constructor(private element: ElementRef, private renderer: Renderer2) {}
 
     public ngOnInit() {
         if (this.manualControl) {
-            this.dismissSubscription = this.manualControl.subscribe((shown: boolean) => {
-                this.dismissState = shown ? "initial" : "dismissed";
-            });
+            this.dismissSubscription = this.manualControl.subscribe(
+                (shown: boolean) => {
+                    this.dismissState = shown ? "initial" : "dismissed";
+                }
+            );
         }
     }
 
@@ -89,7 +96,10 @@ export class MessageComponent implements OnInit, OnDestroy {
             if (this.manualControl) {
                 this.isHidden = true;
             } else {
-                this.renderer.removeChild(this.element.nativeElement.parentNode, this.element.nativeElement);
+                this.renderer.removeChild(
+                    this.element.nativeElement.parentNode,
+                    this.element.nativeElement
+                );
             }
         }
     }

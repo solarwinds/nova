@@ -1,22 +1,25 @@
-import { Component, NO_ERRORS_SCHEMA } from "@angular/core";
-import { WizardDirective } from "./wizard.directive";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { WizardStepV2Component } from "./wizard-step/wizard-step.component";
-import { WizardStepHeaderComponent } from "./wizard-step-header/wizard-step-header.component";
-import { WizardFooterComponent } from "./wizard-footer/wizard-footer.component";
-import { WizardStepLabelDirective } from "./wizard-step-label.directive";
-import { WizardStepFooterDirective } from "./wizard-step-footer.directive";
-import { WizardStepperNextDirective, WizardStepperPreviousDirective } from "./wizard-button/wizard-button";
 import { CdkStepper, STEP_STATE } from "@angular/cdk/stepper";
+import { Component, NO_ERRORS_SCHEMA } from "@angular/core";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+
+import {
+    WizardStepperNextDirective,
+    WizardStepperPreviousDirective,
+} from "./wizard-button/wizard-button";
+import { WizardFooterComponent } from "./wizard-footer/wizard-footer.component";
+import { WizardStepFooterDirective } from "./wizard-step-footer.directive";
+import { WizardStepHeaderComponent } from "./wizard-step-header/wizard-step-header.component";
+import { WizardStepLabelDirective } from "./wizard-step-label.directive";
+import { WizardStepV2Component } from "./wizard-step/wizard-step.component";
+import { WizardDirective } from "./wizard.directive";
 
 @Component({
     selector: "nui-test-cmp",
-    template: `
-        <div>
-            <nui-wizard-step-v2 label="step1"></nui-wizard-step-v2>
-            <nui-wizard-step-v2 label="step2"></nui-wizard-step-v2>
-            <nui-wizard-step-v2 label="step3"></nui-wizard-step-v2>
-        </div>`,
+    template: ` <div>
+        <nui-wizard-step-v2 label="step1"></nui-wizard-step-v2>
+        <nui-wizard-step-v2 label="step2"></nui-wizard-step-v2>
+        <nui-wizard-step-v2 label="step3"></nui-wizard-step-v2>
+    </div>`,
 })
 class TestWrapperComponent extends WizardDirective {}
 
@@ -38,9 +41,7 @@ describe("directives >", () => {
                     WizardStepperPreviousDirective,
                     TestWrapperComponent,
                 ],
-                providers: [
-                    CdkStepper,
-                ],
+                providers: [CdkStepper],
                 schemas: [NO_ERRORS_SCHEMA],
             });
 

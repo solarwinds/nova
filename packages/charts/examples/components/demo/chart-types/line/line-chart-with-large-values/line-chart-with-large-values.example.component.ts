@@ -1,8 +1,19 @@
 import { Component, OnInit } from "@angular/core";
-import {
-    Chart, ChartAssist, IChartSeries, ILineAccessors, IXYScales, LineAccessors, LinearScale, LineRenderer, TimeScale, XYGrid, XYGridConfig,
-} from "@nova-ui/charts";
 import moment from "moment/moment";
+
+import {
+    Chart,
+    ChartAssist,
+    IChartSeries,
+    ILineAccessors,
+    IXYScales,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    TimeScale,
+    XYGrid,
+    XYGridConfig,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "line-chart-with-large-values-example",
@@ -15,19 +26,24 @@ export class LineChartWithLargeValuesExampleComponent implements OnInit {
 
     public ngOnInit(): void {
         // providing chartAssist colors and markers to LineAccessors will share them with the line chart
-        const accessors = new LineAccessors(this.chartAssist.palette.standardColors, this.chartAssist.markers);
+        const accessors = new LineAccessors(
+            this.chartAssist.palette.standardColors,
+            this.chartAssist.markers
+        );
         const renderer = new LineRenderer();
         const scales: IXYScales = {
             x: new TimeScale(),
             y: new LinearScale(),
         };
 
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
-            ...d,
-            accessors,
-            renderer,
-            scales,
-        }));
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
+            (d) => ({
+                ...d,
+                accessors,
+                renderer,
+                scales,
+            })
+        );
 
         (this.chart.getGrid().config() as XYGridConfig).axis.left.fit = true;
 

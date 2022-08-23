@@ -1,8 +1,8 @@
 import { ArrayDataSource } from "@angular/cdk/collections";
 import { NestedTreeControl } from "@angular/cdk/tree";
 import { Component } from "@angular/core";
-import { expand } from "@nova-ui/bits";
 
+import { expand } from "@nova-ui/bits";
 
 interface FoodNode {
     name: string;
@@ -37,7 +37,10 @@ const TREE_DATA: FoodNode[] = [
                 textStyle: TextStyle.DEFAULT,
                 children: [
                     { name: "Broccoli", textStyle: TextStyle.LABEL },
-                    { name: "Brussels sprouts", textStyle: TextStyle.SECONDARY },
+                    {
+                        name: "Brussels sprouts",
+                        textStyle: TextStyle.SECONDARY,
+                    },
                 ],
             },
             {
@@ -52,18 +55,17 @@ const TREE_DATA: FoodNode[] = [
     },
 ];
 
-
 @Component({
     selector: "nui-tree-styling-example",
     templateUrl: "tree-styling.example.component.html",
     styleUrls: ["tree-styling.example.component.less"],
     animations: [expand],
 })
-
 export class TreeStylingExampleComponent {
     treeControl = new NestedTreeControl<FoodNode>((node) => node.children);
     dataSource = new ArrayDataSource(TREE_DATA);
     textStyles: typeof TextStyle = TextStyle;
 
-    hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
+    hasChild = (_: number, node: FoodNode) =>
+        !!node.children && node.children.length > 0;
 }

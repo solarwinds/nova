@@ -1,6 +1,12 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { NuiButtonModule, NuiDocsModule, NuiMessageModule, NuiSwitchModule } from "@nova-ui/bits";
+
+import {
+    NuiButtonModule,
+    NuiDocsModule,
+    NuiMessageModule,
+    NuiSwitchModule,
+} from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { ProportionalDocsComponent } from "./proportional-docs.component";
@@ -9,14 +15,13 @@ import { ProportionalWidgetDonutContentFormattersExampleComponent } from "./prop
 import { ProportionalWidgetExampleComponent } from "./proportional-widget-example/proportional-widget-example.component";
 import { ProportionalWidgetInteractiveExampleComponent } from "./proportional-widget-interactive-example/proportional-widget-interactive-example.component";
 
-
 const routes: Routes = [
     {
         path: "",
         component: ProportionalDocsComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
             showThemeSwitcher: true,
         },
@@ -25,8 +30,8 @@ const routes: Routes = [
         path: "example",
         component: ProportionalWidgetExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -34,8 +39,8 @@ const routes: Routes = [
         path: "donut-content-formatters",
         component: ProportionalDonutContentDocsComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -43,8 +48,8 @@ const routes: Routes = [
         path: "donut-content-formatters-example",
         component: ProportionalWidgetDonutContentFormattersExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -52,8 +57,8 @@ const routes: Routes = [
         path: "proportional-widget-interactive-example",
         component: ProportionalWidgetInteractiveExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -76,5 +81,4 @@ const routes: Routes = [
         ProportionalDonutContentDocsComponent,
     ],
 })
-export class ProportionalDocsModule {
-}
+export class ProportionalDocsModule {}

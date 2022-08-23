@@ -16,7 +16,6 @@ const DEFAULT_RANGE: ListRange = { start: 0, end: 0 };
  */
 @Injectable()
 export class VirtualViewportManager implements IFilterPub {
-
     private _viewportRef: CdkVirtualScrollViewport;
     private _currentPageRange: ListRange = DEFAULT_RANGE;
     private _pageSize: number;
@@ -26,7 +25,9 @@ export class VirtualViewportManager implements IFilterPub {
      * @param  viewportRef - CDK Viewport reference on which you want to perform observations
      * @returns self (VirtualViewportManager)
      */
-    public setViewport(viewportRef: CdkVirtualScrollViewport): VirtualViewportManager {
+    public setViewport(
+        viewportRef: CdkVirtualScrollViewport
+    ): VirtualViewportManager {
         if (this._viewportRef) {
             throw new Error("Viewport is already set");
         }
@@ -62,8 +63,12 @@ export class VirtualViewportManager implements IFilterPub {
         this.updateCurrentPage({ start: 0, end: config.pageSize });
 
         // Note: renderedRangeStream does not emit "first page" which can be a problem
-        const streamParticipants: Observable<ListRange>[] = [this._viewportRef.renderedRangeStream];
-        const shouldEmitFirstPage = !isUndefined(config.emitFirstPage) ? config.emitFirstPage : true;
+        const streamParticipants: Observable<ListRange>[] = [
+            this._viewportRef.renderedRangeStream,
+        ];
+        const shouldEmitFirstPage = !isUndefined(config.emitFirstPage)
+            ? config.emitFirstPage
+            : true;
         if (shouldEmitFirstPage) {
             streamParticipants.push(of(this.currentPageRange));
         }
@@ -86,7 +91,9 @@ export class VirtualViewportManager implements IFilterPub {
      * we can prevent default behaviour of emitting firstPageEvent and let user to set first batch of data
      * @returns void
      */
-    public reset(options: IVirtualViewportResetOptions = { emitFirstPage: true }): void {
+    public reset(
+        options: IVirtualViewportResetOptions = { emitFirstPage: true }
+    ): void {
         if (!this._viewportRef) {
             // Note: If there is no viewportRef or it been invoked
             // prematurely we will suppress that method call;
@@ -98,7 +105,10 @@ export class VirtualViewportManager implements IFilterPub {
         this._viewportRef.scrollToOffset(0);
         // Note: Setting the end value equal to pageSize to avoid ViewportManager
         // incrementing the current page and emitting first page event
-        this._currentPageRange = { ...DEFAULT_RANGE, end: options.emitFirstPage ? 0 : this._pageSize };
+        this._currentPageRange = {
+            ...DEFAULT_RANGE,
+            end: options.emitFirstPage ? 0 : this._pageSize,
+        };
         // Note: Skipping one tick to let CDK Viewport update his internal properties
         setTimeout(() => {
             // Note: Resetting the viewport to initial state
@@ -108,7 +118,7 @@ export class VirtualViewportManager implements IFilterPub {
     }
 
     private updateCurrentPage(range: ListRange): ListRange {
-        return this._currentPageRange = range;
+        return (this._currentPageRange = range);
     }
 
     // Note: Temporary fix related to the CDK Viewport bug
@@ -116,18 +126,26 @@ export class VirtualViewportManager implements IFilterPub {
     // To ensure that CDK Viewport got correct parameters
     // we recheck the viewport size if it is equal to 0
     private checkViewportUntilValid(): void {
-        this._viewportRef.elementScrolled().pipe(
-            takeWhile(() => this._viewportRef.getViewportSize() === 0),
-            tap(() => this._viewportRef.checkViewportSize())
-        ).subscribe();
+        this._viewportRef
+            .elementScrolled()
+            .pipe(
+                takeWhile(() => this._viewportRef.getViewportSize() === 0),
+                tap(() => this._viewportRef.checkViewportSize())
+            )
+            .subscribe();
     }
 
-    protected mapToPageSize(pageSize: number): MonoTypeOperatorFunction<ListRange> {
+    protected mapToPageSize(
+        pageSize: number
+    ): MonoTypeOperatorFunction<ListRange> {
         return (source: Observable<ListRange>) =>
             source.pipe(
                 // Note: We have to reduce number of events to only pagination related,
                 // By emitting only when previous page range was scrolled to the end
-                filter((renderedRange: ListRange) => this.currentPageRange.end <= renderedRange.end),
+                filter(
+                    (renderedRange: ListRange) =>
+                        this.currentPageRange.end <= renderedRange.end
+                ),
                 map((range, index) => {
                     // Note: Avoiding incrementation for the first emission
                     if (index === 0) {

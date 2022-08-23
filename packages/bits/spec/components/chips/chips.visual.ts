@@ -3,7 +3,6 @@ import { browser } from "protractor";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-
 import { ChipsAtom } from "./chips.atom";
 
 const name: string = "Chips";
@@ -17,10 +16,16 @@ describe(`Visual tests: ${name}`, () => {
     beforeAll(async () => {
         await Helpers.prepareBrowser("chips/chips-visual-test");
 
-        chipsBasic = Atom.find(ChipsAtom, "nui-demo-chips-flat-horizontal-visual");
-        chipsVertGroup = Atom.find(ChipsAtom, "nui-demo-chips-grouped-vertical-visual");
+        chipsBasic = Atom.find(
+            ChipsAtom,
+            "nui-demo-chips-flat-horizontal-visual"
+        );
+        chipsVertGroup = Atom.find(
+            ChipsAtom,
+            "nui-demo-chips-grouped-vertical-visual"
+        );
         chipsOverflow = Atom.find(ChipsAtom, "nui-demo-chips-overflow");
-        
+
         camera = new Camera().loadFilm(browser, name);
     });
 
@@ -35,7 +40,9 @@ describe(`Visual tests: ${name}`, () => {
         await chipsBasic.removeItem(2);
         await chipsBasic.removeItem(3);
         await chipsVertGroup.clearAll();
-        await camera.say.cheese(`Removed 2 chips and 'Clear All' vertical group`);
+        await camera.say.cheese(
+            `Removed 2 chips and 'Clear All' vertical group`
+        );
 
         await chipsOverflow.getChipsOverflowElement().click();
         await camera.say.cheese(`Open popup with overflow chips`);

@@ -1,7 +1,9 @@
 @import (reference) "../../styles/mixins.less";
 @import (reference) "../../styles/nui-framework-colors";
 
-@nui-table-row-height-default: (@nui-table-row-container-height-default + (2 * @nui-space-xs));
+@nui-table-row-height-default: (
+    @nui-table-row-container-height-default + (2 * @nui-space-xs)
+);
 
 .nui .nui-table {
     &__table {
@@ -30,7 +32,7 @@
             }
         }
 
-        @media print{
+        @media print {
             break-inside: avoid;
         }
     }
@@ -47,7 +49,8 @@
         padding: @nui-table-cell-padding;
         background: inherit;
         border: @nui-line-default solid @nui-color-line-default;
-        border: @nui-line-default solid var(--nui-color-line-default,@nui-color-line-default);
+        border: @nui-line-default solid
+            var(--nui-color-line-default, @nui-color-line-default);
         min-width: @nui-table-cell-min-width;
         max-width: @nui-table-cell-max-width;
         overflow: hidden;
@@ -85,27 +88,32 @@
             }
         }
 
-        &.cdk-table-sticky { // Border hack because position sticky collapses borders and they are not visible
+        &.cdk-table-sticky {
+            // Border hack because position sticky collapses borders and they are not visible
             border: 0;
 
             &::before {
-                content: '';
+                content: "";
                 position: absolute;
                 top: 0;
                 left: 0;
                 bottom: 0;
                 width: 100%;
                 border-top: @nui-line-default solid @nui-color-line-default;
-                border-top: @nui-line-default solid var(--nui-color-line-default,@nui-color-line-default);
+                border-top: @nui-line-default solid
+                    var(--nui-color-line-default, @nui-color-line-default);
                 border-bottom: @nui-line-default solid @nui-color-line-default;
-                border-bottom: @nui-line-default solid var(--nui-color-line-default,@nui-color-line-default);
+                border-bottom: @nui-line-default solid
+                    var(--nui-color-line-default, @nui-color-line-default);
                 border-left: @nui-line-default solid @nui-color-line-default;
-                border-left: @nui-line-default solid var(--nui-color-line-default,@nui-color-line-default);
+                border-left: @nui-line-default solid
+                    var(--nui-color-line-default, @nui-color-line-default);
             }
 
             &:last-of-type::before {
                 border-right: @nui-line-default solid @nui-color-line-default;
-                border-right: @nui-line-default solid var(--nui-color-line-default,@nui-color-line-default);
+                border-right: @nui-line-default solid
+                    var(--nui-color-line-default, @nui-color-line-default);
             }
 
             &.nui-table__table-cell--left-edge-action {
@@ -158,19 +166,24 @@
         }
 
         &_height_compact {
-            height: (@nui-table-row-container-height-small + (2 * @nui-space-xs));
+            height: (
+                @nui-table-row-container-height-small + (2 * @nui-space-xs)
+            );
             .compact-selector();
         }
 
         &_height_tiny {
-            height: (@nui-table-row-container-height-small + (2 * @nui-space-xxs));
+            height: (
+                @nui-table-row-container-height-small + (2 * @nui-space-xxs)
+            );
             .compact-selector();
         }
     }
 
     &__table-row {
         border-bottom: @nui-line-default solid @nui-color-line-default;
-        border-bottom: @nui-line-default solid var(--nui-color-line-default,@nui-color-line-default);
+        border-bottom: @nui-line-default solid
+            var(--nui-color-line-default, @nui-color-line-default);
         display: table-row;
 
         &:hover {
@@ -182,11 +195,15 @@
         }
 
         &_height_compact {
-            height: (@nui-table-row-container-height-small + (2 * @nui-space-xs));
+            height: (
+                @nui-table-row-container-height-small + (2 * @nui-space-xs)
+            );
         }
 
         &_height_tiny {
-            height: (@nui-table-row-container-height-small + (2 * @nui-space-xxs));
+            height: (
+                @nui-table-row-container-height-small + (2 * @nui-space-xxs)
+            );
         }
 
         // Workaround for Firefox table bug, where first row's <td> cells left borders are 1px narrower than specified
@@ -223,7 +240,7 @@
             padding: 0 0 0 @nui-space-sm;
         }
 
-        &--left-edge-action{
+        &--left-edge-action {
             border-left: @nui-line-medium solid;
             .setCssVariable(border-left-color, nui-color-line-selected-contrast);
         }
@@ -296,7 +313,7 @@
 cdk-virtual-scroll-viewport {
     .sticky-header-placeholder {
         th {
-            border-bottom: none!important;
+            border-bottom: none !important;
         }
     }
 }

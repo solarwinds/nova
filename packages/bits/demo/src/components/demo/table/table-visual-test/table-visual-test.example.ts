@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "table-visual-test-example",
     templateUrl: "./table-visual-test.example.html",
 })
-export class TableVisualTestComponent {
-}
+export class TableVisualTestComponent {}

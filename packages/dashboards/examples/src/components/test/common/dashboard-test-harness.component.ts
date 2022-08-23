@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
+
 import { ThemeSwitchService } from "@nova-ui/bits";
 
 @Component({
@@ -7,12 +8,13 @@ import { ThemeSwitchService } from "@nova-ui/bits";
     host: { class: "dashboard-test-harness" },
 })
 export class DashboardTestHarnessComponent {
-    constructor(public themeSwitcher: ThemeSwitchService) {
-    }
+    constructor(public themeSwitcher: ThemeSwitchService) {}
 
     @Input() public editMode: boolean;
     @Input() public dsError: boolean;
 
-    @Output() public editModeChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() public dsErrorChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() public editModeChange: EventEmitter<boolean> =
+        new EventEmitter<boolean>();
+    @Output() public dsErrorChange: EventEmitter<boolean> =
+        new EventEmitter<boolean>();
 }

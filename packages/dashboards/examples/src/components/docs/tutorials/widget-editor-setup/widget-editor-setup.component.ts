@@ -1,5 +1,15 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    Component,
+    Injectable,
+    OnDestroy,
+    OnInit,
+} from "@angular/core";
+import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { BehaviorSubject } from "rxjs";
+import { finalize } from "rxjs/operators";
+
 import { DataSourceService, IFilteringOutputs } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
@@ -18,15 +28,15 @@ import {
     WellKnownProviders,
     WidgetTypesService,
 } from "@nova-ui/dashboards";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
-import { BehaviorSubject } from "rxjs";
-import { finalize } from "rxjs/operators";
 
 /**
  * A simple KPI data source to retrieve the average rating of Harry Potter and the Sorcerer's Stone (book) via googleapis
  */
 @Injectable()
-export class AverageRatingKpiDataSource extends DataSourceService<IKpiData> implements OnDestroy {
+export class AverageRatingKpiDataSource
+    extends DataSourceService<IKpiData>
+    implements OnDestroy
+{
     // This is the ID we'll use to identify the provider
     public static providerId = "AverageRatingKpiDataSource";
 
@@ -43,7 +53,8 @@ export class AverageRatingKpiDataSource extends DataSourceService<IKpiData> impl
         this.busy.next(true);
         return new Promise((resolve) => {
             // *** Make a resource request to an external API (if needed)
-            this.http.get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
+            this.http
+                .get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
                 .pipe(finalize(() => this.busy.next(false)))
                 .subscribe({
                     next: (data: any) => {
@@ -74,7 +85,10 @@ export class AverageRatingKpiDataSource extends DataSourceService<IKpiData> impl
  * A simple KPI data source to retrieve the ratings count of Harry Potter and the Sorcerer's Stone (book) via googleapis
  */
 @Injectable()
-export class RatingsCountKpiDataSource extends DataSourceService<IKpiData> implements OnDestroy {
+export class RatingsCountKpiDataSource
+    extends DataSourceService<IKpiData>
+    implements OnDestroy
+{
     public static providerId = "RatingsCountKpiDataSource";
 
     // Use this subject to communicate the data source's busy state
@@ -87,7 +101,8 @@ export class RatingsCountKpiDataSource extends DataSourceService<IKpiData> imple
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
         return new Promise((resolve) => {
-            this.http.get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
+            this.http
+                .get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
                 .pipe(finalize(() => this.busy.next(false)))
                 .subscribe({
                     next: (data: any) => {
@@ -141,8 +156,7 @@ export class WidgetEditorSetupComponent implements OnInit {
         // In general, the ProviderRegistryService is used for making entities available for injection into dynamically loaded components.
         private providerRegistry: ProviderRegistryService,
         private changeDetectorRef: ChangeDetectorRef
-
-    ) { }
+    ) {}
 
     public ngOnInit(): void {
         // Grabbing the widget's default template which will be needed as a parameter for setNode
@@ -159,7 +173,10 @@ export class WidgetEditorSetupComponent implements OnInit {
             // the data source providers available for selection in the editor.
             WellKnownPathKey.DataSourceProviders,
             // We are setting the data sources available for selection in the editor
-            [AverageRatingKpiDataSource.providerId, RatingsCountKpiDataSource.providerId]
+            [
+                AverageRatingKpiDataSource.providerId,
+                RatingsCountKpiDataSource.providerId,
+            ]
         );
 
         // Registering the data sources available for injection into the KPI tiles.
@@ -196,7 +213,8 @@ export class WidgetEditorSetupComponent implements OnInit {
         const kpiWidget = widgetConfig;
         const widgetIndex: IWidgets = {
             // Complete the KPI widget with information coming from its type definition
-            [kpiWidget.id]: this.widgetTypesService.mergeWithWidgetType(kpiWidget),
+            [kpiWidget.id]:
+                this.widgetTypesService.mergeWithWidgetType(kpiWidget),
         };
 
         // Setting the widget dimensions and position (this is for gridster)
@@ -215,7 +233,6 @@ export class WidgetEditorSetupComponent implements OnInit {
             widgets: widgetIndex,
         };
     }
-
 }
 
 const widgetConfig: IWidget = {
@@ -224,46 +241,46 @@ const widgetConfig: IWidget = {
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
             [DEFAULT_PIZZAGNA_ROOT]: {
-                "providers": {
+                providers: {
                     [WellKnownProviders.Refresher]: {
-                        "properties": {
+                        properties: {
                             // Configuring the refresher interval so that our data source is invoked every ten minutes
-                            "interval": 60 * 10,
-                            "enabled": true,
+                            interval: 60 * 10,
+                            enabled: true,
                         } as IRefresherProperties,
                     } as Partial<IProviderConfiguration>,
                 },
             },
-            "header": {
-                "properties": {
-                    "title": "Harry Potter and the Sorcerer's Stone",
-                    "subtitle": "By J. K. Rowling",
+            header: {
+                properties: {
+                    title: "Harry Potter and the Sorcerer's Stone",
+                    subtitle: "By J. K. Rowling",
                 },
             },
-            "tiles": {
-                "properties": {
-                    "nodes": ["kpi1"],
+            tiles: {
+                properties: {
+                    nodes: ["kpi1"],
                 },
             },
-            "kpi1": {
-                "id": "kpi1",
-                "componentType": KpiComponent.lateLoadKey,
-                "properties": {
-                    "widgetData": {
-                        "units": "out of 5 Stars",
-                        "label": "Average Rating",
+            kpi1: {
+                id: "kpi1",
+                componentType: KpiComponent.lateLoadKey,
+                properties: {
+                    widgetData: {
+                        units: "out of 5 Stars",
+                        label: "Average Rating",
                     },
                 },
-                "providers": {
+                providers: {
                     [WellKnownProviders.DataSource]: {
                         // Setting the data source providerId for the tile with id "kpi1"
-                        "providerId": AverageRatingKpiDataSource.providerId,
+                        providerId: AverageRatingKpiDataSource.providerId,
                     } as IProviderConfiguration,
                     [WellKnownProviders.Adapter]: {
-                        "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
-                        "properties": {
-                            "componentId": "kpi1",
-                            "propertyPath": "widgetData",
+                        providerId: NOVA_KPI_DATASOURCE_ADAPTER,
+                        properties: {
+                            componentId: "kpi1",
+                            propertyPath: "widgetData",
                         },
                     } as IProviderConfiguration,
                 },

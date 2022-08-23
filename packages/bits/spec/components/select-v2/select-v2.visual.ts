@@ -3,7 +3,6 @@ import { browser, Key } from "protractor";
 import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-
 import { SelectV2Atom } from "./select-v2.atom";
 
 const name: string = "Select-V2";
@@ -21,7 +20,10 @@ describe(`Visual tests: ${name}`, () => {
     beforeAll(async () => {
         selectBasic = Atom.find(SelectV2Atom, "basic");
         selectErrorState = Atom.find(SelectV2Atom, "error-state");
-        selectDisplayValueSmall = Atom.find(SelectV2Atom, "display-value-mw200");
+        selectDisplayValueSmall = Atom.find(
+            SelectV2Atom,
+            "display-value-mw200"
+        );
         selectDisplayValue = Atom.find(SelectV2Atom, "display-value");
         selectGrouped = Atom.find(SelectV2Atom, "grouped");
         selectInForm = Atom.find(SelectV2Atom, "reactive-form");

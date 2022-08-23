@@ -1,3 +1,5 @@
+import { GridsterItem } from "angular-gridster2";
+
 import {
     DEFAULT_PIZZAGNA_ROOT,
     IProportionalWidgetChartOptions,
@@ -17,38 +19,40 @@ import {
     RawFormatterComponent,
     WellKnownProviders,
 } from "@nova-ui/dashboards";
-import { GridsterItem } from "angular-gridster2";
 
-import { TestKpiDataSource, TestKpiDataSource2 } from "../../data/kpi-data-sources";
+import {
+    TestKpiDataSource,
+    TestKpiDataSource2,
+} from "../../data/kpi-data-sources";
 import { TestProportionalDataSource2 } from "../../data/proportional-data-sources";
 import { TestTableDataSource } from "../../data/table-datasources";
 import { TestTimeseriesDataSource } from "../../data/timeseries-data-sources";
 import { frozenTime } from "../../data/widget-data";
 
 export const positions: Record<string, GridsterItem> = {
-    "widget1": {
-        "cols": 6,
-        "rows": 6,
-        "y": 0,
-        "x": 0,
+    widget1: {
+        cols: 6,
+        rows: 6,
+        y: 0,
+        x: 0,
     },
-    "widget2": {
-        "cols": 6,
-        "rows": 6,
-        "y": 0,
-        "x": 6,
+    widget2: {
+        cols: 6,
+        rows: 6,
+        y: 0,
+        x: 6,
     },
-    "widget3": {
-        "cols": 7,
-        "rows": 6,
-        "y": 6,
-        "x": 0,
+    widget3: {
+        cols: 7,
+        rows: 6,
+        y: 6,
+        x: 0,
     },
-    "widget4": {
-        "cols": 5,
-        "rows": 6,
-        "y": 6,
-        "x": 7,
+    widget4: {
+        cols: 5,
+        rows: 6,
+        y: 6,
+        x: 7,
     },
 };
 
@@ -58,71 +62,71 @@ export const widgets: IWidget[] = [
         type: "kpi",
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
-                "header": {
-                    "properties": {
-                        "title": "KPI Widget!",
-                        "subtitle": "A bunch of number boxes",
+                header: {
+                    properties: {
+                        title: "KPI Widget!",
+                        subtitle: "A bunch of number boxes",
                     },
                 },
-                "tiles": {
-                    "properties": {
-                        "nodes": ["kpi1", "kpi2"],
+                tiles: {
+                    properties: {
+                        nodes: ["kpi1", "kpi2"],
                     },
                 },
-                "kpi1": {
-                    "id": "kpi1",
-                    "componentType": KpiComponent.lateLoadKey,
-                    "providers": {
+                kpi1: {
+                    id: "kpi1",
+                    componentType: KpiComponent.lateLoadKey,
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": TestKpiDataSource.providerId,
+                            providerId: TestKpiDataSource.providerId,
                         } as IProviderConfiguration,
                         [WellKnownProviders.Adapter]: {
-                            "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
-                            "properties": {
-                                "componentId": "kpi1",
-                                "propertyPath": "widgetData",
-                                "thresholds": {
-                                    "showThresholds": true,
-                                    "warningThresholdValue": 5,
-                                    "criticalThresholdValue": 8,
+                            providerId: NOVA_KPI_DATASOURCE_ADAPTER,
+                            properties: {
+                                componentId: "kpi1",
+                                propertyPath: "widgetData",
+                                thresholds: {
+                                    showThresholds: true,
+                                    warningThresholdValue: 5,
+                                    criticalThresholdValue: 8,
                                 },
                             },
                         } as IProviderConfiguration,
                     },
-                    "properties": {
-                        "elementClass": "flex-grow-1",
-                        "widgetData": {
-                            "id": "totalStorage",
-                            "value": 0,
-                            "label": "Total storage",
+                    properties: {
+                        elementClass: "flex-grow-1",
+                        widgetData: {
+                            id: "totalStorage",
+                            value: 0,
+                            label: "Total storage",
                         },
                     },
                 },
-                "kpi2": {
-                    "id": "kpi2",
-                    "componentType": KpiComponent.lateLoadKey,
-                    "providers": {
+                kpi2: {
+                    id: "kpi2",
+                    componentType: KpiComponent.lateLoadKey,
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": TestKpiDataSource2.providerId,
+                            providerId: TestKpiDataSource2.providerId,
                         } as IProviderConfiguration,
                         [WellKnownProviders.Adapter]: {
-                            "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
-                            "properties": {
-                                "componentId": "kpi2",
-                                "propertyPath": "widgetData",
-                                "thresholds": {
-                                    "warningThresholdValue": 120,
-                                    "criticalThresholdValue": 150,
+                            providerId: NOVA_KPI_DATASOURCE_ADAPTER,
+                            properties: {
+                                componentId: "kpi2",
+                                propertyPath: "widgetData",
+                                thresholds: {
+                                    warningThresholdValue: 120,
+                                    criticalThresholdValue: 150,
                                 },
                             },
                         } as IProviderConfiguration,
                     },
-                    "properties": {
-                        "elementClass": "flex-grow-1",
-                        "widgetData": {
-                            "id": "downloadSpeed",
-                            "value": 0,
-                            "label": "Download speed",
+                    properties: {
+                        elementClass: "flex-grow-1",
+                        widgetData: {
+                            id: "downloadSpeed",
+                            value: 0,
+                            label: "Download speed",
                         },
                     },
                 },
@@ -134,25 +138,26 @@ export const widgets: IWidget[] = [
         type: "proportional",
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
-                "header": {
-                    "properties": {
-                        "title": "Proportional Widget!",
-                        "subtitle": "Proportional widget with legend formatters",
+                header: {
+                    properties: {
+                        title: "Proportional Widget!",
+                        subtitle: "Proportional widget with legend formatters",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": TestProportionalDataSource2.providerId,
+                            providerId: TestProportionalDataSource2.providerId,
                         } as IProviderConfiguration,
                     },
-                    "properties": {
-                        "configuration": {
-                            "chartOptions": {
-                                "type": ProportionalWidgetChartTypes.PieChart,
-                                "legendPlacement": LegendPlacement.Right,
-                                "legendFormatter": {
-                                    "componentType": LinkFormatterComponent.lateLoadKey,
+                    properties: {
+                        configuration: {
+                            chartOptions: {
+                                type: ProportionalWidgetChartTypes.PieChart,
+                                legendPlacement: LegendPlacement.Right,
+                                legendFormatter: {
+                                    componentType:
+                                        LinkFormatterComponent.lateLoadKey,
                                 },
                             } as IProportionalWidgetChartOptions,
                         },
@@ -167,23 +172,23 @@ export const widgets: IWidget[] = [
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
                 [DEFAULT_PIZZAGNA_ROOT]: {
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": TestTimeseriesDataSource.providerId,
+                            providerId: TestTimeseriesDataSource.providerId,
                         } as IProviderConfiguration,
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Timeseries Widget!",
-                        "subtitle": "Basic timeseries widget",
+                header: {
+                    properties: {
+                        title: "Timeseries Widget!",
+                        subtitle: "Basic timeseries widget",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
-                                "series": [
+                            properties: {
+                                series: [
                                     {
                                         id: "series-1",
                                         label: "Average CPU Load",
@@ -203,18 +208,20 @@ export const widgets: IWidget[] = [
                             },
                         } as Partial<IProviderConfiguration>,
                     },
-                    "properties": {
-                        "configuration": {
-                            "legendPlacement": LegendPlacement.Right,
-                            "enableZoom": true,
-                            "leftAxisLabel": "Utilization (%)",
+                    properties: {
+                        configuration: {
+                            legendPlacement: LegendPlacement.Right,
+                            enableZoom: true,
+                            leftAxisLabel: "Utilization (%)",
                         } as ITimeseriesWidgetConfig,
                     },
                 },
-                "timeframeSelection": {
-                    "properties": {
-                        "timeframe": {
-                            startDatetime: frozenTime().subtract(7, "day").format(),
+                timeframeSelection: {
+                    properties: {
+                        timeframe: {
+                            startDatetime: frozenTime()
+                                .subtract(7, "day")
+                                .format(),
                             endDatetime: frozenTime().format(),
                             selectedPresetId: null,
                         } as unknown as ISerializableTimeframe,
@@ -228,13 +235,13 @@ export const widgets: IWidget[] = [
         type: "table",
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
-                "header": {
+                header: {
                     properties: {
                         title: "Table Widget!",
                         subtitle: "Basic table widget",
                     },
                 },
-                "table": {
+                table: {
                     providers: {
                         [WellKnownProviders.DataSource]: {
                             providerId: TestTableDataSource.providerId,
@@ -248,7 +255,8 @@ export const widgets: IWidget[] = [
                                     label: "No",
                                     isActive: true,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "position",
@@ -261,7 +269,8 @@ export const widgets: IWidget[] = [
                                     label: "Name",
                                     isActive: true,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "name",
@@ -274,7 +283,8 @@ export const widgets: IWidget[] = [
                                     label: "Location",
                                     isActive: true,
                                     formatter: {
-                                        componentType: LinkFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            LinkFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "firstUrlLabel",

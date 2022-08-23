@@ -1,6 +1,5 @@
 import { DataAccessor } from "../../../core/common/types";
 import { IRectangleSeriesAccessors } from "../../accessors/rectangle-accessors";
-
 import { IBarAccessors, IBarDataAccessors } from "./bar-accessors";
 
 export interface IStatusDataAccessors extends IBarDataAccessors {
@@ -27,4 +26,3 @@ export class StatusAccessors implements IStatusAccessors {
         barAccessors.data.status = (d: any) => d.status;
     }
 }
-

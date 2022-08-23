@@ -1,6 +1,7 @@
 import { CdkTreeModule } from "@angular/cdk/tree";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
+
 import {
     DEMO_PATH_TOKEN,
     NuiBusyModule,
@@ -41,8 +42,8 @@ const routes = [
         path: "",
         component: TreeDocsExampleComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.beta,
+            srlc: {
+                stage: SrlcStage.beta,
             },
             showThemeSwitcher: true,
         },
@@ -51,8 +52,8 @@ const routes = [
         path: "basic",
         component: TreeBasicExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -60,8 +61,8 @@ const routes = [
         path: "lazy",
         component: TreeLazyExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -69,8 +70,8 @@ const routes = [
         path: "leaf-pagination",
         component: TreeLeafPaginationExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -78,8 +79,8 @@ const routes = [
         path: "show-all-dialog",
         component: TreeShowAllDialogExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -87,8 +88,8 @@ const routes = [
         path: "styling",
         component: TreeStylingExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -96,8 +97,8 @@ const routes = [
         path: "with-additional-content",
         component: TreeWithAdditionalContentExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -105,8 +106,8 @@ const routes = [
         path: "checkbox",
         component: TreeCheckboxExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -114,8 +115,8 @@ const routes = [
         path: "checkbox-lazy",
         component: TreeCheckboxLazyComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -123,8 +124,8 @@ const routes = [
         path: "load-more",
         component: TreeLoadMoreExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -132,8 +133,8 @@ const routes = [
         path: "tree-visual-test",
         component: TreeVisualTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -177,16 +178,15 @@ const routes = [
     providers: [
         {
             provide: DEMO_PATH_TOKEN,
-            useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/),
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
         },
     ],
-    exports: [
-        RouterModule,
-    ],
-    entryComponents: [
-        TreeDialogContentExampleComponent,
-    ],
+    exports: [RouterModule],
+    entryComponents: [TreeDialogContentExampleComponent],
 })
-export class TreeModule {
-}
-
+export class TreeModule {}

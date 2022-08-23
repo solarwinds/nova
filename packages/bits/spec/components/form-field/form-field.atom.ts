@@ -13,23 +13,39 @@ export class FormFieldAtom extends Atom {
         return this.root.element(by.className("nui-help-hint")).getText();
     }
     public async getCaptionText(): Promise<string> {
-        return this.root.element(by.className("nui-form-field__control-label")).getText();
+        return this.root
+            .element(by.className("nui-form-field__control-label"))
+            .getText();
     }
     public async getStateText(): Promise<string> {
-        return this.root.element(by.className("nui-form-field__state-text")).getText();
+        return this.root
+            .element(by.className("nui-form-field__state-text"))
+            .getText();
     }
     public getInfoIcon(): IconAtom {
-        return Atom.findIn(IconAtom, this.root.element(by.className("nui-form-field__control-label-container-info")));
+        return Atom.findIn(
+            IconAtom,
+            this.root.element(
+                by.className("nui-form-field__control-label-container-info")
+            )
+        );
     }
     public getInfoPopover(): PopoverAtom {
-        return Atom.findIn(PopoverAtom, this.root.element(by.className("nui-form-field__control-label-container-info")));
+        return Atom.findIn(
+            PopoverAtom,
+            this.root.element(
+                by.className("nui-form-field__control-label-container-info")
+            )
+        );
     }
     public async getErrors(): Promise<string[]> {
-        return this.root.all(by.className("nui-validation-message")).map<string>(async (el?: ElementFinder) => {
-            if (!el) {
-                throw new Error("headerCell is not defined");
-            }
-            return el.getText();
-        });
+        return this.root
+            .all(by.className("nui-validation-message"))
+            .map<string>(async (el?: ElementFinder) => {
+                if (!el) {
+                    throw new Error("headerCell is not defined");
+                }
+                return el.getText();
+            });
     }
 }

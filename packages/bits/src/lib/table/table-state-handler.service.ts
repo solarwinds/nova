@@ -1,4 +1,10 @@
-import { forwardRef, Inject, Injectable, NgZone, TrackByFunction } from "@angular/core";
+import {
+    forwardRef,
+    Inject,
+    Injectable,
+    NgZone,
+    TrackByFunction,
+} from "@angular/core";
 import _includes from "lodash/includes";
 import _isNil from "lodash/isNil";
 import _isNumber from "lodash/isNumber";
@@ -8,7 +14,6 @@ import { ISelection, ISelectorState } from "../../services/public-api";
 import { SelectionType } from "../selector/public-api";
 import { SelectorService } from "../selector/selector.service";
 import { ISortedItem, SorterDirection } from "../sorter/public-api";
-
 import { TableResizePhase } from "./table-resizer/table-resizer.directive";
 
 export const enum AlignmentClasses {
@@ -24,7 +29,9 @@ export const enum DropAlignment {
 
 export interface ITableState {
     columnAlignments: { [key: string]: string };
-    columnsWidths: { [key: string]: { width: number, autoCalculated?: boolean } };
+    columnsWidths: {
+        [key: string]: { width: number; autoCalculated?: boolean };
+    };
     columns: string[];
     sortedColumn?: ISortedItem;
     widthCalculationPerformed: boolean;
@@ -60,7 +67,7 @@ const ICON_CELL_WIDTH_PX = 40;
 const SELECTABLE_CELL_WIDTH_PX = 75;
 
 /** @ignore */
-const DEFAULT_TRACK_BY: TrackByFunction<any> = ((i, d) => d);
+const DEFAULT_TRACK_BY: TrackByFunction<any> = (i, d) => d;
 
 @Injectable()
 export class TableStateHandlerService {
@@ -105,12 +112,15 @@ export class TableStateHandlerService {
     };
 
     protected sortIcons: { [key: string]: string } = {
-        "asc": "triangle-up",
-        "desc": "triangle-down",
+        asc: "triangle-up",
+        desc: "triangle-down",
     };
 
-    constructor(protected zone: NgZone, @Inject(forwardRef(() => SelectorService)) protected selectorService: SelectorService) {
-    }
+    constructor(
+        protected zone: NgZone,
+        @Inject(forwardRef(() => SelectorService))
+        protected selectorService: SelectorService
+    ) {}
 
     /**
      * Used to sync directives and components in table to apply additional styles and logic
@@ -304,8 +314,12 @@ export class TableStateHandlerService {
      * @param alignment the new alignment direction
      *
      */
-    public setAlignment(column: string, alignment: string = AlignmentClasses.LEFT): void {
-        this.state.columnAlignments[column] = alignment || this.state.columnAlignments[column];
+    public setAlignment(
+        column: string,
+        alignment: string = AlignmentClasses.LEFT
+    ): void {
+        this.state.columnAlignments[column] =
+            alignment || this.state.columnAlignments[column];
     }
 
     /**
@@ -329,30 +343,43 @@ export class TableStateHandlerService {
     public calculateWidthsOfColumns() {
         // Apply width of 40px for non-resizable columns of type "icon"
         this.state.columns
-            .filter(columnName => {
+            .filter((columnName) => {
                 const columnIndex = this.state.columns.indexOf(columnName);
                 return this.state.columnsTypes[columnIndex] === "icon";
             })
-            .forEach(column => {
-                this.state.columnsWidths[column] = { width: ICON_CELL_WIDTH_PX };
+            .forEach((column) => {
+                this.state.columnsWidths[column] = {
+                    width: ICON_CELL_WIDTH_PX,
+                };
             });
 
         // "selectable" adding one more column with 75px width which is not in the "this.state.columns", so we need take it to the consideration
-        const accumulator = (this.resizable && this.selectable) ? SELECTABLE_CELL_WIDTH_PX : 0;
+        const accumulator =
+            this.resizable && this.selectable ? SELECTABLE_CELL_WIDTH_PX : 0;
         const userColumnsWidths = this.state.columns
-            .filter(columnName => this.state.columnsWidths[columnName])
-            .reduce((total, curr) =>
-                total + this.state.columnsWidths[curr].width, accumulator);
-        const widthConsideringUserInputs = userColumnsWidths > this.tableParentWidth ? 0 : this.tableParentWidth - userColumnsWidths - 1;
-        const columnsToCalculateWidth = this.state.columns
-            .filter(columnName => !this.state.columnsWidths[columnName])
-            .length;
-        const calculatedWidth = Math.floor(widthConsideringUserInputs / columnsToCalculateWidth);
-        const widthOfColumn = calculatedWidth > MIN_COLUMN_WIDTH_PX ? calculatedWidth : MIN_COLUMN_WIDTH_PX;
+            .filter((columnName) => this.state.columnsWidths[columnName])
+            .reduce(
+                (total, curr) => total + this.state.columnsWidths[curr].width,
+                accumulator
+            );
+        const widthConsideringUserInputs =
+            userColumnsWidths > this.tableParentWidth
+                ? 0
+                : this.tableParentWidth - userColumnsWidths - 1;
+        const columnsToCalculateWidth = this.state.columns.filter(
+            (columnName) => !this.state.columnsWidths[columnName]
+        ).length;
+        const calculatedWidth = Math.floor(
+            widthConsideringUserInputs / columnsToCalculateWidth
+        );
+        const widthOfColumn =
+            calculatedWidth > MIN_COLUMN_WIDTH_PX
+                ? calculatedWidth
+                : MIN_COLUMN_WIDTH_PX;
 
         this.state.columns
-            .filter(columnName => !this.state.columnsWidths[columnName])
-            .forEach(column => {
+            .filter((columnName) => !this.state.columnsWidths[columnName])
+            .forEach((column) => {
                 // There is a case when sum of columns can exceed width of parent
                 // Then width of other columns should be set to min width
                 this.state.columnsWidths[column] = { width: widthOfColumn };
@@ -365,18 +392,22 @@ export class TableStateHandlerService {
      * Updates the state's sortedColumn and sortedColumn.direction properties and then broadcasts the
      *  state object to all listeners of sortingState
      *
-    * @param sortCellIndex the index of the column to sort by
+     * @param sortCellIndex the index of the column to sort by
      */
     public sortColumn(sortCellIndex: number) {
         const newSortedColumn = this.state.columns[sortCellIndex];
-        const prevSortedColumn = this.state.sortedColumn && this.state.sortedColumn.sortBy;
-        const prevSortDirection = this.state.sortedColumn && this.state.sortedColumn.direction;
+        const prevSortedColumn =
+            this.state.sortedColumn && this.state.sortedColumn.sortBy;
+        const prevSortDirection =
+            this.state.sortedColumn && this.state.sortedColumn.direction;
 
         let newSortDirection = SorterDirection.original;
 
         if (newSortedColumn === prevSortedColumn) {
-            newSortDirection = (prevSortDirection === SorterDirection.ascending) ?
-                SorterDirection.descending : SorterDirection.ascending;
+            newSortDirection =
+                prevSortDirection === SorterDirection.ascending
+                    ? SorterDirection.descending
+                    : SorterDirection.ascending;
         } else {
             newSortDirection = SorterDirection.ascending;
         }
@@ -409,7 +440,11 @@ export class TableStateHandlerService {
     public reorderColumnsOnDrop(): void {
         this.getNewCellIndex();
 
-        if (!_isNil(this.newCellIndex) && (this.newCellIndex !== this.dragCellIndex) && (this.dragCellIndex !== this.draggedOverCellIndex)) {
+        if (
+            !_isNil(this.newCellIndex) &&
+            this.newCellIndex !== this.dragCellIndex &&
+            this.dragCellIndex !== this.draggedOverCellIndex
+        ) {
             this.reorderColumns(this.dragCellIndex, this.newCellIndex);
         }
     }
@@ -419,9 +454,14 @@ export class TableStateHandlerService {
      */
     public getNewCellIndex(): void {
         if (this.dragCellIndex !== this.draggedOverCellIndex) {
-            this.newCellIndex = (this.dragCellIndex < this.draggedOverCellIndex)
-                ? ((this.dropCellOffsetX < this.dropCellWidth / 2) ? (this.draggedOverCellIndex - 1) : this.draggedOverCellIndex)
-                : ((this.dropCellOffsetX < this.dropCellWidth / 2) ? this.draggedOverCellIndex : (this.draggedOverCellIndex + 1));
+            this.newCellIndex =
+                this.dragCellIndex < this.draggedOverCellIndex
+                    ? this.dropCellOffsetX < this.dropCellWidth / 2
+                        ? this.draggedOverCellIndex - 1
+                        : this.draggedOverCellIndex
+                    : this.dropCellOffsetX < this.dropCellWidth / 2
+                    ? this.draggedOverCellIndex
+                    : this.draggedOverCellIndex + 1;
         }
     }
 
@@ -445,9 +485,13 @@ export class TableStateHandlerService {
      * @returns The drop alignment direction
      */
     public getDropCellAlignment(): DropAlignment {
-        return ((this.dragCellIndex < this.draggedOverCellIndex)
-            ? ((this.newCellIndex < this.draggedOverCellIndex) ? DropAlignment.left : DropAlignment.right)
-            : ((this.newCellIndex > this.draggedOverCellIndex) ? DropAlignment.right : DropAlignment.left));
+        return this.dragCellIndex < this.draggedOverCellIndex
+            ? this.newCellIndex < this.draggedOverCellIndex
+                ? DropAlignment.left
+                : DropAlignment.right
+            : this.newCellIndex > this.draggedOverCellIndex
+            ? DropAlignment.right
+            : DropAlignment.left;
     }
 
     /**
@@ -456,7 +500,10 @@ export class TableStateHandlerService {
      */
     public emitDraggedOverCell(): void {
         this.zone.run(() => {
-            if ((this.dragCellIndex !== this.draggedOverCellIndex) && (this.dragCellIndex !== this.newCellIndex)) {
+            if (
+                this.dragCellIndex !== this.draggedOverCellIndex &&
+                this.dragCellIndex !== this.newCellIndex
+            ) {
                 this.draggedOverCell.next(<DraggedOverCell>{
                     cellIndex: this.draggedOverCellIndex,
                     dropAlignment: this.getDropCellAlignment(),
@@ -473,8 +520,15 @@ export class TableStateHandlerService {
      * @param columnIndex
      * @param eventPhase
      */
-    public emitResizeEvent(columnIndex: number, eventPhase: TableResizePhase): void {
-        this.shouldHighlightEdge.next({ columnIndex, side: DropAlignment.right, eventPhase });
+    public emitResizeEvent(
+        columnIndex: number,
+        eventPhase: TableResizePhase
+    ): void {
+        this.shouldHighlightEdge.next({
+            columnIndex,
+            side: DropAlignment.right,
+            eventPhase,
+        });
     }
 
     /**
@@ -485,8 +539,10 @@ export class TableStateHandlerService {
     public setDraggedOverCell(event: DragEvent): void {
         const dropCellOffsetX: number = event.offsetX;
         const dropCellWidth: number = (event.target as HTMLElement).clientWidth;
-        const dragOverDirection: string = (dropCellOffsetX < dropCellWidth / 2) ? "left-right" : "right-left";
-        const draggedOverCellIndex: number = this.getTargetElementCellIndex(event);
+        const dragOverDirection: string =
+            dropCellOffsetX < dropCellWidth / 2 ? "left-right" : "right-left";
+        const draggedOverCellIndex: number =
+            this.getTargetElementCellIndex(event);
 
         const draggedOverCellChanged: boolean =
             _isNil(this.dragOverDirection) ||
@@ -520,8 +576,11 @@ export class TableStateHandlerService {
      * @returns An array of all currently selected items
      */
     public getSelectedItems() {
-        const trackedItems = this.dataSource.map(d => this.trackBy(d?.id, d));
-        return this.selectorService.getSelectedItems(this.selection, trackedItems);
+        const trackedItems = this.dataSource.map((d) => this.trackBy(d?.id, d));
+        return this.selectorService.getSelectedItems(
+            this.selection,
+            trackedItems
+        );
     }
 
     /**
@@ -569,7 +628,10 @@ export class TableStateHandlerService {
         const excludedRows = this.selection.exclude;
         const includedRows = this.selection.include;
 
-        const rowObjectTrackBy = this.trackBy((<{id: number}>rowObject)?.id, rowObject);
+        const rowObjectTrackBy = this.trackBy(
+            (<{ id: number }>rowObject)?.id,
+            rowObject
+        );
 
         if (this.selection.isAllPages) {
             if (!_includes(excludedRows, rowObjectTrackBy)) {
@@ -600,7 +662,11 @@ export class TableStateHandlerService {
             return {
                 sortingIcon: this.sortIcons[this.state.sortedColumn.direction],
                 // comparing column index with index of sorted column
-                isColumnSorted: cellIndex === this.state.columns.indexOf(this.state.sortedColumn.sortBy) && this.sortable,
+                isColumnSorted:
+                    cellIndex ===
+                        this.state.columns.indexOf(
+                            this.state.sortedColumn.sortBy
+                        ) && this.sortable,
             };
         }
         return {

@@ -1,15 +1,16 @@
-
 import { by, ElementFinder } from "protractor";
 
 import { Atom } from "../../atom";
-
 import { TabHeadingAtom } from "./tab-heading.atom";
 
 export class TabHeadingGroupAtom extends Atom {
     public static CSS_CLASS = "nui-tab-headings__holder";
 
     public async getTabs() {
-        const tabsCount: number = await Atom.findCount(TabHeadingAtom, this.getElement());
+        const tabsCount: number = await Atom.findCount(
+            TabHeadingAtom,
+            this.getElement()
+        );
         const tabs = [];
         for (let i = 0; i < tabsCount; i++) {
             tabs.push(Atom.findIn(TabHeadingAtom, this.getElement(), i));
@@ -32,7 +33,7 @@ export class TabHeadingGroupAtom extends Atom {
         const tab: TabHeadingAtom[] = [];
 
         for (let i = 0; i < tabs.length; i++) {
-            if (await tabs[i].getText() === text.toUpperCase()) {
+            if ((await tabs[i].getText()) === text.toUpperCase()) {
                 tab.push(tabs[i]);
             }
         }
@@ -59,7 +60,8 @@ export class TabHeadingGroupAtom extends Atom {
         return (await caretLeft.isPresent()) && (await caretRight.isPresent());
     }
 
-    public getNumberOfTabs = async (): Promise<number> => Atom.findCount(TabHeadingAtom, this.getElement());
+    public getNumberOfTabs = async (): Promise<number> =>
+        Atom.findCount(TabHeadingAtom, this.getElement());
 
     public getActiveTab = async () => {
         const tabs = await this.getTabs();
@@ -69,7 +71,7 @@ export class TabHeadingGroupAtom extends Atom {
                 return tabs[i];
             }
         }
-    }
+    };
 
     private getCaretLeft(): ElementFinder {
         return this.getElement().element(by.className("btn-caret-left"));

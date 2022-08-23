@@ -5,7 +5,6 @@ import { Component } from "@angular/core";
     templateUrl: "./repeat-test.component.html",
 })
 export class RepeatTestComponent {
-
     public colors = [
         { color: $localize`blue` },
         { color: $localize`green` },
@@ -30,12 +29,11 @@ export class RepeatTestComponent {
     private colorIndex: number = 1;
 
     public addNewColor(): void {
-        this.colors.push(
-            { color: `new color ${this.colorIndex++}` }
-        );
+        this.colors.push({ color: `new color ${this.colorIndex++}` });
     }
 
     // using css display rule instead of *ngIf to test RepeatComponent's IntersectionObserver
     // (*ngIf would instantiate the test component only when the tab is selected instead of immediately on page load)
-    public getTabDisplayMode = (tabId: string): string => this.currentTabId === tabId ? "block" : "none";
+    public getTabDisplayMode = (tabId: string): string =>
+        this.currentTabId === tabId ? "block" : "none";
 }

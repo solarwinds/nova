@@ -10,7 +10,9 @@ export class PopoverAtom extends Atom {
     public popoverModalId: string;
 
     private modalBackdrop: ElementFinder = PopoverAtom.backdrop;
-    private containerAnimationInProgress: ElementFinder = $("div.nui-popover-container-animation.ng-animating");
+    private containerAnimationInProgress: ElementFinder = $(
+        "div.nui-popover-container-animation.ng-animating"
+    );
 
     constructor(private root: ElementFinder) {
         super(root);
@@ -18,10 +20,14 @@ export class PopoverAtom extends Atom {
 
     public togglePopover = async (): Promise<void> => {
         const wasDisplayed = await this.isPopoverDisplayed();
-        const hasBackdrop = await this.modalBackdrop.isPresent() && await this.modalBackdrop.isDisplayed();
-        hasBackdrop ? await this.modalBackdrop.click() : await this.clickTarget();
+        const hasBackdrop =
+            (await this.modalBackdrop.isPresent()) &&
+            (await this.modalBackdrop.isDisplayed());
+        hasBackdrop
+            ? await this.modalBackdrop.click()
+            : await this.clickTarget();
         return wasDisplayed ? this.waitForClosed() : this.waitForOpen();
-    }
+    };
 
     public open = async (): Promise<void> => {
         if (await this.isPopoverDisplayed()) {
@@ -30,7 +36,7 @@ export class PopoverAtom extends Atom {
 
         await this.clickTarget();
         return this.waitForOpen();
-    }
+    };
 
     public openByHover = async (): Promise<void> => {
         if (await this.isPopoverDisplayed()) {
@@ -39,35 +45,52 @@ export class PopoverAtom extends Atom {
 
         await this.hover();
         return this.waitForOpen();
-    }
+    };
 
     public closeModal = async (): Promise<void> => {
         await this.modalBackdrop.click();
         return this.waitForClosed();
-    }
+    };
 
     public waitForOpen = async (timeout: number = 1000): Promise<void> => {
         const errorMessage = "Popover failed to open";
-        await browser.wait(ExpectedConditions.visibilityOf(this.getPopoverBody()), timeout, errorMessage);
-        return browser.wait(ExpectedConditions.stalenessOf(this.containerAnimationInProgress), timeout, errorMessage);
-    }
+        await browser.wait(
+            ExpectedConditions.visibilityOf(this.getPopoverBody()),
+            timeout,
+            errorMessage
+        );
+        return browser.wait(
+            ExpectedConditions.stalenessOf(this.containerAnimationInProgress),
+            timeout,
+            errorMessage
+        );
+    };
 
     public waitForClosed = async (timeout: number = 1000): Promise<void> =>
-        browser.wait(ExpectedConditions.stalenessOf(this.getPopoverBody()), timeout, "Popover failed to close")
+        browser.wait(
+            ExpectedConditions.stalenessOf(this.getPopoverBody()),
+            timeout,
+            "Popover failed to close"
+        );
 
-    public isPopoverDisplayed = async (): Promise<boolean> => this.getPopoverBody().isPresent();
+    public isPopoverDisplayed = async (): Promise<boolean> =>
+        this.getPopoverBody().isPresent();
 
     public getTitle = (): ElementFinder => $(".nui-popover-container__title");
 
-    public getTitleText = async (): Promise<string> => $(".nui-popover-container__title").getText();
+    public getTitleText = async (): Promise<string> =>
+        $(".nui-popover-container__title").getText();
 
-    public isDisplayedRight = async (): Promise<boolean> => this.bodyHasClass("nui-popover-container--right");
-    public isDisplayedLeft = async (): Promise<boolean> => this.bodyHasClass("nui-popover-container--left");
-    public isDisplayedTop = async (): Promise<boolean> => this.bodyHasClass("nui-popover-container--top");
-    public isDisplayedBottom = async (): Promise<boolean> => this.bodyHasClass("nui-popover-container--bottom");
+    public isDisplayedRight = async (): Promise<boolean> =>
+        this.bodyHasClass("nui-popover-container--right");
+    public isDisplayedLeft = async (): Promise<boolean> =>
+        this.bodyHasClass("nui-popover-container--left");
+    public isDisplayedTop = async (): Promise<boolean> =>
+        this.bodyHasClass("nui-popover-container--top");
+    public isDisplayedBottom = async (): Promise<boolean> =>
+        this.bodyHasClass("nui-popover-container--bottom");
 
     public clickTarget = async (): Promise<void> => this.root.click();
-
 
     /*
         !!! WARNING !!!
@@ -78,8 +101,11 @@ export class PopoverAtom extends Atom {
         Or taking an element inside of content that is completely different from .nui-popover-container.
         That is why we need to call this function every time.
     */
-    public getPopoverBody = (): ElementFinder => this.popoverModalId ? $(`#${this.popoverModalId}`) : $(".nui-popover-container");
+    public getPopoverBody = (): ElementFinder =>
+        this.popoverModalId
+            ? $(`#${this.popoverModalId}`)
+            : $(".nui-popover-container");
 
-    private bodyHasClass = async (className: string): Promise<boolean> => Atom.hasClass(this.getPopoverBody(), className);
-
+    private bodyHasClass = async (className: string): Promise<boolean> =>
+        Atom.hasClass(this.getPopoverBody(), className);
 }

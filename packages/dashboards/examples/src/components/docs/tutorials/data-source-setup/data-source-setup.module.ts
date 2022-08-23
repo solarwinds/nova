@@ -2,6 +2,7 @@ import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
+
 import { NuiDocsModule, NuiMessageModule } from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
@@ -13,8 +14,8 @@ const routes = [
         path: "",
         component: DataSourceDocsComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
             showThemeSwitcher: true,
         },
@@ -23,8 +24,8 @@ const routes = [
         path: "example",
         component: DataSourceSetupComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -39,11 +40,7 @@ const routes = [
         NuiMessageModule,
         RouterModule.forChild(routes),
     ],
-    declarations: [
-        DataSourceDocsComponent,
-        DataSourceSetupComponent,
-    ],
-    entryComponents: [
-    ],
+    declarations: [DataSourceDocsComponent, DataSourceSetupComponent],
+    entryComponents: [],
 })
-export class DataSourceSetupModule { }
+export class DataSourceSetupModule {}

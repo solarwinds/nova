@@ -23,7 +23,6 @@ import _isUndefined from "lodash/isUndefined";
 import { imagesPresetToken } from "../../constants/images.constants";
 import { LoggerService } from "../../services/log-service";
 import { UtilService } from "../../services/util.service";
-
 import { IImagesPresetItem } from "./public-api";
 /**
  * <example-url>./../examples/index.html#/image</example-url>
@@ -36,7 +35,7 @@ import { IImagesPresetItem } from "./public-api";
     styleUrls: ["./image.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: {
-        "role": "img",
+        role: "img",
         "[attr.aria-label]": "hasAlt ? null : description || imageName",
     },
 })
@@ -80,27 +79,31 @@ export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
     public imageName: string | null;
     public hasAlt: boolean;
 
-    constructor(private logger: LoggerService,
-                private utilService: UtilService,
-                private changeDetector: ChangeDetectorRef,
-                @Inject(imagesPresetToken) private images: Array<IImagesPresetItem>,
-                private domSanitizer: DomSanitizer,
-                private el: ElementRef) {
-    }
+    constructor(
+        private logger: LoggerService,
+        private utilService: UtilService,
+        private changeDetector: ChangeDetectorRef,
+        @Inject(imagesPresetToken) private images: Array<IImagesPresetItem>,
+        private domSanitizer: DomSanitizer,
+        private el: ElementRef
+    ) {}
 
     public ngOnInit(): void {
-        const dimensionImputs: string[] = [ this.height, this.width ];
+        const dimensionImputs: string[] = [this.height, this.width];
 
-        dimensionImputs.forEach(item => {
+        dimensionImputs.forEach((item) => {
             if (!_isUndefined(item) && !this.isImageSizeValid(item)) {
-                this.logger.error("Image size should be specified in 'px', '%', or 'auto");
+                this.logger.error(
+                    "Image size should be specified in 'px', '%', or 'auto"
+                );
             }
         });
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.image || changes.description) {
-            this.imageName = this.image.name || this.getImage(this.image)?.name || null;
+            this.imageName =
+                this.image.name || this.getImage(this.image)?.name || null;
             this.imageTemplate = this.getImageTemplate();
         }
     }
@@ -112,7 +115,9 @@ export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
                 svg.setAttribute("width", "100%");
                 svg.setAttribute("height", "100%");
             } catch (e) {
-                console.warn("Can't apply 'autoFill' to nui-image, because it is only applicable to SVG type of images");
+                console.warn(
+                    "Can't apply 'autoFill' to nui-image, because it is only applicable to SVG type of images"
+                );
                 return;
             }
         }
@@ -147,9 +152,16 @@ export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     private getImage = (imageName: string): IImagesPresetItem | undefined =>
-        _find(this.images, (img: IImagesPresetItem) => _isEqual(img.name, imageName))
+        _find(this.images, (img: IImagesPresetItem) =>
+            _isEqual(img.name, imageName)
+        );
 
     private isImageSizeValid(input: string): boolean {
-        return _isNumber(parseFloat(input)) && (_includes(input, "px") || _includes(input, "%") || _includes(input, "auto"));
+        return (
+            _isNumber(parseFloat(input)) &&
+            (_includes(input, "px") ||
+                _includes(input, "%") ||
+                _includes(input, "auto"))
+        );
     }
 }

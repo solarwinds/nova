@@ -7,10 +7,9 @@ describe("card-group", () => {
     let cardGroupComponent: CardGroupComponent;
 
     beforeEach(() => {
-        TestBed
-            .configureTestingModule({
-                declarations: [CardGroupComponent],
-            });
+        TestBed.configureTestingModule({
+            declarations: [CardGroupComponent],
+        });
         fixture = TestBed.createComponent(CardGroupComponent);
         cardGroupComponent = fixture.componentInstance;
         fixture.detectChanges();

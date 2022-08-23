@@ -2,20 +2,20 @@ import { browser, by, element } from "protractor";
 
 import { Animations, Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-
 import { SpinnerAtom } from "./spinner.atom";
 
 const name: string = "Spinner";
 
 describe(`Visual tests: ${name}`, () => {
-    let camera: Camera,
-        spinnerLargeWithCancel: SpinnerAtom;
+    let camera: Camera, spinnerLargeWithCancel: SpinnerAtom;
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("spinner/spinner-visual-test");
         await Helpers.disableCSSAnimations(Animations.ALL);
-        spinnerLargeWithCancel = new SpinnerAtom(element(by.id("nui-spinner-large-cancel")));
-        
+        spinnerLargeWithCancel = new SpinnerAtom(
+            element(by.id("nui-spinner-large-cancel"))
+        );
+
         camera = new Camera().loadFilm(browser, name);
     });
 

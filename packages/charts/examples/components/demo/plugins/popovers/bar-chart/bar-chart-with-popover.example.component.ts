@@ -1,6 +1,16 @@
 import { Component, OnInit } from "@angular/core";
+
 import {
-    barAccessors, barGrid, BarRenderer, barScales, BarSeriesHighlightStrategy, Chart, ChartAssist, ChartPopoverPlugin, InteractionLabelPlugin, XYGridConfig,
+    barAccessors,
+    barGrid,
+    BarRenderer,
+    barScales,
+    BarSeriesHighlightStrategy,
+    Chart,
+    ChartAssist,
+    ChartPopoverPlugin,
+    InteractionLabelPlugin,
+    XYGridConfig,
 } from "@nova-ui/charts";
 
 @Component({
@@ -17,20 +27,26 @@ export class BarChartWithPopoverExampleComponent implements OnInit {
         this.chartAssist.chart.addPlugin(this.popoverPlugin);
 
         // grid configuration
-        const gridConfig = <XYGridConfig>this.chartAssist.chart.getGrid().config();
+        const gridConfig = <XYGridConfig>(
+            this.chartAssist.chart.getGrid().config()
+        );
         gridConfig.interactionPlugins = false;
 
         const accessors = barAccessors();
-        const renderer = new BarRenderer({ highlightStrategy: new BarSeriesHighlightStrategy("x") });
+        const renderer = new BarRenderer({
+            highlightStrategy: new BarSeriesHighlightStrategy("x"),
+        });
         const scales = barScales();
 
         // tell the chart assist to populate the chart
-        this.chartAssist.update(getData().map(s => ({
-            ...s,
-            accessors,
-            renderer,
-            scales,
-        })));
+        this.chartAssist.update(
+            getData().map((s) => ({
+                ...s,
+                accessors,
+                renderer,
+                scales,
+            }))
+        );
     }
 }
 

@@ -1,5 +1,6 @@
-import { Atom } from "@nova-ui/bits/sdk/atoms";
 import { By, ElementArrayFinder } from "protractor";
+
+import { Atom } from "@nova-ui/bits/sdk/atoms";
 
 export class DrilldownAtom extends Atom {
     public static CSS_CLASS = "drilldown-widget";

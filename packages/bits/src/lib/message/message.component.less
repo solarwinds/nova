@@ -61,8 +61,17 @@
         display: block;
         padding: 0;
         position: absolute;
-        right: calc((@icon-size-default / 2) + @nui-button-border-width + @btn-padding-is-empty - @nui-space-sm);
-        top: calc(((1em * @line-height-base) + (@nui-space-sm * 2) - @icon-size-default - (@nui-button-border-width * 2) - (@btn-padding-is-empty * 2)) / 2);
+        right: calc(
+            (@icon-size-default / 2) + @nui-button-border-width +
+                @btn-padding-is-empty - @nui-space-sm
+        );
+        top: calc(
+            (
+                    (1em * @line-height-base) + (@nui-space-sm * 2) -
+                        @icon-size-default - (@nui-button-border-width * 2) -
+                        (@btn-padding-is-empty * 2)
+                ) / 2
+        );
 
         &:hover,
         &:active,

@@ -9,7 +9,8 @@ import { LoggerService } from "./log-service";
 
 describe("services >", () => {
     describe("edge-detection-service >", () => {
-        @Component({}) class EdgeDetectionTestComponent {}
+        @Component({})
+        class EdgeDetectionTestComponent {}
 
         let edgeDetectionService: EdgeDetectionService,
             deposit: HTMLElement,
@@ -19,22 +20,27 @@ describe("services >", () => {
         let logErrorSpy: jasmine.Spy;
 
         const basePointDimensions = {
-            x: 50,
-            y: 50,
-            width: 20,
-            height: 10,
-        },
-              parentComponentDimension = {
-                  width: 100,
-                  height: 100,
-              };
+                x: 50,
+                y: 50,
+                width: 20,
+                height: 10,
+            },
+            parentComponentDimension = {
+                width: 100,
+                height: 100,
+            };
 
-        const createBasicHtml = (depositWidth: number, depositHeight: number,
-                                 addEdgeDefiner?: boolean) => {
+        const createBasicHtml = (
+            depositWidth: number,
+            depositHeight: number,
+            addEdgeDefiner?: boolean
+        ) => {
             const edgeDefinerClass = addEdgeDefiner ? "nui-edge-definer" : "";
-            const parentStyle = addEdgeDefiner ? `width: ${parentComponentDimension.width}px;
+            const parentStyle = addEdgeDefiner
+                ? `width: ${parentComponentDimension.width}px;
                                                        height: ${parentComponentDimension.height}px;
-                                                       position: relative;` : "";
+                                                       position: relative;`
+                : "";
             return `<div id="edge-detection"
                          class="${edgeDefinerClass}"
                          style="${parentStyle}">
@@ -53,10 +59,18 @@ describe("services >", () => {
                     </div>`;
         };
 
-        const createBasicComponent = async (depositWidth: number, depositHeight: number, addEdgeDefiner?: boolean) => {
+        const createBasicComponent = async (
+            depositWidth: number,
+            depositHeight: number,
+            addEdgeDefiner?: boolean
+        ) => {
             TestBed.overrideComponent(EdgeDetectionTestComponent, {
                 set: {
-                    template: createBasicHtml(depositWidth, depositHeight, addEdgeDefiner),
+                    template: createBasicHtml(
+                        depositWidth,
+                        depositHeight,
+                        addEdgeDefiner
+                    ),
                 },
             });
             await TestBed.compileComponents();
@@ -68,11 +82,13 @@ describe("services >", () => {
 
             logErrorSpy = spyOnProperty(logger, "error").and.returnValue(noop);
             spyOnProperty(logger, "warn").and.returnValue(noop);
-            edgeDetectionService = new EdgeDetectionService(new DomUtilService(document), document, logger);
+            edgeDetectionService = new EdgeDetectionService(
+                new DomUtilService(document),
+                document,
+                logger
+            );
             TestBed.configureTestingModule({
-                declarations: [
-                    EdgeDetectionTestComponent,
-                ],
+                declarations: [EdgeDetectionTestComponent],
             });
         });
 
@@ -104,7 +120,9 @@ describe("services >", () => {
 
         describe("getEdgeDefinerMeasurements (private)", () => {
             it("returns window measurements if no edgeDefiner element passed", () => {
-                const container = (edgeDetectionService as any).getEdgeDefinerMeasurements(null);
+                const container = (
+                    edgeDetectionService as any
+                ).getEdgeDefinerMeasurements(null);
 
                 expect(container.position.top).toBe(0);
                 expect(container.position.left).toBe(0);
@@ -112,70 +130,122 @@ describe("services >", () => {
         });
 
         describe("placing >", () => {
-            const testLeftRightPlacement = (isPlacementPossible: boolean, placementDirection: string) =>
+            const testLeftRightPlacement =
+                (isPlacementPossible: boolean, placementDirection: string) =>
                 async () => {
                     let depositWidth: number;
                     dimensionAdjustment = isPlacementPossible ? -1 : 1;
                     if (placementDirection === "left") {
                         depositWidth = basePointDimensions.x;
                     } else {
-                        depositWidth = window.innerWidth - basePointDimensions.x - basePointDimensions.width;
+                        depositWidth =
+                            window.innerWidth -
+                            basePointDimensions.x -
+                            basePointDimensions.width;
                     }
                     depositWidth += dimensionAdjustment;
 
-                    const fixture = await createBasicComponent(depositWidth, 10);
+                    const fixture = await createBasicComponent(
+                        depositWidth,
+                        10
+                    );
 
-                    deposit = fixture.debugElement.query(By.css("#deposit")).nativeElement;
-                    basePoint = fixture.debugElement.query(By.css("#base-point")).nativeElement;
-                    const result: any = edgeDetectionService.canBe(basePoint, deposit);
+                    deposit = fixture.debugElement.query(
+                        By.css("#deposit")
+                    ).nativeElement;
+                    basePoint = fixture.debugElement.query(
+                        By.css("#base-point")
+                    ).nativeElement;
+                    const result: any = edgeDetectionService.canBe(
+                        basePoint,
+                        deposit
+                    );
 
-                    expect(result.placed[placementDirection]).toBe(isPlacementPossible);
+                    expect(result.placed[placementDirection]).toBe(
+                        isPlacementPossible
+                    );
                 };
 
-            const testTopBottomPlacement = (isPlacementPossible: boolean, placementDirection: string) =>
+            const testTopBottomPlacement =
+                (isPlacementPossible: boolean, placementDirection: string) =>
                 async () => {
                     let depositHeight: number;
                     dimensionAdjustment = isPlacementPossible ? -1 : 1;
                     if (placementDirection === "bottom") {
-                        depositHeight = window.innerHeight - basePointDimensions.y - basePointDimensions.height;
+                        depositHeight =
+                            window.innerHeight -
+                            basePointDimensions.y -
+                            basePointDimensions.height;
                     } else {
                         depositHeight = basePointDimensions.y;
                     }
                     depositHeight += dimensionAdjustment;
 
-                    const fixture = await createBasicComponent(10, depositHeight);
+                    const fixture = await createBasicComponent(
+                        10,
+                        depositHeight
+                    );
 
-                    deposit = fixture.debugElement.query(By.css("#deposit")).nativeElement;
-                    basePoint = fixture.debugElement.query(By.css("#base-point")).nativeElement;
-                    const result: any = edgeDetectionService.canBe(basePoint, deposit);
+                    deposit = fixture.debugElement.query(
+                        By.css("#deposit")
+                    ).nativeElement;
+                    basePoint = fixture.debugElement.query(
+                        By.css("#base-point")
+                    ).nativeElement;
+                    const result: any = edgeDetectionService.canBe(
+                        basePoint,
+                        deposit
+                    );
 
-                    expect(result.placed[placementDirection]).toBe(isPlacementPossible);
+                    expect(result.placed[placementDirection]).toBe(
+                        isPlacementPossible
+                    );
                 };
 
-            it("should give expected result when no right direction is available",
-               testLeftRightPlacement(false, "right"));
-            it("should give expected result when right direction is available",
-               testLeftRightPlacement(true, "right"));
+            it(
+                "should give expected result when no right direction is available",
+                testLeftRightPlacement(false, "right")
+            );
+            it(
+                "should give expected result when right direction is available",
+                testLeftRightPlacement(true, "right")
+            );
 
-            it("should give expected result when no top direction is available",
-               testTopBottomPlacement(false, "top"));
-            it("should give expected result when top direction is available",
-               testTopBottomPlacement(true, "top"));
+            it(
+                "should give expected result when no top direction is available",
+                testTopBottomPlacement(false, "top")
+            );
+            it(
+                "should give expected result when top direction is available",
+                testTopBottomPlacement(true, "top")
+            );
 
-            it("should give expected result when no bottom direction is available",
-               testTopBottomPlacement(false, "bottom"));
-            it("should give expected result when bottom direction is available",
-               testTopBottomPlacement(true, "bottom"));
+            it(
+                "should give expected result when no bottom direction is available",
+                testTopBottomPlacement(false, "bottom")
+            );
+            it(
+                "should give expected result when bottom direction is available",
+                testTopBottomPlacement(true, "bottom")
+            );
 
-            it("should give expected result when no left direction is available",
-               testLeftRightPlacement(false, "left"));
-            it("should give expected result when left direction is available",
-               testLeftRightPlacement(true, "left"));
+            it(
+                "should give expected result when no left direction is available",
+                testLeftRightPlacement(false, "left")
+            );
+            it(
+                "should give expected result when left direction is available",
+                testLeftRightPlacement(true, "left")
+            );
         });
 
         describe("placing in ", () => {
             describe("solitary edge-definer > ", () => {
-                const testLeftRightPlacementInComponent = (isPlacementPossible: boolean, placementDirection: string) =>
+                const testLeftRightPlacementInComponent =
+                    (
+                        isPlacementPossible: boolean,
+                        placementDirection: string
+                    ) =>
                     async () => {
                         let depositWidth: number;
                         dimensionAdjustment = isPlacementPossible ? -1 : 1;
@@ -184,60 +254,110 @@ describe("services >", () => {
                             depositWidth = basePointDimensions.x;
                         } else {
                             depositWidth =
-                                parentComponentDimension.width - basePointDimensions.x - basePointDimensions.width;
+                                parentComponentDimension.width -
+                                basePointDimensions.x -
+                                basePointDimensions.width;
                         }
                         depositWidth += dimensionAdjustment;
 
-                        const fixture = await createBasicComponent(depositWidth, 10, true);
+                        const fixture = await createBasicComponent(
+                            depositWidth,
+                            10,
+                            true
+                        );
 
-                        deposit = fixture.debugElement.query(By.css("#deposit")).nativeElement;
-                        basePoint = fixture.debugElement.query(By.css("#base-point")).nativeElement;
-                        const result: any = edgeDetectionService.canBe(basePoint, deposit);
+                        deposit = fixture.debugElement.query(
+                            By.css("#deposit")
+                        ).nativeElement;
+                        basePoint = fixture.debugElement.query(
+                            By.css("#base-point")
+                        ).nativeElement;
+                        const result: any = edgeDetectionService.canBe(
+                            basePoint,
+                            deposit
+                        );
 
-                        expect(result.placed[placementDirection]).toBe(isPlacementPossible);
+                        expect(result.placed[placementDirection]).toBe(
+                            isPlacementPossible
+                        );
                     };
 
-                const testTopBottomPlacementInComponent = (isPlacementPossible: boolean, placementDirection: string) =>
+                const testTopBottomPlacementInComponent =
+                    (
+                        isPlacementPossible: boolean,
+                        placementDirection: string
+                    ) =>
                     async () => {
                         let depositHeight: number;
                         dimensionAdjustment = isPlacementPossible ? -1 : 1;
 
                         if (placementDirection === "bottom") {
                             depositHeight =
-                                parentComponentDimension.height - basePointDimensions.y - basePointDimensions.height;
+                                parentComponentDimension.height -
+                                basePointDimensions.y -
+                                basePointDimensions.height;
                         } else {
                             depositHeight = basePointDimensions.y;
                         }
                         depositHeight += dimensionAdjustment;
 
-                        const fixture = await createBasicComponent(10, depositHeight, true);
+                        const fixture = await createBasicComponent(
+                            10,
+                            depositHeight,
+                            true
+                        );
 
-                        deposit = fixture.debugElement.query(By.css("#deposit")).nativeElement;
-                        basePoint = fixture.debugElement.query(By.css("#base-point")).nativeElement;
-                        const result: any = edgeDetectionService.canBe(basePoint, deposit);
+                        deposit = fixture.debugElement.query(
+                            By.css("#deposit")
+                        ).nativeElement;
+                        basePoint = fixture.debugElement.query(
+                            By.css("#base-point")
+                        ).nativeElement;
+                        const result: any = edgeDetectionService.canBe(
+                            basePoint,
+                            deposit
+                        );
 
-                        expect(result.placed[placementDirection]).toBe(isPlacementPossible);
+                        expect(result.placed[placementDirection]).toBe(
+                            isPlacementPossible
+                        );
                     };
 
-                it("should give expected result when no right direction is available",
-                   testLeftRightPlacementInComponent(false, "right"));
-                it("should give expected result when right direction is available",
-                   testLeftRightPlacementInComponent(true, "right"));
+                it(
+                    "should give expected result when no right direction is available",
+                    testLeftRightPlacementInComponent(false, "right")
+                );
+                it(
+                    "should give expected result when right direction is available",
+                    testLeftRightPlacementInComponent(true, "right")
+                );
 
-                it("should give expected result when no top direction is available",
-                   testTopBottomPlacementInComponent(false, "top"));
-                it("should give expected result when top direction is available",
-                   testTopBottomPlacementInComponent(true, "top"));
+                it(
+                    "should give expected result when no top direction is available",
+                    testTopBottomPlacementInComponent(false, "top")
+                );
+                it(
+                    "should give expected result when top direction is available",
+                    testTopBottomPlacementInComponent(true, "top")
+                );
 
-                it("should give expected result when no bottom direction is available",
-                   testTopBottomPlacementInComponent(false, "bottom"));
-                it("should give expected result when bottom direction is available",
-                   testTopBottomPlacementInComponent(true, "bottom"));
+                it(
+                    "should give expected result when no bottom direction is available",
+                    testTopBottomPlacementInComponent(false, "bottom")
+                );
+                it(
+                    "should give expected result when bottom direction is available",
+                    testTopBottomPlacementInComponent(true, "bottom")
+                );
 
-                it("should give expected result when no left direction is available",
-                   testLeftRightPlacementInComponent(false, "left"));
-                it("should give expected result when left direction is available",
-                   testLeftRightPlacementInComponent(true, "left"));
+                it(
+                    "should give expected result when no left direction is available",
+                    testLeftRightPlacementInComponent(false, "left")
+                );
+                it(
+                    "should give expected result when left direction is available",
+                    testLeftRightPlacementInComponent(true, "left")
+                );
             });
 
             describe("multiple edge-definers on the same page > ", () => {
@@ -273,8 +393,12 @@ describe("services >", () => {
                                         height: 20px;
                                         display: none;"`;
 
-                const createHtmlWithMultipleEdgeDefiners = (addOuterEdgeDefiner?: boolean) => {
-                    const edgeDefinerClass = addOuterEdgeDefiner ? "nui-edge-definer" : "";
+                const createHtmlWithMultipleEdgeDefiners = (
+                    addOuterEdgeDefiner?: boolean
+                ) => {
+                    const edgeDefinerClass = addOuterEdgeDefiner
+                        ? "nui-edge-definer"
+                        : "";
                     return `<div id="outer-edge-detection"
                                  style=${outerEdgeDetectionStyle}
                                  class="${edgeDefinerClass}">
@@ -302,16 +426,20 @@ describe("services >", () => {
                         </div>`;
                 };
 
-                const createComponentWithMultipleEdgeDefiners =
-                    async (addOuterEdgeDefiner?: boolean) => {
-                        TestBed.overrideComponent(EdgeDetectionTestComponent, {
-                            set: {
-                                template: createHtmlWithMultipleEdgeDefiners(addOuterEdgeDefiner),
-                            },
-                        });
-                        await TestBed.compileComponents();
-                        return TestBed.createComponent(EdgeDetectionTestComponent);
-                    };
+                const createComponentWithMultipleEdgeDefiners = async (
+                    addOuterEdgeDefiner?: boolean
+                ) => {
+                    TestBed.overrideComponent(EdgeDetectionTestComponent, {
+                        set: {
+                            template:
+                                createHtmlWithMultipleEdgeDefiners(
+                                    addOuterEdgeDefiner
+                                ),
+                        },
+                    });
+                    await TestBed.compileComponents();
+                    return TestBed.createComponent(EdgeDetectionTestComponent);
+                };
 
                 describe("sibling edge definers > ", () => {
                     let toBePlaced: any;
@@ -319,35 +447,54 @@ describe("services >", () => {
                     let basePoint3: any;
 
                     beforeEach(async () => {
-                        fixture = await createComponentWithMultipleEdgeDefiners();
+                        fixture =
+                            await createComponentWithMultipleEdgeDefiners();
 
-                        toBePlaced = fixture.debugElement.query(By.css("#deposit")).nativeElement;
-                        basePoint2 = fixture.debugElement.query(By.css("#base-point-2")).nativeElement;
-                        basePoint3 = fixture.debugElement.query(By.css("#base-point-3")).nativeElement;
+                        toBePlaced = fixture.debugElement.query(
+                            By.css("#deposit")
+                        ).nativeElement;
+                        basePoint2 = fixture.debugElement.query(
+                            By.css("#base-point-2")
+                        ).nativeElement;
+                        basePoint3 = fixture.debugElement.query(
+                            By.css("#base-point-3")
+                        ).nativeElement;
                     });
 
                     describe("when edge definer is below another edge definer", () => {
                         it(`should report that bottom placement is possible for the base point
                             whose deposit would fall inside the lower edge definer`, () => {
-                            const result: any = edgeDetectionService.canBe(basePoint2, toBePlaced);
+                            const result: any = edgeDetectionService.canBe(
+                                basePoint2,
+                                toBePlaced
+                            );
                             expect(result.placed["bottom"]).toBe(true);
                         });
 
                         it(`should report that bottom placement is not possible for the base point
                             whose deposit would not fall inside the lower edge definer`, () => {
-                            const result: any = edgeDetectionService.canBe(basePoint3, toBePlaced);
+                            const result: any = edgeDetectionService.canBe(
+                                basePoint3,
+                                toBePlaced
+                            );
                             expect(result.placed["bottom"]).toBe(false);
                         });
 
                         it(`should report that top placement is possible for the base point
                             whose deposit would fall inside the lower edge definer`, () => {
-                            const result: any = edgeDetectionService.canBe(basePoint3, toBePlaced);
+                            const result: any = edgeDetectionService.canBe(
+                                basePoint3,
+                                toBePlaced
+                            );
                             expect(result.placed["top"]).toBe(true);
                         });
 
                         it(`should report that top placement is not possible for the base point
                             whose deposit would not fall inside the lower edge definer`, () => {
-                            const result: any = edgeDetectionService.canBe(basePoint2, toBePlaced);
+                            const result: any = edgeDetectionService.canBe(
+                                basePoint2,
+                                toBePlaced
+                            );
                             expect(result.placed["top"]).toBe(false);
                         });
                     });
@@ -355,25 +502,37 @@ describe("services >", () => {
                     describe(`when edge definer is to the right of another edge definer`, () => {
                         it(`should report that right placement is possible for the base point
                             whose deposit would fall inside the right-most edge definer`, () => {
-                            const result: any = edgeDetectionService.canBe(basePoint2, toBePlaced);
+                            const result: any = edgeDetectionService.canBe(
+                                basePoint2,
+                                toBePlaced
+                            );
                             expect(result.placed["right"]).toBe(true);
                         });
 
                         it(`should report that right placement is not possible for the base point
                             whose deposit would not fall inside the right-most edge definer`, () => {
-                            const result: any = edgeDetectionService.canBe(basePoint3, toBePlaced);
+                            const result: any = edgeDetectionService.canBe(
+                                basePoint3,
+                                toBePlaced
+                            );
                             expect(result.placed["right"]).toBe(false);
                         });
 
                         it(`should report that left placement is possible for the base point
                             whose deposit would fall inside the right-most edge definer`, () => {
-                            const result: any = edgeDetectionService.canBe(basePoint3, toBePlaced);
+                            const result: any = edgeDetectionService.canBe(
+                                basePoint3,
+                                toBePlaced
+                            );
                             expect(result.placed["left"]).toBe(true);
                         });
 
                         it(`should report that left placement is not possible for the base point
                             whose deposit would not fall inside the right-most edge definer`, () => {
-                            const result: any = edgeDetectionService.canBe(basePoint2, toBePlaced);
+                            const result: any = edgeDetectionService.canBe(
+                                basePoint2,
+                                toBePlaced
+                            );
                             expect(result.placed["left"]).toBe(false);
                         });
                     });
@@ -387,61 +546,97 @@ describe("services >", () => {
                     let basePoint3: any;
 
                     beforeEach(async () => {
-                        fixture = await createComponentWithMultipleEdgeDefiners(true);
+                        fixture = await createComponentWithMultipleEdgeDefiners(
+                            true
+                        );
 
-                        toBePlaced = fixture.debugElement.query(By.css("#deposit")).nativeElement;
-                        basePoint0 = fixture.debugElement.query(By.css("#base-point-0")).nativeElement;
-                        basePoint1 = fixture.debugElement.query(By.css("#base-point-1")).nativeElement;
-                        basePoint2 = fixture.debugElement.query(By.css("#base-point-2")).nativeElement;
-                        basePoint3 = fixture.debugElement.query(By.css("#base-point-3")).nativeElement;
+                        toBePlaced = fixture.debugElement.query(
+                            By.css("#deposit")
+                        ).nativeElement;
+                        basePoint0 = fixture.debugElement.query(
+                            By.css("#base-point-0")
+                        ).nativeElement;
+                        basePoint1 = fixture.debugElement.query(
+                            By.css("#base-point-1")
+                        ).nativeElement;
+                        basePoint2 = fixture.debugElement.query(
+                            By.css("#base-point-2")
+                        ).nativeElement;
+                        basePoint3 = fixture.debugElement.query(
+                            By.css("#base-point-3")
+                        ).nativeElement;
                     });
 
                     describe(`when an edge definer is inside another edge definer`, () => {
                         it(`should report that bottom placement is possible for the base point
                             whose deposit would fall inside both edge definers`, () => {
-                            const result: any = edgeDetectionService.canBe(basePoint0, toBePlaced);
+                            const result: any = edgeDetectionService.canBe(
+                                basePoint0,
+                                toBePlaced
+                            );
                             expect(result.placed["bottom"]).toBe(true);
                         });
 
                         it(`should report that bottom placement is not possible for the base point whose deposit
                             would fall inside the parent edge definer but not the child edge definer`, () => {
-                            const result: any = edgeDetectionService.canBe(basePoint1, toBePlaced);
+                            const result: any = edgeDetectionService.canBe(
+                                basePoint1,
+                                toBePlaced
+                            );
                             expect(result.placed["bottom"]).toBe(false);
                         });
 
                         it(`should report that top placement is possible for the base point
                             whose deposit would fall inside both edge definers`, () => {
-                            const result: any = edgeDetectionService.canBe(basePoint3, toBePlaced);
+                            const result: any = edgeDetectionService.canBe(
+                                basePoint3,
+                                toBePlaced
+                            );
                             expect(result.placed["top"]).toBe(true);
                         });
 
                         it(`should report that top placement is not possible for the base point whose deposit
                             would fall inside the parent edge definer but not the child edge definer`, () => {
-                            const result: any = edgeDetectionService.canBe(basePoint2, toBePlaced);
+                            const result: any = edgeDetectionService.canBe(
+                                basePoint2,
+                                toBePlaced
+                            );
                             expect(result.placed["top"]).toBe(false);
                         });
 
                         it(`should report that right placement is possible for the base point
                             whose deposit would fall inside both edge definers`, () => {
-                            const result: any = edgeDetectionService.canBe(basePoint0, toBePlaced);
+                            const result: any = edgeDetectionService.canBe(
+                                basePoint0,
+                                toBePlaced
+                            );
                             expect(result.placed["right"]).toBe(true);
                         });
 
                         it(`should report that right placement is not possible for the base point whose deposit
                             would fall inside the parent edge definer but not the child edge definer`, () => {
-                            const result: any = edgeDetectionService.canBe(basePoint1, toBePlaced);
+                            const result: any = edgeDetectionService.canBe(
+                                basePoint1,
+                                toBePlaced
+                            );
                             expect(result.placed["right"]).toBe(false);
                         });
 
                         it(`should report that left placement is possible for the base point
                             whose deposit would fall inside both edge definers`, () => {
-                            const result: any = edgeDetectionService.canBe(basePoint3, toBePlaced);
+                            const result: any = edgeDetectionService.canBe(
+                                basePoint3,
+                                toBePlaced
+                            );
                             expect(result.placed["left"]).toBe(true);
                         });
 
                         it(`should report that left placement is not possible for the base point whose deposit
                             would fall inside the parent edge definer but not the child edge definer`, () => {
-                            const result: any = edgeDetectionService.canBe(basePoint2, toBePlaced);
+                            const result: any = edgeDetectionService.canBe(
+                                basePoint2,
+                                toBePlaced
+                            );
                             expect(result.placed["left"]).toBe(false);
                         });
                     });
@@ -450,129 +645,225 @@ describe("services >", () => {
         });
 
         describe("aligning >", () => {
-            const testLeftRightAlignment = (isAlignmentPossible: boolean, alignmentDirection: string) =>
+            const testLeftRightAlignment =
+                (isAlignmentPossible: boolean, alignmentDirection: string) =>
                 async () => {
                     let depositWidth: number;
                     dimensionAdjustment = isAlignmentPossible ? -10 : 10;
                     if (alignmentDirection === "left") {
-                        depositWidth = window.innerWidth - basePointDimensions.x;
+                        depositWidth =
+                            window.innerWidth - basePointDimensions.x;
                     } else {
-                        depositWidth = basePointDimensions.x + basePointDimensions.width;
+                        depositWidth =
+                            basePointDimensions.x + basePointDimensions.width;
                     }
                     depositWidth += dimensionAdjustment;
 
-                    const fixture = await createBasicComponent(depositWidth, 10);
+                    const fixture = await createBasicComponent(
+                        depositWidth,
+                        10
+                    );
 
-                    deposit = fixture.debugElement.query(By.css("#deposit")).nativeElement;
-                    basePoint = fixture.debugElement.query(By.css("#base-point")).nativeElement;
-                    const result: any = edgeDetectionService.canBe(basePoint, deposit);
+                    deposit = fixture.debugElement.query(
+                        By.css("#deposit")
+                    ).nativeElement;
+                    basePoint = fixture.debugElement.query(
+                        By.css("#base-point")
+                    ).nativeElement;
+                    const result: any = edgeDetectionService.canBe(
+                        basePoint,
+                        deposit
+                    );
 
-                    expect(result.aligned[alignmentDirection]).toBe(isAlignmentPossible);
+                    expect(result.aligned[alignmentDirection]).toBe(
+                        isAlignmentPossible
+                    );
                 };
 
-            const testTopBottomAlignment = (isAlignmentPossible: boolean, alignmentDirection: string) =>
+            const testTopBottomAlignment =
+                (isAlignmentPossible: boolean, alignmentDirection: string) =>
                 async () => {
                     let depositHeight: number;
                     dimensionAdjustment = isAlignmentPossible ? -10 : 10;
                     if (alignmentDirection === "bottom") {
-                        depositHeight = basePointDimensions.y + basePointDimensions.height;
+                        depositHeight =
+                            basePointDimensions.y + basePointDimensions.height;
                     } else {
-                        depositHeight = window.innerHeight - basePointDimensions.y;
+                        depositHeight =
+                            window.innerHeight - basePointDimensions.y;
                     }
                     depositHeight += dimensionAdjustment;
 
-                    const fixture = await createBasicComponent(10, depositHeight);
+                    const fixture = await createBasicComponent(
+                        10,
+                        depositHeight
+                    );
 
-                    deposit = fixture.debugElement.query(By.css("#deposit")).nativeElement;
-                    basePoint = fixture.debugElement.query(By.css("#base-point")).nativeElement;
-                    const result: any = edgeDetectionService.canBe(basePoint, deposit);
+                    deposit = fixture.debugElement.query(
+                        By.css("#deposit")
+                    ).nativeElement;
+                    basePoint = fixture.debugElement.query(
+                        By.css("#base-point")
+                    ).nativeElement;
+                    const result: any = edgeDetectionService.canBe(
+                        basePoint,
+                        deposit
+                    );
 
-                    expect(result.aligned[alignmentDirection]).toBe(isAlignmentPossible);
+                    expect(result.aligned[alignmentDirection]).toBe(
+                        isAlignmentPossible
+                    );
                 };
 
-            it("should give expected result when no right direction is available",
-               testLeftRightAlignment(false, "right"));
-            it("should give expected result when right direction is available",
-               testLeftRightAlignment(true, "right"));
+            it(
+                "should give expected result when no right direction is available",
+                testLeftRightAlignment(false, "right")
+            );
+            it(
+                "should give expected result when right direction is available",
+                testLeftRightAlignment(true, "right")
+            );
 
-            it("should give expected result when no top direction is available",
-               testTopBottomAlignment(false, "top"));
-            it("should give expected result when top direction is available",
-               testTopBottomAlignment(true, "top"));
+            it(
+                "should give expected result when no top direction is available",
+                testTopBottomAlignment(false, "top")
+            );
+            it(
+                "should give expected result when top direction is available",
+                testTopBottomAlignment(true, "top")
+            );
 
-            it("should give expected result when no bottom direction is available",
-               testTopBottomAlignment(false, "bottom"));
-            it("should give expected result when bottom direction is available",
-               testTopBottomAlignment(true, "bottom"));
+            it(
+                "should give expected result when no bottom direction is available",
+                testTopBottomAlignment(false, "bottom")
+            );
+            it(
+                "should give expected result when bottom direction is available",
+                testTopBottomAlignment(true, "bottom")
+            );
 
-            it("should give expected result when no left direction is available",
-               testLeftRightAlignment(false, "left"));
-            it("should give expected result when left direction is available",
-               testLeftRightAlignment(true, "left"));
+            it(
+                "should give expected result when no left direction is available",
+                testLeftRightAlignment(false, "left")
+            );
+            it(
+                "should give expected result when left direction is available",
+                testLeftRightAlignment(true, "left")
+            );
         });
 
         describe("aligning in edge-definer >", () => {
-            const testLeftRightAlignmentInComponent = (isAlignmentPossible: boolean, alignmentDirection: string) =>
+            const testLeftRightAlignmentInComponent =
+                (isAlignmentPossible: boolean, alignmentDirection: string) =>
                 async () => {
                     let depositWidth: number;
                     dimensionAdjustment = isAlignmentPossible ? -10 : 10;
 
                     if (alignmentDirection === "left") {
-                        depositWidth = parentComponentDimension.width - basePointDimensions.x;
+                        depositWidth =
+                            parentComponentDimension.width -
+                            basePointDimensions.x;
                     } else {
-                        depositWidth = basePointDimensions.x + basePointDimensions.width;
+                        depositWidth =
+                            basePointDimensions.x + basePointDimensions.width;
                     }
                     depositWidth += dimensionAdjustment;
 
-                    const fixture = await createBasicComponent(depositWidth, 10, true);
+                    const fixture = await createBasicComponent(
+                        depositWidth,
+                        10,
+                        true
+                    );
 
-                    deposit = fixture.debugElement.query(By.css("#deposit")).nativeElement;
-                    basePoint = fixture.debugElement.query(By.css("#base-point")).nativeElement;
-                    const result: any = edgeDetectionService.canBe(basePoint, deposit);
+                    deposit = fixture.debugElement.query(
+                        By.css("#deposit")
+                    ).nativeElement;
+                    basePoint = fixture.debugElement.query(
+                        By.css("#base-point")
+                    ).nativeElement;
+                    const result: any = edgeDetectionService.canBe(
+                        basePoint,
+                        deposit
+                    );
 
-                    expect(result.aligned[alignmentDirection]).toBe(isAlignmentPossible);
+                    expect(result.aligned[alignmentDirection]).toBe(
+                        isAlignmentPossible
+                    );
                 };
 
-            const testTopBottomAlignmentInComponent = (isAlignmentPossible: boolean, alignmentDirection: string) =>
+            const testTopBottomAlignmentInComponent =
+                (isAlignmentPossible: boolean, alignmentDirection: string) =>
                 async () => {
                     let depositHeight: number;
                     dimensionAdjustment = isAlignmentPossible ? -10 : 10;
 
                     if (alignmentDirection === "bottom") {
-                        depositHeight = basePointDimensions.y + basePointDimensions.height;
+                        depositHeight =
+                            basePointDimensions.y + basePointDimensions.height;
                     } else {
-                        depositHeight = parentComponentDimension.height - basePointDimensions.y;
+                        depositHeight =
+                            parentComponentDimension.height -
+                            basePointDimensions.y;
                     }
                     depositHeight += dimensionAdjustment;
 
-                    const fixture = await createBasicComponent(10, depositHeight, true);
+                    const fixture = await createBasicComponent(
+                        10,
+                        depositHeight,
+                        true
+                    );
 
-                    deposit = fixture.debugElement.query(By.css("#deposit")).nativeElement;
-                    basePoint = fixture.debugElement.query(By.css("#base-point")).nativeElement;
-                    const result: any = edgeDetectionService.canBe(basePoint, deposit);
+                    deposit = fixture.debugElement.query(
+                        By.css("#deposit")
+                    ).nativeElement;
+                    basePoint = fixture.debugElement.query(
+                        By.css("#base-point")
+                    ).nativeElement;
+                    const result: any = edgeDetectionService.canBe(
+                        basePoint,
+                        deposit
+                    );
 
-                    expect(result.aligned[alignmentDirection]).toBe(isAlignmentPossible);
+                    expect(result.aligned[alignmentDirection]).toBe(
+                        isAlignmentPossible
+                    );
                 };
 
-            it("should give expected result when no right direction is available",
-               testLeftRightAlignmentInComponent(false, "right"));
-            it("should give expected result when right direction is available",
-               testLeftRightAlignmentInComponent(true, "right"));
+            it(
+                "should give expected result when no right direction is available",
+                testLeftRightAlignmentInComponent(false, "right")
+            );
+            it(
+                "should give expected result when right direction is available",
+                testLeftRightAlignmentInComponent(true, "right")
+            );
 
-            it("should give expected result when no top direction is available",
-               testTopBottomAlignmentInComponent(false, "top"));
-            it("should give expected result when top direction is available",
-               testTopBottomAlignmentInComponent(true, "top"));
+            it(
+                "should give expected result when no top direction is available",
+                testTopBottomAlignmentInComponent(false, "top")
+            );
+            it(
+                "should give expected result when top direction is available",
+                testTopBottomAlignmentInComponent(true, "top")
+            );
 
-            it("should give expected result when no bottom direction is available",
-               testTopBottomAlignmentInComponent(false, "bottom"));
-            it("should give expected result when bottom direction is available",
-               testTopBottomAlignmentInComponent(true, "bottom"));
+            it(
+                "should give expected result when no bottom direction is available",
+                testTopBottomAlignmentInComponent(false, "bottom")
+            );
+            it(
+                "should give expected result when bottom direction is available",
+                testTopBottomAlignmentInComponent(true, "bottom")
+            );
 
-            it("should give expected result when no left direction is available",
-               testLeftRightAlignmentInComponent(false, "left"));
-            it("should give expected result when left direction is available",
-               testLeftRightAlignmentInComponent(true, "left"));
+            it(
+                "should give expected result when no left direction is available",
+                testLeftRightAlignmentInComponent(false, "left")
+            );
+            it(
+                "should give expected result when left direction is available",
+                testLeftRightAlignmentInComponent(true, "left")
+            );
         });
     });
 });

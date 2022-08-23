@@ -8,12 +8,12 @@ export class TabHeadingAtom extends Atom {
             await this.getElement().click();
             times--;
         }
-    }
+    };
 
-    public isDisabled = async () => Atom.hasClass(this.getElement(), "disabled");
+    public isDisabled = async () =>
+        Atom.hasClass(this.getElement(), "disabled");
 
     public isActive = async () => Atom.hasClass(this.getElement(), "active");
 
     public getText = async () => this.getElement().getText();
-
 }

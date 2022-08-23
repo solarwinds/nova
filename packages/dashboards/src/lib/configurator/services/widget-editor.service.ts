@@ -2,25 +2,27 @@ import { Injectable } from "@angular/core";
 import cloneDeep from "lodash/cloneDeep";
 import { Observable } from "rxjs";
 
+import { IWidget } from "../../components/widget/types";
 import { ComponentPortalService } from "../../pizzagna/services/component-portal.service";
 import { PizzagnaLayer } from "../../types";
 import { WidgetEditorComponent } from "../components/widget-editor/widget-editor.component";
-import { IWidget } from "../../components/widget/types";
-
 import { ConfiguratorService } from "./configurator.service";
 import { IComponentPortalBundle, IWidgetEditor } from "./types";
 
 @Injectable()
 export class WidgetEditorService {
-
-    constructor(private configuratorService: ConfiguratorService,
-                private componentPortalService: ComponentPortalService) {
-    }
+    constructor(
+        private configuratorService: ConfiguratorService,
+        private componentPortalService: ComponentPortalService
+    ) {}
 
     public open(widgetEditor: IWidgetEditor): Observable<void> {
         if (!widgetEditor.portalBundle) {
             const formPortal: IComponentPortalBundle<WidgetEditorComponent> = {
-                portal: this.componentPortalService.createComponentPortal(WidgetEditorComponent, null),
+                portal: this.componentPortalService.createComponentPortal(
+                    WidgetEditorComponent,
+                    null
+                ),
                 attached: (componentRef) => {
                     const editorComponent = componentRef.instance;
                     editorComponent.formPizzagna = widgetEditor.formPizzagna;
@@ -41,5 +43,4 @@ export class WidgetEditorService {
 
         return this.configuratorService.open(widgetEditor);
     }
-
 }

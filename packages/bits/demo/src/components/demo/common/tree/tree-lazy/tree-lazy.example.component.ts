@@ -1,10 +1,20 @@
 import { ArrayDataSource } from "@angular/cdk/collections";
-import { CdkNestedTreeNode, CdkTree, NestedTreeControl } from "@angular/cdk/tree";
-import { Component, Injectable, IterableDiffer, IterableDiffers, ViewChild } from "@angular/core";
-import { expand } from "@nova-ui/bits";
+import {
+    CdkNestedTreeNode,
+    CdkTree,
+    NestedTreeControl,
+} from "@angular/cdk/tree";
+import {
+    Component,
+    Injectable,
+    IterableDiffer,
+    IterableDiffers,
+    ViewChild,
+} from "@angular/core";
 import { Observable, of } from "rxjs";
 import { delay } from "rxjs/operators";
 
+import { expand } from "@nova-ui/bits";
 
 interface FoodNode {
     name: string;
@@ -26,14 +36,14 @@ const TREE_DATA: FoodNode[] = [
 class HttpMock {
     get(): Observable<FoodNode[]> {
         const res: FoodNode[] = [
-            {name: "Banana"},
+            { name: "Banana" },
             {
                 name: "Fruit",
                 children: [],
                 length: 3,
                 isLoading: false,
             },
-            {name: "Fruit loops"},
+            { name: "Fruit loops" },
         ];
         return of(res).pipe(delay(3000));
     }
@@ -47,7 +57,6 @@ class HttpMock {
     providers: [HttpMock],
 })
 export class TreeLazyExampleComponent {
-
     treeControl = new NestedTreeControl<FoodNode>((node) => node.children);
     dataSource = new ArrayDataSource(TREE_DATA);
 
@@ -55,12 +64,12 @@ export class TreeLazyExampleComponent {
 
     hasChild = (_: number, node: FoodNode) => node.length;
 
-    constructor(private http: HttpMock,
-                private differ: IterableDiffers) {
-    }
+    constructor(private http: HttpMock, private differ: IterableDiffers) {}
 
     loadMore(node: FoodNode, nestedNode: CdkNestedTreeNode<any>): void {
-        const differ: IterableDiffer<FoodNode> = this.differ.find(node.children).create();
+        const differ: IterableDiffer<FoodNode> = this.differ
+            .find(node.children)
+            .create();
 
         if (node.children?.length === node.length || node.isLoading) {
             return;
@@ -71,7 +80,12 @@ export class TreeLazyExampleComponent {
         this.http.get().subscribe((res: FoodNode[]) => {
             node.isLoading = false;
             node.children = res;
-            this.cdkTree.renderNodeChanges(node.children, differ, nestedNode.nodeOutlet.first.viewContainer, node);
+            this.cdkTree.renderNodeChanges(
+                node.children,
+                differ,
+                nestedNode.nodeOutlet.first.viewContainer,
+                node
+            );
         });
     }
 }

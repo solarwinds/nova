@@ -10,7 +10,7 @@ describe(`Visual tests: ${name}`, () => {
     beforeAll(async () => {
         await Helpers.prepareBrowser("common/badge/badge-visual-test");
         await Helpers.disableCSSAnimations(Animations.ALL);
-        
+
         camera = new Camera().loadFilm(browser, name);
     });
 
@@ -25,4 +25,3 @@ describe(`Visual tests: ${name}`, () => {
         await camera.turn.off();
     }, 100000);
 });
-

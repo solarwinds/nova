@@ -1,5 +1,6 @@
-import { Atom } from "@nova-ui/bits/sdk/atoms";
 import { ElementFinder } from "protractor";
+
+import { Atom } from "@nova-ui/bits/sdk/atoms";
 
 export class SeriesAtom extends Atom {
     public static CSS_CLASS = "data-series-container";

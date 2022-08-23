@@ -5,16 +5,19 @@ import { CommonModule, DatePipe } from "@angular/common";
 import { NgModule, Provider } from "@angular/core";
 // This is not technically used here, but it does pull in the type for $localize
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import {LocalizeFn} from "@angular/localize/init";
+import { LocalizeFn } from "@angular/localize/init";
 
 import { imagesData as IMAGES_PRESET } from "../constants/images";
 import { imagesPresetToken } from "../constants/images.constants";
-import { unitConversionConstants, unitConversionToken } from "../constants/unit-conversion.constants";
+import {
+    unitConversionConstants,
+    unitConversionToken,
+} from "../constants/unit-conversion.constants";
 import { NUI_ENV_PROVIDER } from "../environment";
 import { SelectorService } from "../lib/selector/selector.service";
+import { HighlightPipe } from "../pipes/highlight.pipe";
 import { LimitToPipe } from "../pipes/limit-to.pipe";
 import { UnitConversionPipe } from "../pipes/unit-conversion.pipe";
-import { HighlightPipe } from "../pipes/highlight.pipe";
 import { DomUtilService } from "../services/dom-util.service";
 import { EdgeDetectionService } from "../services/edge-detection.service";
 import { EventBusService } from "../services/event-bus.service";
@@ -27,7 +30,6 @@ import { SearchService } from "../services/search.service";
 import { TransientCacheService } from "../services/transient-cache.service";
 import { UnitConversionService } from "../services/unit-conversion.service";
 import { UtilService } from "../services/util.service";
-
 import { ClickInterceptorDirective } from "./directives/click-interceptor/click-interceptor.directive";
 import { ClipboardDirective } from "./directives/clipboard/clipboard.directive";
 import { DragAndDropService } from "./directives/dragdrop/drag-and-drop.service";
@@ -43,9 +45,7 @@ import { ZoomContentDirective } from "./directives/zoom-content/zoom-content.dir
  * @ignore
  */
 @NgModule({
-    imports: [
-        CommonModule,
-    ],
+    imports: [CommonModule],
     providers: [
         DragAndDropService,
         EventBusService,
@@ -63,9 +63,12 @@ import { ZoomContentDirective } from "./directives/zoom-content/zoom-content.dir
         DomUtilService,
         SelectorService,
         HistoryStorage,
-        {provide: "windowObject", useValue: window},
-        {provide: unitConversionToken, useValue: unitConversionConstants} as Provider,
-        {provide: imagesPresetToken, useValue: IMAGES_PRESET} as Provider,
+        { provide: "windowObject", useValue: window },
+        {
+            provide: unitConversionToken,
+            useValue: unitConversionConstants,
+        } as Provider,
+        { provide: imagesPresetToken, useValue: IMAGES_PRESET } as Provider,
     ],
     declarations: [
         ClickInterceptorDirective,
@@ -95,8 +98,6 @@ import { ZoomContentDirective } from "./directives/zoom-content/zoom-content.dir
         HighlightPipe,
         ZoomContentDirective,
     ],
-    entryComponents: [
-    ],
+    entryComponents: [],
 })
-export class NuiCommonModule {
-}
+export class NuiCommonModule {}

@@ -61,5 +61,4 @@ export class NoopScale<T = string> implements IScale<T> {
         // @ts-ignore
         return;
     }
-
 }

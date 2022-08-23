@@ -1,4 +1,3 @@
-
 export type TableAlignmentOptions = "right" | "left" | "center";
 export type RowHeightOptions = "default" | "compact" | "tiny";
 export type ColumnTypes = "icon";

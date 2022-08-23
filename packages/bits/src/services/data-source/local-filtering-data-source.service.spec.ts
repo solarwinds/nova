@@ -4,7 +4,6 @@ import noop from "lodash/noop";
 
 import { LoggerService } from "../log-service";
 import { SearchService } from "../search.service";
-
 import { LocalFilteringDataSource } from "./local-filtering-data-source.service";
 import {
     IFilterGroup,
@@ -48,7 +47,9 @@ describe("LocalFilteringDataSource >", () => {
         loggerService = TestBed.inject(LoggerService);
         spyOnProperty(loggerService, "warn").and.returnValue(noop);
         datePipe = TestBed.inject(DatePipe);
-        service = new LocalFilteringDataSource<INovaFilteringOutputs>(new SearchService(loggerService, datePipe));
+        service = new LocalFilteringDataSource<INovaFilteringOutputs>(
+            new SearchService(loggerService, datePipe)
+        );
         service.setData(RANDOM_ARRAY);
         expectedFilters = new ExpectedFilters().expectedFilters;
         CommonTestSuite.expected = expectedFilters;
@@ -58,44 +59,59 @@ describe("LocalFilteringDataSource >", () => {
 
     describe("countAvailableResults", () => {
         it("countAvailableResults should return correct object", async () => {
-            const result: IFilterGroup<IFilterItem<number>> = await (service as any).countAvailableResults(allCategoriesArr, arrayToSearchIn);
+            const result: IFilterGroup<IFilterItem<number>> = await (
+                service as any
+            ).countAvailableResults(allCategoriesArr, arrayToSearchIn);
             expect(result).toEqual(expectedAllCategoriesResult());
         });
         it("countAvailableResults doesn't error if property arrays are empty", async () => {
-            const result: IFilterGroup<IFilterItem<number>> = await (service as any).countAvailableResults([{color: []}, {status: []}], []);
-            expect(result).toEqual({color: {}, status: {}});
+            const result: IFilterGroup<IFilterItem<number>> = await (
+                service as any
+            ).countAvailableResults([{ color: [] }, { status: [] }], []);
+            expect(result).toEqual({ color: {}, status: {} });
         });
     });
 
     describe("searchThru", () => {
         it("searchThru should return correct 'two dimensional array' result", async () => {
-            const result = await (service as any).searchThru(arrOBjectsForSearch, bigArrForSearch);
+            const result = await (service as any).searchThru(
+                arrOBjectsForSearch,
+                bigArrForSearch
+            );
             expect(result).toEqual(searchThruResult);
         });
     });
 
     describe("isValueChanged", () => {
         it("isValueChanged should return true", async () => {
-            const result = await (service as any).isValueChanged(changedArrForComparison);
+            const result = await (service as any).isValueChanged(
+                changedArrForComparison
+            );
             expect(result).toEqual(true);
         });
 
         it("isValueChanged should return false", async () => {
-            const result = await (service as any).isValueChanged(unchangedArrForComparison);
+            const result = await (service as any).isValueChanged(
+                unchangedArrForComparison
+            );
             expect(result).toEqual(false);
         });
     });
 
     describe("getAllCategories", () => {
         it("getAllCategories should return correct 'allCategories' result", async () => {
-            const result = await (service as any).getAllCategories(muiltiFilter);
+            const result = await (service as any).getAllCategories(
+                muiltiFilter
+            );
             expect(result).toEqual(allCategoriesForColor);
         });
     });
 
     describe("extractMultiFilters", () => {
         it("extractMultiFilters should return only filters with type 'string' ", async () => {
-            const result = await (service as any).extractMultiFilters(anyFilters);
+            const result = await (service as any).extractMultiFilters(
+                anyFilters
+            );
             expect(result).toEqual(correctmultiFilters);
         });
     });
@@ -104,9 +120,15 @@ describe("LocalFilteringDataSource >", () => {
         it("getFilteredData should return filtered data when found match", async () => {
             service.setData(newFiltersbigArrForSearch);
             const result = await service.getFilteredData(newFilters);
-            expect(result.number).toEqual(newFiltersExpectedallCategoriesResult().number);
-            expect(result.country).toEqual(newFiltersExpectedallCategoriesResult().country);
-            expect(result.repeat?.itemsSource).toEqual(newFiltersExpectedResultItemsArr);
+            expect(result.number).toEqual(
+                newFiltersExpectedallCategoriesResult().number
+            );
+            expect(result.country).toEqual(
+                newFiltersExpectedallCategoriesResult().country
+            );
+            expect(result.repeat?.itemsSource).toEqual(
+                newFiltersExpectedResultItemsArr
+            );
         });
 
         it("getFilteredData should return empty array when match is not found", async () => {
@@ -122,7 +144,9 @@ describe("LocalFilteringDataSource >", () => {
             newFilters.country.value = [];
             newFilters.number.value = [];
             const result = await service.getFilteredData(newFilters);
-            expect(result.repeat?.itemsSource).toEqual(newFiltersbigArrForSearch);
+            expect(result.repeat?.itemsSource).toEqual(
+                newFiltersbigArrForSearch
+            );
         });
 
         it("getFilteredData should return empty array if first filter group has match and second doesn't", async () => {
@@ -133,5 +157,4 @@ describe("LocalFilteringDataSource >", () => {
             expect(result.repeat?.itemsSource).toEqual([]);
         });
     });
-
 });

@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-message-docs-example",
     templateUrl: "./message-docs.example.component.html",
 })
-export class MessageDocsComponent {
-}
+export class MessageDocsComponent {}

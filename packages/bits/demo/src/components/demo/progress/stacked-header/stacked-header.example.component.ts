@@ -5,7 +5,6 @@ import { Component, OnDestroy } from "@angular/core";
     templateUrl: "./stacked-header.example.component.html",
 })
 export class StackedHeaderProgressExampleComponent implements OnDestroy {
-
     public show = false;
     public percent = 0;
     public isCanceled = false;

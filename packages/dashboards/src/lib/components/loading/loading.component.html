@@ -1,6 +1,10 @@
-<nui-progress [@animate]="active"
-              (@animate.start)="$event.element.style.display = 'block'"
-              (@animate.done)="$event.element.style.display = ($event.toState ? 'block' : 'none')"
-              [show]="true"
-              compactMode="true">
+<nui-progress
+    [@animate]="active"
+    (@animate.start)="$event.element.style.display = 'block'"
+    (@animate.done)="
+        $event.element.style.display = $event.toState ? 'block' : 'none'
+    "
+    [show]="true"
+    compactMode="true"
+>
 </nui-progress>

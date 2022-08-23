@@ -19,12 +19,10 @@
  */
 import "@angular/localize/init";
 
-
 /** Evergreen browsers require these. **/
 // Used for reflect-metadata in JIT. If you use AOT (and only Angular decorators), you can remove.
 // eslint-disable-next-line
 import "core-js/es7/reflect";
-
 
 /**
  * Required to support Web Animations `@angular/platform-browser/animations`.
@@ -41,14 +39,11 @@ import "core-js/es7/reflect";
 // (window as any).__Zone_disable_on_property = true; // disable patch onProperty such as onclick
 // (window as any).__zone_symbol__BLACK_LISTED_EVENTS = ['scroll', 'mousemove']; // disable patch specified eventNames
 
-
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
 // eslint-disable-next-line
-import "zone.js";  // Included with Angular CLI.
-
-
+import "zone.js"; // Included with Angular CLI.
 
 /***************************************************************************************************
  * APPLICATION IMPORTS

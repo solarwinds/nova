@@ -9,7 +9,10 @@ export class ThresholdsSummaryVisualTestComponent {
     public singleSeries = { "series-1": [30, 95, 15, 60, 35] };
     public thresholdEdges = { "series-1": [30, 80, 80, 80, 45, 60, 10, 35] };
     public singleSeriesNoHits = { "series-1": [30, 55, 25, 55, 35] };
-    public multipleSeries = { "series-1": [30, 95, 15, 60, 35], "series-2": [100, 40, 70, 45, 90] };
+    public multipleSeries = {
+        "series-1": [30, 95, 15, 60, 35],
+        "series-2": [100, 40, 70, 45, 90],
+    };
 
     public zones = [
         { status: "error", start: 80 },

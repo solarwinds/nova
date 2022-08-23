@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+
 import {
     ChartAssist,
     GaugeMode,
@@ -11,22 +12,34 @@ import {
 
 @Component({
     selector: "donut-gauge-with-custom-threshold-labels-example",
-    templateUrl: "./donut-gauge-with-custom-threshold-labels.example.component.html",
-    styleUrls: ["./donut-gauge-with-custom-threshold-labels.example.component.less"],
+    templateUrl:
+        "./donut-gauge-with-custom-threshold-labels.example.component.html",
+    styleUrls: [
+        "./donut-gauge-with-custom-threshold-labels.example.component.less",
+    ],
 })
-export class DonutGaugeWithCustomThresholdLabelsExampleComponent implements OnInit {
+export class DonutGaugeWithCustomThresholdLabelsExampleComponent
+    implements OnInit
+{
     public chartAssist: ChartAssist;
     public gaugeConfig: IGaugeConfig;
 
     private seriesSet: IChartAssistSeries<IAccessors>[];
-    private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(50, 75);
+    private thresholds: IGaugeThresholdsConfig =
+        GaugeUtil.createStandardThresholdsConfig(50, 75);
 
     public ngOnInit(): void {
         const initialValue = 40;
         this.gaugeConfig = this.getGaugeConfig(initialValue);
-        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Donut);
+        this.chartAssist = GaugeUtil.createChartAssist(
+            this.gaugeConfig,
+            GaugeMode.Donut
+        );
 
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(
+            this.gaugeConfig,
+            GaugeMode.Donut
+        );
         this.chartAssist.update(this.seriesSet);
     }
 

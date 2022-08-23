@@ -1,7 +1,8 @@
-import {Component, OnInit} from "@angular/core";
-import {IconStatus} from "@nova-ui/bits";
+import { Component, OnInit } from "@angular/core";
 
-import {icons as iconsData} from "../../../../../../src/lib/icon/icons";
+import { IconStatus } from "@nova-ui/bits";
+
+import { icons as iconsData } from "../../../../../../src/lib/icon/icons";
 
 @Component({
     selector: "nui-icon-visual-test",
@@ -13,7 +14,6 @@ export class IconVisualTestComponent implements OnInit {
     public iconStatuses: string[] = Object.values(IconStatus);
 
     public ngOnInit(): void {
-
         this.icons = iconsData;
         this.categories = this.getCategories(iconsData);
     }

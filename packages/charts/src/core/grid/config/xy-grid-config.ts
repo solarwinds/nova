@@ -1,5 +1,4 @@
-import {IAllAround, IAxisConfig, IXYGridConfig} from "../types";
-
+import { IAllAround, IAxisConfig, IXYGridConfig } from "../types";
 import { AxisConfig } from "./axis-config";
 import { BorderConfig } from "./border-config";
 import { GridConfig } from "./grid-config";
@@ -34,11 +33,18 @@ export class XYGridConfig extends GridConfig implements IXYGridConfig {
     constructor() {
         super();
 
-        this.dimension.padding = Object.assign({}, XYGridConfig.DEFAULT_PADDING);
+        this.dimension.padding = Object.assign(
+            {},
+            XYGridConfig.DEFAULT_PADDING
+        );
         this.dimension.margin = Object.assign({}, XYGridConfig.DEFAULT_MARGIN);
 
-        this.borders.bottom = new BorderConfig("nui-chart-border nui-chart-border--thick");
-        this.borders.left = new BorderConfig("nui-chart-border nui-chart-border--thick");
+        this.borders.bottom = new BorderConfig(
+            "nui-chart-border nui-chart-border--thick"
+        );
+        this.borders.left = new BorderConfig(
+            "nui-chart-border nui-chart-border--thick"
+        );
         this.borders.left.visible = false; // TODO: figure out if this is the valid default
 
         this.axis.left.gridTicks = true;

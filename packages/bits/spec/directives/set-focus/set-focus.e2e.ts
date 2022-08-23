@@ -1,9 +1,4 @@
-import {
-    browser,
-    by,
-    element,
-    ElementFinder,
-} from "protractor";
+import { browser, by, element, ElementFinder } from "protractor";
 
 import { Atom } from "../../atom";
 import { ButtonAtom } from "../../components/public_api";
@@ -17,9 +12,16 @@ describe("USERCONTROL setFocus:", () => {
 
     beforeEach(async () => {
         await Helpers.prepareBrowser("common/set-focus");
-        carrotRadio = element(by.id("nui-demo-setfocus-radio-carrot")).element(by.tagName("input"));
-        onionRadio = element(by.id("nui-demo-setfocus-radio-onion")).element(by.tagName("input"));
-        carrotBtnAtom = Atom.find(ButtonAtom, "nui-demo-setfocus-button-carrot");
+        carrotRadio = element(by.id("nui-demo-setfocus-radio-carrot")).element(
+            by.tagName("input")
+        );
+        onionRadio = element(by.id("nui-demo-setfocus-radio-onion")).element(
+            by.tagName("input")
+        );
+        carrotBtnAtom = Atom.find(
+            ButtonAtom,
+            "nui-demo-setfocus-button-carrot"
+        );
         onionBtnAtom = Atom.find(ButtonAtom, "nui-demo-setfocus-button-onion");
     });
 
@@ -41,12 +43,16 @@ describe("USERCONTROL setFocus:", () => {
     });
 
     async function expectIsSelected(finder: ElementFinder) {
-        expect(await finder.equals(await browser.driver.switchTo().activeElement())).toEqual(true);
+        expect(
+            await finder.equals(await browser.driver.switchTo().activeElement())
+        ).toEqual(true);
         await browser.driver.switchTo().defaultContent();
     }
 
     async function expectIsNotSelected(finder: ElementFinder) {
-        expect(await finder.equals(await browser.driver.switchTo().activeElement())).toEqual(false);
+        expect(
+            await finder.equals(await browser.driver.switchTo().activeElement())
+        ).toEqual(false);
         await browser.driver.switchTo().defaultContent();
     }
 });

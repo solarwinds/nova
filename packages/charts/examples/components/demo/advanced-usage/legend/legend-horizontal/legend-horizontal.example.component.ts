@@ -1,5 +1,11 @@
 import { Component } from "@angular/core";
-import { CHART_MARKERS, CHART_PALETTE_CS1, SequentialChartMarkerProvider, SequentialColorProvider } from "@nova-ui/charts";
+
+import {
+    CHART_MARKERS,
+    CHART_PALETTE_CS1,
+    SequentialChartMarkerProvider,
+    SequentialColorProvider,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-legend-horizontal-example",

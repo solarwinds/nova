@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+
 import {
     AreaAccessors,
     AreaRenderer,
@@ -55,12 +56,14 @@ export class AreaChartVerticalExampleComponent implements OnInit {
         scales.x.fixDomain([0, 100]);
 
         // Here we assemble the complete chart series.
-        const seriesSet: IChartSeries<IAreaAccessors>[] = getData().map(d => ({
-            ...d,
-            accessors,
-            renderer,
-            scales,
-        }));
+        const seriesSet: IChartSeries<IAreaAccessors>[] = getData().map(
+            (d) => ({
+                ...d,
+                accessors,
+                renderer,
+                scales,
+            })
+        );
 
         // Finally, pass the series set to the chart's update method
         this.chart.update(seriesSet);

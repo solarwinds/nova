@@ -12,12 +12,13 @@
         border: solid @dnd-zone-border-width transparent;
         position: relative;
         padding: @nui-space-sm;
-        transition: all .3s ease-in-out;
+        transition: all 0.3s ease-in-out;
 
         .title {
             position: absolute;
         }
-        &.cdk-drop-list-dragging, &.cdk-drop-list-receiving {
+        &.cdk-drop-list-dragging,
+        &.cdk-drop-list-receiving {
             .draggable-item:hover {
                 box-shadow: none;
                 background-color: initial;
@@ -36,13 +37,16 @@
     margin: 10px 0;
     min-height: (2 * (@min-height + @nui-space-md + @dnd-zone-border-width));
 
-    .cdk-drag-placeholder, .draggable-placeholder {
+    .cdk-drag-placeholder,
+    .draggable-placeholder {
         visibility: hidden;
         min-height: @min-height - @dnd-zone-border-width;
     }
 }
 
-.draggable-item, .draggable-placeholder, .dropzone-preview:extend(.nui-dnd-preview) {
+.draggable-item,
+.draggable-placeholder,
+.dropzone-preview:extend(.nui-dnd-preview) {
     min-height: @min-height + @dnd-item-border-width;
     padding: @nui-space-md;
     box-sizing: border-box;
@@ -61,7 +65,9 @@
         padding: @nui-space-md;
     }
 }
-&.items-container :last-child { border-bottom-color: @nui-color-line-default;}
+&.items-container :last-child {
+    border-bottom-color: @nui-color-line-default;
+}
 
 .draggable-placeholder {
     min-height: @min-height + @dnd-zone-border-width - 1;
@@ -70,7 +76,6 @@
     background: @nui-color-bg-content-hover;
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
-
 
 .cdk-drag-animating {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);

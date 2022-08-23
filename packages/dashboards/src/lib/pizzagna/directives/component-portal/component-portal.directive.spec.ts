@@ -1,7 +1,18 @@
 import { PortalModule } from "@angular/cdk/portal";
 import {
-    AfterViewInit, ChangeDetectorRef, Component, ComponentRef, Directive, EventEmitter, Input, OnChanges,
-    OnDestroy, OnInit, Output, SimpleChange, SimpleChanges,
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    ComponentRef,
+    Directive,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    SimpleChange,
+    SimpleChanges,
 } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
@@ -11,26 +22,20 @@ import { ProviderRegistryService } from "../../../services/provider-registry.ser
 import { IStaticProviders } from "../../../services/types";
 import { IConfigurable, IProperties } from "../../../types";
 import { ComponentRegistryService } from "../../services/component-registry.service";
-
 import { ComponentPortalDirective } from "./component-portal.directive";
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 class MockProvider implements IConfigurable, OnInit, AfterViewInit, OnDestroy {
-    public setComponent(component: any) {
-    }
+    public setComponent(component: any) {}
 
-    public updateConfiguration(properties: IProperties): void {
-    }
+    public updateConfiguration(properties: IProperties): void {}
 
-    public ngOnInit(): void {
-    }
+    public ngOnInit(): void {}
 
-    public ngAfterViewInit(): void {
-    }
+    public ngAfterViewInit(): void {}
 
-    public ngOnDestroy(): void {
-    }
+    public ngOnDestroy(): void {}
 }
 
 @Directive()
@@ -49,9 +54,9 @@ class Mock1Component implements OnChanges {
     @Input() public testProp: string;
     @Output() public testOutput = new EventEmitter<boolean>();
 
-    constructor(public changeDetector: ChangeDetectorRef) { }
+    constructor(public changeDetector: ChangeDetectorRef) {}
 
-    public ngOnChanges(changes: SimpleChanges) { }
+    public ngOnChanges(changes: SimpleChanges) {}
 }
 
 @Component({
@@ -63,21 +68,25 @@ class Mock2Component implements OnChanges {
     @Input() public testProp: string;
     @Output() public testOutput = new EventEmitter<boolean>();
 
-    constructor(public changeDetector: ChangeDetectorRef) { }
+    constructor(public changeDetector: ChangeDetectorRef) {}
 
-    public ngOnChanges(changes: SimpleChanges) { }
+    public ngOnChanges(changes: SimpleChanges) {}
 }
 
 @Component({
-    template: `<ng-container nuiComponentPortal
-                             componentType="Mock1Component"
-                             [outputs]="['testOutput']"
-                             #componentPortal="nuiComponentPortal">
-                   <ng-template [cdkPortalOutlet]="componentPortal.portal"
-                                (attached)="componentPortal.attached($event)" ></ng-template>
-               </ng-container>`,
+    template: `<ng-container
+        nuiComponentPortal
+        componentType="Mock1Component"
+        [outputs]="['testOutput']"
+        #componentPortal="nuiComponentPortal"
+    >
+        <ng-template
+            [cdkPortalOutlet]="componentPortal.portal"
+            (attached)="componentPortal.attached($event)"
+        ></ng-template>
+    </ng-container>`,
 })
-class ComponentPortalTestComponent { }
+class ComponentPortalTestComponent {}
 
 describe("ComponentPortalDirective >", () => {
     let mockComponentRef: ComponentRef<Mock1Component>;
@@ -89,40 +98,44 @@ describe("ComponentPortalDirective >", () => {
 
     beforeEach(() => {
         providerRegistry = new ProviderRegistryService(mockLoggerService);
-        componentRegistryService = new ComponentRegistryService(mockLoggerService);
+        componentRegistryService = new ComponentRegistryService(
+            mockLoggerService
+        );
         componentRegistryService.registerByLateLoadKey(Mock1Component);
         componentRegistryService.registerByLateLoadKey(Mock2Component);
 
-        TestBed
-            .configureTestingModule({
-                imports: [
-                    PortalModule,
-                ],
-                declarations: [
-                    ComponentPortalTestComponent,
-                    ComponentPortalDirective,
-                    Mock1Component,
-                    Mock2Component,
-                ],
-                providers: [
-                    { provide: ComponentRegistryService, useValue: componentRegistryService },
-                    { provide: ProviderRegistryService, useValue: providerRegistry },
-                    ComponentPortalDirective,
-                ],
-            })
-            .overrideModule(BrowserDynamicTestingModule, {
-                set: {
-                    entryComponents: [
-                        Mock1Component,
-                        Mock2Component,
-                    ],
+        TestBed.configureTestingModule({
+            imports: [PortalModule],
+            declarations: [
+                ComponentPortalTestComponent,
+                ComponentPortalDirective,
+                Mock1Component,
+                Mock2Component,
+            ],
+            providers: [
+                {
+                    provide: ComponentRegistryService,
+                    useValue: componentRegistryService,
                 },
-            });
+                {
+                    provide: ProviderRegistryService,
+                    useValue: providerRegistry,
+                },
+                ComponentPortalDirective,
+            ],
+        }).overrideModule(BrowserDynamicTestingModule, {
+            set: {
+                entryComponents: [Mock1Component, Mock2Component],
+            },
+        });
         fixture = TestBed.createComponent(ComponentPortalTestComponent);
         const mockComponentFixture = TestBed.createComponent(Mock1Component);
         mockComponentRef = mockComponentFixture.componentRef;
         mockComponentInstance = mockComponentFixture.componentInstance;
-        componentPortalDirective = fixture.debugElement.childNodes[0].injector.get<ComponentPortalDirective>(ComponentPortalDirective);
+        componentPortalDirective =
+            fixture.debugElement.childNodes[0].injector.get<ComponentPortalDirective>(
+                ComponentPortalDirective
+            );
     });
 
     it("should create", () => {
@@ -138,7 +151,10 @@ describe("ComponentPortalDirective >", () => {
         });
 
         it("should emit the propertiesChanges subject when recreating portal", () => {
-            const applyPropertiesChangeSpy = spyOn(<any>componentPortalDirective, "applyPropertiesChange");
+            const applyPropertiesChangeSpy = spyOn(
+                <any>componentPortalDirective,
+                "applyPropertiesChange"
+            );
             componentPortalDirective.properties = {
                 property: "value",
                 property2: "value2",
@@ -165,7 +181,10 @@ describe("ComponentPortalDirective >", () => {
                 },
             });
             componentPortalDirective.ngOnInit();
-            const spy = spyOn((<any>componentPortalDirective).providerInstances[providerId], "ngAfterViewInit");
+            const spy = spyOn(
+                (<any>componentPortalDirective).providerInstances[providerId],
+                "ngAfterViewInit"
+            );
             componentPortalDirective.ngAfterViewInit();
             expect(spy).toHaveBeenCalled();
         });
@@ -202,7 +221,7 @@ describe("ComponentPortalDirective >", () => {
                 provider1: {},
                 provider2: {},
             };
-            const spy = spyOn((<any>componentPortalDirective), "recreatePortal");
+            const spy = spyOn(<any>componentPortalDirective, "recreatePortal");
             componentPortalDirective.ngOnChanges(changes);
             expect(spy).not.toHaveBeenCalled();
         });
@@ -232,7 +251,7 @@ describe("ComponentPortalDirective >", () => {
                     firstChange: false,
                 },
             };
-            const spy = spyOn((<any>componentPortalDirective), "recreatePortal");
+            const spy = spyOn(<any>componentPortalDirective, "recreatePortal");
             componentPortalDirective.ngOnChanges(changes);
             expect(spy).toHaveBeenCalledTimes(1);
         });
@@ -262,7 +281,7 @@ describe("ComponentPortalDirective >", () => {
                     firstChange: false,
                 },
             };
-            const spy = spyOn((<any>componentPortalDirective), "recreatePortal");
+            const spy = spyOn(<any>componentPortalDirective, "recreatePortal");
             componentPortalDirective.ngOnChanges(changes);
             expect(spy).toHaveBeenCalledTimes(1);
         });
@@ -289,7 +308,7 @@ describe("ComponentPortalDirective >", () => {
                     firstChange: false,
                 },
             };
-            const spy = spyOn((<any>componentPortalDirective), "recreatePortal");
+            const spy = spyOn(<any>componentPortalDirective, "recreatePortal");
             componentPortalDirective.ngOnChanges(changes);
             expect(spy).toHaveBeenCalledTimes(1);
         });
@@ -316,7 +335,7 @@ describe("ComponentPortalDirective >", () => {
                     firstChange: false,
                 },
             };
-            const spy = spyOn((<any>componentPortalDirective), "recreatePortal");
+            const spy = spyOn(<any>componentPortalDirective, "recreatePortal");
             componentPortalDirective.ngOnChanges(changes);
             expect(spy).toHaveBeenCalledTimes(1);
         });
@@ -362,7 +381,7 @@ describe("ComponentPortalDirective >", () => {
             fixture.detectChanges();
             componentPortalDirective.ngOnInit();
 
-            const spy = spyOn((<any>componentPortalDirective), "recreatePortal");
+            const spy = spyOn(<any>componentPortalDirective, "recreatePortal");
             componentPortalDirective.ngOnChanges(changes);
             expect(spy).not.toHaveBeenCalled();
         });
@@ -402,7 +421,10 @@ describe("ComponentPortalDirective >", () => {
             });
             fixture.detectChanges();
             componentPortalDirective.ngOnInit();
-            const spy = spyOn((<any>componentPortalDirective).providerInstances[providerId], "updateConfiguration");
+            const spy = spyOn(
+                (<any>componentPortalDirective).providerInstances[providerId],
+                "updateConfiguration"
+            );
             componentPortalDirective.ngOnChanges(changes);
             expect(spy).toHaveBeenCalled();
         });
@@ -416,7 +438,7 @@ describe("ComponentPortalDirective >", () => {
                     firstChange: false,
                 },
             };
-            const spy = spyOn((<any>componentPortalDirective), "recreatePortal");
+            const spy = spyOn(<any>componentPortalDirective, "recreatePortal");
             componentPortalDirective.ngOnChanges(changes);
             expect(spy).toHaveBeenCalledTimes(1);
         });
@@ -430,7 +452,7 @@ describe("ComponentPortalDirective >", () => {
                     firstChange: true,
                 },
             };
-            const spy = spyOn((<any>componentPortalDirective), "recreatePortal");
+            const spy = spyOn(<any>componentPortalDirective, "recreatePortal");
             componentPortalDirective.ngOnChanges(changes);
             expect(spy).toHaveBeenCalledTimes(0);
         });
@@ -448,7 +470,10 @@ describe("ComponentPortalDirective >", () => {
                     firstChange: false,
                 },
             };
-            const spy = spyOn((<any>componentPortalDirective).propertiesChanges, "next");
+            const spy = spyOn(
+                (<any>componentPortalDirective).propertiesChanges,
+                "next"
+            );
             componentPortalDirective.ngOnChanges(changes);
             expect(spy).toHaveBeenCalledTimes(1);
         });
@@ -474,8 +499,14 @@ describe("ComponentPortalDirective >", () => {
             };
 
             fixture.detectChanges();
-            const recreateSpy = spyOn((<any>componentPortalDirective), "recreatePortal").and.callThrough();
-            const applyPropertiesChangeSpy = spyOn(<any>componentPortalDirective, "applyPropertiesChange");
+            const recreateSpy = spyOn(
+                <any>componentPortalDirective,
+                "recreatePortal"
+            ).and.callThrough();
+            const applyPropertiesChangeSpy = spyOn(
+                <any>componentPortalDirective,
+                "applyPropertiesChange"
+            );
             componentPortalDirective.ngOnChanges(changes);
             fixture.detectChanges();
             expect(recreateSpy).toHaveBeenCalledTimes(1);
@@ -530,8 +561,12 @@ describe("ComponentPortalDirective >", () => {
             const oldComponent = (<any>componentPortalDirective).component;
             componentPortalDirective.ngOnChanges(changes2);
             fixture.detectChanges();
-            expect((<any>componentPortalDirective).component).not.toBe(oldComponent);
-            expect((<any>componentPortalDirective).component.testProp).toEqual(changes2.properties.currentValue.testProp);
+            expect((<any>componentPortalDirective).component).not.toBe(
+                oldComponent
+            );
+            expect((<any>componentPortalDirective).component.testProp).toEqual(
+                changes2.properties.currentValue.testProp
+            );
         });
     });
 
@@ -552,16 +587,29 @@ describe("ComponentPortalDirective >", () => {
 
             fixture.detectChanges();
             componentPortalDirective.ngOnInit();
-            expect((<any>componentPortalDirective).providerInstances[providerId]).toBeTruthy();
-            const spy = spyOn((<any>componentPortalDirective).providerInstances[providerId], "ngOnDestroy");
+            expect(
+                (<any>componentPortalDirective).providerInstances[providerId]
+            ).toBeTruthy();
+            const spy = spyOn(
+                (<any>componentPortalDirective).providerInstances[providerId],
+                "ngOnDestroy"
+            );
             componentPortalDirective.ngOnDestroy();
             expect(spy).toHaveBeenCalled();
-            expect((<any>componentPortalDirective).providerInstances[providerId]).toBeUndefined();
+            expect(
+                (<any>componentPortalDirective).providerInstances[providerId]
+            ).toBeUndefined();
         });
 
         it("should emit and complete the destroy$ subject", () => {
-            const nextSpy = spyOn((<any>componentPortalDirective).destroy$, "next");
-            const completeSpy = spyOn((<any>componentPortalDirective).destroy$, "complete");
+            const nextSpy = spyOn(
+                (<any>componentPortalDirective).destroy$,
+                "next"
+            );
+            const completeSpy = spyOn(
+                (<any>componentPortalDirective).destroy$,
+                "complete"
+            );
             componentPortalDirective.ngOnDestroy();
             expect(nextSpy).toHaveBeenCalled();
             expect(completeSpy).toHaveBeenCalled();
@@ -572,7 +620,10 @@ describe("ComponentPortalDirective >", () => {
         it("should assign the component instance", () => {
             expect((<any>componentPortalDirective).component).toBeUndefined();
             componentPortalDirective.attached(mockComponentRef);
-            expect((<any>componentPortalDirective).component instanceof Mock1Component).toEqual(true);
+            expect(
+                (<any>componentPortalDirective).component instanceof
+                    Mock1Component
+            ).toEqual(true);
         });
 
         it("should set the component instance on each of the providers", () => {
@@ -591,9 +642,15 @@ describe("ComponentPortalDirective >", () => {
 
             fixture.detectChanges();
             componentPortalDirective.ngOnInit();
-            const spy = spyOn((<any>componentPortalDirective).providerInstances[providerId], "setComponent");
+            const spy = spyOn(
+                (<any>componentPortalDirective).providerInstances[providerId],
+                "setComponent"
+            );
             componentPortalDirective.attached(mockComponentRef);
-            expect(spy).toHaveBeenCalledWith((<any>componentPortalDirective).component, (<any>componentPortalDirective).componentId);
+            expect(spy).toHaveBeenCalledWith(
+                (<any>componentPortalDirective).component,
+                (<any>componentPortalDirective).componentId
+            );
         });
 
         it("should subscribe the component instance to properties changes which results in updating the component instance properties", () => {
@@ -610,10 +667,13 @@ describe("ComponentPortalDirective >", () => {
                     firstChange: false,
                 },
             };
-            componentPortalDirective.properties = changes.properties.currentValue;
+            componentPortalDirective.properties =
+                changes.properties.currentValue;
             componentPortalDirective.attached(mockComponentRef);
             componentPortalDirective.ngOnChanges(changes);
-            expect((<any>componentPortalDirective).component.testProp).toEqual(newValue);
+            expect((<any>componentPortalDirective).component.testProp).toEqual(
+                newValue
+            );
         });
 
         it("should subscribe the component instance to properties changes which results in the invocation of the component's ngOnChanges", () => {
@@ -630,11 +690,14 @@ describe("ComponentPortalDirective >", () => {
                     firstChange: false,
                 },
             };
-            componentPortalDirective.properties = changes.properties.currentValue;
+            componentPortalDirective.properties =
+                changes.properties.currentValue;
             const componentChanges = {
-                testProp: new SimpleChange(changes.properties.previousValue.testProp,
-                                           changes.properties.currentValue.testProp,
-                                           changes.properties.isFirstChange()),
+                testProp: new SimpleChange(
+                    changes.properties.previousValue.testProp,
+                    changes.properties.currentValue.testProp,
+                    changes.properties.isFirstChange()
+                ),
             };
             const spy = spyOn(mockComponentInstance, "ngOnChanges");
             componentPortalDirective.ngOnChanges(changes);
@@ -658,12 +721,15 @@ describe("ComponentPortalDirective >", () => {
                     firstChange: false,
                 },
             };
-            componentPortalDirective.properties = changes.properties.currentValue;
+            componentPortalDirective.properties =
+                changes.properties.currentValue;
             componentPortalDirective.componentId = testComponentId;
             expect(mockComponentInstance["componentId"]).toBeUndefined();
             componentPortalDirective.attached(mockComponentRef);
             componentPortalDirective.ngOnChanges(changes);
-            expect(mockComponentInstance["componentId"]).toEqual(testComponentId);
+            expect(mockComponentInstance["componentId"]).toEqual(
+                testComponentId
+            );
         });
 
         it("should subscribe the component instance to properties changes which results in invoking the component instance change detector", () => {
@@ -679,8 +745,12 @@ describe("ComponentPortalDirective >", () => {
                     firstChange: false,
                 },
             };
-            componentPortalDirective.properties = changes.properties.currentValue;
-            const spy = spyOn(mockComponentInstance.changeDetector, "markForCheck");
+            componentPortalDirective.properties =
+                changes.properties.currentValue;
+            const spy = spyOn(
+                mockComponentInstance.changeDetector,
+                "markForCheck"
+            );
             componentPortalDirective.ngOnChanges(changes);
             expect(spy).not.toHaveBeenCalled();
             componentPortalDirective.attached(mockComponentRef);
@@ -702,8 +772,12 @@ describe("ComponentPortalDirective >", () => {
                     firstChange: false,
                 },
             };
-            componentPortalDirective.properties = changes.properties.currentValue;
-            const spy = spyOn(mockComponentInstance.changeDetector, "markForCheck");
+            componentPortalDirective.properties =
+                changes.properties.currentValue;
+            const spy = spyOn(
+                mockComponentInstance.changeDetector,
+                "markForCheck"
+            );
             componentPortalDirective.attached(mockComponentRef);
             componentPortalDirective.ngOnChanges(changes);
             expect(spy).not.toHaveBeenCalled();
@@ -714,7 +788,10 @@ describe("ComponentPortalDirective >", () => {
             const spy = spyOn((<any>componentPortalDirective).output, "emit");
             componentPortalDirective.attached(mockComponentRef);
             (<any>componentPortalDirective).component.testOutput.emit(false);
-            expect(spy).toHaveBeenCalledWith({ id: "testOutput", payload: false });
+            expect(spy).toHaveBeenCalledWith({
+                id: "testOutput",
+                payload: false,
+            });
         });
     });
 
@@ -735,7 +812,9 @@ describe("ComponentPortalDirective >", () => {
             providerRegistry.setProviders(registeredProviders);
 
             const spy = spyOn(MockProvider.prototype, "updateConfiguration");
-            (<any>componentPortalDirective).updateProviders((<any>componentPortalDirective).injector);
+            (<any>componentPortalDirective).updateProviders(
+                (<any>componentPortalDirective).injector
+            );
             expect(spy).not.toHaveBeenCalled();
         });
 
@@ -755,8 +834,13 @@ describe("ComponentPortalDirective >", () => {
             };
             providerRegistry.setProviders(registeredProviders);
 
-            const spy = spyOn(MockProviderWithProperties.prototype, "updateConfiguration");
-            (<any>componentPortalDirective).updateProviders((<any>componentPortalDirective).injector);
+            const spy = spyOn(
+                MockProviderWithProperties.prototype,
+                "updateConfiguration"
+            );
+            (<any>componentPortalDirective).updateProviders(
+                (<any>componentPortalDirective).injector
+            );
             expect(spy).toHaveBeenCalled();
         });
 
@@ -775,10 +859,14 @@ describe("ComponentPortalDirective >", () => {
             };
             providerRegistry.setProviders(registeredProviders);
 
-            const spy = spyOn(MockProviderWithProperties.prototype, "updateConfiguration");
-            (<any>componentPortalDirective).updateProviders((<any>componentPortalDirective).injector);
+            const spy = spyOn(
+                MockProviderWithProperties.prototype,
+                "updateConfiguration"
+            );
+            (<any>componentPortalDirective).updateProviders(
+                (<any>componentPortalDirective).injector
+            );
             expect(spy).not.toHaveBeenCalled();
         });
     });
-
 });

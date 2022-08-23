@@ -1,6 +1,7 @@
 import { Component, Inject } from "@angular/core";
-import { ISearchService, SearchService } from "@nova-ui/bits";
 import _includes from "lodash/includes";
+
+import { ISearchService, SearchService } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-search-service-example",
@@ -10,9 +11,21 @@ export class SearchServiceExampleComponent {
     private now = new Date().getTime();
     private week = 7 * 24 * 60 * 60 * 1000; // milliseconds 7 * 24 * 60 * 60 * 1000
     public items = [
-        {stringContainer: "abc", numberContainer: 123, dateContainer: new Date(this.now - this.week)},
-        {stringContainer: "abcd", numberContainer: 1234, dateContainer: new Date(this.now)},
-        {stringContainer: "abcde", numberContainer: 12345, dateContainer: new Date(this.now + this.week)},
+        {
+            stringContainer: "abc",
+            numberContainer: 123,
+            dateContainer: new Date(this.now - this.week),
+        },
+        {
+            stringContainer: "abcd",
+            numberContainer: 1234,
+            dateContainer: new Date(this.now),
+        },
+        {
+            stringContainer: "abcde",
+            numberContainer: 12345,
+            dateContainer: new Date(this.now + this.week),
+        },
     ];
     public itemsFormatted = JSON.stringify(this.items, null, 2);
     public searchResult: any;
@@ -20,8 +33,7 @@ export class SearchServiceExampleComponent {
     public searchValue: any;
     public props = ["stringContainer", "numberContainer", "dateContainer"];
 
-    constructor(@Inject(SearchService) private searchService: ISearchService) {
-    }
+    constructor(@Inject(SearchService) private searchService: ISearchService) {}
 
     public valuesChanged(values: any[]) {
         this.props = [...values];
@@ -29,7 +41,11 @@ export class SearchServiceExampleComponent {
 
     public search() {
         const props = this.getProps();
-        this.searchResult = this.searchService.search(this.items, props, this.searchValue);
+        this.searchResult = this.searchService.search(
+            this.items,
+            props,
+            this.searchValue
+        );
         this.searchResultFormatted = JSON.stringify(this.searchResult, null, 2);
     }
 

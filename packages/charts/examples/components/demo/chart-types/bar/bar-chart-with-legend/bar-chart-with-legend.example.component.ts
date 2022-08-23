@@ -1,5 +1,14 @@
 import { Component, OnInit } from "@angular/core";
-import { barAccessors, barGrid, BarRenderer, barScales, BarSeriesHighlightStrategy, Chart, ChartAssist } from "@nova-ui/charts";
+
+import {
+    barAccessors,
+    barGrid,
+    BarRenderer,
+    barScales,
+    BarSeriesHighlightStrategy,
+    Chart,
+    ChartAssist,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-bar-chart-with-legend-example",
@@ -12,22 +21,29 @@ export class BarChartWithLegendExampleComponent implements OnInit {
     public chartAssist = new ChartAssist(new Chart(barGrid(this.barConfig)));
 
     ngOnInit() {
-        const accessors = barAccessors(this.barConfig, this.chartAssist.palette.standardColors);
+        const accessors = barAccessors(
+            this.barConfig,
+            this.chartAssist.palette.standardColors
+        );
         const renderer = new BarRenderer({
             // highlightStrategy determines how the bar chart should manage highlighting.
             // BarSeriesHighlightStrategy emphasizes the entire series on hovering a single bar,
             // which also triggers emphasis on the legend tile.
-            highlightStrategy: new BarSeriesHighlightStrategy("x" /* "x" determines which scale the highlight should be driven by */),
+            highlightStrategy: new BarSeriesHighlightStrategy(
+                "x" /* "x" determines which scale the highlight should be driven by */
+            ),
         });
         const scales = barScales(this.barConfig);
 
         // it is important to update the chart via the chartAssist so that the legend is also updated
-        this.chartAssist.update(getData().map(s => ({
-            ...s,
-            accessors,
-            scales,
-            renderer,
-        })));
+        this.chartAssist.update(
+            getData().map((s) => ({
+                ...s,
+                accessors,
+                scales,
+                renderer,
+            }))
+        );
     }
 }
 

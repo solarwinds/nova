@@ -5,7 +5,6 @@ import { IPizzagnaProperty } from "../../pizzagna/functions/get-pizzagna-propert
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { PizzagnaLayer } from "../../types";
-
 import { StatusContentFallbackAdapter } from "./status-content-fallback-adapter";
 import { IDataSourceError, IDataSourceOutput } from "./types";
 
@@ -19,7 +18,10 @@ describe("StatusContentFallbackAdapter > ", () => {
     beforeEach(() => {
         eventBus = new EventBus();
         dynamicComponentCreator = new DynamicComponentCreator();
-        pizzagnaService = new PizzagnaService(eventBus, dynamicComponentCreator);
+        pizzagnaService = new PizzagnaService(
+            eventBus,
+            dynamicComponentCreator
+        );
         adapter = new StatusContentFallbackAdapter(eventBus, pizzagnaService);
         (<any>adapter).componentId = "testId";
 
@@ -85,8 +87,10 @@ describe("StatusContentFallbackAdapter > ", () => {
 
             const spy = spyOn(pizzagnaService, "setProperty");
             eventBus.getStream(DATA_SOURCE_OUTPUT).next(event);
-            expect(spy).toHaveBeenCalledWith(firstSetPropArg, expectedError.toString());
+            expect(spy).toHaveBeenCalledWith(
+                firstSetPropArg,
+                expectedError.toString()
+            );
         });
     });
-
 });

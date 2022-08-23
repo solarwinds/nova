@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { ComboboxV2Component } from "@nova-ui/bits";
 import { Subject } from "rxjs";
+
+import { ComboboxV2Component } from "@nova-ui/bits";
 
 interface IExampleItem {
     id: string;
@@ -13,10 +14,14 @@ interface IExampleItem {
     styleUrls: ["combobox-v2-custom-control.example.component.less"],
     host: { class: "combobox-container d-flex" },
 })
-export class ComboboxV2CustomControlExampleComponent implements OnDestroy, AfterViewInit {
-    public items = Array.from({ length: 100 }).map((_, i) => $localize `Item ${i}`);
+export class ComboboxV2CustomControlExampleComponent
+    implements OnDestroy, AfterViewInit
+{
+    public items = Array.from({ length: 100 }).map(
+        (_, i) => $localize`Item ${i}`
+    );
     public comboboxControl = new FormControl();
-    public placeholder: string = $localize `Select Item`;
+    public placeholder: string = $localize`Select Item`;
     public handleClicksOutside: boolean = false;
 
     @ViewChild("combobox") public combobox: ComboboxV2Component;
@@ -25,7 +30,9 @@ export class ComboboxV2CustomControlExampleComponent implements OnDestroy, After
 
     public ngAfterViewInit() {
         this.combobox.clickOutsideDropdown.subscribe(() => {
-            if (this.handleClicksOutside) { this.combobox.hideDropdown(); }
+            if (this.handleClicksOutside) {
+                this.combobox.hideDropdown();
+            }
         });
     }
 
@@ -39,14 +46,13 @@ export class ComboboxV2CustomControlExampleComponent implements OnDestroy, After
     }
 
     public convertToChip(value: IExampleItem) {
-        return ({ label: value });
+        return { label: value };
     }
 
     public showList(event: Event): void {
         event.stopPropagation();
         this.combobox.showDropdown();
         this.combobox.inputElement.nativeElement.focus();
-
     }
 
     public hideList(event: Event): void {

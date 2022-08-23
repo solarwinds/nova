@@ -13,5 +13,5 @@ export class WizardOverflowComponent {
     @Input() value: number | string;
     @Input() completed = false;
 
-    constructor(public el: ElementRef) { }
+    constructor(public el: ElementRef) {}
 }

@@ -1,5 +1,19 @@
-import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit } from "@angular/core";
-import { DataSourceService, IDataSource, IFilteringOutputs } from "@nova-ui/bits";
+import {
+    ChangeDetectorRef,
+    Component,
+    Injectable,
+    OnDestroy,
+    OnInit,
+} from "@angular/core";
+import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import keyBy from "lodash/keyBy";
+import { BehaviorSubject } from "rxjs";
+
+import {
+    DataSourceService,
+    IDataSource,
+    IFilteringOutputs,
+} from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     DEFAULT_PIZZAGNA_ROOT,
@@ -20,25 +34,26 @@ import {
     WellKnownProviders,
     WidgetTypesService,
 } from "@nova-ui/dashboards";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
-import { BehaviorSubject } from "rxjs";
-import keyBy from "lodash/keyBy";
 
 /**
  * A simple proportional data source to retrieve beer review counts by city
  */
 @Injectable()
-export class ReviewCountsByCityMockDataSource extends DataSourceService<IProportionalWidgetData>
-    implements IDataSource<IProportionalWidgetData>, OnDestroy {
+export class ReviewCountsByCityMockDataSource
+    extends DataSourceService<IProportionalWidgetData>
+    implements IDataSource<IProportionalWidgetData>, OnDestroy
+{
     // This is the ID we'll use to identify the provider
     public static providerId = "ReviewCountsByCityMockDataSource";
     public busy = new BehaviorSubject(false);
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             setTimeout(() => {
-                this.outputsSubject.next({ result: getMockBeerReviewCountsByCity() });
+                this.outputsSubject.next({
+                    result: getMockBeerReviewCountsByCity(),
+                });
                 this.busy.next(false);
             }, 300);
         });
@@ -75,13 +90,14 @@ export class ProportionalWidgetInteractiveExampleComponent implements OnInit {
         // In general, the ProviderRegistryService is used for making entities available for injection into dynamically loaded components.
         private providerRegistry: ProviderRegistryService,
         private changeDetectorRef: ChangeDetectorRef
-
-    ) {
-    }
+    ) {}
 
     public ngOnInit(): void {
         // Grabbing the widget's default template which will be needed as a parameter for setNode
-        const widgetTemplate = this.widgetTypesService.getWidgetType("proportional", 1);
+        const widgetTemplate = this.widgetTypesService.getWidgetType(
+            "proportional",
+            1
+        );
 
         // Registering our data sources as dropdown options in the widget editor/configurator
         // Note: This could also be done in the parent module's constructor so that
@@ -122,7 +138,9 @@ export class ProportionalWidgetInteractiveExampleComponent implements OnInit {
     public initializeDashboard(): void {
         // We're using a static configuration object for this example, but this is where
         // the widget's configuration could potentially be populated from a database
-        const widgetsWithStructure = widgetConfigs.map(w => this.widgetTypesService.mergeWithWidgetType(w));
+        const widgetsWithStructure = widgetConfigs.map((w) =>
+            this.widgetTypesService.mergeWithWidgetType(w)
+        );
         const widgetsIndex = keyBy(widgetsWithStructure, (w: IWidget) => w.id);
 
         // Setting the widget dimensions and position (this is for gridster)
@@ -147,7 +165,6 @@ export class ProportionalWidgetInteractiveExampleComponent implements OnInit {
             widgets: widgetsIndex,
         };
     }
-
 }
 
 const widgetConfigs: IWidget[] = [
@@ -157,7 +174,7 @@ const widgetConfigs: IWidget[] = [
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
                 [DEFAULT_PIZZAGNA_ROOT]: {
-                    "providers": {
+                    providers: {
                         // Configuring the UrlInteractionHandler to handle interactions
                         [WellKnownProviders.InteractionHandler]: {
                             providerId: NOVA_URL_INTERACTION_HANDLER,
@@ -171,26 +188,27 @@ const widgetConfigs: IWidget[] = [
                         },
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Proportional Widget",
-                        "subtitle": "With interaction handler",
+                header: {
+                    properties: {
+                        title: "Proportional Widget",
+                        subtitle: "With interaction handler",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
                             // Setting the data source providerId for the chart
-                            "providerId": ReviewCountsByCityMockDataSource.providerId,
+                            providerId:
+                                ReviewCountsByCityMockDataSource.providerId,
                         } as IProviderConfiguration,
                     },
-                    "properties": {
-                        "configuration": {
+                    properties: {
+                        configuration: {
                             // Setting the interactive to true
                             interactive: true,
-                            "chartOptions": {
-                                "type": ProportionalWidgetChartTypes.VerticalBarChart,
-                                "legendPlacement": LegendPlacement.Bottom,
+                            chartOptions: {
+                                type: ProportionalWidgetChartTypes.VerticalBarChart,
+                                legendPlacement: LegendPlacement.Bottom,
                             } as IProportionalWidgetChartOptions,
                             prioritizeWidgetColors: false,
                         } as IProportionalWidgetConfig,
@@ -204,26 +222,27 @@ const widgetConfigs: IWidget[] = [
         type: "proportional",
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
-                "header": {
-                    "properties": {
-                        "title": "Proportional Widget",
-                        "subtitle": "Without interaction handler",
+                header: {
+                    properties: {
+                        title: "Proportional Widget",
+                        subtitle: "Without interaction handler",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
                             // Setting the data source providerId for the chart
-                            "providerId": ReviewCountsByCityMockDataSource.providerId,
+                            providerId:
+                                ReviewCountsByCityMockDataSource.providerId,
                         } as IProviderConfiguration,
                     },
-                    "properties": {
-                        "configuration": {
+                    properties: {
+                        configuration: {
                             // interactive set to false so series without links are not styled like a link
                             interactive: false,
-                            "chartOptions": {
-                                "type": ProportionalWidgetChartTypes.HorizontalBarChart,
-                                "legendPlacement": LegendPlacement.Bottom,
+                            chartOptions: {
+                                type: ProportionalWidgetChartTypes.HorizontalBarChart,
+                                legendPlacement: LegendPlacement.Bottom,
                             } as IProportionalWidgetChartOptions,
                             prioritizeWidgetColors: false,
                         } as IProportionalWidgetConfig,

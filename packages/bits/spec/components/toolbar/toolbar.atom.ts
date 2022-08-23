@@ -15,7 +15,9 @@ export class ToolbarAtom extends Atom {
     }
 
     private getAllVisibleItems(): ElementArrayFinder {
-        return super.getElement().all(by.css(".nui-toolbar-content__dynamic > .nui-button"));
+        return super
+            .getElement()
+            .all(by.css(".nui-toolbar-content__dynamic > .nui-button"));
     }
 
     public async getAllVisibleItemsCount(): Promise<number> {
@@ -27,7 +29,10 @@ export class ToolbarAtom extends Atom {
     }
 
     public getToolbarMenu(): MenuAtom {
-        return Atom.findIn(MenuAtom, this.getElement().element(by.className("nui-menu")));
+        return Atom.findIn(
+            MenuAtom,
+            this.getElement().element(by.className("nui-menu"))
+        );
     }
 
     public async getToolbarBackground(): Promise<string> {
@@ -35,7 +40,10 @@ export class ToolbarAtom extends Atom {
     }
 
     public async getSelectedStateText(): Promise<string> {
-        return super.getElement().element(by.className("nui-toolbar-content__select")).getText();
+        return super
+            .getElement()
+            .element(by.className("nui-toolbar-content__select"))
+            .getText();
     }
 
     public getToolbarMessages(): ElementArrayFinder {
@@ -43,6 +51,8 @@ export class ToolbarAtom extends Atom {
     }
 
     public async getToolbarMessagesTexts(): Promise<string[]> {
-        return await this.getToolbarMessages().map<string>((el) => el?.getText());
+        return await this.getToolbarMessages().map<string>((el) =>
+            el?.getText()
+        );
     }
 }

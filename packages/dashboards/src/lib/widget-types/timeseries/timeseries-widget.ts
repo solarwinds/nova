@@ -1,11 +1,28 @@
 import { StackComponent } from "../../components/layouts/stack/stack.component";
 import { TimeframeSelectionComponent } from "../../components/time-frame-selection/timeframe-selection.component";
 import { TimeseriesWidgetComponent } from "../../components/timeseries-widget/timeseries-widget.component";
-import { ITimeseriesScaleConfig, ITimeseriesWidgetConfig, TimeseriesChartPreset, TimeseriesScaleType } from "../../components/timeseries-widget/types";
+import {
+    ITimeseriesScaleConfig,
+    ITimeseriesWidgetConfig,
+    TimeseriesChartPreset,
+    TimeseriesScaleType,
+} from "../../components/timeseries-widget/types";
 import { ITimeseriesItemConfiguration } from "../../configurator/components/widgets/timeseries/types";
-import { DEFAULT_PIZZAGNA_ROOT, NOVA_TIMESERIES_DATASOURCE_ADAPTER } from "../../services/types";
-import { IProviderConfiguration, PizzagnaLayer, WellKnownProviders } from "../../types";
-import { widgetBodyContentNodes, WIDGET_BODY, WIDGET_HEADER, WIDGET_LOADING } from "../common/widget/components";
+import {
+    DEFAULT_PIZZAGNA_ROOT,
+    NOVA_TIMESERIES_DATASOURCE_ADAPTER,
+} from "../../services/types";
+import {
+    IProviderConfiguration,
+    PizzagnaLayer,
+    WellKnownProviders,
+} from "../../types";
+import {
+    widgetBodyContentNodes,
+    WIDGET_BODY,
+    WIDGET_HEADER,
+    WIDGET_LOADING,
+} from "../common/widget/components";
 import { EVENT_PROXY, refresher } from "../common/widget/providers";
 
 export const timeseriesWidget = {
@@ -22,11 +39,7 @@ export const timeseriesWidget = {
             },
             properties: {
                 // these values reference other components in this structure
-                nodes: [
-                    "header",
-                    "loading",
-                    "body",
-                ],
+                nodes: ["header", "loading", "body"],
             },
         },
         // widget header
@@ -42,7 +55,6 @@ export const timeseriesWidget = {
             },
         },
 
-
         // retrieving the definitions for the body content nodes. the argument corresponds to the main content node key
         ...widgetBodyContentNodes("mainContent"),
 
@@ -51,10 +63,7 @@ export const timeseriesWidget = {
             componentType: StackComponent.lateLoadKey,
             properties: {
                 // these values reference other components in this configuration
-                nodes: [
-                    "timeframeSelection",
-                    "chart",
-                ],
+                nodes: ["timeframeSelection", "chart"],
             },
         },
         // component that filters the widget's timeseries data by timeframe
@@ -67,15 +76,18 @@ export const timeseriesWidget = {
             id: "chart",
             componentType: TimeseriesWidgetComponent.lateLoadKey,
             properties: {
-                elementClass: "d-flex flex-column justify-content-center h-100 overflow-auto",
+                elementClass:
+                    "d-flex flex-column justify-content-center h-100 overflow-auto",
                 configuration: {
                     preset: TimeseriesChartPreset.Line,
                     // this scales configuration defines default scale types for the chart
                     scales: {
-                        y: { // linear numeric scale for the y axis
+                        y: {
+                            // linear numeric scale for the y axis
                             type: TimeseriesScaleType.Linear,
                         } as ITimeseriesScaleConfig,
-                        x: { // continuous time scale for the x axis
+                        x: {
+                            // continuous time scale for the x axis
                             type: TimeseriesScaleType.Time,
                         } as ITimeseriesScaleConfig,
                     },

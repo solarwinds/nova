@@ -105,7 +105,5 @@
             "@nova-ui/bits": "nui.bits"
         }
     },
-    "whitelistedNonPeerDependencies": [
-        "."
-    ]
+    "whitelistedNonPeerDependencies": ["."]
 }

@@ -1,11 +1,12 @@
-import { APOLLO_OPTIONS } from "apollo-angular";
-import { HttpLink } from "apollo-angular/http";
-import { InMemoryCache } from "@apollo/client/core";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { CommonModule, DatePipe } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { Route, RouterModule, Routes } from "@angular/router";
+import { InMemoryCache } from "@apollo/client/core";
+import { APOLLO_OPTIONS } from "apollo-angular";
+import { HttpLink } from "apollo-angular/http";
+
 import {
     DEMO_PATH_TOKEN,
     NuiBusyModule,
@@ -32,9 +33,6 @@ import {
     NuiToolbarModule,
     SrlcStage,
 } from "@nova-ui/bits";
-
-
-
 
 import { BasicFilterGroupExampleComponent } from "./filter-group/basic-filter-group/basic-filter-group.example.component";
 import { BasicFilterGroupCompositeModule } from "./filter-group/basic-filter-group/basic-filter-group.module";
@@ -93,7 +91,6 @@ import { SchematicJsonComponent } from "./utils/schematic-json.component";
 
 const COUNTRIES_API = "https://countries-274616.ew.r.appspot.com/";
 
-
 enum FilteredViewRoutes {
     Main = "",
     List = "list",
@@ -150,14 +147,13 @@ const FILTERED_VIEW_CHILD_ROUTES: (Route & { path: FilteredViewRoutes })[] = [
     },
 ];
 
-
 const staticRoutes: Routes = [
     {
         path: "",
         component: SchematicsDocsComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -165,8 +161,8 @@ const staticRoutes: Routes = [
         path: "filtered-view",
         component: SchematicsOutletComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.ga,
+            srlc: {
+                stage: SrlcStage.ga,
             },
             showThemeSwitcher: true,
         },
@@ -176,8 +172,8 @@ const staticRoutes: Routes = [
         path: "filter-group",
         component: FilterGroupSchematicExampleComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.ga,
+            srlc: {
+                stage: SrlcStage.ga,
             },
             showThemeSwitcher: true,
         },
@@ -186,8 +182,8 @@ const staticRoutes: Routes = [
         path: "list",
         component: ListSchematicExampleComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.ga,
+            srlc: {
+                stage: SrlcStage.ga,
             },
             showThemeSwitcher: true,
         },
@@ -210,8 +206,8 @@ const staticRoutes: Routes = [
         path: "table",
         component: TableSchematicExampleComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.ga,
+            srlc: {
+                stage: SrlcStage.ga,
             },
             showThemeSwitcher: true,
         },
@@ -224,8 +220,8 @@ const staticRoutes: Routes = [
                 path: "virtual-scroll",
                 component: TableWithVirtualScrollComponent,
                 data: {
-                    "srlc": {
-                        "hideIndicator": true,
+                    srlc: {
+                        hideIndicator: true,
                     },
                 },
             },
@@ -233,8 +229,8 @@ const staticRoutes: Routes = [
                 path: "visual-test",
                 component: TableSchematicsVisualTestComponent,
                 data: {
-                    "srlc": {
-                        "hideIndicator": true,
+                    srlc: {
+                        hideIndicator: true,
                     },
                 },
             },
@@ -244,8 +240,8 @@ const staticRoutes: Routes = [
         path: "tree",
         component: FilteredViewWithTreeComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.ga,
+            srlc: {
+                stage: SrlcStage.ga,
             },
             showThemeSwitcher: true,
         },
@@ -333,7 +329,12 @@ const staticRoutes: Routes = [
         FakeHTTPService,
         {
             provide: DEMO_PATH_TOKEN,
-            useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/),
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
         },
         {
             provide: APOLLO_OPTIONS,
@@ -347,5 +348,4 @@ const staticRoutes: Routes = [
         },
     ],
 })
-export class SchematicModule {
-}
+export class SchematicModule {}

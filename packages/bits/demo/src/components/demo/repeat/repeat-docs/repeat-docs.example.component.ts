@@ -1,4 +1,5 @@
-import {Component} from "@angular/core";
+import { Component } from "@angular/core";
+
 import { IRepeatItemConfig, RepeatComponent } from "@nova-ui/bits";
 
 @Component({

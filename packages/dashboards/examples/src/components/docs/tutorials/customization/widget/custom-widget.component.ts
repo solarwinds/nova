@@ -11,6 +11,8 @@ import {
     SimpleChanges,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { GridsterConfig, GridsterItem } from "angular-gridster2";
+
 import { IMenuItem } from "@nova-ui/bits";
 import {
     ComponentRegistryService,
@@ -41,7 +43,6 @@ import {
     WIDGET_HEADER,
     WIDGET_LOADING,
 } from "@nova-ui/dashboards";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
 
 // The custom widget type name we'll use
 const CUSTOM_WIDGET_TYPENAME = "example-custom-widget";
@@ -69,7 +70,7 @@ export class CustomWidgetBodyContentComponent implements IHasChangeDetector {
 
     // Injecting the ChangeDetectorRef to implement IHasChangeDetector.
     // This allows the dashboard framework to reliably propagate component property changes to the DOM.
-    constructor(public changeDetector: ChangeDetectorRef) { }
+    constructor(public changeDetector: ChangeDetectorRef) {}
 }
 
 /**
@@ -79,11 +80,17 @@ export class CustomWidgetBodyContentComponent implements IHasChangeDetector {
     selector: "custom-configurator-section",
     template: `
         <!-- The nuiWidgetEditorAccordionFormState pipe keeps the editor accordion state updated based on the state of the form -->
-        <nui-widget-editor-accordion [formGroup]="form" [state]="form | nuiWidgetEditorAccordionFormState | async">
+        <nui-widget-editor-accordion
+            [formGroup]="form"
+            [state]="form | nuiWidgetEditorAccordionFormState | async"
+        >
             <!-- The accordionHeader attribute lets the accordion component know which element to use as its header -->
             <div accordionHeader class="d-flex align-items-center pl-4 py-2">
                 <!-- nuiFormHeaderIconPipe detects errors on the form and replaces the regular icon with an error icon if necessary -->
-                <nui-icon class="align-self-start pt-2" [icon]="form | nuiFormHeaderIconPipe:'image' | async"></nui-icon>
+                <nui-icon
+                    class="align-self-start pt-2"
+                    [icon]="form | nuiFormHeaderIconPipe: 'image' | async"
+                ></nui-icon>
                 <div class="d-flex flex-column ml-4 pt1">
                     <span class="nui-text-label" i18n>Image Selection</span>
                     <div [title]="imageDisplayValue" class="nui-text-secondary">
@@ -92,14 +99,26 @@ export class CustomWidgetBodyContentComponent implements IHasChangeDetector {
                 </div>
             </div>
             <div class="custom-configurator-section__accordion-content">
-                <nui-form-field caption="Select an image:" i18n-caption [control]="form.get('imageSource')">
+                <nui-form-field
+                    caption="Select an image:"
+                    i18n-caption
+                    [control]="form.get('imageSource')"
+                >
                     <!-- The dropdown for image source selection -->
-                    <nui-select-v2 formControlName="imageSource"
-                                    placeholder="No image selected" i18n-placeholder
-                                    [popupViewportMargin]="configuratorHeading.height$ | async"
-                                    (valueSelected)="onChanged($event)">
-                        <nui-select-v2-option *ngFor="let item of imageItems" [value]="item.url">
-                            {{item.title}}
+                    <nui-select-v2
+                        formControlName="imageSource"
+                        placeholder="No image selected"
+                        i18n-placeholder
+                        [popupViewportMargin]="
+                            configuratorHeading.height$ | async
+                        "
+                        (valueSelected)="onChanged($event)"
+                    >
+                        <nui-select-v2-option
+                            *ngFor="let item of imageItems"
+                            [value]="item.url"
+                        >
+                            {{ item.title }}
                         </nui-select-v2-option>
                     </nui-select-v2>
                 </nui-form-field>
@@ -110,8 +129,9 @@ export class CustomWidgetBodyContentComponent implements IHasChangeDetector {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 // Remember to declare this class in the parent module
-export class CustomConfiguratorSectionComponent implements OnInit, OnChanges, IHasChangeDetector, IHasForm {
-
+export class CustomConfiguratorSectionComponent
+    implements OnInit, OnChanges, IHasChangeDetector, IHasForm
+{
     // Ensure that the lateLoadKey value matches the class name
     public static lateLoadKey = "CustomConfiguratorSectionComponent";
 
@@ -134,7 +154,11 @@ export class CustomConfiguratorSectionComponent implements OnInit, OnChanges, IH
     public form: FormGroup;
     public imageDisplayValue: string;
 
-    constructor(public changeDetector: ChangeDetectorRef, private formBuilder: FormBuilder, public configuratorHeading: ConfiguratorHeadingService) { }
+    constructor(
+        public changeDetector: ChangeDetectorRef,
+        private formBuilder: FormBuilder,
+        public configuratorHeading: ConfiguratorHeadingService
+    ) {}
 
     public ngOnInit(): void {
         // Initializing the form
@@ -153,7 +177,9 @@ export class CustomConfiguratorSectionComponent implements OnInit, OnChanges, IH
             const previousValue: string = changes.imageSource.previousValue;
             if (previousValue !== this.imageSource) {
                 // Setting the display value according to the current imageSource value
-                this.imageDisplayValue = this.imageItems.find((item: IMenuItem) => item.url === this.imageSource)?.title;
+                this.imageDisplayValue = this.imageItems.find(
+                    (item: IMenuItem) => item.url === this.imageSource
+                )?.title;
 
                 // Updating the form when the imageSource input gets updated
                 this.form.get("imageSource")?.setValue(this.imageSource);
@@ -163,7 +189,9 @@ export class CustomConfiguratorSectionComponent implements OnInit, OnChanges, IH
 
     public onChanged(newValue: string) {
         // Keeping the display value updated as the user changes the dropdown selection
-        this.imageDisplayValue = this.imageItems.find((item: IMenuItem) => item.url === newValue)?.title;
+        this.imageDisplayValue = this.imageItems.find(
+            (item: IMenuItem) => item.url === newValue
+        )?.title;
     }
 }
 
@@ -194,7 +222,7 @@ export class CustomWidgetComponent implements OnInit {
         // Inject the ComponentRegistryService to make our custom component available for late loading by the dashboards framework
         private componentRegistry: ComponentRegistryService,
         private changeDetectorRef: ChangeDetectorRef
-    ) { }
+    ) {}
 
     public ngOnInit(): void {
         // Register the custom widget type and custom components
@@ -247,20 +275,31 @@ export class CustomWidgetComponent implements OnInit {
 
     private prepareNovaDashboards() {
         // Register the custom widget type
-        this.widgetTypesService.registerWidgetType(CUSTOM_WIDGET_TYPENAME, 1, customWidget);
+        this.widgetTypesService.registerWidgetType(
+            CUSTOM_WIDGET_TYPENAME,
+            1,
+            customWidget
+        );
 
         // Register the custom widget body component with the component registry to make it available
         // for late loading by the dashboard framework.
-        this.componentRegistry.registerByLateLoadKey(CustomWidgetBodyContentComponent);
+        this.componentRegistry.registerByLateLoadKey(
+            CustomWidgetBodyContentComponent
+        );
 
         // Register the custom configurator section with the component registry to make it available
         // for late loading by the dashboard framework.
-        this.componentRegistry.registerByLateLoadKey(CustomConfiguratorSectionComponent);
+        this.componentRegistry.registerByLateLoadKey(
+            CustomConfiguratorSectionComponent
+        );
     }
 
     private registerImageOptions() {
         // Grab the widget's default template which will be needed as a parameter for setNode below.
-        const widgetTemplate = this.widgetTypesService.getWidgetType(CUSTOM_WIDGET_TYPENAME, 1);
+        const widgetTemplate = this.widgetTypesService.getWidgetType(
+            CUSTOM_WIDGET_TYPENAME,
+            1
+        );
 
         // Register some image items as dropdown options in the widget editor/configurator
         this.widgetTypesService.setNode(
@@ -273,7 +312,8 @@ export class CustomWidgetComponent implements OnInit {
             IMAGE_SELECTION_CONFIGURATOR_PATH_KEY,
             // We are setting the image items available for selection in the editor. 'imageItems' is defined
             // at the bottom of this file.
-            imageItems);
+            imageItems
+        );
     }
 }
 
@@ -284,20 +324,21 @@ const customWidget: IWidgetTypeDefinition = {
     /***************************************************************************************************
      *  Paths to important settings in this type definition
      ***************************************************************************************************/
-    "paths": {
-        "widget": {
+    paths: {
+        widget: {
             [WellKnownPathKey.Root]: DEFAULT_PIZZAGNA_ROOT,
         },
-        "configurator": {
+        configurator: {
             [WellKnownPathKey.Root]: DEFAULT_PIZZAGNA_ROOT,
             // for the custom configuration component, this is the path for the list of image items available for selection
-            [IMAGE_SELECTION_CONFIGURATOR_PATH_KEY]: "imageSelection.properties.imageItems",
+            [IMAGE_SELECTION_CONFIGURATOR_PATH_KEY]:
+                "imageSelection.properties.imageItems",
         },
     },
     /***************************************************************************************************
      *  Widget section describes the structural part of the custom widget
      ***************************************************************************************************/
-    "widget": {
+    widget: {
         [PizzagnaLayer.Structure]: {
             [DEFAULT_PIZZAGNA_ROOT]: {
                 id: DEFAULT_PIZZAGNA_ROOT,
@@ -311,11 +352,7 @@ const customWidget: IWidgetTypeDefinition = {
                 },
                 properties: {
                     // these values reference child components in the widget structure defined below
-                    nodes: [
-                        "header",
-                        "loading",
-                        "body",
-                    ],
+                    nodes: ["header", "loading", "body"],
                 },
             },
             // standard widget header
@@ -356,19 +393,17 @@ const customWidget: IWidgetTypeDefinition = {
     /***************************************************************************************************
      *  Configurator section describes the form that's used to configure the widget
      ***************************************************************************************************/
-    "configurator": {
+    configurator: {
         [PizzagnaLayer.Structure]: {
             [DEFAULT_PIZZAGNA_ROOT]: {
                 id: DEFAULT_PIZZAGNA_ROOT,
                 // base layout of the configurator - all form components referenced herein will be stacked in a column
                 componentType: FormStackComponent.lateLoadKey,
                 properties: {
-                    elementClass: "flex-grow-1 overflow-auto nui-scroll-shadows",
+                    elementClass:
+                        "flex-grow-1 overflow-auto nui-scroll-shadows",
                     // these values reference child components laid out in this form (defined below)
-                    nodes: [
-                        "presentation",
-                        "customConfig",
-                    ],
+                    nodes: ["presentation", "customConfig"],
                 },
             },
             // /presentation
@@ -383,7 +418,8 @@ const customWidget: IWidgetTypeDefinition = {
             // /presentation/titleAndDescription
             titleAndDescription: {
                 id: "titleAndDescription",
-                componentType: TitleAndDescriptionConfigurationComponent.lateLoadKey,
+                componentType:
+                    TitleAndDescriptionConfigurationComponent.lateLoadKey,
                 providers: {
                     converter: {
                         providerId: NOVA_TITLE_AND_DESCRIPTION_CONVERTER,
@@ -433,7 +469,6 @@ const customWidget: IWidgetTypeDefinition = {
     },
 };
 
-
 // For this example, we're using static items for the image selection dropdown. In a more realistic scenario,
 // the items available for selection might come from a backend database.
 const imageItems = [
@@ -447,7 +482,6 @@ const imageItems = [
     },
 ] as IMenuItem[];
 
-
 // We're using a static configuration object for this example. In a more realistic scenario,
 // a widget's configuration would likely be stored in a database.
 const widgetConfig: IWidget = {
@@ -456,17 +490,17 @@ const widgetConfig: IWidget = {
     type: CUSTOM_WIDGET_TYPENAME,
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
-            "header": {
+            header: {
                 // Setting the initial property values for the WidgetHeaderComponent
-                "properties": {
-                    "title": "Harry Potter and the Sorcerer's Stone",
-                    "subtitle": "By J. K. Rowling",
+                properties: {
+                    title: "Harry Potter and the Sorcerer's Stone",
+                    subtitle: "By J. K. Rowling",
                 },
             },
-            "mainContent": {
-                "properties": {
+            mainContent: {
+                properties: {
                     // Setting the initial value for the 'imageSource' property on our custom widget body
-                    "imageSource": imageItems[0].url,
+                    imageSource: imageItems[0].url,
                 },
             },
         },

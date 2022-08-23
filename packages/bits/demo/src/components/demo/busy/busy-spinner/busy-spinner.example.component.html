@@ -4,13 +4,20 @@
             Attempts to change my checked state will fail when busy is enabled
         </nui-checkbox>
     </div>
-    <nui-spinner id="nui-demo-spinner" size="large" i18n-message message="Hello from custom busy"></nui-spinner>
+    <nui-spinner
+        id="nui-demo-spinner"
+        size="large"
+        i18n-message
+        message="Hello from custom busy"
+    ></nui-spinner>
 </div>
-<button id="nui-demo-spinner-button"
-        nui-button
-        type="button"
-        displayStyle="primary"
-        (click)="switchBusy()"
-        i18n>
+<button
+    id="nui-demo-spinner-button"
+    nui-button
+    type="button"
+    displayStyle="primary"
+    (click)="switchBusy()"
+    i18n
+>
     Switch busy state
 </button>

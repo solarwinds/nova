@@ -19,8 +19,7 @@ export class PopupToggleDirective {
 
     @Output() toggle = new EventEmitter();
 
-    constructor(public host: ElementRef) {
-    }
+    constructor(public host: ElementRef) {}
 
     @HostListener("click", ["$event"])
     public handleElementFocus(event: Event): void {

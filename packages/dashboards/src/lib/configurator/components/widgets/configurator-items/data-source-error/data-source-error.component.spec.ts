@@ -1,9 +1,17 @@
-import { DataSourceErrorComponent } from "./data-source-error.component";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { NuiDashboardsModule } from "../../../../../dashboards.module";
-import { DataSourceFeatures, IDataSource, IFilteringOutputs, IFilteringParticipants, NuiMessageModule } from "@nova-ui/bits";
-import { Subject } from "rxjs";
 import { SimpleChange } from "@angular/core";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { Subject } from "rxjs";
+
+import {
+    DataSourceFeatures,
+    IDataSource,
+    IFilteringOutputs,
+    IFilteringParticipants,
+    NuiMessageModule,
+} from "@nova-ui/bits";
+
+import { NuiDashboardsModule } from "../../../../../dashboards.module";
+import { DataSourceErrorComponent } from "./data-source-error.component";
 
 class MockDataSource implements IDataSource {
     public outputsSubject = new Subject<IFilteringOutputs>();
@@ -15,7 +23,9 @@ class MockDataSource implements IDataSource {
         return null;
     }
 
-    public registerComponent(components: Partial<IFilteringParticipants>): void {
+    public registerComponent(
+        components: Partial<IFilteringParticipants>
+    ): void {
         // @ts-ignore: Suppressed for testing purposes
         this.filterParticipants = components;
     }
@@ -34,16 +44,15 @@ describe("DataSourceErrorComponent", () => {
         dataSource = new MockDataSource();
 
         TestBed.configureTestingModule({
-            imports: [
-                NuiDashboardsModule,
-                NuiMessageModule,
-            ],
+            imports: [NuiDashboardsModule, NuiMessageModule],
         });
         fixture = TestBed.createComponent(DataSourceErrorComponent);
         component = fixture.componentInstance;
 
         component.dataSource = dataSource;
-        const dataSourceChanged = { dataSource: new SimpleChange(null, dataSource, true) };
+        const dataSourceChanged = {
+            dataSource: new SimpleChange(null, dataSource, true),
+        };
         component.ngOnChanges(dataSourceChanged);
     });
 

@@ -1,10 +1,11 @@
 import { browser } from "protractor";
+
 import { assertA11y, Helpers } from "../../helpers";
 import { CheckboxAtom } from "../public_api";
 
 describe("a11y: checkbox", () => {
     // disabling the rule until NUI-6015 is addressed
-    let rulesToDisable: string[] = [
+    const rulesToDisable: string[] = [
         "aria-allowed-role",
         "nested-interactive",
     ];

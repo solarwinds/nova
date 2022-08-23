@@ -1,11 +1,10 @@
 import { ScaleLinear } from "d3-scale";
 import { Selection } from "d3-selection";
 import { ValueMap } from "d3-selection-multi";
-import { StandardGaugeThresholdMarkerRadius } from "../../gauge/constants";
 
+import { StandardGaugeThresholdMarkerRadius } from "../../gauge/constants";
 import { RenderState } from "../../renderers/types";
 import { IGrid } from "../grid/types";
-
 import { ChartPlugin } from "./chart-plugin";
 import { DataManager } from "./data-manager";
 import { EventBus } from "./event-bus";
@@ -16,7 +15,12 @@ import { Scales } from "./scales/types";
 /**
  * Short-form alias for the most commonly used generic D3 Selection type
  */
-export type D3Selection<T extends SVGElement = SVGElement> = Selection<T, any, SVGElement, any>;
+export type D3Selection<T extends SVGElement = SVGElement> = Selection<
+    T,
+    any,
+    SVGElement,
+    any
+>;
 
 /**
  * Signature for data accessors
@@ -25,12 +29,20 @@ export type D3Selection<T extends SVGElement = SVGElement> = Selection<T, any, S
  * @param i index
  * @param series the whole data series
  */
-export type DataAccessor<D = any, T = any> = (d: D, i: number, series: D[], dataSeries: IDataSeries<IAccessors>) => T;
+export type DataAccessor<D = any, T = any> = (
+    d: D,
+    i: number,
+    series: D[],
+    dataSeries: IDataSeries<IAccessors>
+) => T;
 
 /**
  * Signature for series accessors
  */
-export type SeriesAccessor = (seriesId: string, series: IDataSeries<IAccessors>) => any;
+export type SeriesAccessor = (
+    seriesId: string,
+    series: IDataSeries<IAccessors>
+) => any;
 
 /** @ignore */
 export interface ILasagnaLayer {
@@ -122,12 +134,16 @@ export interface IGaugeThresholdsRendererConfig {
 /**
  * Configuration for the DonutGaugeThresholdsRenderer
  */
-export interface IDonutGaugeThresholdsRendererConfig extends IRadialRendererConfig, IGaugeThresholdsRendererConfig {}
+export interface IDonutGaugeThresholdsRendererConfig
+    extends IRadialRendererConfig,
+        IGaugeThresholdsRendererConfig {}
 
 /**
  * Configuration for the LinearGaugeThresholdsRenderer
  */
-export interface ILinearGaugeThresholdsRendererConfig extends IRendererConfig, IGaugeThresholdsRendererConfig {}
+export interface ILinearGaugeThresholdsRendererConfig
+    extends IRendererConfig,
+        IGaugeThresholdsRendererConfig {}
 
 export interface ILinearScales {
     x: ScaleLinear<number, number>;
@@ -189,7 +205,8 @@ export interface IChartSeries<A extends IAccessors> extends IDataSeries<A> {
     renderState?: RenderState;
 }
 
-export interface IChartAssistSeries<A extends IAccessors> extends IChartSeries<A> {
+export interface IChartAssistSeries<A extends IAccessors>
+    extends IChartSeries<A> {
     /**
      * Whether this series should be shown in the legend
      */

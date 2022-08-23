@@ -1,8 +1,19 @@
-import { ChangeDetectorRef, Component, HostBinding, Input, OnChanges, SimpleChanges } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    Component,
+    HostBinding,
+    Input,
+    OnChanges,
+    SimpleChanges,
+} from "@angular/core";
 import toNumber from "lodash/toNumber";
 import toString from "lodash/toString";
 
-import { ISiUnitsPrefix, SI_UNITS_PREFIXES, SI_UNITS_PREFIXES_NEGATIVE } from "../../../../constants/si-units-prefixes";
+import {
+    ISiUnitsPrefix,
+    SI_UNITS_PREFIXES,
+    SI_UNITS_PREFIXES_NEGATIVE,
+} from "../../../../constants/si-units-prefixes";
 import { IFormatterData } from "../types";
 
 @Component({
@@ -29,8 +40,7 @@ export class SiUnitsFormatterComponent implements OnChanges {
     public value: string = "0";
     public modifier: string | undefined;
 
-    constructor(public changeDetector: ChangeDetectorRef) {
-    }
+    constructor(public changeDetector: ChangeDetectorRef) {}
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.data) {
@@ -49,12 +59,16 @@ export class SiUnitsFormatterComponent implements OnChanges {
         this.modifier = prefix?.prefix;
     }
 
-    protected getTransformedValue(value: string, prefix: ISiUnitsPrefix | undefined): string {
-        if (!prefix) { return value; }
+    protected getTransformedValue(
+        value: string,
+        prefix: ISiUnitsPrefix | undefined
+    ): string {
+        if (!prefix) {
+            return value;
+        }
 
-        const transformed = prefix.power !== 1
-            ? +value * Math.pow(10, -prefix.power)
-            : +value;
+        const transformed =
+            prefix.power !== 1 ? +value * Math.pow(10, -prefix.power) : +value;
         const rounded = Math.round(transformed * 10) / 10; // round to 1 decimal
 
         return rounded.toString();
@@ -63,9 +77,13 @@ export class SiUnitsFormatterComponent implements OnChanges {
     protected getTransformPrefix(origin: number): ISiUnitsPrefix | undefined {
         const value = Math.abs(origin);
 
-        if (Number.isNaN(value)) { return undefined; }
+        if (Number.isNaN(value)) {
+            return undefined;
+        }
 
-        const shiftPoint = this.data?.shiftPoint || SiUnitsFormatterComponent.SHIFT_POINT_DEFAULT;
+        const shiftPoint =
+            this.data?.shiftPoint ||
+            SiUnitsFormatterComponent.SHIFT_POINT_DEFAULT;
 
         if (value >= 1) {
             const rounded = Math.round(value);
@@ -73,24 +91,35 @@ export class SiUnitsFormatterComponent implements OnChanges {
             const roundedLength = roundedStr.length;
 
             // iterate over prefixes from higher to lower
-            const prefix = [...SI_UNITS_PREFIXES].reverse().find(pref => roundedLength >= pref.power + 1 + shiftPoint);
+            const prefix = [...SI_UNITS_PREFIXES]
+                .reverse()
+                .find((pref) => roundedLength >= pref.power + 1 + shiftPoint);
             return prefix;
         } else {
             const modifier = getValueNegativeModifier(value);
-            const prefix = [...SI_UNITS_PREFIXES_NEGATIVE].reverse().find(pref => modifier <= Math.abs(pref.power) + 1 + shiftPoint);
+            const prefix = [...SI_UNITS_PREFIXES_NEGATIVE]
+                .reverse()
+                .find(
+                    (pref) => modifier <= Math.abs(pref.power) + 1 + shiftPoint
+                );
             return prefix;
         }
     }
 }
 
-function getValueNegativeModifier(value: number, prevModifier: number = 1): number {
+function getValueNegativeModifier(
+    value: number,
+    prevModifier: number = 1
+): number {
     const val = Math.abs(value);
 
-    if (val >= 1) { return 1; }
+    if (val >= 1) {
+        return 1;
+    }
 
     const newModifier = prevModifier + 1;
 
-    return (val * Math.pow(10, newModifier)) > 1
+    return val * Math.pow(10, newModifier) > 1
         ? newModifier
         : getValueNegativeModifier(val, newModifier);
 }

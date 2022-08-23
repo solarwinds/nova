@@ -44,7 +44,9 @@ export class TimeIntervalScale extends TimeScale implements IBandScale<Date> {
     public domain(domain?: Date[]): any {
         if (domain) {
             if (domain.length === 0 || domain.length % 2 !== 0) {
-                throw new Error("TimeIntervalScale domain has to be defined as a pair of [from, to] time values.");
+                throw new Error(
+                    "TimeIntervalScale domain has to be defined as a pair of [from, to] time values."
+                );
             }
 
             const isDomainEmpty = isEqual(domain, EMPTY_CONTINUOUS_DOMAIN);
@@ -52,13 +54,17 @@ export class TimeIntervalScale extends TimeScale implements IBandScale<Date> {
             // only try to determine bands if the domain is not empty
             if (!isDomainEmpty) {
                 for (let i = 0; i + 1 < domain.length; i += 2) {
-                    bands.push(...this.getBandsForInterval(domain[i], domain[i + 1]));
+                    bands.push(
+                        ...this.getBandsForInterval(domain[i], domain[i + 1])
+                    );
                 }
             }
             this._bandScale.domain(bands);
 
             // maintain the same domain if it's empty
-            const d = isDomainEmpty ? domain : [domain[0], moment(domain[1]).add(this.interval()).toDate()];
+            const d = isDomainEmpty
+                ? domain
+                : [domain[0], moment(domain[1]).add(this.interval()).toDate()];
             return super.domain(d);
         }
         return super.domain();
@@ -78,7 +84,10 @@ export class TimeIntervalScale extends TimeScale implements IBandScale<Date> {
     }
 
     public convert(value: Date, position: number = BAND_CENTER): number {
-        const truncatedDate: Date | undefined = this.truncToInterval(value, this.interval());
+        const truncatedDate: Date | undefined = this.truncToInterval(
+            value,
+            this.interval()
+        );
         if (!truncatedDate) {
             throw new Error("Could not convert interval");
         }
@@ -104,19 +113,28 @@ export class TimeIntervalScale extends TimeScale implements IBandScale<Date> {
         return this._bandScale.bandwidth();
     }
 
-    public truncToInterval(datetime: Date | undefined, interval: Duration, isDomainChange = false): Date | undefined {
+    public truncToInterval(
+        datetime: Date | undefined,
+        interval: Duration,
+        isDomainChange = false
+    ): Date | undefined {
         if (!datetime) {
             return datetime;
         }
 
         const isDst = isDaylightSavingTime(datetime);
-        const isDomainStartDst = isDomainChange ? isDst : isDaylightSavingTime(this.domain()[0]);
+        const isDomainStartDst = isDomainChange
+            ? isDst
+            : isDaylightSavingTime(this.domain()[0]);
 
         const isTransFromDst = isDomainStartDst && !isDst;
         const isTransToDst = !isDomainStartDst && isDst;
 
         const intervalDays = this.interval().asDays();
-        const transToDstAdjustment = intervalDays >= 1 && isTransToDst ? duration(1, "hour").asMilliseconds() : 0;
+        const transToDstAdjustment =
+            intervalDays >= 1 && isTransToDst
+                ? duration(1, "hour").asMilliseconds()
+                : 0;
         const adjustedDt = new Date(datetime.getTime() + transToDstAdjustment);
 
         let standardTimeOffsetMinutes = 0;
@@ -124,7 +142,9 @@ export class TimeIntervalScale extends TimeScale implements IBandScale<Date> {
             standardTimeOffsetMinutes = isTransFromDst ? -60 : 60;
         }
 
-        const timeZoneOffsetMs = (adjustedDt.getTimezoneOffset() + standardTimeOffsetMinutes) * 60000;
+        const timeZoneOffsetMs =
+            (adjustedDt.getTimezoneOffset() + standardTimeOffsetMinutes) *
+            60000;
         const timestamp = adjustedDt.getTime() - timeZoneOffsetMs;
         const intervalMs = interval.asMilliseconds();
         const remainder = timestamp % intervalMs;
@@ -157,10 +177,17 @@ export class TimeIntervalScale extends TimeScale implements IBandScale<Date> {
             // the time to format the day as "mmm d" instead of "11:00pm" or "1:00am" respectively
             standardTimeOffsetMs = isTransFromDst ? 3600000 : -3600000;
         }
-        const adjustedDate = new Date(inputDate.getTime() + standardTimeOffsetMs);
-        const endDate = intervalDays >= 1 ? moment(adjustedDate).add(intervalDays, "days").toDate() : moment(adjustedDate).add(this.interval()).toDate();
-        return datetimeFormatter(adjustedDate) + " - " + datetimeFormatter(endDate);
-    }
+        const adjustedDate = new Date(
+            inputDate.getTime() + standardTimeOffsetMs
+        );
+        const endDate =
+            intervalDays >= 1
+                ? moment(adjustedDate).add(intervalDays, "days").toDate()
+                : moment(adjustedDate).add(this.interval()).toDate();
+        return (
+            datetimeFormatter(adjustedDate) + " - " + datetimeFormatter(endDate)
+        );
+    };
 
     private getBandsForInterval(from: Date, to: Date): Date[] {
         const bands: Date[] = [];
@@ -177,8 +204,12 @@ export class TimeIntervalScale extends TimeScale implements IBandScale<Date> {
         // Add one hour to the "to" date if:
         // 1) we're transitioning to daylight saving time and 2) the interval is >= one day.
         // This ensures that the last day in the domain, which starts an hour later, is included in the generated bands.
-        const dstAdjustment = !isDomainStartDst && isDomainEndDst ? duration(1, "hour").asMilliseconds() : 0;
-        const adjustedToDate = intervalDays >= 1 ? new Date(to.getTime() + dstAdjustment) : to;
+        const dstAdjustment =
+            !isDomainStartDst && isDomainEndDst
+                ? duration(1, "hour").asMilliseconds()
+                : 0;
+        const adjustedToDate =
+            intervalDays >= 1 ? new Date(to.getTime() + dstAdjustment) : to;
 
         while (bandDate <= adjustedToDate) {
             bands.push(bandDate);
@@ -186,5 +217,4 @@ export class TimeIntervalScale extends TimeScale implements IBandScale<Date> {
         }
         return bands;
     }
-
 }

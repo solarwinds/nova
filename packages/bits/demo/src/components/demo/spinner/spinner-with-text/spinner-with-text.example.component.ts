@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-spinner-with-text-example",
     templateUrl: "./spinner-with-text.example.component.html",
 })
-export class SpinnerWithTextExampleComponent {
-}
+export class SpinnerWithTextExampleComponent {}

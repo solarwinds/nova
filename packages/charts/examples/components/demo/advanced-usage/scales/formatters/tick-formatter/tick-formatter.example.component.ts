@@ -1,6 +1,16 @@
 import { Component, OnInit } from "@angular/core";
-import { Chart, IChartSeries, ILineAccessors, LineAccessors, LinearScale, LineRenderer, TimeScale, XYGrid } from "@nova-ui/charts";
 import moment from "moment/moment";
+
+import {
+    Chart,
+    IChartSeries,
+    ILineAccessors,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    TimeScale,
+    XYGrid,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-chart-tick-formatter-example",
@@ -17,12 +27,14 @@ export class TickFormatterExampleComponent implements OnInit {
 
         scales.y.formatters.tick = (value: Number) => `> ${value} %`;
 
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
-            ...d,
-            accessors: new LineAccessors(),
-            renderer: new LineRenderer(),
-            scales,
-        }));
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
+            (d) => ({
+                ...d,
+                accessors: new LineAccessors(),
+                renderer: new LineRenderer(),
+                scales,
+            })
+        );
 
         const grid = new XYGrid();
         // Set the grid's 'axis.left.fit' property to 'true' to accommodate the extra label width required by the y-scale's tick formatter output.

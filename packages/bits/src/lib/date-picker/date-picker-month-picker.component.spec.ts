@@ -22,7 +22,9 @@ describe("components >", () => {
         });
 
         it("should check if refreshView handler for month has been set", () => {
-            expect(_isUndefined((inner as any).refreshViewHandlerYear)).toBeTruthy();
+            expect(
+                _isUndefined((inner as any).refreshViewHandlerYear)
+            ).toBeTruthy();
             spyOn(inner, "setRefreshViewHandler");
             spyOn(inner, "setCompareHandler");
             monthPicker.ngOnInit();

@@ -19,12 +19,27 @@ describe(`Visual tests: ${name}`, () => {
     beforeAll(async () => {
         await Helpers.prepareBrowser("textbox/textbox-visual-test");
         basicTextbox = Atom.find(TextboxAtom, "nui-visual-test-textbox-item");
-        placeholderTextbox = Atom.find(TextboxAtom, "nui-visual-test-placeholder-textbox-item");
-        readonlyTextbox = Atom.find(TextboxAtom, "nui-visual-test-readonly-textbox-item");
-        requiredTextbox = Atom.find(TextboxAtom, "nui-visual-test-required-textbox-item");
-        areaTextbox = Atom.find(TextboxAtom, "nui-visual-test-area-textbox-item");
-        placeholderAreaTextbox = Atom.find(TextboxAtom, "nui-visual-test-placeholder-area-textbox-item");
-        
+        placeholderTextbox = Atom.find(
+            TextboxAtom,
+            "nui-visual-test-placeholder-textbox-item"
+        );
+        readonlyTextbox = Atom.find(
+            TextboxAtom,
+            "nui-visual-test-readonly-textbox-item"
+        );
+        requiredTextbox = Atom.find(
+            TextboxAtom,
+            "nui-visual-test-required-textbox-item"
+        );
+        areaTextbox = Atom.find(
+            TextboxAtom,
+            "nui-visual-test-area-textbox-item"
+        );
+        placeholderAreaTextbox = Atom.find(
+            TextboxAtom,
+            "nui-visual-test-placeholder-area-textbox-item"
+        );
+
         camera = new Camera().loadFilm(browser, name);
     });
 
@@ -38,15 +53,21 @@ describe(`Visual tests: ${name}`, () => {
 
         await basicTextbox.input.click();
         await placeholderTextbox.hover();
-        await camera.say.cheese("Basic Textbox is focused and Textbox with placeholder is hovered");
+        await camera.say.cheese(
+            "Basic Textbox is focused and Textbox with placeholder is hovered"
+        );
 
         await requiredTextbox.acceptText("a");
         await readonlyTextbox.hover();
-        await camera.say.cheese("'a' was entered in required Textbox and readonly Textbox is hovered");
+        await camera.say.cheese(
+            "'a' was entered in required Textbox and readonly Textbox is hovered"
+        );
 
         await areaTextbox.input.click();
         await placeholderAreaTextbox.hover();
-        await camera.say.cheese("Area Textbox is focused and Area Textbox with placeholder is hovered");
+        await camera.say.cheese(
+            "Area Textbox is focused and Area Textbox with placeholder is hovered"
+        );
 
         await camera.turn.off();
     }, 100000);

@@ -11,7 +11,6 @@ import { IChipsGroup, IChipsItem, IChipsItemsSource } from "./public-api";
 
 @Injectable()
 export class ChipsOverflowService {
-
     public itemsSource: IChipsItemsSource;
     public mainCell: ElementRef<HTMLElement>;
     public clearAll: ElementRef<HTMLElement>;
@@ -19,14 +18,14 @@ export class ChipsOverflowService {
     public allChips: QueryList<ChipComponent | ElementRef<HTMLElement>>;
     public overflowCounter: ElementRef<HTMLElement>;
     public overflowLinesNumber: number;
-    public chipsOverflowed: EventEmitter<IChipsItemsSource> = new EventEmitter<IChipsItemsSource>();
+    public chipsOverflowed: EventEmitter<IChipsItemsSource> =
+        new EventEmitter<IChipsItemsSource>();
 
     private overflowedChips: IChipsItemsSource;
     private chipResizeObserver: ResizeObserver;
     private chipsMutationObserver: MutationObserver;
 
-    constructor(private zone: NgZone) {
-    }
+    constructor(private zone: NgZone) {}
 
     public init(): void {
         this.initChipResizeObserver();
@@ -59,12 +58,16 @@ export class ChipsOverflowService {
         // Rendering occurs gradually, so we tracking every dimension change, to calculate overflow items correctly
         // to avoid case when Overflow Counter renders on the next line. Observing occurs only on first item, but it
         // also indicates that other items on the same level of DOM is also rendered
-        this.chipResizeObserver.observe(this.getNativeElement(this.allChips.first));
+        this.chipResizeObserver.observe(
+            this.getNativeElement(this.allChips.first)
+        );
     }
 
     private initChipsMutationObserver(): void {
         const config = { childList: true };
-        this.chipsMutationObserver = new MutationObserver(() => this.handleOverflow());
+        this.chipsMutationObserver = new MutationObserver(() =>
+            this.handleOverflow()
+        );
         this.chipsMutationObserver.observe(this.mainCell.nativeElement, config);
     }
 
@@ -74,7 +77,9 @@ export class ChipsOverflowService {
         let chipsOverflow = false;
 
         const rowMaxWidth = this.getRowWidth();
-        const counterWidth = this.overflowCounter?.nativeElement.getBoundingClientRect().width || 0;
+        const counterWidth =
+            this.overflowCounter?.nativeElement.getBoundingClientRect().width ||
+            0;
 
         this.allChips.toArray().forEach((item: ElementRef | ChipComponent) => {
             const chipElement = this.getNativeElement(item);
@@ -82,12 +87,15 @@ export class ChipsOverflowService {
             const chipElementWidth = chipElement.getBoundingClientRect().width;
             const isLastLine = () => renderedLines === this.overflowLinesNumber;
 
-            if (!isLastLine() && (acc + chipElementWidth) > rowMaxWidth) {
+            if (!isLastLine() && acc + chipElementWidth > rowMaxWidth) {
                 renderedLines++;
                 acc = 0;
             }
 
-            if (isLastLine() && (acc + chipElementWidth + counterWidth) > rowMaxWidth) {
+            if (
+                isLastLine() &&
+                acc + chipElementWidth + counterWidth > rowMaxWidth
+            ) {
                 acc = 0;
                 chipsOverflow = true;
 
@@ -113,8 +121,12 @@ export class ChipsOverflowService {
         }
 
         if (chip?.inGroup) {
-            const groupId = this.itemsSource.groupedItems?.indexOf(chip.inGroup);
-            const existingGroup = this.overflowedChips.groupedItems?.find(group => group.id === `group${groupId}`);
+            const groupId = this.itemsSource.groupedItems?.indexOf(
+                chip.inGroup
+            );
+            const existingGroup = this.overflowedChips.groupedItems?.find(
+                (group) => group.id === `group${groupId}`
+            );
 
             if (existingGroup) {
                 existingGroup.items.push((item as ChipComponent).item);
@@ -129,23 +141,35 @@ export class ChipsOverflowService {
         }
     }
 
-    private findChipItem(item: ElementRef | ChipComponent): { inFlat?: IChipsItem, inGroup?: IChipsGroup } | undefined {
+    private findChipItem(
+        item: ElementRef | ChipComponent
+    ): { inFlat?: IChipsItem; inGroup?: IChipsGroup } | undefined {
         if (!(item instanceof ChipComponent)) {
             return;
         }
-        const inFlat = this.itemsSource.flatItems?.find(i => i === item.item);
-        const inGroup = this.itemsSource.groupedItems?.find(group => group.items.find(i => i === item.item));
+        const inFlat = this.itemsSource.flatItems?.find((i) => i === item.item);
+        const inGroup = this.itemsSource.groupedItems?.find((group) =>
+            group.items.find((i) => i === item.item)
+        );
         return { inFlat, inGroup };
     }
 
     private getNativeElement(item: ChipComponent | ElementRef): HTMLElement {
-        return item instanceof ChipComponent ? item.host.nativeElement : item.nativeElement;
+        return item instanceof ChipComponent
+            ? item.host.nativeElement
+            : item.nativeElement;
     }
 
     private getRowWidth(): number {
-        return this.nuiChips?.nativeElement.getBoundingClientRect().width
-        - this.clearAll?.nativeElement.getBoundingClientRect().width
-        - parseFloat(getComputedStyle(this.nuiChips?.nativeElement).paddingLeft)
-        - parseFloat(getComputedStyle(this.nuiChips?.nativeElement).paddingRight);
+        return (
+            this.nuiChips?.nativeElement.getBoundingClientRect().width -
+            this.clearAll?.nativeElement.getBoundingClientRect().width -
+            parseFloat(
+                getComputedStyle(this.nuiChips?.nativeElement).paddingLeft
+            ) -
+            parseFloat(
+                getComputedStyle(this.nuiChips?.nativeElement).paddingRight
+            )
+        );
     }
 }

@@ -15,18 +15,24 @@ type ObjectLike<O extends object, P extends keyof O = keyof O> = Pick<O, P>;
  * Extract a touched changed observable from an abstract control
  * @param control AbstractControl like object with markAsTouched method
  */
-export const extractTouchedChanges = (control: ObjectLike<AbstractControl, "markAsTouched" | "markAsUntouched">): Observable<boolean> => {
+export const extractTouchedChanges = (
+    control: ObjectLike<AbstractControl, "markAsTouched" | "markAsUntouched">
+): Observable<boolean> => {
     const prevMarkAsTouched = control.markAsTouched;
     const prevMarkAsUntouched = control.markAsUntouched;
 
     const touchedChanges$ = new Subject<boolean>();
 
-    function nextMarkAsTouched(...args: ArgumentsType<AbstractControl["markAsTouched"]>) {
+    function nextMarkAsTouched(
+        ...args: ArgumentsType<AbstractControl["markAsTouched"]>
+    ) {
         touchedChanges$.next(true);
         prevMarkAsTouched.bind(control)(...args);
     }
 
-    function nextMarkAsUntouched(...args: ArgumentsType<AbstractControl["markAsUntouched"]>) {
+    function nextMarkAsUntouched(
+        ...args: ArgumentsType<AbstractControl["markAsUntouched"]>
+    ) {
         touchedChanges$.next(false);
         prevMarkAsUntouched.bind(control)(...args);
     }

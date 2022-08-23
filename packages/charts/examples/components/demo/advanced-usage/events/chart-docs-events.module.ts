@@ -1,7 +1,14 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+
 import {
-    DEMO_PATH_TOKEN, NuiButtonModule, NuiCheckboxModule, NuiDocsModule, NuiMessageModule, NuiSelectModule, SrlcStage,
+    DEMO_PATH_TOKEN,
+    NuiButtonModule,
+    NuiCheckboxModule,
+    NuiDocsModule,
+    NuiMessageModule,
+    NuiSelectModule,
+    SrlcStage,
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
@@ -14,8 +21,8 @@ const exampleRoutes: Routes = [
         path: "",
         component: ChartDocsEventsComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.beta,
+            srlc: {
+                stage: SrlcStage.beta,
             },
             showThemeSwitcher: true,
         },
@@ -24,8 +31,8 @@ const exampleRoutes: Routes = [
         path: "basic",
         component: EventsBasicExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -33,8 +40,8 @@ const exampleRoutes: Routes = [
         path: "event-sampler",
         component: EventSamplerComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -56,7 +63,15 @@ const exampleRoutes: Routes = [
         RouterModule.forChild(exampleRoutes),
     ],
     providers: [
-        { provide: DEMO_PATH_TOKEN, useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/) },
+        {
+            provide: DEMO_PATH_TOKEN,
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
+        },
     ],
 })
-export class ChartDocsEventsModule { }
+export class ChartDocsEventsModule {}

@@ -1,4 +1,10 @@
-import { DataAccessor, IAccessors, IDataAccessors, ISeriesAccessors, SeriesAccessor } from "../../core/common/types";
+import {
+    DataAccessor,
+    IAccessors,
+    IDataAccessors,
+    ISeriesAccessors,
+    SeriesAccessor,
+} from "../../core/common/types";
 
 export interface IStartEndRangeAccessors extends IDataAccessors {
     start: DataAccessor;
@@ -34,7 +40,5 @@ export class RectangleAccessors implements IRectangleAccessors {
     data: IRectangleDataAccessors;
     series: IRectangleSeriesAccessors;
 
-    constructor() {
-
-    }
+    constructor() {}
 }

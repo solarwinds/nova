@@ -1,7 +1,6 @@
 import { ISelection, SelectionModel } from "../../services/public-api";
-import {RepeatSelectionMode} from "../repeat/types";
-
-import {CheckboxStatus, SelectionType} from "./public-api";
+import { RepeatSelectionMode } from "../repeat/types";
+import { CheckboxStatus, SelectionType } from "./public-api";
 import { SelectorService } from "./selector.service";
 
 describe("services >", () => {
@@ -30,29 +29,43 @@ describe("services >", () => {
         const ITEM_ON_FIRST_PAGE = ALL_ITEMS[0];
         const ITEM_ON_SECOND_PAGE = ALL_ITEMS[5];
 
-        const ONE_ON_EACH_PAGE_SELECTION: ISelection = new SelectionModel({ include: [ITEM_ON_FIRST_PAGE, ITEM_ON_SECOND_PAGE] });
+        const ONE_ON_EACH_PAGE_SELECTION: ISelection = new SelectionModel({
+            include: [ITEM_ON_FIRST_PAGE, ITEM_ON_SECOND_PAGE],
+        });
 
-        const ONE_ON_FIRST_PAGE_SELECTION: ISelection = new SelectionModel({ include: [ITEM_ON_FIRST_PAGE] });
+        const ONE_ON_FIRST_PAGE_SELECTION: ISelection = new SelectionModel({
+            include: [ITEM_ON_FIRST_PAGE],
+        });
 
-        const ONE_ON_SECOND_PAGE_SELECTION: ISelection = new SelectionModel({ include: [ITEM_ON_SECOND_PAGE] });
+        const ONE_ON_SECOND_PAGE_SELECTION: ISelection = new SelectionModel({
+            include: [ITEM_ON_SECOND_PAGE],
+        });
 
-        const FULL_SELECTION: ISelection = new SelectionModel({ isAllPages: true });
-
-        const FULL_SELECTION_WITHOUT_FIRST_PAGE: ISelection = new SelectionModel({
+        const FULL_SELECTION: ISelection = new SelectionModel({
             isAllPages: true,
-            exclude: FIRST_PAGE,
         });
 
-        const FULL_SELECTION_WITHOUT_SECOND_PAGE: ISelection = new SelectionModel({
-            isAllPages: true,
-            exclude: SECOND_PAGE,
+        const FULL_SELECTION_WITHOUT_FIRST_PAGE: ISelection =
+            new SelectionModel({
+                isAllPages: true,
+                exclude: FIRST_PAGE,
+            });
+
+        const FULL_SELECTION_WITHOUT_SECOND_PAGE: ISelection =
+            new SelectionModel({
+                isAllPages: true,
+                exclude: SECOND_PAGE,
+            });
+
+        const FIRST_PAGE_SELECTION: ISelection = new SelectionModel({
+            include: FIRST_PAGE,
         });
 
-        const FIRST_PAGE_SELECTION: ISelection = new SelectionModel({ include: FIRST_PAGE });
-
-        const FIRST_AND_SECOND_PAGES_SELECTION: ISelection = new SelectionModel({
-            include: ALL_ITEMS,
-        });
+        const FIRST_AND_SECOND_PAGES_SELECTION: ISelection = new SelectionModel(
+            {
+                include: ALL_ITEMS,
+            }
+        );
 
         const SINGLE_PAGE_WITHOUT_ITEM: ISelection = new SelectionModel({
             isAllPages: true,
@@ -116,7 +129,9 @@ describe("services >", () => {
                     SelectionType.UnselectAll,
                     TOTAL_SIZE
                 );
-                expect(newSelection).toEqual(FULL_SELECTION_WITHOUT_SECOND_PAGE);
+                expect(newSelection).toEqual(
+                    FULL_SELECTION_WITHOUT_SECOND_PAGE
+                );
             });
             it("should unselect second page when some items an every page are selected", () => {
                 const newSelection = selectorService.applySelector(
@@ -154,7 +169,6 @@ describe("services >", () => {
         });
 
         describe("getSelectorState >", () => {
-
             describe("multiple pages >", () => {
                 it("should return correct selector state if no items on page are selected and there are multiple pages", () => {
                     const newSelectorState = selectorService.getSelectorState(
@@ -165,18 +179,20 @@ describe("services >", () => {
                     );
                     expect(newSelectorState).toEqual({
                         checkboxStatus: CheckboxStatus.Unchecked,
-                        selectorItems: [{
-                            itemsSource: [
-                                {
-                                    value: SelectionType.AllPages,
-                                    title: SelectionType.AllPages,
-                                },
-                                {
-                                    value: SelectionType.All,
-                                    title: SelectionType.All,
-                                },
-                            ],
-                        }],
+                        selectorItems: [
+                            {
+                                itemsSource: [
+                                    {
+                                        value: SelectionType.AllPages,
+                                        title: SelectionType.AllPages,
+                                    },
+                                    {
+                                        value: SelectionType.All,
+                                        title: SelectionType.All,
+                                    },
+                                ],
+                            },
+                        ],
                     });
                 });
 
@@ -189,22 +205,24 @@ describe("services >", () => {
                     );
                     expect(newSelectorState).toEqual({
                         checkboxStatus: CheckboxStatus.Indeterminate,
-                        selectorItems: [{
-                            itemsSource: [
-                                {
-                                    value: SelectionType.All,
-                                    title: SelectionType.All,
-                                },
-                                {
-                                    value: SelectionType.AllPages,
-                                    title: SelectionType.AllPages,
-                                },
-                                {
-                                    value: SelectionType.None,
-                                    title: SelectionType.None,
-                                },
-                            ],
-                        }],
+                        selectorItems: [
+                            {
+                                itemsSource: [
+                                    {
+                                        value: SelectionType.All,
+                                        title: SelectionType.All,
+                                    },
+                                    {
+                                        value: SelectionType.AllPages,
+                                        title: SelectionType.AllPages,
+                                    },
+                                    {
+                                        value: SelectionType.None,
+                                        title: SelectionType.None,
+                                    },
+                                ],
+                            },
+                        ],
                     });
                 });
 
@@ -217,18 +235,20 @@ describe("services >", () => {
                     );
                     expect(newSelectorState).toEqual({
                         checkboxStatus: CheckboxStatus.Checked,
-                        selectorItems: [{
-                            itemsSource: [
-                                {
-                                    value: SelectionType.AllPages,
-                                    title: SelectionType.AllPages,
-                                },
-                                {
-                                    value: SelectionType.None,
-                                    title: SelectionType.None,
-                                },
-                            ],
-                        }],
+                        selectorItems: [
+                            {
+                                itemsSource: [
+                                    {
+                                        value: SelectionType.AllPages,
+                                        title: SelectionType.AllPages,
+                                    },
+                                    {
+                                        value: SelectionType.None,
+                                        title: SelectionType.None,
+                                    },
+                                ],
+                            },
+                        ],
                     });
                 });
 
@@ -241,14 +261,16 @@ describe("services >", () => {
                     );
                     expect(newSelectorState).toEqual({
                         checkboxStatus: CheckboxStatus.Checked,
-                        selectorItems: [{
-                            itemsSource: [
-                                {
-                                    value: SelectionType.None,
-                                    title: SelectionType.None,
-                                },
-                            ],
-                        }],
+                        selectorItems: [
+                            {
+                                itemsSource: [
+                                    {
+                                        value: SelectionType.None,
+                                        title: SelectionType.None,
+                                    },
+                                ],
+                            },
+                        ],
                     });
                 });
                 it("should return correct selector state if no items are selected on current page but some items are selected on other pages", () => {
@@ -261,22 +283,24 @@ describe("services >", () => {
                     );
                     expect(newSelectorState).toEqual({
                         checkboxStatus: CheckboxStatus.Unchecked,
-                        selectorItems: [{
-                            itemsSource: [
-                                {
-                                    value: SelectionType.All,
-                                    title: SelectionType.All,
-                                },
-                                {
-                                    value: SelectionType.AllPages,
-                                    title: SelectionType.AllPages,
-                                },
-                                {
-                                    value: SelectionType.None,
-                                    title: SelectionType.None,
-                                },
-                            ],
-                        }],
+                        selectorItems: [
+                            {
+                                itemsSource: [
+                                    {
+                                        value: SelectionType.All,
+                                        title: SelectionType.All,
+                                    },
+                                    {
+                                        value: SelectionType.AllPages,
+                                        title: SelectionType.AllPages,
+                                    },
+                                    {
+                                        value: SelectionType.None,
+                                        title: SelectionType.None,
+                                    },
+                                ],
+                            },
+                        ],
                     });
                 });
 
@@ -289,22 +313,23 @@ describe("services >", () => {
                     );
                     expect(newSelectorState).toEqual({
                         checkboxStatus: CheckboxStatus.Checked,
-                        selectorItems: [{
-                            itemsSource: [
-                                {
-                                    value: SelectionType.AllPages,
-                                    title: SelectionType.AllPages,
-                                },
-                                {
-                                    value: SelectionType.None,
-                                    title: SelectionType.None,
-                                },
-                            ],
-                        }],
+                        selectorItems: [
+                            {
+                                itemsSource: [
+                                    {
+                                        value: SelectionType.AllPages,
+                                        title: SelectionType.AllPages,
+                                    },
+                                    {
+                                        value: SelectionType.None,
+                                        title: SelectionType.None,
+                                    },
+                                ],
+                            },
+                        ],
                     });
                 });
             });
-
 
             describe("single page > ", () => {
                 it("should return correct selector state if there are only one page and items are selected", () => {
@@ -316,14 +341,16 @@ describe("services >", () => {
                     );
                     expect(newSelectorState).toEqual({
                         checkboxStatus: CheckboxStatus.Checked,
-                        selectorItems: [{
-                            itemsSource: [
-                                {
-                                    value: SelectionType.None,
-                                    title: SelectionType.None,
-                                },
-                            ],
-                        }],
+                        selectorItems: [
+                            {
+                                itemsSource: [
+                                    {
+                                        value: SelectionType.None,
+                                        title: SelectionType.None,
+                                    },
+                                ],
+                            },
+                        ],
                     });
                 });
 
@@ -336,14 +363,16 @@ describe("services >", () => {
                     );
                     expect(newSelectorState).toEqual({
                         checkboxStatus: CheckboxStatus.Unchecked,
-                        selectorItems: [{
-                            itemsSource: [
-                                {
-                                    value: SelectionType.All,
-                                    title: SelectionType.All,
-                                },
-                            ],
-                        }],
+                        selectorItems: [
+                            {
+                                itemsSource: [
+                                    {
+                                        value: SelectionType.All,
+                                        title: SelectionType.All,
+                                    },
+                                ],
+                            },
+                        ],
                     });
                 });
 
@@ -356,18 +385,20 @@ describe("services >", () => {
                     );
                     expect(newSelectorState).toEqual({
                         checkboxStatus: CheckboxStatus.Indeterminate,
-                        selectorItems: [{
-                            itemsSource: [
-                                {
-                                    value: SelectionType.All,
-                                    title: SelectionType.All,
-                                },
-                                {
-                                    value: SelectionType.None,
-                                    title: SelectionType.None,
-                                },
-                            ],
-                        }],
+                        selectorItems: [
+                            {
+                                itemsSource: [
+                                    {
+                                        value: SelectionType.All,
+                                        title: SelectionType.All,
+                                    },
+                                    {
+                                        value: SelectionType.None,
+                                        title: SelectionType.None,
+                                    },
+                                ],
+                            },
+                        ],
                     });
                 });
             });
@@ -384,47 +415,65 @@ describe("services >", () => {
                 expect(newSelection).toEqual(EMPTY_SELECTION);
             });
             it("should return one item for single selection modes", () => {
-                Object.values(RepeatSelectionMode).forEach(selectionMode => {
-                    if (selectionMode !== RepeatSelectionMode.none && selectionMode !== RepeatSelectionMode.multi) {
+                Object.values(RepeatSelectionMode).forEach((selectionMode) => {
+                    if (
+                        selectionMode !== RepeatSelectionMode.none &&
+                        selectionMode !== RepeatSelectionMode.multi
+                    ) {
                         const newSelection = selectorService.selectItems(
                             EMPTY_SELECTION,
                             [ITEM_ON_FIRST_PAGE],
                             FIRST_PAGE,
                             selectionMode
                         );
-                        expect(newSelection).toEqual(ONE_ON_FIRST_PAGE_SELECTION);
+                        expect(newSelection).toEqual(
+                            ONE_ON_FIRST_PAGE_SELECTION
+                        );
                     }
                 });
             });
             it("should return one item for single selection modes regardless of initial selection", () => {
-                Object.values(RepeatSelectionMode).forEach(selectionMode => {
-                    if (selectionMode !== RepeatSelectionMode.none && selectionMode !== RepeatSelectionMode.multi) {
+                Object.values(RepeatSelectionMode).forEach((selectionMode) => {
+                    if (
+                        selectionMode !== RepeatSelectionMode.none &&
+                        selectionMode !== RepeatSelectionMode.multi
+                    ) {
                         const newSelection = selectorService.selectItems(
                             FULL_SELECTION,
                             [ITEM_ON_FIRST_PAGE],
                             FIRST_PAGE,
                             selectionMode
                         );
-                        expect(newSelection).toEqual(ONE_ON_FIRST_PAGE_SELECTION);
+                        expect(newSelection).toEqual(
+                            ONE_ON_FIRST_PAGE_SELECTION
+                        );
                     }
                 });
             });
             it("should return one item for single selection modes when a previous selection was made, and a new item has been selected", () => {
-                Object.values(RepeatSelectionMode).forEach(selectionMode => {
-                    if (selectionMode !== RepeatSelectionMode.none && selectionMode !== RepeatSelectionMode.multi) {
+                Object.values(RepeatSelectionMode).forEach((selectionMode) => {
+                    if (
+                        selectionMode !== RepeatSelectionMode.none &&
+                        selectionMode !== RepeatSelectionMode.multi
+                    ) {
                         const newSelection = selectorService.selectItems(
                             ONE_ON_SECOND_PAGE_SELECTION,
                             [ITEM_ON_FIRST_PAGE],
                             FIRST_PAGE,
                             selectionMode
                         );
-                        expect(newSelection).toEqual(ONE_ON_FIRST_PAGE_SELECTION);
+                        expect(newSelection).toEqual(
+                            ONE_ON_FIRST_PAGE_SELECTION
+                        );
                     }
                 });
             });
             it("should return an empty selection for single selection modes when a previous selection was not made, and no new item has been selected", () => {
-                Object.values(RepeatSelectionMode).forEach(selectionMode => {
-                    if (selectionMode !== RepeatSelectionMode.none && selectionMode !== RepeatSelectionMode.multi) {
+                Object.values(RepeatSelectionMode).forEach((selectionMode) => {
+                    if (
+                        selectionMode !== RepeatSelectionMode.none &&
+                        selectionMode !== RepeatSelectionMode.multi
+                    ) {
                         const newSelection = selectorService.selectItems(
                             EMPTY_SELECTION,
                             [],
@@ -442,7 +491,9 @@ describe("services >", () => {
                     SECOND_PAGE,
                     RepeatSelectionMode.multi
                 );
-                expect(newSelection).toEqual(FULL_SELECTION_WITHOUT_SECOND_PAGE);
+                expect(newSelection).toEqual(
+                    FULL_SELECTION_WITHOUT_SECOND_PAGE
+                );
             });
             it("should return correct selection if isAllPages is false and everything is selected", () => {
                 const newSelection = selectorService.selectItems(
@@ -466,4 +517,3 @@ describe("services >", () => {
         });
     });
 });
-

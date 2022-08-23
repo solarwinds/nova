@@ -8,7 +8,9 @@ const paramsRegex = /\{|\}/g;
 export function parseStringWithData(path: string, data: any): string {
     const match = path.match(keyToParseRegex);
 
-    if (!match) { return path; }
+    if (!match) {
+        return path;
+    }
 
     let updatedPath = path;
 
@@ -24,4 +26,5 @@ export function parseStringWithData(path: string, data: any): string {
     return updatedPath;
 }
 
-const getKeyFromParam = (entry: string): string => entry.replace(paramsRegex, "");
+const getKeyFromParam = (entry: string): string =>
+    entry.replace(paramsRegex, "");

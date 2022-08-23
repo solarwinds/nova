@@ -1,17 +1,8 @@
-import {
-    browser,
-    by,
-    element, Key,
-} from "protractor";
+import { browser, by, element, Key } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
-import {
-    BusyAtom,
-    ButtonAtom,
-    SelectAtom,
-    SpinnerAtom,
-} from "../public_api";
+import { BusyAtom, ButtonAtom, SelectAtom, SpinnerAtom } from "../public_api";
 
 describe("USERCONTROL Busy", () => {
     let busy: BusyAtom;
@@ -23,9 +14,18 @@ describe("USERCONTROL Busy", () => {
     beforeAll(async () => {
         busyBtn = Atom.find(ButtonAtom, "nui-busy-test-button");
         busy = Atom.findIn(BusyAtom, element(by.id("nui-busy-test-basic")));
-        progressBusy = Atom.findIn(BusyAtom, element(by.id("nui-busy-test-progress")));
-        spinner = Atom.findIn(SpinnerAtom, element(by.id("nui-busy-test-custom")));
-        select = Atom.findIn(SelectAtom, element(by.id("nui-busy-select-overlay")));
+        progressBusy = Atom.findIn(
+            BusyAtom,
+            element(by.id("nui-busy-test-progress"))
+        );
+        spinner = Atom.findIn(
+            SpinnerAtom,
+            element(by.id("nui-busy-test-custom"))
+        );
+        select = Atom.findIn(
+            SelectAtom,
+            element(by.id("nui-busy-select-overlay"))
+        );
     });
 
     beforeEach(async () => {
@@ -52,7 +52,12 @@ describe("USERCONTROL Busy", () => {
         it("any appended to body popup (select) should not be overlapped by busy", async () => {
             await select.toggleMenu();
             // since select is appended to body, this is the simplest way to get its content
-            const selectedItem = browser.element(by.cssContainingText(".nui-select-popup-host .nui-menu-item", "Item 2"));
+            const selectedItem = browser.element(
+                by.cssContainingText(
+                    ".nui-select-popup-host .nui-menu-item",
+                    "Item 2"
+                )
+            );
             await selectedItem.click();
             expect(await select.getCurrentValue()).toBe("Item 2");
         });
@@ -61,15 +66,17 @@ describe("USERCONTROL Busy", () => {
             await select.getElement().click();
 
             // should be focus on something else other than the last button on page
-            await expect(await busyBtn.getElement().getId())
-                .not.toEqual(await browser.switchTo().activeElement().getId());
+            await expect(await busyBtn.getElement().getId()).not.toEqual(
+                await browser.switchTo().activeElement().getId()
+            );
 
             await browser.actions().sendKeys(Key.TAB).perform();
 
             // should be focus on that the last button on page,
             // since the focusable elements were skipped during our tab navigation
-            expect(await browser.switchTo().activeElement().getId())
-                .toEqual(await busyBtn.getElement().getId());
+            expect(await browser.switchTo().activeElement().getId()).toEqual(
+                await busyBtn.getElement().getId()
+            );
         });
 
         it("should allow tab navigation when component is NOT busy", async () => {
@@ -79,8 +86,9 @@ describe("USERCONTROL Busy", () => {
             await select.getElement().click();
             await browser.actions().sendKeys(Key.TAB).perform();
 
-            expect(await browser.switchTo().activeElement().getAttribute("id"))
-                .toEqual("focusable-button-inside-busy-component");
+            expect(
+                await browser.switchTo().activeElement().getAttribute("id")
+            ).toEqual("focusable-button-inside-busy-component");
         });
     });
 });

@@ -15,6 +15,9 @@ for (const project of projects) {
             packageJson.peerDependencies[dep] = "~" + version;
         }
 
-        fs.writeFileSync(`./${project.path}/package.json`, JSON.stringify(packageJson, null, 2));
+        fs.writeFileSync(
+            `./${project.path}/package.json`,
+            JSON.stringify(packageJson, null, 2)
+        );
     }
 }

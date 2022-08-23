@@ -16,4 +16,7 @@ export interface IChipsGroup {
     customClass?: string | string[] | Set<string> | { [klass: string]: any };
 }
 
-export interface IChipRemoved { item: IChipsItem, group?: IChipsGroup }
+export interface IChipRemoved {
+    item: IChipsItem;
+    group?: IChipsGroup;
+}

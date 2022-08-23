@@ -1,5 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+
 import {
     NuiCheckboxModule,
     NuiDialogModule,
@@ -36,5 +37,4 @@ import { ItemPickerModule } from "./item-picker/item-picker.module";
     ],
     providers: [FilterGroupService],
 })
-
 export class FilterGroupModule {}

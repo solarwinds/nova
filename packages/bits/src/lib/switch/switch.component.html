@@ -1,18 +1,38 @@
-<div class="nui-switch" [class.nui-switched]="value" [class.nui-disabled]="disabled" [attr.disabled]="disabled">
+<div
+    class="nui-switch"
+    [class.nui-switched]="value"
+    [class.nui-disabled]="disabled"
+    [attr.disabled]="disabled"
+>
     <div class="nui-switch__container">
-        <div class="nui-switch__bar"
-             (click)="toggle()"
-             (keyup.enter)="toggle()"
-             (keyup.space)="toggle()"
-             tabindex="{{disabled ? -1 : 0}}"
-             role="checkbox"
-             [attr.aria-checked]="value"
-             [attr.aria-label]="ariaLabel">
+        <div
+            class="nui-switch__bar"
+            (click)="toggle()"
+            (keyup.enter)="toggle()"
+            (keyup.space)="toggle()"
+            tabindex="{{ disabled ? -1 : 0 }}"
+            role="checkbox"
+            [attr.aria-checked]="value"
+            [attr.aria-label]="ariaLabel"
+        >
             <div class="nui-switch__on">
-                <svg aria-hidden="true" class="nui-switch__svg" viewBox="0 0 7.1 6.7"><polyline class="nui-switch__icon-on" points="0.6,2.9 3.2,4.8 7.2,1.0 "/></svg>
+                <svg
+                    aria-hidden="true"
+                    class="nui-switch__svg"
+                    viewBox="0 0 7.1 6.7"
+                >
+                    <polyline
+                        class="nui-switch__icon-on"
+                        points="0.6,2.9 3.2,4.8 7.2,1.0 "
+                    />
+                </svg>
             </div>
             <div class="nui-switch__thumb">
-                <svg aria-hidden="true" class="nui-switch__svg" viewBox="0 0 7.1 6.7"></svg>
+                <svg
+                    aria-hidden="true"
+                    class="nui-switch__svg"
+                    viewBox="0 0 7.1 6.7"
+                ></svg>
             </div>
         </div>
         <label class="nui-switch__label">

@@ -1,9 +1,11 @@
 <div class="nui-widget-cloner">
-    <nui-repeat [itemsSource]="widgetItems"
-                [selection]="widgetSelection"
-                selectionMode="singleWithRequiredSelection"
-                (selectionChange)="onSelect($event)"
-                [repeatItemTemplateRef]="widgetClonerItem">
+    <nui-repeat
+        [itemsSource]="widgetItems"
+        [selection]="widgetSelection"
+        selectionMode="singleWithRequiredSelection"
+        (selectionChange)="onSelect($event)"
+        [repeatItemTemplateRef]="widgetClonerItem"
+    >
     </nui-repeat>
 </div>
 

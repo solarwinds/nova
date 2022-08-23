@@ -13,11 +13,11 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import moment from "moment/moment";
 import { Moment } from "moment/moment";
 
-import {NuiFormFieldControl} from "../form-field/public-api";
+import { NuiFormFieldControl } from "../form-field/public-api";
 
 // <example-url>./../examples/index.html#/date-time-picker</example-url><br />
 
@@ -40,7 +40,9 @@ import {NuiFormFieldControl} from "../form-field/public-api";
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DateTimePickerComponent implements AfterViewInit, OnInit, ControlValueAccessor {
+export class DateTimePickerComponent
+    implements AfterViewInit, OnInit, ControlValueAccessor
+{
     /** latest available date */
     @Input() maxDate: Moment;
     /** earliest available date */
@@ -72,7 +74,8 @@ export class DateTimePickerComponent implements AfterViewInit, OnInit, ControlVa
         }
     }
 
-    @ViewChild("nuiDatetimePicker", {static: true}) public codeElement: ElementRef;
+    @ViewChild("nuiDatetimePicker", { static: true })
+    public codeElement: ElementRef;
     /** Callback to invoke on model change */
     @Output()
     modelChanged: EventEmitter<Moment> = new EventEmitter<Moment>();
@@ -113,8 +116,14 @@ export class DateTimePickerComponent implements AfterViewInit, OnInit, ControlVa
 
     ngAfterViewInit() {
         if (this.displayMode === "inline") {
-            this.renderer.addClass(this.codeElement.nativeElement, "nui-datetime-picker--inline");
-            this.renderer.addClass(this.codeElement.nativeElement.querySelector(".nui-timepicker"), "nui-dropdown--inline");
+            this.renderer.addClass(
+                this.codeElement.nativeElement,
+                "nui-datetime-picker--inline"
+            );
+            this.renderer.addClass(
+                this.codeElement.nativeElement.querySelector(".nui-timepicker"),
+                "nui-dropdown--inline"
+            );
         }
     }
 
@@ -144,10 +153,12 @@ export class DateTimePickerComponent implements AfterViewInit, OnInit, ControlVa
     }
 
     onDateChanged(event: Moment) {
-        const isDateTheSame = moment.isMoment(this.date)
-            && this.date.isSame(event);
+        const isDateTheSame =
+            moment.isMoment(this.date) && this.date.isSame(event);
 
-        if (isDateTheSame) { return; }
+        if (isDateTheSame) {
+            return;
+        }
 
         this.updateDate(event);
         this.modelChanged.emit(moment(this.model));
@@ -158,8 +169,10 @@ export class DateTimePickerComponent implements AfterViewInit, OnInit, ControlVa
     onInputBlurred(): void {
         this.onTouched();
         if (!this.model) {
-            this.isInErrorStateDate = !this.date || this.date && !moment(this.date).isValid();
-            this.isInErrorStateTime = !this.time || this.time && !moment(this.time).isValid();
+            this.isInErrorStateDate =
+                !this.date || (this.date && !moment(this.date).isValid());
+            this.isInErrorStateTime =
+                !this.time || (this.time && !moment(this.time).isValid());
         }
     }
 
@@ -187,7 +200,7 @@ export class DateTimePickerComponent implements AfterViewInit, OnInit, ControlVa
         }
 
         // In case 'date' is not set, this._model is set from 'time' model if 'time' model exists
-        this._model = this._model || this.time && this.time.clone();
+        this._model = this._model || (this.time && this.time.clone());
         if (this._model) {
             this._model.set({
                 year: newValue.year(),
@@ -200,7 +213,7 @@ export class DateTimePickerComponent implements AfterViewInit, OnInit, ControlVa
     }
 
     private updateTime(newValue: Moment) {
-        if (!moment.isMoment(newValue))  {
+        if (!moment.isMoment(newValue)) {
             // TODO: Replace with undefined
             // @ts-ignore
             this._model = null;
@@ -210,12 +223,12 @@ export class DateTimePickerComponent implements AfterViewInit, OnInit, ControlVa
         }
 
         // In case 'time' is not set, this._model is set from 'date' model if 'date' model exists
-        this._model = this._model || this.date && this.date.clone();
+        this._model = this._model || (this.date && this.date.clone());
         if (this._model) {
             this._model.set({
                 hours: newValue.hours(),
                 minutes: newValue.minutes(),
-                seconds:  newValue.seconds(),
+                seconds: newValue.seconds(),
                 milliseconds: newValue.millisecond(),
             });
         }

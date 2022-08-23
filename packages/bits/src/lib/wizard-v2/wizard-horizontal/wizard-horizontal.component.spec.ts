@@ -1,7 +1,8 @@
 import { ChangeDetectorRef, Component, NO_ERRORS_SCHEMA } from "@angular/core";
-import { WizardHorizontalComponent } from "./wizard-horizontal.component";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+
 import { WizardStepV2Component } from "../wizard-step/wizard-step.component";
+import { WizardHorizontalComponent } from "./wizard-horizontal.component";
 
 @Component({
     selector: "nui-test-cmp",

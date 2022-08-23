@@ -12,4 +12,3 @@ export interface IOptionedComponent {
 }
 
 export type InputValueTypes = number | string;
-

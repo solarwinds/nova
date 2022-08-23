@@ -2,25 +2,33 @@ import { browser, by } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
-
 import { DateTimepickerAtom } from "./datetimepicker.atom";
 
 describe("USERCONTROL date-time-picker", () => {
     let dateTimePicker: DateTimepickerAtom;
 
-    async function getModelValue(): Promise<string> {
-        return browser.element(by.id("model-value")).getText();
-    }
+    const getModelValue = async (): Promise<string> =>
+        browser.element(by.id("model-value")).getText();
 
     beforeEach(async () => {
         await Helpers.prepareBrowser("date-time-picker/date-time-picker-test");
-        dateTimePicker = Atom.find(DateTimepickerAtom, "nui-demo-date-time-picker");
+        dateTimePicker = Atom.find(
+            DateTimepickerAtom,
+            "nui-demo-date-time-picker"
+        );
     });
 
     describe("when the datetime picker is displayed, it", () => {
         it("contains initial value", async () => {
-            expect(await dateTimePicker.getDatePicker().getInput().getAttribute("value")).toEqual("15 Mar 1970");
-            expect(await dateTimePicker.getTimePicker().textbox.getValue()).toEqual("3:30 PM");
+            expect(
+                await dateTimePicker
+                    .getDatePicker()
+                    .getInput()
+                    .getAttribute("value")
+            ).toEqual("15 Mar 1970");
+            expect(
+                await dateTimePicker.getTimePicker().textbox.getValue()
+            ).toEqual("3:30 PM");
         });
     });
 

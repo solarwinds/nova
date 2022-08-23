@@ -15,13 +15,16 @@ import {
 import { Subject } from "rxjs";
 import { debounceTime, takeUntil } from "rxjs/operators";
 
-import { IFilter, IFilterPub, ISelectorFilter } from "../../services/data-source/public-api";
+import {
+    IFilter,
+    IFilterPub,
+    ISelectorFilter,
+} from "../../services/data-source/public-api";
 import { CheckboxComponent } from "../checkbox/checkbox.component";
 import { CheckboxChangeEvent } from "../checkbox/public-api";
 import { IMenuGroup, IMenuItem } from "../menu/public-api";
 import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
-
 import { CheckboxStatus, SelectionType } from "./public-api";
 
 /**
@@ -44,16 +47,17 @@ import { CheckboxStatus, SelectionType } from "./public-api";
 @Component({
     selector: "nui-selector",
     host: {
-        "class": "nui-selector",
-        "tabindex": "-1",
+        class: "nui-selector",
+        tabindex: "-1",
         "[attr.aria-label]": "ariaLabel",
     },
     templateUrl: "./selector.component.html",
     styleUrls: ["./selector.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
-
-export class SelectorComponent implements OnChanges, AfterViewInit, OnDestroy, IFilterPub {
+export class SelectorComponent
+    implements OnChanges, AfterViewInit, OnDestroy, IFilterPub
+{
     /**
      * resets selection, makes component appearance indeterminate
      */
@@ -75,7 +79,7 @@ export class SelectorComponent implements OnChanges, AfterViewInit, OnDestroy, I
     @ViewChild("checkbox")
     public checkbox: CheckboxComponent;
 
-    @ViewChild("popupArea", {static: true}) popupArea: ElementRef;
+    @ViewChild("popupArea", { static: true }) popupArea: ElementRef;
 
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
 
@@ -94,24 +98,31 @@ export class SelectorComponent implements OnChanges, AfterViewInit, OnDestroy, I
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes["checkboxStatus"]) {
             const checkboxStatus = changes["checkboxStatus"].currentValue;
-            this.indeterminate = checkboxStatus === CheckboxStatus.Indeterminate;
+            this.indeterminate =
+                checkboxStatus === CheckboxStatus.Indeterminate;
             this.checkboxChecked = checkboxStatus === CheckboxStatus.Checked;
         }
         if (changes.appendToBody) {
-            this.customContainer = changes.appendToBody.currentValue ? undefined : this.popupArea;
+            this.customContainer = changes.appendToBody.currentValue
+                ? undefined
+                : this.popupArea;
         }
     }
 
     public ngAfterViewInit(): void {
         const debounceTimeValue = 10;
 
-        this.checkbox.valueChange.pipe(debounceTime(debounceTimeValue))
+        this.checkbox.valueChange
+            .pipe(debounceTime(debounceTimeValue))
             .subscribe(this.onCheckboxValueChange.bind(this));
         this.overlay.clickOutside
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(_ => this.overlay.hide());
+            .subscribe((_) => this.overlay.hide());
         // TODO: should change programmatically in scope of NUI-5937
-        this.checkbox.checkboxLabel.nativeElement.setAttribute("tabindex", "-1");
+        this.checkbox.checkboxLabel.nativeElement.setAttribute(
+            "tabindex",
+            "-1"
+        );
     }
 
     public ngOnDestroy(): void {
@@ -145,7 +156,9 @@ export class SelectorComponent implements OnChanges, AfterViewInit, OnDestroy, I
         this.indeterminate = false;
         this.checkboxChecked = !this.checkboxChecked;
 
-        const selection = this.checkboxChecked ? SelectionType.All : SelectionType.None;
+        const selection = this.checkboxChecked
+            ? SelectionType.All
+            : SelectionType.None;
         this.status = selection;
 
         this.selectionChange.emit(selection);
@@ -155,7 +168,9 @@ export class SelectorComponent implements OnChanges, AfterViewInit, OnDestroy, I
         this.indeterminate = false;
         this.checkboxChecked = !this.checkboxChecked;
 
-        this.status = this.checkboxChecked ? SelectionType.All : SelectionType.None;
+        this.status = this.checkboxChecked
+            ? SelectionType.All
+            : SelectionType.None;
 
         this.selectionHasChanged = true;
 
@@ -169,8 +184,10 @@ export class SelectorComponent implements OnChanges, AfterViewInit, OnDestroy, I
     }
 
     public handleItemClick(item: IMenuItem): void {
-        const selection = item.value || item.title as SelectionType;
-        this.checkboxChecked = selection === SelectionType.All || selection === SelectionType.AllPages;
+        const selection = item.value || (item.title as SelectionType);
+        this.checkboxChecked =
+            selection === SelectionType.All ||
+            selection === SelectionType.AllPages;
         this.status = selection;
 
         this.selectionHasChanged = true;
@@ -178,5 +195,4 @@ export class SelectorComponent implements OnChanges, AfterViewInit, OnDestroy, I
         // propagate selection
         this.selectionChange.emit(selection);
     }
-
 }

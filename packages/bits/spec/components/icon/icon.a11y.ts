@@ -1,9 +1,10 @@
 import { browser } from "protractor";
+
 import { assertA11y, Helpers } from "../../helpers";
 import { IconAtom } from "../public_api";
 
 describe("a11y: icon", () => {
-    let rulesToDisable: string[] = [
+    const rulesToDisable: string[] = [
         "duplicate-id", // has nothing to do with the icons
     ];
 

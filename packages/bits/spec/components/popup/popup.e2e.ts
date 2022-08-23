@@ -1,6 +1,5 @@
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
-
 import { PopupAtom } from "./popup.atom";
 
 describe("USERCONTROL Popup", () => {
@@ -14,7 +13,10 @@ describe("USERCONTROL Popup", () => {
         popupSimple = Atom.find(PopupAtom, "nui-demo-popup-simple");
         popupCustomWidth = Atom.find(PopupAtom, "nui-demo-popup-custom-width");
         popupIsOpened = Atom.find(PopupAtom, "nui-demo-popup-isOpen-true");
-        popupAppendToBody = Atom.find(PopupAtom, "nui-demo-popup-append-to-body");
+        popupAppendToBody = Atom.find(
+            PopupAtom,
+            "nui-demo-popup-append-to-body"
+        );
     });
 
     afterEach(async () => {
@@ -62,22 +64,31 @@ describe("USERCONTROL Popup", () => {
 
     it("should respect context class", async () => {
         await popupAppendToBody.getPopupToggle().click();
-        expect(await popupAppendToBody.getPopupBoxDetached()
-            .getElement()
-            .getAttribute("class")).toMatch("additional-host-class");
+        expect(
+            await popupAppendToBody
+                .getPopupBoxDetached()
+                .getElement()
+                .getAttribute("class")
+        ).toMatch("additional-host-class");
     });
 
     it("should remove the appended to body popup container on close", async () => {
         await popupAppendToBody.getPopupToggle().click();
-        expect(await popupAppendToBody.getPopupBoxDetached().isPresent()).toBeTruthy();
+        expect(
+            await popupAppendToBody.getPopupBoxDetached().isPresent()
+        ).toBeTruthy();
 
         await popupAppendToBody.getPopupToggle().click();
-        expect(await popupAppendToBody.getPopupBoxDetached().isPresent()).toBeFalsy("Popup container is still in DOM!");
+        expect(
+            await popupAppendToBody.getPopupBoxDetached().isPresent()
+        ).toBeFalsy("Popup container is still in DOM!");
     });
 
     it("should accept custom width", async () => {
         await popupCustomWidth.getPopupToggle().click();
 
-        expect(popupCustomWidth.getPopupBox().getCssValue("width")).toMatch("200px");
+        expect(popupCustomWidth.getPopupBox().getCssValue("width")).toMatch(
+            "200px"
+        );
     });
 });

@@ -1,6 +1,6 @@
-import {Injectable, OnDestroy} from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
-import {switchMap, takeUntil, tap} from "rxjs/operators";
+import { switchMap, takeUntil, tap } from "rxjs/operators";
 
 import { DataSourceService } from "./data-source.service";
 import { IFilteringOutputs, IFilters } from "./public-api";
@@ -9,9 +9,14 @@ import { IFilteringOutputs, IFilters } from "./public-api";
  * <example-url>./../examples/index.html#/common/server-side-data-source</example-url>
  */
 @Injectable()
-export abstract class ServerSideDataSource<T, F extends IFilters = IFilters, D = any>
-    extends DataSourceService<T> implements OnDestroy {
-
+export abstract class ServerSideDataSource<
+        T,
+        F extends IFilters = IFilters,
+        D = any
+    >
+    extends DataSourceService<T>
+    implements OnDestroy
+{
     public busy = new BehaviorSubject(false);
 
     protected applyFilters$ = new Subject<F>();
@@ -24,12 +29,14 @@ export abstract class ServerSideDataSource<T, F extends IFilters = IFilters, D =
     }
 
     protected setupFilters() {
-        this.applyFilters$.pipe(
-            tap((filters) => this.beforeApplyFilters(filters)),
-            switchMap((filters: F) => this.getBackendData(filters)),
-            tap(async(data: D) => this.afterApplyFilters(data)),
-            takeUntil(this.destroy$)
-        ).subscribe();
+        this.applyFilters$
+            .pipe(
+                tap((filters) => this.beforeApplyFilters(filters)),
+                switchMap((filters: F) => this.getBackendData(filters)),
+                tap(async (data: D) => this.afterApplyFilters(data)),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
     }
 
     // make sure we clean upon service destruction

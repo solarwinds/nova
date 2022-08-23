@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component } from "@angular/core";
 
 /**
  * @ignore
@@ -7,6 +7,6 @@ import {Component} from "@angular/core";
 @Component({
     selector: "nui-dialog-backdrop",
     template: "",
-    host: {"class": "dialog-backdrop fade in"},
+    host: { class: "dialog-backdrop fade in" },
 })
 export class DialogBackdropComponent {}

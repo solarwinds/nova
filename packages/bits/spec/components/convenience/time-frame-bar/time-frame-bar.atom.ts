@@ -25,16 +25,40 @@ export class TimeFrameBarAtom extends Atom {
     constructor(private rootElement: ElementFinder) {
         super(rootElement);
 
-        this.prevButton = Atom.findIn(ButtonAtom, rootElement.element(by.className("prev")));
-        this.nextButton = Atom.findIn(ButtonAtom, rootElement.element(by.className("next")));
-        this.undoButton = Atom.findIn(ButtonAtom, rootElement.element(by.className("undo")));
-        this.clearButton = Atom.findIn(ButtonAtom, rootElement.element(by.className("clear")));
-        this.popover = Atom.findIn(PopoverAtom, rootElement.element(by.className("picker-label")));
+        this.prevButton = Atom.findIn(
+            ButtonAtom,
+            rootElement.element(by.className("prev"))
+        );
+        this.nextButton = Atom.findIn(
+            ButtonAtom,
+            rootElement.element(by.className("next"))
+        );
+        this.undoButton = Atom.findIn(
+            ButtonAtom,
+            rootElement.element(by.className("undo"))
+        );
+        this.clearButton = Atom.findIn(
+            ButtonAtom,
+            rootElement.element(by.className("clear"))
+        );
+        this.popover = Atom.findIn(
+            PopoverAtom,
+            rootElement.element(by.className("picker-label"))
+        );
         this.popoverBody = this.popover.getPopoverBody();
         this.quickPicker = Atom.findIn(QuickPickerAtom, this.popoverBody);
-        this.timeFramePicker = Atom.findIn(TimeFramePickerAtom, this.popoverBody);
-        this.timeFramePickerCancelButton = Atom.findIn(ButtonAtom, this.popoverBody.element(by.className("cancel")));
-        this.timeFramePickerUseButton = Atom.findIn(ButtonAtom, this.popoverBody.element(by.className("use")));
+        this.timeFramePicker = Atom.findIn(
+            TimeFramePickerAtom,
+            this.popoverBody
+        );
+        this.timeFramePickerCancelButton = Atom.findIn(
+            ButtonAtom,
+            this.popoverBody.element(by.className("cancel"))
+        );
+        this.timeFramePickerUseButton = Atom.findIn(
+            ButtonAtom,
+            this.popoverBody.element(by.className("use"))
+        );
     }
 
     public async quickPickPreset(presetTitle: string): Promise<void> {
@@ -51,10 +75,18 @@ export class TimeFrameBarAtom extends Atom {
 
         await this.popover.open();
 
-        const startDate = this.timeFramePicker.getStartDatetimePicker().getDatePicker();
-        const startTime = this.timeFramePicker.getStartDatetimePicker().getTimePicker();
-        const endDate = this.timeFramePicker.getEndDatetimePicker().getDatePicker();
-        const endTime = this.timeFramePicker.getEndDatetimePicker().getTimePicker();
+        const startDate = this.timeFramePicker
+            .getStartDatetimePicker()
+            .getDatePicker();
+        const startTime = this.timeFramePicker
+            .getStartDatetimePicker()
+            .getTimePicker();
+        const endDate = this.timeFramePicker
+            .getEndDatetimePicker()
+            .getDatePicker();
+        const endTime = this.timeFramePicker
+            .getEndDatetimePicker()
+            .getTimePicker();
 
         await startDate.clearText();
         await startDate.acceptText(start.format(date));

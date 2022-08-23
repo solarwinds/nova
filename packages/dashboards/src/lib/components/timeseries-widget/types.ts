@@ -37,7 +37,8 @@ export interface ITimeseriesWidgetSeriesData {
     [key: string]: any;
 }
 
-export interface ITimeseriesWidgetStatusData extends ITimeseriesWidgetSeriesData {
+export interface ITimeseriesWidgetStatusData
+    extends ITimeseriesWidgetSeriesData {
     thick?: boolean;
     color?: string;
     icon?: string;

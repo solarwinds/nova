@@ -1,5 +1,4 @@
 import { ILineRendererConfig } from "../types";
-
 import { LineRenderer } from "./line-renderer";
 
 /** Standard line renderer config for visualizing missing data */

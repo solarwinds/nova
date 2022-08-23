@@ -1,5 +1,20 @@
-import { ConnectedPosition, FlexibleConnectedPositionStrategy, Overlay, OverlayConfig, ScrollDispatcher } from "@angular/cdk/overlay";
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import {
+    ConnectedPosition,
+    FlexibleConnectedPositionStrategy,
+    Overlay,
+    OverlayConfig,
+    ScrollDispatcher,
+} from "@angular/cdk/overlay";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    NgZone,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+} from "@angular/core";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { skip, take, takeUntil } from "rxjs/operators";
 
@@ -22,17 +37,20 @@ const ANIMATION_DELAY = 200; // ms
     host: {
         "(body:click)": "this._handleBodyInteraction()",
         "aria-hidden": "true",
-        "role": "tooltip",
+        role: "tooltip",
     },
     template: `
-        <nui-overlay [toggleReference]="toggleReference.nativeElement"
+        <nui-overlay
+            [toggleReference]="toggleReference.nativeElement"
             [overlayConfig]="overlayConfig"
-            >
-            <div class="nui-tooltip-body with-nui-overlay nui-text-small"
+        >
+            <div
+                class="nui-tooltip-body with-nui-overlay nui-text-small"
                 [@fadeIn]="_visibility"
                 (@fadeIn.start)="_animationStart()"
-                (@fadeIn.done)="_animationDone($event)">
-                {{message}}
+                (@fadeIn.done)="_animationDone($event)"
+            >
+                {{ message }}
             </div>
         </nui-overlay>
     `,
@@ -46,12 +64,12 @@ export class TooltipComponent implements OnDestroy, OnInit {
     public set message(value: string) {
         this._message = value;
         this._markForCheck();
-        this.ngZone.onMicrotaskEmpty.asObservable().pipe(
-            take(1),
-            takeUntil(this.destroy$)
-        ).subscribe(() => {
-            this.overlayComponent?.getOverlayRef()?.updatePosition();
-        });
+        this.ngZone.onMicrotaskEmpty
+            .asObservable()
+            .pipe(take(1), takeUntil(this.destroy$))
+            .subscribe(() => {
+                this.overlayComponent?.getOverlayRef()?.updatePosition();
+            });
     }
 
     private _message: string;
@@ -74,11 +92,12 @@ export class TooltipComponent implements OnDestroy, OnInit {
     private destroy$ = new Subject();
     private hiding$ = new BehaviorSubject<boolean>(false);
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef,
+    constructor(
+        private _changeDetectorRef: ChangeDetectorRef,
         private scrollDispatcher: ScrollDispatcher,
         private ngZone: NgZone,
-        protected overlay: Overlay) {
-    }
+        protected overlay: Overlay
+    ) {}
 
     public ngOnInit() {
         this.updatePopupOverlayConfig();
@@ -86,7 +105,9 @@ export class TooltipComponent implements OnDestroy, OnInit {
 
     public updatePossiblePositions(positions: ConnectedPosition[]) {
         this.possiblePositions = positions;
-        const positionStrategy = this.overlayComponent.getOverlayRef().getConfig().positionStrategy as FlexibleConnectedPositionStrategy;
+        const positionStrategy = this.overlayComponent
+            .getOverlayRef()
+            .getConfig().positionStrategy as FlexibleConnectedPositionStrategy;
         positionStrategy.withPositions(this.possiblePositions);
     }
 
@@ -95,14 +116,16 @@ export class TooltipComponent implements OnDestroy, OnInit {
      */
     show(): void {
         if (this.hiding$.value) {
-            this.hiding$.pipe( // open after "hide" in case hide is already in process (animation)
-                skip(1),  // skip behavior subject 1st emit
-                take(1)
-            ).subscribe((v) => this._show());
+            this.hiding$
+                .pipe(
+                    // open after "hide" in case hide is already in process (animation)
+                    skip(1), // skip behavior subject 1st emit
+                    take(1)
+                )
+                .subscribe((v) => this._show());
         } else {
             this._show();
         }
-
     }
 
     private _show() {
@@ -188,10 +211,14 @@ export class TooltipComponent implements OnDestroy, OnInit {
 
     // this is initial overlay cfg that may me improved, didn't touch it not to break anything,- + added positions
     private updatePopupOverlayConfig() {
-        const scrollableAncestors = this.scrollDispatcher.getAncestorScrollContainers(this.toggleReference);
+        const scrollableAncestors =
+            this.scrollDispatcher.getAncestorScrollContainers(
+                this.toggleReference
+            );
 
         // Create connected position strategy that listens for scroll events to reposition.
-        const strategy = this.overlay.position()
+        const strategy = this.overlay
+            .position()
             .flexibleConnectedTo(this.toggleReference)
             .withTransformOriginOn(".nui-tooltip")
             .withFlexibleDimensions(false)
@@ -199,17 +226,24 @@ export class TooltipComponent implements OnDestroy, OnInit {
             .withScrollableContainers(scrollableAncestors)
             .withPositions(this.possiblePositions);
 
-        strategy.positionChanges.pipe(skip(1), takeUntil(this.destroy$)).subscribe(change => {
-            if (change.scrollableViewProperties.isOverlayClipped && this.isVisible()) {
-                // After position changes occur and the overlay is clipped by
-                // a parent scrollable then close the tooltip.
-                this.ngZone.run(() => this.hide());
-            }
-        });
+        strategy.positionChanges
+            .pipe(skip(1), takeUntil(this.destroy$))
+            .subscribe((change) => {
+                if (
+                    change.scrollableViewProperties.isOverlayClipped &&
+                    this.isVisible()
+                ) {
+                    // After position changes occur and the overlay is clipped by
+                    // a parent scrollable then close the tooltip.
+                    this.ngZone.run(() => this.hide());
+                }
+            });
         this.overlayConfig = {
             positionStrategy: strategy,
             panelClass: TOOLTIP_PANEL_CLASS,
-            scrollStrategy: this.overlay.scrollStrategies.reposition({autoClose: true}),
+            scrollStrategy: this.overlay.scrollStrategies.reposition({
+                autoClose: true,
+            }),
         };
         this._markForCheck();
     }

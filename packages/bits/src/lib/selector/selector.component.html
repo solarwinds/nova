@@ -1,35 +1,44 @@
 <div class="btn-group" #toggleButton>
-    <button nui-button
-            type="button"
-            role="checkbox"
-            [attr.aria-checked]="checkboxChecked"
-            class="nui-selector__checkbox-button"
-            [displayStyle]="'default'"
-            (click)="handleSelectorClick($event)">
+    <button
+        nui-button
+        type="button"
+        role="checkbox"
+        [attr.aria-checked]="checkboxChecked"
+        class="nui-selector__checkbox-button"
+        [displayStyle]="'default'"
+        (click)="handleSelectorClick($event)"
+    >
         <div class="nui-selector__checkbox-container">
-            <nui-checkbox #checkbox
-                          [checked]="checkboxChecked"
-                          [indeterminate]="indeterminate">
+            <nui-checkbox
+                #checkbox
+                [checked]="checkboxChecked"
+                [indeterminate]="indeterminate"
+            >
             </nui-checkbox>
         </div>
     </button>
-    <button nui-button *ngIf="items?.length"
-            type="button"
-            class="nui-selector__toggle"
-            ariaLabel="Open Selector Menu"
-            [displayStyle]="'default'"
-            [icon]="'caret-down'"
-            (click)="overlay.toggle()"
-            >
-    </button>
+    <button
+        nui-button
+        *ngIf="items?.length"
+        type="button"
+        class="nui-selector__toggle"
+        ariaLabel="Open Selector Menu"
+        [displayStyle]="'default'"
+        [icon]="'caret-down'"
+        (click)="overlay.toggle()"
+    ></button>
 </div>
 
 <div #popupArea></div>
 
-<nui-overlay #overlay
-             [toggleReference]="toggleButton"
-             [overlayConfig]="overlayConfig"
-             [customContainer]="customContainer">
-    <nui-menu-popup [itemsSource]="items" (menuItemClicked)="handleItemClick($event)"></nui-menu-popup>
+<nui-overlay
+    #overlay
+    [toggleReference]="toggleButton"
+    [overlayConfig]="overlayConfig"
+    [customContainer]="customContainer"
+>
+    <nui-menu-popup
+        [itemsSource]="items"
+        (menuItemClicked)="handleItemClick($event)"
+    ></nui-menu-popup>
 </nui-overlay>
-

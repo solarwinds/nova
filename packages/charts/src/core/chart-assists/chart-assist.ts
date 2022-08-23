@@ -1,8 +1,8 @@
 import each from "lodash/each";
 import keyBy from "lodash/keyBy";
 import values from "lodash/values";
-import {Observable, of, Subject, Subscription} from "rxjs";
-import {filter, map, switchMap, takeUntil} from "rxjs/operators";
+import { Observable, of, Subject, Subscription } from "rxjs";
+import { filter, map, switchMap, takeUntil } from "rxjs/operators";
 
 import {
     DESTROY_EVENT,
@@ -10,9 +10,12 @@ import {
     INTERACTION_DATA_POINTS_EVENT,
     MOUSE_ACTIVE_EVENT,
 } from "../../constants";
-import {RenderState} from "../../renderers/types";
-import {EventBus} from "../common/event-bus";
-import {defaultMarkerProvider, defaultPalette} from "../common/palette/default-providers";
+import { RenderState } from "../../renderers/types";
+import { EventBus } from "../common/event-bus";
+import {
+    defaultMarkerProvider,
+    defaultPalette,
+} from "../common/palette/default-providers";
 import {
     IAccessors,
     IChart,
@@ -28,7 +31,6 @@ import {
     IRenderStateData,
     IValueProvider,
 } from "../common/types";
-
 import {
     ChartAssistEventType,
     ChartAssistRenderStateData,
@@ -42,7 +44,6 @@ import {
  * It will use the most common settings.
  */
 export class ChartAssist<T = IAccessors> implements IChartAssist {
-
     /**
      * Retrieves the display value for a data point on the specified series
      *
@@ -54,20 +55,33 @@ export class ChartAssist<T = IAccessors> implements IChartAssist {
      *
      * @returns The display value for a data point
      */
-    public static getLabel(chartSeries: IChartSeries<IAccessors>, dataPoint: any, scaleKey: string, formatterName?: string, dataAccessorKey?: string): any {
+    public static getLabel(
+        chartSeries: IChartSeries<IAccessors>,
+        dataPoint: any,
+        scaleKey: string,
+        formatterName?: string,
+        dataAccessorKey?: string
+    ): any {
         if (!dataPoint || chartSeries.data.length === 0) {
             return null;
         }
 
-        const valueAccessor = chartSeries.accessors.data?.[dataAccessorKey || scaleKey];
+        const valueAccessor =
+            chartSeries.accessors.data?.[dataAccessorKey || scaleKey];
         if (!valueAccessor) {
             return null;
         }
 
-        const adjustedIndex = dataPoint.index < 0 ? chartSeries.data.length - 1 : dataPoint.index;
+        const adjustedIndex =
+            dataPoint.index < 0 ? chartSeries.data.length - 1 : dataPoint.index;
         const data = chartSeries.data[adjustedIndex];
 
-        const rawValue = valueAccessor(data, adjustedIndex, chartSeries.data, chartSeries);
+        const rawValue = valueAccessor(
+            data,
+            adjustedIndex,
+            chartSeries.data,
+            chartSeries
+        );
         const scale = chartSeries.scales[scaleKey];
         if (!scale || !formatterName) {
             return rawValue;
@@ -93,16 +107,22 @@ export class ChartAssist<T = IAccessors> implements IChartAssist {
     public chartAssistSubject = new Subject<IChartAssistEvent>();
 
     private syncHandlerMap: Record<ChartAssistEventType, any>;
-    private getVisibleSeriesWithLegendBackup: () => IChartAssistSeries<IAccessors<any>>[];
+    private getVisibleSeriesWithLegendBackup: () => IChartAssistSeries<
+        IAccessors<any>
+    >[];
     private syncSubscription: Subscription;
     private legendInteractionAssist: LegendInteractionAssist;
 
     public onEvent: (event: IChartEvent) => void;
 
-    constructor(public chart: IChart,
-                seriesProcessor?: (series: IChartAssistSeries<T>[]) => IChartAssistSeries<T>[],
-                public palette: IChartPalette = defaultPalette(),
-                public markers: IValueProvider<IChartMarker> = defaultMarkerProvider()) {
+    constructor(
+        public chart: IChart,
+        seriesProcessor?: (
+            series: IChartAssistSeries<T>[]
+        ) => IChartAssistSeries<T>[],
+        public palette: IChartPalette = defaultPalette(),
+        public markers: IValueProvider<IChartMarker> = defaultMarkerProvider()
+    ) {
         this.configureChartEventSubscriptions(chart.getEventBus());
         if (seriesProcessor) {
             this.seriesProcessor = seriesProcessor;
@@ -128,45 +148,71 @@ export class ChartAssist<T = IAccessors> implements IChartAssist {
      * otherwise it'll return null
      * @param chartSeries
      */
-    public legendLabelData$(chartSeries: IChartSeries<IAccessors>): Observable<any> {
-        const seriesHighlight$ = this.chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).asObservable()
+    public legendLabelData$(
+        chartSeries: IChartSeries<IAccessors>
+    ): Observable<any> {
+        const seriesHighlight$ = this.chart
+            .getEventBus()
+            .getStream(INTERACTION_DATA_POINTS_EVENT)
+            .asObservable()
             .pipe(
-                filter(event => event.data.interactionType === InteractionType.MouseMove),
-                map(event => event.data.dataPoints[chartSeries.id])
+                filter(
+                    (event) =>
+                        event.data.interactionType === InteractionType.MouseMove
+                ),
+                map((event) => event.data.dataPoints[chartSeries.id])
             );
 
         // if there is no highlightData, or index is "-1", we'll show the last value from series (if possible)
-        const highlightDataPresentPredicate = (highlightData: any) => highlightData && highlightData.index >= 0;
+        const highlightDataPresentPredicate = (highlightData: any) =>
+            highlightData && highlightData.index >= 0;
 
-        return seriesHighlight$
-            .pipe(
-                switchMap(highlightData => highlightDataPresentPredicate(highlightData)
+        return seriesHighlight$.pipe(
+            switchMap((highlightData) =>
+                highlightDataPresentPredicate(highlightData)
                     ? of(highlightData.data)
-                    : of((chartSeries.data && chartSeries.data.length) ? chartSeries.data[chartSeries.data.length - 1] : null))
-            );
+                    : of(
+                          chartSeries.data && chartSeries.data.length
+                              ? chartSeries.data[chartSeries.data.length - 1]
+                              : null
+                      )
+            )
+        );
     }
 
-    public seriesProcessor(series: IChartAssistSeries<IAccessors>[]): IChartAssistSeries<IAccessors>[] {
+    public seriesProcessor(
+        series: IChartAssistSeries<IAccessors>[]
+    ): IChartAssistSeries<IAccessors>[] {
         return series;
     }
 
-    public update(inputSeriesSet: IChartAssistSeries<IAccessors>[], updateLegend = true): void {
+    public update(
+        inputSeriesSet: IChartAssistSeries<IAccessors>[],
+        updateLegend = true
+    ): void {
         this.inputSeriesSet = inputSeriesSet;
 
-        const processedSeriesSet = this.seriesProcessor(inputSeriesSet.map(series => ({
-            ...series,
-            data: series.data || [],
-        })));
+        const processedSeriesSet = this.seriesProcessor(
+            inputSeriesSet.map((series) => ({
+                ...series,
+                data: series.data || [],
+            }))
+        );
 
-        this.legendSeriesSet = processedSeriesSet.filter(s => s.showInLegend || typeof s.showInLegend === "undefined");
+        this.legendSeriesSet = processedSeriesSet.filter(
+            (s) => s.showInLegend || typeof s.showInLegend === "undefined"
+        );
 
         if (updateLegend) {
             this.legendInteractionAssist.update(processedSeriesSet);
         }
         // add render states to the series for use in the chart
-        const seriesSet = processedSeriesSet.map(s => Object.assign(
-            { renderState: this.renderStatesIndex[s.id]?.state },
-            s));
+        const seriesSet = processedSeriesSet.map((s) =>
+            Object.assign(
+                { renderState: this.renderStatesIndex[s.id]?.state },
+                s
+            )
+        );
 
         this.chart.update(seriesSet);
 
@@ -177,8 +223,11 @@ export class ChartAssist<T = IAccessors> implements IChartAssist {
         this.legendInteractionAssist.setGroupVisibility(seriesId, visible);
 
         this.update(this.inputSeriesSet, false);
-        this.chartAssistSubject.next({ type: ChartAssistEventType.ToggleSeries, payload: { seriesId, visible } });
-    }
+        this.chartAssistSubject.next({
+            type: ChartAssistEventType.ToggleSeries,
+            payload: { seriesId, visible },
+        });
+    };
 
     /**
      * Resets all visible series to default state
@@ -187,8 +236,11 @@ export class ChartAssist<T = IAccessors> implements IChartAssist {
         this.legendInteractionAssist.resetSeries();
 
         this.publishRenderStates();
-        this.chartAssistSubject.next({ type: ChartAssistEventType.ResetVisibleSeries, payload: {} });
-    }
+        this.chartAssistSubject.next({
+            type: ChartAssistEventType.ResetVisibleSeries,
+            payload: {},
+        });
+    };
 
     /**
      * For series that are currently visible, emphasize the given series and deemphasizes all the other ones
@@ -199,42 +251,56 @@ export class ChartAssist<T = IAccessors> implements IChartAssist {
         this.legendInteractionAssist.emphasizeSeries(seriesId);
 
         this.publishRenderStates();
-        this.chartAssistSubject.next({ type: ChartAssistEventType.EmphasizeSeries, payload: { seriesId } });
-    }
+        this.chartAssistSubject.next({
+            type: ChartAssistEventType.EmphasizeSeries,
+            payload: { seriesId },
+        });
+    };
 
     public isSeriesHidden(seriesId: string): boolean {
         return this.legendInteractionAssist.isSeriesHidden(seriesId);
     }
 
-    public seriesTrackByFn(index: number, item: IChartAssistSeries<IAccessors>): string {
+    public seriesTrackByFn(
+        index: number,
+        item: IChartAssistSeries<IAccessors>
+    ): string {
         return item.id;
     }
 
     /**
-    * Retrieves the display value for the highlighted data point on the specified series
-    *
-    * @param chartSeries The series containing the highlighted data point to get a label for
-    * @param scaleKey The key for the scale potentially containing a formatter that can be used to format the label
-    * @param formatterName The name of the formatter to use for formatting the label
-    * @param dataAccessorKey The accessor key to use for accessing the data value if the accessor key differs from the scale key
-    *
-    * @returns The display value for the highlighted data point
-    */
-    public getHighlightedValue(chartSeries: IChartSeries<IAccessors>,
-                               scaleKey: string,
-                               formatterName?: string,
-                               dataAccessorKey?: string): string | number | undefined {
-
+     * Retrieves the display value for the highlighted data point on the specified series
+     *
+     * @param chartSeries The series containing the highlighted data point to get a label for
+     * @param scaleKey The key for the scale potentially containing a formatter that can be used to format the label
+     * @param formatterName The name of the formatter to use for formatting the label
+     * @param dataAccessorKey The accessor key to use for accessing the data value if the accessor key differs from the scale key
+     *
+     * @returns The display value for the highlighted data point
+     */
+    public getHighlightedValue(
+        chartSeries: IChartSeries<IAccessors>,
+        scaleKey: string,
+        formatterName?: string,
+        dataAccessorKey?: string
+    ): string | number | undefined {
         if (!this.highlightedDataPoints) {
             return undefined;
         }
 
         const dataPoint = this.highlightedDataPoints[chartSeries.id];
-        return ChartAssist.getLabel(chartSeries, dataPoint, scaleKey, formatterName, dataAccessorKey);
+        return ChartAssist.getLabel(
+            chartSeries,
+            dataPoint,
+            scaleKey,
+            formatterName,
+            dataAccessorKey
+        );
     }
 
-    public getVisibleSeriesWithLegend = (): IChartAssistSeries<IAccessors<any>>[] =>
-        this.legendSeriesSet.filter(s => !this.isSeriesHidden(s.id))
+    public getVisibleSeriesWithLegend = (): IChartAssistSeries<
+        IAccessors<any>
+    >[] => this.legendSeriesSet.filter((s) => !this.isSeriesHidden(s.id));
 
     /**
      * Synchronize this chart assist's actions with IChartAssistEvents emitted by the specified
@@ -248,14 +314,21 @@ export class ChartAssist<T = IAccessors> implements IChartAssist {
      */
     public syncWithChartAssist(chartAssist: ChartAssist): void {
         this.getVisibleSeriesWithLegendBackup = this.getVisibleSeriesWithLegend;
-        this.getVisibleSeriesWithLegend = chartAssist.getVisibleSeriesWithLegend;
+        this.getVisibleSeriesWithLegend =
+            chartAssist.getVisibleSeriesWithLegend;
 
-        this.syncSubscription = chartAssist.chartAssistSubject.pipe(
-            takeUntil(chartAssist.chart.getEventBus().getStream(DESTROY_EVENT))
-        ).subscribe((event: IChartAssistEvent) => {
-            const args = Object.keys(event.payload).map(key => event.payload[key]);
-            this.syncHandlerMap[event.type](...args);
-        });
+        this.syncSubscription = chartAssist.chartAssistSubject
+            .pipe(
+                takeUntil(
+                    chartAssist.chart.getEventBus().getStream(DESTROY_EVENT)
+                )
+            )
+            .subscribe((event: IChartAssistEvent) => {
+                const args = Object.keys(event.payload).map(
+                    (key) => event.payload[key]
+                );
+                this.syncHandlerMap[event.type](...args);
+            });
     }
 
     /**
@@ -272,11 +345,18 @@ export class ChartAssist<T = IAccessors> implements IChartAssist {
         }
     }
 
-    private configureChartEventSubscriptions(eventBus: EventBus<IChartEvent>): void {
+    private configureChartEventSubscriptions(
+        eventBus: EventBus<IChartEvent>
+    ): void {
         const eventHandlers: { [eventName: string]: (data?: any) => void } = {
-            [INTERACTION_DATA_POINTS_EVENT]: (data: IInteractionDataPointsEvent) => {
+            [INTERACTION_DATA_POINTS_EVENT]: (
+                data: IInteractionDataPointsEvent
+            ) => {
                 if (data.interactionType === InteractionType.MouseMove) {
-                    this.highlightedDataPoints = Object.assign({}, data.dataPoints);
+                    this.highlightedDataPoints = Object.assign(
+                        {},
+                        data.dataPoints
+                    );
                 }
             },
             [HIGHLIGHT_SERIES_EVENT]: (data: IDataPoint) => {
@@ -291,7 +371,7 @@ export class ChartAssist<T = IAccessors> implements IChartAssist {
             },
         };
 
-        each(Object.keys(eventHandlers), key => {
+        each(Object.keys(eventHandlers), (key) => {
             eventBus.getStream(key).subscribe((event) => {
                 eventHandlers[key](event.data);
                 if (this.onEvent) {
@@ -302,33 +382,36 @@ export class ChartAssist<T = IAccessors> implements IChartAssist {
     }
 
     private publishRenderStates(): void {
-        this.chart.setSeriesStates(this.legendInteractionAssist.getSeriesStates());
+        this.chart.setSeriesStates(
+            this.legendInteractionAssist.getSeriesStates()
+        );
     }
 }
 
 export class LegendInteractionAssist {
-
     private seriesGroups: Record<string, string[]> = {};
     private seriesIndex: Record<string, IChartAssistSeries<IAccessors>>;
 
     public renderStatesIndex: IRenderStatesIndex = {};
 
-    constructor(private chartAssist: ChartAssist) {
-    }
+    constructor(private chartAssist: ChartAssist) {}
 
     public update(seriesSet: IChartAssistSeries<IAccessors>[]): void {
         this.seriesGroups = this.getSeriesGroups(seriesSet);
-        this.seriesIndex = keyBy(seriesSet, s => s.id);
+        this.seriesIndex = keyBy(seriesSet, (s) => s.id);
 
         this.resetSeries();
 
         // override render states
-        for (const series of seriesSet.filter(s => s.renderState)) {
-            this.renderStatesIndex[series.id] =
-                new ChartAssistRenderStateData(series.id,
-                                               series,
-                                               series.renderState === RenderState.hidden ? RenderState.default : series.renderState,
-                                               series.renderState !== RenderState.hidden);
+        for (const series of seriesSet.filter((s) => s.renderState)) {
+            this.renderStatesIndex[series.id] = new ChartAssistRenderStateData(
+                series.id,
+                series,
+                series.renderState === RenderState.hidden
+                    ? RenderState.default
+                    : series.renderState,
+                series.renderState !== RenderState.hidden
+            );
         }
     }
 
@@ -346,7 +429,8 @@ export class LegendInteractionAssist {
 
         for (const s of seriesSet) {
             const separatorIndex = s.id.indexOf("__");
-            const parentId = (separatorIndex >= 0) ? s.id.substring(0, separatorIndex) : s.id;
+            const parentId =
+                separatorIndex >= 0 ? s.id.substring(0, separatorIndex) : s.id;
 
             if (!seriesGroups[parentId]) {
                 seriesGroups[parentId] = [];
@@ -387,7 +471,12 @@ export class LegendInteractionAssist {
 
     public emphasizeSeries(seriesId: string): void {
         for (const group of Object.keys(this.seriesGroups)) {
-            this.setGroupState(group, group === seriesId ? RenderState.emphasized : RenderState.deemphasized);
+            this.setGroupState(
+                group,
+                group === seriesId
+                    ? RenderState.emphasized
+                    : RenderState.deemphasized
+            );
         }
     }
 
@@ -409,7 +498,11 @@ export class LegendInteractionAssist {
         if (renderState) {
             renderState.emphasisState = state;
         } else {
-            renderState = new ChartAssistRenderStateData(seriesId, this.seriesIndex[seriesId], state);
+            renderState = new ChartAssistRenderStateData(
+                seriesId,
+                this.seriesIndex[seriesId],
+                state
+            );
             this.renderStatesIndex[seriesId] = renderState;
         }
     }
@@ -419,9 +512,13 @@ export class LegendInteractionAssist {
         if (renderState) {
             renderState.visible = visible;
         } else {
-            renderState = new ChartAssistRenderStateData(seriesId, this.seriesIndex[seriesId], RenderState.default, visible);
+            renderState = new ChartAssistRenderStateData(
+                seriesId,
+                this.seriesIndex[seriesId],
+                RenderState.default,
+                visible
+            );
             this.renderStatesIndex[seriesId] = renderState;
         }
     }
-
 }

@@ -1,4 +1,5 @@
 import { browser } from "protractor";
+
 import { assertA11y, Helpers } from "../../helpers";
 import { TableAtom } from "../public_api";
 

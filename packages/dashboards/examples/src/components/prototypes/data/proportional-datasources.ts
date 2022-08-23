@@ -1,17 +1,28 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable, OnDestroy } from "@angular/core";
-import { DataSourceService, IDataSource, IFilteringOutputs } from "@nova-ui/bits";
-import { IConfigurable, IProperties } from "@nova-ui/dashboards";
 import { BehaviorSubject, Subject } from "rxjs";
 import { finalize } from "rxjs/operators";
 
-import { getFixedProportionalWidgetData, getRandomProportionalWidgetData, IProportionalWidgetData } from "./widget-data";
+import {
+    DataSourceService,
+    IDataSource,
+    IFilteringOutputs,
+} from "@nova-ui/bits";
+import { IConfigurable, IProperties } from "@nova-ui/dashboards";
+
+import {
+    getFixedProportionalWidgetData,
+    getRandomProportionalWidgetData,
+    IProportionalWidgetData,
+} from "./widget-data";
 
 const EUROPEAN_CITIES = ["London", "Paris", "Brno", "Kyiv", "Lisbon"];
 
 @Injectable()
-export class AcmeProportionalDataSource extends DataSourceService<IProportionalWidgetData>
-    implements IDataSource<IProportionalWidgetData>, OnDestroy, IConfigurable {
+export class AcmeProportionalDataSource
+    extends DataSourceService<IProportionalWidgetData>
+    implements IDataSource<IProportionalWidgetData>, OnDestroy, IConfigurable
+{
     public static providerId = "AcmeProportionalDataSource";
     public static mockError = false;
 
@@ -29,11 +40,15 @@ export class AcmeProportionalDataSource extends DataSourceService<IProportionalW
         this.busy.next(true);
 
         if (!AcmeProportionalDataSource.mockError) {
-            const citiesToInclude = this.properties.isEuropeOnly ? [EUROPEAN_CITIES] : [];
+            const citiesToInclude = this.properties.isEuropeOnly
+                ? [EUROPEAN_CITIES]
+                : [];
             return new Promise((resolve) => {
                 setTimeout(() => {
                     resolve({
-                        result: getRandomProportionalWidgetData(...citiesToInclude),
+                        result: getRandomProportionalWidgetData(
+                            ...citiesToInclude
+                        ),
                     });
                     this.busy.next(false);
                 }, 1000);
@@ -41,10 +56,15 @@ export class AcmeProportionalDataSource extends DataSourceService<IProportionalW
         } else {
             // generate a 404
             return new Promise((resolve) => {
-                this.http.get("http://www.mocky.io/v2/5ec6bfd93200007800d75100?mocky-delay=1000ms")
-                    .pipe(finalize(() => {
-                        this.busy.next(false);
-                    }))
+                this.http
+                    .get(
+                        "http://www.mocky.io/v2/5ec6bfd93200007800d75100?mocky-delay=1000ms"
+                    )
+                    .pipe(
+                        finalize(() => {
+                            this.busy.next(false);
+                        })
+                    )
                     .subscribe({
                         error: (error: HttpErrorResponse) => {
                             resolve({
@@ -69,8 +89,10 @@ export class AcmeProportionalDataSource extends DataSourceService<IProportionalW
 }
 
 @Injectable()
-export class AcmeProportionalDataSource2 extends DataSourceService<IProportionalWidgetData>
-    implements IDataSource<IProportionalWidgetData>, OnDestroy, IConfigurable {
+export class AcmeProportionalDataSource2
+    extends DataSourceService<IProportionalWidgetData>
+    implements IDataSource<IProportionalWidgetData>, OnDestroy, IConfigurable
+{
     public static providerId = "AcmeProportionalDataSource2";
     public busy = new BehaviorSubject(false);
 
@@ -81,8 +103,10 @@ export class AcmeProportionalDataSource2 extends DataSourceService<IProportional
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(false);
 
-        const citiesToInclude = this.properties.isEuropeOnly ? [EUROPEAN_CITIES] : [];
-        return new Promise(resolve => {
+        const citiesToInclude = this.properties.isEuropeOnly
+            ? [EUROPEAN_CITIES]
+            : [];
+        return new Promise((resolve) => {
             setTimeout(() => {
                 resolve({
                     result: getFixedProportionalWidgetData(...citiesToInclude),

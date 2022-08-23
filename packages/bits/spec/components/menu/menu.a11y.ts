@@ -1,10 +1,11 @@
 import { browser, by, element } from "protractor";
+
 import { assertA11y, Helpers } from "../../helpers";
 import { MenuAtom } from "../public_api";
 
 describe("a11y: menu", () => {
     let menuBasic: MenuAtom;
-    let rulesToDisable: string[] = [
+    const rulesToDisable: string[] = [
         "color-contrast", // NUI-6014
         "scrollable-region-focusable", // NUI-5935, NUI-6007
     ];
@@ -12,7 +13,9 @@ describe("a11y: menu", () => {
     beforeAll(async () => {
         await Helpers.prepareBrowser("menu/menu-visual-test");
 
-        menuBasic = new MenuAtom(element(by.id("nui-demo-basic-menu-with-icon")));
+        menuBasic = new MenuAtom(
+            element(by.id("nui-demo-basic-menu-with-icon"))
+        );
     });
 
     it("should check a11y of menu", async () => {

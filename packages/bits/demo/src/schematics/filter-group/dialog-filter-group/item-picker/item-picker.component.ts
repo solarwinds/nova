@@ -7,6 +7,7 @@ import {
     OnInit,
     Output,
 } from "@angular/core";
+
 import {
     DataSourceService,
     LocalFilteringDataSource,
@@ -24,28 +25,33 @@ export interface IItemPickerOption {
     selector: "app-item-picker-composite",
     templateUrl: "./item-picker.component.html",
     styleUrls: ["./item-picker.component.less"],
-    providers: [{
-        provide: DataSourceService,
-        useClass: LocalFilteringDataSource,
-    }],
+    providers: [
+        {
+            provide: DataSourceService,
+            useClass: LocalFilteringDataSource,
+        },
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class ItemPickerCompositeComponent implements OnInit {
     @Input() itemPickerOptions: IFilterGroupOption[];
     @Input() selectedValues: string[] = [];
 
-    @Output() selectionChanged: EventEmitter<IFilterGroupOption[]> = new EventEmitter();
+    @Output() selectionChanged: EventEmitter<IFilterGroupOption[]> =
+        new EventEmitter();
 
     public selectionMode = RepeatSelectionMode.multi;
     public selectedOptions: IFilterGroupOption[] = [];
 
-
-    constructor(@Inject(DataSourceService) public dataSource: DataSourceService<IFilterGroupOption>) {
-    }
+    constructor(
+        @Inject(DataSourceService)
+        public dataSource: DataSourceService<IFilterGroupOption>
+    ) {}
 
     ngOnInit() {
-        (this.dataSource as LocalFilteringDataSource<IFilterGroupOption>).setData(this.itemPickerOptions);
+        (
+            this.dataSource as LocalFilteringDataSource<IFilterGroupOption>
+        ).setData(this.itemPickerOptions);
         this.selectedOptions = this.getSelectedOptions();
     }
 
@@ -55,6 +61,8 @@ export class ItemPickerCompositeComponent implements OnInit {
     }
 
     public getSelectedOptions(): IFilterGroupOption[] {
-        return this.itemPickerOptions.filter(item => this.selectedValues.indexOf(item.value) !== -1);
+        return this.itemPickerOptions.filter(
+            (item) => this.selectedValues.indexOf(item.value) !== -1
+        );
     }
 }

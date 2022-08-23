@@ -16,14 +16,17 @@ import { Subject, Subscription } from "rxjs";
 import { take } from "rxjs/operators";
 
 import { fadeIn } from "../../animations/fadeIn";
-
 import { IPopoverModalContext } from "./popover-modal.service";
 import { PopoverPlacement } from "./public-api";
 
 /**
  * @ignore
  */
-export type PopoverModalEvents = "mouse-enter" | "mouse-leave" | "backdrop-click" | "outside-click";
+export type PopoverModalEvents =
+    | "mouse-enter"
+    | "mouse-leave"
+    | "backdrop-click"
+    | "outside-click";
 
 /**
  * @ignore
@@ -31,10 +34,8 @@ export type PopoverModalEvents = "mouse-enter" | "mouse-leave" | "backdrop-click
 @Component({
     selector: "nui-popover-modal",
     templateUrl: "./popover-modal.component.html",
-    animations: [
-        fadeIn,
-    ],
-    host: { "role": "dialog" },
+    animations: [fadeIn],
+    host: { role: "dialog" },
 })
 export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
     /**
@@ -95,28 +96,34 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
         this.popoverModalEventSubject.next("mouse-leave");
     }
 
-    constructor(public elRef: ElementRef,
-                private zone: NgZone,
-                private cdRef: ChangeDetectorRef) { }
+    constructor(
+        public elRef: ElementRef,
+        private zone: NgZone,
+        private cdRef: ChangeDetectorRef
+    ) {}
 
     ngOnInit() {
-        const displayChangeSubscription = this.displayChange.subscribe((show: boolean) => {
-            if (!show) {
-                this.popoverBeforeHiddenSubject.next();
-                this.fadeIn = false;
-                this.cdRef.markForCheck();
+        const displayChangeSubscription = this.displayChange.subscribe(
+            (show: boolean) => {
+                if (!show) {
+                    this.popoverBeforeHiddenSubject.next();
+                    this.fadeIn = false;
+                    this.cdRef.markForCheck();
+                }
             }
-        });
+        );
 
         this.popoverModalSubscriptions.push(displayChangeSubscription);
     }
 
     ngAfterViewInit() {
         // To prevent from exception 'expression was changed after check'
-        const zoneSubscription = this.zone.onStable.asObservable().pipe(take(1))
+        const zoneSubscription = this.zone.onStable
+            .asObservable()
+            .pipe(take(1))
             .subscribe(() => {
                 // To be sure, that change detection mechanism was invoked and placement was updated
-                this.zone.run(() => this.fadeIn = true);
+                this.zone.run(() => (this.fadeIn = true));
             });
         this.popoverModalSubscriptions.push(zoneSubscription);
     }
@@ -128,7 +135,7 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.popoverModalSubscriptions.forEach(sub => {
+        this.popoverModalSubscriptions.forEach((sub) => {
             sub.unsubscribe();
         });
     }

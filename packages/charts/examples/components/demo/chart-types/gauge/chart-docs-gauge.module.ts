@@ -2,6 +2,7 @@
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
+
 import {
     DEMO_PATH_TOKEN,
     NuiCheckboxModule,
@@ -16,23 +17,22 @@ import {
 import { NuiChartsModule } from "@nova-ui/charts";
 
 import { DemoCommonModule } from "../../common/demo-common.module";
-
 import { ChartDocsGaugeComponent } from "./chart-docs-gauge.component";
-import { GaugeVisualTestComponent } from "./visual-test/gauge-visual-test.component";
-import { HorizontalGaugeTesterComponent } from "./visual-test/horizontal/horizontal-gauge-tester.component";
-import { DonutGaugeTesterComponent } from "./visual-test/donut/donut-gauge-tester.component";
-import { VerticalGaugeTesterComponent } from "./visual-test/vertical/vertical-gauge-tester.component";
 import { DonutGaugeBasicExampleComponent } from "./donut/donut-basic/donut-gauge-basic.example.component";
 import { DonutGaugeWithContentExampleComponent } from "./donut/donut-with-content/donut-gauge-with-content.example.component";
-import { DonutGaugeWithThresholdsExampleComponent } from "./donut/donut-with-thresholds/donut-gauge-with-thresholds.example.component";
-import { DonutGaugeWithThresholdTogglingExampleComponent } from "./donut/donut-with-threshold-toggling/donut-gauge-with-threshold-toggling.example.component";
 import { DonutGaugeWithCustomThresholdLabelsExampleComponent } from "./donut/donut-with-custom-threshold-labels/donut-gauge-with-custom-threshold-labels.example.component";
-import { HorizontalGaugeBasicExampleComponent } from "./linear/horizontal-basic/horizontal-gauge-basic.example.component";
-import { VerticalGaugeBasicExampleComponent } from "./linear/vertical-basic/vertical-gauge-basic.example.component";
-import { DonutGaugeWithoutThresholdMarkersExampleComponent } from "./donut/donut-without-threshold-markers/donut-gauge-without-threshold-markers.example.component";
 import { DonutGaugeWithThresholdMarkerTogglingExampleComponent } from "./donut/donut-with-threshold-marker-toggling/donut-gauge-with-threshold-marker-toggling.example.component";
-import { LinearGaugeWithThresholdsExampleComponent } from "./linear/linear-with-thresholds/linear-gauge-with-thresholds.example.component";
+import { DonutGaugeWithThresholdTogglingExampleComponent } from "./donut/donut-with-threshold-toggling/donut-gauge-with-threshold-toggling.example.component";
+import { DonutGaugeWithThresholdsExampleComponent } from "./donut/donut-with-thresholds/donut-gauge-with-thresholds.example.component";
+import { DonutGaugeWithoutThresholdMarkersExampleComponent } from "./donut/donut-without-threshold-markers/donut-gauge-without-threshold-markers.example.component";
+import { HorizontalGaugeBasicExampleComponent } from "./linear/horizontal-basic/horizontal-gauge-basic.example.component";
 import { LinearGaugeThicknessAdjustmentExampleComponent } from "./linear/linear-thickness-adjustment/linear-gauge-thickness-adjustment.example.component";
+import { LinearGaugeWithThresholdsExampleComponent } from "./linear/linear-with-thresholds/linear-gauge-with-thresholds.example.component";
+import { VerticalGaugeBasicExampleComponent } from "./linear/vertical-basic/vertical-gauge-basic.example.component";
+import { DonutGaugeTesterComponent } from "./visual-test/donut/donut-gauge-tester.component";
+import { GaugeVisualTestComponent } from "./visual-test/gauge-visual-test.component";
+import { HorizontalGaugeTesterComponent } from "./visual-test/horizontal/horizontal-gauge-tester.component";
+import { VerticalGaugeTesterComponent } from "./visual-test/vertical/vertical-gauge-tester.component";
 
 const exampleRoutes: Routes = [
     {
@@ -40,8 +40,8 @@ const exampleRoutes: Routes = [
         component: ChartDocsGaugeComponent,
         data: {
             showThemeSwitcher: true,
-            "srlc": {
-                "stage": SrlcStage.ga,
+            srlc: {
+                stage: SrlcStage.ga,
             },
         },
     },
@@ -49,8 +49,8 @@ const exampleRoutes: Routes = [
         path: "visual-test",
         component: GaugeVisualTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -58,8 +58,8 @@ const exampleRoutes: Routes = [
         path: "donut-basic",
         component: DonutGaugeBasicExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -67,8 +67,8 @@ const exampleRoutes: Routes = [
         path: "donut-with-content",
         component: DonutGaugeWithContentExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -76,8 +76,8 @@ const exampleRoutes: Routes = [
         path: "donut-with-custom-labels",
         component: DonutGaugeWithCustomThresholdLabelsExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -85,8 +85,8 @@ const exampleRoutes: Routes = [
         path: "donut-without-markers",
         component: DonutGaugeWithoutThresholdMarkersExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -94,8 +94,8 @@ const exampleRoutes: Routes = [
         path: "donut-with-marker-toggling",
         component: DonutGaugeWithThresholdMarkerTogglingExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -103,8 +103,8 @@ const exampleRoutes: Routes = [
         path: "donut-with-thresholds",
         component: DonutGaugeWithThresholdsExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -112,8 +112,8 @@ const exampleRoutes: Routes = [
         path: "donut-with-threshold-toggling",
         component: DonutGaugeWithThresholdTogglingExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -121,8 +121,8 @@ const exampleRoutes: Routes = [
         path: "horizontal-basic",
         component: HorizontalGaugeBasicExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -130,8 +130,8 @@ const exampleRoutes: Routes = [
         path: "vertical-basic",
         component: VerticalGaugeBasicExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -139,8 +139,8 @@ const exampleRoutes: Routes = [
         path: "linear-with-thresholds",
         component: LinearGaugeWithThresholdsExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -148,8 +148,8 @@ const exampleRoutes: Routes = [
         path: "linear-thickness",
         component: LinearGaugeWithThresholdsExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -188,8 +188,15 @@ const exampleRoutes: Routes = [
         RouterModule.forChild(exampleRoutes),
     ],
     providers: [
-        { provide: DEMO_PATH_TOKEN, useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/) },
+        {
+            provide: DEMO_PATH_TOKEN,
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
+        },
     ],
 })
-export class ChartDocsGaugeModule {
-}
+export class ChartDocsGaugeModule {}

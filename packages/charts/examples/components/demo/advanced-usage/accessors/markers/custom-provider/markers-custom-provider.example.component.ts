@@ -1,6 +1,15 @@
 import { Component, OnInit } from "@angular/core";
+
 import {
-    Chart, CHART_MARKERS, IChartSeries, ILineAccessors, LineAccessors, LinearScale, LineRenderer, SequentialChartMarkerProvider, XYGrid,
+    Chart,
+    CHART_MARKERS,
+    IChartSeries,
+    ILineAccessors,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    SequentialChartMarkerProvider,
+    XYGrid,
 } from "@nova-ui/charts";
 
 @Component({
@@ -20,16 +29,24 @@ export class RendererMarkersCustomProviderExampleComponent implements OnInit {
 
         const accessors = new LineAccessors();
         // Defining custom marker set
-        const customMarkerSet = [CHART_MARKERS[6], CHART_MARKERS[8], CHART_MARKERS[9]];
+        const customMarkerSet = [
+            CHART_MARKERS[6],
+            CHART_MARKERS[8],
+            CHART_MARKERS[9],
+        ];
         // Setting marker accessor to use new SequentialChartMarkerProvider with custom markers
-        accessors.series.marker = new SequentialChartMarkerProvider(customMarkerSet).get;
+        accessors.series.marker = new SequentialChartMarkerProvider(
+            customMarkerSet
+        ).get;
 
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
-            ...d,
-            scales,
-            renderer,
-            accessors,
-        }));
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
+            (d) => ({
+                ...d,
+                scales,
+                renderer,
+                accessors,
+            })
+        );
 
         this.chart.update(seriesSet);
     }

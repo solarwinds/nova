@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
+import moment from "moment/moment";
+
 import { HistoryStorage, ITimeframe } from "@nova-ui/bits";
-import moment, {  } from "moment/moment";
 
 @Component({
     selector: "nui-convenience-time-frame-bar-test",
@@ -34,5 +35,4 @@ export class TimeFrameBarTestComponent {
             endDatetime: this.baseDate.clone(),
         });
     }
-
 }

@@ -1,9 +1,11 @@
-import { CdkVirtualScrollViewport, VirtualScrollStrategy } from "@angular/cdk/scrolling";
+import {
+    CdkVirtualScrollViewport,
+    VirtualScrollStrategy,
+} from "@angular/cdk/scrolling";
 import { Observable, Subject } from "rxjs";
 import { distinctUntilChanged } from "rxjs/operators";
 
 export class TableVirtualScrollLinearStrategy implements VirtualScrollStrategy {
-
     private readonly indexChange = new Subject<number>();
 
     private viewport?: CdkVirtualScrollViewport;
@@ -15,7 +17,9 @@ export class TableVirtualScrollLinearStrategy implements VirtualScrollStrategy {
 
     constructor(private rowHeight: number) {
         // giving a contact point, so user can do some stuff of "scrolling" (changing the range)
-        this.scrolledIndexChange = this.indexChange.asObservable().pipe(distinctUntilChanged());
+        this.scrolledIndexChange = this.indexChange
+            .asObservable()
+            .pipe(distinctUntilChanged());
     }
 
     public attach(viewport: CdkVirtualScrollViewport): void {
@@ -39,14 +43,11 @@ export class TableVirtualScrollLinearStrategy implements VirtualScrollStrategy {
         }
     }
 
-    public onContentRendered(): void {
-    }
+    public onContentRendered(): void {}
 
-    public onRenderedOffsetChanged(): void {
-    }
+    public onRenderedOffsetChanged(): void {}
 
-    public scrollToIndex(index: number, behavior: ScrollBehavior): void {
-    }
+    public scrollToIndex(index: number, behavior: ScrollBehavior): void {}
 
     /**
      * Sets the size of the items in the virtually scrolling list.
@@ -80,7 +81,7 @@ export class TableVirtualScrollLinearStrategy implements VirtualScrollStrategy {
 
         const rowCount = this.rowCount || 0;
         const renderedRange = viewport.getRenderedRange();
-        const newRange = {...renderedRange};
+        const newRange = { ...renderedRange };
         const viewportSize = viewport.getViewportSize();
         const scrollOffset = viewport.measureScrollOffset() || 0;
         let firstVisibleIndex = scrollOffset / this.rowHeight || 0;
@@ -90,13 +91,18 @@ export class TableVirtualScrollLinearStrategy implements VirtualScrollStrategy {
         const maxVisibleItems = Math.ceil(viewportSize / this.rowHeight);
 
         // We have to recalculate the first visible index based on new data length and viewport size.
-        firstVisibleIndex = Math.max(0,
-                                     Math.min(firstVisibleIndex, rowCount - maxVisibleItems));
+        firstVisibleIndex = Math.max(
+            0,
+            Math.min(firstVisibleIndex, rowCount - maxVisibleItems)
+        );
         // We must update scroll offset to handle start/end buffers
         // Current range must also be adjusted to cover the new position (bottom of new list).
         newRange.start = Math.floor(firstVisibleIndex);
 
-        newRange.end = Math.max(0, Math.min(rowCount, newRange.start + maxVisibleItems));
+        newRange.end = Math.max(
+            0,
+            Math.min(rowCount, newRange.start + maxVisibleItems)
+        );
 
         viewport.setRenderedRange(newRange);
         this.indexChange.next(Math.floor(firstVisibleIndex));
@@ -118,7 +124,6 @@ export class TableVirtualScrollLinearStrategy implements VirtualScrollStrategy {
  * @deprecated in v11 - Use TableVirtualScrollLinearStrategy instead - Removal: NUI-5796
  */
 export class TableVirtualScrollStrategy implements VirtualScrollStrategy {
-
     private readonly indexChange = new Subject<number>();
 
     private viewport: CdkVirtualScrollViewport;
@@ -143,7 +148,9 @@ export class TableVirtualScrollStrategy implements VirtualScrollStrategy {
 
     constructor(private rowHeight: number, private headerOffset: number) {
         // giving a contact point, so user can do some stuff of "scrolling" (changing the range)
-        this.scrolledIndexChange = this.indexChange.asObservable().pipe(distinctUntilChanged());
+        this.scrolledIndexChange = this.indexChange
+            .asObservable()
+            .pipe(distinctUntilChanged());
     }
 
     public attach(viewport: CdkVirtualScrollViewport): void {
@@ -167,14 +174,11 @@ export class TableVirtualScrollStrategy implements VirtualScrollStrategy {
         }
     }
 
-    public onContentRendered(): void {
-    }
+    public onContentRendered(): void {}
 
-    public onRenderedOffsetChanged(): void {
-    }
+    public onRenderedOffsetChanged(): void {}
 
-    public scrollToIndex(index: number, behavior: ScrollBehavior): void {
-    }
+    public scrollToIndex(index: number, behavior: ScrollBehavior): void {}
 
     /**
      * Sets the size of the items in the virtually scrolling list.
@@ -203,12 +207,15 @@ export class TableVirtualScrollStrategy implements VirtualScrollStrategy {
     private updateContent(viewport: CdkVirtualScrollViewport) {
         if (viewport) {
             // Measuring the new scroll index.
-            const newIndex = Math.max(0, Math.round(viewport.measureScrollOffset() / this.rowHeight));
+            const newIndex = Math.max(
+                0,
+                Math.round(viewport.measureScrollOffset() / this.rowHeight)
+            );
 
             const start = newIndex;
             const end = newIndex + this.maxItems;
 
-            viewport.setRenderedRange({start, end});
+            viewport.setRenderedRange({ start, end });
 
             this.indexChange.next(newIndex);
         }

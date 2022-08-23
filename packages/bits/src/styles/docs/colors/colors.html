@@ -1,6 +1,6 @@
-<link rel="stylesheet" type="text/css" href="_nui-css-url_">
+<link rel="stylesheet" type="text/css" href="_nui-css-url_" />
 
-<base href="/">
+<base href="/" />
 
 <div class="nui nui-demo" ng-controller="ExampleColorsController as ctrl">
     <div class="panel-body component-demo-card">
@@ -10,28 +10,35 @@
                 <h3>{{::key}}</h3>
                 <div class="doc-color-row">
                     <div class="doc-color-swatch" ng-repeat="item in value">
-                        <div class="doc-color-swatch-block" ng-class="item.color | limitTo:1000:1"
-                             nui-clipboard="::item.color" on-clipboard-success="ctrl.onClipboardSuccess()"
-                             role="button"></div>
+                        <div
+                            class="doc-color-swatch-block"
+                            ng-class="item.color | limitTo:1000:1"
+                            nui-clipboard="::item.color"
+                            on-clipboard-success="ctrl.onClipboardSuccess()"
+                            role="button"
+                        ></div>
 
-                        <div class="doc-color-swatch-label doc-color-swatch-label-primary">
+                        <div
+                            class="doc-color-swatch-label doc-color-swatch-label-primary"
+                        >
                             {{::item.color}}
                         </div>
-                        <div class="doc-color-swatch-label doc-color-swatch-label-secondary">
+                        <div
+                            class="doc-color-swatch-label doc-color-swatch-label-secondary"
+                        >
                             {{::item.secondary}}
                         </div>
-
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
-
 </div>
 <style>
     /* this is not a nice way, but otherwise whe would need to create a new ng-docs template*/
-    div.tabbable, a.edit-example.pull-right, #source {
+    div.tabbable,
+    a.edit-example.pull-right,
+    #source {
         display: none;
     }
 

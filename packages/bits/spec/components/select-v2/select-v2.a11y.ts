@@ -1,10 +1,11 @@
 import { browser, Key } from "protractor";
+
 import { Atom } from "../../atom";
 import { Animations, assertA11y, Helpers } from "../../helpers";
 import { SelectV2Atom } from "../public_api";
 
 describe("a11y: select-v2", () => {
-    let rulesToDisable: string[] = [
+    const rulesToDisable: string[] = [
         "color-contrast", // NUI-6014
         "nested-interactive",
     ];
@@ -22,7 +23,10 @@ describe("a11y: select-v2", () => {
 
         selectBasic = Atom.find(SelectV2Atom, "basic");
         selectErrorState = Atom.find(SelectV2Atom, "error-state");
-        selectDisplayValueSmall = Atom.find(SelectV2Atom, "display-value-mw200");
+        selectDisplayValueSmall = Atom.find(
+            SelectV2Atom,
+            "display-value-mw200"
+        );
         selectDisplayValue = Atom.find(SelectV2Atom, "display-value");
         selectGrouped = Atom.find(SelectV2Atom, "grouped");
         selectInForm = Atom.find(SelectV2Atom, "reactive-form");

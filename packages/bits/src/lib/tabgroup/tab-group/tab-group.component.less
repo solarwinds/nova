@@ -12,13 +12,15 @@
         &__holder {
             display: flex;
             border-bottom: 1px solid @nui-color-line-default;
-            border-bottom: 1px solid var(--nui-color-line-default,@nui-color-line-default);
+            border-bottom: 1px solid
+                var(--nui-color-line-default, @nui-color-line-default);
             flex-direction: row;
             .setCssVariable(background-color, nui-color-bg-content);
             &.vertical {
                 border-right: 1px solid @nui-color-line-default;
-                border-right: 1px solid var(--nui-color-line-default,@nui-color-line-default);
-                border-bottom: 0!important;
+                border-right: 1px solid
+                    var(--nui-color-line-default, @nui-color-line-default);
+                border-bottom: 0 !important;
                 margin-right: 5px;
                 margin-bottom: 5px;
             }
@@ -26,18 +28,21 @@
             .btn-caret-right {
                 .caret-button;
                 border-left: 1px solid @nui-color-line-default;
-                border-left: 1px solid var(--nui-color-line-default,@nui-color-line-default);
+                border-left: 1px solid
+                    var(--nui-color-line-default, @nui-color-line-default);
                 box-shadow: -2px 0 2px @nui-color-line-default;
-                box-shadow: -2px 0 2px var(--nui-color-line-default,@nui-color-line-default);
-
+                box-shadow: -2px 0 2px
+                    var(--nui-color-line-default, @nui-color-line-default);
             }
 
             .btn-caret-left {
                 .caret-button;
                 border-right: 1px solid @nui-color-line-default;
-                border-right: 1px solid var(--nui-color-line-default,@nui-color-line-default);
+                border-right: 1px solid
+                    var(--nui-color-line-default, @nui-color-line-default);
                 box-shadow: 2px 0 2px @nui-color-line-default;
-                box-shadow: 2px 0 2px var(--nui-color-line-default,@nui-color-line-default);
+                box-shadow: 2px 0 2px
+                    var(--nui-color-line-default, @nui-color-line-default);
             }
         }
         &__container {
@@ -54,10 +59,18 @@
                         .setCssVariable(background-color, nui-color-bg-transparent);
                     }
                     border-bottom: 3px solid @nui-color-selected-contrast;
-                    border-bottom: 3px solid var(--nui-color-selected-contrast,@nui-color-selected-contrast);
+                    border-bottom: 3px solid
+                        var(
+                            --nui-color-selected-contrast,
+                            @nui-color-selected-contrast
+                        );
                     &__vertical {
                         border-left: 3px solid @nui-color-selected-contrast;
-                        border-left: 3px solid var(--nui-color-selected-contrast,@nui-color-selected-contrast);
+                        border-left: 3px solid
+                            var(
+                                --nui-color-selected-contrast,
+                                @nui-color-selected-contrast
+                            );
                     }
                 }
 

@@ -2,7 +2,6 @@
     "ignorePatterns": ["projects/**/*"],
     "overrides": [
         {
-            "files": ["*.ts"],
             "extends": [
                 "plugin:@angular-eslint/recommended",
                 "eslint:recommended",
@@ -13,15 +12,16 @@
                 "plugin:import/typescript",
                 "plugin:@angular-eslint/template/process-inline-templates"
             ],
+            "files": ["*.ts"],
             "plugins": ["prefer-arrow"],
             "rules": {
                 // TODO: Remove errors in v12 in scope of NUI-6044
                 "@angular-eslint/component-selector": [
                     "off",
                     {
-                        "type": "element",
                         "prefix": "nui",
-                        "style": "kebab-case"
+                        "style": "kebab-case",
+                        "type": "element"
                     }
                 ],
                 "@angular-eslint/contextual-lifecycle": "off",
@@ -30,9 +30,9 @@
                 "@angular-eslint/directive-selector": [
                     "off",
                     {
-                        "type": "attribute",
                         "prefix": "nui",
-                        "style": "camelCase"
+                        "style": "camelCase",
+                        "type": "attribute"
                     }
                 ],
                 "@angular-eslint/no-conflicting-lifecycle": "off",
@@ -85,9 +85,9 @@
                 "@typescript-eslint/naming-convention": [
                     "error",
                     {
-                        "selector": "variable",
                         "format": ["camelCase", "UPPER_CASE", "PascalCase"],
-                        "leadingUnderscore": "allow"
+                        "leadingUnderscore": "allow",
+                        "selector": "variable"
                     }
                 ],
                 "@typescript-eslint/no-empty-function": [
@@ -124,8 +124,8 @@
                     {
                         "allowAliases": "always",
                         "allowCallbacks": "always",
-                        "allowConstructors": "always",
                         "allowConditionalTypes": "always",
+                        "allowConstructors": "always",
                         "allowGenerics": "always",
                         "allowLiterals": "in-intersections",
                         "allowMappedTypes": "always",
@@ -173,11 +173,11 @@
                 "comma-dangle": [
                     "error",
                     {
-                        "objects": "always-multiline",
                         "arrays": "always-multiline",
+                        "exports": "always-multiline",
                         "functions": "never",
                         "imports": "always-multiline",
-                        "exports": "always-multiline"
+                        "objects": "always-multiline"
                     }
                 ],
                 "curly": "error",
@@ -333,21 +333,21 @@
                     "error",
                     "always",
                     {
-                        "line": {
+                        "block": {
+                            "balanced": true,
+                            "exceptions": ["*"],
                             "markers": ["/"]
                         },
-                        "block": {
-                            "markers": ["/"],
-                            "exceptions": ["*"],
-                            "balanced": true
+                        "line": {
+                            "markers": ["/"]
                         }
                     }
                 ]
             }
         },
         {
-            "files": ["*.html"],
             "extends": ["plugin:@angular-eslint/template/recommended"],
+            "files": ["*.html"],
             "rules": {
                 "@angular-eslint/template/no-negated-async": "error"
             }

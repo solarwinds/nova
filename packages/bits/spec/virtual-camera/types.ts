@@ -1,17 +1,16 @@
-
 export interface PercyLensSnapshotOptions {
     widths?: number[];
     minHeight?: number;
     percyCSS?: string;
     enableJavaScript?: boolean;
-  }
+}
 
 export enum LensType {
     Eyes = "eyes",
-    Percy = "percy"
+    Percy = "percy",
 }
 
-export const LENSES: string[] =  [ ...Object.values(LensType) ];
+export const LENSES: string[] = [...Object.values(LensType)];
 
 export const CAMERA_DEFAULT_SETTINGS: ICameraSettings = {
     fullframe: true,
@@ -20,7 +19,7 @@ export const CAMERA_DEFAULT_SETTINGS: ICameraSettings = {
     currentTestName: "",
     globalLens: "percy",
     responsivityCallback: undefined,
-}
+};
 
 export const PERCY_DEFAULT_CONFIG: PercyLensSnapshotOptions = {
     widths: [1920],
@@ -33,7 +32,7 @@ export const PERCY_DEFAULT_CONFIG: PercyLensSnapshotOptions = {
             cursor: none !important;
         }
     `,
-}
+};
 export interface ILens {
     takeSnapshot(label: string): Promise<void>;
     takeFullScreenSnapshot(label: string): Promise<void>;

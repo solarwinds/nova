@@ -38,5 +38,5 @@ export function hasControlInErrorState(parent: AbstractControl): boolean {
     }
 
     // Errors property contains only errors related to the currecnt form and it's not affected by any child forms
-    return ((parent.touched || parent.dirty) && !!parent.errors);
+    return (parent.touched || parent.dirty) && !!parent.errors;
 }

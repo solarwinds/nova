@@ -22,12 +22,14 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
 @Component({
     selector: "nui-menu-link",
     template: `
-        <a class="nui-menu-item__link" role="link"
-           [href]="url"
-           [target]="target"
-           (click)="handleClick($event)"
-           #menuLink>
-
+        <a
+            class="nui-menu-item__link"
+            role="link"
+            [href]="url"
+            [target]="target"
+            (click)="handleClick($event)"
+            #menuLink
+        >
             <nui-icon *ngIf="icon" [icon]="icon"></nui-icon>
             <ng-content></ng-content>
         </a>
@@ -40,7 +42,7 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     ],
     styleUrls: ["./menu-link.component.less"],
     encapsulation: ViewEncapsulation.None,
-    host: { "role": "menuitem" },
+    host: { role: "menuitem" },
 })
 export class MenuLinkComponent extends MenuItemBaseComponent {
     /**
@@ -57,7 +59,10 @@ export class MenuLinkComponent extends MenuItemBaseComponent {
     @Input() public icon: string;
     @ViewChild("menuLink") menuItem: ElementRef;
 
-    constructor(@Optional() readonly group: MenuGroupComponent, cd: ChangeDetectorRef) {
+    constructor(
+        @Optional() readonly group: MenuGroupComponent,
+        cd: ChangeDetectorRef
+    ) {
         super(group, cd);
 
         this.disabled = false;

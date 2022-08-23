@@ -1,86 +1,4 @@
 {
-    "orion palette": [
-        {
-            "color": "@transparent",
-            "secondary": "transparent"
-        },
-        {
-            "color": "@white",
-            "secondary": "#fff"
-        },
-        {
-            "color": "@dirty_white",
-            "secondary": "#fafafa"
-        },
-        {
-            "color": "@light_gray",
-            "secondary": "#f0f0f0"
-        },
-        {
-            "color": "@gray",
-            "secondary": "#d5d5d5"
-        },
-        {
-            "color": "@mid_gray",
-            "secondary": "#b7b7b7"
-        },
-        {
-            "color": "@dark_gray",
-            "secondary": "#999"
-        },
-        {
-            "color": "@anthracite",
-            "secondary": "#707070"
-        },
-        {
-            "color": "@light_black",
-            "secondary": "#333"
-        },
-        {
-            "color": "@black",
-            "secondary": "#111"
-        },
-        {
-            "color": "@swi_orange",
-            "secondary": "#f99d1c"
-        },
-        {
-            "color": "@primary_blue",
-            "secondary": "#0079aa"
-        },
-        {
-            "color": "@cyan",
-            "secondary": "#00c4d2"
-        },
-        {
-            "color": "@down_red",
-            "secondary": "#950000"
-        },
-        {
-            "color": "@critical_red",
-            "secondary": "#dd2c00"
-        },
-        {
-            "color": "@warning_yellow",
-            "secondary": "#fec405"
-        },
-        {
-            "color": "@ok_green",
-            "secondary": "#00a753"
-        },
-        {
-            "color": "@unknown_gray",
-            "secondary": "#999"
-        },
-        {
-            "color": "@info_blue",
-            "secondary": "#1c8eb1"
-        },
-        {
-            "color": "@UNSET",
-            "secondary": "magenta; //should not be used in production"
-        }
-    ],
     "chart colors": [
         {
             "color": "@chart-blue-dark",
@@ -201,6 +119,88 @@
         {
             "color": "@chart-anthracite-light",
             "secondary": "#b7b7b7"
+        }
+    ],
+    "orion palette": [
+        {
+            "color": "@transparent",
+            "secondary": "transparent"
+        },
+        {
+            "color": "@white",
+            "secondary": "#fff"
+        },
+        {
+            "color": "@dirty_white",
+            "secondary": "#fafafa"
+        },
+        {
+            "color": "@light_gray",
+            "secondary": "#f0f0f0"
+        },
+        {
+            "color": "@gray",
+            "secondary": "#d5d5d5"
+        },
+        {
+            "color": "@mid_gray",
+            "secondary": "#b7b7b7"
+        },
+        {
+            "color": "@dark_gray",
+            "secondary": "#999"
+        },
+        {
+            "color": "@anthracite",
+            "secondary": "#707070"
+        },
+        {
+            "color": "@light_black",
+            "secondary": "#333"
+        },
+        {
+            "color": "@black",
+            "secondary": "#111"
+        },
+        {
+            "color": "@swi_orange",
+            "secondary": "#f99d1c"
+        },
+        {
+            "color": "@primary_blue",
+            "secondary": "#0079aa"
+        },
+        {
+            "color": "@cyan",
+            "secondary": "#00c4d2"
+        },
+        {
+            "color": "@down_red",
+            "secondary": "#950000"
+        },
+        {
+            "color": "@critical_red",
+            "secondary": "#dd2c00"
+        },
+        {
+            "color": "@warning_yellow",
+            "secondary": "#fec405"
+        },
+        {
+            "color": "@ok_green",
+            "secondary": "#00a753"
+        },
+        {
+            "color": "@unknown_gray",
+            "secondary": "#999"
+        },
+        {
+            "color": "@info_blue",
+            "secondary": "#1c8eb1"
+        },
+        {
+            "color": "@UNSET",
+            "secondary": "magenta; //should not be used in production"
         }
     ]
 }

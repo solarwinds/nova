@@ -71,13 +71,17 @@ describe("components >", () => {
             });
             it("respects presetKeysOrder if it is defined", () => {
                 quickPicker.presetKeysOrder = ["95", "75", "99"];
-                expect(quickPicker.presetKeys).toBe(quickPicker.presetKeysOrder); // it returns the same reference indeed
+                expect(quickPicker.presetKeys).toBe(
+                    quickPicker.presetKeysOrder
+                ); // it returns the same reference indeed
             });
             it("returns all keys if presetKeysOrder is not defined", () => {
-                expect(quickPicker.presetKeys.sort()).toEqual(["75", "95", "99"]);
+                expect(quickPicker.presetKeys.sort()).toEqual([
+                    "75",
+                    "95",
+                    "99",
+                ]);
             });
         });
-
-
     });
 });

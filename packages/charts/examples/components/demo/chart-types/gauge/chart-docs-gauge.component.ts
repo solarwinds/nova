@@ -3,5 +3,4 @@ import { Component } from "@angular/core";
     selector: "nui-chart-docs-gauge",
     templateUrl: "./chart-docs-gauge.component.html",
 })
-export class ChartDocsGaugeComponent {
-}
+export class ChartDocsGaugeComponent {}

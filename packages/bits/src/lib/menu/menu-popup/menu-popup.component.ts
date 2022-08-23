@@ -26,18 +26,18 @@ import { IMenuGroup, IMenuItem } from "../public-api";
 @Component({
     selector: "nui-menu-popup",
     host: {
-        "class": "nui-menu-popup",
-        "role": "menu",
+        class: "nui-menu-popup",
+        role: "menu",
     },
     templateUrl: "./menu-popup.component.html",
     styleUrls: ["./menu-popup.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
-
 export class MenuPopupComponent {
     @Input() public itemsSource: IMenuGroup[];
     @Input() public size?: string;
-    @ViewChildren(MenuItemBaseComponent) menuItems: QueryList<MenuItemBaseComponent>;
+    @ViewChildren(MenuItemBaseComponent)
+    menuItems: QueryList<MenuItemBaseComponent>;
 
     @HostBinding("class.nui-menu-popup--sm")
     public get smCssClass() {
@@ -49,7 +49,7 @@ export class MenuPopupComponent {
         return this.size === "large";
     }
 
-    @Output() public menuItemClicked ? = new EventEmitter<IMenuItem>();
+    @Output() public menuItemClicked? = new EventEmitter<IMenuItem>();
 
     public handleClick(item: IMenuItem) {
         if (!item.disabled) {

@@ -1,8 +1,11 @@
-import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, SimpleChange } from "@angular/core";
+import {
+    CUSTOM_ELEMENTS_SCHEMA,
+    DebugElement,
+    SimpleChange,
+} from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { SvgMarker } from "../core/common/palette/markers/svg-marker";
-
 import { ChartMarkerComponent } from "./chart-marker.component";
 
 describe("components >", () => {
@@ -13,9 +16,7 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [
-                    ChartMarkerComponent,
-                ],
+                declarations: [ChartMarkerComponent],
                 schemas: [CUSTOM_ELEMENTS_SCHEMA],
             });
             fixture = TestBed.createComponent(ChartMarkerComponent);
@@ -31,7 +32,9 @@ describe("components >", () => {
                     marker: new SimpleChange(null, subject.marker, false),
                 });
 
-                expect(subject.svgContent.nativeElement.innerHTML).toContain(subject.marker.getSvg());
+                expect(subject.svgContent.nativeElement.innerHTML).toContain(
+                    subject.marker.getSvg()
+                );
             });
         });
 
@@ -48,7 +51,9 @@ describe("components >", () => {
                     color: new SimpleChange(null, color, false),
                 });
 
-                expect(subject.svgContent.nativeElement.innerHTML).toContain(testMarker.getSvg());
+                expect(subject.svgContent.nativeElement.innerHTML).toContain(
+                    testMarker.getSvg()
+                );
             });
         });
 
@@ -68,7 +73,9 @@ describe("components >", () => {
                     drawLine: new SimpleChange(null, true, false),
                 });
 
-                expect(subject.svgContent.nativeElement.innerHTML).toContain(lineSvg);
+                expect(subject.svgContent.nativeElement.innerHTML).toContain(
+                    lineSvg
+                );
             });
         });
     });

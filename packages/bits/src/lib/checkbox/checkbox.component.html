@@ -1,36 +1,39 @@
 <div class="nui-checkbox">
-    <label class="nui-checkbox__label"
-           #checkboxLabel
-           role="checkbox"
-           [attr.aria-label]="ariaLabel || null"
-           [attr.aria-labelledby]="ariaLabelledby"
-           [attr.aria-checked]="getAriaChecked()"
-           [attr.aria-describedby]="ariaDescribedby"
-           [attr.tabindex]="!disabled ? 0 : -1"
-           [title]="title"
-           [class.nui-checkbox__translucent]="disabled"
-           (mouseenter)="hoverHandler()"
-           (mouseleave)="hoverHandler()">
+    <label
+        class="nui-checkbox__label"
+        #checkboxLabel
+        role="checkbox"
+        [attr.aria-label]="ariaLabel || null"
+        [attr.aria-labelledby]="ariaLabelledby"
+        [attr.aria-checked]="getAriaChecked()"
+        [attr.aria-describedby]="ariaDescribedby"
+        [attr.tabindex]="!disabled ? 0 : -1"
+        [title]="title"
+        [class.nui-checkbox__translucent]="disabled"
+        (mouseenter)="hoverHandler()"
+        (mouseleave)="hoverHandler()"
+    >
         <div class="nui-checkbox__content">
-            <input #inputViewContainer
-                   class="nui-checkbox__input"
-                   type="checkbox"
-                   [attr.name]="name"
-                   [value]="value"
-                   [checked]="checked"
-                   [disabled]="disabled"
-                   [required]="required"
-                   [indeterminate]="indeterminate"
-                   (click)="onClick($event)"
-                   (change)="changeHandler($event)"/>
+            <input
+                #inputViewContainer
+                class="nui-checkbox__input"
+                type="checkbox"
+                [attr.name]="name"
+                [value]="value"
+                [checked]="checked"
+                [disabled]="disabled"
+                [required]="required"
+                [indeterminate]="indeterminate"
+                (click)="onClick($event)"
+                (change)="changeHandler($event)"
+            />
             <div class="nui-checkbox__mark">
                 <i class="nui-checkbox__glyph"></i>
             </div>
-            <div #checkboxContent
-                 class="nui-checkbox__transclude">
+            <div #checkboxContent class="nui-checkbox__transclude">
                 <ng-content></ng-content>
             </div>
         </div>
-        <div class="nui-help-hint" *ngIf="hint">{{hint}}</div>
+        <div class="nui-help-hint" *ngIf="hint">{{ hint }}</div>
     </label>
 </div>

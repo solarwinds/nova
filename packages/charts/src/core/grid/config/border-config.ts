@@ -6,6 +6,5 @@ export class BorderConfig implements IBorderConfig {
     public width: number;
     public visible = true;
 
-    constructor(public className?: string) {
-    }
+    constructor(public className?: string) {}
 }

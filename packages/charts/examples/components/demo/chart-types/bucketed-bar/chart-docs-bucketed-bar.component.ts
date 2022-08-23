@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-chart-docs-bucketed-bar",
     templateUrl: "./chart-docs-bucketed-bar.component.html",
 })
-export class ChartDocsBucketedBarComponent {
-}
+export class ChartDocsBucketedBarComponent {}

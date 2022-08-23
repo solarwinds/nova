@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-tag-border-color-example",
     templateUrl: "./tag-border-color.example.component.html",
 })
-export class TagBorderColorExampleComponent {
-}
+export class TagBorderColorExampleComponent {}

@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+
 import {
     ChartAssist,
     GaugeMode,
@@ -29,7 +30,10 @@ export class DonutGaugeWithThresholdsExampleComponent implements OnInit {
 
     public ngOnInit(): void {
         // Generating a standard set of thresholds with warning and critical levels
-        this.thresholds = GaugeUtil.createStandardThresholdsConfig(this.lowThreshold, this.highThreshold);
+        this.thresholds = GaugeUtil.createStandardThresholdsConfig(
+            this.lowThreshold,
+            this.highThreshold
+        );
 
         /**
          * Optionally, instead of using the 'createStandardThresholdsConfig' function as above, you can manually create a thresholds
@@ -56,9 +60,15 @@ export class DonutGaugeWithThresholdsExampleComponent implements OnInit {
         // };
 
         this.gaugeConfig = this.getGaugeConfig();
-        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Donut);
+        this.chartAssist = GaugeUtil.createChartAssist(
+            this.gaugeConfig,
+            GaugeMode.Donut
+        );
 
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(
+            this.gaugeConfig,
+            GaugeMode.Donut
+        );
         this.chartAssist.update(this.seriesSet);
     }
 
@@ -72,8 +82,10 @@ export class DonutGaugeWithThresholdsExampleComponent implements OnInit {
         this.thresholds.reversed = reversed;
 
         // swap the values of the warning and critical thresholds
-        this.thresholds.definitions[StandardGaugeThresholdId.Warning].value = this.reversed ? this.highThreshold : this.lowThreshold;
-        this.thresholds.definitions[StandardGaugeThresholdId.Critical].value = this.reversed ? this.lowThreshold : this.highThreshold;
+        this.thresholds.definitions[StandardGaugeThresholdId.Warning].value =
+            this.reversed ? this.highThreshold : this.lowThreshold;
+        this.thresholds.definitions[StandardGaugeThresholdId.Critical].value =
+            this.reversed ? this.lowThreshold : this.highThreshold;
 
         this.updateGauge();
     }

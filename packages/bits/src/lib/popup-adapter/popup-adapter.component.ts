@@ -1,4 +1,8 @@
-import { ConnectedPosition, Overlay, OverlayConfig } from "@angular/cdk/overlay";
+import {
+    ConnectedPosition,
+    Overlay,
+    OverlayConfig,
+} from "@angular/cdk/overlay";
 import { DOCUMENT } from "@angular/common";
 import {
     AfterContentInit,
@@ -41,17 +45,21 @@ const ADAPTER_OVERLAY_CONFIG: OverlayConfig = {
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
-        "class": "nui-popup",
-        "role": "dialog",
+        class: "nui-popup",
+        role: "dialog",
         "[attr.aria-label]": "ariaLabel",
     },
 })
-export class PopupComponent implements AfterContentInit, AfterViewInit, OnChanges, OnDestroy {
+export class PopupComponent
+    implements AfterContentInit, AfterViewInit, OnChanges, OnDestroy
+{
     @ContentChild(PopupToggleDirective)
     public popupToggle: PopupToggleDirective;
 
     @Input() public width: string = "auto";
-    @Input() public get overlayConfig(): OverlayConfig { return this._overlayConfig; }
+    @Input() public get overlayConfig(): OverlayConfig {
+        return this._overlayConfig;
+    }
     public set overlayConfig(value: OverlayConfig) {
         this._overlayConfig = {
             ...ADAPTER_OVERLAY_CONFIG,
@@ -81,7 +89,7 @@ export class PopupComponent implements AfterContentInit, AfterViewInit, OnChange
     @Output()
     public opened = new EventEmitter<boolean>();
 
-    @ViewChild("popupArea", {static: true}) popupArea: ElementRef;
+    @ViewChild("popupArea", { static: true }) popupArea: ElementRef;
     @ViewChild(OverlayComponent) popup: OverlayComponent;
 
     public popupAreaContainer: ElementRef;
@@ -97,7 +105,6 @@ export class PopupComponent implements AfterContentInit, AfterViewInit, OnChange
             return;
         }
         this.popup.getOverlayRef().removePanelClass(POPUP_VISIBLE);
-
     }
     public get visible(): boolean {
         return Boolean(this._visible);
@@ -109,12 +116,13 @@ export class PopupComponent implements AfterContentInit, AfterViewInit, OnChange
     private destroy$: Subject<void> = new Subject();
     private lastEventType: string;
 
-    constructor(private overlay: Overlay,
-                private cdRef: ChangeDetectorRef,
-                private eventBusService: EventBusService,
-                private host: ElementRef,
-                @Inject(DOCUMENT) private document: Document) {
-    }
+    constructor(
+        private overlay: Overlay,
+        private cdRef: ChangeDetectorRef,
+        private eventBusService: EventBusService,
+        private host: ElementRef,
+        @Inject(DOCUMENT) private document: Document
+    ) {}
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.appendToBody) {
@@ -126,11 +134,14 @@ export class PopupComponent implements AfterContentInit, AfterViewInit, OnChange
         }
 
         if (changes.width) {
-            this.overlayConfig = {...this.overlayConfig, width: this.width };
+            this.overlayConfig = { ...this.overlayConfig, width: this.width };
         }
 
         if (changes.directionTop || changes.directionRight) {
-            this.overlayConfig = { ...this.overlayConfig, positionStrategy: this.getPositionStrategy() };
+            this.overlayConfig = {
+                ...this.overlayConfig,
+                positionStrategy: this.getPositionStrategy(),
+            };
         }
     }
 
@@ -138,31 +149,41 @@ export class PopupComponent implements AfterContentInit, AfterViewInit, OnChange
         this.isContentInitialized = true;
         this.initToggleRef();
 
-        this.overlayConfig = { ...this.overlayConfig, positionStrategy: this.getPositionStrategy() };
+        this.overlayConfig = {
+            ...this.overlayConfig,
+            positionStrategy: this.getPositionStrategy(),
+        };
 
         if (this.popupToggle) {
-            this.popupToggle.toggle.subscribe((e: Event) => this.toggleOpened(e));
+            this.popupToggle.toggle.subscribe((e: Event) =>
+                this.toggleOpened(e)
+            );
         }
     }
 
     public ngAfterViewInit(): void {
-        this.overlayConfig = {...this.overlayConfig, width: this.width};
+        this.overlayConfig = { ...this.overlayConfig, width: this.width };
 
         if (this.manualOpenControl) {
-            this.manualOpenControl.subscribe((e: Event) => this.toggleOpened(e));
+            this.manualOpenControl.subscribe((e: Event) =>
+                this.toggleOpened(e)
+            );
         }
 
         if (!this.appendToBody) {
             this.customContainer = this.popupArea;
         }
 
-        this.eventBusService.getStream({id: DOCUMENT_CLICK_EVENT})
-            .pipe(
-                takeUntil(this.destroy$)
-            )
+        this.eventBusService
+            .getStream({ id: DOCUMENT_CLICK_EVENT })
+            .pipe(takeUntil(this.destroy$))
             .subscribe((event: Event) => {
-                const isToggle = this.popupToggle && event ? (this.popupToggle.host.nativeElement as HTMLElement)
-                    .contains(event.target as HTMLElement) : false;
+                const isToggle =
+                    this.popupToggle && event
+                        ? (
+                              this.popupToggle.host.nativeElement as HTMLElement
+                          ).contains(event.target as HTMLElement)
+                        : false;
                 if (this.isOpen && !isToggle) {
                     this.closePopup();
                 }
@@ -209,7 +230,7 @@ export class PopupComponent implements AfterContentInit, AfterViewInit, OnChange
         this.destroy$.complete();
     }
 
-    private getPopupConnectedPosition(): ConnectedPosition[]  {
+    private getPopupConnectedPosition(): ConnectedPosition[] {
         const leftBottom: ConnectedPosition = {
             originX: "start",
             originY: "bottom",
@@ -274,7 +295,8 @@ export class PopupComponent implements AfterContentInit, AfterViewInit, OnChange
     private getPositionStrategy() {
         const defaultViewportMargin = 0;
 
-        return this.overlay.position()
+        return this.overlay
+            .position()
             .flexibleConnectedTo(this.toggleReference)
             .withPush(false)
             .withViewportMargin(defaultViewportMargin)
@@ -296,11 +318,15 @@ export class PopupComponent implements AfterContentInit, AfterViewInit, OnChange
         const overlayContainer = this.popup.getOverlayRef().overlayElement;
 
         this.popupAreaContent = new ElementRef(overlayContainer);
-        this.popupAreaContainer = new ElementRef(overlayContainer.querySelector(`.${POPUP_V2}`));
+        this.popupAreaContainer = new ElementRef(
+            overlayContainer.querySelector(`.${POPUP_V2}`)
+        );
 
         if (this.contextClass) {
-            this.contextClass.split(" ").forEach(contextClass => {
-                this.popupAreaContainer.nativeElement.classList.add(contextClass);
+            this.contextClass.split(" ").forEach((contextClass) => {
+                this.popupAreaContainer.nativeElement.classList.add(
+                    contextClass
+                );
             });
         }
 
@@ -326,8 +352,8 @@ export class PopupComponent implements AfterContentInit, AfterViewInit, OnChange
             this.toggleReference = this.host.nativeElement;
             return;
         }
-        this.toggleReference = this.popupToggle ?
-            this.popupToggle.host.nativeElement :
-            this.document.querySelector(this.baseElementSelector);
+        this.toggleReference = this.popupToggle
+            ? this.popupToggle.host.nativeElement
+            : this.document.querySelector(this.baseElementSelector);
     }
 }

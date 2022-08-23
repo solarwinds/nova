@@ -1,12 +1,15 @@
 import { SimpleChange } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+
 import { EventBus } from "@nova-ui/bits";
 
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
 import { PIZZAGNA_EVENT_BUS } from "../../../../../types";
-
-import { ITimeSpanOption, TimeseriesMetadataConfigurationComponent } from "./timeseries-metadata-configuration.component";
+import {
+    ITimeSpanOption,
+    TimeseriesMetadataConfigurationComponent,
+} from "./timeseries-metadata-configuration.component";
 
 describe("TimeseriesMetadataConfigurationComponent", () => {
     let component: TimeseriesMetadataConfigurationComponent;
@@ -22,12 +25,13 @@ describe("TimeseriesMetadataConfigurationComponent", () => {
                     useClass: EventBus,
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TimeseriesMetadataConfigurationComponent);
+        fixture = TestBed.createComponent(
+            TimeseriesMetadataConfigurationComponent
+        );
         component = fixture.componentInstance;
     });
 
@@ -50,9 +54,11 @@ describe("TimeseriesMetadataConfigurationComponent", () => {
             { id: "bbb", name: "BBB" },
         ];
         component.timeSpans = timeSpans;
-        component.ngOnChanges({ timeSpans: new SimpleChange(null, timeSpans, true) });
+        component.ngOnChanges({
+            timeSpans: new SimpleChange(null, timeSpans, true),
+        });
 
         expect(timeSpanControl.value).toEqual(timeSpans[0]);
         expect(emittedValue).toEqual(timeSpans[0]);
-    })
+    });
 });

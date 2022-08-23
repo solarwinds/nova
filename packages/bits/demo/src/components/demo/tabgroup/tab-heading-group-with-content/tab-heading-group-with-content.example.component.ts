@@ -1,13 +1,11 @@
 import { ChangeDetectorRef, Component, Input } from "@angular/core";
 
-
 @Component({
     selector: "nui-tab-heading-group-with-content-example",
     templateUrl: "./tab-heading-group-with-content.example.component.html",
     styleUrls: ["./tab-heading-group-with-content.example.component.less"],
 })
 export class TabHeadingGroupWithContentExampleComponent {
-
     @Input() public icon: boolean = false;
 
     public currentTabId: string;
@@ -15,19 +13,20 @@ export class TabHeadingGroupWithContentExampleComponent {
     public tabsetContent = [
         {
             id: "1",
-            title: $localize `Tab with really long content`,
+            title: $localize`Tab with really long content`,
             icon: {
                 name: "gear",
                 disabledColor: "disabled-gray",
                 inactiveColor: "gray",
                 activeColor: "black",
             },
-            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu.",
+            content:
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu.",
             isDisabled: false,
         },
         {
             id: "2",
-            title: $localize `Tab 2`,
+            title: $localize`Tab 2`,
             icon: {
                 name: "check",
                 disabledColor: "disabled-gray",
@@ -46,7 +45,7 @@ export class TabHeadingGroupWithContentExampleComponent {
         },
         {
             id: "3",
-            title: $localize `Tab 3`,
+            title: $localize`Tab 3`,
             icon: {
                 name: "acknowledge",
                 disabledColor: "disabled-gray",
@@ -58,16 +57,18 @@ export class TabHeadingGroupWithContentExampleComponent {
         },
         {
             id: "4",
-            title: $localize `Tab 4`,
+            title: $localize`Tab 4`,
             icon: {
                 name: "add",
                 disabledColor: "disabled-gray",
                 inactiveColor: "gray",
                 activeColor: "black",
             },
-            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu.",
+            content:
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu.",
             isDisabled: false,
-        }];
+        },
+    ];
 
     constructor(private changeDetector: ChangeDetectorRef) {}
 

@@ -1,52 +1,50 @@
-Nui.app().controller("SpacingDemoController", ["$scope",
+Nui.app().controller("SpacingDemoController", [
+    "$scope",
     function ($scope) {
         var vm = this;
         vm.spacings = {
-            types: [
-                "padding",
-                "margin"
-            ],
+            types: ["padding", "margin"],
             sizes: [
                 {
                     value: "sm",
-                    name: "small"
+                    name: "small",
                 },
                 {
                     value: "md",
-                    name: "medium"
+                    name: "medium",
                 },
                 {
                     value: "lg",
-                    name: "large"
-                }
+                    name: "large",
+                },
             ],
             directions: [
                 {
                     value: "h",
-                    name: "horizontal"
+                    name: "horizontal",
                 },
                 {
                     value: "v",
-                    name: "vertical"
+                    name: "vertical",
                 },
                 {
                     value: "r",
-                    name: "right"
+                    name: "right",
                 },
                 {
                     value: "l",
-                    name: "left"
-                }
-            ]
+                    name: "left",
+                },
+            ],
         };
         vm.margin = {
             size: "md",
             direction: "",
-            isNegative: false
+            isNegative: false,
         };
         vm.padding = {
             size: "md",
-            direction: ""
+            direction: "",
         };
 
         vm.marginClass = "";
@@ -57,7 +55,8 @@ Nui.app().controller("SpacingDemoController", ["$scope",
                 return vm.margin;
             },
             function () {
-                vm.marginClass = "nui-margin-" + vm.margin.size + vm.margin.direction;
+                vm.marginClass =
+                    "nui-margin-" + vm.margin.size + vm.margin.direction;
                 if (vm.margin.isNegative) {
                     vm.marginClass += "-neg";
                 }
@@ -69,9 +68,10 @@ Nui.app().controller("SpacingDemoController", ["$scope",
                 return vm.padding;
             },
             function () {
-                vm.paddingClass = "nui-padding-" + vm.padding.size + vm.padding.direction;
+                vm.paddingClass =
+                    "nui-padding-" + vm.padding.size + vm.padding.direction;
             },
             true
         );
-    }
+    },
 ]);

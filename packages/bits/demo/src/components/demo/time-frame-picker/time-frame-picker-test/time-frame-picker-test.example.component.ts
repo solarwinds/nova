@@ -1,13 +1,17 @@
 import { Component } from "@angular/core";
-import { ITimeframe, ITimeFramePresetDictionary, TimeframeService } from "@nova-ui/bits";
 import moment from "moment/moment";
 import { Subject } from "rxjs";
+
+import {
+    ITimeframe,
+    ITimeFramePresetDictionary,
+    TimeframeService,
+} from "@nova-ui/bits";
 
 @Component({
     selector: "nui-time-frame-picker-test",
     templateUrl: "./time-frame-picker-test.example.component.html",
 })
-
 export class TimeFramePickerTestExampleComponent {
     public presets: ITimeFramePresetDictionary;
     public selectedPresetKey?: string = "lastHour";
@@ -21,7 +25,9 @@ export class TimeFramePickerTestExampleComponent {
 
     constructor(public timeframeService: TimeframeService) {
         this.presets = timeframeService.getDefaultPresets();
-        this.acceptedTimeframe = this.timeframeService.getTimeframeByPresetId(this.selectedPresetKey);
+        this.acceptedTimeframe = this.timeframeService.getTimeframeByPresetId(
+            this.selectedPresetKey
+        );
         this.tf = this.acceptedTimeframe;
     }
 
@@ -30,9 +36,13 @@ export class TimeFramePickerTestExampleComponent {
 
     public updateTf(value: ITimeframe) {
         this.tf = value;
-        const timeFrameDatesValid = () => this.timeframeService.areTimeFrameDatesValid(value);
-        const timeFrameDatesEqual = () => this.timeframeService.isEqual(this.tf, this.acceptedTimeframe);
-        if (timeFrameDatesValid() && !timeFrameDatesEqual()) { this.showFooter = true; }
+        const timeFrameDatesValid = () =>
+            this.timeframeService.areTimeFrameDatesValid(value);
+        const timeFrameDatesEqual = () =>
+            this.timeframeService.isEqual(this.tf, this.acceptedTimeframe);
+        if (timeFrameDatesValid() && !timeFrameDatesEqual()) {
+            this.showFooter = true;
+        }
 
         this.selectedPresetKey = this.tf.selectedPresetId;
     }

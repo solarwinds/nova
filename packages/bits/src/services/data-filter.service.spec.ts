@@ -1,5 +1,4 @@
 import { SorterDirection } from "../lib/public-api";
-
 import { DataFilterService } from "./data-filter.service";
 import {
     IFilter,
@@ -131,14 +130,18 @@ describe("DataFilterService >", () => {
 
             service.registerFilter(filterComponents);
             service.unregisterFilters(["sorter", "paginator"]);
-            expect(service.getFilters()).toEqual(expectedFiltersAfterUnregistering);
+            expect(service.getFilters()).toEqual(
+                expectedFiltersAfterUnregistering
+            );
         });
     });
 
     describe("with parent >", () => {
         it("should correctly register and get filters with one parent", () => {
-            // @ts-ignore: Suppressing error for testing purposes
-            service = new DataFilterService(new DataFilterServiceSearchClassStub(null));
+            service = new DataFilterService(
+                // @ts-ignore: Suppressing error for testing purposes
+                new DataFilterServiceSearchClassStub(null)
+            );
             const filterComponents = {
                 sorter: {
                     componentInstance: new SorterStub(),
@@ -152,8 +155,12 @@ describe("DataFilterService >", () => {
         });
 
         it("should correctly register and get filters with multiple parents", () => {
-            // @ts-ignore: Suppressing error for testing purposes
-            service = new DataFilterService(new DataFilterServiceSearchClassStub(new DataFilterServicePaginatorClassStub(null)));
+            service = new DataFilterService(
+                new DataFilterServiceSearchClassStub(
+                    // @ts-ignore: Suppressing error for testing purposes
+                    new DataFilterServicePaginatorClassStub(null)
+                )
+            );
             const filterComponents = {
                 sorter: {
                     componentInstance: new SorterStub(),

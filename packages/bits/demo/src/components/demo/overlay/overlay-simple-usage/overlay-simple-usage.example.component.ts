@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ViewChild } from "@angular/core";
-import { OverlayComponent } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
+import { OverlayComponent } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-overlay-simple-usage-example",
@@ -16,6 +16,6 @@ export class OverlaySimpleExampleComponent implements AfterViewInit {
     ngAfterViewInit() {
         this.overlay.clickOutside
             .pipe(takeUntil(this.destroy$))
-            .subscribe(_ => this.overlay.hide());
+            .subscribe((_) => this.overlay.hide());
     }
 }

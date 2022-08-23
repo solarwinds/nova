@@ -16,6 +16,6 @@ export class BarGridConfig extends XYGridConfig {
         this.axis.bottom.tickSize = 5;
         this.axis.left.tickSize = 0;
         this.dimension.margin.right = 0;
-        this.dimension.padding.bottom =  2; // 2 for border
+        this.dimension.padding.bottom = 2; // 2 for border
     }
 }

@@ -1,7 +1,8 @@
 import { Component, Inject } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { IToastService, ToastService } from "@nova-ui/bits";
 import moment, { Moment } from "moment/moment";
+
+import { IToastService, ToastService } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-date-picker-insignificant-example",
@@ -12,10 +13,12 @@ export class DatePickerInsignificantExampleComponent {
     public selectedDate: Date;
     public control = new FormControl(this.dt);
 
-    constructor(@Inject(ToastService) private toastService: IToastService) { }
+    constructor(@Inject(ToastService) private toastService: IToastService) {}
 
     public dateChanged(event: Moment) {
         this.selectedDate = new Date(event.valueOf());
-        this.toastService.info({message: $localize `Selected date: ${event.toString()}`});
+        this.toastService.info({
+            message: $localize`Selected date: ${event.toString()}`,
+        });
     }
 }

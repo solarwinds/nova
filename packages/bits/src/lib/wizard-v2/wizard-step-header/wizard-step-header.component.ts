@@ -13,11 +13,14 @@ import {
     SimpleChanges,
     ViewEncapsulation,
 } from "@angular/core";
-
-import { WizardStepLabelDirective } from "../wizard-step-label.directive";
-import { WIZARD_CONFIG, WIZARD_CONFIG_DEFAULT } from "../../../constants/wizard.constants";
-import { IWizardConfig, WizardStepStateConfig } from "../types";
 import assign from "lodash/assign";
+
+import {
+    WIZARD_CONFIG,
+    WIZARD_CONFIG_DEFAULT,
+} from "../../../constants/wizard.constants";
+import { IWizardConfig, WizardStepStateConfig } from "../types";
+import { WizardStepLabelDirective } from "../wizard-step-label.directive";
 import { WizardStepV2Component } from "../wizard-step/wizard-step.component";
 
 /** @ignore */
@@ -26,16 +29,19 @@ import { WizardStepV2Component } from "../wizard-step/wizard-step.component";
     templateUrl: "wizard-step-header.component.html",
     styleUrls: ["wizard-step-header.component.less"],
     host: {
-        "class": "nui-wizard-step-header",
+        class: "nui-wizard-step-header",
         "[class.nui-wizard-step-header--selected]": "selected",
         "[class.nui-wizard-step-header--optional]": "step.optional",
         "[class.nui-wizard-step-header--completed]": "stepState === 'done'",
-        "role": "tab",
+        role: "tab",
     },
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WizardStepHeaderComponent extends CdkStepHeader implements AfterViewInit, OnDestroy, OnChanges {
+export class WizardStepHeaderComponent
+    extends CdkStepHeader
+    implements AfterViewInit, OnDestroy, OnChanges
+{
     /** State of the given step. */
     public stepState: StepState;
 
@@ -46,7 +52,7 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
     @Input() label: WizardStepLabelDirective | string;
 
     /** Label that is rendered below optional steps. */
-    @Input() optionalLabel: string = $localize `Optional`;
+    @Input() optionalLabel: string = $localize`Optional`;
 
     /** Error message to display when there's an error. */
     @Input() errorMessage: string;
@@ -64,12 +70,14 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
 
     public stepStateConfigMap: WizardStepStateConfig;
 
-    private wizardConfig: IWizardConfig = {...WIZARD_CONFIG_DEFAULT};
+    private wizardConfig: IWizardConfig = { ...WIZARD_CONFIG_DEFAULT };
 
     constructor(
         private _focusMonitor: FocusMonitor,
         _elementRef: ElementRef<HTMLElement>,
-        @Optional() @Inject(WIZARD_CONFIG) public readonly config?: IWizardConfig
+        @Optional()
+        @Inject(WIZARD_CONFIG)
+        public readonly config?: IWizardConfig
     ) {
         super(_elementRef);
 
@@ -104,16 +112,23 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
 
     /** Returns string label of given step if it is a text label. */
     public get stringLabel(): string | null {
-        return this.label instanceof WizardStepLabelDirective ? null : this.label;
+        return this.label instanceof WizardStepLabelDirective
+            ? null
+            : this.label;
     }
 
     /** Returns WizardStepLabel if the label of given step is a template label. */
     public get templateLabel(): WizardStepLabelDirective | null {
-        return this.label instanceof WizardStepLabelDirective ? this.label : null;
+        return this.label instanceof WizardStepLabelDirective
+            ? this.label
+            : null;
     }
 
     private updateStepStateConfig(stepStateConfig: WizardStepStateConfig) {
-        this.wizardConfig.stepState = assign({...this.wizardConfig.stepState}, stepStateConfig);
+        this.wizardConfig.stepState = assign(
+            { ...this.wizardConfig.stepState },
+            stepStateConfig
+        );
     }
 
     private createStepStateConfigMap() {
@@ -122,7 +137,7 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
             [STEP_STATE.DONE]: this.wizardConfig.stepState?.visited,
             [STEP_STATE.EDIT]: this.wizardConfig.stepState?.active,
             [STEP_STATE.ERROR]: this.wizardConfig.stepState?.error,
-        }
+        };
     }
 
     private getStepState(step: WizardStepV2Component): StepState {

@@ -18,6 +18,11 @@ import {
     OnDestroy,
     ViewChild,
 } from "@angular/core";
+import isEqual from "lodash/isEqual";
+import isNil from "lodash/isNil";
+import { Observable, of, Subject } from "rxjs";
+import { catchError, delay, map, take, takeUntil, tap } from "rxjs/operators";
+
 import {
     DataSourceService,
     DialogService,
@@ -38,10 +43,6 @@ import {
     RepeatComponent,
     VirtualViewportManager,
 } from "@nova-ui/bits";
-import isEqual from "lodash/isEqual";
-import isNil from "lodash/isNil";
-import { Observable, of, Subject } from "rxjs";
-import { catchError, delay, map, take, takeUntil, tap } from "rxjs/operators";
 
 interface IServerNode extends Partial<IServer> {
     name: string;
@@ -117,7 +118,8 @@ export const API_URL = "https://nova-pg.swdev.local/api/v1/servers";
 @Injectable()
 export class VirtualScrollListDataSource<T = any>
     extends DataSourceService<T>
-    implements IDataSource {
+    implements IDataSource
+{
     // cache used to store our previous fetched results while scrolling
     // and more data is automatically fetched from the backend
     private cache = Array.from<IServer>({ length: 0 });
@@ -210,7 +212,10 @@ export class VirtualScrollListDataSource<T = any>
     }
 
     // checks if any of the filters specified by name have changed from the previous evaluation
-    public filtersChanged(filters: INovaFilters, ...filterNames: string[]): boolean {
+    public filtersChanged(
+        filters: INovaFilters,
+        ...filterNames: string[]
+    ): boolean {
         for (let i = 0; i < filterNames.length; i++) {
             const filterName = filterNames[i];
             const filter = filters[filterName];
@@ -249,7 +254,8 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
     );
     public dataSource = new ArrayDataSource(TREE_DATA);
 
-    public hasChild = (_: number, node: IServerNode): boolean => !!node.children;
+    public hasChild = (_: number, node: IServerNode): boolean =>
+        !!node.children;
 
     constructor(
         private virtualScrollListDataSource: VirtualScrollListDataSource,
@@ -444,7 +450,8 @@ export class TreeDialogContentExampleComponent implements AfterViewInit {
     @Input() isLoading: boolean = false;
 
     public itemConfig: IRepeatItemConfig = {
-        trackBy: (index: number, item: IServerNode): string | undefined => item?.name,
+        trackBy: (index: number, item: IServerNode): string | undefined =>
+            item?.name,
     };
 
     @ViewChild(RepeatComponent)

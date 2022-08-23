@@ -8,6 +8,7 @@ import {
     SimpleChanges,
     TemplateRef,
 } from "@angular/core";
+
 import { IBusyConfig, SpinnerSize } from "@nova-ui/bits";
 
 import { IDashwizStepComponent, IDashwizStepNavigatedEvent } from "../types";
@@ -20,7 +21,9 @@ import { IDashwizStepComponent, IDashwizStepNavigatedEvent } from "../types";
     templateUrl: "./dashwiz-step.component.html",
     styleUrls: ["./dashwiz-step.component.less"],
 })
-export class DashwizStepComponent implements IDashwizStepComponent, OnInit, OnChanges {
+export class DashwizStepComponent
+    implements IDashwizStepComponent, OnInit, OnChanges
+{
     /**
      * Template for step.
      */
@@ -52,7 +55,8 @@ export class DashwizStepComponent implements IDashwizStepComponent, OnInit, OnCh
     /**
      * Evaluated when the step is entered.
      */
-    @Output() public enter = new EventEmitter<IDashwizStepNavigatedEvent | void>();
+    @Output() public enter =
+        new EventEmitter<IDashwizStepNavigatedEvent | void>();
     /**
      * Evaluated when validity of the step is changed.
      */
@@ -60,11 +64,13 @@ export class DashwizStepComponent implements IDashwizStepComponent, OnInit, OnCh
     /**
      * Evaluated when the step is exited.
      */
-    @Output() public exit = new EventEmitter<IDashwizStepNavigatedEvent | void>();
+    @Output() public exit =
+        new EventEmitter<IDashwizStepNavigatedEvent | void>();
     /**
      * Evaluated when trying to go to the next step.
      */
-    @Output() public next = new EventEmitter<IDashwizStepNavigatedEvent | void>();
+    @Output() public next =
+        new EventEmitter<IDashwizStepNavigatedEvent | void>();
 
     /**
      *
@@ -80,10 +86,10 @@ export class DashwizStepComponent implements IDashwizStepComponent, OnInit, OnCh
     public icon = "step";
     public iconColor = "";
 
-    constructor() { }
+    constructor() {}
 
     ngOnInit(): void {
-        this.nextText = this.nextText || $localize `Next`;
+        this.nextText = this.nextText || $localize`Next`;
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -97,29 +103,29 @@ export class DashwizStepComponent implements IDashwizStepComponent, OnInit, OnCh
      */
     public enterStep = (event?: IDashwizStepNavigatedEvent): void => {
         this.enter.emit(event);
-    }
+    };
 
     /**
      * Set flags for step exiting and emits exit event
      */
     public exitStep = (event?: IDashwizStepNavigatedEvent): void => {
         this.exit.emit(event);
-    }
+    };
 
     public nextStep = (event?: IDashwizStepNavigatedEvent): void => {
         this.next.emit(event);
-    }
+    };
 
     public applyEnteringStep = (): void => {
         this.active = true;
         this.icon = "step-active";
         this.iconColor = "black";
-    }
+    };
 
     public applyExitingStep = (): void => {
         this.active = false;
         this.visited = true;
         this.icon = "step-complete";
         this.iconColor = "";
-    }
+    };
 }

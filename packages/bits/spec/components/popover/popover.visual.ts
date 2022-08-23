@@ -1,26 +1,51 @@
-import { browser, by, element, ElementArrayFinder, ElementFinder } from "protractor";
+import {
+    browser,
+    by,
+    element,
+    ElementArrayFinder,
+    ElementFinder,
+} from "protractor";
 
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
 import { CheckboxAtom } from "../checkbox/checkbox.atom";
 import { ComboboxV2Atom } from "../combobox-v2/combobox-v2.atom";
-
 import { PopoverAtom } from "./popover.atom";
 
 const name: string = "Popover";
 
 describe(`Visual tests: ${name}`, () => {
     let camera: Camera;
-    const buttonPreventClosing: ElementFinder = element(by.id("nui-demo-button-prevent-onclick"));
-    const placementCheckButtons: ElementArrayFinder = element.all(by.css(".placement-check-btn"));
-    const popoverPreventClosing: PopoverAtom = new PopoverAtom(element(by.id("nui-demo-popover-prevent-closing")));
-    const popoverBasic: PopoverAtom = new PopoverAtom(element(by.id("nui-demo-popover-basic")));
-    const popoverNoRestrictions: PopoverAtom = new PopoverAtom(element(by.id("nui-demo-popover-no-limits")));
-    const popoverNoPadding: PopoverAtom = new PopoverAtom(element(by.id("nui-demo-popover-no-padding")));
-    const popoverBasicMultiline: PopoverAtom = new PopoverAtom(element(by.id("nui-demo-popover-limited-and-multiline")));
-    const popoverModal: PopoverAtom = new PopoverAtom(element(by.id("nui-demo-popover-modal")));
-    const checkboxInPopover: CheckboxAtom = new CheckboxAtom(element(by.id("nui-demo-checkbox-in-popover")));
-    const comboboxV2InPopover: ComboboxV2Atom = new ComboboxV2Atom(element(by.id("nui-demo-combobox-v2-in-popover")));
+    const buttonPreventClosing: ElementFinder = element(
+        by.id("nui-demo-button-prevent-onclick")
+    );
+    const placementCheckButtons: ElementArrayFinder = element.all(
+        by.css(".placement-check-btn")
+    );
+    const popoverPreventClosing: PopoverAtom = new PopoverAtom(
+        element(by.id("nui-demo-popover-prevent-closing"))
+    );
+    const popoverBasic: PopoverAtom = new PopoverAtom(
+        element(by.id("nui-demo-popover-basic"))
+    );
+    const popoverNoRestrictions: PopoverAtom = new PopoverAtom(
+        element(by.id("nui-demo-popover-no-limits"))
+    );
+    const popoverNoPadding: PopoverAtom = new PopoverAtom(
+        element(by.id("nui-demo-popover-no-padding"))
+    );
+    const popoverBasicMultiline: PopoverAtom = new PopoverAtom(
+        element(by.id("nui-demo-popover-limited-and-multiline"))
+    );
+    const popoverModal: PopoverAtom = new PopoverAtom(
+        element(by.id("nui-demo-popover-modal"))
+    );
+    const checkboxInPopover: CheckboxAtom = new CheckboxAtom(
+        element(by.id("nui-demo-checkbox-in-popover"))
+    );
+    const comboboxV2InPopover: ComboboxV2Atom = new ComboboxV2Atom(
+        element(by.id("nui-demo-combobox-v2-in-popover"))
+    );
 
     beforeAll(async (done) => {
         await Helpers.prepareBrowser("popover/popover-visual-test");
@@ -33,7 +58,7 @@ describe(`Visual tests: ${name}`, () => {
         await camera.turn.on();
 
         await popoverPreventClosing.togglePopover();
-        await placementCheckButtons.each(async btn => await btn?.click());
+        await placementCheckButtons.each(async (btn) => await btn?.click());
         await browser.actions().mouseMove(buttonPreventClosing).perform();
         await checkboxInPopover.toggle();
         await comboboxV2InPopover.click();
@@ -45,7 +70,7 @@ describe(`Visual tests: ${name}`, () => {
         await Helpers.switchDarkTheme("on");
         await camera.say.cheese(`Dark theme`);
         await Helpers.switchDarkTheme("off");
-        await placementCheckButtons.each(async btn => await btn?.click());
+        await placementCheckButtons.each(async (btn) => await btn?.click());
         await popoverPreventClosing.togglePopover();
 
         await popoverBasic.openByHover();

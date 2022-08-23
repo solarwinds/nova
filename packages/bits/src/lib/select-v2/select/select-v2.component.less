@@ -4,7 +4,9 @@
 @import (reference) "../../../styles/nui-framework-colors.less";
 
 @min-width: 100px;
-@line-height: calc(@nui-space-lg - (2 * @nui-space-xs) - (2 * @nui-line-default)); // @nui-space-xs for padding, @nui-line-default - for borders
+@line-height: calc(
+    @nui-space-lg - (2 * @nui-space-xs) - (2 * @nui-line-default)
+); // @nui-space-xs for padding, @nui-line-default - for borders
 
 .nui-select-v2 {
     .button-base();
@@ -86,5 +88,3 @@
         .text-overflow(ellipsis);
     }
 }
-
-

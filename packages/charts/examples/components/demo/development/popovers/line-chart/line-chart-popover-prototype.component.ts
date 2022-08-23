@@ -1,8 +1,19 @@
 import { Component, OnInit } from "@angular/core";
-import {
-    Chart, ChartAssist, ChartPopoverPlugin, IChartSeries, ILineAccessors, IXYScales, LineAccessors, LinearScale, LineRenderer, TimeScale, XYGrid,
-} from "@nova-ui/charts";
 import moment from "moment/moment";
+
+import {
+    Chart,
+    ChartAssist,
+    ChartPopoverPlugin,
+    IChartSeries,
+    ILineAccessors,
+    IXYScales,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    TimeScale,
+    XYGrid,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "line-chart-popover-prototype",
@@ -21,14 +32,19 @@ export class LineChartPopoverPrototypeComponent implements OnInit {
         };
         const renderer = new LineRenderer();
         // providing chartAssist colors and markers to LineAccessors will share them with the line chart
-        const accessors = new LineAccessors(this.chartAssist.palette.standardColors, this.chartAssist.markers);
+        const accessors = new LineAccessors(
+            this.chartAssist.palette.standardColors,
+            this.chartAssist.markers
+        );
 
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(s => ({
-            ...s,
-            scales,
-            renderer,
-            accessors,
-        }));
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
+            (s) => ({
+                ...s,
+                scales,
+                renderer,
+                accessors,
+            })
+        );
 
         // plugin setup
         this.chart.addPlugin(this.popoverPlugin);

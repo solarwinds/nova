@@ -1,10 +1,4 @@
-import {
-    Component,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-} from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 
 import { SeverityLevels } from "./public-api";
 
@@ -40,7 +34,7 @@ export class DialogHeaderComponent implements OnInit {
         }
     }
 
-    public innerClose (event: any) {
+    public innerClose(event: any) {
         this.closed.emit(event);
     }
 }

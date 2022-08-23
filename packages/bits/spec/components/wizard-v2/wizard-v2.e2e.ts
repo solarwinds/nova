@@ -2,9 +2,9 @@ import { by, element, Key } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
-import { WizardV2Atom } from "./wizard-v2.atom";
-import { SpinnerAtom } from "../spinner/spinner.atom";
 import { ButtonAtom } from "../button/button.atom";
+import { SpinnerAtom } from "../spinner/spinner.atom";
+import { WizardV2Atom } from "./wizard-v2.atom";
 
 describe("USERCONTROL Wizard V2: ", () => {
     let wizard: WizardV2Atom;
@@ -17,13 +17,22 @@ describe("USERCONTROL Wizard V2: ", () => {
         await Helpers.prepareBrowser("wizard-v2/test");
 
         wizard = Atom.find(WizardV2Atom, "nui-wizard-v2-horizontal");
-        wizardDialog = Atom.find(WizardV2Atom, "nui-wizard-v2-horizontal-dialog");
-        wizardDynamic = Atom.find(WizardV2Atom, "nui-wizard-horizontal-dynamic");
-        openWizardDialogBtn = Atom.find(ButtonAtom, "nui-wizard-dialog-trigger");
+        wizardDialog = Atom.find(
+            WizardV2Atom,
+            "nui-wizard-v2-horizontal-dialog"
+        );
+        wizardDynamic = Atom.find(
+            WizardV2Atom,
+            "nui-wizard-horizontal-dynamic"
+        );
+        openWizardDialogBtn = Atom.find(
+            ButtonAtom,
+            "nui-wizard-dialog-trigger"
+        );
         removeStepBtn = Atom.find(ButtonAtom, "nui-remove-wizard-step-button");
     });
 
-    describe("wizard v2 > ",  () => {
+    describe("wizard v2 > ", () => {
         it("should have 3 steps", async () => {
             const steps = await wizard.steps;
 
@@ -42,7 +51,9 @@ describe("USERCONTROL Wizard V2: ", () => {
             await wizard.selectStep(0);
             await wizard.footer.nextButton.click();
 
-            const hasClass = wizard.getHeader(1).hasClass("nui-wizard-step-header--selected");
+            const hasClass = wizard
+                .getHeader(1)
+                .hasClass("nui-wizard-step-header--selected");
 
             expect(hasClass).toEqual(true);
         });
@@ -57,12 +68,14 @@ describe("USERCONTROL Wizard V2: ", () => {
             Helpers.pressKey(Key.ESCAPE);
         });
 
-        it("should wizard be displayed",  async () => {
+        it("should wizard be displayed", async () => {
             expect(await wizardDialog.isDisplayed()).toEqual(true);
         });
 
-        it("should wizard disappear when CANCEL button is pressed",  async () => {
-            const cancelBtn = wizardDialog.footer.getElement().element(by.className("cancel"));
+        it("should wizard disappear when CANCEL button is pressed", async () => {
+            const cancelBtn = wizardDialog.footer
+                .getElement()
+                .element(by.className("cancel"));
 
             await cancelBtn.click();
 
@@ -81,14 +94,18 @@ describe("USERCONTROL Wizard V2: ", () => {
             await firstStepHeader.click();
             await wizardDialog.moveToFinalStep();
 
-            const finishButton = wizardDialog.footer.getElement().element(by.className("complete"));
+            const finishButton = wizardDialog.footer
+                .getElement()
+                .element(by.className("complete"));
 
             await finishButton.click();
             await openWizardDialogBtn.click();
 
             const lastHeader = wizardDialog.getHeader(3);
 
-            expect(await lastHeader.hasClass("nui-wizard-step-header--selected")).toEqual(true)
+            expect(
+                await lastHeader.hasClass("nui-wizard-step-header--selected")
+            ).toEqual(true);
             await Helpers.pressKey(Key.ESCAPE);
         });
     });
@@ -97,7 +114,12 @@ describe("USERCONTROL Wizard V2: ", () => {
         let addButton: ButtonAtom;
 
         beforeEach(() => {
-            addButton = new ButtonAtom(wizardDynamic.getStep(0).getElement().element(by.css(".nui-button.add")));
+            addButton = new ButtonAtom(
+                wizardDynamic
+                    .getStep(0)
+                    .getElement()
+                    .element(by.css(".nui-button.add"))
+            );
         });
 
         it("should add a step dynamically", async () => {

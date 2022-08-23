@@ -1,13 +1,17 @@
 <ng-container *ngIf="pizza && pizza[rootNode]">
-    <ng-container nuiComponentPortal
-                  [componentId]="rootNode"
-                  [componentType]="pizza[rootNode]?.componentType"
-                  [properties]="pizza[rootNode]?.properties"
-                  [providers]="pizza[rootNode]?.providers"
-                  [outputs]="outputs"
-                  (output)="onOutput($event)"
-                  #componentPortal="nuiComponentPortal">
-        <ng-template [cdkPortalOutlet]="componentPortal.portal"
-                     (attached)="componentPortal.attached($event)"></ng-template>
+    <ng-container
+        nuiComponentPortal
+        [componentId]="rootNode"
+        [componentType]="pizza[rootNode]?.componentType"
+        [properties]="pizza[rootNode]?.properties"
+        [providers]="pizza[rootNode]?.providers"
+        [outputs]="outputs"
+        (output)="onOutput($event)"
+        #componentPortal="nuiComponentPortal"
+    >
+        <ng-template
+            [cdkPortalOutlet]="componentPortal.portal"
+            (attached)="componentPortal.attached($event)"
+        ></ng-template>
     </ng-container>
 </ng-container>

@@ -1,11 +1,17 @@
-import { EventBus, IDataSource, IEvent, IFilteringOutputs, IFilteringParticipants } from "@nova-ui/bits";
 import { Subject } from "rxjs";
+
+import {
+    EventBus,
+    IDataSource,
+    IEvent,
+    IFilteringOutputs,
+    IFilteringParticipants,
+} from "@nova-ui/bits";
 
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { REFRESH } from "../../services/types";
 import { PizzagnaLayer } from "../../types";
-
 import { TimeseriesDataSourceAdapter } from "./timeseries-data-source-adapter";
 import { ITimeseriesDataSourceAdapterConfiguration } from "./types";
 
@@ -17,10 +23,11 @@ class MockDataSource implements IDataSource {
         return null;
     }
 
-    public registerComponent(components: Partial<IFilteringParticipants>): void { }
+    public registerComponent(
+        components: Partial<IFilteringParticipants>
+    ): void {}
 
-    public deregisterComponent(componentKey: string) { }
-
+    public deregisterComponent(componentKey: string) {}
 }
 
 describe("TimeseriesDataSourceAdapter > ", () => {
@@ -34,8 +41,15 @@ describe("TimeseriesDataSourceAdapter > ", () => {
         eventBus = new EventBus();
         dataSource = new MockDataSource();
         dynamicComponentCreator = new DynamicComponentCreator();
-        pizzagnaService = new PizzagnaService(eventBus, dynamicComponentCreator);
-        adapter = new TimeseriesDataSourceAdapter(eventBus, dataSource, pizzagnaService);
+        pizzagnaService = new PizzagnaService(
+            eventBus,
+            dynamicComponentCreator
+        );
+        adapter = new TimeseriesDataSourceAdapter(
+            eventBus,
+            dataSource,
+            pizzagnaService
+        );
     });
 
     it("should invoke dataSource.applyFilters on eventBus REFRESH", () => {
@@ -69,14 +83,25 @@ describe("TimeseriesDataSourceAdapter > ", () => {
             ],
         };
 
-        adapter.updateConfiguration({ series: [{ id: "sourceId", label: "adapterLabel", selectedSeriesId: "sourceId"}] });
+        adapter.updateConfiguration({
+            series: [
+                {
+                    id: "sourceId",
+                    label: "adapterLabel",
+                    selectedSeriesId: "sourceId",
+                },
+            ],
+        });
 
         dataSource.outputsSubject.next(testFilteringOutput);
-        expect(spy).toHaveBeenCalledWith({
-            pizzagnaKey: PizzagnaLayer.Data,
-            componentId: undefined,
-            propertyPath: [undefined],
-        } as never, testAdapterOutput);
+        expect(spy).toHaveBeenCalledWith(
+            {
+                pizzagnaKey: PizzagnaLayer.Data,
+                componentId: undefined,
+                propertyPath: [undefined],
+            } as never,
+            testAdapterOutput
+        );
     });
 
     describe("updateConfiguration > ", () => {
@@ -92,11 +117,14 @@ describe("TimeseriesDataSourceAdapter > ", () => {
                 series: [],
             };
             dataSource.outputsSubject.next(testFilteringOutput);
-            expect(spy).toHaveBeenCalledWith({
-                pizzagnaKey: PizzagnaLayer.Data,
-                componentId: testProperties.componentId,
-                propertyPath: [testProperties.propertyPath],
-            }, testFilteringOutput);
+            expect(spy).toHaveBeenCalledWith(
+                {
+                    pizzagnaKey: PizzagnaLayer.Data,
+                    componentId: testProperties.componentId,
+                    propertyPath: [testProperties.propertyPath],
+                },
+                testFilteringOutput
+            );
         });
     });
 
@@ -107,5 +135,4 @@ describe("TimeseriesDataSourceAdapter > ", () => {
             expect(data).toEqual(value);
         });
     });
-
 });

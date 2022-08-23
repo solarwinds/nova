@@ -167,4 +167,3 @@ export interface IDataField {
     dataType: string;
     sortable?: boolean;
 }
-

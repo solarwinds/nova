@@ -1,26 +1,33 @@
 import { Component } from "@angular/core";
+
 import { IMenuGroup } from "@nova-ui/bits";
 
 @Component({
     selector: "expander-test",
     templateUrl: "./expander-test.component.html",
 })
-
 export class ExpanderTestComponent {
     public itemsSource: IMenuGroup[] = [
         {
-            header: "Group 1", itemsSource: [
-                { title: $localize`Item 1`, itemType: "action", action: this.actionDone },
-                { title: $localize`Item 2`, itemType: "action", action: () => alert($localize`hello`) },
+            header: "Group 1",
+            itemsSource: [
+                {
+                    title: $localize`Item 1`,
+                    itemType: "action",
+                    action: this.actionDone,
+                },
+                {
+                    title: $localize`Item 2`,
+                    itemType: "action",
+                    action: () => alert($localize`hello`),
+                },
             ],
         },
         {
-            itemsSource: [
-                { title: "Item 3" },
-            ],
+            itemsSource: [{ title: "Item 3" }],
         },
     ];
-    constructor() { }
+    constructor() {}
 
     public actionDone(): void {
         console.log("Action Done");

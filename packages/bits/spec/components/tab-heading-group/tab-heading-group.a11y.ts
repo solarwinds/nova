@@ -1,9 +1,10 @@
 import { browser } from "protractor";
+
 import { assertA11y, Helpers } from "../../helpers";
 import { TabHeadingAtom, TabHeadingGroupAtom } from "../public_api";
 
 describe("a11y: tab-heading-group", () => {
-    let rulesToDisable: string[] = [
+    const rulesToDisable: string[] = [
         "color-contrast", // NUI-6014
     ];
 
@@ -16,6 +17,10 @@ describe("a11y: tab-heading-group", () => {
     });
 
     it("should check a11y of tab-heading-group", async () => {
-        await assertA11y(browser, TabHeadingGroupAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(
+            browser,
+            TabHeadingGroupAtom.CSS_CLASS,
+            rulesToDisable
+        );
     });
 });

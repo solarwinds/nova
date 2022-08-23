@@ -2,7 +2,6 @@ import { NgModule } from "@angular/core";
 
 import { NuiCommonModule } from "../../common/common.module";
 import { NuiIconModule } from "../icon/icon.module";
-
 import { TabGroupComponent } from "./tab-group/tab-group.component";
 import { TabHeadingGroupComponent } from "./tab-heading-group/tab-heading-group.component";
 import { TabHeadingComponent } from "./tab-heading/tab-heading.component";
@@ -22,10 +21,7 @@ import { TabComponent } from "./tab/tab.component";
         TabHeadingComponent,
         TabHeadingGroupComponent,
     ],
-    imports: [
-        NuiCommonModule,
-        NuiIconModule,
-    ],
+    imports: [NuiCommonModule, NuiIconModule],
     exports: [
         TabHeadingCustomTemplateRefDirective,
         TabHeadingDirective,

@@ -1,4 +1,4 @@
-export * from "./date-time-picker-basic/date-time-picker-basic.example.component" ;
+export * from "./date-time-picker-basic/date-time-picker-basic.example.component";
 export * from "./date-time-picker-empty-state/date-time-picker-empty-state.component";
 export * from "./date-time-picker-docs/date-time-picker-docs.example.component";
 export * from "./date-time-picker-test/date-time-picker-test.component";

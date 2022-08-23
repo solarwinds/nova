@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
-import { IDatePickerDisabledDate } from "@nova-ui/bits";
 import moment from "moment/moment";
+
+import { IDatePickerDisabledDate } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-date-picker-disable-date-example",

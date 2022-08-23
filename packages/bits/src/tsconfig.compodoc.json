@@ -1,5 +1,4 @@
 {
-    "extends": "../tsconfig.json",
     "compilerOptions": {
         "outDir": "../out-tsc/app",
         "baseUrl": "./",
@@ -11,5 +10,6 @@
         "**/*.spec.ts",
         "**/*spec-helper*/*",
         "**/*spec-helper*"
-    ]
+    ],
+    "extends": "../tsconfig.json"
 }

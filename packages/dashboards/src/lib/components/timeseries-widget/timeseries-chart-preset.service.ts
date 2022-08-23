@@ -11,16 +11,25 @@ import { IChartPreset, TimeseriesChartPreset } from "./types";
     providedIn: "root",
 })
 export class TimeseriesChartPresetService {
-
     public presets: Record<TimeseriesChartPreset, IChartPreset>;
 
     constructor() {
         this.presets = {
-            [TimeseriesChartPreset.Line]: { componentType: LineChartComponent.lateLoadKey },
-            [TimeseriesChartPreset.StackedArea]: { componentType: StackedAreaChartComponent.lateLoadKey },
-            [TimeseriesChartPreset.StackedPercentageArea]: { componentType: StackedPercentageAreaChartComponent.lateLoadKey },
-            [TimeseriesChartPreset.StackedBar]: { componentType: StackedBarChartComponent.lateLoadKey },
-            [TimeseriesChartPreset.StatusBar]: { componentType: StatusBarChartComponent.lateLoadKey },
+            [TimeseriesChartPreset.Line]: {
+                componentType: LineChartComponent.lateLoadKey,
+            },
+            [TimeseriesChartPreset.StackedArea]: {
+                componentType: StackedAreaChartComponent.lateLoadKey,
+            },
+            [TimeseriesChartPreset.StackedPercentageArea]: {
+                componentType: StackedPercentageAreaChartComponent.lateLoadKey,
+            },
+            [TimeseriesChartPreset.StackedBar]: {
+                componentType: StackedBarChartComponent.lateLoadKey,
+            },
+            [TimeseriesChartPreset.StatusBar]: {
+                componentType: StatusBarChartComponent.lateLoadKey,
+            },
         };
     }
 }

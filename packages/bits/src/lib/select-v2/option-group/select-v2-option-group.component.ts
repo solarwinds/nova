@@ -1,7 +1,8 @@
 import {
     AfterContentInit,
     ChangeDetectionStrategy,
-    Component, ContentChildren,
+    Component,
+    ContentChildren,
     forwardRef,
     HostBinding,
     Inject,
@@ -17,7 +18,6 @@ import { NUI_SELECT_V2_OPTION_PARENT_COMPONENT } from "../constants";
 import { SelectV2OptionComponent } from "../option/select-v2-option.component";
 import { IOptionedComponent } from "../types";
 
-
 /**
  * @ignore
  * Will be renamed in scope of the NUI-5797
@@ -27,10 +27,11 @@ import { IOptionedComponent } from "../types";
     template: "<ng-content></ng-content>",
     styleUrls: ["./select-v2-option-group.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    host: { "role": "group" },
+    host: { role: "group" },
 })
-export class SelectV2OptionGroupComponent implements AfterContentInit, OnDestroy {
-
+export class SelectV2OptionGroupComponent
+    implements AfterContentInit, OnDestroy
+{
     /** Whether the Option Group outfiltered */
     @HostBinding("class.hidden")
     public outfiltered: boolean = false;
@@ -40,16 +41,23 @@ export class SelectV2OptionGroupComponent implements AfterContentInit, OnDestroy
     private select: IOptionedComponent;
     private onDestroy$ = new Subject();
 
-    constructor(@Optional() @Inject(NUI_SELECT_V2_OPTION_PARENT_COMPONENT) parent: IOptionedComponent) {
+    constructor(
+        @Optional()
+        @Inject(NUI_SELECT_V2_OPTION_PARENT_COMPONENT)
+        parent: IOptionedComponent
+    ) {
         this.select = parent;
     }
-
 
     ngAfterContentInit(): void {
         if (this.select.isTypeaheadEnabled) {
             merge([this.select.valueChanged, this.select.valueSelected])
-                .pipe(takeUntil(this.onDestroy$)).subscribe(() => {
-                    this.outfiltered = every(this.options.toArray(), (option: SelectV2OptionComponent) => option.outfiltered);
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe(() => {
+                    this.outfiltered = every(
+                        this.options.toArray(),
+                        (option: SelectV2OptionComponent) => option.outfiltered
+                    );
                 });
         }
     }

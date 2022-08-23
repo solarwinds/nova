@@ -4,4 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-dashboard-overview-docs",
     templateUrl: "./overview-docs.component.html",
 })
-export class OverviewDocsComponent { }
+export class OverviewDocsComponent {}

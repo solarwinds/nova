@@ -8,15 +8,16 @@ import { ProgressAtom } from "./progress.atom";
 const name: string = "Progress";
 
 describe(`Visual tests: ${name}`, () => {
-    let camera: Camera,
-        startProgressBasic: ButtonAtom;
+    let camera: Camera, startProgressBasic: ButtonAtom;
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("progress/progress-visual-test");
         await Helpers.disableCSSAnimations(Animations.ALL);
 
-        startProgressBasic = new ButtonAtom(element(by.id("nui-demo-start-basic-progress")));
-        
+        startProgressBasic = new ButtonAtom(
+            element(by.id("nui-demo-start-basic-progress"))
+        );
+
         camera = new Camera().loadFilm(browser, name);
     });
 
@@ -24,7 +25,9 @@ describe(`Visual tests: ${name}`, () => {
         await camera.turn.on();
 
         await startProgressBasic.click();
-        await browser.wait(ExpectedConditions.visibilityOf($(`.${ProgressAtom.CSS_CLASS}`)));
+        await browser.wait(
+            ExpectedConditions.visibilityOf($(`.${ProgressAtom.CSS_CLASS}`))
+        );
         await camera.say.cheese(`Default`);
 
         await Helpers.switchDarkTheme("on");

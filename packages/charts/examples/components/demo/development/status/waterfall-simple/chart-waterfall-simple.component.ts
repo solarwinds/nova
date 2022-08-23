@@ -1,7 +1,17 @@
 import { AfterViewInit, Component } from "@angular/core";
+
 import {
-    BandScale, BarHighlightStrategy, BarHorizontalGridConfig, BarRenderer, Chart, ChartPalette, CHART_PALETTE_CS1, HorizontalBarAccessors, LinearScale,
-    MappedValueProvider, XYGrid,
+    BandScale,
+    BarHighlightStrategy,
+    BarHorizontalGridConfig,
+    BarRenderer,
+    Chart,
+    ChartPalette,
+    CHART_PALETTE_CS1,
+    HorizontalBarAccessors,
+    LinearScale,
+    MappedValueProvider,
+    XYGrid,
 } from "@nova-ui/charts";
 
 /**
@@ -14,14 +24,15 @@ import {
     templateUrl: "./chart-waterfall-simple.component.html",
 })
 export class ChartWaterfallSimpleComponent implements AfterViewInit {
-
-    public palette = new ChartPalette(new MappedValueProvider<string>({
-        "connect": CHART_PALETTE_CS1[0],
-        "dns": CHART_PALETTE_CS1[1],
-        "send": CHART_PALETTE_CS1[2],
-        "ttfb": CHART_PALETTE_CS1[3],
-        "cdownload": CHART_PALETTE_CS1[4],
-    }));
+    public palette = new ChartPalette(
+        new MappedValueProvider<string>({
+            connect: CHART_PALETTE_CS1[0],
+            dns: CHART_PALETTE_CS1[1],
+            send: CHART_PALETTE_CS1[2],
+            ttfb: CHART_PALETTE_CS1[3],
+            cdownload: CHART_PALETTE_CS1[4],
+        })
+    );
 
     public gridChart = new Chart(new XYGrid(new BarHorizontalGridConfig()));
 
@@ -55,7 +66,8 @@ export class ChartWaterfallSimpleComponent implements AfterViewInit {
                     end: 178,
                 },
             ],
-        }, {
+        },
+        {
             category: "Category 2",
             data: [
                 {
@@ -146,7 +158,7 @@ export class ChartWaterfallSimpleComponent implements AfterViewInit {
             ],
         },
     ];
-    private scales: { x: LinearScale, y: BandScale };
+    private scales: { x: LinearScale; y: BandScale };
 
     public ngAfterViewInit() {
         const bandScale = new BandScale();
@@ -157,34 +169,36 @@ export class ChartWaterfallSimpleComponent implements AfterViewInit {
             y: bandScale,
             x: linearScale,
         };
-        this.scales.x.formatters.tick = (value: number) => `${Number(value / 1000).toFixed(1)}s`;
-        const renderer = new BarRenderer({ highlightStrategy: new BarHighlightStrategy("x") });
+        this.scales.x.formatters.tick = (value: number) =>
+            `${Number(value / 1000).toFixed(1)}s`;
+        const renderer = new BarRenderer({
+            highlightStrategy: new BarHighlightStrategy("x"),
+        });
         const accessors = new HorizontalBarAccessors();
-        accessors.data.color = (d: any) => this.palette.standardColors.get(d.type);
+        accessors.data.color = (d: any) =>
+            this.palette.standardColors.get(d.type);
 
         const categories: any[] = [];
         const seriesSet: any[] = [];
 
         this.listItems.forEach((item: any, i: number) => {
             categories.push(item.category);
-            seriesSet.push(
-                {
-                    id: `series-${i}`,
-                    name: `Series ${i}`,
-                    data: item.data.map((d: any) =>
-                        ({
-                            value: d.end - d.start,
-                            category: item.category,
-                            type: d.type,
-                            ["__bar"]: {
-                                start: d.start,
-                                end: d.end,
-                            },
-                        })),
-                    accessors,
-                    scales: this.scales,
-                    renderer,
-                });
+            seriesSet.push({
+                id: `series-${i}`,
+                name: `Series ${i}`,
+                data: item.data.map((d: any) => ({
+                    value: d.end - d.start,
+                    category: item.category,
+                    type: d.type,
+                    ["__bar"]: {
+                        start: d.start,
+                        end: d.end,
+                    },
+                })),
+                accessors,
+                scales: this.scales,
+                renderer,
+            });
         });
         bandScale.fixDomain(categories.reverse());
         this.gridChart.update(seriesSet);

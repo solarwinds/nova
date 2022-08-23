@@ -1,5 +1,18 @@
-import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit } from "@angular/core";
-import { DataSourceService, IDataSource, IFilteringOutputs } from "@nova-ui/bits";
+import {
+    ChangeDetectorRef,
+    Component,
+    Injectable,
+    OnDestroy,
+    OnInit,
+} from "@angular/core";
+import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { BehaviorSubject } from "rxjs";
+
+import {
+    DataSourceService,
+    IDataSource,
+    IFilteringOutputs,
+} from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     DEFAULT_PIZZAGNA_ROOT,
@@ -19,24 +32,26 @@ import {
     WellKnownProviders,
     WidgetTypesService,
 } from "@nova-ui/dashboards";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
-import { BehaviorSubject } from "rxjs";
 
 /**
  * A simple proportional data source to retrieve beer review counts by city
  */
 @Injectable()
-export class BeerReviewCountsByCityMockDataSource extends DataSourceService<IProportionalWidgetData>
-    implements IDataSource<IProportionalWidgetData>, OnDestroy {
+export class BeerReviewCountsByCityMockDataSource
+    extends DataSourceService<IProportionalWidgetData>
+    implements IDataSource<IProportionalWidgetData>, OnDestroy
+{
     // This is the ID we'll use to identify the provider
     public static providerId = "BeerReviewCountsByCityMockDataSource";
     public busy = new BehaviorSubject(false);
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             setTimeout(() => {
-                this.outputsSubject.next({ result: getMockBeerReviewCountsByCity() });
+                this.outputsSubject.next({
+                    result: getMockBeerReviewCountsByCity(),
+                });
                 this.busy.next(false);
             }, 300);
         });
@@ -73,13 +88,14 @@ export class ProportionalWidgetExampleComponent implements OnInit {
         // In general, the ProviderRegistryService is used for making entities available for injection into dynamically loaded components.
         private providerRegistry: ProviderRegistryService,
         private changeDetectorRef: ChangeDetectorRef
-
-    ) {
-    }
+    ) {}
 
     public ngOnInit(): void {
         // Grabbing the widget's default template which will be needed as a parameter for setNode
-        const widgetTemplate = this.widgetTypesService.getWidgetType("proportional", 1);
+        const widgetTemplate = this.widgetTypesService.getWidgetType(
+            "proportional",
+            1
+        );
 
         // Registering our data sources as dropdown options in the widget editor/configurator
         // Note: This could also be done in the parent module's constructor so that
@@ -122,7 +138,8 @@ export class ProportionalWidgetExampleComponent implements OnInit {
         // the widget's configuration could potentially be populated from a database
         const widgetIndex: IWidgets = {
             // Complete the proportional widget with information coming from its type definition
-            [widgetConfig.id]: this.widgetTypesService.mergeWithWidgetType(widgetConfig),
+            [widgetConfig.id]:
+                this.widgetTypesService.mergeWithWidgetType(widgetConfig),
         };
 
         // Setting the widget dimensions and position (this is for gridster)
@@ -141,7 +158,6 @@ export class ProportionalWidgetExampleComponent implements OnInit {
             widgets: widgetIndex,
         };
     }
-
 }
 
 const widgetConfig: IWidget = {
@@ -150,34 +166,35 @@ const widgetConfig: IWidget = {
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
             [DEFAULT_PIZZAGNA_ROOT]: {
-                "providers": {
+                providers: {
                     [WellKnownProviders.Refresher]: {
-                        "properties": {
+                        properties: {
                             // Configuring the refresher interval so that our data source is invoked every ten minutes
-                            "interval": 60 * 10,
-                            "enabled": true,
+                            interval: 60 * 10,
+                            enabled: true,
                         } as IRefresherProperties,
                     } as Partial<IProviderConfiguration>,
                 },
             },
-            "header": {
-                "properties": {
-                    "title": "Beer Review Tally by City",
-                    "subtitle": "These People Love Beer",
+            header: {
+                properties: {
+                    title: "Beer Review Tally by City",
+                    subtitle: "These People Love Beer",
                 },
             },
-            "chart": {
-                "providers": {
+            chart: {
+                providers: {
                     [WellKnownProviders.DataSource]: {
                         // Setting the data source providerId for the chart
-                        "providerId": BeerReviewCountsByCityMockDataSource.providerId,
+                        providerId:
+                            BeerReviewCountsByCityMockDataSource.providerId,
                     } as IProviderConfiguration,
                 },
-                "properties": {
-                    "configuration": {
-                        "chartOptions": {
-                            "type": ProportionalWidgetChartTypes.DonutChart,
-                            "legendPlacement": LegendPlacement.Right,
+                properties: {
+                    configuration: {
+                        chartOptions: {
+                            type: ProportionalWidgetChartTypes.DonutChart,
+                            legendPlacement: LegendPlacement.Right,
                         } as IProportionalWidgetChartOptions,
                         // You can optionally define custom colors for the chart by setting the 'chartColors' configuration property
                         // "chartColors": [
@@ -190,11 +207,11 @@ const widgetConfig: IWidget = {
                         // ],
                         // or use-mapped structure
                         chartColors: {
-                            "Brno": "var(--nui-color-chart-five)",
-                            "kyiv": "var(--nui-color-chart-six)",
-                            "austin": "var(--nui-color-chart-seven)",
-                            "lisbon": "var(--nui-color-chart-eight)",
-                            "sydney": "var(--nui-color-chart-nine)",
+                            Brno: "var(--nui-color-chart-five)",
+                            kyiv: "var(--nui-color-chart-six)",
+                            austin: "var(--nui-color-chart-seven)",
+                            lisbon: "var(--nui-color-chart-eight)",
+                            sydney: "var(--nui-color-chart-nine)",
                             "nur-sultan": "var(--nui-color-chart-ten)",
                         },
                         prioritizeWidgetColors: false,

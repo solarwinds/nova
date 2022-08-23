@@ -1,9 +1,10 @@
 import { Inject, Injectable } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { EventBus, IEvent, immutableSet } from "@nova-ui/bits";
 import get from "lodash/get";
 import pick from "lodash/pick";
 import { takeUntil } from "rxjs/operators";
+
+import { EventBus, IEvent, immutableSet } from "@nova-ui/bits";
 
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
 import { PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../../../../types";
@@ -19,13 +20,17 @@ export class GenericArrayConverterService extends BaseConverter {
         return this.componentId.split("/")[0];
     }
 
-    constructor(@Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
-                                            previewService: PreviewService,
-                                            pizzagnaService: PizzagnaService) {
+    constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
+        previewService: PreviewService,
+        pizzagnaService: PizzagnaService
+    ) {
         super(eventBus, previewService, pizzagnaService);
     }
 
-    public updateConfiguration(properties: { formParts: IConverterFormPartsProperties[] }) {
+    public updateConfiguration(properties: {
+        formParts: IConverterFormPartsProperties[];
+    }) {
         if (properties && properties.formParts) {
             this.formParts = properties.formParts;
         }
@@ -36,10 +41,16 @@ export class GenericArrayConverterService extends BaseConverter {
 
         const updatedPizzagna = this.formParts.reduce((res, v) => {
             const previewSlice = get(preview, v.previewPath) as any[];
-            const componentInArray = previewSlice?.find(c => c.id === this.previewComponentId);
+            const componentInArray = previewSlice?.find(
+                (c) => c.id === this.previewComponentId
+            );
             const fromPreview = pick(componentInArray, v.keys);
 
-            res = immutableSet(res, `${PizzagnaLayer.Data}.${this.componentId}.properties`, fromPreview);
+            res = immutableSet(
+                res,
+                `${PizzagnaLayer.Data}.${this.componentId}.properties`,
+                fromPreview
+            );
 
             return res;
         }, this.pizzagnaService.pizzagna);
@@ -49,12 +60,14 @@ export class GenericArrayConverterService extends BaseConverter {
     public toPreview(form: FormGroup) {
         form.valueChanges
             .pipe(takeUntil(this.destroy$))
-            .subscribe(formData => {
+            .subscribe((formData) => {
                 const updatedPreview = this.formParts.reduce((p, v) => {
                     const outPath = v.previewOutputPath || v.previewPath;
 
                     const preview = get(p, outPath) as any[];
-                    const compIndex = preview.findIndex(c => c.id === this.previewComponentId);
+                    const compIndex = preview.findIndex(
+                        (c) => c.id === this.previewComponentId
+                    );
                     const fromPreview = preview[compIndex];
 
                     const fromForm = pick(formData, v.keys);
@@ -66,5 +79,4 @@ export class GenericArrayConverterService extends BaseConverter {
                 this.updatePreview(updatedPreview);
             });
     }
-
 }

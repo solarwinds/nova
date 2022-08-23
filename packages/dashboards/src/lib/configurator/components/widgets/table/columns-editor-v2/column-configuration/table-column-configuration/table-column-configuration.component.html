@@ -1,8 +1,12 @@
 <div [formGroup]="form">
-    <nui-description-configuration-v2 [formControl]="form.controls['description']"
-                                                   [isWidthMessageDisplayed]="isWidthMessageDisplayed">
+    <nui-description-configuration-v2
+        [formControl]="form.controls['description']"
+        [isWidthMessageDisplayed]="isWidthMessageDisplayed"
+    >
     </nui-description-configuration-v2>
 
-    <nui-presentation-configuration-v2 [formControl]="form.controls['presentation']">
+    <nui-presentation-configuration-v2
+        [formControl]="form.controls['presentation']"
+    >
     </nui-presentation-configuration-v2>
 </div>

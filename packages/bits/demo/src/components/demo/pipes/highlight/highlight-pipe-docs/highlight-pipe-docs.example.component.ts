@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-pipes-docs-example",
     templateUrl: "./highlight-pipe-docs.example.component.html",
 })
-
 export class HighlightPipeDocsExampleComponent {}

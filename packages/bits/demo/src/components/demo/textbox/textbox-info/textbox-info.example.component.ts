@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-textbox-info-example",
     templateUrl: "./textbox-info.example.component.html",
 })
-
 export class TextboxInfoExampleComponent {}

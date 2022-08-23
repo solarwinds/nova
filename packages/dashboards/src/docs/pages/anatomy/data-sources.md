@@ -16,6 +16,7 @@ It is highly recommended to implement the data source on top of the [DataSourceS
 that will allow Nova to introduce new functionality to the data source so that you won't need to add that.
 
 ## Data Source Features
+
 Data Source Features is way to describe the capabilities of a data source. For example, you can set up the data source
 so that it can sort the data and reflect this set up in the configuration. That will allow some parts of the application working
 with the Features.
@@ -23,6 +24,7 @@ with the Features.
 Data Source Features are implemented using [IDataSourceFeaturesConfiguration](https://ux.solarwinds.io/nova/docs/nova-bits/latest/sdk/api-docs-ng2/interfaces/IDataSourceFeaturesConfiguration.html) which is used in [IDataSource](https://ux.solarwinds.io/nova/docs/bits/latest/sdk/api-docs-ng2/interfaces/IDataSource.html).
 
 The example of the features configuration:
+
 ```
 const supportedFeatures: IDataSourceFeatures = {
     search: { enabled: true },
@@ -34,12 +36,13 @@ It is highly recommended to use [DataSourceFeatures](https://ux.solarwinds.io/no
 
 You can check the example of GoogleBooks API [DataSource](../widget-types/table/table-with-search.html) in the example.
 
-
 Currently supported Features by Nova:
-- Search ([Table Widget](../widget-types/table/table-with-search.html))
+
+-   Search ([Table Widget](../widget-types/table/table-with-search.html))
 
 Planned support:
-- TBD
+
+-   TBD
 
 ## DataFields Config
 
@@ -75,15 +78,17 @@ export class MyDataSource<T = any> extends ServerSideDataSource<T> implements ID
 An adapter is another specialized type of a provider, whose purpose is to invoke a data source, wait for
 the result, and assign it to the right component. This provider type was introduced for the following
 reasons:
-- To maintain the pure nature of a widget that accepts all data via component inputs thereby respecting
-one-way data binding.
-- To separate responsibilities between the data source, the component that displays the data, and the
-bridge between them.
+
+-   To maintain the pure nature of a widget that accepts all data via component inputs thereby respecting
+    one-way data binding.
+-   To separate responsibilities between the data source, the component that displays the data, and the
+    bridge between them.
 
 The basic implementation is called
 [`NOVA_DATASOURCE_ADAPTER`](../../miscellaneous/variables.html#NOVA_DATASOURCE_ADAPTER), and it invokes a
 data source whenever the [`REFRESH`](../../miscellaneous/variables.html#REFRESH) event is received on the
 pizzagna event bus and passes the result to a component property path specified in the adapter's properties.
+
 ```
 ...
 "providers": {
@@ -99,8 +104,10 @@ pizzagna event bus and passes the result to a component property path specified 
 ```
 
 ## Below-fold lazy loading
+
 If You want for your widgets to load the data only after they are visible you have to configure the dashboard
 via `belowFoldLazyLoadingConfig` input. For example:
+
 ```
 public belowFoldLazyLoadingConfig: IDashboardBelowFoldLazyLoadingConfig = {
     enabled: true,
@@ -115,6 +122,7 @@ public belowFoldLazyLoadingConfig: IDashboardBelowFoldLazyLoadingConfig = {
 
 Also, if you want to load data only widgets that are in the viewport, and remove the widgets from the viewport
 if they were already loaded, put `reloadWidgetsOnScroll` of `configuration` part to `true`.
+
 ```
 public belowFoldLazyLoadingConfig: IDashboardBelowFoldLazyLoadingConfig = {
     enabled: true,

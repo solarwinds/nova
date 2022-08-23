@@ -9,6 +9,9 @@ import {
     OnInit,
     ViewChild,
 } from "@angular/core";
+import { BehaviorSubject, Subject } from "rxjs";
+import { filter, switchMap, takeUntil, tap } from "rxjs/operators";
+
 import {
     DataSourceService,
     IFilteringOutputs,
@@ -16,8 +19,6 @@ import {
     INovaFilters,
     VirtualViewportManager,
 } from "@nova-ui/bits";
-import { BehaviorSubject, Subject } from "rxjs";
-import { filter, switchMap, takeUntil, tap } from "rxjs/operators";
 
 @Component({
     selector: "nui-table-virtual-scroll-real-api-example",
@@ -26,8 +27,11 @@ import { filter, switchMap, takeUntil, tap } from "rxjs/operators";
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [VirtualViewportManager],
 })
-export class TableVirtualScrollRealApiExampleComponent implements AfterViewInit, OnDestroy, OnInit {
-    @ViewChild(CdkVirtualScrollViewport, {static: false}) viewport: CdkVirtualScrollViewport;
+export class TableVirtualScrollRealApiExampleComponent
+    implements AfterViewInit, OnDestroy, OnInit
+{
+    @ViewChild(CdkVirtualScrollViewport, { static: false })
+    viewport: CdkVirtualScrollViewport;
     // This value is obtained from the server and used to evaluate the total number of pages to display
     private _totalItems: number = 0;
     private _isBusy: boolean = false;
@@ -46,7 +50,18 @@ export class TableVirtualScrollRealApiExampleComponent implements AfterViewInit,
     public range: number = 40;
     // The dynamically changed array of items to render by the table
     public users: IRandomUserTableModel[] = [];
-    public displayedColumns: string[] = ["no", "nameTitle", "nameFirst", "nameLast", "gender", "country", "city", "postcode", "email", "cell"];
+    public displayedColumns: string[] = [
+        "no",
+        "nameTitle",
+        "nameFirst",
+        "nameLast",
+        "gender",
+        "country",
+        "city",
+        "postcode",
+        "email",
+        "cell",
+    ];
     public gridHeight = 400;
     public makeSticky: boolean = true;
 
@@ -60,7 +75,7 @@ export class TableVirtualScrollRealApiExampleComponent implements AfterViewInit,
     ngOnInit() {
         this.dataSource.busy
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(busy => {
+            .subscribe((busy) => {
                 this._isBusy = busy;
             });
     }
@@ -73,21 +88,27 @@ export class TableVirtualScrollRealApiExampleComponent implements AfterViewInit,
             // Note: Initializing the stream with the desired page size, based on which
             // VirtualViewportManager will perform the observations and will emit
             // distinct ranges with step equal to provided pageSize
-            .observeNextPage$({pageSize: this.range}).pipe(
-            // Note: In case we know the total number of items we can stop the stream when dataset end is reached
-            // Otherwise we can let VirtualViewportManager to stop when last received page range will not match requested range
-                filter(range => this.totalItems ? this.totalItems >= range.end : true),
-                tap(() => this.dataSource.applyFilters()),
+            .observeNextPage$({ pageSize: this.range })
+            .pipe(
+                // Note: In case we know the total number of items we can stop the stream when dataset end is reached
+                // Otherwise we can let VirtualViewportManager to stop when last received page range will not match requested range
+                filter((range) =>
+                    this.totalItems ? this.totalItems >= range.end : true
+                ),
+                tap(async () => this.dataSource.applyFilters()),
                 // Note: Using the same stream to subscribe to the outputsSubject and update the items list
-                switchMap(() => this.dataSource.outputsSubject.pipe(
-                    tap((outputs: IFilteringOutputs) => {
-                        this._totalItems = outputs.totalItems;
-                        this.users = outputs.repeat.itemsSource || [];
-                        this.cd.detectChanges();
-                    })
-                )),
+                switchMap(() =>
+                    this.dataSource.outputsSubject.pipe(
+                        tap((outputs: IFilteringOutputs) => {
+                            this._totalItems = outputs.totalItems;
+                            this.users = outputs.repeat.itemsSource || [];
+                            this.cd.detectChanges();
+                        })
+                    )
+                ),
                 takeUntil(this.onDestroy$)
-            ).subscribe();
+            )
+            .subscribe();
     }
 
     public ngOnDestroy(): void {
@@ -97,7 +118,7 @@ export class TableVirtualScrollRealApiExampleComponent implements AfterViewInit,
 
     private registerVirtualScroll() {
         this.dataSource.registerComponent({
-            virtualScroll: {componentInstance: this.viewportManager},
+            virtualScroll: { componentInstance: this.viewportManager },
         });
     }
 }
@@ -107,66 +128,84 @@ export class RandomuserTableDataSource extends DataSourceService<IRandomUserTabl
     private readonly url = "https://randomuser.me/api";
     private readonly seed = "sw";
 
-    private cache = Array.from<IRandomUserTableModel>({length: 0});
+    private cache = Array.from<IRandomUserTableModel>({ length: 0 });
     public busy = new BehaviorSubject(false);
 
-    public async getFilteredData(filters: INovaFilters): Promise<INovaFilteringOutputs> {
+    public async getFilteredData(
+        filters: INovaFilters
+    ): Promise<INovaFilteringOutputs> {
         this.busy.next(true);
-        const virtualScrollFilter = filters.virtualScroll && filters.virtualScroll.value;
-        const start = virtualScrollFilter ? filters.virtualScroll?.value.start : 0;
+        const virtualScrollFilter =
+            filters.virtualScroll && filters.virtualScroll.value;
+        const start = virtualScrollFilter
+            ? filters.virtualScroll?.value.start
+            : 0;
         const end = virtualScrollFilter ? filters.virtualScroll?.value.end : 0;
 
         // We're returning Promise with setTimeout here to make the response from the server longer, as the API being used sends responses
         // almost immediately. We need it longer to be able the show the spinner component on data load
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             setTimeout(() => {
-                this.getData(start, end).then((response: UsersQueryResponse | undefined) => {
-                    if (!response) {
-                        return;
-                    }
+                this.getData(start, end).then(
+                    (response: UsersQueryResponse | undefined) => {
+                        if (!response) {
+                            return;
+                        }
 
-                    this.cache = this.cache.concat(response.users);
-                    this.dataSubject.next(this.cache);
-                    resolve({
-                        repeat: {
-                            itemsSource: this.cache,
-                        },
-                        // This API can return thousands of results, however doesn't return the max number of results,
-                        // so we set the max number of result manually here.
-                        totalItems: 200,
-                        start: response.start,
-                    });
-                    this.busy.next(false);
-                });
+                        this.cache = this.cache.concat(response.users);
+                        this.dataSubject.next(this.cache);
+                        resolve({
+                            repeat: {
+                                itemsSource: this.cache,
+                            },
+                            // This API can return thousands of results, however doesn't return the max number of results,
+                            // so we set the max number of result manually here.
+                            totalItems: 200,
+                            start: response.start,
+                        });
+                        this.busy.next(false);
+                    }
+                );
             }, 2000);
         });
     }
 
-    public async getData(start: number = 0, end: number = 20): Promise<UsersQueryResponse | undefined> {
+    public async getData(
+        start: number = 0,
+        end: number = 20
+    ): Promise<UsersQueryResponse | undefined> {
         let response: IRandomUserResponse | undefined;
         const delta: number = end - start;
         try {
-            response = await
-            (await fetch(`${this.url}/?page=${end / delta}&results=${delta}&seed=${this.seed}`))
-                .json();
+            response = await (
+                await fetch(
+                    `${this.url}/?page=${end / delta}&results=${delta}&seed=${
+                        this.seed
+                    }`
+                )
+            ).json();
             return {
-                users: response?.results.map((result: IRandomUserResults, i: number) => ({
-                    no: this.cache.length + i + 1,
-                    nameTitle: result.name.title,
-                    nameFirst: result.name.first,
-                    nameLast: result.name.last,
-                    gender: result.gender,
-                    country: result.location.country,
-                    city: result.location.city,
-                    postcode: result.location.postcode,
-                    email: result.email,
-                    cell: result.cell,
-                })),
+                users: response?.results.map(
+                    (result: IRandomUserResults, i: number) => ({
+                        no: this.cache.length + i + 1,
+                        nameTitle: result.name.title,
+                        nameFirst: result.name.first,
+                        nameLast: result.name.last,
+                        gender: result.gender,
+                        country: result.location.country,
+                        city: result.location.city,
+                        postcode: result.location.postcode,
+                        email: result.email,
+                        cell: result.cell,
+                    })
+                ),
                 total: response?.results.length,
                 start: start,
             } as UsersQueryResponse;
         } catch (e) {
-            console.error("Error responding from server. Please visit https://https://randomuser.me/ to see if it's available");
+            console.error(
+                "Error responding from server. Please visit https://https://randomuser.me/ to see if it's available"
+            );
         }
     }
 }
@@ -241,10 +280,10 @@ export interface IRandomUserTableModel {
 
 export interface IRandomUserLocation {
     city: string;
-    coordinates: { latitude: string, longitude: string };
+    coordinates: { latitude: string; longitude: string };
     country: string;
     postcode: number;
     state: string;
-    street: { number: number, name: string };
+    street: { number: number; name: string };
     timezone: any;
 }

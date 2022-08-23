@@ -1,11 +1,15 @@
 import { Overlay } from "@angular/cdk/overlay";
 import { SimpleChange, SimpleChanges } from "@angular/core";
-import { ComponentFixture, fakeAsync, flush, TestBed } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    flush,
+    TestBed,
+} from "@angular/core/testing";
 import noop from "lodash/noop";
 
 import { LoggerService } from "../../services/log-service";
-import {NuiTooltipModule} from "../tooltip/tooltip.module";
-
+import { NuiTooltipModule } from "../tooltip/tooltip.module";
 import { SpinnerSize } from "./public-api";
 import { SpinnerComponent } from "./spinner.component";
 describe("components", () => {
@@ -18,20 +22,17 @@ describe("components", () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [NuiTooltipModule],
-                declarations: [
-                    SpinnerComponent,
-                ],
-                providers: [
-                    LoggerService,
-                    Overlay,
-                ],
+                declarations: [SpinnerComponent],
+                providers: [LoggerService, Overlay],
             });
-            spyOnProperty(TestBed.inject(LoggerService), "warn").and.returnValue(noop);
+            spyOnProperty(
+                TestBed.inject(LoggerService),
+                "warn"
+            ).and.returnValue(noop);
 
             componentFixture = TestBed.createComponent(SpinnerComponent);
             subject = componentFixture.componentInstance;
         });
-
 
         it("should set isDeterminate value to true when percentage is specified as 0", () => {
             subject.percent = 0;
@@ -89,7 +90,9 @@ describe("components", () => {
 
             flush();
             componentFixture.detectChanges();
-            componentFixture.debugElement.nativeElement.querySelector(".nui-spinner__cancel").click();
+            componentFixture.debugElement.nativeElement
+                .querySelector(".nui-spinner__cancel")
+                .click();
             expect(spy).toHaveBeenCalled();
         }));
 
@@ -105,7 +108,10 @@ describe("components", () => {
 
             flush();
             componentFixture.detectChanges();
-            const label = componentFixture.debugElement.nativeElement.querySelector(".nui-spinner__label");
+            const label =
+                componentFixture.debugElement.nativeElement.querySelector(
+                    ".nui-spinner__label"
+                );
             expect(label.innerText.trim()).toEqual(message);
         }));
         it("should set the size to 'small' if the size input is not set", () => {

@@ -10,11 +10,21 @@ import {
     TemplateRef,
     ViewChildren,
 } from "@angular/core";
-import { CheckboxComponent, DialogService, IFilter, IFilterPub } from "@nova-ui/bits";
 import _orderBy from "lodash/orderBy";
 import { Subject } from "rxjs";
 
-import { IFilterGroupItem, IFilterGroupMultiFilterMetadata, IFilterGroupOption } from "./public-api";
+import {
+    CheckboxComponent,
+    DialogService,
+    IFilter,
+    IFilterPub,
+} from "@nova-ui/bits";
+
+import {
+    IFilterGroupItem,
+    IFilterGroupMultiFilterMetadata,
+    IFilterGroupOption,
+} from "./public-api";
 
 @Component({
     selector: "app-filter-group",
@@ -26,7 +36,8 @@ export class FilterGroupComponent implements IFilterPub, OnInit, OnDestroy {
     @Input() checkboxTemplateRef: TemplateRef<string>;
     @Input() expanderTemplateRef: TemplateRef<string>;
 
-    @Output() filterChanged: EventEmitter<IFilterGroupItem> = new EventEmitter();
+    @Output() filterChanged: EventEmitter<IFilterGroupItem> =
+        new EventEmitter();
     @Output() showAllButtonClicked: EventEmitter<any> = new EventEmitter();
 
     @ViewChildren(CheckboxComponent) filterItems: QueryList<CheckboxComponent>;
@@ -36,7 +47,11 @@ export class FilterGroupComponent implements IFilterPub, OnInit, OnDestroy {
     constructor(@Inject(DialogService) private dialogService: DialogService) {}
 
     ngOnInit() {
-        this.filterGroupItem.allFilterOptions = _orderBy(this.filterGroupItem.allFilterOptions, "value", "asc");
+        this.filterGroupItem.allFilterOptions = _orderBy(
+            this.filterGroupItem.allFilterOptions,
+            "value",
+            "asc"
+        );
     }
 
     public isChecked(value: string): boolean {
@@ -57,7 +72,9 @@ export class FilterGroupComponent implements IFilterPub, OnInit, OnDestroy {
             type: "string[]",
             value: this.filterGroupItem.selectedFilterValues,
             metadata: {
-                allCategories: this.getAllFilterOptionsList(this.filterGroupItem.allFilterOptions),
+                allCategories: this.getAllFilterOptionsList(
+                    this.filterGroupItem.allFilterOptions
+                ),
                 expanded: Boolean(this.filterGroupItem.expanded),
             },
         };
@@ -68,7 +85,9 @@ export class FilterGroupComponent implements IFilterPub, OnInit, OnDestroy {
     }
 
     public getDisplayedFiltersCount() {
-        return this.filterGroupItem.itemsToDisplay ? this.filterGroupItem.itemsToDisplay : 10;
+        return this.filterGroupItem.itemsToDisplay
+            ? this.filterGroupItem.itemsToDisplay
+            : 10;
     }
 
     public hasFilterOptions(): boolean {
@@ -76,22 +95,28 @@ export class FilterGroupComponent implements IFilterPub, OnInit, OnDestroy {
     }
 
     public deselectFilterItemByValue(value: any) {
-        const checkbox = this.filterItems.find(i => i.value === value);
+        const checkbox = this.filterItems.find((i) => i.value === value);
         if (checkbox) {
             this.deselectFilterItem(checkbox);
         }
     }
 
     public deselectAllFilterItems() {
-        this.filterItems.filter(i => i.checked).forEach(i => this.deselectFilterItem(i));
+        this.filterItems
+            .filter((i) => i.checked)
+            .forEach((i) => this.deselectFilterItem(i));
     }
 
     private deselectFilterItem(checkbox: CheckboxComponent) {
         checkbox.inputViewContainer.element.nativeElement.checked = false;
-        checkbox.inputViewContainer.element.nativeElement.dispatchEvent(new Event("change"));
+        checkbox.inputViewContainer.element.nativeElement.dispatchEvent(
+            new Event("change")
+        );
     }
 
-    private getAllFilterOptionsList(filterGroupItems: IFilterGroupOption[]): string[] {
+    private getAllFilterOptionsList(
+        filterGroupItems: IFilterGroupOption[]
+    ): string[] {
         return filterGroupItems.map((item) => item.value);
     }
 

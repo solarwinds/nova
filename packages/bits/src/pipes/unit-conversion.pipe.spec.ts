@@ -2,9 +2,7 @@ import { TestBed } from "@angular/core/testing";
 
 import { LoggerService } from "../services/log-service";
 import { UnitConversionService } from "../services/unit-conversion.service";
-
 import { UnitConversionPipe } from "./unit-conversion.pipe";
-
 
 describe("pipes >", () => {
     describe("unit conversion pipe >", () => {
@@ -15,7 +13,9 @@ describe("pipes >", () => {
                 providers: [LoggerService, UnitConversionService],
             });
 
-            pipe = new UnitConversionPipe(TestBed.inject(UnitConversionService));
+            pipe = new UnitConversionPipe(
+                TestBed.inject(UnitConversionService)
+            );
         });
 
         it(`should use UnitBase.Bytes for the 'bytes' unit`, () => {

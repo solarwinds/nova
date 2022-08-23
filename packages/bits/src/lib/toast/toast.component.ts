@@ -1,12 +1,17 @@
-import { Component, HostBinding, HostListener, NgZone, OnDestroy, ViewEncapsulation } from "@angular/core";
+import {
+    Component,
+    HostBinding,
+    HostListener,
+    NgZone,
+    OnDestroy,
+    ViewEncapsulation,
+} from "@angular/core";
 import { SafeHtml } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
-
 
 import { IToastConfig } from "./public-api";
 import { ToastPackage } from "./toast-package";
 import { ToastServiceBase } from "./toast.servicebase";
-
 
 enum ToastState {
     Inactive = "inactive",
@@ -24,7 +29,7 @@ enum ToastState {
  * __Usage :__
  * Used to show toast, handle animation and events. Handles progress bar animation.
  * This component is created dynamically in ToastContainerService
-*/
+ */
 @Component({
     selector: "nui-toast-component",
     templateUrl: "./toast.component.html",
@@ -41,7 +46,12 @@ export class ToastComponent implements OnDestroy {
     public toastIcon: string;
     public closeButton?: boolean;
 
-    get role(): string { return this.toastPackage.toastType === "success" || this.toastPackage.toastType === "info" ? "status" : "alert"; }
+    get role(): string {
+        return this.toastPackage.toastType === "success" ||
+            this.toastPackage.toastType === "info"
+            ? "status"
+            : "alert";
+    }
 
     /** a combination of toast type and options.toastClass */
     @HostBinding("class") toastClasses = "";
@@ -62,9 +72,11 @@ export class ToastComponent implements OnDestroy {
         success: "severity_ok",
     };
 
-    constructor(private toastService: ToastServiceBase,
+    constructor(
+        private toastService: ToastServiceBase,
         private toastPackage: ToastPackage,
-        private ngZone: NgZone) {
+        private ngZone: NgZone
+    ) {
         this.title = toastPackage.title;
         this.body = toastPackage.body;
         this.options = toastPackage.config;
@@ -72,13 +84,15 @@ export class ToastComponent implements OnDestroy {
         this.toastIcon = this.toastTypeToSeverityIcon[toastPackage.toastType];
         this.closeButton = this.toastPackage.config.closeButton;
 
-        const activateSubscription = this.toastPackage.toastRef.afterActivate()
+        const activateSubscription = this.toastPackage.toastRef
+            .afterActivate()
             .subscribe(() => {
                 this.display = "block";
                 setTimeout(() => this.activateToast()); // Is needed to make "display: none" & "opacity" transitions working
             });
 
-        const closeSubscription = this.toastPackage.toastRef.manualClosed()
+        const closeSubscription = this.toastPackage.toastRef
+            .manualClosed()
             .subscribe(() => {
                 this.remove();
             });
@@ -120,7 +134,10 @@ export class ToastComponent implements OnDestroy {
         clearTimeout(this.timeout);
         this.state = ToastState.Removed;
         this.fadeOut = true;
-        this.timeout = setTimeout(() => this.toastService.remove(this.toastPackage.toastId), this.animationFadeOutLength);
+        this.timeout = setTimeout(
+            () => this.toastService.remove(this.toastPackage.toastId),
+            this.animationFadeOutLength
+        );
     }
 
     /**
@@ -163,11 +180,17 @@ export class ToastComponent implements OnDestroy {
     public delayedHideToast() {
         clearInterval(this.intervalId);
 
-        if (this.options.extendedTimeOut === 0 || this.state === ToastState.Removed) {
+        if (
+            this.options.extendedTimeOut === 0 ||
+            this.state === ToastState.Removed
+        ) {
             return;
         }
 
-        this.timeout = setTimeout(() => this.remove(), this.options.extendedTimeOut);
+        this.timeout = setTimeout(
+            () => this.remove(),
+            this.options.extendedTimeOut
+        );
         this.options.timeOut = this.options.extendedTimeOut;
         this.hideTime = new Date().getTime() + (this.options.timeOut || 0);
         this.width = 100;
@@ -220,7 +243,9 @@ export class ToastComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions.forEach((subscription) =>
+            subscription.unsubscribe()
+        );
         clearInterval(this.intervalId);
         clearTimeout(this.timeout);
     }

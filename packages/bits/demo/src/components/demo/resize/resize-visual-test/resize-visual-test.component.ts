@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-resize-visual-test",
     templateUrl: "./resize-visual-test.component.html",
 })
-export class ResizeVisualTestComponent {
-}
+export class ResizeVisualTestComponent {}

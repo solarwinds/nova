@@ -10,21 +10,25 @@ import { NuiDatePickerModule } from "../../date-picker/date-picker.module";
 import { NuiDialogModule } from "../../dialog/dialog.module";
 import { NuiIconModule } from "../../icon/icon.module";
 import { NuiPopoverModule } from "../../popover/popover.module";
-import { ITimeframe, ITimeFramePresetDictionary } from "../../time-frame-picker/public-api";
+import {
+    ITimeframe,
+    ITimeFramePresetDictionary,
+} from "../../time-frame-picker/public-api";
 import { NuiTimeFramePickerModule } from "../../time-frame-picker/time-frame-picker.module";
 import { NuiTimePickerModule } from "../../time-picker/time-picker.module";
 import { NuiTooltipModule } from "../../tooltip/tooltip.module";
-
 import { TimeFrameBarComponent } from "./time-frame-bar.component";
 
 @Component({
     selector: "test-wrapper-component",
     template: `
-        <nui-time-frame-bar [minDate]="minDate"
-                            [maxDate]="maxDate"
-                            [(timeFrame)]="timeFrame">
+        <nui-time-frame-bar
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            [(timeFrame)]="timeFrame"
+        >
             <nui-icon icon="calendar" class="pr-3"></nui-icon>
-            {{timeFrame | timeFrame}}
+            {{ timeFrame | timeFrame }}
             <nui-quick-picker timeFrameSelection>
                 <nui-time-frame-picker></nui-time-frame-picker>
             </nui-quick-picker>
@@ -70,15 +74,15 @@ describe("convenience components >", () => {
                     NuiTimePickerModule,
                     NuiTooltipModule,
                 ],
-                declarations: [
-                    TimeFrameBarComponent,
-                    TestWrapperComponent,
-                ],
+                declarations: [TimeFrameBarComponent, TestWrapperComponent],
                 providers: [],
             });
             fixture = TestBed.createComponent(TestWrapperComponent);
             component = fixture.debugElement.children[0].componentInstance;
-            warningSpy = spyOnProperty((<any>component).logger, "warn").and.returnValue(noop); // suppress warnings
+            warningSpy = spyOnProperty(
+                (<any>component).logger,
+                "warn"
+            ).and.returnValue(noop); // suppress warnings
             fixture.detectChanges();
         });
 
@@ -120,33 +124,49 @@ describe("convenience components >", () => {
             });
 
             it("should set the time frame picker's properties", () => {
-                expect(component.timeFramePicker.model).toBe(component.pickerTimeframe); // check for same instance
-                expect(component.timeFramePicker.minDate).toBe(component.minDate);
-                expect(component.timeFramePicker.maxDate).toBe(component.maxDate);
+                expect(component.timeFramePicker.model).toBe(
+                    component.pickerTimeframe
+                ); // check for same instance
+                expect(component.timeFramePicker.minDate).toBe(
+                    component.minDate
+                );
+                expect(component.timeFramePicker.maxDate).toBe(
+                    component.maxDate
+                );
             });
 
             it("should invoke updatePickerTf on time frame picker changed event", () => {
                 spyOn(component, "updatePickerTf");
                 component.timeFramePicker.changed.emit(component.timeFrame);
-                expect(component.timeFramePicker.changed.observers.length).toEqual(1);
-                expect(component.updatePickerTf).toHaveBeenCalledWith(component.timeFrame);
+                expect(
+                    component.timeFramePicker.changed.observers.length
+                ).toEqual(1);
+                expect(component.updatePickerTf).toHaveBeenCalledWith(
+                    component.timeFrame
+                );
             });
 
             it("should unsubscribe from time frame picker changed event on time frame bar destroy", () => {
-                expect(component.timeFramePicker.changed.observers.length).toEqual(1);
+                expect(
+                    component.timeFramePicker.changed.observers.length
+                ).toEqual(1);
                 component.ngOnDestroy();
-                expect(component.timeFramePicker.changed.observers.length).toEqual(0);
+                expect(
+                    component.timeFramePicker.changed.observers.length
+                ).toEqual(0);
             });
         });
 
         describe("QuickPicker initialization", () => {
             it("should set the quick picker's presets to the default time frame service presets if not specified", () => {
-                expect(component.quickPicker.presets).toEqual(component.timeframeService.getDefaultPresets());
+                expect(component.quickPicker.presets).toEqual(
+                    component.timeframeService.getDefaultPresets()
+                );
             });
 
             it("should use the quick picker's specified presets", () => {
                 const testPresets: ITimeFramePresetDictionary = {
-                    "lastHour": {
+                    lastHour: {
                         name: "Last hour",
                         startDatetimePattern: { hours: -1 },
                         endDatetimePattern: {},
@@ -158,7 +178,9 @@ describe("convenience components >", () => {
             });
 
             it("should set the quick picker's picker title to the default picker title if not specified", () => {
-                expect(component.quickPicker.pickerTitle).toEqual(component.defaultPickerTitle);
+                expect(component.quickPicker.pickerTitle).toEqual(
+                    component.defaultPickerTitle
+                );
             });
 
             it("should use the quick picker's specified picker title", () => {
@@ -171,14 +193,22 @@ describe("convenience components >", () => {
             it("should invoke handlePresetSelection on quick picker presetSelected event", () => {
                 spyOn(component, "handlePresetSelection");
                 component.quickPicker.presetSelected.emit("samplePreset");
-                expect(component.quickPicker.presetSelected.observers.length).toEqual(1);
-                expect(component.handlePresetSelection).toHaveBeenCalledWith("samplePreset");
+                expect(
+                    component.quickPicker.presetSelected.observers.length
+                ).toEqual(1);
+                expect(component.handlePresetSelection).toHaveBeenCalledWith(
+                    "samplePreset"
+                );
             });
 
             it("should unsubscribe from quick picker presetSelected event on time frame bar destroy", () => {
-                expect(component.quickPicker.presetSelected.observers.length).toEqual(1);
+                expect(
+                    component.quickPicker.presetSelected.observers.length
+                ).toEqual(1);
                 component.ngOnDestroy();
-                expect(component.quickPicker.presetSelected.observers.length).toEqual(0);
+                expect(
+                    component.quickPicker.presetSelected.observers.length
+                ).toEqual(0);
             });
         });
 
@@ -189,7 +219,13 @@ describe("convenience components >", () => {
                     startDatetime: component.minDate,
                     endDatetime: fixture.componentInstance.baseDate.clone(),
                 };
-                component.ngOnChanges({ timeFrame: new SimpleChange(null, component.timeFrame, true) });
+                component.ngOnChanges({
+                    timeFrame: new SimpleChange(
+                        null,
+                        component.timeFrame,
+                        true
+                    ),
+                });
                 expect(component.isLeftmostRange).toEqual(true);
             });
 
@@ -199,7 +235,13 @@ describe("convenience components >", () => {
                     startDatetime: fixture.componentInstance.baseDate.clone(),
                     endDatetime: component.maxDate,
                 };
-                component.ngOnChanges({ timeFrame: new SimpleChange(null, component.timeFrame, true) });
+                component.ngOnChanges({
+                    timeFrame: new SimpleChange(
+                        null,
+                        component.timeFrame,
+                        true
+                    ),
+                });
                 expect(component.isRightmostRange).toEqual(true);
             });
 
@@ -208,7 +250,13 @@ describe("convenience components >", () => {
                     startDatetime: fixture.componentInstance.baseDate.clone(),
                     endDatetime: component.maxDate,
                 };
-                component.ngOnChanges({ timeFrame: new SimpleChange(null, component.timeFrame, true) });
+                component.ngOnChanges({
+                    timeFrame: new SimpleChange(
+                        null,
+                        component.timeFrame,
+                        true
+                    ),
+                });
                 expect(component.pickerTimeframe).toEqual(component.timeFrame);
                 expect(component.pickerTimeframe).not.toBe(component.timeFrame); // check for clone
             });
@@ -219,7 +267,13 @@ describe("convenience components >", () => {
                     startDatetime: fixture.componentInstance.baseDate.clone(),
                     endDatetime: component.maxDate,
                 };
-                component.ngOnChanges({ timeFrame: new SimpleChange(null, component.timeFrame, true) });
+                component.ngOnChanges({
+                    timeFrame: new SimpleChange(
+                        null,
+                        component.timeFrame,
+                        true
+                    ),
+                });
                 expect(component.humanizedTimeframe).toEqual("a month");
             });
         });
@@ -230,11 +284,16 @@ describe("convenience components >", () => {
                 component.timeFramePicker.model = undefined;
                 component.onPopoverShown();
                 expect(component.timeFramePicker.model).toBeDefined();
-                expect(component.timeFramePicker.model).toBe(component.pickerTimeframe); // check for same instance
+                expect(component.timeFramePicker.model).toBe(
+                    component.pickerTimeframe
+                ); // check for same instance
             });
 
             it("should invoke markForCheck on the time frame picker's change detector", () => {
-                const markForCheckSpy = spyOn(component.timeFramePicker.changeDetector, "markForCheck");
+                const markForCheckSpy = spyOn(
+                    component.timeFramePicker.changeDetector,
+                    "markForCheck"
+                );
                 component.onPopoverShown();
                 expect(markForCheckSpy).toHaveBeenCalled();
             });
@@ -243,12 +302,17 @@ describe("convenience components >", () => {
                 component.quickPicker.selectedPreset = undefined;
                 component.onPopoverShown();
                 expect(component.quickPicker.selectedPreset).toBeDefined();
-                // @ts-ignore: Suppressing error for testing purposes
-                expect(component.quickPicker.selectedPreset).toEqual(component.timeFrame.selectedPresetId);
+                expect(component.quickPicker.selectedPreset).toEqual(
+                    // @ts-ignore: Suppressing error for testing purposes
+                    component.timeFrame.selectedPresetId
+                );
             });
 
             it("should invoke markForCheck on the quick picker's change detector", () => {
-                const markForCheckSpy = spyOn(component.quickPicker.changeDetector, "markForCheck");
+                const markForCheckSpy = spyOn(
+                    component.quickPicker.changeDetector,
+                    "markForCheck"
+                );
                 component.onPopoverShown();
                 expect(markForCheckSpy).toHaveBeenCalled();
             });
@@ -283,7 +347,10 @@ describe("convenience components >", () => {
             let closePopoverSpy: jasmine.Spy;
 
             beforeEach(() => {
-                getTimeframeByPresetIdSpy = spyOn(component.timeframeService, "getTimeframeByPresetId");
+                getTimeframeByPresetIdSpy = spyOn(
+                    component.timeframeService,
+                    "getTimeframeByPresetId"
+                );
                 closePopoverSpy = spyOn(component, "closePopover");
             });
 
@@ -300,11 +367,16 @@ describe("convenience components >", () => {
             it("should set the quick picker's preset to the specified value", () => {
                 component.quickPicker.selectedPreset = "";
                 component.handlePresetSelection("test_preset_key");
-                expect(component.quickPicker.selectedPreset).toEqual("test_preset_key");
+                expect(component.quickPicker.selectedPreset).toEqual(
+                    "test_preset_key"
+                );
             });
 
             it("should invoke markForCheck on the quick picker's change detector", () => {
-                const markForCheckSpy = spyOn(component.quickPicker.changeDetector, "markForCheck");
+                const markForCheckSpy = spyOn(
+                    component.quickPicker.changeDetector,
+                    "markForCheck"
+                );
                 component.handlePresetSelection("");
                 expect(markForCheckSpy).toHaveBeenCalled();
             });
@@ -352,9 +424,16 @@ describe("convenience components >", () => {
             it("should shift the range left by emitting the timeFrameChange event with the correct output value", () => {
                 spyOn(component.timeFrameChange, "emit");
                 component.shiftRange(-1);
-                expect(component.timeFrameChange.emit).toHaveBeenCalledWith(<any>{
-                    startDatetime: fixture.componentInstance.timeFrame.startDatetime.clone().subtract(1, "weeks"),
-                    endDatetime: fixture.componentInstance.timeFrame.endDatetime.clone().subtract(1, "weeks"),
+                expect(component.timeFrameChange.emit).toHaveBeenCalledWith(<
+                    any
+                >{
+                    startDatetime:
+                        fixture.componentInstance.timeFrame.startDatetime
+                            .clone()
+                            .subtract(1, "weeks"),
+                    endDatetime: fixture.componentInstance.timeFrame.endDatetime
+                        .clone()
+                        .subtract(1, "weeks"),
                     selectedPresetId: null,
                 });
             });
@@ -362,9 +441,16 @@ describe("convenience components >", () => {
             it("should shift the range left by emitting the timeFrameChange event with the correct output value", () => {
                 spyOn(component.timeFrameChange, "emit");
                 component.shiftRange(1);
-                expect(component.timeFrameChange.emit).toHaveBeenCalledWith(<any>{
-                    startDatetime: fixture.componentInstance.timeFrame.startDatetime.clone().add(1, "weeks"),
-                    endDatetime: fixture.componentInstance.timeFrame.endDatetime.clone().add(1, "weeks"),
+                expect(component.timeFrameChange.emit).toHaveBeenCalledWith(<
+                    any
+                >{
+                    startDatetime:
+                        fixture.componentInstance.timeFrame.startDatetime
+                            .clone()
+                            .add(1, "weeks"),
+                    endDatetime: fixture.componentInstance.timeFrame.endDatetime
+                        .clone()
+                        .add(1, "weeks"),
                     selectedPresetId: null,
                 });
             });

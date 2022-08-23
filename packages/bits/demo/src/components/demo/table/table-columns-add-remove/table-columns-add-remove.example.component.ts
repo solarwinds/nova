@@ -1,5 +1,13 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit, TemplateRef, ViewChild } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Inject,
+    OnInit,
+    TemplateRef,
+    ViewChild,
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+
 import { DialogService, TableComponent } from "@nova-ui/bits";
 
 interface IExampleTableModel {
@@ -21,22 +29,41 @@ interface IExampleTableModel {
 })
 export class TableColumnsAddRemoveExampleComponent implements OnInit {
     public myForm: FormGroup;
-    public availableColumns = ["issue", "project", "description", "status", "epic", "assignee", "reporter", "actions"];
-    public displayedColumns = ["issue", "project", "description", "status", "epic", "actions"];
+    public availableColumns = [
+        "issue",
+        "project",
+        "description",
+        "status",
+        "epic",
+        "assignee",
+        "reporter",
+        "actions",
+    ];
+    public displayedColumns = [
+        "issue",
+        "project",
+        "description",
+        "status",
+        "epic",
+        "actions",
+    ];
     // full copy of displayed columns added to update columns only when updateTable() is called
     public displayedColumnsCopy = this.displayedColumns.slice();
     public newColumn: string;
     public dataSource = getData();
     @ViewChild(TableComponent) table: TableComponent<IExampleTableModel>;
 
-    constructor(@Inject(DialogService) private dialogService: DialogService,
-        private formBuilder: FormBuilder) {
-    }
+    constructor(
+        @Inject(DialogService) private dialogService: DialogService,
+        private formBuilder: FormBuilder
+    ) {}
 
     ngOnInit() {
         this.myForm = this.formBuilder.group({
             checkboxGroup: this.formBuilder.control(this.displayedColumnsCopy, [
-                Validators.required, Validators.minLength(3)]),
+                Validators.required,
+                Validators.minLength(3),
+            ]),
         });
     }
 
@@ -94,7 +121,8 @@ function getData(): IExampleTableModel[] {
         {
             issue: "NUI-111",
             project: "Nova NUI",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            description:
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
             status: "In Progress",
             epic: "Table Component",
             assignee: "Alex",
@@ -114,7 +142,8 @@ function getData(): IExampleTableModel[] {
         {
             issue: "NUI-333",
             project: "Nova NUI",
-            description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            description:
+                "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             status: "In Progress",
             epic: "Table Component",
             assignee: "John",
@@ -124,7 +153,8 @@ function getData(): IExampleTableModel[] {
         {
             issue: "NUI-444",
             project: "Nova NUI",
-            description: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            description:
+                "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
             status: "Done",
             epic: "Textbox Component",
             assignee: "Alberto",
@@ -134,7 +164,8 @@ function getData(): IExampleTableModel[] {
         {
             issue: "NUI-555",
             project: "Nova NUI",
-            description: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            description:
+                "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             status: "Open",
             epic: "Textbox Component",
             assignee: "Rob",

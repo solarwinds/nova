@@ -1,7 +1,8 @@
 import { OverlayConfig } from "@angular/cdk/overlay";
 import { Component } from "@angular/core";
-import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "@nova-ui/bits";
 import { Subject } from "rxjs";
+
+import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-popover-visual-test",

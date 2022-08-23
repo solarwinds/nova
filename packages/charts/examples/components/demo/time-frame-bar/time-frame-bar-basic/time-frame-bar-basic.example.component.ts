@@ -1,11 +1,29 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { HistoryStorage, IFilter, IFilteringOutputs, ITimeframe, NoopDataSourceService } from "@nova-ui/bits";
-import {
-    Chart, ChartAssist, getAutomaticDomainWithIncludedInterval, IAccessors, IChartAssistSeries, ISetDomainEventPayload, LineAccessors, LinearScale,
-    LineRenderer, SET_DOMAIN_EVENT, TimeScale, XYGrid, ZoomPlugin,
-} from "@nova-ui/charts";
 import moment, { Moment } from "moment/moment";
 import { Subscription } from "rxjs";
+
+import {
+    HistoryStorage,
+    IFilter,
+    IFilteringOutputs,
+    ITimeframe,
+    NoopDataSourceService,
+} from "@nova-ui/bits";
+import {
+    Chart,
+    ChartAssist,
+    getAutomaticDomainWithIncludedInterval,
+    IAccessors,
+    IChartAssistSeries,
+    ISetDomainEventPayload,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    SET_DOMAIN_EVENT,
+    TimeScale,
+    XYGrid,
+    ZoomPlugin,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-time-frame-bar-example",
@@ -27,18 +45,28 @@ export class TimeFrameBarBasicExampleComponent implements OnInit, OnDestroy {
     private seriesSet: IChartAssistSeries<IAccessors>[] = [];
     private filteringSubscription: Subscription;
 
-    constructor(public history: HistoryStorage<ITimeframe>,
-                private dataSourceService: NoopDataSourceService<ITimeframe>) {
-    }
+    constructor(
+        public history: HistoryStorage<ITimeframe>,
+        private dataSourceService: NoopDataSourceService<ITimeframe>
+    ) {}
 
     public ngOnInit() {
-        const accessors = new LineAccessors(this.chartAssist.palette.standardColors, this.chartAssist.markers);
+        const accessors = new LineAccessors(
+            this.chartAssist.palette.standardColors,
+            this.chartAssist.markers
+        );
         const renderer = new LineRenderer();
-        this.yScale.domainCalculator = getAutomaticDomainWithIncludedInterval([0, 100]);
+        this.yScale.domainCalculator = getAutomaticDomainWithIncludedInterval([
+            0, 100,
+        ]);
         this.seriesSet = Object.keys(this.series).map((key: string) => ({
             id: key,
             name: key,
-            data: buildTimeSeriesFromData(this.fromDate, this.toDate, this.series[key]),
+            data: buildTimeSeriesFromData(
+                this.fromDate,
+                this.toDate,
+                this.series[key]
+            ),
             accessors,
             renderer,
             scales: { x: this.xScale, y: this.yScale },
@@ -53,17 +81,20 @@ export class TimeFrameBarBasicExampleComponent implements OnInit, OnDestroy {
         this.chart.addPlugins(new ZoomPlugin());
 
         // Update Time Frame Bar when chart got zoomed
-        this.chart.getEventBus().getStream(SET_DOMAIN_EVENT).subscribe((event) => {
-            const payload = <ISetDomainEventPayload>event.data;
-            const newDomain = payload[this.xScale.id];
-            this.timeFrame = this.history.save({
-                startDatetime: moment(newDomain[0]),
-                endDatetime: moment(newDomain[1]),
-                selectedPresetId: undefined,
-            });
+        this.chart
+            .getEventBus()
+            .getStream(SET_DOMAIN_EVENT)
+            .subscribe((event) => {
+                const payload = <ISetDomainEventPayload>event.data;
+                const newDomain = payload[this.xScale.id];
+                this.timeFrame = this.history.save({
+                    startDatetime: moment(newDomain[0]),
+                    endDatetime: moment(newDomain[1]),
+                    selectedPresetId: undefined,
+                });
 
-            void this.dataSourceService.applyFilters();
-        });
+                void this.dataSourceService.applyFilters();
+            });
 
         this.filteringSubscription = this.setUpFiltering();
 
@@ -98,30 +129,46 @@ export class TimeFrameBarBasicExampleComponent implements OnInit, OnDestroy {
         this.dataSourceService.registerComponent({
             timeframe: {
                 componentInstance: {
-                    getFilters: () => <IFilter<ITimeframe>>({
-                        type: "ITimeframe",
-                        value: this.timeFrame,
-                    }),
+                    getFilters: () =>
+                        <IFilter<ITimeframe>>{
+                            type: "ITimeframe",
+                            value: this.timeFrame,
+                        },
                 },
             },
         });
 
-        return this.dataSourceService.outputsSubject.subscribe((data: IFilteringOutputs) => {
-            this.xScale.fixDomain([data.timeframe.value.startDatetime.toDate(), data.timeframe.value.endDatetime.toDate()]);
-            this.chartAssist.update(this.seriesSet);
-        });
+        return this.dataSourceService.outputsSubject.subscribe(
+            (data: IFilteringOutputs) => {
+                this.xScale.fixDomain([
+                    data.timeframe.value.startDatetime.toDate(),
+                    data.timeframe.value.endDatetime.toDate(),
+                ]);
+                this.chartAssist.update(this.seriesSet);
+            }
+        );
     }
 }
 
 /* Chart data */
 function getData(): Record<string, number[]> {
     return {
-        "Tex-lab-aus-2621": [18, 27, 35, 33, 26, 50, 36, 47, 58, 66, 65, 50, 40, 31, 42, 62, 57, 99, 75, 55, 73, 69, 77, 57, 61, 68, 82, 81, 78, 67],
-        "Cz-lab-brn-02": [41, 50, 56, 40, 44, 35, 27, 42, 38, 23, 20, 13, 29, 42, 84, 93, 71, 60, 54, 79, 64, 49, 48, 59, 76, 63, 52, 84, 89, 80],
+        "Tex-lab-aus-2621": [
+            18, 27, 35, 33, 26, 50, 36, 47, 58, 66, 65, 50, 40, 31, 42, 62, 57,
+            99, 75, 55, 73, 69, 77, 57, 61, 68, 82, 81, 78, 67,
+        ],
+        "Cz-lab-brn-02": [
+            41, 50, 56, 40, 44, 35, 27, 42, 38, 23, 20, 13, 29, 42, 84, 93, 71,
+            60, 54, 79, 64, 49, 48, 59, 76, 63, 52, 84, 89, 80,
+        ],
     };
 }
 
-function buildTimeSeriesFromData(from: Moment, to: Moment, data: number[]): { x: Moment, y: number }[] {
+function buildTimeSeriesFromData(
+    from: Moment,
+    to: Moment,
+    data: number[]
+): { x: Moment; y: number }[] {
     const count = data.length;
     if (!from || !to || count === 0) {
         return [];

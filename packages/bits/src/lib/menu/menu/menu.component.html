@@ -1,25 +1,33 @@
-<nui-popup [class.nui-menu--compact]="isMenuCompact()"
-           (opened)="onMenuOpen()"
-           [appendToBody]="appendToBody"
-           [width]="widthOfPopup"
-           [contextClass]="contextClass + ' nui-menu-popup-host'">
-    <button #menuToggle
-            nui-button
-            nuiPopupToggle
-            [disabled]="isDisabled"
-            aria-haspopup="true"
-            type="button"
-            (blur)="onBlur($event)"
-            [displayStyle]="displayStyle"
-            [size]="size"
-            [icon]="icon"
-            [iconRight]="isTitlePresent()"
-            class="menu-button no-shadow"
-            [isEmpty]="!isTitlePresent()">
-        <span>{{title}}</span>
+<nui-popup
+    [class.nui-menu--compact]="isMenuCompact()"
+    (opened)="onMenuOpen()"
+    [appendToBody]="appendToBody"
+    [width]="widthOfPopup"
+    [contextClass]="contextClass + ' nui-menu-popup-host'"
+>
+    <button
+        #menuToggle
+        nui-button
+        nuiPopupToggle
+        [disabled]="isDisabled"
+        aria-haspopup="true"
+        type="button"
+        (blur)="onBlur($event)"
+        [displayStyle]="displayStyle"
+        [size]="size"
+        [icon]="icon"
+        [iconRight]="isTitlePresent()"
+        class="menu-button no-shadow"
+        [isEmpty]="!isTitlePresent()"
+    >
+        <span>{{ title }}</span>
     </button>
     <div popupAreaContent>
-        <nui-menu-popup *ngIf="itemsSource" [itemsSource]="itemsSource" [size]="size"></nui-menu-popup>
+        <nui-menu-popup
+            *ngIf="itemsSource"
+            [itemsSource]="itemsSource"
+            [size]="size"
+        ></nui-menu-popup>
         <ng-content *ngIf="!itemsSource"></ng-content>
     </div>
 </nui-popup>

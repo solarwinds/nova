@@ -1,43 +1,68 @@
 <h1>Table Widget with Search Functionality</h1>
 <p>
-    Table Widget can have search functionality.
-    This page contains information only about setting up the search, so before proceeding get familiar with the following:
+    Table Widget can have search functionality. This page contains information
+    only about setting up the search, so before proceeding get familiar with the
+    following:
 </p>
 <ul>
-    <li><a href="../additional-documentation/anatomy/data-sources.html" target="_blank"><code>Data Sources</code></a> - for information about Data Sources and their Features.</li>
-    <li><a href="../additional-documentation/widget-types/table.html" target="_blank"><code>Table Widget</code></a> - for configuring a table widget itself.</li>
+    <li>
+        <a
+            href="../additional-documentation/anatomy/data-sources.html"
+            target="_blank"
+            ><code>Data Sources</code></a
+        >
+        - for information about Data Sources and their Features.
+    </li>
+    <li>
+        <a
+            href="../additional-documentation/widget-types/table.html"
+            target="_blank"
+            ><code>Table Widget</code></a
+        >
+        - for configuring a table widget itself.
+    </li>
 </ul>
 
-<nui-example-wrapper filenamePrefix="table-widget-search.example.component" exampleTitle="Table widget with Search">
+<nui-example-wrapper
+    filenamePrefix="table-widget-search.example.component"
+    exampleTitle="Table widget with Search"
+>
     <table-widget-search-example></table-widget-search-example>
 </nui-example-wrapper>
 
 <h2>Configuring the Data Source</h2>
 <p>
     To use search within the Data Source you need to use data source Features.
-    Data Source should <em>implement</em> <a href="https://ux.solarwinds.io/nova/docs/nova-bits/latest/sdk/api-docs-ng2/interfaces/IDataSource.html"
-                                             target="_blank"><code>IDataSource</code></a> interface
-    and have <em>features</em> property set.
+    Data Source should <em>implement</em>
+    <a
+        href="https://ux.solarwinds.io/nova/docs/nova-bits/latest/sdk/api-docs-ng2/interfaces/IDataSource.html"
+        target="_blank"
+        ><code>IDataSource</code></a
+    >
+    interface and have <em>features</em> property set.
 </p>
-<p>
-    Default way to do that is to declare the features:
-</p>
+<p>Default way to do that is to declare the features:</p>
 <nui-example-code language="typescript">
-    {{featuredDeclaredText}}
+    {{ featuredDeclaredText }}
 </nui-example-code>
 
 <p>
-    And then pass it to the <a href="https://ux.solarwinds.io/nova/docs/nova-bits/latest/sdk/api-docs-ng2/classes/DataSourceFeatures.html#source"
-                               target="_blank"><code>DataSourceFeatures</code></a>
+    And then pass it to the
+    <a
+        href="https://ux.solarwinds.io/nova/docs/nova-bits/latest/sdk/api-docs-ng2/classes/DataSourceFeatures.html#source"
+        target="_blank"
+        ><code>DataSourceFeatures</code></a
+    >
 </p>
 <nui-example-code language="typescript">
-    {{featuresUsedText}}
+    {{ featuresUsedText }}
 </nui-example-code>
 
 <h2>Configuring the Widget</h2>
 <p>
-    To configure the widget you have to enable search in the widget configuration:
+    To configure the widget you have to enable search in the widget
+    configuration:
 </p>
 <nui-example-code language="typescript">
-    {{tableConfigurationText}}
+    {{ tableConfigurationText }}
 </nui-example-code>

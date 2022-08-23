@@ -1,4 +1,13 @@
-import { Directive, ElementRef, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from "@angular/core";
+import {
+    Directive,
+    ElementRef,
+    Inject,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    SimpleChanges,
+} from "@angular/core";
 import escape from "lodash/escape";
 import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
@@ -17,17 +26,20 @@ import { InputValueTypes } from "../types";
     selector: "[nuiComboboxV2OptionHighlight]",
     providers: [HighlightPipe],
 })
-export class ComboboxV2OptionHighlightDirective implements OnChanges, OnInit, OnDestroy {
-
+export class ComboboxV2OptionHighlightDirective
+    implements OnChanges, OnInit, OnDestroy
+{
     /** Part of the text to be highlighted */
     // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input("nuiComboboxV2OptionHighlight") public value: string;
 
     private destroy$ = new Subject();
 
-    constructor(private el: ElementRef<HTMLElement>,
-                @Inject(NUI_SELECT_V2_OPTION_PARENT_COMPONENT) private combobox: ComboboxV2Component,
-                private highlightPipe: HighlightPipe
+    constructor(
+        private el: ElementRef<HTMLElement>,
+        @Inject(NUI_SELECT_V2_OPTION_PARENT_COMPONENT)
+        private combobox: ComboboxV2Component,
+        private highlightPipe: HighlightPipe
     ) {}
 
     public ngOnInit(): void {
@@ -54,10 +66,17 @@ export class ComboboxV2OptionHighlightDirective implements OnChanges, OnInit, On
     }
 
     private updateHTML(highlighted?: InputValueTypes): void {
-        const isHighlightNecessary = highlighted && this.combobox.getLastSelectedOption()?.viewValue !== highlighted;
+        const isHighlightNecessary =
+            highlighted &&
+            this.combobox.getLastSelectedOption()?.viewValue !== highlighted;
 
-        this.el.nativeElement.innerHTML = (isHighlightNecessary && !isUndefined(highlighted)
-            ? this.highlightPipe.transform(this.value, highlighted.toString())
-            : escape(this.value)) as string;
+        this.el.nativeElement.innerHTML = (
+            isHighlightNecessary && !isUndefined(highlighted)
+                ? this.highlightPipe.transform(
+                      this.value,
+                      highlighted.toString()
+                  )
+                : escape(this.value)
+        ) as string;
     }
 }

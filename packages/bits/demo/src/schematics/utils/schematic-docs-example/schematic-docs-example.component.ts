@@ -1,4 +1,12 @@
-import { Component, Inject, Input, OnInit, Optional, SkipSelf, ViewEncapsulation } from "@angular/core";
+import {
+    Component,
+    Inject,
+    Input,
+    OnInit,
+    Optional,
+    SkipSelf,
+    ViewEncapsulation,
+} from "@angular/core";
 import _set from "lodash/set";
 
 import { DEMO_PATH_TOKEN } from "../../../../../src/constants/path.constant";
@@ -33,10 +41,14 @@ export class SchematicDocsExampleComponent implements OnInit {
         }, 100);
     }
 
-    constructor(@SkipSelf() @Optional() @Inject(DEMO_PATH_TOKEN) private context: any) {}
+    constructor(
+        @SkipSelf() @Optional() @Inject(DEMO_PATH_TOKEN) private context: any
+    ) {}
 
     ngOnInit() {
-        this.componentSources = this.getSourcesByFilenamePrefix(this.exampleFolderName);
+        this.componentSources = this.getSourcesByFilenamePrefix(
+            this.exampleFolderName
+        );
     }
 
     public getSource(fileName: string) {
@@ -57,15 +69,24 @@ export class SchematicDocsExampleComponent implements OnInit {
     }
 
     private getSourcesByFilenamePrefix(prefix: string) {
-        const matchingFilePaths = this.context.keys().filter((filePath: string) => {
-            const prefixIndex = filePath.indexOf(prefix);
-            const nextChar = prefixIndex !== -1 ? filePath[prefixIndex + prefix.length] : undefined;
-            return prefixIndex !== -1 && (nextChar === "." || nextChar === "/");
-        });
+        const matchingFilePaths = this.context
+            .keys()
+            .filter((filePath: string) => {
+                const prefixIndex = filePath.indexOf(prefix);
+                const nextChar =
+                    prefixIndex !== -1
+                        ? filePath[prefixIndex + prefix.length]
+                        : undefined;
+                return (
+                    prefixIndex !== -1 && (nextChar === "." || nextChar === "/")
+                );
+            });
 
         return matchingFilePaths.reduce((dataset: any, fileName: any) => {
             const fileObj = this.getFileData(fileName);
-            const splitPath = fileName.substr(fileName.indexOf(prefix)).split("/");
+            const splitPath = fileName
+                .substr(fileName.indexOf(prefix))
+                .split("/");
             const pathToSourceCode = [];
 
             this.rawData[splitPath[splitPath.length - 1]] = fileObj;
@@ -95,5 +116,4 @@ export class SchematicDocsExampleComponent implements OnInit {
 
         return fileContent;
     }
-
 }

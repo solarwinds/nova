@@ -1,6 +1,13 @@
-import { AfterViewInit, Component, ContentChildren, Inject, QueryList } from "@angular/core";
-import { DataSourceService, IFilteringParticipants } from "@nova-ui/bits";
+import {
+    AfterViewInit,
+    Component,
+    ContentChildren,
+    Inject,
+    QueryList,
+} from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
+
+import { DataSourceService, IFilteringParticipants } from "@nova-ui/bits";
 
 import { CustomDataSourceFilterGroupCompositeComponent } from "../custom-data-source-filter-group.component";
 
@@ -9,25 +16,37 @@ import { CustomDataSourceFilterGroupCompositeComponent } from "../custom-data-so
     templateUrl: "filter-groups-wrapper.component.html",
     styleUrls: ["filter-groups-wrapper.component.less"],
 })
+export class CustomDataSourceFilterGroupsWrapperComponent
+    implements AfterViewInit
+{
+    @ContentChildren(CustomDataSourceFilterGroupCompositeComponent)
+    filterGroups: QueryList<CustomDataSourceFilterGroupCompositeComponent>;
 
-export class CustomDataSourceFilterGroupsWrapperComponent implements AfterViewInit {
-    @ContentChildren(CustomDataSourceFilterGroupCompositeComponent) filterGroups: QueryList<CustomDataSourceFilterGroupCompositeComponent>;
+    public i18nHiddenFiltersMapping: { [k: string]: string } = {
+        "=1": $localize`1 hidden filter.`,
+        other: $localize`# hidden filters.`,
+    };
 
-    public i18nHiddenFiltersMapping: { [k: string]: string } = {"=1": $localize `1 hidden filter.`, "other": $localize `# hidden filters.`};
-
-    constructor(@Inject(DataSourceService) public dataSourceService: DataSourceService<any>) { }
+    constructor(
+        @Inject(DataSourceService)
+        public dataSourceService: DataSourceService<any>
+    ) {}
 
     ngAfterViewInit() {
         this.dataSourceService.registerComponent(this.getFilterComponents());
         this.filterGroups.changes.subscribe(() => {
-            this.dataSourceService.registerComponent(this.getFilterComponents());
+            this.dataSourceService.registerComponent(
+                this.getFilterComponents()
+            );
         });
     }
 
     public emptyFilterGroupsTitles(): string {
         return this.filterGroups
-            .filter(filterGroup => _isEmpty(filterGroup.filterGroupItem.allFilterOptions))
-            .map(filterGroup => filterGroup.filterGroupItem.title)
+            .filter((filterGroup) =>
+                _isEmpty(filterGroup.filterGroupItem.allFilterOptions)
+            )
+            .map((filterGroup) => filterGroup.filterGroupItem.title)
             .join(", ");
     }
 
@@ -36,13 +55,21 @@ export class CustomDataSourceFilterGroupsWrapperComponent implements AfterViewIn
     }
 
     public emptyFilterGroupsCount(): number {
-        return this.filterGroups.filter(filterGroup => _isEmpty(filterGroup.filterGroupItem.allFilterOptions)).length;
+        return this.filterGroups.filter((filterGroup) =>
+            _isEmpty(filterGroup.filterGroupItem.allFilterOptions)
+        ).length;
     }
 
     private getFilterComponents(): IFilteringParticipants {
-        return this.filterGroups.reduce((obj: IFilteringParticipants, item: CustomDataSourceFilterGroupCompositeComponent) => {
-            obj[item.filterGroupItem.id] = {componentInstance: item};
-            return obj;
-        }, {});
+        return this.filterGroups.reduce(
+            (
+                obj: IFilteringParticipants,
+                item: CustomDataSourceFilterGroupCompositeComponent
+            ) => {
+                obj[item.filterGroupItem.id] = { componentInstance: item };
+                return obj;
+            },
+            {}
+        );
     }
 }

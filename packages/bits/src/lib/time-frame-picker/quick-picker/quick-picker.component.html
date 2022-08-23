@@ -1,16 +1,24 @@
 <div class="nui-quick-picker">
     <div class="nui-quick-picker__presets">
-        <h4 class="nui-quick-picker-header nui-quick-picker__presets-header">{{presetsTitle}}</h4>
-        <div *ngFor="let key of presetKeys"
-                       (click)="selectPreset(key)"
-                       [ngClass]="{'nui-quick-picker__preset--selected': isPresetSelected(key)}"
-                       class="nui-quick-picker__preset">
-            {{presets[key].name}}
+        <h4 class="nui-quick-picker-header nui-quick-picker__presets-header">
+            {{ presetsTitle }}
+        </h4>
+        <div
+            *ngFor="let key of presetKeys"
+            (click)="selectPreset(key)"
+            [ngClass]="{
+                'nui-quick-picker__preset--selected': isPresetSelected(key)
+            }"
+            class="nui-quick-picker__preset"
+        >
+            {{ presets[key].name }}
         </div>
     </div>
     <div class="nui-quick-picker__divider"></div>
     <div class="nui-quick-picker__picker">
-        <h4 class="nui-quick-picker-header nui-quick-picker__picker-header">{{pickerTitle}}</h4>
+        <h4 class="nui-quick-picker-header nui-quick-picker__picker-header">
+            {{ pickerTitle }}
+        </h4>
         <ng-content></ng-content>
     </div>
 </div>

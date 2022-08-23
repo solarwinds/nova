@@ -1,26 +1,17 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "../out-tsc/app",
-    "baseUrl": "./",
-    "skipLibCheck": true,
-    "declaration": false,
-    "types": [
-      "node"
-    ],
-    "paths": {
-      "@angular/*": ["../../node_modules/@angular/*"],
-      "@nova-ui/dashboards": ["../../src/public-api.ts"],
-    }
-  },
-  "exclude": [
-    "**/*.spec.ts"
-  ],
-  "typeRoots": [
-    "../../node_modules/@types"
-  ],
-  "lib": [
-    "es6",
-    "dom"
-  ]
+    "compilerOptions": {
+        "outDir": "../out-tsc/app",
+        "baseUrl": "./",
+        "skipLibCheck": true,
+        "declaration": false,
+        "types": ["node"],
+        "paths": {
+            "@angular/*": ["../../node_modules/@angular/*"],
+            "@nova-ui/dashboards": ["../../src/public-api.ts"]
+        }
+    },
+    "exclude": ["**/*.spec.ts"],
+    "extends": "../../tsconfig.json",
+    "lib": ["es6", "dom"],
+    "typeRoots": ["../../node_modules/@types"]
 }

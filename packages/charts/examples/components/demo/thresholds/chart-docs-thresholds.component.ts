@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-chart-docs-thresholds",
     templateUrl: "./chart-docs-thresholds.component.html",
 })
-export class ChartDocsThresholdsComponent {
-}
+export class ChartDocsThresholdsComponent {}

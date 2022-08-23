@@ -1,8 +1,16 @@
 import { StackComponent } from "../../components/layouts/stack/stack.component";
 import { ProportionalWidgetComponent } from "../../components/proportional-widget/proportional-widget.component";
-import { DEFAULT_PIZZAGNA_ROOT, NOVA_DATASOURCE_ADAPTER } from "../../services/types";
+import {
+    DEFAULT_PIZZAGNA_ROOT,
+    NOVA_DATASOURCE_ADAPTER,
+} from "../../services/types";
 import { PizzagnaLayer, WellKnownProviders } from "../../types";
-import { widgetBodyContentNodes, WIDGET_BODY, WIDGET_HEADER, WIDGET_LOADING } from "../common/widget/components";
+import {
+    widgetBodyContentNodes,
+    WIDGET_BODY,
+    WIDGET_HEADER,
+    WIDGET_LOADING,
+} from "../common/widget/components";
 import { EVENT_PROXY, refresher } from "../common/widget/providers";
 
 export const proportionalWidget = {
@@ -13,11 +21,7 @@ export const proportionalWidget = {
             componentType: StackComponent.lateLoadKey,
             properties: {
                 // these values reference other components in this structure
-                nodes: [
-                    "header",
-                    "loading",
-                    "body",
-                ],
+                nodes: ["header", "loading", "body"],
             },
             providers: {
                 // When enabled, this provider emits the REFRESH event on the pizzagna event bus every X seconds
@@ -39,7 +43,6 @@ export const proportionalWidget = {
             },
         },
 
-
         // retrieving the definitions for the body content nodes. the argument corresponds to the main content node key
         ...widgetBodyContentNodes("chart"),
 
@@ -57,7 +60,8 @@ export const proportionalWidget = {
                 },
             },
             properties: {
-                elementClass: "d-flex flex-grow-1 justify-content-center overflow-auto",
+                elementClass:
+                    "d-flex flex-grow-1 justify-content-center overflow-auto",
             },
         },
     },

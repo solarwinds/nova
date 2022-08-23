@@ -1,7 +1,7 @@
-import {ElementRef, QueryList} from "@angular/core";
+import { ElementRef, QueryList } from "@angular/core";
 
-import {MenuGroupComponent} from "./menu-item/menu-group/menu-group.component";
-import {MenuItemBaseComponent} from "./menu-item/menu-item/menu-item-base";
+import { MenuGroupComponent } from "./menu-item/menu-group/menu-group.component";
+import { MenuItemBaseComponent } from "./menu-item/menu-item/menu-item-base";
 
 export enum MenuActionType {
     destructive = "destructive",

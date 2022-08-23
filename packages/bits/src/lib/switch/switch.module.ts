@@ -1,7 +1,6 @@
 import { NgModule } from "@angular/core";
 
 import { NuiCommonModule } from "../../common/common.module";
-
 import { SwitchComponent } from "./switch.component";
 
 /**
@@ -9,10 +8,8 @@ import { SwitchComponent } from "./switch.component";
  */
 @NgModule({
     declarations: [SwitchComponent],
-    imports: [
-        NuiCommonModule,
-    ],
+    imports: [NuiCommonModule],
     exports: [SwitchComponent],
     providers: [],
 })
-export class NuiSwitchModule { }
+export class NuiSwitchModule {}

@@ -1,9 +1,9 @@
-import { EventBus, EventDefinition, IEvent } from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 
-import { PizzagnaService } from "../pizzagna/services/pizzagna.service";
-import { IWidget } from "../components/widget/types";
+import { EventBus, EventDefinition, IEvent } from "@nova-ui/bits";
 
+import { IWidget } from "../components/widget/types";
+import { PizzagnaService } from "../pizzagna/services/pizzagna.service";
 import { EventRegistryService } from "./event-registry.service";
 import { WidgetConfigurationService } from "./widget-configuration.service";
 import { WidgetToDashboardEventProxyService } from "./widget-to-dashboard-event-proxy.service";
@@ -35,57 +35,140 @@ describe("WidgetToDashboardEventProxyService", () => {
         eventRegistry.registerEvent(DOWNSTREAM_TEST_EVENT_2);
 
         widgetConfigService.updateWidget({ id: testWidgetId } as IWidget);
-        service = new WidgetToDashboardEventProxyService(pizzagnaBus, dashboardBus, widgetConfigService, eventRegistry, pizzagnaService);
+        service = new WidgetToDashboardEventProxyService(
+            pizzagnaBus,
+            dashboardBus,
+            widgetConfigService,
+            eventRegistry,
+            pizzagnaService
+        );
     });
 
     describe("updateConfiguration > ", () => {
         it("should not register subscriptions if the dashboard bus is not defined", () => {
-            // @ts-ignore: Suppressed for testing purposes
-            service = new WidgetToDashboardEventProxyService(pizzagnaBus, undefined, widgetConfigService, eventRegistry, pizzagnaService);
-            service.updateConfiguration({ upstreams: [UPSTREAM_TEST_EVENT_1.id], downstreams: [DOWNSTREAM_TEST_EVENT_1.id] });
+            service = new WidgetToDashboardEventProxyService(
+                pizzagnaBus,
+                // @ts-ignore: Suppressed for testing purposes
+                undefined,
+                widgetConfigService,
+                eventRegistry,
+                pizzagnaService
+            );
+            service.updateConfiguration({
+                upstreams: [UPSTREAM_TEST_EVENT_1.id],
+                downstreams: [DOWNSTREAM_TEST_EVENT_1.id],
+            });
             expect((<any>service).upstreamSubscriptions).toEqual({});
             expect((<any>service).downstreamSubscriptions).toEqual({});
         });
 
         it("should register upstream and downstream subscriptions", () => {
-            service.updateConfiguration({ upstreams: [UPSTREAM_TEST_EVENT_1.id], downstreams: [DOWNSTREAM_TEST_EVENT_1.id] });
-            const upstreamSpy = spyOn(dashboardBus.getStream(UPSTREAM_TEST_EVENT_1), "next");
+            service.updateConfiguration({
+                upstreams: [UPSTREAM_TEST_EVENT_1.id],
+                downstreams: [DOWNSTREAM_TEST_EVENT_1.id],
+            });
+            const upstreamSpy = spyOn(
+                dashboardBus.getStream(UPSTREAM_TEST_EVENT_1),
+                "next"
+            );
             pizzagnaBus.getStream(UPSTREAM_TEST_EVENT_1).next();
-            expect(upstreamSpy).toHaveBeenCalledWith({ id: UPSTREAM_TEST_EVENT_1.id, widgetId: testWidgetId });
-            const downstreamSpy = spyOn(pizzagnaBus.getStream(DOWNSTREAM_TEST_EVENT_1), "next");
+            expect(upstreamSpy).toHaveBeenCalledWith({
+                id: UPSTREAM_TEST_EVENT_1.id,
+                widgetId: testWidgetId,
+            });
+            const downstreamSpy = spyOn(
+                pizzagnaBus.getStream(DOWNSTREAM_TEST_EVENT_1),
+                "next"
+            );
             dashboardBus.getStream(DOWNSTREAM_TEST_EVENT_1).next();
-            expect(downstreamSpy).toHaveBeenCalledWith({ id: DOWNSTREAM_TEST_EVENT_1.id });
+            expect(downstreamSpy).toHaveBeenCalledWith({
+                id: DOWNSTREAM_TEST_EVENT_1.id,
+            });
         });
 
         it("should remove subscriptions that are no longer valid", () => {
-            const upstreams = [UPSTREAM_TEST_EVENT_1.id, UPSTREAM_TEST_EVENT_2.id];
-            const downstreams = [DOWNSTREAM_TEST_EVENT_1.id, DOWNSTREAM_TEST_EVENT_2.id];
+            const upstreams = [
+                UPSTREAM_TEST_EVENT_1.id,
+                UPSTREAM_TEST_EVENT_2.id,
+            ];
+            const downstreams = [
+                DOWNSTREAM_TEST_EVENT_1.id,
+                DOWNSTREAM_TEST_EVENT_2.id,
+            ];
             service.updateConfiguration({ upstreams, downstreams });
-            expect((<any>service).upstreamSubscriptions[UPSTREAM_TEST_EVENT_1.id] instanceof Subscription).toEqual(true);
-            expect((<any>service).upstreamSubscriptions[UPSTREAM_TEST_EVENT_2.id] instanceof Subscription).toEqual(true);
-            expect((<any>service).downstreamSubscriptions[DOWNSTREAM_TEST_EVENT_1.id] instanceof Subscription).toEqual(true);
-            expect((<any>service).downstreamSubscriptions[DOWNSTREAM_TEST_EVENT_2.id] instanceof Subscription).toEqual(true);
-            const upstreamUnsubscribeSpy = spyOn((<any>service).upstreamSubscriptions[UPSTREAM_TEST_EVENT_2.id], "unsubscribe");
-            const downstreamUnsubscribeSpy = spyOn((<any>service).downstreamSubscriptions[DOWNSTREAM_TEST_EVENT_2.id], "unsubscribe");
-            service.updateConfiguration({ upstreams: [UPSTREAM_TEST_EVENT_1.id], downstreams: [DOWNSTREAM_TEST_EVENT_1.id] });
+            expect(
+                (<any>service).upstreamSubscriptions[
+                    UPSTREAM_TEST_EVENT_1.id
+                ] instanceof Subscription
+            ).toEqual(true);
+            expect(
+                (<any>service).upstreamSubscriptions[
+                    UPSTREAM_TEST_EVENT_2.id
+                ] instanceof Subscription
+            ).toEqual(true);
+            expect(
+                (<any>service).downstreamSubscriptions[
+                    DOWNSTREAM_TEST_EVENT_1.id
+                ] instanceof Subscription
+            ).toEqual(true);
+            expect(
+                (<any>service).downstreamSubscriptions[
+                    DOWNSTREAM_TEST_EVENT_2.id
+                ] instanceof Subscription
+            ).toEqual(true);
+            const upstreamUnsubscribeSpy = spyOn(
+                (<any>service).upstreamSubscriptions[UPSTREAM_TEST_EVENT_2.id],
+                "unsubscribe"
+            );
+            const downstreamUnsubscribeSpy = spyOn(
+                (<any>service).downstreamSubscriptions[
+                    DOWNSTREAM_TEST_EVENT_2.id
+                ],
+                "unsubscribe"
+            );
+            service.updateConfiguration({
+                upstreams: [UPSTREAM_TEST_EVENT_1.id],
+                downstreams: [DOWNSTREAM_TEST_EVENT_1.id],
+            });
             expect(upstreamUnsubscribeSpy).toHaveBeenCalled();
             expect(downstreamUnsubscribeSpy).toHaveBeenCalled();
-            expect((<any>service).upstreamSubscriptions[UPSTREAM_TEST_EVENT_2.id]).toBeUndefined();
-            expect((<any>service).downstreamSubscriptions[DOWNSTREAM_TEST_EVENT_2.id]).toBeUndefined();
+            expect(
+                (<any>service).upstreamSubscriptions[UPSTREAM_TEST_EVENT_2.id]
+            ).toBeUndefined();
+            expect(
+                (<any>service).downstreamSubscriptions[
+                    DOWNSTREAM_TEST_EVENT_2.id
+                ]
+            ).toBeUndefined();
         });
 
         it("should add subscriptions that were not registered previously", () => {
-            service.updateConfiguration({ upstreams: [UPSTREAM_TEST_EVENT_1.id], downstreams: [DOWNSTREAM_TEST_EVENT_1.id] });
+            service.updateConfiguration({
+                upstreams: [UPSTREAM_TEST_EVENT_1.id],
+                downstreams: [DOWNSTREAM_TEST_EVENT_1.id],
+            });
 
             // Add more streams to the existing set
-            const upstreams = [UPSTREAM_TEST_EVENT_1.id, UPSTREAM_TEST_EVENT_2.id];
-            const downstreams = [DOWNSTREAM_TEST_EVENT_1.id, DOWNSTREAM_TEST_EVENT_2.id];
+            const upstreams = [
+                UPSTREAM_TEST_EVENT_1.id,
+                UPSTREAM_TEST_EVENT_2.id,
+            ];
+            const downstreams = [
+                DOWNSTREAM_TEST_EVENT_1.id,
+                DOWNSTREAM_TEST_EVENT_2.id,
+            ];
             service.updateConfiguration({ upstreams, downstreams });
 
-            const upstreamSpy = spyOn(dashboardBus.getStream(UPSTREAM_TEST_EVENT_2), "next");
+            const upstreamSpy = spyOn(
+                dashboardBus.getStream(UPSTREAM_TEST_EVENT_2),
+                "next"
+            );
             pizzagnaBus.getStream(UPSTREAM_TEST_EVENT_2).next();
             expect(upstreamSpy).toHaveBeenCalled();
-            const downstreamSpy = spyOn(pizzagnaBus.getStream(DOWNSTREAM_TEST_EVENT_2), "next");
+            const downstreamSpy = spyOn(
+                pizzagnaBus.getStream(DOWNSTREAM_TEST_EVENT_2),
+                "next"
+            );
             dashboardBus.getStream(DOWNSTREAM_TEST_EVENT_2).next();
             expect(downstreamSpy).toHaveBeenCalled();
         });
@@ -93,13 +176,22 @@ describe("WidgetToDashboardEventProxyService", () => {
 
     describe("ngOnDestroy > ", () => {
         it("should unsubscribe all subscriptions", () => {
-            service.updateConfiguration({ upstreams: [UPSTREAM_TEST_EVENT_1.id], downstreams: [DOWNSTREAM_TEST_EVENT_1.id] });
+            service.updateConfiguration({
+                upstreams: [UPSTREAM_TEST_EVENT_1.id],
+                downstreams: [DOWNSTREAM_TEST_EVENT_1.id],
+            });
             service.ngOnDestroy();
 
-            const upstreamSpy = spyOn(dashboardBus.getStream(UPSTREAM_TEST_EVENT_1), "next");
+            const upstreamSpy = spyOn(
+                dashboardBus.getStream(UPSTREAM_TEST_EVENT_1),
+                "next"
+            );
             pizzagnaBus.getStream(UPSTREAM_TEST_EVENT_1).next();
             expect(upstreamSpy).not.toHaveBeenCalled();
-            const downstreamSpy = spyOn(pizzagnaBus.getStream(DOWNSTREAM_TEST_EVENT_1), "next");
+            const downstreamSpy = spyOn(
+                pizzagnaBus.getStream(DOWNSTREAM_TEST_EVENT_1),
+                "next"
+            );
             dashboardBus.getStream(DOWNSTREAM_TEST_EVENT_1).next();
             expect(downstreamSpy).not.toHaveBeenCalled();
         });

@@ -34,7 +34,7 @@ import { IMenuGroup } from "../public-api";
 @Component({
     selector: "nui-menu",
     host: {
-        "class": "nui-menu",
+        class: "nui-menu",
         "[attr.aria-label]": "title || ariaLabel",
     },
     templateUrl: "./menu.component.html",
@@ -89,17 +89,21 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     public menuOpenStream = new Subject<boolean>();
     // Only menu that resolves *ngIf on <ng-content> with these menuItems can correctly get ContentChildren
-    @ContentChildren(MenuItemBaseComponent, {descendants: true}) public menuItems: QueryList<MenuItemBaseComponent>;
-    @ContentChildren(MenuGroupComponent) public menuGroups: QueryList<MenuGroupComponent>;
+    @ContentChildren(MenuItemBaseComponent, { descendants: true })
+    public menuItems: QueryList<MenuItemBaseComponent>;
+    @ContentChildren(MenuGroupComponent)
+    public menuGroups: QueryList<MenuGroupComponent>;
     @ViewChild(PopupComponent) public popup: PopupComponent;
     @ViewChild(MenuPopupComponent) menuPopup: MenuPopupComponent;
     @ViewChild("menuToggle", { read: ElementRef }) menuToggle: ElementRef;
 
     private menuKeyControlListeners: Function[] = [];
     private focusMonitorSubscription: Subscription;
-    constructor(private keyControlService: MenuKeyControlService,
-                private renderer: Renderer2,
-                private focusMonitor: FocusMonitor) {}
+    constructor(
+        private keyControlService: MenuKeyControlService,
+        private renderer: Renderer2,
+        private focusMonitor: FocusMonitor
+    ) {}
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes["size"]) {
@@ -110,7 +114,6 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         if (changes["displayStyle"]) {
             this.iconColor = this.displayStyle === "primary" ? "white" : "";
         }
-
     }
 
     ngAfterViewInit() {
@@ -120,23 +123,29 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.keyControlService.initKeyboardManager();
         // listening to events for key-control
         this.menuKeyControlListeners.push(
-            this.renderer.listen(this.menuToggle.nativeElement, "keydown", (event: KeyboardEvent) => {
-                if (!this.popup.popupToggle.disabled) {
-                    this.keyControlService.handleKeydown(event);
+            this.renderer.listen(
+                this.menuToggle.nativeElement,
+                "keydown",
+                (event: KeyboardEvent) => {
+                    if (!this.popup.popupToggle.disabled) {
+                        this.keyControlService.handleKeydown(event);
+                    }
                 }
-            })
+            )
         );
         // opening menu on focusin
         // The FocusMonitor is an injectable service that can be used to listen for changes in the focus state of an element.
         // It's more powerful than just listening for focus or blur events because it tells you how the element was focused
         // (via mouse, keyboard, touch, or programmatically).
-        this.focusMonitorSubscription = this.focusMonitor.monitor(this.menuToggle.nativeElement).subscribe((origin: FocusOrigin) => {
-            if (origin === "keyboard") {
-                if (!this.popup.popupToggle.disabled) {
-                    this.popup.toggleOpened(new FocusEvent("focusin"));
+        this.focusMonitorSubscription = this.focusMonitor
+            .monitor(this.menuToggle.nativeElement)
+            .subscribe((origin: FocusOrigin) => {
+                if (origin === "keyboard") {
+                    if (!this.popup.popupToggle.disabled) {
+                        this.popup.toggleOpened(new FocusEvent("focusin"));
+                    }
                 }
-            }
-        });
+            });
     }
 
     public isMenuCompact() {
@@ -170,7 +179,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.menuKeyControlListeners.forEach(listener => listener());
+        this.menuKeyControlListeners.forEach((listener) => listener());
         this.focusMonitorSubscription.unsubscribe();
     }
 }

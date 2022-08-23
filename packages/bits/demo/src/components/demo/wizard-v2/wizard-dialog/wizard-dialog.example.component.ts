@@ -1,4 +1,11 @@
+import {
+    FlexibleConnectedPositionStrategy,
+    OverlayRef,
+} from "@angular/cdk/overlay";
 import { Component, Inject, OnDestroy, TemplateRef } from "@angular/core";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
+
 import {
     DialogService,
     NuiDialogRef,
@@ -6,9 +13,6 @@ import {
     ToastService,
     WizardHorizontalComponent,
 } from "@nova-ui/bits";
-import { FlexibleConnectedPositionStrategy, OverlayRef } from "@angular/cdk/overlay";
-import { takeUntil } from "rxjs/operators";
-import { Subject } from "rxjs";
 
 @Component({
     selector: "nui-wizard-v2-dialog-example",
@@ -26,7 +30,7 @@ export class WizardDialogExampleComponent implements OnDestroy {
     constructor(
         @Inject(DialogService) private dialogService: DialogService,
         private toastService: ToastService
-    ) { }
+    ) {}
 
     public vegetables = [
         $localize`Cabbage`,
@@ -63,7 +67,10 @@ export class WizardDialogExampleComponent implements OnDestroy {
     }
 
     // Open confirmation overlay
-    public openConfirmationOverlay(overlay: OverlayComponent, wizard: WizardHorizontalComponent): void {
+    public openConfirmationOverlay(
+        overlay: OverlayComponent,
+        wizard: WizardHorizontalComponent
+    ): void {
         if (wizard.selectedIndex === 0) {
             this.closeDialog();
             return;
@@ -78,23 +85,32 @@ export class WizardDialogExampleComponent implements OnDestroy {
         // Here we update the positions for the overlay. By default, the overlay service connects the overlay to the bottom-left
         // corner of the toggle reference element. We change this behavior here by setting new positions, since we want overlay to
         // stick to the upper-top corner of the parent container
-        (this.overlayRef.getConfig().positionStrategy as FlexibleConnectedPositionStrategy).withPositions([{
-            originX: "start",
-            originY: "top",
-            overlayX: "start",
-            overlayY: "top",
-        }]);
+        (
+            this.overlayRef.getConfig()
+                .positionStrategy as FlexibleConnectedPositionStrategy
+        ).withPositions([
+            {
+                originX: "start",
+                originY: "top",
+                overlayX: "start",
+                overlayY: "top",
+            },
+        ]);
         // We update the size of the overlay container to follow the dimensions of the new 'toggle reference' container we set in the very first step
         this.updateOverlayDimensions(overlay);
 
         // Handling ESC events inside overlay
-        this.activeDialog?.closed$.pipe(
-            takeUntil(this.overlayTriggered$),
-            takeUntil(this.onDestroy$)).subscribe(() => overlay.hide());
+        this.activeDialog?.closed$
+            .pipe(takeUntil(this.overlayTriggered$), takeUntil(this.onDestroy$))
+            .subscribe(() => overlay.hide());
     }
 
     public open(content: TemplateRef<string>): void {
-        this.activeDialog = this.dialogService.open(content, { size: "lg", backdrop: "static", useOverlay: true });
+        this.activeDialog = this.dialogService.open(content, {
+            size: "lg",
+            backdrop: "static",
+            useOverlay: true,
+        });
     }
 
     public actionDone(): void {

@@ -10,5 +10,4 @@ export class LayoutSheetAtom extends Atom {
     async getHeight(): Promise<number> {
         return (await super.getElement().getSize()).height;
     }
-
 }

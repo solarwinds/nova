@@ -4,6 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-switch-docs-example",
     templateUrl: "./switch-docs.example.component.html",
 })
-
-export class SwitchDocsExampleComponent {
-}
+export class SwitchDocsExampleComponent {}

@@ -8,13 +8,10 @@ import { BandScale } from "../band-scale";
 import { LinearScale } from "../linear-scale";
 import { TimeScale } from "../time-scale";
 import { Scales } from "../types";
-
 import { getAutomaticDomain } from "./automatic-domain";
 
 describe("automatic domain >", () => {
-
     describe("respects fixed domain for domain calculation", () => {
-
         it("for number based scale", () => {
             const scales: Scales = {
                 x: new LinearScale(),
@@ -47,7 +44,10 @@ describe("automatic domain >", () => {
                 x: new TimeScale(),
                 y: new LinearScale(),
             };
-            scales.x.fixDomain([new Date("2017-06-01T00:00:00Z"), new Date("2018-06-01T00:00:00Z")]);
+            scales.x.fixDomain([
+                new Date("2017-06-01T00:00:00Z"),
+                new Date("2018-06-01T00:00:00Z"),
+            ]);
 
             const chartSeries: IChartSeries<IAccessors> = {
                 id: "1",
@@ -66,11 +66,9 @@ describe("automatic domain >", () => {
             expect(domain[0]).toBe(20);
             expect(domain[1]).toBe(20);
         });
-
     });
 
     describe("band scale", () => {
-
         it("calculates bands", () => {
             const scales: Scales = {
                 x: new BandScale(),
@@ -135,8 +133,10 @@ describe("automatic domain >", () => {
             ];
 
             const domain = getAutomaticDomain(chartSeriesSet, "x", scales.x);
-            expect(domain).toEqual([["Q1", "Q2", "Q3", "Q4"], ["Brno", "Austin"]]);
+            expect(domain).toEqual([
+                ["Q1", "Q2", "Q3", "Q4"],
+                ["Brno", "Austin"],
+            ]);
         });
-
     });
 });

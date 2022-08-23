@@ -1,10 +1,10 @@
 import { NgZone } from "@angular/core";
 import { fakeAsync, TestBed, tick } from "@angular/core/testing";
+
 import { EventBus, IEvent } from "@nova-ui/bits";
 import { RefresherSettingsService } from "@nova-ui/dashboards";
 
 import { REFRESH } from "../../services/types";
-
 import { Refresher } from "./refresher";
 import { DEFAULT_REFRESH_INTERVAL } from "./types";
 
@@ -53,7 +53,6 @@ describe("Refresher > ", () => {
     });
 
     describe("refresherSettings", () => {
-
         it("updates interval when global settings change", fakeAsync(() => {
             refresherSettings.refreshRateSeconds = 1;
             refresher.updateConfiguration({ overrideDefaultSettings: false });
@@ -69,7 +68,5 @@ describe("Refresher > ", () => {
             expect(spy).toHaveBeenCalledTimes(2);
             refresher.ngOnDestroy();
         }));
-
     });
-
 });

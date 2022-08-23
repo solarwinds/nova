@@ -4,6 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-checkbox-visual-test",
     templateUrl: "./checkbox-visual-test.component.html",
 })
-export class CheckboxVisualTestComponent {
-
-}
+export class CheckboxVisualTestComponent {}

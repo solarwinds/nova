@@ -34,8 +34,12 @@ export class IconService {
     }
 
     getIconResized(iconCode: string, iconNewSize: number, viewBox?: string) {
-        return `<g transform="translate(-${iconNewSize / 2}, -${iconNewSize / 2})">
-                    <svg height="${iconNewSize}" width="${iconNewSize}" viewBox="${viewBox ? viewBox : "0 0 20 20"}">
+        return `<g transform="translate(-${iconNewSize / 2}, -${
+            iconNewSize / 2
+        })">
+                    <svg height="${iconNewSize}" width="${iconNewSize}" viewBox="${
+            viewBox ? viewBox : "0 0 20 20"
+        }">
                         ${iconCode}
                     </svg>
                 </g>`;
@@ -54,21 +58,21 @@ export class IconService {
 
     private updateIconStatusesAndNames() {
         this.statuses = this.icons
-            .filter(iconData => {
+            .filter((iconData) => {
                 if (iconData.cat_namespace === IconCategoryNamespace.Status) {
                     return iconData;
                 }
             })
             .reduce((acc: any, curr) => {
-                acc[curr.name.split(IconCategoryNamespace.Status)[1]] = curr.code;
+                acc[curr.name.split(IconCategoryNamespace.Status)[1]] =
+                    curr.code;
                 return acc;
             }, {});
 
         // ensure unique icons by name, so only the last one is available
-        this.names = this.icons
-            .reduce((acc: any, curr) => {
-                acc[curr.name] = curr;
-                return acc;
-            }, {});
+        this.names = this.icons.reduce((acc: any, curr) => {
+            acc[curr.name] = curr;
+            return acc;
+        }, {});
     }
 }

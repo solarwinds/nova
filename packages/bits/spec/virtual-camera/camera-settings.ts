@@ -1,4 +1,8 @@
-import { CAMERA_DEFAULT_SETTINGS, ICameraSettings, ICameraSettingsActions } from "./types";
+import {
+    CAMERA_DEFAULT_SETTINGS,
+    ICameraSettings,
+    ICameraSettingsActions,
+} from "./types";
 
 export class CameraSettings {
     public currentSettings: ICameraSettings;
@@ -12,17 +16,26 @@ export class CameraSettings {
         crop: this.crop.bind(this),
         responsive: this.responsive.bind(this),
         defaultResponsive: this.defaultResponsive.bind(this),
+    };
+
+    private async fullframe(): Promise<void> {
+        this.currentSettings.fullframe = true;
     }
 
-    private async fullframe(): Promise<void> { this.currentSettings.fullframe = true }
+    private async crop(): Promise<void> {
+        this.currentSettings.fullframe = false;
+    }
 
-    private async crop(): Promise<void> { this.currentSettings.fullframe = false }
-
-    private async responsive(values: Array<number>, callback?: Function): Promise<void> {
+    private async responsive(
+        values: Array<number>,
+        callback?: Function
+    ): Promise<void> {
         this.currentSettings.responsiveWidths = [...values];
         this.currentSettings.responsivityCallback = callback;
     }
 
-    private async defaultResponsive(): Promise<void> { this.currentSettings.responsiveWidths = CAMERA_DEFAULT_SETTINGS.responsiveWidths }
-
+    private async defaultResponsive(): Promise<void> {
+        this.currentSettings.responsiveWidths =
+            CAMERA_DEFAULT_SETTINGS.responsiveWidths;
+    }
 }

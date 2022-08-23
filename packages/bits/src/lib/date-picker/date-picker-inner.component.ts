@@ -22,7 +22,9 @@ import { IDatePickerDisabledDate } from "./public-api";
     selector: "nui-date-picker-inner",
     templateUrl: "./date-picker-inner.component.html",
 })
-export class DatePickerInnerComponent implements AfterContentInit, OnInit, OnChanges, OnDestroy {
+export class DatePickerInnerComponent
+    implements AfterContentInit, OnInit, OnChanges, OnDestroy
+{
     @Input() locale: string;
     @Input() datepickerMode: string;
     @Input() startingDay: number;
@@ -75,7 +77,9 @@ export class DatePickerInnerComponent implements AfterContentInit, OnInit, OnCha
 
     private modes: string[] = ["day", "month", "year"];
 
-    get role(): string { return this.inline ? "application" : "dialog"; }
+    get role(): string {
+        return this.inline ? "application" : "dialog";
+    }
 
     @Input()
     get value(): Moment | undefined {
@@ -84,7 +88,7 @@ export class DatePickerInnerComponent implements AfterContentInit, OnInit, OnCha
 
     set value(value: Moment | undefined) {
         if (!this.preserveInsignificant && value) {
-            value.set({"hour": 0, "minute": 0, "second": 0, "millisecond": 0});
+            value.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
         }
 
         this._value = value;
@@ -119,14 +123,24 @@ export class DatePickerInnerComponent implements AfterContentInit, OnInit, OnCha
 
         switch (this.datepickerMode) {
             case "day":
-                shouldRefreshView = !_isNil(changes.value) && !_isNil(this.selectedDate)
-                    && !changes.value.currentValue.isSame(changes.value.previousValue);
+                shouldRefreshView =
+                    !_isNil(changes.value) &&
+                    !_isNil(this.selectedDate) &&
+                    !changes.value.currentValue.isSame(
+                        changes.value.previousValue
+                    );
                 break;
             case "month":
-                shouldRefreshView = !_isNil(this.value) && !_isNil(this.selectedDate) && this.value.month() !== this.selectedDate.month();
+                shouldRefreshView =
+                    !_isNil(this.value) &&
+                    !_isNil(this.selectedDate) &&
+                    this.value.month() !== this.selectedDate.month();
                 break;
             case "year":
-                shouldRefreshView = !_isNil(this.value) && !_isNil(this.selectedDate) && this.value.year() !== this.selectedDate.year();
+                shouldRefreshView =
+                    !_isNil(this.value) &&
+                    !_isNil(this.selectedDate) &&
+                    this.value.year() !== this.selectedDate.year();
                 break;
             default:
                 shouldRefreshView = false;
@@ -134,7 +148,10 @@ export class DatePickerInnerComponent implements AfterContentInit, OnInit, OnCha
 
         if (shouldRefreshView) {
             _each(changes, (change) => {
-                shouldRefreshView = (!change.firstChange && moment.isMoment(change.currentValue) && !change.currentValue.isSame(change.previousValue));
+                shouldRefreshView =
+                    !change.firstChange &&
+                    moment.isMoment(change.currentValue) &&
+                    !change.currentValue.isSame(change.previousValue);
             });
         }
 
@@ -232,7 +249,8 @@ export class DatePickerInnerComponent implements AfterContentInit, OnInit, OnCha
         if (this.datepickerMode === this.minMode) {
             this.selectionDone.emit(this.value);
         } else {
-            this.datepickerMode = this.modes[this.modes.indexOf(this.datepickerMode) - 1];
+            this.datepickerMode =
+                this.modes[this.modes.indexOf(this.datepickerMode) - 1];
             event.stopPropagation();
         }
 
@@ -258,10 +276,15 @@ export class DatePickerInnerComponent implements AfterContentInit, OnInit, OnCha
         if (expectedStep) {
             const activeDateMoment = this.value || moment();
 
-            const year = activeDateMoment.year() + direction * (expectedStep.years || 0);
-            const month = activeDateMoment.month() + direction * (expectedStep.months || 0);
+            const year =
+                activeDateMoment.year() + direction * (expectedStep.years || 0);
+            const month =
+                activeDateMoment.month() +
+                direction * (expectedStep.months || 0);
 
-            this.value = activeDateMoment.clone().set({"year": year, "month": month, "date": 1});
+            this.value = activeDateMoment
+                .clone()
+                .set({ year: year, month: month, date: 1 });
             this.refreshView();
 
             this.calendarMoved.next(this.value);
@@ -280,7 +303,8 @@ export class DatePickerInnerComponent implements AfterContentInit, OnInit, OnCha
             return;
         }
 
-        this.datepickerMode = this.modes[this.modes.indexOf(this.datepickerMode) + direction];
+        this.datepickerMode =
+            this.modes[this.modes.indexOf(this.datepickerMode) + direction];
         this.refreshView();
         event.stopPropagation();
     }
@@ -290,7 +314,7 @@ export class DatePickerInnerComponent implements AfterContentInit, OnInit, OnCha
 
         if (this.disabledDates) {
             this.disabledDates.forEach(
-                (disabledDate: { date: Moment, mode: string }) => {
+                (disabledDate: { date: Moment; mode: string }) => {
                     if (this.compareDateDisabled(disabledDate, date) === 0) {
                         isDateDisabled = true;
                     }
@@ -305,14 +329,20 @@ export class DatePickerInnerComponent implements AfterContentInit, OnInit, OnCha
         const diff1: number | undefined = this.compare(date, this.minDate);
         const diff2: number | undefined = this.compare(date, this.maxDate);
 
-        return (this.minDate && (diff1 || 0) < 0) || (this.maxDate && (diff2 || 0) > 0);
+        return (
+            (this.minDate && (diff1 || 0) < 0) ||
+            (this.maxDate && (diff2 || 0) > 0)
+        );
     }
 
     public formatDate(date: any, format: any): string {
         return moment(date).clone().format(format);
     }
 
-    protected compareDateDisabled(date1Disabled: { date: Moment, mode: string }, date2: Moment): number | undefined {
+    protected compareDateDisabled(
+        date1Disabled: { date: Moment; mode: string },
+        date2: Moment
+    ): number | undefined {
         if (_isNil(date1Disabled) || _isNil(date2)) {
             return undefined;
         }

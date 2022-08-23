@@ -1,17 +1,26 @@
-import { ChangeDetectorRef, Component, HostBinding, Input, OnInit } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    Component,
+    HostBinding,
+    Input,
+    OnInit,
+} from "@angular/core";
 
-import { IHasChangeDetector } from "../../../types";
 import { IWidgetErrorDisplayProperties } from "../../../components/widget/types";
+import { IHasChangeDetector } from "../../../types";
 
 @Component({
     selector: "nui-widget-error",
     templateUrl: "./widget-error.component.html",
     styleUrls: ["./widget-error.component.less"],
 })
-export class WidgetErrorComponent implements OnInit, IHasChangeDetector, IWidgetErrorDisplayProperties {
+export class WidgetErrorComponent
+    implements OnInit, IHasChangeDetector, IWidgetErrorDisplayProperties
+{
     public static lateLoadKey = "WidgetErrorComponent";
 
-    public readonly defaultClasses = "d-flex flex-column justify-content-center w-100 p-3";
+    public readonly defaultClasses =
+        "d-flex flex-column justify-content-center w-100 p-3";
 
     @Input() public image: string;
     @Input() public title: string;
@@ -24,8 +33,7 @@ export class WidgetErrorComponent implements OnInit, IHasChangeDetector, IWidget
 
     @HostBinding("class") public classNames: string;
 
-    constructor(public changeDetector: ChangeDetectorRef) {
-    }
+    constructor(public changeDetector: ChangeDetectorRef) {}
 
     ngOnInit() {
         this.classNames = `${this.defaultClasses} ${this.elementClass}`;

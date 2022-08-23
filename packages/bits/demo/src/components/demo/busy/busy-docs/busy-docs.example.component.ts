@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-busy-docs-example",
     templateUrl: "./busy-docs.example.component.html",
 })
-export class BusyDocsExampleComponent {
-}
+export class BusyDocsExampleComponent {}

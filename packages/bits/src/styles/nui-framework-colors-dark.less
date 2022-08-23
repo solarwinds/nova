@@ -7,37 +7,37 @@
 /* SECTION: backgrounds */
 @nui-color-bg-transparent: fade(@white, 0%);
 @nui-color-bg-content: @base;
-@nui-color-bg-secondary:  tint(@base, 4%);
-@nui-color-bg-content_popover:  tint(@base, 8%);
-@nui-color-bg-workspace:  shade(@base, 50%);
+@nui-color-bg-secondary: tint(@base, 4%);
+@nui-color-bg-content_popover: tint(@base, 8%);
+@nui-color-bg-workspace: shade(@base, 50%);
 @nui-color-bg-transparent-hover: fade(@white, 8%); // unofficial
 @nui-color-bg-content-hover: tint(@base, 8%); // unofficial
-@nui-color-bg-table_header:  tint(@base, 15%);
+@nui-color-bg-table_header: tint(@base, 15%);
 @nui-color-bg-accordion_header: fade(@white, 15%);
 @nui-color-bg-accordion_header-hover: fade(@white, 20%);
-@nui-color-bg-inverse:  @white;
-@nui-color-bg-platformbar:  @base;
-@nui-color-bg-platformbar_vertical:  @base;
-@nui-color-bg-table_header-hover:  tint(@base, 20%);
-@nui-color-bg-inverse-hover:  shade(@white, 10%);
-@nui-color-bg-platformbar-hover:  tint(@base, 5%);
-@nui-color-bg-platformbar_vertical-hover:  tint(@base, 5%);
-@nui-color-bg-platformbar-secondary:  shade(@black, 10%);
-@nui-color-bg-platformbar-secondary-hover:  @base;
+@nui-color-bg-inverse: @white;
+@nui-color-bg-platformbar: @base;
+@nui-color-bg-platformbar_vertical: @base;
+@nui-color-bg-table_header-hover: tint(@base, 20%);
+@nui-color-bg-inverse-hover: shade(@white, 10%);
+@nui-color-bg-platformbar-hover: tint(@base, 5%);
+@nui-color-bg-platformbar_vertical-hover: tint(@base, 5%);
+@nui-color-bg-platformbar-secondary: shade(@black, 10%);
+@nui-color-bg-platformbar-secondary-hover: @base;
 @nui-color-bg-light: @base; // unofficial
 @nui-color-bg-light-hover: fade(@black, 20%); // unofficial
 @nui-color-bg-dark: fade(@black, 24%); // unofficial
-@nui-color-bg-dark-offset:  fade(@black, 26%); // unofficial
-@nui-color-bg-dark-offset-hover:  fade(@black, 28%); // unofficial
-@nui-color-bg-mid_dark:  fade(@black, 30%); // unofficial
-@nui-color-bg-dark-hover:fade(@black, 34%); // unofficial
-@nui-color-bg-mid_dark-hover:  fade(@black, 36%); // unofficial
+@nui-color-bg-dark-offset: fade(@black, 26%); // unofficial
+@nui-color-bg-dark-offset-hover: fade(@black, 28%); // unofficial
+@nui-color-bg-mid_dark: fade(@black, 30%); // unofficial
+@nui-color-bg-dark-hover: fade(@black, 34%); // unofficial
+@nui-color-bg-mid_dark-hover: fade(@black, 36%); // unofficial
 
 /* effects & interactions */
 /* SECTION: effects and interactions */
 @nui-color-active: @primary-blue--dark;
-@nui-color-active-hover:  tint(@primary-blue--dark, 30%);
-@nui-color-selected: fade(@cyan,20%);
+@nui-color-active-hover: tint(@primary-blue--dark, 30%);
+@nui-color-selected: fade(@cyan, 20%);
 @nui-color-selected-hover: fade(@cyan, 30%);
 @nui-color-selected-contrast: @cyan;
 @nui-color-selected-contrast-hover: tint(@cyan, 30%);
@@ -57,7 +57,10 @@
 /* texts */
 /* SECTION: texts */
 @nui-color-text-default: @white;
-@nui-color-text-default-hover: darken(@nui-color-text-default, 10%); // unofficial
+@nui-color-text-default-hover: darken(
+    @nui-color-text-default,
+    10%
+); // unofficial
 @nui-color-text-secondary: fade(@white, 50%);
 @nui-color-text-link: @primary-blue--dark;
 @nui-color-text-link-inverse: @nui-color-text-link;
@@ -65,7 +68,7 @@
 @nui-color-text-inverse: @base;
 @nui-color-text-inverse-disabled: @nui-color-text-disabled;
 @nui-color-text-inverse-secondary: fade(@base, 50%);
-@nui-color-text-light:@white;
+@nui-color-text-light: @white;
 @nui-color-text-light-secondary: darken(@white, 20%); // unofficial
 @nui-color-text-highlight-platform_bar: @swi_orange;
 @nui-color-text-critical: @critical_red--dark;
@@ -166,7 +169,6 @@
 @nui-color-semantic-bg-critical-threshold: fade(@critical_red--dark, 20%);
 @nui-color-semantic-bg-warning-threshold: fade(@warning_yellow, 20%);
 
-
 /* chart colors */
 /* SECTION: charts */
 @nui-color-chart-one-dark: shade(@chart-blue, 40%);
@@ -249,8 +251,14 @@
 @nui-color-line-offset: #4d3f62; // unofficial
 
 @nui-color-btn1-focusBrd: darken(@nui-color-line-default, 5.5%); // unofficial
-@nui-color-btn1-activeOpenBrd: darken(@nui-color-line-default, 12%); // unofficial
-@nui-color-btn1-activeHoverBrd: darken(@nui-color-line-default, 25%); // unofficial
+@nui-color-btn1-activeOpenBrd: darken(
+    @nui-color-line-default,
+    12%
+); // unofficial
+@nui-color-btn1-activeHoverBrd: darken(
+    @nui-color-line-default,
+    25%
+); // unofficial
 @nui-color-btn2-focusBk: darken(@nui-color-text-link, 5.5%); // unofficial
 @nui-color-btn2-activeOpenBk: darken(@nui-color-text-link, 12%); // unofficial
 @nui-color-btn2-activeHoverBk: darken(@nui-color-text-link, 25%); // unofficial
@@ -258,56 +266,59 @@
 @nui-color-btn4-activeOpen: darken(@nui-color-active, 12%); // unofficial
 @nui-color-btn4-activeHover: darken(@nui-color-active, 25%); // unofficial
 
-@nui-color-input-box-shadow: fade(@nui-color-line-default,50%); // unofficial
-@nui-color-input-box-shadow-hover: fade(@nui-color-line-default, 60%); // unofficial
+@nui-color-input-box-shadow: fade(@nui-color-line-default, 50%); // unofficial
+@nui-color-input-box-shadow-hover: fade(
+    @nui-color-line-default,
+    60%
+); // unofficial
 
 //** Shadow color
 @nui-shadow-color-stronger: @pure_black;
 @nui-shadow-color: fade(@pure_black, 90%);
 
 //** Background color for `<body>`.
-@body-bg:               #8f9acc; // unofficial
+@body-bg: #8f9acc; // unofficial
 //** Global text color on `<body>`.
-@text-color:            #e0f807; // unofficial
+@text-color: #e0f807; // unofficial
 
 //** Global textual link color.
-@link-color:            #cef97f; // unofficial
+@link-color: #cef97f; // unofficial
 //** Link hover color set via `darken()` function.
-@link-hover-color:      #a1591e; // unofficial
+@link-hover-color: #a1591e; // unofficial
 
 //** Border color for inputs on focus
-@input-border-focus:             #8b6764; // unofficial
+@input-border-focus: #8b6764; // unofficial
 
 //** Placeholder text color
-@input-color-placeholder:        @nui-color-text-secondary; // unofficial
+@input-color-placeholder: @nui-color-text-secondary; // unofficial
 
-@kbd-color:                   #50eb9d; // unofficial
-@kbd-bg:                      #60d53b; // unofficial
+@kbd-color: #50eb9d; // unofficial
+@kbd-bg: #60d53b; // unofficial
 
-@pre-color:                   #2ba19a; // unofficial
-@pre-border-color:            #d44e59; // unofficial
+@pre-color: #2ba19a; // unofficial
+@pre-border-color: #d44e59; // unofficial
 
 //** Text muted color
-@text-muted:                  #bdba13; // unofficial
+@text-muted: #bdba13; // unofficial
 //** Abbreviations and acronyms border color
-@abbr-border-color:           #284202; // unofficial
+@abbr-border-color: #284202; // unofficial
 //** Headings small color
-@headings-small-color:        #41dce8; // unofficial
+@headings-small-color: #41dce8; // unofficial
 //** Blockquote small color
-@blockquote-small-color:      #38d422; // unofficial
+@blockquote-small-color: #38d422; // unofficial
 
 //** Page header border color
-@page-header-border-color:    @nui-color-bg-workspace; // unofficial
+@page-header-border-color: @nui-color-bg-workspace; // unofficial
 
 //** Horizontal line color.
-@hr-border:                   #d08f2a; // unofficial
+@hr-border: #d08f2a; // unofficial
 
 //** Thumbnail background color
-@thumbnail-bg:                #38d422; // unofficial
+@thumbnail-bg: #38d422; // unofficial
 
 //** Background color, that .nui-scroll-shadow class will try to simulate
-@nui-color-bg-scroll:         @nui-color-bg-content; // unofficial
+@nui-color-bg-scroll: @nui-color-bg-content; // unofficial
 
 //** Code component colors
-@nui-code-bg-color:           @nui-color-bg-mid_dark; // unofficial
-@nui-code-color:              @nui-color-bg-content; // unofficial
+@nui-code-bg-color: @nui-color-bg-mid_dark; // unofficial
+@nui-code-color: @nui-color-bg-content; // unofficial

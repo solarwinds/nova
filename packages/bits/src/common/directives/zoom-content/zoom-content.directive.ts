@@ -1,4 +1,15 @@
-import { AfterViewInit, ChangeDetectorRef, Directive, ElementRef, HostBinding, Input, NgZone, OnChanges, OnDestroy, SimpleChanges } from "@angular/core";
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Directive,
+    ElementRef,
+    HostBinding,
+    Input,
+    NgZone,
+    OnChanges,
+    OnDestroy,
+    SimpleChanges,
+} from "@angular/core";
 import isFinite from "lodash/isFinite";
 import { BehaviorSubject, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -20,7 +31,9 @@ export interface IBrokerValue {
 @Directive({
     selector: "[nuiZoomContent]",
 })
-export class ZoomContentDirective implements OnDestroy, AfterViewInit, OnChanges {
+export class ZoomContentDirective
+    implements OnDestroy, AfterViewInit, OnChanges
+{
     private destroy$ = new Subject();
 
     @HostBinding("style.zoom")
@@ -69,14 +82,11 @@ export class ZoomContentDirective implements OnDestroy, AfterViewInit, OnChanges
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.scaleOUT$ && this.scaleOUT$) {
-
-            this.scaleIN$
-                .pipe(takeUntil(this.destroy$))
-                .subscribe(data => {
-                    this.latestDataFromBroker = {...data};
-                    this.element.style.transform = `scale(${data.targetValue})`;
-                    this.checkScaleBoundaries(data.targetValue);
-                });
+            this.scaleIN$.pipe(takeUntil(this.destroy$)).subscribe((data) => {
+                this.latestDataFromBroker = { ...data };
+                this.element.style.transform = `scale(${data.targetValue})`;
+                this.checkScaleBoundaries(data.targetValue);
+            });
         }
     }
 
@@ -116,8 +126,12 @@ export class ZoomContentDirective implements OnDestroy, AfterViewInit, OnChanges
         const heightZoom = this.parentRect.height / this.elementRect.height;
 
         let zoom = Math.min(widthZoom, heightZoom) * this.zoomRatio;
-        if (this.minZoom) { zoom = Math.max(zoom, this.minZoom); }
-        if (this.maxZoom) { zoom = Math.min(zoom, this.maxZoom); }
+        if (this.minZoom) {
+            zoom = Math.max(zoom, this.minZoom);
+        }
+        if (this.maxZoom) {
+            zoom = Math.min(zoom, this.maxZoom);
+        }
 
         if (Math.abs(zoom - this.zoom) > this.minZoomDifference) {
             this.zoom = zoom;
@@ -127,19 +141,22 @@ export class ZoomContentDirective implements OnDestroy, AfterViewInit, OnChanges
 
     private applyScale() {
         const parentSize = {
-            width: this.parentElement.offsetWidth - (2 * this.margin),
-            height: this.parentElement.offsetHeight  - (2 * this.margin),
+            width: this.parentElement.offsetWidth - 2 * this.margin,
+            height: this.parentElement.offsetHeight - 2 * this.margin,
         };
 
-        const scale = Math.min(parentSize.width / this.element.offsetWidth, parentSize.height / this.element.offsetHeight);
+        const scale = Math.min(
+            parentSize.width / this.element.offsetWidth,
+            parentSize.height / this.element.offsetHeight
+        );
 
         this.scaleOUT$
             ? this.scaleOUT$.next({
-                ...this.latestDataFromBroker,
-                targetID: this.uuid,
-                targetValue: isFinite(scale) ? scale : 0,
-            })
-            : this.element.style.transform =  `scale(${scale})`;
+                  ...this.latestDataFromBroker,
+                  targetID: this.uuid,
+                  targetValue: isFinite(scale) ? scale : 0,
+              })
+            : (this.element.style.transform = `scale(${scale})`);
 
         this.checkScaleBoundaries(scale);
     }
@@ -149,7 +166,7 @@ export class ZoomContentDirective implements OnDestroy, AfterViewInit, OnChanges
             this.element.style.transform = `scale(${this.minScale})`;
         }
 
-        if (this.maxScale && (scale > this.maxScale)) {
+        if (this.maxScale && scale > this.maxScale) {
             this.element.style.transform = `scale(${this.maxScale})`;
         }
     }

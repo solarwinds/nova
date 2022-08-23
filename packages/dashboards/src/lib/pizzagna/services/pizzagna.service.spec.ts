@@ -2,8 +2,10 @@ import { EventBus, IEvent } from "@nova-ui/bits";
 
 import { ISetPropertyPayload, SET_PROPERTY_VALUE } from "../../services/types";
 import { IPizzagna, PizzagnaLayer } from "../../types";
-import { getPizzagnaPropertyPath, IPizzagnaProperty } from "../functions/get-pizzagna-property-path";
-
+import {
+    getPizzagnaPropertyPath,
+    IPizzagnaProperty,
+} from "../functions/get-pizzagna-property-path";
 import { DynamicComponentCreator } from "./dynamic-component-creator.service";
 import { PizzagnaService } from "./pizzagna.service";
 
@@ -50,8 +52,7 @@ describe("PizzagnaService > ", () => {
         it("preserves reference integrity of objects that were not removed", () => {
             const pizzagna: IPizzagna = {
                 [PizzagnaLayer.Structure]: {
-                    component1: {
-                    },
+                    component1: {},
                     component2: {
                         properties: {
                             nodes: ["component2/first", "component2/second"],
@@ -72,8 +73,7 @@ describe("PizzagnaService > ", () => {
 
             const expectedPizzagna = {
                 [PizzagnaLayer.Structure]: {
-                    component1: {
-                    },
+                    component1: {},
                 },
                 [PizzagnaLayer.Data]: {},
                 [PizzagnaLayer.Configuration]: {},
@@ -83,12 +83,13 @@ describe("PizzagnaService > ", () => {
             expect(service.pizzagna).toEqual(expectedPizzagna);
 
             // reference to component1 was not changed
-            expect(service.pizzagna[PizzagnaLayer.Structure].component1)
-                .toBe(pizzagna[PizzagnaLayer.Structure].component1);
+            expect(service.pizzagna[PizzagnaLayer.Structure].component1).toBe(
+                pizzagna[PizzagnaLayer.Structure].component1
+            );
             // reference to 'structure' layer was modified as a component was removed from it
-            expect(service.pizzagna[PizzagnaLayer.Structure])
-                .not.toBe(pizzagna[PizzagnaLayer.Structure]);
+            expect(service.pizzagna[PizzagnaLayer.Structure]).not.toBe(
+                pizzagna[PizzagnaLayer.Structure]
+            );
         });
     });
-
 });

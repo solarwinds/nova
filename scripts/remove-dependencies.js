@@ -16,4 +16,7 @@ for (const dep of project.dependencies) {
     delete packageJson.devDependencies[dep];
 }
 
-fs.writeFileSync(`./${project.path}/package.json`, JSON.stringify(packageJson, null, 2));
+fs.writeFileSync(
+    `./${project.path}/package.json`,
+    JSON.stringify(packageJson, null, 2)
+);

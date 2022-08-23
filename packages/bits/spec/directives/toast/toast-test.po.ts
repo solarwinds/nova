@@ -1,8 +1,7 @@
-import {$, by, ElementFinder} from "protractor";
+import { $, by, ElementFinder } from "protractor";
 
-import {Atom} from "../../atom";
-
-import {ToastAtom} from "./toast.atom";
+import { Atom } from "../../atom";
+import { ToastAtom } from "./toast.atom";
 
 // interfaces duplicated here because if we import them from lib, dist-copy for atoms will work improperly
 export interface IToastDeclaration {
@@ -70,23 +69,27 @@ export class ToastTestPage {
     private radioBottomCenter = this.root.element(by.id("radioBottomCenter"));
     private radioBottomLeft = this.root.element(by.id("radioBottomLeft"));
     private radioBottomRight = this.root.element(by.id("radioBottomRight"));
-    private radioBottomFullWidth = this.root.element(by.id("radioBottomFullWidth"));
+    private radioBottomFullWidth = this.root.element(
+        by.id("radioBottomFullWidth")
+    );
     private radioCustomClass = this.root.element(by.id("radioCustomClass"));
     private chbClickToDismiss = this.root.element(by.id("chbClickToDismiss"));
     private chbStickyError = this.root.element(by.id("chbStickyError"));
     private txtMaxOpened = this.root.element(by.id("txtMaxOpened"));
     private chbAutoDismiss = this.root.element(by.id("chbAutoDismiss"));
     private chbNewestOnTop = this.root.element(by.id("chbNewestOnTop"));
-    private chbPreventDuplicates = this.root.element(by.id("chbPreventDuplicates"));
+    private chbPreventDuplicates = this.root.element(
+        by.id("chbPreventDuplicates")
+    );
 
     private btnFire = this.root.element(by.id("btnFire"));
     private btnReset = this.root.element(by.id("btnReset"));
 
     private radioTypes: Record<string, ElementFinder> = {
-        "error": this.radioError,
-        "info": this.radioInfo,
-        "success": this.radioSuccess,
-        "warning": this.radioWarning,
+        error: this.radioError,
+        info: this.radioInfo,
+        success: this.radioSuccess,
+        warning: this.radioWarning,
     };
 
     private positionElements: ElementFinder[] = [
@@ -104,19 +107,35 @@ export class ToastTestPage {
 
     private updateCheckBox = this.updateSelectable;
 
-    public async showToasts(declaration: IToastDeclaration, type: string = "info", count: number = 1): Promise<void> {
+    public async showToasts(
+        declaration: IToastDeclaration,
+        type: string = "info",
+        count: number = 1
+    ): Promise<void> {
         await this.updateTextBox(this.txtTitle, declaration.title || "");
         await this.updateTextBox(this.txtMessage, declaration.message || "");
 
         if (declaration.options) {
-            await this.updateTextBox(this.txtTimeOut, "" + declaration.options.timeOut);
-            await this.updateTextBox(this.txtExtendedTimeOut, "" + declaration.options.extendedTimeOut);
-            // @ts-ignore: Disabled for testing purposes
-            await this.updateCheckBox(this.chbEnableHtml, declaration.options.enableHtml);
+            await this.updateTextBox(
+                this.txtTimeOut,
+                "" + declaration.options.timeOut
+            );
+            await this.updateTextBox(
+                this.txtExtendedTimeOut,
+                "" + declaration.options.extendedTimeOut
+            );
+            await this.updateCheckBox(
+                this.chbEnableHtml,
+                // @ts-ignore: Disabled for testing purposes
+                declaration.options.enableHtml
+            );
 
             // TODO: update all the other options
-            // @ts-ignore: Disabled for testing purposes
-            await this.updateCheckBox(this.chbClickToDismiss, declaration.options.clickToDismiss);
+            await this.updateCheckBox(
+                this.chbClickToDismiss,
+                // @ts-ignore: Disabled for testing purposes
+                declaration.options.clickToDismiss
+            );
         }
 
         for (const element of this.positionElements) {
@@ -145,7 +164,10 @@ export class ToastTestPage {
         return Atom.findCount(ToastAtom, this.body);
     }
 
-    private async updateTextBox(input: ElementFinder, value: string): Promise<void> {
+    private async updateTextBox(
+        input: ElementFinder,
+        value: string
+    ): Promise<void> {
         const currentValue = await input.getAttribute("value");
         if (currentValue === value) {
             return;
@@ -158,7 +180,10 @@ export class ToastTestPage {
         return this.updateSelectable(input, true);
     }
 
-    private async updateSelectable(input: ElementFinder, value: boolean): Promise<void> {
+    private async updateSelectable(
+        input: ElementFinder,
+        value: boolean
+    ): Promise<void> {
         const currentValue = await input.isSelected();
         if (currentValue === value) {
             return;

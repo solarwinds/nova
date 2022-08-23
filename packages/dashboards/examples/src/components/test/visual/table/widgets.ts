@@ -1,3 +1,5 @@
+import { GridsterItem } from "angular-gridster2";
+
 import {
     IProviderConfiguration,
     ITableWidgetColumnConfig,
@@ -8,28 +10,30 @@ import {
     RawFormatterComponent,
     WellKnownProviders,
 } from "@nova-ui/dashboards";
-import { GridsterItem } from "angular-gridster2";
 
-import { TestTableDataSource, TestTableDataSource2 } from "../../data/table-datasources";
+import {
+    TestTableDataSource,
+    TestTableDataSource2,
+} from "../../data/table-datasources";
 
 export const positions: Record<string, GridsterItem> = {
-    "widget1": {
-        "cols": 6,
-        "rows": 6,
-        "x": 0,
-        "y": 0,
+    widget1: {
+        cols: 6,
+        rows: 6,
+        x: 0,
+        y: 0,
     },
-    "widget2": {
-        "cols": 6,
-        "rows": 6,
-        "x": 6,
-        "y": 0,
+    widget2: {
+        cols: 6,
+        rows: 6,
+        x: 6,
+        y: 0,
     },
-    "widget3": {
-        "cols": 6,
-        "rows": 6,
-        "x": 0,
-        "y": 6,
+    widget3: {
+        cols: 6,
+        rows: 6,
+        x: 0,
+        y: 6,
     },
 };
 
@@ -39,13 +43,13 @@ export const widgets: IWidget[] = [
         type: "table",
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
-                "header": {
+                header: {
                     properties: {
                         title: "Table Widget!",
                         subtitle: "Basic table widget",
                     },
                 },
-                "table": {
+                table: {
                     providers: {
                         [WellKnownProviders.DataSource]: {
                             providerId: TestTableDataSource.providerId,
@@ -60,7 +64,8 @@ export const widgets: IWidget[] = [
                                     isActive: true,
                                     width: 100,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "position",
@@ -73,7 +78,8 @@ export const widgets: IWidget[] = [
                                     label: "Name",
                                     isActive: true,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "name",
@@ -87,7 +93,8 @@ export const widgets: IWidget[] = [
                                     isActive: true,
                                     width: 100,
                                     formatter: {
-                                        componentType: LinkFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            LinkFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "firstUrlLabel",
@@ -113,13 +120,13 @@ export const widgets: IWidget[] = [
         type: "table",
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
-                "header": {
+                header: {
                     properties: {
                         title: "An Empty Table Widget!",
                         subtitle: "Empty table widget",
                     },
                 },
-                "table": {
+                table: {
                     providers: {
                         [WellKnownProviders.DataSource]: {
                             providerId: TestTableDataSource.providerId,
@@ -144,13 +151,13 @@ export const widgets: IWidget[] = [
         type: "table",
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
-                "header": {
+                header: {
                     properties: {
                         title: "Another Table Widget!",
                         subtitle: "Basic table widget",
                     },
                 },
-                "table": {
+                table: {
                     providers: {
                         [WellKnownProviders.DataSource]: {
                             providerId: TestTableDataSource2.providerId,
@@ -164,7 +171,8 @@ export const widgets: IWidget[] = [
                                     label: "No",
                                     isActive: true,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "position",
@@ -177,7 +185,8 @@ export const widgets: IWidget[] = [
                                     label: "Name",
                                     isActive: true,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "name",

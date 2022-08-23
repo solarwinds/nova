@@ -1,13 +1,29 @@
-import { ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Inject,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    SimpleChanges,
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { EventBus, IEvent } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
+import { EventBus, IEvent } from "@nova-ui/bits";
+
 import { TimeseriesChartPreset } from "../../../../../components/timeseries-widget/types";
-import { LegendPlacement } from "../../../../../widget-types/common/widget/legend";
 import { PREVIEW_EVENT, REFRESH } from "../../../../../services/types";
-import { IHasChangeDetector, IHasForm, PIZZAGNA_EVENT_BUS } from "../../../../../types";
+import {
+    IHasChangeDetector,
+    IHasForm,
+    PIZZAGNA_EVENT_BUS,
+} from "../../../../../types";
+import { LegendPlacement } from "../../../../../widget-types/common/widget/legend";
 import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
 
 export interface ITimeseriesChartTypeOption {
@@ -25,7 +41,9 @@ export interface ITimeSpanOption {
     templateUrl: "./timeseries-metadata-configuration.component.html",
     styleUrls: ["./timeseries-metadata-configuration.component.less"],
 })
-export class TimeseriesMetadataConfigurationComponent implements IHasChangeDetector, IHasForm, OnInit, OnChanges, OnDestroy {
+export class TimeseriesMetadataConfigurationComponent
+    implements IHasChangeDetector, IHasForm, OnInit, OnChanges, OnDestroy
+{
     static lateLoadKey = "TimeseriesMetadataConfigurationComponent";
 
     @Input() legendPlacements: LegendPlacement[] = [];
@@ -35,11 +53,17 @@ export class TimeseriesMetadataConfigurationComponent implements IHasChangeDetec
     @Input() leftAxisLabel: string;
     @Input() preset: TimeseriesChartPreset;
     @Input() availableChartTypes: ITimeseriesChartTypeOption[] = [
-        {label: $localize`Line`, value: TimeseriesChartPreset.Line},
-        {label: $localize`Stacked area`, value: TimeseriesChartPreset.StackedArea},
-        {label: $localize`Stacked % area`, value: TimeseriesChartPreset.StackedPercentageArea},
-        {label: $localize`Bar`, value: TimeseriesChartPreset.StackedBar},
-        {label: $localize`Status`, value: TimeseriesChartPreset.StatusBar},
+        { label: $localize`Line`, value: TimeseriesChartPreset.Line },
+        {
+            label: $localize`Stacked area`,
+            value: TimeseriesChartPreset.StackedArea,
+        },
+        {
+            label: $localize`Stacked % area`,
+            value: TimeseriesChartPreset.StackedPercentageArea,
+        },
+        { label: $localize`Bar`, value: TimeseriesChartPreset.StackedBar },
+        { label: $localize`Status`, value: TimeseriesChartPreset.StatusBar },
     ];
 
     @Output() formReady = new EventEmitter<FormGroup>();
@@ -48,10 +72,12 @@ export class TimeseriesMetadataConfigurationComponent implements IHasChangeDetec
 
     private destroy$ = new Subject();
 
-    constructor(public changeDetector: ChangeDetectorRef,
-                public configuratorHeading: ConfiguratorHeadingService,
-                private formBuilder: FormBuilder,
-                @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>) {
+    constructor(
+        public changeDetector: ChangeDetectorRef,
+        public configuratorHeading: ConfiguratorHeadingService,
+        private formBuilder: FormBuilder,
+        @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>
+    ) {
         this.form = this.formBuilder.group({
             leftAxisLabel: [""],
             startingTimespan: [null, Validators.required],
@@ -61,12 +87,15 @@ export class TimeseriesMetadataConfigurationComponent implements IHasChangeDetec
     }
 
     public ngOnInit(): void {
-        this.form.get("startingTimespan")?.valueChanges
-            .pipe(takeUntil(this.destroy$))
+        this.form
+            .get("startingTimespan")
+            ?.valueChanges.pipe(takeUntil(this.destroy$))
             .subscribe((value) => {
                 // this is to wait until the value of 'startingTimespan' is converted to the preview
                 setTimeout(() => {
-                    this.eventBus.next(PREVIEW_EVENT, {payload: {id: REFRESH}});
+                    this.eventBus.next(PREVIEW_EVENT, {
+                        payload: { id: REFRESH },
+                    });
                 });
             });
 
@@ -77,19 +106,27 @@ export class TimeseriesMetadataConfigurationComponent implements IHasChangeDetec
         const startingTimespanControl = this.form.get("startingTimespan");
 
         if (changes.leftAxisLabel) {
-            this.form.get("leftAxisLabel")?.setValue(this.leftAxisLabel, {emitEvent: false});
+            this.form
+                .get("leftAxisLabel")
+                ?.setValue(this.leftAxisLabel, { emitEvent: false });
         }
 
         if (changes.startingTimespan) {
-            startingTimespanControl?.setValue(this.startingTimespan, {emitEvent: false});
+            startingTimespanControl?.setValue(this.startingTimespan, {
+                emitEvent: false,
+            });
         }
 
         if (changes.legendPlacement) {
-            this.form.get("legendPlacement")?.setValue(this.legendPlacement, {emitEvent: false});
+            this.form
+                .get("legendPlacement")
+                ?.setValue(this.legendPlacement, { emitEvent: false });
         }
 
         if (changes.preset) {
-            this.form.get("preset")?.setValue(this.preset, {emitEvent: false});
+            this.form
+                .get("preset")
+                ?.setValue(this.preset, { emitEvent: false });
         }
 
         if (changes.timeSpans) {
@@ -101,9 +138,14 @@ export class TimeseriesMetadataConfigurationComponent implements IHasChangeDetec
 
     public getSecondaryText() {
         const startingTimespan = this.form.controls["startingTimespan"].value;
-        const forTimeframe = (startingTimespan && startingTimespan.name) || $localize`No timespan`;
-        const forLegend = this.form.controls["legendPlacement"].value || $localize`No legend`;
-        const forAxisLabel = this.form.controls["leftAxisLabel"].value || $localize`No y-axis label`;
+        const forTimeframe =
+            (startingTimespan && startingTimespan.name) ||
+            $localize`No timespan`;
+        const forLegend =
+            this.form.controls["legendPlacement"].value || $localize`No legend`;
+        const forAxisLabel =
+            this.form.controls["leftAxisLabel"].value ||
+            $localize`No y-axis label`;
         return `${forTimeframe}, ${forLegend}, ${forAxisLabel}`;
     }
 

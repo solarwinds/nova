@@ -1,4 +1,9 @@
-import { CompactType, DisplayGrid, GridsterConfig, GridType } from "angular-gridster2";
+import {
+    CompactType,
+    DisplayGrid,
+    GridsterConfig,
+    GridType,
+} from "angular-gridster2";
 
 export const DEFAULT_GRIDSTER_CONFIG: GridsterConfig = {
     displayGrid: DisplayGrid.None,

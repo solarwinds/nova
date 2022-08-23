@@ -11,22 +11,27 @@ import {
     ViewChild,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { LoggerService } from "@nova-ui/bits";
 import { combineLatest, Subject } from "rxjs";
 import { filter, takeUntil, tap } from "rxjs/operators";
 
+import { LoggerService } from "@nova-ui/bits";
+
 import { RefresherSettingsService } from "../../../../../components/providers/refresher-settings.service";
 import { IHasChangeDetector, IHasForm } from "../../../../../types";
-
 import { RefreshRateConfiguratorComponent } from "./refresh-rate-configurator/refresh-rate-configurator.component";
-import { TimeUnit, TIME_UNITS_SHORT } from "./refresh-rate-configurator/time-units";
+import {
+    TimeUnit,
+    TIME_UNITS_SHORT,
+} from "./refresh-rate-configurator/time-units";
 
 @Component({
     selector: "nui-refresher-configuration",
     templateUrl: "./refresher-configuration.component.html",
     styleUrls: ["./refresher-configuration.component.less"],
 })
-export class RefresherConfigurationComponent implements OnInit, OnChanges, OnDestroy, IHasChangeDetector, IHasForm {
+export class RefresherConfigurationComponent
+    implements OnInit, OnChanges, OnDestroy, IHasChangeDetector, IHasForm
+{
     public static lateLoadKey = "RefresherConfigurationComponent";
 
     @Input() enabled: boolean;
@@ -40,32 +45,40 @@ export class RefresherConfigurationComponent implements OnInit, OnChanges, OnDes
     public form: FormGroup;
 
     private destroyed$ = new Subject();
-    @ViewChild(RefreshRateConfiguratorComponent) private refreshRateComp: RefreshRateConfiguratorComponent;
+    @ViewChild(RefreshRateConfiguratorComponent)
+    private refreshRateComp: RefreshRateConfiguratorComponent;
 
-    constructor(public changeDetector: ChangeDetectorRef,
-                private formBuilder: FormBuilder,
-                private logger: LoggerService,
-                public refresherSettings: RefresherSettingsService,
-                private cd: ChangeDetectorRef) {
-    }
+    constructor(
+        public changeDetector: ChangeDetectorRef,
+        private formBuilder: FormBuilder,
+        private logger: LoggerService,
+        public refresherSettings: RefresherSettingsService,
+        private cd: ChangeDetectorRef
+    ) {}
 
     public ngOnInit(): void {
         this.form = this.formBuilder.group({
             enabled: [true, [Validators.required]],
-            overrideDefaultSettings: [this.overrideDefaultSettings, [Validators.required]],
+            overrideDefaultSettings: [
+                this.overrideDefaultSettings,
+                [Validators.required],
+            ],
             interval: [this.interval ?? 0, [Validators.required]],
         });
 
-        this.form.statusChanges.pipe(
-            takeUntil(this.destroyed$)
-        ).subscribe(() => {
-            this.form.markAllAsTouched();
-            this.cd.detectChanges();
-        });
+        this.form.statusChanges
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe(() => {
+                this.form.markAllAsTouched();
+                this.cd.detectChanges();
+            });
 
-        combineLatest([this.form.controls["enabled"].valueChanges, this.form.controls["overrideDefaultSettings"].valueChanges])
+        combineLatest([
+            this.form.controls["enabled"].valueChanges,
+            this.form.controls["overrideDefaultSettings"].valueChanges,
+        ])
             .pipe(
-                filter(values => values.some(v => !v)),
+                filter((values) => values.some((v) => !v)),
                 tap(this.resetInterval),
                 takeUntil(this.destroyed$)
             )
@@ -82,7 +95,9 @@ export class RefresherConfigurationComponent implements OnInit, OnChanges, OnDes
             this.form?.get("interval")?.patchValue(this.interval);
         }
         if (changes.overrideDefaultSettings) {
-            this.form?.get("overrideDefaultSettings")?.patchValue(this.overrideDefaultSettings);
+            this.form
+                ?.get("overrideDefaultSettings")
+                ?.patchValue(this.overrideDefaultSettings);
         }
     }
 
@@ -97,9 +112,17 @@ export class RefresherConfigurationComponent implements OnInit, OnChanges, OnDes
             result += $localize`Enabled`;
             result += ", ";
             if (this.form.get("overrideDefaultSettings")?.value) {
-                result += this.getDurationLabel(this.form.get("interval")?.value);
+                result += this.getDurationLabel(
+                    this.form.get("interval")?.value
+                );
             } else {
-                result += $localize`Use default value` + " (" + this.getDurationLabel(this.refresherSettings.refreshRateSeconds) + ")";
+                result +=
+                    $localize`Use default value` +
+                    " (" +
+                    this.getDurationLabel(
+                        this.refresherSettings.refreshRateSeconds
+                    ) +
+                    ")";
             }
         } else {
             result += $localize`Disabled`;
@@ -110,7 +133,6 @@ export class RefresherConfigurationComponent implements OnInit, OnChanges, OnDes
 
     // TODO: make reusable
     public getDurationLabel(seconds: number): string {
-
         let totalSeconds = seconds;
         let result: string = "";
         const hours = Math.floor(totalSeconds / 3600);
@@ -129,7 +151,11 @@ export class RefresherConfigurationComponent implements OnInit, OnChanges, OnDes
         }
 
         if (calculatedSeconds > 0) {
-            result += calculatedSeconds + " " + TIME_UNITS_SHORT[TimeUnit.Second] + " ";
+            result +=
+                calculatedSeconds +
+                " " +
+                TIME_UNITS_SHORT[TimeUnit.Second] +
+                " ";
         }
 
         result = result.trim();
@@ -144,5 +170,5 @@ export class RefresherConfigurationComponent implements OnInit, OnChanges, OnDes
     private resetInterval = () => {
         this.refreshRateComp.resetUnits();
         this.form.get("interval")?.setValue(this.interval || this.minSeconds);
-    }
+    };
 }

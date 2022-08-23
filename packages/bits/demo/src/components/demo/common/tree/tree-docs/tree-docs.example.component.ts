@@ -4,7 +4,6 @@ import { Component } from "@angular/core";
     selector: "nui-tree-docs-example",
     templateUrl: "./tree-docs.example.component.html",
 })
-
 export class TreeDocsExampleComponent {
     initialSetupCode = `
 // our module where we want to use tree features
@@ -18,7 +17,5 @@ import { CdkTreeModule } from "@angular/cdk/tree";
     declarations: [ /* our module declaration */],
     exports:      [ /* our exports */ ],
 })
-export class MyModule {}`
-        .replace("\r\n", "<br/>") // nice rendering
-        ;
+export class MyModule {}`.replace("\r\n", "<br/>"); // nice rendering
 }

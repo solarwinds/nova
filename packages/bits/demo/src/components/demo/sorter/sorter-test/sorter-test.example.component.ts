@@ -1,7 +1,13 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { IMenuItem, ISorterChanges, SorterComponent, SorterDirection } from "@nova-ui/bits";
 import _orderBy from "lodash/orderBy";
 import { BehaviorSubject } from "rxjs";
+
+import {
+    IMenuItem,
+    ISorterChanges,
+    SorterComponent,
+    SorterDirection,
+} from "@nova-ui/bits";
 
 interface IFilm {
     title: string;
@@ -15,10 +21,12 @@ interface IFilm {
     styleUrls: ["./sorter-test.example.component.less"],
 })
 export class SorterTestExampleComponent implements OnInit {
-    private readonly emptyColumns: IMenuItem[] = [{
-        title: $localize`Empty`,
-        value: "",
-    }];
+    private readonly emptyColumns: IMenuItem[] = [
+        {
+            title: $localize`Empty`,
+            value: "",
+        },
+    ];
     public readonly dataColumns: IMenuItem[] = [
         {
             title: $localize`Title`,
@@ -51,16 +59,21 @@ export class SorterTestExampleComponent implements OnInit {
 
     public updateSorterDirection() {
         const old = this.sortDirection;
-        this.sortDirection = (old === SorterDirection.ascending) ?
-            SorterDirection.descending : SorterDirection.ascending;
+        this.sortDirection =
+            old === SorterDirection.ascending
+                ? SorterDirection.descending
+                : SorterDirection.ascending;
     }
 
     public onSorterAction(changeEvent: ISorterChanges) {
         this.sortBy = changeEvent.newValue.sortBy;
-        this.sortItems(changeEvent.newValue.sortBy, changeEvent.newValue.direction);
+        this.sortItems(
+            changeEvent.newValue.sortBy,
+            changeEvent.newValue.direction
+        );
     }
 
-    private delayPromise(delay: number = 0): Promise<void> {
+    private async delayPromise(delay: number = 0): Promise<void> {
         return new Promise((resolve) => {
             setTimeout(resolve, delay);
         });
@@ -85,7 +98,15 @@ export class SorterTestExampleComponent implements OnInit {
     }
 
     private sortItems(sortBy: string, direction: SorterDirection) {
-        this.items = _orderBy(this.items, [sortBy], [direction as (SorterDirection.ascending | SorterDirection.descending)]) as IFilm[];
+        this.items = _orderBy(
+            this.items,
+            [sortBy],
+            [
+                direction as
+                    | SorterDirection.ascending
+                    | SorterDirection.descending,
+            ]
+        ) as IFilm[];
     }
 }
 
@@ -93,12 +114,24 @@ function getData(): IFilm[] {
     return [
         { title: "Vertigo", year: "1958", director: "Alfred Hitchcock" },
         { title: "Citizen Kane", year: "1941", director: "Orson Welles" },
-        { title: "2001: A Space Odyssey", year: "1968", director: "Stanley Kubrick" },
-        { title: "The Godfather", year: "1972", director: "Francis Ford Coppola" },
+        {
+            title: "2001: A Space Odyssey",
+            year: "1968",
+            director: "Stanley Kubrick",
+        },
+        {
+            title: "The Godfather",
+            year: "1972",
+            director: "Francis Ford Coppola",
+        },
         { title: "Mulholland Dr.", year: "2001", director: "David Lynch" },
         { title: "Taxi Driver", year: "1976", director: "Martin Scorsese" },
         { title: "La Dolce Vita", year: "1960", director: "Federico Fellini" },
-        { title: "The Silence of the Lambs", year: "1991", director: "Jonathan Demme" },
+        {
+            title: "The Silence of the Lambs",
+            year: "1991",
+            director: "Jonathan Demme",
+        },
         { title: "The Terminator", year: "1984", director: "James Cameron" },
     ];
 }

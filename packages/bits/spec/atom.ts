@@ -1,15 +1,14 @@
-import {
-    browser,
-    by,
-    element,
-    ElementFinder,
-} from "protractor";
+import { browser, by, element, ElementFinder } from "protractor";
 import { ILocation } from "selenium-webdriver";
 
 export interface IAtomClass<T extends Atom> {
-    new(element: ElementFinder): T;
+    new (element: ElementFinder): T;
     CSS_CLASS: string;
-    findIn<M extends Atom>(atomClass: IAtomClass<M>, parentElement: ElementFinder, index?: number): M;
+    findIn<M extends Atom>(
+        atomClass: IAtomClass<M>,
+        parentElement: ElementFinder,
+        index?: number
+    ): M;
 }
 
 export class Atom {
@@ -18,26 +17,31 @@ export class Atom {
     /**
      * Finds given component based on unique css id
      */
-    public static find<T extends Atom>(atomClass: IAtomClass<T>, id: string): T {
+    public static find<T extends Atom>(
+        atomClass: IAtomClass<T>,
+        id: string
+    ): T {
         return atomClass.findIn(atomClass, element(by.id(id)));
     }
 
     private static addProperLocator() {
         // We need locator which can match root element
-        by.addLocator("properClassName",
+        by.addLocator(
+            "properClassName",
             // This function is executed inside browser, needs to be inline
-                      (className: string, rootElement: any) => {
-                          const classString = rootElement.getAttribute("class");
-                          if (classString) {
-                              const allClasses = " " + classString.replace(/\s+/g, " ") + " ";
-                              if (allClasses.indexOf(" " + className + " ") > -1) {
-                                  // Class is set in root element, let's return it
-                                  return rootElement;
-                              }
-                          }
-                          // Return matching sub-elements
-                          return rootElement.getElementsByClassName(className);
-                      }
+            (className: string, rootElement: any) => {
+                const classString = rootElement.getAttribute("class");
+                if (classString) {
+                    const allClasses =
+                        " " + classString.replace(/\s+/g, " ") + " ";
+                    if (allClasses.indexOf(" " + className + " ") > -1) {
+                        // Class is set in root element, let's return it
+                        return rootElement;
+                    }
+                }
+                // Return matching sub-elements
+                return rootElement.getElementsByClassName(className);
+            }
         );
     }
 
@@ -47,7 +51,11 @@ export class Atom {
      * - Will provide a warning if more child components are found
      * - Uses static CSS_CLASS property in component's class
      */
-    public static findIn<T extends Atom>(atomClass: IAtomClass<T>, parentElement: ElementFinder, index?: number): T {
+    public static findIn<T extends Atom>(
+        atomClass: IAtomClass<T>,
+        parentElement: ElementFinder,
+        index?: number
+    ): T {
         if (atomClass.findIn !== Atom.findIn) {
             return atomClass.findIn(atomClass, parentElement, index);
         }
@@ -57,38 +65,61 @@ export class Atom {
         let componentRootElement: ElementFinder;
         if (index !== undefined) {
             if (!parentElement) {
-                componentRootElement = element.all(by.className(atomClass.CSS_CLASS)).get(index);
+                componentRootElement = element
+                    .all(by.className(atomClass.CSS_CLASS))
+                    .get(index);
             } else {
-                componentRootElement = parentElement.all(by.className(atomClass.CSS_CLASS)).get(index);
+                componentRootElement = parentElement
+                    .all(by.className(atomClass.CSS_CLASS))
+                    .get(index);
             }
         } else {
             if (!parentElement) {
-                componentRootElement = element((<any>by).properClassName(atomClass.CSS_CLASS));
+                componentRootElement = element(
+                    (<any>by).properClassName(atomClass.CSS_CLASS)
+                );
             } else {
-                componentRootElement = parentElement.element((<any>by).properClassName(atomClass.CSS_CLASS));
+                componentRootElement = parentElement.element(
+                    (<any>by).properClassName(atomClass.CSS_CLASS)
+                );
             }
         }
         return new atomClass(componentRootElement);
     }
 
-    public static async findCount<T extends Atom>(atomClass: IAtomClass<T>, parentElement?: ElementFinder): Promise<number> {
+    public static async findCount<T extends Atom>(
+        atomClass: IAtomClass<T>,
+        parentElement?: ElementFinder
+    ): Promise<number> {
         if (!parentElement) {
             return <any>element.all(by.className(atomClass.CSS_CLASS)).count();
         }
-        return <any>parentElement.all(by.className(atomClass.CSS_CLASS)).count();
+        return <any>(
+            parentElement.all(by.className(atomClass.CSS_CLASS)).count()
+        );
     }
 
-    public static async hasClass(el: ElementFinder, className: string): Promise<boolean> {
-        return el.getAttribute("class").then((classes: string) =>
-            classes.split(" ").indexOf(className) !== -1);
+    public static async hasClass(
+        el: ElementFinder,
+        className: string
+    ): Promise<boolean> {
+        return el
+            .getAttribute("class")
+            .then(
+                (classes: string) =>
+                    classes.split(" ").indexOf(className) !== -1
+            );
     }
 
-    public static async hasAnyClass(el: ElementFinder, classNamesToSearch: string[]): Promise<boolean> {
+    public static async hasAnyClass(
+        el: ElementFinder,
+        classNamesToSearch: string[]
+    ): Promise<boolean> {
         return el.getAttribute("class").then((classesInElement: string) => {
             let found = false;
             const classesInElementArray = classesInElement.split(" ");
             classNamesToSearch.forEach((name: string) => {
-                found = (classesInElementArray.indexOf(name) !== -1) || found;
+                found = classesInElementArray.indexOf(name) !== -1 || found;
             });
             return found;
         });
@@ -113,8 +144,12 @@ export class Atom {
     }
 
     public async hasClass(className: string): Promise<boolean> {
-        return this.element.getAttribute("class").then((classes: string) =>
-            classes.split(" ").indexOf(className) !== -1);
+        return this.element
+            .getAttribute("class")
+            .then(
+                (classes: string) =>
+                    classes.split(" ").indexOf(className) !== -1
+            );
     }
 
     public getElement(): ElementFinder {
@@ -132,11 +167,21 @@ export class Atom {
      * If an element and location is provided, will offset from top left of provided element.
      * @param {ElementFinder} [el] - accepts an element to mouse over center
      * @param {ILocation} [location] - offsets the mouse from top left of element
-    */
-    public async hover(el?: ElementFinder, location?: ILocation): Promise<void> {
-        return browser.actions().mouseMove(el ?? this.getElement(), location).perform();
+     */
+    public async hover(
+        el?: ElementFinder,
+        location?: ILocation
+    ): Promise<void> {
+        return browser
+            .actions()
+            .mouseMove(el ?? this.getElement(), location)
+            .perform();
     }
 
     public scrollTo = async (options?: ScrollIntoViewOptions) =>
-        browser.executeScript("arguments[0].scrollIntoView(arguments[1])", this.getElement(), options || null)
+        browser.executeScript(
+            "arguments[0].scrollIntoView(arguments[1])",
+            this.getElement(),
+            options || null
+        );
 }

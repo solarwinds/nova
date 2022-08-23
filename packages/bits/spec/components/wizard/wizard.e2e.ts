@@ -5,31 +5,79 @@ import { Animations, Helpers } from "../../helpers";
 import { ButtonAtom } from "../button/button.atom";
 import { DialogAtom } from "../dialog/dialog.atom";
 import { TextboxAtom } from "../textbox/textbox.atom";
-
 import { WizardStepAtom } from "./wizard-step.atom";
 import { WizardAtom } from "./wizard.atom";
 
-
 describe("USERCONTROL Wizard >", () => {
     const wizard: WizardAtom = Atom.find(WizardAtom, "nui-demo-wizard");
-    const wizardValidation: WizardAtom = Atom.find(WizardAtom, "nui-demo-wizard-validation");
-    const wizardDisable: WizardAtom = Atom.find(WizardAtom, "nui-demo-wizard-disable");
-    const wizardHide: WizardAtom = Atom.find(WizardAtom, "nui-demo-wizard-hide-show");
-    const wizardDynamic: WizardAtom = Atom.find(WizardAtom, "nui-demo-wizard-add-dynamic");
-    const wizardBusy: WizardAtom = Atom.find(WizardAtom, "nui-demo-wizard-busy");
-    const wizardDialog: WizardAtom = Atom.find(WizardAtom, "nui-demo-wizard-dialog");
-    const wizardConstantHeight: WizardAtom = Atom.find(WizardAtom, "nui-demo-wizard-constant-height");
-    const wizardStep: WizardStepAtom = Atom.find(WizardStepAtom, "nui-demo-wizard-step");
-    const wizardDialogButton: ButtonAtom = Atom.find(ButtonAtom, "nui-demo-dialog-wizard-btn");
-    const disableButton: ButtonAtom = Atom.find(ButtonAtom, "nui-demo-disable-button");
-    const hideButton: ButtonAtom = Atom.find(ButtonAtom, "nui-demo-hide-button");
-    const visibleButton: ButtonAtom = Atom.find(ButtonAtom, "nui-demo-show-button");
-    const busyButton: ButtonAtom = Atom.find(ButtonAtom, "nui-demo-busy-button");
-    const addButton: ButtonAtom = Atom.find(ButtonAtom, "nui-demo-dynamic-button");
-    const dialogWizard: DialogAtom = new DialogAtom(element(by.className("nui-dialog")));
+    const wizardValidation: WizardAtom = Atom.find(
+        WizardAtom,
+        "nui-demo-wizard-validation"
+    );
+    const wizardDisable: WizardAtom = Atom.find(
+        WizardAtom,
+        "nui-demo-wizard-disable"
+    );
+    const wizardHide: WizardAtom = Atom.find(
+        WizardAtom,
+        "nui-demo-wizard-hide-show"
+    );
+    const wizardDynamic: WizardAtom = Atom.find(
+        WizardAtom,
+        "nui-demo-wizard-add-dynamic"
+    );
+    const wizardBusy: WizardAtom = Atom.find(
+        WizardAtom,
+        "nui-demo-wizard-busy"
+    );
+    const wizardDialog: WizardAtom = Atom.find(
+        WizardAtom,
+        "nui-demo-wizard-dialog"
+    );
+    const wizardConstantHeight: WizardAtom = Atom.find(
+        WizardAtom,
+        "nui-demo-wizard-constant-height"
+    );
+    const wizardStep: WizardStepAtom = Atom.find(
+        WizardStepAtom,
+        "nui-demo-wizard-step"
+    );
+    const wizardDialogButton: ButtonAtom = Atom.find(
+        ButtonAtom,
+        "nui-demo-dialog-wizard-btn"
+    );
+    const disableButton: ButtonAtom = Atom.find(
+        ButtonAtom,
+        "nui-demo-disable-button"
+    );
+    const hideButton: ButtonAtom = Atom.find(
+        ButtonAtom,
+        "nui-demo-hide-button"
+    );
+    const visibleButton: ButtonAtom = Atom.find(
+        ButtonAtom,
+        "nui-demo-show-button"
+    );
+    const busyButton: ButtonAtom = Atom.find(
+        ButtonAtom,
+        "nui-demo-busy-button"
+    );
+    const addButton: ButtonAtom = Atom.find(
+        ButtonAtom,
+        "nui-demo-dynamic-button"
+    );
+    const dialogWizard: DialogAtom = new DialogAtom(
+        element(by.className("nui-dialog"))
+    );
     const stepInputName: TextboxAtom = Atom.find(TextboxAtom, "stepInputName");
-    const stepInputEmail: TextboxAtom = Atom.find(TextboxAtom, "stepInputEmail");
-    const stepInputPassword: TextboxAtom = Atom.find(TextboxAtom, "stepInputPassword");
+    const stepInputEmail: TextboxAtom = Atom.find(
+        TextboxAtom,
+        "stepInputEmail"
+    );
+    const stepInputPassword: TextboxAtom = Atom.find(
+        TextboxAtom,
+        "stepInputPassword"
+    );
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("wizard/wizard-test");
@@ -37,14 +85,18 @@ describe("USERCONTROL Wizard >", () => {
     });
 
     describe("by default", () => {
-        it("should be defined", () => { expect(wizard).toBeDefined(); });
+        it("should be defined", () => {
+            expect(wizard).toBeDefined();
+        });
 
         it("should have 2 steps", async () => {
             const steps = await wizard.getSteps();
             expect(steps.length).toBe(2);
         });
 
-        it("should display header", () => { expect(wizard.getHeader()).toBeDefined(); });
+        it("should display header", () => {
+            expect(wizard.getHeader()).toBeDefined();
+        });
 
         it("should display title", async () => {
             const steps = await wizard.getHeaderSteps();
@@ -92,12 +144,16 @@ describe("USERCONTROL Wizard >", () => {
             await stepInputEmail.clearText();
             await stepInputEmail.acceptText("1");
             await wizardValidation.next();
-            expect(await wizardValidation.getActiveStep().getText()).toContain("Step with validation");
+            expect(await wizardValidation.getActiveStep().getText()).toContain(
+                "Step with validation"
+            );
         });
 
         it("should validate", async () => {
             await wizardValidation.next();
-            expect(await wizardValidation.getActiveStep().getText()).toContain("Second step");
+            expect(await wizardValidation.getActiveStep().getText()).toContain(
+                "Second step"
+            );
         });
     });
 
@@ -105,7 +161,9 @@ describe("USERCONTROL Wizard >", () => {
         it("should disable 'Second' wizard step", async () => {
             await disableButton.click();
             await wizardDisable.next();
-            expect(await wizardDisable.getActiveStep().getText()).toContain("Disable next step");
+            expect(await wizardDisable.getActiveStep().getText()).toContain(
+                "Disable next step"
+            );
         });
 
         it("should hide step in wizard", async () => {
@@ -134,19 +192,36 @@ describe("USERCONTROL Wizard >", () => {
     });
 
     describe("wizard busy state >", () => {
-        const firstStep = Atom.findIn(WizardStepAtom, wizardBusy.getElement().all(by.className(WizardStepAtom.CSS_CLASS)).first());
+        const firstStep = Atom.findIn(
+            WizardStepAtom,
+            wizardBusy
+                .getElement()
+                .all(by.className(WizardStepAtom.CSS_CLASS))
+                .first()
+        );
         const spinner = firstStep.busy.getSpinner();
 
         it("should add busy to wizard step", async () => {
             await busyButton.click();
             await spinner.waitForDisplayed();
-            expect(await spinner.isDisplayed()).toEqual(true, "busy spinner didn't show up");
-            expect(await wizardBusy.nextButton.isBusy()).toBeTruthy("NEXT button is not busy");
+            expect(await spinner.isDisplayed()).toEqual(
+                true,
+                "busy spinner didn't show up"
+            );
+            expect(await wizardBusy.nextButton.isBusy()).toBeTruthy(
+                "NEXT button is not busy"
+            );
 
             await busyButton.click();
             await spinner.waitForHidden();
-            expect(await spinner.isPresent()).toEqual(false, "busy spinner didn't hide");
-            expect(await wizardBusy.nextButton.isBusy()).toEqual(false, "NEXT button is still busy");
+            expect(await spinner.isPresent()).toEqual(
+                false,
+                "busy spinner didn't hide"
+            );
+            expect(await wizardBusy.nextButton.isBusy()).toEqual(
+                false,
+                "NEXT button is still busy"
+            );
         });
     });
 
@@ -156,7 +231,9 @@ describe("USERCONTROL Wizard >", () => {
             expect(await dialogWizard.isDialogDisplayed()).toBeTruthy();
         });
 
-        it("should dialog contain wizard", () => { expect(wizardDialog).toBeDefined(); });
+        it("should dialog contain wizard", () => {
+            expect(wizardDialog).toBeDefined();
+        });
 
         it("should contain finish button on last step", async () => {
             await wizardDialog.next();
@@ -171,13 +248,19 @@ describe("USERCONTROL Wizard >", () => {
 
     describe("wizard constant height >", () => {
         it("should properly set wizard container height via input", async () => {
-            expect(await wizardConstantHeight.getContainerHeight()).toEqual(200);
+            expect(await wizardConstantHeight.getContainerHeight()).toEqual(
+                200
+            );
         });
 
         it("wizard container height should remain same on all steps", async () => {
-            expect(await wizardConstantHeight.getContainerHeight()).toEqual(200);
+            expect(await wizardConstantHeight.getContainerHeight()).toEqual(
+                200
+            );
             await wizardConstantHeight.next();
-            expect(await wizardConstantHeight.getContainerHeight()).toEqual(200);
+            expect(await wizardConstantHeight.getContainerHeight()).toEqual(
+                200
+            );
         });
     });
 });

@@ -5,4 +5,3 @@ import { Component } from "@angular/core";
     templateUrl: "./paginator-visibility.example.component.html",
 })
 export class PaginatorVisibilityExampleComponent {}
-

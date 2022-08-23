@@ -7,10 +7,12 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
     host: { class: "select-container" },
 })
 export class SelectV2ReactiveFormFieldExampleComponent implements OnInit {
-    public items = Array.from({ length: 100 }).map((_, i) => $localize`Item ${i}`);
+    public items = Array.from({ length: 100 }).map(
+        (_, i) => $localize`Item ${i}`
+    );
     public fancyForm: FormGroup;
 
-    constructor(private formBuilder: FormBuilder) { }
+    constructor(private formBuilder: FormBuilder) {}
 
     ngOnInit(): void {
         this.fancyForm = this.formBuilder.group({

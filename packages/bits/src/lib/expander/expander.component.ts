@@ -9,6 +9,7 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
+
 import { expandV2 } from "../../animations/expand";
 import { KEYBOARD_CODE } from "../../constants";
 
@@ -57,7 +58,7 @@ export class ExpanderComponent implements AfterContentInit {
      */
     @Output() openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    @ViewChild("customHeaderContent", {static: true})
+    @ViewChild("customHeaderContent", { static: true })
     public customHeaderContent: ElementRef;
 
     public state: "expanded" | "collapsed" = "collapsed";
@@ -66,7 +67,8 @@ export class ExpanderComponent implements AfterContentInit {
     constructor(private cdRef: ChangeDetectorRef) {}
 
     ngAfterContentInit(): void {
-        this.isCustomHeaderContentEmpty = this.customHeaderContent.nativeElement.childNodes.length === 0;
+        this.isCustomHeaderContentEmpty =
+            this.customHeaderContent.nativeElement.childNodes.length === 0;
     }
 
     public toggle(): void {
@@ -82,7 +84,10 @@ export class ExpanderComponent implements AfterContentInit {
     }
 
     public onKeyDown(event: KeyboardEvent): void {
-        if (event.code === KEYBOARD_CODE.SPACE || event.code === KEYBOARD_CODE.ENTER) {
+        if (
+            event.code === KEYBOARD_CODE.SPACE ||
+            event.code === KEYBOARD_CODE.ENTER
+        ) {
             if (event.target === event.currentTarget) {
                 event.preventDefault();
                 this.toggle();

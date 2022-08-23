@@ -1,7 +1,8 @@
 import { Inject, Injectable, OnDestroy } from "@angular/core";
-import { EventBus, IEvent } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+
+import { EventBus, IEvent } from "@nova-ui/bits";
 
 import { PIZZAGNA_EVENT_BUS } from "../../types";
 
@@ -10,14 +11,16 @@ import { PIZZAGNA_EVENT_BUS } from "../../types";
  */
 @Injectable()
 export class EventBusDebugger implements OnDestroy {
-
     private destroy$ = new Subject();
 
-    constructor(@Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>) {
+    constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>
+    ) {
         eventBus.streamAdded
             .pipe(takeUntil(this.destroy$))
             .subscribe((stream) => {
-                eventBus.getStream({ id: stream })
+                eventBus
+                    .getStream({ id: stream })
                     .pipe(takeUntil(this.destroy$))
                     .subscribe((event) => {
                         console.log(`${event.id}: `, event.payload);
@@ -29,5 +32,4 @@ export class EventBusDebugger implements OnDestroy {
         this.destroy$.next();
         this.destroy$.complete();
     }
-
 }

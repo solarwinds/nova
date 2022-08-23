@@ -1,14 +1,15 @@
-<link rel="stylesheet" type="text/css" href="_nui-css-url_">
-<base href="/">
-<div class="nui nui-demo typography-example" ng-controller="TypographyDemoController as ctrl">
+<link rel="stylesheet" type="text/css" href="_nui-css-url_" />
+<base href="/" />
+<div
+    class="nui nui-demo typography-example"
+    ng-controller="TypographyDemoController as ctrl"
+>
     <div class="nui-color-palette">
         <div ng-repeat="unit in ctrl.units track by $index">
             <h3>{{unit.header}}</h3>
             <div class="typography-unit">
                 <code>.{{unit.class}}</code>
-                <div class="{{unit.class}} nui-padding-lg">
-                    {{unit.sample}}
-                </div>
+                <div class="{{unit.class}} nui-padding-lg">{{unit.sample}}</div>
             </div>
         </div>
     </div>
@@ -17,16 +18,14 @@
             <h3>{{font.header}}</h3>
             <div class="typography-unit">
                 <code>.{{font.class}}</code>
-                <div class="{{font.class}} nui-padding-lg">
-                    {{font.sample}}
-                </div>
+                <div class="{{font.class}} nui-padding-lg">{{font.sample}}</div>
 
                 <div ng-if="font.header != 'Regular'">
                     <code>.{{font.class}} .{{font.class + '-bg'}}</code>
                     <div class="{{font.class}} nui-padding-lg">
-                    <span class="{{font.class + '-bg'}}">
-                        {{font.sample}} with background
-                    </span>
+                        <span class="{{font.class + '-bg'}}">
+                            {{font.sample}} with background
+                        </span>
                     </div>
                 </div>
             </div>
@@ -34,13 +33,9 @@
         <div>
             <h3>Tag</h3>
             <div class="typography-unit">
-                <code>
-                    .nui-tag
-                </code>
+                <code> .nui-tag </code>
                 <div class="nui-padding-lg">
-                    <div class="nui-tag">
-                        Node tag
-                    </div>
+                    <div class="nui-tag">Node tag</div>
                 </div>
             </div>
         </div>
@@ -54,7 +49,9 @@
     }
 
     /* this is not a nice way, but otherwise whe would need to create a new ng-docs template*/
-    .nui-styles-typography-page .tabbable, .nui-styles-typography-page div[source-edit], #source {
+    .nui-styles-typography-page .tabbable,
+    .nui-styles-typography-page div[source-edit],
+    #source {
         display: none;
     }
 </style>

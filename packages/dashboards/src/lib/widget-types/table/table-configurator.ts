@@ -2,6 +2,7 @@
 import { FormStackComponent } from "../../configurator/components/form-stack/form-stack.component";
 import { WidgetConfiguratorSectionComponent } from "../../configurator/components/widget-configurator-section/widget-configurator-section.component";
 import { DataSourceConfigurationComponent } from "../../configurator/components/widgets/configurator-items/data-source-configuration/data-source-configuration.component";
+import { TableDataSourceErrorComponent } from "../../configurator/components/widgets/configurator-items/data-source-error/table/table-data-source-error.component";
 import { TitleAndDescriptionConfigurationComponent } from "../../configurator/components/widgets/configurator-items/title-and-description-configuration/title-and-description-configuration.component";
 import { TableColumnsConfigurationV2Component } from "../../configurator/components/widgets/table/columns-editor-v2/table-columns-configuration-v2.component";
 import { TableFiltersEditorComponent } from "../../configurator/components/widgets/table/filters-editor/table-filters-editor.component";
@@ -16,8 +17,6 @@ import {
 } from "../../services/types";
 import { IPizzagna, PizzagnaLayer, WellKnownProviders } from "../../types";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
-import { TableDataSourceErrorComponent } from "../../configurator/components/widgets/configurator-items/data-source-error/table/table-data-source-error.component";
-
 import { DEFAULT_TABLE_FORMATTERS } from "./default-table-formatters";
 
 /* eslint-enable max-len */
@@ -55,7 +54,8 @@ export const tableConfigurator: IPizzagna = {
         // /presentation/titleAndDescription
         titleAndDescription: {
             id: "titleAndDescription",
-            componentType: TitleAndDescriptionConfigurationComponent.lateLoadKey,
+            componentType:
+                TitleAndDescriptionConfigurationComponent.lateLoadKey,
             providers: {
                 [WellKnownProviders.Converter]: {
                     providerId: NOVA_TITLE_AND_DESCRIPTION_CONVERTER,
@@ -101,7 +101,8 @@ export const tableConfigurator: IPizzagna = {
                                 keys: ["providerId", "properties"],
                             },
                             {
-                                previewPath: "table.providers.adapter.properties.dataSource",
+                                previewPath:
+                                    "table.providers.adapter.properties.dataSource",
                                 keys: ["properties"],
                             },
                         ],

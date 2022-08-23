@@ -1,18 +1,24 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { IActiveToast, IToastConfig, IToastService, ToastPositionClass, ToastService } from "@nova-ui/bits";
+
+import {
+    IActiveToast,
+    IToastConfig,
+    IToastService,
+    ToastPositionClass,
+    ToastService,
+} from "@nova-ui/bits";
 
 @Component({
     selector: "nui-toast-events-example",
     templateUrl: "./toast-events.example.component.html",
 })
-
 export class ToastEventsExampleComponent implements OnInit {
     public lastShown?: number;
     public clickCount = 0;
     public toastCount = 0;
     public isDisplayed: boolean;
 
-    constructor(@Inject(ToastService) private toastService: IToastService) { }
+    constructor(@Inject(ToastService) private toastService: IToastService) {}
 
     ngOnInit() {
         this.toastService.setConfig({}, "id");
@@ -20,8 +26,8 @@ export class ToastEventsExampleComponent implements OnInit {
 
     public onShowToast(highlightMode: boolean): void {
         const toastInstance: IActiveToast = this.toastService.info({
-            title: $localize `Toast Events`,
-            message: $localize `Click Me!`,
+            title: $localize`Toast Events`,
+            message: $localize`Click Me!`,
             options: this.getOptions(),
         });
         toastInstance.onShown?.subscribe(() => {

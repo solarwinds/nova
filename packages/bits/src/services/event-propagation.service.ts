@@ -17,9 +17,8 @@ import { IEventPropagationService } from "./public-api";
  */
 
 /** @ignore */
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class EventPropagationService implements IEventPropagationService {
-
     private preventedTargetSelectors: string[] = [
         "a",
         "nui-checkbox-mark",
@@ -45,8 +44,9 @@ export class EventPropagationService implements IEventPropagationService {
      */
     public targetShouldPropagate(event: Event): boolean {
         // TODO: Refactor event.target logic, incorrect type, EventTarget type does not contain parentElement property
-        const element = <Element>(event.target);
-        const parentElement: HTMLElement | undefined = element.parentElement ?? undefined;
+        const element = <Element>event.target;
+        const parentElement: HTMLElement | undefined =
+            element.parentElement ?? undefined;
         this.should = true;
 
         if (isUndefined(parentElement)) {
@@ -54,7 +54,10 @@ export class EventPropagationService implements IEventPropagationService {
         }
 
         this.compareElementSelector(this.preventedTargetSelectors, element);
-        this.compareElementSelector(this.preventedTargetParentSelectors, parentElement);
+        this.compareElementSelector(
+            this.preventedTargetParentSelectors,
+            parentElement
+        );
 
         return this.should;
     }
@@ -68,11 +71,12 @@ export class EventPropagationService implements IEventPropagationService {
      */
     private compareElementSelector(selectors: string[], element: Element) {
         selectors.forEach((selector: string) => {
-            if (element.tagName.toLowerCase() === selector ||
-                includes(element.classList, selector)) {
-                return this.should = false;
+            if (
+                element.tagName.toLowerCase() === selector ||
+                includes(element.classList, selector)
+            ) {
+                return (this.should = false);
             }
         });
-
     }
 }

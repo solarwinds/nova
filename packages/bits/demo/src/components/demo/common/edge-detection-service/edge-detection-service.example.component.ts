@@ -1,13 +1,12 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
-import { EdgeDetectionService, IEdgeDetectionResult } from "@nova-ui/bits";
 import _set from "lodash/set";
+
+import { EdgeDetectionService, IEdgeDetectionResult } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-edge-detection-service-example",
     templateUrl: "./edge-detection-service.example.component.html",
-    styleUrls: [
-        "./edge-detection-service.example.component.less",
-    ],
+    styleUrls: ["./edge-detection-service.example.component.less"],
 })
 export class EdgeDetectionServiceExampleComponent implements AfterViewInit {
     @ViewChild("parent") private parentElement: ElementRef;
@@ -40,8 +39,7 @@ export class EdgeDetectionServiceExampleComponent implements AfterViewInit {
         },
     };
 
-    constructor(private edgeDetectionService: EdgeDetectionService) {
-    }
+    constructor(private edgeDetectionService: EdgeDetectionService) {}
 
     public ngAfterViewInit(): void {
         this.update();
@@ -50,7 +48,9 @@ export class EdgeDetectionServiceExampleComponent implements AfterViewInit {
     public update() {
         setTimeout(() => {
             const parent = this.parentElement.nativeElement;
-            const basePointElement = parent.querySelector(".base-point-element");
+            const basePointElement = parent.querySelector(
+                ".base-point-element"
+            );
 
             if (this.parentComponent.width < 300) {
                 this.parentComponent.width = 300;
@@ -66,8 +66,10 @@ export class EdgeDetectionServiceExampleComponent implements AfterViewInit {
                 parent.classList.remove("nui-edge-definer");
             }
 
-            this.canBe = this.edgeDetectionService
-                .canBe(basePointElement, this.toBePlacedElement.nativeElement);
+            this.canBe = this.edgeDetectionService.canBe(
+                basePointElement,
+                this.toBePlacedElement.nativeElement
+            );
         });
     }
 

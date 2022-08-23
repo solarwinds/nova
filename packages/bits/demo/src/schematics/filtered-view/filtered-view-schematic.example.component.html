@@ -1,21 +1,28 @@
 <nui-schematic-docs-page schematicFolderName="filtered-view">
     <div schematicSummary>
         <p>
-            The Filtered View schematic provides the ability to create a generic filtered view that can cover many use cases
-            for filtering a set of data. Its main responsibility is to integrate a filter group panel with a list or table view
-            that displays the filtered data.
+            The Filtered View schematic provides the ability to create a generic
+            filtered view that can cover many use cases for filtering a set of
+            data. Its main responsibility is to integrate a filter group panel
+            with a list or table view that displays the filtered data.
         </p>
         <h2>Notable Command Line Options</h2>
         <nui-schematic-cli-option name="presentationType">
             <p>
-                This string option allows you to select how the filtered data will be presented to the user. The values currently supported
-                for this option are <code>table</code> and <code>list</code>. The default value is <code>list</code>.
+                This string option allows you to select how the filtered data
+                will be presented to the user. The values currently supported
+                for this option are <code>table</code> and <code>list</code>.
+                The default value is <code>list</code>.
             </p>
         </nui-schematic-cli-option>
-        <nui-schematic-cli-option name="selectionMode"></nui-schematic-cli-option>
+        <nui-schematic-cli-option
+            name="selectionMode"
+        ></nui-schematic-cli-option>
         <nui-schematic-cli-option name="pagingMode"></nui-schematic-cli-option>
         <nui-schematic-cli-option name="dataSource"></nui-schematic-cli-option>
-        <nui-schematic-cli-option name="enableSearch"></nui-schematic-cli-option>
+        <nui-schematic-cli-option
+            name="enableSearch"
+        ></nui-schematic-cli-option>
         <nui-schematic-cli-option name="enableSort"></nui-schematic-cli-option>
         <nui-schematic-cli-option name="chips"></nui-schematic-cli-option>
     </div>
@@ -23,90 +30,149 @@
         <nui-tab heading="List">
             <h2>Filtered View with List</h2>
             <p>
-                This example shows the output of the CLI command without any modifications.
+                This example shows the output of the CLI command without any
+                modifications.
             </p>
-            <nui-schematic-docs-command>ng g @nova-ui/bits:filtered-view --p=app --name=filtered-view-with-list --presentationType=list</nui-schematic-docs-command>
-            <nui-schematic-docs-example exampleFolderName="filtered-view-with-list">
+            <nui-schematic-docs-command
+                >ng g @nova-ui/bits:filtered-view --p=app
+                --name=filtered-view-with-list
+                --presentationType=list</nui-schematic-docs-command
+            >
+            <nui-schematic-docs-example
+                exampleFolderName="filtered-view-with-list"
+            >
                 <app-filtered-view-with-list></app-filtered-view-with-list>
             </nui-schematic-docs-example>
         </nui-tab>
         <nui-tab heading="List with Pagination">
             <h2>List with Pagination</h2>
-            <nui-schematic-docs-command>ng g @nova-ui/bits:filtered-view --p=app --name=filtered-view-list-with-pagination --presentationType=list --dataSource=serverSide
+            <nui-schematic-docs-command
+                >ng g @nova-ui/bits:filtered-view --p=app
+                --name=filtered-view-list-with-pagination
+                --presentationType=list --dataSource=serverSide
                 <strong>--pagingMode=pagination</strong>
             </nui-schematic-docs-command>
-            <nui-schematic-docs-example exampleFolderName="filtered-view-list-with-pagination">
+            <nui-schematic-docs-example
+                exampleFolderName="filtered-view-list-with-pagination"
+            >
                 <app-filtered-view-list-with-pagination></app-filtered-view-list-with-pagination>
             </nui-schematic-docs-example>
         </nui-tab>
         <nui-tab heading="List with Virtual Scroll">
             <h2>List with Virtual Scroll</h2>
-            <nui-schematic-docs-command>ng g @nova-ui/bits:filtered-view --p=app --name=filtered-view-virtual-scroll --presentationType=list --dataSource=serverSide
+            <nui-schematic-docs-command
+                >ng g @nova-ui/bits:filtered-view --p=app
+                --name=filtered-view-virtual-scroll --presentationType=list
+                --dataSource=serverSide
                 <strong>--pagingMode=virtualScroll</strong>
             </nui-schematic-docs-command>
-            <nui-schematic-docs-example exampleFolderName="filtered-view-list-with-virtual-scroll">
+            <nui-schematic-docs-example
+                exampleFolderName="filtered-view-list-with-virtual-scroll"
+            >
                 <app-filtered-view-list-with-virtual-scroll></app-filtered-view-list-with-virtual-scroll>
             </nui-schematic-docs-example>
         </nui-tab>
         <nui-tab heading="Table">
             <h2>Filtered View with Table</h2>
-            <p>
-                This example shows the output of the CLI command shown below.
-            </p>
-            <nui-schematic-docs-command>ng g @nova-ui/bits:filtered-view --name=filtered-view-with-table --p=app <strong>--presentationType=table</strong>
+            <p>This example shows the output of the CLI command shown below.</p>
+            <nui-schematic-docs-command
+                >ng g @nova-ui/bits:filtered-view
+                --name=filtered-view-with-table --p=app
+                <strong>--presentationType=table</strong>
             </nui-schematic-docs-command>
-            <nui-schematic-docs-example exampleFolderName="filtered-view-with-table">
+            <nui-schematic-docs-example
+                exampleFolderName="filtered-view-with-table"
+            >
                 <app-filtered-view-with-table></app-filtered-view-with-table>
             </nui-schematic-docs-example>
         </nui-tab>
         <nui-tab heading="Table with Pagination">
             <h2>Table with Pagination</h2>
-            <nui-schematic-docs-command>ng g @nova-ui/bits:filtered-view --p=app --name=filtered-view-table-with-pagination --presentationType=table --dataSource=serverSide
+            <nui-schematic-docs-command
+                >ng g @nova-ui/bits:filtered-view --p=app
+                --name=filtered-view-table-with-pagination
+                --presentationType=table --dataSource=serverSide
                 <strong>--pagingMode=pagination</strong>
             </nui-schematic-docs-command>
-            <nui-schematic-docs-example exampleFolderName="filtered-view-table-with-pagination">
+            <nui-schematic-docs-example
+                exampleFolderName="filtered-view-table-with-pagination"
+            >
                 <app-filtered-view-table-with-pagination></app-filtered-view-table-with-pagination>
             </nui-schematic-docs-example>
         </nui-tab>
         <nui-tab heading="Table with Selection">
             <h2>Table with Selection</h2>
-            <nui-schematic-docs-command>ng g @nova-ui/bits:filtered-view --p=app --name=filtered-view-table-with-selection --presentationType=table --dataSource=serverSide --pagingMode=pagination
+            <nui-schematic-docs-command
+                >ng g @nova-ui/bits:filtered-view --p=app
+                --name=filtered-view-table-with-selection
+                --presentationType=table --dataSource=serverSide
+                --pagingMode=pagination
             </nui-schematic-docs-command>
-            <nui-schematic-docs-example exampleFolderName="filtered-view-table-with-selection">
+            <nui-schematic-docs-example
+                exampleFolderName="filtered-view-table-with-selection"
+            >
                 <app-filtered-view-table-with-selection></app-filtered-view-table-with-selection>
             </nui-schematic-docs-example>
         </nui-tab>
         <nui-tab heading="Table with Virtual Scroll" #vs>
             <h2>Table with Virtual Scroll</h2>
-            <nui-schematic-docs-command>ng g @nova-ui/bits:filtered-view --p=app --name=filtered-view-table-with-virtual-scroll --presentationType=table --dataSource=serverSide
+            <nui-schematic-docs-command
+                >ng g @nova-ui/bits:filtered-view --p=app
+                --name=filtered-view-table-with-virtual-scroll
+                --presentationType=table --dataSource=serverSide
                 <strong>--pagingMode=virtualScroll</strong>
             </nui-schematic-docs-command>
-            <nui-schematic-docs-example exampleFolderName="filtered-view-table-with-virtual-scroll">
-                <app-filtered-view-table-with-virtual-scroll *ngIf="vs.active"></app-filtered-view-table-with-virtual-scroll>
+            <nui-schematic-docs-example
+                exampleFolderName="filtered-view-table-with-virtual-scroll"
+            >
+                <app-filtered-view-table-with-virtual-scroll
+                    *ngIf="vs.active"
+                ></app-filtered-view-table-with-virtual-scroll>
             </nui-schematic-docs-example>
         </nui-tab>
         <nui-tab heading="Table with Virtual Scroll and Selection" #vss>
             <h2>Table with Virtual Scroll and Selection</h2>
-            <nui-schematic-docs-command>ng g @nova-ui/bits:filtered-view --p=app --name=filtered-view-table-with-virtual-scroll --presentationType=table --dataSource=serverSide
+            <nui-schematic-docs-command
+                >ng g @nova-ui/bits:filtered-view --p=app
+                --name=filtered-view-table-with-virtual-scroll
+                --presentationType=table --dataSource=serverSide
                 <strong>--pagingMode=virtualScroll</strong>
             </nui-schematic-docs-command>
-            <nui-schematic-docs-example exampleFolderName="filtered-view-table-with-virtual-scroll-selection">
-                <app-filtered-view-table-with-virtual-scroll-selection *ngIf="vss.active"></app-filtered-view-table-with-virtual-scroll-selection>
+            <nui-schematic-docs-example
+                exampleFolderName="filtered-view-table-with-virtual-scroll-selection"
+            >
+                <app-filtered-view-table-with-virtual-scroll-selection
+                    *ngIf="vss.active"
+                ></app-filtered-view-table-with-virtual-scroll-selection>
             </nui-schematic-docs-example>
         </nui-tab>
         <nui-tab heading="Table with Custom Virtual Scroll" #cvs>
             <h2>Table with Custom Virtual Scroll</h2>
-            <nui-schematic-docs-command>ng g @nova-ui/bits:filtered-view --p=app --name=filtered-view-table-with-virtual-scroll --presentationType=table --dataSource=serverSide
-                <strong>--pagingMode=virtualScroll --virtualScrollStrategy=custom</strong>
+            <nui-schematic-docs-command
+                >ng g @nova-ui/bits:filtered-view --p=app
+                --name=filtered-view-table-with-virtual-scroll
+                --presentationType=table --dataSource=serverSide
+                <strong
+                    >--pagingMode=virtualScroll
+                    --virtualScrollStrategy=custom</strong
+                >
             </nui-schematic-docs-command>
-            <nui-schematic-docs-example exampleFolderName="filtered-view-table-with-custom-virtual-scroll">
-                <app-filtered-view-table-with-custom-virtual-scroll *ngIf="cvs.active"></app-filtered-view-table-with-custom-virtual-scroll>
+            <nui-schematic-docs-example
+                exampleFolderName="filtered-view-table-with-custom-virtual-scroll"
+            >
+                <app-filtered-view-table-with-custom-virtual-scroll
+                    *ngIf="cvs.active"
+                ></app-filtered-view-table-with-custom-virtual-scroll>
             </nui-schematic-docs-example>
         </nui-tab>
         <nui-tab heading="Tree" #tree>
             <h2>Tree</h2>
-            <nui-schematic-docs-example exampleFolderName="filtered-view-with-tree">
-                <app-filtered-view-with-tree *ngIf="tree.active"></app-filtered-view-with-tree>
+            <nui-schematic-docs-example
+                exampleFolderName="filtered-view-with-tree"
+            >
+                <app-filtered-view-with-tree
+                    *ngIf="tree.active"
+                ></app-filtered-view-with-tree>
             </nui-schematic-docs-example>
         </nui-tab>
     </nui-tab-group>

@@ -1,4 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { GridsterConfig, GridsterItem } from "angular-gridster2";
+
 import {
     ComponentRegistryService,
     EmbeddedContentComponent,
@@ -10,7 +12,6 @@ import {
     PizzagnaLayer,
     WidgetTypesService,
 } from "@nova-ui/dashboards";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
 
 @Component({
     selector: "embedded-content-widget-example",
@@ -35,8 +36,7 @@ export class EmbeddedContentWidgetExampleComponent implements OnInit {
 
         private componentRegistry: ComponentRegistryService,
         private changeDetectorRef: ChangeDetectorRef
-
-    ) { }
+    ) {}
 
     public ngOnInit(): void {
         this.prepareNovaDashboards();
@@ -58,7 +58,10 @@ export class EmbeddedContentWidgetExampleComponent implements OnInit {
         const embeddedContentWidget = widgetConfig;
         const widgets: IWidgets = {
             // Complete the widget with information coming from its type definition
-            [embeddedContentWidget.id]: this.widgetTypesService.mergeWithWidgetType(embeddedContentWidget),
+            [embeddedContentWidget.id]:
+                this.widgetTypesService.mergeWithWidgetType(
+                    embeddedContentWidget
+                ),
         };
 
         // Setting the widget dimensions and position (this is for gridster)
@@ -77,9 +80,10 @@ export class EmbeddedContentWidgetExampleComponent implements OnInit {
 
     private prepareNovaDashboards() {
         this.componentRegistry.registerByLateLoadKey(EmbeddedContentComponent);
-        this.componentRegistry.registerByLateLoadKey(EmbeddedContentConfigurationComponent);
+        this.componentRegistry.registerByLateLoadKey(
+            EmbeddedContentConfigurationComponent
+        );
     }
-
 }
 
 const widgetConfig: IWidget = {
@@ -87,14 +91,14 @@ const widgetConfig: IWidget = {
     type: "embedded-content",
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
-            "header": {
-                "properties": {
-                    "title": "Embedded Content Widget",
-                    "subtitle": "",
+            header: {
+                properties: {
+                    title: "Embedded Content Widget",
+                    subtitle: "",
                 },
             },
-            "mainContent": {
-                "properties": {
+            mainContent: {
+                properties: {
                     sanitized: true,
                     mode: EmbeddedContentMode.URL,
                     customEmbeddedContent: "https://www.ventusky.com/",

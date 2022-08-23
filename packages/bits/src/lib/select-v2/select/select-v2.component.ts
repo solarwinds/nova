@@ -1,3 +1,4 @@
+import { LiveAnnouncer } from "@angular/cdk/a11y";
 import {
     AfterContentInit,
     ChangeDetectionStrategy,
@@ -21,7 +22,6 @@ import { BaseSelectV2 } from "../base-select-v2";
 import { NUI_SELECT_V2_OPTION_PARENT_COMPONENT } from "../constants";
 import { OptionKeyControlService } from "../option-key-control.service";
 import { SelectV2OptionComponent } from "../option/select-v2-option.component";
-import { LiveAnnouncer } from "@angular/cdk/a11y";
 
 // <example-url>./../examples/index.html#/select-v2</example-url>
 @Component({
@@ -41,28 +41,34 @@ import { LiveAnnouncer } from "@angular/cdk/a11y";
             useExisting: forwardRef(() => SelectV2Component),
             multi: true,
         },
-        { provide: NUI_SELECT_V2_OPTION_PARENT_COMPONENT, useExisting: SelectV2Component },
+        {
+            provide: NUI_SELECT_V2_OPTION_PARENT_COMPONENT,
+            useExisting: SelectV2Component,
+        },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
-        "class": "nui-select-v2",
-        "role": "button",
+        class: "nui-select-v2",
+        role: "button",
     },
 })
 
 // Will be renamed in scope of the NUI-5797
-export class SelectV2Component extends BaseSelectV2 implements AfterContentInit, OnDestroy, OnChanges {
-
+export class SelectV2Component
+    extends BaseSelectV2
+    implements AfterContentInit, OnDestroy, OnChanges
+{
     /** Sets a custom template for displaying it in the Option */
     @Input() public displayValueTemplate: TemplateRef<any>;
 
     /** Value of the selected Option that derives in the Select */
     public displayText: string;
 
-    constructor(elRef: ElementRef<HTMLElement>,
-                optionKeyControlService: OptionKeyControlService<SelectV2OptionComponent>,
-                cdRef: ChangeDetectorRef,
-                public liveAnnouncer: LiveAnnouncer
+    constructor(
+        elRef: ElementRef<HTMLElement>,
+        optionKeyControlService: OptionKeyControlService<SelectV2OptionComponent>,
+        cdRef: ChangeDetectorRef,
+        public liveAnnouncer: LiveAnnouncer
     ) {
         super(optionKeyControlService, cdRef, elRef, liveAnnouncer);
     }
@@ -86,13 +92,15 @@ export class SelectV2Component extends BaseSelectV2 implements AfterContentInit,
 
         // options may be received after value changes, that's why
         // we check "selectedOptions" and "valueChanged" to be set per "value" again in "handleValueChange"
-        merge (this.optionsChanged(), this.valueChanged.pipe(takeUntil(this.destroy$)))
-            .subscribe(() => {
-                if (!this.multiselect) {
-                    this.defineDisplayText();
-                }
-                this.cdRef.markForCheck();
-            });
+        merge(
+            this.optionsChanged(),
+            this.valueChanged.pipe(takeUntil(this.destroy$))
+        ).subscribe(() => {
+            if (!this.multiselect) {
+                this.defineDisplayText();
+            }
+            this.cdRef.markForCheck();
+        });
     }
 
     /** Selects specific Option and set its value to the model */

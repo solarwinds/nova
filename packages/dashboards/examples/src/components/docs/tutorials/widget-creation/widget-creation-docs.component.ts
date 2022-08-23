@@ -4,4 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-dashboard-widget-creation-docs",
     templateUrl: "./widget-creation-docs.component.html",
 })
-export class WidgetCreationDocsComponent { }
+export class WidgetCreationDocsComponent {}

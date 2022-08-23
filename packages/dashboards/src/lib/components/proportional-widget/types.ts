@@ -1,10 +1,14 @@
-import { IDataField, IDataFieldsConfig } from "@nova-ui/bits";
-import { IAllAround, IAccessors, IChartAssistSeries } from "@nova-ui/charts";
 import { BehaviorSubject } from "rxjs";
 
+import { IDataField, IDataFieldsConfig } from "@nova-ui/bits";
+import { IAllAround, IAccessors, IChartAssistSeries } from "@nova-ui/charts";
+
 import { IProportionalDonutContentAggregator } from "../../functions/proportional-aggregators/types";
+import {
+    ILegendPlacementOption,
+    LegendPlacement,
+} from "../../widget-types/common/widget/legend";
 import { IFormatter, IFormatterDefinition } from "../types";
-import { ILegendPlacementOption, LegendPlacement } from "../../widget-types/common/widget/legend"
 
 export enum ProportionalWidgetChartTypes {
     DonutChart = "DonutChart",
@@ -65,6 +69,7 @@ export interface IProportionalDataFieldsConfig extends IDataFieldsConfig {
     chartSeriesDataFields$: BehaviorSubject<IDataField[]>;
 }
 
-export interface IProportionalWidgetData extends IChartAssistSeries<IAccessors> {
+export interface IProportionalWidgetData
+    extends IChartAssistSeries<IAccessors> {
     link?: string;
 }

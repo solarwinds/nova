@@ -1,6 +1,8 @@
 import { Component } from "@angular/core";
-import { IAccessors, IDataSeries } from "@nova-ui/charts";
 import moment, { duration } from "moment/moment";
+
+import { IAccessors, IDataSeries } from "@nova-ui/charts";
+
 import { DateTimeUtil } from "./date-time-util";
 
 @Component({
@@ -33,7 +35,9 @@ export class DstTimeIntervalTestPageComponent {
         this.endDstMidnight = DateTimeUtil.getEndDstMidnight(2021);
         this.endDstHour = DateTimeUtil.getEndDstHour(2021);
 
-        this.startDstOneMinuteData = getStartDstOneMinuteData(this.startDstHour);
+        this.startDstOneMinuteData = getStartDstOneMinuteData(
+            this.startDstHour
+        );
         this.startDstOneHourData = getStartDstOneHourData(this.startDstHour);
         this.startDstTwoHourData = getStartDstTwoHourData(this.startDstHour);
         this.startDstOneDayData = getStartDstOneDayData(this.startDstMidnight);
@@ -42,17 +46,25 @@ export class DstTimeIntervalTestPageComponent {
         this.endDstTwoHourData = getEndDstTwoHourData(this.endDstHour);
         this.endDstOneDayData = getEndDstOneDayData(this.endDstMidnight);
 
-        console.log("Local Time Zone:", Intl.DateTimeFormat().resolvedOptions().timeZone);
+        console.log(
+            "Local Time Zone:",
+            Intl.DateTimeFormat().resolvedOptions().timeZone
+        );
     }
 }
 
-function getStartDstOneMinuteData(startDstHour: Date): Partial<IDataSeries<IAccessors>>[] {
+function getStartDstOneMinuteData(
+    startDstHour: Date
+): Partial<IDataSeries<IAccessors>>[] {
     return [
         {
             id: "series-1",
             name: "Series 1",
             data: [
-                { x: moment(startDstHour).subtract(1, "minute").toDate(), y: 30 },
+                {
+                    x: moment(startDstHour).subtract(1, "minute").toDate(),
+                    y: 30,
+                },
                 { x: startDstHour, y: 95 },
                 { x: moment(startDstHour).add(1, "minute").toDate(), y: 15 },
                 { x: moment(startDstHour).add(2, "minutes").toDate(), y: 60 },
@@ -62,7 +74,9 @@ function getStartDstOneMinuteData(startDstHour: Date): Partial<IDataSeries<IAcce
     ];
 }
 
-function getStartDstOneHourData(startDstHour: Date): Partial<IDataSeries<IAccessors>>[] {
+function getStartDstOneHourData(
+    startDstHour: Date
+): Partial<IDataSeries<IAccessors>>[] {
     return [
         {
             id: "series-1",
@@ -78,13 +92,18 @@ function getStartDstOneHourData(startDstHour: Date): Partial<IDataSeries<IAccess
     ];
 }
 
-function getStartDstTwoHourData(startDstHour: Date): Partial<IDataSeries<IAccessors>>[] {
+function getStartDstTwoHourData(
+    startDstHour: Date
+): Partial<IDataSeries<IAccessors>>[] {
     return [
         {
             id: "series-1",
             name: "Series 1",
             data: [
-                { x: moment(startDstHour).subtract(2, "hours").toDate(), y: 30 },
+                {
+                    x: moment(startDstHour).subtract(2, "hours").toDate(),
+                    y: 30,
+                },
                 { x: startDstHour, y: 95 },
                 { x: moment(startDstHour).add(2, "hours").toDate(), y: 15 },
                 { x: moment(startDstHour).add(4, "hours").toDate(), y: 60 },
@@ -94,13 +113,18 @@ function getStartDstTwoHourData(startDstHour: Date): Partial<IDataSeries<IAccess
     ];
 }
 
-function getStartDstOneDayData(startDstMidnight: Date): Partial<IDataSeries<IAccessors>>[] {
+function getStartDstOneDayData(
+    startDstMidnight: Date
+): Partial<IDataSeries<IAccessors>>[] {
     return [
         {
             id: "series-1",
             name: "Series 1",
             data: [
-                { x: moment(startDstMidnight).subtract(1, "day").toDate(), y: 30 },
+                {
+                    x: moment(startDstMidnight).subtract(1, "day").toDate(),
+                    y: 30,
+                },
                 { x: startDstMidnight, y: 95 },
                 { x: moment(startDstMidnight).add(1, "day").toDate(), y: 15 },
                 { x: moment(startDstMidnight).add(2, "days").toDate(), y: 60 },
@@ -110,7 +134,9 @@ function getStartDstOneDayData(startDstMidnight: Date): Partial<IDataSeries<IAcc
     ];
 }
 
-function getEndDstOneMinuteData(endDstHour: Date): Partial<IDataSeries<IAccessors>>[] {
+function getEndDstOneMinuteData(
+    endDstHour: Date
+): Partial<IDataSeries<IAccessors>>[] {
     return [
         {
             id: "series-1",
@@ -126,7 +152,9 @@ function getEndDstOneMinuteData(endDstHour: Date): Partial<IDataSeries<IAccessor
     ];
 }
 
-function getEndDstOneHourData(endDstHour: Date): Partial<IDataSeries<IAccessors>>[] {
+function getEndDstOneHourData(
+    endDstHour: Date
+): Partial<IDataSeries<IAccessors>>[] {
     return [
         {
             id: "series-1",
@@ -142,7 +170,9 @@ function getEndDstOneHourData(endDstHour: Date): Partial<IDataSeries<IAccessors>
     ];
 }
 
-function getEndDstTwoHourData(endDstHour: Date): Partial<IDataSeries<IAccessors>>[] {
+function getEndDstTwoHourData(
+    endDstHour: Date
+): Partial<IDataSeries<IAccessors>>[] {
     return [
         {
             id: "series-1",
@@ -158,13 +188,18 @@ function getEndDstTwoHourData(endDstHour: Date): Partial<IDataSeries<IAccessors>
     ];
 }
 
-function getEndDstOneDayData(endDstMidnight: Date): Partial<IDataSeries<IAccessors>>[] {
+function getEndDstOneDayData(
+    endDstMidnight: Date
+): Partial<IDataSeries<IAccessors>>[] {
     return [
         {
             id: "series-1",
             name: "Series 1",
             data: [
-                { x: moment(endDstMidnight).subtract(1, "day").toDate(), y: 30 },
+                {
+                    x: moment(endDstMidnight).subtract(1, "day").toDate(),
+                    y: 30,
+                },
                 { x: endDstMidnight, y: 95 },
                 { x: moment(endDstMidnight).add(1, "day").toDate(), y: 15 },
                 { x: moment(endDstMidnight).add(2, "days").toDate(), y: 60 },

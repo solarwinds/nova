@@ -30,7 +30,6 @@ describe("services >", () => {
             expect(cache).toBeDefined();
             expect(cacheFactory.count()).toEqual(1);
             expect(cacheFactory.get(cacheId)).toBe(cache);
-
         });
 
         it("should throw if cache already exists", () => {

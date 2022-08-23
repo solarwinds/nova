@@ -8,11 +8,9 @@ import { Inject, Injectable } from "@angular/core";
 /**
  * @ignore
  */
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class DomUtilService {
-
-    constructor(@Inject(DOCUMENT) private document: any) {
-    }
+    constructor(@Inject(DOCUMENT) private document: any) {}
 
     /**
      * Gets the closest parent element matching the specified selector
@@ -27,9 +25,12 @@ export class DomUtilService {
                 (Element.prototype as any).msMatchesSelector ||
                 Element.prototype.webkitMatchesSelector ||
                 function (slctr: string): boolean {
-                    // @ts-ignore: 'this' implicitly has type 'any' because it does not have a type annotation
-                    // An outer value of 'this' is shadowed by this container.
-                    const matches = (this.document || this.ownerDocument).querySelectorAll(slctr);
+                    const matches =
+                        // @ts-ignore: 'this' implicitly has type 'any' because it does not have a type annotation
+                        // An outer value of 'this' is shadowed by this container.
+                        (this.document || this.ownerDocument).querySelectorAll(
+                            slctr
+                        );
                     let index = matches.length - 1;
                     // @ts-ignore: 'this' implicitly has type 'any' because it does not have a type annotation
                     // An outer value of 'this' is shadowed by this container.
@@ -41,11 +42,15 @@ export class DomUtilService {
         }
 
         // Get the closest matching element
-        for (; elem && elem !== this.document; elem = elem.parentElement ?? undefined) {
+        for (
+            ;
+            elem && elem !== this.document;
+            elem = elem.parentElement ?? undefined
+        ) {
             if (elem?.matches(selector)) {
                 return elem;
             }
         }
         return null;
-    }
+    };
 }

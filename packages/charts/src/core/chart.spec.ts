@@ -16,12 +16,14 @@ describe("Chart", () => {
     });
 
     it("should populate the grid's updateChartDimensionsSubject", () => {
-        expect(grid.updateChartDimensionsSubject).toBe((<any>chart).updateDimensionsSubject);
+        expect(grid.updateChartDimensionsSubject).toBe(
+            (<any>chart).updateDimensionsSubject
+        );
     });
 
     describe("build", () => {
         it("should invoke buildGrid", () => {
-            const spy = spyOn((<any>chart), "buildGrid").and.callThrough();
+            const spy = spyOn(<any>chart, "buildGrid").and.callThrough();
             chart.build(element);
             expect(spy).toHaveBeenCalled();
         });
@@ -31,7 +33,9 @@ describe("Chart", () => {
             chart.addPlugin(new InteractionLabelPlugin());
             chart.build(element);
             expect((<any>chart).plugins.length).toBeGreaterThan(1);
-            expect((<any>chart).plugins[0] instanceof RenderEnginePlugin).toEqual(true);
+            expect(
+                (<any>chart).plugins[0] instanceof RenderEnginePlugin
+            ).toEqual(true);
         });
     });
 });

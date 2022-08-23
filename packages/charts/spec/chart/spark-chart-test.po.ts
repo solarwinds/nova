@@ -1,8 +1,8 @@
-import { Atom } from "@nova-ui/bits/sdk/atoms";
 import { by, element, ElementFinder } from "protractor";
 
-import { LegendSeriesAtom } from "../legend/legend-series.atom";
+import { Atom } from "@nova-ui/bits/sdk/atoms";
 
+import { LegendSeriesAtom } from "../legend/legend-series.atom";
 import { ChartAtom } from "./atoms/chart.atom";
 
 export class SparkChartTestPage {
@@ -34,7 +34,7 @@ export class SparkChartTestPage {
         return Atom.findIn(LegendSeriesAtom, this.root, index);
     }
 
-    public async changeData(input: number [][]): Promise<void> {
+    public async changeData(input: number[][]): Promise<void> {
         await this.dataInput.clear();
         return this.dataInput.sendKeys(JSON.stringify(input));
     }

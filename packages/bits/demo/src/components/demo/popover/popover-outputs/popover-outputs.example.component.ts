@@ -1,4 +1,5 @@
 import { Component, Inject } from "@angular/core";
+
 import { IToastService, ToastService } from "@nova-ui/bits";
 
 @Component({
@@ -6,14 +7,13 @@ import { IToastService, ToastService } from "@nova-ui/bits";
     templateUrl: "./popover-outputs.example.component.html",
 })
 export class PopoverOutputsExampleComponent {
-    constructor(@Inject(ToastService) private toastService: IToastService) {
-    }
+    constructor(@Inject(ToastService) private toastService: IToastService) {}
 
     public onHide(): void {
-        this.toastService.success({message: $localize `onHide was invoked`});
+        this.toastService.success({ message: $localize`onHide was invoked` });
     }
 
     public onShow(): void {
-        this.toastService.success({message: $localize `onShow was invoked`});
+        this.toastService.success({ message: $localize`onShow was invoked` });
     }
 }

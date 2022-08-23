@@ -1,19 +1,27 @@
 import { Component, OnInit } from "@angular/core";
-import { ISelectChangedEvent } from "@nova-ui/bits";
 import _cloneDeep from "lodash/cloneDeep";
+
+import { ISelectChangedEvent } from "@nova-ui/bits";
 
 @Component({
     selector: "combobox-visual-test",
     templateUrl: "./combobox-visual-test.component.html",
 })
-
 export class ComboboxVisualTestComponent implements OnInit {
     public isRequired: boolean = true;
     public errorState: boolean = true;
     public dataset = {
         items: [
-            "Item 1", "Item 2", "Item 3", "Item 4", "Item 5",
-            "Item 6", "Item 7", "Item 8", "Item 9", "Item 10",
+            "Item 1",
+            "Item 2",
+            "Item 3",
+            "Item 4",
+            "Item 5",
+            "Item 6",
+            "Item 7",
+            "Item 8",
+            "Item 9",
+            "Item 10",
         ],
         selectedItem: "",
     };
@@ -37,8 +45,10 @@ export class ComboboxVisualTestComponent implements OnInit {
 
     public textboxChanged(searchQuery: ISelectChangedEvent<string>) {
         this.displayedItems = _cloneDeep(this.datasetInGroups.itemsInGroups);
-        this.displayedItems.forEach(items => {
-            items.items = items.items.filter(item => item.includes(searchQuery.newValue));
+        this.displayedItems.forEach((items) => {
+            items.items = items.items.filter((item) =>
+                item.includes(searchQuery.newValue)
+            );
         });
     }
 
@@ -52,7 +62,11 @@ export class ComboboxVisualTestComponent implements OnInit {
     }
 
     public isInErrorState(): void {
-        this.errorState = this.isRequired &&
-            (!this.dataset.selectedItem || !(this.dataset.items.indexOf(this.dataset.selectedItem) !== -1));
+        this.errorState =
+            this.isRequired &&
+            (!this.dataset.selectedItem ||
+                !(
+                    this.dataset.items.indexOf(this.dataset.selectedItem) !== -1
+                ));
     }
 }

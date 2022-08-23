@@ -17,15 +17,20 @@ import {
     ViewChildren,
     ViewContainerRef,
 } from "@angular/core";
-import { IBusyConfig, IEvent, LoggerService } from "@nova-ui/bits";
 import find from "lodash/find";
 import findIndex from "lodash/findIndex";
 import isUndefined from "lodash/isUndefined";
 import { BehaviorSubject } from "rxjs";
 
-import { DashwizStepComponent } from "../dashwiz-step/dashwiz-step.component";
-import { IDashwizButtonsComponent, IDashwizStepComponent, IDashwizStepNavigatedEvent, IDashwizWaitEvent } from "../types";
+import { IBusyConfig, IEvent, LoggerService } from "@nova-ui/bits";
 
+import { DashwizStepComponent } from "../dashwiz-step/dashwiz-step.component";
+import {
+    IDashwizButtonsComponent,
+    IDashwizStepComponent,
+    IDashwizStepNavigatedEvent,
+    IDashwizWaitEvent,
+} from "../types";
 import { DashwizButtonsComponent } from "./dashwiz-buttons.component";
 import { DashwizService } from "./dashwiz.service";
 import { IDashwizComponent } from "./model";
@@ -39,10 +44,19 @@ import { IDashwizComponent } from "./model";
     styleUrls: ["./dashwiz.component.less"],
     host: { class: "flex-grow-1 overflow-auto" },
 })
-export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChecked, OnDestroy, DoCheck, IDashwizComponent {
+export class DashwizComponent
+    implements
+        OnInit,
+        AfterContentInit,
+        AfterViewChecked,
+        OnDestroy,
+        DoCheck,
+        IDashwizComponent
+{
     private static placeholderFinishText = "Action"; // as a placeholder "Action" does not need to be i18n
 
-    @ContentChildren(DashwizStepComponent) steps: QueryList<DashwizStepComponent>;
+    @ContentChildren(DashwizStepComponent)
+    steps: QueryList<DashwizStepComponent>;
     @ViewChildren("stepTitle") stepTitles: QueryList<ElementRef>;
     @ViewChild("container", { read: ViewContainerRef }) dynamicStep: any;
 
@@ -78,7 +92,8 @@ export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChec
     /**
      * Evaluated when a step is selected.
      */
-    @Output() public stepNavigated = new EventEmitter<IDashwizStepNavigatedEvent>();
+    @Output() public stepNavigated =
+        new EventEmitter<IDashwizStepNavigatedEvent>();
     /**
      * Evaluated when the user attempts to cancel the wizard.
      */
@@ -98,10 +113,11 @@ export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChec
     /**
      * Use this BehaviorSubject to control navigability between steps
      */
-    @Input() public navigationControl: BehaviorSubject<IDashwizWaitEvent> = new BehaviorSubject<IDashwizWaitEvent>({
-        busyState: { busy: false },
-        allowStepChange: true,
-    });
+    @Input() public navigationControl: BehaviorSubject<IDashwizWaitEvent> =
+        new BehaviorSubject<IDashwizWaitEvent>({
+            busyState: { busy: false },
+            allowStepChange: true,
+        });
 
     public currentStep: DashwizStepComponent;
     public stepLineWidth: number = 65;
@@ -114,21 +130,26 @@ export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChec
 
     private arraySteps: any[];
 
-    constructor(private changeDetector: ChangeDetectorRef,
-                private componentFactoryResolver: ComponentFactoryResolver,
-                private logger: LoggerService,
-                private dashwizService: DashwizService) {
+    constructor(
+        private changeDetector: ChangeDetectorRef,
+        private componentFactoryResolver: ComponentFactoryResolver,
+        private logger: LoggerService,
+        private dashwizService: DashwizService
+    ) {
         if (dashwizService) {
             dashwizService.component = this;
         }
     }
 
     ngOnInit() {
-        this.buttonComponentTypes = this.buttonComponentTypes || [DashwizButtonsComponent.lateLoadKey];
+        this.buttonComponentTypes = this.buttonComponentTypes || [
+            DashwizButtonsComponent.lateLoadKey,
+        ];
 
         if (this.finishText === DashwizComponent.placeholderFinishText) {
-            this.logger.warn(`DashwizComponent input "finishText" is using placeholder text
-"${ DashwizComponent.placeholderFinishText }". A value should be specified.`);
+            this.logger
+                .warn(`DashwizComponent input "finishText" is using placeholder text
+"${DashwizComponent.placeholderFinishText}". A value should be specified.`);
         }
     }
 
@@ -163,13 +184,19 @@ export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChec
             });
         });
 
-        this.navigationControl.subscribe((value: { busyState: IBusyConfig, allowStepChange: any }) => {
-            this.currentStep.busyConfig = value.busyState;
-            if (value.allowStepChange && !isUndefined(this.futureStep) && this.currentStep !== this.futureStep) {
-                this.enterAnotherStep();
-                this.futureStep = undefined;
+        this.navigationControl.subscribe(
+            (value: { busyState: IBusyConfig; allowStepChange: any }) => {
+                this.currentStep.busyConfig = value.busyState;
+                if (
+                    value.allowStepChange &&
+                    !isUndefined(this.futureStep) &&
+                    this.currentStep !== this.futureStep
+                ) {
+                    this.enterAnotherStep();
+                    this.futureStep = undefined;
+                }
             }
-        });
+        );
     }
 
     public ngAfterViewChecked() {
@@ -180,13 +207,21 @@ export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChec
     }
 
     public ngOnDestroy() {
-        this.steps.toArray().forEach((step: DashwizStepComponent) => step.valid.unsubscribe());
+        this.steps
+            .toArray()
+            .forEach((step: DashwizStepComponent) => step.valid.unsubscribe());
         this.navigationControl.unsubscribe();
         this.dashwizService.component = undefined;
     }
 
-    public addStepDynamic(wizardStep: IDashwizStepComponent, indexToInsert: number) {
-        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(DashwizStepComponent);
+    public addStepDynamic(
+        wizardStep: IDashwizStepComponent,
+        indexToInsert: number
+    ) {
+        const componentFactory =
+            this.componentFactoryResolver.resolveComponentFactory(
+                DashwizStepComponent
+            );
         const componentRef = this.dynamicStep.createComponent(componentFactory);
         const instance: IDashwizStepComponent = componentRef.instance;
         instance.stepTemplate = wizardStep.stepTemplate;
@@ -244,14 +279,19 @@ export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChec
         if (!isUndefined(this.stepIndex)) {
             let previousStep = this.arraySteps[this.stepIndex - 1];
             if (previousStep.hidden || previousStep.disabled) {
-                previousStep = find(this.arraySteps.slice(0).reverse(),
-                                    step => !step.hidden,
-                                    findIndex(this.arraySteps.slice(0).reverse(), this.arraySteps[this.stepIndex]) + 1);
+                previousStep = find(
+                    this.arraySteps.slice(0).reverse(),
+                    (step) => !step.hidden,
+                    findIndex(
+                        this.arraySteps.slice(0).reverse(),
+                        this.arraySteps[this.stepIndex]
+                    ) + 1
+                );
             }
             this.selectStep(previousStep);
             this.back.emit();
         }
-    }
+    };
 
     public onNext = () => {
         let nextStep = this.arraySteps[this.stepIndex + 1];
@@ -262,11 +302,21 @@ export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChec
             previousStep: this.currentStep,
             previousStepIndex: this.stepIndex,
         });
-        if (nextStep.hidden || nextStep.disabled && !isUndefined(nextStep.stepControl)) {
+        if (
+            nextStep.hidden ||
+            (nextStep.disabled && !isUndefined(nextStep.stepControl))
+        ) {
             // this disabled does not let user to go forward when next is disabled. Needs to be changed after validation
-            nextStep = find(this.arraySteps, step => !step.hidden, this.stepIndex + 1);
+            nextStep = find(
+                this.arraySteps,
+                (step) => !step.hidden,
+                this.stepIndex + 1
+            );
         }
-        if (isUndefined(this.currentStep.stepControl) || this.currentStep.stepControl) {
+        if (
+            isUndefined(this.currentStep.stepControl) ||
+            this.currentStep.stepControl
+        ) {
             this.currentStep.complete = true;
         }
         if (nextStep.disabled && !nextStep.visited) {
@@ -274,15 +324,17 @@ export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChec
         }
         this.selectStep(nextStep);
         this.next.emit();
-    }
+    };
 
     public onFinish = () => {
         this.finish.emit();
-    }
+    };
 
     public onCancel = () => {
-        this.cancel.emit(this.steps.toArray().filter(step => step.complete).length !== 0);
-    }
+        this.cancel.emit(
+            this.steps.toArray().filter((step) => step.complete).length !== 0
+        );
+    };
 
     // eslint-disable-next-line @typescript-eslint/member-ordering
     public buttonPortalActionMap: Record<string, Function> = {
@@ -340,7 +392,9 @@ export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChec
     }
 
     private getLargestLabelWidth() {
-        const widths = this.stepTitles.map((title) => title.nativeElement.offsetWidth);
+        const widths = this.stepTitles.map(
+            (title) => title.nativeElement.offsetWidth
+        );
 
         return Math.round(Math.max(...widths));
     }

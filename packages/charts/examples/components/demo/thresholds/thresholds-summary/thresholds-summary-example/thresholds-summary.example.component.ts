@@ -1,11 +1,34 @@
 import { Component, OnInit } from "@angular/core";
-import {
-    BandScale, BarRenderer, Chart, ChartAssist, ChartPalette, CHART_PALETTE_CS_S, getAutomaticDomainWithIncludedInterval, IAccessors, IChartAssistSeries,
-    IChartSeries, ILineAccessors, IScale, ISimpleThresholdZone, IXYScales, LineAccessors, LinearScale, LineRenderer, MappedValueProvider, StatusAccessors,
-    ThresholdsService, thresholdsSummaryGridConfig, thresholdsTopGridConfig, THRESHOLDS_SUMMARY_RENDERER_CONFIG, TimeScale, XYGrid,
-} from "@nova-ui/charts";
 import cloneDeep from "lodash/cloneDeep";
 import moment from "moment/moment";
+
+import {
+    BandScale,
+    BarRenderer,
+    Chart,
+    ChartAssist,
+    ChartPalette,
+    CHART_PALETTE_CS_S,
+    getAutomaticDomainWithIncludedInterval,
+    IAccessors,
+    IChartAssistSeries,
+    IChartSeries,
+    ILineAccessors,
+    IScale,
+    ISimpleThresholdZone,
+    IXYScales,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    MappedValueProvider,
+    StatusAccessors,
+    ThresholdsService,
+    thresholdsSummaryGridConfig,
+    thresholdsTopGridConfig,
+    THRESHOLDS_SUMMARY_RENDERER_CONFIG,
+    TimeScale,
+    XYGrid,
+} from "@nova-ui/charts";
 
 enum Status {
     Error = "error",
@@ -23,13 +46,14 @@ export class ThresholdsSummaryExampleComponent implements OnInit {
 
     private thresholdsPalette: ChartPalette;
 
-    constructor(private thresholdsService: ThresholdsService) {
-    }
+    constructor(private thresholdsService: ThresholdsService) {}
 
     public ngOnInit() {
         // When instantiating the charts, use the provided grid configuration functions for the main grid and summary grid
         const mainChart = new Chart(new XYGrid(thresholdsTopGridConfig()));
-        const summaryChart = new Chart(new XYGrid(thresholdsSummaryGridConfig()));
+        const summaryChart = new Chart(
+            new XYGrid(thresholdsSummaryGridConfig())
+        );
 
         // Instantiate a chart assist for the main chart and summary chart
         this.chartAssist = new ChartAssist(mainChart);
@@ -52,40 +76,59 @@ export class ThresholdsSummaryExampleComponent implements OnInit {
         // To give the data series visualization some vertical breathing room, set the y scale's
         // domainCalculator by invoking getAutomaticDomainWithIncludedInterval, where the
         // specified interval is larger than the expected domain of the visualized data
-        mainChartDataScales.y.domainCalculator = getAutomaticDomainWithIncludedInterval([0, 100]);
+        mainChartDataScales.y.domainCalculator =
+            getAutomaticDomainWithIncludedInterval([0, 100]);
 
         // Create a palette with a mapped value provider that maps status to color
-        this.thresholdsPalette = new ChartPalette(new MappedValueProvider({
-            [Status.Error]: CHART_PALETTE_CS_S[1],
-            [Status.Warning]: CHART_PALETTE_CS_S[2],
-            [Status.Ok]: CHART_PALETTE_CS_S[4],
-        }, "transparent"));
+        this.thresholdsPalette = new ChartPalette(
+            new MappedValueProvider(
+                {
+                    [Status.Error]: CHART_PALETTE_CS_S[1],
+                    [Status.Warning]: CHART_PALETTE_CS_S[2],
+                    [Status.Ok]: CHART_PALETTE_CS_S[4],
+                },
+                "transparent"
+            )
+        );
 
         // Standard line renderer for the data series visualization
         const renderer = new LineRenderer();
         // Providing chartAssist colors and markers to LineAccessors will share them with the line chart
-        const accessors = new LineAccessors(this.chartAssist.palette.standardColors, this.chartAssist.markers);
+        const accessors = new LineAccessors(
+            this.chartAssist.palette.standardColors,
+            this.chartAssist.markers
+        );
 
         // Here we define the data series on the main chart which will be visualized as lines.
         // These series are also used in the creation of the corresponding main chart threshold series
         // and summary chart series.
-        const mainChartDataSeriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
-            ...d,
-            accessors,
-            renderer,
-            scales: mainChartDataScales,
-        }));
+        const mainChartDataSeriesSet: IChartSeries<ILineAccessors>[] =
+            getData().map((d) => ({
+                ...d,
+                accessors,
+                renderer,
+                scales: mainChartDataScales,
+            }));
 
         // Zone definitions tell the threshold service where threshold zones begin and end
         const zoneDefinitions: ISimpleThresholdZone[] = getZoneDefinitions();
 
         // See the createMainChartThresholdSeriesSet method definition below for how to assemble
         // the required elements for thresholds on the main chart
-        const mainChartThresholdSeriesSet = this.createMainChartThresholdSeriesSet(mainChartDataSeriesSet, mainChartDataScales, zoneDefinitions);
+        const mainChartThresholdSeriesSet =
+            this.createMainChartThresholdSeriesSet(
+                mainChartDataSeriesSet,
+                mainChartDataScales,
+                zoneDefinitions
+            );
 
         // See the createSummarySeriesSet method definition below for how to assemble the required elements
         // for thresholds on the summary chart
-        const summarySeriesSet = this.createSummarySeriesSet(mainChartDataSeriesSet, sharedXScale, zoneDefinitions);
+        const summarySeriesSet = this.createSummarySeriesSet(
+            mainChartDataSeriesSet,
+            sharedXScale,
+            zoneDefinitions
+        );
 
         // Invoke the update method on each of the chart assists passing the appropriate series sets
         // ---
@@ -93,13 +136,18 @@ export class ThresholdsSummaryExampleComponent implements OnInit {
         // the series are passed here. So, in this case, since the 'mainChartDataSeriesSet' appears after the
         // 'mainChartThresholdSeriesSet' in this array, the main data elements will be rendered in front of the
         // threshold-related elements on the chart.
-        this.chartAssist.update([...mainChartThresholdSeriesSet, ...mainChartDataSeriesSet]);
+        this.chartAssist.update([
+            ...mainChartThresholdSeriesSet,
+            ...mainChartDataSeriesSet,
+        ]);
         this.summaryChartAssist.update(summarySeriesSet);
     }
 
-    private createMainChartThresholdSeriesSet(mainChartDataSeriesSet: IChartSeries<ILineAccessors>[],
-                                              mainChartDataScales: IXYScales,
-                                              zoneDefinitions: ISimpleThresholdZone[]) {
+    private createMainChartThresholdSeriesSet(
+        mainChartDataSeriesSet: IChartSeries<ILineAccessors>[],
+        mainChartDataScales: IXYScales,
+        zoneDefinitions: ISimpleThresholdZone[]
+    ) {
         // Create scales for the main chart thresholds.
         // Note that the same x scale from the data series scales is used here.
         // Also note that the y band scale fixes the domain to a single value of STATUS_DOMAIN
@@ -114,7 +162,11 @@ export class ThresholdsSummaryExampleComponent implements OnInit {
             // here, but what we do instead is use simplified zones that are defined by a start value and/or an end value. (A missing
             // start or end value indicates an infinite zone.)
             // Those values are then converted into a set of data series in this step.
-            const zones = this.thresholdsService.getThresholdZones(s, zoneDefinitions, this.thresholdsPalette.standardColors);
+            const zones = this.thresholdsService.getThresholdZones(
+                s,
+                zoneDefinitions,
+                this.thresholdsPalette.standardColors
+            );
 
             // This injects threshold data into every data point of the source series. It is important, because later we can
             // access related threshold information from many different places like legend, tooltips or even when calculating
@@ -129,9 +181,17 @@ export class ThresholdsSummaryExampleComponent implements OnInit {
             // the elements are defined here. So, in this case, since the threshold lines are defined after the
             // backgrounds in this array, the threshold lines will be rendered in front of the backgrounds on the chart.
             const seriesThresholds = [
-                this.thresholdsService.getBackgrounds(s, zones, thresholdScales, this.thresholdsPalette.backgroundColors),
+                this.thresholdsService.getBackgrounds(
+                    s,
+                    zones,
+                    thresholdScales,
+                    this.thresholdsPalette.backgroundColors
+                ),
                 ...this.thresholdsService.getThresholdLines(zones),
-                ...this.thresholdsService.getSideIndicators(zones, mainChartDataScales),
+                ...this.thresholdsService.getSideIndicators(
+                    zones,
+                    mainChartDataScales
+                ),
             ];
 
             thresholdSeriesSet.push(...seriesThresholds);
@@ -139,7 +199,11 @@ export class ThresholdsSummaryExampleComponent implements OnInit {
         return thresholdSeriesSet;
     }
 
-    private createSummarySeriesSet(seriesSet: IChartSeries<ILineAccessors>[], xScale: IScale<any>, zoneDefinitions: ISimpleThresholdZone[]) {
+    private createSummarySeriesSet(
+        seriesSet: IChartSeries<ILineAccessors>[],
+        xScale: IScale<any>,
+        zoneDefinitions: ISimpleThresholdZone[]
+    ) {
         // Zone definitions let the threshold service know where threshold zones begin and end.
         //
         // The summary zones use the same definitions as those on the main chart,
@@ -148,10 +212,7 @@ export class ThresholdsSummaryExampleComponent implements OnInit {
         // a need to visualize the data in an "ok" state there.
         //
         // On the summary, data falling within the "ok" zone is visualized as a thin green line.
-        const summaryZoneDefs = [
-            ...zoneDefinitions,
-            { status: Status.Ok },
-        ];
+        const summaryZoneDefs = [...zoneDefinitions, { status: Status.Ok }];
 
         // Create scales for the summary chart.
         // Note that the same x scale from the data series scales of the main chart is used here.
@@ -165,12 +226,18 @@ export class ThresholdsSummaryExampleComponent implements OnInit {
         // height for the threshold visualization. The default thickness is the full height of the grid.
         const thicknessMap = { [Status.Ok]: BarRenderer.THIN };
 
-        const summarySeriesSet: IChartAssistSeries<IAccessors>[] = [...seriesSet].map(s => {
+        const summarySeriesSet: IChartAssistSeries<IAccessors>[] = [
+            ...seriesSet,
+        ].map((s) => {
             // It's possible to manually define zones by area-like data series with start/end values for every data point. We don't do that
             // here, but what we do instead is use simplified zones that are defined by a start value and/or an end value. (A missing
             // start or end value indicates an infinite zone.)
             // Those values are then converted into a set of data series in this step.
-            const zones = this.thresholdsService.getThresholdZones(s, summaryZoneDefs, this.thresholdsPalette.standardColors);
+            const zones = this.thresholdsService.getThresholdZones(
+                s,
+                summaryZoneDefs,
+                this.thresholdsPalette.standardColors
+            );
 
             // This injects threshold data into every data point of the source series. It's important, because later we can
             // access related threshold information from many different places like legend, tooltips or even when calculating
@@ -181,8 +248,14 @@ export class ThresholdsSummaryExampleComponent implements OnInit {
             // with arguments for the data series, the defined zones, the palette's standard colors
             // and the predefined THRESHOLDS_SUMMARY_RENDERER_CONFIG.
             // The renderer config defines the behavior of series when they are emphasized, hidden, etc.
-            return this.thresholdsService.getBackgrounds(s, zones, summaryScales, this.thresholdsPalette.standardColors,
-                                                         thicknessMap, cloneDeep(THRESHOLDS_SUMMARY_RENDERER_CONFIG));
+            return this.thresholdsService.getBackgrounds(
+                s,
+                zones,
+                summaryScales,
+                this.thresholdsPalette.standardColors,
+                thicknessMap,
+                cloneDeep(THRESHOLDS_SUMMARY_RENDERER_CONFIG)
+            );
         });
 
         return summarySeriesSet;

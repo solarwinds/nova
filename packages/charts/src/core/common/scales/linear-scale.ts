@@ -9,7 +9,7 @@ export class LinearScale extends Scale<number> {
     constructor(id?: string) {
         super(id);
 
-        this.formatters.tick = value => value?.toLocaleString();
+        this.formatters.tick = (value) => value?.toLocaleString();
     }
 
     protected createD3Scale(): any {

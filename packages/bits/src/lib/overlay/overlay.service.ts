@@ -1,4 +1,10 @@
-import { Overlay, OverlayConfig, OverlayContainer, OverlayRef, OverlaySizeConfig } from "@angular/cdk/overlay";
+import {
+    Overlay,
+    OverlayConfig,
+    OverlayContainer,
+    OverlayRef,
+    OverlaySizeConfig,
+} from "@angular/cdk/overlay";
 import { Portal } from "@angular/cdk/portal";
 import { DOCUMENT } from "@angular/common";
 import { Inject, Injectable, OnDestroy, Optional } from "@angular/core";
@@ -24,7 +30,9 @@ export class OverlayService implements OnDestroy {
     public hide$: Subject<void> = new Subject<void>();
 
     public get overlayConfig(): OverlayConfig {
-        if (!this._overlayConfig) { this.defineOverlayConfig(); }
+        if (!this._overlayConfig) {
+            this.defineOverlayConfig();
+        }
         return this._overlayConfig;
     }
     public set overlayConfig(value: OverlayConfig) {
@@ -37,8 +45,10 @@ export class OverlayService implements OnDestroy {
         protected overlay: Overlay,
         protected overlayContainer: OverlayContainer,
         @Inject(DOCUMENT) protected document: Document,
-        @Optional() @Inject(OVERLAY_CONTAINER) private customContainerInjection: OverlayContainerType
-    ) { }
+        @Optional()
+        @Inject(OVERLAY_CONTAINER)
+        private customContainerInjection: OverlayContainerType
+    ) {}
 
     public createOverlay() {
         this.appendToContainer();
@@ -48,7 +58,9 @@ export class OverlayService implements OnDestroy {
     }
 
     public show() {
-        if (this.showing) { return; }
+        if (this.showing) {
+            return;
+        }
         this.createOverlay();
 
         this.showing = true;
@@ -56,7 +68,9 @@ export class OverlayService implements OnDestroy {
     }
 
     public hide() {
-        if (!this.showing) { return; }
+        if (!this.showing) {
+            return;
+        }
         this.disposeOverlayRef();
 
         this.showing = false;
@@ -77,7 +91,9 @@ export class OverlayService implements OnDestroy {
     }
 
     private defineOverlayConfig(): void {
-        const positionStrategy = this.overlay.position().global()
+        const positionStrategy = this.overlay
+            .position()
+            .global()
             .centerHorizontally()
             .centerVertically();
         const scrollStrategy = this.overlay.scrollStrategies.reposition();
@@ -99,21 +115,29 @@ export class OverlayService implements OnDestroy {
 
     private appendToContainer(): void {
         let container: HTMLElement | undefined;
-        const customContainer = this.customContainer || this.customContainerInjection; // input is a priority
+        const customContainer =
+            this.customContainer || this.customContainerInjection; // input is a priority
 
         if (customContainer) {
-            container = typeof customContainer === "string"
-                ? this.document.querySelector<HTMLElement>(customContainer) ?? undefined
-                : customContainer.nativeElement;
+            container =
+                typeof customContainer === "string"
+                    ? this.document.querySelector<HTMLElement>(
+                          customContainer
+                      ) ?? undefined
+                    : customContainer.nativeElement;
 
             if (!container) {
-                console.warn(`Specified container is not found: ${customContainer}. \nAppending to body.`);
+                console.warn(
+                    `Specified container is not found: ${customContainer}. \nAppending to body.`
+                );
                 container = this.document.body;
             }
         } else {
             container = this.document.body;
         }
 
-        (this.overlayContainer as OverlayCustomContainer).setContainer(container);
+        (this.overlayContainer as OverlayCustomContainer).setContainer(
+            container
+        );
     }
 }

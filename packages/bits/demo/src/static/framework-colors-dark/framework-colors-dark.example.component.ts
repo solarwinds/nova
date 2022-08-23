@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+
 import { ToastService } from "@nova-ui/bits";
 
 /* eslint-disable-next-line */
@@ -15,7 +16,7 @@ export class FrameworkColorsDarkExampleComponent {
 
     public onClipboardSuccess() {
         this.toastService.success({
-            message: $localize `Color successfully copied to clipboard`,
+            message: $localize`Color successfully copied to clipboard`,
         });
     }
 

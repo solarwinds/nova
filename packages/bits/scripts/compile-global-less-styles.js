@@ -1,14 +1,12 @@
 "use strict";
 
 const fs = require("fs");
-const exec = require('child_process').exec;
+const exec = require("child_process").exec;
 
 const stylesDir = "./src/styles";
 const outputDir = "./sdk/api-docs-ng2/styles/global-styles/";
 
-const requredFiles = [
-    "nui-framework-typography.less"
-];
+const requredFiles = ["nui-framework-typography.less"];
 
 if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
 
@@ -21,9 +19,14 @@ function compileStyles(files) {
         if (!fs.existsSync(filePath)) {
             throw {
                 name: "FileNotFoundException: ",
-                message: `File with name "${fileName}" doesn't exist under "${stylesDir}"!\n`
-            }
-        } else exec(`lessc ${filePath} ${outputDir}/${fileName.replace(".less", ".css")}`);
-    }
-)};
-
+                message: `File with name "${fileName}" doesn't exist under "${stylesDir}"!\n`,
+            };
+        } else
+            exec(
+                `lessc ${filePath} ${outputDir}/${fileName.replace(
+                    ".less",
+                    ".css"
+                )}`
+            );
+    });
+}

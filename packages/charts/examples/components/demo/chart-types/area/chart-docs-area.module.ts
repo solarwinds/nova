@@ -2,16 +2,21 @@
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiDocsModule, NuiIconModule, NuiMessageModule, SrlcStage } from "@nova-ui/bits";
+
+import {
+    DEMO_PATH_TOKEN,
+    NuiDocsModule,
+    NuiIconModule,
+    NuiMessageModule,
+    SrlcStage,
+} from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
 import { DemoCommonModule } from "../../common/demo-common.module";
-
 import { AreaChartBasicExampleComponent } from "./area-chart-basic/area-chart-basic-example.component";
 import { AreaChartBiDirectionalStackedInvertedExampleComponent } from "./area-chart-bi-directional-stacked-inverted/area-chart-bi-directional-stacked-inverted-example.component";
 import { AreaChartBiDirectionalStackedTestComponent } from "./area-chart-bi-directional-stacked-test/area-chart-bi-directional-stacked-test.component";
-import { AreaChartBiDirectionalStackedVisualTestComponent }
-    from "./area-chart-bi-directional-stacked-test/area-chart-bi-directional-stacked-visual-test.component";
+import { AreaChartBiDirectionalStackedVisualTestComponent } from "./area-chart-bi-directional-stacked-test/area-chart-bi-directional-stacked-visual-test.component";
 import { AreaChartBiDirectionalStackedExampleComponent } from "./area-chart-bi-directional-stacked/area-chart-bi-directional-stacked-example.component";
 import { AreaChartBiDirectionalExampleComponent } from "./area-chart-bi-directional/area-chart-bi-directional-example.component";
 import { AreaChartStackPercentageExampleComponent } from "./area-chart-stack-percentage/area-chart-stack-percentage-example.component";
@@ -141,8 +146,15 @@ const exampleRoutes: Routes = [
         RouterModule.forChild(exampleRoutes),
     ],
     providers: [
-        { provide: DEMO_PATH_TOKEN, useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/) },
+        {
+            provide: DEMO_PATH_TOKEN,
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
+        },
     ],
 })
-export class ChartDocsAreaModule {
-}
+export class ChartDocsAreaModule {}

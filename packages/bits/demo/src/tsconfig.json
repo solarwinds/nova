@@ -1,19 +1,14 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "../out-tsc/app",
-    "baseUrl": "./",
-    "skipLibCheck": true,
-    "declaration": false,
-    "paths": {
-      "@nova-ui/bits": ["../../src/public_api.ts"]
-    }
-  },
-  "files": [
-    "index.ts",
-    "polyfills.ts"
-  ],
-    "typeRoots": [
-        "node_modules/@types"
-    ]
+    "compilerOptions": {
+        "outDir": "../out-tsc/app",
+        "baseUrl": "./",
+        "skipLibCheck": true,
+        "declaration": false,
+        "paths": {
+            "@nova-ui/bits": ["../../src/public_api.ts"]
+        }
+    },
+    "extends": "../../tsconfig.json",
+    "files": ["index.ts", "polyfills.ts"],
+    "typeRoots": ["node_modules/@types"]
 }

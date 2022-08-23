@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
-
 @Component({
     selector: "nui-form-field-complex-example",
     templateUrl: "./form-field-complex.example.component.html",
@@ -9,17 +8,24 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 export class FormFieldComplexExampleComponent implements OnInit {
     public fancyForm: FormGroup;
 
-    constructor(private formBuilder: FormBuilder, private changeDetector: ChangeDetectorRef) {
-    }
+    constructor(
+        private formBuilder: FormBuilder,
+        private changeDetector: ChangeDetectorRef
+    ) {}
 
     public ngOnInit() {
-
-        this.fancyForm = this.formBuilder.group({
-            password: this.formBuilder.control("", Validators.required),
-            confirmPassword: this.formBuilder.control("", Validators.required),
-        }, {
-            validator: this.matchPassword.bind(this.formBuilder.group),
-        });
+        this.fancyForm = this.formBuilder.group(
+            {
+                password: this.formBuilder.control("", Validators.required),
+                confirmPassword: this.formBuilder.control(
+                    "",
+                    Validators.required
+                ),
+            },
+            {
+                validator: this.matchPassword.bind(this.formBuilder.group),
+            }
+        );
     }
 
     private matchPassword(group: FormGroup) {

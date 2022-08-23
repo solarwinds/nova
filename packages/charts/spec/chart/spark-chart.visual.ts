@@ -1,6 +1,7 @@
+import { browser, by, element } from "protractor";
+
 import { Atom, Camera } from "@nova-ui/bits/sdk/atoms";
 import { Animations, Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
-import { browser, by, element } from "protractor";
 
 import { ChartAtom } from "./atoms/chart.atom";
 
@@ -12,9 +13,15 @@ describe(`Visual tests: Charts - ${name}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("chart-types/spark/test");
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
 
-        firstChart = Atom.findIn(ChartAtom, element(by.tagName("nui-spark-chart-multiple-example")), 0);
+        firstChart = Atom.findIn(
+            ChartAtom,
+            element(by.tagName("nui-spark-chart-multiple-example")),
+            0
+        );
 
         camera = new Camera().loadFilm(browser, name);
     });

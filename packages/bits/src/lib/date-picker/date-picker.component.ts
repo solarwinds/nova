@@ -16,12 +16,18 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
-import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from "@angular/forms";
+import {
+    ControlValueAccessor,
+    FormControl,
+    NG_VALIDATORS,
+    NG_VALUE_ACCESSOR,
+    ValidationErrors,
+} from "@angular/forms";
 import _defaults from "lodash/defaults";
 import _isEqual from "lodash/isEqual";
 import _isNil from "lodash/isNil";
 import _isNull from "lodash/isNull";
-import moment, {Moment} from "moment/moment";
+import moment, { Moment } from "moment/moment";
 import { Subject, Subscription } from "rxjs";
 import { debounceTime, takeUntil } from "rxjs/operators";
 
@@ -30,9 +36,12 @@ import { NuiFormFieldControl } from "../form-field/public-api";
 import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
 import { TextboxComponent } from "../textbox/textbox.component";
-
 import { DatePickerInnerComponent } from "./date-picker-inner.component";
-import { datePickerDateFormats, datePickerDefaults, IDatePickerDisabledDate } from "./public-api";
+import {
+    datePickerDateFormats,
+    datePickerDefaults,
+    IDatePickerDisabledDate,
+} from "./public-api";
 
 // <example-url>./../examples/index.html#/date-picker</example-url><br />
 @Component({
@@ -58,10 +67,19 @@ import { datePickerDateFormats, datePickerDefaults, IDatePickerDisabledDate } fr
     styleUrls: ["./date-picker.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
-export class DatePickerComponent implements OnChanges, OnInit, ControlValueAccessor, NuiFormFieldControl, AfterViewInit, OnDestroy {
+export class DatePickerComponent
+    implements
+        OnChanges,
+        OnInit,
+        ControlValueAccessor,
+        NuiFormFieldControl,
+        AfterViewInit,
+        OnDestroy
+{
     /** sets date-picker inline mode */
     @HostBinding("class.nui-datepicker--inline")
-    @Input() inline: boolean;
+    @Input()
+    inline: boolean;
     /** checks if value in datepicker is required */
     @Input() isRequired: boolean;
     /** Option to disabled datepicker. */
@@ -123,9 +141,11 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
 
     set value(value: Moment) {
         if (!this.preserveInsignificant && value) {
-            value.set({"hour": 0, "minute": 0, "second": 0, "millisecond": 0});
+            value.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
         }
-        if (!value || value && value.isSame(this._value)) { return; }
+        if (!value || (value && value.isSame(this._value))) {
+            return;
+        }
         this.setDate(value);
         this.updateTextboxValue();
     }
@@ -148,7 +168,7 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
 
     @ViewChild("date") textbox: TextboxComponent;
 
-    @ViewChild("popupArea", {static: true}) popupArea: ElementRef;
+    @ViewChild("popupArea", { static: true }) popupArea: ElementRef;
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
 
     public onDestroy$ = new Subject<void>();
@@ -166,10 +186,8 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
     private inputChanged: Subject<string> = new Subject<string>();
     private momentDateFormat: string;
     private calendarChanged: Subscription;
-    
-    constructor(
-        private cd: ChangeDetectorRef
-    ) {}
+
+    constructor(private cd: ChangeDetectorRef) {}
 
     ngOnInit(): void {
         _defaults(this, datePickerDefaults);
@@ -177,21 +195,32 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
         this.initDate = this.value && this.value.clone();
         this.setDateFormat();
 
-        this.inputChanged.pipe(debounceTime(500))
-            .subscribe((value: string) => {
-                const momentValue = moment(value, datePickerDateFormats, true);
-                this.onTouched();
+        this.inputChanged.pipe(debounceTime(500)).subscribe((value: string) => {
+            const momentValue = moment(value, datePickerDateFormats, true);
+            this.onTouched();
 
-                // In case of FormControl absence we still need to perform validation
-                const templateDrivenControlValid = !this.formControl && _isNull(NuiValidators.dateFormat(momentValue));
-                const reactiveDrivenControlValid = this.formControl && this.formControl.valid && _isNull(NuiValidators.dateFormat(momentValue));
-                const isInputValid = (templateDrivenControlValid || reactiveDrivenControlValid) && !this.isDateDisabled(momentValue);
+            // In case of FormControl absence we still need to perform validation
+            const templateDrivenControlValid =
+                !this.formControl &&
+                _isNull(NuiValidators.dateFormat(momentValue));
+            const reactiveDrivenControlValid =
+                this.formControl &&
+                this.formControl.valid &&
+                _isNull(NuiValidators.dateFormat(momentValue));
+            const isInputValid =
+                (templateDrivenControlValid || reactiveDrivenControlValid) &&
+                !this.isDateDisabled(momentValue);
 
-                this.setDate(momentValue);
-                this.setErrorState(!isInputValid);
+            this.setDate(momentValue);
+            this.setErrorState(!isInputValid);
 
-                if (this.value.isValid() && !_isEqual(this.value.format(this.momentDateFormat), value)) { this.updateTextboxValue(); }
-            });
+            if (
+                this.value.isValid() &&
+                !_isEqual(this.value.format(this.momentDateFormat), value)
+            ) {
+                this.updateTextboxValue();
+            }
+        });
         this.onAppendToBodyChange(this.appendToBody);
     }
 
@@ -202,26 +231,32 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
     }
 
     ngAfterViewInit(): void {
-        this.calendarChanged = this._datePicker.calendarMoved.subscribe((value: Moment) => this.calendarNavigated.emit(value));
+        this.calendarChanged = this._datePicker.calendarMoved.subscribe(
+            (value: Moment) => this.calendarNavigated.emit(value)
+        );
         this.updateTextboxValue();
         this.cd.detectChanges();
         if (this.overlay) {
             this.overlay.clickOutside
                 .pipe(takeUntil(this.onDestroy$))
-                .subscribe(_ => this.overlay.hide());
+                .subscribe((_) => this.overlay.hide());
 
             // Sets innerDatePicker 'value' to 'null' on popup close and refreshView() on popup open,
             // so in case datePicker.value is invalid it will build the calendar from the scratch
             // and not keep its previous state.
 
-            this.overlay.show$.pipe(takeUntil(this.onDestroy$)).subscribe(_ => this._datePicker.refreshView());
-            this.overlay.hide$.pipe(takeUntil(this.onDestroy$)).subscribe(_ => {
-                const currentDateValid = this.value?.isValid();
-                if (!currentDateValid) {
-                    this._datePicker.value = undefined;
-                    this._datePicker.datepickerMode = "day";
-                }
-            });
+            this.overlay.show$
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe((_) => this._datePicker.refreshView());
+            this.overlay.hide$
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe((_) => {
+                    const currentDateValid = this.value?.isValid();
+                    if (!currentDateValid) {
+                        this._datePicker.value = undefined;
+                        this._datePicker.datepickerMode = "day";
+                    }
+                });
         }
     }
 
@@ -286,7 +321,9 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
     }
 
     private updateTextboxValue(value: any = this._value) {
-        if (!this.textbox || !value) { return; }
+        if (!this.textbox || !value) {
+            return;
+        }
         this.textbox.writeValue(moment(value).format(this.momentDateFormat));
     }
 
@@ -295,9 +332,16 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
     }
 
     private setDateFormat(): void {
-        const isCustomFormatValid = !_isNil(this.dateFormat)
-            && moment(this._todayDate.format(this.dateFormat), datePickerDateFormats, true).isValid();
-        this.momentDateFormat = isCustomFormatValid ? this.dateFormat : datePickerDefaults.dateFormat;
+        const isCustomFormatValid =
+            !_isNil(this.dateFormat) &&
+            moment(
+                this._todayDate.format(this.dateFormat),
+                datePickerDateFormats,
+                true
+            ).isValid();
+        this.momentDateFormat = isCustomFormatValid
+            ? this.dateFormat
+            : datePickerDefaults.dateFormat;
     }
 
     ngOnDestroy(): void {

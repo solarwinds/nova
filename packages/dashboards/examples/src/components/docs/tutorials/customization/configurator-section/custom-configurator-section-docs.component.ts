@@ -4,4 +4,4 @@ import { Component } from "@angular/core";
     selector: "custom-configurator-section-docs",
     templateUrl: "./custom-configurator-section-docs.component.html",
 })
-export class CustomConfiguratorSectionDocsComponent { }
+export class CustomConfiguratorSectionDocsComponent {}

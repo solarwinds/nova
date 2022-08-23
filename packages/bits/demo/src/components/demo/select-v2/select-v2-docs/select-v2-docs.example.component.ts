@@ -5,5 +5,4 @@ import { Component } from "@angular/core";
     templateUrl: "./select-v2-docs.example.component.html",
     styleUrls: ["select-v2-docs.example.component.less"],
 })
-export class SelectV2DocsComponent {
-}
+export class SelectV2DocsComponent {}

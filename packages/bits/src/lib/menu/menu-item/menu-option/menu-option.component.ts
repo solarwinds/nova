@@ -26,12 +26,13 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     selector: "nui-menu-option",
     template: `
         <div class="nui-menu-item__option" #menuOption tabindex="-1">
-            <nui-checkbox class="nui-menu-item__checkbox"
-                          [name]="name"
-                          [value]="value"
-                          [checked]="checked"
-                          [disabled]="disabled">
-
+            <nui-checkbox
+                class="nui-menu-item__checkbox"
+                [name]="name"
+                [value]="value"
+                [checked]="checked"
+                [disabled]="disabled"
+            >
                 <ng-content></ng-content>
             </nui-checkbox>
         </div>
@@ -44,7 +45,7 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
         },
     ],
     encapsulation: ViewEncapsulation.None,
-    host: { "role": "menuitemcheckbox" },
+    host: { role: "menuitemcheckbox" },
 })
 export class MenuOptionComponent extends MenuItemBaseComponent {
     /**
@@ -77,7 +78,10 @@ export class MenuOptionComponent extends MenuItemBaseComponent {
         return this.checked;
     }
 
-    constructor(@Optional() readonly group: MenuGroupComponent, cd: ChangeDetectorRef) {
+    constructor(
+        @Optional() readonly group: MenuGroupComponent,
+        cd: ChangeDetectorRef
+    ) {
         super(group, cd);
 
         this.name = "";
@@ -92,5 +96,4 @@ export class MenuOptionComponent extends MenuItemBaseComponent {
         this.checked = !this.checked;
         this.actionDone.emit(this.checked);
     }
-
 }

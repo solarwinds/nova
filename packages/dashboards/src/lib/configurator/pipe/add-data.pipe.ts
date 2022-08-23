@@ -4,11 +4,19 @@ import isNil from "lodash/isNil";
 
 @Pipe({ name: "nuiAddData" })
 export class AddDataPipe implements PipeTransform {
-    transform(origin: object | Array<any> | undefined, value: any, key?: string): object | Array<any> | any[] | undefined {
-        if (isNil(origin)) { return; }
+    transform(
+        origin: object | Array<any> | undefined,
+        value: any,
+        key?: string
+    ): object | Array<any> | any[] | undefined {
+        if (isNil(origin)) {
+            return;
+        }
 
         if (isArray(origin)) {
-            if (!value) { return origin; }
+            if (!value) {
+                return origin;
+            }
 
             const newArr = [...origin];
             newArr.push(value);
@@ -16,7 +24,8 @@ export class AddDataPipe implements PipeTransform {
             return newArr;
         }
 
-        const computedKey: string = typeof key === "undefined" ? "undefined" : key;
+        const computedKey: string =
+            typeof key === "undefined" ? "undefined" : key;
         return Object.assign({}, origin, { [computedKey]: value });
     }
 }

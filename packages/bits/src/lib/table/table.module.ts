@@ -6,7 +6,6 @@ import { NuiCheckboxModule } from "../checkbox/checkbox.module";
 import { NuiIconModule } from "../icon/icon.module";
 import { NuiSelectModule } from "../select/select.module";
 import { NuiSelectorModule } from "../selector/selector.module";
-
 import { TableCellDefDirective } from "./table-cell/table-cell-def.directive";
 import { TableCellDirective } from "./table-cell/table-cell.directive";
 import { TableColumnDefDirective } from "./table-cell/table-column-def.directive";
@@ -69,5 +68,4 @@ const DECLARATIONS_EXPORTS: Array<Type<any> | any[]> = [
     exports: DECLARATIONS_EXPORTS,
     providers: [],
 })
-export class NuiTableModule {
-}
+export class NuiTableModule {}

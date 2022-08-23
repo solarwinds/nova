@@ -1,5 +1,4 @@
 {
-    "plugins": ["prettier-plugin-sort-json"],
     "overrides": [
         {
             "files": "*",
@@ -22,5 +21,6 @@
                 "parser": "json"
             }
         }
-    ]
+    ],
+    "plugins": ["prettier-plugin-sort-json"]
 }

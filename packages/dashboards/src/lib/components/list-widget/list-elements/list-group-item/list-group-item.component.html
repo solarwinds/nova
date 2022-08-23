@@ -1,11 +1,16 @@
-<div class="list-group-item" [ngClass]="{'widget-medium': isMedium, 'widget-small': isSmall}" (click)="onButtonClick()">
+<div
+    class="list-group-item"
+    [ngClass]="{ 'widget-medium': isMedium, 'widget-small': isSmall }"
+    (click)="onButtonClick()"
+>
     <div class="list-group-item__label" [title]="label">{{ label }}</div>
     <div class="list-group-item__statuses">
         <div class="statuses">
-            <div class="status-column"
-                 *ngFor="let status of statuses">
+            <div class="status-column" *ngFor="let status of statuses">
                 <nui-icon [icon]="status.key" class="mr-2"></nui-icon>
-                <span class="status-column__label" [title]="status.value">{{status.value}}</span>
+                <span class="status-column__label" [title]="status.value">{{
+                    status.value
+                }}</span>
             </div>
         </div>
         <nui-icon *ngIf="canNavigate" icon="caret-right"></nui-icon>

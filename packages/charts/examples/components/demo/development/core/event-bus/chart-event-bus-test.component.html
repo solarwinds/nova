@@ -3,33 +3,58 @@
         <nui-chart class="w-100" [chart]="chart"></nui-chart>
     </div>
 </div>
-<hr>
+<hr />
 <div class="btn-group">
-    <button type="button" nui-button (click)="selectAllFilters()">Select All</button>
-    <button type="button" nui-button (click)="deselectAllFilters()">Deselect All</button>
-    <button type="button" nui-button (click)="parsedEvents = []">Clear Log</button>
+    <button type="button" nui-button (click)="selectAllFilters()">
+        Select All
+    </button>
+    <button type="button" nui-button (click)="deselectAllFilters()">
+        Deselect All
+    </button>
+    <button type="button" nui-button (click)="parsedEvents = []">
+        Clear Log
+    </button>
 </div>
 <h1>Events</h1>
 <div class="mx-3">
-    <nui-checkbox-group class="nui-checkbox-group-inline" name="eventFilter" [values]="selectedEventFilters"
-                        (valuesChange)="onEventFilterChange($event)">
-        <nui-checkbox *ngFor="let filter of eventFilters" [value]="filter" [checked]="isEventFilterChecked(filter)">
-            {{filter}}
+    <nui-checkbox-group
+        class="nui-checkbox-group-inline"
+        name="eventFilter"
+        [values]="selectedEventFilters"
+        (valuesChange)="onEventFilterChange($event)"
+    >
+        <nui-checkbox
+            *ngFor="let filter of eventFilters"
+            [value]="filter"
+            [checked]="isEventFilterChecked(filter)"
+        >
+            {{ filter }}
         </nui-checkbox>
     </nui-checkbox-group>
 </div>
 <h1>Interaction Types</h1>
-<p>(These apply only to <code>interaction_values</code> and <code>interaction_data_points</code> events.)</p>
+<p>
+    (These apply only to <code>interaction_values</code> and
+    <code>interaction_data_points</code> events.)
+</p>
 <div class="mx-3">
-    <nui-checkbox-group class="nui-checkbox-group-inline" name="interactionTypeFilter" [values]="selectedInteractionTypeFilters"
-                        (valuesChange)="onInteractionTypeFilterChange($event)">
-        <nui-checkbox *ngFor="let filter of interactionTypeFilters" [value]="filter" [checked]="isInteractionTypeFilterChecked(filter)">
-            {{filter}}
+    <nui-checkbox-group
+        class="nui-checkbox-group-inline"
+        name="interactionTypeFilter"
+        [values]="selectedInteractionTypeFilters"
+        (valuesChange)="onInteractionTypeFilterChange($event)"
+    >
+        <nui-checkbox
+            *ngFor="let filter of interactionTypeFilters"
+            [value]="filter"
+            [checked]="isInteractionTypeFilterChecked(filter)"
+        >
+            {{ filter }}
         </nui-checkbox>
     </nui-checkbox-group>
 </div>
 <div class="mt-3">
     <nui-example-code *ngFor="let event of parsedEvents" language="typescript">
-        {{event}}
+        {{ event }}
     </nui-example-code>
 </div>

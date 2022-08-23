@@ -22,5 +22,4 @@ xdescribe(`Visual Tests: ${name}`, () => {
 
         await camera.turn.off();
     }, 300000);
-
 });

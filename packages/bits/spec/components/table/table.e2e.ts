@@ -10,7 +10,6 @@ import { SearchAtom } from "../search/search.atom";
 import { SelectorAtom } from "../selector/selector.atom";
 import { SelectionType } from "../selector/selector.e2e";
 import { TextboxAtom } from "../textbox/textbox.atom";
-
 import { TableAtom } from "./table.atom";
 
 describe("USERCONTROL table >", () => {

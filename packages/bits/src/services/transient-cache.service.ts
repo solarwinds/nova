@@ -10,14 +10,17 @@ interface ICache {
 }
 
 /** @ignore */
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class TransientCacheService implements ITransientCache {
     private cache: ICache = {};
 
-    constructor(private utilService: UtilService) {
-    }
+    constructor(private utilService: UtilService) {}
 
-    public put = async (key: string, value: any, lifetime: number): Promise<void> => {
+    public put = async (
+        key: string,
+        value: any,
+        lifetime: number
+    ): Promise<void> => {
         if (typeof key === "undefined" || key === null) {
             return Promise.reject("no key");
         }
@@ -30,16 +33,16 @@ export class TransientCacheService implements ITransientCache {
             .pipe(
                 map(() => {
                     this.remove(key);
-                }))
+                })
+            )
             .toPromise();
-    }
+    };
 
     public remove = (key: string): void => {
         delete this.cache[key];
-    }
+    };
 
-    public get = (key: string): any =>
-        this.cache[key]
+    public get = (key: string): any => this.cache[key];
 
     public removeAll = (): void => {
         for (const key in this.cache) {
@@ -47,25 +50,25 @@ export class TransientCacheService implements ITransientCache {
                 this.remove(key);
             }
         }
-    }
+    };
 
     public destroy = (): void => {
         this.removeAll();
-    }
+    };
 
-    public entryCount = (): number =>
-        Object.keys(this.cache).length
+    public entryCount = (): number => Object.keys(this.cache).length;
 
     public size = (): number => {
         let byteCount = 0;
 
         for (const key in this.cache) {
             if (this.cache.hasOwnProperty(key)) {
-                byteCount += this.utilService.sizeof(key)
-                    + this.utilService.sizeof(this.get(key));
+                byteCount +=
+                    this.utilService.sizeof(key) +
+                    this.utilService.sizeof(this.get(key));
             }
         }
 
         return byteCount;
-    }
+    };
 }

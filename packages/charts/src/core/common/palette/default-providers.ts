@@ -1,5 +1,4 @@
 import { IChartMarker, IChartPalette, IValueProvider } from "../types";
-
 import { ChartPalette } from "./chart-palette";
 import { CHART_MARKERS, CHART_PALETTE_CS1 } from "./palettes";
 import { SequentialChartMarkerProvider } from "./sequential-chart-marker-provider";

@@ -1,13 +1,18 @@
-import { ITimeframe } from "@nova-ui/bits";
 import moment, { Moment } from "moment/moment";
 
-import { ITimeseriesWidgetData, ITimeseriesWidgetSeriesData } from "../../types";
+import { ITimeframe } from "@nova-ui/bits";
 
+import {
+    ITimeseriesWidgetData,
+    ITimeseriesWidgetSeriesData,
+} from "../../types";
 import { applyStatusEndpoints } from "./apply-status-endpoints";
 
 describe("applyStatusEndpoints", () => {
     let widgetData: ITimeseriesWidgetData[];
-    const frozenTime = moment("2020-11-06T00:00:00-06:00").startOf("day").toDate();
+    const frozenTime = moment("2020-11-06T00:00:00-06:00")
+        .startOf("day")
+        .toDate();
 
     beforeEach(() => {
         widgetData = [
@@ -16,9 +21,18 @@ describe("applyStatusEndpoints", () => {
                 name: "Test Name",
                 description: "Test Description",
                 data: [
-                    { x: moment(frozenTime).subtract(9, "day").toDate(), y: Status.Warning },
-                    { x: moment(frozenTime).subtract(6, "day").toDate(), y: Status.Up },
-                    { x: moment(frozenTime).subtract(3, "day").toDate(), y: Status.Critical },
+                    {
+                        x: moment(frozenTime).subtract(9, "day").toDate(),
+                        y: Status.Warning,
+                    },
+                    {
+                        x: moment(frozenTime).subtract(6, "day").toDate(),
+                        y: Status.Up,
+                    },
+                    {
+                        x: moment(frozenTime).subtract(3, "day").toDate(),
+                        y: Status.Critical,
+                    },
                     { x: moment(frozenTime).toDate(), y: Status.Critical },
                 ],
             },
@@ -33,7 +47,11 @@ describe("applyStatusEndpoints", () => {
             title: undefined,
         };
         const filteredData = filterData(testTimeframe, widgetData);
-        const testData = applyStatusEndpoints(testTimeframe, filteredData, widgetData);
+        const testData = applyStatusEndpoints(
+            testTimeframe,
+            filteredData,
+            widgetData
+        );
         expect(testData).toEqual(widgetData);
     });
 
@@ -45,11 +63,19 @@ describe("applyStatusEndpoints", () => {
             title: undefined,
         };
         const filteredData = filterData(testTimeframe, widgetData);
-        const dataWithEndpoints = applyStatusEndpoints(testTimeframe, filteredData, widgetData)[0].data;
+        const dataWithEndpoints = applyStatusEndpoints(
+            testTimeframe,
+            filteredData,
+            widgetData
+        )[0].data;
         expect(dataWithEndpoints.length).toEqual(2);
-        expect(dataWithEndpoints[0].x).toEqual(testTimeframe.startDatetime.toDate());
+        expect(dataWithEndpoints[0].x).toEqual(
+            testTimeframe.startDatetime.toDate()
+        );
         expect(dataWithEndpoints[0].y).toEqual(widgetData[0].data[1].y);
-        expect(dataWithEndpoints[1].x).toEqual(testTimeframe.endDatetime.toDate());
+        expect(dataWithEndpoints[1].x).toEqual(
+            testTimeframe.endDatetime.toDate()
+        );
         expect(dataWithEndpoints[1].y).toEqual(widgetData[0].data[1].y);
     });
 
@@ -61,13 +87,21 @@ describe("applyStatusEndpoints", () => {
             title: undefined,
         };
         const filteredData = filterData(testTimeframe, widgetData);
-        const dataWithEndpoints = applyStatusEndpoints(testTimeframe, filteredData, widgetData)[0].data;
+        const dataWithEndpoints = applyStatusEndpoints(
+            testTimeframe,
+            filteredData,
+            widgetData
+        )[0].data;
         expect(dataWithEndpoints.length).toEqual(3);
-        expect(dataWithEndpoints[0].x).toEqual(testTimeframe.startDatetime.toDate());
+        expect(dataWithEndpoints[0].x).toEqual(
+            testTimeframe.startDatetime.toDate()
+        );
         expect(dataWithEndpoints[0].y).toEqual(widgetData[0].data[0].y);
         expect(dataWithEndpoints[1].x).toEqual(widgetData[0].data[1].x);
         expect(dataWithEndpoints[1].y).toEqual(widgetData[0].data[1].y);
-        expect(dataWithEndpoints[2].x).toEqual(testTimeframe.endDatetime.toDate());
+        expect(dataWithEndpoints[2].x).toEqual(
+            testTimeframe.endDatetime.toDate()
+        );
         expect(dataWithEndpoints[2].y).toEqual(widgetData[0].data[1].y);
     });
 
@@ -79,11 +113,17 @@ describe("applyStatusEndpoints", () => {
             title: undefined,
         };
         const filteredData = filterData(testTimeframe, widgetData);
-        const dataWithEndpoints = applyStatusEndpoints(testTimeframe, filteredData, widgetData)[0].data;
+        const dataWithEndpoints = applyStatusEndpoints(
+            testTimeframe,
+            filteredData,
+            widgetData
+        )[0].data;
         expect(dataWithEndpoints.length).toEqual(2);
         expect(dataWithEndpoints[0].x).toEqual(widgetData[0].data[0].x);
         expect(dataWithEndpoints[0].y).toEqual(widgetData[0].data[0].y);
-        expect(dataWithEndpoints[1].x).toEqual(testTimeframe.endDatetime.toDate());
+        expect(dataWithEndpoints[1].x).toEqual(
+            testTimeframe.endDatetime.toDate()
+        );
         expect(dataWithEndpoints[1].y).toEqual(widgetData[0].data[0].y);
     });
 
@@ -95,9 +135,15 @@ describe("applyStatusEndpoints", () => {
             title: undefined,
         };
         const filteredData = filterData(testTimeframe, widgetData);
-        const dataWithEndpoints = applyStatusEndpoints(testTimeframe, filteredData, widgetData)[0].data;
+        const dataWithEndpoints = applyStatusEndpoints(
+            testTimeframe,
+            filteredData,
+            widgetData
+        )[0].data;
         expect(dataWithEndpoints.length).toEqual(2);
-        expect(dataWithEndpoints[0].x).toEqual(testTimeframe.startDatetime.toDate());
+        expect(dataWithEndpoints[0].x).toEqual(
+            testTimeframe.startDatetime.toDate()
+        );
         expect(dataWithEndpoints[0].y).toEqual(widgetData[0].data[3].y);
         expect(dataWithEndpoints[1].x).toEqual(widgetData[0].data[3].x);
         expect(dataWithEndpoints[1].y).toEqual(widgetData[0].data[3].y);
@@ -110,21 +156,32 @@ enum Status {
     Critical = "critical",
 }
 
-function filterData(timeframe: ITimeframe, data: ITimeseriesWidgetData[]): ITimeseriesWidgetData[] {
+function filterData(
+    timeframe: ITimeframe,
+    data: ITimeseriesWidgetData[]
+): ITimeseriesWidgetData[] {
     let filteredData = data;
-    filteredData = filteredData.map((item: ITimeseriesWidgetData) =>
-        ({
-            id: item.id,
-            name: item.name,
-            description: item.description,
-            data: item.data.filter((seriesData: ITimeseriesWidgetSeriesData) =>
-                filterDates(seriesData.x, timeframe.startDatetime, timeframe.endDatetime)),
-        }));
+    filteredData = filteredData.map((item: ITimeseriesWidgetData) => ({
+        id: item.id,
+        name: item.name,
+        description: item.description,
+        data: item.data.filter((seriesData: ITimeseriesWidgetSeriesData) =>
+            filterDates(
+                seriesData.x,
+                timeframe.startDatetime,
+                timeframe.endDatetime
+            )
+        ),
+    }));
 
     return filteredData;
 }
 
 function filterDates(dateToCheck: Date, startDate: Moment, endDate: Moment) {
     const mom = moment(dateToCheck);
-    return mom.isBetween(startDate, endDate) || mom.isSame(startDate) || mom.isSame(endDate);
+    return (
+        mom.isBetween(startDate, endDate) ||
+        mom.isSame(startDate) ||
+        mom.isSame(endDate)
+    );
 }

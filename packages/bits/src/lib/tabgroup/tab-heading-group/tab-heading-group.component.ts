@@ -1,6 +1,18 @@
 import {
-    AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, ElementRef, EventEmitter,
-    HostBinding, Input, NgZone, OnDestroy, Output, QueryList, ViewChild,
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ContentChildren,
+    ElementRef,
+    EventEmitter,
+    HostBinding,
+    Input,
+    NgZone,
+    OnDestroy,
+    Output,
+    QueryList,
+    ViewChild,
 } from "@angular/core";
 import { Subscription } from "rxjs";
 
@@ -12,7 +24,7 @@ import { TabHeadingComponent } from "../tab-heading/tab-heading.component";
     templateUrl: "./tab-heading-group.component.html",
     styleUrls: ["./tab-heading-group.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    host: { "role": "tablist" },
+    host: { role: "tablist" },
 })
 export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
     @ContentChildren(TabHeadingComponent) _tabs: QueryList<TabHeadingComponent>;
@@ -27,7 +39,9 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
      */
     @Output() selected: EventEmitter<string> = new EventEmitter();
 
-    @HostBinding("class.vertical") get isVertical() { return this.vertical; }
+    @HostBinding("class.vertical") get isVertical() {
+        return this.vertical;
+    }
 
     public leftTraverseEnabled = true;
     public rightTraverseEnabled = false;
@@ -39,13 +53,17 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
     private _tabSelectedSubscriptions: Subscription[] = [];
     private _changesSubscription: Subscription;
 
-    constructor (private el: ElementRef,
-                 private changeDetectorRef: ChangeDetectorRef,
-                 private ngZone: NgZone) {}
+    constructor(
+        private el: ElementRef,
+        private changeDetectorRef: ChangeDetectorRef,
+        private ngZone: NgZone
+    ) {}
 
     ngAfterViewInit() {
         // Observing the size of the component to check traverse
-        this._ro = new ResizeObserver(entries => entries.forEach(() => this.checkTraverse()));
+        this._ro = new ResizeObserver((entries) =>
+            entries.forEach(() => this.checkTraverse())
+        );
         this.ngZone.runOutsideAngular(() => {
             this._ro.observe(this.resizableArea.nativeElement);
             this._ro.observe(this.el.nativeElement);
@@ -55,12 +73,16 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
         this.setActiveTab();
         this.subscribeToSelection();
 
-        this._changesSubscription = this._tabs.changes.subscribe((changedTabs: any) => {
-            this.setActiveTab();
-            this._tabSelectedSubscriptions.forEach(sub => sub.unsubscribe());
-            this._tabSelectedSubscriptions = [];
-            this.subscribeToSelection();
-        });
+        this._changesSubscription = this._tabs.changes.subscribe(
+            (changedTabs: any) => {
+                this.setActiveTab();
+                this._tabSelectedSubscriptions.forEach((sub) =>
+                    sub.unsubscribe()
+                );
+                this._tabSelectedSubscriptions = [];
+                this.subscribeToSelection();
+            }
+        );
     }
 
     public setActiveTab() {
@@ -88,18 +110,24 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
         if (this.vertical) {
             return false;
         }
-        return holderSize +  this._traverseButtonsWidth <= contentSize;
+        return holderSize + this._traverseButtonsWidth <= contentSize;
     }
 
     public traverseRight(): void {
         const margin = this.getCurrentShift();
         if (this.isTraverseRightAllowed(margin)) {
             const traverseStep =
-                Math.abs(this.getNumberFromPixels(margin)) < this._traverseStepSize ?
-                    Math.abs(this.getNumberFromPixels(margin)) : this._traverseStepSize;
+                Math.abs(this.getNumberFromPixels(margin)) <
+                this._traverseStepSize
+                    ? Math.abs(this.getNumberFromPixels(margin))
+                    : this._traverseStepSize;
             this.setNewShift(this.addPixels(margin, traverseStep));
-            this.rightTraverseEnabled = this.isTraverseRightAllowed(this.addPixels(margin, traverseStep));
-            this.leftTraverseEnabled = this.isTraverseLeftAllowed(this.addPixels(margin, traverseStep));
+            this.rightTraverseEnabled = this.isTraverseRightAllowed(
+                this.addPixels(margin, traverseStep)
+            );
+            this.leftTraverseEnabled = this.isTraverseLeftAllowed(
+                this.addPixels(margin, traverseStep)
+            );
         }
     }
 
@@ -107,13 +135,24 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
         const margin = this.getCurrentShift();
         if (this.isTraverseLeftAllowed(margin)) {
             const tabsSize = this.getElementSize("nui-tab-headings__container");
-            const tabHolderSize = this.getElementSize("nui-tab-headings__holder");
-            const maxAllowedMargin = Math.abs(tabsSize - tabHolderSize + this._traverseButtonsWidth);
+            const tabHolderSize = this.getElementSize(
+                "nui-tab-headings__holder"
+            );
+            const maxAllowedMargin = Math.abs(
+                tabsSize - tabHolderSize + this._traverseButtonsWidth
+            );
             const leftMarginValue = Math.abs(this.getNumberFromPixels(margin));
-            const traverseStep = Math.min(maxAllowedMargin - leftMarginValue, this._traverseStepSize);
+            const traverseStep = Math.min(
+                maxAllowedMargin - leftMarginValue,
+                this._traverseStepSize
+            );
             this.setNewShift(this.addPixels(margin, -traverseStep));
-            this.rightTraverseEnabled = this.isTraverseRightAllowed(this.addPixels(margin, -traverseStep));
-            this.leftTraverseEnabled = this.isTraverseLeftAllowed(this.addPixels(margin, -traverseStep));
+            this.rightTraverseEnabled = this.isTraverseRightAllowed(
+                this.addPixels(margin, -traverseStep)
+            );
+            this.leftTraverseEnabled = this.isTraverseLeftAllowed(
+                this.addPixels(margin, -traverseStep)
+            );
         }
     }
 
@@ -124,9 +163,11 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
                 tab.selected.subscribe((currentTab: TabHeadingComponent) => {
                     if (!currentTab.active && !currentTab.disabled) {
                         // Making all elements in array inactive to make than current one active
-                        this._tabs.forEach((tabHeading: TabHeadingComponent) => {
-                            tabHeading.active = false;
-                        });
+                        this._tabs.forEach(
+                            (tabHeading: TabHeadingComponent) => {
+                                tabHeading.active = false;
+                            }
+                        );
                         currentTab.active = true;
                         this.changeDetectorRef.markForCheck();
                         this.changeDetectorRef.detectChanges();
@@ -140,13 +181,15 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
     private isTraverseLeftAllowed(leftMargin: string): boolean {
         const tabsSize = this.getElementSize("nui-tab-headings__container");
         const tabHolderSize = this.getElementSize("nui-tab-headings__holder");
-        const maxAllowedMargin = Math.abs(tabsSize - tabHolderSize + this._traverseButtonsWidth);
+        const maxAllowedMargin = Math.abs(
+            tabsSize - tabHolderSize + this._traverseButtonsWidth
+        );
 
         const margin = Math.abs(this.getNumberFromPixels(leftMargin));
         return margin < maxAllowedMargin;
     }
 
-    private isTraverseRightAllowed (margin: string): boolean {
+    private isTraverseRightAllowed(margin: string): boolean {
         return this.getNumberFromPixels(margin) < 0;
     }
 
@@ -155,26 +198,34 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
     }
 
     private getNumberFromPixels(pixels: string): number {
-        return pixels.indexOf("px") ? Number(pixels.substring(0, pixels.indexOf("px"))) : 0;
+        return pixels.indexOf("px")
+            ? Number(pixels.substring(0, pixels.indexOf("px")))
+            : 0;
     }
 
     private getCurrentShift(): string {
-        return this.el.nativeElement.querySelector(".nui-tab-headings__container").style.marginLeft;
+        return this.el.nativeElement.querySelector(
+            ".nui-tab-headings__container"
+        ).style.marginLeft;
     }
 
     private setNewShift(newShift: string): void {
-        this.el.nativeElement.querySelector(".nui-tab-headings__container").style.marginTop = "0px";
-        this.el.nativeElement.querySelector(".nui-tab-headings__container").style.marginLeft = newShift;
+        this.el.nativeElement.querySelector(
+            ".nui-tab-headings__container"
+        ).style.marginTop = "0px";
+        this.el.nativeElement.querySelector(
+            ".nui-tab-headings__container"
+        ).style.marginLeft = newShift;
     }
 
     private addPixels(currentValue: string, increment: number): string {
         const value = this.getNumberFromPixels(currentValue);
-        return (value + increment) + "px";
+        return value + increment + "px";
     }
 
     ngOnDestroy(): void {
         this._changesSubscription.unsubscribe();
-        this._tabSelectedSubscriptions.forEach(sub => sub.unsubscribe());
+        this._tabSelectedSubscriptions.forEach((sub) => sub.unsubscribe());
         this._ro.disconnect();
     }
 }

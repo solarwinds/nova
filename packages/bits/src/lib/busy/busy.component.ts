@@ -1,6 +1,15 @@
-import {AfterContentInit, Component, ContentChild, ElementRef, Input, OnChanges, SimpleChanges, ViewEncapsulation} from "@angular/core";
+import {
+    AfterContentInit,
+    Component,
+    ContentChild,
+    ElementRef,
+    Input,
+    OnChanges,
+    SimpleChanges,
+    ViewEncapsulation,
+} from "@angular/core";
 
-import { TabNavigationService} from "../../services/tab-navigation.service";
+import { TabNavigationService } from "../../services/tab-navigation.service";
 import { ProgressComponent } from "../progress/progress.component";
 import { SpinnerComponent } from "../spinner/spinner.component";
 
@@ -52,9 +61,12 @@ export class BusyComponent implements AfterContentInit, OnChanges {
             this.isDefaultTemplate = true;
         }
     }
- 
+
     public ngOnChanges(changes: SimpleChanges) {
-        if (this.disableTabNavigation && changes.busy?.currentValue !== undefined) {
+        if (
+            this.disableTabNavigation &&
+            changes.busy?.currentValue !== undefined
+        ) {
             if (this.busy) {
                 this.tabNavigationService.disableTabNavigation(this.elRef);
             } else {

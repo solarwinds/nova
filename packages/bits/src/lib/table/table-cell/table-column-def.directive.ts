@@ -1,8 +1,14 @@
 import { CdkColumnDef } from "@angular/cdk/table";
-import { Directive, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import {
+    Directive,
+    Input,
+    OnChanges,
+    OnInit,
+    SimpleChanges,
+} from "@angular/core";
 
-import { ColumnTypes } from "../types";
 import { TableStateHandlerService } from "../table-state-handler.service";
+import { ColumnTypes } from "../types";
 
 /**
  * @ignore
@@ -10,9 +16,14 @@ import { TableStateHandlerService } from "../table-state-handler.service";
 
 @Directive({
     selector: "[nuiColumnDef]",
-    providers: [{ provide: CdkColumnDef, useExisting: TableColumnDefDirective }],
+    providers: [
+        { provide: CdkColumnDef, useExisting: TableColumnDefDirective },
+    ],
 })
-export class TableColumnDefDirective extends CdkColumnDef implements OnInit, OnChanges {
+export class TableColumnDefDirective
+    extends CdkColumnDef
+    implements OnInit, OnChanges
+{
     /* eslint-disable @angular-eslint/no-input-rename */
     public get name(): string {
         return super.name;
@@ -31,17 +42,26 @@ export class TableColumnDefDirective extends CdkColumnDef implements OnInit, OnC
 
     ngOnInit() {
         if (this.columnWidth) {
-            this.tableStateHandlerService.setColumnWidth(this.name, this.columnWidth);
+            this.tableStateHandlerService.setColumnWidth(
+                this.name,
+                this.columnWidth
+            );
         }
 
         if (this.type === "icon") {
-            this.tableStateHandlerService.setAlignment(this.name, "align-center");
+            this.tableStateHandlerService.setAlignment(
+                this.name,
+                "align-center"
+            );
         }
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.columnWidth && !changes.columnWidth.firstChange) {
-            this.tableStateHandlerService.setColumnWidth(this.name, changes.columnWidth.currentValue);
+            this.tableStateHandlerService.setColumnWidth(
+                this.name,
+                changes.columnWidth.currentValue
+            );
         }
     }
 }

@@ -4,6 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-switch-test",
     templateUrl: "./switch-test.component.html",
 })
-
-export class SwitchTestComponent {
-}
+export class SwitchTestComponent {}

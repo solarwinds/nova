@@ -3,8 +3,13 @@ import { Subject } from "rxjs";
 
 import { Renderer } from "../core/common/renderer";
 import { Scales } from "../core/common/scales/types";
-import { IAccessors, IDataSeries, IRenderContainers, IRendererConfig, IRendererEventPayload } from "../core/common/types";
-
+import {
+    IAccessors,
+    IDataSeries,
+    IRenderContainers,
+    IRendererConfig,
+    IRendererEventPayload,
+} from "../core/common/types";
 import { IRectangleAccessors } from "./accessors/rectangle-accessors";
 import { BarRenderer } from "./bar/bar-renderer";
 import { ILineAccessors } from "./line/line-accessors";
@@ -101,12 +106,23 @@ export interface IRenderSeries<TA extends IAccessors> {
 }
 
 export interface IHighlightStrategy<TA, T = Renderer<TA>> {
+    getDataPointIndex(
+        renderer: T,
+        series: IDataSeries<TA>,
+        values: { [p: string]: any },
+        scales: Scales
+    ): number;
 
-    getDataPointIndex(renderer: T, series: IDataSeries<TA>, values: { [p: string]: any }, scales: Scales): number;
+    highlightDataPoint(
+        renderer: T,
+        renderSeries: IRenderSeries<TA>,
+        dataPointIndex: number,
+        rendererSubject: Subject<IRendererEventPayload>
+    ): void;
 
-    highlightDataPoint(renderer: T, renderSeries: IRenderSeries<TA>,
-                       dataPointIndex: number, rendererSubject: Subject<IRendererEventPayload>): void;
-
-    draw(renderer: T, renderSeries: IRenderSeries<TA>, rendererSubject: Subject<IRendererEventPayload>): void;
-
+    draw(
+        renderer: T,
+        renderSeries: IRenderSeries<TA>,
+        rendererSubject: Subject<IRendererEventPayload>
+    ): void;
 }

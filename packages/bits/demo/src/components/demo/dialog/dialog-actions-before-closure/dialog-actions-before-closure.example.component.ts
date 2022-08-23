@@ -1,6 +1,7 @@
 import { Component, TemplateRef } from "@angular/core";
-import { DialogService, NuiDialogEvent, NuiDialogRef } from "@nova-ui/bits";
 import { take, takeUntil } from "rxjs/operators";
+
+import { DialogService, NuiDialogEvent, NuiDialogRef } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-dialog-actions-before-closure-example",
@@ -13,16 +14,18 @@ export class DialogActionBeforeClosureExampleComponent {
 
     public open(content: TemplateRef<string>) {
         // You can return 'false' from the optional beforeDismiss function anytime you want to prevent the dialog from closing.
-        this.activeDialog = this.dialogService.open(content, {size: "sm", beforeDismiss: this.beforeDismiss});
+        this.activeDialog = this.dialogService.open(content, {
+            size: "sm",
+            beforeDismiss: this.beforeDismiss,
+        });
 
         // You can use the beforeDismissed$ event to execute actions right before the dialog gets closed
-        this.activeDialog
-            .beforeDismissed$
+        this.activeDialog.beforeDismissed$
             .pipe(
                 // Be sure to unsubscribe on dialog closure
                 takeUntil(this.activeDialog.closed$)
             )
-            .subscribe(event => {
+            .subscribe((event) => {
                 // A dialog will typically close in response to the escape key
                 if (event === NuiDialogEvent.EscapeKey) {
                     console.log($localize`ESC CLOSED`);

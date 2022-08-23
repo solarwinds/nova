@@ -4,7 +4,6 @@ import { Component } from "@angular/core";
     selector: "textbox-visual-test",
     templateUrl: "./textbox-visual-test.component.html",
 })
-
 export class TextboxVisualTestComponent {
     public isRequired = true;
     public value = "";

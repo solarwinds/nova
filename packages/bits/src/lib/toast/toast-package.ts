@@ -12,12 +12,14 @@ import { ToastRef } from "./toast-ref";
 export class ToastPackage {
     private onClickSubject: Subject<any> = new Subject();
 
-    constructor(public toastId: number,
-                public config: IToastConfig,
-                public body: string | SafeHtml | undefined,
-                public title: string | undefined,
-                public toastType: string,
-                public toastRef: ToastRef<any>) { }
+    constructor(
+        public toastId: number,
+        public config: IToastConfig,
+        public body: string | SafeHtml | undefined,
+        public title: string | undefined,
+        public toastType: string,
+        public toastRef: ToastRef<any>
+    ) {}
 
     /** Fires after clicking on toast */
     public triggerClick(): void {
@@ -27,5 +29,4 @@ export class ToastPackage {
     public onClick(): Observable<any> {
         return this.onClickSubject.asObservable();
     }
-
 }

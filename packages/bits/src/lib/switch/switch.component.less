@@ -7,14 +7,14 @@
     & .nui-switch {
         .no-select();
 
-        &[disabled=true] {
+        &[disabled="true"] {
             cursor: default;
             pointer-events: none; // Future-proof disabling of clicks
             .opacity(@disabled-opacity);
         }
 
         &:focus {
-            outline:none;
+            outline: none;
         }
 
         &.nui-switched {
@@ -49,7 +49,9 @@
             }
         }
 
-        &__on, &__off, &__thumb {
+        &__on,
+        &__off,
+        &__thumb {
             width: @nui-line-height-small;
             height: @nui-line-height-small;
             text-align: center;
@@ -95,8 +97,8 @@
             stroke-miterlimit: 10;
         }
 
-        &__label:focus{
-            outline:none;
+        &__label:focus {
+            outline: none;
         }
     }
 }

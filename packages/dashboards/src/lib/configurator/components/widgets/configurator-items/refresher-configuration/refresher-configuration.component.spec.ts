@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { FormBuilder, ReactiveFormsModule } from "@angular/forms";
+
 import {
     NuiExpanderModule,
     NuiFormFieldModule,
@@ -14,7 +15,6 @@ import { WidgetEditorAccordionFormStatePipe } from "../../../../pipe/widget-edit
 import { FormHeaderIconPipePipe } from "../../../../pipe/widget-editor-accordion-header-icon.pipe";
 import { WidgetConfiguratorSectionCoordinatorService } from "../../../widget-configurator-section/widget-configurator-section-coordinator.service";
 import { WidgetEditorAccordionComponent } from "../../../widget-editor-accordion/widget-editor-accordion.component";
-
 import { RefreshRateConfiguratorComponent } from "./refresh-rate-configurator/refresh-rate-configurator.component";
 import { RefresherConfigurationComponent } from "./refresher-configuration.component";
 
@@ -41,9 +41,11 @@ describe("RefresherConfigurationComponent", () => {
                 NuiFormFieldModule,
                 NuiSwitchModule,
             ],
-            providers: [FormBuilder, WidgetConfiguratorSectionCoordinatorService],
-        })
-            .compileComponents();
+            providers: [
+                FormBuilder,
+                WidgetConfiguratorSectionCoordinatorService,
+            ],
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -91,6 +93,5 @@ describe("RefresherConfigurationComponent", () => {
             const label = component.getDurationLabel(0);
             expect(label).toEqual("0 sec");
         });
-
     });
 });

@@ -1,14 +1,37 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { LoggerService } from "@nova-ui/bits";
 import {
-    Chart, ChartAssist, HIGHLIGHT_DATA_POINT_EVENT, IAccessors, IChart, IChartAssistSeries, IChartEvent, InteractionType,
-    INTERACTION_DATA_POINTS_EVENT, INTERACTION_SERIES_EVENT, INTERACTION_VALUES_EVENT, LineAccessors, LinearScale, LineRenderer,
-    LineSelectSeriesInteractionStrategy,
-    MOUSE_ACTIVE_EVENT, Scales, TimeScale, XYGrid, XYGridConfig,
-} from "@nova-ui/charts";
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    OnInit,
+    ViewEncapsulation,
+} from "@angular/core";
 import cloneDeep from "lodash/cloneDeep";
 import each from "lodash/each";
 import includes from "lodash/includes";
+
+import { LoggerService } from "@nova-ui/bits";
+import {
+    Chart,
+    ChartAssist,
+    HIGHLIGHT_DATA_POINT_EVENT,
+    IAccessors,
+    IChart,
+    IChartAssistSeries,
+    IChartEvent,
+    InteractionType,
+    INTERACTION_DATA_POINTS_EVENT,
+    INTERACTION_SERIES_EVENT,
+    INTERACTION_VALUES_EVENT,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    LineSelectSeriesInteractionStrategy,
+    MOUSE_ACTIVE_EVENT,
+    Scales,
+    TimeScale,
+    XYGrid,
+    XYGridConfig,
+} from "@nova-ui/charts";
 
 import { DataGenerator } from "../../../../../data-generator";
 
@@ -58,8 +81,10 @@ export class ChartEventBusTestComponent implements OnInit {
         this.selectedInteractionTypeFilters = filters;
     }
 
-    constructor(private logger: LoggerService, private changeDetector: ChangeDetectorRef) {
-    }
+    constructor(
+        private logger: LoggerService,
+        private changeDetector: ChangeDetectorRef
+    ) {}
 
     ngOnInit() {
         const gridConfig = new XYGridConfig();
@@ -70,23 +95,43 @@ export class ChartEventBusTestComponent implements OnInit {
         this.selectAllFilters();
         this.chartAssist.update(this.generateDataSeriesSet(2));
 
-        each(this.eventFilters, eventName => {
-            this.chart.getEventBus().getStream(eventName).subscribe((event: IChartEvent) => {
-                if (includes(this.selectedEventFilters, eventName)) {
-                    if (!event.data.interactionType || includes(this.selectedInteractionTypeFilters, event.data.interactionType)) {
-                        this.logger.info("EVENT:", eventName, "DATA:", event.data);
-                        this.parsedEvents.unshift(`Event: "${eventName}" Data: ${JSON.stringify(event.data)}`);
-                        this.parsedEvents = this.parsedEvents.slice(0, 10);
-                        this.changeDetector.markForCheck();
+        each(this.eventFilters, (eventName) => {
+            this.chart
+                .getEventBus()
+                .getStream(eventName)
+                .subscribe((event: IChartEvent) => {
+                    if (includes(this.selectedEventFilters, eventName)) {
+                        if (
+                            !event.data.interactionType ||
+                            includes(
+                                this.selectedInteractionTypeFilters,
+                                event.data.interactionType
+                            )
+                        ) {
+                            this.logger.info(
+                                "EVENT:",
+                                eventName,
+                                "DATA:",
+                                event.data
+                            );
+                            this.parsedEvents.unshift(
+                                `Event: "${eventName}" Data: ${JSON.stringify(
+                                    event.data
+                                )}`
+                            );
+                            this.parsedEvents = this.parsedEvents.slice(0, 10);
+                            this.changeDetector.markForCheck();
+                        }
                     }
-                }
-            });
+                });
         });
     }
 
     public selectAllFilters() {
         this.selectedEventFilters = cloneDeep(this.eventFilters);
-        this.selectedInteractionTypeFilters = cloneDeep(this.interactionTypeFilters);
+        this.selectedInteractionTypeFilters = cloneDeep(
+            this.interactionTypeFilters
+        );
     }
 
     public deselectAllFilters() {
@@ -94,8 +139,13 @@ export class ChartEventBusTestComponent implements OnInit {
         this.selectedInteractionTypeFilters = [];
     }
 
-    private generateDataSeriesSet(dataSeriesCount: number): IChartAssistSeries<IAccessors>[] {
-        const seriesSet = DataGenerator.generateMockTimeLineSeriesSet(dataSeriesCount, 40);
+    private generateDataSeriesSet(
+        dataSeriesCount: number
+    ): IChartAssistSeries<IAccessors>[] {
+        const seriesSet = DataGenerator.generateMockTimeLineSeriesSet(
+            dataSeriesCount,
+            40
+        );
         const scales: Scales = {
             x: new TimeScale(),
             y: new LinearScale(),
@@ -105,12 +155,11 @@ export class ChartEventBusTestComponent implements OnInit {
         });
         const accessors = new LineAccessors();
 
-        return seriesSet.map(dataSeries => ({
+        return seriesSet.map((dataSeries) => ({
             ...dataSeries,
             scales,
             renderer,
             accessors,
         }));
     }
-
 }

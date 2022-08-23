@@ -2,7 +2,6 @@ import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { TestBed, waitForAsync } from "@angular/core/testing";
 
 import { EventBusService } from "../../services/event-bus.service";
-
 import { OverlayComponent } from "./overlay-component/overlay.component";
 import { NuiOverlayModule } from "./overlay.module";
 import { OverlayService } from "./overlay.service";
@@ -14,16 +13,11 @@ describe("OverlayService >", () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [
-                OverlayComponent,
-            ],
+            declarations: [OverlayComponent],
             imports: [NuiOverlayModule],
-            providers: [
-                EventBusService,
-            ],
-            schemas: [ NO_ERRORS_SCHEMA ],
-        })
-            .compileComponents();
+            providers: [EventBusService],
+            schemas: [NO_ERRORS_SCHEMA],
+        }).compileComponents();
 
         fixture = TestBed.createComponent(OverlayComponent);
         component = fixture.componentInstance;

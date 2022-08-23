@@ -1,6 +1,16 @@
 import { Component, OnInit } from "@angular/core";
-import { IChartSeries, ILineAccessors, IXYScales, LineAccessors, LinearScale, LineRenderer, SparkChartAssist, TimeScale } from "@nova-ui/charts";
 import moment from "moment/moment";
+
+import {
+    IChartSeries,
+    ILineAccessors,
+    IXYScales,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    SparkChartAssist,
+    TimeScale,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-spark-chart-legend-example",
@@ -20,12 +30,14 @@ export class SparkChartLegendExampleComponent implements OnInit {
             y: new LinearScale(),
         };
 
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
-            ...d,
-            accessors,
-            renderer,
-            scales,
-        }));
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
+            (d) => ({
+                ...d,
+                accessors,
+                renderer,
+                scales,
+            })
+        );
 
         // chart assist needs to be used to update data
         this.chartAssist.update(seriesSet);
@@ -36,20 +48,22 @@ export class SparkChartLegendExampleComponent implements OnInit {
 function getData() {
     const format = "YYYY-MM-DDTHH:mm:ssZ";
 
-    return [{
-        id: "1",
-        name: "Series 1",
-        data: [
-            { x: moment("2018-07-08T01:51:43.448Z", format), y: 85 },
-            { x: moment("2018-07-21T17:35:10.344Z", format), y: 57 },
-            { x: moment("2018-08-04T09:18:37.241Z", format), y: 99 },
-            { x: moment("2018-08-18T01:02:04.137Z", format), y: 75 },
-            { x: moment("2018-08-31T16:45:31.034Z", format), y: 55 },
-            { x: moment("2018-09-14T08:28:57.931Z", format), y: 73 },
-            { x: moment("2018-09-28T00:12:24.827Z", format), y: 30 },
-            { x: moment("2018-10-11T15:55:51.724Z", format), y: 77 },
-            { x: moment("2018-10-25T07:39:18.620Z", format), y: 57 },
-            { x: moment("2018-11-07T23:22:45.517Z", format), y: 61 },
-        ],
-    }];
+    return [
+        {
+            id: "1",
+            name: "Series 1",
+            data: [
+                { x: moment("2018-07-08T01:51:43.448Z", format), y: 85 },
+                { x: moment("2018-07-21T17:35:10.344Z", format), y: 57 },
+                { x: moment("2018-08-04T09:18:37.241Z", format), y: 99 },
+                { x: moment("2018-08-18T01:02:04.137Z", format), y: 75 },
+                { x: moment("2018-08-31T16:45:31.034Z", format), y: 55 },
+                { x: moment("2018-09-14T08:28:57.931Z", format), y: 73 },
+                { x: moment("2018-09-28T00:12:24.827Z", format), y: 30 },
+                { x: moment("2018-10-11T15:55:51.724Z", format), y: 77 },
+                { x: moment("2018-10-25T07:39:18.620Z", format), y: 57 },
+                { x: moment("2018-11-07T23:22:45.517Z", format), y: 61 },
+            ],
+        },
+    ];
 }

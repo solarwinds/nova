@@ -1,5 +1,5 @@
-import {ComponentFixture, TestBed} from "@angular/core/testing";
-import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import moment from "moment/moment";
 
 import {
@@ -16,24 +16,29 @@ import {
     TimePickerComponent,
     TooltipDirective,
 } from "../../public_api";
-import {DomUtilService} from "../../services/dom-util.service";
-import {EdgeDetectionService} from "../../services/edge-detection.service";
-import {LoggerService} from "../../services/log-service";
-import {UtilService} from "../../services/util.service";
-import {CheckboxComponent} from "../checkbox/checkbox.component";
-import {DayPickerComponent} from "../date-picker/date-picker-day-picker.component";
-import {DatePickerInnerComponent} from "../date-picker/date-picker-inner.component";
-import {MonthPickerComponent} from "../date-picker/date-picker-month-picker.component";
-import {YearPickerComponent} from "../date-picker/date-picker-year-picker.component";
-import {DatePickerComponent} from "../date-picker/date-picker.component";
-import {DividerComponent} from "../divider/divider.component";
-import {IconService} from "../icon/icon.service";
-import {MenuActionComponent, MenuItemComponent, MenuLinkComponent, MenuOptionComponent, MenuSwitchComponent} from "../menu";
-import {PopoverComponent} from "../popover/popover.component";
-import {SwitchComponent} from "../switch/switch.component";
-import {ValidationMessageComponent} from "../validation-message/validation-message.component";
-
-import {DateTimePickerComponent} from "./date-time-picker.component";
+import { DomUtilService } from "../../services/dom-util.service";
+import { EdgeDetectionService } from "../../services/edge-detection.service";
+import { LoggerService } from "../../services/log-service";
+import { UtilService } from "../../services/util.service";
+import { CheckboxComponent } from "../checkbox/checkbox.component";
+import { DayPickerComponent } from "../date-picker/date-picker-day-picker.component";
+import { DatePickerInnerComponent } from "../date-picker/date-picker-inner.component";
+import { MonthPickerComponent } from "../date-picker/date-picker-month-picker.component";
+import { YearPickerComponent } from "../date-picker/date-picker-year-picker.component";
+import { DatePickerComponent } from "../date-picker/date-picker.component";
+import { DividerComponent } from "../divider/divider.component";
+import { IconService } from "../icon/icon.service";
+import {
+    MenuActionComponent,
+    MenuItemComponent,
+    MenuLinkComponent,
+    MenuOptionComponent,
+    MenuSwitchComponent,
+} from "../menu";
+import { PopoverComponent } from "../popover/popover.component";
+import { SwitchComponent } from "../switch/switch.component";
+import { ValidationMessageComponent } from "../validation-message/validation-message.component";
+import { DateTimePickerComponent } from "./date-time-picker.component";
 
 describe("components >", () => {
     describe("date-time-picker >", () => {
@@ -87,9 +92,14 @@ describe("components >", () => {
 
         it("should update children models after model's update", () => {
             const newDate = moment();
-            spyOn(<any>datetimePicker, "updateChildrenModels").and.callThrough();
+            spyOn(
+                <any>datetimePicker,
+                "updateChildrenModels"
+            ).and.callThrough();
             datetimePicker.writeValue(newDate);
-            expect((datetimePicker as any).updateChildrenModels).toHaveBeenCalled();
+            expect(
+                (datetimePicker as any).updateChildrenModels
+            ).toHaveBeenCalled();
             expect(datetimePicker.date?.isSame(newDate)).toBeTruthy();
             expect(datetimePicker.time?.isSame(newDate)).toBeTruthy();
         });
@@ -97,7 +107,10 @@ describe("components >", () => {
         it("ngAfterViewInit should add inline styles in case of inline input set to true", () => {
             datetimePicker.displayMode = "inline";
             datetimePicker.ngAfterViewInit();
-            const isInline = datetimePicker.codeElement.nativeElement.classList.contains("nui-datetime-picker--inline");
+            const isInline =
+                datetimePicker.codeElement.nativeElement.classList.contains(
+                    "nui-datetime-picker--inline"
+                );
             expect(isInline).toBeTruthy();
         });
 
@@ -105,7 +118,10 @@ describe("components >", () => {
             datetimePicker.model = moment("2017/01/01", "DD MMM YYYY");
             const valueForEverything = 10;
             const oldTime = moment(datetimePicker.time);
-            const newTime = moment().hours(valueForEverything).minutes(valueForEverything).seconds(valueForEverything);
+            const newTime = moment()
+                .hours(valueForEverything)
+                .minutes(valueForEverything)
+                .seconds(valueForEverything);
             datetimePicker.onTimeChanged(newTime);
             expect(oldTime.valueOf()).not.toBe(datetimePicker.model.valueOf());
             expect(datetimePicker.model.hours()).toBe(valueForEverything);
@@ -133,7 +149,9 @@ describe("components >", () => {
             // @ts-ignore: Suppressing error for testing purposes
             datetimePicker.onDateChanged(null);
 
-            datetimePicker.modelChanged.subscribe((val: any) => expect(val).toEqual(moment("")));
+            datetimePicker.modelChanged.subscribe((val: any) =>
+                expect(val).toEqual(moment(""))
+            );
         });
 
         it("should emit invalid Moment object if time is missing", () => {
@@ -141,7 +159,9 @@ describe("components >", () => {
             // @ts-ignore: Suppressing error for testing purposes
             datetimePicker.onTimeChanged(null);
 
-            datetimePicker.modelChanged.subscribe((val: any) => expect(val).toEqual(moment("")));
+            datetimePicker.modelChanged.subscribe((val: any) =>
+                expect(val).toEqual(moment(""))
+            );
         });
     });
 });

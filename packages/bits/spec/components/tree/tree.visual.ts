@@ -4,7 +4,6 @@ import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
 import { PaginatorAtom } from "../paginator/paginator.atom";
-
 import { TreeAtom } from "./tree.atom";
 
 const name: string = "Tree";
@@ -24,8 +23,14 @@ describe(`Visual tests: ${name}`, () => {
         basicTree = Atom.find(TreeAtom, "nui-tree-basic-example");
         checkboxTree = Atom.find(TreeAtom, "nui-tree-checkbox-example");
         paginatorTree = Atom.find(TreeAtom, "nui-tree-paginator-example");
-        paginator1 = Atom.find(PaginatorAtom, "nui-tree-paginator-component-vegetables");
-        paginator2 = Atom.find(PaginatorAtom, "nui-tree-paginator-component-fruits");
+        paginator1 = Atom.find(
+            PaginatorAtom,
+            "nui-tree-paginator-component-vegetables"
+        );
+        paginator2 = Atom.find(
+            PaginatorAtom,
+            "nui-tree-paginator-component-fruits"
+        );
 
         camera = new Camera().loadFilm(browser, name);
     });
@@ -36,7 +41,10 @@ describe(`Visual tests: ${name}`, () => {
         await paginatorTree.expandAll();
         await browser.wait(
             EC.visibilityOf(paginator1.getElement()) &&
-                EC.visibilityOf(paginator2.getElement()), 3000, "Paginators didn't load!");
+                EC.visibilityOf(paginator2.getElement()),
+            3000,
+            "Paginators didn't load!"
+        );
         await paginator2.ellipsisLink(0).click();
         await camera.say.cheese("Default");
 
@@ -46,13 +54,23 @@ describe(`Visual tests: ${name}`, () => {
         await Helpers.clickOnEmptySpace();
         await camera.say.cheese("Tree is fully opened up");
 
-
-        await checkboxTree.getBranchCheckboxNodes().each(async (item: ElementFinder | undefined, index: number | undefined) => {
-            if (index) {
-                await item?.click();
-            }
-        });
-        await browser.wait(EC.visibilityOf(checkboxTree.getLeafCheckboxNodes().first()), 3000, "Can't see the first leaf checkbox node!");
+        await checkboxTree
+            .getBranchCheckboxNodes()
+            .each(
+                async (
+                    item: ElementFinder | undefined,
+                    index: number | undefined
+                ) => {
+                    if (index) {
+                        await item?.click();
+                    }
+                }
+            );
+        await browser.wait(
+            EC.visibilityOf(checkboxTree.getLeafCheckboxNodes().first()),
+            3000,
+            "Can't see the first leaf checkbox node!"
+        );
         await checkboxTree.getLeafCheckboxNodes().first().click();
         await camera.say.cheese("Checkbox Tree is in all possible states");
 

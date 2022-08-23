@@ -1,5 +1,16 @@
 import { CdkDragDrop, CdkDragStart } from "@angular/cdk/drag-drop";
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    SimpleChanges,
+} from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import isArray from "lodash/isArray";
 import { Subject } from "rxjs";
@@ -8,7 +19,13 @@ import { takeUntil, tap } from "rxjs/operators";
 import { IKpiColorRules } from "../../../../../components/providers/types";
 import { DEFAULT_KPI_TILE_COLOR } from "../../../../../constants/default-palette";
 import { KpiColorComparatorsRegistryService } from "../../../../../services/kpi-color-comparators-registry.service";
-import { ComparatorTypes, IComparatorsDict, IHasChangeDetector, IHasForm, IPaletteColor } from "../../../../../types";
+import {
+    ComparatorTypes,
+    IComparatorsDict,
+    IHasChangeDetector,
+    IHasForm,
+    IPaletteColor,
+} from "../../../../../types";
 
 const DEFAULT_LABEL = "Custom Comparator";
 
@@ -18,7 +35,9 @@ const DEFAULT_LABEL = "Custom Comparator";
     styleUrls: ["./background-color-rules-configuration.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BackgroundColorRulesConfigurationComponent implements IHasChangeDetector, IHasForm, OnChanges, OnInit, OnDestroy {
+export class BackgroundColorRulesConfigurationComponent
+    implements IHasChangeDetector, IHasForm, OnChanges, OnInit, OnDestroy
+{
     public static lateLoadKey = "BackgroundColorRulesConfigurationComponent";
 
     @Input() rules: IKpiColorRules[];
@@ -33,24 +52,30 @@ export class BackgroundColorRulesConfigurationComponent implements IHasChangeDet
 
     private destroy$ = new Subject();
 
-    constructor(public changeDetector: ChangeDetectorRef,
+    constructor(
+        public changeDetector: ChangeDetectorRef,
         private formBuilder: FormBuilder,
-                comparatorsRegistry: KpiColorComparatorsRegistryService
+        comparatorsRegistry: KpiColorComparatorsRegistryService
     ) {
         this.availableComparators = comparatorsRegistry.getComparators();
     }
 
     public ngOnInit(): void {
-        this.palette = [{ color: DEFAULT_KPI_TILE_COLOR, label: $localize`Default color` }].concat(this.backgroundColors);
+        this.palette = [
+            { color: DEFAULT_KPI_TILE_COLOR, label: $localize`Default color` },
+        ].concat(this.backgroundColors);
 
         this.formLocal = this.initDefaultRulesGroup();
         this.form = this.formBuilder.group({
             rules: [[]],
         });
 
-        this.formLocal.get("rules")?.value.valueChanges
-            .pipe(
-                tap((value: IKpiColorRules[]) => this.form.get("rules")?.patchValue([...value])),
+        this.formLocal
+            .get("rules")
+            ?.value.valueChanges.pipe(
+                tap((value: IKpiColorRules[]) =>
+                    this.form.get("rules")?.patchValue([...value])
+                ),
                 takeUntil(this.destroy$)
             )
             .subscribe();
@@ -63,21 +88,30 @@ export class BackgroundColorRulesConfigurationComponent implements IHasChangeDet
             (this.formLocal?.get("rules")?.value as FormArray).setValue([]);
 
             if (this.rules && isArray(this.rules)) {
-                this.rules.forEach(rule => {
-                    (this.formLocal.get("rules")?.value as FormArray).push(this.formBuilder.group({
-                        comparisonType: [rule.comparisonType, [Validators.required]],
-                        value: [rule.value, [Validators.required]],
-                        color: [rule.color],
-                    }));
+                this.rules.forEach((rule) => {
+                    (this.formLocal.get("rules")?.value as FormArray).push(
+                        this.formBuilder.group({
+                            comparisonType: [
+                                rule.comparisonType,
+                                [Validators.required],
+                            ],
+                            value: [rule.value, [Validators.required]],
+                            color: [rule.color],
+                        })
+                    );
                 });
             }
         }
     }
 
     public getColorRulesSubtitle(): string {
-        return (this.formLocal?.get("rules")?.value as FormArray).controls.length === 0
+        return (this.formLocal?.get("rules")?.value as FormArray).controls
+            .length === 0
             ? $localize`No color rules`
-            : $localize`${(this.formLocal?.get("rules")?.value as FormArray).controls.length} color rules`;
+            : $localize`${
+                  (this.formLocal?.get("rules")?.value as FormArray).controls
+                      .length
+              } color rules`;
     }
 
     public getLabel(item: ComparatorTypes | string): string {
@@ -85,15 +119,19 @@ export class BackgroundColorRulesConfigurationComponent implements IHasChangeDet
     }
 
     public removeRule(controlIndex: number) {
-        (this.formLocal?.get("rules")?.value as FormArray).removeAt(controlIndex);
+        (this.formLocal?.get("rules")?.value as FormArray).removeAt(
+            controlIndex
+        );
     }
 
     public addRule() {
-        (this.formLocal?.get("rules")?.value as FormArray).push(this.formBuilder.group({
-            comparisonType: [">", [Validators.required]],
-            value: [0, [Validators.required]],
-            color: [DEFAULT_KPI_TILE_COLOR],
-        }));
+        (this.formLocal?.get("rules")?.value as FormArray).push(
+            this.formBuilder.group({
+                comparisonType: [">", [Validators.required]],
+                value: [0, [Validators.required]],
+                color: [DEFAULT_KPI_TILE_COLOR],
+            })
+        );
     }
 
     public drop(event: CdkDragDrop<string[]>) {
@@ -118,7 +156,9 @@ export class BackgroundColorRulesConfigurationComponent implements IHasChangeDet
     private move(currentIndex: number, previousIndex: number): void {
         const rules = this.formLocal?.get("rules")?.value as FormArray;
         const dir = currentIndex > previousIndex ? 1 : -1;
-        if (!rules) { return; }
+        if (!rules) {
+            return;
+        }
 
         const temp = rules.at(previousIndex);
 

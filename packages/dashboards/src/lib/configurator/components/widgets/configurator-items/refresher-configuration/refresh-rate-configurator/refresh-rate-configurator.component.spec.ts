@@ -11,9 +11,7 @@ describe("RefreshRateConfiguratorComponent", () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [RefreshRateConfiguratorComponent],
-            providers: [
-                FormBuilder,
-            ],
+            providers: [FormBuilder],
             schemas: [NO_ERRORS_SCHEMA],
         });
 

@@ -1,8 +1,15 @@
-import { Directive, Input, OnChanges, OnDestroy, SimpleChanges } from "@angular/core";
-import { IDataSource } from "@nova-ui/bits";
-import { IXYScales } from "@nova-ui/charts";
+import {
+    Directive,
+    Input,
+    OnChanges,
+    OnDestroy,
+    SimpleChanges,
+} from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+
+import { IDataSource } from "@nova-ui/bits";
+import { IXYScales } from "@nova-ui/charts";
 
 import { WellKnownDataSourceFeatures } from "../../../types";
 import { TimeseriesScalesService } from "../timeseries-scales.service";
@@ -15,10 +22,13 @@ import {
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData> implements OnChanges, OnDestroy {
-
-    @Input() public widgetData: ITimeseriesOutput<T> = {} as ITimeseriesOutput<T>;
-    @Input() public configuration: ITimeseriesWidgetConfig = {} as ITimeseriesWidgetConfig;
+export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
+    implements OnChanges, OnDestroy
+{
+    @Input() public widgetData: ITimeseriesOutput<T> =
+        {} as ITimeseriesOutput<T>;
+    @Input() public configuration: ITimeseriesWidgetConfig =
+        {} as ITimeseriesWidgetConfig;
 
     protected scales: IXYScales = {} as IXYScales;
     protected destroy$ = new Subject<void>();
@@ -27,12 +37,19 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData> 
     protected chartBuilt = false;
 
     public get seriesInteractive(): boolean {
-        return this.configuration?.interaction === "series" ||
-            this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.Interactivity)?.enabled || false;
+        return (
+            this.configuration?.interaction === "series" ||
+            this.dataSource?.features?.getFeatureConfig(
+                WellKnownDataSourceFeatures.Interactivity
+            )?.enabled ||
+            false
+        );
     }
 
-    protected constructor(public timeseriesScalesService: TimeseriesScalesService,
-                          public dataSource: IDataSource) {
+    protected constructor(
+        public timeseriesScalesService: TimeseriesScalesService,
+        public dataSource: IDataSource
+    ) {
         this.buildChart$.pipe(takeUntil(this.destroy$)).subscribe(() => {
             this.chartBuilt = true;
         });
@@ -43,23 +60,47 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData> 
         let shouldRebuildChart = false;
 
         if (changes.configuration) {
-            const configurationCurrent: ITimeseriesWidgetConfig = changes.configuration.currentValue;
-            const configurationPrevious: ITimeseriesWidgetConfig = changes.configuration.previousValue;
+            const configurationCurrent: ITimeseriesWidgetConfig =
+                changes.configuration.currentValue;
+            const configurationPrevious: ITimeseriesWidgetConfig =
+                changes.configuration.previousValue;
 
-            if (configurationCurrent?.preset !== configurationPrevious?.preset) {
+            if (
+                configurationCurrent?.preset !== configurationPrevious?.preset
+            ) {
                 shouldRebuildChart = true;
             }
 
-            if (configurationCurrent?.scales !== configurationPrevious?.scales) {
-                for (const scaleKey of (Object.keys(configurationCurrent?.scales) as Array<keyof ITimeseriesScalesConfig>)) {
-                    const scaleConfigCurrent = configurationCurrent?.scales?.[scaleKey];
-                    const scaleConfigPrevious = configurationPrevious?.scales?.[scaleKey];
+            if (
+                configurationCurrent?.scales !== configurationPrevious?.scales
+            ) {
+                for (const scaleKey of Object.keys(
+                    configurationCurrent?.scales
+                ) as Array<keyof ITimeseriesScalesConfig>) {
+                    const scaleConfigCurrent =
+                        configurationCurrent?.scales?.[scaleKey];
+                    const scaleConfigPrevious =
+                        configurationPrevious?.scales?.[scaleKey];
 
-                    if (scaleConfigCurrent?.type !== scaleConfigPrevious?.type || !this.scales[scaleKey]) {
-                        this.scales[scaleKey] = this.timeseriesScalesService.getScale(scaleConfigCurrent, configurationCurrent.units);
+                    if (
+                        scaleConfigCurrent?.type !==
+                            scaleConfigPrevious?.type ||
+                        !this.scales[scaleKey]
+                    ) {
+                        this.scales[scaleKey] =
+                            this.timeseriesScalesService.getScale(
+                                scaleConfigCurrent,
+                                configurationCurrent.units
+                            );
                         shouldUpdateChart = true;
-                    } else if (scaleConfigCurrent?.properties !== scaleConfigPrevious?.properties) {
-                        this.timeseriesScalesService.updateConfiguration(this.scales[scaleKey], scaleConfigCurrent);
+                    } else if (
+                        scaleConfigCurrent?.properties !==
+                        scaleConfigPrevious?.properties
+                    ) {
+                        this.timeseriesScalesService.updateConfiguration(
+                            this.scales[scaleKey],
+                            scaleConfigCurrent
+                        );
                         shouldUpdateChart = true;
                     }
                 }
@@ -100,5 +141,4 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData> 
     protected abstract updateChartData(): void;
 
     protected abstract buildChart(): void;
-
 }

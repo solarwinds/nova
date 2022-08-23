@@ -3,7 +3,6 @@ import { browser } from "protractor";
 import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-
 import { ButtonAtom } from "./button.atom";
 
 const name: string = "Button";
@@ -20,7 +19,7 @@ describe(`Visual tests: ${name}`, () => {
         basicButton = Atom.find(ButtonAtom, "basic-button");
         primaryButton = Atom.find(ButtonAtom, "primary-button");
         actionButton = Atom.find(ButtonAtom, "action-button");
-        
+
         camera = new Camera().loadFilm(browser, name);
     });
 

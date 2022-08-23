@@ -1,18 +1,13 @@
 import { ChangeDetectorRef } from "@angular/core";
 
 export class MockedChangeDetectorRef extends ChangeDetectorRef {
-    checkNoChanges(): void {
-    }
+    checkNoChanges(): void {}
 
-    detach(): void {
-    }
+    detach(): void {}
 
-    detectChanges(): void {
-    }
+    detectChanges(): void {}
 
-    markForCheck(): void {
-    }
+    markForCheck(): void {}
 
-    reattach(): void {
-    }
+    reattach(): void {}
 }

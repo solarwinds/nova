@@ -1,4 +1,3 @@
-
 import { AreaGridConfig } from "../../core/grid/config/area-grid-config";
 import { XYGrid } from "../../core/grid/xy-grid";
 

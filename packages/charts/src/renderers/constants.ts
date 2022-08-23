@@ -1,5 +1,4 @@
 import { IRendererConfig } from "../core/common/types";
-
 import { IMarkerInteractionConfig, RenderState } from "./types";
 
 /** Renderer configuration for the thresholds on a chart */

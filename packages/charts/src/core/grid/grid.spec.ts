@@ -3,13 +3,12 @@ import cloneDeep from "lodash/cloneDeep";
 
 import { ScalesIndex } from "../common/scales/types";
 import { D3Selection } from "../common/types";
-
 import { BorderConfig } from "./config/border-config";
 import { GridConfig } from "./config/grid-config";
 import { Grid } from "./grid";
 import { IBorderConfig, IGrid } from "./types";
 
-class MockDerivedGrid extends Grid { }
+class MockDerivedGrid extends Grid {}
 
 describe("Grid >", () => {
     let grid: IGrid;
@@ -59,14 +58,22 @@ describe("Grid >", () => {
             clipPath = grid.target().selectAll("clipPath");
             expect(clipPath.nodes().length).toEqual(1);
             expect(clipPath.selectAll("rect").nodes().length).toEqual(1);
-            expect((clipPath.nodes()[0] as HTMLElement).id.startsWith(Grid.RENDERING_AREA_CLIP_PATH_PREFIX)).toEqual(true);
+            expect(
+                (clipPath.nodes()[0] as HTMLElement).id.startsWith(
+                    Grid.RENDERING_AREA_CLIP_PATH_PREFIX
+                )
+            ).toEqual(true);
         });
 
         it("should append a container for the grid", () => {
-            let gridContainer = grid.target().selectAll(`g.${Grid.GRID_CLASS_NAME}`);
+            let gridContainer = grid
+                .target()
+                .selectAll(`g.${Grid.GRID_CLASS_NAME}`);
             expect(gridContainer.nodes().length).toEqual(0);
             grid.build();
-            gridContainer = grid.target().selectAll(`g.${Grid.GRID_CLASS_NAME}`);
+            gridContainer = grid
+                .target()
+                .selectAll(`g.${Grid.GRID_CLASS_NAME}`);
             expect(gridContainer.nodes().length).toEqual(1);
         });
 
@@ -78,16 +85,25 @@ describe("Grid >", () => {
 
         it(`should add a "${Grid.GRID_ELEMENTS_LAYER_NAME}" layer`, () => {
             grid.build();
-            expect(grid.getLasagna().getLayerContainer(Grid.GRID_ELEMENTS_LAYER_NAME).nodes().length).toEqual(1);
+            expect(
+                grid
+                    .getLasagna()
+                    .getLayerContainer(Grid.GRID_ELEMENTS_LAYER_NAME)
+                    .nodes().length
+            ).toEqual(1);
         });
 
         it(`should add a "${Grid.RENDERING_AREA_LAYER_NAME}" layer`, () => {
             grid.build();
-            const renderingAreaLayer = grid.getLasagna().getLayerContainer(Grid.RENDERING_AREA_LAYER_NAME);
+            const renderingAreaLayer = grid
+                .getLasagna()
+                .getLayerContainer(Grid.RENDERING_AREA_LAYER_NAME);
             const renderingAreaLayerRect = renderingAreaLayer.selectAll("rect");
             expect(renderingAreaLayer.nodes().length).toEqual(1);
             expect(renderingAreaLayerRect.nodes().length).toEqual(1);
-            expect(renderingAreaLayerRect.attr("pointer-events")).toEqual("all");
+            expect(renderingAreaLayerRect.attr("pointer-events")).toEqual(
+                "all"
+            );
             expect(renderingAreaLayerRect.attr("fill")).toEqual("transparent");
         });
 
@@ -100,20 +116,30 @@ describe("Grid >", () => {
             grid.config(config);
 
             grid.build();
-            const gridElementsLayer = grid.getLasagna().getLayerContainer(Grid.GRID_ELEMENTS_LAYER_NAME);
-            const borderSelections: D3Selection = gridElementsLayer.selectAll(`.${testBorderConfig.className}`);
+            const gridElementsLayer = grid
+                .getLasagna()
+                .getLayerContainer(Grid.GRID_ELEMENTS_LAYER_NAME);
+            const borderSelections: D3Selection = gridElementsLayer.selectAll(
+                `.${testBorderConfig.className}`
+            );
             expect(borderSelections.nodes().length).toEqual(4);
-            borderSelections.nodes().forEach(borderNode => {
+            borderSelections.nodes().forEach((borderNode) => {
                 // @ts-ignore: Disabled for testing purposes
                 expect(borderNode.style.stroke).toEqual(testBorderConfig.color);
-                expect(borderNode.style.strokeWidth).toEqual(`${testBorderConfig.width}`);
+                expect(borderNode.style.strokeWidth).toEqual(
+                    `${testBorderConfig.width}`
+                );
             });
         });
 
         it("should not create borders if they aren't configured", () => {
             grid.build();
-            const gridElementsLayer = grid.getLasagna().getLayerContainer(Grid.GRID_ELEMENTS_LAYER_NAME);
-            const borderSelections = gridElementsLayer.selectAll(`.${Grid.DEFAULT_BORDER_CLASS_NAME}`);
+            const gridElementsLayer = grid
+                .getLasagna()
+                .getLayerContainer(Grid.GRID_ELEMENTS_LAYER_NAME);
+            const borderSelections = gridElementsLayer.selectAll(
+                `.${Grid.DEFAULT_BORDER_CLASS_NAME}`
+            );
             expect(borderSelections.nodes().length).toEqual(0);
         });
 
@@ -125,8 +151,12 @@ describe("Grid >", () => {
             grid.config(config);
 
             grid.build();
-            const gridElementsLayer = grid.getLasagna().getLayerContainer(Grid.GRID_ELEMENTS_LAYER_NAME);
-            const borderSelections = gridElementsLayer.selectAll(`.${Grid.DEFAULT_BORDER_CLASS_NAME}`);
+            const gridElementsLayer = grid
+                .getLasagna()
+                .getLayerContainer(Grid.GRID_ELEMENTS_LAYER_NAME);
+            const borderSelections = gridElementsLayer.selectAll(
+                `.${Grid.DEFAULT_BORDER_CLASS_NAME}`
+            );
             expect(borderSelections.nodes().length).toEqual(3);
         });
 
@@ -137,8 +167,12 @@ describe("Grid >", () => {
             grid.config(config);
 
             grid.build();
-            const gridElementsLayer = grid.getLasagna().getLayerContainer(Grid.GRID_ELEMENTS_LAYER_NAME);
-            const borderSelections = gridElementsLayer.selectAll(`.${Grid.DEFAULT_BORDER_CLASS_NAME}`);
+            const gridElementsLayer = grid
+                .getLasagna()
+                .getLayerContainer(Grid.GRID_ELEMENTS_LAYER_NAME);
+            const borderSelections = gridElementsLayer.selectAll(
+                `.${Grid.DEFAULT_BORDER_CLASS_NAME}`
+            );
             expect(borderSelections.nodes().length).toEqual(1);
         });
 
@@ -148,8 +182,12 @@ describe("Grid >", () => {
             grid.config(config);
 
             grid.build();
-            const gridElementsLayer = grid.getLasagna().getLayerContainer(Grid.GRID_ELEMENTS_LAYER_NAME);
-            const borderSelections = gridElementsLayer.selectAll(`.${Grid.DEFAULT_BORDER_CLASS_NAME}`);
+            const gridElementsLayer = grid
+                .getLasagna()
+                .getLayerContainer(Grid.GRID_ELEMENTS_LAYER_NAME);
+            const borderSelections = gridElementsLayer.selectAll(
+                `.${Grid.DEFAULT_BORDER_CLASS_NAME}`
+            );
             expect(borderSelections.nodes().length).toEqual(1);
         });
 
@@ -157,9 +195,12 @@ describe("Grid >", () => {
             const gridWidth = 10;
             const gridHeight = 20;
             const expectedClipPathWidth = gridWidth;
-            const expectedClipPathHeight = gridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION;
-            const expectedRenderAreaWidth = gridWidth - Grid.RENDER_AREA_WIDTH_CORRECTION;
-            const expectedRenderAreaHeight = gridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION;
+            const expectedClipPathHeight =
+                gridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION;
+            const expectedRenderAreaWidth =
+                gridWidth - Grid.RENDER_AREA_WIDTH_CORRECTION;
+            const expectedRenderAreaHeight =
+                gridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION;
             const config = new GridConfig();
             config.dimension.width(gridWidth);
             config.dimension.height(gridHeight);
@@ -167,24 +208,40 @@ describe("Grid >", () => {
 
             grid.build();
             const clipPathRect = grid.target().selectAll("clipPath rect");
-            expect(clipPathRect.attr("width")).toEqual(`${expectedClipPathWidth}`);
-            expect(clipPathRect.attr("height")).toEqual(`${expectedClipPathHeight}`);
-            expect(clipPathRect.attr("y")).toEqual(`${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
+            expect(clipPathRect.attr("width")).toEqual(
+                `${expectedClipPathWidth}`
+            );
+            expect(clipPathRect.attr("height")).toEqual(
+                `${expectedClipPathHeight}`
+            );
+            expect(clipPathRect.attr("y")).toEqual(
+                `${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
 
-            const renderingAreaLayer = grid.getLasagna().getLayerContainer(Grid.RENDERING_AREA_LAYER_NAME);
+            const renderingAreaLayer = grid
+                .getLasagna()
+                .getLayerContainer(Grid.RENDERING_AREA_LAYER_NAME);
             const renderingArea = renderingAreaLayer.select("rect");
-            expect(renderingArea.attr("width")).toEqual(`${expectedRenderAreaWidth}`);
-            expect(renderingArea.attr("height")).toEqual(`${expectedRenderAreaHeight}`);
-            expect(renderingArea.attr("y")).toEqual(`${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
+            expect(renderingArea.attr("width")).toEqual(
+                `${expectedRenderAreaWidth}`
+            );
+            expect(renderingArea.attr("height")).toEqual(
+                `${expectedRenderAreaHeight}`
+            );
+            expect(renderingArea.attr("y")).toEqual(
+                `${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
         });
 
         it("should not allow the clip path and rendering area to have negative dimensions", () => {
             const gridWidth = 0.5;
             const gridHeight = 0.5;
             const expectedClipPathWidth = gridWidth;
-            const expectedClipPathHeight = gridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION;
+            const expectedClipPathHeight =
+                gridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION;
             const expectedRenderAreaWidth = 0;
-            const expectedRenderAreaHeight = gridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION;
+            const expectedRenderAreaHeight =
+                gridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION;
             const config = new GridConfig();
             config.dimension.width(gridWidth);
             config.dimension.height(gridHeight);
@@ -193,20 +250,33 @@ describe("Grid >", () => {
             grid.build();
 
             const clipPathRect = grid.target().selectAll("clipPath rect");
-            expect(clipPathRect.attr("width")).toEqual(`${expectedClipPathWidth}`);
-            expect(clipPathRect.attr("height")).toEqual(`${expectedClipPathHeight}`);
-            expect(clipPathRect.attr("y")).toEqual(`${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
+            expect(clipPathRect.attr("width")).toEqual(
+                `${expectedClipPathWidth}`
+            );
+            expect(clipPathRect.attr("height")).toEqual(
+                `${expectedClipPathHeight}`
+            );
+            expect(clipPathRect.attr("y")).toEqual(
+                `${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
 
-            const renderingAreaLayer = grid.getLasagna().getLayerContainer(Grid.RENDERING_AREA_LAYER_NAME);
+            const renderingAreaLayer = grid
+                .getLasagna()
+                .getLayerContainer(Grid.RENDERING_AREA_LAYER_NAME);
             const renderingArea = renderingAreaLayer.select("rect");
-            expect(renderingArea.attr("width")).toEqual(`${expectedRenderAreaWidth}`);
-            expect(renderingArea.attr("height")).toEqual(`${expectedRenderAreaHeight}`);
-            expect(renderingArea.attr("y")).toEqual(`${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
+            expect(renderingArea.attr("width")).toEqual(
+                `${expectedRenderAreaWidth}`
+            );
+            expect(renderingArea.attr("height")).toEqual(
+                `${expectedRenderAreaHeight}`
+            );
+            expect(renderingArea.attr("y")).toEqual(
+                `${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
         });
 
         it(`should not apply disabled dimension corrections when adjusting the clip path
             and rendering area according to the configured width and height`, () => {
-
             const gridWidth = 10;
             const gridHeight = 20;
             const expectedClipPathWidth = gridWidth;
@@ -225,14 +295,24 @@ describe("Grid >", () => {
 
             grid.build();
             const clipPathRect = grid.target().selectAll("clipPath rect");
-            expect(clipPathRect.attr("width")).toEqual(`${expectedClipPathWidth}`);
-            expect(clipPathRect.attr("height")).toEqual(`${expectedClipPathHeight}`);
+            expect(clipPathRect.attr("width")).toEqual(
+                `${expectedClipPathWidth}`
+            );
+            expect(clipPathRect.attr("height")).toEqual(
+                `${expectedClipPathHeight}`
+            );
             expect(clipPathRect.attr("y") === null).toEqual(true);
 
-            const renderingAreaLayer = grid.getLasagna().getLayerContainer(Grid.RENDERING_AREA_LAYER_NAME);
+            const renderingAreaLayer = grid
+                .getLasagna()
+                .getLayerContainer(Grid.RENDERING_AREA_LAYER_NAME);
             const renderingArea = renderingAreaLayer.select("rect");
-            expect(renderingArea.attr("width")).toEqual(`${expectedRenderAreaWidth}`);
-            expect(renderingArea.attr("height")).toEqual(`${expectedRenderAreaHeight}`);
+            expect(renderingArea.attr("width")).toEqual(
+                `${expectedRenderAreaWidth}`
+            );
+            expect(renderingArea.attr("height")).toEqual(
+                `${expectedRenderAreaHeight}`
+            );
             expect(renderingArea.attr("y") === null).toEqual(true);
         });
 
@@ -255,15 +335,21 @@ describe("Grid >", () => {
             grid.build();
             grid.update();
 
-            const gridElementsLayer = grid.getLasagna().getLayerContainer(Grid.GRID_ELEMENTS_LAYER_NAME);
-            const borderSelections: D3Selection = gridElementsLayer.selectAll(`.${testBorderConfig.className}`);
+            const gridElementsLayer = grid
+                .getLasagna()
+                .getLayerContainer(Grid.GRID_ELEMENTS_LAYER_NAME);
+            const borderSelections: D3Selection = gridElementsLayer.selectAll(
+                `.${testBorderConfig.className}`
+            );
             expect(borderSelections.nodes().length).toEqual(4);
             borderSelections.nodes().forEach((borderNode: Element) => {
                 expect(borderNode.getAttribute("x1")).toBeNull();
                 expect(borderNode.getAttribute("y1")).toBeNull();
                 expect(borderNode.getAttribute("x2")).toBeNull();
                 expect(borderNode.getAttribute("y2")).toBeNull();
-                expect(borderNode.getAttribute("class")).not.toContain("hidden");
+                expect(borderNode.getAttribute("class")).not.toContain(
+                    "hidden"
+                );
             });
         });
 
@@ -279,8 +365,12 @@ describe("Grid >", () => {
             grid.build();
             grid.update();
 
-            const gridElementsLayer = grid.getLasagna().getLayerContainer(Grid.GRID_ELEMENTS_LAYER_NAME);
-            const borderSelections: D3Selection = gridElementsLayer.selectAll(`.${testBorderConfig.className}`);
+            const gridElementsLayer = grid
+                .getLasagna()
+                .getLayerContainer(Grid.GRID_ELEMENTS_LAYER_NAME);
+            const borderSelections: D3Selection = gridElementsLayer.selectAll(
+                `.${testBorderConfig.className}`
+            );
             expect(borderSelections.nodes().length).toEqual(4);
             borderSelections.nodes().forEach((borderNode: Element) => {
                 expect(borderNode.getAttribute("x1")).not.toBeNull();
@@ -302,14 +392,26 @@ describe("Grid >", () => {
             grid.build();
             let clipPathRect = grid.target().selectAll("clipPath rect");
             expect(clipPathRect.attr("width")).toEqual(`${gridWidth}`);
-            expect(clipPathRect.attr("height")).toEqual(`${gridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
-            expect(clipPathRect.attr("y")).toEqual(`${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
+            expect(clipPathRect.attr("height")).toEqual(
+                `${gridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
+            expect(clipPathRect.attr("y")).toEqual(
+                `${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
 
-            const renderingAreaLayer = grid.getLasagna().getLayerContainer(Grid.RENDERING_AREA_LAYER_NAME);
+            const renderingAreaLayer = grid
+                .getLasagna()
+                .getLayerContainer(Grid.RENDERING_AREA_LAYER_NAME);
             let renderingArea = renderingAreaLayer.select("rect");
-            expect(renderingArea.attr("width")).toEqual(`${gridWidth - Grid.RENDER_AREA_WIDTH_CORRECTION}`);
-            expect(renderingArea.attr("height")).toEqual(`${gridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
-            expect(renderingArea.attr("y")).toEqual(`${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
+            expect(renderingArea.attr("width")).toEqual(
+                `${gridWidth - Grid.RENDER_AREA_WIDTH_CORRECTION}`
+            );
+            expect(renderingArea.attr("height")).toEqual(
+                `${gridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
+            expect(renderingArea.attr("y")).toEqual(
+                `${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
 
             config.dimension.width(gridWidth + 1);
             config.dimension.height(gridHeight + 1);
@@ -319,13 +421,23 @@ describe("Grid >", () => {
 
             clipPathRect = grid.target().selectAll("clipPath rect");
             expect(clipPathRect.attr("width")).toEqual(`${gridWidth}`);
-            expect(clipPathRect.attr("height")).toEqual(`${gridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
-            expect(clipPathRect.attr("y")).toEqual(`${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
+            expect(clipPathRect.attr("height")).toEqual(
+                `${gridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
+            expect(clipPathRect.attr("y")).toEqual(
+                `${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
 
             renderingArea = renderingAreaLayer.select("rect");
-            expect(renderingArea.attr("width")).toEqual(`${gridWidth - Grid.RENDER_AREA_WIDTH_CORRECTION}`);
-            expect(renderingArea.attr("height")).toEqual(`${gridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
-            expect(renderingArea.attr("y")).toEqual(`${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
+            expect(renderingArea.attr("width")).toEqual(
+                `${gridWidth - Grid.RENDER_AREA_WIDTH_CORRECTION}`
+            );
+            expect(renderingArea.attr("height")).toEqual(
+                `${gridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
+            expect(renderingArea.attr("y")).toEqual(
+                `${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
         });
 
         it("should adjust the clip path and rendering area if the scales are not empty", () => {
@@ -339,14 +451,26 @@ describe("Grid >", () => {
             grid.build();
             let clipPathRect = grid.target().selectAll("clipPath rect");
             expect(clipPathRect.attr("width")).toEqual(`${originalGridWidth}`);
-            expect(clipPathRect.attr("height")).toEqual(`${originalGridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
-            expect(clipPathRect.attr("y")).toEqual(`${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
+            expect(clipPathRect.attr("height")).toEqual(
+                `${originalGridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
+            expect(clipPathRect.attr("y")).toEqual(
+                `${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
 
-            const renderingAreaLayer = grid.getLasagna().getLayerContainer(Grid.RENDERING_AREA_LAYER_NAME);
+            const renderingAreaLayer = grid
+                .getLasagna()
+                .getLayerContainer(Grid.RENDERING_AREA_LAYER_NAME);
             let renderingArea = renderingAreaLayer.select("rect");
-            expect(renderingArea.attr("width")).toEqual(`${originalGridWidth - Grid.RENDER_AREA_WIDTH_CORRECTION}`);
-            expect(renderingArea.attr("height")).toEqual(`${originalGridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
-            expect(renderingArea.attr("y")).toEqual(`${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
+            expect(renderingArea.attr("width")).toEqual(
+                `${originalGridWidth - Grid.RENDER_AREA_WIDTH_CORRECTION}`
+            );
+            expect(renderingArea.attr("height")).toEqual(
+                `${originalGridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
+            expect(renderingArea.attr("y")).toEqual(
+                `${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
 
             config.dimension.width(originalGridWidth + 1);
             config.dimension.height(originalGridHeight + 1);
@@ -356,14 +480,26 @@ describe("Grid >", () => {
             grid.update();
 
             clipPathRect = grid.target().selectAll("clipPath rect");
-            expect(clipPathRect.attr("width")).toEqual(`${originalGridWidth + 1}`);
-            expect(clipPathRect.attr("height")).toEqual(`${originalGridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION + 1}`);
-            expect(clipPathRect.attr("y")).toEqual(`${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
+            expect(clipPathRect.attr("width")).toEqual(
+                `${originalGridWidth + 1}`
+            );
+            expect(clipPathRect.attr("height")).toEqual(
+                `${originalGridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION + 1}`
+            );
+            expect(clipPathRect.attr("y")).toEqual(
+                `${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
 
             renderingArea = renderingAreaLayer.select("rect");
-            expect(renderingArea.attr("width")).toEqual(`${originalGridWidth - Grid.RENDER_AREA_WIDTH_CORRECTION + 1}`);
-            expect(renderingArea.attr("height")).toEqual(`${originalGridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION + 1}`);
-            expect(renderingArea.attr("y")).toEqual(`${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
+            expect(renderingArea.attr("width")).toEqual(
+                `${originalGridWidth - Grid.RENDER_AREA_WIDTH_CORRECTION + 1}`
+            );
+            expect(renderingArea.attr("height")).toEqual(
+                `${originalGridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION + 1}`
+            );
+            expect(renderingArea.attr("y")).toEqual(
+                `${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
         });
 
         it("should return the grid instance if the scales are empty", () => {
@@ -387,7 +523,9 @@ describe("Grid >", () => {
             grid.updateDimensions({ width: expectedWidth });
 
             expect(grid.config().dimension.outerHeight()).toEqual(0);
-            expect(grid.config().dimension.outerWidth()).toEqual(expectedWidth - Grid.TICK_DIMENSION_CORRECTION);
+            expect(grid.config().dimension.outerWidth()).toEqual(
+                expectedWidth - Grid.TICK_DIMENSION_CORRECTION
+            );
         });
 
         it("should update the dimension config outer height", () => {
@@ -397,7 +535,9 @@ describe("Grid >", () => {
             grid.updateDimensions({ height: expectedHeight });
 
             expect(grid.config().dimension.outerWidth()).toEqual(0);
-            expect(grid.config().dimension.outerHeight()).toEqual(expectedHeight);
+            expect(grid.config().dimension.outerHeight()).toEqual(
+                expectedHeight
+            );
         });
 
         it("should update the clip path dimensions", () => {
@@ -407,15 +547,28 @@ describe("Grid >", () => {
 
             let clipPathRect = grid.target().selectAll("clipPath rect");
             expect(clipPathRect.attr("width")).toEqual("0");
-            expect(clipPathRect.attr("height")).toEqual(`${0 + Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
-            expect(clipPathRect.attr("y")).toEqual(`${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
+            expect(clipPathRect.attr("height")).toEqual(
+                `${0 + Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
+            expect(clipPathRect.attr("y")).toEqual(
+                `${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
 
-            grid.updateDimensions({ height: expectedHeight, width: expectedWidth });
+            grid.updateDimensions({
+                height: expectedHeight,
+                width: expectedWidth,
+            });
 
             clipPathRect = grid.target().selectAll("clipPath rect");
-            expect(clipPathRect.attr("height")).toEqual(`${expectedHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
-            expect(clipPathRect.attr("width")).toEqual(`${expectedWidth - Grid.TICK_DIMENSION_CORRECTION}`);
-            expect(clipPathRect.attr("y")).toEqual(`${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
+            expect(clipPathRect.attr("height")).toEqual(
+                `${expectedHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
+            expect(clipPathRect.attr("width")).toEqual(
+                `${expectedWidth - Grid.TICK_DIMENSION_CORRECTION}`
+            );
+            expect(clipPathRect.attr("y")).toEqual(
+                `${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
         });
 
         it("should update the rendering area dimensions", () => {
@@ -423,18 +576,37 @@ describe("Grid >", () => {
             const expectedWidth = 8;
             grid.build();
 
-            const renderingAreaLayer = grid.getLasagna().getLayerContainer(Grid.RENDERING_AREA_LAYER_NAME);
+            const renderingAreaLayer = grid
+                .getLasagna()
+                .getLayerContainer(Grid.RENDERING_AREA_LAYER_NAME);
             let renderingArea = renderingAreaLayer.select("rect");
             expect(renderingArea.attr("width")).toEqual("0");
-            expect(renderingArea.attr("height")).toEqual(`${Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
-            expect(renderingArea.attr("y")).toEqual(`${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
+            expect(renderingArea.attr("height")).toEqual(
+                `${Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
+            expect(renderingArea.attr("y")).toEqual(
+                `${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
 
-            grid.updateDimensions({ height: expectedHeight, width: expectedWidth });
+            grid.updateDimensions({
+                height: expectedHeight,
+                width: expectedWidth,
+            });
 
             renderingArea = renderingAreaLayer.select("rect");
-            expect(renderingArea.attr("height")).toEqual(`${expectedHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
-            expect(renderingArea.attr("width")).toEqual(`${expectedWidth - Grid.TICK_DIMENSION_CORRECTION - Grid.RENDER_AREA_WIDTH_CORRECTION}`);
-            expect(renderingArea.attr("y")).toEqual(`${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
+            expect(renderingArea.attr("height")).toEqual(
+                `${expectedHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
+            expect(renderingArea.attr("width")).toEqual(
+                `${
+                    expectedWidth -
+                    Grid.TICK_DIMENSION_CORRECTION -
+                    Grid.RENDER_AREA_WIDTH_CORRECTION
+                }`
+            );
+            expect(renderingArea.attr("y")).toEqual(
+                `${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`
+            );
         });
 
         it("should invoke updateRanges", () => {

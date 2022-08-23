@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+
 import {
     ChartAssist,
     GaugeMode,
@@ -25,10 +26,16 @@ export class HorizontalGaugeBasicExampleComponent implements OnInit {
         this.gaugeConfig = this.getGaugeConfig(initialValue);
 
         // Creating the chart assist
-        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Horizontal);
+        this.chartAssist = GaugeUtil.createChartAssist(
+            this.gaugeConfig,
+            GaugeMode.Horizontal
+        );
 
         // Assembling the series
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Horizontal);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(
+            this.gaugeConfig,
+            GaugeMode.Horizontal
+        );
 
         // Updating the chart
         this.chartAssist.update(this.seriesSet);

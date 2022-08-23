@@ -1,32 +1,65 @@
-<div *ngIf="hasFilterOptions()"
-     class="nui-filter-group-composite">
-    <nui-expander [open]="filterGroupItem?.expanded"
-                  (openChange)="onOpenChanged($event)">
+<div *ngIf="hasFilterOptions()" class="nui-filter-group-composite">
+    <nui-expander
+        [open]="filterGroupItem?.expanded"
+        (openChange)="onOpenChanged($event)"
+    >
         <div nuiExpanderHeader>
             <ng-template #defaultExpander>
-                <span class="nui-filter-group-composite__header">{{filterGroupItem.title}}</span>
+                <span class="nui-filter-group-composite__header">{{
+                    filterGroupItem.title
+                }}</span>
             </ng-template>
-            <ng-container *ngTemplateOutlet="expanderTemplateRef || defaultExpander; context: {expander: filterGroupItem}"></ng-container>
+            <ng-container
+                *ngTemplateOutlet="
+                    expanderTemplateRef || defaultExpander;
+                    context: { expander: filterGroupItem }
+                "
+            ></ng-container>
         </div>
-        <nui-checkbox-group [values]="filterGroupItem.selectedFilterValues"
-                            (valuesChange)="onValueChanged($event)">
-            <nui-checkbox *ngFor="let filterOption of filterGroupItem.allFilterOptions | slice: 0: getDisplayedFiltersCount()"
-                          class="nui-checkbox--justified"
-                          [value]="filterOption.value"
-                          [checked]="isChecked(filterOption.value)">
+        <nui-checkbox-group
+            [values]="filterGroupItem.selectedFilterValues"
+            (valuesChange)="onValueChanged($event)"
+        >
+            <nui-checkbox
+                *ngFor="
+                    let filterOption of filterGroupItem.allFilterOptions
+                        | slice: 0:getDisplayedFiltersCount()
+                "
+                class="nui-checkbox--justified"
+                [value]="filterOption.value"
+                [checked]="isChecked(filterOption.value)"
+            >
                 <ng-template #defaultCheckboxes>
-                    <div class="d-flex justify-content-between nui-filter-group-composite__checkbox">
-                        <span class="d-inline-block nui-filter-group-composite__checkbox-value">{{filterOption.displayValue}}</span>
-                        <span class="d-inline-block nui-filter-group-composite__checkbox-count">{{filterOption.count}}</span>
+                    <div
+                        class="d-flex justify-content-between nui-filter-group-composite__checkbox"
+                    >
+                        <span
+                            class="d-inline-block nui-filter-group-composite__checkbox-value"
+                            >{{ filterOption.displayValue }}</span
+                        >
+                        <span
+                            class="d-inline-block nui-filter-group-composite__checkbox-count"
+                            >{{ filterOption.count }}</span
+                        >
                     </div>
                 </ng-template>
-                <ng-container *ngTemplateOutlet="checkboxTemplateRef || defaultCheckboxes; context: {checkbox: filterOption}"></ng-container>
+                <ng-container
+                    *ngTemplateOutlet="
+                        checkboxTemplateRef || defaultCheckboxes;
+                        context: { checkbox: filterOption }
+                    "
+                ></ng-container>
             </nui-checkbox>
         </nui-checkbox-group>
-        <a class="nui-filter-group-composite__show-more-link"
-           *ngIf="filterGroupItem?.allFilterOptions?.length > getDisplayedFiltersCount()"
-           (click)="showFilterDialog()">
-            Show all ({{filterGroupItem.allFilterOptions.length}})
+        <a
+            class="nui-filter-group-composite__show-more-link"
+            *ngIf="
+                filterGroupItem?.allFilterOptions?.length >
+                getDisplayedFiltersCount()
+            "
+            (click)="showFilterDialog()"
+        >
+            Show all ({{ filterGroupItem.allFilterOptions.length }})
         </a>
     </nui-expander>
 </div>

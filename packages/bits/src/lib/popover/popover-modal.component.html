@@ -1,21 +1,40 @@
-<div class="nui-popover-container-animation fade" [@fadeIn]="fadeIn" (@fadeIn.done)="onAnimationEnd($event)">
-    <div class="nui-popover-container" [ngClass]="[ 'nui-popover-container--' + placement ]" [class.unlimited]="unlimited">
+<div
+    class="nui-popover-container-animation fade"
+    [@fadeIn]="fadeIn"
+    (@fadeIn.done)="onAnimationEnd($event)"
+>
+    <div
+        class="nui-popover-container"
+        [ngClass]="['nui-popover-container--' + placement]"
+        [class.unlimited]="unlimited"
+    >
         <div class="nui-popover-container__arrow arrow"></div>
         <div class="nui-popover-container__frame">
-            <div *ngIf="context.icon || context.title"
-                 class="nui-popover-container__header"
-                 [class.nui-popover-container__header--with-border]="context.title">
+            <div
+                *ngIf="context.icon || context.title"
+                class="nui-popover-container__header"
+                [class.nui-popover-container__header--with-border]="
+                    context.title
+                "
+            >
                 <div class="nui-popover-container__icon" *ngIf="context.icon">
                     <nui-icon [icon]="context.icon"></nui-icon>
                 </div>
-                <div *ngIf="context.title"
-                     class="nui-popover-container__title"
-                     [class.nui-popover-container__title--with-icon]="context.icon"
-                     title="{{context.title}}">
-                    <span>{{context.title}}</span>
+                <div
+                    *ngIf="context.title"
+                    class="nui-popover-container__title"
+                    [class.nui-popover-container__title--with-icon]="
+                        context.icon
+                    "
+                    title="{{ context.title }}"
+                >
+                    <span>{{ context.title }}</span>
                 </div>
             </div>
-            <div class="nui-popover-container__content" [class.noPadding]="!hasPadding">
+            <div
+                class="nui-popover-container__content"
+                [class.noPadding]="!hasPadding"
+            >
                 <ng-container [ngTemplateOutlet]="template"></ng-container>
             </div>
         </div>

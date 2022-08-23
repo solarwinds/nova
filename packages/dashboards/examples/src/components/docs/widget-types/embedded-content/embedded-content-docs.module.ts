@@ -1,20 +1,25 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+
 // eslint-disable-next-line max-len
-import { NuiButtonModule, NuiDocsModule, NuiMessageModule,  NuiSwitchModule } from "@nova-ui/bits";
+import {
+    NuiButtonModule,
+    NuiDocsModule,
+    NuiMessageModule,
+    NuiSwitchModule,
+} from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { EmbeddedContentDocsComponent } from "./embedded-content-docs.component";
 import { EmbeddedContentWidgetExampleComponent } from "./embedded-content-widget-example/embedded-content-widget-example.component";
-
 
 const routes: Routes = [
     {
         path: "",
         component: EmbeddedContentDocsComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -22,8 +27,8 @@ const routes: Routes = [
         path: "example",
         component: EmbeddedContentWidgetExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -43,5 +48,4 @@ const routes: Routes = [
         EmbeddedContentWidgetExampleComponent,
     ],
 })
-export class EmbeddedContentDocsModule {
-}
+export class EmbeddedContentDocsModule {}

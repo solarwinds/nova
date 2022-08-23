@@ -1,22 +1,29 @@
-import {ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges, ViewEncapsulation} from "@angular/core";
-import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Input,
+    OnChanges,
+    SimpleChanges,
+    ViewEncapsulation,
+} from "@angular/core";
+import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import _isInteger from "lodash/isInteger";
 import isNil from "lodash/isNil";
 
-import {IconService} from "./icon.service";
-import {IconData, IconStatus} from "./types";
+import { IconService } from "./icon.service";
+import { IconData, IconStatus } from "./types";
 
 /**
-* <example-url>./../examples/index.html#/icon</example-url>
-*/
+ * <example-url>./../examples/index.html#/icon</example-url>
+ */
 
 @Component({
     selector: "nui-icon",
     templateUrl: "./icon.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
-        "class": "nui-icon-wrapper",
-        "role": "img",
+        class: "nui-icon-wrapper",
+        role: "img",
         "[attr.aria-label]": "icon + ' icon'",
     },
     styleUrls: ["./icon.component.less"],
@@ -24,8 +31,8 @@ import {IconData, IconStatus} from "./types";
 })
 export class IconComponent implements OnChanges {
     public static SIZE_MAP: { [key: string]: string } = {
-        "medium": "nui-icon-size-md",
-        "small": "nui-icon-size-sm",
+        medium: "nui-icon-size-md",
+        small: "nui-icon-size-sm",
     };
 
     @Input()
@@ -53,9 +60,10 @@ export class IconComponent implements OnChanges {
     private iconFound: boolean;
     private iconData: IconData;
 
-    constructor(private iconService: IconService,
-                private sanitizer: DomSanitizer) {
-    }
+    constructor(
+        private iconService: IconService,
+        private sanitizer: DomSanitizer
+    ) {}
 
     getIconByStatus(status: string) {
         if (!status) {
@@ -70,7 +78,6 @@ export class IconComponent implements OnChanges {
         if (!this.iconFound) {
             iconClass.push("nui-icon-not-found");
         } else {
-
             if (this.brushType) {
                 iconClass.push(this.brushType);
             }
@@ -130,7 +137,9 @@ export class IconComponent implements OnChanges {
     private generateIcon() {
         this.iconData = this.iconService.getIconData(this.icon);
         this.iconFound = !!this.iconData;
-        let resultingSvg = `<div class='nui-icon-item'>${(this.iconData && this.iconData.code) ?? ""}</div>`;
+        let resultingSvg = `<div class='nui-icon-item'>${
+            (this.iconData && this.iconData.code) ?? ""
+        }</div>`;
         if (this.status) {
             resultingSvg += `<div class="nui-icon-item nui-icon-item__child">
                                     ${this.getIconByStatus(this.status)}
@@ -138,9 +147,12 @@ export class IconComponent implements OnChanges {
         }
         if (this.childStatus) {
             resultingSvg += `<div class="nui-icon-item nui-icon-item__grand-child">
-                                        ${this.getIconByStatus(this.childStatus)}
+                                        ${this.getIconByStatus(
+                                            this.childStatus
+                                        )}
                                  </div>`;
         }
-        this.resultingSvg = this.sanitizer.bypassSecurityTrustHtml(resultingSvg);
+        this.resultingSvg =
+            this.sanitizer.bypassSecurityTrustHtml(resultingSvg);
     }
 }

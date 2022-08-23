@@ -13,19 +13,16 @@ export class TableDocsComponent {
     public fetch = `fetchURI = "\${this.url\}/?page=\${end / (end - start)}&results=\${end - start}"`;
 
     public dataSourceSetup = {
-        extendDS:
-`@Injectable()
+        extendDS: `@Injectable()
 export class RandomuserTableDataSource extends DataSourceService<ITableModel> {
     constructor(private searchService: SearchService) {
         super();
     }
 }`,
-        defineFields:
-`private readonly url = "https://yourserver.com/api";
+        defineFields: `private readonly url = "https://yourserver.com/api";
 private cache = Array.from<ITableModel>({ length: 0 });
 public busy = new BehaviorSubject(false);`,
-        getData:
-`public async getData(start: number = 0, end: number= 20): Promise<INovaFilteringOutputs> {
+        getData: `public async getData(start: number = 0, end: number= 20): Promise<INovaFilteringOutputs> {
     let response: IRandomuserResponse = null;
     try {
         response = await
@@ -51,8 +48,7 @@ public busy = new BehaviorSubject(false);`,
         console.error("Error responding from server. Please visit https://https://randomuser.me/ to see if it's available");
     }
 }`,
-        getFilteredData:
-`public async getFilteredData(filters: INovaFilters): Promise<INovaFilteringOutputs> {
+        getFilteredData: `public async getFilteredData(filters: INovaFilters): Promise<INovaFilteringOutputs> {
     this.busy.next(true);
     const virtualScrollFilter = filters.virtualScroll && filters.virtualScroll.value;
     const start = virtualScrollFilter ? filters.virtualScroll.value.start : 0;
@@ -76,8 +72,7 @@ public busy = new BehaviorSubject(false);`,
     };
 
     public tableScrollingSetup = {
-        vars:
-`
+        vars: `
 private _totalItems: number = 0;
 private _isBusy: boolean = false;
 
@@ -92,40 +87,33 @@ public displayedColumns: string[] = ["no", "nameTitle", "nameFirst", "nameLast",
 private dataSource: RandomuserTableDataSource;
 `,
         viewportManagerImport: `import { VirtualViewportManager } from "@nova-ui/bits";`,
-        viewChildren:
-`
+        viewChildren: `
 @ViewChild(CdkVirtualScrollViewport, { static: false }) viewport: CdkVirtualScrollViewport;
 `,
-        provideViewport:
-            `
+        provideViewport: `
 @Component({
     //
     providers: [VirtualViewportManager]
 })
 `,
-        injectViewport:
-            `
+        injectViewport: `
 constructor(private viewportManager: VirtualViewportManager) {}
 `,
-        oninitSubscribeBusy:
-`
+        oninitSubscribeBusy: `
 ngOnInit(): void {
     this.dataSource.busy.subscribe(busy => {
         this._isBusy = busy;
     });
 }`,
-        registerScroll:
-`private registerVirtualScroll() {
+        registerScroll: `private registerVirtualScroll() {
     this.dataSource.registerComponent({
         virtualScroll: { componentInstance: this.viewportManager },
     });
  }`,
-        ngAfterViewInitStart:
-`ngAfterViewInit(): void {
+        ngAfterViewInitStart: `ngAfterViewInit(): void {
     this.registerVirtualScroll();
 }`,
-        ngAfterViewInitViewport:
-`this.viewportManager
+        ngAfterViewInitViewport: `this.viewportManager
     // Note: Initializing viewportManager with the repeat's CDK Viewport Ref
     .setViewport(this.viewport)
     // Note: Initializing the stream with the desired page size, based on which
@@ -147,7 +135,6 @@ ngOnInit(): void {
     takeUntil(this.onDestroy$)
 ).subscribe();
         `,
-
     };
 }
 
@@ -155,32 +142,60 @@ ngOnInit(): void {
     selector: "nui-table-row-selection-instructions",
     template: `
         <ol>
-            <li>
-                Specify <code>selectable = true</code> input.
-            </li>
+            <li>Specify <code>selectable = true</code> input.</li>
             <li>
                 Bind a trackBy handler to the
-                <code><a href="https://material.angular.io/cdk/table/overview#connecting-the-table-to-a-data-source" target="_blank">trackBy</a></code>
+                <code
+                    ><a
+                        href="https://material.angular.io/cdk/table/overview#connecting-the-table-to-a-data-source"
+                        target="_blank"
+                        >trackBy</a
+                    ></code
+                >
                 property inherited from
-                <code><a href="https://material.angular.io/cdk/table/overview" target="_blank">CdkTable</a></code>.
-                The trackBy handler should return a value that uniquely identifies each item in the table.
-                <br>
+                <code
+                    ><a
+                        href="https://material.angular.io/cdk/table/overview"
+                        target="_blank"
+                        >CdkTable</a
+                    ></code
+                >. The trackBy handler should return a value that uniquely
+                identifies each item in the table.
+                <br />
                 <strong>Note:</strong> When <code>trackBy</code> is used, the
-                <code><a href="../interfaces/ISelection.html" target="_blank">ISelection</a></code> will consist
-                of the trackBy property values only and will not contain entire representations of the selected
-                objects. As a result, it may be beneficial to keep a separate index mapping the selected item IDs
-                to the corresponding objects.
+                <code
+                    ><a href="../interfaces/ISelection.html" target="_blank"
+                        >ISelection</a
+                    ></code
+                >
+                will consist of the trackBy property values only and will not
+                contain entire representations of the selected objects. As a
+                result, it may be beneficial to keep a separate index mapping
+                the selected item IDs to the corresponding objects.
             </li>
             <li>
-                Pass the row object to <code>nui-row</code> using the <code>rowObject</code> input.
+                Pass the row object to <code>nui-row</code> using the
+                <code>rowObject</code> input.
             </li>
             <li>
-                Bind to the selection event using the <code>(selectionChange)</code> output. In this event table
-                will emit
-                <code><a href="../interfaces/ISelection.html" target="_blank">ISelection</a></code>
-                object which should be converted to selected items by calling <code>getSelectedItems()</code>
+                Bind to the selection event using the
+                <code>(selectionChange)</code> output. In this event table will
+                emit
+                <code
+                    ><a href="../interfaces/ISelection.html" target="_blank"
+                        >ISelection</a
+                    ></code
+                >
+                object which should be converted to selected items by calling
+                <code>getSelectedItems()</code>
                 function from
-                <code><a href="../injectables/SelectorService.html" target="_blank">SelectorService</a></code>.
+                <code
+                    ><a
+                        href="../injectables/SelectorService.html"
+                        target="_blank"
+                        >SelectorService</a
+                    ></code
+                >.
             </li>
         </ol>
     `,

@@ -1,18 +1,25 @@
 import { OverlayModule } from "@angular/cdk/overlay";
 import { Component, DebugElement } from "@angular/core";
-import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
+} from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
 import { NuiButtonModule } from "../button/button.module";
-
 import { TooltipPosition } from "./public-api";
 import { TooltipDirective } from "./tooltip.directive";
 import { NuiTooltipModule } from "./tooltip.module";
 
 @Component({
     selector: "nui-tooltip-unit",
-    template: `
-    <span [nuiTooltip]="tooltipValue" [nuiTooltipDisabled]="isDisabled">Tooltip</span>`,
+    template: ` <span
+        [nuiTooltip]="tooltipValue"
+        [nuiTooltipDisabled]="isDisabled"
+        >Tooltip</span
+    >`,
 })
 class TooltipTestComponent {
     public tooltipValue? = "test tooltip";
@@ -21,8 +28,12 @@ class TooltipTestComponent {
 
 @Component({
     selector: "nui-tooltip-unit",
-    template: `
-    <span [nuiTooltip]="tooltipValue" [nuiTooltipDisabled]="isDisabled" [tooltipPlacement]="position">Tooltip</span>`,
+    template: ` <span
+        [nuiTooltip]="tooltipValue"
+        [nuiTooltipDisabled]="isDisabled"
+        [tooltipPlacement]="position"
+        >Tooltip</span
+    >`,
 })
 class TooltipWithPositionTestComponent {
     public tooltipValue = "test tooltip";
@@ -32,11 +43,16 @@ class TooltipWithPositionTestComponent {
 
 @Component({
     selector: "nui-tooltip-unit",
-    template: `
-    <button nui-button displayStyle="primary" type="button"
+    template: ` <button
+        nui-button
+        displayStyle="primary"
+        type="button"
         [nuiTooltip]="tooltipValue"
         [nuiTooltipDisabled]="isDisabled"
-        [tooltipPlacement]="position">Tooltip</button>`,
+        [tooltipPlacement]="position"
+    >
+        Tooltip
+    </button>`,
 })
 class TooltipOnButtonTestComponent {
     public tooltipValue = "test tooltip";
@@ -52,11 +68,10 @@ class TooltipOnButtonTestComponent {
         </div>
     `,
 })
-class TooltipInOverlapingScrollContainerComponent { }
+class TooltipInOverlapingScrollContainerComponent {}
 
 describe("directives >", () => {
     describe("tooltip >", () => {
-
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [NuiTooltipModule, OverlayModule],
@@ -85,7 +100,10 @@ describe("directives >", () => {
                 fixture.detectChanges();
                 spanDebugElement = fixture.debugElement.query(By.css("span"));
                 spanElement = <HTMLElement>spanDebugElement.nativeElement;
-                tooltipDirective = spanDebugElement.injector.get<TooltipDirective>(TooltipDirective);
+                tooltipDirective =
+                    spanDebugElement.injector.get<TooltipDirective>(
+                        TooltipDirective
+                    );
             });
 
             afterEach(() => {
@@ -105,7 +123,9 @@ describe("directives >", () => {
             });
 
             it("should have correct tooltip value in directive", () => {
-                expect(fixture.componentInstance.tooltipValue).toEqual(tooltipDirective.message);
+                expect(fixture.componentInstance.tooltipValue).toEqual(
+                    tooltipDirective.message
+                );
             });
 
             it("should open on mouseenter mouse event", fakeAsync(() => {
@@ -125,10 +145,17 @@ describe("directives >", () => {
             }));
 
             it("should appear on hover in overlaping scrollable container", fakeAsync(() => {
-                const scrollContainerFixture = TestBed.createComponent(TooltipInOverlapingScrollContainerComponent);
+                const scrollContainerFixture = TestBed.createComponent(
+                    TooltipInOverlapingScrollContainerComponent
+                );
                 scrollContainerFixture.detectChanges();
-                spanDebugElement = scrollContainerFixture.debugElement.query(By.css("span"));
-                tooltipDirective = spanDebugElement.injector.get<TooltipDirective>(TooltipDirective);
+                spanDebugElement = scrollContainerFixture.debugElement.query(
+                    By.css("span")
+                );
+                tooltipDirective =
+                    spanDebugElement.injector.get<TooltipDirective>(
+                        TooltipDirective
+                    );
                 tooltipDirective.show();
                 scrollContainerFixture.detectChanges();
                 tick();
@@ -166,11 +193,16 @@ describe("directives >", () => {
                 });
 
                 it("should tooltip contain tooltip text", () => {
-                    const expectedText = document.querySelector(".nui-tooltip-body")?.textContent;
+                    const expectedText =
+                        document.querySelector(
+                            ".nui-tooltip-body"
+                        )?.textContent;
                     if (!expectedText) {
                         throw new Error("ExpectedText was not found");
                     }
-                    expect(fixture.componentInstance.tooltipValue).toEqual(expectedText?.trim());
+                    expect(fixture.componentInstance.tooltipValue).toEqual(
+                        expectedText?.trim()
+                    );
                 });
 
                 it("should stay open on show() call when opened", fakeAsync(() => {
@@ -211,7 +243,7 @@ describe("directives >", () => {
                     for (const value of values) {
                         fixture.componentInstance.tooltipValue = value;
                         fixture.detectChanges();
-                        expect(typeof (tooltipDirective.message)).toBe("string");
+                        expect(typeof tooltipDirective.message).toBe("string");
                         expect(tooltipDirective.message).toEqual("");
                     }
                 });
@@ -221,7 +253,7 @@ describe("directives >", () => {
                     for (const value of values) {
                         fixture.componentInstance.tooltipValue = value;
                         fixture.detectChanges();
-                        expect(typeof (tooltipDirective.message)).toBe("string");
+                        expect(typeof tooltipDirective.message).toBe("string");
                         expect(tooltipDirective.message).toEqual(`${value}`);
                     }
                 });
@@ -230,14 +262,17 @@ describe("directives >", () => {
                     tooltipDirective.show();
                     fixture.detectChanges();
                     tick();
-                    expect(tooltipDirective._tooltipInstance?.isVisible()).toBeTruthy();
+                    expect(
+                        tooltipDirective._tooltipInstance?.isVisible()
+                    ).toBeTruthy();
                     fixture.componentInstance.tooltipValue = undefined;
                     fixture.detectChanges();
                     tick(200);
 
-                    expect(tooltipDirective._tooltipInstance?.isVisible()).toBeFalsy();
+                    expect(
+                        tooltipDirective._tooltipInstance?.isVisible()
+                    ).toBeFalsy();
                 }));
-
             });
 
             describe("position >", () => {
@@ -245,11 +280,20 @@ describe("directives >", () => {
                     TestBed.resetTestingModule()
                         .configureTestingModule({
                             imports: [NuiTooltipModule, OverlayModule],
-                            declarations: [TooltipTestComponent, TooltipWithPositionTestComponent, TooltipOnButtonTestComponent],
-                        }).compileComponents();
-                    positionFixture = TestBed.createComponent(TooltipWithPositionTestComponent);
+                            declarations: [
+                                TooltipTestComponent,
+                                TooltipWithPositionTestComponent,
+                                TooltipOnButtonTestComponent,
+                            ],
+                        })
+                        .compileComponents();
+                    positionFixture = TestBed.createComponent(
+                        TooltipWithPositionTestComponent
+                    );
                     positionFixture.detectChanges();
-                    tooltipDirective = positionFixture.debugElement.query(By.css("span")).injector.get(TooltipDirective);
+                    tooltipDirective = positionFixture.debugElement
+                        .query(By.css("span"))
+                        .injector.get(TooltipDirective);
                 });
 
                 it("should be positioned to the top by default", fakeAsync(() => {
@@ -268,37 +312,56 @@ describe("directives >", () => {
                     tick();
                     expect(tooltipDirective.position).toEqual("bottom");
                 }));
-
             });
 
             describe("with button >", () => {
                 beforeEach(() => {
                     TestBed.resetTestingModule()
                         .configureTestingModule({
-                            imports: [NuiTooltipModule, OverlayModule, NuiButtonModule],
-                            declarations: [TooltipTestComponent, TooltipWithPositionTestComponent, TooltipOnButtonTestComponent],
-                        }).compileComponents();
-                    buttonFixture = TestBed.createComponent(TooltipOnButtonTestComponent);
+                            imports: [
+                                NuiTooltipModule,
+                                OverlayModule,
+                                NuiButtonModule,
+                            ],
+                            declarations: [
+                                TooltipTestComponent,
+                                TooltipWithPositionTestComponent,
+                                TooltipOnButtonTestComponent,
+                            ],
+                        })
+                        .compileComponents();
+                    buttonFixture = TestBed.createComponent(
+                        TooltipOnButtonTestComponent
+                    );
                     buttonFixture.detectChanges();
-                    buttonDebugElement = buttonFixture.debugElement.query(By.css("button"));
-                    tooltipDirective = buttonDebugElement.injector.get(TooltipDirective);
+                    buttonDebugElement = buttonFixture.debugElement.query(
+                        By.css("button")
+                    );
+                    tooltipDirective =
+                        buttonDebugElement.injector.get(TooltipDirective);
                 });
 
                 it("should not be displayed on click event", fakeAsync(() => {
                     expect(tooltipDirective._isTooltipVisible()).toBeFalsy();
-                    buttonDebugElement.nativeElement.dispatchEvent(new Event("click"));
+                    buttonDebugElement.nativeElement.dispatchEvent(
+                        new Event("click")
+                    );
                     tick();
                     buttonFixture.detectChanges();
                     expect(tooltipDirective._isTooltipVisible()).toBeFalsy();
                 }));
 
                 it("should be displayed on mouseenter and hidden on mouseleave events", fakeAsync(() => {
-                    buttonDebugElement.nativeElement.dispatchEvent(new Event("mouseenter"));
+                    buttonDebugElement.nativeElement.dispatchEvent(
+                        new Event("mouseenter")
+                    );
                     buttonFixture.detectChanges();
                     tick();
                     expect(tooltipDirective._isTooltipVisible()).toBeTruthy();
 
-                    buttonDebugElement.nativeElement.dispatchEvent(new Event("mouseleave"));
+                    buttonDebugElement.nativeElement.dispatchEvent(
+                        new Event("mouseleave")
+                    );
                     buttonFixture.detectChanges();
                     tick(200);
                     expect(tooltipDirective._isTooltipVisible()).toBeFalsy();

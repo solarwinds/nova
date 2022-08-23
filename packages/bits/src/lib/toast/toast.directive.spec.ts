@@ -5,7 +5,6 @@ import _find from "lodash/find";
 import { SwitchState } from "../../services/notification-args";
 import NotificationService from "../../services/notification-service";
 import { INotificationService } from "../../services/public-api";
-
 import { ToastDirective } from "./toast.directive";
 import { ToastService } from "./toast.service";
 
@@ -27,11 +26,10 @@ describe("directives >", () => {
         let notificationService: INotificationService;
 
         beforeEach(() => {
-            TestBed
-                .configureTestingModule({
-                    declarations: [ToastTestingComponent, ToastDirective],
-                    providers: [ToastService, NotificationService],
-                });
+            TestBed.configureTestingModule({
+                declarations: [ToastTestingComponent, ToastDirective],
+                providers: [ToastService, NotificationService],
+            });
             fixture = TestBed.createComponent(ToastTestingComponent);
             fixture.autoDetectChanges(true);
             notificationService = TestBed.inject(NotificationService);
@@ -46,10 +44,18 @@ describe("directives >", () => {
             };
             notificationService.post("Highlight", options);
 
-            expect(_find(element.classList, (className: string) => className === successStatus))
-                .not.toBeNull();
-            expect(_find(element.classList, (className: string) => className === highlightOnClass))
-                .not.toBeNull();
+            expect(
+                _find(
+                    element.classList,
+                    (className: string) => className === successStatus
+                )
+            ).not.toBeNull();
+            expect(
+                _find(
+                    element.classList,
+                    (className: string) => className === highlightOnClass
+                )
+            ).not.toBeNull();
         });
     });
 });

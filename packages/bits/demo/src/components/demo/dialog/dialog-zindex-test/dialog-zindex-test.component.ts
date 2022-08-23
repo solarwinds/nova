@@ -1,8 +1,20 @@
-import {Overlay, OverlayRef} from "@angular/cdk/overlay";
-import {TemplatePortal} from "@angular/cdk/portal";
-import {Component, OnInit, TemplateRef, ViewContainerRef, ViewEncapsulation} from "@angular/core";
-import {DialogService, ITimeframe, NuiDialogRef, ToastService} from "@nova-ui/bits";
+import { Overlay, OverlayRef } from "@angular/cdk/overlay";
+import { TemplatePortal } from "@angular/cdk/portal";
+import {
+    Component,
+    OnInit,
+    TemplateRef,
+    ViewContainerRef,
+    ViewEncapsulation,
+} from "@angular/core";
 import moment from "moment/moment";
+
+import {
+    DialogService,
+    ITimeframe,
+    NuiDialogRef,
+    ToastService,
+} from "@nova-ui/bits";
 
 @Component({
     selector: "nui-dialog-zindex--test",
@@ -17,7 +29,14 @@ export class DialogZIndexTestComponent implements OnInit {
     public timeFrame: ITimeframe;
 
     public dt = moment("2018-02-02");
-    public items = ["Long description item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6"];
+    public items = [
+        "Long description item 1",
+        "Item 2",
+        "Item 3",
+        "Item 4",
+        "Item 5",
+        "Item 6",
+    ];
     public longTextTooltip = `
     which should appear on top of any other components (popup, popover, menu,etc.) even if it's displayed after the popover has been displayed.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam maximus faucibus bibendum.
@@ -32,10 +51,11 @@ export class DialogZIndexTestComponent implements OnInit {
     private overlayRef: OverlayRef;
     private baseDate = moment([2018, 5, 1, 15, 0, 0]);
 
-    constructor(private dialogService: DialogService,
-                private toastService: ToastService,
-                private overlay: Overlay,
-                private viewContainerRef: ViewContainerRef
+    constructor(
+        private dialogService: DialogService,
+        private toastService: ToastService,
+        private overlay: Overlay,
+        private viewContainerRef: ViewContainerRef
     ) {}
 
     public ngOnInit(): void {
@@ -53,8 +73,14 @@ export class DialogZIndexTestComponent implements OnInit {
         this.appendToBody = !this.appendToBody;
     }
 
-    public openOverlay(templateRef: TemplateRef<string>, width: string, height: string) {
-        const positionStrategy = this.overlay.position().global()
+    public openOverlay(
+        templateRef: TemplateRef<string>,
+        width: string,
+        height: string
+    ) {
+        const positionStrategy = this.overlay
+            .position()
+            .global()
             .centerHorizontally()
             .centerVertically();
 
@@ -65,7 +91,6 @@ export class DialogZIndexTestComponent implements OnInit {
             width: width,
             height: height,
             scrollStrategy: this.overlay.scrollStrategies.block(),
-
         });
         const portal = new TemplatePortal(templateRef, this.viewContainerRef);
         this.overlayRef.attach(portal);
@@ -76,7 +101,11 @@ export class DialogZIndexTestComponent implements OnInit {
     }
 
     public openInnerDialog(templateRef: TemplateRef<string>) {
-        this.activeDialogs.push(this.dialogService.open(templateRef, {windowClass: "inner-dialog"}));
+        this.activeDialogs.push(
+            this.dialogService.open(templateRef, {
+                windowClass: "inner-dialog",
+            })
+        );
     }
 
     public closeDialog() {
@@ -84,6 +113,9 @@ export class DialogZIndexTestComponent implements OnInit {
     }
 
     public showToast(): void {
-        this.toastService.success({message: $localize`Sample toast displayed!`, title: $localize`Event`});
+        this.toastService.success({
+            message: $localize`Sample toast displayed!`,
+            title: $localize`Event`,
+        });
     }
 }

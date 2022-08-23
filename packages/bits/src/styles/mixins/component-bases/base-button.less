@@ -1,4 +1,3 @@
-
 @import (reference) "../../nui-framework-variables.less";
 @import (reference) "../../nui-framework-base.less";
 
@@ -51,7 +50,7 @@
 
 .button-default() {
     .button-default-base();
-    .with-icon-fill(nui-color-text-link, nui-color-disabled)
+    .with-icon-fill(nui-color-text-link, nui-color-disabled);
 }
 
 .button-primary-base() {
@@ -75,7 +74,7 @@
 
 .button-primary() {
     .button-primary-base();
-    .with-icon-fill(nui-color-icon-light, white)
+    .with-icon-fill(nui-color-icon-light, white);
 }
 
 .button-action-base() {
@@ -99,7 +98,7 @@
 
 .button-action() {
     .button-action-base();
-    .with-icon-fill(nui-color-text-link, nui-color-disabled)
+    .with-icon-fill(nui-color-text-link, nui-color-disabled);
 }
 
 .button-destructive-base() {
@@ -123,7 +122,7 @@
 
 .button-destructive() {
     .button-destructive-base();
-    .with-icon-fill(nui-color-text-critical, nui-color-disabled)
+    .with-icon-fill(nui-color-text-critical, nui-color-disabled);
 }
 
 .button-selected-base() {
@@ -147,7 +146,7 @@
 
 .button-selected() {
     .button-selected-base();
-    .with-icon-fill(nui-color-text-link, white)
+    .with-icon-fill(nui-color-text-link, white);
 }
 
 .button-selected-contrast-base() {
@@ -171,7 +170,7 @@
 
 .button-selected-contrast() {
     .button-selected-contrast-base();
-    .with-icon-fill(nui-color-icon-light, white)
+    .with-icon-fill(nui-color-icon-light, white);
 }
 
 .button-variant(@colorVariableName;
@@ -215,9 +214,9 @@
         &:hover,
         &:focus,
         &.focus {
-        .setCssVariable(color, @colorVariableName);
-        .setCssVariable(background-color, @activeHoverBkVariableName);
-        .setCssVariable(border-color, @activeHoverBrdVariableName);
+            .setCssVariable(color, @colorVariableName);
+            .setCssVariable(background-color, @activeHoverBkVariableName);
+            .setCssVariable(border-color, @activeHoverBrdVariableName);
         }
     }
     &:active,
@@ -276,16 +275,17 @@
     }
 }
 
-
 .busy-variant(@variableName) {
-    .ripple-1, .ripple-2 {
+    .ripple-1,
+    .ripple-2 {
         .setCssVariable(background, @variableName);
     }
 }
 
 .fill-icon(@variableName) {
     .nui-icon:not(.custom-icon-color) {
-        path, polygon {
+        path,
+        polygon {
             .setCssVariable(fill, @variableName);
         }
     }

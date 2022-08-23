@@ -4,4 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-chips-docs-example",
     templateUrl: "./chips-docs.example.component.html",
 })
-export class ChipsDocsExampleComponent { }
+export class ChipsDocsExampleComponent {}

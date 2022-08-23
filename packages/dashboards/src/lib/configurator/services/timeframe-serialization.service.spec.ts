@@ -1,5 +1,6 @@
-import { ITimeframe } from "@nova-ui/bits";
 import moment from "moment/moment";
+
+import { ITimeframe } from "@nova-ui/bits";
 
 import { TimeframeSerializationService } from "./timeframe-serialization.service";
 import { ISerializableTimeframe } from "./types";
@@ -24,7 +25,11 @@ describe("TimeframeSerializationService > ", () => {
             title,
         };
 
-        expect(new TimeframeSerializationService().convertFromSerializable(serializableTimeframe)).toEqual(nonSerializableTimeframe);
+        expect(
+            new TimeframeSerializationService().convertFromSerializable(
+                serializableTimeframe
+            )
+        ).toEqual(nonSerializableTimeframe);
     });
 
     it("should render a serializable timeframe", () => {
@@ -35,6 +40,10 @@ describe("TimeframeSerializationService > ", () => {
             title,
         };
 
-        expect(new TimeframeSerializationService().convertToSerializable(nonSerializableTimeframe)).toEqual(serializableTimeframe);
+        expect(
+            new TimeframeSerializationService().convertToSerializable(
+                nonSerializableTimeframe
+            )
+        ).toEqual(serializableTimeframe);
     });
 });

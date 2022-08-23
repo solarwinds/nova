@@ -1,27 +1,21 @@
 {
-  "extends": "../.eslintrc.json",
-  "overrides": [
-    {
-      "files": [
-        "*.ts"
-      ],
-      "parserOptions": {
-        "project": [
-          "examples/src/tsconfig.json"
-        ]
-      },
-      "settings": {
-        "import/resolver": {
-          "typescript": {
-            "project": [
-              "examples/src/tsconfig.json"
-            ]
-          }
+    "extends": "../.eslintrc.json",
+    "overrides": [
+        {
+            "files": ["*.ts"],
+            "parserOptions": {
+                "project": ["examples/src/tsconfig.json"]
+            },
+            "settings": {
+                "import/resolver": {
+                    "typescript": {
+                        "project": ["examples/src/tsconfig.json"]
+                    }
+                }
+            },
+            "rules": {
+                "max-len": "off"
+            }
         }
-      },
-      "rules": {
-        "max-len": "off"
-      }
-    }
-  ]
+    ]
 }

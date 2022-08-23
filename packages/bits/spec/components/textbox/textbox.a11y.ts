@@ -1,9 +1,10 @@
 import { browser } from "protractor";
+
 import { assertA11y, Helpers } from "../../helpers";
 import { TextboxAtom } from "../public_api";
 
 describe("a11y: textbox", () => {
-    let rulesToDisable: string[] = [];
+    const rulesToDisable: string[] = [];
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("textbox/textbox-visual-test");

@@ -1,21 +1,39 @@
-<div class="d-flex"
-     [ngClass]="['nui-legend-series--state-' + seriesRenderState]"
-     [class.nui-legend-series--deselected]="!isSelected">
+<div
+    class="d-flex"
+    [ngClass]="['nui-legend-series--state-' + seriesRenderState]"
+    [class.nui-legend-series--deselected]="!isSelected"
+>
     <div class="nui-legend-series__tile-wrapper">
         <div class="nui-legend-series__tile">
             <ng-content></ng-content>
         </div>
-        <div class="nui-legend-series__checkbox-wrapper"
-             [class.nui-legend-series__checkbox--checked]="isSelected">
+        <div
+            class="nui-legend-series__checkbox-wrapper"
+            [class.nui-legend-series__checkbox--checked]="isSelected"
+        >
             <div class="nui-legend-series__checkbox-mark">
                 <i class="nui-legend-series__checkbox-glyph"></i>
             </div>
         </div>
     </div>
-    <div *ngIf="hasInputDescription(); else descriptionTemplate"
-         class="description-container nui-text-small d-flex flex-column justify-content-center">
-        <div *ngIf="!!descriptionPrimary" class="description description-primary" [title]="descriptionPrimary">{{ descriptionPrimary }}</div>
-        <div *ngIf="!!descriptionSecondary" class="description description-secondary" [title]="descriptionSecondary">{{ descriptionSecondary }}</div>
+    <div
+        *ngIf="hasInputDescription(); else descriptionTemplate"
+        class="description-container nui-text-small d-flex flex-column justify-content-center"
+    >
+        <div
+            *ngIf="!!descriptionPrimary"
+            class="description description-primary"
+            [title]="descriptionPrimary"
+        >
+            {{ descriptionPrimary }}
+        </div>
+        <div
+            *ngIf="!!descriptionSecondary"
+            class="description description-secondary"
+            [title]="descriptionSecondary"
+        >
+            {{ descriptionSecondary }}
+        </div>
     </div>
 </div>
 <ng-template #descriptionTemplate>

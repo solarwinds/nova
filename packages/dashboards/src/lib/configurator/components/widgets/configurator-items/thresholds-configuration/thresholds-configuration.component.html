@@ -1,24 +1,41 @@
-<nui-widget-editor-accordion [formGroup]="form"
-                             [state]="form | nuiWidgetEditorAccordionFormState | async">
-    <div accordionHeader
-         class="d-flex align-items-center px-4 py-2">
-        <nui-icon class="align-self-start pt-2" [icon]="form | nuiFormHeaderIconPipe:'thresholds' | async"></nui-icon>
+<nui-widget-editor-accordion
+    [formGroup]="form"
+    [state]="form | nuiWidgetEditorAccordionFormState | async"
+>
+    <div accordionHeader class="d-flex align-items-center px-4 py-2">
+        <nui-icon
+            class="align-self-start pt-2"
+            [icon]="form | nuiFormHeaderIconPipe: 'thresholds' | async"
+        ></nui-icon>
         <div class="d-flex flex-column ml-4 pt-1">
             <span class="nui-text-label" i18n>Thresholds</span>
-            <div class="nui-text-secondary" [title]="getThresholdsSubtitle(form.get('showThresholds')?.value)">{{getThresholdsSubtitle(form.get('showThresholds')?.value)}}</div>
+            <div
+                class="nui-text-secondary"
+                [title]="
+                    getThresholdsSubtitle(form.get('showThresholds')?.value)
+                "
+            >
+                {{ getThresholdsSubtitle(form.get("showThresholds")?.value) }}
+            </div>
         </div>
     </div>
     <div class="kpi-thresholds-configuration__accordion-content">
-        <nui-form-field [control]="form.get('showThresholds')"
-                        caption="How do you want to set warning/critical thresholds?"
-                        i18n-caption>
-            <nui-radio-group formControlName="showThresholds"
-                             [value]="radioButtonGroupValue"
-                             name="showThresholds"
-                             required>
-                <nui-radio *ngFor="let thresholdOption of thresholdOptions"
-                           [value]="thresholdOption.value">
-                    {{thresholdOption.displayValue}}
+        <nui-form-field
+            [control]="form.get('showThresholds')"
+            caption="How do you want to set warning/critical thresholds?"
+            i18n-caption
+        >
+            <nui-radio-group
+                formControlName="showThresholds"
+                [value]="radioButtonGroupValue"
+                name="showThresholds"
+                required
+            >
+                <nui-radio
+                    *ngFor="let thresholdOption of thresholdOptions"
+                    [value]="thresholdOption.value"
+                >
+                    {{ thresholdOption.displayValue }}
                 </nui-radio>
             </nui-radio-group>
             <nui-validation-message for="required" i18n>
@@ -28,43 +45,65 @@
 
         <div class="mt-4" *ngIf="form.get('showThresholds')?.value">
             <div class="mb-4">
-                <nui-form-field caption="Warning value" i18n-caption [control]="form.get('warningThresholdValue')">
-                    <nui-textbox-number formControlName="warningThresholdValue"
-                                        placeholder="Never show the warning state"
-                                        i18n-placeholder></nui-textbox-number>
+                <nui-form-field
+                    caption="Warning value"
+                    i18n-caption
+                    [control]="form.get('warningThresholdValue')"
+                >
+                    <nui-textbox-number
+                        formControlName="warningThresholdValue"
+                        placeholder="Never show the warning state"
+                        i18n-placeholder
+                    ></nui-textbox-number>
                     <nui-validation-message for="required" i18n>
                         This field is required
                     </nui-validation-message>
                     <nui-validation-message for="min" i18n>
-                        Warning threshold should be greater than critical threshold
+                        Warning threshold should be greater than critical
+                        threshold
                     </nui-validation-message>
                     <nui-validation-message for="max" i18n>
-                        Warning threshold should be lower than critical threshold
+                        Warning threshold should be lower than critical
+                        threshold
                     </nui-validation-message>
                 </nui-form-field>
             </div>
 
             <div class="mb-4">
-                <nui-form-field caption="Critical value" i18n-caption [control]="form.get('criticalThresholdValue')">
-                    <nui-textbox-number formControlName="criticalThresholdValue"
-                                        placeholder="Set critical value"
-                                        i18n-placeholder></nui-textbox-number>
+                <nui-form-field
+                    caption="Critical value"
+                    i18n-caption
+                    [control]="form.get('criticalThresholdValue')"
+                >
+                    <nui-textbox-number
+                        formControlName="criticalThresholdValue"
+                        placeholder="Set critical value"
+                        i18n-placeholder
+                    ></nui-textbox-number>
                     <nui-validation-message for="required" i18n>
                         This field is required
                     </nui-validation-message>
                     <nui-validation-message for="min" i18n>
-                        Critical threshold should be greater than warning threshold
+                        Critical threshold should be greater than warning
+                        threshold
                     </nui-validation-message>
                     <nui-validation-message for="max" i18n>
-                        Critical threshold should be lower than warning threshold
+                        Critical threshold should be lower than warning
+                        threshold
                     </nui-validation-message>
                 </nui-form-field>
             </div>
 
-            <nui-form-field caption="Warning and critical when below threshold values" i18n-caption
-                            [control]="form.get('reversedThresholds')"
-                            [showOptionalText]="false">
-                <nui-checkbox formControlName="reversedThresholds" required></nui-checkbox>
+            <nui-form-field
+                caption="Warning and critical when below threshold values"
+                i18n-caption
+                [control]="form.get('reversedThresholds')"
+                [showOptionalText]="false"
+            >
+                <nui-checkbox
+                    formControlName="reversedThresholds"
+                    required
+                ></nui-checkbox>
                 <nui-validation-message for="required" i18n>
                     This field is required
                 </nui-validation-message>

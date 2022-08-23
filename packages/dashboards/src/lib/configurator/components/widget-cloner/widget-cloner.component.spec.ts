@@ -1,11 +1,25 @@
 import { ChangeDetectorRef, Component } from "@angular/core";
-import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    flush,
+    TestBed,
+    waitForAsync,
+} from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
-import { LoggerService, NuiBusyModule, NuiButtonModule, NuiIconModule, NuiSpinnerModule } from "@nova-ui/bits";
+
+import {
+    LoggerService,
+    NuiBusyModule,
+    NuiButtonModule,
+    NuiIconModule,
+    NuiSpinnerModule,
+} from "@nova-ui/bits";
 
 import { TemplateLoadErrorComponent } from "../../../components/template-load-error/template-load-error.component";
+import { IWidget } from "../../../components/widget/types";
 import { mockChangeDetector, mockLoggerService } from "../../../mocks";
 import { NuiPizzagnaModule } from "../../../pizzagna/pizzagna.module";
 import { ProviderRegistryService } from "../../../services/provider-registry.service";
@@ -21,8 +35,6 @@ import { DashwizStepComponent } from "../wizard/dashwiz-step/dashwiz-step.compon
 import { DashwizButtonsComponent } from "../wizard/dashwiz/dashwiz-buttons.component";
 import { DashwizComponent } from "../wizard/dashwiz/dashwiz.component";
 import { IDashwizStepNavigatedEvent } from "../wizard/types";
-import { IWidget } from "../../../components/widget/types"
-
 import { WidgetClonerComponent } from "./widget-cloner.component";
 
 @Component({
@@ -91,24 +103,26 @@ describe("WidgetClonerComponent", () => {
                     useValue: mockLoggerService,
                 },
             ],
-        }).overrideModule(BrowserDynamicTestingModule,
-                          {
-                              set: {
-                                  entryComponents: [
-                                      DashwizButtonsComponent,
-                                      MockCloneSelectionComponent,
-                                      TemplateLoadErrorComponent,
-                                  ],
-                              },
-                          }
-        ).compileComponents();
+        })
+            .overrideModule(BrowserDynamicTestingModule, {
+                set: {
+                    entryComponents: [
+                        DashwizButtonsComponent,
+                        MockCloneSelectionComponent,
+                        TemplateLoadErrorComponent,
+                    ],
+                },
+            })
+            .compileComponents();
     }));
 
     beforeEach(() => {
         fixture = TestBed.createComponent(WidgetClonerComponent);
         component = fixture.componentInstance;
         component.cloneSelectionComponentType = MockCloneSelectionComponent;
-        const dashwizDE = fixture.debugElement.query(By.directive(DashwizComponent));
+        const dashwizDE = fixture.debugElement.query(
+            By.directive(DashwizComponent)
+        );
         dashwiz = dashwizDE.componentInstance;
         fixture.detectChanges();
     });
@@ -191,7 +205,9 @@ describe("WidgetClonerComponent", () => {
         });
 
         it("should invoke onStepNavigated on dashwiz stepNavigated output", () => {
-            const testPayload = { currentStepIndex: 0 } as IDashwizStepNavigatedEvent;
+            const testPayload = {
+                currentStepIndex: 0,
+            } as IDashwizStepNavigatedEvent;
             const spy = spyOn(component, "onStepNavigated");
             dashwiz.stepNavigated.next(testPayload);
             expect(spy).toHaveBeenCalledWith(testPayload);
@@ -207,16 +223,27 @@ describe("WidgetClonerComponent", () => {
         describe("Wizard Step 0 > ", () => {
             describe("if the currentStepIndex is 0 and the previousStepIndex is 1 > ", () => {
                 it("should set the formPizzagna to undefined", () => {
-                    component.onStepNavigated({ currentStepIndex: 1 } as IDashwizStepNavigatedEvent);
-                    const expectedPizzagna = widgetTypesService.getWidgetType(component.widgetTemplate.type, component.widgetTemplate.version).configurator;
+                    component.onStepNavigated({
+                        currentStepIndex: 1,
+                    } as IDashwizStepNavigatedEvent);
+                    const expectedPizzagna = widgetTypesService.getWidgetType(
+                        component.widgetTemplate.type,
+                        component.widgetTemplate.version
+                    ).configurator;
                     expect(component.formPizzagna).toEqual(expectedPizzagna);
-                    component.onStepNavigated({ currentStepIndex: 0, previousStepIndex: 1 } as IDashwizStepNavigatedEvent);
+                    component.onStepNavigated({
+                        currentStepIndex: 0,
+                        previousStepIndex: 1,
+                    } as IDashwizStepNavigatedEvent);
                     expect(component.formPizzagna).not.toBeDefined();
                 });
 
                 it("should invoke change detection in response to form status changes", () => {
                     const spy = spyOn(component.changeDetector, "markForCheck");
-                    component.onStepNavigated({ currentStepIndex: 0, previousStepIndex: 1 } as IDashwizStepNavigatedEvent);
+                    component.onStepNavigated({
+                        currentStepIndex: 0,
+                        previousStepIndex: 1,
+                    } as IDashwizStepNavigatedEvent);
 
                     // trigger status change
                     component.form.setValue({});
@@ -226,14 +253,20 @@ describe("WidgetClonerComponent", () => {
 
                 it("should re-instantiate the form", () => {
                     const previousForm = component.form;
-                    component.onStepNavigated({ currentStepIndex: 0, previousStepIndex: 1 } as IDashwizStepNavigatedEvent);
+                    component.onStepNavigated({
+                        currentStepIndex: 0,
+                        previousStepIndex: 1,
+                    } as IDashwizStepNavigatedEvent);
                     expect(previousForm).not.toBe(component.form);
                 });
 
                 it("should unsubscribe from status changes on the previous form instance", () => {
                     const spy = spyOn(component.changeDetector, "markForCheck");
                     const previousForm = component.form;
-                    component.onStepNavigated({ currentStepIndex: 0, previousStepIndex: 1 } as IDashwizStepNavigatedEvent);
+                    component.onStepNavigated({
+                        currentStepIndex: 0,
+                        previousStepIndex: 1,
+                    } as IDashwizStepNavigatedEvent);
 
                     // trigger status change
                     previousForm.setValue({});
@@ -243,7 +276,10 @@ describe("WidgetClonerComponent", () => {
 
                 it("should unsubscribe from status changes on ngOnDestroy", () => {
                     const spy = spyOn(component.changeDetector, "markForCheck");
-                    component.onStepNavigated({ currentStepIndex: 0, previousStepIndex: 1 } as IDashwizStepNavigatedEvent);
+                    component.onStepNavigated({
+                        currentStepIndex: 0,
+                        previousStepIndex: 1,
+                    } as IDashwizStepNavigatedEvent);
                     component.ngOnDestroy();
 
                     // trigger status change
@@ -255,7 +291,10 @@ describe("WidgetClonerComponent", () => {
                 it("should invoke onSelect with the current widgetTemplate", () => {
                     const expectedWidgetTemplate = component.widgetTemplate;
                     const spy = spyOn(component, "onSelect");
-                    component.onStepNavigated({ currentStepIndex: 0, previousStepIndex: 1 } as IDashwizStepNavigatedEvent);
+                    component.onStepNavigated({
+                        currentStepIndex: 0,
+                        previousStepIndex: 1,
+                    } as IDashwizStepNavigatedEvent);
 
                     expect(spy).toHaveBeenCalledWith(expectedWidgetTemplate);
                 });
@@ -265,31 +304,50 @@ describe("WidgetClonerComponent", () => {
         describe("Wizard Step 1 > ", () => {
             it("should set isFormDisplayed to true", () => {
                 expect(component.isFormDisplayed).toEqual(false);
-                component.onStepNavigated({ currentStepIndex: 1 } as IDashwizStepNavigatedEvent);
+                component.onStepNavigated({
+                    currentStepIndex: 1,
+                } as IDashwizStepNavigatedEvent);
                 expect(component.isFormDisplayed).toEqual(true);
             });
 
             it("should set isFormDisplayed to false if the currentStepIndex is anything but 1", () => {
-                component.onStepNavigated({ currentStepIndex: 1 } as IDashwizStepNavigatedEvent);
+                component.onStepNavigated({
+                    currentStepIndex: 1,
+                } as IDashwizStepNavigatedEvent);
                 expect(component.isFormDisplayed).toEqual(true);
-                component.onStepNavigated({ currentStepIndex: 3 } as IDashwizStepNavigatedEvent);
+                component.onStepNavigated({
+                    currentStepIndex: 3,
+                } as IDashwizStepNavigatedEvent);
                 expect(component.isFormDisplayed).toEqual(false);
-                component.onStepNavigated({ currentStepIndex: 1 } as IDashwizStepNavigatedEvent);
+                component.onStepNavigated({
+                    currentStepIndex: 1,
+                } as IDashwizStepNavigatedEvent);
                 expect(component.isFormDisplayed).toEqual(true);
-                component.onStepNavigated({ currentStepIndex: 0 } as IDashwizStepNavigatedEvent);
+                component.onStepNavigated({
+                    currentStepIndex: 0,
+                } as IDashwizStepNavigatedEvent);
                 expect(component.isFormDisplayed).toEqual(false);
             });
 
             it("should set the formPizzagna", () => {
-                component.onStepNavigated({ currentStepIndex: 1 } as IDashwizStepNavigatedEvent);
-                const expectedPizzagna = widgetTypesService.getWidgetType(component.widgetTemplate.type, component.widgetTemplate.version).configurator;
+                component.onStepNavigated({
+                    currentStepIndex: 1,
+                } as IDashwizStepNavigatedEvent);
+                const expectedPizzagna = widgetTypesService.getWidgetType(
+                    component.widgetTemplate.type,
+                    component.widgetTemplate.version
+                ).configurator;
                 expect(component.formPizzagna).toEqual(expectedPizzagna);
             });
 
             it("should set the previewService.preview", () => {
-                component.widgetTemplate.pizzagna[PizzagnaLayer.Configuration] = { "test": {} };
-                const expectedPreview = component.widgetTemplate.pizzagna.configuration;
-                component.onStepNavigated({ currentStepIndex: 1 } as IDashwizStepNavigatedEvent);
+                component.widgetTemplate.pizzagna[PizzagnaLayer.Configuration] =
+                    { test: {} };
+                const expectedPreview =
+                    component.widgetTemplate.pizzagna.configuration;
+                component.onStepNavigated({
+                    currentStepIndex: 1,
+                } as IDashwizStepNavigatedEvent);
                 expect(previewService.preview).toEqual(expectedPreview);
             });
         });
@@ -311,5 +369,4 @@ describe("WidgetClonerComponent", () => {
             expect(spy).toHaveBeenCalled();
         });
     });
-
 });

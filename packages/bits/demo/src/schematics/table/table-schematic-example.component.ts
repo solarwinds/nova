@@ -26,7 +26,11 @@ import { SchematicsDocsComponentType } from "../utils/schematic-docs-cli-option/
 @Component({
     selector: "nui-table-schematics-docs-example",
     templateUrl: "table-schematic-example.component.html",
-    providers: [{provide: SchematicsDocsComponentType, useValue: SchematicsDocsComponentType.table }],
+    providers: [
+        {
+            provide: SchematicsDocsComponentType,
+            useValue: SchematicsDocsComponentType.table,
+        },
+    ],
 })
-export class TableSchematicExampleComponent {
-}
+export class TableSchematicExampleComponent {}

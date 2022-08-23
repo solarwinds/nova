@@ -1,4 +1,6 @@
-import { ChangeDetectorRef, Component, OnInit} from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { GridsterConfig, GridsterItem } from "angular-gridster2";
+
 import {
     DATA_SOURCE,
     DEFAULT_PIZZAGNA_ROOT,
@@ -15,8 +17,13 @@ import {
     WellKnownProviders,
     WidgetTypesService,
 } from "@nova-ui/dashboards";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
-import { TestKpiDataSource, TestKpiDataSource2, TestKpiDataSourceBigNumber, TestKpiDataSourceSmallNumber } from "../../../data/kpi-data-sources";
+
+import {
+    TestKpiDataSource,
+    TestKpiDataSource2,
+    TestKpiDataSourceBigNumber,
+    TestKpiDataSourceSmallNumber,
+} from "../../../data/kpi-data-sources";
 
 /**
  * A component that instantiates the dashboard
@@ -37,7 +44,7 @@ export class KpiErrorTestComponent implements OnInit {
         private widgetTypesService: WidgetTypesService,
         private providerRegistry: ProviderRegistryService,
         private changeDetectorRef: ChangeDetectorRef
-    ) { }
+    ) {}
 
     public ngOnInit(): void {
         const widgetTemplate = this.widgetTypesService.getWidgetType("kpi", 1);
@@ -46,11 +53,20 @@ export class KpiErrorTestComponent implements OnInit {
             widgetTemplate,
             "configurator",
             WellKnownPathKey.DataSourceProviders,
-            [TestKpiDataSource.providerId, TestKpiDataSource2.providerId, TestKpiDataSourceBigNumber.providerId, TestKpiDataSourceSmallNumber.providerId]
+            [
+                TestKpiDataSource.providerId,
+                TestKpiDataSource2.providerId,
+                TestKpiDataSourceBigNumber.providerId,
+                TestKpiDataSourceSmallNumber.providerId,
+            ]
         );
-        [TestKpiDataSource, TestKpiDataSource2, TestKpiDataSourceBigNumber].forEach((dataSource) => {
+        [
+            TestKpiDataSource,
+            TestKpiDataSource2,
+            TestKpiDataSourceBigNumber,
+        ].forEach((dataSource) => {
             dataSource.mockError = true;
-        })
+        });
         this.providerRegistry.setProviders({
             [TestKpiDataSource.providerId]: {
                 provide: DATA_SOURCE,
@@ -87,7 +103,8 @@ export class KpiErrorTestComponent implements OnInit {
     public initializeDashboard(): void {
         const kpiWidget = widgetConfig;
         const widgetIndex: IWidgets = {
-            [kpiWidget.id]: this.widgetTypesService.mergeWithWidgetType(kpiWidget),
+            [kpiWidget.id]:
+                this.widgetTypesService.mergeWithWidgetType(kpiWidget),
         };
         const positions: Record<string, GridsterItem> = {
             [kpiWidget.id]: {
@@ -103,7 +120,6 @@ export class KpiErrorTestComponent implements OnInit {
             widgets: widgetIndex,
         };
     }
-
 }
 
 const widgetConfig: IWidget = {
@@ -112,45 +128,45 @@ const widgetConfig: IWidget = {
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
             [DEFAULT_PIZZAGNA_ROOT]: {
-                "providers": {
+                providers: {
                     [WellKnownProviders.Refresher]: {
-                        "properties": {
+                        properties: {
                             // Configuring the refresher interval so that our data source is invoked every ten minutes
-                            "interval": 60 * 10,
-                            "enabled": true,
+                            interval: 60 * 10,
+                            enabled: true,
                         } as IRefresherProperties,
                     } as Partial<IProviderConfiguration>,
                 },
             },
-            "header": {
-                "properties": {
-                    "title": "Error Widget",
+            header: {
+                properties: {
+                    title: "Error Widget",
                 },
             },
-            "tiles": {
-                "properties": {
-                    "nodes": ["kpi1"],
+            tiles: {
+                properties: {
+                    nodes: ["kpi1"],
                 },
             },
-            "kpi1": {
-                "id": "kpi1",
-                "componentType": KpiComponent.lateLoadKey,
-                "properties": {
-                    "widgetData": {
-                        "units": "out of 5 Stars",
-                        "label": "Average Rating",
+            kpi1: {
+                id: "kpi1",
+                componentType: KpiComponent.lateLoadKey,
+                properties: {
+                    widgetData: {
+                        units: "out of 5 Stars",
+                        label: "Average Rating",
                     },
                 },
-                "providers": {
+                providers: {
                     [WellKnownProviders.DataSource]: {
                         // Setting the data source providerId for the tile with id "kpi1"
-                        "providerId": TestKpiDataSource.providerId,
+                        providerId: TestKpiDataSource.providerId,
                     } as IProviderConfiguration,
                     [WellKnownProviders.Adapter]: {
-                        "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
-                        "properties": {
-                            "componentId": "kpi1",
-                            "propertyPath": "widgetData",
+                        providerId: NOVA_KPI_DATASOURCE_ADAPTER,
+                        properties: {
+                            componentId: "kpi1",
+                            propertyPath: "widgetData",
                         },
                     } as IProviderConfiguration,
                 },

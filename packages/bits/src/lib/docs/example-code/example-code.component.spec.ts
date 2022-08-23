@@ -1,17 +1,18 @@
 /// <reference path="../../../../node_modules/highlight.js/types/index.d.ts" />
 
 import { ElementRef } from "@angular/core";
+import hljs from "highlight.js/lib/core";
 
 import { ExampleCodeComponent } from "./example-code.component";
-
-import hljs from "highlight.js/lib/core";
 
 describe("components >", () => {
     describe("code >", () => {
         let subject: ExampleCodeComponent;
         beforeEach(() => {
-            subject = new ExampleCodeComponent;
-            subject.codeElement =  {nativeElement: document.createElement("div")} as ElementRef;
+            subject = new ExampleCodeComponent();
+            subject.codeElement = {
+                nativeElement: document.createElement("div"),
+            } as ElementRef;
         });
 
         describe("ngAfterViewInit", () => {

@@ -25,41 +25,42 @@ interface IKpiNodeConfig {
 
 export function getKpiNode(cfg: IKpiNodeConfig) {
     return {
-        "id": cfg.id,
-        "providers": {
+        id: cfg.id,
+        providers: {
             [WellKnownProviders.DataSource]: {
-                "providerId": cfg.ds?.providerId || TestKpiDataSource.providerId,
+                providerId: cfg.ds?.providerId || TestKpiDataSource.providerId,
             } as IProviderConfiguration,
             [WellKnownProviders.Adapter]: {
-                "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
-                "properties": {
-                    "componentId": cfg.id,
-                    "propertyPath": "widgetData",
+                providerId: NOVA_KPI_DATASOURCE_ADAPTER,
+                properties: {
+                    componentId: cfg.id,
+                    propertyPath: "widgetData",
                 },
             } as IProviderConfiguration,
             [WellKnownProviders.KpiColorPrioritizer]: {
-                "providerId": NOVA_KPI_COLOR_PRIORITIZER,
-                "properties": cfg.colorPrioritizer ? getColorPrioritizer() : {},
+                providerId: NOVA_KPI_COLOR_PRIORITIZER,
+                properties: cfg.colorPrioritizer ? getColorPrioritizer() : {},
             } as IProviderConfiguration,
         },
-        "properties": {
+        properties: {
             configuration: {
                 formatters: cfg.formatter ? getFormatter() : {},
             } as IKpiConfiguration,
 
-            "widgetData": {
-                "id":  "totalStorage",
-                "value": 0,
-                "label": cfg.title ? "Test Label" : "Lack_of_white_spaces_often_break_the_markup",
-                "units": "Bytes",
-                "backgroundColor": cfg.color || "skyblue",
-                "icon": "state_ok",
-                "link": "http://www.google.com",
+            widgetData: {
+                id: "totalStorage",
+                value: 0,
+                label: cfg.title
+                    ? "Test Label"
+                    : "Lack_of_white_spaces_often_break_the_markup",
+                units: "Bytes",
+                backgroundColor: cfg.color || "skyblue",
+                icon: "state_ok",
+                link: "http://www.google.com",
             },
         },
     };
 }
-
 
 export function getFormatter() {
     return {
@@ -78,21 +79,21 @@ export function getFormatter() {
 
 export function getColorPrioritizer() {
     return {
-        "rules": [
+        rules: [
             {
-                "comparisonType": ">",
-                "value": 2,
-                "color": "var(--nui-color-chart-four)",
+                comparisonType: ">",
+                value: 2,
+                color: "var(--nui-color-chart-four)",
             },
             {
-                "comparisonType": "==",
-                "value": 1.5,
-                "color": "var(--nui-color-chart-seven)",
+                comparisonType: "==",
+                value: 1.5,
+                color: "var(--nui-color-chart-seven)",
             },
             {
-                "comparisonType": "<",
-                "value": 1,
-                "color": "var(--nui-color-chart-one)",
+                comparisonType: "<",
+                value: 1,
+                color: "var(--nui-color-chart-one)",
             },
         ] as IKpiColorRules[],
     };

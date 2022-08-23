@@ -12,18 +12,22 @@ export class SourcesService {
     constructor(
         private logger: LoggerService,
         @SkipSelf() @Optional() @Inject(DEMO_PATH_TOKEN) private context: any
-    ) { }
+    ) {}
 
     public getSourcesByFilenamePrefix(prefix: string) {
         if (!this.context) {
-            this.logger.error(`You need to configure SourceService in the module where you import NuiDocsModule
+            this.logger
+                .error(`You need to configure SourceService in the module where you import NuiDocsModule
                                 e.g. { provide: DEMO_PATH_TOKEN,
                                 useFactory: () => (<any> require).context("!!raw-loader!./components/demo/", true, /.*\.(ts|html|less)$/)}, `);
             return;
         }
         const matchingFilePaths = _filter(this.context.keys(), (filePath) => {
             const prefixIndex = filePath.indexOf(prefix);
-            const nextChar = prefixIndex !== -1 ? filePath[prefixIndex + prefix.length] : undefined;
+            const nextChar =
+                prefixIndex !== -1
+                    ? filePath[prefixIndex + prefix.length]
+                    : undefined;
             return prefixIndex !== -1 && (nextChar === "." || nextChar === "/");
         });
         return matchingFilePaths.reduce((acc: any, curr: any) => {
@@ -66,7 +70,10 @@ export class SourcesService {
                 );
             }
 
-            fileData = { [extension]: extension === "less" ? fileContent : fileContent.default };
+            fileData = {
+                [extension]:
+                    extension === "less" ? fileContent : fileContent.default,
+            };
         }
 
         return fileData;

@@ -1,71 +1,113 @@
 <div class="nui-table-columns-configuration">
-    <div *ngIf="!dataSourceError && dataSourceFields.length" cdkDropList (cdkDropListDropped)="drop($event)"
-         [formGroup]="form">
+    <div
+        *ngIf="!dataSourceError && dataSourceFields.length"
+        cdkDropList
+        (cdkDropListDropped)="drop($event)"
+        [formGroup]="form"
+    >
         <div formArrayName="columns">
-            <div cdkDrag
-                 (cdkDragStarted)="cdkDragStarted($event)"
-                 class="nui-table-columns-configuration__node-item"
-                 *ngFor="let columnForm of columnForms; index as i; trackBy: trackBy">
-
-                <nui-drop-area class="nui-table-columns-configuration__drop-area" *cdkDragPlaceholder [style.height.px]="draggedItemHeight"></nui-drop-area>
+            <div
+                cdkDrag
+                (cdkDragStarted)="cdkDragStarted($event)"
+                class="nui-table-columns-configuration__node-item"
+                *ngFor="
+                    let columnForm of columnForms;
+                    index as i;
+                    trackBy: trackBy
+                "
+            >
+                <nui-drop-area
+                    class="nui-table-columns-configuration__drop-area"
+                    *cdkDragPlaceholder
+                    [style.height.px]="draggedItemHeight"
+                ></nui-drop-area>
 
                 <ng-template #headerText>
                     <ng-container>
-                        <div class="nui-table-columns-configuration__drag-handler" cdkDragHandle>
+                        <div
+                            class="nui-table-columns-configuration__drag-handler"
+                            cdkDragHandle
+                        >
                             <nui-icon icon="drag"></nui-icon>
                         </div>
                     </ng-container>
-                    <span class="nui-table-columns-configuration__header-text"
-                          [title]="columnForm?.value.label | nuiWidgetConfiguratorSectionHeader : i : columnLabel">
-                    {{ columnForm?.value.label | nuiWidgetConfiguratorSectionHeader : i : columnLabel }}
-                </span>
+                    <span
+                        class="nui-table-columns-configuration__header-text"
+                        [title]="
+                            columnForm?.value.label
+                                | nuiWidgetConfiguratorSectionHeader
+                                    : i
+                                    : columnLabel
+                        "
+                    >
+                        {{
+                            columnForm?.value.label
+                                | nuiWidgetConfiguratorSectionHeader
+                                    : i
+                                    : columnLabel
+                        }}
+                    </span>
                 </ng-template>
 
                 <ng-template #headerButtons>
                     <div class="d-flex">
-                        <button id="table-widget-remove-column-btn-{{i}}"
-                                nui-button
-                                type="button"
-                                icon="delete"
-                                displayStyle="action"
-                                (click)="removeItem(i)"></button>
+                        <button
+                            id="table-widget-remove-column-btn-{{ i }}"
+                            nui-button
+                            type="button"
+                            icon="delete"
+                            displayStyle="action"
+                            (click)="removeItem(i)"
+                        ></button>
                     </div>
                 </ng-template>
 
-                <nui-widget-configurator-section class="no-margin"
-                                                 [headerTextTemplate]="headerText"
-                                                 [headerButtonsTemplate]="headerButtons">
-                    <nui-table-column-configuration [formControl]="columnForm"
-                                                    [isWidthMessageDisplayed]="isWidthMessageDisplayed"></nui-table-column-configuration>
+                <nui-widget-configurator-section
+                    class="no-margin"
+                    [headerTextTemplate]="headerText"
+                    [headerButtonsTemplate]="headerButtons"
+                >
+                    <nui-table-column-configuration
+                        [formControl]="columnForm"
+                        [isWidthMessageDisplayed]="isWidthMessageDisplayed"
+                    ></nui-table-column-configuration>
                 </nui-widget-configurator-section>
             </div>
 
-            <div class="pl-4 pr-4" *ngIf="(emptyColumns$ | async) && form.touched">
+            <div
+                class="pl-4 pr-4"
+                *ngIf="(emptyColumns$ | async) && form.touched"
+            >
                 <nui-message type="critical" [allowDismiss]="false">
                     <b i18n>At least one column must be added.</b>
                 </nui-message>
             </div>
 
-            <button nui-button
-                    icon="add"
-                    displayStyle="action"
-                    id="table-widget-add-indicator-btn"
-                    type="button"
-                    class="ml-4 mb-4"
-                    (click)="addColumn()"
-                    i18n>Add new column
+            <button
+                nui-button
+                icon="add"
+                displayStyle="action"
+                id="table-widget-add-indicator-btn"
+                type="button"
+                class="ml-4 mb-4"
+                (click)="addColumn()"
+                i18n
+            >
+                Add new column
             </button>
 
-            <button nui-button
-                    icon="reset"
-                    displayStyle="action"
-                    id="table-widget-reset-indicator-btn"
-                    type="button"
-                    class="ml-4 mb-4"
-                    (click)="onResetColumns()"
-                    i18n>Reset columns
+            <button
+                nui-button
+                icon="reset"
+                displayStyle="action"
+                id="table-widget-reset-indicator-btn"
+                type="button"
+                class="ml-4 mb-4"
+                (click)="onResetColumns()"
+                i18n
+            >
+                Reset columns
             </button>
         </div>
     </div>
 </div>
-

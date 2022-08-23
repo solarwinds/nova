@@ -13,6 +13,9 @@ import {
     SimpleChanges,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ReplaySubject, Subject } from "rxjs";
+import { take, takeUntil } from "rxjs/operators";
+
 import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
 import {
     ConfiguratorHeadingService,
@@ -24,8 +27,6 @@ import {
     PIZZAGNA_EVENT_BUS,
     ProviderRegistryService,
 } from "@nova-ui/dashboards";
-import { ReplaySubject, Subject } from "rxjs";
-import { take, takeUntil } from "rxjs/operators";
 
 @Component({
     selector: "acme-proportional-ds-config",
@@ -33,7 +34,9 @@ import { take, takeUntil } from "rxjs/operators";
     styleUrls: ["./proportional-ds-config.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AcmeProportionalDSConfigComponent implements IHasChangeDetector, OnInit, OnChanges, OnDestroy {
+export class AcmeProportionalDSConfigComponent
+    implements IHasChangeDetector, OnInit, OnChanges, OnDestroy
+{
     public static lateLoadKey = "AcmeProportionalDSConfigComponent";
 
     @Input() dataSourceProviders: string[] = [];
@@ -50,13 +53,15 @@ export class AcmeProportionalDSConfigComponent implements IHasChangeDetector, On
 
     private destroy$: Subject<any> = new Subject();
 
-    constructor(public changeDetector: ChangeDetectorRef,
+    constructor(
+        public changeDetector: ChangeDetectorRef,
         private formBuilder: FormBuilder,
         public configuratorHeading: ConfiguratorHeadingService,
         private providerRegistryService: ProviderRegistryService,
         @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
         private injector: Injector,
-        private logger: LoggerService) { }
+        private logger: LoggerService
+    ) {}
 
     public ngOnInit(): void {
         this.form = this.formBuilder.group({
@@ -72,15 +77,20 @@ export class AcmeProportionalDSConfigComponent implements IHasChangeDetector, On
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.providerId && !changes.providerId.isFirstChange()) {
             const previousValue: string = changes.providerId.previousValue;
-            if ((previousValue) !== this.providerId) {
+            if (previousValue !== this.providerId) {
                 this.form.get("providerId")?.setValue(this.providerId);
                 this.invokeDataSource(this.providerId);
             }
         }
 
         if (changes.properties && !changes.properties.isFirstChange()) {
-            if (changes.properties.previousValue?.isEuropeOnly !== this.properties.isEuropeOnly) {
-                this.form.get("properties.isEuropeOnly")?.setValue(this.properties.isEuropeOnly);
+            if (
+                changes.properties.previousValue?.isEuropeOnly !==
+                this.properties.isEuropeOnly
+            ) {
+                this.form
+                    .get("properties.isEuropeOnly")
+                    ?.setValue(this.properties.isEuropeOnly);
             }
         }
     }
@@ -101,26 +111,27 @@ export class AcmeProportionalDSConfigComponent implements IHasChangeDetector, On
         }
         const provider = this.providerRegistryService.getProvider(providerId);
         if (provider) {
-            const dataSource = this.providerRegistryService.getProviderInstance(provider, this.injector);
+            const dataSource = this.providerRegistryService.getProviderInstance(
+                provider,
+                this.injector
+            );
             // This subscriptions is only meant to emit actual datasource value to event bus
-            dataSource
-                .outputsSubject
+            dataSource.outputsSubject
                 .pipe(take(1))
                 .subscribe((result: any | IDataSourceOutput<any>) => {
                     this.eventBus.next(DATA_SOURCE_OUTPUT, { payload: result });
                 });
 
             // This subscription emits filtered set of datasource values defined by the from properties changes
-            dataSource
-                .outputsSubject
+            dataSource.outputsSubject
                 .pipe(takeUntil(this.destroy$))
                 .subscribe((result: any | IDataSourceOutput<any>) => {
                     this.dsOutput.next(result);
                 });
 
             this.form
-                .get("properties")?.valueChanges
-                .pipe(takeUntil(this.destroy$))
+                .get("properties")
+                ?.valueChanges.pipe(takeUntil(this.destroy$))
                 .subscribe(async (value) => {
                     // Updating changed properties to let datasource properly update the datasource if there are any filters
                     // in the configuration (isEuropeOnly property in our case).
@@ -130,7 +141,6 @@ export class AcmeProportionalDSConfigComponent implements IHasChangeDetector, On
                     });
                     await dataSource.applyFilters();
                 });
-
         } else {
             this.logger.warn("No provider found for id:", providerId);
         }

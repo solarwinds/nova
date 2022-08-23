@@ -1,6 +1,17 @@
 import { ChangeDetectorRef, Component, Inject, Optional } from "@angular/core";
+
 import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
-import { Chart, ChartAssist, ChartPalette, IAccessors, IValueProvider, LineAccessors, LineRenderer, XYGrid, XYGridConfig } from "@nova-ui/charts";
+import {
+    Chart,
+    ChartAssist,
+    ChartPalette,
+    IAccessors,
+    IValueProvider,
+    LineAccessors,
+    LineRenderer,
+    XYGrid,
+    XYGridConfig,
+} from "@nova-ui/charts";
 
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../../types";
 import { TimeseriesScalesService } from "../../../timeseries-scales.service";
@@ -14,16 +25,20 @@ import { XYChartComponent } from "../xy-chart.component";
 export class LineChartComponent extends XYChartComponent {
     public static lateLoadKey = "LineChartComponent";
 
-    constructor(@Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
-                @Optional() @Inject(DATA_SOURCE) dataSource: IDataSource,
-                                            timeseriesScalesService: TimeseriesScalesService,
-                                            changeDetector: ChangeDetectorRef) {
+    constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
+        @Optional() @Inject(DATA_SOURCE) dataSource: IDataSource,
+        timeseriesScalesService: TimeseriesScalesService,
+        changeDetector: ChangeDetectorRef
+    ) {
         super(eventBus, dataSource, timeseriesScalesService, changeDetector);
 
         this.renderer = new LineRenderer();
     }
 
-    protected createAccessors(colorProvider: IValueProvider<string>): IAccessors {
+    protected createAccessors(
+        colorProvider: IValueProvider<string>
+    ): IAccessors {
         return new LineAccessors(colorProvider);
     }
 

@@ -1,7 +1,13 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+
 // eslint-disable-next-line max-len
-import { NuiButtonModule, NuiDocsModule, NuiMessageModule,  NuiSwitchModule } from "@nova-ui/bits";
+import {
+    NuiButtonModule,
+    NuiDocsModule,
+    NuiMessageModule,
+    NuiSwitchModule,
+} from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { DrilldownDocsComponent } from "./drilldown-docs.component";
@@ -13,8 +19,8 @@ const routes: Routes = [
         path: "",
         component: DrilldownDocsComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -22,8 +28,8 @@ const routes: Routes = [
         path: "example",
         component: DrilldownWidgetExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -31,8 +37,8 @@ const routes: Routes = [
         path: "multiple-requests",
         component: DrilldownMultiRequestWidgetExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -53,5 +59,4 @@ const routes: Routes = [
         DrilldownMultiRequestWidgetExampleComponent,
     ],
 })
-export class DrilldownDocsModule {
-}
+export class DrilldownDocsModule {}

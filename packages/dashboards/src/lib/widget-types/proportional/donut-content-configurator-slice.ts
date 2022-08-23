@@ -1,11 +1,14 @@
 /* eslint-disable max-len */
 import { IBroadcasterConfig } from "../../components/providers/types";
-import { LegendPlacement } from "../../widget-types/common/widget/legend"
 import { WidgetConfiguratorSectionComponent } from "../../configurator/components/widget-configurator-section/widget-configurator-section.component";
 import { ProportionalChartOptionsEditorV2Component } from "../../configurator/components/widgets/proportional/chart-options-editor-v2/proportional-chart-options-editor-v2.component";
 import { DonutContentConfigurationComponent } from "../../configurator/components/widgets/proportional/donut-content-configuration/donut-content-configuration.component";
-import { NOVA_GENERIC_CONVERTER, NOVA_PIZZAGNA_BROADCASTER } from "../../services/types";
+import {
+    NOVA_GENERIC_CONVERTER,
+    NOVA_PIZZAGNA_BROADCASTER,
+} from "../../services/types";
 import { WellKnownProviders } from "../../types";
+import { LegendPlacement } from "../../widget-types/common/widget/legend";
 
 export const DONUT_CONTENT_CONFIGURATION_SLICE = {
     presentation: {
@@ -64,8 +67,13 @@ export const DONUT_CONTENT_CONFIGURATION_SLICE = {
                 properties: {
                     formParts: [
                         {
-                            previewPath: "chart.properties.configuration.chartOptions",
-                            keys: ["type", "legendPlacement", "legendFormatter"],
+                            previewPath:
+                                "chart.properties.configuration.chartOptions",
+                            keys: [
+                                "type",
+                                "legendPlacement",
+                                "legendFormatter",
+                            ],
                         },
                         // {
                         //     previewPath: "chart.properties.configuration",
@@ -81,7 +89,9 @@ export const DONUT_CONTENT_CONFIGURATION_SLICE = {
                         {
                             trackOn: "component",
                             key: "chartTypeChanged$",
-                            paths: ["data.donutContentConfiguration.properties.chartType"],
+                            paths: [
+                                "data.donutContentConfiguration.properties.chartType",
+                            ],
                         },
                     ] as IBroadcasterConfig[],
                 },
@@ -99,7 +109,8 @@ export const DONUT_CONTENT_CONFIGURATION_SLICE = {
                 properties: {
                     formParts: [
                         {
-                            previewPath: "chart.properties.configuration.chartOptions.donutContentConfig",
+                            previewPath:
+                                "chart.properties.configuration.chartOptions.donutContentConfig",
                             keys: ["formatter", "aggregator"],
                         },
                     ],

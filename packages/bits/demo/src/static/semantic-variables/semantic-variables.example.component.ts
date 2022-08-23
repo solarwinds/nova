@@ -5,5 +5,4 @@ import { Component } from "@angular/core";
     styleUrls: ["semantic-variables.example.component.less"],
     templateUrl: "./semantic-variables.example.component.html",
 })
-export class SemanticVariablesExampleComponent {
-}
+export class SemanticVariablesExampleComponent {}

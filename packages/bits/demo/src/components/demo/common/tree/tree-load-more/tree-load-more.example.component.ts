@@ -1,6 +1,16 @@
 import { ArrayDataSource } from "@angular/cdk/collections";
-import { CdkNestedTreeNode, CdkTree, NestedTreeControl } from "@angular/cdk/tree";
-import { Component, IterableDiffer, IterableDiffers, ViewChild } from "@angular/core";
+import {
+    CdkNestedTreeNode,
+    CdkTree,
+    NestedTreeControl,
+} from "@angular/cdk/tree";
+import {
+    Component,
+    IterableDiffer,
+    IterableDiffers,
+    ViewChild,
+} from "@angular/core";
+
 import { EventBusService, expand } from "@nova-ui/bits";
 
 import { HttpMockService } from "../http-mock.service";
@@ -17,7 +27,6 @@ interface IApiResponse {
     items: FoodNode[];
     total: number;
 }
-
 
 const TREE_DATA: FoodNode[] = [
     {
@@ -37,7 +46,6 @@ const TREE_DATA: FoodNode[] = [
             },
         ],
     },
-
 ];
 
 @Component({
@@ -47,26 +55,30 @@ const TREE_DATA: FoodNode[] = [
     animations: [expand],
     providers: [HttpMockService],
 })
-
 export class TreeLoadMoreExampleComponent {
     public pageSize = 10;
     public remainingItemsCount: { [key: string]: number } = {};
 
-    public treeControl = new NestedTreeControl<FoodNode>((node) => node.children);
+    public treeControl = new NestedTreeControl<FoodNode>(
+        (node) => node.children
+    );
     public dataSource = new ArrayDataSource(TREE_DATA);
 
     @ViewChild(CdkTree) private cdkTree: CdkTree<FoodNode>;
 
     hasChild = (_: number, node: FoodNode) => node.children;
 
-    constructor(private http: HttpMockService,
-                private differ: IterableDiffers,
-                private eventBusService: EventBusService) {
-    }
+    constructor(
+        private http: HttpMockService,
+        private differ: IterableDiffers,
+        private eventBusService: EventBusService
+    ) {}
 
     /** Load first page on first open */
     public onToggleClick(node: FoodNode, nestedNode: CdkNestedTreeNode<any>) {
-        this.eventBusService.getStream({id: "document-click"}).next(new MouseEvent("click"));
+        this.eventBusService
+            .getStream({ id: "document-click" })
+            .next(new MouseEvent("click"));
 
         if (node.hasPagination && node.children && !node.children.length) {
             node.page = 1;
@@ -74,30 +86,50 @@ export class TreeLoadMoreExampleComponent {
         }
     }
 
-    public loadMoreItems(node: FoodNode, nestedNodeDirective: CdkNestedTreeNode<any>): void {
-        if (node.isLoading) { return; }
+    public loadMoreItems(
+        node: FoodNode,
+        nestedNodeDirective: CdkNestedTreeNode<any>
+    ): void {
+        if (node.isLoading) {
+            return;
+        }
 
         node.isLoading = true;
 
         const page = node.page ? node.page++ : 1;
 
-        this.http.getNodeItems(node.name, page, this.pageSize).subscribe((res: IApiResponse) => {
-            this.setRemainingItemsCount(node, res.total);
-            this.handleNodeContent(node, nestedNodeDirective, res.items);
-            node.isLoading = false;
-        });
+        this.http
+            .getNodeItems(node.name, page, this.pageSize)
+            .subscribe((res: IApiResponse) => {
+                this.setRemainingItemsCount(node, res.total);
+                this.handleNodeContent(node, nestedNodeDirective, res.items);
+                node.isLoading = false;
+            });
     }
 
     private setRemainingItemsCount(node: FoodNode, totalItems: number) {
-        this.remainingItemsCount[node.name] = node.children ? totalItems - node.children?.length : totalItems;
+        this.remainingItemsCount[node.name] = node.children
+            ? totalItems - node.children?.length
+            : totalItems;
     }
 
-    private handleNodeContent(node: FoodNode, nestedNodeDirective: CdkNestedTreeNode<any>, items: FoodNode[]) {
-        const differ: IterableDiffer<FoodNode> = this.differ.find(node.children).create();
+    private handleNodeContent(
+        node: FoodNode,
+        nestedNodeDirective: CdkNestedTreeNode<any>,
+        items: FoodNode[]
+    ) {
+        const differ: IterableDiffer<FoodNode> = this.differ
+            .find(node.children)
+            .create();
         node.children?.push(...items);
 
         // clear previously rendered leaf nodes
         nestedNodeDirective.nodeOutlet.first.viewContainer.clear();
-        this.cdkTree.renderNodeChanges(node.children || [], differ, nestedNodeDirective.nodeOutlet.first.viewContainer, node);
+        this.cdkTree.renderNodeChanges(
+            node.children || [],
+            differ,
+            nestedNodeDirective.nodeOutlet.first.viewContainer,
+            node
+        );
     }
 }

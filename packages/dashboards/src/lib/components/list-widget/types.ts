@@ -20,4 +20,3 @@ export interface INavigationBarConfig {
     label?: string;
     isRoot?: boolean;
 }
-

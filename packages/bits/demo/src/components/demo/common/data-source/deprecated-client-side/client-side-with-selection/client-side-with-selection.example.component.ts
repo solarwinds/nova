@@ -1,9 +1,24 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, ViewChild } from "@angular/core";
 import {
-    INovaFilteringOutputs, ListService, LocalFilteringDataSource, PaginatorComponent, RepeatComponent, RepeatSelectionMode, SearchComponent, SelectionType,
-} from "@nova-ui/bits";
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    OnDestroy,
+    ViewChild,
+} from "@angular/core";
 import isUndefined from "lodash/isUndefined";
 import { Subscription } from "rxjs";
+
+import {
+    INovaFilteringOutputs,
+    ListService,
+    LocalFilteringDataSource,
+    PaginatorComponent,
+    RepeatComponent,
+    RepeatSelectionMode,
+    SearchComponent,
+    SelectionType,
+} from "@nova-ui/bits";
 
 interface IExampleItem {
     color: string;
@@ -19,7 +34,9 @@ interface IExampleItem {
     templateUrl: "./client-side-with-selection.example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DepreacatedDataSourceWithSelectionExampleComponent implements AfterViewInit, OnDestroy {
+export class DepreacatedDataSourceWithSelectionExampleComponent
+    implements AfterViewInit, OnDestroy
+{
     public searchTerm = "";
     public page = 1;
 
@@ -31,9 +48,11 @@ export class DepreacatedDataSourceWithSelectionExampleComponent implements After
 
     private outputsSubscription: Subscription;
 
-    constructor(public dataSourceService: LocalFilteringDataSource<IExampleItem>,
+    constructor(
+        public dataSourceService: LocalFilteringDataSource<IExampleItem>,
         public changeDetection: ChangeDetectorRef,
-        private listService: ListService) {
+        private listService: ListService
+    ) {
         dataSourceService.setData(getData());
     }
 
@@ -50,21 +69,37 @@ export class DepreacatedDataSourceWithSelectionExampleComponent implements After
             },
         });
 
-        this.outputsSubscription = this.dataSourceService.outputsSubject.subscribe((data: INovaFilteringOutputs) => {
-            this.state = { ...this.state, ...data };
-            this.state = this.listService.updateSelectionState(this.state);
+        this.outputsSubscription =
+            this.dataSourceService.outputsSubject.subscribe(
+                (data: INovaFilteringOutputs) => {
+                    this.state = { ...this.state, ...data };
+                    this.state = this.listService.updateSelectionState(
+                        this.state
+                    );
 
-            if (data && data.paginator && data.paginator.reset) {
-                this.paginator.page = 1;
-            }
+                    if (data && data.paginator && data.paginator.reset) {
+                        this.paginator.page = 1;
+                    }
 
-            const areItemsAvailable = data.paginator && !isUndefined(data.paginator.total) && data.paginator.total > 0;
-            if (data && areItemsAvailable && data.repeat?.itemsSource.length === 0) {
-                this.paginator.goToPage(this.paginator.page > 1 ? this.paginator.page - 1 : 1);
-            }
+                    const areItemsAvailable =
+                        data.paginator &&
+                        !isUndefined(data.paginator.total) &&
+                        data.paginator.total > 0;
+                    if (
+                        data &&
+                        areItemsAvailable &&
+                        data.repeat?.itemsSource.length === 0
+                    ) {
+                        this.paginator.goToPage(
+                            this.paginator.page > 1
+                                ? this.paginator.page - 1
+                                : 1
+                        );
+                    }
 
-            this.changeDetection.detectChanges();
-        });
+                    this.changeDetection.detectChanges();
+                }
+            );
 
         this.dataSourceService.applyFilters();
     }
@@ -82,7 +117,11 @@ export class DepreacatedDataSourceWithSelectionExampleComponent implements After
     }
 
     public onRepeatOutput(selectedItems: IExampleItem[]) {
-        this.state = this.listService.selectItems(selectedItems, RepeatSelectionMode.multi, this.state);
+        this.state = this.listService.selectItems(
+            selectedItems,
+            RepeatSelectionMode.multi,
+            this.state
+        );
     }
 }
 

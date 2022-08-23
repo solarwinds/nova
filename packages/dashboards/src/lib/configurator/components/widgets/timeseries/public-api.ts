@@ -3,4 +3,3 @@ export * from "./timeseries-series-collection-configuration/timeseries-series-co
 export * from "./timeseries-tile-description-configuration/timeseries-tile-description-configuration.component";
 export * from "./timeseries-tile-indicator-data-configuration/timeseries-tile-indicator-data-configuration.component";
 export * from "./types";
-

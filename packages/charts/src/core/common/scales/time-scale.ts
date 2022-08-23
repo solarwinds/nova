@@ -8,7 +8,6 @@ import { Scale } from "./scale";
  * Nova wrapper around [D3's scaleTime](https://d3indepth.com/scales/#scaletime)
  */
 export class TimeScale extends Scale<Date> {
-
     constructor(id?: string) {
         super(id);
 
@@ -25,7 +24,9 @@ export class TimeScale extends Scale<Date> {
 
     public invert(coordinate: number): Date | undefined {
         const date = this._d3Scale.invert(coordinate);
-        const result: Date | undefined = isNaN(date.getTime()) ? undefined : date;
+        const result: Date | undefined = isNaN(date.getTime())
+            ? undefined
+            : date;
         return result;
     }
 
@@ -34,6 +35,8 @@ export class TimeScale extends Scale<Date> {
     }
 
     public isDomainValid(): boolean {
-        return -1 === this.domain().findIndex((value) => isNaN(value.getTime()));
+        return (
+            -1 === this.domain().findIndex((value) => isNaN(value.getTime()))
+        );
     }
 }

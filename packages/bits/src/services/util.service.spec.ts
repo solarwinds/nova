@@ -27,7 +27,9 @@ describe("services >", () => {
                 const booleanExample = true;
                 const booleanLength = 4;
 
-                expect(utilService.sizeof(booleanExample)).toEqual(booleanLength);
+                expect(utilService.sizeof(booleanExample)).toEqual(
+                    booleanLength
+                );
             });
 
             it("should handle number properly", () => {
@@ -65,85 +67,147 @@ describe("services >", () => {
 
         describe("when formatString() is called", () => {
             it("formats a string with one string argument", () => {
-                expect(utilService.formatString("Formatted {0}", "string")).toEqual("Formatted string");
+                expect(
+                    utilService.formatString("Formatted {0}", "string")
+                ).toEqual("Formatted string");
             });
 
             it("formats a string with two string arguments in reverse order", () => {
-                expect(utilService.formatString("Double-{1} formatted {0}", "string", "argument"))
-                    .toEqual("Double-argument formatted string");
+                expect(
+                    utilService.formatString(
+                        "Double-{1} formatted {0}",
+                        "string",
+                        "argument"
+                    )
+                ).toEqual("Double-argument formatted string");
             });
 
             it("formats a string with three string arguments", () => {
-                expect(utilService.formatString("{0}-{1} formatted {2}", "Triple", "argument", "string"))
-                    .toEqual("Triple-argument formatted string");
+                expect(
+                    utilService.formatString(
+                        "{0}-{1} formatted {2}",
+                        "Triple",
+                        "argument",
+                        "string"
+                    )
+                ).toEqual("Triple-argument formatted string");
             });
 
             it("formats a string with three string arguments in reverse order", () => {
-                expect(utilService.formatString("{2}-{1} formatted {0}", "string", "argument", "Triple"))
-                    .toEqual("Triple-argument formatted string");
+                expect(
+                    utilService.formatString(
+                        "{2}-{1} formatted {0}",
+                        "string",
+                        "argument",
+                        "Triple"
+                    )
+                ).toEqual("Triple-argument formatted string");
             });
 
             it("formats a string with one single-digit decimal argument", () => {
-                expect(utilService.formatString("Formatted decimal: {0}", 0)).toEqual("Formatted decimal: 0");
+                expect(
+                    utilService.formatString("Formatted decimal: {0}", 0)
+                ).toEqual("Formatted decimal: 0");
             });
 
             it("formats a string with one multiple-digit decimal argument", () => {
-                expect(utilService.formatString("Formatted triple-digit decimal: {0}", 123))
-                    .toEqual("Formatted triple-digit decimal: 123");
+                expect(
+                    utilService.formatString(
+                        "Formatted triple-digit decimal: {0}",
+                        123
+                    )
+                ).toEqual("Formatted triple-digit decimal: 123");
             });
 
             it("formats a string with multiple decimal arguments", () => {
-                expect(utilService.formatString("First decimal: {0}, Second decimal: {1}", 123, 456))
-                    .toEqual("First decimal: 123, Second decimal: 456");
+                expect(
+                    utilService.formatString(
+                        "First decimal: {0}, Second decimal: {1}",
+                        123,
+                        456
+                    )
+                ).toEqual("First decimal: 123, Second decimal: 456");
             });
 
             it("formats a string with a single floating point argument", () => {
-                expect(utilService.formatString("Floating point: {0}", 1.23))
-                    .toEqual("Floating point: 1.23");
+                expect(
+                    utilService.formatString("Floating point: {0}", 1.23)
+                ).toEqual("Floating point: 1.23");
             });
 
             it("formats a string with a multiple floating point arguments", () => {
-                expect(utilService.formatString("First floating point: {0}, Second floating point: {1}", 1.23, 4.56))
-                    .toEqual("First floating point: 1.23, Second floating point: 4.56");
+                expect(
+                    utilService.formatString(
+                        "First floating point: {0}, Second floating point: {1}",
+                        1.23,
+                        4.56
+                    )
+                ).toEqual(
+                    "First floating point: 1.23, Second floating point: 4.56"
+                );
             });
 
             it("formats a string with one false boolean argument", () => {
-                expect(utilService.formatString("Formatted boolean: {0}", false)).toEqual("Formatted boolean: false");
+                expect(
+                    utilService.formatString("Formatted boolean: {0}", false)
+                ).toEqual("Formatted boolean: false");
             });
 
             it("formats a string with one true boolean argument", () => {
-                expect(utilService.formatString("Formatted boolean: {0}", true)).toEqual("Formatted boolean: true");
+                expect(
+                    utilService.formatString("Formatted boolean: {0}", true)
+                ).toEqual("Formatted boolean: true");
             });
 
             it("formats a string with all possible argument types", () => {
-                expect(utilService.formatString(`Formatted boolean: {0},
+                expect(
+                    utilService.formatString(
+                        `Formatted boolean: {0},
                                                    Formatted decimal: {1},
                                                    Formatted string: {2},
-                                                   Formatted floating point: {3}`, true, 123, "test", 1.23))
-                    .toEqual(`Formatted boolean: true,
+                                                   Formatted floating point: {3}`,
+                        true,
+                        123,
+                        "test",
+                        1.23
+                    )
+                ).toEqual(`Formatted boolean: true,
                                                    Formatted decimal: 123,
                                                    Formatted string: test,
                                                    Formatted floating point: 1.23`);
             });
 
             it("allows for undefined arguments", () => {
-                expect(utilService.formatString("Undefined value: {0}", undefined))
-                    .toEqual("Undefined value: ");
+                expect(
+                    utilService.formatString("Undefined value: {0}", undefined)
+                ).toEqual("Undefined value: ");
             });
 
             it("allows for null arguments", () => {
-                expect(utilService.formatString("Null value: {0}", null))
-                    .toEqual("Null value: ");
+                expect(
+                    utilService.formatString("Null value: {0}", null)
+                ).toEqual("Null value: ");
             });
 
             it("allows for escaping open and close braces", () => {
-                expect(utilService.formatString("{0} and {1} braces: {{ property: value }}", "Open", "close"))
-                    .toEqual("Open and close braces: { property: value }");
+                expect(
+                    utilService.formatString(
+                        "{0} and {1} braces: {{ property: value }}",
+                        "Open",
+                        "close"
+                    )
+                ).toEqual("Open and close braces: { property: value }");
             });
 
             it("allows for escaping open and close braces with an embedded insertion point", () => {
-                expect(utilService.formatString("{0} and {1} braces: {{property: {2}}}", "Open", "close", "value"))
-                    .toEqual("Open and close braces: {property: value}");
+                expect(
+                    utilService.formatString(
+                        "{0} and {1} braces: {{property: {2}}}",
+                        "Open",
+                        "close",
+                        "value"
+                    )
+                ).toEqual("Open and close braces: {property: value}");
             });
         });
 
@@ -151,31 +215,41 @@ describe("services >", () => {
             it("should return 'Safari'", () => {
                 fakeDocument.defaultView.navigator.userAgent = `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13) AppleWebKit/603.1.13
                     (KHTML, like Gecko) Version/10.1 Safari/603.1.13`;
-                expect((<any> utilService).getBrowser()).toEqual(BrowserName.Safari);
+                expect((<any>utilService).getBrowser()).toEqual(
+                    BrowserName.Safari
+                );
             });
 
             it("should return 'Edge'", () => {
                 fakeDocument.defaultView.navigator.userAgent = `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
                     (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299`;
-                expect((<any> utilService).getBrowser()).toEqual(BrowserName.Edge);
+                expect((<any>utilService).getBrowser()).toEqual(
+                    BrowserName.Edge
+                );
             });
 
             it("should return 'Firefox'", () => {
                 fakeDocument.defaultView.navigator.userAgent = `Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0)
                     Gecko/20100101 Firefox/58.0`;
-                expect((<any> utilService).getBrowser()).toEqual(BrowserName.Firefox);
+                expect((<any>utilService).getBrowser()).toEqual(
+                    BrowserName.Firefox
+                );
             });
 
             it("should return 'Opera'", () => {
                 fakeDocument.defaultView.navigator.userAgent = `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
                     (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 OPR/51.0.2830.34`;
-                expect((<any> utilService).getBrowser()).toEqual(BrowserName.Opera);
+                expect((<any>utilService).getBrowser()).toEqual(
+                    BrowserName.Opera
+                );
             });
 
             it("should return 'Chrome'", () => {
                 fakeDocument.defaultView.navigator.userAgent = `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
                     (KHTML, like Gecko) Chrome/64.0.3282.167 Safari/537.36`;
-                expect((<any> utilService).getBrowser()).toEqual(BrowserName.Chrome);
+                expect((<any>utilService).getBrowser()).toEqual(
+                    BrowserName.Chrome
+                );
             });
         });
 
@@ -183,31 +257,31 @@ describe("services >", () => {
             it("should return the correct Safari version", () => {
                 fakeDocument.defaultView.navigator.userAgent = `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13) AppleWebKit/603.1.13
                 (KHTML, like Gecko) Version/10.1 Safari/603.1.13`;
-                expect((<any> utilService).getBrowserVersion()).toEqual("10");
+                expect((<any>utilService).getBrowserVersion()).toEqual("10");
             });
 
             it("should return the correct Edge version", () => {
                 fakeDocument.defaultView.navigator.userAgent = `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
                     (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299`;
-                expect((<any> utilService).getBrowserVersion()).toEqual("16");
+                expect((<any>utilService).getBrowserVersion()).toEqual("16");
             });
 
             it("should return the correct Firefox version", () => {
                 fakeDocument.defaultView.navigator.userAgent = `Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0)
                     Gecko/20100101 Firefox/58.0`;
-                expect((<any> utilService).getBrowserVersion()).toEqual("58");
+                expect((<any>utilService).getBrowserVersion()).toEqual("58");
             });
 
             it("should return the correct Opera version", () => {
                 fakeDocument.defaultView.navigator.userAgent = `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
                     (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 OPR/51.0.2830.34`;
-                expect((<any> utilService).getBrowserVersion()).toEqual("51");
+                expect((<any>utilService).getBrowserVersion()).toEqual("51");
             });
 
             it("should return the correct Chrome version", () => {
                 fakeDocument.defaultView.navigator.userAgent = `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
                     (KHTML, like Gecko) Chrome/64.0.3282.167 Safari/537.36`;
-                expect((<any> utilService).getBrowserVersion()).toEqual("64");
+                expect((<any>utilService).getBrowserVersion()).toEqual("64");
             });
         });
 
@@ -228,52 +302,68 @@ describe("services >", () => {
             it("should return false for iOS on Android", () => {
                 fakeDocument.defaultView.navigator.userAgent = `Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build/IML74K)
                     AppleWebkit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30`;
-                expect(utilService.browser?.mobileDevice.isIOS()).toEqual(false);
+                expect(utilService.browser?.mobileDevice.isIOS()).toEqual(
+                    false
+                );
             });
 
             it("should return true for Android", () => {
                 fakeDocument.defaultView.navigator.userAgent = `Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build/IML74K)
                     AppleWebkit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30`;
-                expect(utilService.browser?.mobileDevice.isAndroid()).toEqual(true);
+                expect(utilService.browser?.mobileDevice.isAndroid()).toEqual(
+                    true
+                );
             });
 
             it("should return false for Android on iOS", () => {
                 fakeDocument.defaultView.navigator.userAgent = `Mozilla/5.0 (iPad; CPU OS 7_0 like Mac OS X) AppleWebKit/537.51.1
                     (KHTML, like Gecko) CriOS/30.0.1599.12 Mobile/11A465 Safari/8536.25
                     (3B92C18B-D9DE-4CB7-A02A-22FD2AF17C8F)`;
-                expect(utilService.browser?.mobileDevice.isAndroid()).toEqual(false);
+                expect(utilService.browser?.mobileDevice.isAndroid()).toEqual(
+                    false
+                );
             });
 
             it("should return true for Blackberry", () => {
                 fakeDocument.defaultView.navigator.userAgent = `Mozilla/5.0 (BlackBerry; U; BlackBerry 9320; nl) AppleWebKit/534.11+
                     (KHTML, like Gecko) Version/7.1.0.714 Mobile Safari/534.11+`;
-                expect(utilService.browser?.mobileDevice.isBlackberry()).toEqual(true);
+                expect(
+                    utilService.browser?.mobileDevice.isBlackberry()
+                ).toEqual(true);
             });
 
             it("should return true for Blackberry 10", () => {
                 fakeDocument.defaultView.navigator.userAgent = `Mozilla/5.0 (BB10; Kbd) AppleWebKit/537.10+ (KHTML, like Gecko)
                     Version/10.1.0.4633 Mobile Safari/537.10+`;
-                expect(utilService.browser?.mobileDevice.isBlackberry()).toEqual(true);
+                expect(
+                    utilService.browser?.mobileDevice.isBlackberry()
+                ).toEqual(true);
             });
 
             it("should return false for Blackberry on iOS", () => {
                 fakeDocument.defaultView.navigator.userAgent = `Mozilla/5.0 (iPad; CPU OS 7_0 like Mac OS X) AppleWebKit/537.51.1
                     (KHTML, like Gecko) CriOS/30.0.1599.12 Mobile/11A465 Safari/8536.25
                     (3B92C18B-D9DE-4CB7-A02A-22FD2AF17C8F)`;
-                expect(utilService.browser?.mobileDevice.isBlackberry()).toEqual(false);
+                expect(
+                    utilService.browser?.mobileDevice.isBlackberry()
+                ).toEqual(false);
             });
 
             it("should return true for Opera Mini", () => {
                 fakeDocument.defaultView.navigator.userAgent = `Opera/9.80 (J2ME/MIDP; Opera Mini/9.80
                     (S60; SymbOS; Opera Mobi/23.348; U; en) Presto/2.5.25 Version/10.54`;
-                expect(utilService.browser?.mobileDevice.isOpera()).toEqual(true);
+                expect(utilService.browser?.mobileDevice.isOpera()).toEqual(
+                    true
+                );
             });
 
             it("should return false for Opera Mini on iOS", () => {
                 fakeDocument.defaultView.navigator.userAgent = `Mozilla/5.0 (iPad; CPU OS 7_0 like Mac OS X) AppleWebKit/537.51.1
                     (KHTML, like Gecko) CriOS/30.0.1599.12 Mobile/11A465 Safari/8536.25
                     (3B92C18B-D9DE-4CB7-A02A-22FD2AF17C8F)`;
-                expect(utilService.browser?.mobileDevice.isOpera()).toEqual(false);
+                expect(utilService.browser?.mobileDevice.isOpera()).toEqual(
+                    false
+                );
             });
 
             it("should return true for any", () => {
@@ -284,7 +374,9 @@ describe("services >", () => {
 
             it("should return false for any", () => {
                 fakeDocument.defaultView.navigator.userAgent = `random user agent`;
-                expect(utilService.browser?.mobileDevice.isAny()).toEqual(false);
+                expect(utilService.browser?.mobileDevice.isAny()).toEqual(
+                    false
+                );
             });
         });
 

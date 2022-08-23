@@ -11,29 +11,43 @@ import {
     Output,
     SimpleChanges,
 } from "@angular/core";
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { EventBus, IDataField, IDataSource, IEvent } from "@nova-ui/bits";
+import {
+    AbstractControl,
+    FormArray,
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators,
+} from "@angular/forms";
 import _difference from "lodash/difference";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { IHasChangeDetector, IHasForm, PIZZAGNA_EVENT_BUS } from "../../../../../types";
-import { DATA_SOURCE_CREATED } from "../../../../types";
+import { EventBus, IDataField, IDataSource, IEvent } from "@nova-ui/bits";
 
+import {
+    IHasChangeDetector,
+    IHasForm,
+    PIZZAGNA_EVENT_BUS,
+} from "../../../../../types";
+import { DATA_SOURCE_CREATED } from "../../../../types";
 
 @Component({
     selector: "nui-grouping-configuration",
     templateUrl: "./grouping-configuration.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
-    styles: [`
-        .grouping-configuration__accordion-content {
-            padding: 15px 15px 15px 46px;
-        }
-    `],
+    styles: [
+        `
+            .grouping-configuration__accordion-content {
+                padding: 15px 15px 15px 46px;
+            }
+        `,
+    ],
 })
 // Remember to declare this class in the parent module
-export class GroupingConfigurationComponent implements OnInit, OnChanges, IHasChangeDetector, IHasForm, OnDestroy {
-
+export class GroupingConfigurationComponent
+    implements OnInit, OnChanges, IHasChangeDetector, IHasForm, OnDestroy
+{
     public static lateLoadKey = "DrilldownConfiguratorComponent";
 
     @Input() groups: string[];
@@ -50,9 +64,11 @@ export class GroupingConfigurationComponent implements OnInit, OnChanges, IHasCh
 
     private destroy$: Subject<any> = new Subject();
 
-    constructor(public changeDetector: ChangeDetectorRef,
-                private formBuilder: FormBuilder,
-                @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>) { }
+    constructor(
+        public changeDetector: ChangeDetectorRef,
+        private formBuilder: FormBuilder,
+        @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>
+    ) {}
 
     public get getGroupByControl(): FormArray {
         return this.form.get("groupBy") as FormArray;
@@ -67,9 +83,12 @@ export class GroupingConfigurationComponent implements OnInit, OnChanges, IHasCh
     }
 
     public ngOnInit(): void {
-        this.eventBus.getStream(DATA_SOURCE_CREATED)
+        this.eventBus
+            .getStream(DATA_SOURCE_CREATED)
             .pipe(takeUntil(this.destroy$))
-            .subscribe((provider: IEvent<IDataSource>) => this.onDataSourceCreated(provider));
+            .subscribe((provider: IEvent<IDataSource>) =>
+                this.onDataSourceCreated(provider)
+            );
 
         this.getGroupByControl.valueChanges
             .pipe(takeUntil(this.destroy$))
@@ -86,7 +105,9 @@ export class GroupingConfigurationComponent implements OnInit, OnChanges, IHasCh
         }
         if (changes.groupBy && !changes.groupBy.firstChange) {
             this.getGroupByControl.clear();
-            this.groupBy.forEach(group => this.getGroupByControl.push(this.createControl(group)));
+            this.groupBy.forEach((group) =>
+                this.getGroupByControl.push(this.createControl(group))
+            );
             this.fillGroupsOptions();
         }
     }
@@ -109,12 +130,16 @@ export class GroupingConfigurationComponent implements OnInit, OnChanges, IHasCh
     }
 
     public isAddRestricted() {
-        return this.selectData.some(i => i.length === 1);
+        return this.selectData.some((i) => i.length === 1);
     }
 
     public getSubtitle(): string {
-        const subtitle = this.getGroupByControl.controls.map((control: AbstractControl, index: number) =>
-            `${index === 0 ? "By" : "then"} ${control.value}`).join(", ");
+        const subtitle = this.getGroupByControl.controls
+            .map(
+                (control: AbstractControl, index: number) =>
+                    `${index === 0 ? "By" : "then"} ${control.value}`
+            )
+            .join(", ");
 
         return this.getGroupByControl?.value.length === 0
             ? $localize`No groups`
@@ -127,33 +152,37 @@ export class GroupingConfigurationComponent implements OnInit, OnChanges, IHasCh
     }
 
     private onDataSourceCreated(provider: IEvent<IDataSource>) {
-        provider?.payload?.dataFieldsConfig?.dataFields$?.pipe(
-            takeUntil(this.destroy$)
-        ).subscribe((dataFields: IDataField[]) => {
-            if (dataFields) {
-                const dataFieldIds = dataFields.map((field: IDataField) => field.id);
-                const dataDiff = _difference(this.groups, dataFieldIds);
-                if (dataDiff.length || (!this.groups?.length)) {
-                    this.groups = dataFieldIds;
-                    this.getGroupsControl.setValue(dataFieldIds);
-                    this.getGroupByControl.clear();
-                    this.getDrillStateControl.setValue([]);
-                    this.fillGroupsOptions();
+        provider?.payload?.dataFieldsConfig?.dataFields$
+            ?.pipe(takeUntil(this.destroy$))
+            .subscribe((dataFields: IDataField[]) => {
+                if (dataFields) {
+                    const dataFieldIds = dataFields.map(
+                        (field: IDataField) => field.id
+                    );
+                    const dataDiff = _difference(this.groups, dataFieldIds);
+                    if (dataDiff.length || !this.groups?.length) {
+                        this.groups = dataFieldIds;
+                        this.getGroupsControl.setValue(dataFieldIds);
+                        this.getGroupByControl.clear();
+                        this.getDrillStateControl.setValue([]);
+                        this.fillGroupsOptions();
+                    }
                 }
-            }
-        });
+            });
     }
 
     private fillGroupsOptions() {
         this.selectData = [];
         const controlValue = this.getGroupByControl.value as string[];
-        this.getGroupByControl.controls.forEach((value: AbstractControl, index: number) => {
-            this.selectData[index] = [];
-            const diff = _difference(this.groups, controlValue);
-            if (controlValue[index]) {
-                this.selectData[index].push(controlValue[index]);
+        this.getGroupByControl.controls.forEach(
+            (value: AbstractControl, index: number) => {
+                this.selectData[index] = [];
+                const diff = _difference(this.groups, controlValue);
+                if (controlValue[index]) {
+                    this.selectData[index].push(controlValue[index]);
+                }
+                this.selectData[index] = [...this.selectData[index], ...diff];
             }
-            this.selectData[index] = [...this.selectData[index], ...diff];
-        });
+        );
     }
 }

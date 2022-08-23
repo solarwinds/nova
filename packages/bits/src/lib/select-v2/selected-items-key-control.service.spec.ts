@@ -1,17 +1,16 @@
-import { SelectedItemsKeyControlService } from "./selected-items-key-control.service";
 import { EventEmitter } from "@angular/core";
 
-const getItemMock = (title: string) => (
-    {
-        cdRef: {
-            context: {
-                item: {
-                    label: title,
-                },
+import { SelectedItemsKeyControlService } from "./selected-items-key-control.service";
+
+const getItemMock = (title: string) => ({
+    cdRef: {
+        context: {
+            item: {
+                label: title,
             },
         },
-    }
-);
+    },
+});
 
 describe("components > ", () => {
     const announcerMock = jasmine.createSpyObj("liveAnnouncer", ["announce"]);
@@ -35,7 +34,10 @@ describe("components > ", () => {
         beforeEach(() => {
             testService = new SelectedItemsKeyControlService(announcerMock);
 
-            testService.initSelectedItemsKeyManager(queryListMock as any, comboboxMock as any);
+            testService.initSelectedItemsKeyManager(
+                queryListMock as any,
+                comboboxMock as any
+            );
         });
 
         describe("onKeydown", () => {
@@ -53,15 +55,18 @@ describe("components > ", () => {
 
             it("should hide dropdown if no active item and no manualDropdownControl", () => {
                 const spy = spyOn(comboboxMock, "hideDropdown");
-                const event = { ...keyBoardEventMock, ...{ keyCode: 8 }};
+                const event = { ...keyBoardEventMock, ...{ keyCode: 8 } };
                 testService.onKeydown(event as any);
 
                 expect(spy).toHaveBeenCalled();
             });
 
             it("should call selectedItemsKeyManager 'onKeydown' when left key was pressed ", () => {
-                const spy = spyOn(testService["selectedItemsKeyManager"], "onKeydown");
-                const event = { ...keyBoardEventMock, ...{ keyCode: 37 }};
+                const spy = spyOn(
+                    testService["selectedItemsKeyManager"],
+                    "onKeydown"
+                );
+                const event = { ...keyBoardEventMock, ...{ keyCode: 37 } };
                 testService.onKeydown(event as any);
 
                 expect(spy).toHaveBeenCalledWith(event as any);
@@ -71,9 +76,11 @@ describe("components > ", () => {
                 const itemTitle = "Item";
                 const activeItem = getItemMock(itemTitle);
 
-                spyOnProperty(testService, "activeItem" as any).and.returnValue(activeItem as any);
+                spyOnProperty(testService, "activeItem" as any).and.returnValue(
+                    activeItem as any
+                );
 
-                const event = { ...keyBoardEventMock, ...{ keyCode: 37 }};
+                const event = { ...keyBoardEventMock, ...{ keyCode: 37 } };
                 spyOn(testService["selectedItemsKeyManager"], "onKeydown");
                 testService.onKeydown(event as any);
 
@@ -84,9 +91,11 @@ describe("components > ", () => {
                 const itemTitle = "Item";
                 const activeItem = getItemMock(itemTitle);
 
-                spyOnProperty(testService, "activeItem" as any).and.returnValue(activeItem as any);
+                spyOnProperty(testService, "activeItem" as any).and.returnValue(
+                    activeItem as any
+                );
                 const spy = spyOn(testService, "handleRightArrow" as any);
-                const event = { ...keyBoardEventMock, ...{ keyCode: 39 }};
+                const event = { ...keyBoardEventMock, ...{ keyCode: 39 } };
                 testService.onKeydown(event as any);
 
                 expect(spy).toHaveBeenCalledWith(event as any);
@@ -96,10 +105,12 @@ describe("components > ", () => {
                 const itemTitle = "Item";
                 const activeItem = getItemMock(itemTitle);
 
-                spyOnProperty(testService, "activeItem" as any).and.returnValue(activeItem as any);
+                spyOnProperty(testService, "activeItem" as any).and.returnValue(
+                    activeItem as any
+                );
 
                 const spy = spyOn(testService, "deselectItem" as any);
-                const event = { ...keyBoardEventMock, ...{ keyCode: 8 }};
+                const event = { ...keyBoardEventMock, ...{ keyCode: 8 } };
 
                 testService.onKeydown(event as any);
 
@@ -110,11 +121,19 @@ describe("components > ", () => {
                 const itemTitle = "Item";
                 const activeItem = getItemMock(itemTitle);
 
-                spyOnProperty(testService, "activeItem" as any).and.returnValue(activeItem as any);
-                spyOnProperty(testService["selectedItemsKeyManager"], "activeItemIndex" as any).and.returnValue(1);
+                spyOnProperty(testService, "activeItem" as any).and.returnValue(
+                    activeItem as any
+                );
+                spyOnProperty(
+                    testService["selectedItemsKeyManager"],
+                    "activeItemIndex" as any
+                ).and.returnValue(1);
 
-                const spy = spyOn(testService, "calculateActiveSelectedItemIndex" as any);
-                const event = { ...keyBoardEventMock, ...{ keyCode: 8 }};
+                const spy = spyOn(
+                    testService,
+                    "calculateActiveSelectedItemIndex" as any
+                );
+                const event = { ...keyBoardEventMock, ...{ keyCode: 8 } };
 
                 testService.onKeydown(event as any);
 
@@ -126,11 +145,16 @@ describe("components > ", () => {
                 const activeItem = getItemMock(itemTitle);
                 const mockIndex = 1;
 
-                spyOnProperty(testService, "activeItem" as any).and.returnValue(activeItem as any);
-                spyOnProperty(testService["selectedItemsKeyManager"], "activeItemIndex" as any).and.returnValue(mockIndex);
+                spyOnProperty(testService, "activeItem" as any).and.returnValue(
+                    activeItem as any
+                );
+                spyOnProperty(
+                    testService["selectedItemsKeyManager"],
+                    "activeItemIndex" as any
+                ).and.returnValue(mockIndex);
 
                 const spy = spyOn(comboboxMock, "deselectItem" as any);
-                const event = { ...keyBoardEventMock, ...{ keyCode: 8 }};
+                const event = { ...keyBoardEventMock, ...{ keyCode: 8 } };
 
                 testService.onKeydown(event as any);
 
@@ -140,11 +164,14 @@ describe("components > ", () => {
 
         describe("deactivateSelectedItems", () => {
             it("should call 'setActiveItem' method", () => {
-                const spy = spyOn(testService["selectedItemsKeyManager"], "setActiveItem");
+                const spy = spyOn(
+                    testService["selectedItemsKeyManager"],
+                    "setActiveItem"
+                );
 
                 testService.deactivateSelectedItems();
 
-                expect(spy).toHaveBeenCalledWith(-1)
+                expect(spy).toHaveBeenCalledWith(-1);
             });
 
             it("should reset activeSelectedItemIndex to undefined", () => {
@@ -154,7 +181,7 @@ describe("components > ", () => {
                 testService.deactivateSelectedItems();
 
                 expect(testService["activeSelectedItemIndex"]).toBeUndefined();
-            })
+            });
         });
     });
 });

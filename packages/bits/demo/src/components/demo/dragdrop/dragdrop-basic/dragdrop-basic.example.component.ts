@@ -1,5 +1,11 @@
 import { Component, Inject } from "@angular/core";
-import { IDropEvent, IDropValidator, IToastService, ToastService } from "@nova-ui/bits";
+
+import {
+    IDropEvent,
+    IDropValidator,
+    IToastService,
+    ToastService,
+} from "@nova-ui/bits";
 
 class IsStringValidator implements IDropValidator {
     isValidDropTarget(payload: any, isExternal: boolean): boolean {
@@ -29,7 +35,8 @@ export class DragdropBasicExampleComponent {
     public destObject: {};
     public destString: string;
     public destAnything: any;
-    public draggableExcel = "<table>" +
+    public draggableExcel =
+        "<table>" +
         "<tr>" +
         "<th>thing1</th>" +
         "<th>thing2</th>" +
@@ -46,43 +53,43 @@ export class DragdropBasicExampleComponent {
     public isStringValidator = new IsStringValidator();
     public isObjectValidator = new IsObjectValidator();
 
-    constructor(@Inject(ToastService) private toastService: IToastService) { }
+    constructor(@Inject(ToastService) private toastService: IToastService) {}
 
     public onDropObject(dropEvent: IDropEvent) {
-        this.toastService.info({message: $localize `Drop object!`});
+        this.toastService.info({ message: $localize`Drop object!` });
         this.destObject = dropEvent.payload;
     }
 
     public onDropString(dropEvent: IDropEvent) {
-        this.toastService.info({message: $localize `Drop string!`});
+        this.toastService.info({ message: $localize`Drop string!` });
         this.destString = JSON.stringify(dropEvent.payload);
     }
 
     public onDropAnything(dropEvent: IDropEvent) {
-        this.toastService.info({message: $localize `Drop anything!`});
+        this.toastService.info({ message: $localize`Drop anything!` });
         this.destAnything = dropEvent.payload;
     }
 
     public onDragStart(event: DragEvent) {
-        this.toastService.info({message: $localize `Drag start`});
+        this.toastService.info({ message: $localize`Drag start` });
     }
 
     public onDragEnd(event: DragEvent) {
-        this.toastService.info({message: $localize `Drag end`});
+        this.toastService.info({ message: $localize`Drag end` });
     }
 
     public onDragOver(event: DragEvent) {
         this.toastService.info({
-            message: $localize `Drag over`,
+            message: $localize`Drag over`,
             options: { preventDuplicates: true },
         });
     }
 
     public onDragEnter(event: DragEvent) {
-        this.toastService.info({message: $localize `Drag enter`});
+        this.toastService.info({ message: $localize`Drag enter` });
     }
 
     public onDragLeave(event: DragEvent) {
-        this.toastService.info({message: $localize `Drag leave`});
+        this.toastService.info({ message: $localize`Drag leave` });
     }
 }

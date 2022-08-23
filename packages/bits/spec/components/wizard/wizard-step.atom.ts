@@ -14,9 +14,10 @@ export class WizardStepAtom extends Atom {
 
     // step body
     public busy: BusyAtom = Atom.findIn(BusyAtom, this.root);
-    private stepTitle: ElementFinder = this.root.all(by.className("nui-wizard__step-title")).first();
+    private stepTitle: ElementFinder = this.root
+        .all(by.className("nui-wizard__step-title"))
+        .first();
     public getStepTitle = async (): Promise<string> => this.stepTitle.getText();
-
 }
 
 // WARNING!!!
