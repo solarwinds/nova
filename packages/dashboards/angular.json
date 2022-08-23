@@ -206,7 +206,6 @@
       }
     }
   },
-  "defaultProject": "lib",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "nui",

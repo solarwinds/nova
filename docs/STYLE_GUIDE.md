@@ -23,31 +23,6 @@ Why? setTimeout is tied to a wider context of executed code, which might not be 
     ```
 The reason for this is that, since in Firefox ResizeObserver is not native (as of July 2019), it isn't "hacked" by ZoneJS, so it needs to be explicitly executed outside of Angular.
 
-## HTML Formatting
-
-### Line Wrapping
-
-When wrapping attributes please put the first attribute on the same line as the opening element tag, and put the closing bracket of the opening element on the same
-line as the last attribute:
-
-<em>Not Preferred</em>
-
-```html
-<div 
-     id="my-id"
-     class="my-class"
->
-</div>
-```
-
-<em>Preferred</em>
-
-```html
-<div id="my-id"
-     class="my-class">
-</div>
-```
-
 ## Typescript Conventions
 
 ### Naming

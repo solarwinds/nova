@@ -1,8 +1,8 @@
-.angular
-.circleci
+/.github
+/.vscode
 .tmp
-.vscode
-coverage
-dist
 node_modules
-sdk
+packages/*/coverage
+packages/*/dist
+packages/*/schematics
+packages/*/sdk

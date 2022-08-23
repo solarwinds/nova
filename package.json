@@ -48,9 +48,13 @@
     "bash": "bash scripts/runner",
     "snyk-auth": "snyk auth $SNYK_TOKEN",
     "snyk-test": "snyk test --dev --all-projects --exclude=dist --strict-out-of-sync=false --org=solarwinds || true",
-    "snyk-monitor": "snyk monitor --dev --all-projects --exclude=dist --strict-out-of-sync=false --org=solarwinds"
+    "snyk-monitor": "snyk monitor --dev --all-projects --exclude=dist --strict-out-of-sync=false --org=solarwinds",
+    "prettier-check": "yarn --check && prettier --cache --no-error-on-unmatched-pattern --check",
+    "prettier-fix": "yarn --check && prettier --cache --no-error-on-unmatched-pattern --write"
   },
   "devDependencies": {
+    "prettier": "^2.7.1",
+    "prettier-plugin-sort-json": "^0.0.3",
     "rimraf": "^3.0.0",
     "snyk": "^1.483.0",
     "symlink-dir": "^3.1.0"

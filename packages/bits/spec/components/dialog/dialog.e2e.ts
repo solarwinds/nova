@@ -1,8 +1,6 @@
-import { $, browser, by, element, ElementFinder, ExpectedConditions, Key } from "protractor";
+import { $, browser, by, element, ElementFinder, ExpectedConditions, Key, WebElement } from "protractor";
 import { protractor } from "protractor/built/ptor";
 
-// eslint-disable-next-line import/no-unresolved
-import { WebElement } from "../../../stub/protractor";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { ButtonAtom, DateTimepickerAtom, DialogAtom } from "../public_api";

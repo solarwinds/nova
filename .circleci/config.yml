@@ -61,15 +61,20 @@ jobs:
             -   persist_to_workspace:
                     root: .
                     paths:
-                        - packages
-                        - ts-lint-rules
-                        - scripts
                         - .git
-                        - docker-compose.yml
-                        - tsconfig.main.json
-                        - package.json
-                        - LICENSE
+                        - packages
+                        - scripts
+                        - .editorconfig
+                        - .eslintignore
                         - .eslintrc.json
+                        - .prettierignore
+                        - .prettierrc.js
+                        - .prettierrc.json
+                        - docker-compose.yml
+                        - LICENSE
+                        - package.json
+                        - tsconfig.main.json
+                        - yarn.lock
     bits-unit-test:
         working_directory: ~/nova/packages/bits
         docker:

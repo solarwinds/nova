@@ -1,13 +1,8 @@
 {
-    "root": true,
-    "ignorePatterns": [
-        "projects/**/*"
-    ],
+    "ignorePatterns": ["projects/**/*"],
     "overrides": [
         {
-            "files": [
-                "*.ts"
-            ],
+            "files": ["*.ts"],
             "extends": [
                 "plugin:@angular-eslint/recommended",
                 "eslint:recommended",
@@ -18,16 +13,8 @@
                 "plugin:import/typescript",
                 "plugin:@angular-eslint/template/process-inline-templates"
             ],
-            "plugins": [
-                "prefer-arrow"
-            ],
+            "plugins": ["prefer-arrow"],
             "rules": {
-                /******************************
-                 * Angular-specific rules
-                 *******************************/
-                "@angular-eslint/no-empty-lifecycle-method": "off",
-                "@angular-eslint/no-conflicting-lifecycle": "off",
-                "@angular-eslint/contextual-lifecycle": "off",
                 // TODO: Remove errors in v12 in scope of NUI-6044
                 "@angular-eslint/component-selector": [
                     "off",
@@ -37,6 +24,7 @@
                         "style": "kebab-case"
                     }
                 ],
+                "@angular-eslint/contextual-lifecycle": "off",
                 "@angular-eslint/directive-class-suffix": "error",
                 // TODO: Remove errors in v12 in scope of NUI-6044
                 "@angular-eslint/directive-selector": [
@@ -47,20 +35,61 @@
                         "style": "camelCase"
                     }
                 ],
+                "@angular-eslint/no-conflicting-lifecycle": "off",
+                /******************************
+                 * Angular-specific rules
+                 *******************************/
+                "@angular-eslint/no-empty-lifecycle-method": "off",
                 "@angular-eslint/no-host-metadata-property": "off",
-                // TODO: fix lint errors
-                "@typescript-eslint/no-unsafe-argument": "off",
                 /******************************
                  * Typescript-specific rules
                  *******************************/
                 "@typescript-eslint/await-thenable": "error",
+                "@typescript-eslint/ban-ts-comment": "off",
+                "@typescript-eslint/ban-types": "off",
                 "@typescript-eslint/consistent-type-definitions": "error",
-                "@typescript-eslint/no-inferrable-types": "off",
-                "@typescript-eslint/promise-function-async": "warn",
-                "no-case-declarations": "error",
-                // Must disable the base rule as it can report incorrect errors
-                // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-empty-function.md
-                "no-empty-function": "off",
+                "@typescript-eslint/explicit-module-boundary-types": [
+                    "warn",
+                    {
+                        "allowArgumentsExplicitlyTypedAsAny": true,
+                        "allowTypedFunctionExpressions": false
+                    }
+                ],
+                // "semi": "off",
+                // "@typescript-eslint/semi": ["error"],
+                "@typescript-eslint/member-delimiter-style": [
+                    "error",
+                    {
+                        "multiline": {
+                            "delimiter": "semi",
+                            "requireLast": true
+                        },
+                        "singleline": {
+                            "delimiter": "semi",
+                            "requireLast": false
+                        }
+                    }
+                ],
+                "@typescript-eslint/member-ordering": [
+                    "error",
+                    {
+                        "default": [
+                            "static-field",
+                            "static-method",
+                            "instance-field",
+                            "instance-method"
+                        ]
+                    }
+                ],
+                // Substitutes the 'class-name' tslint rule.
+                "@typescript-eslint/naming-convention": [
+                    "error",
+                    {
+                        "selector": "variable",
+                        "format": ["camelCase", "UPPER_CASE", "PascalCase"],
+                        "leadingUnderscore": "allow"
+                    }
+                ],
                 "@typescript-eslint/no-empty-function": [
                     "error",
                     {
@@ -77,41 +106,18 @@
                         ]
                     }
                 ],
-                // Must disable the base rule as it can report incorrect errors
-                // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/dot-notation.md
-                // TODO: resolve all the warnings for the following rule in the scope of NUI-5900
-                "no-unused-vars": "off",
-                "@typescript-eslint/no-unused-vars": [
-                    "warn",
-                    {
-                        "args": "none",
-                        "ignoreRestSiblings": true
-                    }
-                ],
-                "@typescript-eslint/restrict-template-expressions": "off",
-                "@typescript-eslint/no-explicit-any": "off",
-                "@typescript-eslint/no-unsafe-assignment": "off",
-                "@typescript-eslint/no-unsafe-return": "off",
-                "@typescript-eslint/no-unsafe-member-access": "off",
-                "@typescript-eslint/no-unsafe-call": "off",
-                // Must disable the base rule as it can report incorrect errors
-                // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unused-expressions.md
-                "no-unused-expressions": "off",
-                "@typescript-eslint/no-unused-expressions": [
+                "@typescript-eslint/no-empty-interface": [
                     "error",
                     {
-                        "allowTernary": true
+                        "allowSingleExtends": true
                     }
                 ],
-                "@typescript-eslint/ban-types": "off",
-                "@typescript-eslint/ban-ts-comment": "off",
-                "@typescript-eslint/explicit-module-boundary-types": [
-                    "warn",
-                    {
-                        "allowArgumentsExplicitlyTypedAsAny": true,
-                        "allowTypedFunctionExpressions": false
-                    }
-                ],
+                "@typescript-eslint/no-explicit-any": "off",
+                "@typescript-eslint/no-floating-promises": "off",
+                "@typescript-eslint/no-inferrable-types": "off",
+                "@typescript-eslint/no-loss-of-precision": ["warn"],
+                "@typescript-eslint/no-misused-promises": "off",
+                "@typescript-eslint/no-this-alias": "off",
                 // TODO: fix lint errors
                 "@typescript-eslint/no-type-alias": [
                     "off",
@@ -126,79 +132,44 @@
                         "allowTupleTypes": "always"
                     }
                 ],
-                "@typescript-eslint/no-empty-interface": [
-                    "error",
-                    {
-                        "allowSingleExtends": true
-                    }
-                ],
-                "@typescript-eslint/no-floating-promises": "off",
-                "@typescript-eslint/no-misused-promises": "off",
-                "@typescript-eslint/no-this-alias": "off",
-                "@typescript-eslint/no-var-requires": "off",
-                "@typescript-eslint/prefer-regexp-exec": "off",
-                "@typescript-eslint/unbound-method": "off",
-                "@typescript-eslint/member-ordering": [
-                    "error",
-                    {
-                        "default": [
-                            "static-field",
-                            "static-method",
-                            "instance-field",
-                            "instance-method"
-                        ]
-                    }
-                ],
-                "@typescript-eslint/unified-signatures": "error",
-                "@typescript-eslint/type-annotation-spacing": "error",
-                "@typescript-eslint/restrict-plus-operands": "off",
-                "require-await": "off",
-                "@typescript-eslint/require-await": "off",
                 "@typescript-eslint/no-unnecessary-type-assertion": "off",
-                "@typescript-eslint/triple-slash-reference": "off",
+                // TODO: fix lint errors
+                "@typescript-eslint/no-unsafe-argument": "off",
+                "@typescript-eslint/no-unsafe-assignment": "off",
+                "@typescript-eslint/no-unsafe-call": "off",
+                "@typescript-eslint/no-unsafe-member-access": "off",
+                "@typescript-eslint/no-unsafe-return": "off",
+                "@typescript-eslint/no-unused-expressions": [
+                    "error",
+                    {
+                        "allowTernary": true
+                    }
+                ],
+                "@typescript-eslint/no-unused-vars": [
+                    "warn",
+                    {
+                        "args": "none",
+                        "ignoreRestSiblings": true
+                    }
+                ],
+                "@typescript-eslint/no-var-requires": "off",
                 // Substitutes the 'callable-types' tslint rule
                 "@typescript-eslint/prefer-function-type": "error",
-                // "semi": "off",
-                // "@typescript-eslint/semi": ["error"],
-                "@typescript-eslint/member-delimiter-style": [
-                    "error",
-                    {
-                        "multiline": {
-                            "delimiter": "semi",
-                            "requireLast": true
-                        },
-                        "singleline": {
-                            "delimiter": "comma",
-                            "requireLast": false
-                        }
-                    }
-                ],
-                // Substitutes the 'class-name' tslint rule.
-                "@typescript-eslint/naming-convention": [
-                    "error",
-                    {
-                        "selector": "variable",
-                        "format": [
-                            "camelCase",
-                            "UPPER_CASE",
-                            "PascalCase"
-                        ],
-                        "leadingUnderscore": "allow"
-                    }
-                ],
-                // TODO fix in future
-                "no-unsafe-assignment": "off",
+                "@typescript-eslint/prefer-regexp-exec": "off",
+                "@typescript-eslint/promise-function-async": "warn",
+                "@typescript-eslint/require-await": "off",
+                "@typescript-eslint/restrict-plus-operands": "off",
+                "@typescript-eslint/restrict-template-expressions": "off",
+                "@typescript-eslint/triple-slash-reference": "off",
+                "@typescript-eslint/type-annotation-spacing": "error",
+                "@typescript-eslint/unbound-method": "off",
+                "@typescript-eslint/unified-signatures": "error",
                 /******************************
                  * ESLint rules
                  *******************************/
                 // Substitutes the 'arrow-return-shorthand' tslint rule
-                "arrow-body-style": [
-                    "error",
-                    "as-needed"
-                ],
-                "brace-style": [
-                    "off"
-                ],
+                "arrow-body-style": ["error", "as-needed"],
+                "brace-style": ["off"],
                 "comma-dangle": [
                     "error",
                     {
@@ -210,60 +181,56 @@
                     }
                 ],
                 "curly": "error",
-                "guard-for-in": "error",
                 "eol-last": "error",
-                "eqeqeq": [
+                "eqeqeq": ["error", "smart"],
+                "guard-for-in": "error",
+                "id-denylist": [
                     "error",
-                    "smart"
+                    "any",
+                    "string",
+                    "boolean",
+                    "undefined"
                 ],
+                "id-match": "error",
                 "import/export": "off",
                 // Substitutes the 'deprecation' tslint rule
                 "import/no-deprecated": "warn",
                 "import/no-duplicates": "off",
-                "import/no-named-as-default-member": "off",
                 "import/no-named-as-default": "off",
+                "import/no-named-as-default-member": "off",
                 "import/order": [
-                    "off",
+                    "warn",
                     {
+                        "alphabetize": {
+                            "order": "asc"
+                        },
                         "groups": [
                             "builtin",
                             "external",
                             "internal",
-                            "parent",
-                            [
-                                "sibling",
-                                "index"
-                            ]
+                            ["parent", "sibling", "index"]
                         ],
+                        "newlines-between": "always",
                         "pathGroups": [
                             {
-                                "pattern": "@{nova-ui}/**",
                                 "group": "internal",
+                                "pattern": "@nova-ui/**",
                                 "position": "before"
                             }
                         ],
-                        "pathGroupsExcludedImportTypes": [
-                            "builtin"
-                        ],
-                        "newlines-between": "always",
-                        "alphabetize": {
-                            "order": "asc"
-                        }
+                        "pathGroupsExcludedImportTypes": ["builtin"]
                     }
                 ],
-                "indent": [
-                    "off"
-                ],
+                "indent": ["off"],
                 "max-len": [
-                    "error",
+                    "off",
                     {
                         "code": 160
                     }
                 ],
                 "no-bitwise": "error",
                 "no-caller": "error",
-                "no-fallthrough": "error",
-                "no-eval": "error",
+                "no-case-declarations": "error",
                 "no-console": [
                     "error",
                     {
@@ -296,24 +263,22 @@
                         "allowEmptyCatch": true
                     }
                 ],
+                // Must disable the base rule as it can report incorrect errors
+                // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-empty-function.md
+                "no-empty-function": "off",
+                "no-eval": "error",
+                "no-fallthrough": "error",
+                // TODO Fix in future
+                "no-loss-of-precision": "off",
                 "no-new-wrappers": "error",
+                "no-prototype-builtins": "off",
                 "no-redeclare": "error",
                 "no-restricted-imports": [
                     "error",
                     {
-                        "paths": [
-                            "lodash",
-                            "moment"
-                        ]
+                        "paths": ["lodash", "moment"]
                     }
                 ],
-                "no-trailing-spaces": [
-                    "error",
-                    {
-                        "skipBlankLines": true
-                    }
-                ],
-                "no-prototype-builtins": "off",
                 "no-shadow": [
                     "off",
                     {
@@ -321,18 +286,25 @@
                     }
                 ],
                 "no-throw-literal": "error",
-                "no-var": "error",
-                "id-denylist": [
+                "no-trailing-spaces": [
                     "error",
-                    "any",
-                    "string",
-                    "boolean",
-                    "undefined"
+                    {
+                        "skipBlankLines": true
+                    }
                 ],
-                "id-match": "error",
                 "no-undef-init": "error",
                 "no-underscore-dangle": "off",
+                // TODO fix in future
+                "no-unsafe-assignment": "off",
+                // Must disable the base rule as it can report incorrect errors
+                // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unused-expressions.md
+                "no-unused-expressions": "off",
+                // Must disable the base rule as it can report incorrect errors
+                // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/dot-notation.md
+                // TODO: resolve all the warnings for the following rule in the scope of NUI-5900
+                "no-unused-vars": "off",
                 "no-useless-escape": "off",
+                "no-var": "error",
                 "prefer-arrow/prefer-arrow-functions": [
                     "warn",
                     {
@@ -354,6 +326,7 @@
                     }
                 ],
                 "radix": "error",
+                "require-await": "off",
                 "sort-imports": "off",
                 // Substitutes the 'comment-format' tslint rule
                 "spaced-comment": [
@@ -361,38 +334,24 @@
                     "always",
                     {
                         "line": {
-                            "markers": [
-                                "/"
-                            ]
+                            "markers": ["/"]
                         },
                         "block": {
-                            "markers": [
-                                "/"
-                            ],
-                            "exceptions": [
-                                "*"
-                            ],
+                            "markers": ["/"],
+                            "exceptions": ["*"],
                             "balanced": true
                         }
                     }
-                ],
-                // TODO Fix in future
-                "no-loss-of-precision": "off",
-                "@typescript-eslint/no-loss-of-precision": [
-                    "warn"
                 ]
             }
         },
         {
-            "files": [
-                "*.html"
-            ],
-            "extends": [
-                "plugin:@angular-eslint/template/recommended"
-            ],
+            "files": ["*.html"],
+            "extends": ["plugin:@angular-eslint/template/recommended"],
             "rules": {
                 "@angular-eslint/template/no-negated-async": "error"
             }
         }
-    ]
+    ],
+    "root": true
 }

@@ -1,5 +1,7 @@
 {
     "line-length": false,
+    "list-marker-space": false,
     "no-duplicate-heading": false,
-    "no-inline-html": false
+    "no-inline-html": false,
+    "ul-indent": false
 }
