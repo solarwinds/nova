@@ -1,18 +1,17 @@
 import { Inject, Injectable, OnDestroy, Optional } from "@angular/core";
-import { IDataSource } from "@nova-ui/bits";
 import { Subject, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+
+import { IDataSource } from "@nova-ui/bits";
 
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { KpiColorComparatorsRegistryService } from "../../services/kpi-color-comparators-registry.service";
 import { DATA_SOURCE, IComparatorsDict, IConfigurable } from "../../types";
 import { IKpiData } from "../kpi-widget/types";
-
 import { IDataSourceOutput, IKpiColorRules } from "./types";
 
 @Injectable()
 export class KpiColorPrioritizer implements IConfigurable, OnDestroy {
-
     protected destroy$ = new Subject();
     protected componentId: string;
     protected propertyPath: string = "backgroundColor";
@@ -59,7 +58,8 @@ export class KpiColorPrioritizer implements IConfigurable, OnDestroy {
         this.dsSubscription$ = this.dataSource.outputsSubject
             .pipe(takeUntil(this.destroy$))
             .subscribe((event: IDataSourceOutput<IKpiData>) => {
-                this.latestValueFromDS = event.result?.value || this.latestValueFromDS;
+                this.latestValueFromDS =
+                    event.result?.value || this.latestValueFromDS;
                 this.checkColorConditions();
             });
     }
@@ -79,7 +79,12 @@ export class KpiColorPrioritizer implements IConfigurable, OnDestroy {
         // reverse because last rule has top priority
         const newRules = this.rules && [...this.rules].reverse();
         for (const rule of newRules) {
-            if (this.comparators[rule.comparisonType]?.comparatorFn(this.latestValueFromDS, rule.value)) {
+            if (
+                this.comparators[rule.comparisonType]?.comparatorFn(
+                    this.latestValueFromDS,
+                    rule.value
+                )
+            ) {
                 colorToSet = rule.color;
                 break; // exit if the rule matches
             }
@@ -94,9 +99,12 @@ export class KpiColorPrioritizer implements IConfigurable, OnDestroy {
      * @param color - Color to set
      */
     private setColor(color: string | undefined) {
-        this.pizzagnaService.setProperty({
-            componentId: this.componentId,
-            propertyPath: [this.propertyPath],
-        }, color);
+        this.pizzagnaService.setProperty(
+            {
+                componentId: this.componentId,
+                propertyPath: [this.propertyPath],
+            },
+            color
+        );
     }
 }

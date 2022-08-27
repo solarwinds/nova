@@ -1,15 +1,21 @@
-<div #gridItemsContainer
+<div
+    #gridItemsContainer
     class="nui-grid-layout"
     [ngClass]="{ 'prioritize-rows': prioritizeGridRows }"
-    >
-    <ng-container *ngFor="let node of nodeConfigs; trackBy: trackByFn" >
-        <ng-container nuiComponentPortal
-                        #componentPortal="nuiComponentPortal"
-                        [componentId]="node.id"
-                        [componentType]="node.componentType"
-                        [properties]="node.properties"
-                        [providers]="node.providers">
-            <ng-template [cdkPortalOutlet]="componentPortal.portal" (attached)="componentPortal.attached($event)"></ng-template>
+>
+    <ng-container *ngFor="let node of nodeConfigs; trackBy: trackByFn">
+        <ng-container
+            nuiComponentPortal
+            #componentPortal="nuiComponentPortal"
+            [componentId]="node.id"
+            [componentType]="node.componentType"
+            [properties]="node.properties"
+            [providers]="node.providers"
+        >
+            <ng-template
+                [cdkPortalOutlet]="componentPortal.portal"
+                (attached)="componentPortal.attached($event)"
+            ></ng-template>
         </ng-container>
     </ng-container>
 </div>

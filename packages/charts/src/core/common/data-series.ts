@@ -1,7 +1,6 @@
 import { DataAccessor, IAccessors, IDataSeries, SeriesAccessor } from "./types";
 
 export class DataSeries implements IDataSeries<IAccessors> {
-
     public id: string;
     public accessors: {
         data?: Record<string, DataAccessor | undefined>;
@@ -19,8 +18,8 @@ export class DataSeries implements IDataSeries<IAccessors> {
             data: {
                 category: (d: any) => d.name,
                 value: (d: any) => d.value,
-            }, series: {},
+            },
+            series: {},
         };
     }
-
 }

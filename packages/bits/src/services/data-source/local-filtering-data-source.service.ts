@@ -7,10 +7,7 @@ import _orderBy from "lodash/orderBy";
 
 import { SorterDirection } from "../../lib/sorter/public-api";
 import { SearchService } from "../search.service";
-
-import {
-    DataSourceService,
-} from "./data-source.service";
+import { DataSourceService } from "./data-source.service";
 import {
     IFilter,
     IFilterGroup,
@@ -32,7 +29,10 @@ interface ComparisonItems {
  * @deprecated in v11 - use ClientSideDataSource instead - Removal: NUI-5796
  */
 @Injectable()
-export class LocalFilteringDataSource<T, F extends INovaFilters = INovaFilters> extends DataSourceService<T, F> {
+export class LocalFilteringDataSource<
+    T,
+    F extends INovaFilters = INovaFilters
+> extends DataSourceService<T, F> {
     protected _allData: T[];
     protected _allCategoriesResult: IFilteringOutputs = {};
     protected _searchProps: string[] = [];
@@ -63,7 +63,9 @@ export class LocalFilteringDataSource<T, F extends INovaFilters = INovaFilters> 
             nextChunk = this.searchHandler(searchTerm);
         }
 
-        const multiFiltersArr: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>[] = this.extractMultiFilters(filters);
+        const multiFiltersArr: IFilterGroup<
+            IFilter<string[], IMultiFilterMetadata>
+        >[] = this.extractMultiFilters(filters);
         // APPLY FILTERS with type 'string[]' if any
         if (multiFiltersArr?.length) {
             nextChunk = this.multiFilterHandler(nextChunk, multiFiltersArr);
@@ -74,12 +76,18 @@ export class LocalFilteringDataSource<T, F extends INovaFilters = INovaFilters> 
         // RESET PAGINATION if needed
         const filtersChanged = this.filtersChanged(
             filters,
-            this.setItemsToCompare(filters, nextChunk, searchTerm, multiFiltersArr)
+            this.setItemsToCompare(
+                filters,
+                nextChunk,
+                searchTerm,
+                multiFiltersArr
+            )
         );
 
         if (filtersChanged) {
             if (filters?.paginator) {
-                const size = filters.paginator.value.end - filters.paginator.value.start;
+                const size =
+                    filters.paginator.value.end - filters.paginator.value.start;
                 filters.paginator.value.start = 0;
                 filters.paginator.value.end = size;
             }
@@ -111,12 +119,18 @@ export class LocalFilteringDataSource<T, F extends INovaFilters = INovaFilters> 
     }
 
     protected searchHandler(searchTerm: any) {
-        return this.searchService.search(this._allData, this._searchProps, searchTerm);
+        return this.searchService.search(
+            this._allData,
+            this._searchProps,
+            searchTerm
+        );
     }
 
     protected multiFilterHandler(nextChunk: any, multiFiltersArr: any) {
-        const allCategoriesArr: IFilterItem<string[]>[] = multiFiltersArr
-            .map((el: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>) => this.getAllCategories(el));
+        const allCategoriesArr: IFilterItem<string[]>[] = multiFiltersArr.map(
+            (el: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>) =>
+                this.getAllCategories(el)
+        );
         if (multiFiltersArr.length) {
             const filteredResult = this.searchThru(multiFiltersArr, nextChunk);
             const selectedFilters = this.getSelectedFilters(multiFiltersArr);
@@ -126,15 +140,25 @@ export class LocalFilteringDataSource<T, F extends INovaFilters = INovaFilters> 
             }
         }
         // count number of occurrences of every item
-        this._allCategoriesResult = this.countAvailableResults(allCategoriesArr, nextChunk);
+        this._allCategoriesResult = this.countAvailableResults(
+            allCategoriesArr,
+            nextChunk
+        );
         return nextChunk;
     }
 
     protected sortingHandler(filters: any, nextChunk: any) {
-        if (_get(filters, "sorter.value.sortBy") && _get(filters, "sorter.value.direction")) {
+        if (
+            _get(filters, "sorter.value.sortBy") &&
+            _get(filters, "sorter.value.direction")
+        ) {
             // Original direction means that sorting is not needed
             if (filters.sorter.value.direction !== SorterDirection.original) {
-                return _orderBy(nextChunk, filters.sorter.value.sortBy, filters.sorter.value.direction);
+                return _orderBy(
+                    nextChunk,
+                    filters.sorter.value.sortBy,
+                    filters.sorter.value.direction
+                );
             }
         }
         return nextChunk;
@@ -181,90 +205,158 @@ export class LocalFilteringDataSource<T, F extends INovaFilters = INovaFilters> 
         return false;
     }
 
-    protected setItemsToCompare(filters: F,
-                                nextChunk: T[],
-                                searchTerm: string | undefined,
-                                multiFiltersArr: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>[]) {
+    protected setItemsToCompare(
+        filters: F,
+        nextChunk: T[],
+        searchTerm: string | undefined,
+        multiFiltersArr: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>[]
+    ) {
         // GET FILTERS from previous filtering
-        const previousSortBy = _get(this._previousFilters, "sorter.value.sortBy");
-        const previousDirection = _get(this._previousFilters, "sorter.value.direction");
+        const previousSortBy = _get(
+            this._previousFilters,
+            "sorter.value.sortBy"
+        );
+        const previousDirection = _get(
+            this._previousFilters,
+            "sorter.value.direction"
+        );
         const previousSearchTerm = _get(this._previousFilters, "search.value");
-        const previousMultiFiltersArr = this.extractMultiFilters(this._previousFilters);
+        const previousMultiFiltersArr = this.extractMultiFilters(
+            this._previousFilters
+        );
 
         const sortBy = _get(filters, "sorter.value.sortBy");
         const direction = _get(filters, "sorter.value.direction");
 
         const itemsToCompare: ComparisonItems[] = [];
-        itemsToCompare.push({ previousValue: previousSortBy, currentValue: sortBy });
-        itemsToCompare.push({ previousValue: previousDirection, currentValue: direction });
-        itemsToCompare.push({ previousValue: previousSearchTerm, currentValue: searchTerm });
-        itemsToCompare.push({ previousValue: previousMultiFiltersArr, currentValue: multiFiltersArr });
+        itemsToCompare.push({
+            previousValue: previousSortBy,
+            currentValue: sortBy,
+        });
+        itemsToCompare.push({
+            previousValue: previousDirection,
+            currentValue: direction,
+        });
+        itemsToCompare.push({
+            previousValue: previousSearchTerm,
+            currentValue: searchTerm,
+        });
+        itemsToCompare.push({
+            previousValue: previousMultiFiltersArr,
+            currentValue: multiFiltersArr,
+        });
         return itemsToCompare;
     }
 
-    protected extractMultiFilters(filters: F): IFilterGroup<IFilter<string[], IMultiFilterMetadata>>[] {
-        const multiFilterArr: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>[] = [];
+    protected extractMultiFilters(
+        filters: F
+    ): IFilterGroup<IFilter<string[], IMultiFilterMetadata>>[] {
+        const multiFilterArr: IFilterGroup<
+            IFilter<string[], IMultiFilterMetadata>
+        >[] = [];
         _forEach(filters, (value, key) => {
             if (value?.type === "string[]") {
-                multiFilterArr
-                    .push({[key]: value} as any);
+                multiFilterArr.push({ [key]: value } as any);
             }
         });
         return multiFilterArr;
     }
 
-    private getSelectedFilters(multiFiltersArr: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>[]): string[] {
-        return multiFiltersArr.reduce((prev: string[], curr: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>) =>
-            prev.concat(curr[Object.keys(curr)[0]].value), []);
+    private getSelectedFilters(
+        multiFiltersArr: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>[]
+    ): string[] {
+        return multiFiltersArr.reduce(
+            (
+                prev: string[],
+                curr: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>
+            ) => prev.concat(curr[Object.keys(curr)[0]].value),
+            []
+        );
     }
 
-    private countAvailableResults(allCategoriesArr: IFilterItem<string[]>[], nextChunk: T[]): IFilterGroup<IFilterItem<number>> {
-        const allCategoriesResult: IFilterGroup<IFilterItem<number>[]>[] = allCategoriesArr.map((el, index) => {
-            const key = Object.keys(el)[0];
-            const valuesArr: string[] = allCategoriesArr[index][key];
-            const resultArr = valuesArr.map((element: string) => {
-                const r: T[] = this.searchService.search(nextChunk, [key], element);
-                return { [element]: r.length };
+    private countAvailableResults(
+        allCategoriesArr: IFilterItem<string[]>[],
+        nextChunk: T[]
+    ): IFilterGroup<IFilterItem<number>> {
+        const allCategoriesResult: IFilterGroup<IFilterItem<number>[]>[] =
+            allCategoriesArr.map((el, index) => {
+                const key = Object.keys(el)[0];
+                const valuesArr: string[] = allCategoriesArr[index][key];
+                const resultArr = valuesArr.map((element: string) => {
+                    const r: T[] = this.searchService.search(
+                        nextChunk,
+                        [key],
+                        element
+                    );
+                    return { [element]: r.length };
+                });
+                return { [key]: resultArr };
             });
-            return { [key]: resultArr };
-        });
 
-        return allCategoriesResult
-            // convert array to an object
-            .reduce((prev: any, curr: any) => {
-                const [prop] = Object.keys(curr);
+        return (
+            allCategoriesResult
                 // convert array to an object
-                const newObj = curr[prop].reduce((previous: any, current: any) => {
-                    const [property] = Object.keys(current);
-                    previous[property] = current[property];
-                    return previous;
-                }, {});
-                prev[prop] = newObj;
-                return prev;
-            }, {});
+                .reduce((prev: any, curr: any) => {
+                    const [prop] = Object.keys(curr);
+                    // convert array to an object
+                    const newObj = curr[prop].reduce(
+                        (previous: any, current: any) => {
+                            const [property] = Object.keys(current);
+                            previous[property] = current[property];
+                            return previous;
+                        },
+                        {}
+                    );
+                    prev[prop] = newObj;
+                    return prev;
+                }, {})
+        );
     }
 
-    private searchThru(arrToMap: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>[], arrToSearchIn: T[]) {
+    private searchThru(
+        arrToMap: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>[],
+        arrToSearchIn: T[]
+    ) {
         // We are filtering out filter groups which doesn't have selected filters. If filters are not present,
         // it means that filtered data with this filters should not participate in intersection
-        return arrToMap.filter(arr => !!arr[Object.keys(arr)[0]].value.length).map((multiFilter: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>) => {
-            const [prop] = Object.keys(multiFilter);
-            return multiFilter[prop]
-                // extract value array
-                .value
-                // find matches
-                .map((el: string) =>
-                    this.searchService.search(arrToSearchIn, [prop], el))
-                // flatten returned multidimensional arrays
-                .reduce((prev: T[], curr: T[]) =>
-                    prev.concat(curr), []);
-        });
+        return arrToMap
+            .filter((arr) => !!arr[Object.keys(arr)[0]].value.length)
+            .map(
+                (
+                    multiFilter: IFilterGroup<
+                        IFilter<string[], IMultiFilterMetadata>
+                    >
+                ) => {
+                    const [prop] = Object.keys(multiFilter);
+                    return (
+                        multiFilter[prop].value // extract value array
+                            // find matches
+                            .map((el: string) =>
+                                this.searchService.search(
+                                    arrToSearchIn,
+                                    [prop],
+                                    el
+                                )
+                            )
+                            // flatten returned multidimensional arrays
+                            .reduce(
+                                (prev: T[], curr: T[]) => prev.concat(curr),
+                                []
+                            )
+                    );
+                }
+            );
     }
 
-    private getAllCategories(multiFilter: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>) {
-        if (!multiFilter) { return; }
+    private getAllCategories(
+        multiFilter: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>
+    ) {
+        if (!multiFilter) {
+            return;
+        }
         const [prop] = Object.keys(multiFilter);
-        const { metadata }: IFilter<string[], IMultiFilterMetadata> = multiFilter[prop];
+        const { metadata }: IFilter<string[], IMultiFilterMetadata> =
+            multiFilter[prop];
         return { [prop]: metadata?.allCategories };
     }
 
@@ -276,5 +368,4 @@ export class LocalFilteringDataSource<T, F extends INovaFilters = INovaFilters> 
         }
         return false;
     }
-
 }

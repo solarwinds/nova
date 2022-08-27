@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { NuiDashboardsModule } from "../../dashboards.module";
-
 import { TemplateLoadErrorComponent } from "./template-load-error.component";
 
 describe("TemplateLoadErrorComponent", () => {
@@ -10,9 +9,8 @@ describe("TemplateLoadErrorComponent", () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [ NuiDashboardsModule ],
-        })
-            .compileComponents();
+            imports: [NuiDashboardsModule],
+        }).compileComponents();
     }));
 
     beforeEach(() => {

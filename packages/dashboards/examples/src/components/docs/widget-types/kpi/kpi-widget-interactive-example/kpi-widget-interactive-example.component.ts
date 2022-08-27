@@ -1,5 +1,9 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
+import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { BehaviorSubject } from "rxjs";
+import { finalize } from "rxjs/operators";
+
 import { DataSourceService, IFilteringOutputs } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
@@ -22,15 +26,15 @@ import {
     WellKnownProviders,
     WidgetTypesService,
 } from "@nova-ui/dashboards";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
-import { BehaviorSubject } from "rxjs";
-import { finalize } from "rxjs/operators";
 
 /**
  * A simple KPI data source to retrieve the average rating of Harry Potter and the Sorcerer's Stone (book) via googleapis
  */
 @Injectable()
-export class BookRatingDataSource extends DataSourceService<IKpiData> implements OnDestroy {
+export class BookRatingDataSource
+    extends DataSourceService<IKpiData>
+    implements OnDestroy
+{
     // This is the ID we'll use to identify the provider
     public static providerId = "BookRatingDataSource";
 
@@ -47,7 +51,8 @@ export class BookRatingDataSource extends DataSourceService<IKpiData> implements
         this.busy.next(true);
         return new Promise((resolve) => {
             // *** Make a resource request to an external API (if needed)
-            this.http.get("https://www.googleapis.com/books/v1/volumes/zpvysRGsBlwC")
+            this.http
+                .get("https://www.googleapis.com/books/v1/volumes/zpvysRGsBlwC")
                 .pipe(finalize(() => this.busy.next(false)))
                 .subscribe({
                     next: (data: any) => {
@@ -101,7 +106,7 @@ export class KpiWidgetInteractiveExampleComponent implements OnInit {
 
         // In general, the ProviderRegistryService is used for making entities available for injection into dynamically loaded components.
         private providerRegistry: ProviderRegistryService
-    ) { }
+    ) {}
 
     public ngOnInit(): void {
         // Grabbing the widget's default template which will be needed as a parameter for setNode
@@ -141,7 +146,8 @@ export class KpiWidgetInteractiveExampleComponent implements OnInit {
         const kpiWidget = widgetConfig;
         const widgetIndex: IWidgets = {
             // Complete the KPI widget with information coming from its type definition
-            [kpiWidget.id]: this.widgetTypesService.mergeWithWidgetType(kpiWidget),
+            [kpiWidget.id]:
+                this.widgetTypesService.mergeWithWidgetType(kpiWidget),
         };
 
         // Setting the widget dimensions and position (this is for gridster)
@@ -160,7 +166,6 @@ export class KpiWidgetInteractiveExampleComponent implements OnInit {
             widgets: widgetIndex,
         };
     }
-
 }
 
 const widgetConfig: IWidget = {
@@ -168,13 +173,13 @@ const widgetConfig: IWidget = {
     type: "kpi",
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
-            "header": {
-                "properties": {
-                    "title": "Harry Potter and the Order of the Phoenix",
-                    "subtitle": "By: J. K. Rowling",
+            header: {
+                properties: {
+                    title: "Harry Potter and the Order of the Phoenix",
+                    subtitle: "By: J. K. Rowling",
                 },
             },
-            "tiles": {
+            tiles: {
                 providers: {
                     interaction: {
                         // Configuring the UrlInteractionHandler for interactions on the tiles
@@ -185,34 +190,33 @@ const widgetConfig: IWidget = {
                         },
                     },
                 },
-                "properties": {
-                    "nodes": ["kpi1"],
-                    
+                properties: {
+                    nodes: ["kpi1"],
                 },
             },
-            "kpi1": {
-                "id": "kpi1",
-                "componentType": KpiComponent.lateLoadKey,
-                "properties": {
-                    "widgetData": {
-                        "units": `out of 5 stars`,
-                        "label": `Average Rating`,
-                        "value": 0,
+            kpi1: {
+                id: "kpi1",
+                componentType: KpiComponent.lateLoadKey,
+                properties: {
+                    widgetData: {
+                        units: `out of 5 stars`,
+                        label: `Average Rating`,
+                        value: 0,
                         // the link property that is passed to the UrlInteractionHandler when the title is clicked
                         // this will be updated in BookRatingDataSource's 'getFilteredData' call.
-                        "link": "http://www.google.com",
+                        link: "http://www.google.com",
                     },
                 },
-                "providers": {
+                providers: {
                     [WellKnownProviders.DataSource]: {
                         // Setting the data source providerId for the tile with id "kpi1"
-                        "providerId": BookRatingDataSource.providerId,
+                        providerId: BookRatingDataSource.providerId,
                     } as IProviderConfiguration,
                     [WellKnownProviders.Adapter]: {
-                        "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
-                        "properties": {
-                            "componentId": "kpi1",
-                            "propertyPath": "widgetData",
+                        providerId: NOVA_KPI_DATASOURCE_ADAPTER,
+                        properties: {
+                            componentId: "kpi1",
+                            propertyPath: "widgetData",
                         },
                     } as IProviderConfiguration,
                 },

@@ -13,18 +13,17 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [
-                    LegendComponent,
-                ],
+                declarations: [LegendComponent],
                 schemas: [CUSTOM_ELEMENTS_SCHEMA],
             });
 
             fixture = TestBed.createComponent(LegendComponent);
             legend = fixture.debugElement.componentInstance;
-            element = fixture.debugElement.query(By.css(".nui-legend")).nativeElement;
+            element = fixture.debugElement.query(
+                By.css(".nui-legend")
+            ).nativeElement;
             fixture.detectChanges();
         });
-
 
         it("should emit active changed with the new active value", () => {
             legend.active = false;
@@ -32,7 +31,9 @@ describe("components >", () => {
             spyOn(legend.activeChanged, "emit");
             legend.active = true;
 
-            legend.ngOnChanges({ active: new SimpleChange(null, null, legend.active) });
+            legend.ngOnChanges({
+                active: new SimpleChange(null, null, legend.active),
+            });
 
             expect(legend.activeChanged.emit).toHaveBeenCalledWith(true);
         });
@@ -46,6 +47,5 @@ describe("components >", () => {
             fixture.detectChanges();
             expect(element.classList).not.toContain("flex-column");
         });
-
     });
 });

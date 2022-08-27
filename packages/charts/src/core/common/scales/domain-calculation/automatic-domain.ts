@@ -1,11 +1,14 @@
 import indexOf from "lodash/indexOf";
+
 import { IAccessors, IChartSeries } from "../../types";
 import { DomainCalculator, IScale } from "../types";
-
 import { mergeDomains } from "./merge-domains";
 
 /** @ignore */
-function getFixedDomains(chartSeriesSet: IChartSeries<IAccessors>[], scaleId: string): Record<string, IScale<any>[]> {
+function getFixedDomains(
+    chartSeriesSet: IChartSeries<IAccessors>[],
+    scaleId: string
+): Record<string, IScale<any>[]> {
     return chartSeriesSet.reduce((result, next: IChartSeries<IAccessors>) => {
         for (const scaleKey of Object.keys(next.scales)) {
             if (scaleKey === scaleId) {
@@ -38,20 +41,36 @@ function getFixedDomains(chartSeriesSet: IChartSeries<IAccessors>[], scaleId: st
  * @param scale
  * @returns {[any, any]} domain
  */
-export const getAutomaticDomain: DomainCalculator = (chartSeriesSet: IChartSeries<IAccessors>[], scaleKey: string, scale: IScale<any>): any[] => {
+export const getAutomaticDomain: DomainCalculator = (
+    chartSeriesSet: IChartSeries<IAccessors>[],
+    scaleKey: string,
+    scale: IScale<any>
+): any[] => {
     const fixedDomains = getFixedDomains(chartSeriesSet, scaleKey);
 
-    const domains: any[][] = chartSeriesSet.map(cs => {
+    const domains: any[][] = chartSeriesSet.map((cs) => {
         // find fixed, continuous scales that are referenced by this series
-        const filterScales = Object.keys(fixedDomains).reduce((result, next: string) => {
-            const seriesScale = cs.scales[next];
-            if (seriesScale && seriesScale.isContinuous() && indexOf(fixedDomains[next], seriesScale) !== -1) {
-                result[next] = seriesScale;
-            }
-            return result;
-        }, <Record<string, IScale<any>>>{});
+        const filterScales = Object.keys(fixedDomains).reduce(
+            (result, next: string) => {
+                const seriesScale = cs.scales[next];
+                if (
+                    seriesScale &&
+                    seriesScale.isContinuous() &&
+                    indexOf(fixedDomains[next], seriesScale) !== -1
+                ) {
+                    result[next] = seriesScale;
+                }
+                return result;
+            },
+            <Record<string, IScale<any>>>{}
+        );
 
-        return cs.renderer.getDomainOfFilteredData(cs, filterScales, scaleKey, cs.scales[scaleKey]);
+        return cs.renderer.getDomainOfFilteredData(
+            cs,
+            filterScales,
+            scaleKey,
+            cs.scales[scaleKey]
+        );
     });
 
     return mergeDomains(domains, scale);
@@ -64,10 +83,21 @@ export const getAutomaticDomain: DomainCalculator = (chartSeriesSet: IChartSerie
  * @returns {(chartSeriesSet: IChartSeries<IAccessors>[], scaleId: string) => [number , number]} A domain calculator
  * that includes the specified interval in its calculation
  */
-export const getAutomaticDomainWithIncludedInterval = (interval: [number, number]): DomainCalculator =>
-    (chartSeriesSet: IChartSeries<IAccessors>[], scaleId: string, scale: IScale<any>) => {
-        const automaticDomain = getAutomaticDomain(chartSeriesSet, scaleId, scale);
+export const getAutomaticDomainWithIncludedInterval =
+    (interval: [number, number]): DomainCalculator =>
+    (
+        chartSeriesSet: IChartSeries<IAccessors>[],
+        scaleId: string,
+        scale: IScale<any>
+    ) => {
+        const automaticDomain = getAutomaticDomain(
+            chartSeriesSet,
+            scaleId,
+            scale
+        );
 
-        return [Math.min(automaticDomain[0], interval[0]), Math.max(automaticDomain[1], interval[1])];
+        return [
+            Math.min(automaticDomain[0], interval[0]),
+            Math.max(automaticDomain[1], interval[1]),
+        ];
     };
-

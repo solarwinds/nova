@@ -3,7 +3,6 @@ import { $$, browser, by, element, ElementFinder, Key } from "protractor";
 import { ButtonAtom, CheckboxAtom } from "../..";
 import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
-
 import { PopoverAtom } from "./popover.atom";
 
 describe("USERCONTROL popover", () => {

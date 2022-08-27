@@ -14,8 +14,16 @@ import {
 } from "@angular/core";
 import debounce from "lodash/debounce";
 
-import { CHART_COMPONENT, CHART_VIEW_STATUS_EVENT, REFRESH_EVENT } from "../constants";
-import { IChart, IChartComponent, IChartViewStatusEventPayload } from "../core/common/types";
+import {
+    CHART_COMPONENT,
+    CHART_VIEW_STATUS_EVENT,
+    REFRESH_EVENT,
+} from "../constants";
+import {
+    IChart,
+    IChartComponent,
+    IChartViewStatusEventPayload,
+} from "../core/common/types";
 
 @Component({
     selector: "nui-chart",
@@ -27,19 +35,31 @@ import { IChart, IChartComponent, IChartViewStatusEventPayload } from "../core/c
         },
     ],
 })
-export class ChartComponent implements OnInit, AfterContentInit, AfterViewInit, OnDestroy, IChartComponent, OnChanges {
-
+export class ChartComponent
+    implements
+        OnInit,
+        AfterContentInit,
+        AfterViewInit,
+        OnDestroy,
+        IChartComponent,
+        OnChanges
+{
     @Input() public chart: IChart;
 
     public resizeObserver?: ResizeObserver;
     private resizeHandler: Function;
     private intersectionObserver: IntersectionObserver;
 
-    constructor(private elRef: ElementRef, private ngZone: NgZone, private cd: ChangeDetectorRef) {
-    }
+    constructor(
+        private elRef: ElementRef,
+        private ngZone: NgZone,
+        private cd: ChangeDetectorRef
+    ) {}
 
     public ngOnInit() {
-        this.intersectionObserver = new IntersectionObserver(this.intersectionObserverCallback);
+        this.intersectionObserver = new IntersectionObserver(
+            this.intersectionObserverCallback
+        );
         this.intersectionObserver.observe(this.elRef.nativeElement);
     }
 
@@ -58,9 +78,12 @@ export class ChartComponent implements OnInit, AfterContentInit, AfterViewInit, 
     }
 
     public ngAfterContentInit() {
-        this.chart.getEventBus().getStream(REFRESH_EVENT).subscribe(() => {
-            this.chart.updateDimensions();
-        });
+        this.chart
+            .getEventBus()
+            .getStream(REFRESH_EVENT)
+            .subscribe(() => {
+                this.chart.updateDimensions();
+            });
     }
 
     public ngAfterViewInit() {
@@ -69,7 +92,9 @@ export class ChartComponent implements OnInit, AfterContentInit, AfterViewInit, 
             // This was suggested here https://github.com/angular/zone.js/issues/1011
             this.ngZone.run(() => this.resizeHandler());
         });
-        this.ngZone.runOutsideAngular(() => this.resizeObserver?.observe(<Element>(this.elRef.nativeElement)));
+        this.ngZone.runOutsideAngular(() =>
+            this.resizeObserver?.observe(<Element>this.elRef.nativeElement)
+        );
     }
 
     public ngOnDestroy() {
@@ -81,11 +106,19 @@ export class ChartComponent implements OnInit, AfterContentInit, AfterViewInit, 
     public redraw = () => {
         this.chart.updateDimensions();
         this.cd.detectChanges();
-    }
+    };
 
-    private intersectionObserverCallback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void => {
+    private intersectionObserverCallback = (
+        entries: IntersectionObserverEntry[],
+        observer: IntersectionObserver
+    ): void => {
         // Since we're only listening for intersection changes for one target (the chart itself), the 'entries' argument always has just one element.
-        const data: IChartViewStatusEventPayload = { isChartInView: entries[0].isIntersecting };
-        this.chart.getEventBus().getStream(CHART_VIEW_STATUS_EVENT).next({ data });
-    }
+        const data: IChartViewStatusEventPayload = {
+            isChartInView: entries[0].isIntersecting,
+        };
+        this.chart
+            .getEventBus()
+            .getStream(CHART_VIEW_STATUS_EVENT)
+            .next({ data });
+    };
 }

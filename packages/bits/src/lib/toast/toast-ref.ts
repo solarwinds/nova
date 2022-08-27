@@ -16,7 +16,7 @@ export class ToastRef<T> implements IToastRef<T> {
     private activateSubject: Subject<any> = new Subject();
     private manualCloseSubject: Subject<any> = new Subject();
 
-    constructor(private toastContainerService: ToastContainerService) { }
+    constructor(private toastContainerService: ToastContainerService) {}
 
     public manualClose() {
         this.manualCloseSubject.next();

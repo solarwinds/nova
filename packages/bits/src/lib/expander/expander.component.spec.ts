@@ -8,7 +8,9 @@ const customHeaderHtml = `<div nuiExpanderHeader=""><p>Custom Projected Header</
 const customBodyHtml = `<div><span>Covfefe</span></div>`;
 
 @Component({
-    template: `<nui-expander [open]="open">${customHeaderHtml}${customBodyHtml}</nui-expander>`,
+    template: `<nui-expander [open]="open"
+        >${customHeaderHtml}${customBodyHtml}</nui-expander
+    >`,
 })
 class ExpanderUsageWithContentComponent {
     @Input() open = false;
@@ -46,7 +48,9 @@ describe("components >", () => {
                 beforeEach(() => {
                     fixture = TestBed.createComponent(ExpanderComponent);
                     subject = fixture.componentInstance;
-                    headerIconEl = fixture.debugElement.query(By.css(".nui-expander__header-icon"));
+                    headerIconEl = fixture.debugElement.query(
+                        By.css(".nui-expander__header-icon")
+                    );
                     headerIcon = headerIconEl.injector.get(MockIconComponent);
                 });
 
@@ -77,7 +81,9 @@ describe("components >", () => {
                     subject = fixture.componentInstance;
                     subject.header = "Expander title";
                     fixture.detectChanges();
-                    headerEl = fixture.debugElement.query(By.css(".nui-expander__header-content-wrapper"));
+                    headerEl = fixture.debugElement.query(
+                        By.css(".nui-expander__header-content-wrapper")
+                    );
                 });
 
                 it("when enabled", () => {
@@ -92,13 +98,19 @@ describe("components >", () => {
                 let headerContentEls: DebugElement[];
 
                 beforeEach(() => {
-                    usageFixture = TestBed.createComponent(ExpanderUsageWithContentComponent);
+                    usageFixture = TestBed.createComponent(
+                        ExpanderUsageWithContentComponent
+                    );
                     usageFixture.detectChanges();
-                    headerContentEls = usageFixture.debugElement.queryAll(By.css(".nui-expander__header-content-wrapper>*"));
+                    headerContentEls = usageFixture.debugElement.queryAll(
+                        By.css(".nui-expander__header-content-wrapper>*")
+                    );
                 });
 
                 it("projects expected content", () => {
-                    expect(headerContentEls[0].nativeElement.innerText.trim()).toBe("Custom Projected Header");
+                    expect(
+                        headerContentEls[0].nativeElement.innerText.trim()
+                    ).toBe("Custom Projected Header");
                 });
 
                 it("removes default header content", () => {
@@ -107,9 +119,10 @@ describe("components >", () => {
             });
 
             describe("when header content is not specified >", () => {
-                const getHeaderContentIconEl = () => fixture.debugElement.query(
-                    By.css(".nui-expander__header-content-icon")
-                );
+                const getHeaderContentIconEl = () =>
+                    fixture.debugElement.query(
+                        By.css(".nui-expander__header-content-icon")
+                    );
 
                 beforeEach(() => {
                     fixture = TestBed.createComponent(ExpanderComponent);
@@ -121,7 +134,8 @@ describe("components >", () => {
                     fixture.detectChanges();
                     const headerContentIconEl = getHeaderContentIconEl();
                     expect(headerContentIconEl).not.toBeNull();
-                    const headerContentIcon = headerContentIconEl.injector.get(MockIconComponent);
+                    const headerContentIcon =
+                        headerContentIconEl.injector.get(MockIconComponent);
                     expect(headerContentIcon.icon).toBe("clown-shoes");
                 });
 
@@ -133,15 +147,24 @@ describe("components >", () => {
                 it("sets expected header text in default header", () => {
                     subject.header = "Scrunch Bunch";
                     fixture.detectChanges();
-                    const headerTextEl = fixture.debugElement.query(By.css(".nui-expander__header-title"));
-                    expect(headerTextEl.nativeElement.innerHTML).toBe("Scrunch Bunch");
+                    const headerTextEl = fixture.debugElement.query(
+                        By.css(".nui-expander__header-title")
+                    );
+                    expect(headerTextEl.nativeElement.innerHTML).toBe(
+                        "Scrunch Bunch"
+                    );
                 });
 
                 it("applies proper classes if header content is empty", () => {
                     subject.header = "";
                     fixture.detectChanges();
-                    const headerElement = fixture.debugElement.query(By.css(".nui-expander__header--empty"));
-                    const headerContentWrapperElement = fixture.debugElement.query(By.css(".nui-expander__custom-header--empty"));
+                    const headerElement = fixture.debugElement.query(
+                        By.css(".nui-expander__header--empty")
+                    );
+                    const headerContentWrapperElement =
+                        fixture.debugElement.query(
+                            By.css(".nui-expander__custom-header--empty")
+                        );
                     expect(headerElement).not.toBeNull();
                     expect(headerContentWrapperElement).not.toBeNull();
                     expect(subject.isCustomHeaderContentEmpty).toEqual(true);
@@ -151,10 +174,15 @@ describe("components >", () => {
             describe("when body content is specified", () => {
                 let usageFixture: ComponentFixture<ExpanderUsageWithContentComponent>;
                 let usageSubject: ExpanderUsageWithContentComponent;
-                const getBodyContentEl = () => usageFixture.debugElement.query(By.css(".nui-expander__body-wrapper"));
+                const getBodyContentEl = () =>
+                    usageFixture.debugElement.query(
+                        By.css(".nui-expander__body-wrapper")
+                    );
 
                 beforeEach(() => {
-                    usageFixture = TestBed.createComponent(ExpanderUsageWithContentComponent);
+                    usageFixture = TestBed.createComponent(
+                        ExpanderUsageWithContentComponent
+                    );
                     usageSubject = usageFixture.componentInstance;
                 });
 
@@ -167,7 +195,9 @@ describe("components >", () => {
                 it("should not project content when closed", () => {
                     usageSubject.open = false;
                     usageFixture.detectChanges();
-                    expect(getBodyContentEl().nativeElement.innerHTML).not.toContain(customBodyHtml);
+                    expect(
+                        getBodyContentEl().nativeElement.innerHTML
+                    ).not.toContain(customBodyHtml);
                 });
             });
 
@@ -175,16 +205,20 @@ describe("components >", () => {
                 fixture = TestBed.createComponent(ExpanderComponent);
                 subject = fixture.componentInstance;
                 const wasOpen = subject.open;
-                const headerEl = fixture.debugElement.query(By.css(".nui-expander__header"));
+                const headerEl = fixture.debugElement.query(
+                    By.css(".nui-expander__header")
+                );
                 headerEl.triggerEventHandler("click", null);
                 expect(subject.open).not.toEqual(wasOpen);
             });
-
         });
 
         describe("toggle >", () => {
             beforeEach(() => {
-                subject = TestBed.createComponent(ExpanderComponent).componentInstance;
+                subject =
+                    TestBed.createComponent(
+                        ExpanderComponent
+                    ).componentInstance;
             });
 
             describe("when enabled >", () => {

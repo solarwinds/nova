@@ -6,19 +6,22 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
     templateUrl: "./tab-content-settings.example.component.html",
 })
 export class TabContentSettingsExampleComponent implements OnInit {
-    public content: string = "You can change your password using the form below:";
+    public content: string =
+        "You can change your password using the form below:";
     public tabTitle: string = "Account Settings";
 
     public dynamicForm: FormGroup;
     public visibleRadio: boolean;
 
-    constructor(private formBuilder: FormBuilder) {
-    }
+    constructor(private formBuilder: FormBuilder) {}
 
     public ngOnInit() {
         this.dynamicForm = this.formBuilder.group({
             password: this.formBuilder.control("", Validators.required),
-            confirmPassword: this.formBuilder.control({value: "", disabled: true}, Validators.required),
+            confirmPassword: this.formBuilder.control(
+                { value: "", disabled: true },
+                Validators.required
+            ),
         });
     }
 

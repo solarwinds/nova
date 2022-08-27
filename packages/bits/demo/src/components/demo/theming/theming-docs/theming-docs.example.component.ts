@@ -5,7 +5,6 @@ import { Component } from "@angular/core";
     templateUrl: "./theming-docs.example.component.html",
     styleUrls: ["./theming-docs.example.component.less"],
 })
-
 export class ThemingDocsExampleComponent {
     public lessCode = `
 @import (reference) "nui-framework-variables";

@@ -1,25 +1,47 @@
-<div class="nui-wizard-step-header__label"
-     [nuiTooltip]="stringLabel ? stringLabel : ''"
-     [class.nui-wizard-step-header__label--active]="step.completed"
-     [class.nui-wizard-step-header__label--selected]="selected"
-     [class.nui-wizard-step-header__label--error]="stepState === 'error'">
-
+<div
+    class="nui-wizard-step-header__label"
+    [nuiTooltip]="stringLabel ? stringLabel : ''"
+    [class.nui-wizard-step-header__label--active]="step.completed"
+    [class.nui-wizard-step-header__label--selected]="selected"
+    [class.nui-wizard-step-header__label--error]="stepState === 'error'"
+>
     <!-- If there is a label template, use it. -->
-    <ng-container *ngIf="templateLabel" [ngTemplateOutlet]="templateLabel?.template"></ng-container>
+    <ng-container
+        *ngIf="templateLabel"
+        [ngTemplateOutlet]="templateLabel?.template"
+    ></ng-container>
 
     <!-- If there is no label template, fall back to the text label. -->
-    <div class="nui-wizard-step-header__text-label" *ngIf="stringLabel">{{label}}</div>
+    <div class="nui-wizard-step-header__text-label" *ngIf="stringLabel">
+        {{ label }}
+    </div>
 
-    <div class="nui-wizard-step-header__label--optional" *ngIf="step.optional && stepState !== 'error'">{{optionalLabel}}</div>
-    <div class="nui-wizard-step-header__label--error" *ngIf="stepState === 'error'">{{errorMessage}}</div>
+    <div
+        class="nui-wizard-step-header__label--optional"
+        *ngIf="step.optional && stepState !== 'error'"
+    >
+        {{ optionalLabel }}
+    </div>
+    <div
+        class="nui-wizard-step-header__label--error"
+        *ngIf="stepState === 'error'"
+    >
+        {{ errorMessage }}
+    </div>
 </div>
 
-<div class="nui-wizard-step-header-icon nui-step-header-icon-state--{{stepState}}">
+<div
+    class="nui-wizard-step-header-icon nui-step-header-icon-state--{{
+        stepState
+    }}"
+>
     <div class="nui-wizard-step-header-icon-container">
         <span class="nui-wizard-step-header-icon-content">
             <ng-container>
-                <nui-icon [icon]="stepStateConfigMap[stepState].icon"
-                          [iconColor]="stepStateConfigMap[stepState].iconColor"></nui-icon>
+                <nui-icon
+                    [icon]="stepStateConfigMap[stepState].icon"
+                    [iconColor]="stepStateConfigMap[stepState].iconColor"
+                ></nui-icon>
             </ng-container>
         </span>
     </div>

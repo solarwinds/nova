@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 import { IBroadcasterConfig } from "../../components/providers/types";
 import { IFormatterDefinition } from "../../components/types";
-import { LegendPlacement } from "../../widget-types/common/widget/legend"
 import { FormStackComponent } from "../../configurator/components/form-stack/form-stack.component";
 import { DonutContentPercentageFormatterComponent } from "../../configurator/components/formatters/donut-content-percentage-formatter/donut-content-percentage-formatter.component";
 import { DonutContentRawFormatterComponent } from "../../configurator/components/formatters/donut-content-raw-formatter/donut-content-raw-formatter.component";
@@ -13,12 +12,16 @@ import { SiUnitsFormatterComponent } from "../../configurator/components/formatt
 import { StatusWithIconFormatterComponent } from "../../configurator/components/formatters/status-with-icon-formatter/status-with-icon-formatter.component";
 import { WidgetConfiguratorSectionComponent } from "../../configurator/components/widget-configurator-section/widget-configurator-section.component";
 import { DataSourceConfigurationComponent } from "../../configurator/components/widgets/configurator-items/data-source-configuration/data-source-configuration.component";
+import { DataSourceErrorComponent } from "../../configurator/components/widgets/configurator-items/data-source-error/data-source-error.component";
 import { TitleAndDescriptionConfigurationComponent } from "../../configurator/components/widgets/configurator-items/title-and-description-configuration/title-and-description-configuration.component";
 import { AggregatorMetricSelectorConfigurationComponent } from "../../configurator/components/widgets/proportional/aggregators-configurators/aggregator-configurator/aggregator-configurator.component";
 import { FieldMapperAggregatorConfiguratorComponent } from "../../configurator/components/widgets/proportional/aggregators-configurators/field-mapper-aggregator-configurator/field-mapper-aggregator-configurator.component";
 import { ProportionalChartOptionsEditorComponent } from "../../configurator/components/widgets/proportional/chart-options-editor/proportional-chart-options-editor.component";
 import { fieldMapper } from "../../functions/proportional-aggregators/field-mapper";
-import { IPercentageAggregatorProperties, percentageAggregator } from "../../functions/proportional-aggregators/percentage-aggregator";
+import {
+    IPercentageAggregatorProperties,
+    percentageAggregator,
+} from "../../functions/proportional-aggregators/percentage-aggregator";
 import { sumAggregator } from "../../functions/proportional-aggregators/sum-aggregator";
 import { IProportionalDonutContentAggregatorDefinition } from "../../functions/proportional-aggregators/types";
 import {
@@ -30,8 +33,8 @@ import {
     NOVA_TITLE_AND_DESCRIPTION_CONVERTER,
 } from "../../services/types";
 import { PizzagnaLayer, WellKnownProviders } from "../../types";
+import { LegendPlacement } from "../../widget-types/common/widget/legend";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
-import { DataSourceErrorComponent } from "../../configurator/components/widgets/configurator-items/data-source-error/data-source-error.component";
 /* eslint-enable max-len */
 
 export const DEFAULT_LEGEND_FORMATTERS: IFormatterDefinition[] = [
@@ -45,7 +48,7 @@ export const DEFAULT_LEGEND_FORMATTERS: IFormatterDefinition[] = [
     },
     {
         componentType: StatusWithIconFormatterComponent.lateLoadKey,
-        "label": $localize`Status With Icon`,
+        label: $localize`Status With Icon`,
         dataTypes: {
             // @ts-ignore
             value: null,
@@ -53,13 +56,12 @@ export const DEFAULT_LEGEND_FORMATTERS: IFormatterDefinition[] = [
     },
     {
         componentType: LinkFormatterComponent.lateLoadKey,
-        "label": $localize`Link`,
+        label: $localize`Link`,
         dataTypes: {
             // @ts-ignore
             value: null,
         },
     },
-
 ];
 export const DEFAULT_PROPORTIONAL_CONTENT_FORMATTERS: IFormatterDefinition[] = [
     {
@@ -97,29 +99,33 @@ export const DEFAULT_PROPORTIONAL_CONTENT_FORMATTERS: IFormatterDefinition[] = [
     },
 ];
 
-export const DEFAULT_PROPORTIONAL_CONTENT_AGGREGATORS: IProportionalDonutContentAggregatorDefinition[] = [
-    {
-        aggregatorType: sumAggregator.aggregatorType,
-        label: "Sum Aggregator",
-        fn: sumAggregator,
-        configurationComponent: AggregatorMetricSelectorConfigurationComponent.lateLoadKey,
-    },
-    {
-        aggregatorType: percentageAggregator.aggregatorType,
-        label: "Percentage Aggregator",
-        fn: percentageAggregator,
-        properties: {
-            base100: true,
-        } as IPercentageAggregatorProperties,
-        configurationComponent: AggregatorMetricSelectorConfigurationComponent.lateLoadKey,
-    },
-    {
-        aggregatorType: fieldMapper.aggregatorType,
-        label: "Field Mapper Aggregator",
-        fn: fieldMapper,
-        configurationComponent: FieldMapperAggregatorConfiguratorComponent.lateLoadKey,
-    },
-];
+export const DEFAULT_PROPORTIONAL_CONTENT_AGGREGATORS: IProportionalDonutContentAggregatorDefinition[] =
+    [
+        {
+            aggregatorType: sumAggregator.aggregatorType,
+            label: "Sum Aggregator",
+            fn: sumAggregator,
+            configurationComponent:
+                AggregatorMetricSelectorConfigurationComponent.lateLoadKey,
+        },
+        {
+            aggregatorType: percentageAggregator.aggregatorType,
+            label: "Percentage Aggregator",
+            fn: percentageAggregator,
+            properties: {
+                base100: true,
+            } as IPercentageAggregatorProperties,
+            configurationComponent:
+                AggregatorMetricSelectorConfigurationComponent.lateLoadKey,
+        },
+        {
+            aggregatorType: fieldMapper.aggregatorType,
+            label: "Field Mapper Aggregator",
+            fn: fieldMapper,
+            configurationComponent:
+                FieldMapperAggregatorConfiguratorComponent.lateLoadKey,
+        },
+    ];
 
 export const proportionalConfigurator = {
     [PizzagnaLayer.Structure]: {
@@ -150,7 +156,8 @@ export const proportionalConfigurator = {
         // /presentation/titleAndDescription
         titleAndDescription: {
             id: "titleAndDescription",
-            componentType: TitleAndDescriptionConfigurationComponent.lateLoadKey,
+            componentType:
+                TitleAndDescriptionConfigurationComponent.lateLoadKey,
             providers: {
                 [WellKnownProviders.Converter]: {
                     providerId: NOVA_TITLE_AND_DESCRIPTION_CONVERTER,
@@ -163,7 +170,12 @@ export const proportionalConfigurator = {
             componentType: ProportionalChartOptionsEditorComponent.lateLoadKey,
             properties: {
                 chartOptions: {
-                    chartTypes: ["PieChart", "DonutChart", "VerticalBarChart", "HorizontalBarChart"],
+                    chartTypes: [
+                        "PieChart",
+                        "DonutChart",
+                        "VerticalBarChart",
+                        "HorizontalBarChart",
+                    ],
                     legendPlacementOptions: [
                         {
                             id: LegendPlacement.None,
@@ -180,27 +192,32 @@ export const proportionalConfigurator = {
                     ],
                     contentFormatters: [
                         {
-                            componentType: DonutContentRawFormatterComponent.lateLoadKey,
-                            "label": $localize`Raw`,
+                            componentType:
+                                DonutContentRawFormatterComponent.lateLoadKey,
+                            label: $localize`Raw`,
                         },
                         {
-                            componentType: DonutContentSumFormatterComponent.lateLoadKey,
-                            "label": $localize`Sum`,
+                            componentType:
+                                DonutContentSumFormatterComponent.lateLoadKey,
+                            label: $localize`Sum`,
                         },
                         {
-                            componentType: DonutContentPercentageFormatterComponent.lateLoadKey,
-                            "label": $localize`Percentage`,
-                            configurationComponent: "DonutContentPercentageConfigurationComponent",
+                            componentType:
+                                DonutContentPercentageFormatterComponent.lateLoadKey,
+                            label: $localize`Percentage`,
+                            configurationComponent:
+                                "DonutContentPercentageConfigurationComponent",
                         },
                     ] as IFormatterDefinition[],
                     legendFormatters: [
                         {
-                            componentType: StatusWithIconFormatterComponent.lateLoadKey,
-                            "label": $localize`Status With Icon`,
+                            componentType:
+                                StatusWithIconFormatterComponent.lateLoadKey,
+                            label: $localize`Status With Icon`,
                         },
                         {
                             componentType: LinkFormatterComponent.lateLoadKey,
-                            "label": $localize`Link`,
+                            label: $localize`Link`,
                         },
                     ] as IFormatterDefinition[],
                 },
@@ -208,7 +225,8 @@ export const proportionalConfigurator = {
             providers: {
                 // converter transforms the chart options data between the widget and the form
                 [WellKnownProviders.Converter]: {
-                    providerId: NOVA_PROPORTIONAL_WIDGET_CHART_OPTIONS_CONVERTER,
+                    providerId:
+                        NOVA_PROPORTIONAL_WIDGET_CHART_OPTIONS_CONVERTER,
                 },
             },
         },
@@ -245,7 +263,8 @@ export const proportionalConfigurator = {
                             },
                             {
                                 // this component updates the 'properties' of the 'dataSource' via an adapter
-                                previewPath: "chart.providers.adapter.properties.dataSource",
+                                previewPath:
+                                    "chart.providers.adapter.properties.dataSource",
                                 keys: ["properties"],
                             },
                         ],
@@ -258,7 +277,9 @@ export const proportionalConfigurator = {
                             {
                                 trackOn: "component",
                                 key: "dsOutput",
-                                paths: ["data.chartOptionsEditor.properties.dsOutput"],
+                                paths: [
+                                    "data.chartOptionsEditor.properties.dsOutput",
+                                ],
                             },
                         ] as IBroadcasterConfig[],
                     },

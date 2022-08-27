@@ -1,13 +1,25 @@
 /* eslint-disable max-len */
-import { IInfoMessage, IInfoMessageProperties, ILinkDefinition } from "../../components/types";
+import {
+    IInfoMessage,
+    IInfoMessageProperties,
+    ILinkDefinition,
+} from "../../components/types";
 import { FormStackComponent } from "../../configurator/components/form-stack/form-stack.component";
 import { WidgetConfiguratorSectionComponent } from "../../configurator/components/widget-configurator-section/widget-configurator-section.component";
 import { EmbeddedContentConfigurationComponent } from "../../configurator/components/widgets/configurator-items/embedded-content-configuration/embedded-content-configuration.component";
 import { InfoMessageConfigurationComponent } from "../../configurator/components/widgets/configurator-items/info-message-configuration/info-message-configuration.component";
 import { TitleAndDescriptionConfigurationComponent } from "../../configurator/components/widgets/configurator-items/title-and-description-configuration/title-and-description-configuration.component";
 import { IConverterFormPartsProperties } from "../../configurator/services/converters/types";
-import { DEFAULT_PIZZAGNA_ROOT, NOVA_GENERIC_CONVERTER, NOVA_TITLE_AND_DESCRIPTION_CONVERTER } from "../../services/types";
-import { IProviderConfiguration, PizzagnaLayer, WellKnownProviders } from "../../types";
+import {
+    DEFAULT_PIZZAGNA_ROOT,
+    NOVA_GENERIC_CONVERTER,
+    NOVA_TITLE_AND_DESCRIPTION_CONVERTER,
+} from "../../services/types";
+import {
+    IProviderConfiguration,
+    PizzagnaLayer,
+    WellKnownProviders,
+} from "../../types";
 /* eslint-enable max-len */
 
 export const embeddedContentConfigurator = {
@@ -19,10 +31,7 @@ export const embeddedContentConfigurator = {
             properties: {
                 elementClass: "flex-grow-1 overflow-auto nui-scroll-shadows",
                 // references to other components laid out in this form
-                nodes: [
-                    "presentation",
-                    "customConfig",
-                ],
+                nodes: ["presentation", "customConfig"],
             },
         },
         // /presentation
@@ -37,7 +46,8 @@ export const embeddedContentConfigurator = {
         // /presentation/titleAndDescription
         titleAndDescription: {
             id: "titleAndDescription",
-            componentType: TitleAndDescriptionConfigurationComponent.lateLoadKey,
+            componentType:
+                TitleAndDescriptionConfigurationComponent.lateLoadKey,
             providers: {
                 converter: {
                     providerId: NOVA_TITLE_AND_DESCRIPTION_CONVERTER,
@@ -59,8 +69,9 @@ export const embeddedContentConfigurator = {
             componentType: EmbeddedContentConfigurationComponent.lateLoadKey,
             properties: {
                 messageComponent: {
-                    componentType: InfoMessageConfigurationComponent.lateLoadKey,
-                    properties:  {
+                    componentType:
+                        InfoMessageConfigurationComponent.lateLoadKey,
+                    properties: {
                         emphasizeText: "Some content may not work as expected.",
                         generalText: `Web pages embedded in a widget may not be able to open popup windows or may experience formatting problems.
                                     If you supply your own HTML, dangerous content like scripts will be removed.`,

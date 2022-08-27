@@ -4,6 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-expander-without-border-example",
     templateUrl: "expander-without-border.example.component.html",
 })
-
-export class ExpanderWithoutBorderExampleComponent {
-}
+export class ExpanderWithoutBorderExampleComponent {}

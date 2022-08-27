@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-date-picker-basic-example",
     templateUrl: "./date-picker-basic.example.component.html",
 })
-export class DatePickerBasicExampleComponent {
-}
+export class DatePickerBasicExampleComponent {}

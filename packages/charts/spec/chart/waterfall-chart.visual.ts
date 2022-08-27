@@ -1,6 +1,7 @@
+import { browser } from "protractor";
+
 import { Camera } from "@nova-ui/bits/sdk/atoms";
 import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
-import { browser } from "protractor";
 
 const name: string = "Waterfall Chart";
 

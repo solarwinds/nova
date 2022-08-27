@@ -7,8 +7,5 @@
 export function getParentComponentId(path: string): string {
     const parts = path.split("/");
 
-    return parts?.length > 1
-        ? parts[parts.length - 2]
-        : path;
+    return parts?.length > 1 ? parts[parts.length - 2] : path;
 }
-

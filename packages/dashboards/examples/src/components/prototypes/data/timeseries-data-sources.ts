@@ -1,6 +1,15 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { DataSourceService, IDataSource, INovaFilters, ITimeframe } from "@nova-ui/bits";
+import moment from "moment/moment";
+import { BehaviorSubject } from "rxjs";
+import { finalize } from "rxjs/operators";
+
+import {
+    DataSourceService,
+    IDataSource,
+    INovaFilters,
+    ITimeframe,
+} from "@nova-ui/bits";
 import {
     applyStatusEndpoints,
     IDataSourceOutput,
@@ -9,14 +18,19 @@ import {
     ITimeseriesWidgetSeriesData,
     ITimeseriesWidgetStatusData,
 } from "@nova-ui/dashboards";
-import moment from "moment/moment";
-import { BehaviorSubject } from "rxjs";
-import { finalize } from "rxjs/operators";
 
-import { getTimeseriesStatusData, getTimeseriesStatusIntervalData, getTimeseriesWidgetData, getTimeseriesWidgetData2 } from "./widget-data";
+import {
+    getTimeseriesStatusData,
+    getTimeseriesStatusIntervalData,
+    getTimeseriesWidgetData,
+    getTimeseriesWidgetData2,
+} from "./widget-data";
 
 @Injectable()
-export class AcmeTimeseriesDataSource extends DataSourceService<ITimeseriesWidgetData> implements IDataSource<ITimeseriesOutput> {
+export class AcmeTimeseriesDataSource
+    extends DataSourceService<ITimeseriesWidgetData>
+    implements IDataSource<ITimeseriesOutput>
+{
     public static providerId = "AcmeTimeseriesDataSource";
     public static mockError = false;
 
@@ -26,7 +40,9 @@ export class AcmeTimeseriesDataSource extends DataSourceService<ITimeseriesWidge
 
     public busy = new BehaviorSubject(false);
 
-    public async getFilteredData(filters: INovaFilters): Promise<IDataSourceOutput<ITimeseriesOutput>> {
+    public async getFilteredData(
+        filters: INovaFilters
+    ): Promise<IDataSourceOutput<ITimeseriesOutput>> {
         this.busy.next(true);
         if (!AcmeTimeseriesDataSource.mockError) {
             return new Promise((resolve) => {
@@ -34,7 +50,10 @@ export class AcmeTimeseriesDataSource extends DataSourceService<ITimeseriesWidge
                     this.busy.next(false);
                     resolve({
                         result: {
-                            series: filterData(filters, getTimeseriesWidgetData()),
+                            series: filterData(
+                                filters,
+                                getTimeseriesWidgetData()
+                            ),
                         },
                     });
                 }, 1000);
@@ -42,10 +61,16 @@ export class AcmeTimeseriesDataSource extends DataSourceService<ITimeseriesWidge
         } else {
             // generate a 404
             return new Promise((resolve) => {
-                this.http.get("http://www.mocky.io/v2/5ec6bfd93200007800d75100?mocky-delay=1000ms")
-                    .pipe(finalize(() => {
-                        this.busy.next(false);
-                    })).subscribe({
+                this.http
+                    .get(
+                        "http://www.mocky.io/v2/5ec6bfd93200007800d75100?mocky-delay=1000ms"
+                    )
+                    .pipe(
+                        finalize(() => {
+                            this.busy.next(false);
+                        })
+                    )
+                    .subscribe({
                         error: (error: HttpErrorResponse) => {
                             resolve({
                                 // @ts-ignore: Demo purposes
@@ -62,7 +87,10 @@ export class AcmeTimeseriesDataSource extends DataSourceService<ITimeseriesWidge
 }
 
 @Injectable()
-export class AcmeTimeseriesDataSource2 extends DataSourceService<ITimeseriesWidgetData> implements IDataSource<ITimeseriesOutput> {
+export class AcmeTimeseriesDataSource2
+    extends DataSourceService<ITimeseriesWidgetData>
+    implements IDataSource<ITimeseriesOutput>
+{
     public static providerId = "AcmeTimeseriesDataSource2";
 
     constructor() {
@@ -70,16 +98,23 @@ export class AcmeTimeseriesDataSource2 extends DataSourceService<ITimeseriesWidg
     }
     public busy = new BehaviorSubject(false);
 
-    public async getFilteredData(filters: INovaFilters): Promise<ITimeseriesOutput> {
+    public async getFilteredData(
+        filters: INovaFilters
+    ): Promise<ITimeseriesOutput> {
         this.busy.next(true);
-        const data = { series: filterData(filters, getTimeseriesWidgetData2()) };
+        const data = {
+            series: filterData(filters, getTimeseriesWidgetData2()),
+        };
         this.busy.next(false);
         return data;
     }
 }
 
 @Injectable()
-export class AcmeTimeseriesStatusDataSource extends DataSourceService<ITimeseriesWidgetData> implements IDataSource<ITimeseriesOutput> {
+export class AcmeTimeseriesStatusDataSource
+    extends DataSourceService<ITimeseriesWidgetData>
+    implements IDataSource<ITimeseriesOutput>
+{
     public static providerId = "AcmeTimeseriesStatusDataSource";
 
     constructor() {
@@ -87,15 +122,25 @@ export class AcmeTimeseriesStatusDataSource extends DataSourceService<ITimeserie
     }
     public busy = new BehaviorSubject(false);
 
-    public async getFilteredData(filters: INovaFilters): Promise<ITimeseriesOutput<ITimeseriesWidgetStatusData>> {
+    public async getFilteredData(
+        filters: INovaFilters
+    ): Promise<ITimeseriesOutput<ITimeseriesWidgetStatusData>> {
         this.busy.next(true);
-        const data = { series: getFilteredStatusDataWithEndpoints(filters, getTimeseriesStatusData()) };
+        const data = {
+            series: getFilteredStatusDataWithEndpoints(
+                filters,
+                getTimeseriesStatusData()
+            ),
+        };
         this.busy.next(false);
         return data;
     }
 }
 
-export class AcmeTimeseriesStatusIntervalDataSource extends DataSourceService<ITimeseriesWidgetData> implements IDataSource<ITimeseriesOutput> {
+export class AcmeTimeseriesStatusIntervalDataSource
+    extends DataSourceService<ITimeseriesWidgetData>
+    implements IDataSource<ITimeseriesOutput>
+{
     public static providerId = "AcmeTimeseriesStatusIntervalDataSource";
 
     constructor() {
@@ -103,29 +148,40 @@ export class AcmeTimeseriesStatusIntervalDataSource extends DataSourceService<IT
     }
     public busy = new BehaviorSubject(false);
 
-    public async getFilteredData(filters: INovaFilters): Promise<ITimeseriesOutput<ITimeseriesWidgetStatusData>> {
+    public async getFilteredData(
+        filters: INovaFilters
+    ): Promise<ITimeseriesOutput<ITimeseriesWidgetStatusData>> {
         this.busy.next(true);
-        const data = { series: filterData(filters, getTimeseriesStatusIntervalData()) };
+        const data = {
+            series: filterData(filters, getTimeseriesStatusIntervalData()),
+        };
         this.busy.next(false);
         return data;
     }
 }
 
-function filterData(filters: INovaFilters, data: ITimeseriesWidgetData[]): ITimeseriesWidgetData[] {
+function filterData(
+    filters: INovaFilters,
+    data: ITimeseriesWidgetData[]
+): ITimeseriesWidgetData[] {
     const timeframeFilter = filters.timeframe;
     let filteredData = data;
     // TIME FRAME PICKER FILTERING
     if (timeframeFilter) {
-        filteredData = filteredData.map((item: ITimeseriesWidgetData) =>
-            ({
-                id: item.id,
-                name: item.name,
-                description: item.description,
-                link: item.link,
-                secondaryLink: item.secondaryLink,
-                data: item.data.filter((seriesData: ITimeseriesWidgetSeriesData) =>
-                    filterDates(seriesData.x, timeframeFilter.value.startDatetime, timeframeFilter.value.endDatetime)),
-            }));
+        filteredData = filteredData.map((item: ITimeseriesWidgetData) => ({
+            id: item.id,
+            name: item.name,
+            description: item.description,
+            link: item.link,
+            secondaryLink: item.secondaryLink,
+            data: item.data.filter((seriesData: ITimeseriesWidgetSeriesData) =>
+                filterDates(
+                    seriesData.x,
+                    timeframeFilter.value.startDatetime,
+                    timeframeFilter.value.endDatetime
+                )
+            ),
+        }));
     }
 
     return filteredData;
@@ -133,13 +189,24 @@ function filterData(filters: INovaFilters, data: ITimeseriesWidgetData[]): ITime
 
 function filterDates(dateToCheck: Date, startDate: Date, endDate: Date) {
     const mom = moment(dateToCheck);
-    return mom.isBetween(startDate, endDate) || mom.isSame(startDate) || mom.isSame(endDate);
+    return (
+        mom.isBetween(startDate, endDate) ||
+        mom.isSame(startDate) ||
+        mom.isSame(endDate)
+    );
 }
 
-function getFilteredStatusDataWithEndpoints(filters: INovaFilters, data: ITimeseriesWidgetData[]): ITimeseriesWidgetData[] {
+function getFilteredStatusDataWithEndpoints(
+    filters: INovaFilters,
+    data: ITimeseriesWidgetData[]
+): ITimeseriesWidgetData[] {
     let filteredData = filterData(filters, data);
     if (filters.timeframe) {
-        filteredData = applyStatusEndpoints(filters.timeframe.value as ITimeframe, filteredData, data);
+        filteredData = applyStatusEndpoints(
+            filters.timeframe.value as ITimeframe,
+            filteredData,
+            data
+        );
     }
     return filteredData;
 }

@@ -4,7 +4,10 @@ import isUndefined from "lodash/isUndefined";
 import { BandScale } from "../band-scale";
 import { isBandScale, IScale } from "../types";
 
-export function invert(scale: IScale<any>, coordinate: number): number | string | unknown[] {
+export function invert(
+    scale: IScale<any>,
+    coordinate: number
+): number | string | unknown[] {
     if (!scale) {
         return 0;
     }
@@ -19,7 +22,10 @@ export function invert(scale: IScale<any>, coordinate: number): number | string 
         return value;
     }
 
-    const val = invert(bandScale.innerScale, coordinate - bandScale.convert(value, 0));
+    const val = invert(
+        bandScale.innerScale,
+        coordinate - bandScale.convert(value, 0)
+    );
     if (isArray(val)) {
         return [value, ...val];
     }

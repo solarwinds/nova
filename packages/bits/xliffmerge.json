@@ -6,7 +6,7 @@
         "i18nFormat": "xlf",
         "encoding": "UTF-8",
         "defaultLanguage": "en-us",
-        "languages": ["en-gb", "de", "en-us", "es","fr","it","pt-br","ja"],
+        "languages": ["en-gb", "de", "en-us", "es", "fr", "it", "pt-br", "ja"],
         "removeUnusedIds": true,
         "useSourceAsTarget": false,
         "beautifyOutput": true,

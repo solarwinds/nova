@@ -1,10 +1,13 @@
-import { IAllAround, IBorderConfig, IDimensionConfig, IGridConfig } from "../types";
-
+import {
+    IAllAround,
+    IBorderConfig,
+    IDimensionConfig,
+    IGridConfig,
+} from "../types";
 import { DimensionConfig } from "./dimension-config";
 
 /** See {@link IGridConfig} */
 export class GridConfig implements IGridConfig {
-
     // We should avoid this kind of option in future versions of GridConfig
     // because ideally all plugins should be added manually (NUI-3304).
     /** See {@link IGridConfig#interactive} */

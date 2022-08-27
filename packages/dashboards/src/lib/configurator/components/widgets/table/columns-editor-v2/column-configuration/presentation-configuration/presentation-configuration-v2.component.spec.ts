@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { FormBuilder } from "@angular/forms";
+
+import { EventBus } from "@nova-ui/bits";
+import { PIZZAGNA_EVENT_BUS } from "@nova-ui/dashboards";
 
 import { IFormatterDefinition } from "../../../../../../../components/types";
 import { NuiDashboardsModule } from "../../../../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../../../../services/provider-registry.service";
-
 import { PresentationConfigurationV2Component } from "./presentation-configuration-v2.component";
-import { PIZZAGNA_EVENT_BUS } from "@nova-ui/dashboards";
-import { EventBus } from "@nova-ui/bits";
-import { FormBuilder } from "@angular/forms";
 
 describe("PresentationConfigurationV2Component", () => {
     let component: PresentationConfigurationV2Component;
@@ -61,18 +61,21 @@ describe("PresentationConfigurationV2Component", () => {
             component.ngOnInit();
 
             component.form.get("properties")?.setValue({
-                dataFieldIds: {value: "firstUrlLabel", link: "firstUrl"},
+                dataFieldIds: { value: "firstUrlLabel", link: "firstUrl" },
             });
 
             const propertiesForm = formBuilder.group({
-                dataFieldIds: {value: "", link: ""},
+                dataFieldIds: { value: "", link: "" },
             });
             component.onFormReady(propertiesForm);
 
             expect(component.propertiesForm).toBe(propertiesForm);
-            expect(component.propertiesForm.value.dataFieldIds.value).toEqual("firstUrlLabel");
-            expect(component.propertiesForm.value.dataFieldIds.link).toEqual("firstUrl");
-
+            expect(component.propertiesForm.value.dataFieldIds.value).toEqual(
+                "firstUrlLabel"
+            );
+            expect(component.propertiesForm.value.dataFieldIds.link).toEqual(
+                "firstUrl"
+            );
         });
     });
 });

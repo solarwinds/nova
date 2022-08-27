@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import moment, { duration } from "moment/moment";
+
 import {
     barAccessors,
     barGrid,
@@ -8,7 +10,6 @@ import {
     Scales,
     TimeIntervalScale,
 } from "@nova-ui/charts";
-import moment, { duration } from "moment/moment";
 
 @Component({
     selector: "nui-time-interval-test",
@@ -29,12 +30,14 @@ export class TimeIntervalTestComponent implements OnInit {
             y: new LinearScale(),
         };
 
-        this.chart.update(getData().map(s => ({
-            ...s,
-            accessors,
-            renderer,
-            scales,
-        })));
+        this.chart.update(
+            getData().map((s) => ({
+                ...s,
+                accessors,
+                renderer,
+                scales,
+            }))
+        );
     }
 }
 
@@ -47,11 +50,11 @@ function getData() {
             id: "series-1",
             name: "Series 1",
             data: [
-                {x: moment("2020-07-01T0", format).toDate(), y: 30},
-                {x: moment("2020-07-02T0", format).toDate(), y: 95},
-                {x: moment("2020-07-03T0", format).toDate(), y: 15},
-                {x: moment("2020-07-04T0", format).toDate(), y: 60},
-                {x: moment("2020-07-05T0", format).toDate(), y: 35},
+                { x: moment("2020-07-01T0", format).toDate(), y: 30 },
+                { x: moment("2020-07-02T0", format).toDate(), y: 95 },
+                { x: moment("2020-07-03T0", format).toDate(), y: 15 },
+                { x: moment("2020-07-04T0", format).toDate(), y: 60 },
+                { x: moment("2020-07-05T0", format).toDate(), y: 35 },
             ],
         },
     ];

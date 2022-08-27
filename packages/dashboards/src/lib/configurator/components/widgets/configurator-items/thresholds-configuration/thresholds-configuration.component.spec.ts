@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
-
 import { ThresholdsConfigurationComponent } from "./thresholds-configuration.component";
 import { thresholdsValidator } from "./thresholds-validator";
 
@@ -13,11 +12,8 @@ describe("ThresholdsConfigurationComponent > ", () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
-            providers: [
-                ProviderRegistryService,
-            ],
-        })
-            .compileComponents();
+            providers: [ProviderRegistryService],
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -76,7 +72,5 @@ describe("ThresholdsConfigurationComponent > ", () => {
             expect(formSpy).not.toHaveBeenCalled();
             expect(cdSpy).not.toHaveBeenCalled();
         });
-
     });
-
 });

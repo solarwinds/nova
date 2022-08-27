@@ -1,22 +1,27 @@
 import { SimpleChange, SimpleChanges } from "@angular/core";
-import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from "@angular/core/testing";
-import { EventBus, LoggerService } from "@nova-ui/bits";
+import {
+    ComponentFixture,
+    fakeAsync,
+    flush,
+    TestBed,
+    waitForAsync,
+} from "@angular/core/testing";
 import { Subject } from "rxjs";
+
+import { EventBus, LoggerService } from "@nova-ui/bits";
 
 import { IKpiData } from "../../../../../components/public-api";
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../../types";
 import { DATA_SOURCE_OUTPUT } from "../../../../types";
-
 import { DataSourceConfigurationV2Component } from "./data-source-configuration-v2.component";
 
 class DataSource1 {
     // This is the ID we'll use to identify the provider
     public static providerId = "TestCaseOne";
 
-    constructor() {
-    }
+    constructor() {}
 
     public outputsSubject = new Subject<Partial<IKpiData>>();
 
@@ -25,15 +30,13 @@ class DataSource1 {
             value: "Fizz",
         });
     }
-
 }
 
 class DataSource2 {
     // This is the ID we'll use to identify the provider
     public static providerId = "TestCaseTwo";
 
-    constructor() {
-    }
+    constructor() {}
 
     public outputsSubject = new Subject<Partial<IKpiData>>();
     public properties: any;
@@ -47,7 +50,6 @@ class DataSource2 {
     public updateConfiguration(properties: any) {
         this.properties = properties;
     }
-
 }
 
 describe("DataSourceConfigurationV2Component", () => {
@@ -71,8 +73,7 @@ describe("DataSourceConfigurationV2Component", () => {
                     useClass: EventBus,
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -99,18 +100,18 @@ describe("DataSourceConfigurationV2Component", () => {
         component.providerId = "TestCaseOne";
         component.ngOnInit();
         (<any>component).providerRegistryService.setProviders({
-            "TestCaseOne": {
+            TestCaseOne: {
                 provide: DATA_SOURCE,
                 useClass: DataSource1,
                 // Any dependencies that need to be injected into the provider must be listed here
                 deps: [],
             },
-            "TestCaseTwo": {
+            TestCaseTwo: {
                 provide: DATA_SOURCE,
                 useClass: DataSource2,
                 deps: [],
             },
-            "TestCaseThree": {
+            TestCaseThree: {
                 provide: DATA_SOURCE,
                 useClass: DataSource1,
                 deps: [],
@@ -136,7 +137,9 @@ describe("DataSourceConfigurationV2Component", () => {
         component.form.get("dataSource")?.setValue(dataSource);
         component.onDataSourceSelected(dataSource);
         flush();
-        expect((<any>component).eventBus.getStream(DATA_SOURCE_OUTPUT).next).toHaveBeenCalled();
+        expect(
+            (<any>component).eventBus.getStream(DATA_SOURCE_OUTPUT).next
+        ).toHaveBeenCalled();
     }));
 
     it("should set outputsSubject based off of its properties", fakeAsync(() => {
@@ -145,18 +148,21 @@ describe("DataSourceConfigurationV2Component", () => {
         component.form.get("dataSource")?.setValue(dataSource);
         component.onDataSourceSelected(dataSource);
         flush();
-        expect((<any>component).eventBus.getStream(DATA_SOURCE_OUTPUT).next).toHaveBeenCalledWith(
-            {
-                payload: {
-                    value: "buzz",
-                },
-            }
-        );
+        expect(
+            (<any>component).eventBus.getStream(DATA_SOURCE_OUTPUT).next
+        ).toHaveBeenCalledWith({
+            payload: {
+                value: "buzz",
+            },
+        });
     }));
 
     describe("ngOnChanges > ", () => {
         it("should set providerId on the form", fakeAsync(() => {
-            spyOn((<any>component).eventBus.getStream(DATA_SOURCE_OUTPUT), "next");
+            spyOn(
+                (<any>component).eventBus.getStream(DATA_SOURCE_OUTPUT),
+                "next"
+            );
             component.providerId = "TestCaseOne";
             const changes: SimpleChanges = {
                 providerId: new SimpleChange(null, component.providerId, false),
@@ -165,19 +171,24 @@ describe("DataSourceConfigurationV2Component", () => {
             const formProviderValue = component.form.get("providerId")?.value;
             expect(formProviderValue).toEqual(component.providerId);
             const formDataSourceValue = component.form.get("dataSource")?.value;
-            expect(formDataSourceValue).toEqual(component.dataSourceProviders[0]);
-            flush();
-            expect((<any>component).eventBus.getStream(DATA_SOURCE_OUTPUT).next).toHaveBeenCalledWith(
-                {
-                    payload: {
-                        value: "Fizz",
-                    },
-                }
+            expect(formDataSourceValue).toEqual(
+                component.dataSourceProviders[0]
             );
+            flush();
+            expect(
+                (<any>component).eventBus.getStream(DATA_SOURCE_OUTPUT).next
+            ).toHaveBeenCalledWith({
+                payload: {
+                    value: "Fizz",
+                },
+            });
         }));
 
         it("should set properties on the form", fakeAsync(() => {
-            spyOn((<any>component).eventBus.getStream(DATA_SOURCE_OUTPUT), "next");
+            spyOn(
+                (<any>component).eventBus.getStream(DATA_SOURCE_OUTPUT),
+                "next"
+            );
             component.providerId = "TestCaseOne";
             component.properties = {
                 fizz: "buzz",
@@ -190,18 +201,22 @@ describe("DataSourceConfigurationV2Component", () => {
             const formValue = component.form.get("properties")?.value;
             expect(formValue).toEqual(component.properties);
             flush();
-            expect((<any>component).eventBus.getStream(DATA_SOURCE_OUTPUT).next).toHaveBeenCalledWith(
-                {
-                    payload: {
-                        value: "Fizz",
-                    },
-                }
-            );
+            expect(
+                (<any>component).eventBus.getStream(DATA_SOURCE_OUTPUT).next
+            ).toHaveBeenCalledWith({
+                payload: {
+                    value: "Fizz",
+                },
+            });
         }));
 
         it("should not set data source if theres more than one in the list", () => {
             const changes: SimpleChanges = {
-                dataSourceProviders: new SimpleChange(null, component.dataSourceProviders, false),
+                dataSourceProviders: new SimpleChange(
+                    null,
+                    component.dataSourceProviders,
+                    false
+                ),
             };
             component.ngOnChanges(changes);
             const formValue = component.form.get("dataSource")?.value;
@@ -239,13 +254,15 @@ describe("DataSourceConfigurationV2Component", () => {
 
             expect(propertiesFormValue).toEqual({});
             expect(providerIdFormValue).toEqual(component.providerId);
-
         });
     });
 
-    describe("ngAfterViewInit > ",() => {
-        it("should set the dataSource to the first value if no dataSource is provided",  fakeAsync(() => {
-            spyOn((<any>component).eventBus.getStream(DATA_SOURCE_OUTPUT), "next");
+    describe("ngAfterViewInit > ", () => {
+        it("should set the dataSource to the first value if no dataSource is provided", fakeAsync(() => {
+            spyOn(
+                (<any>component).eventBus.getStream(DATA_SOURCE_OUTPUT),
+                "next"
+            );
             component.dataSourceProviders = [
                 {
                     providerId: "TestCaseOne",
@@ -254,15 +271,15 @@ describe("DataSourceConfigurationV2Component", () => {
             ];
             component.ngAfterViewInit();
             const formValue = component.form.get("dataSource")?.value;
-            expect(formValue).toEqual(component.dataSourceProviders[0])
+            expect(formValue).toEqual(component.dataSourceProviders[0]);
             flush();
-            expect((<any>component).eventBus.getStream(DATA_SOURCE_OUTPUT).next).toHaveBeenCalledWith(
-                {
-                    payload: {
-                        value: "Fizz",
-                    },
-                }
-            );
+            expect(
+                (<any>component).eventBus.getStream(DATA_SOURCE_OUTPUT).next
+            ).toHaveBeenCalledWith({
+                payload: {
+                    value: "Fizz",
+                },
+            });
         }));
     });
 });

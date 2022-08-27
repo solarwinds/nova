@@ -1,5 +1,20 @@
-import { ChangeDetectorRef, Component, forwardRef, Input, OnInit } from "@angular/core";
-import { AbstractControl, ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from "@angular/forms";
+import {
+    ChangeDetectorRef,
+    Component,
+    forwardRef,
+    Input,
+    OnInit,
+} from "@angular/core";
+import {
+    AbstractControl,
+    ControlValueAccessor,
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    NG_VALIDATORS,
+    NG_VALUE_ACCESSOR,
+    ValidationErrors,
+} from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -22,7 +37,9 @@ import { onMarkAsTouched } from "../../../../../../../functions/on-mark-as-touch
         },
     ],
 })
-export class TableColumnConfigurationComponent implements ControlValueAccessor, OnInit {
+export class TableColumnConfigurationComponent
+    implements ControlValueAccessor, OnInit
+{
     public static lateLoadKey = "TableColumnConfigurationComponent";
 
     public form: FormGroup;
@@ -34,20 +51,25 @@ export class TableColumnConfigurationComponent implements ControlValueAccessor, 
     @Input() formControl: AbstractControl;
     @Input() isWidthMessageDisplayed = false;
 
-    constructor(private formBuilder: FormBuilder, public changeDetector: ChangeDetectorRef) {
+    constructor(
+        private formBuilder: FormBuilder,
+        public changeDetector: ChangeDetectorRef
+    ) {
         this.form = this.formBuilder.group({
             description: this.formBuilder.control({}),
             presentation: this.formBuilder.control({}),
         });
 
-        this.form.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((value) => {
-            const newValue = {
-                id: this.input?.id,
-                ...value.description,
-                formatter: value.presentation,
-            };
-            this.changeFn(newValue);
-        });
+        this.form.valueChanges
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((value) => {
+                const newValue = {
+                    id: this.input?.id,
+                    ...value.description,
+                    formatter: value.presentation,
+                };
+                this.changeFn(newValue);
+            });
     }
 
     public ngOnInit(): void {
@@ -60,23 +82,24 @@ export class TableColumnConfigurationComponent implements ControlValueAccessor, 
         this.changeFn = fn;
     }
 
-    public registerOnTouched(fn: any): void {
-    }
+    public registerOnTouched(fn: any): void {}
 
-    public setDisabledState(isDisabled: boolean): void {
-    }
+    public setDisabledState(isDisabled: boolean): void {}
 
     public validate(c: FormControl): ValidationErrors | null {
-        return this.form.valid ? null : { "error": "error" };
+        return this.form.valid ? null : { error: "error" };
     }
 
     public writeValue(obj: ITableWidgetColumnConfig): void {
         this.input = obj;
 
-        this.form.setValue({
-            presentation: obj?.formatter || {},
-            description: obj,
-        }, { emitEvent: false });
+        this.form.setValue(
+            {
+                presentation: obj?.formatter || {},
+                description: obj,
+            },
+            { emitEvent: false }
+        );
 
         this.changeDetector.markForCheck();
     }
@@ -85,5 +108,4 @@ export class TableColumnConfigurationComponent implements ControlValueAccessor, 
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }
-
 }

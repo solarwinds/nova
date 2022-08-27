@@ -7,8 +7,17 @@ import {
     NOVA_KPI_DATASOURCE_ADAPTER,
     NOVA_KPI_STATUS_CONTENT_FALLBACK_ADAPTER,
 } from "../../services/types";
-import { IProviderConfiguration, PizzagnaLayer, WellKnownProviders } from "../../types";
-import { widgetBodyContentNodes, WIDGET_BODY, WIDGET_HEADER, WIDGET_LOADING } from "../common/widget/components";
+import {
+    IProviderConfiguration,
+    PizzagnaLayer,
+    WellKnownProviders,
+} from "../../types";
+import {
+    widgetBodyContentNodes,
+    WIDGET_BODY,
+    WIDGET_HEADER,
+    WIDGET_LOADING,
+} from "../common/widget/components";
 import { EVENT_PROXY, refresher } from "../common/widget/providers";
 
 export const kpiWidget = {
@@ -24,11 +33,7 @@ export const kpiWidget = {
                 [WellKnownProviders.EventProxy]: EVENT_PROXY,
             },
             properties: {
-                nodes: [
-                    "header",
-                    "loading",
-                    "body",
-                ],
+                nodes: ["header", "loading", "body"],
             },
         },
         // widget header
@@ -50,7 +55,10 @@ export const kpiWidget = {
          * The first argument corresponds to the main content node key.
          * The second argument is the id of the adapter responsible for activating fallback content in case of an error.
          */
-        ...widgetBodyContentNodes("tiles", NOVA_KPI_STATUS_CONTENT_FALLBACK_ADAPTER),
+        ...widgetBodyContentNodes(
+            "tiles",
+            NOVA_KPI_STATUS_CONTENT_FALLBACK_ADAPTER
+        ),
 
         // the main content node specifying a component that manages layout of the KPI tiles in a CSS grid
         tiles: {
@@ -60,25 +68,23 @@ export const kpiWidget = {
                 elementClass: "flex-grow-1 pt-2 px-3 pb-3 w-100",
                 template: {
                     componentType: KpiComponent.lateLoadKey,
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.KpiColorPrioritizer]: {
-                            "providerId": NOVA_KPI_COLOR_PRIORITIZER,
-                            "properties": {
-                            },
+                            providerId: NOVA_KPI_COLOR_PRIORITIZER,
+                            properties: {},
                         } as IProviderConfiguration,
                         [WellKnownProviders.Adapter]: {
-                            "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
-                            "properties": {
-                                "propertyPath": "widgetData",
+                            providerId: NOVA_KPI_DATASOURCE_ADAPTER,
+                            properties: {
+                                propertyPath: "widgetData",
                             },
                         } as IProviderConfiguration,
                     },
-                    "properties": {
-                        "elementClass": "flex-grow-1",
+                    properties: {
+                        elementClass: "flex-grow-1",
                     },
                 },
             },
-
         },
     },
     [PizzagnaLayer.Configuration]: {

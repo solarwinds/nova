@@ -1,5 +1,4 @@
-import {IAccessors} from "../../core/common/types";
-
+import { IAccessors } from "../../core/common/types";
 
 export interface INoopAccessors extends IAccessors {
     data: any;

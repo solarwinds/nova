@@ -1,4365 +1,4365 @@
 import { IconStatus } from "@nova-ui/bits";
 
 export const GRAPH_DATA_MOCK = {
-    "data": {
-        "countries": [
+    data: {
+        countries: [
             {
-                "name": "Andorra",
-                "code": "AD",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Andorra la Vella",
-                "continent": {
-                    "name": "Europe",
+                name: "Andorra",
+                code: "AD",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Andorra la Vella",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "Catalan",
+                        name: "Catalan",
                     },
                 ],
-                "url": "https://en.wikipedia.org/wiki/Andorra",
+                url: "https://en.wikipedia.org/wiki/Andorra",
             },
             {
-                "name": "United Arab Emirates",
-                "code": "AE",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Abu Dhabi",
-                "continent": {
-                    "name": "Asia",
+                name: "United Arab Emirates",
+                code: "AE",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Abu Dhabi",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "AED",
-                "languages": [
+                currency: "AED",
+                languages: [
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                 ],
-                "url": "https://en.wikipedia.org/wiki/United_Arab_Emirates",
+                url: "https://en.wikipedia.org/wiki/United_Arab_Emirates",
             },
             {
-                "name": "Afghanistan",
-                "code": "AF",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Kabul",
-                "continent": {
-                    "name": "Asia",
+                name: "Afghanistan",
+                code: "AF",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Kabul",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "AFN",
-                "languages": [
+                currency: "AFN",
+                languages: [
                     {
-                        "name": "Pashto",
+                        name: "Pashto",
                     },
                     {
-                        "name": "Uzbek",
+                        name: "Uzbek",
                     },
                     {
-                        "name": "Turkmen",
+                        name: "Turkmen",
                     },
                 ],
-                "url": "https://en.wikipedia.org/wiki/Afghanistan",
+                url: "https://en.wikipedia.org/wiki/Afghanistan",
             },
             {
-                "name": "Antigua and Barbuda",
-                "code": "AG",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Saint John's",
-                "continent": {
-                    "name": "North America",
+                name: "Antigua and Barbuda",
+                code: "AG",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Saint John's",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "XCD",
-                "languages": [
+                currency: "XCD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
-                "url": "https://en.wikipedia.org/wiki/Antigua_and_Barbuda",
+                url: "https://en.wikipedia.org/wiki/Antigua_and_Barbuda",
             },
             {
-                "name": "Anguilla",
-                "code": "AI",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "The Valley",
-                "continent": {
-                    "name": "North America",
+                name: "Anguilla",
+                code: "AI",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "The Valley",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "XCD",
-                "languages": [
+                currency: "XCD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
-                "url": "https://en.wikipedia.org/wiki/Anguilla",
+                url: "https://en.wikipedia.org/wiki/Anguilla",
             },
             {
-                "name": "Albania",
-                "code": "AL",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Tirana",
-                "continent": {
-                    "name": "Europe",
+                name: "Albania",
+                code: "AL",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Tirana",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "ALL",
-                "languages": [
+                currency: "ALL",
+                languages: [
                     {
-                        "name": "Albanian",
+                        name: "Albanian",
                     },
                 ],
-                "url": "https://en.wikipedia.org/wiki/Albania",
+                url: "https://en.wikipedia.org/wiki/Albania",
             },
             {
-                "name": "Armenia",
-                "code": "AM",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Yerevan",
-                "continent": {
-                    "name": "Asia",
+                name: "Armenia",
+                code: "AM",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Yerevan",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "AMD",
-                "languages": [
+                currency: "AMD",
+                languages: [
                     {
-                        "name": "Armenian",
+                        name: "Armenian",
                     },
                     {
-                        "name": "Russian",
+                        name: "Russian",
                     },
                 ],
-                "url": "https://en.wikipedia.org/wiki/Armenia",
+                url: "https://en.wikipedia.org/wiki/Armenia",
             },
             {
-                "name": "Angola",
-                "code": "AO",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Luanda",
-                "continent": {
-                    "name": "Africa",
+                name: "Angola",
+                code: "AO",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Luanda",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "AOA",
-                "languages": [
+                currency: "AOA",
+                languages: [
                     {
-                        "name": "Portuguese",
+                        name: "Portuguese",
                     },
                 ],
             },
             {
-                "name": "Antarctica",
-                "code": "AQ",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": null,
-                "continent": {
-                    "name": "Antarctica",
+                name: "Antarctica",
+                code: "AQ",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: null,
+                continent: {
+                    name: "Antarctica",
                 },
-                "currency": null,
-                "languages": [],
+                currency: null,
+                languages: [],
             },
             {
-                "name": "Argentina",
-                "code": "AR",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Buenos Aires",
-                "continent": {
-                    "name": "South America",
+                name: "Argentina",
+                code: "AR",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Buenos Aires",
+                continent: {
+                    name: "South America",
                 },
-                "currency": "ARS",
-                "languages": [
+                currency: "ARS",
+                languages: [
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                     {
-                        "name": "Guarani",
+                        name: "Guarani",
                     },
                 ],
             },
             {
-                "name": "American Samoa",
-                "code": "AS",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Pago Pago",
-                "continent": {
-                    "name": "Oceania",
+                name: "American Samoa",
+                code: "AS",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Pago Pago",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "USD",
-                "languages": [
+                currency: "USD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "Samoan",
+                        name: "Samoan",
                     },
                 ],
             },
             {
-                "name": "Austria",
-                "code": "AT",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Vienna",
-                "continent": {
-                    "name": "Europe",
+                name: "Austria",
+                code: "AT",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Vienna",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "German",
+                        name: "German",
                     },
                 ],
             },
             {
-                "name": "Australia",
-                "code": "AU",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Canberra",
-                "continent": {
-                    "name": "Oceania",
+                name: "Australia",
+                code: "AU",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Canberra",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "AUD",
-                "languages": [
+                currency: "AUD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Aruba",
-                "code": "AW",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Oranjestad",
-                "continent": {
-                    "name": "North America",
+                name: "Aruba",
+                code: "AW",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Oranjestad",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "AWG",
-                "languages": [
+                currency: "AWG",
+                languages: [
                     {
-                        "name": "Dutch",
+                        name: "Dutch",
                     },
                     {
-                        "name": "Panjabi / Punjabi",
+                        name: "Panjabi / Punjabi",
                     },
                 ],
             },
             {
-                "name": "Åland",
-                "code": "AX",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Mariehamn",
-                "continent": {
-                    "name": "Europe",
+                name: "Åland",
+                code: "AX",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Mariehamn",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "Swedish",
+                        name: "Swedish",
                     },
                 ],
             },
             {
-                "name": "Azerbaijan",
-                "code": "AZ",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Baku",
-                "continent": {
-                    "name": "Asia",
+                name: "Azerbaijan",
+                code: "AZ",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Baku",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "AZN",
-                "languages": [
+                currency: "AZN",
+                languages: [
                     {
-                        "name": "Azerbaijani",
+                        name: "Azerbaijani",
                     },
                 ],
             },
             {
-                "name": "Bosnia and Herzegovina",
-                "code": "BA",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Sarajevo",
-                "continent": {
-                    "name": "Europe",
+                name: "Bosnia and Herzegovina",
+                code: "BA",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Sarajevo",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "BAM",
-                "languages": [
+                currency: "BAM",
+                languages: [
                     {
-                        "name": "Bosnian",
+                        name: "Bosnian",
                     },
                     {
-                        "name": "Croatian",
+                        name: "Croatian",
                     },
                     {
-                        "name": "Serbian",
+                        name: "Serbian",
                     },
                 ],
             },
             {
-                "name": "Barbados",
-                "code": "BB",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Bridgetown",
-                "continent": {
-                    "name": "North America",
+                name: "Barbados",
+                code: "BB",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Bridgetown",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "BBD",
-                "languages": [
+                currency: "BBD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Bangladesh",
-                "code": "BD",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Dhaka",
-                "continent": {
-                    "name": "Asia",
+                name: "Bangladesh",
+                code: "BD",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Dhaka",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "BDT",
-                "languages": [
+                currency: "BDT",
+                languages: [
                     {
-                        "name": "Bengali",
+                        name: "Bengali",
                     },
                 ],
             },
             {
-                "name": "Belgium",
-                "code": "BE",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Brussels",
-                "continent": {
-                    "name": "Europe",
+                name: "Belgium",
+                code: "BE",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Brussels",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "Dutch",
+                        name: "Dutch",
                     },
                     {
-                        "name": "French",
+                        name: "French",
                     },
                     {
-                        "name": "German",
+                        name: "German",
                     },
                 ],
             },
             {
-                "name": "Burkina Faso",
-                "code": "BF",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Ouagadougou",
-                "continent": {
-                    "name": "Africa",
+                name: "Burkina Faso",
+                code: "BF",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Ouagadougou",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "XOF",
-                "languages": [
+                currency: "XOF",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                     {
-                        "name": "Peul",
+                        name: "Peul",
                     },
                 ],
             },
             {
-                "name": "Bulgaria",
-                "code": "BG",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Sofia",
-                "continent": {
-                    "name": "Europe",
+                name: "Bulgaria",
+                code: "BG",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Sofia",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "BGN",
-                "languages": [
+                currency: "BGN",
+                languages: [
                     {
-                        "name": "Bulgarian",
+                        name: "Bulgarian",
                     },
                 ],
             },
             {
-                "name": "Bahrain",
-                "code": "BH",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Manama",
-                "continent": {
-                    "name": "Asia",
+                name: "Bahrain",
+                code: "BH",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Manama",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "BHD",
-                "languages": [
+                currency: "BHD",
+                languages: [
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                 ],
             },
             {
-                "name": "Burundi",
-                "code": "BI",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Bujumbura",
-                "continent": {
-                    "name": "Africa",
+                name: "Burundi",
+                code: "BI",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Bujumbura",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "BIF",
-                "languages": [
+                currency: "BIF",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                     {
-                        "name": "Kirundi",
+                        name: "Kirundi",
                     },
                 ],
             },
             {
-                "name": "Benin",
-                "code": "BJ",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Porto-Novo",
-                "continent": {
-                    "name": "Africa",
+                name: "Benin",
+                code: "BJ",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Porto-Novo",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "XOF",
-                "languages": [
+                currency: "XOF",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Saint Barthélemy",
-                "code": "BL",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Gustavia",
-                "continent": {
-                    "name": "North America",
+                name: "Saint Barthélemy",
+                code: "BL",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Gustavia",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Bermuda",
-                "code": "BM",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Hamilton",
-                "continent": {
-                    "name": "North America",
+                name: "Bermuda",
+                code: "BM",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Hamilton",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "BMD",
-                "languages": [
+                currency: "BMD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Brunei",
-                "code": "BN",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Bandar Seri Begawan",
-                "continent": {
-                    "name": "Asia",
+                name: "Brunei",
+                code: "BN",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Bandar Seri Begawan",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "BND",
-                "languages": [
+                currency: "BND",
+                languages: [
                     {
-                        "name": "Malay",
+                        name: "Malay",
                     },
                 ],
             },
             {
-                "name": "Bolivia",
-                "code": "BO",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Sucre",
-                "continent": {
-                    "name": "South America",
+                name: "Bolivia",
+                code: "BO",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Sucre",
+                continent: {
+                    name: "South America",
                 },
-                "currency": "BOB,BOV",
-                "languages": [
+                currency: "BOB,BOV",
+                languages: [
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                     {
-                        "name": "Aymara",
+                        name: "Aymara",
                     },
                     {
-                        "name": "Quechua",
+                        name: "Quechua",
                     },
                 ],
             },
             {
-                "name": "Bonaire",
-                "code": "BQ",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Kralendijk",
-                "continent": {
-                    "name": "North America",
+                name: "Bonaire",
+                code: "BQ",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Kralendijk",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "USD",
-                "languages": [
+                currency: "USD",
+                languages: [
                     {
-                        "name": "Dutch",
+                        name: "Dutch",
                     },
                 ],
             },
             {
-                "name": "Brazil",
-                "code": "BR",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Brasília",
-                "continent": {
-                    "name": "South America",
+                name: "Brazil",
+                code: "BR",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Brasília",
+                continent: {
+                    name: "South America",
                 },
-                "currency": "BRL",
-                "languages": [
+                currency: "BRL",
+                languages: [
                     {
-                        "name": "Portuguese",
+                        name: "Portuguese",
                     },
                 ],
             },
             {
-                "name": "Bahamas",
-                "code": "BS",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Nassau",
-                "continent": {
-                    "name": "North America",
+                name: "Bahamas",
+                code: "BS",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Nassau",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "BSD",
-                "languages": [
+                currency: "BSD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Bhutan",
-                "code": "BT",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Thimphu",
-                "continent": {
-                    "name": "Asia",
+                name: "Bhutan",
+                code: "BT",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Thimphu",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "BTN,INR",
-                "languages": [
+                currency: "BTN,INR",
+                languages: [
                     {
-                        "name": "Dzongkha",
+                        name: "Dzongkha",
                     },
                 ],
             },
             {
-                "name": "Bouvet Island",
-                "code": "BV",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": null,
-                "continent": {
-                    "name": "Antarctica",
+                name: "Bouvet Island",
+                code: "BV",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: null,
+                continent: {
+                    name: "Antarctica",
                 },
-                "currency": "NOK",
-                "languages": [
+                currency: "NOK",
+                languages: [
                     {
-                        "name": "Norwegian",
+                        name: "Norwegian",
                     },
                     {
-                        "name": "Norwegian Bokmål",
+                        name: "Norwegian Bokmål",
                     },
                     {
-                        "name": "Norwegian Nynorsk",
+                        name: "Norwegian Nynorsk",
                     },
                 ],
             },
             {
-                "name": "Botswana",
-                "code": "BW",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Gaborone",
-                "continent": {
-                    "name": "Africa",
+                name: "Botswana",
+                code: "BW",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Gaborone",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "BWP",
-                "languages": [
+                currency: "BWP",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "Tswana",
+                        name: "Tswana",
                     },
                 ],
             },
             {
-                "name": "Belarus",
-                "code": "BY",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Minsk",
-                "continent": {
-                    "name": "Europe",
+                name: "Belarus",
+                code: "BY",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Minsk",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "BYN",
-                "languages": [
+                currency: "BYN",
+                languages: [
                     {
-                        "name": "Belarusian",
+                        name: "Belarusian",
                     },
                     {
-                        "name": "Russian",
+                        name: "Russian",
                     },
                 ],
             },
             {
-                "name": "Belize",
-                "code": "BZ",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Belmopan",
-                "continent": {
-                    "name": "North America",
+                name: "Belize",
+                code: "BZ",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Belmopan",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "BZD",
-                "languages": [
+                currency: "BZD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                 ],
             },
             {
-                "name": "Canada",
-                "code": "CA",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Ottawa",
-                "continent": {
-                    "name": "North America",
+                name: "Canada",
+                code: "CA",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Ottawa",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "CAD",
-                "languages": [
+                currency: "CAD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Cocos [Keeling] Islands",
-                "code": "CC",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "West Island",
-                "continent": {
-                    "name": "Asia",
+                name: "Cocos [Keeling] Islands",
+                code: "CC",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "West Island",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "AUD",
-                "languages": [
+                currency: "AUD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Democratic Republic of the Congo",
-                "code": "CD",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Kinshasa",
-                "continent": {
-                    "name": "Africa",
+                name: "Democratic Republic of the Congo",
+                code: "CD",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Kinshasa",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "CDF",
-                "languages": [
+                currency: "CDF",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                     {
-                        "name": "Lingala",
+                        name: "Lingala",
                     },
                     {
-                        "name": "Kongo",
+                        name: "Kongo",
                     },
                     {
-                        "name": "Swahili",
+                        name: "Swahili",
                     },
                     {
-                        "name": "Luba-Katanga",
+                        name: "Luba-Katanga",
                     },
                 ],
             },
             {
-                "name": "Central African Republic",
-                "code": "CF",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Bangui",
-                "continent": {
-                    "name": "Africa",
+                name: "Central African Republic",
+                code: "CF",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Bangui",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "XAF",
-                "languages": [
+                currency: "XAF",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                     {
-                        "name": "Sango",
+                        name: "Sango",
                     },
                 ],
             },
             {
-                "name": "Republic of the Congo",
-                "code": "CG",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Brazzaville",
-                "continent": {
-                    "name": "Africa",
+                name: "Republic of the Congo",
+                code: "CG",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Brazzaville",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "XAF",
-                "languages": [
+                currency: "XAF",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                     {
-                        "name": "Lingala",
+                        name: "Lingala",
                     },
                 ],
             },
             {
-                "name": "Switzerland",
-                "code": "CH",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Bern",
-                "continent": {
-                    "name": "Europe",
+                name: "Switzerland",
+                code: "CH",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Bern",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "CHE,CHF,CHW",
-                "languages": [
+                currency: "CHE,CHF,CHW",
+                languages: [
                     {
-                        "name": "German",
+                        name: "German",
                     },
                     {
-                        "name": "French",
+                        name: "French",
                     },
                     {
-                        "name": "Italian",
+                        name: "Italian",
                     },
                 ],
             },
             {
-                "name": "Ivory Coast",
-                "code": "CI",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Yamoussoukro",
-                "continent": {
-                    "name": "Africa",
+                name: "Ivory Coast",
+                code: "CI",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Yamoussoukro",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "XOF",
-                "languages": [
+                currency: "XOF",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Cook Islands",
-                "code": "CK",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Avarua",
-                "continent": {
-                    "name": "Oceania",
+                name: "Cook Islands",
+                code: "CK",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Avarua",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "NZD",
-                "languages": [
+                currency: "NZD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Chile",
-                "code": "CL",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Santiago",
-                "continent": {
-                    "name": "South America",
+                name: "Chile",
+                code: "CL",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Santiago",
+                continent: {
+                    name: "South America",
                 },
-                "currency": "CLF,CLP",
-                "languages": [
+                currency: "CLF,CLP",
+                languages: [
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                 ],
             },
             {
-                "name": "Cameroon",
-                "code": "CM",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Yaoundé",
-                "continent": {
-                    "name": "Africa",
+                name: "Cameroon",
+                code: "CM",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Yaoundé",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "XAF",
-                "languages": [
+                currency: "XAF",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "China",
-                "code": "CN",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Beijing",
-                "continent": {
-                    "name": "Asia",
+                name: "China",
+                code: "CN",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Beijing",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "CNY",
-                "languages": [
+                currency: "CNY",
+                languages: [
                     {
-                        "name": "Chinese",
+                        name: "Chinese",
                     },
                 ],
             },
             {
-                "name": "Colombia",
-                "code": "CO",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Bogotá",
-                "continent": {
-                    "name": "South America",
+                name: "Colombia",
+                code: "CO",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Bogotá",
+                continent: {
+                    name: "South America",
                 },
-                "currency": "COP",
-                "languages": [
+                currency: "COP",
+                languages: [
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                 ],
             },
             {
-                "name": "Costa Rica",
-                "code": "CR",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "San José",
-                "continent": {
-                    "name": "North America",
+                name: "Costa Rica",
+                code: "CR",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "San José",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "CRC",
-                "languages": [
+                currency: "CRC",
+                languages: [
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                 ],
             },
             {
-                "name": "Cuba",
-                "code": "CU",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Havana",
-                "continent": {
-                    "name": "North America",
+                name: "Cuba",
+                code: "CU",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Havana",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "CUC,CUP",
-                "languages": [
+                currency: "CUC,CUP",
+                languages: [
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                 ],
             },
             {
-                "name": "Cape Verde",
-                "code": "CV",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Praia",
-                "continent": {
-                    "name": "Africa",
+                name: "Cape Verde",
+                code: "CV",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Praia",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "CVE",
-                "languages": [
+                currency: "CVE",
+                languages: [
                     {
-                        "name": "Portuguese",
+                        name: "Portuguese",
                     },
                 ],
             },
             {
-                "name": "Curacao",
-                "code": "CW",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Willemstad",
-                "continent": {
-                    "name": "North America",
+                name: "Curacao",
+                code: "CW",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Willemstad",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "ANG",
-                "languages": [
+                currency: "ANG",
+                languages: [
                     {
-                        "name": "Dutch",
+                        name: "Dutch",
                     },
                     {
-                        "name": "Panjabi / Punjabi",
+                        name: "Panjabi / Punjabi",
                     },
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Christmas Island",
-                "code": "CX",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Flying Fish Cove",
-                "continent": {
-                    "name": "Asia",
+                name: "Christmas Island",
+                code: "CX",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Flying Fish Cove",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "AUD",
-                "languages": [
+                currency: "AUD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Cyprus",
-                "code": "CY",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Nicosia",
-                "continent": {
-                    "name": "Europe",
+                name: "Cyprus",
+                code: "CY",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Nicosia",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "Greek",
+                        name: "Greek",
                     },
                     {
-                        "name": "Turkish",
+                        name: "Turkish",
                     },
                     {
-                        "name": "Armenian",
+                        name: "Armenian",
                     },
                 ],
             },
             {
-                "name": "Czech Republic",
-                "code": "CZ",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Prague",
-                "continent": {
-                    "name": "Europe",
+                name: "Czech Republic",
+                code: "CZ",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Prague",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "CZK",
-                "languages": [
+                currency: "CZK",
+                languages: [
                     {
-                        "name": "Czech",
+                        name: "Czech",
                     },
                     {
-                        "name": "Slovak",
+                        name: "Slovak",
                     },
                 ],
             },
             {
-                "name": "Germany",
-                "code": "DE",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Berlin",
-                "continent": {
-                    "name": "Europe",
+                name: "Germany",
+                code: "DE",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Berlin",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "German",
+                        name: "German",
                     },
                 ],
             },
             {
-                "name": "Djibouti",
-                "code": "DJ",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Djibouti",
-                "continent": {
-                    "name": "Africa",
+                name: "Djibouti",
+                code: "DJ",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Djibouti",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "DJF",
-                "languages": [
+                currency: "DJF",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                 ],
             },
             {
-                "name": "Denmark",
-                "code": "DK",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Copenhagen",
-                "continent": {
-                    "name": "Europe",
+                name: "Denmark",
+                code: "DK",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Copenhagen",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "DKK",
-                "languages": [
+                currency: "DKK",
+                languages: [
                     {
-                        "name": "Danish",
+                        name: "Danish",
                     },
                 ],
             },
             {
-                "name": "Dominica",
-                "code": "DM",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Roseau",
-                "continent": {
-                    "name": "North America",
+                name: "Dominica",
+                code: "DM",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Roseau",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "XCD",
-                "languages": [
+                currency: "XCD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Dominican Republic",
-                "code": "DO",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Santo Domingo",
-                "continent": {
-                    "name": "North America",
+                name: "Dominican Republic",
+                code: "DO",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Santo Domingo",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "DOP",
-                "languages": [
+                currency: "DOP",
+                languages: [
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                 ],
             },
             {
-                "name": "Algeria",
-                "code": "DZ",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Algiers",
-                "continent": {
-                    "name": "Africa",
+                name: "Algeria",
+                code: "DZ",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Algiers",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "DZD",
-                "languages": [
+                currency: "DZD",
+                languages: [
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                 ],
             },
             {
-                "name": "Ecuador",
-                "code": "EC",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Quito",
-                "continent": {
-                    "name": "South America",
+                name: "Ecuador",
+                code: "EC",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Quito",
+                continent: {
+                    name: "South America",
                 },
-                "currency": "USD",
-                "languages": [
+                currency: "USD",
+                languages: [
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                 ],
             },
             {
-                "name": "Estonia",
-                "code": "EE",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Tallinn",
-                "continent": {
-                    "name": "Europe",
+                name: "Estonia",
+                code: "EE",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Tallinn",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "Estonian",
+                        name: "Estonian",
                     },
                 ],
             },
             {
-                "name": "Egypt",
-                "code": "EG",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Cairo",
-                "continent": {
-                    "name": "Africa",
+                name: "Egypt",
+                code: "EG",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Cairo",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "EGP",
-                "languages": [
+                currency: "EGP",
+                languages: [
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                 ],
             },
             {
-                "name": "Western Sahara",
-                "code": "EH",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "El Aaiún",
-                "continent": {
-                    "name": "Africa",
+                name: "Western Sahara",
+                code: "EH",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "El Aaiún",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "MAD,DZD,MRU",
-                "languages": [
+                currency: "MAD,DZD,MRU",
+                languages: [
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                 ],
             },
             {
-                "name": "Eritrea",
-                "code": "ER",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Asmara",
-                "continent": {
-                    "name": "Africa",
+                name: "Eritrea",
+                code: "ER",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Asmara",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "ERN",
-                "languages": [
+                currency: "ERN",
+                languages: [
                     {
-                        "name": "Tigrinya",
+                        name: "Tigrinya",
                     },
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Spain",
-                "code": "ES",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Madrid",
-                "continent": {
-                    "name": "Europe",
+                name: "Spain",
+                code: "ES",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Madrid",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                     {
-                        "name": "Basque",
+                        name: "Basque",
                     },
                     {
-                        "name": "Catalan",
+                        name: "Catalan",
                     },
                     {
-                        "name": "Galician",
+                        name: "Galician",
                     },
                     {
-                        "name": "Occitan",
+                        name: "Occitan",
                     },
                 ],
             },
             {
-                "name": "Ethiopia",
-                "code": "ET",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Addis Ababa",
-                "continent": {
-                    "name": "Africa",
+                name: "Ethiopia",
+                code: "ET",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Addis Ababa",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "ETB",
-                "languages": [
+                currency: "ETB",
+                languages: [
                     {
-                        "name": "Amharic",
+                        name: "Amharic",
                     },
                 ],
             },
             {
-                "name": "Finland",
-                "code": "FI",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Helsinki",
-                "continent": {
-                    "name": "Europe",
+                name: "Finland",
+                code: "FI",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Helsinki",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "Finnish",
+                        name: "Finnish",
                     },
                     {
-                        "name": "Swedish",
+                        name: "Swedish",
                     },
                 ],
             },
             {
-                "name": "Fiji",
-                "code": "FJ",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Suva",
-                "continent": {
-                    "name": "Oceania",
+                name: "Fiji",
+                code: "FJ",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Suva",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "FJD",
-                "languages": [
+                currency: "FJD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "Fijian",
+                        name: "Fijian",
                     },
                     {
-                        "name": "Hindi",
+                        name: "Hindi",
                     },
                     {
-                        "name": "Urdu",
+                        name: "Urdu",
                     },
                 ],
             },
             {
-                "name": "Falkland Islands",
-                "code": "FK",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Stanley",
-                "continent": {
-                    "name": "South America",
+                name: "Falkland Islands",
+                code: "FK",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Stanley",
+                continent: {
+                    name: "South America",
                 },
-                "currency": "FKP",
-                "languages": [
+                currency: "FKP",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Micronesia",
-                "code": "FM",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Palikir",
-                "continent": {
-                    "name": "Oceania",
+                name: "Micronesia",
+                code: "FM",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Palikir",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "USD",
-                "languages": [
+                currency: "USD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Faroe Islands",
-                "code": "FO",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Tórshavn",
-                "continent": {
-                    "name": "Europe",
+                name: "Faroe Islands",
+                code: "FO",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Tórshavn",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "DKK",
-                "languages": [
+                currency: "DKK",
+                languages: [
                     {
-                        "name": "Faroese",
+                        name: "Faroese",
                     },
                 ],
             },
             {
-                "name": "France",
-                "code": "FR",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Paris",
-                "continent": {
-                    "name": "Europe",
+                name: "France",
+                code: "FR",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Paris",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Gabon",
-                "code": "GA",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Libreville",
-                "continent": {
-                    "name": "Africa",
+                name: "Gabon",
+                code: "GA",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Libreville",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "XAF",
-                "languages": [
+                currency: "XAF",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "United Kingdom",
-                "code": "GB",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "London",
-                "continent": {
-                    "name": "Europe",
+                name: "United Kingdom",
+                code: "GB",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "London",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "GBP",
-                "languages": [
+                currency: "GBP",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Grenada",
-                "code": "GD",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "St. George's",
-                "continent": {
-                    "name": "North America",
+                name: "Grenada",
+                code: "GD",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "St. George's",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "XCD",
-                "languages": [
+                currency: "XCD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Georgia",
-                "code": "GE",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Tbilisi",
-                "continent": {
-                    "name": "Asia",
+                name: "Georgia",
+                code: "GE",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Tbilisi",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "GEL",
-                "languages": [
+                currency: "GEL",
+                languages: [
                     {
-                        "name": "Georgian",
+                        name: "Georgian",
                     },
                 ],
             },
             {
-                "name": "French Guiana",
-                "code": "GF",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Cayenne",
-                "continent": {
-                    "name": "South America",
+                name: "French Guiana",
+                code: "GF",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Cayenne",
+                continent: {
+                    name: "South America",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Guernsey",
-                "code": "GG",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "St. Peter Port",
-                "continent": {
-                    "name": "Europe",
+                name: "Guernsey",
+                code: "GG",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "St. Peter Port",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "GBP",
-                "languages": [
+                currency: "GBP",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Ghana",
-                "code": "GH",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Accra",
-                "continent": {
-                    "name": "Africa",
+                name: "Ghana",
+                code: "GH",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Accra",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "GHS",
-                "languages": [
+                currency: "GHS",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Gibraltar",
-                "code": "GI",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Gibraltar",
-                "continent": {
-                    "name": "Europe",
+                name: "Gibraltar",
+                code: "GI",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Gibraltar",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "GIP",
-                "languages": [
+                currency: "GIP",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Greenland",
-                "code": "GL",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Nuuk",
-                "continent": {
-                    "name": "North America",
+                name: "Greenland",
+                code: "GL",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Nuuk",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "DKK",
-                "languages": [
+                currency: "DKK",
+                languages: [
                     {
-                        "name": "Greenlandic",
+                        name: "Greenlandic",
                     },
                 ],
             },
             {
-                "name": "Gambia",
-                "code": "GM",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Banjul",
-                "continent": {
-                    "name": "Africa",
+                name: "Gambia",
+                code: "GM",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Banjul",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "GMD",
-                "languages": [
+                currency: "GMD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Guinea",
-                "code": "GN",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Conakry",
-                "continent": {
-                    "name": "Africa",
+                name: "Guinea",
+                code: "GN",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Conakry",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "GNF",
-                "languages": [
+                currency: "GNF",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                     {
-                        "name": "Peul",
+                        name: "Peul",
                     },
                 ],
             },
             {
-                "name": "Guadeloupe",
-                "code": "GP",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Basse-Terre",
-                "continent": {
-                    "name": "North America",
+                name: "Guadeloupe",
+                code: "GP",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Basse-Terre",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Equatorial Guinea",
-                "code": "GQ",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Malabo",
-                "continent": {
-                    "name": "Africa",
+                name: "Equatorial Guinea",
+                code: "GQ",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Malabo",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "XAF",
-                "languages": [
+                currency: "XAF",
+                languages: [
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Greece",
-                "code": "GR",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Athens",
-                "continent": {
-                    "name": "Europe",
+                name: "Greece",
+                code: "GR",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Athens",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "Greek",
+                        name: "Greek",
                     },
                 ],
             },
             {
-                "name": "South Georgia and the South Sandwich Islands",
-                "code": "GS",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "King Edward Point",
-                "continent": {
-                    "name": "Antarctica",
+                name: "South Georgia and the South Sandwich Islands",
+                code: "GS",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "King Edward Point",
+                continent: {
+                    name: "Antarctica",
                 },
-                "currency": "GBP",
-                "languages": [
+                currency: "GBP",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Guatemala",
-                "code": "GT",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Guatemala City",
-                "continent": {
-                    "name": "North America",
+                name: "Guatemala",
+                code: "GT",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Guatemala City",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "GTQ",
-                "languages": [
+                currency: "GTQ",
+                languages: [
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                 ],
             },
             {
-                "name": "Guam",
-                "code": "GU",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Hagåtña",
-                "continent": {
-                    "name": "Oceania",
+                name: "Guam",
+                code: "GU",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Hagåtña",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "USD",
-                "languages": [
+                currency: "USD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "Chamorro",
+                        name: "Chamorro",
                     },
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                 ],
             },
             {
-                "name": "Guinea-Bissau",
-                "code": "GW",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Bissau",
-                "continent": {
-                    "name": "Africa",
+                name: "Guinea-Bissau",
+                code: "GW",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Bissau",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "XOF",
-                "languages": [
+                currency: "XOF",
+                languages: [
                     {
-                        "name": "Portuguese",
+                        name: "Portuguese",
                     },
                 ],
             },
             {
-                "name": "Guyana",
-                "code": "GY",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Georgetown",
-                "continent": {
-                    "name": "South America",
+                name: "Guyana",
+                code: "GY",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Georgetown",
+                continent: {
+                    name: "South America",
                 },
-                "currency": "GYD",
-                "languages": [
+                currency: "GYD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Hong Kong",
-                "code": "HK",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "City of Victoria",
-                "continent": {
-                    "name": "Asia",
+                name: "Hong Kong",
+                code: "HK",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "City of Victoria",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "HKD",
-                "languages": [
+                currency: "HKD",
+                languages: [
                     {
-                        "name": "Chinese",
+                        name: "Chinese",
                     },
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Heard Island and McDonald Islands",
-                "code": "HM",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": null,
-                "continent": {
-                    "name": "Antarctica",
+                name: "Heard Island and McDonald Islands",
+                code: "HM",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: null,
+                continent: {
+                    name: "Antarctica",
                 },
-                "currency": "AUD",
-                "languages": [
+                currency: "AUD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Honduras",
-                "code": "HN",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Tegucigalpa",
-                "continent": {
-                    "name": "North America",
+                name: "Honduras",
+                code: "HN",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Tegucigalpa",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "HNL",
-                "languages": [
+                currency: "HNL",
+                languages: [
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                 ],
             },
             {
-                "name": "Croatia",
-                "code": "HR",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Zagreb",
-                "continent": {
-                    "name": "Europe",
+                name: "Croatia",
+                code: "HR",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Zagreb",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "HRK",
-                "languages": [
+                currency: "HRK",
+                languages: [
                     {
-                        "name": "Croatian",
+                        name: "Croatian",
                     },
                 ],
             },
             {
-                "name": "Haiti",
-                "code": "HT",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Port-au-Prince",
-                "continent": {
-                    "name": "North America",
+                name: "Haiti",
+                code: "HT",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Port-au-Prince",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "HTG,USD",
-                "languages": [
+                currency: "HTG,USD",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                     {
-                        "name": "Haitian",
+                        name: "Haitian",
                     },
                 ],
             },
             {
-                "name": "Hungary",
-                "code": "HU",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Budapest",
-                "continent": {
-                    "name": "Europe",
+                name: "Hungary",
+                code: "HU",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Budapest",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "HUF",
-                "languages": [
+                currency: "HUF",
+                languages: [
                     {
-                        "name": "Hungarian",
+                        name: "Hungarian",
                     },
                 ],
             },
             {
-                "name": "Indonesia",
-                "code": "ID",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Jakarta",
-                "continent": {
-                    "name": "Asia",
+                name: "Indonesia",
+                code: "ID",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Jakarta",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "IDR",
-                "languages": [
+                currency: "IDR",
+                languages: [
                     {
-                        "name": "Indonesian",
+                        name: "Indonesian",
                     },
                 ],
             },
             {
-                "name": "Ireland",
-                "code": "IE",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Dublin",
-                "continent": {
-                    "name": "Europe",
+                name: "Ireland",
+                code: "IE",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Dublin",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "Irish",
+                        name: "Irish",
                     },
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Israel",
-                "code": "IL",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Jerusalem",
-                "continent": {
-                    "name": "Asia",
+                name: "Israel",
+                code: "IL",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Jerusalem",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "ILS",
-                "languages": [
+                currency: "ILS",
+                languages: [
                     {
-                        "name": "Hebrew",
+                        name: "Hebrew",
                     },
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                 ],
             },
             {
-                "name": "Isle of Man",
-                "code": "IM",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Douglas",
-                "continent": {
-                    "name": "Europe",
+                name: "Isle of Man",
+                code: "IM",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Douglas",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "GBP",
-                "languages": [
+                currency: "GBP",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "Manx",
+                        name: "Manx",
                     },
                 ],
             },
             {
-                "name": "India",
-                "code": "IN",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "New Delhi",
-                "continent": {
-                    "name": "Asia",
+                name: "India",
+                code: "IN",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "New Delhi",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "INR",
-                "languages": [
+                currency: "INR",
+                languages: [
                     {
-                        "name": "Hindi",
+                        name: "Hindi",
                     },
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "British Indian Ocean Territory",
-                "code": "IO",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Diego Garcia",
-                "continent": {
-                    "name": "Asia",
+                name: "British Indian Ocean Territory",
+                code: "IO",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Diego Garcia",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "USD",
-                "languages": [
+                currency: "USD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Iraq",
-                "code": "IQ",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Baghdad",
-                "continent": {
-                    "name": "Asia",
+                name: "Iraq",
+                code: "IQ",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Baghdad",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "IQD",
-                "languages": [
+                currency: "IQD",
+                languages: [
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                     {
-                        "name": "Kurdish",
+                        name: "Kurdish",
                     },
                 ],
             },
             {
-                "name": "Iran",
-                "code": "IR",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Tehran",
-                "continent": {
-                    "name": "Asia",
+                name: "Iran",
+                code: "IR",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Tehran",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "IRR",
-                "languages": [
+                currency: "IRR",
+                languages: [
                     {
-                        "name": "Persian",
+                        name: "Persian",
                     },
                 ],
             },
             {
-                "name": "Iceland",
-                "code": "IS",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Reykjavik",
-                "continent": {
-                    "name": "Europe",
+                name: "Iceland",
+                code: "IS",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Reykjavik",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "ISK",
-                "languages": [
+                currency: "ISK",
+                languages: [
                     {
-                        "name": "Icelandic",
+                        name: "Icelandic",
                     },
                 ],
             },
             {
-                "name": "Italy",
-                "code": "IT",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Rome",
-                "continent": {
-                    "name": "Europe",
+                name: "Italy",
+                code: "IT",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Rome",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "Italian",
+                        name: "Italian",
                     },
                 ],
             },
             {
-                "name": "Jersey",
-                "code": "JE",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Saint Helier",
-                "continent": {
-                    "name": "Europe",
+                name: "Jersey",
+                code: "JE",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Saint Helier",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "GBP",
-                "languages": [
+                currency: "GBP",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Jamaica",
-                "code": "JM",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Kingston",
-                "continent": {
-                    "name": "North America",
+                name: "Jamaica",
+                code: "JM",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Kingston",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "JMD",
-                "languages": [
+                currency: "JMD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Jordan",
-                "code": "JO",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Amman",
-                "continent": {
-                    "name": "Asia",
+                name: "Jordan",
+                code: "JO",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Amman",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "JOD",
-                "languages": [
+                currency: "JOD",
+                languages: [
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                 ],
             },
             {
-                "name": "Japan",
-                "code": "JP",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Tokyo",
-                "continent": {
-                    "name": "Asia",
+                name: "Japan",
+                code: "JP",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Tokyo",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "JPY",
-                "languages": [
+                currency: "JPY",
+                languages: [
                     {
-                        "name": "Japanese",
+                        name: "Japanese",
                     },
                 ],
             },
             {
-                "name": "Kenya",
-                "code": "KE",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Nairobi",
-                "continent": {
-                    "name": "Africa",
+                name: "Kenya",
+                code: "KE",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Nairobi",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "KES",
-                "languages": [
+                currency: "KES",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "Swahili",
+                        name: "Swahili",
                     },
                 ],
             },
             {
-                "name": "Kyrgyzstan",
-                "code": "KG",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Bishkek",
-                "continent": {
-                    "name": "Asia",
+                name: "Kyrgyzstan",
+                code: "KG",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Bishkek",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "KGS",
-                "languages": [
+                currency: "KGS",
+                languages: [
                     {
-                        "name": "Kirghiz",
+                        name: "Kirghiz",
                     },
                     {
-                        "name": "Russian",
+                        name: "Russian",
                     },
                 ],
             },
             {
-                "name": "Cambodia",
-                "code": "KH",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Phnom Penh",
-                "continent": {
-                    "name": "Asia",
+                name: "Cambodia",
+                code: "KH",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Phnom Penh",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "KHR",
-                "languages": [
+                currency: "KHR",
+                languages: [
                     {
-                        "name": "Cambodian",
+                        name: "Cambodian",
                     },
                 ],
             },
             {
-                "name": "Kiribati",
-                "code": "KI",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "South Tarawa",
-                "continent": {
-                    "name": "Oceania",
+                name: "Kiribati",
+                code: "KI",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "South Tarawa",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "AUD",
-                "languages": [
+                currency: "AUD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Comoros",
-                "code": "KM",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Moroni",
-                "continent": {
-                    "name": "Africa",
+                name: "Comoros",
+                code: "KM",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Moroni",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "KMF",
-                "languages": [
+                currency: "KMF",
+                languages: [
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Saint Kitts and Nevis",
-                "code": "KN",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Basseterre",
-                "continent": {
-                    "name": "North America",
+                name: "Saint Kitts and Nevis",
+                code: "KN",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Basseterre",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "XCD",
-                "languages": [
+                currency: "XCD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "North Korea",
-                "code": "KP",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Pyongyang",
-                "continent": {
-                    "name": "Asia",
+                name: "North Korea",
+                code: "KP",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Pyongyang",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "KPW",
-                "languages": [
+                currency: "KPW",
+                languages: [
                     {
-                        "name": "Korean",
+                        name: "Korean",
                     },
                 ],
             },
             {
-                "name": "South Korea",
-                "code": "KR",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Seoul",
-                "continent": {
-                    "name": "Asia",
+                name: "South Korea",
+                code: "KR",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Seoul",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "KRW",
-                "languages": [
+                currency: "KRW",
+                languages: [
                     {
-                        "name": "Korean",
+                        name: "Korean",
                     },
                 ],
             },
             {
-                "name": "Kuwait",
-                "code": "KW",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Kuwait City",
-                "continent": {
-                    "name": "Asia",
+                name: "Kuwait",
+                code: "KW",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Kuwait City",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "KWD",
-                "languages": [
+                currency: "KWD",
+                languages: [
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                 ],
             },
             {
-                "name": "Cayman Islands",
-                "code": "KY",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "George Town",
-                "continent": {
-                    "name": "North America",
+                name: "Cayman Islands",
+                code: "KY",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "George Town",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "KYD",
-                "languages": [
+                currency: "KYD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Kazakhstan",
-                "code": "KZ",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Astana",
-                "continent": {
-                    "name": "Asia",
+                name: "Kazakhstan",
+                code: "KZ",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Astana",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "KZT",
-                "languages": [
+                currency: "KZT",
+                languages: [
                     {
-                        "name": "Kazakh",
+                        name: "Kazakh",
                     },
                     {
-                        "name": "Russian",
+                        name: "Russian",
                     },
                 ],
             },
             {
-                "name": "Laos",
-                "code": "LA",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Vientiane",
-                "continent": {
-                    "name": "Asia",
+                name: "Laos",
+                code: "LA",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Vientiane",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "LAK",
-                "languages": [
+                currency: "LAK",
+                languages: [
                     {
-                        "name": "Laotian",
+                        name: "Laotian",
                     },
                 ],
             },
             {
-                "name": "Lebanon",
-                "code": "LB",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Beirut",
-                "continent": {
-                    "name": "Asia",
+                name: "Lebanon",
+                code: "LB",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Beirut",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "LBP",
-                "languages": [
+                currency: "LBP",
+                languages: [
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Saint Lucia",
-                "code": "LC",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Castries",
-                "continent": {
-                    "name": "North America",
+                name: "Saint Lucia",
+                code: "LC",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Castries",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "XCD",
-                "languages": [
+                currency: "XCD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Liechtenstein",
-                "code": "LI",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Vaduz",
-                "continent": {
-                    "name": "Europe",
+                name: "Liechtenstein",
+                code: "LI",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Vaduz",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "CHF",
-                "languages": [
+                currency: "CHF",
+                languages: [
                     {
-                        "name": "German",
+                        name: "German",
                     },
                 ],
             },
             {
-                "name": "Sri Lanka",
-                "code": "LK",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Colombo",
-                "continent": {
-                    "name": "Asia",
+                name: "Sri Lanka",
+                code: "LK",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Colombo",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "LKR",
-                "languages": [
+                currency: "LKR",
+                languages: [
                     {
-                        "name": "Sinhalese",
+                        name: "Sinhalese",
                     },
                     {
-                        "name": "Tamil",
+                        name: "Tamil",
                     },
                 ],
             },
             {
-                "name": "Liberia",
-                "code": "LR",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Monrovia",
-                "continent": {
-                    "name": "Africa",
+                name: "Liberia",
+                code: "LR",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Monrovia",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "LRD",
-                "languages": [
+                currency: "LRD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Lesotho",
-                "code": "LS",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Maseru",
-                "continent": {
-                    "name": "Africa",
+                name: "Lesotho",
+                code: "LS",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Maseru",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "LSL,ZAR",
-                "languages": [
+                currency: "LSL,ZAR",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "Southern Sotho",
+                        name: "Southern Sotho",
                     },
                 ],
             },
             {
-                "name": "Lithuania",
-                "code": "LT",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Vilnius",
-                "continent": {
-                    "name": "Europe",
+                name: "Lithuania",
+                code: "LT",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Vilnius",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "Lithuanian",
+                        name: "Lithuanian",
                     },
                 ],
             },
             {
-                "name": "Luxembourg",
-                "code": "LU",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Luxembourg",
-                "continent": {
-                    "name": "Europe",
+                name: "Luxembourg",
+                code: "LU",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Luxembourg",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                     {
-                        "name": "German",
+                        name: "German",
                     },
                     {
-                        "name": "Luxembourgish",
+                        name: "Luxembourgish",
                     },
                 ],
             },
             {
-                "name": "Latvia",
-                "code": "LV",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Riga",
-                "continent": {
-                    "name": "Europe",
+                name: "Latvia",
+                code: "LV",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Riga",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "Latvian",
+                        name: "Latvian",
                     },
                 ],
             },
             {
-                "name": "Libya",
-                "code": "LY",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Tripoli",
-                "continent": {
-                    "name": "Africa",
+                name: "Libya",
+                code: "LY",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Tripoli",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "LYD",
-                "languages": [
+                currency: "LYD",
+                languages: [
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                 ],
             },
             {
-                "name": "Morocco",
-                "code": "MA",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Rabat",
-                "continent": {
-                    "name": "Africa",
+                name: "Morocco",
+                code: "MA",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Rabat",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "MAD",
-                "languages": [
+                currency: "MAD",
+                languages: [
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                 ],
             },
             {
-                "name": "Monaco",
-                "code": "MC",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Monaco",
-                "continent": {
-                    "name": "Europe",
+                name: "Monaco",
+                code: "MC",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Monaco",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Moldova",
-                "code": "MD",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Chișinău",
-                "continent": {
-                    "name": "Europe",
+                name: "Moldova",
+                code: "MD",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Chișinău",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "MDL",
-                "languages": [
+                currency: "MDL",
+                languages: [
                     {
-                        "name": "Romanian",
+                        name: "Romanian",
                     },
                 ],
             },
             {
-                "name": "Montenegro",
-                "code": "ME",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Podgorica",
-                "continent": {
-                    "name": "Europe",
+                name: "Montenegro",
+                code: "ME",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Podgorica",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "Serbian",
+                        name: "Serbian",
                     },
                     {
-                        "name": "Bosnian",
+                        name: "Bosnian",
                     },
                     {
-                        "name": "Albanian",
+                        name: "Albanian",
                     },
                     {
-                        "name": "Croatian",
+                        name: "Croatian",
                     },
                 ],
             },
             {
-                "name": "Saint Martin",
-                "code": "MF",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Marigot",
-                "continent": {
-                    "name": "North America",
+                name: "Saint Martin",
+                code: "MF",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Marigot",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "French",
+                        name: "French",
                     },
                     {
-                        "name": "Dutch",
+                        name: "Dutch",
                     },
                 ],
             },
             {
-                "name": "Madagascar",
-                "code": "MG",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Antananarivo",
-                "continent": {
-                    "name": "Africa",
+                name: "Madagascar",
+                code: "MG",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Antananarivo",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "MGA",
-                "languages": [
+                currency: "MGA",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                     {
-                        "name": "Malagasy",
+                        name: "Malagasy",
                     },
                 ],
             },
             {
-                "name": "Marshall Islands",
-                "code": "MH",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Majuro",
-                "continent": {
-                    "name": "Oceania",
+                name: "Marshall Islands",
+                code: "MH",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Majuro",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "USD",
-                "languages": [
+                currency: "USD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "Marshallese",
+                        name: "Marshallese",
                     },
                 ],
             },
             {
-                "name": "North Macedonia",
-                "code": "MK",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Skopje",
-                "continent": {
-                    "name": "Europe",
+                name: "North Macedonia",
+                code: "MK",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Skopje",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "MKD",
-                "languages": [
+                currency: "MKD",
+                languages: [
                     {
-                        "name": "Macedonian",
+                        name: "Macedonian",
                     },
                 ],
             },
             {
-                "name": "Mali",
-                "code": "ML",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Bamako",
-                "continent": {
-                    "name": "Africa",
+                name: "Mali",
+                code: "ML",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Bamako",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "XOF",
-                "languages": [
+                currency: "XOF",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Myanmar [Burma]",
-                "code": "MM",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Naypyidaw",
-                "continent": {
-                    "name": "Asia",
+                name: "Myanmar [Burma]",
+                code: "MM",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Naypyidaw",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "MMK",
-                "languages": [
+                currency: "MMK",
+                languages: [
                     {
-                        "name": "Burmese",
+                        name: "Burmese",
                     },
                 ],
             },
             {
-                "name": "Mongolia",
-                "code": "MN",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Ulan Bator",
-                "continent": {
-                    "name": "Asia",
+                name: "Mongolia",
+                code: "MN",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Ulan Bator",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "MNT",
-                "languages": [
+                currency: "MNT",
+                languages: [
                     {
-                        "name": "Mongolian",
+                        name: "Mongolian",
                     },
                 ],
             },
             {
-                "name": "Macao",
-                "code": "MO",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": null,
-                "continent": {
-                    "name": "Asia",
+                name: "Macao",
+                code: "MO",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: null,
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "MOP",
-                "languages": [
+                currency: "MOP",
+                languages: [
                     {
-                        "name": "Chinese",
+                        name: "Chinese",
                     },
                     {
-                        "name": "Portuguese",
+                        name: "Portuguese",
                     },
                 ],
             },
             {
-                "name": "Northern Mariana Islands",
-                "code": "MP",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Saipan",
-                "continent": {
-                    "name": "Oceania",
+                name: "Northern Mariana Islands",
+                code: "MP",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Saipan",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "USD",
-                "languages": [
+                currency: "USD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "Chamorro",
+                        name: "Chamorro",
                     },
                 ],
             },
             {
-                "name": "Martinique",
-                "code": "MQ",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Fort-de-France",
-                "continent": {
-                    "name": "North America",
+                name: "Martinique",
+                code: "MQ",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Fort-de-France",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Mauritania",
-                "code": "MR",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Nouakchott",
-                "continent": {
-                    "name": "Africa",
+                name: "Mauritania",
+                code: "MR",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Nouakchott",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "MRU",
-                "languages": [
+                currency: "MRU",
+                languages: [
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                 ],
             },
             {
-                "name": "Montserrat",
-                "code": "MS",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Plymouth",
-                "continent": {
-                    "name": "North America",
+                name: "Montserrat",
+                code: "MS",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Plymouth",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "XCD",
-                "languages": [
+                currency: "XCD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Malta",
-                "code": "MT",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Valletta",
-                "continent": {
-                    "name": "Europe",
+                name: "Malta",
+                code: "MT",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Valletta",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "Maltese",
+                        name: "Maltese",
                     },
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Mauritius",
-                "code": "MU",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Port Louis",
-                "continent": {
-                    "name": "Africa",
+                name: "Mauritius",
+                code: "MU",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Port Louis",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "MUR",
-                "languages": [
+                currency: "MUR",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Maldives",
-                "code": "MV",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Malé",
-                "continent": {
-                    "name": "Asia",
+                name: "Maldives",
+                code: "MV",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Malé",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "MVR",
-                "languages": [
+                currency: "MVR",
+                languages: [
                     {
-                        "name": "Divehi",
+                        name: "Divehi",
                     },
                 ],
             },
             {
-                "name": "Malawi",
-                "code": "MW",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Lilongwe",
-                "continent": {
-                    "name": "Africa",
+                name: "Malawi",
+                code: "MW",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Lilongwe",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "MWK",
-                "languages": [
+                currency: "MWK",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "Chichewa",
+                        name: "Chichewa",
                     },
                 ],
             },
             {
-                "name": "Mexico",
-                "code": "MX",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Mexico City",
-                "continent": {
-                    "name": "North America",
+                name: "Mexico",
+                code: "MX",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Mexico City",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "MXN",
-                "languages": [
+                currency: "MXN",
+                languages: [
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                 ],
             },
             {
-                "name": "Malaysia",
-                "code": "MY",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Kuala Lumpur",
-                "continent": {
-                    "name": "Asia",
+                name: "Malaysia",
+                code: "MY",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Kuala Lumpur",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "MYR",
-                "languages": [
+                currency: "MYR",
+                languages: [
                     {
-                        "name": "Malay",
+                        name: "Malay",
                     },
                 ],
             },
             {
-                "name": "Mozambique",
-                "code": "MZ",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Maputo",
-                "continent": {
-                    "name": "Africa",
+                name: "Mozambique",
+                code: "MZ",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Maputo",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "MZN",
-                "languages": [
+                currency: "MZN",
+                languages: [
                     {
-                        "name": "Portuguese",
+                        name: "Portuguese",
                     },
                 ],
             },
             {
-                "name": "Namibia",
-                "code": "NA",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Windhoek",
-                "continent": {
-                    "name": "Africa",
+                name: "Namibia",
+                code: "NA",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Windhoek",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "NAD,ZAR",
-                "languages": [
+                currency: "NAD,ZAR",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "Afrikaans",
+                        name: "Afrikaans",
                     },
                 ],
             },
             {
-                "name": "New Caledonia",
-                "code": "NC",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Nouméa",
-                "continent": {
-                    "name": "Oceania",
+                name: "New Caledonia",
+                code: "NC",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Nouméa",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "XPF",
-                "languages": [
+                currency: "XPF",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Niger",
-                "code": "NE",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Niamey",
-                "continent": {
-                    "name": "Africa",
+                name: "Niger",
+                code: "NE",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Niamey",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "XOF",
-                "languages": [
+                currency: "XOF",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Norfolk Island",
-                "code": "NF",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Kingston",
-                "continent": {
-                    "name": "Oceania",
+                name: "Norfolk Island",
+                code: "NF",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Kingston",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "AUD",
-                "languages": [
+                currency: "AUD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Nigeria",
-                "code": "NG",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Abuja",
-                "continent": {
-                    "name": "Africa",
+                name: "Nigeria",
+                code: "NG",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Abuja",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "NGN",
-                "languages": [
+                currency: "NGN",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Nicaragua",
-                "code": "NI",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Managua",
-                "continent": {
-                    "name": "North America",
+                name: "Nicaragua",
+                code: "NI",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Managua",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "NIO",
-                "languages": [
+                currency: "NIO",
+                languages: [
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                 ],
             },
             {
-                "name": "Netherlands",
-                "code": "NL",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Amsterdam",
-                "continent": {
-                    "name": "Europe",
+                name: "Netherlands",
+                code: "NL",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Amsterdam",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "Dutch",
+                        name: "Dutch",
                     },
                 ],
             },
             {
-                "name": "Norway",
-                "code": "NO",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Oslo",
-                "continent": {
-                    "name": "Europe",
+                name: "Norway",
+                code: "NO",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Oslo",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "NOK",
-                "languages": [
+                currency: "NOK",
+                languages: [
                     {
-                        "name": "Norwegian",
+                        name: "Norwegian",
                     },
                     {
-                        "name": "Norwegian Bokmål",
+                        name: "Norwegian Bokmål",
                     },
                     {
-                        "name": "Norwegian Nynorsk",
+                        name: "Norwegian Nynorsk",
                     },
                 ],
             },
             {
-                "name": "Nepal",
-                "code": "NP",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Kathmandu",
-                "continent": {
-                    "name": "Asia",
+                name: "Nepal",
+                code: "NP",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Kathmandu",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "NPR",
-                "languages": [
+                currency: "NPR",
+                languages: [
                     {
-                        "name": "Nepali",
+                        name: "Nepali",
                     },
                 ],
             },
             {
-                "name": "Nauru",
-                "code": "NR",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Yaren",
-                "continent": {
-                    "name": "Oceania",
+                name: "Nauru",
+                code: "NR",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Yaren",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "AUD",
-                "languages": [
+                currency: "AUD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "Nauruan",
+                        name: "Nauruan",
                     },
                 ],
             },
             {
-                "name": "Niue",
-                "code": "NU",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Alofi",
-                "continent": {
-                    "name": "Oceania",
+                name: "Niue",
+                code: "NU",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Alofi",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "NZD",
-                "languages": [
+                currency: "NZD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "New Zealand",
-                "code": "NZ",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Wellington",
-                "continent": {
-                    "name": "Oceania",
+                name: "New Zealand",
+                code: "NZ",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Wellington",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "NZD",
-                "languages": [
+                currency: "NZD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "Maori",
+                        name: "Maori",
                     },
                 ],
             },
             {
-                "name": "Oman",
-                "code": "OM",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Muscat",
-                "continent": {
-                    "name": "Asia",
+                name: "Oman",
+                code: "OM",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Muscat",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "OMR",
-                "languages": [
+                currency: "OMR",
+                languages: [
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                 ],
             },
             {
-                "name": "Panama",
-                "code": "PA",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Panama City",
-                "continent": {
-                    "name": "North America",
+                name: "Panama",
+                code: "PA",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Panama City",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "PAB,USD",
-                "languages": [
+                currency: "PAB,USD",
+                languages: [
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                 ],
             },
             {
-                "name": "Peru",
-                "code": "PE",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Lima",
-                "continent": {
-                    "name": "South America",
+                name: "Peru",
+                code: "PE",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Lima",
+                continent: {
+                    name: "South America",
                 },
-                "currency": "PEN",
-                "languages": [
+                currency: "PEN",
+                languages: [
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                 ],
             },
             {
-                "name": "French Polynesia",
-                "code": "PF",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Papeetē",
-                "continent": {
-                    "name": "Oceania",
+                name: "French Polynesia",
+                code: "PF",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Papeetē",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "XPF",
-                "languages": [
+                currency: "XPF",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Papua New Guinea",
-                "code": "PG",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Port Moresby",
-                "continent": {
-                    "name": "Oceania",
+                name: "Papua New Guinea",
+                code: "PG",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Port Moresby",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "PGK",
-                "languages": [
+                currency: "PGK",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Philippines",
-                "code": "PH",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Manila",
-                "continent": {
-                    "name": "Asia",
+                name: "Philippines",
+                code: "PH",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Manila",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "PHP",
-                "languages": [
+                currency: "PHP",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Pakistan",
-                "code": "PK",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Islamabad",
-                "continent": {
-                    "name": "Asia",
+                name: "Pakistan",
+                code: "PK",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Islamabad",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "PKR",
-                "languages": [
+                currency: "PKR",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "Urdu",
+                        name: "Urdu",
                     },
                 ],
             },
             {
-                "name": "Poland",
-                "code": "PL",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Warsaw",
-                "continent": {
-                    "name": "Europe",
+                name: "Poland",
+                code: "PL",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Warsaw",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "PLN",
-                "languages": [
+                currency: "PLN",
+                languages: [
                     {
-                        "name": "Polish",
+                        name: "Polish",
                     },
                 ],
             },
             {
-                "name": "Saint Pierre and Miquelon",
-                "code": "PM",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Saint-Pierre",
-                "continent": {
-                    "name": "North America",
+                name: "Saint Pierre and Miquelon",
+                code: "PM",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Saint-Pierre",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Pitcairn Islands",
-                "code": "PN",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Adamstown",
-                "continent": {
-                    "name": "Oceania",
+                name: "Pitcairn Islands",
+                code: "PN",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Adamstown",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "NZD",
-                "languages": [
+                currency: "NZD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Puerto Rico",
-                "code": "PR",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "San Juan",
-                "continent": {
-                    "name": "North America",
+                name: "Puerto Rico",
+                code: "PR",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "San Juan",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "USD",
-                "languages": [
+                currency: "USD",
+                languages: [
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Palestine",
-                "code": "PS",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Ramallah",
-                "continent": {
-                    "name": "Asia",
+                name: "Palestine",
+                code: "PS",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Ramallah",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "ILS",
-                "languages": [
+                currency: "ILS",
+                languages: [
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                 ],
             },
             {
-                "name": "Portugal",
-                "code": "PT",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Lisbon",
-                "continent": {
-                    "name": "Europe",
+                name: "Portugal",
+                code: "PT",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Lisbon",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "Portuguese",
+                        name: "Portuguese",
                     },
                 ],
             },
             {
-                "name": "Palau",
-                "code": "PW",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Ngerulmud",
-                "continent": {
-                    "name": "Oceania",
+                name: "Palau",
+                code: "PW",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Ngerulmud",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "USD",
-                "languages": [
+                currency: "USD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Paraguay",
-                "code": "PY",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Asunción",
-                "continent": {
-                    "name": "South America",
+                name: "Paraguay",
+                code: "PY",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Asunción",
+                continent: {
+                    name: "South America",
                 },
-                "currency": "PYG",
-                "languages": [
+                currency: "PYG",
+                languages: [
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                     {
-                        "name": "Guarani",
+                        name: "Guarani",
                     },
                 ],
             },
             {
-                "name": "Qatar",
-                "code": "QA",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Doha",
-                "continent": {
-                    "name": "Asia",
+                name: "Qatar",
+                code: "QA",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Doha",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "QAR",
-                "languages": [
+                currency: "QAR",
+                languages: [
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                 ],
             },
             {
-                "name": "Réunion",
-                "code": "RE",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Saint-Denis",
-                "continent": {
-                    "name": "Africa",
+                name: "Réunion",
+                code: "RE",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Saint-Denis",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Romania",
-                "code": "RO",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Bucharest",
-                "continent": {
-                    "name": "Europe",
+                name: "Romania",
+                code: "RO",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Bucharest",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "RON",
-                "languages": [
+                currency: "RON",
+                languages: [
                     {
-                        "name": "Romanian",
+                        name: "Romanian",
                     },
                 ],
             },
             {
-                "name": "Serbia",
-                "code": "RS",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Belgrade",
-                "continent": {
-                    "name": "Europe",
+                name: "Serbia",
+                code: "RS",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Belgrade",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "RSD",
-                "languages": [
+                currency: "RSD",
+                languages: [
                     {
-                        "name": "Serbian",
+                        name: "Serbian",
                     },
                 ],
             },
             {
-                "name": "Russia",
-                "code": "RU",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Moscow",
-                "continent": {
-                    "name": "Europe",
+                name: "Russia",
+                code: "RU",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Moscow",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "RUB",
-                "languages": [
+                currency: "RUB",
+                languages: [
                     {
-                        "name": "Russian",
+                        name: "Russian",
                     },
                 ],
             },
             {
-                "name": "Rwanda",
-                "code": "RW",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Kigali",
-                "continent": {
-                    "name": "Africa",
+                name: "Rwanda",
+                code: "RW",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Kigali",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "RWF",
-                "languages": [
+                currency: "RWF",
+                languages: [
                     {
-                        "name": "Rwandi",
+                        name: "Rwandi",
                     },
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Saudi Arabia",
-                "code": "SA",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Riyadh",
-                "continent": {
-                    "name": "Asia",
+                name: "Saudi Arabia",
+                code: "SA",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Riyadh",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "SAR",
-                "languages": [
+                currency: "SAR",
+                languages: [
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                 ],
             },
             {
-                "name": "Solomon Islands",
-                "code": "SB",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Honiara",
-                "continent": {
-                    "name": "Oceania",
+                name: "Solomon Islands",
+                code: "SB",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Honiara",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "SBD",
-                "languages": [
+                currency: "SBD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Seychelles",
-                "code": "SC",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Victoria",
-                "continent": {
-                    "name": "Africa",
+                name: "Seychelles",
+                code: "SC",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Victoria",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "SCR",
-                "languages": [
+                currency: "SCR",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Sudan",
-                "code": "SD",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Khartoum",
-                "continent": {
-                    "name": "Africa",
+                name: "Sudan",
+                code: "SD",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Khartoum",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "SDG",
-                "languages": [
+                currency: "SDG",
+                languages: [
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Sweden",
-                "code": "SE",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Stockholm",
-                "continent": {
-                    "name": "Europe",
+                name: "Sweden",
+                code: "SE",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Stockholm",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "SEK",
-                "languages": [
+                currency: "SEK",
+                languages: [
                     {
-                        "name": "Swedish",
+                        name: "Swedish",
                     },
                 ],
             },
             {
-                "name": "Singapore",
-                "code": "SG",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Singapore",
-                "continent": {
-                    "name": "Asia",
+                name: "Singapore",
+                code: "SG",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Singapore",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "SGD",
-                "languages": [
+                currency: "SGD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "Malay",
+                        name: "Malay",
                     },
                     {
-                        "name": "Tamil",
+                        name: "Tamil",
                     },
                     {
-                        "name": "Chinese",
+                        name: "Chinese",
                     },
                 ],
             },
             {
-                "name": "Saint Helena",
-                "code": "SH",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Jamestown",
-                "continent": {
-                    "name": "Africa",
+                name: "Saint Helena",
+                code: "SH",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Jamestown",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "SHP",
-                "languages": [
+                currency: "SHP",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Slovenia",
-                "code": "SI",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Ljubljana",
-                "continent": {
-                    "name": "Europe",
+                name: "Slovenia",
+                code: "SI",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Ljubljana",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "Slovenian",
+                        name: "Slovenian",
                     },
                 ],
             },
             {
-                "name": "Svalbard and Jan Mayen",
-                "code": "SJ",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Longyearbyen",
-                "continent": {
-                    "name": "Europe",
+                name: "Svalbard and Jan Mayen",
+                code: "SJ",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Longyearbyen",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "NOK",
-                "languages": [
+                currency: "NOK",
+                languages: [
                     {
-                        "name": "Norwegian",
+                        name: "Norwegian",
                     },
                 ],
             },
             {
-                "name": "Slovakia",
-                "code": "SK",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Bratislava",
-                "continent": {
-                    "name": "Europe",
+                name: "Slovakia",
+                code: "SK",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Bratislava",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "Slovak",
+                        name: "Slovak",
                     },
                 ],
             },
             {
-                "name": "Sierra Leone",
-                "code": "SL",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Freetown",
-                "continent": {
-                    "name": "Africa",
+                name: "Sierra Leone",
+                code: "SL",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Freetown",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "SLL",
-                "languages": [
+                currency: "SLL",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "San Marino",
-                "code": "SM",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "City of San Marino",
-                "continent": {
-                    "name": "Europe",
+                name: "San Marino",
+                code: "SM",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "City of San Marino",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "Italian",
+                        name: "Italian",
                     },
                 ],
             },
             {
-                "name": "Senegal",
-                "code": "SN",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Dakar",
-                "continent": {
-                    "name": "Africa",
+                name: "Senegal",
+                code: "SN",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Dakar",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "XOF",
-                "languages": [
+                currency: "XOF",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Somalia",
-                "code": "SO",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Mogadishu",
-                "continent": {
-                    "name": "Africa",
+                name: "Somalia",
+                code: "SO",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Mogadishu",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "SOS",
-                "languages": [
+                currency: "SOS",
+                languages: [
                     {
-                        "name": "Somalia",
+                        name: "Somalia",
                     },
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                 ],
             },
             {
-                "name": "Suriname",
-                "code": "SR",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Paramaribo",
-                "continent": {
-                    "name": "South America",
+                name: "Suriname",
+                code: "SR",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Paramaribo",
+                continent: {
+                    name: "South America",
                 },
-                "currency": "SRD",
-                "languages": [
+                currency: "SRD",
+                languages: [
                     {
-                        "name": "Dutch",
+                        name: "Dutch",
                     },
                 ],
             },
             {
-                "name": "South Sudan",
-                "code": "SS",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Juba",
-                "continent": {
-                    "name": "Africa",
+                name: "South Sudan",
+                code: "SS",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Juba",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "SSP",
-                "languages": [
+                currency: "SSP",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "São Tomé and Príncipe",
-                "code": "ST",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "São Tomé",
-                "continent": {
-                    "name": "Africa",
+                name: "São Tomé and Príncipe",
+                code: "ST",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "São Tomé",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "STN",
-                "languages": [
+                currency: "STN",
+                languages: [
                     {
-                        "name": "Portuguese",
+                        name: "Portuguese",
                     },
                 ],
             },
             {
-                "name": "El Salvador",
-                "code": "SV",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "San Salvador",
-                "continent": {
-                    "name": "North America",
+                name: "El Salvador",
+                code: "SV",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "San Salvador",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "SVC,USD",
-                "languages": [
+                currency: "SVC,USD",
+                languages: [
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                 ],
             },
             {
-                "name": "Sint Maarten",
-                "code": "SX",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Philipsburg",
-                "continent": {
-                    "name": "North America",
+                name: "Sint Maarten",
+                code: "SX",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Philipsburg",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "ANG",
-                "languages": [
+                currency: "ANG",
+                languages: [
                     {
-                        "name": "Dutch",
+                        name: "Dutch",
                     },
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Syria",
-                "code": "SY",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Damascus",
-                "continent": {
-                    "name": "Asia",
+                name: "Syria",
+                code: "SY",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Damascus",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "SYP",
-                "languages": [
+                currency: "SYP",
+                languages: [
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                 ],
             },
             {
-                "name": "Swaziland",
-                "code": "SZ",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Lobamba",
-                "continent": {
-                    "name": "Africa",
+                name: "Swaziland",
+                code: "SZ",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Lobamba",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "SZL",
-                "languages": [
+                currency: "SZL",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "Swati",
+                        name: "Swati",
                     },
                 ],
             },
             {
-                "name": "Turks and Caicos Islands",
-                "code": "TC",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Cockburn Town",
-                "continent": {
-                    "name": "North America",
+                name: "Turks and Caicos Islands",
+                code: "TC",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Cockburn Town",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "USD",
-                "languages": [
+                currency: "USD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Chad",
-                "code": "TD",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "N'Djamena",
-                "continent": {
-                    "name": "Africa",
+                name: "Chad",
+                code: "TD",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "N'Djamena",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "XAF",
-                "languages": [
+                currency: "XAF",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                 ],
             },
             {
-                "name": "French Southern Territories",
-                "code": "TF",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Port-aux-Français",
-                "continent": {
-                    "name": "Antarctica",
+                name: "French Southern Territories",
+                code: "TF",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Port-aux-Français",
+                continent: {
+                    name: "Antarctica",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Togo",
-                "code": "TG",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Lomé",
-                "continent": {
-                    "name": "Africa",
+                name: "Togo",
+                code: "TG",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Lomé",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "XOF",
-                "languages": [
+                currency: "XOF",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Thailand",
-                "code": "TH",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Bangkok",
-                "continent": {
-                    "name": "Asia",
+                name: "Thailand",
+                code: "TH",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Bangkok",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "THB",
-                "languages": [
+                currency: "THB",
+                languages: [
                     {
-                        "name": "Thai",
+                        name: "Thai",
                     },
                 ],
             },
             {
-                "name": "Tajikistan",
-                "code": "TJ",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Dushanbe",
-                "continent": {
-                    "name": "Asia",
+                name: "Tajikistan",
+                code: "TJ",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Dushanbe",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "TJS",
-                "languages": [
+                currency: "TJS",
+                languages: [
                     {
-                        "name": "Tajik",
+                        name: "Tajik",
                     },
                     {
-                        "name": "Russian",
+                        name: "Russian",
                     },
                 ],
             },
             {
-                "name": "Tokelau",
-                "code": "TK",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Fakaofo",
-                "continent": {
-                    "name": "Oceania",
+                name: "Tokelau",
+                code: "TK",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Fakaofo",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "NZD",
-                "languages": [
+                currency: "NZD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "East Timor",
-                "code": "TL",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Dili",
-                "continent": {
-                    "name": "Oceania",
+                name: "East Timor",
+                code: "TL",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Dili",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "USD",
-                "languages": [
+                currency: "USD",
+                languages: [
                     {
-                        "name": "Portuguese",
+                        name: "Portuguese",
                     },
                 ],
             },
             {
-                "name": "Turkmenistan",
-                "code": "TM",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Ashgabat",
-                "continent": {
-                    "name": "Asia",
+                name: "Turkmenistan",
+                code: "TM",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Ashgabat",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "TMT",
-                "languages": [
+                currency: "TMT",
+                languages: [
                     {
-                        "name": "Turkmen",
+                        name: "Turkmen",
                     },
                     {
-                        "name": "Russian",
+                        name: "Russian",
                     },
                 ],
             },
             {
-                "name": "Tunisia",
-                "code": "TN",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Tunis",
-                "continent": {
-                    "name": "Africa",
+                name: "Tunisia",
+                code: "TN",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Tunis",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "TND",
-                "languages": [
+                currency: "TND",
+                languages: [
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                 ],
             },
             {
-                "name": "Tonga",
-                "code": "TO",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Nuku'alofa",
-                "continent": {
-                    "name": "Oceania",
+                name: "Tonga",
+                code: "TO",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Nuku'alofa",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "TOP",
-                "languages": [
+                currency: "TOP",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "Tonga",
+                        name: "Tonga",
                     },
                 ],
             },
             {
-                "name": "Turkey",
-                "code": "TR",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Ankara",
-                "continent": {
-                    "name": "Asia",
+                name: "Turkey",
+                code: "TR",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Ankara",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "TRY",
-                "languages": [
+                currency: "TRY",
+                languages: [
                     {
-                        "name": "Turkish",
+                        name: "Turkish",
                     },
                 ],
             },
             {
-                "name": "Trinidad and Tobago",
-                "code": "TT",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Port of Spain",
-                "continent": {
-                    "name": "North America",
+                name: "Trinidad and Tobago",
+                code: "TT",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Port of Spain",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "TTD",
-                "languages": [
+                currency: "TTD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Tuvalu",
-                "code": "TV",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Funafuti",
-                "continent": {
-                    "name": "Oceania",
+                name: "Tuvalu",
+                code: "TV",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Funafuti",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "AUD",
-                "languages": [
+                currency: "AUD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Taiwan",
-                "code": "TW",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Taipei",
-                "continent": {
-                    "name": "Asia",
+                name: "Taiwan",
+                code: "TW",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Taipei",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "TWD",
-                "languages": [
+                currency: "TWD",
+                languages: [
                     {
-                        "name": "Chinese",
+                        name: "Chinese",
                     },
                 ],
             },
             {
-                "name": "Tanzania",
-                "code": "TZ",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Dodoma",
-                "continent": {
-                    "name": "Africa",
+                name: "Tanzania",
+                code: "TZ",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Dodoma",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "TZS",
-                "languages": [
+                currency: "TZS",
+                languages: [
                     {
-                        "name": "Swahili",
+                        name: "Swahili",
                     },
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Ukraine",
-                "code": "UA",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Kyiv",
-                "continent": {
-                    "name": "Europe",
+                name: "Ukraine",
+                code: "UA",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Kyiv",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "UAH",
-                "languages": [
+                currency: "UAH",
+                languages: [
                     {
-                        "name": "Ukrainian",
+                        name: "Ukrainian",
                     },
                 ],
             },
             {
-                "name": "Uganda",
-                "code": "UG",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Kampala",
-                "continent": {
-                    "name": "Africa",
+                name: "Uganda",
+                code: "UG",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Kampala",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "UGX",
-                "languages": [
+                currency: "UGX",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "Swahili",
+                        name: "Swahili",
                     },
                 ],
             },
             {
-                "name": "U.S. Minor Outlying Islands",
-                "code": "UM",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": null,
-                "continent": {
-                    "name": "Oceania",
+                name: "U.S. Minor Outlying Islands",
+                code: "UM",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: null,
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "USD",
-                "languages": [
+                currency: "USD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "United States",
-                "code": "US",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Washington D.C.",
-                "continent": {
-                    "name": "North America",
+                name: "United States",
+                code: "US",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Washington D.C.",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "USD,USN,USS",
-                "languages": [
+                currency: "USD,USN,USS",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Uruguay",
-                "code": "UY",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Montevideo",
-                "continent": {
-                    "name": "South America",
+                name: "Uruguay",
+                code: "UY",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Montevideo",
+                continent: {
+                    name: "South America",
                 },
-                "currency": "UYI,UYU",
-                "languages": [
+                currency: "UYI,UYU",
+                languages: [
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                 ],
             },
             {
-                "name": "Uzbekistan",
-                "code": "UZ",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Tashkent",
-                "continent": {
-                    "name": "Asia",
+                name: "Uzbekistan",
+                code: "UZ",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Tashkent",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "UZS",
-                "languages": [
+                currency: "UZS",
+                languages: [
                     {
-                        "name": "Uzbek",
+                        name: "Uzbek",
                     },
                     {
-                        "name": "Russian",
+                        name: "Russian",
                     },
                 ],
             },
             {
-                "name": "Vatican City",
-                "code": "VA",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Vatican City",
-                "continent": {
-                    "name": "Europe",
+                name: "Vatican City",
+                code: "VA",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Vatican City",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "Italian",
+                        name: "Italian",
                     },
                     {
-                        "name": "Latin",
+                        name: "Latin",
                     },
                 ],
             },
             {
-                "name": "Saint Vincent and the Grenadines",
-                "code": "VC",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Kingstown",
-                "continent": {
-                    "name": "North America",
+                name: "Saint Vincent and the Grenadines",
+                code: "VC",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Kingstown",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "XCD",
-                "languages": [
+                currency: "XCD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Venezuela",
-                "code": "VE",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Caracas",
-                "continent": {
-                    "name": "South America",
+                name: "Venezuela",
+                code: "VE",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Caracas",
+                continent: {
+                    name: "South America",
                 },
-                "currency": "VES",
-                "languages": [
+                currency: "VES",
+                languages: [
                     {
-                        "name": "Spanish",
+                        name: "Spanish",
                     },
                 ],
             },
             {
-                "name": "British Virgin Islands",
-                "code": "VG",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Road Town",
-                "continent": {
-                    "name": "North America",
+                name: "British Virgin Islands",
+                code: "VG",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Road Town",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "USD",
-                "languages": [
+                currency: "USD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "U.S. Virgin Islands",
-                "code": "VI",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Charlotte Amalie",
-                "continent": {
-                    "name": "North America",
+                name: "U.S. Virgin Islands",
+                code: "VI",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Charlotte Amalie",
+                continent: {
+                    name: "North America",
                 },
-                "currency": "USD",
-                "languages": [
+                currency: "USD",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Vietnam",
-                "code": "VN",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Hanoi",
-                "continent": {
-                    "name": "Asia",
+                name: "Vietnam",
+                code: "VN",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Hanoi",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "VND",
-                "languages": [
+                currency: "VND",
+                languages: [
                     {
-                        "name": "Vietnamese",
+                        name: "Vietnamese",
                     },
                 ],
             },
             {
-                "name": "Vanuatu",
-                "code": "VU",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Port Vila",
-                "continent": {
-                    "name": "Oceania",
+                name: "Vanuatu",
+                code: "VU",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Port Vila",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "VUV",
-                "languages": [
+                currency: "VUV",
+                languages: [
                     {
-                        "name": "Bislama",
+                        name: "Bislama",
                     },
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Wallis and Futuna",
-                "code": "WF",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Mata-Utu",
-                "continent": {
-                    "name": "Oceania",
+                name: "Wallis and Futuna",
+                code: "WF",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Mata-Utu",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "XPF",
-                "languages": [
+                currency: "XPF",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "Samoa",
-                "code": "WS",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Apia",
-                "continent": {
-                    "name": "Oceania",
+                name: "Samoa",
+                code: "WS",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Apia",
+                continent: {
+                    name: "Oceania",
                 },
-                "currency": "WST",
-                "languages": [
+                currency: "WST",
+                languages: [
                     {
-                        "name": "Samoan",
+                        name: "Samoan",
                     },
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Kosovo",
-                "code": "XK",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Pristina",
-                "continent": {
-                    "name": "Europe",
+                name: "Kosovo",
+                code: "XK",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Pristina",
+                continent: {
+                    name: "Europe",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "Albanian",
+                        name: "Albanian",
                     },
                     {
-                        "name": "Serbian",
+                        name: "Serbian",
                     },
                 ],
             },
             {
-                "name": "Yemen",
-                "code": "YE",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Sana'a",
-                "continent": {
-                    "name": "Asia",
+                name: "Yemen",
+                code: "YE",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Sana'a",
+                continent: {
+                    name: "Asia",
                 },
-                "currency": "YER",
-                "languages": [
+                currency: "YER",
+                languages: [
                     {
-                        "name": "Arabic",
+                        name: "Arabic",
                     },
                 ],
             },
             {
-                "name": "Mayotte",
-                "code": "YT",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Mamoudzou",
-                "continent": {
-                    "name": "Africa",
+                name: "Mayotte",
+                code: "YT",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Mamoudzou",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "EUR",
-                "languages": [
+                currency: "EUR",
+                languages: [
                     {
-                        "name": "French",
+                        name: "French",
                     },
                 ],
             },
             {
-                "name": "South Africa",
-                "code": "ZA",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Pretoria",
-                "continent": {
-                    "name": "Africa",
+                name: "South Africa",
+                code: "ZA",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Pretoria",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "ZAR",
-                "languages": [
+                currency: "ZAR",
+                languages: [
                     {
-                        "name": "Afrikaans",
+                        name: "Afrikaans",
                     },
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "South Ndebele",
+                        name: "South Ndebele",
                     },
                     {
-                        "name": "Southern Sotho",
+                        name: "Southern Sotho",
                     },
                     {
-                        "name": "Swati",
+                        name: "Swati",
                     },
                     {
-                        "name": "Tswana",
+                        name: "Tswana",
                     },
                     {
-                        "name": "Tsonga",
+                        name: "Tsonga",
                     },
                     {
-                        "name": "Venda",
+                        name: "Venda",
                     },
                     {
-                        "name": "Xhosa",
+                        name: "Xhosa",
                     },
                     {
-                        "name": "Zulu",
+                        name: "Zulu",
                     },
                 ],
             },
             {
-                "name": "Zambia",
-                "code": "ZM",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Lusaka",
-                "continent": {
-                    "name": "Africa",
+                name: "Zambia",
+                code: "ZM",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Lusaka",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "ZMW",
-                "languages": [
+                currency: "ZMW",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                 ],
             },
             {
-                "name": "Zimbabwe",
-                "code": "ZW",
-                "icon": "virtual-host",
-                "icon_status": IconStatus.Up,
-                "capital": "Harare",
-                "continent": {
-                    "name": "Africa",
+                name: "Zimbabwe",
+                code: "ZW",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Harare",
+                continent: {
+                    name: "Africa",
                 },
-                "currency": "USD,ZAR,BWP,GBP,AUD,CNY,INR,JPY",
-                "languages": [
+                currency: "USD,ZAR,BWP,GBP,AUD,CNY,INR,JPY",
+                languages: [
                     {
-                        "name": "English",
+                        name: "English",
                     },
                     {
-                        "name": "Shona",
+                        name: "Shona",
                     },
                     {
-                        "name": "North Ndebele",
+                        name: "North Ndebele",
                     },
                 ],
             },

@@ -36,25 +36,26 @@ import { ToastService } from "../../toast/toast.service";
 import { TooltipDirective } from "../../tooltip/tooltip.directive";
 import { ISelectGroup } from "../public-api";
 import { ComboboxReactiveFormTestComponent } from "../spec-helpers/spec-components";
-
 import { ComboboxComponent } from "./combobox.component";
 
 describe("components >", () => {
     describe("combobox >", () => {
         const itemsSource = ["Item 1", "Item 2", "Item 3"];
         const itemsSourceComplex = [
-            {name: "Item 4", value: "Bonobo"},
-            {name: "Item 5", value: "Zelda"},
-            {name: "Item 6", value: "Max"},
+            { name: "Item 4", value: "Bonobo" },
+            { name: "Item 5", value: "Zelda" },
+            { name: "Item 6", value: "Max" },
         ];
-        const itemsSourceComplexGrouped: ISelectGroup[] = [{
-            header: "Group",
-            items: [
-                {name: "Item 4", value: "Bonobo"},
-                {name: "Item 5", value: "Zelda"},
-                {name: "Item 6", value: "Max"},
-            ],
-        }];
+        const itemsSourceComplexGrouped: ISelectGroup[] = [
+            {
+                header: "Group",
+                items: [
+                    { name: "Item 4", value: "Bonobo" },
+                    { name: "Item 5", value: "Zelda" },
+                    { name: "Item 6", value: "Max" },
+                ],
+            },
+        ];
 
         let fixture: ComponentFixture<ComboboxComponent>;
         let componentInstance: ComboboxComponent;
@@ -62,11 +63,7 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
-                    FormsModule,
-                    ReactiveFormsModule,
-                    PopupAdapterModule,
-                ],
+                imports: [FormsModule, ReactiveFormsModule, PopupAdapterModule],
                 declarations: [
                     ButtonComponent,
                     CheckboxComponent,
@@ -129,9 +126,13 @@ describe("components >", () => {
             componentInstance.value = itemsSource[1];
             fixture.detectChanges();
             componentInstance.popup.toggleOpened(new FocusEvent("focusin"));
-            const selected = debugElement.query(By.css(".nui-menu-item.item-selected"));
+            const selected = debugElement.query(
+                By.css(".nui-menu-item.item-selected")
+            );
             expect(selected).toBeDefined();
-            expect(selected.nativeElement.innerText.trim()).toEqual(itemsSource[1]);
+            expect(selected.nativeElement.innerText.trim()).toEqual(
+                itemsSource[1]
+            );
             expect(componentInstance.isItemSelected).toHaveBeenCalled();
         });
 
@@ -148,7 +149,9 @@ describe("components >", () => {
             componentInstance.value = itemsSourceComplex[1];
             fixture.detectChanges();
             componentInstance.popup.toggleOpened(new FocusEvent("focusin"));
-            const selected = debugElement.query(By.css(".nui-menu-item.item-selected"));
+            const selected = debugElement.query(
+                By.css(".nui-menu-item.item-selected")
+            );
             expect(selected).toBeDefined();
             expect(selected.nativeElement.innerText.trim()).toEqual("Zelda");
         });
@@ -160,10 +163,14 @@ describe("components >", () => {
             componentInstance.value = itemsSourceComplex[1].name;
             fixture.detectChanges();
             toggle.nativeElement.click();
-            expect(debugElement.query(By.css(".nui-menu-item.item-selected"))).not.toBeNull();
+            expect(
+                debugElement.query(By.css(".nui-menu-item.item-selected"))
+            ).not.toBeNull();
 
             componentInstance.ngOnInit();
-            expect(debugElement.query(By.css(".nui-menu-item.item-selected"))).not.toBeNull();
+            expect(
+                debugElement.query(By.css(".nui-menu-item.item-selected"))
+            ).not.toBeNull();
         });
 
         it("should change selected item on value change event", () => {
@@ -189,7 +196,9 @@ describe("components >", () => {
         it("should has 'nui-combobox--justified' class if 'justified' attribute is set to 'true'", () => {
             componentInstance.justified = true;
             fixture.detectChanges();
-            expect(debugElement.classes["nui-combobox--justified"]).toEqual(true);
+            expect(debugElement.classes["nui-combobox--justified"]).toEqual(
+                true
+            );
         });
 
         it("should add 'has-error' class if 'isInErrorState' is 'true' and value is not selected", () => {
@@ -214,15 +223,21 @@ describe("components >", () => {
 
         it("should not modify text position while not being editable and if the icon is not set", () => {
             fixture.detectChanges();
-            const inputIcon = debugElement.query(By.css(".nui-combobox__input"));
+            const inputIcon = debugElement.query(
+                By.css(".nui-combobox__input")
+            );
             // checking that nui-combobox__input-icon is not applied
-            expect(inputIcon.classes["nui-combobox__input-icon"]).toBeUndefined();
+            expect(
+                inputIcon.classes["nui-combobox__input-icon"]
+            ).toBeUndefined();
         });
 
         it("should modify text position while being editable and if the icon is set", () => {
             componentInstance.icon = "add";
             fixture.detectChanges();
-            const inputIcon = debugElement.query(By.css(".nui-combobox__input"));
+            const inputIcon = debugElement.query(
+                By.css(".nui-combobox__input")
+            );
             expect(inputIcon.classes["nui-combobox__input-icon"]).toEqual(true);
         });
 
@@ -264,27 +279,35 @@ describe("components >", () => {
             spyOn(componentInstance, "writeValue").and.callThrough();
             componentInstance.displayValue = "value";
             componentInstance.select(itemsSourceComplex[2]);
-            expect(componentInstance.selectedItem).toEqual(itemsSourceComplex[2]);
+            expect(componentInstance.selectedItem).toEqual(
+                itemsSourceComplex[2]
+            );
         });
 
         it("should return correct value when displayValue is true and data is grouped", () => {
             componentInstance.itemsSource = itemsSourceComplexGrouped;
             componentInstance.displayValue = "value";
-            expect(componentInstance.findObjectByValue("Bonobo")).toEqual(itemsSourceComplexGrouped[0].items[0]);
+            expect(componentInstance.findObjectByValue("Bonobo")).toEqual(
+                itemsSourceComplexGrouped[0].items[0]
+            );
         });
 
         it("should return true if data is passed as ISelectGroup[]", () => {
-            expect(componentInstance.isGroupedData(itemsSourceComplexGrouped)).toEqual(true);
+            expect(
+                componentInstance.isGroupedData(itemsSourceComplexGrouped)
+            ).toEqual(true);
         });
 
-        it("should not clear value if data is grouped with displayValue and with clearOnBlur", (() => {
+        it("should not clear value if data is grouped with displayValue and with clearOnBlur", () => {
             componentInstance.itemsSource = itemsSourceComplexGrouped;
             componentInstance.displayValue = "name";
             componentInstance.onInputChange("Item 5");
             componentInstance.handleBlur();
-            expect(componentInstance.selectedItem).toEqual(itemsSourceComplexGrouped[0].items[1]);
+            expect(componentInstance.selectedItem).toEqual(
+                itemsSourceComplexGrouped[0].items[1]
+            );
             expect(componentInstance.inputValue).toEqual("Item 5");
-        }));
+        });
 
         it("should not call changeValue multiple times if value doesn't change", () => {
             spyOn(componentInstance, "select").and.callThrough();
@@ -306,7 +329,9 @@ describe("components >", () => {
             componentInstance.select("Item 2");
             componentInstance.isRemoveValueEnabled = true;
 
-            componentInstance.clearValue({ stopPropagation: () => {} } as Event);
+            componentInstance.clearValue({
+                stopPropagation: () => {},
+            } as Event);
             expect(componentInstance.inputValue).toBeNull();
         });
 
@@ -315,7 +340,9 @@ describe("components >", () => {
             componentInstance.select("Item 2");
             componentInstance.isRemoveValueEnabled = false;
 
-            componentInstance.clearValue({ stopPropagation: () => {} } as Event);
+            componentInstance.clearValue({
+                stopPropagation: () => {},
+            } as Event);
             expect(componentInstance.inputValue).toEqual("Item 2");
         });
 
@@ -326,14 +353,14 @@ describe("components >", () => {
                 componentInstance.onInputChange(itemsSource[1]);
             });
 
-            it("should emit value on blur only once, if value has changed", (() => {
+            it("should emit value on blur only once, if value has changed", () => {
                 expect(componentInstance.select).not.toHaveBeenCalled();
                 expect(componentInstance.changed.emit).toHaveBeenCalledTimes(1);
                 componentInstance.onInputChange(itemsSource[2]);
                 componentInstance.handleBlur();
                 expect(componentInstance.select).toHaveBeenCalledTimes(1);
                 expect(componentInstance.changed.emit).toHaveBeenCalledTimes(2);
-            }));
+            });
 
             it("shouldn't emit value on blur, if value hasn't changed", () => {
                 expect(componentInstance.select).not.toHaveBeenCalled();
@@ -351,13 +378,8 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
-                    FormsModule,
-                    ReactiveFormsModule,
-                ],
-                declarations: [
-                    ComboboxReactiveFormTestComponent,
-                ],
+                imports: [FormsModule, ReactiveFormsModule],
+                declarations: [ComboboxReactiveFormTestComponent],
                 providers: [
                     ToastService,
                     ToastContainerService,
@@ -366,7 +388,9 @@ describe("components >", () => {
                 schemas: [NO_ERRORS_SCHEMA],
             });
 
-            fixture = TestBed.createComponent(ComboboxReactiveFormTestComponent);
+            fixture = TestBed.createComponent(
+                ComboboxReactiveFormTestComponent
+            );
             componentInstance = fixture.componentInstance;
         });
 

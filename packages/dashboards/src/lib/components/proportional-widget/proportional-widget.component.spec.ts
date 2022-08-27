@@ -1,15 +1,21 @@
 import { NgZone, SimpleChange, SimpleChanges } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { EventBus, IDataSource, IEvent, IFilteringOutputs, IFilteringParticipants } from "@nova-ui/bits";
-import { defaultPalette } from "@nova-ui/charts";
 import { Subject } from "rxjs";
+
+import {
+    EventBus,
+    IDataSource,
+    IEvent,
+    IFilteringOutputs,
+    IFilteringParticipants,
+} from "@nova-ui/bits";
+import { defaultPalette } from "@nova-ui/charts";
 
 import { NuiDashboardsModule } from "../../dashboards.module";
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { ProviderRegistryService } from "../../services/provider-registry.service";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../types";
-
 import { ProportionalWidgetComponent } from "./proportional-widget.component";
 import { IProportionalWidgetConfig } from "./types";
 
@@ -22,7 +28,9 @@ class MockDataSource implements IDataSource {
         return null;
     }
 
-    public registerComponent(components: Partial<IFilteringParticipants>): void {
+    public registerComponent(
+        components: Partial<IFilteringParticipants>
+    ): void {
         // @ts-ignore: Suppressed for testing purposes
         this.filterParticipants = components;
     }
@@ -37,7 +45,10 @@ describe("ProportionalWidgetComponent", () => {
     let fixture: ComponentFixture<ProportionalWidgetComponent>;
     const eventBus = new EventBus<IEvent>();
     const dynamicComponentCreator = new DynamicComponentCreator();
-    const pizzagnaService = new PizzagnaService(eventBus, dynamicComponentCreator);
+    const pizzagnaService = new PizzagnaService(
+        eventBus,
+        dynamicComponentCreator
+    );
     const dataSource = new MockDataSource();
     let ngZone: NgZone;
 
@@ -82,9 +93,15 @@ describe("ProportionalWidgetComponent", () => {
 
         beforeEach(() => {
             buildChartSpy = spyOn(<any>component, "buildChart");
-            component.configuration = { chartOptions: {}, chartColors: {} } as IProportionalWidgetConfig;
+            component.configuration = {
+                chartOptions: {},
+                chartColors: {},
+            } as IProportionalWidgetConfig;
             changes = {
-                configuration: { currentValue: { chartOptions: {} }, previousValue: { chartOptions: {} } } as SimpleChange,
+                configuration: {
+                    currentValue: { chartOptions: {} },
+                    previousValue: { chartOptions: {} },
+                } as SimpleChange,
             };
         });
 
@@ -92,7 +109,9 @@ describe("ProportionalWidgetComponent", () => {
             component.configuration.chartColors = ["blue"];
             changes.configuration.currentValue.chartColors = ["blue"];
             component.ngOnChanges(changes);
-            expect((<any>component).chartPalette.standardColors.get("testEntityId")).toEqual("blue");
+            expect(
+                (<any>component).chartPalette.standardColors.get("testEntityId")
+            ).toEqual("blue");
         });
 
         it("should rebuild the chart if the color configuration changes", () => {
@@ -104,7 +123,9 @@ describe("ProportionalWidgetComponent", () => {
         it("should use the default color provider if no colors are specified in the configuration", () => {
             changes.configuration.currentValue.chartColors = undefined;
             component.ngOnChanges(changes);
-            expect((<any>component).chartPalette.standardColors.get("testEntityId")).toEqual(defaultPalette().standardColors.get("testEntityId"));
+            expect(
+                (<any>component).chartPalette.standardColors.get("testEntityId")
+            ).toEqual(defaultPalette().standardColors.get("testEntityId"));
         });
 
         it("should not rebuild the chart if the color configuration doesn't change", () => {
@@ -113,7 +134,5 @@ describe("ProportionalWidgetComponent", () => {
             component.ngOnChanges(changes);
             expect(buildChartSpy).not.toHaveBeenCalled();
         });
-
     });
-
 });

@@ -4,6 +4,8 @@
 USAGE EXAMPLE
     console.log(nameof<Interface>("prop")); // "prop"
 */
-export function nameof<T extends Object>(prop: Extract<keyof T, string>): string {
+export function nameof<T extends Object>(
+    prop: Extract<keyof T, string>
+): string {
     return prop;
 }

@@ -1,5 +1,10 @@
 import { DebugElement } from "@angular/core";
-import { ComponentFixture, fakeAsync, flush, TestBed } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    flush,
+    TestBed,
+} from "@angular/core/testing";
 import { FormBuilder, FormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 
@@ -9,7 +14,6 @@ import { IconComponent } from "../../icon/icon.component";
 import { IconService } from "../../icon/icon.service";
 import { SpinnerComponent } from "../../spinner/spinner.component";
 import { TooltipDirective } from "../../tooltip/tooltip.directive";
-
 import { TextboxNumberComponent } from "./textbox-number.component";
 
 describe("components >", () => {
@@ -35,9 +39,7 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
-                    FormsModule,
-                ],
+                imports: [FormsModule],
                 declarations: [
                     TextboxNumberComponent,
                     IconComponent,
@@ -45,11 +47,7 @@ describe("components >", () => {
                     ButtonComponent,
                     TooltipDirective,
                 ],
-                providers: [
-                    FormBuilder,
-                    LoggerService,
-                    IconService,
-                ],
+                providers: [FormBuilder, LoggerService, IconService],
             });
             fixture = TestBed.createComponent(TextboxNumberComponent);
             fixture.detectChanges();
@@ -88,7 +86,9 @@ describe("components >", () => {
                 inputControl.nativeElement.value = "123456789.98";
                 inputControl.nativeElement.dispatchEvent(pasteEvent);
                 fixture.detectChanges();
-                expect(inputControl.nativeElement.value).toEqual("123456789.98");
+                expect(inputControl.nativeElement.value).toEqual(
+                    "123456789.98"
+                );
             });
 
             it("should not paste invalid data", () => {
@@ -124,7 +124,7 @@ describe("components >", () => {
                 expect(subject.onChange).toHaveBeenCalledWith(89);
             }));
 
-            it("should clamp the value to be within specified bounds",  fakeAsync(() => {
+            it("should clamp the value to be within specified bounds", fakeAsync(() => {
                 subject.minValue = 0;
                 subject.maxValue = 10;
                 subject.value = 100;
@@ -184,6 +184,5 @@ describe("components >", () => {
                 expect(subject.onChange).toHaveBeenCalledWith(3.6);
             }));
         });
-
     });
 });

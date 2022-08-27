@@ -1,6 +1,6 @@
 import { browser, by, Key } from "protractor";
-import { Atom } from "../../atom";
 
+import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
 import { ButtonAtom } from "../button/button.atom";
@@ -20,11 +20,23 @@ describe(`Visual tests: ${name}`, () => {
         await Helpers.prepareBrowser("wizard-v2/test");
 
         wizard = Atom.find(WizardV2Atom, "nui-wizard-v2-horizontal");
-        wizardInDialog = Atom.find(WizardV2Atom, "nui-wizard-v2-horizontal-dialog");
-        wizardDynamic = Atom.find(WizardV2Atom, "nui-wizard-horizontal-dynamic");
-        openWizardDialogBtn = Atom.find(ButtonAtom, "nui-wizard-dialog-trigger");
-        addDynamicStepButton = Atom.find(ButtonAtom, "nui-add-step-dynamically");
-        
+        wizardInDialog = Atom.find(
+            WizardV2Atom,
+            "nui-wizard-v2-horizontal-dialog"
+        );
+        wizardDynamic = Atom.find(
+            WizardV2Atom,
+            "nui-wizard-horizontal-dynamic"
+        );
+        openWizardDialogBtn = Atom.find(
+            ButtonAtom,
+            "nui-wizard-dialog-trigger"
+        );
+        addDynamicStepButton = Atom.find(
+            ButtonAtom,
+            "nui-add-step-dynamically"
+        );
+
         camera = new Camera().loadFilm(browser, name);
     });
 
@@ -42,11 +54,17 @@ describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese(`Wizard inside dialog`);
 
         await wizardInDialog.moveToFinalStep();
-        await wizardInDialog.footer.getElement().element(by.className("complete")).click();
+        await wizardInDialog.footer
+            .getElement()
+            .element(by.className("complete"))
+            .click();
         await openWizardDialogBtn.click();
         await camera.say.cheese(`Restored wizard`);
 
-        await wizardInDialog.footer.getElement().element(by.className("cancel")).click();
+        await wizardInDialog.footer
+            .getElement()
+            .element(by.className("cancel"))
+            .click();
         await camera.say.cheese(`Confirmation dialog`);
 
         Helpers.pressKey(Key.ESCAPE);
@@ -72,14 +90,16 @@ describe(`Visual tests: ${name}`, () => {
         await clickButton(wizardDynamic.footer.previousButton, 14);
         await browser.manage().window().setSize(1700, 1080);
         await camera.say.cheese(`Dynamic steps with overflow responsivity`);
-        
+
         await camera.turn.off();
     }, 200000);
 });
 
-async function clickButton (button: ButtonAtom, number: number) {
-    if (await button.isPresent() && await button.isDisplayed()) {
-        if (number < 0) {return}
+async function clickButton(button: ButtonAtom, number: number) {
+    if ((await button.isPresent()) && (await button.isDisplayed())) {
+        if (number < 0) {
+            return;
+        }
 
         while (number) {
             await button.click();

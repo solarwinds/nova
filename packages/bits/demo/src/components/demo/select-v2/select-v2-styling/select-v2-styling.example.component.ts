@@ -1,5 +1,6 @@
 import { OverlayConfig } from "@angular/cdk/overlay";
 import { Component, ViewEncapsulation } from "@angular/core";
+
 import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "@nova-ui/bits";
 
 @Component({
@@ -12,9 +13,14 @@ import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "@nova-ui/bits";
     encapsulation: ViewEncapsulation.None,
 })
 export class SelectV2StylingExampleComponent {
-    public items = Array.from({ length: 100 }).map((_, i) => ($localize`Item ${i}`));
+    public items = Array.from({ length: 100 }).map(
+        (_, i) => $localize`Item ${i}`
+    );
 
     public config: OverlayConfig = {
-        panelClass: [OVERLAY_WITH_POPUP_STYLES_CLASS, "nui-overlay-styling-demo-custom-class"],
+        panelClass: [
+            OVERLAY_WITH_POPUP_STYLES_CLASS,
+            "nui-overlay-styling-demo-custom-class",
+        ],
     };
 }

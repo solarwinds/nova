@@ -1,5 +1,6 @@
-import { Atom, ButtonAtom, MenuAtom } from "@nova-ui/bits/sdk/atoms";
 import { by } from "protractor";
+
+import { Atom, ButtonAtom, MenuAtom } from "@nova-ui/bits/sdk/atoms";
 
 export class WidgetHeaderAtom extends Atom {
     public static CSS_CLASS = "nui-widget-header";
@@ -11,6 +12,9 @@ export class WidgetHeaderAtom extends Atom {
     }
 
     public async clickEdit() {
-        return Atom.findIn(ButtonAtom, this.root.element(by.className("nui-widget-header__action-edit"))).click();
+        return Atom.findIn(
+            ButtonAtom,
+            this.root.element(by.className("nui-widget-header__action-edit"))
+        ).click();
     }
 }

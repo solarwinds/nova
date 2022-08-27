@@ -1,4 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
+
 import { ToastService, WizardHorizontalComponent } from "@nova-ui/bits";
 
 @Component({
@@ -11,8 +12,7 @@ export class WizardBusyExampleComponent {
 
     @ViewChild("wizard") private wizard: WizardHorizontalComponent;
 
-    constructor(private toastService: ToastService) {
-    }
+    constructor(private toastService: ToastService) {}
 
     public resetWizard(): void {
         this.wizard.reset();

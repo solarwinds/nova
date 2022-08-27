@@ -1,5 +1,16 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+
 import { LoggerService } from "@nova-ui/bits";
 
 import { IHasChangeDetector, IHasForm } from "../../../../../types";
@@ -10,7 +21,9 @@ import { IHasChangeDetector, IHasForm } from "../../../../../types";
     styleUrls: ["title-and-description-configuration.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TitleAndDescriptionConfigurationComponent implements IHasChangeDetector, IHasForm, OnInit, OnChanges {
+export class TitleAndDescriptionConfigurationComponent
+    implements IHasChangeDetector, IHasForm, OnInit, OnChanges
+{
     public static lateLoadKey = "TitleAndDescriptionConfigurationComponent";
 
     @Input() title: string;
@@ -23,9 +36,11 @@ export class TitleAndDescriptionConfigurationComponent implements IHasChangeDete
 
     public form: FormGroup;
 
-    constructor(public changeDetector: ChangeDetectorRef,
-                private formBuilder: FormBuilder,
-                private logger: LoggerService) {
+    constructor(
+        public changeDetector: ChangeDetectorRef,
+        private formBuilder: FormBuilder,
+        private logger: LoggerService
+    ) {
         this.form = this.formBuilder.group({
             title: ["", Validators.required],
             subtitle: [""],
@@ -59,9 +74,10 @@ export class TitleAndDescriptionConfigurationComponent implements IHasChangeDete
     }
 
     public getSecondaryText() {
-        const forTitle = this.form.controls["title"].value || $localize `No title`;
-        const forSubtitle = this.form.controls["subtitle"].value || $localize `no subtitle`;
+        const forTitle =
+            this.form.controls["title"].value || $localize`No title`;
+        const forSubtitle =
+            this.form.controls["subtitle"].value || $localize`no subtitle`;
         return `${forTitle}, ${forSubtitle}`;
     }
-
 }

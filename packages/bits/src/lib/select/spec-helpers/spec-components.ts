@@ -11,14 +11,14 @@ import { ISelectChangedEvent } from "../public-api";
     template: `
         <form [formGroup]="myForm" (submit)="onSubmit()">
             <div class="form-group">
-                <nui-select placeholder="Select item"
-                            id="nui-demo-basic-select-reactive-form"
-                            formControlName="item"
-                            [itemsSource]="dataset.items"
-                            (changed)="valueChange($event)"></nui-select>
-                <button nui-button
-                        type="submit"
-                        class="mt-1">Submit</button>
+                <nui-select
+                    placeholder="Select item"
+                    id="nui-demo-basic-select-reactive-form"
+                    formControlName="item"
+                    [itemsSource]="dataset.items"
+                    (changed)="valueChange($event)"
+                ></nui-select>
+                <button nui-button type="submit" class="mt-1">Submit</button>
             </div>
         </form>
     `,
@@ -30,12 +30,16 @@ export class SelectReactiveFormTestComponent implements OnInit {
         selectedItem: "",
     };
 
-    constructor(private formBuilder: FormBuilder,
-                @Inject(ToastService) public toastService: ToastService) {}
+    constructor(
+        private formBuilder: FormBuilder,
+        @Inject(ToastService) public toastService: ToastService
+    ) {}
 
     public ngOnInit() {
         this.myForm = this.formBuilder.group({
-            item: this.formBuilder.control( this.dataset.selectedItem, [Validators.required]),
+            item: this.formBuilder.control(this.dataset.selectedItem, [
+                Validators.required,
+            ]),
         });
     }
 
@@ -45,8 +49,8 @@ export class SelectReactiveFormTestComponent implements OnInit {
 
     public onSubmit() {
         this.myForm.valid
-            ? this.toastService.success({message: "Your form is valid!"})
-            : this.toastService.error({message: "Your form is invalid!"});
+            ? this.toastService.success({ message: "Your form is valid!" })
+            : this.toastService.error({ message: "Your form is invalid!" });
     }
 }
 
@@ -57,13 +61,14 @@ export class SelectReactiveFormTestComponent implements OnInit {
     template: `
         <form [formGroup]="myForm" (submit)="onSubmit()">
             <div class="form-group">
-                <nui-combobox id="nui-demo-combobox-reactive-form"
-                              formControlName="item"
-                              [itemsSource]="dataset.items"
-                              placeholder="Select item" required></nui-combobox>
-                <button nui-button
-                        type="submit"
-                        class="mt-1">Submit</button>
+                <nui-combobox
+                    id="nui-demo-combobox-reactive-form"
+                    formControlName="item"
+                    [itemsSource]="dataset.items"
+                    placeholder="Select item"
+                    required
+                ></nui-combobox>
+                <button nui-button type="submit" class="mt-1">Submit</button>
             </div>
         </form>
     `,
@@ -75,17 +80,22 @@ export class ComboboxReactiveFormTestComponent implements OnInit {
         selectedItem: "",
     };
 
-    constructor(private formBuilder: FormBuilder,
-                @Inject(ToastService) public toastService: ToastService) {}
+    constructor(
+        private formBuilder: FormBuilder,
+        @Inject(ToastService) public toastService: ToastService
+    ) {}
 
     public ngOnInit() {
         this.myForm = this.formBuilder.group({
-            item: this.formBuilder.control( this.dataset.selectedItem, [Validators.required]),
+            item: this.formBuilder.control(this.dataset.selectedItem, [
+                Validators.required,
+            ]),
         });
     }
 
     public onSubmit() {
-        this.myForm.valid ? this.toastService.success({title: "Your form is valid!"}) :
-            this.toastService.error({title: "Your form is invalid!"});
+        this.myForm.valid
+            ? this.toastService.success({ title: "Your form is valid!" })
+            : this.toastService.error({ title: "Your form is invalid!" });
     }
 }

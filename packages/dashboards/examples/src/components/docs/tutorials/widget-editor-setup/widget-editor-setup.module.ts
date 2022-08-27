@@ -2,7 +2,13 @@ import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { NuiButtonModule,  NuiDocsModule, NuiMessageModule, NuiSwitchModule } from "@nova-ui/bits";
+
+import {
+    NuiButtonModule,
+    NuiDocsModule,
+    NuiMessageModule,
+    NuiSwitchModule,
+} from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { WidgetEditorDocsComponent } from "./widget-editor-setup-docs.component";
@@ -13,8 +19,8 @@ const routes = [
         path: "",
         component: WidgetEditorDocsComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
             showThemeSwitcher: true,
         },
@@ -23,8 +29,8 @@ const routes = [
         path: "example",
         component: WidgetEditorSetupComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -41,11 +47,7 @@ const routes = [
         NuiButtonModule,
         RouterModule.forChild(routes),
     ],
-    declarations: [
-        WidgetEditorDocsComponent,
-        WidgetEditorSetupComponent,
-    ],
-    entryComponents: [
-    ],
+    declarations: [WidgetEditorDocsComponent, WidgetEditorSetupComponent],
+    entryComponents: [],
 })
-export class WidgetEditorSetupModule { }
+export class WidgetEditorSetupModule {}

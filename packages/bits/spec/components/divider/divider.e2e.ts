@@ -16,15 +16,39 @@ describe("USERCONTROL divider", () => {
     beforeAll(async () => {
         await Helpers.prepareBrowser("divider");
 
-        dividerHorizontalNone = Atom.find(DividerAtom, "nui-demo-no-margin-horizontal");
-        dividerHorizontalExtraSmall = Atom.find(DividerAtom, "nui-demo-extra-small-horizontal");
-        dividerHorizontalSmall = Atom.find(DividerAtom, "nui-demo-small-horizontal");
-        dividerHorizontalMedium = Atom.find(DividerAtom, "nui-demo-medium-horizontal");
+        dividerHorizontalNone = Atom.find(
+            DividerAtom,
+            "nui-demo-no-margin-horizontal"
+        );
+        dividerHorizontalExtraSmall = Atom.find(
+            DividerAtom,
+            "nui-demo-extra-small-horizontal"
+        );
+        dividerHorizontalSmall = Atom.find(
+            DividerAtom,
+            "nui-demo-small-horizontal"
+        );
+        dividerHorizontalMedium = Atom.find(
+            DividerAtom,
+            "nui-demo-medium-horizontal"
+        );
 
-        dividerVerticalNone = Atom.find(DividerAtom, "nui-demo-no-margin-vertical");
-        dividerVerticalExtraSmall = Atom.find(DividerAtom, "nui-demo-extra-small-vertical");
-        dividerVerticalSmall = Atom.find(DividerAtom, "nui-demo-small-vertical");
-        dividerVerticalMedium = Atom.find(DividerAtom, "nui-demo-medium-vertical");
+        dividerVerticalNone = Atom.find(
+            DividerAtom,
+            "nui-demo-no-margin-vertical"
+        );
+        dividerVerticalExtraSmall = Atom.find(
+            DividerAtom,
+            "nui-demo-extra-small-vertical"
+        );
+        dividerVerticalSmall = Atom.find(
+            DividerAtom,
+            "nui-demo-small-vertical"
+        );
+        dividerVerticalMedium = Atom.find(
+            DividerAtom,
+            "nui-demo-medium-vertical"
+        );
     });
 
     it("should apply correct class for horizontal divider", async () => {
@@ -44,7 +68,9 @@ describe("USERCONTROL divider", () => {
 
     describe("horizontal divider sizes", () => {
         it("should be without margins", async () => {
-            expect(await dividerHorizontalNone.hasClass("nui-divider--no-margin")).toBe(true);
+            expect(
+                await dividerHorizontalNone.hasClass("nui-divider--no-margin")
+            ).toBe(true);
         });
 
         it("should have extra-small size", async () => {
@@ -67,7 +93,9 @@ describe("USERCONTROL divider", () => {
 
     describe("vertical divider sizes", () => {
         it("should be without margins", async () => {
-            expect(await dividerVerticalNone.hasClass("nui-divider--no-margin")).toBe(true);
+            expect(
+                await dividerVerticalNone.hasClass("nui-divider--no-margin")
+            ).toBe(true);
         });
 
         it("should have extra-small size", async () => {

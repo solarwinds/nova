@@ -6,7 +6,12 @@ import { Subject } from "rxjs";
 import { EventBus } from "../common/event-bus";
 import { Lasagna } from "../common/lasagna";
 import { ScalesIndex } from "../common/scales/types";
-import { D3Selection, IChart, IChartEvent, IChartPlugin } from "../common/types";
+import {
+    D3Selection,
+    IChart,
+    IChartEvent,
+    IChartPlugin,
+} from "../common/types";
 
 /**
  * Interface for defining aspects of the top, right, bottom, and left sides of a grid
@@ -103,8 +108,7 @@ export interface IDimensionConfig {
 /**
  * Interface for defining the SVGElements forming the top, right, bottom, and left borders of an entity
  */
-export interface IBorders extends IAllAround<SVGElement> {
-}
+export interface IBorders extends IAllAround<SVGElement> {}
 
 /**
  * Configuration of grid borders
@@ -127,7 +131,10 @@ export interface ITextOverflowArgs {
 }
 
 /** Type for tick overflow handler */
-export type TextOverflowHandler = (textSelection: Selection<BaseType, unknown, null, undefined>, args: ITextOverflowArgs) => void;
+export type TextOverflowHandler = (
+    textSelection: Selection<BaseType, unknown, null, undefined>,
+    args: ITextOverflowArgs
+) => void;
 
 /** Interface representing the configuration for tick labels */
 export interface ITickLabelConfig {
@@ -245,7 +252,9 @@ export interface IGrid {
      * @returns {IGrid} The grid instance
      */
     target(target: D3Selection<SVGSVGElement>): IGrid;
-    target(target: D3Selection<SVGSVGElement>): D3Selection<SVGSVGElement> | IGrid;
+    target(
+        target: D3Selection<SVGSVGElement>
+    ): D3Selection<SVGSVGElement> | IGrid;
 
     /**
      * getter for the grid configuration

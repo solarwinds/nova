@@ -1,16 +1,17 @@
-import {AfterViewInit, Component, ElementRef} from "@angular/core";
-import {ComponentFixture, TestBed} from "@angular/core/testing";
-import {BrowserDynamicTestingModule} from "@angular/platform-browser-dynamic/testing";
+import { AfterViewInit, Component, ElementRef } from "@angular/core";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
 
-import {ResizerDirective} from "../../../common/directives";
-import {ResizeDirection, ResizeUnit} from "../../../common/directives/resizer/public-api";
-
-import {LayoutResizerComponent} from "./layout-resizer.component";
+import { ResizerDirective } from "../../../common/directives";
+import {
+    ResizeDirection,
+    ResizeUnit,
+} from "../../../common/directives/resizer/public-api";
+import { LayoutResizerComponent } from "./layout-resizer.component";
 
 @Component({
     template: `<div>Loren Ipsum</div>`,
 })
-
 class LayoutResizerTestingComponent implements AfterViewInit {
     constructor(public elRef: ElementRef) {}
     ngAfterViewInit() {
@@ -27,21 +28,24 @@ describe("Components >", () => {
         let resizerComponent: LayoutResizerComponent;
 
         beforeEach(() => {
-            TestBed
-                .overrideModule(BrowserDynamicTestingModule, {
-                    set: {
-                        entryComponents: [LayoutResizerComponent],
-                    },
-                });
-            TestBed
-                .configureTestingModule({
-                    declarations: [LayoutResizerTestingComponent, LayoutResizerComponent],
-                    providers: [ResizerDirective],
-                });
+            TestBed.overrideModule(BrowserDynamicTestingModule, {
+                set: {
+                    entryComponents: [LayoutResizerComponent],
+                },
+            });
+            TestBed.configureTestingModule({
+                declarations: [
+                    LayoutResizerTestingComponent,
+                    LayoutResizerComponent,
+                ],
+                providers: [ResizerDirective],
+            });
             fixture = TestBed.createComponent(LayoutResizerComponent);
             resizerComponent = fixture.componentInstance;
 
-            testFixture = TestBed.createComponent(LayoutResizerTestingComponent);
+            testFixture = TestBed.createComponent(
+                LayoutResizerTestingComponent
+            );
             testComponent = testFixture.componentInstance;
 
             resizerComponent.resizeElement = testComponent;
@@ -52,16 +56,18 @@ describe("Components >", () => {
         it("should have correct classes", () => {
             resizerComponent.resizeDirection = ResizeDirection.right;
             fixture.detectChanges();
-            const layoutResizer =
-                fixture.elementRef.nativeElement;
-            expect(layoutResizer.classList).toContain("nui-layout-resizer--horizontal");
+            const layoutResizer = fixture.elementRef.nativeElement;
+            expect(layoutResizer.classList).toContain(
+                "nui-layout-resizer--horizontal"
+            );
         });
         it("should have correct classes", () => {
             resizerComponent.resizeDirection = ResizeDirection.bottom;
             fixture.detectChanges();
-            const layoutResizer =
-                fixture.elementRef.nativeElement;
-            expect(layoutResizer.classList).toContain("nui-layout-resizer--vertical");
+            const layoutResizer = fixture.elementRef.nativeElement;
+            expect(layoutResizer.classList).toContain(
+                "nui-layout-resizer--vertical"
+            );
         });
     });
 });

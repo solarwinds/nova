@@ -29,12 +29,9 @@ describe("services >", () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
                 declarations: [],
-                providers: [
-                    BreadcrumbStateService,
-                ],
+                providers: [BreadcrumbStateService],
             });
             instance = TestBed.inject(BreadcrumbStateService);
-
         });
 
         it("should return correct breadcrumb state", () => {

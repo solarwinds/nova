@@ -1,8 +1,14 @@
 import { TitleCasePipe } from "@angular/common";
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { IWidget, IWidgetTemplateSelector, PizzagnaLayer, WidgetTypesService } from "@nova-ui/dashboards";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
+
+import {
+    IWidget,
+    IWidgetTemplateSelector,
+    PizzagnaLayer,
+    WidgetTypesService,
+} from "@nova-ui/dashboards";
 
 import { widgets } from "../widgets";
 
@@ -11,7 +17,9 @@ import { widgets } from "../widgets";
     templateUrl: "./acme-clone-selection.component.html",
     styleUrls: ["./acme-clone-selection.component.less"],
 })
-export class AcmeCloneSelectionComponent implements IWidgetTemplateSelector, OnInit {
+export class AcmeCloneSelectionComponent
+    implements IWidgetTemplateSelector, OnInit
+{
     static lateLoadKey = "AcmeCloneSelectionComponent";
 
     @Output() public widgetSelected = new EventEmitter<IWidget>();
@@ -19,25 +27,23 @@ export class AcmeCloneSelectionComponent implements IWidgetTemplateSelector, OnI
     public widgetItems: any[] = [];
     public widgetSelection: any[];
 
-    constructor(protected widgetTypesService: WidgetTypesService) {
-    }
+    constructor(protected widgetTypesService: WidgetTypesService) {}
 
     public ngOnInit() {
         const titleCasePipe = new TitleCasePipe();
 
-        this.widgetItems = widgets.map(w => {
+        this.widgetItems = widgets.map((w) => {
             console.log(w);
             const typeDisplay = titleCasePipe.transform(w.type);
-            return ({
+            return {
                 title: typeDisplay,
                 widget: this.widgetTypesService.mergeWithWidgetType(w),
-            });
+            };
         });
         this.onSelect([this.widgetItems[0]]);
         widgets.forEach((widgetConfig) => {
             this.addUnconfiguredWidgetWithConfigLayer(widgetConfig);
         });
-
     }
 
     private addUnconfiguredWidgetWithConfigLayer(widget: IWidget) {
@@ -45,14 +51,20 @@ export class AcmeCloneSelectionComponent implements IWidgetTemplateSelector, OnI
         this.widgetItems.push({
             title: `Unconfigured ${typeDisplay} With Config Layer`,
             widget: {
-                ...cloneDeep(this.widgetTypesService.mergeWithWidgetType(widget)),
+                ...cloneDeep(
+                    this.widgetTypesService.mergeWithWidgetType(widget)
+                ),
                 id: `unconfiguredWithConfigLayer${typeDisplay}`,
                 metadata: {
                     needsConfiguration: true,
                 },
             },
         });
-        set(this.widgetItems[this.widgetItems.length - 1].widget.pizzagna, `${PizzagnaLayer.Configuration}.header.properties.title`, `Unconfigured ${typeDisplay} With Config Layer`);
+        set(
+            this.widgetItems[this.widgetItems.length - 1].widget.pizzagna,
+            `${PizzagnaLayer.Configuration}.header.properties.title`,
+            `Unconfigured ${typeDisplay} With Config Layer`
+        );
     }
 
     public onSelect(selectedItems: any[]) {

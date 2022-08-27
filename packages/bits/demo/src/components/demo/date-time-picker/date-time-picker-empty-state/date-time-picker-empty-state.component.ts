@@ -2,7 +2,6 @@ import { Component } from "@angular/core";
 import { FormControl, Validators } from "@angular/forms";
 import { Moment } from "moment/moment";
 
-
 @Component({
     selector: "nui-date-time-picker-empty-state",
     templateUrl: "./date-time-picker-empty-state.component.html",

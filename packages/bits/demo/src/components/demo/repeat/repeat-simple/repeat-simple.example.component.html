@@ -1,9 +1,11 @@
 <ng-template #repeatItemTemplate let-item="item">
-    <div>{{item.color}}</div>
+    <div>{{ item.color }}</div>
 </ng-template>
 
 <div class="example">
-    <nui-repeat [itemsSource]="colors"
-                [repeatItemTemplateRef]="repeatItemTemplate">
+    <nui-repeat
+        [itemsSource]="colors"
+        [repeatItemTemplateRef]="repeatItemTemplate"
+    >
     </nui-repeat>
 </div>

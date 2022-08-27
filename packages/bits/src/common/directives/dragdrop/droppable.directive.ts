@@ -14,7 +14,13 @@ import { Subscription } from "rxjs";
 
 import { DragAndDropService } from "./drag-and-drop.service";
 import { scrollConstants } from "./dragdrop.constants";
-import { IDragEvent, IDragPayload, IDragState, IDropEvent, IDropValidator } from "./public-api";
+import {
+    IDragEvent,
+    IDragPayload,
+    IDragState,
+    IDropEvent,
+    IDropValidator,
+} from "./public-api";
 
 /**
  * Directive that provides behavior of droppable zone for an element
@@ -86,9 +92,13 @@ export class DroppableDirective implements OnInit, OnDestroy {
 
     private onDragStateChangedSubscription: Subscription;
 
-    private dragThrottle = throttle((dragEvent: any) => {
-        this.dragOver.emit(dragEvent);
-    }, scrollConstants.checkIntervalInMs, { trailing: false });
+    private dragThrottle = throttle(
+        (dragEvent: any) => {
+            this.dragOver.emit(dragEvent);
+        },
+        scrollConstants.checkIntervalInMs,
+        { trailing: false }
+    );
 
     @HostListener("dragenter", ["$event"])
     onDragEnter(event: IDragEvent) {
@@ -97,7 +107,10 @@ export class DroppableDirective implements OnInit, OnDestroy {
             this.elRef.nativeElement.classList.remove(this.dropIndicatorClass);
             this.elRef.nativeElement.classList.add(this.dragOverClass);
             this.dragEnter.emit(event);
-        } else if (this.dragElements.length === 0 && this.invalidDragOverClass) {
+        } else if (
+            this.dragElements.length === 0 &&
+            this.invalidDragOverClass
+        ) {
             this.elRef.nativeElement.classList.add(this.invalidDragOverClass);
         }
         this.dragElements.push(<HTMLElement>event.target);
@@ -116,7 +129,9 @@ export class DroppableDirective implements OnInit, OnDestroy {
     @HostListener("dragleave", ["$event"])
     onDragLeave(event: IDragEvent) {
         const payload = this.dragAndDropService.getDragPayload(event);
-        this.dragElements = this.dragElements.filter(el => el !== event.target);
+        this.dragElements = this.dragElements.filter(
+            (el) => el !== event.target
+        );
         if (this.validateDrop(payload) && this.dragElements.length === 0) {
             this.elRef.nativeElement.classList.remove(this.dragOverClass);
             if (!payload?.isExternal) {
@@ -124,8 +139,13 @@ export class DroppableDirective implements OnInit, OnDestroy {
                 this.elRef.nativeElement.classList.add(this.dropIndicatorClass);
             }
             this.dragLeave.emit(event);
-        } else if (this.dragElements.length === 0 && this.invalidDragOverClass) {
-            this.elRef.nativeElement.classList.remove(this.invalidDragOverClass);
+        } else if (
+            this.dragElements.length === 0 &&
+            this.invalidDragOverClass
+        ) {
+            this.elRef.nativeElement.classList.remove(
+                this.invalidDragOverClass
+            );
         }
     }
 
@@ -135,37 +155,61 @@ export class DroppableDirective implements OnInit, OnDestroy {
         event.preventDefault();
         if (this.validateDrop(payload)) {
             this.dragElements = [];
-            if ((typeof DragEvent !== "undefined" && event instanceof DragEvent) || (<any>event).dataTransfer) {
-
+            if (
+                (typeof DragEvent !== "undefined" &&
+                    event instanceof DragEvent) ||
+                (<any>event).dataTransfer
+            ) {
                 this.dropSuccess.emit({ event, payload: payload.data });
             }
             this.elRef.nativeElement.classList.remove(this.dragOverClass);
         } else if (!_isNil(this.invalidDragOverClass)) {
-            this.elRef.nativeElement.classList.remove(this.invalidDragOverClass);
+            this.elRef.nativeElement.classList.remove(
+                this.invalidDragOverClass
+            );
         }
         this.dragAndDropService.resetPayload();
         event.stopPropagation();
         return false;
     }
 
-    constructor(private elRef: ElementRef, private dragAndDropService: DragAndDropService) { }
+    constructor(
+        private elRef: ElementRef,
+        private dragAndDropService: DragAndDropService
+    ) {}
     ngOnInit(): void {
-        this.onDragStateChangedSubscription = this.dragAndDropService.onDragStateChanged.subscribe((item: IDragState) => {
-            if (!_isNil(this.dropIndicatorClass) && this.validateDrop({ data: item.payload, isExternal: false })) {
-                if (item.isInProgress) {
-                    this.elRef.nativeElement.classList.add(this.dropIndicatorClass);
-                } else {
-                    this.elRef.nativeElement.classList.remove(this.dropIndicatorClass);
+        this.onDragStateChangedSubscription =
+            this.dragAndDropService.onDragStateChanged.subscribe(
+                (item: IDragState) => {
+                    if (
+                        !_isNil(this.dropIndicatorClass) &&
+                        this.validateDrop({
+                            data: item.payload,
+                            isExternal: false,
+                        })
+                    ) {
+                        if (item.isInProgress) {
+                            this.elRef.nativeElement.classList.add(
+                                this.dropIndicatorClass
+                            );
+                        } else {
+                            this.elRef.nativeElement.classList.remove(
+                                this.dropIndicatorClass
+                            );
+                        }
+                    }
                 }
-            }
-        });
+            );
     }
 
     private validateDrop(payload: IDragPayload) {
         if (!this.dropValidator) {
             return true; // if there is no drop validator specified drop is always valid
         }
-        return this.dropValidator.isValidDropTarget(payload.data, payload.isExternal);
+        return this.dropValidator.isValidDropTarget(
+            payload.data,
+            payload.isExternal
+        );
     }
 
     ngOnDestroy(): void {
@@ -173,5 +217,4 @@ export class DroppableDirective implements OnInit, OnDestroy {
             this.onDragStateChangedSubscription.unsubscribe();
         }
     }
-
 }

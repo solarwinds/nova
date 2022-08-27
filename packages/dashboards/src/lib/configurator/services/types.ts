@@ -1,10 +1,10 @@
 import { ComponentPortal } from "@angular/cdk/portal";
 import { ComponentRef } from "@angular/core";
+import { Observable } from "rxjs";
 
 import { DashboardComponent } from "../../components/dashboard/dashboard.component";
-import { IPizzagna } from "../../types";
 import { IWidget } from "../../components/widget/types";
-import { Observable } from "rxjs";
+import { IPizzagna } from "../../types";
 
 export interface IComponentPortalBundle<T> {
     portal: ComponentPortal<T>;
@@ -37,5 +37,11 @@ export interface ISerializableTimeframe {
     title?: string;
 }
 
-export type WidgetUpdateOperation = (widget: IWidget, source: IConfiguratorSource) => Observable<IWidget>;
-export type WidgetRemovalOperation = (widgetId: string, source: IConfiguratorSource) => Observable<string>;
+export type WidgetUpdateOperation = (
+    widget: IWidget,
+    source: IConfiguratorSource
+) => Observable<IWidget>;
+export type WidgetRemovalOperation = (
+    widgetId: string,
+    source: IConfiguratorSource
+) => Observable<string>;

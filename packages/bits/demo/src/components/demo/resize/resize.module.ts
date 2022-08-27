@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
+
 import {
     DEMO_PATH_TOKEN,
     NuiCommonModule,
@@ -22,8 +23,8 @@ const routes = [
         path: "",
         component: ResizeDocsExampleComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.ga,
+            srlc: {
+                stage: SrlcStage.ga,
             },
         },
     },
@@ -31,8 +32,8 @@ const routes = [
         path: "resizer-visual-test",
         component: ResizeVisualTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -56,12 +57,14 @@ const routes = [
     providers: [
         {
             provide: DEMO_PATH_TOKEN,
-            useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/),
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
         },
     ],
-    exports: [
-        RouterModule,
-    ],
+    exports: [RouterModule],
 })
-export class ResizeModule {
-}
+export class ResizeModule {}

@@ -1,6 +1,7 @@
+import { browser, by, element } from "protractor";
+
 import { Atom, Camera } from "@nova-ui/bits/sdk/atoms";
 import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
-import { browser, by, element } from "protractor";
 
 import { LegendAtom } from "../legend/legend.atom";
 
@@ -12,7 +13,10 @@ describe(`Visual Tests: Charts - ${name}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("chart-types/area/test");
-        legend = Atom.findIn(LegendAtom, element(by.tagName("area-chart-bi-directional-example")));
+        legend = Atom.findIn(
+            LegendAtom,
+            element(by.tagName("area-chart-bi-directional-example"))
+        );
         camera = new Camera().loadFilm(browser, name);
     });
 

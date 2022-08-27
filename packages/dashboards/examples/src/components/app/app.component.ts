@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from "@angular/core";
+
 import { ThemeSwitchService } from "@nova-ui/bits";
 
 @Component({
@@ -8,5 +9,5 @@ import { ThemeSwitchService } from "@nova-ui/bits";
     encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
-    constructor(public themeSwitcher: ThemeSwitchService) { }
+    constructor(public themeSwitcher: ThemeSwitchService) {}
 }

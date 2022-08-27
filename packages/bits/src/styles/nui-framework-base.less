@@ -3,7 +3,7 @@
 @import (reference) "mixins.less";
 
 html {
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 body {
@@ -73,7 +73,8 @@ body {
 
 // overrides for button classes
 // TYPE.LESS OVERRIDES
-blockquote, .blockquote-reverse {
+blockquote,
+.blockquote-reverse {
     border-left: 0;
     border-right: 0;
     padding-left: 0;
@@ -84,7 +85,11 @@ blockquote, .blockquote-reverse {
     margin-bottom: @nui-space-sm;
 }
 
-.text-primary, .text-success, .text-info, .text-warning, .text-danger {
+.text-primary,
+.text-success,
+.text-info,
+.text-warning,
+.text-danger {
     font-weight: @nui-font-weight-semibold;
 }
 
@@ -114,34 +119,40 @@ blockquote, .blockquote-reverse {
         .setCssVariable(background-color, nui-color-bg-workspace);
         .setCssVariable(color, nui-color-text-secondary);
         border: 1px solid @nui-color-bg-workspace;
-        border: 1px solid var(--nui-color-bg-workspace,@nui-color-bg-workspace);
+        border: 1px solid var(--nui-color-bg-workspace, @nui-color-bg-workspace);
 
         > th {
             font-weight: @nui-font-weight-semibold;
         }
     }
 
-    > tbody > tr > td, > tbody > tr > th {
+    > tbody > tr > td,
+    > tbody > tr > th {
         border-top: 1px solid @nui-color-bg-light;
-        border-top: 1px solid var(--nui-color-bg-light,@nui-color-bg-light);
+        border-top: 1px solid var(--nui-color-bg-light, @nui-color-bg-light);
         border-bottom: 1px solid @nui-color-bg-light;
-        border-bottom: 1px solid var(--nui-color-bg-light,@nui-color-bg-light);
+        border-bottom: 1px solid var(--nui-color-bg-light, @nui-color-bg-light);
         border-left: 0;
         border-right: 0;
         &:first-child {
             border-left: 1px solid @nui-color-bg-light;
-            border-left: 1px solid var(--nui-color-bg-light,@nui-color-bg-light);
+            border-left: 1px solid
+                var(--nui-color-bg-light, @nui-color-bg-light);
         }
 
         &:last-child {
             border-right: 1px solid @nui-color-bg-light;
-            border-right: 1px solid var(--nui-color-bg-light,@nui-color-bg-light);
+            border-right: 1px solid
+                var(--nui-color-bg-light, @nui-color-bg-light);
         }
     }
 
-    > thead, > tbody, > tfoot {
+    > thead,
+    > tbody,
+    > tfoot {
         > tr {
-            > th, > td {
+            > th,
+            > td {
                 padding-left: 15px;
                 padding-right: 15px;
             }
@@ -176,7 +187,8 @@ ul {
 }
 
 .table-striped {
-    > tbody > tr:nth-of-type(odd) > td, > tbody > tr:nth-of-type(odd) > th {
+    > tbody > tr:nth-of-type(odd) > td,
+    > tbody > tr:nth-of-type(odd) > th {
         .setCssVariable(border-top-color, nui-color-bg-secondary);
         .setCssVariable(border-bottom-color, nui-color-bg-secondary);
         &:first-child {
@@ -189,7 +201,8 @@ ul {
     }
 }
 
-.table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th {
+.table-hover > tbody > tr:hover > td,
+.table-hover > tbody > tr:hover > th {
     border-color: @nui-color-line-active !important;
     border-color: var(--nui-color-line-active) !important;
 }
@@ -280,8 +293,7 @@ ul {
 
 .table-bordered {
     border: 1px solid @nui-color-line-default;
-    border: 1px solid var(--nui-color-line-default,@nui-color-line-default);
-
+    border: 1px solid var(--nui-color-line-default, @nui-color-line-default);
 }
 // FORMS.LESS OVERRIDES
 textarea.form-control {
@@ -319,15 +331,22 @@ select.form-control {
 
 // common styling mixin for text inputs / textareas
 .nui-input-text() {
-    &:focus, &:active {
+    &:focus,
+    &:active {
         .setCssVariable(border-color, nui-color-active-hover);
         box-shadow: inset 0 1px 3px @nui-color-input-box-shadow;
-        box-shadow: inset 0 1px 3px var(--nui-color-input-box-shadow,@nui-color-input-box-shadow);
+        box-shadow: inset 0 1px 3px
+            var(--nui-color-input-box-shadow, @nui-color-input-box-shadow);
     }
     &[disabled] {
-        &:hover, &:focus, &:active {
+        &:hover,
+        &:focus,
+        &:active {
             .setCssVariable(border-color, nui-color-input-box-shadow-hover);
-            border-color: var(--nui-color-input-box-shadow-hover,@nui-color-input-box-shadow-hover);
+            border-color: var(
+                --nui-color-input-box-shadow-hover,
+                @nui-color-input-box-shadow-hover
+            );
         }
     }
     &::-ms-clear {
@@ -347,7 +366,7 @@ select.form-control {
 }
 
 .generic-control() {
-    .setCssVariable(border-color, nui-color-line-default);    
+    .setCssVariable(border-color, nui-color-line-default);
     border-width: @nui-line-default;
     border-style: @nui-border-solid;
     border-radius: @nui-radius-default;

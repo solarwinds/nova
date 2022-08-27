@@ -4,16 +4,20 @@
 @import (reference) "../../styles/nui-framework-colors.less";
 
 @textbox-feedback-icon-margin: @nui-space-xs + @nui-space-xxs;
-@textbox-feedback-icon-offset: ((2 * @textbox-feedback-icon-margin) + @icon-size-small);
+@textbox-feedback-icon-offset: (
+    (2 * @textbox-feedback-icon-margin) + @icon-size-small
+);
 @textbox-updown-offset: ((2 * @input-height-base) - 2);
-@textbox-padding-simple-updown: @textbox-updown-offset + @textbox-feedback-icon-margin;
-@textbox-feedback-icon-with-updown-margin: @textbox-feedback-icon-margin + @textbox-updown-offset;
-@textbox-feedback-icon-offset-with-updown: @textbox-feedback-icon-offset + @textbox-updown-offset;
+@textbox-padding-simple-updown: @textbox-updown-offset +
+    @textbox-feedback-icon-margin;
+@textbox-feedback-icon-with-updown-margin: @textbox-feedback-icon-margin +
+    @textbox-updown-offset;
+@textbox-feedback-icon-offset-with-updown: @textbox-feedback-icon-offset +
+    @textbox-updown-offset;
 @textbox-busy-offset: 1px;
 @textbox-busy-offset-with-updown: @textbox-updown-offset + @textbox-busy-offset;
 
 .nui .nui-textbox {
-
     &--disabled {
         .has-feedback {
             .input-control {
@@ -48,7 +52,7 @@
         }
 
         &:focus {
-            .focus-outline()
+            .focus-outline();
         }
     }
 
@@ -107,7 +111,7 @@
     &.nui-radio label,
     &.checkbox label,
     &.radio-inline label,
-    &.checkbox-inline label  {
+    &.checkbox-inline label {
         .setCssVariable(color, nui-color-text-default);
     }
     .nui-validation {
@@ -133,5 +137,3 @@
         overflow-y: auto;
     }
 }
-
-

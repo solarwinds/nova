@@ -1,10 +1,8 @@
 import { LinearScale } from "../linear-scale";
 import { EMPTY_CONTINUOUS_DOMAIN } from "../types";
-
 import { mergeDomains } from "./merge-domains";
 
 describe("merge domain >", () => {
-
     it("should grab the max and min out of a two element array", () => {
         const scale = new LinearScale();
 
@@ -30,5 +28,4 @@ describe("merge domain >", () => {
         const mergedDomains = mergeDomains(domains, scale);
         expect(mergedDomains).toEqual(EMPTY_CONTINUOUS_DOMAIN);
     });
-
 });

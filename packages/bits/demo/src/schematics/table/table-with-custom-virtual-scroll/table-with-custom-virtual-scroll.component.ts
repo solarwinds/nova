@@ -9,6 +9,9 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
+import { Subject } from "rxjs";
+import { debounceTime, takeUntil, tap } from "rxjs/operators";
+
 import {
     DataSourceService,
     INovaFilteringOutputs,
@@ -18,12 +21,6 @@ import {
     TableComponent,
     VirtualViewportManager,
 } from "@nova-ui/bits";
-import { Subject } from "rxjs";
-import {
-    debounceTime,
-    takeUntil,
-    tap,
-} from "rxjs/operators";
 
 import {
     CUSTOM_SCROLL_ITEMS_PER_PAGE,
@@ -51,7 +48,9 @@ import { VirtualScrollCustomStrategyService } from "./virtual-scroll-custom-stra
         },
     ],
 })
-export class TableWithCustomVirtualScrollComponent implements OnInit, OnDestroy, AfterViewInit {
+export class TableWithCustomVirtualScrollComponent
+    implements OnInit, OnDestroy, AfterViewInit
+{
     public items: IServer[] = [];
     public isBusy: boolean = false;
 
@@ -81,21 +80,23 @@ export class TableWithCustomVirtualScrollComponent implements OnInit, OnDestroy,
     private destroy$ = new Subject();
 
     constructor(
-        @Inject(DataSourceService) private dataSource: TableWithCustomVirtualScrollDataSource<IServer>,
+        @Inject(DataSourceService)
+        private dataSource: TableWithCustomVirtualScrollDataSource<IServer>,
         private viewportManager: VirtualViewportManager,
         private customVirtualScrollStrategyService: VirtualScrollCustomStrategyService,
         private changeDetection: ChangeDetectorRef
-    ) {
-    }
+    ) {}
 
     public ngOnInit() {
-        this.dataSource.busy.pipe(
-            tap(val => {
-                this.isBusy = val;
-                this.changeDetection.detectChanges();
-            }),
-            takeUntil(this.destroy$)
-        ).subscribe();
+        this.dataSource.busy
+            .pipe(
+                tap((val) => {
+                    this.isBusy = val;
+                    this.changeDetection.detectChanges();
+                }),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
     }
 
     public async ngAfterViewInit() {
@@ -103,47 +104,56 @@ export class TableWithCustomVirtualScrollComponent implements OnInit, OnDestroy,
         this.dataSource.registerComponent(this.table.getFilterComponents());
         this.dataSource.registerComponent({
             search: { componentInstance: this.search },
-            virtualScroll: {componentInstance: this.customVirtualScrollStrategyService },
+            virtualScroll: {
+                componentInstance: this.customVirtualScrollStrategyService,
+            },
         });
         this.viewportManager
             // Note: Initializing viewportManager with the repeat's CDK Viewport Ref
             .setViewport(this.viewport);
 
-        this.dataSource.outputsSubject.pipe(
-            tap((data: INovaFilteringOutputs) => {
-                // update the list of items to be rendered
-                let items = data.repeat?.itemsSource || [];
+        this.dataSource.outputsSubject
+            .pipe(
+                tap((data: INovaFilteringOutputs) => {
+                    // update the list of items to be rendered
+                    let items = data.repeat?.itemsSource || [];
 
-                // number of fetched items from our data source
-                const fetchedItemsCount = items.length;
+                    // number of fetched items from our data source
+                    const fetchedItemsCount = items.length;
 
-                // number of useful items after eliminating the leftovers;
-                // leftovers appear when we reach the end of all our data
-                // since we're keep requesting the same page multiple times
-                // waiting for new items to be added between subsequent requests
-                const usefulItemsCount = fetchedItemsCount < this.pageSize
-                    ? this.previouslyLoadedCount - fetchedItemsCount
-                    : fetchedItemsCount;
+                    // number of useful items after eliminating the leftovers;
+                    // leftovers appear when we reach the end of all our data
+                    // since we're keep requesting the same page multiple times
+                    // waiting for new items to be added between subsequent requests
+                    const usefulItemsCount =
+                        fetchedItemsCount < this.pageSize
+                            ? this.previouslyLoadedCount - fetchedItemsCount
+                            : fetchedItemsCount;
 
-                items = items.slice(0, usefulItemsCount);
+                    items = items.slice(0, usefulItemsCount);
 
-                this.previouslyLoadedCount = items.length;
+                    this.previouslyLoadedCount = items.length;
 
-                // append current useful items we need to append it to our previous fetched results
-                this.items = this.items.concat(items);
+                    // append current useful items we need to append it to our previous fetched results
+                    this.items = this.items.concat(items);
 
-                this.customVirtualScrollStrategyService.prepareNextPage(fetchedItemsCount);
-            }),
-            takeUntil(this.destroy$)
-        ).subscribe();
+                    this.customVirtualScrollStrategyService.prepareNextPage(
+                        fetchedItemsCount
+                    );
+                }),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
 
         // listen for input change in order to perform the search
-        this.search.inputChange.pipe(
-            debounceTime(500),
-            // perform actual search
-            tap(() => this.onSearch()),
-            takeUntil(this.destroy$)
-        ).subscribe();
+        this.search.inputChange
+            .pipe(
+                debounceTime(500),
+                // perform actual search
+                tap(async () => this.onSearch()),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
 
         await this.applyFilters();
     }
@@ -170,7 +180,7 @@ export class TableWithCustomVirtualScrollComponent implements OnInit, OnDestroy,
         if (resetVirtualScroll) {
             // it is important to reset viewportManager to start page
             // so that the datasource performs the search with 1st page
-            this.viewportManager.reset({emitFirstPage: false});
+            this.viewportManager.reset({ emitFirstPage: false });
         }
 
         // Every new search request or filter change should

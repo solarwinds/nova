@@ -1,6 +1,7 @@
+import { browser } from "protractor";
+
 import { Atom, Camera } from "@nova-ui/bits/sdk/atoms";
 import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
-import { browser } from "protractor";
 
 import { ProportionalWidgetAtom } from "./proportional-widget.atom";
 
@@ -12,7 +13,10 @@ describe(`Visual tests: Dashboards - ${name}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("test/proportional");
-        proportionalWidget = Atom.find(ProportionalWidgetAtom, "proportional-widget");
+        proportionalWidget = Atom.find(
+            ProportionalWidgetAtom,
+            "proportional-widget"
+        );
 
         camera = new Camera().loadFilm(browser, name);
     });

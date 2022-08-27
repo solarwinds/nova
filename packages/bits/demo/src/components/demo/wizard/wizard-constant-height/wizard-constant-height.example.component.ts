@@ -4,7 +4,6 @@ import { Component } from "@angular/core";
     selector: "nui-wizard-constant-height-example",
     templateUrl: "./wizard-constant-height.example.component.html",
 })
-
 export class WizardConstantHeightExampleComponent {
     public wizardBodyHeight: string = "200px";
 

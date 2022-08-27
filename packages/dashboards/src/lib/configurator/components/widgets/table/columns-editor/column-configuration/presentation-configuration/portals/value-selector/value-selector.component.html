@@ -1,16 +1,23 @@
 <div *ngIf="form" [formGroup]="form">
     <div formGroupName="dataFieldIds">
-        <nui-form-field caption="Value"
-                        i18n-caption
-                        class="mb-3"
-                        [control]="dataFieldIds.controls['value']">
-            <nui-select-v2 formControlName="value"
-                           [popupViewportMargin]="configuratorHeading.height$ | async"
-                           placeholder="Select Value" i18n-placeholder>
-                <nui-select-v2-option *ngFor="let itemValue of dropdownItems.value"
-                                      [displayValueContext]="itemValue.label"
-                                      [value]="itemValue.id">
-                    {{itemValue.label}}
+        <nui-form-field
+            caption="Value"
+            i18n-caption
+            class="mb-3"
+            [control]="dataFieldIds.controls['value']"
+        >
+            <nui-select-v2
+                formControlName="value"
+                [popupViewportMargin]="configuratorHeading.height$ | async"
+                placeholder="Select Value"
+                i18n-placeholder
+            >
+                <nui-select-v2-option
+                    *ngFor="let itemValue of dropdownItems.value"
+                    [displayValueContext]="itemValue.label"
+                    [value]="itemValue.id"
+                >
+                    {{ itemValue.label }}
                 </nui-select-v2-option>
             </nui-select-v2>
             <nui-validation-message for="required" i18n>

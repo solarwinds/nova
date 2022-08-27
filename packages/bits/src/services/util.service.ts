@@ -1,9 +1,5 @@
 import { DOCUMENT, isPlatformBrowser } from "@angular/common";
-import {
-    Inject,
-    Injectable,
-    PLATFORM_ID,
-} from "@angular/core";
+import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
 import forOwn from "lodash/forOwn";
 import includes from "lodash/includes";
 import isBoolean from "lodash/isBoolean";
@@ -39,9 +35,11 @@ export enum BrowserName {
  */
 @Injectable({ providedIn: "root" })
 export class UtilService {
-
     public static getSvgFromString(s: string) {
-        const div = document.createElementNS("http://www.w3.org/1999/xhtml", "div");
+        const div = document.createElementNS(
+            "http://www.w3.org/1999/xhtml",
+            "div"
+        );
         div.innerHTML = `<svg xmlns='http://www.w3.org/2000/svg'>${s}</svg>`;
         const frag = document.createDocumentFragment();
         while (div.firstChild?.firstChild) {
@@ -94,18 +92,26 @@ export class UtilService {
                 isSafari: () => this.browserName === BrowserName.Safari,
                 mobileDevice: {
                     isAndroid: () =>
-                        this.document.defaultView?.navigator.userAgent.match(/Android/i) !== null,
+                        this.document.defaultView?.navigator.userAgent.match(
+                            /Android/i
+                        ) !== null,
                     isBlackberry: () =>
-                        this.document.defaultView?.navigator.userAgent.match(/BlackBerry|BB10/i) !== null,
+                        this.document.defaultView?.navigator.userAgent.match(
+                            /BlackBerry|BB10/i
+                        ) !== null,
                     isIOS: () =>
-                        this.document.defaultView?.navigator.userAgent.match(/iPhone|iPad|iPod/i) !== null,
+                        this.document.defaultView?.navigator.userAgent.match(
+                            /iPhone|iPad|iPod/i
+                        ) !== null,
                     isOpera: () =>
-                        this.document.defaultView?.navigator.userAgent.match(/Opera Mini/i) !== null,
+                        this.document.defaultView?.navigator.userAgent.match(
+                            /Opera Mini/i
+                        ) !== null,
                     isAny: () =>
-                        (this.browser?.mobileDevice.isIOS() ||
-                            this.browser?.mobileDevice.isAndroid() ||
-                            this.browser?.mobileDevice.isBlackberry() ||
-                            this.browser?.mobileDevice.isOpera()),
+                        this.browser?.mobileDevice.isIOS() ||
+                        this.browser?.mobileDevice.isAndroid() ||
+                        this.browser?.mobileDevice.isBlackberry() ||
+                        this.browser?.mobileDevice.isOpera(),
                 },
             };
         }
@@ -139,9 +145,12 @@ export class UtilService {
                 }
             })(obj);
             const proto = ctor.prototype;
-            const formatter = typeof obj !== "string" ?
-                (proto ? proto.format || proto.toString : obj.format || obj.toString) :
-                obj.toString;
+            const formatter =
+                typeof obj !== "string"
+                    ? proto
+                        ? proto.format || proto.toString
+                        : obj.format || obj.toString
+                    : obj.toString;
             if (formatter) {
                 if (typeof format === "undefined" || format === "") {
                     return formatter.call(obj);
@@ -153,19 +162,25 @@ export class UtilService {
             }
         };
 
-        target = target.replace(/\{\{|\}\}|\{([^}: ]+?)(?::([^}]*?))?\}/g, (match, num, format) => {
-            if (match === "{{") {
-                return "{";
+        target = target.replace(
+            /\{\{|\}\}|\{([^}: ]+?)(?::([^}]*?))?\}/g,
+            (match, num, format) => {
+                if (match === "{{") {
+                    return "{";
+                }
+                if (match === "}}") {
+                    return "}";
+                }
+                if (
+                    typeof params[num] !== "undefined" &&
+                    params[num] !== null
+                ) {
+                    return toString(params[num], format);
+                } else {
+                    return "";
+                }
             }
-            if (match === "}}") {
-                return "}";
-            }
-            if (typeof params[num] !== "undefined" && params[num] !== null) {
-                return toString(params[num], format);
-            } else {
-                return "";
-            }
-        });
+        );
 
         return target;
     }
@@ -179,7 +194,10 @@ export class UtilService {
             }
 
             let tem;
-            let M: RegExpMatchArray = ua.match(/(edge|opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+            let M: RegExpMatchArray =
+                ua.match(
+                    /(edge|opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i
+                ) || [];
             if (M[1] === "Chrome") {
                 tem = ua.match(/\bOPR\/(\d+)/);
                 if (tem != null) {
@@ -190,9 +208,15 @@ export class UtilService {
                     return BrowserName.Edge;
                 }
             }
-            M = <RegExpMatchArray>(M[2]
-                ? [M[1], M[2]]
-                : [this.document.defaultView?.navigator.appName, this.document.defaultView?.navigator.appVersion, "-?"]);
+            M = <RegExpMatchArray>(
+                (M[2]
+                    ? [M[1], M[2]]
+                    : [
+                          this.document.defaultView?.navigator.appName,
+                          this.document.defaultView?.navigator.appVersion,
+                          "-?",
+                      ])
+            );
             if ((tem = ua.match(/version\/(\d+)/i)) != null) {
                 M.splice(1, 1, tem[1]);
             }
@@ -209,7 +233,10 @@ export class UtilService {
             }
 
             let tem,
-                M = ua.match(/(edge|opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+                M =
+                    ua.match(
+                        /(edge|opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i
+                    ) || [];
             if (/trident/i.test(M[1])) {
                 tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
                 return tem[1] || "";
@@ -224,9 +251,15 @@ export class UtilService {
                     return tem[1];
                 }
             }
-            M = <RegExpMatchArray>(M[2]
-                ? [M[1], M[2]]
-                : [this.document.defaultView?.navigator.appName, this.document.defaultView?.navigator.appVersion, "-?"]);
+            M = <RegExpMatchArray>(
+                (M[2]
+                    ? [M[1], M[2]]
+                    : [
+                          this.document.defaultView?.navigator.appName,
+                          this.document.defaultView?.navigator.appVersion,
+                          "-?",
+                      ])
+            );
             if ((tem = ua.match(/version\/(\d+)/i)) != null) {
                 M.splice(1, 1, tem[1]);
             }
@@ -274,7 +307,7 @@ export class UtilService {
     public sizeof = (object: any): number => {
         const visitedObjects: any[] = [];
         return this.calculateSizeof(object, visitedObjects);
-    }
+    };
 
     private calculateSizeof = (object: any, visitedObjects: any[]): number => {
         if (isString(object)) {
@@ -299,7 +332,7 @@ export class UtilService {
         } else {
             return 0;
         }
-    }
+    };
 
     public dateEquals(date1?: Date, date2?: Date): boolean {
         if (isNil(date1) && isNil(date2)) {

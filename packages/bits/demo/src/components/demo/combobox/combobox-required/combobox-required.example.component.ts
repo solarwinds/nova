@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+
 import { ISelectChangedEvent } from "@nova-ui/bits";
 
 @Component({
@@ -23,7 +24,11 @@ export class ComboboxRequiredExampleComponent implements OnInit {
     }
 
     public isInErrorState(): void {
-        this.errorState = this.isRequired &&
-            (!this.dataset.selectedItem || !(this.dataset.items.indexOf(this.dataset.selectedItem) !== -1));
+        this.errorState =
+            this.isRequired &&
+            (!this.dataset.selectedItem ||
+                !(
+                    this.dataset.items.indexOf(this.dataset.selectedItem) !== -1
+                ));
     }
 }

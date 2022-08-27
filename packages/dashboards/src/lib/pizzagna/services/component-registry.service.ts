@@ -1,4 +1,5 @@
 import { Injectable, Type } from "@angular/core";
+
 import { LoggerService } from "@nova-ui/bits";
 
 // Extending with Type<any> to be compatible with EntryComponents type
@@ -10,11 +11,9 @@ export interface IComponentWithLateLoadKey extends Type<any> {
     providedIn: "root",
 })
 export class ComponentRegistryService {
-
     private components: Record<string, any> = {};
 
-    constructor(private logger: LoggerService) {
-    }
+    constructor(private logger: LoggerService) {}
 
     public registerByLateLoadKey(component: IComponentWithLateLoadKey) {
         this.registerComponentType(component.lateLoadKey, component);
@@ -28,7 +27,12 @@ export class ComponentRegistryService {
         const component = this.components[key];
 
         if (!component) {
-            this.logger.warn("Component '" + key + "' not defined. Available components: " + JSON.stringify(Object.keys(this.components)));
+            this.logger.warn(
+                "Component '" +
+                    key +
+                    "' not defined. Available components: " +
+                    JSON.stringify(Object.keys(this.components))
+            );
         }
 
         return component;

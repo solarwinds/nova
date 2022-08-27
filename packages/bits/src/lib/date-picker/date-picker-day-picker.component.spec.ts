@@ -23,7 +23,9 @@ describe("components >", () => {
         });
 
         it("should check if refreshView handler for day has been set", () => {
-            expect(_isUndefined((inner as any).refreshViewHandlerYear)).toBeTruthy();
+            expect(
+                _isUndefined((inner as any).refreshViewHandlerYear)
+            ).toBeTruthy();
             spyOn(inner, "setRefreshViewHandler");
             spyOn(inner, "setCompareHandler");
             dayPicker.ngOnInit();
@@ -32,21 +34,43 @@ describe("components >", () => {
         });
 
         it("should get dates", () => {
-            const date = moment({year: 2018, month: 1, date: 2});
+            const date = moment({ year: 2018, month: 1, date: 2 });
             const dates = (dayPicker as any).getDates(date, 10);
             const last = dates.length - 1;
             expect(moment(dates[0].date).isSame(date)).toBe(true);
-            expect(moment(dates[last].date).isSame(moment({year: 2018, month: 1, date: 11}))).toBe(true);
+            expect(
+                moment(dates[last].date).isSame(
+                    moment({ year: 2018, month: 1, date: 11 })
+                )
+            ).toBe(true);
             expect(dates.length).toBe(10);
         });
 
         it("should get dates (preserving insignificant)", () => {
             inner.preserveInsignificant = true;
-            const date = moment({year: 2018, month: 1, date: 2, hour: 2, minute: 2, second: 2});
+            const date = moment({
+                year: 2018,
+                month: 1,
+                date: 2,
+                hour: 2,
+                minute: 2,
+                second: 2,
+            });
             const dates = (dayPicker as any).getDates(date, 10);
             const last = dates.length - 1;
             expect(moment(dates[0].date).isSame(date)).toBe(true);
-            expect(moment(dates[last].date).isSame(moment({year: 2018, month: 1, date: 11, hour: 2, minute: 2, second: 2}))).toBe(true);
+            expect(
+                moment(dates[last].date).isSame(
+                    moment({
+                        year: 2018,
+                        month: 1,
+                        date: 11,
+                        hour: 2,
+                        minute: 2,
+                        second: 2,
+                    })
+                )
+            ).toBe(true);
             expect(dates.length).toBe(10);
         });
     });

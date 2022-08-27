@@ -1,10 +1,15 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { NuiButtonModule, NuiCheckboxModule, NuiExpanderModule, NuiTextboxModule } from "@nova-ui/bits";
+
+import {
+    NuiButtonModule,
+    NuiCheckboxModule,
+    NuiExpanderModule,
+    NuiTextboxModule,
+} from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
 import { DemoCommonModule } from "../../common/demo-common.module";
-
 import { PieChartTestComponent } from "./pie-chart-test/pie-chart.example.component";
 
 const bubbleRoutes: Routes = [
@@ -15,9 +20,7 @@ const bubbleRoutes: Routes = [
 ];
 
 @NgModule({
-    declarations: [
-        PieChartTestComponent,
-    ],
+    declarations: [PieChartTestComponent],
     imports: [
         DemoCommonModule,
         NuiChartsModule,
@@ -28,5 +31,4 @@ const bubbleRoutes: Routes = [
         NuiExpanderModule,
     ],
 })
-export class PieChartExampleModule {
-}
+export class PieChartExampleModule {}

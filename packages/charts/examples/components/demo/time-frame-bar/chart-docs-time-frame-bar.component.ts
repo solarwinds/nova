@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-chart-docs-time-frame-bar",
     templateUrl: "./chart-docs-time-frame-bar.component.html",
 })
-export class ChartDocsTimeFrameBarComponent {
-}
+export class ChartDocsTimeFrameBarComponent {}

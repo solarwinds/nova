@@ -1,15 +1,35 @@
 import { HttpClient } from "@angular/common/http";
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { LoggerService, ThemeSwitchService } from "@nova-ui/bits";
-import { DATA_SOURCE, IDashboard, IWidget, ProviderRegistryService, WidgetTypesService } from "@nova-ui/dashboards";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    OnInit,
+    ViewEncapsulation,
+} from "@angular/core";
 import keyBy from "lodash/keyBy";
 
-import { HarryPotterAverageRatingDataSource, HarryPotterRatingsCountDataSource } from "../data/kpi-datasources";
-import { BeerReviewCountsByCityMockDataSource, BeerReviewCountsByCityMockDataSource2 } from "../data/proportional-datasources";
+import { LoggerService, ThemeSwitchService } from "@nova-ui/bits";
+import {
+    DATA_SOURCE,
+    IDashboard,
+    IWidget,
+    ProviderRegistryService,
+    WidgetTypesService,
+} from "@nova-ui/dashboards";
+
+import {
+    HarryPotterAverageRatingDataSource,
+    HarryPotterRatingsCountDataSource,
+} from "../data/kpi-datasources";
+import {
+    BeerReviewCountsByCityMockDataSource,
+    BeerReviewCountsByCityMockDataSource2,
+} from "../data/proportional-datasources";
 import { BeerDataSource } from "../data/table/beer-data-source";
 import { RandomUserDataSource } from "../data/table/random-user-data-source";
-import { BeerVsReadingMockDataSource, LoungingVsFrisbeeGolfMockDataSource } from "../data/timeseries-data-sources";
-
+import {
+    BeerVsReadingMockDataSource,
+    LoungingVsFrisbeeGolfMockDataSource,
+} from "../data/timeseries-data-sources";
 import { positions, widgets } from "./widget-configs";
 
 /**
@@ -31,9 +51,11 @@ export class HeroDashboardComponent implements OnInit {
     public gridsterConfig = {};
     public editMode = false;
 
-    constructor(private providerRegistry: ProviderRegistryService,
-                public themeSwitcherService: ThemeSwitchService,
-                private widgetTypesService: WidgetTypesService) {
+    constructor(
+        private providerRegistry: ProviderRegistryService,
+        public themeSwitcherService: ThemeSwitchService,
+        private widgetTypesService: WidgetTypesService
+    ) {
         this.providerRegistry.setProviders({
             [HarryPotterAverageRatingDataSource.providerId]: {
                 provide: DATA_SOURCE,
@@ -79,10 +101,11 @@ export class HeroDashboardComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        const widgetsWithStructure = widgets.map(w => ({
+        const widgetsWithStructure = widgets.map((w) => ({
             ...w,
             pizzagna: {
-                ...this.widgetTypesService.getWidgetType(w.type, w.version).widget,
+                ...this.widgetTypesService.getWidgetType(w.type, w.version)
+                    .widget,
                 ...w.pizzagna,
             },
         }));

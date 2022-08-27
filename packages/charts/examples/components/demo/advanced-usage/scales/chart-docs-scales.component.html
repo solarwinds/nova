@@ -2,59 +2,100 @@
 
 <h4>Subtopics</h4>
 <ol>
-    <li><a href="../additional-documentation/advanced-usage/scales/domains.html" target="_parent">Domains</a></li>
-    <li><a href="../additional-documentation/advanced-usage/scales/formatters.html" target="_parent">Formatters</a></li>
+    <li>
+        <a
+            href="../additional-documentation/advanced-usage/scales/domains.html"
+            target="_parent"
+            >Domains</a
+        >
+    </li>
+    <li>
+        <a
+            href="../additional-documentation/advanced-usage/scales/formatters.html"
+            target="_parent"
+            >Formatters</a
+        >
+    </li>
 </ol>
 
 <h1>Overview</h1>
 <p>
-    <code><a href="../classes/Scale.html" target="_blank">Scale</a></code> is the abstract projection of your
-    domain specific data value boundaries to screen pixel range. Generally speaking, it lets you to convert any
-    data value into pixel based coordinates on the screen and vice versa. Because of that scales are extremely
-    handy when you build your own
-    <a href="../additional-documentation/advanced-usage/renderers.html" target="_parent">Renderer</a>. Nova
-    scale is an extended version of <a href="https://github.com/d3/d3-scale#d3-scale" target="_blank">D3 Scale</a>.
+    <code><a href="../classes/Scale.html" target="_blank">Scale</a></code> is
+    the abstract projection of your domain specific data value boundaries to
+    screen pixel range. Generally speaking, it lets you to convert any data
+    value into pixel based coordinates on the screen and vice versa. Because of
+    that scales are extremely handy when you build your own
+    <a
+        href="../additional-documentation/advanced-usage/renderers.html"
+        target="_parent"
+        >Renderer</a
+    >. Nova scale is an extended version of
+    <a href="https://github.com/d3/d3-scale#d3-scale" target="_blank"
+        >D3 Scale</a
+    >.
 </p>
 <p>
-    And, they are also used for tick generation and tick label formatting. But, in addition to formatting for tick
-    labels, a scale can have the whole set of
-    <a href="../additional-documentation/advanced-usage/scales/formatters.html" target="_parent">Formatters</a>
+    And, they are also used for tick generation and tick label formatting. But,
+    in addition to formatting for tick labels, a scale can have the whole set of
+    <a
+        href="../additional-documentation/advanced-usage/scales/formatters.html"
+        target="_parent"
+        >Formatters</a
+    >
     to be used for various purposes.
 </p>
 
 <h2>Principles</h2>
 <p>
-    Every scale is defined by its <strong>domain</strong> and <strong>range</strong>. The range will be set by the
-    chart itself and will represent the amount of screen space that is available for rendering. Meanwhile, the
-    domain is controlled by a data provider (it's you) and allows for plenty of possibilities. Some of those
-    possiblities are described on the dedicated
-    <a href="../additional-documentation/advanced-usage/scales/domains.html" target="_parent">Domains</a>
+    Every scale is defined by its <strong>domain</strong> and
+    <strong>range</strong>. The range will be set by the chart itself and will
+    represent the amount of screen space that is available for rendering.
+    Meanwhile, the domain is controlled by a data provider (it's you) and allows
+    for plenty of possibilities. Some of those possiblities are described on the
+    dedicated
+    <a
+        href="../additional-documentation/advanced-usage/scales/domains.html"
+        target="_parent"
+        >Domains</a
+    >
     page.
 </p>
 
 <h2>Usage</h2>
 <p>
-    As a user of the chart framework you will usually need to provide a couple of scales with your
-    <code><a href="../interfaces/IChartSeries.html" target="_blank">IChartSeries</a></code>. Don't know how to do
-    it? You may find it helpful to start with the
-    <a href="../additional-documentation/advanced-usage/basics.html" target="_parent">Chart Basics</a> page
-    first.
+    As a user of the chart framework you will usually need to provide a couple
+    of scales with your
+    <code
+        ><a href="../interfaces/IChartSeries.html" target="_blank"
+            >IChartSeries</a
+        ></code
+    >. Don't know how to do it? You may find it helpful to start with the
+    <a
+        href="../additional-documentation/advanced-usage/basics.html"
+        target="_parent"
+        >Chart Basics</a
+    >
+    page first.
 </p>
 <p>
-    But, if you're ready to create a scale, just instantiate any class that implements the
-    <code><a href="../interfaces/IScale.html" target="_blank">IScale</a></code> interface. Let's use
-    <code><a href="../classes/LinearScale.html" target="_blank">LinearScale</a></code> as an example:
+    But, if you're ready to create a scale, just instantiate any class that
+    implements the
+    <code><a href="../interfaces/IScale.html" target="_blank">IScale</a></code>
+    interface. Let's use
+    <code
+        ><a href="../classes/LinearScale.html" target="_blank"
+            >LinearScale</a
+        ></code
+    >
+    as an example:
 </p>
-<pre>{{scaleDefinition}}</pre>
+<pre>{{ scaleDefinition }}</pre>
 
 <h2>Scale ID</h2>
 <p>
-    Scales are reusable and can be shared between multiple charts. Scales are identified by the value of their
-    <code>id</code> field. It can be passed as a parameter on scale instantiation, otherwise it will be
-    autogenerated.
+    Scales are reusable and can be shared between multiple charts. Scales are
+    identified by the value of their
+    <code>id</code> field. It can be passed as a parameter on scale
+    instantiation, otherwise it will be autogenerated.
 </p>
-<pre>{{scaleWithId}}</pre>
-
-
-
-
+<pre>{{ scaleWithId }}</pre>

@@ -67,12 +67,18 @@ describe("components >", () => {
                 inner.datepickerMode = "day";
                 inner.setCompareHandler((a: Date, b: Date) => 1, "day");
                 expect((inner as any).compareHandlerDay).toBeDefined();
-                const compareResult = inner.compare(moment({year: 2018, month: 0, day: 1}), moment({year: 2018, month: 0, day: 2}));
+                const compareResult = inner.compare(
+                    moment({ year: 2018, month: 0, day: 1 }),
+                    moment({ year: 2018, month: 0, day: 2 })
+                );
                 expect(compareResult).toBe(1);
             });
 
             it("return undefined with defined dates but undefined mode", () => {
-                const compareResult = inner.compare(moment({year: 2018, month: 0, day: 1}), moment({year: 2018, month: 0, day: 2}));
+                const compareResult = inner.compare(
+                    moment({ year: 2018, month: 0, day: 1 }),
+                    moment({ year: 2018, month: 0, day: 2 })
+                );
                 expect(compareResult).toBeUndefined();
             });
         });
@@ -87,7 +93,7 @@ describe("components >", () => {
             inner.setRefreshViewHandler(_noop, "day");
             expect((inner as any).refreshViewHandlerDay).toBeDefined();
             inner.datepickerMode = "day";
-            spyOn((inner as any), "refreshViewHandlerDay");
+            spyOn(inner as any, "refreshViewHandlerDay");
             inner.refreshView();
             expect((inner as any).refreshViewHandlerDay).toHaveBeenCalled();
         });
@@ -139,7 +145,7 @@ describe("components >", () => {
 
         it("should correctly update date if month is moved", () => {
             inner.datepickerMode = "day";
-            inner.stepDay = {months: 1};
+            inner.stepDay = { months: 1 };
             inner.value = moment();
             const oldDate = inner.value;
 
@@ -174,17 +180,26 @@ describe("components >", () => {
         describe("should compare date disabled", () => {
             it("result 1 as in custom handler", () => {
                 inner.setCompareHandler((a: Moment, b: Moment) => 1, "day");
-                const isDateDisabled = (inner as any).compareDateDisabled({date: moment(), mode: "day"}, moment());
+                const isDateDisabled = (inner as any).compareDateDisabled(
+                    { date: moment(), mode: "day" },
+                    moment()
+                );
                 expect(isDateDisabled).toBe(1);
             });
 
             it("result is undefined, one of the dates is undefined", () => {
-                const isDateDisabled = (inner as any).compareDateDisabled(undefined, moment());
+                const isDateDisabled = (inner as any).compareDateDisabled(
+                    undefined,
+                    moment()
+                );
                 expect(isDateDisabled).toBeUndefined();
             });
 
             it("result is undefined", () => {
-                const isDateDisabled = (inner as any).compareDateDisabled({date: moment(), mode: "day"}, moment());
+                const isDateDisabled = (inner as any).compareDateDisabled(
+                    { date: moment(), mode: "day" },
+                    moment()
+                );
                 expect(isDateDisabled).toBeUndefined();
             });
         });
@@ -195,23 +210,27 @@ describe("components >", () => {
             });
 
             it("returns true: max date is set", () => {
-                inner.disabledDates = [{
-                    date: moment(),
-                    mode: "day",
-                }];
-                spyOn((inner as any), "compareDateDisabled").and.returnValue(0);
-                spyOn((inner as any), "compare").and.returnValue(1);
+                inner.disabledDates = [
+                    {
+                        date: moment(),
+                        mode: "day",
+                    },
+                ];
+                spyOn(inner as any, "compareDateDisabled").and.returnValue(0);
+                spyOn(inner as any, "compare").and.returnValue(1);
                 inner.maxDate = moment();
                 expect((inner as any).isDisabled()).toBeTruthy();
             });
 
             it("returns true: min date is set", () => {
-                inner.disabledDates = [{
-                    date: moment(),
-                    mode: "day",
-                }];
-                spyOn((inner as any), "compareDateDisabled").and.returnValue(0);
-                spyOn((inner as any), "compare").and.returnValue(-1);
+                inner.disabledDates = [
+                    {
+                        date: moment(),
+                        mode: "day",
+                    },
+                ];
+                spyOn(inner as any, "compareDateDisabled").and.returnValue(0);
+                spyOn(inner as any, "compare").and.returnValue(-1);
                 inner.maxDate = moment();
                 expect((inner as any).isDisabled()).toBeTruthy();
             });

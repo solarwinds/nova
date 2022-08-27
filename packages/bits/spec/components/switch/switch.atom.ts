@@ -8,17 +8,33 @@ export class SwitchAtom extends Atom {
 
     public toggle = async (): Promise<void> => this.slider().click();
 
-    public container(): ElementFinder { return super.getElement().element(by.className("nui-switch__container")); }
+    public container(): ElementFinder {
+        return super
+            .getElement()
+            .element(by.className("nui-switch__container"));
+    }
 
-    public labelElement(): ElementFinder { return super.getElement().element(by.className("nui-switch__label")); }
+    public labelElement(): ElementFinder {
+        return super.getElement().element(by.className("nui-switch__label"));
+    }
 
-    public labelText = async (): Promise<string> => this.labelElement().getText();
+    public labelText = async (): Promise<string> =>
+        this.labelElement().getText();
 
-    public slider(): ElementFinder { return super.getElement().element(by.className("nui-switch__bar")); }
+    public slider(): ElementFinder {
+        return super.getElement().element(by.className("nui-switch__bar"));
+    }
 
-    public async isOn(): Promise<boolean> { return super.hasClass(SwitchAtom.ON_CSS); }
+    public async isOn(): Promise<boolean> {
+        return super.hasClass(SwitchAtom.ON_CSS);
+    }
 
-    public async disabled(): Promise<boolean> { return super.getElement().getAttribute("class").then((classString) => classString.indexOf("disabled") !== -1); }
+    public async disabled(): Promise<boolean> {
+        return super
+            .getElement()
+            .getAttribute("class")
+            .then((classString) => classString.indexOf("disabled") !== -1);
+    }
 
     public async setState(shouldBeOn: boolean): Promise<void> {
         const current = await this.isOn();

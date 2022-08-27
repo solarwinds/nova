@@ -1,6 +1,12 @@
 import { AfterViewInit, Component, OnDestroy } from "@angular/core";
-import { ClientSideDataSource, INovaFilteringOutputs, ISelection, SelectorService } from "@nova-ui/bits";
 import { Subscription } from "rxjs";
+
+import {
+    ClientSideDataSource,
+    INovaFilteringOutputs,
+    ISelection,
+    SelectorService,
+} from "@nova-ui/bits";
 
 interface IExampleTableModel {
     position: number;
@@ -14,27 +20,38 @@ interface IExampleTableModel {
     providers: [ClientSideDataSource],
     templateUrl: "./table-row-clickable.example.component.html",
 })
-export class TableRowClickableExampleComponent implements AfterViewInit, OnDestroy {
-    public displayedColumns = ["position", "description", "status", "location", "actions"];
+export class TableRowClickableExampleComponent
+    implements AfterViewInit, OnDestroy
+{
+    public displayedColumns = [
+        "position",
+        "description",
+        "status",
+        "location",
+        "actions",
+    ];
     public dataSource?: IExampleTableModel[] = [];
     public selectedItems: IExampleTableModel[] = [];
     public selection: ISelection = {
         isAllPages: false,
         include: [2, 3],
-        exclude: [
-        ],
+        exclude: [],
     };
 
     private outputsSubscription: Subscription;
 
-    constructor(public dataSourceService: ClientSideDataSource<IExampleTableModel>,
-        public selectorService: SelectorService) {
-    }
+    constructor(
+        public dataSourceService: ClientSideDataSource<IExampleTableModel>,
+        public selectorService: SelectorService
+    ) {}
 
     ngAfterViewInit() {
-        this.outputsSubscription = this.dataSourceService.outputsSubject.subscribe((data: INovaFilteringOutputs) => {
-            this.dataSource = data.repeat?.itemsSource;
-        });
+        this.outputsSubscription =
+            this.dataSourceService.outputsSubject.subscribe(
+                (data: INovaFilteringOutputs) => {
+                    this.dataSource = data.repeat?.itemsSource;
+                }
+            );
         this.applyFilters();
     }
 
@@ -57,7 +74,8 @@ function getData(): IExampleTableModel[] {
     return [
         {
             position: 1,
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            description:
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
             status: "status_inactive",
             location: "Brno",
         },
@@ -69,49 +87,57 @@ function getData(): IExampleTableModel[] {
         },
         {
             position: 3,
-            description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            description:
+                "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             status: "status_up",
             location: "Brno",
         },
         {
             position: 4,
-            description: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            description:
+                "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
             status: "status_up",
             location: "Brno",
         },
         {
             position: 5,
-            description: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            description:
+                "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             status: "status_up",
             location: "Brno",
         },
         {
             position: 6,
-            description: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.",
+            description:
+                "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.",
             status: "status_up",
             location: "Brno",
         },
         {
             position: 7,
-            description: "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur.",
+            description:
+                "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur.",
             status: "status_up",
             location: "Brno",
         },
         {
             position: 8,
-            description: "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.",
+            description:
+                "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.",
             status: "status_up",
             location: "Brno",
         },
         {
             position: 9,
-            description: "Quis autem vel eum iure reprehenderit qui in ea voluptate.",
+            description:
+                "Quis autem vel eum iure reprehenderit qui in ea voluptate.",
             status: "status_up",
             location: "Brno",
         },
         {
             position: 10,
-            description: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.",
+            description:
+                "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.",
             status: "status_up",
             location: "Brno",
         },

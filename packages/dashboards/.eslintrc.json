@@ -1,32 +1,26 @@
 {
-  "extends": "../../.eslintrc.json",
-  "overrides": [
-    {
-      "files": [
-        "*.ts"
-      ],
-      "parserOptions": {
-        "project": [
-          "tsconfig.json"
-        ],
-        "createDefaultProgram": true
-      },
-      "settings": {
-        "import/parsers": {
-          "@typescript-eslint/parser": [".ts", ".html"]
-        },
-        "import/resolver": {
-          "typescript": {
-            "project": [
-              "tsconfig.json"
-            ]
-          },
-          "node": {
-            "extensions": [".js", ".ts"],
-            "paths": ["./examples/src/components"]
-          }
+    "extends": "../../.eslintrc.json",
+    "overrides": [
+        {
+            "files": ["*.ts"],
+            "parserOptions": {
+                "project": ["tsconfig.json"],
+                "createDefaultProgram": true
+            },
+            "settings": {
+                "import/parsers": {
+                    "@typescript-eslint/parser": [".ts", ".html"]
+                },
+                "import/resolver": {
+                    "typescript": {
+                        "project": ["tsconfig.json"]
+                    },
+                    "node": {
+                        "extensions": [".js", ".ts"],
+                        "paths": ["./examples/src/components"]
+                    }
+                }
+            }
         }
-      }
-    }
-  ]
+    ]
 }

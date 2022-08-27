@@ -1,10 +1,19 @@
-import { ConnectedOverlayPositionChange, ConnectedPosition, FlexibleConnectedPositionStrategy, OverlayRef } from "@angular/cdk/overlay";
+import {
+    ConnectedOverlayPositionChange,
+    ConnectedPosition,
+    FlexibleConnectedPositionStrategy,
+    OverlayRef,
+} from "@angular/cdk/overlay";
 import { Injectable } from "@angular/core";
 import isNil from "lodash/isNil";
 import { Subscription } from "rxjs";
 
 import { OVERLAY_ARROW_SIZE } from "./constants";
-import { IOverlayPositionServiceConfig, OverlayPlacement, OverlayPosition } from "./types";
+import {
+    IOverlayPositionServiceConfig,
+    OverlayPlacement,
+    OverlayPosition,
+} from "./types";
 
 enum OverlayPanelClass {
     overlayCenterTop = "overlay-center-top",
@@ -30,24 +39,35 @@ export class OverlayPositionService {
     public config: IOverlayPositionServiceConfig;
 
     public setOverlayPositionConfig(config?: IOverlayPositionServiceConfig) {
-        this.arrowSize =  !isNil(config?.arrowSize) ? <number>config?.arrowSize : OVERLAY_ARROW_SIZE;
-        this.arrowPadding = !isNil(config?.arrowPadding) ? <number>config?.arrowPadding : 0;
+        this.arrowSize = !isNil(config?.arrowSize)
+            ? <number>config?.arrowSize
+            : OVERLAY_ARROW_SIZE;
+        this.arrowPadding = !isNil(config?.arrowPadding)
+            ? <number>config?.arrowPadding
+            : 0;
         this.overlayPositions = getOverlayPositions();
     }
 
-    public updateOffsetOnPositionChanges(positionStrategy: FlexibleConnectedPositionStrategy, getOverlayRef: () => OverlayRef): Subscription {
-        return positionStrategy.positionChanges
-            .subscribe((connectedPosition: ConnectedOverlayPositionChange) => {
+    public updateOffsetOnPositionChanges(
+        positionStrategy: FlexibleConnectedPositionStrategy,
+        getOverlayRef: () => OverlayRef
+    ): Subscription {
+        return positionStrategy.positionChanges.subscribe(
+            (connectedPosition: ConnectedOverlayPositionChange) => {
                 const overlayRefElement = getOverlayRef().overlayElement;
                 const panelClass = connectedPosition.connectionPair.panelClass;
                 if (!panelClass) {
                     return;
                 }
                 this.setOverlayOffset(panelClass, overlayRefElement);
-            });
+            }
+        );
     }
 
-    private setOverlayOffset(panelClass: string | string[], overlayRefElement: HTMLElement) {
+    private setOverlayOffset(
+        panelClass: string | string[],
+        overlayRefElement: HTMLElement
+    ) {
         if (Array.isArray(panelClass)) {
             panelClass = this.getOverlayPositionPanelClass(panelClass);
         }
@@ -66,22 +86,26 @@ export class OverlayPositionService {
                 overlayRefElement.style.marginBottom = this.arrowSize + "px";
                 break;
             case OverlayPanelClass.overlayTopLeft:
-                overlayRefElement.style.marginRight = 2 * this.arrowPadding + "px";
+                overlayRefElement.style.marginRight =
+                    2 * this.arrowPadding + "px";
                 overlayRefElement.style.marginBottom = this.arrowSize + "px";
                 break;
             case OverlayPanelClass.overlayTopRight:
-                overlayRefElement.style.marginLeft = 2 * this.arrowPadding + "px";
+                overlayRefElement.style.marginLeft =
+                    2 * this.arrowPadding + "px";
                 overlayRefElement.style.marginBottom = this.arrowSize + "px";
                 break;
             case OverlayPanelClass.overlayCenterBottom:
                 overlayRefElement.style.marginTop = this.arrowSize + "px";
                 break;
             case OverlayPanelClass.overlayBottomRight:
-                overlayRefElement.style.marginLeft = 2 * this.arrowPadding + "px";
+                overlayRefElement.style.marginLeft =
+                    2 * this.arrowPadding + "px";
                 overlayRefElement.style.marginTop = this.arrowSize + "px";
                 break;
             case OverlayPanelClass.overlayBottomLeft:
-                overlayRefElement.style.marginRight = 2 * this.arrowPadding + "px";
+                overlayRefElement.style.marginRight =
+                    2 * this.arrowPadding + "px";
                 overlayRefElement.style.marginTop = this.arrowSize + "px";
                 break;
             case OverlayPanelClass.overlayCenterLeft:
@@ -105,7 +129,9 @@ export class OverlayPositionService {
         }
     }
 
-    public getPossiblePositionsForPlacement(placement: OverlayPlacement): ConnectedPosition[] {
+    public getPossiblePositionsForPlacement(
+        placement: OverlayPlacement
+    ): ConnectedPosition[] {
         const possiblePositions: ConnectedPosition[] = [];
 
         // add positions for the requested placement
@@ -151,7 +177,7 @@ export class OverlayPositionService {
         let result;
         for (const panelClassKey in OverlayPanelClass) {
             if (OverlayPanelClass.hasOwnProperty(panelClassKey)) {
-                result = panelClass.find(i => i === panelClassKey);
+                result = panelClass.find((i) => i === panelClassKey);
             }
         }
         return result || "";
@@ -164,7 +190,9 @@ export class OverlayPositionService {
      * @param placement
      * @returns ConnectedPosition[]
      */
-    private getPositionsForPlacement(placement: OverlayPlacement): ConnectedPosition[] {
+    private getPositionsForPlacement(
+        placement: OverlayPlacement
+    ): ConnectedPosition[] {
         let possiblePositionNames: OverlayPosition[] = [];
         switch (placement) {
             case OverlayPlacement.Left:
@@ -203,11 +231,17 @@ export class OverlayPositionService {
                 throw new Error(`Custom position should be handled by user`);
         }
 
-        return possiblePositionNames.map((positionName: OverlayPosition) => this.overlayPositions[positionName]);
+        return possiblePositionNames.map(
+            (positionName: OverlayPosition) =>
+                this.overlayPositions[positionName]
+        );
     }
 }
 
-export function getOverlayPositions(): Record<OverlayPosition, ConnectedPosition> {
+export function getOverlayPositions(): Record<
+    OverlayPosition,
+    ConnectedPosition
+> {
     return {
         // TOP
         [OverlayPosition.centerTop]: {

@@ -4,12 +4,15 @@ import { pie } from "d3-shape";
 import { IGaugeThresholdDatum } from "../../../gauge/types";
 
 export class DonutGaugeRenderingUtil {
-    public static generateThresholdArcData(data: IGaugeThresholdDatum[]): DefaultArcObject[] {
+    public static generateThresholdArcData(
+        data: IGaugeThresholdDatum[]
+    ): DefaultArcObject[] {
         if (!data.length) {
             return [];
         }
 
-        const arcData: number[] = DonutGaugeRenderingUtil.generateArcValues(data);
+        const arcData: number[] =
+            DonutGaugeRenderingUtil.generateArcValues(data);
         const thresholdsData: any[] = [];
         const pieGenerator = pie().sort(null);
         const arcsForMarkers = pieGenerator(arcData);

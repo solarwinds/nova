@@ -4,7 +4,6 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { NuiDashboardsModule } from "../../../../dashboards.module";
 import { NuiPizzagnaModule } from "../../../../pizzagna/pizzagna.module";
 import { PizzagnaService } from "../../../../pizzagna/services/pizzagna.service";
-
 import { SiUnitsFormatterComponent } from "./si-units-formatter.component";
 
 const TEST_DATA: any[] = [
@@ -124,16 +123,9 @@ describe("SiUnitsFormatterComponent", () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [
-                NuiPizzagnaModule,
-                NuiDashboardsModule,
-            ],
+            imports: [NuiPizzagnaModule, NuiDashboardsModule],
             declarations: [SiUnitsFormatterComponent],
-            providers: [
-
-                PizzagnaService,
-
-            ],
+            providers: [PizzagnaService],
         });
     }));
 
@@ -145,7 +137,7 @@ describe("SiUnitsFormatterComponent", () => {
     });
 
     describe("value formatting > ", () => {
-        TEST_DATA.forEach(test => {
+        TEST_DATA.forEach((test) => {
             it("should correctly format Si units", () => {
                 const data = new SimpleChange(undefined, test.input, false);
 
@@ -154,6 +146,5 @@ describe("SiUnitsFormatterComponent", () => {
                 expect(component.modifier).toEqual(test.expected.modifier);
             });
         });
-
     });
 });

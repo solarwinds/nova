@@ -3,7 +3,6 @@ import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { AccordionState } from "../../types";
-
 import { WidgetEditorAccordionFormStatePipe } from "./widget-editor-accordion-form-state.pipe";
 
 describe("WidgetEditorAccordionFormStatePipe > ", () => {
@@ -13,7 +12,9 @@ describe("WidgetEditorAccordionFormStatePipe > ", () => {
 
     beforeEach(() => {
         const formBuilder = new FormBuilder();
-        form = formBuilder.group({ testControl: ["", [Validators.maxLength(0)]] });
+        form = formBuilder.group({
+            testControl: ["", [Validators.maxLength(0)]],
+        });
         pipe = new WidgetEditorAccordionFormStatePipe();
     });
 
@@ -55,5 +56,4 @@ describe("WidgetEditorAccordionFormStatePipe > ", () => {
             expect(args[1]).toEqual([AccordionState.CRITICAL]);
         });
     });
-
 });

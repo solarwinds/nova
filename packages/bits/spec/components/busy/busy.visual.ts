@@ -11,8 +11,10 @@ describe(`Visual tests: ${name}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("busy/busy-visual-test");
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
-        
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
+
         camera = new Camera().loadFilm(browser, name);
         switchBusyState = element(by.id("nui-busy-test-button"));
     });

@@ -1,9 +1,11 @@
-<div class="w-100 d-flex flex-wrap align-items-center pt-2"
-    [attr.role]="(multiselect && selectedOptions.length) ? 'list' : null">
-
+<div
+    class="w-100 d-flex flex-wrap align-items-center pt-2"
+    [attr.role]="multiselect && selectedOptions.length ? 'list' : null"
+>
     <ng-content select="[selectedItems]"></ng-content>
 
-    <input class="nui-combobox-v2__input pb-2"
+    <input
+        class="nui-combobox-v2__input pb-2"
         type="text"
         [attr.aria-label]="ariaLabel || 'input'"
         [class.has-error]="isInErrorState"
@@ -13,21 +15,24 @@
         (input)="handleInput(input.value)"
         (keydown)="onKeyDown($event)"
         (click)="selectTextInInput()"
-        #input />
+        #input
+    />
 </div>
-<button tabindex="0"
+<button
+    tabindex="0"
     *ngIf="isRemoveValueEnabled && (selectedOptions[0] || inputValue)"
     nui-button
     class="nui-combobox-v2__remove-value action"
-    (click)="clearValue($event);"
+    (click)="clearValue($event)"
     [isEmpty]="true"
     icon="remove"
     type="button"
     [nuiTooltip]="clearValueButtonTooltip"
     [class.disabled]="isDisabled"
-    [disabled]="isDisabled">
-</button>
-<button tabindex="-1"
+    [disabled]="isDisabled"
+></button>
+<button
+    tabindex="-1"
     class="nui-combobox-v2__toggle action"
     nui-button
     type="button"
@@ -36,11 +41,13 @@
     [class.rotate]="isDropdownOpen"
     [class.disabled]="isDisabled"
     [disabled]="isDisabled"
-    (click)="selectTextInInput()">
-</button>
-<nui-overlay roleAttr="listbox"
-              [toggleReference]="elRef.nativeElement"
-              [viewportMargin]="popupViewportMargin"
-              [overlayConfig]="overlayConfig">
+    (click)="selectTextInInput()"
+></button>
+<nui-overlay
+    roleAttr="listbox"
+    [toggleReference]="elRef.nativeElement"
+    [viewportMargin]="popupViewportMargin"
+    [overlayConfig]="overlayConfig"
+>
     <ng-content></ng-content>
 </nui-overlay>

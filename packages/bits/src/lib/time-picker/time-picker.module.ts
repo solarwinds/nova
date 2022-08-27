@@ -5,7 +5,6 @@ import { NuiIconModule } from "../icon/icon.module";
 import { NuiMenuModule } from "../menu/menu.module";
 import { NuiOverlayModule } from "../overlay/overlay.module";
 import { NuiTextboxModule } from "../textbox/textbox.module";
-
 import { TimePickerComponent } from "./time-picker.component";
 
 /**
@@ -19,13 +18,8 @@ import { TimePickerComponent } from "./time-picker.component";
         NuiOverlayModule,
         NuiMenuModule,
     ],
-    declarations: [
-        TimePickerComponent,
-    ],
-    exports: [
-        TimePickerComponent,
-    ],
+    declarations: [TimePickerComponent],
+    exports: [TimePickerComponent],
     providers: [],
 })
-export class NuiTimePickerModule {
-}
+export class NuiTimePickerModule {}

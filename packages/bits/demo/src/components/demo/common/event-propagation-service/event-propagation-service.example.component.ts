@@ -1,17 +1,24 @@
 import { Component, Inject } from "@angular/core";
-import { EventPropagationService, IEventPropagationService, IToastService, ToastService } from "@nova-ui/bits";
+
+import {
+    EventPropagationService,
+    IEventPropagationService,
+    IToastService,
+    ToastService,
+} from "@nova-ui/bits";
 
 @Component({
     selector: "nui-event-propagation-service-example",
     templateUrl: "./event-propagation-service.example.component.html",
 })
 export class EventPropagationServiceExampleComponent {
+    constructor(
+        @Inject(EventPropagationService)
+        private eventPropagationService: IEventPropagationService,
+        @Inject(ToastService) private toastService: IToastService
+    ) {}
 
-    constructor(@Inject(EventPropagationService) private eventPropagationService: IEventPropagationService,
-                @Inject(ToastService) private toastService: IToastService) {
-    }
-
-    public handleClick (event: Event): void {
+    public handleClick(event: Event): void {
         const target = <Element>event.target;
         this.toastService.clear();
         if (this.eventPropagationService.targetShouldPropagate(event)) {

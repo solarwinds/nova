@@ -1,11 +1,12 @@
 import { ChartAssist } from "../../core/chart-assists/chart-assist";
 import { IChartAssistSeries, IChartSeries } from "../../core/common/types";
 import { IStackMetadata } from "../bar/types";
-
 import { IAreaAccessors } from "./area-accessors";
 
-export function stackedPercentageAreaPreprocessor(chartSeriesSet: IChartSeries<IAreaAccessors>[],
-                                                  isVisible: (chartSeries: IChartSeries<IAreaAccessors>) => boolean): IChartSeries<IAreaAccessors>[] {
+export function stackedPercentageAreaPreprocessor(
+    chartSeriesSet: IChartSeries<IAreaAccessors>[],
+    isVisible: (chartSeries: IChartSeries<IAreaAccessors>) => boolean
+): IChartSeries<IAreaAccessors>[] {
     // No need to preprocess empty series.
     if (chartSeriesSet.length === 0) {
         return chartSeriesSet;
@@ -18,18 +19,38 @@ export function stackedPercentageAreaPreprocessor(chartSeriesSet: IChartSeries<I
     const valueAccessorKey = "y";
 
     for (const chartSeries of chartSeriesSet) {
-        calculateDomainValueCombinedTotals(baseAccessorKey, valueAccessorKey, chartSeries, isVisible, domainValueCombinedTotals);
+        calculateDomainValueCombinedTotals(
+            baseAccessorKey,
+            valueAccessorKey,
+            chartSeries,
+            isVisible,
+            domainValueCombinedTotals
+        );
     }
 
     for (const chartSeries of chartSeriesSet) {
-        applyStackMetadata(baseAccessorKey, valueAccessorKey, chartSeries, isVisible, domainValueStacks, domainValueCombinedTotals);
+        applyStackMetadata(
+            baseAccessorKey,
+            valueAccessorKey,
+            chartSeries,
+            isVisible,
+            domainValueStacks,
+            domainValueCombinedTotals
+        );
     }
 
     return chartSeriesSet;
 }
 
-export function stackedPercentageArea(this: ChartAssist, chartSeriesSet: IChartAssistSeries<IAreaAccessors>[]): IChartAssistSeries<IAreaAccessors>[] {
-    return stackedPercentageAreaPreprocessor(chartSeriesSet, (series: IChartSeries<IAreaAccessors>) => !this.isSeriesHidden(series.id));
+export function stackedPercentageArea(
+    this: ChartAssist,
+    chartSeriesSet: IChartAssistSeries<IAreaAccessors>[]
+): IChartAssistSeries<IAreaAccessors>[] {
+    return stackedPercentageAreaPreprocessor(
+        chartSeriesSet,
+        (series: IChartSeries<IAreaAccessors>) =>
+            !this.isSeriesHidden(series.id)
+    );
 }
 
 export function calculateDomainValueCombinedTotals(
@@ -65,7 +86,8 @@ export function applyStackMetadata(
     baseAccessorKey: string,
     valueAccessorKey: string,
     chartSeries: IChartSeries<IAreaAccessors>,
-    isVisible: any, domainValueStacks: Record<any, number>,
+    isVisible: any,
+    domainValueStacks: Record<any, number>,
     domainValueCombinedTotals: Record<any, number>
 ) {
     const baseAccessor = chartSeries.accessors.data[baseAccessorKey];
@@ -90,6 +112,6 @@ export function applyStackMetadata(
         const end = start + diffPercent * 100;
         domainValueStacks[base.valueOf()] = end;
 
-        datum["__stack_" + valueAccessorKey] = {start, end} as IStackMetadata;
+        datum["__stack_" + valueAccessorKey] = { start, end } as IStackMetadata;
     });
 }

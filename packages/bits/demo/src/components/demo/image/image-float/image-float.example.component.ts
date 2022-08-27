@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-image-float-example",
     templateUrl: "./image-float.example.component.html",
 })
-
 export class ImageFloatExampleComponent {}

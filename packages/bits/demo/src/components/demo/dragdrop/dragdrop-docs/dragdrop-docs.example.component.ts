@@ -4,6 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-dragdrop-example",
     templateUrl: "./dragdrop-docs.example.component.html",
 })
-export class DragdropExampleComponent {
-
-}
+export class DragdropExampleComponent {}

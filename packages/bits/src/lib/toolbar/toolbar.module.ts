@@ -5,7 +5,6 @@ import { NuiButtonModule } from "../button/button.module";
 import { NuiDividerModule } from "../divider/divider.module";
 import { NuiIconModule } from "../icon/icon.module";
 import { NuiMenuModule } from "../menu/menu.module";
-
 import { ToolbarGroupComponent } from "./toolbar-group.component";
 import { ToolbarItemComponent } from "./toolbar-item.component";
 import { ToolbarMessageComponent } from "./toolbar-message.component";
@@ -39,5 +38,4 @@ import { ToolbarComponent } from "./toolbar.component";
     ],
     providers: [],
 })
-export class NuiToolbarModule {
-}
+export class NuiToolbarModule {}

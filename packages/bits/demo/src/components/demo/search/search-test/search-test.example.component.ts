@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
 
-
 @Component({
     selector: "nui-search-example",
     templateUrl: "./search-test.example.component.html",

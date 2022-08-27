@@ -14,13 +14,17 @@ import {
 import debounce from "lodash/debounce";
 import isFunction from "lodash/isFunction";
 import isUndefined from "lodash/isUndefined";
-import {Subscription} from "rxjs";
+import { Subscription } from "rxjs";
 
-import {RESIZE_DEBOUNCE_TIME} from "../../../constants/resize.constants";
-import {EventBusService} from "../../../services/event-bus.service";
-import {UtilService} from "../../../services/util.service";
-
-import {IResizeProperties, ResizeDirection, resizeDirectionHelpers, ResizeUnit} from "./public-api";
+import { RESIZE_DEBOUNCE_TIME } from "../../../constants/resize.constants";
+import { EventBusService } from "../../../services/event-bus.service";
+import { UtilService } from "../../../services/util.service";
+import {
+    IResizeProperties,
+    ResizeDirection,
+    resizeDirectionHelpers,
+    ResizeUnit,
+} from "./public-api";
 
 /** @ignore */
 const resizeClass = "nui-resize-gutter";
@@ -34,8 +38,8 @@ const resizeClass = "nui-resize-gutter";
 })
 export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
     /**
-    * Direction in which element can be resizable. can be "top", "right", "left" and "bottom"
-    */
+     * Direction in which element can be resizable. can be "top", "right", "left" and "bottom"
+     */
     private _direction: ResizeDirection;
 
     @Input() set resizerDirection(direction: ResizeDirection) {
@@ -48,13 +52,13 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     /**
-    * Sets custom size of resizable element
-    */
+     * Sets custom size of resizable element
+     */
     protected _size: number = 16;
 
     /**
-    * Disables element resizing
-    */
+     * Disables element resizing
+     */
     private _disabled: boolean = false;
 
     @Input() set resizerDisabled(isDisabled: boolean) {
@@ -71,8 +75,8 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
         return this._disabled;
     }
     /**
-    * Choose resize value of your element(pixel, percent). By default pixels are used.
-    */
+     * Choose resize value of your element(pixel, percent). By default pixels are used.
+     */
     @Input() public resizerValue: ResizeUnit = ResizeUnit.pixel;
 
     /**
@@ -81,8 +85,8 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
     @Input() public isMultiple: boolean;
 
     /**
-    * Emits new size of element on which directive was applied
-    */
+     * Emits new size of element on which directive was applied
+     */
     @Output() public resizerSizeChanged = new EventEmitter<string>();
 
     protected resizePropObj: IResizeProperties;
@@ -101,17 +105,18 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
     private resizeObserver?: ResizeObserver;
     private resizeSubscription: Subscription;
     private eventSubscriptions: (() => void)[] = [];
-    private mouseUpUnlisten: (() => void);
-    private mouseMoveUnlisten: (() => void);
+    private mouseUpUnlisten: () => void;
+    private mouseMoveUnlisten: () => void;
     private sibling: any;
 
-    constructor(private elRef: ElementRef,
-                private renderer: Renderer2,
-                private utilService: UtilService,
-                private _element: ElementRef,
-                private ngZone: NgZone,
-                private eventBusService: EventBusService) {
-    }
+    constructor(
+        private elRef: ElementRef,
+        private renderer: Renderer2,
+        private utilService: UtilService,
+        private _element: ElementRef,
+        private ngZone: NgZone,
+        private eventBusService: EventBusService
+    ) {}
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes["resizerDirection"] && this.resizeGutter) {
@@ -126,15 +131,25 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
         this.addSubscription();
 
         if (!this.isAtTheBeginning()) {
-            this.renderer.appendChild(this.targetElement.nativeElement, this._resizeElement);
-            this.resizeGutter = this.targetElement.nativeElement.lastElementChild;
+            this.renderer.appendChild(
+                this.targetElement.nativeElement,
+                this._resizeElement
+            );
+            this.resizeGutter =
+                this.targetElement.nativeElement.lastElementChild;
         } else {
-            this.renderer.insertBefore(this.targetElement.nativeElement, this._resizeElement, this.targetElement.nativeElement.firstElementChild);
-            this.resizeGutter = this.targetElement.nativeElement.firstElementChild;
+            this.renderer.insertBefore(
+                this.targetElement.nativeElement,
+                this._resizeElement,
+                this.targetElement.nativeElement.firstElementChild
+            );
+            this.resizeGutter =
+                this.targetElement.nativeElement.firstElementChild;
         }
         this.appendResizeElement();
         this.resizeGutter.className = this.resizeClass;
-        this.parentContainerNode = this.targetElement.nativeElement.parentElement;
+        this.parentContainerNode =
+            this.targetElement.nativeElement.parentElement;
         this.addResizeObserver();
         this.appendEvents();
         this.refreshStyle();
@@ -142,7 +157,9 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
 
     ngOnDestroy() {
         if (this.resizeObserver) {
-            this.resizeObserver.unobserve(<Element>(this.targetElement.nativeElement.parentElement));
+            this.resizeObserver.unobserve(
+                <Element>this.targetElement.nativeElement.parentElement
+            );
         }
         if (this.resizeSubscription) {
             this.resizeSubscription.unsubscribe();
@@ -151,8 +168,11 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     protected addResizeObserver() {
-        const resizeHandler = debounce(entry => this.refreshStyle(), RESIZE_DEBOUNCE_TIME);
-        this.resizeObserver = new ResizeObserver(entries => {
+        const resizeHandler = debounce(
+            (entry) => this.refreshStyle(),
+            RESIZE_DEBOUNCE_TIME
+        );
+        this.resizeObserver = new ResizeObserver((entries) => {
             entries.forEach((entry: ResizeObserverEntry) => {
                 this.ngZone.run(() => {
                     if (!this.resizerDisabled) {
@@ -162,14 +182,16 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
             });
         });
         this.ngZone.runOutsideAngular(() => {
-            this.resizeObserver?.observe(<Element>(this.targetElement.nativeElement.parentElement));
+            this.resizeObserver?.observe(
+                <Element>this.targetElement.nativeElement.parentElement
+            );
         });
     }
 
     protected addSubscription() {
-        this.resizeSubscription = this.eventBusService.getStream({id: "complete-resize"})
-            .subscribe(resize =>
-                this.refreshStyle());
+        this.resizeSubscription = this.eventBusService
+            .getStream({ id: "complete-resize" })
+            .subscribe((resize) => this.refreshStyle());
     }
 
     protected onSizeChanged(newSize: string) {
@@ -179,16 +201,28 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
     protected refreshStyle(): void {
         if (this.resizeGutter && !this.resizerDisabled) {
             // fix safari bug about gutter height when direction is horizontal
-            this.renderer.setStyle(this.resizeGutter, this.resizePropObj.sizeToSet, `${ this._size }px`);
-            this.renderer.setStyle(this.resizeGutter, this.resizePropObj.otherSizeProperty, "100%");
+            this.renderer.setStyle(
+                this.resizeGutter,
+                this.resizePropObj.sizeToSet,
+                `${this._size}px`
+            );
+            this.renderer.setStyle(
+                this.resizeGutter,
+                this.resizePropObj.otherSizeProperty,
+                "100%"
+            );
             this.calculatePosition();
-            this.renderer.setStyle(this.resizeGutter, "cursor", this.resizePropObj.cursor);
+            this.renderer.setStyle(
+                this.resizeGutter,
+                "cursor",
+                this.resizePropObj.cursor
+            );
             this.switchDisabledClasses();
         }
     }
 
     protected unlistenEvents() {
-        this.eventSubscriptions.forEach(unlistenFn => {
+        this.eventSubscriptions.forEach((unlistenFn) => {
             if (isFunction(unlistenFn)) {
                 unlistenFn();
             }
@@ -196,23 +230,51 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     protected appendEvents() {
-        this.eventSubscriptions.push(this.renderer.listen(this.resizeGutter, "mouseenter", ($event: MouseEvent) => this.onMouseEnter($event)));
-        this.eventSubscriptions.push(this.renderer.listen(this.resizeGutter, "mouseleave", () => this.onMouseLeave()));
-        this.eventSubscriptions.push(this.renderer.listen(this.resizeGutter, "mousedown", ($event: MouseEvent) => this.onMouseDown($event)));
+        this.eventSubscriptions.push(
+            this.renderer.listen(
+                this.resizeGutter,
+                "mouseenter",
+                ($event: MouseEvent) => this.onMouseEnter($event)
+            )
+        );
+        this.eventSubscriptions.push(
+            this.renderer.listen(this.resizeGutter, "mouseleave", () =>
+                this.onMouseLeave()
+            )
+        );
+        this.eventSubscriptions.push(
+            this.renderer.listen(
+                this.resizeGutter,
+                "mousedown",
+                ($event: MouseEvent) => this.onMouseDown($event)
+            )
+        );
     }
 
     protected isResizeHorizontal(): boolean {
-        return this.resizerDirection === ResizeDirection.left || this.resizerDirection === ResizeDirection.right;
+        return (
+            this.resizerDirection === ResizeDirection.left ||
+            this.resizerDirection === ResizeDirection.right
+        );
     }
 
     protected isAtTheBeginning(): boolean {
-        return this.resizerDirection === ResizeDirection.left || this.resizerDirection === ResizeDirection.top;
+        return (
+            this.resizerDirection === ResizeDirection.left ||
+            this.resizerDirection === ResizeDirection.top
+        );
     }
 
     private switchDisabledClasses(): void {
         this.resizerDisabled
-            ? this.renderer.addClass(this.resizeGutter, `${this.resizeClass}-disabled`)
-            : this.renderer.removeClass(this.resizeGutter, `${this.resizeClass}-disabled`);
+            ? this.renderer.addClass(
+                  this.resizeGutter,
+                  `${this.resizeClass}-disabled`
+              )
+            : this.renderer.removeClass(
+                  this.resizeGutter,
+                  `${this.resizeClass}-disabled`
+              );
     }
 
     private appendResizeElement() {
@@ -221,7 +283,12 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
         }
         this.resizerSplit = document.createElement("div");
         this.renderer.addClass(this.resizerSplit, `${this.resizeClass}__split`);
-        this.renderer.addClass(this.resizerSplit, `${this.resizeClass}__split-${this.isResizeHorizontal() ? "horizontal" : "vertical"}`);
+        this.renderer.addClass(
+            this.resizerSplit,
+            `${this.resizeClass}__split-${
+                this.isResizeHorizontal() ? "horizontal" : "vertical"
+            }`
+        );
         this.renderer.appendChild(this.resizeGutter, this.resizerSplit);
         this.resizePropObj = resizeDirectionHelpers[this.resizerDirection];
     }
@@ -240,14 +307,27 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
         this._isHovering = true;
         // Add hovering class only while mouse is not clicked
         // "which" is supported by Safari
-        if ((!isUndefined(event.buttons) && event.buttons === 0) || (!isUndefined(event.which) && event.which === 0)) {
-            this.renderer.addClass(this.resizeGutter, `${this.resizeClass}--hovering`);
-            this.mouseMoveUnlisten = this.renderer.listen(document, "mousemove", ($event: MouseEvent) => this.onMouseMove($event));
+        if (
+            (!isUndefined(event.buttons) && event.buttons === 0) ||
+            (!isUndefined(event.which) && event.which === 0)
+        ) {
+            this.renderer.addClass(
+                this.resizeGutter,
+                `${this.resizeClass}--hovering`
+            );
+            this.mouseMoveUnlisten = this.renderer.listen(
+                document,
+                "mousemove",
+                ($event: MouseEvent) => this.onMouseMove($event)
+            );
         }
     }
 
     private onMouseLeave() {
-        this.renderer.removeClass(this.resizeGutter, `${this.resizeClass}--hovering`);
+        this.renderer.removeClass(
+            this.resizeGutter,
+            `${this.resizeClass}--hovering`
+        );
         if (!this._isDragging) {
             this._isHovering = false;
             this.unlistenResizeEvents();
@@ -268,30 +348,55 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
 
     // Registers mouseup
     private onMouseDown(event: MouseEvent): void {
-        this.renderer.addClass(this.resizeGutter, `${this.resizeClass}--active`);
+        this.renderer.addClass(
+            this.resizeGutter,
+            `${this.resizeClass}--active`
+        );
         // Cursor should be there until mouseUp.
-        this.renderer.setStyle(document.documentElement, "cursor", this.resizePropObj.cursor);
+        this.renderer.setStyle(
+            document.documentElement,
+            "cursor",
+            this.resizePropObj.cursor
+        );
         this._isDragging = true;
-        this._oldSize = this.isResizeHorizontal() ? event.clientX : event.clientY;
-        this.mouseUpUnlisten = this.renderer.listen(document, "mouseup", ($event: MouseEvent) => this.onMouseUp($event));
+        this._oldSize = this.isResizeHorizontal()
+            ? event.clientX
+            : event.clientY;
+        this.mouseUpUnlisten = this.renderer.listen(
+            document,
+            "mouseup",
+            ($event: MouseEvent) => this.onMouseUp($event)
+        );
         event.preventDefault(); // This disables accidental text selection while resizing
     }
 
     private onMouseUp(event: MouseEvent): void {
         this.renderer.removeStyle(document.documentElement, "cursor");
-        this.renderer.removeClass(this.resizeGutter, `${this.resizeClass}--active`);
+        this.renderer.removeClass(
+            this.resizeGutter,
+            `${this.resizeClass}--active`
+        );
         this._isDragging = false;
-        this.eventBusService.getStream({id: "complete-resize"}).next();
+        this.eventBusService.getStream({ id: "complete-resize" }).next();
     }
 
     private calculatePosition() {
         if (this.resizerDisabled) {
             return;
         }
-        const parentCoord = this.parentContainerNode.getBoundingClientRect()[this.resizePropObj.appendDirection];
-        const elementCoord = this.targetElement.nativeElement.getBoundingClientRect()[this.resizePropObj.borderToCalculate];
-        this.renderer.setStyle(this.resizeGutter, this.resizePropObj.appendDirection,
-                               `${Math.abs(parentCoord - elementCoord) - this.offsetSize }px`);
+        const parentCoord =
+            this.parentContainerNode.getBoundingClientRect()[
+                this.resizePropObj.appendDirection
+            ];
+        const elementCoord =
+            this.targetElement.nativeElement.getBoundingClientRect()[
+                this.resizePropObj.borderToCalculate
+            ];
+        this.renderer.setStyle(
+            this.resizeGutter,
+            this.resizePropObj.appendDirection,
+            `${Math.abs(parentCoord - elementCoord) - this.offsetSize}px`
+        );
     }
 
     private applyNewSize(event: MouseEvent) {
@@ -299,38 +404,77 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
         if (!this._isDragging || this.resizerDisabled) {
             return;
         }
-        const newSize = this.isResizeHorizontal() ? event.clientX : event.clientY;
+        const newSize = this.isResizeHorizontal()
+            ? event.clientX
+            : event.clientY;
         this.updateSize(newSize);
     }
 
     private updateSize(newSize: number) {
-        const updatedProp = this.isMultiple ? "flex-basis" : this.resizePropObj.sizeToSet;
-        const parentSize = this.parentContainerNode[this.resizePropObj.nativeElementSizeProperty];
-        const valueCoeff = this.resizerValue === ResizeUnit.pixel ? 1 : (100 / parentSize);
+        const updatedProp = this.isMultiple
+            ? "flex-basis"
+            : this.resizePropObj.sizeToSet;
+        const parentSize =
+            this.parentContainerNode[
+                this.resizePropObj.nativeElementSizeProperty
+            ];
+        const valueCoeff =
+            this.resizerValue === ResizeUnit.pixel ? 1 : 100 / parentSize;
 
         // if width is already defined then use it without calculating
-        const nativeElSize = `${this.calculateNativeElementSize(newSize, this.resizePropObj.nativeElementSizeProperty) * valueCoeff}${this.resizerValue}`;
-        const resizerPosition = `${ this.targetElement.nativeElement[this.resizePropObj.nativeElementSizeProperty] - this.offsetSize }px`;
+        const nativeElSize = `${
+            this.calculateNativeElementSize(
+                newSize,
+                this.resizePropObj.nativeElementSizeProperty
+            ) * valueCoeff
+        }${this.resizerValue}`;
+        const resizerPosition = `${
+            this.targetElement.nativeElement[
+                this.resizePropObj.nativeElementSizeProperty
+            ] - this.offsetSize
+        }px`;
         if (!this.isMultiple) {
-            this.renderer.setStyle(this.targetElement.nativeElement, updatedProp, nativeElSize);
+            this.renderer.setStyle(
+                this.targetElement.nativeElement,
+                updatedProp,
+                nativeElSize
+            );
         } else {
-            const siblingSize = `${this.calculateSiblingSize(newSize, this.resizePropObj.nativeElementSizeProperty) * valueCoeff}${this.resizerValue}`;
+            const siblingSize = `${
+                this.calculateSiblingSize(
+                    newSize,
+                    this.resizePropObj.nativeElementSizeProperty
+                ) * valueCoeff
+            }${this.resizerValue}`;
             if (this.parentContainerNode.children.length > 2) {
                 // These 2 should ALWAYS be together
                 this.renderer.setStyle(this.sibling, updatedProp, siblingSize);
-                this.renderer.setStyle(this.targetElement.nativeElement, updatedProp, nativeElSize);
+                this.renderer.setStyle(
+                    this.targetElement.nativeElement,
+                    updatedProp,
+                    nativeElSize
+                );
             }
         }
-        this.renderer.setStyle(this.resizeGutter, this.resizePropObj.appendDirection, resizerPosition);
+        this.renderer.setStyle(
+            this.resizeGutter,
+            this.resizePropObj.appendDirection,
+            resizerPosition
+        );
 
         this.onSizeChanged(nativeElSize);
         this._oldSize = newSize;
     }
 
-    private calculateNativeElementSize(newSize: number, updatedProp: string): number {
+    private calculateNativeElementSize(
+        newSize: number,
+        updatedProp: string
+    ): number {
         return this.isAtTheBeginning()
-            ? this.targetElement.nativeElement[updatedProp] - (newSize - this._oldSize)
-            : this.targetElement.nativeElement[updatedProp] + (newSize - this._oldSize);
+            ? this.targetElement.nativeElement[updatedProp] -
+                  (newSize - this._oldSize)
+            : this.targetElement.nativeElement[updatedProp] +
+                  (newSize - this._oldSize);
     }
 
     private calculateSiblingSize(newSize: number, updatedProp: string): number {

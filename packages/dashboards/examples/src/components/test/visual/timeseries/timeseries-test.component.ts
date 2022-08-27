@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    OnInit,
+    ViewChild,
+    ViewEncapsulation,
+} from "@angular/core";
+import keyBy from "lodash/keyBy";
+
 import { ThemeSwitchService } from "@nova-ui/bits";
 import {
     DashboardComponent,
@@ -8,7 +16,6 @@ import {
     ProviderRegistryService,
     WidgetTypesService,
 } from "@nova-ui/dashboards";
-import keyBy from "lodash/keyBy";
 
 import {
     TestTimeseriesDataSource,
@@ -17,7 +24,6 @@ import {
     TestTimeseriesStatusDataSource,
     TestTimeseriesStatusIntervalDataSource,
 } from "../../data/timeseries-data-sources";
-
 import { AcmeFormSubmitHandler } from "./acme-form-submit-handler";
 import { positions, widgetConfigs } from "./widgets";
 
@@ -33,7 +39,8 @@ import { positions, widgetConfigs } from "./widgets";
     providers: [AcmeFormSubmitHandler],
 })
 export class AcmeDashboardComponent implements OnInit {
-    @ViewChild(DashboardComponent, {static: true}) dashboardComponent: DashboardComponent;
+    @ViewChild(DashboardComponent, { static: true })
+    dashboardComponent: DashboardComponent;
 
     public dashboard: IDashboard = {
         positions: {},
@@ -49,10 +56,12 @@ export class AcmeDashboardComponent implements OnInit {
     public editMode = false;
     public dsError = false;
 
-    constructor(private providerRegistry: ProviderRegistryService,
-                public submitHandler: AcmeFormSubmitHandler,
-                public themeSwitcherService: ThemeSwitchService,
-                private widgetTypesService: WidgetTypesService) {
+    constructor(
+        private providerRegistry: ProviderRegistryService,
+        public submitHandler: AcmeFormSubmitHandler,
+        public themeSwitcherService: ThemeSwitchService,
+        private widgetTypesService: WidgetTypesService
+    ) {
         this.providerRegistry.setProviders({
             [TestTimeseriesDataSource.providerId]: {
                 provide: DATA_SOURCE,
@@ -83,7 +92,9 @@ export class AcmeDashboardComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        const widgetsWithStructure = widgetConfigs.map(w => this.widgetTypesService.mergeWithWidgetType(w));
+        const widgetsWithStructure = widgetConfigs.map((w) =>
+            this.widgetTypesService.mergeWithWidgetType(w)
+        );
         const widgetsIndex = keyBy(widgetsWithStructure, (w: IWidget) => w.id);
 
         this.dashboard = {

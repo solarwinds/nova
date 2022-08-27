@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+
 import { IToastConfig, IToastDeclaration } from "@nova-ui/bits";
 
 @Component({

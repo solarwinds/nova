@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { ITimeframe } from "@nova-ui/bits";
 import moment, { Moment } from "moment/moment";
+
+import { ITimeframe } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-convenience-time-frame-bar-basic-example",

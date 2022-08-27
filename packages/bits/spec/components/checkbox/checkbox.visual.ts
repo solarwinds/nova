@@ -17,7 +17,7 @@ describe(`Visual tests: ${name}`, () => {
         await Helpers.disableCSSAnimations(Animations.ALL);
         checkboxBasic = Atom.find(CheckboxAtom, "nui-demo-checkbox");
         checkboxSpecial = Atom.find(CheckboxAtom, "nui-demo-checkbox-special");
-        
+
         camera = new Camera().loadFilm(browser, name);
     });
 

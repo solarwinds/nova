@@ -5,9 +5,7 @@ import { NgModule } from "@angular/core";
 import { NuiCommonModule } from "../../common/common.module";
 import { NuiOverlayModule } from "../overlay/overlay.module";
 import { NuiSelectV2Module } from "../select-v2/select-v2.module";
-
 import { PopupComponent } from "./popup-adapter.component";
-
 
 @NgModule({
     declarations: [PopupComponent],
@@ -20,4 +18,4 @@ import { PopupComponent } from "./popup-adapter.component";
     ],
     exports: [PopupComponent],
 })
-export class PopupAdapterModule { }
+export class PopupAdapterModule {}

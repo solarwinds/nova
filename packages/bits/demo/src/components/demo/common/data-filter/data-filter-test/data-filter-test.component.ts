@@ -4,6 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-data-filter-example",
     templateUrl: "./data-filter-test.component.html",
 })
-export class DataFilterTestComponent {
-
-}
+export class DataFilterTestComponent {}

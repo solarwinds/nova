@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+
 import { EventBus } from "@nova-ui/bits";
 
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
@@ -6,7 +7,6 @@ import { DynamicComponentCreator } from "../../../../../pizzagna/services/dynami
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
 import { PIZZAGNA_EVENT_BUS } from "../../../../../types";
-
 import { KpiTilesConfigurationComponent } from "./kpi-tiles-configuration.component";
 
 describe("KpiTilesConfigurationComponent", () => {
@@ -25,8 +25,7 @@ describe("KpiTilesConfigurationComponent", () => {
                     useClass: EventBus,
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {

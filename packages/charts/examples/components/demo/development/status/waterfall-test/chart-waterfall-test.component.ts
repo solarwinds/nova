@@ -1,10 +1,40 @@
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
-import { ConnectionPositionPair, Overlay, OverlayPositionBuilder, PositionStrategy, ScrollStrategyOptions } from "@angular/cdk/overlay";
-import { TemplatePortal } from "@angular/cdk/portal";
-import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild, ViewContainerRef } from "@angular/core";
 import {
-    BandScale, BarRenderer, BarStatusGridConfig, Chart, ChartPalette, CHART_PALETTE_CS1, HIGHLIGHT_DATA_POINT_EVENT, HorizontalBarAccessors,
-    ISetDomainEventPayload, LinearScale, MappedValueProvider, NoopAccessors, NoopRenderer, SELECT_DATA_POINT_EVENT, SET_DOMAIN_EVENT, XYGrid, XYGridConfig,
+    ConnectionPositionPair,
+    Overlay,
+    OverlayPositionBuilder,
+    PositionStrategy,
+    ScrollStrategyOptions,
+} from "@angular/cdk/overlay";
+import { TemplatePortal } from "@angular/cdk/portal";
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    OnInit,
+    TemplateRef,
+    ViewChild,
+    ViewContainerRef,
+} from "@angular/core";
+
+import {
+    BandScale,
+    BarRenderer,
+    BarStatusGridConfig,
+    Chart,
+    ChartPalette,
+    CHART_PALETTE_CS1,
+    HIGHLIGHT_DATA_POINT_EVENT,
+    HorizontalBarAccessors,
+    ISetDomainEventPayload,
+    LinearScale,
+    MappedValueProvider,
+    NoopAccessors,
+    NoopRenderer,
+    SELECT_DATA_POINT_EVENT,
+    SET_DOMAIN_EVENT,
+    XYGrid,
+    XYGridConfig,
     ZoomPlugin,
 } from "@nova-ui/charts";
 
@@ -20,13 +50,15 @@ import {
 })
 export class ChartWaterfallTestComponent implements AfterViewInit, OnInit {
     // TODO: 1. overlay for grid. 2. top axis 3. popup on hover example
-    public palette = new ChartPalette(new MappedValueProvider<string>({
-        "connect": CHART_PALETTE_CS1[0],
-        "dns": CHART_PALETTE_CS1[1],
-        "send": CHART_PALETTE_CS1[2],
-        "ttfb": CHART_PALETTE_CS1[3],
-        "cdownload": CHART_PALETTE_CS1[4],
-    }));
+    public palette = new ChartPalette(
+        new MappedValueProvider<string>({
+            connect: CHART_PALETTE_CS1[0],
+            dns: CHART_PALETTE_CS1[1],
+            send: CHART_PALETTE_CS1[2],
+            ttfb: CHART_PALETTE_CS1[3],
+            cdownload: CHART_PALETTE_CS1[4],
+        })
+    );
 
     public gridChart = new Chart(new XYGrid());
 
@@ -38,7 +70,9 @@ export class ChartWaterfallTestComponent implements AfterViewInit, OnInit {
             url: "http://www.google.com",
             size: 924, // in Bytes
             icon: "xml-file",
-            chart: new Chart(new XYGrid(new BarStatusGridConfig({ showBottomAxis: false }))),
+            chart: new Chart(
+                new XYGrid(new BarStatusGridConfig({ showBottomAxis: false }))
+            ),
             data: [
                 {
                     type: "connect",
@@ -66,11 +100,14 @@ export class ChartWaterfallTestComponent implements AfterViewInit, OnInit {
                     end: 178,
                 },
             ],
-        }, {
+        },
+        {
             url: "http://www2.google.com",
             size: 924, // in Bytes
             icon: "xml-file",
-            chart: new Chart(new XYGrid(new BarStatusGridConfig({ showBottomAxis: false }))),
+            chart: new Chart(
+                new XYGrid(new BarStatusGridConfig({ showBottomAxis: false }))
+            ),
             data: [
                 {
                     type: "connect",
@@ -103,7 +140,9 @@ export class ChartWaterfallTestComponent implements AfterViewInit, OnInit {
             url: "http://www.google.com/cat.png",
             size: 3333, // in Bytes
             icon: "image",
-            chart: new Chart(new XYGrid(new BarStatusGridConfig({ showBottomAxis: false }))),
+            chart: new Chart(
+                new XYGrid(new BarStatusGridConfig({ showBottomAxis: false }))
+            ),
             data: [
                 {
                     type: "connect",
@@ -136,7 +175,9 @@ export class ChartWaterfallTestComponent implements AfterViewInit, OnInit {
             url: "http://www.google.com/revenge.png",
             size: 3333, // in Bytes
             icon: "image",
-            chart: new Chart(new XYGrid(new BarStatusGridConfig({ showBottomAxis: false }))),
+            chart: new Chart(
+                new XYGrid(new BarStatusGridConfig({ showBottomAxis: false }))
+            ),
             data: [
                 {
                     type: "connect",
@@ -166,31 +207,39 @@ export class ChartWaterfallTestComponent implements AfterViewInit, OnInit {
             ],
         },
     ];
-    private scales: { x: LinearScale, y: BandScale };
+    private scales: { x: LinearScale; y: BandScale };
 
-    @ViewChild("templatePortalGrid") public templatePortalGrid: TemplateRef<any>;
+    @ViewChild("templatePortalGrid")
+    public templatePortalGrid: TemplateRef<any>;
     @ViewChild("gridChartPlaceholder") public gridChartPlaceholder: ElementRef;
 
-    constructor(private overlay: Overlay,
-                private overlayPositionBuilder: OverlayPositionBuilder,
-                private _viewContainerRef: ViewContainerRef,
-                private scrollStrategyOptions: ScrollStrategyOptions) {
-    }
+    constructor(
+        private overlay: Overlay,
+        private overlayPositionBuilder: OverlayPositionBuilder,
+        private _viewContainerRef: ViewContainerRef,
+        private scrollStrategyOptions: ScrollStrategyOptions
+    ) {}
 
     public ngOnInit() {
         this.gridChart.addPlugin(new ZoomPlugin());
 
-        this.gridChart.getEventBus().getStream(SET_DOMAIN_EVENT).subscribe((event) => {
-            const payload = <ISetDomainEventPayload>event.data;
-            this.listItems.forEach(item => {
-                this.scales.x.fixDomain(payload[this.scales.x.id]);
-                item.chart.updateDimensions();
+        this.gridChart
+            .getEventBus()
+            .getStream(SET_DOMAIN_EVENT)
+            .subscribe((event) => {
+                const payload = <ISetDomainEventPayload>event.data;
+                this.listItems.forEach((item) => {
+                    this.scales.x.fixDomain(payload[this.scales.x.id]);
+                    item.chart.updateDimensions();
+                });
             });
-        });
     }
 
     public ngAfterViewInit() {
-        this.templatePortal = new TemplatePortal(this.templatePortalGrid, this._viewContainerRef);
+        this.templatePortal = new TemplatePortal(
+            this.templatePortalGrid,
+            this._viewContainerRef
+        );
         const positions: ConnectionPositionPair[] = [
             {
                 overlayX: "start",
@@ -218,19 +267,21 @@ export class ChartWaterfallTestComponent implements AfterViewInit, OnInit {
             y: bandScale,
             x: linearScale,
         };
-        this.scales.x.formatters.tick = (value: number) => `${Number(value / 1000).toFixed(1)}s`;
+        this.scales.x.formatters.tick = (value: number) =>
+            `${Number(value / 1000).toFixed(1)}s`;
         const renderer = new BarRenderer();
         const accessors = new HorizontalBarAccessors();
-        accessors.data.color = (d: any) => this.palette.standardColors.get(d.type);
+        accessors.data.color = (d: any) =>
+            this.palette.standardColors.get(d.type);
 
         let commonWidth = 0;
 
-        this.listItems.forEach(item => {
+        this.listItems.forEach((item) => {
             const seriesSet = [
                 {
                     id: "series-1",
                     name: "Series 1",
-                    data: item.data.map(d => ({
+                    data: item.data.map((d) => ({
                         value: d.end - d.start,
                         category: "cat1",
                         type: d.type,
@@ -242,15 +293,21 @@ export class ChartWaterfallTestComponent implements AfterViewInit, OnInit {
                     accessors,
                     scales: this.scales,
                     renderer,
-                }];
+                },
+            ];
 
             item.chart.update(seriesSet);
 
-            item.chart.getEventBus().getStream(HIGHLIGHT_DATA_POINT_EVENT).subscribe(console.log);
-            item.chart.getEventBus().getStream(SELECT_DATA_POINT_EVENT).subscribe(console.log);
+            item.chart
+                .getEventBus()
+                .getStream(HIGHLIGHT_DATA_POINT_EVENT)
+                .subscribe(console.log);
+            item.chart
+                .getEventBus()
+                .getStream(SELECT_DATA_POINT_EVENT)
+                .subscribe(console.log);
 
             commonWidth = item.chart.getGrid().config().dimension.width(); // TODO: executed n times
-
         });
 
         // Handle grid
@@ -281,6 +338,10 @@ export class ChartWaterfallTestComponent implements AfterViewInit, OnInit {
     }
 
     drop(event: CdkDragDrop<string[]>) {
-        moveItemInArray(this.listItems, event.previousIndex, event.currentIndex);
+        moveItemInArray(
+            this.listItems,
+            event.previousIndex,
+            event.currentIndex
+        );
     }
 }

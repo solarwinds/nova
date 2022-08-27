@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+
 import { CheckboxStatus, IMenuGroup, SelectionType } from "@nova-ui/bits";
 
 @Component({
@@ -6,9 +7,12 @@ import { CheckboxStatus, IMenuGroup, SelectionType } from "@nova-ui/bits";
     templateUrl: "./selector.example.component.html",
 })
 export class SelectorExampleComponent {
-
     public selection: SelectionType = SelectionType.None;
-    public availableStatuses: IMenuGroup[] = this.getMenuItems([SelectionType.All, SelectionType.AllPages, SelectionType.None]);
+    public availableStatuses: IMenuGroup[] = this.getMenuItems([
+        SelectionType.All,
+        SelectionType.AllPages,
+        SelectionType.None,
+    ]);
     public checkBoxStatus: CheckboxStatus = CheckboxStatus.Unchecked;
     public appendToBody = false;
 
@@ -17,17 +21,26 @@ export class SelectorExampleComponent {
 
         switch (this.selection) {
             case SelectionType.All:
-                this.checkBoxStatus =  CheckboxStatus.Checked;
-                this.availableStatuses = this.getMenuItems([SelectionType.AllPages, SelectionType.None]);
+                this.checkBoxStatus = CheckboxStatus.Checked;
+                this.availableStatuses = this.getMenuItems([
+                    SelectionType.AllPages,
+                    SelectionType.None,
+                ]);
                 break;
             case SelectionType.AllPages:
-                this.checkBoxStatus =  CheckboxStatus.Checked;
-                this.availableStatuses = this.getMenuItems([SelectionType.All, SelectionType.None]);
+                this.checkBoxStatus = CheckboxStatus.Checked;
+                this.availableStatuses = this.getMenuItems([
+                    SelectionType.All,
+                    SelectionType.None,
+                ]);
                 break;
             case SelectionType.None:
             case SelectionType.UnselectAll:
-                this.checkBoxStatus =  CheckboxStatus.Unchecked;
-                this.availableStatuses = this.getMenuItems([SelectionType.All, SelectionType.AllPages]);
+                this.checkBoxStatus = CheckboxStatus.Unchecked;
+                this.availableStatuses = this.getMenuItems([
+                    SelectionType.All,
+                    SelectionType.AllPages,
+                ]);
                 break;
         }
     }
@@ -42,9 +55,11 @@ export class SelectorExampleComponent {
     }
 
     public getMenuItems(arr: SelectionType[]): IMenuGroup[] {
-        const resultArr: IMenuGroup[] = [{
-            itemsSource: [],
-        }];
+        const resultArr: IMenuGroup[] = [
+            {
+                itemsSource: [],
+            },
+        ];
         arr.map((element: SelectionType) => {
             resultArr[0].itemsSource.push({ value: element, title: element });
         });

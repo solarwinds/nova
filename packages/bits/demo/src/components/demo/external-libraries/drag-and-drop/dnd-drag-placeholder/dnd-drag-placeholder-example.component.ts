@@ -1,5 +1,5 @@
-import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
-import {Component} from "@angular/core";
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { Component } from "@angular/core";
 
 @Component({
     selector: "dnd-drag-placeholder",
@@ -7,9 +7,13 @@ import {Component} from "@angular/core";
     styleUrls: ["./dnd-drag-placeholder-example.component.less"],
 })
 export class DndDragPlaceholderExampleComponent {
-    public listItems: string[] = ["Adobe", "IBM", "Dell" ];
+    public listItems: string[] = ["Adobe", "IBM", "Dell"];
 
     public onItemDropped(event: CdkDragDrop<string[]>) {
-        moveItemInArray(this.listItems, event.previousIndex, event.currentIndex);
+        moveItemInArray(
+            this.listItems,
+            event.previousIndex,
+            event.currentIndex
+        );
     }
 }

@@ -1,12 +1,12 @@
 import { Component, Inject } from "@angular/core";
-import { ToastService } from "@nova-ui/bits";
 import moment, { Moment } from "moment/moment";
+
+import { ToastService } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-time-picker-preserve-insignificant",
     templateUrl: "./time-picker-preserve-insignificant.example.component.html",
 })
-
 export class TimePickerPreserveInsignificantExampleComponent {
     public time: Moment;
 
@@ -16,6 +16,8 @@ export class TimePickerPreserveInsignificantExampleComponent {
 
     public valueChange(time: any): void {
         this.time = time;
-        this.toastService.info({message: $localize `Selected time is: ` + this.time.toString()});
+        this.toastService.info({
+            message: $localize`Selected time is: ` + this.time.toString(),
+        });
     }
 }

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+
 import { NuiImageModule } from "@nova-ui/bits";
 
 import { WidgetErrorComponent } from "./widget-error.component";
@@ -9,14 +10,9 @@ describe("WidgetErrorComponent", () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [
-                WidgetErrorComponent,
-            ],
-            imports: [
-                NuiImageModule,
-            ],
-        })
-            .compileComponents();
+            declarations: [WidgetErrorComponent],
+            imports: [NuiImageModule],
+        }).compileComponents();
     }));
 
     beforeEach(() => {

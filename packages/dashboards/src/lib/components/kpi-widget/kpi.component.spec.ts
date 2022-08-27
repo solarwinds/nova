@@ -1,13 +1,24 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { DataSourceFeatures, EventBus, IDataSource, IEvent, IFilteringOutputs, IFilteringParticipants } from "@nova-ui/bits";
 import { Subject } from "rxjs";
+
+import {
+    DataSourceFeatures,
+    EventBus,
+    IDataSource,
+    IEvent,
+    IFilteringOutputs,
+    IFilteringParticipants,
+} from "@nova-ui/bits";
 
 import { NuiDashboardsModule } from "../../dashboards.module";
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { ProviderRegistryService } from "../../services/provider-registry.service";
-import { DATA_SOURCE, PIZZAGNA_EVENT_BUS, WellKnownDataSourceFeatures } from "../../types";
-
+import {
+    DATA_SOURCE,
+    PIZZAGNA_EVENT_BUS,
+    WellKnownDataSourceFeatures,
+} from "../../types";
 import { KpiComponent } from "./kpi.component";
 
 class MockDataSource implements IDataSource {
@@ -20,7 +31,9 @@ class MockDataSource implements IDataSource {
         return null;
     }
 
-    public registerComponent(components: Partial<IFilteringParticipants>): void {
+    public registerComponent(
+        components: Partial<IFilteringParticipants>
+    ): void {
         // @ts-ignore: Suppressed for testing purposes
         this.filterParticipants = components;
     }
@@ -35,7 +48,10 @@ describe("KpiComponent", () => {
     let fixture: ComponentFixture<KpiComponent>;
     const eventBus = new EventBus<IEvent>();
     const dynamicComponentCreator = new DynamicComponentCreator();
-    const pizzagnaService = new PizzagnaService(eventBus, dynamicComponentCreator);
+    const pizzagnaService = new PizzagnaService(
+        eventBus,
+        dynamicComponentCreator
+    );
     let dataSource: IDataSource;
 
     beforeEach(waitForAsync(() => {
@@ -74,8 +90,10 @@ describe("KpiComponent", () => {
         it("is interactive when datasource is interactive with data", () => {
             expect(component.interactive).toBeFalsy();
 
-            dataSource.features = new DataSourceFeatures({ [WellKnownDataSourceFeatures.Interactivity]: { enabled: true } });
-            component.widgetData = {value: 0};
+            dataSource.features = new DataSourceFeatures({
+                [WellKnownDataSourceFeatures.Interactivity]: { enabled: true },
+            });
+            component.widgetData = { value: 0 };
 
             expect(component.interactive).toBe(true);
         });
@@ -84,7 +102,7 @@ describe("KpiComponent", () => {
             expect(component.interactive).toBeFalsy();
 
             component.configuration = { interactive: true };
-            component.widgetData = {value: 0};
+            component.widgetData = { value: 0 };
 
             expect(component.interactive).toBe(true);
         });
@@ -92,7 +110,9 @@ describe("KpiComponent", () => {
         it("is not interactive when datasource is interactive with no data", () => {
             expect(component.interactive).toBeFalsy();
 
-            dataSource.features = new DataSourceFeatures({ [WellKnownDataSourceFeatures.Interactivity]: { enabled: true } });
+            dataSource.features = new DataSourceFeatures({
+                [WellKnownDataSourceFeatures.Interactivity]: { enabled: true },
+            });
 
             expect(component.interactive).toBe(false);
         });
@@ -105,5 +125,4 @@ describe("KpiComponent", () => {
             expect(component.interactive).toBe(false);
         });
     });
-
 });

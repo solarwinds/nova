@@ -1,15 +1,11 @@
-import {
-    Component,
-    Input,
-    ViewEncapsulation,
-} from "@angular/core";
+import { Component, Input, ViewEncapsulation } from "@angular/core";
 /** @ignore */
 @Component({
     selector: "nui-validation-message",
     templateUrl: "./validation-message.component.html",
     styleUrls: ["./validation-message.component.less"],
     encapsulation: ViewEncapsulation.None,
-    host: { "role": "alert" },
+    host: { role: "alert" },
 })
 export class ValidationMessageComponent {
     /**

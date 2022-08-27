@@ -1,13 +1,9 @@
 import { BandScale } from "../band-scale";
 import { LinearScale } from "../linear-scale";
-
 import { convert } from "./convert";
 
 describe("convert", () => {
-
-    beforeEach(() => {
-
-    });
+    beforeEach(() => {});
 
     it("passes conversion to linear scale", () => {
         const scale = new LinearScale();
@@ -45,8 +41,12 @@ describe("convert", () => {
 
         scale.range([0, 100]);
 
-        expect(convert(scale, [3, 30], 0)).toEqual(scale.convert(3, 0) + innerScale.convert(30, 0));
-        expect(convert(scale, [3, 30], 1)).toEqual(scale.convert(3, 0) + innerScale.convert(30, 1));
+        expect(convert(scale, [3, 30], 0)).toEqual(
+            scale.convert(3, 0) + innerScale.convert(30, 0)
+        );
+        expect(convert(scale, [3, 30], 1)).toEqual(
+            scale.convert(3, 0) + innerScale.convert(30, 1)
+        );
     });
 
     it("converts an array of values by inner scales - 3 levels", () => {
@@ -63,8 +63,16 @@ describe("convert", () => {
 
         scale.range([0, 100]);
 
-        expect(convert(scale, [3, 30, 300], 0)).toEqual(scale.convert(3, 0) + innerScale1.convert(30, 0) + innerScale2.convert(300, 0));
-        expect(convert(scale, [3, 30, 300], 1)).toEqual(scale.convert(3, 0) + innerScale1.convert(30, 0) + innerScale2.convert(300, 1));
+        expect(convert(scale, [3, 30, 300], 0)).toEqual(
+            scale.convert(3, 0) +
+                innerScale1.convert(30, 0) +
+                innerScale2.convert(300, 0)
+        );
+        expect(convert(scale, [3, 30, 300], 1)).toEqual(
+            scale.convert(3, 0) +
+                innerScale1.convert(30, 0) +
+                innerScale2.convert(300, 1)
+        );
     });
 
     it("works when there are more values than scales", () => {
@@ -77,8 +85,12 @@ describe("convert", () => {
 
         scale.range([0, 100]);
 
-        expect(convert(scale, [3, 30, 40], 0)).toEqual(scale.convert(3, 0) + innerScale.convert(30, 0));
-        expect(convert(scale, [3, 30, 40], 1)).toEqual(scale.convert(3, 0) + innerScale.convert(30, 1));
+        expect(convert(scale, [3, 30, 40], 0)).toEqual(
+            scale.convert(3, 0) + innerScale.convert(30, 0)
+        );
+        expect(convert(scale, [3, 30, 40], 1)).toEqual(
+            scale.convert(3, 0) + innerScale.convert(30, 1)
+        );
     });
 
     it("works when there are more scales than values", () => {
@@ -105,8 +117,11 @@ describe("convert", () => {
 
         scale.range([0, 100]);
 
-        expect(convert(scale, [3, 50], 0)).toEqual(scale.convert(3, 0) + innerScale.convert(50));
-        expect(convert(scale, [3, 50], 1)).toEqual(scale.convert(3, 0) + innerScale.convert(50));
+        expect(convert(scale, [3, 50], 0)).toEqual(
+            scale.convert(3, 0) + innerScale.convert(50)
+        );
+        expect(convert(scale, [3, 50], 1)).toEqual(
+            scale.convert(3, 0) + innerScale.convert(50)
+        );
     });
-
 });

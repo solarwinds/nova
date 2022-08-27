@@ -1,5 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+
 import {
     NuiCheckboxModule,
     NuiDialogModule,
@@ -21,15 +22,8 @@ import { FilterGroupsWrapperComponent } from "./filter-groups-wrapper/filter-gro
         NuiExpanderModule,
         NuiPopoverModule,
     ],
-    declarations: [
-        FilterGroupsWrapperComponent,
-        FilterGroupComponent,
-    ],
-    exports: [
-        FilterGroupsWrapperComponent,
-        FilterGroupComponent,
-    ],
+    declarations: [FilterGroupsWrapperComponent, FilterGroupComponent],
+    exports: [FilterGroupsWrapperComponent, FilterGroupComponent],
     providers: [FilterGroupService],
 })
-
 export class FilterGroupModule {}

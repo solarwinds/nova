@@ -1,8 +1,8 @@
 import { Inject, Injectable } from "@angular/core";
+
 import { DataSourceService, IFilters } from "@nova-ui/bits";
 
 import { FakeHTTPService } from "../fake-http.service";
-
 import { ExampleItem, ICustomDSFilteredData } from "./public-api";
 
 @Injectable()
@@ -12,7 +12,9 @@ export class FilterGroupCustomDataSourceService extends DataSourceService<Exampl
     }
 
     // Emitting current filters to 'server' via http service, to get filtered data 'ICustomDSFilteredData'
-    public async getFilteredData(filters: IFilters): Promise<ICustomDSFilteredData> {
+    public async getFilteredData(
+        filters: IFilters
+    ): Promise<ICustomDSFilteredData> {
         return await this.httpService.getData(filters);
     }
 }

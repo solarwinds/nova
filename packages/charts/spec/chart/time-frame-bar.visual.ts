@@ -1,6 +1,7 @@
+import { browser } from "protractor";
+
 import { Camera } from "@nova-ui/bits/sdk/atoms";
 import { Animations, Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
-import { browser } from "protractor";
 
 import { ZoomBooster } from "./boosters/zoom.booster";
 import { TimeFrameBarTestPage } from "./time-frame-bar-test.po";
@@ -13,7 +14,9 @@ describe(`Visual tests: Charts - ${name}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("time-frame-bar/test");
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
         await page.removeDelay();
 
         camera = new Camera().loadFilm(browser, name);
@@ -24,14 +27,9 @@ describe(`Visual tests: Charts - ${name}`, () => {
 
         await camera.say.cheese(`${name} - Default`);
 
-        await ZoomBooster.zoom(
-            page.chart,
-            { x: 50, y: 50 },
-            { x: 200, y: 50 }
-        );
+        await ZoomBooster.zoom(page.chart, { x: 50, y: 50 }, { x: 200, y: 50 });
         await camera.say.cheese(`${name} - After zoom`);
 
         await camera.turn.off();
     }, 100000);
-
 });

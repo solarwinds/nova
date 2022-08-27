@@ -1,5 +1,6 @@
-import { Atom, TimeFrameBarAtom } from "@nova-ui/bits/sdk/atoms";
 import { by, element, ElementFinder } from "protractor";
+
+import { Atom, TimeFrameBarAtom } from "@nova-ui/bits/sdk/atoms";
 
 import { ChartAtom } from "./atoms/chart.atom";
 
@@ -17,7 +18,10 @@ export class TimeFrameBarTestPage {
     }
 
     public get timeFrameBar(): TimeFrameBarAtom {
-        return Atom.findIn(TimeFrameBarAtom, element(by.className("time-frame-bar")));
+        return Atom.findIn(
+            TimeFrameBarAtom,
+            element(by.className("time-frame-bar"))
+        );
     }
 
     public async removeDelay(): Promise<void> {

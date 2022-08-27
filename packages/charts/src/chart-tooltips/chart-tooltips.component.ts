@@ -1,5 +1,20 @@
-import { ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnDestroy, QueryList, SimpleChanges, ViewChildren } from "@angular/core";
-import { forceCollide, forceSimulation, Simulation, SimulationNodeDatum } from "d3-force";
+import {
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    Input,
+    OnChanges,
+    OnDestroy,
+    QueryList,
+    SimpleChanges,
+    ViewChildren,
+} from "@angular/core";
+import {
+    forceCollide,
+    forceSimulation,
+    Simulation,
+    SimulationNodeDatum,
+} from "d3-force";
 import { select } from "d3-selection";
 import each from "lodash/each";
 import isEqual from "lodash/isEqual";
@@ -9,7 +24,6 @@ import { takeUntil } from "rxjs/operators";
 
 import { IPosition } from "../core/common/types";
 import { ChartTooltipsPlugin } from "../core/plugins/tooltips/chart-tooltips-plugin";
-
 import { ChartTooltipDirective } from "./chart-tooltip.directive";
 
 interface ITooltipNode extends SimulationNodeDatum {
@@ -23,12 +37,12 @@ interface ITooltipNode extends SimulationNodeDatum {
     styleUrls: ["./chart-tooltips.component.less"],
 })
 export class ChartTooltipsComponent implements OnChanges, OnDestroy {
-
     @Input() plugin: ChartTooltipsPlugin;
 
     @Input() template: ElementRef;
 
-    @ViewChildren(ChartTooltipDirective) tooltips: QueryList<ChartTooltipDirective>;
+    @ViewChildren(ChartTooltipDirective)
+    tooltips: QueryList<ChartTooltipDirective>;
 
     public openTooltips = new Subject<void>();
     public closeTooltips = new Subject<void>();
@@ -36,15 +50,16 @@ export class ChartTooltipsComponent implements OnChanges, OnDestroy {
     private unsubscribe$ = new Subject();
     private simulation: Simulation<ITooltipNode, undefined>;
     // index we use for fast access of tooltip directives by seriesId
-    private tooltipDirectivesIndex: { [seriesId: string]: ChartTooltipDirective } = {};
+    private tooltipDirectivesIndex: {
+        [seriesId: string]: ChartTooltipDirective;
+    } = {};
     private closePending = false;
     private isOpen = false;
     private openTimeout: number;
     private collisionTimeout: number;
     private closeTimeout: number;
 
-    constructor(private changeDetector: ChangeDetectorRef) {
-    }
+    constructor(private changeDetector: ChangeDetectorRef) {}
 
     public ngOnChanges(changes: SimpleChanges) {
         if (!(changes["plugin"] && changes["plugin"].currentValue)) {
@@ -53,8 +68,12 @@ export class ChartTooltipsComponent implements OnChanges, OnDestroy {
 
         this.unsubscribe$.next();
 
-        this.plugin.showSubject.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.handleOpen());
-        this.plugin.hideSubject.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.handleClose());
+        this.plugin.showSubject
+            .pipe(takeUntil(this.unsubscribe$))
+            .subscribe(() => this.handleOpen());
+        this.plugin.hideSubject
+            .pipe(takeUntil(this.unsubscribe$))
+            .subscribe(() => this.handleClose());
     }
 
     public ngOnDestroy(): void {
@@ -69,10 +88,14 @@ export class ChartTooltipsComponent implements OnChanges, OnDestroy {
     private handleOpen() {
         this.changeDetector.detectChanges();
 
-        const currentTooltipDirectivesIndex: { [seriesId: string]: ChartTooltipDirective } = {};
-        this.tooltips.forEach(tooltip => {
+        const currentTooltipDirectivesIndex: {
+            [seriesId: string]: ChartTooltipDirective;
+        } = {};
+        this.tooltips.forEach((tooltip) => {
             // this is how we identify which series does the tooltip belong to
-            const seriesId: string | undefined = tooltip.elementRef.nativeElement.getAttribute("series-id") ?? undefined;
+            const seriesId: string | undefined =
+                tooltip.elementRef.nativeElement.getAttribute("series-id") ??
+                undefined;
 
             if (!seriesId) {
                 throw new Error("SeriesId is not defined");
@@ -81,7 +104,10 @@ export class ChartTooltipsComponent implements OnChanges, OnDestroy {
             currentTooltipDirectivesIndex[seriesId] = tooltip;
         });
 
-        const directivesChanged = !isEqual(currentTooltipDirectivesIndex, this.tooltipDirectivesIndex);
+        const directivesChanged = !isEqual(
+            currentTooltipDirectivesIndex,
+            this.tooltipDirectivesIndex
+        );
         if (this.closePending || directivesChanged || !this.isOpen) {
             clearTimeout(this.openTimeout);
 
@@ -123,11 +149,13 @@ export class ChartTooltipsComponent implements OnChanges, OnDestroy {
         // extracted tooltip positions from tooltip directives
         const tooltipPositions: { [seriesId: string]: IPosition } = {};
 
-        this.tooltips.forEach(tooltip => {
+        this.tooltips.forEach((tooltip) => {
             const element = tooltip.getOverlayElement();
 
             // this is how we identify which series does the tooltip belong to
-            const seriesId: string | undefined = tooltip.elementRef.nativeElement.getAttribute("series-id") ?? undefined;
+            const seriesId: string | undefined =
+                tooltip.elementRef.nativeElement.getAttribute("series-id") ??
+                undefined;
 
             if (!seriesId) {
                 throw new Error("SeriesId is not defined");
@@ -148,7 +176,10 @@ export class ChartTooltipsComponent implements OnChanges, OnDestroy {
             this.simulation.stop();
         }
 
-        this.simulation = this.startSimulation(this.tooltipDirectivesIndex, tooltipPositions);
+        this.simulation = this.startSimulation(
+            this.tooltipDirectivesIndex,
+            tooltipPositions
+        );
     }
 
     /**
@@ -157,9 +188,11 @@ export class ChartTooltipsComponent implements OnChanges, OnDestroy {
      * @param tooltipIndex
      * @param tooltipPositions
      */
-    private startSimulation(tooltipIndex: { [p: string]: ChartTooltipDirective },
-                            tooltipPositions: { [seriesId: string]: IPosition }) {
-        const nodes = Object.keys(tooltipPositions).map(seriesId => {
+    private startSimulation(
+        tooltipIndex: { [p: string]: ChartTooltipDirective },
+        tooltipPositions: { [seriesId: string]: IPosition }
+    ) {
+        const nodes = Object.keys(tooltipPositions).map((seriesId) => {
             const position = tooltipPositions[seriesId];
 
             if (isNil(position.height) || isNil(position.width)) {
@@ -170,7 +203,9 @@ export class ChartTooltipsComponent implements OnChanges, OnDestroy {
                 seriesId: seriesId,
                 x: position.x,
                 y: position.y,
-                radius: this.isVertical() ? position.height / 2 : position.width / 2,
+                radius: this.isVertical()
+                    ? position.height / 2
+                    : position.width / 2,
             };
             if (this.isVertical()) {
                 props.fx = position.x;
@@ -193,8 +228,10 @@ export class ChartTooltipsComponent implements OnChanges, OnDestroy {
             each(nodes, (node: ITooltipNode) => {
                 const tooltip = tooltipIndex[node.seriesId];
 
-                select(tooltip.getOverlayElement())
-                    .style(this.isVertical() ? "top" : "left", (this.isVertical() ? node.y : node.x) + "px");
+                select(tooltip.getOverlayElement()).style(
+                    this.isVertical() ? "top" : "left",
+                    (this.isVertical() ? node.y : node.x) + "px"
+                );
             });
         });
 
@@ -204,5 +241,4 @@ export class ChartTooltipsComponent implements OnChanges, OnDestroy {
     private isVertical() {
         return this.plugin.orientation === "right";
     }
-
 }

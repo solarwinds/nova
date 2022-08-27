@@ -1,7 +1,8 @@
 import { Component } from "@angular/core";
 import { FormControl, Validators } from "@angular/forms";
-import { ISelectChangedEvent } from "@nova-ui/bits";
 import moment from "moment-timezone";
+
+import { ISelectChangedEvent } from "@nova-ui/bits";
 
 const zonesData = require("moment-timezone/data/packed/latest.json");
 moment.tz.add(zonesData.zones);
@@ -12,8 +13,12 @@ moment.tz.add(zonesData.zones);
 })
 export class DateTimePickerTimezonesExampleComponent {
     public control = new FormControl(moment(), Validators.required);
-    get selectedDate() { return this.control.value.toString(); }
-    public zones: string[] = zonesData.zones.map((z: string) => z.split("|")[0]);
+    get selectedDate() {
+        return this.control.value.toString();
+    }
+    public zones: string[] = zonesData.zones.map(
+        (z: string) => z.split("|")[0]
+    );
     public displayedZones = this.zones;
     public initialZone = "Australia/Sydney";
 
@@ -23,9 +28,11 @@ export class DateTimePickerTimezonesExampleComponent {
 
     public textboxChanged(searchQuery: ISelectChangedEvent<any>) {
         const val = searchQuery.newValue;
-        this.displayedZones = this.zones.filter(z => z.toLowerCase().includes(val.toLowerCase()));
+        this.displayedZones = this.zones.filter((z) =>
+            z.toLowerCase().includes(val.toLowerCase())
+        );
 
-        if (this.zones.find(z => z === val)) {
+        if (this.zones.find((z) => z === val)) {
             this.control.setValue(this.control.value.tz(val));
         }
     }

@@ -1,26 +1,18 @@
 {
-    "extends": "./tsconfig.json",
     "compilerOptions": {
         "module": "ESNext",
         "outDir": "../../out-tsc/spec",
-        "types": [
-            "jasmine",
-            "node"
-        ],
+        "types": ["jasmine", "node"],
         "paths": {
             "@nova-ui/dashboards": ["./src/public-api.ts"]
         }
     },
-    "files": [
-        "./src/test.ts",
-        "./src/polyfills.ts"
-    ],
+    "exclude": ["**/schematics/**/files/**"],
+    "extends": "./tsconfig.json",
+    "files": ["./src/test.ts", "./src/polyfills.ts"],
     "include": [
         "../spec/virtual-dashboards/**/*.spec.ts",
         "**/*.spec.ts",
         "**/*.d.ts"
-    ],
-    "exclude": [
-        "**/schematics/**/files/**"
     ]
 }

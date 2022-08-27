@@ -2,7 +2,11 @@ import { Injectable } from "@angular/core";
 
 @Injectable({ providedIn: "root" })
 export class PlunkerFiles {
-    public getAppFile = (filePrefix: string, className: string, selector: string): string => `import {
+    public getAppFile = (
+        filePrefix: string,
+        className: string,
+        selector: string
+    ): string => `import {
     Component,
     NgModule,
     TRANSLATIONS,
@@ -153,7 +157,7 @@ export class App {
     ],
 })
 export class AppModule {}
-`
+`;
 
     public getSystemJsConfigFile = (): string => `var ver = {
     ng: '^11.0.0'
@@ -350,13 +354,14 @@ System.config({
         },
     }
 });
-`
+`;
 
-    public getMainFile = (): string => `import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+    public getMainFile =
+        (): string => `import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {AppModule} from './app';
 
 platformBrowserDynamic().bootstrapModule(AppModule);
-`
+`;
 
     public getIndexFile = (): string => `<!DOCTYPE html>
 <html class="nui">
@@ -386,5 +391,5 @@ platformBrowserDynamic().bootstrapModule(AppModule);
     </body>
 
 </html>
-`
+`;
 }

@@ -1,7 +1,6 @@
 import { SvgMarker } from "./svg-marker";
 
 describe("SvgMarker >", () => {
-
     let marker: SvgMarker;
 
     beforeEach(() => {
@@ -11,6 +10,6 @@ describe("SvgMarker >", () => {
     it("setColor", () => {
         marker.setColor("red");
 
-        expect(marker.getSvg()).toBe("<g fill=\"red\">xxx</g>");
+        expect(marker.getSvg()).toBe(`<g fill="red">xxx</g>`);
     });
 });

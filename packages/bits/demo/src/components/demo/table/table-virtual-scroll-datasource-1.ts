@@ -1,6 +1,12 @@
 import { Injectable } from "@angular/core";
-import { DataSourceService, INovaFilteringOutputs, INovaFilters, SearchService } from "@nova-ui/bits";
 import { BehaviorSubject } from "rxjs";
+
+import {
+    DataSourceService,
+    INovaFilteringOutputs,
+    INovaFilters,
+    SearchService,
+} from "@nova-ui/bits";
 
 import {
     IRandomUserResponse,
@@ -25,15 +31,22 @@ export class RandomuserTableDataSource1 extends DataSourceService<IRandomUserTab
         super();
     }
 
-    public async getFilteredData(filters: INovaFilters): Promise<INovaFilteringOutputs> {
+    public async getFilteredData(
+        filters: INovaFilters
+    ): Promise<INovaFilteringOutputs> {
         this.busy.next(true);
 
         // We're returning Promise with setTimeout here to make the response from the server longer, as the API being used sends responses
         // almost immediately. We need it longer to be able the show the spinner component on data load
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             setTimeout(() => {
-                this.getData(this.dataStart, this.dataStart + this.step.value).then((response: UsersQueryResponse | undefined) => {
-                    if (!response) { return; }
+                this.getData(
+                    this.dataStart,
+                    this.dataStart + this.step.value
+                ).then((response: UsersQueryResponse | undefined) => {
+                    if (!response) {
+                        return;
+                    }
 
                     this.cache = this.cache.concat(response.users);
                     this.dataSubject.next(this.cache);
@@ -55,30 +68,41 @@ export class RandomuserTableDataSource1 extends DataSourceService<IRandomUserTab
         });
     }
 
-    public async getData(start: number = 0, end: number= 20): Promise<UsersQueryResponse | undefined> {
+    public async getData(
+        start: number = 0,
+        end: number = 20
+    ): Promise<UsersQueryResponse | undefined> {
         let response: IRandomUserResponse | undefined;
         try {
-            response = await
-            (await fetch(`${this.url}/?page=${this.page}&results=${end - start}&seed=${this.seed}`))
-                .json();
+            response = await (
+                await fetch(
+                    `${this.url}/?page=${this.page}&results=${
+                        end - start
+                    }&seed=${this.seed}`
+                )
+            ).json();
             return {
-                users: response?.results.map((result: IRandomUserResults, i: number) => ({
-                    no: this.cache.length + i + 1,
-                    nameTitle: result.name.title,
-                    nameFirst: result.name.first,
-                    nameLast: result.name.last,
-                    gender: result.gender,
-                    country: result.location.country,
-                    city: result.location.city,
-                    postcode: result.location.postcode,
-                    email: result.email,
-                    cell: result.cell,
-                })),
+                users: response?.results.map(
+                    (result: IRandomUserResults, i: number) => ({
+                        no: this.cache.length + i + 1,
+                        nameTitle: result.name.title,
+                        nameFirst: result.name.first,
+                        nameLast: result.name.last,
+                        gender: result.gender,
+                        country: result.location.country,
+                        city: result.location.city,
+                        postcode: result.location.postcode,
+                        email: result.email,
+                        cell: result.cell,
+                    })
+                ),
                 total: response?.results.length,
                 start: start,
             } as UsersQueryResponse;
         } catch (e) {
-            console.error("Error responding from server. Please visit https://https://randomuser.me/ to see if it's available");
+            console.error(
+                "Error responding from server. Please visit https://https://randomuser.me/ to see if it's available"
+            );
         }
     }
 }

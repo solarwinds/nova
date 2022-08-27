@@ -20,4 +20,3 @@ export * from "./date-picker-visual-test/date-picker-visual-test.component";
 export * from "./date-picker-calendar-navigated/date-picker-calendar-navigated.example.component";
 export * from "./date-picker-reactive-form/date-picker-reactive-form.example.component";
 export * from "./date-picker-timezone/date-picker-timezone.example.component";
-

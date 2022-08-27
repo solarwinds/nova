@@ -15,12 +15,13 @@ import {
     SimpleChanges,
     StaticProvider,
 } from "@angular/core";
-import { IEvent, LoggerService } from "@nova-ui/bits";
 import isArray from "lodash/isArray";
 import values from "lodash/values";
 import xor from "lodash/xor";
 import { ReplaySubject, Subject, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+
+import { IEvent, LoggerService } from "@nova-ui/bits";
 
 import { ProviderRegistryService } from "../../../services/provider-registry.service";
 import { IConfigurable, IProviderConfiguration } from "../../../types";
@@ -30,7 +31,9 @@ import { ComponentPortalService } from "../../services/component-portal.service"
     selector: "[nuiComponentPortal]",
     exportAs: "nuiComponentPortal",
 })
-export class ComponentPortalDirective implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+export class ComponentPortalDirective
+    implements OnInit, AfterViewInit, OnDestroy, OnChanges
+{
     @Input() public componentId: string;
     @Input() public componentType: string | Function;
     @Input() public properties: Record<string, any>;
@@ -46,12 +49,13 @@ export class ComponentPortalDirective implements OnInit, AfterViewInit, OnDestro
     private destroy$ = new Subject();
     private changesSubscription?: Subscription;
 
-    constructor(private injector: Injector,
-                private logger: LoggerService,
-                private portalService: ComponentPortalService,
-                private renderer: Renderer2,
-                private providerRegistry: ProviderRegistryService) {
-    }
+    constructor(
+        private injector: Injector,
+        private logger: LoggerService,
+        private portalService: ComponentPortalService,
+        private renderer: Renderer2,
+        private providerRegistry: ProviderRegistryService
+    ) {}
 
     public ngOnInit(): void {
         this.logger.debug("Portal created:", this.componentId);
@@ -59,7 +63,7 @@ export class ComponentPortalDirective implements OnInit, AfterViewInit, OnDestro
     }
 
     public ngAfterViewInit(): void {
-        Object.keys(this.providerInstances).forEach(key => {
+        Object.keys(this.providerInstances).forEach((key) => {
             const provider = this.providerInstances[key];
             if (provider.ngAfterViewInit) {
                 provider.ngAfterViewInit();
@@ -73,7 +77,10 @@ export class ComponentPortalDirective implements OnInit, AfterViewInit, OnDestro
 
         if (providersChange && !providersChange.isFirstChange()) {
             if (this.checkForProviderChanges(providersChange)) {
-                this.logger.debug("Portal recreated (provider change):", this.componentId);
+                this.logger.debug(
+                    "Portal recreated (provider change):",
+                    this.componentId
+                );
                 this.recreatePortal();
                 recreated = true; // we want to prevent multiple recreations within one ngOnChanges cycle
             } else {
@@ -81,8 +88,15 @@ export class ComponentPortalDirective implements OnInit, AfterViewInit, OnDestro
             }
         }
 
-        if (changes.componentType && !changes.componentType.isFirstChange() && !recreated) {
-            this.logger.debug("Portal recreated (component change):", this.componentId);
+        if (
+            changes.componentType &&
+            !changes.componentType.isFirstChange() &&
+            !recreated
+        ) {
+            this.logger.debug(
+                "Portal recreated (component change):",
+                this.componentId
+            );
             this.recreatePortal();
         }
 
@@ -105,19 +119,31 @@ export class ComponentPortalDirective implements OnInit, AfterViewInit, OnDestro
 
         // ctrl+shift+click on a pizzagna to get a dump of its properties
         // this will propagate through the parent components, so it should dump the parent pizzagnas as well
-        this.renderer.listen(componentRef.location.nativeElement, "click", (event: MouseEvent) => {
-            // event.metaKey is a CMD key for Mac
-            if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.button === 0) {
-                console.log("==================== PIZZAGNA DUMP =========================");
-                console.log("componentId:", this.componentId);
-                console.log("component:", this.component);
-                console.log("componentType:", this.componentType);
-                console.log("properties:", this.properties);
-                console.log("providers:", this.providers);
-                console.log("providerInstances:", this.providerInstances);
-                console.log("============================================================");
+        this.renderer.listen(
+            componentRef.location.nativeElement,
+            "click",
+            (event: MouseEvent) => {
+                // event.metaKey is a CMD key for Mac
+                if (
+                    (event.ctrlKey || event.metaKey) &&
+                    event.shiftKey &&
+                    event.button === 0
+                ) {
+                    console.log(
+                        "==================== PIZZAGNA DUMP ========================="
+                    );
+                    console.log("componentId:", this.componentId);
+                    console.log("component:", this.component);
+                    console.log("componentType:", this.componentType);
+                    console.log("properties:", this.properties);
+                    console.log("providers:", this.providers);
+                    console.log("providerInstances:", this.providerInstances);
+                    console.log(
+                        "============================================================"
+                    );
+                }
             }
-        });
+        );
 
         for (const key of Object.keys(this.providerInstances)) {
             const provider = this.providerInstances[key];
@@ -155,13 +181,18 @@ export class ComponentPortalDirective implements OnInit, AfterViewInit, OnDestro
             injector = this.updateProviders(injector);
         }
 
-        this.portal = this.portalService.createComponentPortal(this.componentType, injector);
+        this.portal = this.portalService.createComponentPortal(
+            this.componentType,
+            injector
+        );
 
         // apply initial property values to the freshly (re)created component
         if (this.properties) {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             for (const key of Object.keys(this.properties)) {
-                this.propertiesChanges.next(new SimpleChange(undefined, this.properties, true));
+                this.propertiesChanges.next(
+                    new SimpleChange(undefined, this.properties, true)
+                );
             }
         }
     }
@@ -171,7 +202,9 @@ export class ComponentPortalDirective implements OnInit, AfterViewInit, OnDestro
         const registeredProviders = providerKeys.reduce((acc, next) => {
             // for cases when providerId is just empty string, null or undefined (for example adding a tile doesn't provide a DS to it)
             if (this.providers[next].providerId) {
-                acc[next] = this.providerRegistry.getProvider(this.providers[next].providerId);
+                acc[next] = this.providerRegistry.getProvider(
+                    this.providers[next].providerId
+                );
             }
             return acc;
         }, {} as Record<string, StaticProvider>);
@@ -182,20 +215,29 @@ export class ComponentPortalDirective implements OnInit, AfterViewInit, OnDestro
         });
 
         this.providerInstances = providerKeys.reduce((acc, next) => {
-            const registeredProvider = (registeredProviders[next] as any);
+            const registeredProvider = registeredProviders[next] as any;
             const providerConfig = this.providers[next];
             if (registeredProvider) {
                 // TODO: Why do we pass null to the injectFlags parameter?
-                // @ts-ignore
-                const injections = portalInjector.get(registeredProvider.provide, null, null);
+                const injections = portalInjector.get(
+                    registeredProvider.provide,
+                    null,
+                    // @ts-ignore
+                    null
+                );
                 const providerInstance = isArray(injections)
-                    ? (injections as any).find((v: any) => v instanceof registeredProvider.useClass)
+                    ? (injections as any).find(
+                          (v: any) => v instanceof registeredProvider.useClass
+                      )
                     : injections;
 
                 if (!providerInstance) {
                     throw new Error("Provider '" + next + "' does not exist.");
                 }
-                if (providerInstance.updateConfiguration && providerConfig.properties) {
+                if (
+                    providerInstance.updateConfiguration &&
+                    providerConfig.properties
+                ) {
                     providerInstance.updateConfiguration({
                         providerKey: next,
                         ...(providerConfig.properties || {}),
@@ -205,7 +247,10 @@ export class ComponentPortalDirective implements OnInit, AfterViewInit, OnDestro
 
                 acc[next] = providerInstance;
             } else if (providerConfig.providerId) {
-                this.logger.error("There's no registered provider for id", next);
+                this.logger.error(
+                    "There's no registered provider for id",
+                    next
+                );
             }
             return acc;
         }, this.providerInstances);
@@ -228,16 +273,22 @@ export class ComponentPortalDirective implements OnInit, AfterViewInit, OnDestro
             }
             const providerInstance = this.providerInstances[providerKey];
             if (!providerInstance) {
-                throw new Error("Provider '" + providerKey + "' does not exist.");
+                throw new Error(
+                    "Provider '" + providerKey + "' does not exist."
+                );
             }
 
             const previousValue = providersChange.previousValue[providerKey];
             const currentValue = providersChange.currentValue[providerKey];
 
-            const previousProperties = previousValue && previousValue.properties;
+            const previousProperties =
+                previousValue && previousValue.properties;
             const currentProperties = currentValue && currentValue.properties;
 
-            if (previousProperties !== currentProperties && providerInstance.updateConfiguration) {
+            if (
+                previousProperties !== currentProperties &&
+                providerInstance.updateConfiguration
+            ) {
                 (providerInstance as IConfigurable).updateConfiguration({
                     providerKey,
                     ...currentProperties,
@@ -251,8 +302,11 @@ export class ComponentPortalDirective implements OnInit, AfterViewInit, OnDestro
             return;
         }
 
-        for (const output of this.outputs.filter(o => this.component[o] instanceof EventEmitter)) {
-            this.component[output].pipe(takeUntil(this.destroy$))
+        for (const output of this.outputs.filter(
+            (o) => this.component[o] instanceof EventEmitter
+        )) {
+            this.component[output]
+                .pipe(takeUntil(this.destroy$))
                 .subscribe(($event: any) => {
                     this.output.emit({
                         id: output,
@@ -263,14 +317,25 @@ export class ComponentPortalDirective implements OnInit, AfterViewInit, OnDestro
     }
 
     private checkForProviderChanges(change: SimpleChange): boolean {
-        const previousKeys = change.previousValue ? Object.keys(change.previousValue) : [];
-        const currentKeys = change.currentValue ? Object.keys(change.currentValue) : [];
-        if (previousKeys.length !== currentKeys.length || xor(previousKeys, currentKeys).length > 0) {
+        const previousKeys = change.previousValue
+            ? Object.keys(change.previousValue)
+            : [];
+        const currentKeys = change.currentValue
+            ? Object.keys(change.currentValue)
+            : [];
+        if (
+            previousKeys.length !== currentKeys.length ||
+            xor(previousKeys, currentKeys).length > 0
+        ) {
             return true;
         }
 
-        const previousIds = Object.keys(change.previousValue).map((key: string) => change.previousValue[key].providerId);
-        const currentIds = Object.keys(change.currentValue).map((key: string) => change.currentValue[key].providerId);
+        const previousIds = Object.keys(change.previousValue).map(
+            (key: string) => change.previousValue[key].providerId
+        );
+        const currentIds = Object.keys(change.currentValue).map(
+            (key: string) => change.currentValue[key].providerId
+        );
         if (xor(previousIds, currentIds).length > 0) {
             return true;
         }
@@ -318,7 +383,11 @@ export class ComponentPortalDirective implements OnInit, AfterViewInit, OnDestro
                 this.component[key] = properties[key];
                 // we're simulating angular by calling ngOnChanges manually
                 if (this.component.ngOnChanges) {
-                    changes[key] = new SimpleChange(previousValue, properties[key], change.isFirstChange());
+                    changes[key] = new SimpleChange(
+                        previousValue,
+                        properties[key],
+                        change.isFirstChange()
+                    );
                 }
             }
         }
@@ -331,10 +400,11 @@ export class ComponentPortalDirective implements OnInit, AfterViewInit, OnDestro
             if (changeDetector) {
                 changeDetector.markForCheck();
             } else {
-                this.logger.warn(`Property 'changeDetector' is missing on component '${this.componentType}',` +
-                    ` so dynamic refresh of given component might not work.`);
+                this.logger.warn(
+                    `Property 'changeDetector' is missing on component '${this.componentType}',` +
+                        ` so dynamic refresh of given component might not work.`
+                );
             }
         }
     }
-
 }

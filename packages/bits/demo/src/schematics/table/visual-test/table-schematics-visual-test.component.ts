@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "table-schematics-visual-test",
     templateUrl: "table-schematics-visual-test.component.html",
 })
-export class TableSchematicsVisualTestComponent {
-}
+export class TableSchematicsVisualTestComponent {}

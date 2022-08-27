@@ -1,11 +1,10 @@
 import { browser } from "protractor";
+
 import { assertA11y, Helpers } from "../../helpers";
 import { PaginatorAtom } from "../public_api";
 
 describe("a11y: paginator", () => {
-    let rulesToDisable: string[] = [
-        "nested-interactive",
-    ];
+    const rulesToDisable: string[] = ["nested-interactive"];
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("paginator/paginator-visual-test");

@@ -4,7 +4,6 @@ import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
 import { SelectorAtom } from "../selector/selector.atom";
-
 import { TableAtom } from "./table.atom";
 
 const name: string = "Table";
@@ -18,7 +17,7 @@ describe(`Visual tests: ${name}`, () => {
     let selector: SelectorAtom;
     let resizeTable: TableAtom;
     let selectPinnedHeaderTable: TableAtom;
-    let expanders: {[key: string]: ElementFinder};
+    let expanders: { [key: string]: ElementFinder };
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("table/visual-test");
@@ -27,21 +26,43 @@ describe(`Visual tests: ${name}`, () => {
         customActionTable = Atom.find(TableAtom, "table-custom-action");
         selectedRowsTable = Atom.find(TableAtom, "table-selected-row");
         resizeTable = Atom.find(TableAtom, "table-resizing");
-        selectPinnedHeaderTable = Atom.find(TableAtom, "table-select-pinned-header");
-        actionsMenu = customActionTable.getElement().all(by.className("nui-menu")).get(0);
+        selectPinnedHeaderTable = Atom.find(
+            TableAtom,
+            "table-select-pinned-header"
+        );
+        actionsMenu = customActionTable
+            .getElement()
+            .all(by.className("nui-menu"))
+            .get(0);
 
         expanders = {
             basicSummary: element(by.id("nui-visual-table-basic-summary")),
             pinnedHeader: element(by.id("nui-visual-table-pinned-summary")),
-            columnAlignment: element(by.id("nui-visual-table-alignment-summary")),
-            rowDensityTiny: element(by.id("nui-visual-table-row-density-tiny-summary")),
-            rowDensityCompact: element(by.id("nui-visual-table-row-density-compact-summary")),
+            columnAlignment: element(
+                by.id("nui-visual-table-alignment-summary")
+            ),
+            rowDensityTiny: element(
+                by.id("nui-visual-table-row-density-tiny-summary")
+            ),
+            rowDensityCompact: element(
+                by.id("nui-visual-table-row-density-compact-summary")
+            ),
             sorting: element(by.id("nui-visual-table-sorting-summary")),
-            customActions: element(by.id("nui-visual-table-custom-action-summary")),
-            columnResize: element(by.id("nui-visual-table-column-size-summary")),
-            rowSelection: element(by.id("nui-visual-table-row-selection-summary")),
-            selectPinnedHeader: element(by.id("nui-visual-table-select-pinned-header-summary")),
-            virtualScrollStickyHeader: element(by.id("nui-visual-table-virtual-scroll-sticky-header-summary")),
+            customActions: element(
+                by.id("nui-visual-table-custom-action-summary")
+            ),
+            columnResize: element(
+                by.id("nui-visual-table-column-size-summary")
+            ),
+            rowSelection: element(
+                by.id("nui-visual-table-row-selection-summary")
+            ),
+            selectPinnedHeader: element(
+                by.id("nui-visual-table-select-pinned-header-summary")
+            ),
+            virtualScrollStickyHeader: element(
+                by.id("nui-visual-table-virtual-scroll-sticky-header-summary")
+            ),
         };
 
         const firstHeaderCell = selectedRowsTable.getCell(0, 0);
@@ -59,17 +80,19 @@ describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese("Dark theme");
         await Helpers.switchDarkTheme("off");
 
-        for (const key of Object.keys(expanders)) { await expanders[key].click(); }
+        for (const key of Object.keys(expanders)) {
+            await expanders[key].click();
+        }
 
         await expanders.sorting.click();
         await sortableTable.getCell(0, 4).click();
-        await browser.actions().mouseMove({x: 0, y: 300}).perform();
+        await browser.actions().mouseMove({ x: 0, y: 300 }).perform();
         await camera.say.cheese("Sorting table");
         await expanders.sorting.click();
 
         await expanders.rowSelection.click();
         await selector.getCheckbox().toggle();
-        await browser.actions().mouseMove({x: 0, y: 300}).perform();
+        await browser.actions().mouseMove({ x: 0, y: 300 }).perform();
         await camera.say.cheese("Selected rows in table");
         await expanders.rowSelection.click();
 
@@ -86,7 +109,9 @@ describe(`Visual tests: ${name}`, () => {
 
         await expanders.selectPinnedHeader.click();
         await selectPinnedHeaderTable.getCell(1, 0).click();
-        await browser.executeScript("document.getElementById('table-select-pinned-header').getElementsByClassName('nui-table__container')[0].scrollTop = '20'");
+        await browser.executeScript(
+            "document.getElementById('table-select-pinned-header').getElementsByClassName('nui-table__container')[0].scrollTop = '20'"
+        );
         await camera.say.cheese("Active checkbox under pinned header");
         await expanders.selectPinnedHeader.click();
 

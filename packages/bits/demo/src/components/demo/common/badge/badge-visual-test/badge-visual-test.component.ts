@@ -5,5 +5,4 @@ import { Component } from "@angular/core";
     templateUrl: "./badge-visual-test.component.html",
     styleUrls: ["./badge-visual-test.component.less"],
 })
-export class BadgeVisualTestComponent {
-}
+export class BadgeVisualTestComponent {}

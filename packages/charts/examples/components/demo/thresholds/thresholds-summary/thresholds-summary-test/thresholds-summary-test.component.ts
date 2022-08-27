@@ -1,12 +1,42 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 import {
-    BandScale, BarRenderer, Chart, ChartAssist, ChartPalette, ChartTooltipsPlugin, CHART_PALETTE_CS_S, getAutomaticDomainWithIncludedInterval, IAccessors,
-    IChartAssistSeries, IChartSeries, IDataSeries, ILineAccessors, ISimpleThresholdZone, IXYScales, LineAccessors, LinearScale, LineRenderer,
-    MappedValueProvider, StatusAccessors, ThresholdsService, thresholdsSummaryGridConfig, thresholdsTopGridConfig, THRESHOLDS_SUMMARY_RENDERER_CONFIG,
-    TimeScale, UtilityService, XYGrid,
-} from "@nova-ui/charts";
+    Component,
+    Input,
+    OnChanges,
+    OnInit,
+    SimpleChanges,
+} from "@angular/core";
 import cloneDeep from "lodash/cloneDeep";
 import { Moment } from "moment/moment";
+
+import {
+    BandScale,
+    BarRenderer,
+    Chart,
+    ChartAssist,
+    ChartPalette,
+    ChartTooltipsPlugin,
+    CHART_PALETTE_CS_S,
+    getAutomaticDomainWithIncludedInterval,
+    IAccessors,
+    IChartAssistSeries,
+    IChartSeries,
+    IDataSeries,
+    ILineAccessors,
+    ISimpleThresholdZone,
+    IXYScales,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    MappedValueProvider,
+    StatusAccessors,
+    ThresholdsService,
+    thresholdsSummaryGridConfig,
+    thresholdsTopGridConfig,
+    THRESHOLDS_SUMMARY_RENDERER_CONFIG,
+    TimeScale,
+    UtilityService,
+    XYGrid,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-thresholds-summary-test",
@@ -54,19 +84,29 @@ export class ThresholdsSummaryTestComponent implements OnChanges, OnInit {
 
         this.summaryChartAssist.syncWithChartAssist(this.chartAssist);
 
-        this.scales.y.domainCalculator = getAutomaticDomainWithIncludedInterval([0, 100]);
+        this.scales.y.domainCalculator = getAutomaticDomainWithIncludedInterval(
+            [0, 100]
+        );
         this.backgroundScales.y.fixDomain(StatusAccessors.STATUS_DOMAIN);
         this.summaryScales.y.fixDomain(StatusAccessors.STATUS_DOMAIN);
 
-        this.thresholdsPalette = new ChartPalette(new MappedValueProvider({
-            "error": CHART_PALETTE_CS_S[1],
-            "warning": CHART_PALETTE_CS_S[2],
-            "ok": CHART_PALETTE_CS_S[4],
-        }, "transparent"));
-        this.thicknessMap = { "ok": BarRenderer.THIN };
+        this.thresholdsPalette = new ChartPalette(
+            new MappedValueProvider(
+                {
+                    error: CHART_PALETTE_CS_S[1],
+                    warning: CHART_PALETTE_CS_S[2],
+                    ok: CHART_PALETTE_CS_S[4],
+                },
+                "transparent"
+            )
+        );
+        this.thicknessMap = { ok: BarRenderer.THIN };
 
         this.renderer = new LineRenderer();
-        this.accessors = new LineAccessors(this.chartAssist.palette.standardColors, this.chartAssist.markers);
+        this.accessors = new LineAccessors(
+            this.chartAssist.palette.standardColors,
+            this.chartAssist.markers
+        );
     }
 
     public ngOnInit() {
@@ -80,29 +120,58 @@ export class ThresholdsSummaryTestComponent implements OnChanges, OnInit {
     }
 
     private update(data: Record<string, number[]>) {
-        const seriesSet: IChartSeries<ILineAccessors>[] = getDataSeriesSet(data, this.accessors, this.startDate).map((d: any) => ({
+        const seriesSet: IChartSeries<ILineAccessors>[] = getDataSeriesSet(
+            data,
+            this.accessors,
+            this.startDate
+        ).map((d: any) => ({
             ...d,
             renderer: this.renderer,
             scales: this.scales,
         }));
 
-        const summarySeriesSet: IChartAssistSeries<IAccessors>[] = [...seriesSet].map(s => {
+        const summarySeriesSet: IChartAssistSeries<IAccessors>[] = [
+            ...seriesSet,
+        ].map((s) => {
             const summaryZoneDefs = [...this.zones, { status: "ok" }];
-            const zones = this.thresholdsService.getThresholdZones(s, summaryZoneDefs, this.thresholdsPalette.standardColors);
+            const zones = this.thresholdsService.getThresholdZones(
+                s,
+                summaryZoneDefs,
+                this.thresholdsPalette.standardColors
+            );
             this.thresholdsService.injectThresholdsData(s, zones);
-            return this.thresholdsService.getBackgrounds(s, zones, this.summaryScales,
-                                                         this.thresholdsPalette.standardColors,
-                                                         this.thicknessMap, cloneDeep(THRESHOLDS_SUMMARY_RENDERER_CONFIG));
+            return this.thresholdsService.getBackgrounds(
+                s,
+                zones,
+                this.summaryScales,
+                this.thresholdsPalette.standardColors,
+                this.thicknessMap,
+                cloneDeep(THRESHOLDS_SUMMARY_RENDERER_CONFIG)
+            );
         });
         const thresholdSeriesSet: IChartAssistSeries<IAccessors>[] = [];
         for (const s of seriesSet) {
-            const zones = this.thresholdsService.getThresholdZones(s, this.zones, this.thresholdsPalette.standardColors);
+            const zones = this.thresholdsService.getThresholdZones(
+                s,
+                this.zones,
+                this.thresholdsPalette.standardColors
+            );
             this.thresholdsService.injectThresholdsData(s, zones);
-            thresholdSeriesSet.push(...[
-                this.thresholdsService.getBackgrounds(s, zones, this.backgroundScales, this.thresholdsPalette.backgroundColors),
-                ...this.thresholdsService.getThresholdLines(zones),
-                ...this.thresholdsService.getSideIndicators(zones, this.scales),
-            ]);
+            thresholdSeriesSet.push(
+                ...[
+                    this.thresholdsService.getBackgrounds(
+                        s,
+                        zones,
+                        this.backgroundScales,
+                        this.thresholdsPalette.backgroundColors
+                    ),
+                    ...this.thresholdsService.getThresholdLines(zones),
+                    ...this.thresholdsService.getSideIndicators(
+                        zones,
+                        this.scales
+                    ),
+                ]
+            );
         }
         // chart assist needs to be used to update data
         this.chartAssist.update([...thresholdSeriesSet, ...seriesSet]);
@@ -122,11 +191,17 @@ export class ThresholdsSummaryTestComponent implements OnChanges, OnInit {
         summaryGridConfig.dimension.width(400);
         summaryGridConfig.dimension.autoWidth = false;
     }
-
 }
 
-function getDataSeriesSet(data: Record<string, number[]>, accessors: LineAccessors, startDate: Moment): IDataSeries<LineAccessors>[] {
-    const toDataPoint = (y: number, i: number) => ({ x: startDate.clone().add(i, "d"), y });
+function getDataSeriesSet(
+    data: Record<string, number[]>,
+    accessors: LineAccessors,
+    startDate: Moment
+): IDataSeries<LineAccessors>[] {
+    const toDataPoint = (y: number, i: number) => ({
+        x: startDate.clone().add(i, "d"),
+        y,
+    });
 
     return Object.keys(data).map((seriesId) => {
         const seriesData = data[seriesId];

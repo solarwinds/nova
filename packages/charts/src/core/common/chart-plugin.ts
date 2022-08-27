@@ -1,16 +1,15 @@
 import { IChart, IChartPlugin } from "./types";
 
 export abstract class ChartPlugin implements IChartPlugin {
-
-    constructor() { }
+    constructor() {}
 
     public chart: IChart;
 
-    public initialize(): void { }
+    public initialize(): void {}
 
-    public update(): void { }
+    public update(): void {}
 
-    public updateDimensions(): void { }
+    public updateDimensions(): void {}
 
-    public destroy(): void { }
+    public destroy(): void {}
 }

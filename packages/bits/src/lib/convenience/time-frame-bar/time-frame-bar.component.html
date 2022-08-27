@@ -1,72 +1,107 @@
 <div class="nui-time-frame-bar py-2">
     <div class="left-content pr-4">
-        <ng-content select=[leftContent]></ng-content>
+        <ng-content select="[leftContent]"></ng-content>
     </div>
-    <div class="prev" nuiTooltip="{{humanizedTimeframe}} before" i18n-nuiTooltip="e.g. '7 days before' or 'an hour before'">
-        <button nui-button
-                type="button"
-                icon="caret-left"
-                displayStyle="action"
-                [disabled]="isLeftmostRange"
-                (click)="shiftRange(-1)">
-        </button>
+    <div
+        class="prev"
+        nuiTooltip="{{ humanizedTimeframe }} before"
+        i18n-nuiTooltip="e.g. '7 days before' or 'an hour before'"
+    >
+        <button
+            nui-button
+            type="button"
+            icon="caret-left"
+            displayStyle="action"
+            [disabled]="isLeftmostRange"
+            (click)="shiftRange(-1)"
+        ></button>
     </div>
     <div class="picker-label d-inline-flex px-3">
-        <nui-popover trigger="click"
-                     [template]="popoverTimeFramePicker"
-                     [hasPadding]="false"
-                     [closePopover]="closePopoverSubject"
-                     [modal]="true"
-                     (shown)="onPopoverShown()"
-                     [unlimited]="true">
-            <div class="picker-label-content d-inline-flex align-items-center nui-text-link">
+        <nui-popover
+            trigger="click"
+            [template]="popoverTimeFramePicker"
+            [hasPadding]="false"
+            [closePopover]="closePopoverSubject"
+            [modal]="true"
+            (shown)="onPopoverShown()"
+            [unlimited]="true"
+        >
+            <div
+                class="picker-label-content d-inline-flex align-items-center nui-text-link"
+            >
                 <ng-content></ng-content>
             </div>
         </nui-popover>
     </div>
-    <div class="next" nuiTooltip="{{humanizedTimeframe}} later" i18n-nuiTooltip="e.g. '7 days later' or 'an hour later'">
-        <button nui-button
-                type="button"
-                icon="caret-right"
-                displayStyle="action"
-                [disabled]="isRightmostRange"
-                (click)="shiftRange(1)"></button>
+    <div
+        class="next"
+        nuiTooltip="{{ humanizedTimeframe }} later"
+        i18n-nuiTooltip="e.g. '7 days later' or 'an hour later'"
+    >
+        <button
+            nui-button
+            type="button"
+            icon="caret-right"
+            displayStyle="action"
+            [disabled]="isRightmostRange"
+            (click)="shiftRange(1)"
+        ></button>
     </div>
     <div class="right-content d-flex pl-4">
         <div class="pr-3">
-            <button nui-button class="undo ml-1"
-                    type="button"
-                    displayStyle="action"
-                    icon="undo"
-                    *ngIf="historyIndex > 1"
-                    (click)="onUndo()"
-                    nuiTooltip="Undo"
-                    i18n-nuiTooltip>
-            </button>
-            <button nui-button class="clear ml-1"
-                    type="button"
-                    displayStyle="action"
-                    icon="reset"
-                    *ngIf="historyIndex > 0"
-                    (click)="onClear()"
-                    nuiTooltip="Reset to default"
-                    i18n-nuiTooltip>
-            </button>
+            <button
+                nui-button
+                class="undo ml-1"
+                type="button"
+                displayStyle="action"
+                icon="undo"
+                *ngIf="historyIndex > 1"
+                (click)="onUndo()"
+                nuiTooltip="Undo"
+                i18n-nuiTooltip
+            ></button>
+            <button
+                nui-button
+                class="clear ml-1"
+                type="button"
+                displayStyle="action"
+                icon="reset"
+                *ngIf="historyIndex > 0"
+                (click)="onClear()"
+                nuiTooltip="Reset to default"
+                i18n-nuiTooltip
+            ></button>
         </div>
-        <ng-content select=[rightContent]></ng-content>
+        <ng-content select="[rightContent]"></ng-content>
     </div>
 </div>
 
 <ng-template #popoverTimeFramePicker>
-    <div [ngClass]="{'px-3 py-2' : !quickPicker}">
+    <div [ngClass]="{ 'px-3 py-2': !quickPicker }">
         <ng-content select="[timeFrameSelection]"></ng-content>
     </div>
     <nui-dialog-footer *ngIf="changed">
-        <button nui-button type="button" displayStyle="action" class="cancel mr-3" (click)="closePopover()" i18n>
+        <button
+            nui-button
+            type="button"
+            displayStyle="action"
+            class="cancel mr-3"
+            (click)="closePopover()"
+            i18n
+        >
             Cancel
         </button>
-        <button nui-button type="button" displayStyle="primary" class="use" (click)="closePopover(true)"
-                i18n="Imperative indicating that the user would like to apply, or use, the current value">
+        <button
+            nui-button
+            type="button"
+            displayStyle="primary"
+            class="use"
+            (click)="closePopover(true)"
+            i18n="
+                Imperative indicating that the user would like to apply, or use,
+                the current value
+            "
+        >
             Use
         </button>
     </nui-dialog-footer>

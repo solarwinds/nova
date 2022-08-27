@@ -1,12 +1,27 @@
 import { CdkDragDrop, CdkDragStart } from "@angular/cdk/drag-drop";
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+    ViewEncapsulation,
+} from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { IEvent, LoggerService } from "@nova-ui/bits";
 import { startWith, takeUntil } from "rxjs/operators";
+
+import { IEvent, LoggerService } from "@nova-ui/bits";
 
 import { BaseLayout } from "../../../components/layouts/base-layout";
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
-import { IComponentConfiguration, IHasChangeDetector, IHasForm } from "../../../types";
+import {
+    IComponentConfiguration,
+    IHasChangeDetector,
+    IHasForm,
+} from "../../../types";
 import { IItemConfiguration } from "../types";
 
 /** @ignore */
@@ -17,7 +32,10 @@ import { IItemConfiguration } from "../types";
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
-export class ItemsDynamicComponent extends BaseLayout implements IHasChangeDetector, IHasForm<FormArray>, OnInit, OnDestroy {
+export class ItemsDynamicComponent
+    extends BaseLayout
+    implements IHasChangeDetector, IHasForm<FormArray>, OnInit, OnDestroy
+{
     static lateLoadKey = "ItemsDynamicComponent";
 
     @Input() items: IItemConfiguration[] = [];
@@ -31,15 +49,19 @@ export class ItemsDynamicComponent extends BaseLayout implements IHasChangeDetec
     public height: number;
     public headerMap: Map<string, string> = new Map<string, string>();
 
-    constructor(changeDetector: ChangeDetectorRef,
-                pizzagnaService: PizzagnaService,
-                logger: LoggerService,
-                private formBuilder: FormBuilder) {
+    constructor(
+        changeDetector: ChangeDetectorRef,
+        pizzagnaService: PizzagnaService,
+        logger: LoggerService,
+        private formBuilder: FormBuilder
+    ) {
         super(changeDetector, pizzagnaService, logger);
     }
 
-    public getItemForNode(node: IComponentConfiguration): IItemConfiguration | undefined {
-        return this.items.find(item => item.id === node.id);
+    public getItemForNode(
+        node: IComponentConfiguration
+    ): IItemConfiguration | undefined {
+        return this.items.find((item) => item.id === node.id);
     }
 
     public getNodes() {
@@ -53,8 +75,8 @@ export class ItemsDynamicComponent extends BaseLayout implements IHasChangeDetec
 
     public onEvent(componentId: string, event: IEvent) {
         // TODO: refactor
-        const item = this.items.find(i => i.id === componentId);
-        const index = this.items.findIndex(i => i.id === componentId);
+        const item = this.items.find((i) => i.id === componentId);
+        const index = this.items.findIndex((i) => i.id === componentId);
 
         if (event.id === "formReady" && item) {
             this.onFormReady(item, event.payload, index);
@@ -65,7 +87,11 @@ export class ItemsDynamicComponent extends BaseLayout implements IHasChangeDetec
         }
     }
 
-    public onFormReady(item: IItemConfiguration, form: FormGroup, index: number) {
+    public onFormReady(
+        item: IItemConfiguration,
+        form: FormGroup,
+        index: number
+    ) {
         const childForm = this.formBuilder.group({
             id: [item.id],
             componentType: [item.componentType],
@@ -98,7 +124,7 @@ export class ItemsDynamicComponent extends BaseLayout implements IHasChangeDetec
 
             this.form.removeAt(i);
             // triggers form change
-            this.form.patchValue(this.form.value, {emitEvent: true});
+            this.form.patchValue(this.form.value, { emitEvent: true });
         });
     }
 
@@ -106,18 +132,20 @@ export class ItemsDynamicComponent extends BaseLayout implements IHasChangeDetec
         return item.id;
     }
 
-    public removeItem(item: IItemConfiguration | undefined, index: number): void {
+    public removeItem(
+        item: IItemConfiguration | undefined,
+        index: number
+    ): void {
         if (!item) {
             throw new Error("Unable to remove undefined item from pizzagna");
         }
 
         // remove item configuration - this will cause the onFormDestroy to be called for related form after component disappears from the view
-        this.itemsChange.emit(this.items.filter(it => it !== item));
+        this.itemsChange.emit(this.items.filter((it) => it !== item));
         this.items.splice(index, 1);
 
         this.nodes.splice(index, 1);
         this.pizzagnaService.removeComponents(item.id);
-
     }
 
     public moveItem(index: number, toIndex: number) {
@@ -135,7 +163,7 @@ export class ItemsDynamicComponent extends BaseLayout implements IHasChangeDetec
         // triggers form change - setTimeout because we need to wait first for items to update
         // console.log(this.form.value);
         setTimeout(() => {
-            this.form.setValue(this.form.value, {emitEvent: true});
+            this.form.setValue(this.form.value, { emitEvent: true });
         });
     }
 

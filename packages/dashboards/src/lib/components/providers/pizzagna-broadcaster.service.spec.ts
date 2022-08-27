@@ -1,5 +1,6 @@
 import { ChangeDetectorRef } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
+
 import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
 
 // eslint-disable-next-line max-len
@@ -7,7 +8,6 @@ import { TitleAndDescriptionConfigurationComponent } from "../../configurator/co
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { SET_PROPERTY_VALUE } from "../../services/types";
-
 import { PizzagnaBroadcasterService } from "./pizzagna-broadcaster.service";
 
 const cdRefMock: ChangeDetectorRef = {
@@ -28,7 +28,10 @@ describe("PizzagnaBroadcasterService > ", () => {
     beforeEach(() => {
         eventBus = new EventBus();
         dynamicComponentCreator = new DynamicComponentCreator();
-        pizzagnaService = new PizzagnaService(eventBus, dynamicComponentCreator);
+        pizzagnaService = new PizzagnaService(
+            eventBus,
+            dynamicComponentCreator
+        );
         broadcaster = new PizzagnaBroadcasterService(pizzagnaService);
 
         mockComponent = new TitleAndDescriptionConfigurationComponent(
@@ -47,11 +50,13 @@ describe("PizzagnaBroadcasterService > ", () => {
             expect(v.payload.path).toEqual(testPath);
         });
 
-        broadcaster["configs"] = [{
-            trackOn: "component",
-            key: "form.controls.title.valueChanges",
-            paths: [testPath],
-        }];
+        broadcaster["configs"] = [
+            {
+                trackOn: "component",
+                key: "form.controls.title.valueChanges",
+                paths: [testPath],
+            },
+        ];
         broadcaster.setComponent(mockComponent, "mockComponentId");
 
         mockComponent.form.controls.title.setValue(testValue);
@@ -66,15 +71,17 @@ describe("PizzagnaBroadcasterService > ", () => {
             expect(v.payload.path).toEqual(testPath);
         });
 
-        broadcaster["configs"] = [{
-            trackOn: "pizzagna",
-            key: "someComponent.properties.title",
-            paths: [testPath],
-        }];
+        broadcaster["configs"] = [
+            {
+                trackOn: "pizzagna",
+                key: "someComponent.properties.title",
+                paths: [testPath],
+            },
+        ];
         broadcaster.setComponent(mockComponent, "mockComponentId");
 
         pizzagnaService.pizzaChanged.next({
-            "someComponent": {
+            someComponent: {
                 id: "someComponent",
                 componentType: "someComponent",
                 properties: {

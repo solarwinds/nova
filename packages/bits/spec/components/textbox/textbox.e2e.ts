@@ -16,7 +16,6 @@ import {
 } from "../public_api";
 
 describe("USERCONTROL textbox >", () => {
-
     let textBox: TextboxAtom;
     let disabledTextbox: TextboxAtom;
     let readonlyTextbox: TextboxAtom;
@@ -32,25 +31,42 @@ describe("USERCONTROL textbox >", () => {
         await Helpers.prepareBrowser("textbox");
         asyncCheckbox = Atom.find(CheckboxAtom, "nui-demo-async-checkbox");
         textBox = Atom.find(TextboxAtom, "demo-options-textbox-item");
-        disabledTextbox = Atom.find(TextboxAtom, "demo-options-disabled-textbox-item");
-        requiredTextbox = Atom.find(TextboxAtom, "demo-options-required-textbox-item");
-        readonlyTextbox = Atom.find(TextboxAtom, "demo-options-readonly-textbox-item");
-        customWidthTextbox = Atom.find(TextboxAtom, "demo-options-custom-width-textbox-item");
+        disabledTextbox = Atom.find(
+            TextboxAtom,
+            "demo-options-disabled-textbox-item"
+        );
+        requiredTextbox = Atom.find(
+            TextboxAtom,
+            "demo-options-required-textbox-item"
+        );
+        readonlyTextbox = Atom.find(
+            TextboxAtom,
+            "demo-options-readonly-textbox-item"
+        );
+        customWidthTextbox = Atom.find(
+            TextboxAtom,
+            "demo-options-custom-width-textbox-item"
+        );
         asyncSpinner = Atom.findIn(SpinnerAtom, element(by.id("test-textbox")));
-        checkboxGroup = Atom.findIn(CheckboxGroupAtom, element.all(by.className("demo-options-section")).first());
+        checkboxGroup = Atom.findIn(
+            CheckboxGroupAtom,
+            element.all(by.className("demo-options-section")).first()
+        );
         validationMessage = element(by.className("nui-textbox__messages"));
-        validationMessageText = element(by.css(".nui-textbox__messages.nui-validation > div"));
+        validationMessageText = element(
+            by.css(".nui-textbox__messages.nui-validation > div")
+        );
     });
 
-    it("should have native input element without \"disabled\" attribute by default", async () => {
+    it(`should have native input element without "disabled" attribute by default`, async () => {
         expect(await textBox.disabled()).toBe(false);
     });
 
-    it("should have native input element with \"disabled\" attribute", async () => {
+    it(`should have native input element with "disabled" attribute`, async () => {
         expect(await disabledTextbox.disabled()).toBe(true);
     });
 
-    it("should have native input element with \"readonly\" attribute", async () => {
+    it(`should have native input element with "readonly" attribute`, async () => {
         expect(await readonlyTextbox.isReadonly()).toBe(true);
     });
 
@@ -70,7 +86,7 @@ describe("USERCONTROL textbox >", () => {
     // TODO: disabled, since validation messages are moved to separate component and cannot be used outside of form. To be changed (delete/move)
     xdescribe("testing sync and async validation", () => {
         beforeEach(async () => {
-            if (await asyncCheckbox.isChecked() === false) {
+            if ((await asyncCheckbox.isChecked()) === false) {
                 await asyncCheckbox.toggle();
             }
 
@@ -89,7 +105,9 @@ describe("USERCONTROL textbox >", () => {
             await textBox.clearText();
             await textBox.acceptText("Ted");
             expect(await validationMessage.isDisplayed()).toBe(true);
-            expect(await validationMessageText.getText()).not.toBe("Ted's error");
+            expect(await validationMessageText.getText()).not.toBe(
+                "Ted's error"
+            );
         });
 
         it("should trigger sync validation on invalid value", async () => {
@@ -97,7 +115,10 @@ describe("USERCONTROL textbox >", () => {
             await textBox.acceptText("1");
             await browser.sleep(2000);
             expect(await asyncSpinner.isDisplayed()).toBe(false);
-            await browser.wait(ExpectedConditions.visibilityOf(validationMessage), 2000);
+            await browser.wait(
+                ExpectedConditions.visibilityOf(validationMessage),
+                2000
+            );
             expect(await validationMessage.isDisplayed()).toBe(true);
         });
 
@@ -122,13 +143,15 @@ describe("USERCONTROL textbox >", () => {
                 const letter = ted[idx];
                 await textBox.acceptText(letter);
                 await asyncSpinner.waitForDisplayed(1000);
-                if (idx !== (ted.length - 1)) {
+                if (idx !== ted.length - 1) {
                     await browser.sleep(2000);
                     expect(await validationMessage.isPresent()).toBe(false);
                 } else {
                     await browser.sleep(2000);
                     expect(await validationMessage.isDisplayed()).toBe(true);
-                    expect(await validationMessageText.getText()).toBe("Ted's error");
+                    expect(await validationMessageText.getText()).toBe(
+                        "Ted's error"
+                    );
                 }
             }
         });

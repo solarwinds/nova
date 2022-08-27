@@ -4,7 +4,6 @@ import { TestBed } from "@angular/core/testing";
 import { DomUtilService } from "../../services/dom-util.service";
 import { EdgeDetectionService } from "../../services/edge-detection.service";
 import { LoggerService } from "../../services/log-service";
-
 import { PopupDeprecatedComponent } from "./popup.component";
 
 describe("components >", () => {
@@ -21,7 +20,9 @@ describe("components >", () => {
                     EdgeDetectionService,
                 ],
             });
-            const componentFixture = TestBed.createComponent(PopupDeprecatedComponent);
+            const componentFixture = TestBed.createComponent(
+                PopupDeprecatedComponent
+            );
             subject = componentFixture.componentInstance;
         });
 
@@ -95,5 +96,7 @@ describe("components >", () => {
 });
 
 export class MockElementRef extends ElementRef {
-    constructor() { super(null); }
+    constructor() {
+        super(null);
+    }
 }

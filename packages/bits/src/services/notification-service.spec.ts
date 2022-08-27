@@ -65,7 +65,7 @@ describe("services >", () => {
         it("should properly unsubscribe", () => {
             const spy = jasmine.createSpy("spy");
 
-            const sub = notificationService.subscribe(channel,  (args: any) => {
+            const sub = notificationService.subscribe(channel, (args: any) => {
                 spy(args);
             });
 

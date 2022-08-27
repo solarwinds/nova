@@ -1,5 +1,8 @@
 import { IRefresherProperties } from "../../../components/providers/refresher";
-import { NOVA_DASHBOARD_EVENT_PROXY, NOVA_DATASOURCE_INTERVAL_REFRESHER } from "../../../services/types";
+import {
+    NOVA_DASHBOARD_EVENT_PROXY,
+    NOVA_DATASOURCE_INTERVAL_REFRESHER,
+} from "../../../services/types";
 import { IProviderConfiguration } from "../../../types";
 
 /**
@@ -17,7 +20,10 @@ export const EVENT_PROXY: IProviderConfiguration = {
  *
  * @returns A provider configuration for the refresher
  */
-export function refresher(enabled = false, interval = 0): IProviderConfiguration {
+export function refresher(
+    enabled = false,
+    interval = 0
+): IProviderConfiguration {
     return {
         providerId: NOVA_DATASOURCE_INTERVAL_REFRESHER,
         properties: {

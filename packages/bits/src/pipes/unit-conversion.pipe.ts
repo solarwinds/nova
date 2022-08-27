@@ -26,10 +26,23 @@ export class UnitConversionPipe implements PipeTransform {
      *
      * @returns {string} The conversion result appended with the converted unit label
      */
-    transform(value: any, scale: number = 0, plusSign: boolean = false, unit: UnitOption = "bytes"): string {
+    transform(
+        value: any,
+        scale: number = 0,
+        plusSign: boolean = false,
+        unit: UnitOption = "bytes"
+    ): string {
         const base = unit === "bytes" ? UnitBase.Bytes : UnitBase.Standard;
-        const result = this.unitConversionService.convert(value as number, base, scale);
+        const result = this.unitConversionService.convert(
+            value as number,
+            base,
+            scale
+        );
 
-        return this.unitConversionService.getFullDisplay(result, unit, plusSign);
+        return this.unitConversionService.getFullDisplay(
+            result,
+            unit,
+            plusSign
+        );
     }
 }

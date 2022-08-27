@@ -19,7 +19,6 @@ export interface IFilterGroupMultiFilterMetadata extends IMultiFilterMetadata {
     expanded: boolean;
 }
 
-
 export interface ExampleItem {
     color: string;
     status: string;

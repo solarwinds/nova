@@ -16,7 +16,7 @@ export class BarHorizontalGridConfig extends XYGridConfig {
         this.axis.bottom.fit = true;
         this.axis.bottom.tickSize = 0;
         this.axis.left.tickSize = 5;
-        this.dimension.padding.left =  2; // 2 for border
+        this.dimension.padding.left = 2; // 2 for border
         this.borders.left.visible = true;
         this.borders.bottom.visible = false;
     }

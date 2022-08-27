@@ -1,5 +1,6 @@
-import { Atom } from "@nova-ui/bits/sdk/atoms";
 import { by, element, ElementFinder } from "protractor";
+
+import { Atom } from "@nova-ui/bits/sdk/atoms";
 
 import { ChartAtom } from "./atoms/chart.atom";
 
@@ -16,7 +17,7 @@ export class LineChartTestPage {
         return Atom.findIn(ChartAtom, this.root);
     }
 
-    public async changeData(input: number [][]): Promise<void> {
+    public async changeData(input: number[][]): Promise<void> {
         await this.dataInput.clear();
         return this.dataInput.sendKeys(JSON.stringify(input));
     }

@@ -35,7 +35,10 @@ export interface IEdgeDetectionProperties {
     height: number;
 }
 export interface IEdgeDetectionService {
-    canBe(basePointElement: Element, placedElement: Element): IEdgeDetectionResult;
+    canBe(
+        basePointElement: Element,
+        placedElement: Element
+    ): IEdgeDetectionResult;
 }
 
 export interface IEdgeDefinerMeasurements {
@@ -47,10 +50,12 @@ export interface IEdgeDefinerMeasurements {
 }
 
 export interface ISearchService {
-    search(items: any[],
-           properties: string[],
-           searchValue: any,
-           dateFormat?: string): any[];
+    search(
+        items: any[],
+        properties: string[],
+        searchValue: any,
+        dateFormat?: string
+    ): any[];
 }
 
 export interface INotificationService {
@@ -110,14 +115,15 @@ export interface IEventDefinition<T = any> {
 }
 
 export class EventDefinition<T> implements IEventDefinition<IEvent<T>> {
-    constructor(public id: string, public subjectFactory?: () => Subject<IEvent<T>>) {
-    }
+    constructor(
+        public id: string,
+        public subjectFactory?: () => Subject<IEvent<T>>
+    ) {}
 
     public toString() {
         return this.id;
     }
 }
-
 
 export interface IVirtualPageConfig {
     /**
@@ -136,7 +142,8 @@ export interface IVirtualPageConfig {
 /**
  * VirtualViewportManager reset configuration options
  */
-export interface IVirtualViewportResetOptions extends Required<Pick<IVirtualPageConfig, "emitFirstPage">> {
+export interface IVirtualViewportResetOptions
+    extends Required<Pick<IVirtualPageConfig, "emitFirstPage">> {
     /**
      * Set this boolean to false if the first batch of data will be loaded/requested
      * externally by a different entity (ex. search, sort, etc.).

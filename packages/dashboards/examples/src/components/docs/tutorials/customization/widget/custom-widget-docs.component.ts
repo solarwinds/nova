@@ -4,4 +4,4 @@ import { Component } from "@angular/core";
     selector: "custom-widget-docs",
     templateUrl: "./custom-widget-docs.component.html",
 })
-export class CustomWidgetDocsComponent { }
+export class CustomWidgetDocsComponent {}

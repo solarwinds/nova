@@ -1,5 +1,11 @@
 import { SorterDirection } from "../../../lib/sorter/public-api";
-import { IFilter, IFilterGroup, IFilterItem, IMultiFilterMetadata, INovaFilters } from "../public-api";
+import {
+    IFilter,
+    IFilterGroup,
+    IFilterItem,
+    IMultiFilterMetadata,
+    INovaFilters,
+} from "../public-api";
 
 export interface ExampleItem {
     color: string;
@@ -23,7 +29,9 @@ export const newFiltersExpectedResultItemsArr: NewFiltersExampleItem[] = [
     { color: "light-blue", status: "Up", country: "Ukraine", number: "seven" },
 ];
 
-export const newFiltersExpectedallCategoriesResult = (): IFilterGroup<IFilterItem<number>> => ({
+export const newFiltersExpectedallCategoriesResult = (): IFilterGroup<
+    IFilterItem<number>
+> => ({
     country: {
         France: 0,
         Italy: 0,
@@ -47,13 +55,7 @@ export const newFilters = {
         type: "string[]",
         value: ["Ukraine"],
         metadata: {
-            allCategories: [
-                "Ukraine",
-                "USA",
-                "France",
-                "Spain",
-                "Italy",
-            ],
+            allCategories: ["Ukraine", "USA", "France", "Spain", "Italy"],
         },
     },
     number: {
@@ -70,40 +72,124 @@ export const newFilters = {
                 "seven",
             ],
         },
-
     },
 };
 
 export const newFiltersbigArrForSearch: NewFiltersExampleItem[] = [
-    { color: "regular-blue", status: "Critical", country: "Ukraine", number: "one" },
-    { color: "regular-green", status: "Warning", country: "USA", number: "two" },
-    { color: "regular-yellow", status: "Up", country: "France", number: "three" },
-    { color: "regular-cyan ", status: "Critical", country: "Spain", number: "four" },
-    { color: "regular-magenta", status: "Warning", country: "Italy", number: "five" },
+    {
+        color: "regular-blue",
+        status: "Critical",
+        country: "Ukraine",
+        number: "one",
+    },
+    {
+        color: "regular-green",
+        status: "Warning",
+        country: "USA",
+        number: "two",
+    },
+    {
+        color: "regular-yellow",
+        status: "Up",
+        country: "France",
+        number: "three",
+    },
+    {
+        color: "regular-cyan ",
+        status: "Critical",
+        country: "Spain",
+        number: "four",
+    },
+    {
+        color: "regular-magenta",
+        status: "Warning",
+        country: "Italy",
+        number: "five",
+    },
     { color: "regular-black", status: "Up", country: "Ukraine", number: "six" },
     { color: "regular-orange", status: "Up", country: "USA", number: "seven" },
     { color: "regular-rose", status: "Up", country: "France", number: "one" },
     { color: "regular-violet", status: "Up", country: "Spain", number: "two" },
-    { color: "regular-azure", status: "Critical", country: "Italy", number: "three" },
-    { color: "dark-blue", status: "Warning", country: "Ukraine", number: "four" },
+    {
+        color: "regular-azure",
+        status: "Critical",
+        country: "Italy",
+        number: "three",
+    },
+    {
+        color: "dark-blue",
+        status: "Warning",
+        country: "Ukraine",
+        number: "four",
+    },
     { color: "dark-green", status: "Up", country: "USA", number: "five" },
-    { color: "dark-yellow", status: "Critical", country: "France", number: "six" },
-    { color: "dark-cyan ", status: "Warning", country: "Spain", number: "seven" },
+    {
+        color: "dark-yellow",
+        status: "Critical",
+        country: "France",
+        number: "six",
+    },
+    {
+        color: "dark-cyan ",
+        status: "Warning",
+        country: "Spain",
+        number: "seven",
+    },
     { color: "dark-magenta", status: "Up", country: "Italy", number: "one" },
-    { color: "dark-black", status: "Critical", country: "Ukraine", number: "two" },
-    { color: "dark-orange", status: "Warning", country: "USA", number: "three" },
+    {
+        color: "dark-black",
+        status: "Critical",
+        country: "Ukraine",
+        number: "two",
+    },
+    {
+        color: "dark-orange",
+        status: "Warning",
+        country: "USA",
+        number: "three",
+    },
     { color: "dark-rose", status: "Up", country: "France", number: "four" },
-    { color: "dark-violet", status: "Critical", country: "Spain", number: "five" },
+    {
+        color: "dark-violet",
+        status: "Critical",
+        country: "Spain",
+        number: "five",
+    },
     { color: "dark-azure", status: "Warning", country: "Italy", number: "six" },
     { color: "light-blue", status: "Up", country: "Ukraine", number: "seven" },
     { color: "light-green", status: "Critical", country: "USA", number: "one" },
-    { color: "light-yellow", status: "Warning", country: "France", number: "two" },
+    {
+        color: "light-yellow",
+        status: "Warning",
+        country: "France",
+        number: "two",
+    },
     { color: "light-cyan", status: "Up", country: "Spain", number: "three" },
-    { color: "light-magenta", status: "Critical", country: "Italy", number: "four" },
-    { color: "light-black", status: "Warning", country: "Ukraine", number: "five" },
+    {
+        color: "light-magenta",
+        status: "Critical",
+        country: "Italy",
+        number: "four",
+    },
+    {
+        color: "light-black",
+        status: "Warning",
+        country: "Ukraine",
+        number: "five",
+    },
     { color: "light-orange", status: "Up", country: "USA", number: "six" },
-    { color: "light-rose", status: "Critical", country: "France", number: "seven" },
-    { color: "light-violet", status: "Warning", country: "Spain", number: "one" },
+    {
+        color: "light-rose",
+        status: "Critical",
+        country: "France",
+        number: "seven",
+    },
+    {
+        color: "light-violet",
+        status: "Warning",
+        country: "Spain",
+        number: "one",
+    },
     { color: "light-azure", status: "Up", country: "Italy", number: "two" },
 ];
 
@@ -148,16 +234,14 @@ export const anyFilters: INovaFilters = {
         type: "string[]",
         value: ["Critical"],
         metadata: {
-            allCategories: [
-                "Warning",
-                "Critical",
-                "Up",
-            ],
+            allCategories: ["Warning", "Critical", "Up"],
         },
     },
 };
 
-export const correctmultiFilters: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>[] = [
+export const correctmultiFilters: IFilterGroup<
+    IFilter<string[], IMultiFilterMetadata>
+>[] = [
     {
         color: {
             type: "string[]",
@@ -182,16 +266,11 @@ export const correctmultiFilters: IFilterGroup<IFilter<string[], IMultiFilterMet
             type: "string[]",
             value: ["Critical"],
             metadata: {
-                allCategories: [
-                    "Warning",
-                    "Critical",
-                    "Up",
-                ],
+                allCategories: ["Warning", "Critical", "Up"],
             },
         },
     },
 ];
-
 
 // isValueChanged data
 export const changedArrForComparison: ComparisonItems[] = [
@@ -205,7 +284,9 @@ export const unchangedArrForComparison: ComparisonItems[] = [
 ];
 
 // getAllCategories data
-export const muiltiFilter: IFilterGroup<IFilter<string[], IMultiFilterMetadata>> = {
+export const muiltiFilter: IFilterGroup<
+    IFilter<string[], IMultiFilterMetadata>
+> = {
     color: {
         type: "string[]",
         value: ["azure"],
@@ -255,15 +336,13 @@ export const allCategoriesArr = [
         ],
     },
     {
-        status: [
-            "Warning",
-            "Critical",
-            "Up",
-        ],
+        status: ["Warning", "Critical", "Up"],
     },
 ];
 
-export const expectedAllCategoriesResult = (): IFilterGroup<IFilterItem<number>> => ({
+export const expectedAllCategoriesResult = (): IFilterGroup<
+    IFilterItem<number>
+> => ({
     color: {
         azure: 3,
         black: 0,
@@ -322,7 +401,9 @@ export const bigArrForSearch: ExampleItem[] = [
     { color: "light-azure", status: "Up" },
 ];
 
-export const arrOBjectsForSearch: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>[] = [
+export const arrOBjectsForSearch: IFilterGroup<
+    IFilter<string[], IMultiFilterMetadata>
+>[] = [
     {
         color: {
             type: "string[]",
@@ -347,11 +428,7 @@ export const arrOBjectsForSearch: IFilterGroup<IFilter<string[], IMultiFilterMet
             type: "string[]",
             value: ["Critical"],
             metadata: {
-                allCategories: [
-                    "Warning",
-                    "Critical",
-                    "Up",
-                ],
+                allCategories: ["Warning", "Critical", "Up"],
             },
         },
     },
@@ -414,9 +491,7 @@ export const resultForLightFirstPage = [
     { color: "light-magenta" },
 ];
 
-export const resultForLightSecondPage = [
-    { color: "light-yellow" },
-];
+export const resultForLightSecondPage = [{ color: "light-yellow" }];
 
 export const resultsForLightFirstPageDesc = [
     { color: "light-yellow" },
@@ -451,5 +526,4 @@ export class ExpectedFilters {
             },
         };
     }
-
 }

@@ -4,7 +4,6 @@ import { BarDataPointAtom } from "./bar-data-point.atom";
 import { SeriesAtom } from "./series.atom";
 
 export class ThresholdSeriesAtom extends SeriesAtom {
-
     public static buildSeriesId(dataSeriesId: string): string {
         return `${dataSeriesId}__thresholds-background`;
     }

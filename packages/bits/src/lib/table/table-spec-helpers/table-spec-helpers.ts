@@ -40,9 +40,24 @@ export class TableSpecHelpers {
             clientWidth: 20,
             expectedResult: [
                 ["No.", "Name", "Asset Class", "Location"],
-                [ELEMENT_DATA[0].position, ELEMENT_DATA[0].name, ELEMENT_DATA[0].asset, ELEMENT_DATA[0].location],
-                [ELEMENT_DATA[1].position, ELEMENT_DATA[1].name, ELEMENT_DATA[1].asset, ELEMENT_DATA[1].location],
-                [ELEMENT_DATA[2].position, ELEMENT_DATA[2].name, ELEMENT_DATA[2].asset, ELEMENT_DATA[2].location],
+                [
+                    ELEMENT_DATA[0].position,
+                    ELEMENT_DATA[0].name,
+                    ELEMENT_DATA[0].asset,
+                    ELEMENT_DATA[0].location,
+                ],
+                [
+                    ELEMENT_DATA[1].position,
+                    ELEMENT_DATA[1].name,
+                    ELEMENT_DATA[1].asset,
+                    ELEMENT_DATA[1].location,
+                ],
+                [
+                    ELEMENT_DATA[2].position,
+                    ELEMENT_DATA[2].name,
+                    ELEMENT_DATA[2].asset,
+                    ELEMENT_DATA[2].location,
+                ],
             ],
         };
     }
@@ -56,9 +71,24 @@ export class TableSpecHelpers {
                 clientWidth: 20,
                 expectedResult: [
                     ["Name", "No.", "Asset Class", "Location"],
-                    [ELEMENT_DATA[0].name, ELEMENT_DATA[0].position, ELEMENT_DATA[0].asset, ELEMENT_DATA[0].location],
-                    [ELEMENT_DATA[1].name, ELEMENT_DATA[1].position, ELEMENT_DATA[1].asset, ELEMENT_DATA[1].location],
-                    [ELEMENT_DATA[2].name, ELEMENT_DATA[2].position, ELEMENT_DATA[2].asset, ELEMENT_DATA[2].location],
+                    [
+                        ELEMENT_DATA[0].name,
+                        ELEMENT_DATA[0].position,
+                        ELEMENT_DATA[0].asset,
+                        ELEMENT_DATA[0].location,
+                    ],
+                    [
+                        ELEMENT_DATA[1].name,
+                        ELEMENT_DATA[1].position,
+                        ELEMENT_DATA[1].asset,
+                        ELEMENT_DATA[1].location,
+                    ],
+                    [
+                        ELEMENT_DATA[2].name,
+                        ELEMENT_DATA[2].position,
+                        ELEMENT_DATA[2].asset,
+                        ELEMENT_DATA[2].location,
+                    ],
                 ],
             },
             {
@@ -68,9 +98,24 @@ export class TableSpecHelpers {
                 clientWidth: 30,
                 expectedResult: [
                     ["No.", "Name", "Asset Class", "Location"],
-                    [ELEMENT_DATA[0].position, ELEMENT_DATA[0].name, ELEMENT_DATA[0].asset, ELEMENT_DATA[0].location],
-                    [ELEMENT_DATA[1].position, ELEMENT_DATA[1].name, ELEMENT_DATA[1].asset, ELEMENT_DATA[1].location],
-                    [ELEMENT_DATA[2].position, ELEMENT_DATA[2].name, ELEMENT_DATA[2].asset, ELEMENT_DATA[2].location],
+                    [
+                        ELEMENT_DATA[0].position,
+                        ELEMENT_DATA[0].name,
+                        ELEMENT_DATA[0].asset,
+                        ELEMENT_DATA[0].location,
+                    ],
+                    [
+                        ELEMENT_DATA[1].position,
+                        ELEMENT_DATA[1].name,
+                        ELEMENT_DATA[1].asset,
+                        ELEMENT_DATA[1].location,
+                    ],
+                    [
+                        ELEMENT_DATA[2].position,
+                        ELEMENT_DATA[2].name,
+                        ELEMENT_DATA[2].asset,
+                        ELEMENT_DATA[2].location,
+                    ],
                 ],
             },
             {
@@ -80,9 +125,24 @@ export class TableSpecHelpers {
                 clientWidth: 30,
                 expectedResult: [
                     ["Name", "No.", "Asset Class", "Location"],
-                    [ELEMENT_DATA[0].name, ELEMENT_DATA[0].position, ELEMENT_DATA[0].asset, ELEMENT_DATA[0].location],
-                    [ELEMENT_DATA[1].name, ELEMENT_DATA[1].position, ELEMENT_DATA[1].asset, ELEMENT_DATA[1].location],
-                    [ELEMENT_DATA[2].name, ELEMENT_DATA[2].position, ELEMENT_DATA[2].asset, ELEMENT_DATA[2].location],
+                    [
+                        ELEMENT_DATA[0].name,
+                        ELEMENT_DATA[0].position,
+                        ELEMENT_DATA[0].asset,
+                        ELEMENT_DATA[0].location,
+                    ],
+                    [
+                        ELEMENT_DATA[1].name,
+                        ELEMENT_DATA[1].position,
+                        ELEMENT_DATA[1].asset,
+                        ELEMENT_DATA[1].location,
+                    ],
+                    [
+                        ELEMENT_DATA[2].name,
+                        ELEMENT_DATA[2].position,
+                        ELEMENT_DATA[2].asset,
+                        ELEMENT_DATA[2].location,
+                    ],
                 ],
             },
             {
@@ -92,9 +152,24 @@ export class TableSpecHelpers {
                 clientWidth: 70,
                 expectedResult: [
                     ["No.", "Name", "Asset Class", "Location"],
-                    [ELEMENT_DATA[0].position, ELEMENT_DATA[0].name, ELEMENT_DATA[0].asset, ELEMENT_DATA[0].location],
-                    [ELEMENT_DATA[1].position, ELEMENT_DATA[1].name, ELEMENT_DATA[1].asset, ELEMENT_DATA[1].location],
-                    [ELEMENT_DATA[2].position, ELEMENT_DATA[2].name, ELEMENT_DATA[2].asset, ELEMENT_DATA[2].location],
+                    [
+                        ELEMENT_DATA[0].position,
+                        ELEMENT_DATA[0].name,
+                        ELEMENT_DATA[0].asset,
+                        ELEMENT_DATA[0].location,
+                    ],
+                    [
+                        ELEMENT_DATA[1].position,
+                        ELEMENT_DATA[1].name,
+                        ELEMENT_DATA[1].asset,
+                        ELEMENT_DATA[1].location,
+                    ],
+                    [
+                        ELEMENT_DATA[2].position,
+                        ELEMENT_DATA[2].name,
+                        ELEMENT_DATA[2].asset,
+                        ELEMENT_DATA[2].location,
+                    ],
                 ],
             },
             {
@@ -104,9 +179,24 @@ export class TableSpecHelpers {
                 clientWidth: 50,
                 expectedResult: [
                     ["Name", "Asset Class", "No.", "Location"],
-                    [ELEMENT_DATA[0].name, ELEMENT_DATA[0].asset, ELEMENT_DATA[0].position, ELEMENT_DATA[0].location],
-                    [ELEMENT_DATA[1].name, ELEMENT_DATA[1].asset, ELEMENT_DATA[1].position, ELEMENT_DATA[1].location],
-                    [ELEMENT_DATA[2].name, ELEMENT_DATA[2].asset, ELEMENT_DATA[2].position, ELEMENT_DATA[2].location],
+                    [
+                        ELEMENT_DATA[0].name,
+                        ELEMENT_DATA[0].asset,
+                        ELEMENT_DATA[0].position,
+                        ELEMENT_DATA[0].location,
+                    ],
+                    [
+                        ELEMENT_DATA[1].name,
+                        ELEMENT_DATA[1].asset,
+                        ELEMENT_DATA[1].position,
+                        ELEMENT_DATA[1].location,
+                    ],
+                    [
+                        ELEMENT_DATA[2].name,
+                        ELEMENT_DATA[2].asset,
+                        ELEMENT_DATA[2].position,
+                        ELEMENT_DATA[2].location,
+                    ],
                 ],
             },
             {
@@ -116,9 +206,24 @@ export class TableSpecHelpers {
                 clientWidth: 100,
                 expectedResult: [
                     ["Location", "No.", "Name", "Asset Class"],
-                    [ELEMENT_DATA[0].location, ELEMENT_DATA[0].position, ELEMENT_DATA[0].name, ELEMENT_DATA[0].asset],
-                    [ELEMENT_DATA[1].location, ELEMENT_DATA[1].position, ELEMENT_DATA[1].name, ELEMENT_DATA[1].asset],
-                    [ELEMENT_DATA[2].location, ELEMENT_DATA[2].position, ELEMENT_DATA[2].name, ELEMENT_DATA[2].asset],
+                    [
+                        ELEMENT_DATA[0].location,
+                        ELEMENT_DATA[0].position,
+                        ELEMENT_DATA[0].name,
+                        ELEMENT_DATA[0].asset,
+                    ],
+                    [
+                        ELEMENT_DATA[1].location,
+                        ELEMENT_DATA[1].position,
+                        ELEMENT_DATA[1].name,
+                        ELEMENT_DATA[1].asset,
+                    ],
+                    [
+                        ELEMENT_DATA[2].location,
+                        ELEMENT_DATA[2].position,
+                        ELEMENT_DATA[2].name,
+                        ELEMENT_DATA[2].asset,
+                    ],
                 ],
             },
         ];
@@ -145,7 +250,13 @@ export class TableSpecHelpers {
         ];
     }
 
-    public static dropElement(droppedElement: Element, offsetX: number, clientWidth: number, dragCellIndex: number, dropCellIndex: number) {
+    public static dropElement(
+        droppedElement: Element,
+        offsetX: number,
+        clientWidth: number,
+        dragCellIndex: number,
+        dropCellIndex: number
+    ) {
         const dragover = new DragEvent("dragover");
         const drop = new DragEvent("drop");
 
@@ -204,7 +315,7 @@ export class TableSpecHelpers {
     }
 
     public static getElement(element: Element, query: string): Element | null {
-        return (element.querySelector(query));
+        return element.querySelector(query);
     }
 
     public static getHeaderRow(tableElement: Element): Element | null {
@@ -212,7 +323,10 @@ export class TableSpecHelpers {
     }
 
     public static getRows(tableElement: Element): Element[] {
-        return TableSpecHelpers.getElements(tableElement, ".nui-table__table-row");
+        return TableSpecHelpers.getElements(
+            tableElement,
+            ".nui-table__table-row"
+        );
     }
 
     public static getCells(row: Element): Element[] {
@@ -225,17 +339,26 @@ export class TableSpecHelpers {
         cells = TableSpecHelpers.getElements(row, "nui-table__table-cell");
 
         if (!cells.length) {
-            cells = TableSpecHelpers.getElements(row, "td.nui-table__table-cell");
+            cells = TableSpecHelpers.getElements(
+                row,
+                "td.nui-table__table-cell"
+            );
         }
 
         return cells;
     }
 
     public static getHeaderCells(headerRow: Element): Element[] {
-        let cells = TableSpecHelpers.getElements(headerRow, "nui-table__table-header-cell");
+        let cells = TableSpecHelpers.getElements(
+            headerRow,
+            "nui-table__table-header-cell"
+        );
 
         if (!cells.length) {
-            cells = TableSpecHelpers.getElements(headerRow, "th.nui-table__table-header-cell");
+            cells = TableSpecHelpers.getElements(
+                headerRow,
+                "th.nui-table__table-header-cell"
+            );
         }
 
         return cells;
@@ -243,34 +366,46 @@ export class TableSpecHelpers {
 
     public static getActualTableContent(tableElement: Element): string[][] {
         let actualTableContent: Element[][] = [];
-        const headerRow: Element | null = TableSpecHelpers.getHeaderRow(tableElement);
+        const headerRow: Element | null =
+            TableSpecHelpers.getHeaderRow(tableElement);
         if (!headerRow) {
             throw new Error("HeaderRow is not defined");
         }
         actualTableContent.push(TableSpecHelpers.getHeaderCells(headerRow));
 
         // Check data row cells
-        const rows = TableSpecHelpers.getRows(tableElement).map(row => TableSpecHelpers.getCells(row));
+        const rows = TableSpecHelpers.getRows(tableElement).map((row) =>
+            TableSpecHelpers.getCells(row)
+        );
         actualTableContent = actualTableContent.concat(rows);
 
         // Convert the nodes into their text content;
         // eslint-disable-next-line
-        return actualTableContent.map(row => row.map(cell => cell.textContent!.trim()));
+        return actualTableContent.map((row) =>
+            row.map((cell) => cell.textContent!.trim())
+        );
     }
 
-    public static expectTableToMatchContent(tableElement: Element, expected: any[]) {
+    public static expectTableToMatchContent(
+        tableElement: Element,
+        expected: any[]
+    ) {
         const actual = TableSpecHelpers.getActualTableContent(tableElement);
         const missedExpectations: string[] = [];
 
         function checkCellContent(actualCell: string, expectedCell: string) {
             if (actualCell !== expectedCell) {
-                missedExpectations.push(`Expected cell contents to be ${expectedCell} but was ${actualCell}`);
+                missedExpectations.push(
+                    `Expected cell contents to be ${expectedCell} but was ${actualCell}`
+                );
             }
         }
 
         // Make sure the number of rows match
         if (actual.length !== expected.length) {
-            missedExpectations.push(`Expected ${expected.length} total rows but got ${actual.length}`);
+            missedExpectations.push(
+                `Expected ${expected.length} total rows but got ${actual.length}`
+            );
             fail(missedExpectations.join("\n"));
         }
 
@@ -279,12 +414,16 @@ export class TableSpecHelpers {
 
             // Make sure the number of cells match
             if (row.length !== expectedRow.length) {
-                missedExpectations.push(`Expected ${expectedRow.length} cells in row but got ${row.length}`);
+                missedExpectations.push(
+                    `Expected ${expectedRow.length} cells in row but got ${row.length}`
+                );
                 fail(missedExpectations.join("\n"));
             }
 
             row.forEach((actualCell: any, cellIndex: number) => {
-                const expectedCell = expectedRow ? expectedRow[cellIndex] : null;
+                const expectedCell = expectedRow
+                    ? expectedRow[cellIndex]
+                    : null;
                 checkCellContent(actualCell, expectedCell);
             });
         });

@@ -5,6 +5,4 @@ import { Component } from "@angular/core";
     templateUrl: "./layout-complex.example.component.html",
     styleUrls: ["./layout-complex.example.component.less"],
 })
-export class LayoutComplexExampleComponent {
-
-}
+export class LayoutComplexExampleComponent {}

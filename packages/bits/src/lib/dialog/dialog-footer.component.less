@@ -6,8 +6,9 @@
     padding: @nui-space-md;
     text-align: right; // right align buttons
     border-top: 1px solid @nui-color-line-default;
-    border-top: 1px solid var(--nui-color-line-default,@nui-color-line-default);
-    &:extend(.clearfix all); // clear it in case folks use .pull-* classes on buttons
+    border-top: 1px solid var(--nui-color-line-default, @nui-color-line-default);
+    &:extend(.clearfix
+        all); // clear it in case folks use .pull-* classes on buttons
 
     .btn:first-child {
         margin-left: @nui-space-md;

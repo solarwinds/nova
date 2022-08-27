@@ -1,4 +1,10 @@
-import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from "@angular/core";
+import {
+    Component,
+    Input,
+    OnChanges,
+    OnDestroy,
+    SimpleChanges,
+} from "@angular/core";
 import { Subscription } from "rxjs";
 
 import { ChartDonutContentPlugin } from "../core/plugins/chart-donut-content-plugin";
@@ -10,7 +16,6 @@ import { IElementPosition } from "../core/plugins/types";
     styleUrls: ["./chart-donut-content.component.less"],
 })
 export class ChartDonutContentComponent implements OnDestroy, OnChanges {
-
     /** The plugin instance */
     @Input() public plugin: ChartDonutContentPlugin;
 
@@ -23,9 +28,12 @@ export class ChartDonutContentComponent implements OnDestroy, OnChanges {
         if (changes.plugin) {
             this.contentPositionUpdateSubscription?.unsubscribe();
 
-            this.contentPositionUpdateSubscription = this.plugin.contentPositionUpdateSubject.subscribe((contentPosition: IElementPosition) => {
-                this.contentPosition = contentPosition;
-            });
+            this.contentPositionUpdateSubscription =
+                this.plugin.contentPositionUpdateSubject.subscribe(
+                    (contentPosition: IElementPosition) => {
+                        this.contentPosition = contentPosition;
+                    }
+                );
 
             this.plugin.chart.updateDimensions();
         }

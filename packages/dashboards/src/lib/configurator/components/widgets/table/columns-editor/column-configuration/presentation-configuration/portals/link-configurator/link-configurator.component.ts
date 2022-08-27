@@ -5,7 +5,6 @@ import { LoggerService } from "@nova-ui/bits";
 
 import { IHasChangeDetector } from "../../../../../../../../../types";
 import { ConfiguratorHeadingService } from "../../../../../../../../services/configurator-heading.service";
-
 import { FormatterConfiguratorComponent } from "../formatter-configurator.component";
 
 @Component({
@@ -14,7 +13,8 @@ import { FormatterConfiguratorComponent } from "../formatter-configurator.compon
 })
 export class LinkConfiguratorComponent
     extends FormatterConfiguratorComponent
-    implements IHasChangeDetector {
+    implements IHasChangeDetector
+{
     public static lateLoadKey = "LinkConfiguratorComponent";
 
     constructor(

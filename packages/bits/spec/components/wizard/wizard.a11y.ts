@@ -1,12 +1,11 @@
 import { browser } from "protractor";
+
 import { Atom } from "../../atom";
 import { assertA11y, Helpers } from "../../helpers";
 import { WizardAtom } from "../public_api";
 
 describe("a11y: wizard", () => {
-    let rulesToDisable: string[] = [
-        "duplicate-id",
-    ];
+    const rulesToDisable: string[] = ["duplicate-id"];
     let basicWizard: WizardAtom;
 
     beforeAll(async () => {

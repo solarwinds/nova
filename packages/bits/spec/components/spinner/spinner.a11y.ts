@@ -1,9 +1,10 @@
 import { browser } from "protractor";
+
 import { Animations, assertA11y, Helpers } from "../../helpers";
 import { SpinnerAtom } from "../public_api";
 
 describe("a11y: spinner", () => {
-    let rulesToDisable: string[] = [];
+    const rulesToDisable: string[] = [];
 
     beforeAll(async () => {
         await browser.waitForAngularEnabled(false);

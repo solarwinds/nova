@@ -1,4 +1,5 @@
 import { Component, Inject } from "@angular/core";
+
 import { ToastService } from "@nova-ui/bits";
 
 @Component({
@@ -6,13 +7,12 @@ import { ToastService } from "@nova-ui/bits";
     templateUrl: "./button-basic.example.component.html",
 })
 export class ButtonBasicExampleComponent {
-    constructor(@Inject(ToastService) private toastService: ToastService) {
-    }
+    constructor(@Inject(ToastService) private toastService: ToastService) {}
 
     onClick() {
         this.toastService.info({
-            message: $localize `Button clicked!`,
-            title: $localize `Event`,
+            message: $localize`Button clicked!`,
+            title: $localize`Event`,
         });
     }
 }

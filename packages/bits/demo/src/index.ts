@@ -8,6 +8,6 @@ void platformBrowserDynamic().bootstrapModule(NuiDemoModule, {
     providers: [
         // needed for JIT compiler
         { provide: TRANSLATIONS, useValue: translationLibrary },
-        {provide: TRANSLATIONS_FORMAT, useValue: "xlf"},
+        { provide: TRANSLATIONS_FORMAT, useValue: "xlf" },
     ],
 });

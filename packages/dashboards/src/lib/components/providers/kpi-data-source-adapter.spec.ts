@@ -1,13 +1,22 @@
 import { DecimalPipe } from "@angular/common";
-import { EventBus, IDataSource, IEvent, IFilteringOutputs, IFilteringParticipants } from "@nova-ui/bits";
 import { Subject } from "rxjs";
+
+import {
+    EventBus,
+    IDataSource,
+    IEvent,
+    IFilteringOutputs,
+    IFilteringParticipants,
+} from "@nova-ui/bits";
 
 import { KpiWidgetThresholdColors } from "../../configurator/components/widgets/kpi/types";
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { IKpiData } from "../kpi-widget/types";
-
-import { IKpiDataSourceAdapterConfiguration, KpiDataSourceAdapter } from "./kpi-data-source-adapter";
+import {
+    IKpiDataSourceAdapterConfiguration,
+    KpiDataSourceAdapter,
+} from "./kpi-data-source-adapter";
 
 class MockDataSource implements IDataSource {
     public outputsSubject = new Subject<IFilteringOutputs>();
@@ -17,7 +26,9 @@ class MockDataSource implements IDataSource {
         return null;
     }
 
-    public registerComponent(components: Partial<IFilteringParticipants>): void { }
+    public registerComponent(
+        components: Partial<IFilteringParticipants>
+    ): void {}
 
     public deregisterComponent(componentKey: string): void {}
 }
@@ -37,8 +48,16 @@ describe("KpiDataSourceAdapter > ", () => {
         dataSource = new MockDataSource();
         dynamicComponentCreator = new DynamicComponentCreator();
         numberPipe = new DecimalPipe("en-US");
-        pizzagnaService = new PizzagnaService(eventBus, dynamicComponentCreator);
-        adapter = new KpiDataSourceAdapter(eventBus, dataSource, pizzagnaService, numberPipe);
+        pizzagnaService = new PizzagnaService(
+            eventBus,
+            dynamicComponentCreator
+        );
+        adapter = new KpiDataSourceAdapter(
+            eventBus,
+            dataSource,
+            pizzagnaService,
+            numberPipe
+        );
         configuration = {
             thresholds: {
                 showThresholds: false,
@@ -90,7 +109,9 @@ describe("KpiDataSourceAdapter > ", () => {
             adapter.updateConfiguration(configuration);
             const data = (<any>adapter).processOutput(testData);
             expect(data.value).toEqual(testData.value);
-            expect(data.backgroundColor).toEqual(KpiWidgetThresholdColors.Warning);
+            expect(data.backgroundColor).toEqual(
+                KpiWidgetThresholdColors.Warning
+            );
         });
 
         it("should return the value with a warning backgroundColor if reversedThresholds is true", () => {
@@ -102,7 +123,9 @@ describe("KpiDataSourceAdapter > ", () => {
             adapter.updateConfiguration(configuration);
             const data = (<any>adapter).processOutput(testData);
             expect(data.value).toEqual(testData.value);
-            expect(data.backgroundColor).toEqual(KpiWidgetThresholdColors.Warning);
+            expect(data.backgroundColor).toEqual(
+                KpiWidgetThresholdColors.Warning
+            );
         });
 
         it("should return the value with a critical backgroundColor if reversedThresholds is false", () => {
@@ -114,7 +137,9 @@ describe("KpiDataSourceAdapter > ", () => {
             adapter.updateConfiguration(configuration);
             const data = (<any>adapter).processOutput(testData);
             expect(data.value).toEqual(testData.value);
-            expect(data.backgroundColor).toEqual(KpiWidgetThresholdColors.Critical);
+            expect(data.backgroundColor).toEqual(
+                KpiWidgetThresholdColors.Critical
+            );
         });
 
         it("should return the value with a critical backgroundColor if reversedThresholds is true", () => {
@@ -126,7 +151,9 @@ describe("KpiDataSourceAdapter > ", () => {
             adapter.updateConfiguration(configuration);
             const data = (<any>adapter).processOutput(testData);
             expect(data.value).toEqual(testData.value);
-            expect(data.backgroundColor).toEqual(KpiWidgetThresholdColors.Critical);
+            expect(data.backgroundColor).toEqual(
+                KpiWidgetThresholdColors.Critical
+            );
         });
 
         it("should return the value with its default backgroundColor if reversedThresholds is false", () => {
@@ -184,5 +211,4 @@ describe("KpiDataSourceAdapter > ", () => {
             expect(data.value).toEqual("12.2");
         });
     });
-
 });

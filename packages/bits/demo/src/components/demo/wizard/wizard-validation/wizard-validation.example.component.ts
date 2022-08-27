@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+
 import { WizardComponent } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-wizard-validation-example",
     templateUrl: "./wizard-validation.example.component.html",
 })
-
 export class WizardValidationExampleComponent implements OnInit {
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;
     public myForm: FormGroup;

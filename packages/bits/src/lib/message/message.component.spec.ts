@@ -1,5 +1,10 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
+} from "@angular/core/testing";
 import { Subject } from "rxjs";
 
 import { MessageComponent } from "./message.component";
@@ -25,10 +30,12 @@ describe("components >", () => {
             subject.type = messageType;
 
             expect(subject.messageClass).toEqual(`nui-message-${messageType}`);
-            expect(subject.icon).toEqual(MessageComponent.ICON_MAP[messageType]);
+            expect(subject.icon).toEqual(
+                MessageComponent.ICON_MAP[messageType]
+            );
         });
 
-        it("shouldn\"t have class names when type is not specified", () => {
+        it(`shouldn't have class names when type is not specified`, () => {
             expect(subject.messageClass).toEqual("");
             expect(subject.icon).toEqual(MessageComponent.UNKNOWN_ICON);
         });
@@ -63,7 +70,6 @@ describe("components >", () => {
                 tick();
                 expect(subject.dismissState).toEqual("dismissed");
 
-
                 manualDestroyControl.next(true);
                 tick();
                 expect(subject.dismissState).toEqual("initial");
@@ -79,5 +85,4 @@ describe("components >", () => {
             expect(subject.dismiss.complete).toHaveBeenCalled();
         });
     });
-
 });

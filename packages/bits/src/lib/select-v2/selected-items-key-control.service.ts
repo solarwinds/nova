@@ -6,10 +6,8 @@ import isNil from "lodash/isNil";
 import { ComboboxV2Component } from "./combobox-v2/combobox-v2.component";
 import { MarkAsSelectedItemDirective } from "./mark-as-selected-item.directive";
 
-
 @Injectable()
 export class SelectedItemsKeyControlService {
-
     private selectedItems: QueryList<MarkAsSelectedItemDirective>;
     private selectedItemsKeyManager: ActiveDescendantKeyManager<any>;
     private activeSelectedItemIndex?: number;
@@ -18,23 +16,40 @@ export class SelectedItemsKeyControlService {
 
     constructor(public liveAnnouncer: LiveAnnouncer) {}
 
-    public initSelectedItemsKeyManager(elems: QueryList<MarkAsSelectedItemDirective>, combobox: ComboboxV2Component): void {
+    public initSelectedItemsKeyManager(
+        elems: QueryList<MarkAsSelectedItemDirective>,
+        combobox: ComboboxV2Component
+    ): void {
         this.combobox = combobox;
         this.inputElement = combobox.inputElement?.nativeElement;
         this.selectedItems = elems;
 
-        this.selectedItemsKeyManager = new ActiveDescendantKeyManager(elems).withHorizontalOrientation("ltr").withWrap();
+        this.selectedItemsKeyManager = new ActiveDescendantKeyManager(elems)
+            .withHorizontalOrientation("ltr")
+            .withWrap();
 
-        if (!isNil(this.activeSelectedItemIndex) && this.activeSelectedItemIndex >= 0 && Number.isInteger(this.activeSelectedItemIndex)) {
-            setTimeout(() => this.selectedItemsKeyManager.setActiveItem(this.activeSelectedItemIndex));
+        if (
+            !isNil(this.activeSelectedItemIndex) &&
+            this.activeSelectedItemIndex >= 0 &&
+            Number.isInteger(this.activeSelectedItemIndex)
+        ) {
+            setTimeout(() =>
+                this.selectedItemsKeyManager.setActiveItem(
+                    this.activeSelectedItemIndex
+                )
+            );
         }
     }
 
     public onKeydown(event: KeyboardEvent): void {
         const caretPosition = (event.target as HTMLInputElement).selectionStart;
-        const isKeyAllowed = this.isBackspace(event) || this.isLeftOrRightArrow(event);
+        const isKeyAllowed =
+            this.isBackspace(event) || this.isLeftOrRightArrow(event);
 
-        if ((caretPosition !== 0) || (!this.activeItem && this.isRightArrow(event))) {
+        if (
+            caretPosition !== 0 ||
+            (!this.activeItem && this.isRightArrow(event))
+        ) {
             return;
         }
 
@@ -47,7 +62,10 @@ export class SelectedItemsKeyControlService {
             this.combobox.hideDropdown();
         }
 
-        if (this.isLeftArrow(event) && (this.activeItem !== this.selectedItems.first)) {
+        if (
+            this.isLeftArrow(event) &&
+            this.activeItem !== this.selectedItems.first
+        ) {
             this.selectedItemsKeyManager.onKeydown(event);
             this.liveAnnouncer.announce(`${this.getActiveItemTitle} selected`);
             return;
@@ -90,7 +108,8 @@ export class SelectedItemsKeyControlService {
     }
 
     private handleRightArrow(event: KeyboardEvent): void {
-        const isLastSelectedItemActive = (this.activeItem === this.selectedItems.last);
+        const isLastSelectedItemActive =
+            this.activeItem === this.selectedItems.last;
 
         if (isLastSelectedItemActive) {
             this.selectedItemsKeyManager.onKeydown(event);
@@ -108,12 +127,12 @@ export class SelectedItemsKeyControlService {
     }
 
     private calculateActiveSelectedItemIndex(): void {
-
         if (isNil(this.selectedItemsKeyManager.activeItemIndex)) {
             throw new Error("ActiveItemIndex is not defined");
         }
 
-        const previousItemIndex = this.selectedItemsKeyManager.activeItemIndex - 1;
+        const previousItemIndex =
+            this.selectedItemsKeyManager.activeItemIndex - 1;
 
         if (previousItemIndex >= 0) {
             this.activeSelectedItemIndex = previousItemIndex;
@@ -159,7 +178,9 @@ export class SelectedItemsKeyControlService {
     private deselectItem(): void {
         if (!isNil(this.selectedItemsKeyManager.activeItemIndex)) {
             this.calculateActiveSelectedItemIndex();
-            this.combobox.deselectItem(this.selectedItemsKeyManager.activeItemIndex);
+            this.combobox.deselectItem(
+                this.selectedItemsKeyManager.activeItemIndex
+            );
             this.liveAnnouncer.announce(`${this.getActiveItemTitle} removed`);
         }
     }

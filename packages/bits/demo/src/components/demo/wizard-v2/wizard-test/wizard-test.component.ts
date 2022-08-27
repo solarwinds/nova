@@ -1,4 +1,8 @@
 import {
+    FlexibleConnectedPositionStrategy,
+    OverlayRef,
+} from "@angular/cdk/overlay";
+import {
     AfterViewInit,
     Component,
     Inject,
@@ -6,7 +10,8 @@ import {
     ViewChild,
 } from "@angular/core";
 import { Subject } from "rxjs";
-import { FlexibleConnectedPositionStrategy, OverlayRef } from "@angular/cdk/overlay";
+import { takeUntil } from "rxjs/operators";
+
 import {
     DialogService,
     IWizardState,
@@ -15,7 +20,6 @@ import {
     WizardHorizontalComponent,
     WizardStepV2Component,
 } from "@nova-ui/bits";
-import { takeUntil } from "rxjs/operators";
 
 interface IWizardStepData {
     title: string;
@@ -27,10 +31,10 @@ interface IWizardStepData {
     templateUrl: "./wizard-test.component.html",
     styleUrls: ["./wizard-test.less"],
 })
-export class WizardV2TestComponent implements AfterViewInit{
+export class WizardV2TestComponent implements AfterViewInit {
     public onDestroy$ = new Subject<void>();
     public overlayTriggered$ = new Subject<void>();
-    public responsiveSteps: Array<any> = Array.from({length: 20});
+    public responsiveSteps: Array<any> = Array.from({ length: 20 });
 
     private overlayRef: OverlayRef;
     public busy: boolean = false;
@@ -38,8 +42,13 @@ export class WizardV2TestComponent implements AfterViewInit{
 
     constructor(@Inject(DialogService) private dialogService: DialogService) {}
 
-    public vegetables = [$localize `Cabbage`, $localize `Potato`, $localize `Tomato`, $localize `Carrot`];
-    public selectedVegetables = [$localize `Potato`, $localize `Tomato`];
+    public vegetables = [
+        $localize`Cabbage`,
+        $localize`Potato`,
+        $localize`Tomato`,
+        $localize`Carrot`,
+    ];
+    public selectedVegetables = [$localize`Potato`, $localize`Tomato`];
     public state: IWizardState;
     public steps: IWizardStepData[] = [];
 
@@ -75,8 +84,10 @@ export class WizardV2TestComponent implements AfterViewInit{
         }, 3000);
     }
 
-
-    public openConfirmationOverlay(overlay: OverlayComponent, wizard: WizardHorizontalComponent): void {
+    public openConfirmationOverlay(
+        overlay: OverlayComponent,
+        wizard: WizardHorizontalComponent
+    ): void {
         if (wizard.selectedIndex === 0) {
             this.closeDialog();
             return;
@@ -86,20 +97,29 @@ export class WizardV2TestComponent implements AfterViewInit{
         overlay.toggle();
 
         this.overlayRef = overlay.getOverlayRef();
-        (this.overlayRef.getConfig().positionStrategy as FlexibleConnectedPositionStrategy).withPositions([{
-            originX: "start",
-            originY: "top",
-            overlayX: "start",
-            overlayY: "top",
-        }]);
+        (
+            this.overlayRef.getConfig()
+                .positionStrategy as FlexibleConnectedPositionStrategy
+        ).withPositions([
+            {
+                originX: "start",
+                originY: "top",
+                overlayX: "start",
+                overlayY: "top",
+            },
+        ]);
         this.updateOverlayDimensions(overlay);
-        this.activeDialog?.closed$.pipe(
-            takeUntil(this.overlayTriggered$),
-            takeUntil(this.onDestroy$)).subscribe(() => overlay.hide());
+        this.activeDialog?.closed$
+            .pipe(takeUntil(this.overlayTriggered$), takeUntil(this.onDestroy$))
+            .subscribe(() => overlay.hide());
     }
 
     public open(content: TemplateRef<string>): void {
-        this.activeDialog = this.dialogService.open(content, {size: "lg", backdrop: "static", useOverlay: true});
+        this.activeDialog = this.dialogService.open(content, {
+            size: "lg",
+            backdrop: "static",
+            useOverlay: true,
+        });
     }
 
     public actionDone(): void {
@@ -126,7 +146,10 @@ export class WizardV2TestComponent implements AfterViewInit{
     }
 
     public addStep(templateRef: TemplateRef<string>, title?: string): void {
-        this.steps.push({ title: title ?? `Dynamic Step ${this.steps.length + 1}`, templateRef: templateRef });
+        this.steps.push({
+            title: title ?? `Dynamic Step ${this.steps.length + 1}`,
+            templateRef: templateRef,
+        });
     }
 
     public removeStep(index = 1): void {

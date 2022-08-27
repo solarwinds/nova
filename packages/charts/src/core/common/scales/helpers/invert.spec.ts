@@ -1,6 +1,5 @@
 import { BandScale } from "../band-scale";
 import { LinearScale } from "../linear-scale";
-
 import { invert } from "./invert";
 
 describe("invert", () => {

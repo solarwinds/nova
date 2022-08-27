@@ -1,5 +1,17 @@
 import { HttpClient } from "@angular/common/http";
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    Component,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+    ViewEncapsulation,
+} from "@angular/core";
+import keyBy from "lodash/keyBy";
+import { Subject } from "rxjs";
+import { take, takeUntil } from "rxjs/operators";
+
 import { immutableSet, LoggerService, SearchService } from "@nova-ui/bits";
 import {
     DashboardComponent,
@@ -13,19 +25,25 @@ import {
     WidgetTypesService,
     WIDGET_CREATE,
 } from "@nova-ui/dashboards";
-import keyBy from "lodash/keyBy";
-import { Subject } from "rxjs";
-import { take, takeUntil } from "rxjs/operators";
 
-import { AcmeKpiDataSource, AcmeKpiDataSource2, AcmeKpiDataSource3 } from "../data/kpi-datasources";
-import { AcmeProportionalDataSource, AcmeProportionalDataSource2 } from "../data/proportional-datasources";
+import {
+    AcmeKpiDataSource,
+    AcmeKpiDataSource2,
+    AcmeKpiDataSource3,
+} from "../data/kpi-datasources";
+import {
+    AcmeProportionalDataSource,
+    AcmeProportionalDataSource2,
+} from "../data/proportional-datasources";
 import { AcmeTableDataSource } from "../data/table/acme-table-data-source.service";
 import { AcmeTableDataSource2 } from "../data/table/acme-table-data-source2.service";
 import { AcmeTableDataSourceNoColumnGeneration } from "../data/table/acme-table-data-source3.service";
 import { AcmeTableGBooksDataSource } from "../data/table/acme-table-gbooks-data-source.service";
 import { AcmeTableMockDataSource } from "../data/table/acme-table-mock-data-source.service";
-import { AcmeTimeseriesDataSource, AcmeTimeseriesDataSource2 } from "../data/timeseries-data-sources";
-
+import {
+    AcmeTimeseriesDataSource,
+    AcmeTimeseriesDataSource2,
+} from "../data/timeseries-data-sources";
 import { AcmeCloneSelectionComponent } from "./acme-clone-selection/acme-clone-selection.component";
 import { AcmeEditWithClonerComponent } from "./acme-clone-selection/acme-edit-with-cloner.component";
 import { AcmeFormSubmitHandler } from "./acme-form-submit-handler";
@@ -42,8 +60,11 @@ import { positions, widgets } from "./widgets";
     changeDetection: ChangeDetectionStrategy.Default,
     providers: [AcmeFormSubmitHandler],
 })
-export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
-    @ViewChild(DashboardComponent, { static: true }) dashboardComponent: DashboardComponent;
+export class AcmeDashboardComponent
+    implements OnInit, AfterViewInit, OnDestroy
+{
+    @ViewChild(DashboardComponent, { static: true })
+    dashboardComponent: DashboardComponent;
 
     public dashboard: IDashboard = {
         positions: {},
@@ -60,10 +81,12 @@ export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
 
     private destroy$ = new Subject();
 
-    constructor(private providerRegistry: ProviderRegistryService,
-                public submitHandler: AcmeFormSubmitHandler,
-                private widgetTypesService: WidgetTypesService,
-                private widgetClonerService: WidgetClonerService) {
+    constructor(
+        private providerRegistry: ProviderRegistryService,
+        public submitHandler: AcmeFormSubmitHandler,
+        private widgetTypesService: WidgetTypesService,
+        private widgetClonerService: WidgetClonerService
+    ) {
         this.providerRegistry.setProviders({
             [AcmeKpiDataSource.providerId]: {
                 provide: DATA_SOURCE,
@@ -129,9 +152,15 @@ export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
     }
 
     public ngOnInit(): void {
-        this.widgetTypesService.getWidgetType("table").configurator?.[PizzagnaLayer.Structure].presentation.properties?.nodes.push("refresher");
+        this.widgetTypesService
+            .getWidgetType("table")
+            .configurator?.[
+                PizzagnaLayer.Structure
+            ].presentation.properties?.nodes.push("refresher");
 
-        const widgetsWithStructure = widgets.map(w => this.widgetTypesService.mergeWithWidgetType(w));
+        const widgetsWithStructure = widgets.map((w) =>
+            this.widgetTypesService.mergeWithWidgetType(w)
+        );
         const widgetsIndex = keyBy(widgetsWithStructure, (w: IWidget) => w.id);
 
         this.dashboard = {
@@ -150,26 +179,32 @@ export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
 
     public onShowButtonSwitch(value: boolean, property: string) {
         for (const widget of Object.keys(this.dashboard.widgets)) {
-            this.dashboard = immutableSet(this.dashboard, `widgets.${widget}.pizzagna.configuration.header.properties.${property}`, value);
+            this.dashboard = immutableSet(
+                this.dashboard,
+                `widgets.${widget}.pizzagna.configuration.header.properties.${property}`,
+                value
+            );
         }
     }
 
     public ngAfterViewInit(): void {
-        this.dashboardComponent.eventBus.subscribeUntil(WIDGET_CREATE, this.destroy$, (event) => {
-            const cloner: IWidgetSelector = {
-                // @ts-ignore: Suppressing strict mode error, preserving old flow
-                widget: this.dashboard.widgets[event.widgetId],
-                dashboardComponent: this.dashboardComponent,
-                trySubmit: this.submitHandler.trySubmit,
-                widgetSelectionComponentType: AcmeEditWithClonerComponent,
-            };
-            this.widgetClonerService.open(cloner)
-                .pipe(
-                    take(1),
-                    takeUntil(this.destroy$)
-                )
-                .subscribe();
-        });
+        this.dashboardComponent.eventBus.subscribeUntil(
+            WIDGET_CREATE,
+            this.destroy$,
+            (event) => {
+                const cloner: IWidgetSelector = {
+                    // @ts-ignore: Suppressing strict mode error, preserving old flow
+                    widget: this.dashboard.widgets[event.widgetId],
+                    dashboardComponent: this.dashboardComponent,
+                    trySubmit: this.submitHandler.trySubmit,
+                    widgetSelectionComponentType: AcmeEditWithClonerComponent,
+                };
+                this.widgetClonerService
+                    .open(cloner)
+                    .pipe(take(1), takeUntil(this.destroy$))
+                    .subscribe();
+            }
+        );
     }
 
     public onCloneWidget() {
@@ -178,17 +213,17 @@ export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
             trySubmit: this.submitHandler.trySubmit,
             widgetSelectionComponentType: AcmeCloneSelectionComponent,
         };
-        this.widgetClonerService.open(cloner)
-            .pipe(
-                take(1),
-                takeUntil(this.destroy$)
-            )
+        this.widgetClonerService
+            .open(cloner)
+            .pipe(take(1), takeUntil(this.destroy$))
             .subscribe();
     }
 
     public onEditWithCloner() {
         // this simulates invoking WIDGET_CREATE event from inside of the first widget
-        this.dashboardComponent.eventBus.next(WIDGET_CREATE, { widgetId: widgets[0].id });
+        this.dashboardComponent.eventBus.next(WIDGET_CREATE, {
+            widgetId: widgets[0].id,
+        });
     }
 
     public ngOnDestroy(): void {

@@ -31,7 +31,9 @@ import { NuiFormFieldControl } from "../form-field/public-api";
  */
 @Component({
     selector: "nui-radio-group",
-    template: `<div class="nui-radio-group" [attr.aria-label]="ariaLabel"><ng-content></ng-content></div>`,
+    template: `<div class="nui-radio-group" [attr.aria-label]="ariaLabel">
+        <ng-content></ng-content>
+    </div>`,
     providers: [
         {
             provide: NuiFormFieldControl,
@@ -44,10 +46,11 @@ import { NuiFormFieldControl } from "../form-field/public-api";
             multi: true,
         },
     ],
-    host: { "role": "radiogroup" },
+    host: { role: "radiogroup" },
 })
-export class RadioGroupComponent implements AfterContentInit, OnDestroy, ControlValueAccessor {
-
+export class RadioGroupComponent
+    implements AfterContentInit, OnDestroy, ControlValueAccessor
+{
     /**
      * Input to set aria label text
      */
@@ -62,7 +65,9 @@ export class RadioGroupComponent implements AfterContentInit, OnDestroy, Control
      * Stores the value from selected radio
      */
     @Input()
-    get value(): any { return this._value; }
+    get value(): any {
+        return this._value;
+    }
     set value(newValue: any) {
         if (this._value !== newValue) {
             // Set this before proceeding to ensure no circular loop occurs with selection.
@@ -84,43 +89,52 @@ export class RadioGroupComponent implements AfterContentInit, OnDestroy, Control
     @Output() public valueChange = new EventEmitter<any>();
 
     /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
-    @ContentChildren(forwardRef(() => RadioComponent), { descendants: true }) private children: QueryList<RadioComponent>;
+    @ContentChildren(forwardRef(() => RadioComponent), { descendants: true })
+    private children: QueryList<RadioComponent>;
     private _value: any = null;
     private selectedRadio: RadioComponent | null = null;
     private subscriptions = new Array<Subscription>();
-    constructor(private renderer: Renderer2) { }
+    constructor(private renderer: Renderer2) {}
 
     public ngAfterContentInit(): void {
         this.children.toArray().forEach((child) => {
-            this.renderer.setAttribute(child.inputViewContainer.element.nativeElement, "name", this.name);
-            this.subscriptions.push(
-                this.subscribeToRadioEvent(child)
+            this.renderer.setAttribute(
+                child.inputViewContainer.element.nativeElement,
+                "name",
+                this.name
             );
+            this.subscriptions.push(this.subscribeToRadioEvent(child));
             // timeout to prevent "expression changed after it has been checked" error
             setTimeout(() => {
                 this.setChildDisabled(child);
             });
         });
-        this.children.changes.subscribe((radioComponentQueryList: QueryList<RadioComponent>) => {
-            this.subscriptions.forEach(sub => sub.unsubscribe());
-            radioComponentQueryList.toArray().forEach((radio: RadioComponent) => {
-                this.renderer.setAttribute(radio.inputViewContainer.element.nativeElement, "name", this.name);
-                this.subscriptions.push(
-                    this.subscribeToRadioEvent(radio)
-                );
-                // timeout to prevent "expression changed after it has been checked" error
-                setTimeout(() => {
-                    this.setChildDisabled(radio);
-                });
-            });
-        });
+        this.children.changes.subscribe(
+            (radioComponentQueryList: QueryList<RadioComponent>) => {
+                this.subscriptions.forEach((sub) => sub.unsubscribe());
+                radioComponentQueryList
+                    .toArray()
+                    .forEach((radio: RadioComponent) => {
+                        this.renderer.setAttribute(
+                            radio.inputViewContainer.element.nativeElement,
+                            "name",
+                            this.name
+                        );
+                        this.subscriptions.push(
+                            this.subscribeToRadioEvent(radio)
+                        );
+                        // timeout to prevent "expression changed after it has been checked" error
+                        setTimeout(() => {
+                            this.setChildDisabled(radio);
+                        });
+                    });
+            }
+        );
     }
 
-    public onChange(value: any) {
-    }
+    public onChange(value: any) {}
 
-    public onTouched() {
-    }
+    public onTouched() {}
 
     public writeValue(value: any) {
         this.value = value;
@@ -142,14 +156,14 @@ export class RadioGroupComponent implements AfterContentInit, OnDestroy, Control
     }
 
     public ngOnDestroy(): void {
-        this.subscriptions.forEach(sub => sub.unsubscribe());
+        this.subscriptions.forEach((sub) => sub.unsubscribe());
     }
 
     private setChildDisabled = (child: RadioComponent) => {
         if (!_isUndefined(this.disabled)) {
             child.disabled = this.disabled;
         }
-    }
+    };
 
     private checkSelectedRadioButton() {
         if (this.selectedRadio && !this.selectedRadio.checked) {
@@ -159,9 +173,11 @@ export class RadioGroupComponent implements AfterContentInit, OnDestroy, Control
 
     private updateSelectedRadioFromValue(): void {
         // If the value already matches the selected radio, do nothing.
-        const isAlreadySelected = this.selectedRadio !== null && this.selectedRadio.value === this._value;
+        const isAlreadySelected =
+            this.selectedRadio !== null &&
+            this.selectedRadio.value === this._value;
         if (this.children && !isAlreadySelected) {
-            this.children.forEach(radio => {
+            this.children.forEach((radio) => {
                 radio.checked = this.value === radio.value;
                 if (radio.checked) {
                     this.selectedRadio = radio;
@@ -195,7 +211,7 @@ export class RadioGroupComponent implements AfterContentInit, OnDestroy, Control
     host: {
         "[class.nui-radio--hovered]": "hovered",
         "[class.nui-radio--checked]": "checked",
-        "role": "radio",
+        role: "radio",
     },
 })
 export class RadioComponent implements OnInit, OnDestroy {
@@ -240,10 +256,10 @@ export class RadioComponent implements OnInit, OnDestroy {
      */
     @Input() public ariaLabel: string = "";
 
-    @ViewChild("inputViewContainer", {static: true, read: ViewContainerRef })
+    @ViewChild("inputViewContainer", { static: true, read: ViewContainerRef })
     public inputViewContainer: ViewContainerRef;
 
-    @ViewChild("radioTransclude", {static: true})
+    @ViewChild("radioTransclude", { static: true })
     public radioTransclude: ElementRef;
 
     public radioTranscludeIsEmpty: boolean;
@@ -253,9 +269,11 @@ export class RadioComponent implements OnInit, OnDestroy {
     private _disabled: boolean = false;
 
     readonly radioGroup: RadioGroupComponent;
-    constructor(@Optional() radioGroup: RadioGroupComponent,
-                private changeDetector: ChangeDetectorRef,
-                private eventBusService: EventBusService) {
+    constructor(
+        @Optional() radioGroup: RadioGroupComponent,
+        private changeDetector: ChangeDetectorRef,
+        private eventBusService: EventBusService
+    ) {
         this.radioGroup = radioGroup;
     }
 
@@ -268,12 +286,14 @@ export class RadioComponent implements OnInit, OnDestroy {
         if (this.checked) {
             // TODO: remove timeout in v10 NUI-4843
             // nui-radio-group should subscribe before event is emitted
-            this.timeoutId = <any>setTimeout(() => {
+            this.timeoutId = (<any>setTimeout(() => {
                 this.valueChange.emit(this.value);
-            }, 0) as number;
+            }, 0)) as number;
         }
         // Checks if user supplied any content as a label for radio button to adjust styles for radio buttons without labels
-        this.radioTranscludeIsEmpty = _isNil(this.radioTransclude.nativeElement.firstChild);
+        this.radioTranscludeIsEmpty = _isNil(
+            this.radioTransclude.nativeElement.firstChild
+        );
     }
 
     public ngOnDestroy(): void {
@@ -298,6 +318,8 @@ export class RadioComponent implements OnInit, OnDestroy {
         // This will lead to multiple click events.
         // Preventing bubbling for the second event will solve that issue.
         event.stopPropagation();
-        this.eventBusService.getStream({id: DOCUMENT_CLICK_EVENT}).next(event);
+        this.eventBusService
+            .getStream({ id: DOCUMENT_CLICK_EVENT })
+            .next(event);
     }
 }

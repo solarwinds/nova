@@ -1,14 +1,13 @@
 import { SimpleChange, SimpleChanges } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { GridsterItem } from "angular-gridster2";
-import { IDashboard } from "./types";
 
 import { NuiDashboardsModule } from "../../dashboards.module";
 import { WIDGET_POSITION_CHANGE } from "../../services/types";
 import { IWidgets } from "../widget/types";
-
 import { DashboardComponent } from "./dashboard.component";
 import { DEFAULT_GRIDSTER_CONFIG } from "./default-gridster-config";
+import { IDashboard } from "./types";
 
 describe("DashboardComponent", () => {
     let component: DashboardComponent;
@@ -17,8 +16,7 @@ describe("DashboardComponent", () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -46,13 +44,19 @@ describe("DashboardComponent", () => {
 
         beforeAll(() => {
             changes = {
-                gridsterConfig: new SimpleChange(undefined, component.gridsterConfig, true),
+                gridsterConfig: new SimpleChange(
+                    undefined,
+                    component.gridsterConfig,
+                    true
+                ),
             };
         });
 
         it("should register an itemChangeCallback", () => {
             component.ngOnChanges(changes);
-            expect(typeof component.gridsterConfig.itemChangeCallback).toEqual("function");
+            expect(typeof component.gridsterConfig.itemChangeCallback).toEqual(
+                "function"
+            );
         });
 
         it("should emit the gridsterConfigChange output", () => {
@@ -62,14 +66,18 @@ describe("DashboardComponent", () => {
         });
 
         it("should invoke optionsChanged on gridsterConfig.api", () => {
-            spyOn(component.gridsterConfig.api ?? {}, "optionsChanged" as never);
+            spyOn(
+                component.gridsterConfig.api ?? {},
+                "optionsChanged" as never
+            );
             component.ngOnChanges(changes);
-            expect(component.gridsterConfig.api?.optionsChanged).toHaveBeenCalled();
+            expect(
+                component.gridsterConfig.api?.optionsChanged
+            ).toHaveBeenCalled();
         });
     });
 
     describe("orderWidgets > ", () => {
-
         const testPositions: Record<string, GridsterItem> = {
             widget_1: { x: 2, y: 0, cols: 2, rows: 3 },
             widget_2: { x: 1, y: 0, cols: 2, rows: 3 },
@@ -97,11 +105,17 @@ describe("DashboardComponent", () => {
             component.dashboard = testDashboard;
             let result: number;
 
-            result = component.orderWidgets({ key: "widget_2", value: testWidgets.widget_2 }, { key: "widget_1", value: testWidgets.widget_1 });
+            result = component.orderWidgets(
+                { key: "widget_2", value: testWidgets.widget_2 },
+                { key: "widget_1", value: testWidgets.widget_1 }
+            );
 
             expect(result).toBeLessThan(0);
 
-            result = component.orderWidgets({ key: "widget_5", value: testWidgets.widget_5 }, { key: "widget_4", value: testWidgets.widget_4 });
+            result = component.orderWidgets(
+                { key: "widget_5", value: testWidgets.widget_5 },
+                { key: "widget_4", value: testWidgets.widget_4 }
+            );
 
             expect(result).toBeLessThan(0);
         });
@@ -110,11 +124,17 @@ describe("DashboardComponent", () => {
             component.dashboard = testDashboard;
             let result: number;
 
-            result = component.orderWidgets({ key: "widget_3", value: testWidgets.widget_3 }, { key: "widget_2", value: testWidgets.widget_2 });
+            result = component.orderWidgets(
+                { key: "widget_3", value: testWidgets.widget_3 },
+                { key: "widget_2", value: testWidgets.widget_2 }
+            );
 
             expect(result).toBeGreaterThan(0);
 
-            result = component.orderWidgets({ key: "widget_6", value: testWidgets.widget_6 }, { key: "widget_5", value: testWidgets.widget_5 });
+            result = component.orderWidgets(
+                { key: "widget_6", value: testWidgets.widget_6 },
+                { key: "widget_5", value: testWidgets.widget_5 }
+            );
 
             expect(result).toBeGreaterThan(0);
         });
@@ -137,14 +157,26 @@ describe("DashboardComponent", () => {
 
         it("should emit the dashboardChange output", () => {
             const spy = spyOn(component.dashboardChange, "emit");
-            (<any>component).updateWidgetPosition(testGridsterItem, testGridsterComponentInterface);
+            (<any>component).updateWidgetPosition(
+                testGridsterItem,
+                testGridsterComponentInterface
+            );
             expect(spy).toHaveBeenCalledWith(expectedArg);
         });
 
         it("should emit WIDGET_POSITION_CHANGE via the eventBus", () => {
-            const spy = spyOn(component.eventBus.getStream(WIDGET_POSITION_CHANGE), "next");
-            (<any>component).updateWidgetPosition(testGridsterItem, testGridsterComponentInterface);
-            expect(spy).toHaveBeenCalledWith({ widgetId: testGridsterComponentInterface.widgetId, payload: testGridsterItem });
+            const spy = spyOn(
+                component.eventBus.getStream(WIDGET_POSITION_CHANGE),
+                "next"
+            );
+            (<any>component).updateWidgetPosition(
+                testGridsterItem,
+                testGridsterComponentInterface
+            );
+            expect(spy).toHaveBeenCalledWith({
+                widgetId: testGridsterComponentInterface.widgetId,
+                payload: testGridsterItem,
+            });
         });
     });
 
@@ -173,9 +205,10 @@ describe("DashboardComponent", () => {
             component.dashboard.positions = testPositions;
             component.dashboard.widgets = { [testWidget.id]: testWidget };
             component.onWidgetChange(testWidget);
-            expect(component.dashboardChange.emit).toHaveBeenCalledWith(expectedArg);
+            expect(component.dashboardChange.emit).toHaveBeenCalledWith(
+                expectedArg
+            );
         });
-
     });
 
     describe("updateWidget >", () => {
@@ -192,7 +225,10 @@ describe("DashboardComponent", () => {
                 cols: DEFAULT_GRIDSTER_CONFIG.defaultItemCols,
             };
 
-            const spy = spyOn(component.gridsterConfig.api ?? {}, "getFirstPossiblePosition" as never);
+            const spy = spyOn(
+                component.gridsterConfig.api ?? {},
+                "getFirstPossiblePosition" as never
+            );
 
             // component.dashboard.widgets = { [testWidget.id]: testWidget };
             component.updateWidget(testWidget);
@@ -249,7 +285,10 @@ describe("DashboardComponent", () => {
             };
             const spy = spyOn(component.dashboardChange, "emit");
             component.removeWidget(testWidget.id, false);
-            expect(spy).toHaveBeenCalledWith({ widgets: {}, positions: testPositions });
+            expect(spy).toHaveBeenCalledWith({
+                widgets: {},
+                positions: testPositions,
+            });
         });
     });
 });

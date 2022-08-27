@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-radio-docs-example",
     templateUrl: "./radio-group-docs.example.component.html",
 })
-export class RadioGroupDocsExampleComponent {
-}
+export class RadioGroupDocsExampleComponent {}

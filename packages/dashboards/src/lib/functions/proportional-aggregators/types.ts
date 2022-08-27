@@ -15,9 +15,13 @@ interface IAggregatorChartData extends Pick<IChartSeries<any>, "id" | "data"> {
     // there's a possibility to pass any value from the dataSource to the aggregator
     [key: string]: any;
 }
-export interface IProportionalAggregatorOrigin extends Array<IAggregatorChartData> {}
+export interface IProportionalAggregatorOrigin
+    extends Array<IAggregatorChartData> {}
 
-export type IProportionalAggregatorFn = ((origin: IProportionalAggregatorOrigin, properties?: IProportionalDonutContentAggregatorProperties) => string) & {
+export type IProportionalAggregatorFn = ((
+    origin: IProportionalAggregatorOrigin,
+    properties?: IProportionalDonutContentAggregatorProperties
+) => string) & {
     aggregatorType: string;
 };
 

@@ -5,4 +5,3 @@ import { Component } from "@angular/core";
     templateUrl: "./paginator-adjacent.example.component.html",
 })
 export class PaginatorAdjacentExampleComponent {}
-

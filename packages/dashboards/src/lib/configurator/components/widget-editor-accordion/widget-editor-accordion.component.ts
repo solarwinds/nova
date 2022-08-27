@@ -1,5 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
-import {Subject} from "rxjs";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Input,
+    OnDestroy,
+    OnInit,
+    ViewEncapsulation,
+} from "@angular/core";
+import { Subject } from "rxjs";
 
 import { AccordionState } from "../../../types";
 import { WidgetConfiguratorSectionCoordinatorService } from "../widget-configurator-section/widget-configurator-section-coordinator.service";
@@ -21,8 +29,10 @@ export class WidgetEditorAccordionComponent implements OnInit, OnDestroy {
     public openSubject = new Subject<void>();
     public destroySubject = new Subject<void>();
 
-    constructor(private accordionCoordinator: WidgetConfiguratorSectionCoordinatorService,
-                public cd: ChangeDetectorRef) { }
+    constructor(
+        private accordionCoordinator: WidgetConfiguratorSectionCoordinatorService,
+        public cd: ChangeDetectorRef
+    ) {}
 
     ngOnInit() {
         this.accordionCoordinator.registerAccordion(this);
@@ -46,4 +56,3 @@ export class WidgetEditorAccordionComponent implements OnInit, OnDestroy {
         this.destroySubject.complete();
     }
 }
-

@@ -1,4 +1,5 @@
 import { browser } from "protractor";
+
 import { Atom } from "../../atom";
 import { assertA11y, Helpers } from "../../helpers";
 import { ExpanderAtom } from "../public_api";
@@ -6,7 +7,7 @@ import { ExpanderAtom } from "../public_api";
 describe("a11y: expander", () => {
     let basicExpander: ExpanderAtom;
     let lineLessExpander: ExpanderAtom;
-    let rulesToDisable: string[] = [
+    const rulesToDisable: string[] = [
         "aria-required-children",
         "aria-dialog-name",
         "landmark-unique",
@@ -16,8 +17,14 @@ describe("a11y: expander", () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("expander/expander-visual-test");
-        basicExpander = Atom.find(ExpanderAtom, "nui-visual-test-expander-basic");
-        lineLessExpander = Atom.find(ExpanderAtom, "nui-visual-test-expander-without-border");
+        basicExpander = Atom.find(
+            ExpanderAtom,
+            "nui-visual-test-expander-basic"
+        );
+        lineLessExpander = Atom.find(
+            ExpanderAtom,
+            "nui-visual-test-expander-without-border"
+        );
     });
 
     it("should check a11y of expander", async () => {

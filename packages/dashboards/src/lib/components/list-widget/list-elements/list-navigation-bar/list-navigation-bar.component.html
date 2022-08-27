@@ -1,17 +1,21 @@
 <div class="list-nav-bar" *ngIf="navBarConfig && !navBarConfig?.isRoot">
-    <button nui-button
-            type="button"
-            [isRepeat]="true"
-            displayStyle="action"
-            icon="arrow-left"
-            [disabled]="!navBarConfig?.buttons?.back?.disabled"
-            (click)="onBack()"></button>
+    <button
+        nui-button
+        type="button"
+        [isRepeat]="true"
+        displayStyle="action"
+        icon="arrow-left"
+        [disabled]="!navBarConfig?.buttons?.back?.disabled"
+        (click)="onBack()"
+    ></button>
 
-    <button nui-button
-            type="button"
-            [isRepeat]="true"
-            displayStyle="action"
-            icon="overview"
-            (click)="onHome()"></button>
-    <div class="list-nav-bar__label">{{navBarConfig?.label}}</div>
+    <button
+        nui-button
+        type="button"
+        [isRepeat]="true"
+        displayStyle="action"
+        icon="overview"
+        (click)="onHome()"
+    ></button>
+    <div class="list-nav-bar__label">{{ navBarConfig?.label }}</div>
 </div>

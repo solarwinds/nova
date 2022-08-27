@@ -3,19 +3,35 @@ import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiButtonModule, NuiDocsModule, NuiFormFieldModule, NuiIconModule, NuiMessageModule, NuiSwitchModule, NuiTextboxModule } from "@nova-ui/bits";
-import { NuiDashboardConfiguratorModule, NuiDashboardsModule } from "@nova-ui/dashboards";
+
+import {
+    DEMO_PATH_TOKEN,
+    NuiButtonModule,
+    NuiDocsModule,
+    NuiFormFieldModule,
+    NuiIconModule,
+    NuiMessageModule,
+    NuiSwitchModule,
+    NuiTextboxModule,
+} from "@nova-ui/bits";
+import {
+    NuiDashboardConfiguratorModule,
+    NuiDashboardsModule,
+} from "@nova-ui/dashboards";
 
 import { CustomConfiguratorSectionDocsComponent } from "./custom-configurator-section-docs.component";
-import { CustomConfiguratorSectionExampleComponent, CustomKpiDescriptionConfigurationComponent } from "./custom-configurator-section.example.component";
+import {
+    CustomConfiguratorSectionExampleComponent,
+    CustomKpiDescriptionConfigurationComponent,
+} from "./custom-configurator-section.example.component";
 
 const routes = [
     {
         path: "",
         component: CustomConfiguratorSectionDocsComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
             showThemeSwitcher: true,
         },
@@ -24,8 +40,8 @@ const routes = [
         path: "example",
         component: CustomConfiguratorSectionExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -53,7 +69,15 @@ const routes = [
         CustomConfiguratorSectionExampleComponent,
     ],
     providers: [
-        { provide: DEMO_PATH_TOKEN, useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/) },
+        {
+            provide: DEMO_PATH_TOKEN,
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
+        },
     ],
 })
-export class CustomConfiguratorSectionModule { }
+export class CustomConfiguratorSectionModule {}

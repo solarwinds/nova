@@ -5,5 +5,4 @@ import { Component } from "@angular/core";
     template: ``,
     styleUrls: ["./drop-area.component.less"],
 })
-export class DropAreaComponent {
-}
+export class DropAreaComponent {}

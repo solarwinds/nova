@@ -16,10 +16,14 @@ describe("components >", () => {
 
         it("should provide default placeholder if no custom one is provided", () => {
             subject.placeholder = "";
-            expect(subject.getPlaceholder()).toEqual(subject.defaultPlaceholder + "...");
+            expect(subject.getPlaceholder()).toEqual(
+                subject.defaultPlaceholder + "..."
+            );
             // @ts-ignore: Suppressing error for testing purposes
             subject.placeholder = undefined;
-            expect(subject.getPlaceholder()).toEqual(subject.defaultPlaceholder + "...");
+            expect(subject.getPlaceholder()).toEqual(
+                subject.defaultPlaceholder + "..."
+            );
         });
 
         it("should set 'captureFocus' and emit 'focusChange' with true passed on cancel", () => {
@@ -58,7 +62,7 @@ describe("components >", () => {
             const currentInput = "current input";
             subject.value = currentInput;
             spyOn(subject.search, "emit");
-            const keyboardEvent = <KeyboardEvent>{key: "Enter"};
+            const keyboardEvent = <KeyboardEvent>{ key: "Enter" };
             subject.onKeyup(keyboardEvent);
             expect(subject.search.emit).toHaveBeenCalledWith(currentInput);
         });

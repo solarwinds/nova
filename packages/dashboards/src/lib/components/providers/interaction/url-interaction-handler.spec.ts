@@ -1,11 +1,11 @@
 import { EventBus, IEvent } from "@nova-ui/bits";
+import { UrlInteractionService } from "@nova-ui/dashboards";
 
+import { mockLoggerService } from "../../../mocks";
 import { INTERACTION } from "../../../services/types";
-
 import { IInteractionPayload } from "./interaction-handler";
 import { UrlInteractionHandler } from "./url-interaction-handler";
-import { UrlInteractionService } from "@nova-ui/dashboards";
-import { mockLoggerService } from "../../../mocks";
+
 import Spy = jasmine.Spy;
 
 describe("UrlInteractionHandler", () => {
@@ -21,19 +21,29 @@ describe("UrlInteractionHandler", () => {
                 location: {
                     href: "default",
                 },
-                open: () => {
-                },
+                open: () => {},
             };
             eventBus = new EventBus<IEvent>();
             const urlInteraction = new UrlInteractionService(mockLoggerService);
-            handler = new UrlInteractionHandler(eventBus, window, mockLoggerService, urlInteraction);
-            handleInteractionSpy = spyOn(handler as any, "handleInteraction").and.callThrough();
+            handler = new UrlInteractionHandler(
+                eventBus,
+                window,
+                mockLoggerService,
+                urlInteraction
+            );
+            handleInteractionSpy = spyOn(
+                handler as any,
+                "handleInteraction"
+            ).and.callThrough();
 
             payload = { interactionType: "click", data: "data" };
         });
 
         it("handles interaction when interaction type matches", () => {
-            handler.updateConfiguration({ interactionType: "click", url: "url" });
+            handler.updateConfiguration({
+                interactionType: "click",
+                url: "url",
+            });
             eventBus.getStream(INTERACTION).next({ payload });
 
             expect(handleInteractionSpy).toHaveBeenCalledWith(payload);
@@ -47,7 +57,10 @@ describe("UrlInteractionHandler", () => {
         });
 
         it("doesn't handle interaction when interaction type doesn't match", () => {
-            handler.updateConfiguration({ interactionType: "mismatch", url: "url" });
+            handler.updateConfiguration({
+                interactionType: "mismatch",
+                url: "url",
+            });
             eventBus.getStream(INTERACTION).next({ payload });
 
             expect(handleInteractionSpy).not.toHaveBeenCalled();
@@ -76,7 +89,9 @@ describe("UrlInteractionHandler", () => {
         it("should not throw error if properties are undefined", () => {
             (<any>handler).properties = undefined;
 
-            expect(() => eventBus.getStream(INTERACTION).next({ payload })).not.toThrow();
+            expect(() =>
+                eventBus.getStream(INTERACTION).next({ payload })
+            ).not.toThrow();
         });
     });
 });

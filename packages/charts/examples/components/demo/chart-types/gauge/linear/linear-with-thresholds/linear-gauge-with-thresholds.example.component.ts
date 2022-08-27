@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+
 import {
     ChartAssist,
     GaugeMode,
@@ -55,13 +56,25 @@ export class LinearGaugeWithThresholdsExampleComponent implements OnInit {
         this.gaugeConfig = this.getGaugeConfig();
 
         // Creating the horizontal gauge
-        this.horizontalChartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Horizontal);
-        this.horizontalSeriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Horizontal);
+        this.horizontalChartAssist = GaugeUtil.createChartAssist(
+            this.gaugeConfig,
+            GaugeMode.Horizontal
+        );
+        this.horizontalSeriesSet = GaugeUtil.assembleSeriesSet(
+            this.gaugeConfig,
+            GaugeMode.Horizontal
+        );
         this.horizontalChartAssist.update(this.horizontalSeriesSet);
 
         // Creating the vertical gauge
-        this.verticalChartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Vertical);
-        this.verticalSeriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Vertical);
+        this.verticalChartAssist = GaugeUtil.createChartAssist(
+            this.gaugeConfig,
+            GaugeMode.Vertical
+        );
+        this.verticalSeriesSet = GaugeUtil.assembleSeriesSet(
+            this.gaugeConfig,
+            GaugeMode.Vertical
+        );
         this.verticalChartAssist.update(this.verticalSeriesSet);
     }
 
@@ -74,11 +87,17 @@ export class LinearGaugeWithThresholdsExampleComponent implements OnInit {
         this.gaugeConfig = this.getGaugeConfig();
 
         // Updating the horizontal gauge
-        this.horizontalSeriesSet = GaugeUtil.update(this.horizontalSeriesSet, this.gaugeConfig);
+        this.horizontalSeriesSet = GaugeUtil.update(
+            this.horizontalSeriesSet,
+            this.gaugeConfig
+        );
         this.horizontalChartAssist.update(this.horizontalSeriesSet);
 
         // Updating the vertical gauge
-        this.verticalSeriesSet = GaugeUtil.update(this.verticalSeriesSet, this.gaugeConfig);
+        this.verticalSeriesSet = GaugeUtil.update(
+            this.verticalSeriesSet,
+            this.gaugeConfig
+        );
         this.verticalChartAssist.update(this.verticalSeriesSet);
     }
 

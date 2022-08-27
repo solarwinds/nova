@@ -4,7 +4,7 @@
 
 To quickly see the state of any component's pizzagna within a dashboard, open the console output in the
 browser's dev tools. Then, hold CTRL + SHIFT while clicking the component you want to
-examine the pizzagna for. A snapshot of the pizzagna state will appear in the console showing the state 
+examine the pizzagna for. A snapshot of the pizzagna state will appear in the console showing the state
 of the clicked component as well as the states of all its ascendants.
 
 Contained in each component state are the component's ID, type, instance, providers, and properties.

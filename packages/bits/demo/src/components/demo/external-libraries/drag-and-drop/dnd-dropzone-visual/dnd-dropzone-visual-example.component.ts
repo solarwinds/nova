@@ -1,5 +1,10 @@
-import {CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
-import {ChangeDetectionStrategy, Component} from "@angular/core";
+import {
+    CdkDragDrop,
+    copyArrayItem,
+    moveItemInArray,
+    transferArrayItem,
+} from "@angular/cdk/drag-drop";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 
 class Company {
     name: string;
@@ -19,9 +24,15 @@ const INDUSTRY_HW: string = "Hardware";
 const INDUSTRY_SW: string = "Software";
 
 const availableCompanies: Company[] = [
-    {name: COMPANY_ADOBE, industries: [{name: INDUSTRY_SW}]},
-    {name: COMPANY_IBM, industries: [{name: INDUSTRY_SW}, {name: INDUSTRY_HW}]},
-    {name: COMPANY_DELL, industries: [{name: INDUSTRY_HW}, {name: INDUSTRY_SW}]},
+    { name: COMPANY_ADOBE, industries: [{ name: INDUSTRY_SW }] },
+    {
+        name: COMPANY_IBM,
+        industries: [{ name: INDUSTRY_SW }, { name: INDUSTRY_HW }],
+    },
+    {
+        name: COMPANY_DELL,
+        industries: [{ name: INDUSTRY_HW }, { name: INDUSTRY_SW }],
+    },
 ];
 
 @Component({
@@ -33,7 +44,10 @@ const availableCompanies: Company[] = [
 export class DndDropzoneVisualExampleComponent {
     public companies: Company[] = availableCompanies;
 
-    public industries: Industry[] = [{name: INDUSTRY_HW, companies: [{name: COMPANY_IBM}]}, {name: INDUSTRY_SW, companies: []}];
+    public industries: Industry[] = [
+        { name: INDUSTRY_HW, companies: [{ name: COMPANY_IBM }] },
+        { name: INDUSTRY_SW, companies: [] },
+    ];
 
     // Note: Prevent user from putting back already displaced items
     public sourceAcceptsItem(): boolean {
@@ -49,14 +63,31 @@ export class DndDropzoneVisualExampleComponent {
             return;
         }
         if (event.previousContainer === event.container) {
-            moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+            moveItemInArray(
+                event.container.data,
+                event.previousIndex,
+                event.currentIndex
+            );
         } else {
-            if (event.previousContainer.element.nativeElement.classList.contains("dragzone")) {
-                copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+            if (
+                event.previousContainer.element.nativeElement.classList.contains(
+                    "dragzone"
+                )
+            ) {
+                copyArrayItem(
+                    event.previousContainer.data,
+                    event.container.data,
+                    event.previousIndex,
+                    event.currentIndex
+                );
             } else {
-                transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+                transferArrayItem(
+                    event.previousContainer.data,
+                    event.container.data,
+                    event.previousIndex,
+                    event.currentIndex
+                );
             }
-
         }
     }
 }

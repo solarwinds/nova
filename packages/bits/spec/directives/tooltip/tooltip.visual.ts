@@ -1,9 +1,8 @@
-
 import { browser } from "protractor";
 
-import {Atom} from "../../atom";
-import {ButtonAtom} from "../../components/button/button.atom";
-import {Animations, Helpers} from "../../helpers";
+import { Atom } from "../../atom";
+import { ButtonAtom } from "../../components/button/button.atom";
+import { Animations, Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
 
 const name: string = "Tooltip";
@@ -24,7 +23,7 @@ describe(`Visual tests: ${name}`, () => {
         bottomTooltipButton = Atom.find(ButtonAtom, "bottom-tooltip");
         rightTooltipButton = Atom.find(ButtonAtom, "right-tooltip");
         manualTooltipButton = Atom.find(ButtonAtom, "manual-tooltip");
-        
+
         camera = new Camera().loadFilm(browser, name);
     });
 
@@ -51,7 +50,9 @@ describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese("After tooltip triggered manually", 400);
 
         Helpers.switchDarkTheme("on");
-        await camera.say.cheese("After tooltip triggered manually with dark theme mode on");
+        await camera.say.cheese(
+            "After tooltip triggered manually with dark theme mode on"
+        );
 
         await camera.turn.off();
     }, 200000);

@@ -4,4 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-custom-data-source-configurator-docs",
     templateUrl: "./custom-data-source-configurator-docs.component.html",
 })
-export class CustomDataSourceConfiguratorDocComponent { }
+export class CustomDataSourceConfiguratorDocComponent {}

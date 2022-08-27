@@ -1,70 +1,108 @@
-<div [style.height.px]="gridHeight" [style.max-width.px]="1300" style="border-color: lightgrey;">
-    <cdk-virtual-scroll-viewport [style.height.px]="gridHeight" tableVirtualScroll [rowHeight]="24" [offset]="40">
-        <table nui-table [dataSource]="users" [resizable]="false" [reorderable]="true">
+<div
+    [style.height.px]="gridHeight"
+    [style.max-width.px]="1300"
+    style="border-color: lightgrey"
+>
+    <cdk-virtual-scroll-viewport
+        [style.height.px]="gridHeight"
+        tableVirtualScroll
+        [rowHeight]="24"
+        [offset]="40"
+    >
+        <table
+            nui-table
+            [dataSource]="users"
+            [resizable]="false"
+            [reorderable]="true"
+        >
             <ng-container nuiColumnDef="no" [columnWidth]="50">
-                <th nui-header-cell *nuiHeaderCellDef i18n> No.</th>
-                <td nui-cell *nuiCellDef="let element">{{element.no}}</td>
+                <th nui-header-cell *nuiHeaderCellDef i18n>No.</th>
+                <td nui-cell *nuiCellDef="let element">{{ element.no }}</td>
             </ng-container>
 
             <ng-container nuiColumnDef="nameTitle" [columnWidth]="100">
-                <th nui-header-cell *nuiHeaderCellDef i18n> Title</th>
-                <td nui-cell *nuiCellDef="let element"> {{element.nameTitle}}</td>
+                <th nui-header-cell *nuiHeaderCellDef i18n>Title</th>
+                <td nui-cell *nuiCellDef="let element">
+                    {{ element.nameTitle }}
+                </td>
             </ng-container>
 
             <ng-container nuiColumnDef="nameFirst" [columnWidth]="100">
-                <th nui-header-cell *nuiHeaderCellDef i18n> First Name</th>
-                <td nui-cell *nuiCellDef="let element"> {{element.nameFirst}}</td>
+                <th nui-header-cell *nuiHeaderCellDef i18n>First Name</th>
+                <td nui-cell *nuiCellDef="let element">
+                    {{ element.nameFirst }}
+                </td>
             </ng-container>
 
             <ng-container nuiColumnDef="nameLast" [columnWidth]="100">
-                <th nui-header-cell *nuiHeaderCellDef i18n> Last Name</th>
-                <td nui-cell *nuiCellDef="let element"> {{element.nameLast}}</td>
+                <th nui-header-cell *nuiHeaderCellDef i18n>Last Name</th>
+                <td nui-cell *nuiCellDef="let element">
+                    {{ element.nameLast }}
+                </td>
             </ng-container>
 
             <ng-container nuiColumnDef="gender" [columnWidth]="100">
-                <th nui-header-cell *nuiHeaderCellDef i18n> Gender</th>
-                <td nui-cell *nuiCellDef="let element"> {{element.gender}}</td>
+                <th nui-header-cell *nuiHeaderCellDef i18n>Gender</th>
+                <td nui-cell *nuiCellDef="let element">{{ element.gender }}</td>
             </ng-container>
 
             <ng-container nuiColumnDef="country" [columnWidth]="150">
-                <th nui-header-cell *nuiHeaderCellDef i18n> Country</th>
-                <td nui-cell *nuiCellDef="let element"> {{element.country}}</td>
+                <th nui-header-cell *nuiHeaderCellDef i18n>Country</th>
+                <td nui-cell *nuiCellDef="let element">
+                    {{ element.country }}
+                </td>
             </ng-container>
 
             <ng-container nuiColumnDef="city" [columnWidth]="100">
-                <th nui-header-cell *nuiHeaderCellDef i18n> City</th>
-                <td nui-cell *nuiCellDef="let element">{{element.city}}</td>
+                <th nui-header-cell *nuiHeaderCellDef i18n>City</th>
+                <td nui-cell *nuiCellDef="let element">{{ element.city }}</td>
             </ng-container>
 
             <ng-container nuiColumnDef="postcode" [columnWidth]="100">
-                <th nui-header-cell *nuiHeaderCellDef i18n> Postcode</th>
-                <td nui-cell *nuiCellDef="let element">{{element.postcode}}</td>
+                <th nui-header-cell *nuiHeaderCellDef i18n>Postcode</th>
+                <td nui-cell *nuiCellDef="let element">
+                    {{ element.postcode }}
+                </td>
             </ng-container>
 
             <ng-container nuiColumnDef="email" [columnWidth]="200">
-                <th nui-header-cell *nuiHeaderCellDef i18n> Email</th>
-                <td nui-cell *nuiCellDef="let element">{{element.email}}</td>
+                <th nui-header-cell *nuiHeaderCellDef i18n>Email</th>
+                <td nui-cell *nuiCellDef="let element">{{ element.email }}</td>
             </ng-container>
 
             <ng-container nuiColumnDef="cell" [columnWidth]="150">
-                <th nui-header-cell *nuiHeaderCellDef i18n> Cell</th>
-                <td nui-cell *nuiCellDef="let element" style="overflow: visible">{{element.cell}}</td>
+                <th nui-header-cell *nuiHeaderCellDef i18n>Cell</th>
+                <td
+                    nui-cell
+                    *nuiCellDef="let element"
+                    style="overflow: visible"
+                >
+                    {{ element.cell }}
+                </td>
             </ng-container>
 
-            <tr nui-header-row *nuiHeaderRowDef="displayedColumns; sticky: true"></tr>
-            <tr nui-row *nuiRowDef="let row; columns: displayedColumns" density="tiny"></tr>
+            <tr
+                nui-header-row
+                *nuiHeaderRowDef="displayedColumns; sticky: true"
+            ></tr>
+            <tr
+                nui-row
+                *nuiRowDef="let row; columns: displayedColumns"
+                density="tiny"
+            ></tr>
         </table>
     </cdk-virtual-scroll-viewport>
 </div>
 
-<footer *ngIf="users.length !== totalItems"
-        style="color: #767676; height: 20px;"
-        [style.max-width.px]="1285"
-        class="d-flex justify-content-center align-items-center">
-
-        <div class="h-100 w-100">
-            <div *ngIf="isBusy">
-                <nui-progress [show]="isBusy" compactMode="true"></nui-progress>
-            </div>
+<footer
+    *ngIf="users.length !== totalItems"
+    style="color: #767676; height: 20px"
+    [style.max-width.px]="1285"
+    class="d-flex justify-content-center align-items-center"
+>
+    <div class="h-100 w-100">
+        <div *ngIf="isBusy">
+            <nui-progress [show]="isBusy" compactMode="true"></nui-progress>
         </div>
+    </div>
 </footer>

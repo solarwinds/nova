@@ -1,20 +1,23 @@
 import { MockedChangeDetectorRef } from "../../../../spec-helpers/angular";
 import { MenuGroupComponent } from "../menu-group/menu-group.component";
-
 import { MenuSwitchComponent } from "./menu-switch.component";
 
 describe("components >", () => {
-
     describe("menu-switch >", () => {
-
         describe("stopPropagationOfClick function >", () => {
             let mockEvent: MouseEvent;
             let spyForSwitchEmit: jasmine.Spy;
             let menuSwitch: MenuSwitchComponent;
 
             beforeEach(() => {
-                mockEvent = jasmine.createSpyObj("event", ["preventDefault", "stopPropagation"]);
-                menuSwitch = new MenuSwitchComponent(new MenuGroupComponent(), new MockedChangeDetectorRef());
+                mockEvent = jasmine.createSpyObj("event", [
+                    "preventDefault",
+                    "stopPropagation",
+                ]);
+                menuSwitch = new MenuSwitchComponent(
+                    new MenuGroupComponent(),
+                    new MockedChangeDetectorRef()
+                );
                 spyForSwitchEmit = spyOn(menuSwitch.actionDone, "emit");
             });
 
@@ -35,9 +38,6 @@ describe("components >", () => {
                 expect(mockEvent.stopPropagation).toHaveBeenCalled();
                 expect(spyForSwitchEmit).toHaveBeenCalledWith(true);
             });
-
         });
-
     });
-
 });

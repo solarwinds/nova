@@ -1,19 +1,33 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, TemplateRef, ViewChild } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Inject,
+    OnInit,
+    TemplateRef,
+    ViewChild,
+} from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+
 import {
     DialogService,
     NuiDialogRef,
     ToastService,
     WizardHorizontalComponent,
 } from "@nova-ui/bits";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
     selector: "nui-wizard-with-confirmation-dialog-on-cancel-example",
-    templateUrl: "./wizard-with-confirmation-dialog-on-cancel.example.component.html",
-    styleUrls: ["./wizard-with-confirmation-dialog-on-cancel.example.component.less"],
+    templateUrl:
+        "./wizard-with-confirmation-dialog-on-cancel.example.component.html",
+    styleUrls: [
+        "./wizard-with-confirmation-dialog-on-cancel.example.component.less",
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WizardWithConfirmationDialogOnCancelExampleComponent implements OnInit{
+export class WizardWithConfirmationDialogOnCancelExampleComponent
+    implements OnInit
+{
     public confirmationDialog: NuiDialogRef;
     public form: FormGroup;
 
@@ -23,7 +37,8 @@ export class WizardWithConfirmationDialogOnCancelExampleComponent implements OnI
         @Inject(DialogService) private dialogService: DialogService,
         private toastService: ToastService,
         private formBuilder: FormBuilder,
-        public cd: ChangeDetectorRef) { }
+        public cd: ChangeDetectorRef
+    ) {}
 
     public ngOnInit(): void {
         this.initForm();
@@ -70,16 +85,16 @@ export class WizardWithConfirmationDialogOnCancelExampleComponent implements OnI
 
     private initForm(): void {
         this.form = new FormGroup({
-            "personDetails": this.formBuilder.group({
-                "firstName": ["", [Validators.required, Validators.minLength(3)]],
-                "lastName": ["", [Validators.required, Validators.minLength(3)]],
+            personDetails: this.formBuilder.group({
+                firstName: ["", [Validators.required, Validators.minLength(3)]],
+                lastName: ["", [Validators.required, Validators.minLength(3)]],
             }),
-            "contactDetails": this.formBuilder.group({
-                "email": ["", [Validators.required, Validators.email]],
-                "phone": [""],
+            contactDetails: this.formBuilder.group({
+                email: ["", [Validators.required, Validators.email]],
+                phone: [""],
             }),
-            "confirm": this.formBuilder.group({
-                "confirmed": [false, Validators.requiredTrue],
+            confirm: this.formBuilder.group({
+                confirmed: [false, Validators.requiredTrue],
             }),
         });
     }

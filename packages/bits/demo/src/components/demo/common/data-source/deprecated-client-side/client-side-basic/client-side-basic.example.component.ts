@@ -1,28 +1,38 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, ViewChild } from "@angular/core";
 import {
-    INovaFilteringOutputs, LocalFilteringDataSource, PaginatorComponent, SearchComponent,
-} from "@nova-ui/bits";
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    OnDestroy,
+    ViewChild,
+} from "@angular/core";
 import { Subscription } from "rxjs";
 
+import {
+    INovaFilteringOutputs,
+    LocalFilteringDataSource,
+    PaginatorComponent,
+    SearchComponent,
+} from "@nova-ui/bits";
+
 const RANDOM_ARRAY = [
-    {color: "regular-blue"},
-    {color: "regular-green"},
-    {color: "regular-yellow"},
-    {color: "regular-cyan "},
-    {color: "regular-magenta"},
-    {color: "regular-black"},
-    {color: "dark-blue"},
-    {color: "dark-green"},
-    {color: "dark-yellow"},
-    {color: "dark-cyan "},
-    {color: "dark-magenta"},
-    {color: "dark-black"},
-    {color: "light-blue"},
-    {color: "light-green"},
-    {color: "light-yellow"},
-    {color: "light-cyan "},
-    {color: "light-magenta"},
-    {color: "light-black"},
+    { color: "regular-blue" },
+    { color: "regular-green" },
+    { color: "regular-yellow" },
+    { color: "regular-cyan " },
+    { color: "regular-magenta" },
+    { color: "regular-black" },
+    { color: "dark-blue" },
+    { color: "dark-green" },
+    { color: "dark-yellow" },
+    { color: "dark-cyan " },
+    { color: "dark-magenta" },
+    { color: "dark-black" },
+    { color: "light-blue" },
+    { color: "light-green" },
+    { color: "light-yellow" },
+    { color: "light-cyan " },
+    { color: "light-magenta" },
+    { color: "light-black" },
 ];
 
 interface ExampleItem {
@@ -35,10 +45,12 @@ interface ExampleItem {
  */
 @Component({
     selector: "nui-deprecated-client-side-basic-data-source-example",
-    providers: [ LocalFilteringDataSource ],
+    providers: [LocalFilteringDataSource],
     templateUrl: "./client-side-basic.example.component.html",
 })
-export class DepreacatedDataSourceClientSideBasicExampleComponent implements AfterViewInit, OnDestroy {
+export class DepreacatedDataSourceClientSideBasicExampleComponent
+    implements AfterViewInit, OnDestroy
+{
     public searchTerm = "";
     public page = 1;
 
@@ -60,8 +72,10 @@ export class DepreacatedDataSourceClientSideBasicExampleComponent implements Aft
 
     private outputsSubscription: Subscription;
 
-    constructor(public dataSourceService: LocalFilteringDataSource<ExampleItem>,
-                public changeDetection: ChangeDetectorRef) {
+    constructor(
+        public dataSourceService: LocalFilteringDataSource<ExampleItem>,
+        public changeDetection: ChangeDetectorRef
+    ) {
         dataSourceService.setData(RANDOM_ARRAY);
 
         this.filters = ["regular", "dark", "light"];
@@ -77,13 +91,16 @@ export class DepreacatedDataSourceClientSideBasicExampleComponent implements Aft
                 componentInstance: this.filteringPaginator,
             },
         });
-        this.outputsSubscription = this.dataSourceService.outputsSubject.subscribe((data: INovaFilteringOutputs) => {
-            this.state = data;
-            if (data && data.paginator && data.paginator.reset) {
-                this.filteringPaginator.page = 1;
-            }
-            this.changeDetection.detectChanges();
-        });
+        this.outputsSubscription =
+            this.dataSourceService.outputsSubject.subscribe(
+                (data: INovaFilteringOutputs) => {
+                    this.state = data;
+                    if (data && data.paginator && data.paginator.reset) {
+                        this.filteringPaginator.page = 1;
+                    }
+                    this.changeDetection.detectChanges();
+                }
+            );
         await this.dataSourceService.applyFilters();
     }
 

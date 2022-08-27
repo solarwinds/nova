@@ -2,40 +2,40 @@
 @import (reference) "../../styles/mixins.less";
 
 .cdk-drag {
-  position: relative;
-  cursor: move;
-  &:hover{
-    .setCssVariable(background-color, nui-color-bg-light-hover);
-    box-shadow: @nui-shadow-default;
-  }
+    position: relative;
+    cursor: move;
+    &:hover {
+        .setCssVariable(background-color, nui-color-bg-light-hover);
+        box-shadow: @nui-shadow-default;
+    }
 }
 
 .cdk-drag-with-handle {
-  pointer-events: none;
-  svg {
-    pointer-events: all;
+    pointer-events: none;
+    svg {
+        pointer-events: all;
 
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: #ccc;
-    cursor: move;
-    width: 24px;
-    height: 24px;
-  }
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #ccc;
+        cursor: move;
+        width: 24px;
+        height: 24px;
+    }
 }
 .cdk-drop-list-dragging {
-  .setCssVariable(background-color, nui-color-selected);
-  position: relative;
-  pointer-events:none;
-  box-shadow: @nui-shadow-default;
+    .setCssVariable(background-color, nui-color-selected);
+    position: relative;
+    pointer-events: none;
+    box-shadow: @nui-shadow-default;
 
-  .cdk-drag-placeholder {
-    opacity: 10%;
-    display: initial;
-  }
+    .cdk-drag-placeholder {
+        opacity: 10%;
+        display: initial;
+    }
 }
 
 .cdk-drag-placeholder {
-  display: none;
+    display: none;
 }

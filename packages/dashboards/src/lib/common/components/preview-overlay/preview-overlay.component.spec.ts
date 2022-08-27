@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { NuiDashboardsModule } from "../../../dashboards.module";
-
 import { PreviewOverlayComponent } from "./preview-overlay.component";
 
 describe("PreviewOverlayComponent", () => {
@@ -10,9 +9,8 @@ describe("PreviewOverlayComponent", () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [ NuiDashboardsModule ],
-        })
-            .compileComponents();
+            imports: [NuiDashboardsModule],
+        }).compileComponents();
     }));
 
     beforeEach(() => {

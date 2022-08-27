@@ -1,7 +1,8 @@
 import { Component, Inject, OnDestroy, OnInit } from "@angular/core";
-import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+
+import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
 
 import { DialogContentExampleComponent } from "../component-as-content/dialog-content.example.component";
 
@@ -10,20 +11,23 @@ import { DialogContentExampleComponent } from "../component-as-content/dialog-co
     templateUrl: "./dialog-after-opened.example.component.html",
 })
 export class DialogAfterOpenedExampleComponent implements OnInit, OnDestroy {
-    constructor(@Inject(DialogService) private dialogService: DialogService,
-                @Inject(ToastService) private toastService: ToastService) {
-    }
+    constructor(
+        @Inject(DialogService) private dialogService: DialogService,
+        @Inject(ToastService) private toastService: ToastService
+    ) {}
 
     public destroy$$: Subject<void> = new Subject<void>();
 
     public ngOnInit() {
-        this.dialogService.afterOpened$.pipe(
-            takeUntil(this.destroy$$)
-        ).subscribe((dialog: NuiDialogRef) => {
-            if (dialog.componentInstance) {
-                this.toastService.info({ message: `${dialog.componentInstance.constructor.name} was opened` });
-            }
-        });
+        this.dialogService.afterOpened$
+            .pipe(takeUntil(this.destroy$$))
+            .subscribe((dialog: NuiDialogRef) => {
+                if (dialog.componentInstance) {
+                    this.toastService.info({
+                        message: `${dialog.componentInstance.constructor.name} was opened`,
+                    });
+                }
+            });
     }
 
     public ngOnDestroy() {
@@ -41,7 +45,10 @@ export class DialogAfterOpenedExampleComponent implements OnInit, OnDestroy {
     }
 
     public openWithComponent() {
-        const dialogRef = this.dialogService.open(DialogContentExampleComponent, { size: "sm" });
-        dialogRef.componentInstance.name = $localize `Dialog title`;
+        const dialogRef = this.dialogService.open(
+            DialogContentExampleComponent,
+            { size: "sm" }
+        );
+        dialogRef.componentInstance.name = $localize`Dialog title`;
     }
 }

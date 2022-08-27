@@ -1,8 +1,18 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import {
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators,
+} from "@angular/forms";
 import { of } from "rxjs";
 import { delay, take } from "rxjs/operators";
-import { ToastService, WizardHorizontalComponent, WizardStepV2Component } from "@nova-ui/bits";
+
+import {
+    ToastService,
+    WizardHorizontalComponent,
+    WizardStepV2Component,
+} from "@nova-ui/bits";
 
 const fakeAsyncValidator = (c: FormControl) => of(null).pipe(delay(4000));
 
@@ -19,7 +29,7 @@ export class WizardAsyncFormValidationExampleComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
         private toastService: ToastService
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         this.form = new FormGroup({

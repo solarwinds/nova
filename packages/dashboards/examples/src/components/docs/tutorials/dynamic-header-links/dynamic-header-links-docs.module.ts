@@ -8,8 +8,8 @@ const routes = [
         path: "",
         component: DynamicHeaderLinksDocsComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
             showThemeSwitcher: true,
         },
@@ -17,13 +17,8 @@ const routes = [
 ];
 
 @NgModule({
-    imports: [
-        RouterModule.forChild(routes),
-    ],
-    declarations: [
-        DynamicHeaderLinksDocsComponent,
-    ],
-    entryComponents: [
-    ],
+    imports: [RouterModule.forChild(routes)],
+    declarations: [DynamicHeaderLinksDocsComponent],
+    entryComponents: [],
 })
-export class DynamicHeaderLinksDocsModule { }
+export class DynamicHeaderLinksDocsModule {}

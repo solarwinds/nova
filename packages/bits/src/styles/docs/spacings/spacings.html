@@ -1,87 +1,122 @@
-<link rel="stylesheet" type="text/css" href="_nui-css-url_">
-<base href="/">
-    <div class="nui" ng-controller="SpacingDemoController as ctrl">
-        <div class="spacings-demo" >
-            <h2>Available spacings (for UX)</h2>
-            <p>Select specific options for generating classnames.</p>
-            <div class="spaces nui-padding-mdh">
-                <div class="space-item space-item-small">
-                    <h3>Small</h3>
-                    <div class="space-item-demo"></div>
-                    <code>7px</code>
+<link rel="stylesheet" type="text/css" href="_nui-css-url_" />
+<base href="/" />
+<div class="nui" ng-controller="SpacingDemoController as ctrl">
+    <div class="spacings-demo">
+        <h2>Available spacings (for UX)</h2>
+        <p>Select specific options for generating classnames.</p>
+        <div class="spaces nui-padding-mdh">
+            <div class="space-item space-item-small">
+                <h3>Small</h3>
+                <div class="space-item-demo"></div>
+                <code>7px</code>
+            </div>
+            <div class="space-item space-item-medium">
+                <h3>Medium</h3>
+                <div class="space-item-demo"></div>
+                <code>10px</code>
+            </div>
+            <div class="space-item space-item-large">
+                <h3>Large</h3>
+                <div class="space-item-demo"></div>
+                <code>15px</code>
+            </div>
+        </div>
+        <nui-divider></nui-divider>
+        <h2>Available classes (for devs)</h2>
+        <ng-form class="prop-form nui-margin-lgh">
+            <div class="prop">
+                <div class="prop-header">
+                    <h2>Margin</h2>
+                    <code>.{{ctrl.marginClass}}</code>
                 </div>
-                <div class="space-item space-item-medium">
-                    <h3>Medium</h3>
-                    <div class="space-item-demo"></div>
-                    <code>10px</code>
-                </div>
-                <div class="space-item space-item-large">
-                    <h3>Large</h3>
-                    <div class="space-item-demo"></div>
-                    <code>15px</code>
+                <div class="prop-setters">
+                    <div class="prop-setter-item">
+                        <h3>Size</h3>
+                        <nui-radio value="lg" ng-model="ctrl.margin.size"
+                            >Large</nui-radio
+                        >
+                        <nui-radio value="md" ng-model="ctrl.margin.size"
+                            >Medium</nui-radio
+                        >
+                        <nui-radio value="sm" ng-model="ctrl.margin.size"
+                            >Small</nui-radio
+                        >
+                    </div>
+                    <div class="prop-setter-item">
+                        <h3>Directions</h3>
+                        <nui-radio value="" ng-model="ctrl.margin.direction"
+                            >All around</nui-radio
+                        >
+                        <nui-radio value="h" ng-model="ctrl.margin.direction"
+                            >Horizontal</nui-radio
+                        >
+                        <nui-radio value="v" ng-model="ctrl.margin.direction"
+                            >Vertical</nui-radio
+                        >
+                        <nui-radio value="r" ng-model="ctrl.margin.direction"
+                            >Right</nui-radio
+                        >
+                        <nui-radio value="l" ng-model="ctrl.margin.direction"
+                            >Left</nui-radio
+                        >
+                    </div>
+                    <div class="prop-setter-item">
+                        <nui-checkbox ng-model="ctrl.margin.isNegative"
+                            >Negative</nui-checkbox
+                        >
+                    </div>
                 </div>
             </div>
-            <nui-divider></nui-divider>
-            <h2>Available classes (for devs)</h2>
-            <ng-form class="prop-form nui-margin-lgh">
-                <div class="prop">
-                    <div class="prop-header">
-                        <h2>Margin</h2>
-                        <code>.{{ctrl.marginClass}}</code>
+            <div class="prop">
+                <div class="prop-header">
+                    <h2>Padding</h2>
+                    <code>.{{ctrl.paddingClass}}</code>
+                </div>
+                <div class="prop-setters">
+                    <div class="prop-setter-item">
+                        <h3>Size</h3>
+                        <nui-radio value="lg" ng-model="ctrl.padding.size"
+                            >Large</nui-radio
+                        >
+                        <nui-radio value="md" ng-model="ctrl.padding.size"
+                            >Medium</nui-radio
+                        >
+                        <nui-radio value="sm" ng-model="ctrl.padding.size"
+                            >Small</nui-radio
+                        >
                     </div>
-                    <div class="prop-setters">
-                        <div class="prop-setter-item">
-                            <h3>Size</h3>
-                            <nui-radio value="lg" ng-model="ctrl.margin.size">Large</nui-radio>
-                            <nui-radio value="md" ng-model="ctrl.margin.size">Medium</nui-radio>
-                            <nui-radio value="sm" ng-model="ctrl.margin.size">Small</nui-radio>
-                        </div>
-                        <div class="prop-setter-item">
-                            <h3>Directions</h3>
-                            <nui-radio value="" ng-model="ctrl.margin.direction">All around</nui-radio>
-                            <nui-radio value="h" ng-model="ctrl.margin.direction">Horizontal</nui-radio>
-                            <nui-radio value="v" ng-model="ctrl.margin.direction">Vertical</nui-radio>
-                            <nui-radio value="r" ng-model="ctrl.margin.direction">Right</nui-radio>
-                            <nui-radio value="l" ng-model="ctrl.margin.direction">Left</nui-radio>
-                        </div>
-                        <div class="prop-setter-item">
-                            <nui-checkbox ng-model="ctrl.margin.isNegative">Negative</nui-checkbox>
-                        </div>
+                    <div class="prop-setter-item">
+                        <h3>Directions</h3>
+                        <nui-radio value="" ng-model="ctrl.padding.direction"
+                            >All around</nui-radio
+                        >
+                        <nui-radio value="h" ng-model="ctrl.padding.direction"
+                            >Horizontal</nui-radio
+                        >
+                        <nui-radio value="v" ng-model="ctrl.padding.direction"
+                            >Vertical</nui-radio
+                        >
+                        <nui-radio value="r" ng-model="ctrl.padding.direction"
+                            >Right</nui-radio
+                        >
+                        <nui-radio value="l" ng-model="ctrl.padding.direction"
+                            >Left</nui-radio
+                        >
                     </div>
                 </div>
-                <div class="prop">
-                    <div class="prop-header">
-                        <h2>Padding</h2>
-                        <code>.{{ctrl.paddingClass}}</code>
-                    </div>
-                    <div class="prop-setters">
-                        <div class="prop-setter-item">
-                            <h3>Size</h3>
-                            <nui-radio value="lg" ng-model="ctrl.padding.size">Large</nui-radio>
-                            <nui-radio value="md" ng-model="ctrl.padding.size">Medium</nui-radio>
-                            <nui-radio value="sm" ng-model="ctrl.padding.size">Small</nui-radio>
-                        </div>
-                        <div class="prop-setter-item">
-                            <h3>Directions</h3>
-                            <nui-radio value="" ng-model="ctrl.padding.direction">All around</nui-radio>
-                            <nui-radio value="h" ng-model="ctrl.padding.direction">Horizontal</nui-radio>
-                            <nui-radio value="v" ng-model="ctrl.padding.direction">Vertical</nui-radio>
-                            <nui-radio value="r" ng-model="ctrl.padding.direction">Right</nui-radio>
-                            <nui-radio value="l" ng-model="ctrl.padding.direction">Left</nui-radio>
-                        </div>
-
-                    </div>
-                </div>
-            </ng-form>
-            <nui-divider></nui-divider>
-            <div class="demo-box-outer">
-                <div class="demo-box" ng-class="[ctrl.marginClass, ctrl.paddingClass]">
-                    <div class="demo-box-inner"></div>
-                </div>
+            </div>
+        </ng-form>
+        <nui-divider></nui-divider>
+        <div class="demo-box-outer">
+            <div
+                class="demo-box"
+                ng-class="[ctrl.marginClass, ctrl.paddingClass]"
+            >
+                <div class="demo-box-inner"></div>
             </div>
         </div>
     </div>
-</base>
+</div>
 <style>
     .spaces {
         display: flex;
@@ -131,7 +166,9 @@
     }
 
     /* this is not a nice way, but otherwise whe would need to create a new ng-docs template*/
-    .nui-styles-spacings-page .tabbable,  .nui-styles-spacings-page div[source-edit], #source {
+    .nui-styles-spacings-page .tabbable,
+    .nui-styles-spacings-page div[source-edit],
+    #source {
         display: none;
     }
 </style>

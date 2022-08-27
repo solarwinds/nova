@@ -1,5 +1,15 @@
 import { Component, OnInit } from "@angular/core";
-import { Chart, CHART_PALETTE_CS2, IChartSeries, ILineAccessors, LineAccessors, LinearScale, LineRenderer, XYGrid } from "@nova-ui/charts";
+
+import {
+    Chart,
+    CHART_PALETTE_CS2,
+    IChartSeries,
+    ILineAccessors,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    XYGrid,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-colors-custom-accessor-example",
@@ -18,12 +28,14 @@ export class RendererColorsCustomAccessorExampleComponent implements OnInit {
         // Custom color accessor
         accessors.series.color = () => CHART_PALETTE_CS2[6];
 
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
-            ...d,
-            scales,
-            renderer,
-            accessors,
-        }));
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
+            (d) => ({
+                ...d,
+                scales,
+                renderer,
+                accessors,
+            })
+        );
 
         this.chart.update(seriesSet);
     }

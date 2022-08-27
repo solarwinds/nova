@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
-import { LegendPlacement } from "../../widget-types/common/widget/legend"
 import { FormStackComponent } from "../../configurator/components/form-stack/form-stack.component";
 import { WidgetConfiguratorSectionComponent } from "../../configurator/components/widget-configurator-section/widget-configurator-section.component";
 import { DataSourceConfigurationComponent } from "../../configurator/components/widgets/configurator-items/data-source-configuration/data-source-configuration.component";
+import { DataSourceErrorComponent } from "../../configurator/components/widgets/configurator-items/data-source-error/data-source-error.component";
 import { TimeseriesMetadataConfigurationComponent } from "../../configurator/components/widgets/configurator-items/timeseries-metadata-configuration/timeseries-metadata-configuration.component";
 import { TitleAndDescriptionConfigurationComponent } from "../../configurator/components/widgets/configurator-items/title-and-description-configuration/title-and-description-configuration.component";
 import { TimeseriesSeriesCollectionConfigurationComponent } from "../../configurator/components/widgets/timeseries/timeseries-series-collection-configuration/timeseries-series-collection-configuration.component";
@@ -18,9 +18,14 @@ import {
     NOVA_TIMESERIES_TILE_INDICATOR_DATA_CONVERTER,
     NOVA_TITLE_AND_DESCRIPTION_CONVERTER,
 } from "../../services/types";
-import { IPizzagna, IProviderConfiguration, PizzagnaLayer, WellKnownProviders } from "../../types";
+import {
+    IPizzagna,
+    IProviderConfiguration,
+    PizzagnaLayer,
+    WellKnownProviders,
+} from "../../types";
+import { LegendPlacement } from "../../widget-types/common/widget/legend";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
-import { DataSourceErrorComponent } from "../../configurator/components/widgets/configurator-items/data-source-error/data-source-error.component";
 /* eslint-enable max-len */
 
 export const timeseriesConfigurator: IPizzagna = {
@@ -32,11 +37,7 @@ export const timeseriesConfigurator: IPizzagna = {
             properties: {
                 elementClass: "flex-grow-1 overflow-auto nui-scroll-shadows",
                 // references to other components laid out in this form
-                nodes: [
-                    "presentation",
-                    "dataAndCalculations",
-                    "series",
-                ],
+                nodes: ["presentation", "dataAndCalculations", "series"],
             },
         },
         // /presentation
@@ -45,16 +46,14 @@ export const timeseriesConfigurator: IPizzagna = {
             componentType: WidgetConfiguratorSectionComponent.lateLoadKey,
             properties: {
                 headerText: $localize`Presentation`,
-                nodes: [
-                    "titleAndDescription",
-                    "timeseriesMetadata",
-                ],
+                nodes: ["titleAndDescription", "timeseriesMetadata"],
             },
         },
         // /presentation/titleAndDescription
         titleAndDescription: {
             id: "titleAndDescription",
-            componentType: TitleAndDescriptionConfigurationComponent.lateLoadKey,
+            componentType:
+                TitleAndDescriptionConfigurationComponent.lateLoadKey,
             providers: {
                 [WellKnownProviders.Converter]: {
                     providerId: NOVA_TITLE_AND_DESCRIPTION_CONVERTER,
@@ -121,7 +120,8 @@ export const timeseriesConfigurator: IPizzagna = {
                             },
                             {
                                 // this component updates 'properties' of 'dataSource' via an adapter
-                                previewPath: "chart.providers.adapter.properties.dataSource",
+                                previewPath:
+                                    "chart.providers.adapter.properties.dataSource",
                                 keys: ["properties"],
                             },
                         ] as IConverterFormPartsProperties[],
@@ -132,7 +132,8 @@ export const timeseriesConfigurator: IPizzagna = {
         // /series
         series: {
             id: "series",
-            componentType: TimeseriesSeriesCollectionConfigurationComponent.lateLoadKey,
+            componentType:
+                TimeseriesSeriesCollectionConfigurationComponent.lateLoadKey,
             providers: {
                 // converter transforms the data between the widget and the form
                 [WellKnownProviders.Converter]: {
@@ -145,7 +146,8 @@ export const timeseriesConfigurator: IPizzagna = {
                     {
                         // series description (label) configuration section
                         id: "description",
-                        componentType: TimeseriesTileDescriptionConfigurationComponent.lateLoadKey,
+                        componentType:
+                            TimeseriesTileDescriptionConfigurationComponent.lateLoadKey,
                         providers: {
                             // converter transforms the data between the widget and the form
                             [WellKnownProviders.Converter]: {
@@ -154,7 +156,8 @@ export const timeseriesConfigurator: IPizzagna = {
                                     formParts: [
                                         {
                                             // this component updates 'label' of 'series' via an adapter
-                                            previewPath: "chart.providers.adapter.properties.series",
+                                            previewPath:
+                                                "chart.providers.adapter.properties.series",
                                             keys: ["label"],
                                         },
                                     ] as IConverterFormPartsProperties[],
@@ -165,11 +168,13 @@ export const timeseriesConfigurator: IPizzagna = {
                     {
                         // indicator data configuration section
                         id: "indicatorData",
-                        componentType: TimeseriesTileIndicatorDataConfigurationComponent.lateLoadKey,
+                        componentType:
+                            TimeseriesTileIndicatorDataConfigurationComponent.lateLoadKey,
                         providers: {
                             // converter transforms the data such as the selected series between the widget and the form
                             [WellKnownProviders.Converter]: {
-                                providerId: NOVA_TIMESERIES_TILE_INDICATOR_DATA_CONVERTER,
+                                providerId:
+                                    NOVA_TIMESERIES_TILE_INDICATOR_DATA_CONVERTER,
                             } as IProviderConfiguration,
                         },
                     },

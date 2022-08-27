@@ -12,7 +12,10 @@ describe("USERCONTROL Radio group", () => {
         await Helpers.prepareBrowser("radio-group/radio-group-test");
         basicGroup = Atom.find(RadioGroupAtom, "basic-radio-group");
         disabledGroup = Atom.find(RadioGroupAtom, "disabled-radio-group");
-        toggleDisabledGroupCheckbox = Atom.find(CheckboxAtom, "toggle-disabled-group-checkbox");
+        toggleDisabledGroupCheckbox = Atom.find(
+            CheckboxAtom,
+            "toggle-disabled-group-checkbox"
+        );
     });
 
     it("should have 'Kiwi' fruit value", async () => {

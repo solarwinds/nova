@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
+
 import {
     DEMO_PATH_TOKEN,
     NuiButtonModule,
@@ -37,8 +38,8 @@ const routes = [
         path: "",
         component: PanelDocsExampleComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.ga,
+            srlc: {
+                stage: SrlcStage.ga,
             },
             showThemeSwitcher: true,
         },
@@ -47,8 +48,8 @@ const routes = [
         path: "panel-visual-test",
         component: PanelVisualTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -56,8 +57,8 @@ const routes = [
         path: "panel-test",
         component: PanelTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -65,8 +66,8 @@ const routes = [
         path: "basic",
         component: PanelBasicExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -74,8 +75,8 @@ const routes = [
         path: "collapsible",
         component: PanelCollapseExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -83,8 +84,8 @@ const routes = [
         path: "hidden",
         component: PanelHideExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -92,8 +93,8 @@ const routes = [
         path: "floating",
         component: PanelFloatExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -101,8 +102,8 @@ const routes = [
         path: "resize",
         component: PanelResizeExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -141,12 +142,14 @@ const routes = [
     providers: [
         {
             provide: DEMO_PATH_TOKEN,
-            useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/),
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
         },
     ],
-    exports: [
-        RouterModule,
-    ],
+    exports: [RouterModule],
 })
-export class PanelModule {
-}
+export class PanelModule {}

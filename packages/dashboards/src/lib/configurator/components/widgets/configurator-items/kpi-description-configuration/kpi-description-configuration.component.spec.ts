@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
-
 import { KpiDescriptionConfigurationComponent } from "./kpi-description-configuration.component";
 
 describe("DataSourceConfigurationComponent", () => {
@@ -12,11 +11,8 @@ describe("DataSourceConfigurationComponent", () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
-            providers: [
-                ProviderRegistryService,
-            ],
-        })
-            .compileComponents();
+            providers: [ProviderRegistryService],
+        }).compileComponents();
     }));
 
     beforeEach(() => {

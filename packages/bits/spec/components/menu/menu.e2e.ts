@@ -51,14 +51,18 @@ describe("USERCONTROL Menu", () => {
     describe("> key navigation", () => {
         describe("> basic", () => {
             it("should open menu immediately if focused by TAB key", async () => {
-                const menuContainer = menu.getElement().element(by.xpath("../.."));
+                const menuContainer = menu
+                    .getElement()
+                    .element(by.xpath("../.."));
                 await menuContainer.click();
                 await browser.actions().sendKeys(protractor.Key.TAB).perform();
                 expect(await menu.isMenuOpened()).toBe(true);
             });
 
             it("should close menu when navigating from it by TAB key", async () => {
-                const menuContainer = menu.getElement().element(by.xpath("../.."));
+                const menuContainer = menu
+                    .getElement()
+                    .element(by.xpath("../.."));
                 await menuContainer.click();
                 await browser.actions().sendKeys(protractor.Key.TAB).perform();
                 expect(await menu.isMenuOpened()).toBe(true);
@@ -67,28 +71,53 @@ describe("USERCONTROL Menu", () => {
             });
 
             it("should NOT open and close menu by ENTER key if focused on toggle", async () => {
-                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                await browser
+                    .actions()
+                    .sendKeys(protractor.Key.ENTER)
+                    .perform();
                 expect(await menu.isMenuOpened()).toBe(false);
-                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                await browser
+                    .actions()
+                    .sendKeys(protractor.Key.ENTER)
+                    .perform();
                 expect(await menu.isMenuOpened()).toBe(false);
             });
 
             it("should open and NOT close menu by Shift + DOWN-ARROW key if focused on toggle", async () => {
                 await menu.toggleMenu();
-                await browser.actions().sendKeys(protractor.Key.chord(protractor.Key.SHIFT, protractor.Key.ARROW_DOWN)).perform();
+                await browser
+                    .actions()
+                    .sendKeys(
+                        protractor.Key.chord(
+                            protractor.Key.SHIFT,
+                            protractor.Key.ARROW_DOWN
+                        )
+                    )
+                    .perform();
                 expect(await menu.isMenuOpened()).toBe(true);
-                await browser.actions().sendKeys(protractor.Key.chord(protractor.Key.SHIFT, protractor.Key.ARROW_DOWN)).perform();
+                await browser
+                    .actions()
+                    .sendKeys(
+                        protractor.Key.chord(
+                            protractor.Key.SHIFT,
+                            protractor.Key.ARROW_DOWN
+                        )
+                    )
+                    .perform();
                 expect(await menu.isMenuOpened()).toBe(true);
             });
 
             it("should close menu on ESC key", async () => {
                 await menu.toggleMenu();
-                await browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+                await browser
+                    .actions()
+                    .sendKeys(protractor.Key.ESCAPE)
+                    .perform();
                 expect(await menu.isMenuOpened()).toBe(false);
             });
 
             // Enable tests in the scope of NUI-6104.
-            xdescribe("arrow navigation and menu item types >", async() => {
+            xdescribe("arrow navigation and menu item types >", async () => {
                 const moveDownKeyboardInputs = [
                     Key.PAGE_DOWN,
                     Key.END,
@@ -117,9 +146,18 @@ describe("USERCONTROL Menu", () => {
                     await Helpers.pressKey(Key.ENTER);
                     expect(await menu.getSelectedSwitchesCount()).toEqual(2);
                     // Return to initial state
-                    await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-                    await browser.actions().sendKeys(protractor.Key.ARROW_UP).perform();
-                    await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                    await browser
+                        .actions()
+                        .sendKeys(protractor.Key.ENTER)
+                        .perform();
+                    await browser
+                        .actions()
+                        .sendKeys(protractor.Key.ARROW_UP)
+                        .perform();
+                    await browser
+                        .actions()
+                        .sendKeys(protractor.Key.ENTER)
+                        .perform();
                     expect(await menu.getSelectedSwitchesCount()).toEqual(0);
                 });
 
@@ -145,11 +183,19 @@ describe("USERCONTROL Menu", () => {
                 });
 
                 it("should jump to the last item on END, PAGE_DOWN, or Command + ARROW_DOWN key chords", async () => {
-                    await assertStartAndEndKeyboardShortcuts(moveDownKeyboardInputs, menu, "last");
+                    await assertStartAndEndKeyboardShortcuts(
+                        moveDownKeyboardInputs,
+                        menu,
+                        "last"
+                    );
                 });
 
                 it("should jump to the last item on HOME, PAGE_UP, or Command + ARROW_UP key chords", async () => {
-                    await assertStartAndEndKeyboardShortcuts(moveUpKeyboardInputs, menu, "first");
+                    await assertStartAndEndKeyboardShortcuts(
+                        moveUpKeyboardInputs,
+                        menu,
+                        "first"
+                    );
                 });
             });
         });
@@ -159,22 +205,35 @@ describe("USERCONTROL Menu", () => {
                 await Helpers.pressKey(Key.TAB);
 
                 await Helpers.pressKey(Key.ARROW_DOWN);
-                const checkbox = appendToBody.getAppendToBodyMenu().all(by.tagName("nui-checkbox")).first();
-                expect(await Atom.hasClass(checkbox, "nui-checkbox--checked")).toBe(false);
+                const checkbox = appendToBody
+                    .getAppendToBodyMenu()
+                    .all(by.tagName("nui-checkbox"))
+                    .first();
+                expect(
+                    await Atom.hasClass(checkbox, "nui-checkbox--checked")
+                ).toBe(false);
 
                 await Helpers.pressKey(Key.ENTER);
-                expect(await Atom.hasClass(checkbox, "nui-checkbox--checked")).toBe(true);
+                expect(
+                    await Atom.hasClass(checkbox, "nui-checkbox--checked")
+                ).toBe(true);
 
                 // Return to initial state
                 await Helpers.pressKey(Key.ENTER);
-                expect(await Atom.hasClass(checkbox, "nui-checkbox--checked")).toBe(false);
+                expect(
+                    await Atom.hasClass(checkbox, "nui-checkbox--checked")
+                ).toBe(false);
             });
         });
     });
 });
 
-async function assertStartAndEndKeyboardShortcuts(keys: Array<string>, menu: MenuAtom, position: "first" | "last") {
-    for(const key of keys) {
+async function assertStartAndEndKeyboardShortcuts(
+    keys: Array<string>,
+    menu: MenuAtom,
+    position: "first" | "last"
+) {
+    for (const key of keys) {
         if (!(await menu.isMenuOpened())) {
             await menu.toggleMenu();
         }
@@ -185,7 +244,10 @@ async function assertStartAndEndKeyboardShortcuts(keys: Array<string>, menu: Men
         await Helpers.pressKey(position === "first" ? Key.END : Key.HOME);
         await Helpers.pressKey(key);
 
-        expect(await currentItem.isActiveItem()).toBe(true, `assertion failed for key ${key}`);
+        expect(await currentItem.isActiveItem()).toBe(
+            true,
+            `assertion failed for key ${key}`
+        );
 
         await menu.toggleMenu();
     }

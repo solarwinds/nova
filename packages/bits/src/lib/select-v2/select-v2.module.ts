@@ -8,7 +8,6 @@ import { NuiButtonModule } from "../button/button.module";
 import { NuiIconModule } from "../icon/icon.module";
 import { NuiOverlayModule } from "../overlay/overlay.module";
 import { NuiTooltipModule } from "../tooltip/tooltip.module";
-
 import { ComboboxV2OptionHighlightDirective } from "./combobox-v2-option-highlight/combobox-v2-option-highlight.directive";
 import { ComboboxV2Component } from "./combobox-v2/combobox-v2.component";
 import { MarkAsSelectedItemDirective } from "./mark-as-selected-item.directive";
@@ -49,5 +48,4 @@ import { SelectV2Component } from "./select/select-v2.component";
     providers: [],
 })
 // Will be renamed in scope of the NUI-5797
-export class NuiSelectV2Module {
-}
+export class NuiSelectV2Module {}

@@ -15,14 +15,16 @@ describe("validators >", () => {
             { num: "0.8", result: false },
         ];
         beforeAll(() => {
-            TestBed
-                .configureTestingModule({
-                    imports: [ReactiveFormsModule],
-                });
+            TestBed.configureTestingModule({
+                imports: [ReactiveFormsModule],
+            });
             formBuilder = TestBed.inject(FormBuilder);
         });
 
-        const executeTestCases = (testCases: Array<{num: string, result: boolean}>, validatorFn: ValidatorFn) => {
+        const executeTestCases = (
+            testCases: Array<{ num: string; result: boolean }>,
+            validatorFn: ValidatorFn
+        ) => {
             testCases.forEach((test, idx) => {
                 it(`integer validation test case ${test.num} should be ${test.result}`, () => {
                     const control = formBuilder.control(test.num, validatorFn);
@@ -32,17 +34,17 @@ describe("validators >", () => {
         };
 
         describe("signed integer validation >", () => {
-            const testCases = [
-                { num: "-108", result: true },
-            ].concat(commonTestCases);
+            const testCases = [{ num: "-108", result: true }].concat(
+                commonTestCases
+            );
             const validatorFn = NuiValidators.integer();
             executeTestCases(testCases, validatorFn);
         });
 
         describe("unsigned integer validation >", () => {
-            const testCases = [
-                { num: "-108", result: false },
-            ].concat(commonTestCases);
+            const testCases = [{ num: "-108", result: false }].concat(
+                commonTestCases
+            );
             const validatorFn = NuiValidators.integer(true);
             executeTestCases(testCases, validatorFn);
         });

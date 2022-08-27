@@ -1,4 +1,3 @@
-
 import { browser, by, element, ElementFinder } from "protractor";
 
 import { Animations, Helpers } from "../../helpers";
@@ -26,8 +25,10 @@ describe(`Visual tests: ${name}`, () => {
         buttonCallStickyToast = element(by.id("nui-toast-sticky"));
         buttonAdjustSize = element(by.id("nui-toast-adjust-size"));
         buttonNoHeader = element(by.id("nui-toast-no-header"));
-        buttonToastsWithProgressBar = element(by.id("nui-toast-button-all-positions-progress-bar"));
-        
+        buttonToastsWithProgressBar = element(
+            by.id("nui-toast-button-all-positions-progress-bar")
+        );
+
         camera = new Camera().loadFilm(browser, name);
     });
 
@@ -49,11 +50,15 @@ describe(`Visual tests: ${name}`, () => {
         await buttonClearAllToasts.click();
 
         await buttonAdjustSize.click();
-        await camera.say.cheese("Check toast messages ADJUST their sizes when triggered one after another");
+        await camera.say.cheese(
+            "Check toast messages ADJUST their sizes when triggered one after another"
+        );
         await buttonClearAllToasts.click();
 
         await buttonNoHeader.click();
-        await camera.say.cheese("Checking the markup uis correct if no header is selected");
+        await camera.say.cheese(
+            "Checking the markup uis correct if no header is selected"
+        );
         await buttonClearAllToasts.click();
 
         await buttonCallStickyToast.click();

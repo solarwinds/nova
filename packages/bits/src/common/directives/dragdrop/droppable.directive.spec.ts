@@ -5,7 +5,6 @@ import _noop from "lodash/noop";
 import { Subject } from "rxjs";
 
 import { UtilService } from "../../../services/util.service";
-
 import { DragAndDropService } from "./drag-and-drop.service";
 import { DraggableDirective } from "./draggable.directive";
 import { DroppableDirective } from "./droppable.directive";
@@ -14,49 +13,61 @@ import { IDragState, IDropEvent } from "./public-api";
 const DEFAULT_DRAGOVER_CLASS = "nui-drag--over";
 
 @Component({
-    template: `<div nuiDraggable
-                    id="test-draggable"
-                    [payload]="draggableString"
-                    [adornerDragClass]="'demoDragClass'"
-                    (dragStart)="onDragStart($event)"
-                    (dragEnd)="onDragEnd($event)">
-                </div>
-                <div nuiDroppable
-                     id="test-droppable"
-                     (dropSuccess)="onDropString($event)"
-                     (dragOver)="onDragOver($event)"
-                     (dragEnter)="onDragEnter($event)"
-                     (dragLeave)="onDragLeave($event)">
-                </div>`,
+    template: `<div
+            nuiDraggable
+            id="test-draggable"
+            [payload]="draggableString"
+            [adornerDragClass]="'demoDragClass'"
+            (dragStart)="onDragStart($event)"
+            (dragEnd)="onDragEnd($event)"
+        ></div>
+        <div
+            nuiDroppable
+            id="test-droppable"
+            (dropSuccess)="onDropString($event)"
+            (dragOver)="onDragOver($event)"
+            (dragEnter)="onDragEnter($event)"
+            (dragLeave)="onDragLeave($event)"
+        ></div>`,
 })
 class DroppableTestingComponent {
     public draggableString = "this is a string";
     public transferredString: any;
 
-    public onDragStart(event: DragEvent) { _noop(); }
-    public onDragEnd(event: DragEvent) { _noop(); }
+    public onDragStart(event: DragEvent) {
+        _noop();
+    }
+    public onDragEnd(event: DragEvent) {
+        _noop();
+    }
     public onDropString(event: IDropEvent) {
         this.transferredString = event.payload;
     }
-    public onDragOver(event: DragEvent) { _noop(); }
-    public onDragEnter(event: DragEvent) { _noop(); }
-    public onDragLeave(event: DragEvent) { _noop(); }
+    public onDragOver(event: DragEvent) {
+        _noop();
+    }
+    public onDragEnter(event: DragEvent) {
+        _noop();
+    }
+    public onDragLeave(event: DragEvent) {
+        _noop();
+    }
 }
 
 describe("directives >", () => {
     describe("droppable >", () => {
-        type DragEventType = "drag" |
-            "dragstart" |
-            "dragend" |
-            "dragover" |
-            "dragenter" |
-            "dragleave" |
-            "drop";
-        const dragAndDropServiceMock = jasmine.createSpyObj("DragAndDropService", [
-            "setDragPayload",
-            "getDragPayload",
-            "resetPayload",
-        ]);
+        type DragEventType =
+            | "drag"
+            | "dragstart"
+            | "dragend"
+            | "dragover"
+            | "dragenter"
+            | "dragleave"
+            | "drop";
+        const dragAndDropServiceMock = jasmine.createSpyObj(
+            "DragAndDropService",
+            ["setDragPayload", "getDragPayload", "resetPayload"]
+        );
         let dragStartSubject: Subject<IDragState>;
         let fixture: ComponentFixture<DroppableTestingComponent>;
         let component: DroppableTestingComponent;
@@ -69,19 +80,29 @@ describe("directives >", () => {
         };
 
         function setValidator(validate: boolean) {
-            const validator = jasmine.createSpyObj("Validator", ["isValidDropTarget"]);
+            const validator = jasmine.createSpyObj("Validator", [
+                "isValidDropTarget",
+            ]);
             validator.isValidDropTarget.and.returnValue(validate);
             droppableDirective.dropValidator = validator;
         }
 
         beforeEach(() => {
             dragStartSubject = new Subject<IDragState>();
-            dragAndDropServiceMock.onDragStateChanged = dragStartSubject.asObservable();
+            dragAndDropServiceMock.onDragStateChanged =
+                dragStartSubject.asObservable();
             TestBed.configureTestingModule({
-                declarations: [DraggableDirective, DroppableDirective, DroppableTestingComponent],
+                declarations: [
+                    DraggableDirective,
+                    DroppableDirective,
+                    DroppableTestingComponent,
+                ],
                 providers: [
                     UtilService,
-                    { provide: DragAndDropService, useValue: dragAndDropServiceMock },
+                    {
+                        provide: DragAndDropService,
+                        useValue: dragAndDropServiceMock,
+                    },
                     { provide: "windowObject", useValue: window },
                 ],
                 schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -89,9 +110,12 @@ describe("directives >", () => {
             fixture = TestBed.createComponent(DroppableTestingComponent);
             fixture.autoDetectChanges(true);
             component = fixture.componentInstance;
-            droppableElement = fixture.debugElement.query(By.directive(DroppableDirective));
-            droppableDirective = droppableElement.injector.get(DroppableDirective) as DroppableDirective;
-
+            droppableElement = fixture.debugElement.query(
+                By.directive(DroppableDirective)
+            );
+            droppableDirective = droppableElement.injector.get(
+                DroppableDirective
+            ) as DroppableDirective;
         });
 
         afterEach(() => {
@@ -103,7 +127,10 @@ describe("directives >", () => {
             const dataTransfer = new DataTransfer();
             dataTransfer.setData("Text", "This is a string");
             const event = new DragEvent("drop", { dataTransfer });
-            dragAndDropServiceMock.getDragPayload.and.returnValue({ data: "This is a string", isExternal: false });
+            dragAndDropServiceMock.getDragPayload.and.returnValue({
+                data: "This is a string",
+                isExternal: false,
+            });
             droppableElement.nativeElement.dispatchEvent(event);
             await fixture.whenStable().then(() => {
                 expect(component.onDropString).toHaveBeenCalled();
@@ -115,7 +142,10 @@ describe("directives >", () => {
             const dataTransfer = new DataTransfer();
             dataTransfer.setData("Text", "This is a string");
             const event = new DragEvent("drop", { dataTransfer });
-            dragAndDropServiceMock.getDragPayload.and.returnValue({ data: "This is a string", isExternal: false });
+            dragAndDropServiceMock.getDragPayload.and.returnValue({
+                data: "This is a string",
+                isExternal: false,
+            });
             setValidator(false);
             droppableElement.nativeElement.dispatchEvent(event);
 
@@ -129,7 +159,10 @@ describe("directives >", () => {
             const dataTransfer = new DataTransfer();
             dataTransfer.setData("Text", "This is a string");
             const event = new DragEvent("drop", { dataTransfer });
-            dragAndDropServiceMock.getDragPayload.and.returnValue({ data: "This is a string", isExternal: false });
+            dragAndDropServiceMock.getDragPayload.and.returnValue({
+                data: "This is a string",
+                isExternal: false,
+            });
             setValidator(true);
             droppableElement.nativeElement.dispatchEvent(event);
 
@@ -143,7 +176,10 @@ describe("directives >", () => {
             const dataTransfer = new DataTransfer();
             dataTransfer.setData("Text", "This is a string");
             const event = new DragEvent("drop", { dataTransfer });
-            dragAndDropServiceMock.getDragPayload.and.returnValue({ data: "This is a string", isExternal: false });
+            dragAndDropServiceMock.getDragPayload.and.returnValue({
+                data: "This is a string",
+                isExternal: false,
+            });
             setValidator(false);
             const invalidDragOverClass = "invalid-drag-over-class";
             droppableDirective.invalidDragOverClass = invalidDragOverClass;
@@ -151,7 +187,9 @@ describe("directives >", () => {
             droppableElement.nativeElement.dispatchEvent(event);
 
             await fixture.whenStable().then(() => {
-                expect(droppableElement.nativeElement.classList).not.toContain(invalidDragOverClass);
+                expect(droppableElement.nativeElement.classList).not.toContain(
+                    invalidDragOverClass
+                );
             });
         });
 
@@ -205,10 +243,13 @@ describe("directives >", () => {
             emitEvent("dragenter", droppableElement.nativeElement);
 
             await fixture.whenStable().then(() => {
-                expect(droppableElement.nativeElement.classList).toContain(dragOverClass);
-                expect(droppableElement.nativeElement.classList).not.toContain(dropIndicatorClass);
+                expect(droppableElement.nativeElement.classList).toContain(
+                    dragOverClass
+                );
+                expect(droppableElement.nativeElement.classList).not.toContain(
+                    dropIndicatorClass
+                );
             });
-
         });
 
         it("should add invalidDragOverClass if validator returns false", async () => {
@@ -218,19 +259,27 @@ describe("directives >", () => {
             emitEvent("dragenter", droppableElement.nativeElement);
 
             await fixture.whenStable().then(() => {
-                expect(droppableElement.nativeElement.classList).toContain(invalidDragOverClass);
+                expect(droppableElement.nativeElement.classList).toContain(
+                    invalidDragOverClass
+                );
             });
         });
 
         it("should trigger emission of dragleave event", () => {
-            dragAndDropServiceMock.getDragPayload.and.returnValue({ data: "payload", isExternal: false });
+            dragAndDropServiceMock.getDragPayload.and.returnValue({
+                data: "payload",
+                isExternal: false,
+            });
             spyOn(component, "onDragLeave");
             emitEvent("dragleave", droppableElement.nativeElement);
             expect(component.onDragLeave).toHaveBeenCalled();
         });
 
         it("should NOT trigger emission of dragleave event if validator returns false", () => {
-            dragAndDropServiceMock.getDragPayload.and.returnValue({ data: "payload", isExternal: false });
+            dragAndDropServiceMock.getDragPayload.and.returnValue({
+                data: "payload",
+                isExternal: false,
+            });
             setValidator(false);
             spyOn(component, "onDragLeave");
             emitEvent("dragleave", droppableElement.nativeElement);
@@ -238,7 +287,10 @@ describe("directives >", () => {
         });
 
         it("should trigger emission of dragleave event if validator returns true", () => {
-            dragAndDropServiceMock.getDragPayload.and.returnValue({ data: "payload", isExternal: false });
+            dragAndDropServiceMock.getDragPayload.and.returnValue({
+                data: "payload",
+                isExternal: false,
+            });
             setValidator(true);
             spyOn(component, "onDragLeave");
             emitEvent("dragleave", droppableElement.nativeElement);
@@ -251,27 +303,39 @@ describe("directives >", () => {
             droppableDirective.dropIndicatorClass = dropIndicatorClass;
             droppableDirective.dragOverClass = dragOverClass;
             droppableElement.nativeElement.classList.add(dragOverClass);
-            dragAndDropServiceMock.getDragPayload.and.returnValue({ data: "payload", isExternal: false });
+            dragAndDropServiceMock.getDragPayload.and.returnValue({
+                data: "payload",
+                isExternal: false,
+            });
             setValidator(true);
             spyOn(component, "onDragLeave");
             emitEvent("dragleave", droppableElement.nativeElement);
 
             await fixture.whenStable().then(() => {
-                expect(droppableElement.nativeElement.classList).not.toContain(dragOverClass);
-                expect(droppableElement.nativeElement.classList).toContain(dropIndicatorClass);
+                expect(droppableElement.nativeElement.classList).not.toContain(
+                    dragOverClass
+                );
+                expect(droppableElement.nativeElement.classList).toContain(
+                    dropIndicatorClass
+                );
             });
         });
 
         it("should NOT add dropIndicatorClass if validator returns true and payloay is external", async () => {
             const dropIndicatorClass = "drop-indiecator-class";
             droppableDirective.dropIndicatorClass = dropIndicatorClass;
-            dragAndDropServiceMock.getDragPayload.and.returnValue({ data: "payload", isExternal: true });
+            dragAndDropServiceMock.getDragPayload.and.returnValue({
+                data: "payload",
+                isExternal: true,
+            });
             setValidator(true);
             spyOn(component, "onDragLeave");
             emitEvent("dragleave", droppableElement.nativeElement);
 
             await fixture.whenStable().then(() => {
-                expect(droppableElement.nativeElement.classList).not.toContain(dropIndicatorClass);
+                expect(droppableElement.nativeElement.classList).not.toContain(
+                    dropIndicatorClass
+                );
             });
         });
 
@@ -279,20 +343,27 @@ describe("directives >", () => {
             const invalidDragOverClass = "invalidDragOverClass";
             droppableDirective.invalidDragOverClass = invalidDragOverClass;
             droppableElement.nativeElement.classList.add(invalidDragOverClass);
-            dragAndDropServiceMock.getDragPayload.and.returnValue({ data: "payload", isExternal: true });
+            dragAndDropServiceMock.getDragPayload.and.returnValue({
+                data: "payload",
+                isExternal: true,
+            });
             setValidator(false);
             spyOn(component, "onDragLeave");
             emitEvent("dragleave", droppableElement.nativeElement);
 
             await fixture.whenStable().then(() => {
-                expect(droppableElement.nativeElement.classList).not.toContain(invalidDragOverClass);
+                expect(droppableElement.nativeElement.classList).not.toContain(
+                    invalidDragOverClass
+                );
             });
         });
 
         it("should remove default class on dragleave", () => {
             emitEvent("dragleave", droppableElement.nativeElement);
-            const hasDefaultClass = droppableElement.nativeElement.classList
-                .contains(DEFAULT_DRAGOVER_CLASS);
+            const hasDefaultClass =
+                droppableElement.nativeElement.classList.contains(
+                    DEFAULT_DRAGOVER_CLASS
+                );
             expect(hasDefaultClass).toBe(false);
         });
 
@@ -301,7 +372,10 @@ describe("directives >", () => {
             const payload = "This is a string";
             dataTransfer.setData("Text", payload);
             const event = new DragEvent("drop", { dataTransfer });
-            dragAndDropServiceMock.getDragPayload.and.returnValue({ data: payload, isExternal: false });
+            dragAndDropServiceMock.getDragPayload.and.returnValue({
+                data: payload,
+                isExternal: false,
+            });
             droppableElement.nativeElement.dispatchEvent(event);
 
             await fixture.whenStable().then(() => {
@@ -311,8 +385,10 @@ describe("directives >", () => {
 
         it("should set default class on dragenter", () => {
             emitEvent("dragenter", droppableElement.nativeElement);
-            const hasDefaultClass = droppableElement.nativeElement.classList
-                .contains(DEFAULT_DRAGOVER_CLASS);
+            const hasDefaultClass =
+                droppableElement.nativeElement.classList.contains(
+                    DEFAULT_DRAGOVER_CLASS
+                );
             expect(hasDefaultClass).toBe(true);
         });
 
@@ -323,11 +399,14 @@ describe("directives >", () => {
             droppableDirective.dropIndicatorClass = dropIndicatorClass;
             droppableElement.nativeElement.classList.add(dropIndicatorClass);
             emitEvent("dragenter", droppableElement.nativeElement);
-            await fixture.whenStable()
-                .then(() => {
-                    expect(droppableElement.nativeElement.classList).toContain(dragOverClass);
-                    expect(droppableElement.nativeElement.classList).not.toContain(dropIndicatorClass);
-                });
+            await fixture.whenStable().then(() => {
+                expect(droppableElement.nativeElement.classList).toContain(
+                    dragOverClass
+                );
+                expect(droppableElement.nativeElement.classList).not.toContain(
+                    dropIndicatorClass
+                );
+            });
         });
 
         it("should set transmitted class on dragenter", async () => {
@@ -335,29 +414,34 @@ describe("directives >", () => {
             droppableDirective.invalidDragOverClass = invalidDragOverClass;
             setValidator(false);
             emitEvent("dragenter", droppableElement.nativeElement);
-            await fixture.whenStable()
-                .then(() => {
-                    expect(droppableElement.nativeElement.classList).toContain(invalidDragOverClass);
-                });
+            await fixture.whenStable().then(() => {
+                expect(droppableElement.nativeElement.classList).toContain(
+                    invalidDragOverClass
+                );
+            });
         });
 
         it("should remove drag over class on drop", async () => {
             emitEvent("dragenter", droppableElement.nativeElement);
             droppableDirective.dragOverClass = "my-class";
             emitEvent("dragleave", droppableElement.nativeElement);
-            await fixture.whenStable()
-                .then(() => {
-                    const haveClass = droppableElement.nativeElement.classList
-                        .contains("my-class");
-                    expect(haveClass).toBeFalsy();
-                });
+            await fixture.whenStable().then(() => {
+                const haveClass =
+                    droppableElement.nativeElement.classList.contains(
+                        "my-class"
+                    );
+                expect(haveClass).toBeFalsy();
+            });
         });
 
         it("should reset payload on drop event", () => {
             const dataTransfer = new DataTransfer();
             dataTransfer.setData("Text", "This is a string");
             const event = new DragEvent("drop", { dataTransfer });
-            dragAndDropServiceMock.getDragPayload.and.returnValue({ data: "This is a string", isExternal: false });
+            dragAndDropServiceMock.getDragPayload.and.returnValue({
+                data: "This is a string",
+                isExternal: false,
+            });
             droppableElement.nativeElement.dispatchEvent(event);
 
             expect(dragAndDropServiceMock.resetPayload).toHaveBeenCalled();
@@ -369,7 +453,9 @@ describe("directives >", () => {
 
             expect(dragStartSubject.observers.length).toBe(1);
             await fixture.whenStable().then(() => {
-                expect(droppableElement.nativeElement.classList).toContain("dropIndicatorClass");
+                expect(droppableElement.nativeElement.classList).toContain(
+                    "dropIndicatorClass"
+                );
             });
         });
 
@@ -380,7 +466,9 @@ describe("directives >", () => {
 
             expect(dragStartSubject.observers.length).toBe(1);
             await fixture.whenStable().then(() => {
-                expect(droppableElement.nativeElement.classList).not.toContain("dropIndicatorClass");
+                expect(droppableElement.nativeElement.classList).not.toContain(
+                    "dropIndicatorClass"
+                );
             });
         });
 
@@ -391,6 +479,5 @@ describe("directives >", () => {
             droppableDirective.ngOnDestroy();
             expect(dragStartSubject.observers.length).toBe(0);
         });
-
     });
 });

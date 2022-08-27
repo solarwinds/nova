@@ -1,4 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
+import moment from "moment/moment";
+
 import {
     AreaAccessors,
     AreaRenderer,
@@ -16,7 +18,6 @@ import {
     XYGrid,
     XYGridConfig,
 } from "@nova-ui/charts";
-import moment from "moment/moment";
 
 @Component({
     selector: "area-chart-bi-directional-stacked-test",
@@ -32,16 +33,24 @@ export class AreaChartBiDirectionalStackedTestComponent implements OnInit {
     public chartBottom: Chart;
     public chartAssistBottom: ChartAssist;
 
-    constructor(public changeDetector: ChangeDetectorRef) {
-    }
+    constructor(public changeDetector: ChangeDetectorRef) {}
 
     public ngOnInit() {
         // areaGrid returns an XYGrid configured for displaying an area chart's axes and other grid elements.
-        this.chartTop = new Chart(new XYGrid(topChartConfig()), { updateDomainForEmptySeries: true });
+        this.chartTop = new Chart(new XYGrid(topChartConfig()), {
+            updateDomainForEmptySeries: true,
+        });
         this.chartAssistTop = new ChartAssist(this.chartTop, stackedArea);
 
-        this.chartBottom = new Chart(new XYGrid(bottomChartConfig()), { updateDomainForEmptySeries: true });
-        this.chartAssistBottom = new ChartAssist(this.chartBottom, stackedArea, this.chartAssistTop.palette, this.chartAssistTop.markers);
+        this.chartBottom = new Chart(new XYGrid(bottomChartConfig()), {
+            updateDomainForEmptySeries: true,
+        });
+        this.chartAssistBottom = new ChartAssist(
+            this.chartBottom,
+            stackedArea,
+            this.chartAssistTop.palette,
+            this.chartAssistTop.markers
+        );
 
         // Area accessors let the renderer know how to access x and y domain data respectively from a chart's input data set(s).
         const accessors = new AreaAccessors();
@@ -79,26 +88,35 @@ export class AreaChartBiDirectionalStackedTestComponent implements OnInit {
         };
 
         // Here we assemble the complete chart series.
-        const seriesSetTop: IChartSeries<IAreaAccessors>[] = getDataTop().map(d => ({
-            ...d,
-            renderer,
-            accessors,
-            scales: scalesTop,
-        }));
+        const seriesSetTop: IChartSeries<IAreaAccessors>[] = getDataTop().map(
+            (d) => ({
+                ...d,
+                renderer,
+                accessors,
+                scales: scalesTop,
+            })
+        );
 
-        const seriesSetBottom: IChartSeries<IAreaAccessors>[] = getDataBottom().map(d => ({
-            ...d,
-            renderer,
-            accessors,
-            scales: scalesBottom,
-        }));
+        const seriesSetBottom: IChartSeries<IAreaAccessors>[] =
+            getDataBottom().map((d) => ({
+                ...d,
+                renderer,
+                accessors,
+                scales: scalesBottom,
+            }));
 
         // We need to replace domain calculators to reflect series on both charts
-        const topChartDomainCalculator = domainWithAuxiliarySeries(() => seriesSetBottom, getAutomaticDomain);
+        const topChartDomainCalculator = domainWithAuxiliarySeries(
+            () => seriesSetBottom,
+            getAutomaticDomain
+        );
         scalesTop.y.domainCalculator = topChartDomainCalculator;
         scalesTop.x.domainCalculator = topChartDomainCalculator;
 
-        const bottomChartDomainCalculator = domainWithAuxiliarySeries(() => seriesSetTop, getAutomaticDomain);
+        const bottomChartDomainCalculator = domainWithAuxiliarySeries(
+            () => seriesSetTop,
+            getAutomaticDomain
+        );
         scalesBottom.y.domainCalculator = bottomChartDomainCalculator;
         scalesBottom.x.domainCalculator = bottomChartDomainCalculator;
 
@@ -114,7 +132,11 @@ export class AreaChartBiDirectionalStackedTestComponent implements OnInit {
      * @param value
      * @param currentChartAssist
      */
-    public onSelectedChange(legendSeries: IChartAssistSeries<any>, value: boolean, currentChartAssist: ChartAssist) {
+    public onSelectedChange(
+        legendSeries: IChartAssistSeries<any>,
+        value: boolean,
+        currentChartAssist: ChartAssist
+    ) {
         let chartAssists = [this.chartAssistTop, this.chartAssistBottom];
         if (currentChartAssist === this.chartAssistBottom) {
             chartAssists = chartAssists.reverse();
@@ -149,40 +171,124 @@ function getDataTop() {
             id: "up1",
             name: "Up Speed",
             data: [
-                { timeStamp: moment("2016-12-25T11:45:29.909Z", format), value: 6 },
-                { timeStamp: moment("2016-12-25T12:10:29.909Z", format), value: 33 },
-                { timeStamp: moment("2016-12-25T12:50:29.909Z", format), value: 15 },
-                { timeStamp: moment("2016-12-25T13:15:29.909Z", format), value: 20 },
-                { timeStamp: moment("2016-12-25T13:40:29.909Z", format), value: 30 },
-                { timeStamp: moment("2016-12-25T13:55:29.909Z", format), value: 12 },
-                { timeStamp: moment("2016-12-25T14:20:29.909Z", format), value: 6 },
-                { timeStamp: moment("2016-12-25T14:40:29.909Z", format), value: 35 },
-                { timeStamp: moment("2016-12-25T15:00:29.909Z", format), value: 23 },
-                { timeStamp: moment("2016-12-25T15:25:29.909Z", format), value: 25 },
-                { timeStamp: moment("2016-12-25T15:45:29.909Z", format), value: 38 },
-                { timeStamp: moment("2016-12-25T16:10:29.909Z", format), value: 25 },
-                { timeStamp: moment("2016-12-25T16:30:29.909Z", format), value: 43 },
-                { timeStamp: moment("2016-12-25T16:45:29.909Z", format), value: 28 },
+                {
+                    timeStamp: moment("2016-12-25T11:45:29.909Z", format),
+                    value: 6,
+                },
+                {
+                    timeStamp: moment("2016-12-25T12:10:29.909Z", format),
+                    value: 33,
+                },
+                {
+                    timeStamp: moment("2016-12-25T12:50:29.909Z", format),
+                    value: 15,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:15:29.909Z", format),
+                    value: 20,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:40:29.909Z", format),
+                    value: 30,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:55:29.909Z", format),
+                    value: 12,
+                },
+                {
+                    timeStamp: moment("2016-12-25T14:20:29.909Z", format),
+                    value: 6,
+                },
+                {
+                    timeStamp: moment("2016-12-25T14:40:29.909Z", format),
+                    value: 35,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:00:29.909Z", format),
+                    value: 23,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:25:29.909Z", format),
+                    value: 25,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:45:29.909Z", format),
+                    value: 38,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:10:29.909Z", format),
+                    value: 25,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:30:29.909Z", format),
+                    value: 43,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:45:29.909Z", format),
+                    value: 28,
+                },
             ],
         },
         {
             id: "down1",
             name: "Dn Speed",
             data: [
-                { timeStamp: moment("2016-12-25T11:45:29.909Z", format), value: 12 },
-                { timeStamp: moment("2016-12-25T12:10:29.909Z", format), value: 65 },
-                { timeStamp: moment("2016-12-25T12:50:29.909Z", format), value: 30 },
-                { timeStamp: moment("2016-12-25T13:15:29.909Z", format), value: 40 },
-                { timeStamp: moment("2016-12-25T13:40:29.909Z", format), value: 60 },
-                { timeStamp: moment("2016-12-25T13:55:29.909Z", format), value: 23 },
-                { timeStamp: moment("2016-12-25T14:20:29.909Z", format), value: 12 },
-                { timeStamp: moment("2016-12-25T14:40:29.909Z", format), value: 70 },
-                { timeStamp: moment("2016-12-25T15:00:29.909Z", format), value: 45 },
-                { timeStamp: moment("2016-12-25T15:25:29.909Z", format), value: 50 },
-                { timeStamp: moment("2016-12-25T15:45:29.909Z", format), value: 75 },
-                { timeStamp: moment("2016-12-25T16:10:29.909Z", format), value: 50 },
-                { timeStamp: moment("2016-12-25T16:30:29.909Z", format), value: 85 },
-                { timeStamp: moment("2016-12-25T16:45:29.909Z", format), value: 55 },
+                {
+                    timeStamp: moment("2016-12-25T11:45:29.909Z", format),
+                    value: 12,
+                },
+                {
+                    timeStamp: moment("2016-12-25T12:10:29.909Z", format),
+                    value: 65,
+                },
+                {
+                    timeStamp: moment("2016-12-25T12:50:29.909Z", format),
+                    value: 30,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:15:29.909Z", format),
+                    value: 40,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:40:29.909Z", format),
+                    value: 60,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:55:29.909Z", format),
+                    value: 23,
+                },
+                {
+                    timeStamp: moment("2016-12-25T14:20:29.909Z", format),
+                    value: 12,
+                },
+                {
+                    timeStamp: moment("2016-12-25T14:40:29.909Z", format),
+                    value: 70,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:00:29.909Z", format),
+                    value: 45,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:25:29.909Z", format),
+                    value: 50,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:45:29.909Z", format),
+                    value: 75,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:10:29.909Z", format),
+                    value: 50,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:30:29.909Z", format),
+                    value: 85,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:45:29.909Z", format),
+                    value: 55,
+                },
             ],
         },
     ];
@@ -196,40 +302,124 @@ function getDataBottom() {
             id: "up2",
             name: "Up Speed",
             data: [
-                { timeStamp: moment("2016-12-25T11:45:29.909Z", format), value: 6 },
-                { timeStamp: moment("2016-12-25T12:10:29.909Z", format), value: 33 },
-                { timeStamp: moment("2016-12-25T12:50:29.909Z", format), value: 15 },
-                { timeStamp: moment("2016-12-25T13:15:29.909Z", format), value: 20 },
-                { timeStamp: moment("2016-12-25T13:40:29.909Z", format), value: 30 },
-                { timeStamp: moment("2016-12-25T13:55:29.909Z", format), value: 12 },
-                { timeStamp: moment("2016-12-25T14:20:29.909Z", format), value: 6 },
-                { timeStamp: moment("2016-12-25T14:40:29.909Z", format), value: 35 },
-                { timeStamp: moment("2016-12-25T15:00:29.909Z", format), value: 23 },
-                { timeStamp: moment("2016-12-25T15:25:29.909Z", format), value: 95 },
-                { timeStamp: moment("2016-12-25T15:45:29.909Z", format), value: 38 },
-                { timeStamp: moment("2016-12-25T16:10:29.909Z", format), value: 25 },
-                { timeStamp: moment("2016-12-25T16:30:29.909Z", format), value: 43 },
-                { timeStamp: moment("2016-12-25T16:45:29.909Z", format), value: 28 },
+                {
+                    timeStamp: moment("2016-12-25T11:45:29.909Z", format),
+                    value: 6,
+                },
+                {
+                    timeStamp: moment("2016-12-25T12:10:29.909Z", format),
+                    value: 33,
+                },
+                {
+                    timeStamp: moment("2016-12-25T12:50:29.909Z", format),
+                    value: 15,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:15:29.909Z", format),
+                    value: 20,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:40:29.909Z", format),
+                    value: 30,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:55:29.909Z", format),
+                    value: 12,
+                },
+                {
+                    timeStamp: moment("2016-12-25T14:20:29.909Z", format),
+                    value: 6,
+                },
+                {
+                    timeStamp: moment("2016-12-25T14:40:29.909Z", format),
+                    value: 35,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:00:29.909Z", format),
+                    value: 23,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:25:29.909Z", format),
+                    value: 95,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:45:29.909Z", format),
+                    value: 38,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:10:29.909Z", format),
+                    value: 25,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:30:29.909Z", format),
+                    value: 43,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:45:29.909Z", format),
+                    value: 28,
+                },
             ],
         },
         {
             id: "down2",
             name: "Dn Speed",
             data: [
-                { timeStamp: moment("2016-12-25T11:45:29.909Z", format), value: 12 },
-                { timeStamp: moment("2016-12-25T12:10:29.909Z", format), value: 65 },
-                { timeStamp: moment("2016-12-25T12:50:29.909Z", format), value: 30 },
-                { timeStamp: moment("2016-12-25T13:15:29.909Z", format), value: 40 },
-                { timeStamp: moment("2016-12-25T13:40:29.909Z", format), value: 60 },
-                { timeStamp: moment("2016-12-25T13:55:29.909Z", format), value: 23 },
-                { timeStamp: moment("2016-12-25T14:20:29.909Z", format), value: 12 },
-                { timeStamp: moment("2016-12-25T14:40:29.909Z", format), value: 250 },
-                { timeStamp: moment("2016-12-25T15:00:29.909Z", format), value: 45 },
-                { timeStamp: moment("2016-12-25T15:25:29.909Z", format), value: 50 },
-                { timeStamp: moment("2016-12-25T15:45:29.909Z", format), value: 75 },
-                { timeStamp: moment("2016-12-25T16:10:29.909Z", format), value: 50 },
-                { timeStamp: moment("2016-12-25T16:30:29.909Z", format), value: 85 },
-                { timeStamp: moment("2016-12-25T16:45:29.909Z", format), value: 55 },
+                {
+                    timeStamp: moment("2016-12-25T11:45:29.909Z", format),
+                    value: 12,
+                },
+                {
+                    timeStamp: moment("2016-12-25T12:10:29.909Z", format),
+                    value: 65,
+                },
+                {
+                    timeStamp: moment("2016-12-25T12:50:29.909Z", format),
+                    value: 30,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:15:29.909Z", format),
+                    value: 40,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:40:29.909Z", format),
+                    value: 60,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:55:29.909Z", format),
+                    value: 23,
+                },
+                {
+                    timeStamp: moment("2016-12-25T14:20:29.909Z", format),
+                    value: 12,
+                },
+                {
+                    timeStamp: moment("2016-12-25T14:40:29.909Z", format),
+                    value: 250,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:00:29.909Z", format),
+                    value: 45,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:25:29.909Z", format),
+                    value: 50,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:45:29.909Z", format),
+                    value: 75,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:10:29.909Z", format),
+                    value: 50,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:30:29.909Z", format),
+                    value: 85,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:45:29.909Z", format),
+                    value: 55,
+                },
             ],
         },
     ];

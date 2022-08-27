@@ -1,5 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+
 import {
     NuiBusyModule,
     NuiChipsModule,
@@ -30,14 +31,7 @@ import { FilteredViewWithListComponent } from "./filtered-view-with-list.compone
         NuiChipsModule,
         NuiPopoverModule,
     ],
-    declarations: [
-        FilteredViewWithListComponent,
-        FilteredViewListComponent,
-    ],
-    exports: [
-        FilteredViewWithListComponent,
-        FilteredViewListComponent,
-    ],
+    declarations: [FilteredViewWithListComponent, FilteredViewListComponent],
+    exports: [FilteredViewWithListComponent, FilteredViewListComponent],
 })
-
 export class FilteredViewWithListModule {}

@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import moment from "moment/moment";
+
 import {
     Chart,
     ChartAssist,
@@ -12,14 +14,12 @@ import {
     TimeScale,
     XYGrid,
 } from "@nova-ui/charts";
-import moment from "moment/moment";
 
 @Component({
     selector: "line-chart-tooltips-prototype",
     templateUrl: "./line-chart-tooltips-prototype.component.html",
 })
 export class LineChartTooltipsPrototypeComponent implements OnInit {
-
     public chart = new Chart(new XYGrid());
 
     public chartAssist: ChartAssist = new ChartAssist(this.chart);
@@ -32,14 +32,19 @@ export class LineChartTooltipsPrototypeComponent implements OnInit {
         };
         const renderer = new LineRenderer();
         // providing chartAssist colors and markers to LineAccessors will share them with the line chart
-        const accessors = new LineAccessors(this.chartAssist.palette.standardColors, this.chartAssist.markers);
+        const accessors = new LineAccessors(
+            this.chartAssist.palette.standardColors,
+            this.chartAssist.markers
+        );
 
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(s => ({
-            ...s,
-            scales,
-            renderer,
-            accessors,
-        }));
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
+            (s) => ({
+                ...s,
+                scales,
+                renderer,
+                accessors,
+            })
+        );
 
         // plugin setup
         this.chart.addPlugin(this.tooltipsPlugin);
@@ -49,18 +54,23 @@ export class LineChartTooltipsPrototypeComponent implements OnInit {
         this.chartAssist.update(seriesSet);
     }
 
-    public formatNumber(intNum: number, nanMessage: string = "Undefined", precision: number = 0): string {
+    public formatNumber(
+        intNum: number,
+        nanMessage: string = "Undefined",
+        precision: number = 0
+    ): string {
         if (!this.isNumericValuePresent(intNum)) {
             return nanMessage;
         }
-        return intNum.toLocaleString(undefined, {maximumFractionDigits: precision});
+        return intNum.toLocaleString(undefined, {
+            maximumFractionDigits: precision,
+        });
     }
 
     // eslint-disable-next-line arrow-body-style
     public isNumericValuePresent = (numericValue: number): boolean => {
         return numericValue !== undefined && numericValue !== null;
-    }
-
+    };
 }
 
 /* Chart data */

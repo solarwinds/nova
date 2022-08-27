@@ -80,12 +80,12 @@ export { CardGroupComponent } from "./lib/layout/card-group/card-group.component
 export { SheetComponent } from "./lib/layout/sheet/sheet.component";
 export { SheetGroupComponent } from "./lib/layout/sheet-group/sheet-group.component";
 export { TableHeaderCellComponent } from "./lib/table/table-cell/table-header-cell.component";
-export { TableFooterCellDefDirective} from "./lib/table/table-cell/table-footer-cell-def.directive";
-export { TableFooterCellDirective} from "./lib/table/table-cell/table-footer-cell.directive";
-export { TableHeaderCellDefDirective} from "./lib/table/table-cell/table-header-cell-def.directive";
-export { TableColumnDefDirective} from "./lib/table/table-cell/table-column-def.directive";
-export { TableCellDirective} from "./lib/table/table-cell/table-cell.directive";
-export { TableCellDefDirective} from "./lib/table/table-cell/table-cell-def.directive";
+export { TableFooterCellDefDirective } from "./lib/table/table-cell/table-footer-cell-def.directive";
+export { TableFooterCellDirective } from "./lib/table/table-cell/table-footer-cell.directive";
+export { TableHeaderCellDefDirective } from "./lib/table/table-cell/table-header-cell-def.directive";
+export { TableColumnDefDirective } from "./lib/table/table-cell/table-column-def.directive";
+export { TableCellDirective } from "./lib/table/table-cell/table-cell.directive";
+export { TableCellDefDirective } from "./lib/table/table-cell/table-cell-def.directive";
 export { TableResizerDirective } from "./lib/table/table-resizer/table-resizer.directive";
 export { ToolbarComponent } from "./lib/toolbar/toolbar.component";
 export { ToolbarGroupComponent } from "./lib/toolbar/toolbar-group.component";
@@ -125,7 +125,6 @@ export { ExampleWrapperComponent } from "./lib/docs/example-wrapper/example-wrap
 export { ExampleCodeComponent } from "./lib/docs/example-code/example-code.component";
 export { SrlcIndicatorComponent } from "./lib/docs/srlc-indicator/srlc-indicator.component";
 
-
 // Pipes
 export { HighlightPipe } from "./pipes/highlight.pipe";
 export { LimitToPipe } from "./pipes/limit-to.pipe";
@@ -148,7 +147,10 @@ export { EventPropagationService } from "./services/event-propagation.service";
 export { HistoryStorage } from "./services/history-storage";
 export { ListService } from "./services/list.service";
 export { LoggerService } from "./services/log-service";
-export { NotificationHandler, NotificationService } from "./services/notification-service";
+export {
+    NotificationHandler,
+    NotificationService,
+} from "./services/notification-service";
 export { PositionService } from "./services/position.service";
 export { SearchService } from "./services/search.service";
 export { SelectorService } from "./lib/selector/selector.service";

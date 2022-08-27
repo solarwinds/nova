@@ -9,5 +9,7 @@ import setWith from "lodash/setWith";
  * @param value
  */
 export function immutableSet<T>(object: T, path: string, value: any): T {
-    return path.length === 0 ? value : setWith(clone(object) as any, path, value, clone);
+    return path.length === 0
+        ? value
+        : setWith(clone(object) as any, path, value, clone);
 }

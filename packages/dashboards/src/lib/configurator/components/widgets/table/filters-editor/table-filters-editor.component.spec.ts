@@ -1,6 +1,7 @@
 import { SimpleChange, SimpleChanges } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { FormBuilder } from "@angular/forms";
+
 import { EventBus } from "@nova-ui/bits";
 
 import { IFormatter } from "../../../../../components/types";
@@ -8,7 +9,6 @@ import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { DynamicComponentCreator } from "../../../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
 import { PIZZAGNA_EVENT_BUS } from "../../../../../types";
-
 import { TableFiltersEditorComponent } from "./table-filters-editor.component";
 
 describe("TableFiltersEditorComponent", () => {
@@ -30,8 +30,7 @@ describe("TableFiltersEditorComponent", () => {
                     useValue: new FormBuilder(),
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -46,12 +45,14 @@ describe("TableFiltersEditorComponent", () => {
 
     describe("ngOnChanges > ", () => {
         it("should set the 'sortingConfiguration' form controls", () => {
-            component.sortableColumns = [{
-                id: "testId",
-                formatter: {} as IFormatter,
-                label: "Test",
-                sortable: true,
-            }];
+            component.sortableColumns = [
+                {
+                    id: "testId",
+                    formatter: {} as IFormatter,
+                    label: "Test",
+                    sortable: true,
+                },
+            ];
             component.sorterConfiguration = {
                 sortBy: "testId",
                 descendantSorting: true,
@@ -62,17 +63,23 @@ describe("TableFiltersEditorComponent", () => {
 
             component.ngOnChanges(changes);
             const sorterConfigGroup = component.form.get("sorterConfiguration");
-            expect(sorterConfigGroup?.get("sortBy")?.value).toEqual(component.sorterConfiguration.sortBy);
-            expect(sorterConfigGroup?.get("descendantSorting")?.value).toEqual(component.sorterConfiguration.descendantSorting);
+            expect(sorterConfigGroup?.get("sortBy")?.value).toEqual(
+                component.sorterConfiguration.sortBy
+            );
+            expect(sorterConfigGroup?.get("descendantSorting")?.value).toEqual(
+                component.sorterConfiguration.descendantSorting
+            );
         });
 
         it("should set the 'sortedColumn' form control to 'undefined' if the sorterConfiguration column id is not represented in the sortableColumns", () => {
-            component.sortableColumns = [{
-                id: "testId",
-                formatter: {} as IFormatter,
-                label: "Test",
-                sortable: true,
-            }];
+            component.sortableColumns = [
+                {
+                    id: "testId",
+                    formatter: {} as IFormatter,
+                    label: "Test",
+                    sortable: true,
+                },
+            ];
             component.sorterConfiguration = {
                 sortBy: "otherId",
                 descendantSorting: true,
@@ -84,7 +91,9 @@ describe("TableFiltersEditorComponent", () => {
             component.ngOnChanges(changes);
             const sorterConfigGroup = component.form.get("sorterConfiguration");
             expect(sorterConfigGroup?.get("sortBy")?.value).toBeUndefined();
-            expect(sorterConfigGroup?.get("descendantSorting")?.value).toEqual(component.sorterConfiguration.descendantSorting);
+            expect(sorterConfigGroup?.get("descendantSorting")?.value).toEqual(
+                component.sorterConfiguration.descendantSorting
+            );
         });
 
         it("should update the sortableColumns based on a change in the columns", () => {
@@ -138,8 +147,12 @@ describe("TableFiltersEditorComponent", () => {
 
             component.ngOnChanges(changes);
             const sorterConfigGroup = component.form.get("sorterConfiguration");
-            expect(sorterConfigGroup?.get("sortBy")?.value).toEqual(component.sorterConfiguration.sortBy);
-            expect(sorterConfigGroup?.get("descendantSorting")?.value).toEqual(component.sorterConfiguration.descendantSorting);
+            expect(sorterConfigGroup?.get("sortBy")?.value).toEqual(
+                component.sorterConfiguration.sortBy
+            );
+            expect(sorterConfigGroup?.get("descendantSorting")?.value).toEqual(
+                component.sorterConfiguration.descendantSorting
+            );
         });
 
         it("should set the 'sortBy' form control to 'undefined' if sorted column's sortable value changes to false", () => {
@@ -232,9 +245,9 @@ describe("TableFiltersEditorComponent", () => {
             component.ngOnChanges(changes);
             const sorterConfigGroup = component.form.get("sorterConfiguration");
             expect(sorterConfigGroup?.get("sortBy")?.disabled).toEqual(true);
-            expect(sorterConfigGroup?.get("descendantSorting")?.disabled).toEqual(true);
+            expect(
+                sorterConfigGroup?.get("descendantSorting")?.disabled
+            ).toEqual(true);
         });
-
     });
-
 });

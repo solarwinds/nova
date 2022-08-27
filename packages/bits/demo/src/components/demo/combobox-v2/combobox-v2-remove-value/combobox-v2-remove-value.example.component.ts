@@ -7,6 +7,8 @@ import { FormControl } from "@angular/forms";
     host: { class: "combobox-container" },
 })
 export class ComboboxV2RemoveValueExampleComponent {
-    public items = Array.from({ length: 100 }).map((_, i) => $localize `Item ${i}`);
+    public items = Array.from({ length: 100 }).map(
+        (_, i) => $localize`Item ${i}`
+    );
     public comboboxControl = new FormControl();
 }

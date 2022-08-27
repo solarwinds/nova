@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-select-docs-example",
     templateUrl: "./select-docs.example.component.html",
 })
-export class SelectDocsComponent {
-}
+export class SelectDocsComponent {}

@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
+
 import {
     DEMO_PATH_TOKEN,
     NuiButtonModule,
@@ -28,8 +29,8 @@ const routes = [
         path: "",
         component: SearchDocsExampleComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.ga,
+            srlc: {
+                stage: SrlcStage.ga,
             },
             showThemeSwitcher: true,
         },
@@ -38,8 +39,8 @@ const routes = [
         path: "search-test",
         component: SearchTestExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -47,8 +48,8 @@ const routes = [
         path: "search-visual-test",
         component: SearchVisualTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -79,12 +80,14 @@ const routes = [
     providers: [
         {
             provide: DEMO_PATH_TOKEN,
-            useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/),
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
         },
     ],
-    exports: [
-        RouterModule,
-    ],
+    exports: [RouterModule],
 })
-export class SearchModule {
-}
+export class SearchModule {}

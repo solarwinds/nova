@@ -4,21 +4,13 @@ import { NuiCommonModule } from "@nova-ui/bits";
 
 import { FileDropExampleComponent } from "./file-drop.component";
 
-
 /**
  * @ignore
  */
 @NgModule({
-    imports: [
-        NuiCommonModule,
-    ],
-    declarations: [
-        FileDropExampleComponent,
-    ],
-    exports: [
-        FileDropExampleComponent,
-    ],
+    imports: [NuiCommonModule],
+    declarations: [FileDropExampleComponent],
+    exports: [FileDropExampleComponent],
     providers: [],
 })
-export class NuiFileDropExampleModule {
-}
+export class NuiFileDropExampleModule {}

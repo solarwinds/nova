@@ -1,4 +1,15 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+    ViewEncapsulation,
+} from "@angular/core";
+import keyBy from "lodash/keyBy";
+import { Subject } from "rxjs";
+import { take, takeUntil } from "rxjs/operators";
+
 import { SearchService, ThemeSwitchService } from "@nova-ui/bits";
 import {
     DashboardComponent,
@@ -11,15 +22,24 @@ import {
     WidgetClonerService,
     WidgetTypesService,
 } from "@nova-ui/dashboards";
-import keyBy from "lodash/keyBy";
-import { Subject } from "rxjs";
-import { take, takeUntil } from "rxjs/operators";
 
-import { TestKpiDataSource, TestKpiDataSource2 } from "../../data/kpi-data-sources";
-import { TestProportionalDataSource, TestProportionalDataSource2, TestProportionalDataSource3 } from "../../data/proportional-data-sources";
-import { TestTableDataSource, TestTableDataSource2 } from "../../data/table-datasources";
-import { TestTimeseriesDataSource, TestTimeseriesDataSource2 } from "../../data/timeseries-data-sources";
-
+import {
+    TestKpiDataSource,
+    TestKpiDataSource2,
+} from "../../data/kpi-data-sources";
+import {
+    TestProportionalDataSource,
+    TestProportionalDataSource2,
+    TestProportionalDataSource3,
+} from "../../data/proportional-data-sources";
+import {
+    TestTableDataSource,
+    TestTableDataSource2,
+} from "../../data/table-datasources";
+import {
+    TestTimeseriesDataSource,
+    TestTimeseriesDataSource2,
+} from "../../data/timeseries-data-sources";
 import { AcmeCloneSelectionComponent } from "./acme-clone-selection/acme-clone-selection.component";
 import { AcmeFormSubmitHandler } from "./acme-form-submit-handler";
 import { positions, widgets } from "./widgets";
@@ -36,7 +56,8 @@ import { positions, widgets } from "./widgets";
     providers: [AcmeFormSubmitHandler],
 })
 export class AcmeDashboardComponent implements OnInit, OnDestroy {
-    @ViewChild(DashboardComponent, { static: true }) dashboardComponent: DashboardComponent;
+    @ViewChild(DashboardComponent, { static: true })
+    dashboardComponent: DashboardComponent;
     private destroy$ = new Subject();
 
     public dashboard: IDashboard = {
@@ -53,11 +74,13 @@ export class AcmeDashboardComponent implements OnInit, OnDestroy {
     public editMode = false;
     public dsError = false;
 
-    constructor(private providerRegistry: ProviderRegistryService,
+    constructor(
+        private providerRegistry: ProviderRegistryService,
         public submitHandler: AcmeFormSubmitHandler,
         public themeSwitcherService: ThemeSwitchService,
         private widgetTypesService: WidgetTypesService,
-        private widgetClonerService: WidgetClonerService) {
+        private widgetClonerService: WidgetClonerService
+    ) {
         this.providerRegistry.setProviders({
             [TestKpiDataSource.providerId]: {
                 provide: DATA_SOURCE,
@@ -108,10 +131,11 @@ export class AcmeDashboardComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit(): void {
-        const widgetsWithStructure = widgets.map(w => ({
+        const widgetsWithStructure = widgets.map((w) => ({
             ...w,
             pizzagna: {
-                ...this.widgetTypesService.getWidgetType(w.type, w.version).widget,
+                ...this.widgetTypesService.getWidgetType(w.type, w.version)
+                    .widget,
                 ...w.pizzagna,
             },
         }));
@@ -136,11 +160,9 @@ export class AcmeDashboardComponent implements OnInit, OnDestroy {
             trySubmit: this.submitHandler.trySubmit,
             widgetSelectionComponentType: AcmeCloneSelectionComponent,
         };
-        this.widgetClonerService.open(cloner)
-            .pipe(
-                take(1),
-                takeUntil(this.destroy$)
-            )
+        this.widgetClonerService
+            .open(cloner)
+            .pipe(take(1), takeUntil(this.destroy$))
             .subscribe();
     }
 

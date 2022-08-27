@@ -18,7 +18,9 @@ export class NuiValidators {
      */
     static integer(unsigned: boolean = false): ValidatorFn {
         const res = (control: AbstractControl): ValidationErrors | null => {
-            const integerRegex: RegExp = unsigned ? /^(0|[1-9]\d*)$/ : /^\-?(0|[1-9]\d*)$/;
+            const integerRegex: RegExp = unsigned
+                ? /^(0|[1-9]\d*)$/
+                : /^\-?(0|[1-9]\d*)$/;
             const errorObject = {
                 value: control.value,
                 invalidInteger: "Invalid integer value",
@@ -33,7 +35,7 @@ export class NuiValidators {
      * Validator that returns date validation using Moment.isValid method.
      */
     static dateFormat(value: Moment): ValidationErrors | null {
-        return (!_isNil(value) && moment.isMoment(value) && value.isValid())
+        return !_isNil(value) && moment.isMoment(value) && value.isValid()
             ? null
             : { invalidFormat: "The provided format is invalid" };
     }

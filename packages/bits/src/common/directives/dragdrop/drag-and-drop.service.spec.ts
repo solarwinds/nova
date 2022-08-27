@@ -16,14 +16,20 @@ describe("directives >", () => {
         });
 
         it("#setDragPayload should set dragPayload", () => {
-            const event = new DragEvent("dragstart", { dataTransfer: new DataTransfer()});
+            const event = new DragEvent("dragstart", {
+                dataTransfer: new DataTransfer(),
+            });
             const payload = {
                 property: "value",
             };
             sut.setDragPayload(payload, event);
             const result = sut.getDragPayload(new DragEvent("dragenter"));
-            const nativeDragPayloadText = JSON.parse(event.dataTransfer?.getData("Text") ?? "");
-            const nativeDragPayloadTextPlain = JSON.parse(event.dataTransfer?.getData("text/plain") ?? "");
+            const nativeDragPayloadText = JSON.parse(
+                event.dataTransfer?.getData("Text") ?? ""
+            );
+            const nativeDragPayloadTextPlain = JSON.parse(
+                event.dataTransfer?.getData("text/plain") ?? ""
+            );
             const expectedResult = {
                 data: payload,
                 isExternal: false,
@@ -34,12 +40,14 @@ describe("directives >", () => {
         });
 
         it("#setDragPayload should emit onDragStateChanged", () => {
-            const event = new DragEvent("dragstart", { dataTransfer: new DataTransfer()});
+            const event = new DragEvent("dragstart", {
+                dataTransfer: new DataTransfer(),
+            });
             const payload = {
                 property: "value",
             };
             let result: IDragState | undefined;
-            sut.onDragStateChanged.subscribe(state => {
+            sut.onDragStateChanged.subscribe((state) => {
                 result = state;
             });
             sut.setDragPayload(payload, event);
@@ -50,14 +58,18 @@ describe("directives >", () => {
         });
 
         it("#resetPayload should set payload to undefined", () => {
-            const event = new DragEvent("dragstart", { dataTransfer: new DataTransfer()});
+            const event = new DragEvent("dragstart", {
+                dataTransfer: new DataTransfer(),
+            });
             const payload = {
                 property: "value",
             };
             sut.setDragPayload(payload, event);
             expect(sut.getDragPayload(new DragEvent("drop"))).toBeDefined();
             sut.resetPayload();
-            const result = sut.getDragPayload(new DragEvent("drop", { dataTransfer: new DataTransfer()}));
+            const result = sut.getDragPayload(
+                new DragEvent("drop", { dataTransfer: new DataTransfer() })
+            );
             expect(result.data).toBeFalsy();
             expect(result.isExternal).toBe(true);
         });
@@ -78,7 +90,5 @@ describe("directives >", () => {
 
             expect((<IDragState>result).isInProgress).toBe(false);
         });
-
     });
-
 });

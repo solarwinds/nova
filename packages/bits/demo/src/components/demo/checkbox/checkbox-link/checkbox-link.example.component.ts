@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+
 import { ToastService } from "@nova-ui/bits";
 
 @Component({
@@ -7,7 +8,7 @@ import { ToastService } from "@nova-ui/bits";
 })
 export class CheckboxLinkExampleComponent {
     public action() {
-        this.toastService.warning({message: $localize `Link clicked!`});
+        this.toastService.warning({ message: $localize`Link clicked!` });
         return false;
     }
     constructor(private toastService: ToastService) {}

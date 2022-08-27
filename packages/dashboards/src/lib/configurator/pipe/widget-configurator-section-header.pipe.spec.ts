@@ -11,13 +11,17 @@ describe("WidgetEditorAccordionFormStatePipe > ", () => {
         it("should return the correct string when the headerText is empty", () => {
             const testHeaderText = "";
             const testPrefix = "Test Prefix";
-            expect(pipe.transform(testHeaderText, 0, testPrefix)).toEqual(`${testPrefix} 1`);
+            expect(pipe.transform(testHeaderText, 0, testPrefix)).toEqual(
+                `${testPrefix} 1`
+            );
         });
 
         it("should return the correct string when the headerText is undefined", () => {
             const testHeaderText: string | undefined = undefined;
             const testPrefix = "Test Prefix";
-            expect(pipe.transform(testHeaderText, 0, testPrefix)).toEqual(`${testPrefix} 1`);
+            expect(pipe.transform(testHeaderText, 0, testPrefix)).toEqual(
+                `${testPrefix} 1`
+            );
         });
 
         it("should return the correct string when no prefix is specified", () => {
@@ -28,8 +32,9 @@ describe("WidgetEditorAccordionFormStatePipe > ", () => {
         it("should return the correct string when all arguments are provided", () => {
             const testText = "Test Text";
             const testPrefix = "Test Prefix";
-            expect(pipe.transform(testText, 0, testPrefix)).toEqual(`${testPrefix} 1 - ${testText}`);
+            expect(pipe.transform(testText, 0, testPrefix)).toEqual(
+                `${testPrefix} 1 - ${testText}`
+            );
         });
     });
-
 });

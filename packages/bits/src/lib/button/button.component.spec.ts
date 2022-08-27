@@ -14,7 +14,6 @@ import { By } from "@angular/platform-browser";
 
 import { buttonConstants } from "../../constants/button.constants";
 import { LoggerService } from "../../services/log-service";
-
 import { ButtonComponent } from "./button.component";
 import { ButtonSizeType } from "./public-api";
 

@@ -1,6 +1,7 @@
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
+
 import {
     DEMO_PATH_TOKEN,
     NuiButtonModule,
@@ -19,7 +20,6 @@ import { BadgeNovauiComponent } from "./badge-novaui/badge-novaui.component";
 import { BadgeSystemStatusesComponent } from "./badge-system-statuses/badge-system-statuses.component";
 import { BadgeVisualTestComponent } from "./badge-visual-test/badge-visual-test.component";
 
-
 const routes = [
     {
         path: "",
@@ -29,8 +29,8 @@ const routes = [
         path: "badge-visual-test",
         component: BadgeVisualTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -59,12 +59,14 @@ const routes = [
     providers: [
         {
             provide: DEMO_PATH_TOKEN,
-            useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/),
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
         },
     ],
-    exports: [
-        RouterModule,
-    ],
+    exports: [RouterModule],
 })
-export class BadgeModule {
-}
+export class BadgeModule {}

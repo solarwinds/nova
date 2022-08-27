@@ -1,7 +1,6 @@
 import moment from "moment/moment";
 
 import { Animations, Helpers } from "../../../helpers";
-
 import { TimeFrameBarTestPage } from "./time-frame-bar-test.po";
 
 describe("CONVENIENCE COMPONENTS", () => {

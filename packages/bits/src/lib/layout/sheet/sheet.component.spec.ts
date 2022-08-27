@@ -7,10 +7,9 @@ describe("sheet", () => {
     let sheetComponent: SheetComponent;
 
     beforeEach(() => {
-        TestBed
-            .configureTestingModule({
-                declarations: [SheetComponent],
-            });
+        TestBed.configureTestingModule({
+            declarations: [SheetComponent],
+        });
         fixture = TestBed.createComponent(SheetComponent);
         sheetComponent = fixture.componentInstance;
         fixture.detectChanges();

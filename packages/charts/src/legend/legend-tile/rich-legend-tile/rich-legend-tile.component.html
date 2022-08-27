@@ -1,15 +1,27 @@
-<div class="nui-rich-legend-tile"
-     [class.nui-rich-legend-tile--has-point-marker]="rightEdge.children.length > 0"
-     [class.nui-rich-legend-tile--series-has-additional-content]="seriesHasAdditionalContent">
-    <div class="nui-rich-legend-tile__tilebox d-flex justify-content-center align-items-end flex-column"
-         [ngStyle]="{'background-color': backgroundColor}"
-         [style.color]="color">
-        <div *ngIf="hasInputValue(); else projectedTopContent"
-             class="nui-rich-legend-tile__tilebox-value nui-rich-legend-tile__ellipsified">
+<div
+    class="nui-rich-legend-tile"
+    [class.nui-rich-legend-tile--has-point-marker]="
+        rightEdge.children.length > 0
+    "
+    [class.nui-rich-legend-tile--series-has-additional-content]="
+        seriesHasAdditionalContent
+    "
+>
+    <div
+        class="nui-rich-legend-tile__tilebox d-flex justify-content-center align-items-end flex-column"
+        [ngStyle]="{ 'background-color': backgroundColor }"
+        [style.color]="color"
+    >
+        <div
+            *ngIf="hasInputValue(); else projectedTopContent"
+            class="nui-rich-legend-tile__tilebox-value nui-rich-legend-tile__ellipsified"
+        >
             {{ value }}
         </div>
-        <div *ngIf="hasInputUnitLabel(); else projectedBottomContent"
-             class="nui-rich-legend-tile__tilebox-unit nui-rich-legend-tile__ellipsified">
+        <div
+            *ngIf="hasInputUnitLabel(); else projectedBottomContent"
+            class="nui-rich-legend-tile__tilebox-unit nui-rich-legend-tile__ellipsified"
+        >
             {{ unitLabel }}
         </div>
         <ng-content></ng-content>

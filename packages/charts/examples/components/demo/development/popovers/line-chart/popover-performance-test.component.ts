@@ -4,4 +4,4 @@ import { Component } from "@angular/core";
     templateUrl: "./popover-performance-test.component.html",
     styleUrls: ["./popover-performance-test.component.less"],
 })
-export class PopoverPerformanceTestComponent { }
+export class PopoverPerformanceTestComponent {}

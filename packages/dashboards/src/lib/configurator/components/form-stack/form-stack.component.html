@@ -1,12 +1,17 @@
 <ng-container *ngFor="let node of nodeConfigs; trackBy: trackByFn">
-    <ng-container nuiComponentPortal
-                  #componentPortal="nuiComponentPortal"
-                  [componentId]="node.id"
-                  [componentType]="node.componentType"
-                  [providers]="node.providers"
-                  [properties]="node.properties"
-                  [outputs]="['formReady']"
-                  (output)="onEvent(node.id, $event)">
-        <ng-template [cdkPortalOutlet]="componentPortal.portal" (attached)="componentPortal.attached($event)"></ng-template>
+    <ng-container
+        nuiComponentPortal
+        #componentPortal="nuiComponentPortal"
+        [componentId]="node.id"
+        [componentType]="node.componentType"
+        [providers]="node.providers"
+        [properties]="node.properties"
+        [outputs]="['formReady']"
+        (output)="onEvent(node.id, $event)"
+    >
+        <ng-template
+            [cdkPortalOutlet]="componentPortal.portal"
+            (attached)="componentPortal.attached($event)"
+        ></ng-template>
     </ng-container>
 </ng-container>

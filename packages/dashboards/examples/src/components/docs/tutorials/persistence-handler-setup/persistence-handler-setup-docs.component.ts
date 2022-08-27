@@ -4,4 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-dashboard-persistence-handler-setup-docs",
     templateUrl: "./persistence-handler-setup-docs.component.html",
 })
-export class PersistenceHandlerSetupDocsComponent { }
+export class PersistenceHandlerSetupDocsComponent {}

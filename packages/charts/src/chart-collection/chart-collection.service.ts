@@ -8,7 +8,6 @@ import { ChartCollection } from "../core/chart-collection";
  */
 @Injectable()
 export class ChartCollectionService {
-
     private collections: { [key: string]: ChartCollection } = {};
 
     public getChartCollection(collectionId: string) {
@@ -19,5 +18,4 @@ export class ChartCollectionService {
         }
         return collection;
     }
-
 }

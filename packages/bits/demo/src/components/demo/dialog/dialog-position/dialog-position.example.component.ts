@@ -1,4 +1,5 @@
 import { Component, Inject, TemplateRef } from "@angular/core";
+
 import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
 
 @Component({
@@ -9,9 +10,10 @@ export class DialogPositionExampleComponent {
     public isResponsiveMode = false;
     private activeDialog: NuiDialogRef;
 
-    constructor(@Inject(DialogService) private dialogService: DialogService,
-                @Inject(ToastService) private toastService: ToastService) {
-    }
+    constructor(
+        @Inject(DialogService) private dialogService: DialogService,
+        @Inject(ToastService) private toastService: ToastService
+    ) {}
 
     public open(content: TemplateRef<string>, options: any) {
         this.isResponsiveMode = options.isResponsiveMode;
@@ -24,10 +26,16 @@ export class DialogPositionExampleComponent {
     }
 
     private actionDone(): void {
-        this.toastService.success({message: $localize `Action Done!`, title: $localize `Event`});
+        this.toastService.success({
+            message: $localize`Action Done!`,
+            title: $localize`Event`,
+        });
     }
 
     private actionCanceled(): void {
-        this.toastService.info({message: $localize `Action Cancelled!`, title: $localize `Event`});
+        this.toastService.info({
+            message: $localize`Action Cancelled!`,
+            title: $localize`Event`,
+        });
     }
 }

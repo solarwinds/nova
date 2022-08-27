@@ -1,5 +1,4 @@
 <nui-wizard-horizontal #wizard>
-
     <!--  content of the 1st step -->
     <nui-wizard-step-v2 i18n-label label="First step">
         <!-- content of the current step -->
@@ -23,14 +22,26 @@
         <ng-template nuiWizardStepFooter>
             <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
             <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
-            <button type="button" displayStyle="primary" nui-button (click)="finishWizard()" i18n>
+            <button
+                type="button"
+                displayStyle="primary"
+                nui-button
+                (click)="finishWizard()"
+                i18n
+            >
                 Finish
             </button>
         </ng-template>
     </nui-wizard-step-v2>
 
     <ng-template #wizardCancel>
-        <button type="button" displayStyle="action" nui-button (click)="resetWizard()" i18n>
+        <button
+            type="button"
+            displayStyle="action"
+            nui-button
+            (click)="resetWizard()"
+            i18n
+        >
             Cancel
         </button>
     </ng-template>
@@ -42,12 +53,15 @@
     </ng-template>
 
     <ng-template #wizardNext>
-        <button nuiWizardNext
-                type="button"
-                nui-button
-                displayStyle="primary"
-                icon="caret-right"
-                iconRight="true"
-        >Next</button>
+        <button
+            nuiWizardNext
+            type="button"
+            nui-button
+            displayStyle="primary"
+            icon="caret-right"
+            iconRight="true"
+        >
+            Next
+        </button>
     </ng-template>
 </nui-wizard-horizontal>

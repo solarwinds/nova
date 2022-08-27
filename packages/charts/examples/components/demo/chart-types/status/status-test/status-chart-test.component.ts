@@ -1,11 +1,28 @@
 import { Component, OnInit } from "@angular/core";
+import moment from "moment/moment";
+
 import { IconService } from "@nova-ui/bits";
 import {
-    BandScale, BarHighlightStrategy, BarRenderer, BarStatusGridConfig, BarTooltipsPlugin, Chart, CHART_PALETTE_CS_S, HIGHLIGHT_DATA_POINT_EVENT,
-    InteractionLabelPlugin, InteractionLinePlugin, IValueProvider, IXYScales, MappedValueProvider, SELECT_DATA_POINT_EVENT, statusAccessors, StatusAccessors,
-    SvgMarker, TimeScale, XYGrid,
+    BandScale,
+    BarHighlightStrategy,
+    BarRenderer,
+    BarStatusGridConfig,
+    BarTooltipsPlugin,
+    Chart,
+    CHART_PALETTE_CS_S,
+    HIGHLIGHT_DATA_POINT_EVENT,
+    InteractionLabelPlugin,
+    InteractionLinePlugin,
+    IValueProvider,
+    IXYScales,
+    MappedValueProvider,
+    SELECT_DATA_POINT_EVENT,
+    statusAccessors,
+    StatusAccessors,
+    SvgMarker,
+    TimeScale,
+    XYGrid,
 } from "@nova-ui/charts";
-import moment from "moment/moment";
 
 enum Status {
     Unknown = "unknown",
@@ -24,8 +41,7 @@ export class StatusChartTestComponent implements OnInit {
     public tooltipsPlugin = new BarTooltipsPlugin({ horizontal: true });
     public statusMarkers: IValueProvider<SvgMarker>;
 
-    constructor(private iconService: IconService) {
-    }
+    constructor(private iconService: IconService) {}
 
     public ngOnInit() {
         this.statusMarkers = createMarkerProvider(this.iconService);
@@ -41,17 +57,23 @@ export class StatusChartTestComponent implements OnInit {
         const statusColors = createColorProvider();
         const accessors = statusAccessors(statusColors);
         const iconSize: number = 10;
-        const icons = new MappedValueProvider(getResizedIconsValueMap(this.iconService, iconSize));
+        const icons = new MappedValueProvider(
+            getResizedIconsValueMap(this.iconService, iconSize)
+        );
         // Thickness accessor should be used to specify which status corresponds to a thin bar or thick
-        accessors.data.thickness = (data: any) => data.status === Status.Up ? BarRenderer.THIN : BarRenderer.THICK;
+        accessors.data.thickness = (data: any) =>
+            data.status === Status.Up ? BarRenderer.THIN : BarRenderer.THICK;
         accessors.data.marker = (data: any) => icons.get(data.status);
 
-        const renderer = new BarRenderer({ highlightStrategy: new BarHighlightStrategy("x") });
+        const renderer = new BarRenderer({
+            highlightStrategy: new BarHighlightStrategy("x"),
+        });
 
         const bandScale = new BandScale();
         const timeScale = new TimeScale();
         // This formats label in interaction label plugin
-        timeScale.formatters.labelFormatter = (d: any) => moment(d).format("LL");
+        timeScale.formatters.labelFormatter = (d: any) =>
+            moment(d).format("LL");
         bandScale.fixDomain(StatusAccessors.STATUS_DOMAIN);
         const scales: IXYScales = {
             y: bandScale,
@@ -61,7 +83,7 @@ export class StatusChartTestComponent implements OnInit {
         // Marker accessor is used to draw marker on a bar depending on the data point
         accessors.data.marker = (data: any) => icons.get(data.status);
 
-        const seriesSet = getData().map(d => ({
+        const seriesSet = getData().map((d) => ({
             ...d,
             accessors,
             renderer,
@@ -71,13 +93,22 @@ export class StatusChartTestComponent implements OnInit {
         this.chart.update(seriesSet);
 
         // Sample events that can be used in order to handle click or highlighting of certain status
-        this.chart.getEventBus().getStream(HIGHLIGHT_DATA_POINT_EVENT).subscribe(console.log);
-        this.chart.getEventBus().getStream(SELECT_DATA_POINT_EVENT).subscribe(console.log);
+        this.chart
+            .getEventBus()
+            .getStream(HIGHLIGHT_DATA_POINT_EVENT)
+            .subscribe(console.log);
+        this.chart
+            .getEventBus()
+            .getStream(SELECT_DATA_POINT_EVENT)
+            .subscribe(console.log);
     }
 }
 
-function createMarkerProvider(iconService: IconService): IValueProvider<SvgMarker> {
-    const getStatusMarker = (status: string) => new SvgMarker(iconService.getStatusIcon(status));
+function createMarkerProvider(
+    iconService: IconService
+): IValueProvider<SvgMarker> {
+    const getStatusMarker = (status: string) =>
+        new SvgMarker(iconService.getStatusIcon(status));
 
     return new MappedValueProvider({
         [Status.Unknown]: getStatusMarker(Status.Unknown),
@@ -100,67 +131,84 @@ function createColorProvider(): IValueProvider<string> {
 
 function getResizedIconsValueMap(iconService: IconService, iconSize: number) {
     return {
-        [Status.Unknown]: iconService.getIconResized(iconService.getStatusIcon(Status.Unknown), iconSize),
-        [Status.Up]: iconService.getIconResized(iconService.getStatusIcon(Status.Up), iconSize),
-        [Status.Warning]: iconService.getIconResized(iconService.getStatusIcon(Status.Warning), iconSize),
-        [Status.Down]: iconService.getIconResized(iconService.getStatusIcon(Status.Down), iconSize),
-        [Status.Critical]: iconService.getIconResized(iconService.getStatusIcon(Status.Critical), iconSize),
+        [Status.Unknown]: iconService.getIconResized(
+            iconService.getStatusIcon(Status.Unknown),
+            iconSize
+        ),
+        [Status.Up]: iconService.getIconResized(
+            iconService.getStatusIcon(Status.Up),
+            iconSize
+        ),
+        [Status.Warning]: iconService.getIconResized(
+            iconService.getStatusIcon(Status.Warning),
+            iconSize
+        ),
+        [Status.Down]: iconService.getIconResized(
+            iconService.getStatusIcon(Status.Down),
+            iconSize
+        ),
+        [Status.Critical]: iconService.getIconResized(
+            iconService.getStatusIcon(Status.Critical),
+            iconSize
+        ),
     };
 }
 
 /* Chart data */
 function getData() {
-    return [{
-        id: "1",
-        name: "Series 1",
-        data: [
-            {
-                status: Status.Up,
-                start: 0, // in days from today
-                end: 22,
-            },
-            {
-                status: Status.Warning,
-                start: 22,
-                end: 39,
-            },
-            {
-                status: Status.Unknown,
-                start: 39,
-                end: 59,
-            },
-            {
-                status: Status.Down,
-                start: 59,
-                end: 109,
-            },
-            {
-                status: Status.Critical,
-                start: 109,
-                end: 178,
-            },
-            {
-                status: Status.Up,
-                start: 178,
-                end: 877,
-            },
-            {
-                status: Status.Critical,
-                start: 877,
-                end: 980,
-            },
-            {
-                status: Status.Warning,
-                start: 980,
-                end: 1000,
-            },
-        ].map(d => ({
-            value: d.end - d.start,
-            status: d.status,
-            start: getDate(d.start),
-            end: getDate(d.end),
-        })),
-    }];
+    return [
+        {
+            id: "1",
+            name: "Series 1",
+            data: [
+                {
+                    status: Status.Up,
+                    start: 0, // in days from today
+                    end: 22,
+                },
+                {
+                    status: Status.Warning,
+                    start: 22,
+                    end: 39,
+                },
+                {
+                    status: Status.Unknown,
+                    start: 39,
+                    end: 59,
+                },
+                {
+                    status: Status.Down,
+                    start: 59,
+                    end: 109,
+                },
+                {
+                    status: Status.Critical,
+                    start: 109,
+                    end: 178,
+                },
+                {
+                    status: Status.Up,
+                    start: 178,
+                    end: 877,
+                },
+                {
+                    status: Status.Critical,
+                    start: 877,
+                    end: 980,
+                },
+                {
+                    status: Status.Warning,
+                    start: 980,
+                    end: 1000,
+                },
+            ].map((d) => ({
+                value: d.end - d.start,
+                status: d.status,
+                start: getDate(d.start),
+                end: getDate(d.end),
+            })),
+        },
+    ];
 }
 
 function getDate(hours: number) {

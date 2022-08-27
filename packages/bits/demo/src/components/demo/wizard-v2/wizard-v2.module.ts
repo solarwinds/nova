@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
+
 import {
     DEMO_PATH_TOKEN,
     NuiBusyModule,
@@ -50,8 +51,8 @@ const routes = [
         path: "",
         component: WizardDocsComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.beta,
+            srlc: {
+                stage: SrlcStage.beta,
             },
             showThemeSwitcher: true,
         },
@@ -70,7 +71,7 @@ const routes = [
         path: "test",
         component: WizardV2TestComponent,
         data: {
-            "srlc": {
+            srlc: {
                 hideIndicator: true,
             },
             showThemeSwitcher: false,
@@ -125,11 +126,14 @@ const routes = [
     providers: [
         {
             provide: DEMO_PATH_TOKEN,
-            useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/),
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
         },
     ],
-    exports: [
-        RouterModule,
-    ],
+    exports: [RouterModule],
 })
-export class WizardV2Module { }
+export class WizardV2Module {}

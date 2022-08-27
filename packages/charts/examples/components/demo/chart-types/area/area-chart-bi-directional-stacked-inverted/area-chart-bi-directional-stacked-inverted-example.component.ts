@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import moment from "moment/moment";
+
 import {
     AreaAccessors,
     AreaRenderer,
@@ -16,13 +18,15 @@ import {
     XYGrid,
     XYGridConfig,
 } from "@nova-ui/charts";
-import moment from "moment/moment";
 
 @Component({
     selector: "area-chart-bi-directional-stacked-inverted-example",
-    templateUrl: "./area-chart-bi-directional-stacked-inverted-example.component.html",
+    templateUrl:
+        "./area-chart-bi-directional-stacked-inverted-example.component.html",
 })
-export class AreaChartBiDirectionalStackedInvertedExampleComponent implements OnInit {
+export class AreaChartBiDirectionalStackedInvertedExampleComponent
+    implements OnInit
+{
     public chartTop: Chart;
     public chartAssistTop: ChartAssist;
 
@@ -30,11 +34,20 @@ export class AreaChartBiDirectionalStackedInvertedExampleComponent implements On
     public chartAssistBottom: ChartAssist;
 
     public ngOnInit(): void {
-        this.chartTop = new Chart(new XYGrid(topChartConfig()), { updateDomainForEmptySeries: true });
+        this.chartTop = new Chart(new XYGrid(topChartConfig()), {
+            updateDomainForEmptySeries: true,
+        });
         this.chartAssistTop = new ChartAssist(this.chartTop, stackedArea);
 
-        this.chartBottom = new Chart(new XYGrid(bottomChartConfig()), { updateDomainForEmptySeries: true });
-        this.chartAssistBottom = new ChartAssist(this.chartBottom, stackedArea, this.chartAssistTop.palette, this.chartAssistTop.markers);
+        this.chartBottom = new Chart(new XYGrid(bottomChartConfig()), {
+            updateDomainForEmptySeries: true,
+        });
+        this.chartAssistBottom = new ChartAssist(
+            this.chartBottom,
+            stackedArea,
+            this.chartAssistTop.palette,
+            this.chartAssistTop.markers
+        );
         const accessors = this.createAccessors();
         const renderer = new AreaRenderer();
         const xScale = new TimeScale();
@@ -55,27 +68,36 @@ export class AreaChartBiDirectionalStackedInvertedExampleComponent implements On
         };
 
         // Here we assemble a complete chart series set for each chart.
-        const seriesSetTop: IChartSeries<IAreaAccessors>[] = getDataTop().map(d => ({
-            ...d,
-            renderer,
-            accessors,
-            scales: scalesTop,
-        }));
+        const seriesSetTop: IChartSeries<IAreaAccessors>[] = getDataTop().map(
+            (d) => ({
+                ...d,
+                renderer,
+                accessors,
+                scales: scalesTop,
+            })
+        );
 
-        const seriesSetBottom: IChartSeries<IAreaAccessors>[] = getDataBottom().map(d => ({
-            ...d,
-            renderer,
-            accessors,
-            scales: scalesBottom,
-        }));
+        const seriesSetBottom: IChartSeries<IAreaAccessors>[] =
+            getDataBottom().map((d) => ({
+                ...d,
+                renderer,
+                accessors,
+                scales: scalesBottom,
+            }));
 
         // We need to replace the default domain calculators to have each chart take the series
         // on the opposite chart into account when calculating the domains.
-        const topChartDomainCalculator = domainWithAuxiliarySeries(() => seriesSetBottom, getAutomaticDomain);
+        const topChartDomainCalculator = domainWithAuxiliarySeries(
+            () => seriesSetBottom,
+            getAutomaticDomain
+        );
         scalesTop.y.domainCalculator = topChartDomainCalculator;
         scalesTop.x.domainCalculator = topChartDomainCalculator;
 
-        const bottomChartDomainCalculator = domainWithAuxiliarySeries(() => seriesSetTop, getAutomaticDomain);
+        const bottomChartDomainCalculator = domainWithAuxiliarySeries(
+            () => seriesSetTop,
+            getAutomaticDomain
+        );
         scalesBottom.y.domainCalculator = bottomChartDomainCalculator;
         scalesBottom.x.domainCalculator = bottomChartDomainCalculator;
 
@@ -87,7 +109,11 @@ export class AreaChartBiDirectionalStackedInvertedExampleComponent implements On
      * This function ensures the change in visibility of series is propagated to both charts. The chart that is directly
      * associated with the series has to be invoked first.
      */
-    public onSelectedChange(legendSeries: IChartAssistSeries<any>, value: boolean, currentChartAssist: ChartAssist): void {
+    public onSelectedChange(
+        legendSeries: IChartAssistSeries<any>,
+        value: boolean,
+        currentChartAssist: ChartAssist
+    ): void {
         let chartAssists = [this.chartAssistTop, this.chartAssistBottom];
         if (currentChartAssist === this.chartAssistBottom) {
             chartAssists = chartAssists.reverse();
@@ -143,40 +169,124 @@ function getDataTop() {
             id: "www-http-ingress",
             name: "World Wide Web HTTP",
             data: [
-                { timeStamp: moment("2016-12-25T11:45:29.909Z", format), value: 6 },
-                { timeStamp: moment("2016-12-25T12:10:29.909Z", format), value: 33 },
-                { timeStamp: moment("2016-12-25T12:50:29.909Z", format), value: 15 },
-                { timeStamp: moment("2016-12-25T13:15:29.909Z", format), value: 20 },
-                { timeStamp: moment("2016-12-25T13:40:29.909Z", format), value: 30 },
-                { timeStamp: moment("2016-12-25T13:55:29.909Z", format), value: 12 },
-                { timeStamp: moment("2016-12-25T14:20:29.909Z", format), value: 6 },
-                { timeStamp: moment("2016-12-25T14:40:29.909Z", format), value: 35 },
-                { timeStamp: moment("2016-12-25T15:00:29.909Z", format), value: 23 },
-                { timeStamp: moment("2016-12-25T15:25:29.909Z", format), value: 25 },
-                { timeStamp: moment("2016-12-25T15:45:29.909Z", format), value: 38 },
-                { timeStamp: moment("2016-12-25T16:10:29.909Z", format), value: 25 },
-                { timeStamp: moment("2016-12-25T16:30:29.909Z", format), value: 43 },
-                { timeStamp: moment("2016-12-25T16:45:29.909Z", format), value: 28 },
+                {
+                    timeStamp: moment("2016-12-25T11:45:29.909Z", format),
+                    value: 6,
+                },
+                {
+                    timeStamp: moment("2016-12-25T12:10:29.909Z", format),
+                    value: 33,
+                },
+                {
+                    timeStamp: moment("2016-12-25T12:50:29.909Z", format),
+                    value: 15,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:15:29.909Z", format),
+                    value: 20,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:40:29.909Z", format),
+                    value: 30,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:55:29.909Z", format),
+                    value: 12,
+                },
+                {
+                    timeStamp: moment("2016-12-25T14:20:29.909Z", format),
+                    value: 6,
+                },
+                {
+                    timeStamp: moment("2016-12-25T14:40:29.909Z", format),
+                    value: 35,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:00:29.909Z", format),
+                    value: 23,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:25:29.909Z", format),
+                    value: 25,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:45:29.909Z", format),
+                    value: 38,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:10:29.909Z", format),
+                    value: 25,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:30:29.909Z", format),
+                    value: 43,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:45:29.909Z", format),
+                    value: 28,
+                },
             ],
         },
         {
             id: "mssql-server-ingress",
             name: "MSSQL-Server",
             data: [
-                { timeStamp: moment("2016-12-25T11:45:29.909Z", format), value: 12 },
-                { timeStamp: moment("2016-12-25T12:10:29.909Z", format), value: 65 },
-                { timeStamp: moment("2016-12-25T12:50:29.909Z", format), value: 30 },
-                { timeStamp: moment("2016-12-25T13:15:29.909Z", format), value: 40 },
-                { timeStamp: moment("2016-12-25T13:40:29.909Z", format), value: 60 },
-                { timeStamp: moment("2016-12-25T13:55:29.909Z", format), value: 23 },
-                { timeStamp: moment("2016-12-25T14:20:29.909Z", format), value: 12 },
-                { timeStamp: moment("2016-12-25T14:40:29.909Z", format), value: 70 },
-                { timeStamp: moment("2016-12-25T15:00:29.909Z", format), value: 45 },
-                { timeStamp: moment("2016-12-25T15:25:29.909Z", format), value: 50 },
-                { timeStamp: moment("2016-12-25T15:45:29.909Z", format), value: 75 },
-                { timeStamp: moment("2016-12-25T16:10:29.909Z", format), value: 50 },
-                { timeStamp: moment("2016-12-25T16:30:29.909Z", format), value: 85 },
-                { timeStamp: moment("2016-12-25T16:45:29.909Z", format), value: 55 },
+                {
+                    timeStamp: moment("2016-12-25T11:45:29.909Z", format),
+                    value: 12,
+                },
+                {
+                    timeStamp: moment("2016-12-25T12:10:29.909Z", format),
+                    value: 65,
+                },
+                {
+                    timeStamp: moment("2016-12-25T12:50:29.909Z", format),
+                    value: 30,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:15:29.909Z", format),
+                    value: 40,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:40:29.909Z", format),
+                    value: 60,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:55:29.909Z", format),
+                    value: 23,
+                },
+                {
+                    timeStamp: moment("2016-12-25T14:20:29.909Z", format),
+                    value: 12,
+                },
+                {
+                    timeStamp: moment("2016-12-25T14:40:29.909Z", format),
+                    value: 70,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:00:29.909Z", format),
+                    value: 45,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:25:29.909Z", format),
+                    value: 50,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:45:29.909Z", format),
+                    value: 75,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:10:29.909Z", format),
+                    value: 50,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:30:29.909Z", format),
+                    value: 85,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:45:29.909Z", format),
+                    value: 55,
+                },
             ],
         },
     ];
@@ -190,40 +300,124 @@ function getDataBottom() {
             id: "www-http-egress",
             name: "World Wide Web HTTP",
             data: [
-                { timeStamp: moment("2016-12-25T11:45:29.909Z", format), value: 6 },
-                { timeStamp: moment("2016-12-25T12:10:29.909Z", format), value: 33 },
-                { timeStamp: moment("2016-12-25T12:50:29.909Z", format), value: 15 },
-                { timeStamp: moment("2016-12-25T13:15:29.909Z", format), value: 20 },
-                { timeStamp: moment("2016-12-25T13:40:29.909Z", format), value: 30 },
-                { timeStamp: moment("2016-12-25T13:55:29.909Z", format), value: 12 },
-                { timeStamp: moment("2016-12-25T14:20:29.909Z", format), value: 6 },
-                { timeStamp: moment("2016-12-25T14:40:29.909Z", format), value: 35 },
-                { timeStamp: moment("2016-12-25T15:00:29.909Z", format), value: 23 },
-                { timeStamp: moment("2016-12-25T15:25:29.909Z", format), value: 95 },
-                { timeStamp: moment("2016-12-25T15:45:29.909Z", format), value: 38 },
-                { timeStamp: moment("2016-12-25T16:10:29.909Z", format), value: 25 },
-                { timeStamp: moment("2016-12-25T16:30:29.909Z", format), value: 43 },
-                { timeStamp: moment("2016-12-25T16:45:29.909Z", format), value: 28 },
+                {
+                    timeStamp: moment("2016-12-25T11:45:29.909Z", format),
+                    value: 6,
+                },
+                {
+                    timeStamp: moment("2016-12-25T12:10:29.909Z", format),
+                    value: 33,
+                },
+                {
+                    timeStamp: moment("2016-12-25T12:50:29.909Z", format),
+                    value: 15,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:15:29.909Z", format),
+                    value: 20,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:40:29.909Z", format),
+                    value: 30,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:55:29.909Z", format),
+                    value: 12,
+                },
+                {
+                    timeStamp: moment("2016-12-25T14:20:29.909Z", format),
+                    value: 6,
+                },
+                {
+                    timeStamp: moment("2016-12-25T14:40:29.909Z", format),
+                    value: 35,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:00:29.909Z", format),
+                    value: 23,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:25:29.909Z", format),
+                    value: 95,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:45:29.909Z", format),
+                    value: 38,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:10:29.909Z", format),
+                    value: 25,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:30:29.909Z", format),
+                    value: 43,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:45:29.909Z", format),
+                    value: 28,
+                },
             ],
         },
         {
             id: "mssql-server-egress",
             name: "MSSQL-Server",
             data: [
-                { timeStamp: moment("2016-12-25T11:45:29.909Z", format), value: 12 },
-                { timeStamp: moment("2016-12-25T12:10:29.909Z", format), value: 65 },
-                { timeStamp: moment("2016-12-25T12:50:29.909Z", format), value: 30 },
-                { timeStamp: moment("2016-12-25T13:15:29.909Z", format), value: 40 },
-                { timeStamp: moment("2016-12-25T13:40:29.909Z", format), value: 60 },
-                { timeStamp: moment("2016-12-25T13:55:29.909Z", format), value: 23 },
-                { timeStamp: moment("2016-12-25T14:20:29.909Z", format), value: 12 },
-                { timeStamp: moment("2016-12-25T14:40:29.909Z", format), value: 250 },
-                { timeStamp: moment("2016-12-25T15:00:29.909Z", format), value: 45 },
-                { timeStamp: moment("2016-12-25T15:25:29.909Z", format), value: 50 },
-                { timeStamp: moment("2016-12-25T15:45:29.909Z", format), value: 75 },
-                { timeStamp: moment("2016-12-25T16:10:29.909Z", format), value: 50 },
-                { timeStamp: moment("2016-12-25T16:30:29.909Z", format), value: 85 },
-                { timeStamp: moment("2016-12-25T16:45:29.909Z", format), value: 55 },
+                {
+                    timeStamp: moment("2016-12-25T11:45:29.909Z", format),
+                    value: 12,
+                },
+                {
+                    timeStamp: moment("2016-12-25T12:10:29.909Z", format),
+                    value: 65,
+                },
+                {
+                    timeStamp: moment("2016-12-25T12:50:29.909Z", format),
+                    value: 30,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:15:29.909Z", format),
+                    value: 40,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:40:29.909Z", format),
+                    value: 60,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:55:29.909Z", format),
+                    value: 23,
+                },
+                {
+                    timeStamp: moment("2016-12-25T14:20:29.909Z", format),
+                    value: 12,
+                },
+                {
+                    timeStamp: moment("2016-12-25T14:40:29.909Z", format),
+                    value: 250,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:00:29.909Z", format),
+                    value: 45,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:25:29.909Z", format),
+                    value: 50,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:45:29.909Z", format),
+                    value: 75,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:10:29.909Z", format),
+                    value: 50,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:30:29.909Z", format),
+                    value: 85,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:45:29.909Z", format),
+                    value: 55,
+                },
             ],
         },
     ];

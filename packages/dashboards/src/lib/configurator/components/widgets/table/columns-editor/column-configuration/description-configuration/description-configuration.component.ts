@@ -1,4 +1,15 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    SimpleChanges,
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 import { IHasChangeDetector } from "../../../../../../../types";
@@ -9,7 +20,9 @@ import { IHasChangeDetector } from "../../../../../../../types";
     styleUrls: ["./description-configuration.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DescriptionConfigurationComponent implements OnInit, OnDestroy, OnChanges, IHasChangeDetector {
+export class DescriptionConfigurationComponent
+    implements OnInit, OnDestroy, OnChanges, IHasChangeDetector
+{
     static lateLoadKey = "DescriptionConfigurationComponent";
 
     @Input() label: string;
@@ -17,13 +30,17 @@ export class DescriptionConfigurationComponent implements OnInit, OnDestroy, OnC
     @Input() width: number;
     @Input() isWidthMessageDisplayed: boolean;
 
-    @Output() formReady: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
-    @Output() formDestroy: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
+    @Output() formReady: EventEmitter<FormGroup> =
+        new EventEmitter<FormGroup>();
+    @Output() formDestroy: EventEmitter<FormGroup> =
+        new EventEmitter<FormGroup>();
 
     public form: FormGroup;
 
-    constructor(private formBuilder: FormBuilder, public changeDetector: ChangeDetectorRef) {
-    }
+    constructor(
+        private formBuilder: FormBuilder,
+        public changeDetector: ChangeDetectorRef
+    ) {}
 
     ngOnInit(): void {
         this.form = this.formBuilder.group({

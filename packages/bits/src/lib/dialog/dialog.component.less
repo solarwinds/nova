@@ -111,7 +111,6 @@
                         max-height: @dialog-max-height;
                     }
                 }
-
             }
         }
     }
@@ -131,7 +130,8 @@
     // in case user has set 'useOverlay' option  to 'true'
     .nui-overlay-container {
         &.cdk-overlay-container {
-            .dialog-backdrop, .nui-dialog {
+            .dialog-backdrop,
+            .nui-dialog {
                 z-index: 1000;
             }
         }
@@ -150,9 +150,13 @@
     }
 
     // Dialog sizes
-    .nui-dialog .modal-dialog.dialog-sm { width: @dialog-sm; }
+    .nui-dialog .modal-dialog.dialog-sm {
+        width: @dialog-sm;
+    }
 }
 
 @media (min-width: @screen-md-min) {
-    .nui-dialog .modal-dialog.dialog-lg { width: @dialog-lg; }
+    .nui-dialog .modal-dialog.dialog-lg {
+        width: @dialog-lg;
+    }
 }

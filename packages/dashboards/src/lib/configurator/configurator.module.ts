@@ -4,6 +4,8 @@ import { PortalModule } from "@angular/cdk/portal";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
+import { GridsterModule } from "angular-gridster2";
+
 import {
     NuiBusyModule,
     NuiButtonModule,
@@ -30,14 +32,15 @@ import {
     NuiValidationMessageModule,
     NuiWizardModule,
 } from "@nova-ui/bits";
-import { GridsterModule } from "angular-gridster2";
 
 import { NuiDashboardsCommonModule } from "../common/common.module";
 import { TimeseriesChartPresetService } from "../components/timeseries-widget/timeseries-chart-preset.service";
 import { TimeseriesScalesService } from "../components/timeseries-widget/timeseries-scales.service";
 import { NuiPizzagnaModule } from "../pizzagna/pizzagna.module";
-import { ComponentRegistryService, IComponentWithLateLoadKey } from "../pizzagna/services/component-registry.service";
-
+import {
+    ComponentRegistryService,
+    IComponentWithLateLoadKey,
+} from "../pizzagna/services/component-registry.service";
 import { ColorPickerComponent } from "./components/color-picker/color-picker.component";
 import { ConfiguratorComponent } from "./components/configurator/configurator.component";
 import { DropAreaComponent } from "./components/drop-area/drop-area.component";
@@ -63,6 +66,8 @@ import { WidgetEditorComponent } from "./components/widget-editor/widget-editor.
 import { BackgroundColorRulesConfigurationComponent } from "./components/widgets/configurator-items/background-color-rules-configuration/background-color-rules-configuration.component";
 import { DataSourceConfigurationV2Component } from "./components/widgets/configurator-items/data-source-configuration-v2/data-source-configuration-v2.component";
 import { DataSourceConfigurationComponent } from "./components/widgets/configurator-items/data-source-configuration/data-source-configuration.component";
+import { DataSourceErrorComponent } from "./components/widgets/configurator-items/data-source-error/data-source-error.component";
+import { TableDataSourceErrorComponent } from "./components/widgets/configurator-items/data-source-error/table/table-data-source-error.component";
 import { EmbeddedContentConfigurationComponent } from "./components/widgets/configurator-items/embedded-content-configuration/embedded-content-configuration.component";
 import { InfoMessageConfigurationComponent } from "./components/widgets/configurator-items/info-message-configuration/info-message-configuration.component";
 import { KpiDescriptionConfigurationComponent } from "./components/widgets/configurator-items/kpi-description-configuration/kpi-description-configuration.component";
@@ -102,11 +107,9 @@ import { WidgetEditorAccordionFormStatePipe } from "./pipe/widget-editor-accordi
 import { FormHeaderIconPipePipe } from "./pipe/widget-editor-accordion-header-icon.pipe";
 import { ConfiguratorService } from "./services/configurator.service";
 import { KpiWidgetColorService } from "./services/kpi-widget-color.service";
+import { ConfiguratorHeadingService } from "./services/public-api";
 import { WidgetClonerService } from "./services/widget-cloner.service";
 import { WidgetEditorService } from "./services/widget-editor.service";
-import { DataSourceErrorComponent } from "./components/widgets/configurator-items/data-source-error/data-source-error.component";
-import { TableDataSourceErrorComponent } from "./components/widgets/configurator-items/data-source-error/table/table-data-source-error.component";
-import { ConfiguratorHeadingService } from "./services/public-api";
 /* eslint-enable max-len */
 
 const entryComponents: IComponentWithLateLoadKey[] = [
@@ -213,9 +216,7 @@ const exportedDeclarations = [
         NuiRepeatModule,
         NuiImageModule,
     ],
-    declarations: [
-        ...exportedDeclarations,
-    ],
+    declarations: [...exportedDeclarations],
     providers: [
         ConfiguratorService,
         ConfiguratorHeadingService,
@@ -230,11 +231,11 @@ const exportedDeclarations = [
     entryComponents: entryComponents,
 })
 export class NuiDashboardConfiguratorModule {
-
     constructor(componentRegistry: ComponentRegistryService) {
-        for (const ec of entryComponents.filter((c: IComponentWithLateLoadKey) => c.lateLoadKey)) {
+        for (const ec of entryComponents.filter(
+            (c: IComponentWithLateLoadKey) => c.lateLoadKey
+        )) {
             componentRegistry.registerByLateLoadKey(ec);
         }
     }
-
 }

@@ -1,13 +1,15 @@
 <div class="nui-timepicker">
     <div class="nui-timepicker__container" (click)="scrollToView()" #toggleRef>
-        <nui-textbox [disabled]="isDisabled"
-                    autocomplete="off"
-                    [class.nui-timepicker__input-disabled]="isDisabled"
-                    #date
-                    [isInErrorState]="isInErrorState"
-                    (textChange)="onInputActiveDateChanged($event)"
-                    (blurred)="updateInnerModel($event)"
-                    [ariaLabel]="ariaLabel">
+        <nui-textbox
+            [disabled]="isDisabled"
+            autocomplete="off"
+            [class.nui-timepicker__input-disabled]="isDisabled"
+            #date
+            [isInErrorState]="isInErrorState"
+            (textChange)="onInputActiveDateChanged($event)"
+            (blurred)="updateInnerModel($event)"
+            [ariaLabel]="ariaLabel"
+        >
         </nui-textbox>
         <nui-icon
             #menuTrigger
@@ -15,18 +17,24 @@
             icon="clock"
             tabindex="0"
             (click)="focusOnForm()"
-            [iconColor]="getIconColor()">
+            [iconColor]="getIconColor()"
+        >
         </nui-icon>
     </div>
 
     <div #popupArea></div>
 
-    <nui-overlay #overlay
-                 [toggleReference]="toggleRef"
-                 [overlayConfig]="overlayConfig"
-                 [customContainer]="customContainer">
-                 <nui-menu-popup #popup
-                     [itemsSource]="itemsSource" (menuItemClicked)="select($event)">
-                </nui-menu-popup>
+    <nui-overlay
+        #overlay
+        [toggleReference]="toggleRef"
+        [overlayConfig]="overlayConfig"
+        [customContainer]="customContainer"
+    >
+        <nui-menu-popup
+            #popup
+            [itemsSource]="itemsSource"
+            (menuItemClicked)="select($event)"
+        >
+        </nui-menu-popup>
     </nui-overlay>
 </div>

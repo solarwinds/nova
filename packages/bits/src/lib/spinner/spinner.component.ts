@@ -15,7 +15,6 @@ import {
 } from "@angular/core";
 
 import { LoggerService } from "../../services/log-service";
-
 import { ButtonIcon, SpinnerSize } from "./public-api";
 
 /**
@@ -29,26 +28,25 @@ import { ButtonIcon, SpinnerSize } from "./public-api";
     animations: [
         trigger("spinnerAppear", [
             transition(":enter", [
-                animate(".2s ease-in-out", style({opacity: 1})),
+                animate(".2s ease-in-out", style({ opacity: 1 })),
             ]),
             transition(":leave", [
-                animate(".2s ease-in-out", style({opacity: 0})),
+                animate(".2s ease-in-out", style({ opacity: 0 })),
             ]),
         ]),
     ],
     host: {
-        "role": "progressbar",
+        role: "progressbar",
         "aria-valuemin": "0",
         "aria-valuemax": "100",
         "[attr.aria-label]": "ariaLabel",
     },
 })
 export class SpinnerComponent implements OnChanges, OnDestroy {
-
     private static defaultSize: SpinnerSize = SpinnerSize.Small;
     private showTimer: any;
     private _size: SpinnerSize;
-    public tooltipText = $localize `Cancel`;
+    public tooltipText = $localize`Cancel`;
 
     public showSpinner = false;
     public isDeterminate = false;
@@ -69,7 +67,6 @@ export class SpinnerComponent implements OnChanges, OnDestroy {
 
     @Output() public cancel = new EventEmitter();
 
-
     @Input() public set size(val: SpinnerSize) {
         const sizes = Object.values(SpinnerSize);
 
@@ -80,7 +77,8 @@ export class SpinnerComponent implements OnChanges, OnDestroy {
 
         this.logger.warn(
             `Allowed sizes for nui-spinner are ${sizes.join(", ")}. ` +
-            `Default is ${SpinnerComponent.defaultSize}.`);
+                `Default is ${SpinnerComponent.defaultSize}.`
+        );
 
         this._size = SpinnerComponent.defaultSize;
     }
@@ -97,9 +95,11 @@ export class SpinnerComponent implements OnChanges, OnDestroy {
         return this.size !== SpinnerSize.Small;
     }
 
-    constructor(private logger: LoggerService,
+    constructor(
+        private logger: LoggerService,
         private changeDetector: ChangeDetectorRef,
-        private ngZone: NgZone) { }
+        private ngZone: NgZone
+    ) {}
 
     public ngOnChanges(changes: SimpleChanges) {
         if (changes?.percent) {

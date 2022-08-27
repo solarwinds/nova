@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from "@angular/core";
+
 import { ThemeSwitchService } from "@nova-ui/bits";
 
 @Component({

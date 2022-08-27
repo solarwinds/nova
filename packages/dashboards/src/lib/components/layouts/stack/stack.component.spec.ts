@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+
 import { EventBus } from "@nova-ui/bits";
 
 import { NuiDashboardsModule } from "../../../dashboards.module";
 import { DynamicComponentCreator } from "../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
 import { PIZZAGNA_EVENT_BUS } from "../../../types";
-
 import { StackComponent } from "./stack.component";
 
 describe("StackComponent", () => {
@@ -14,7 +14,7 @@ describe("StackComponent", () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [ NuiDashboardsModule ],
+            imports: [NuiDashboardsModule],
             providers: [
                 PizzagnaService,
                 DynamicComponentCreator,
@@ -23,8 +23,7 @@ describe("StackComponent", () => {
                     useClass: EventBus,
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -42,7 +41,9 @@ describe("StackComponent", () => {
             component.elementClass = "myElClass";
             expect(component.classNames).toBeUndefined();
             component.ngOnInit();
-            expect(component.classNames).toEqual(`${component.defaultClassNames} flex-${component.direction} ${component.elementClass}`);
+            expect(component.classNames).toEqual(
+                `${component.defaultClassNames} flex-${component.direction} ${component.elementClass}`
+            );
         });
     });
 });

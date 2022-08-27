@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
+
 import {
     DEMO_PATH_TOKEN,
     NuiButtonModule,
@@ -35,9 +36,9 @@ const routes = [
         path: "",
         component: ComboboxDocsComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.support,
-                "eolDate": new Date("2020-07-09"),
+            srlc: {
+                stage: SrlcStage.support,
+                eolDate: new Date("2020-07-09"),
             },
             showThemeSwitcher: true,
         },
@@ -50,8 +51,8 @@ const routes = [
         path: "combobox-visual-test",
         component: ComboboxVisualTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -59,8 +60,8 @@ const routes = [
         path: "basic",
         component: ComboboxBasicExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -98,12 +99,14 @@ const routes = [
     providers: [
         {
             provide: DEMO_PATH_TOKEN,
-            useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/),
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
         },
     ],
-    exports: [
-        RouterModule,
-    ],
+    exports: [RouterModule],
 })
-export class ComboboxModule {
-}
+export class ComboboxModule {}

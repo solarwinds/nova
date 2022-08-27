@@ -1,4 +1,10 @@
 {
+    "disableLifeCycleHooks": "true",
+    "disablePrivate": "true",
+    "disableProtected": "true",
+    "hideGenerator": "true",
+    "includes": "docs/production",
+    "includesName": "Examples",
     "navTabConfig": [
         {
             "id": "example",
@@ -13,12 +19,6 @@
             "label": "Source"
         }
     ],
-    "tsconfig": "tsconfig.lib.json",
     "output": "sdk/api-docs-ng2",
-    "includes": "docs/production",
-    "includesName": "Examples",
-    "hideGenerator": "true",
-    "disablePrivate": "true",
-    "disableProtected": "true",
-    "disableLifeCycleHooks": "true"
+    "tsconfig": "tsconfig.lib.json"
 }

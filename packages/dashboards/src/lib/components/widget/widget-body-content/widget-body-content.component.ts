@@ -1,4 +1,13 @@
-import { ChangeDetectorRef, Component, HostBinding, Input, OnChanges, OnDestroy, OnInit } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    Component,
+    HostBinding,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+} from "@angular/core";
+
 import { LoggerService } from "@nova-ui/bits";
 
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
@@ -9,7 +18,10 @@ import { BaseLayout } from "../../layouts/base-layout";
     selector: "nui-widget-body-content",
     templateUrl: "./widget-body-content.component.html",
 })
-export class WidgetBodyContentComponent extends BaseLayout implements OnChanges, OnInit, OnDestroy {
+export class WidgetBodyContentComponent
+    extends BaseLayout
+    implements OnChanges, OnInit, OnDestroy
+{
     public static lateLoadKey = "WidgetBodyContentComponent";
 
     /**
@@ -42,9 +54,11 @@ export class WidgetBodyContentComponent extends BaseLayout implements OnChanges,
 
     public readonly defaultClasses = "w-100";
 
-    constructor(changeDetector: ChangeDetectorRef,
-                pizzagnaService: PizzagnaService,
-                logger: LoggerService) {
+    constructor(
+        changeDetector: ChangeDetectorRef,
+        pizzagnaService: PizzagnaService,
+        logger: LoggerService
+    ) {
         super(changeDetector, pizzagnaService, logger);
     }
 
@@ -58,7 +72,9 @@ export class WidgetBodyContentComponent extends BaseLayout implements OnChanges,
 
     public getNodes(): string[] {
         if (this.fallbackKey) {
-            const fallbackContent = (this.fallbackMap && this.fallbackMap[this.fallbackKey]) || ErrorNodeKey.ErrorUnknown;
+            const fallbackContent =
+                (this.fallbackMap && this.fallbackMap[this.fallbackKey]) ||
+                ErrorNodeKey.ErrorUnknown;
             return [this.primaryContent, fallbackContent];
         }
         return [this.primaryContent];

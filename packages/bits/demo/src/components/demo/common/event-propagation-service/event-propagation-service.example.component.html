@@ -1,22 +1,28 @@
 <div class="nui-demo-event-propagation-service">
     <h2>Shouldn't propagate examples:</h2>
-    <nui-textbox value="Textbox"
-                 customBoxWidth="150px"
-                 (click)="handleClick($event)">
+    <nui-textbox
+        value="Textbox"
+        customBoxWidth="150px"
+        (click)="handleClick($event)"
+    >
     </nui-textbox>
-    <button nui-button
-            type="button"
-            (click)="handleClick($event)"
-            displayStyle="primary">Button
+    <button
+        nui-button
+        type="button"
+        (click)="handleClick($event)"
+        displayStyle="primary"
+    >
+        Button
     </button>
-    <nui-radio value="readonly"
-               [checked]="false"
-               (click)="handleClick($event)">Radio
+    <nui-radio value="readonly" [checked]="false" (click)="handleClick($event)"
+        >Radio
     </nui-radio>
 
-    <nui-checkbox value="example"
-                  [checked]="false"
-                  (click)="handleClick($event)">Checkbox
+    <nui-checkbox
+        value="example"
+        [checked]="false"
+        (click)="handleClick($event)"
+        >Checkbox
     </nui-checkbox>
     <a role="button" (click)="handleClick($event)">Link</a>
     <nui-divider></nui-divider>
@@ -30,7 +36,7 @@
 </div>
 
 <style>
-    .nui-demo-event-propagation-service{
+    .nui-demo-event-propagation-service {
         max-width: 260px;
     }
 </style>

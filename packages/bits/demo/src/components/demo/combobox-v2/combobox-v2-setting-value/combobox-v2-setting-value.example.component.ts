@@ -7,7 +7,9 @@ import { FormControl } from "@angular/forms";
     host: { class: "combobox-container" },
 })
 export class ComboboxV2SettingValueExampleComponent implements OnInit {
-    public items = Array.from({ length : 50 }).map((_, i) => $localize `Item ${i}`);
+    public items = Array.from({ length: 50 }).map(
+        (_, i) => $localize`Item ${i}`
+    );
     public comboboxControl: FormControl = new FormControl();
 
     ngOnInit(): void {

@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-panel-hoverable-example",
     templateUrl: "./panel-hoverable.example.component.html",
 })
-
 export class PanelHoverableExampleComponent {}

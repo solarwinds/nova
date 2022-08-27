@@ -1,7 +1,8 @@
-import { Atom, Camera } from "@nova-ui/bits/sdk/atoms";
-import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
 import { browser } from "protractor";
 import { by, element } from "protractor";
+
+import { Atom, Camera } from "@nova-ui/bits/sdk/atoms";
+import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
 
 import { ConfiguratorAtom } from "./configurator/configurator.atom";
 import { TestPage } from "./test.po";
@@ -15,7 +16,10 @@ describe(`Visual tests: Dashboards - ${name}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("test/table");
-        configurator = Atom.findIn(ConfiguratorAtom, element(by.className(ConfiguratorAtom.CSS_CLASS)));
+        configurator = Atom.findIn(
+            ConfiguratorAtom,
+            element(by.className(ConfiguratorAtom.CSS_CLASS))
+        );
 
         camera = new Camera().loadFilm(browser, name);
     });
@@ -28,16 +32,23 @@ describe(`Visual tests: Dashboards - ${name}`, () => {
         await page.enableEditMode();
         await page.editWidget(`Table Widget!`);
 
-        const accordion = await configurator?.getAccordion("Column 1", "Description");
+        const accordion = await configurator?.getAccordion(
+            "Column 1",
+            "Description"
+        );
         await accordion?.toggle();
-        const widthInput = accordion?.getTextBoxNumberInput("description-configuration__accordion-content__width-input");
+        const widthInput = accordion?.getTextBoxNumberInput(
+            "description-configuration__accordion-content__width-input"
+        );
         await widthInput?.clearText();
         await widthInput?.acceptText("70");
         await camera.say.cheese(`${name} - Column width update in preview`);
 
         await configurator.wizard.finish();
         await page.disableEditMode();
-        await camera.say.cheese(`${name} - Column width update after configurator submit`);
+        await camera.say.cheese(
+            `${name} - Column width update after configurator submit`
+        );
 
         await camera.turn.off();
     }, 100000);

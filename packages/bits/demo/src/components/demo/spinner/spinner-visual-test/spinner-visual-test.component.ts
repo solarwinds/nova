@@ -14,5 +14,4 @@ export class SpinnerVisualTestComponent {
         this.showWithCancel = false;
         this.isCanceled = true;
     }
-
 }

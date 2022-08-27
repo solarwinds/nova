@@ -16,11 +16,23 @@ describe(`Visual tests: ${name}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("time-picker/time-picker-visual-test");
-        basicTimepicker = Atom.find(TimepickerAtom, "nui-visual-test-timepicker-basic");
-        customFormatTimepicker = Atom.find(TimepickerAtom, "nui-visual-test-custom-format-timepicker");
-        customStepTimepicker = Atom.find(TimepickerAtom, "nui-visual-test-custom-step-timepicker");
-        requiredTimepicker = Atom.find(TimepickerAtom, "nui-visual-test-required-timepicker");
-        
+        basicTimepicker = Atom.find(
+            TimepickerAtom,
+            "nui-visual-test-timepicker-basic"
+        );
+        customFormatTimepicker = Atom.find(
+            TimepickerAtom,
+            "nui-visual-test-custom-format-timepicker"
+        );
+        customStepTimepicker = Atom.find(
+            TimepickerAtom,
+            "nui-visual-test-custom-step-timepicker"
+        );
+        requiredTimepicker = Atom.find(
+            TimepickerAtom,
+            "nui-visual-test-required-timepicker"
+        );
+
         camera = new Camera().loadFilm(browser, name);
     });
 
@@ -31,7 +43,9 @@ describe(`Visual tests: ${name}`, () => {
 
         await customStepTimepicker.toggle();
         await basicTimepicker.textbox.hover();
-        await camera.say.cheese("Timepicker with custom step is toggled and Basic Timepicker is hovered");
+        await camera.say.cheese(
+            "Timepicker with custom step is toggled and Basic Timepicker is hovered"
+        );
 
         await customFormatTimepicker.toggle();
         await camera.say.cheese("Timepicker with custom format is toggled");
@@ -43,15 +57,23 @@ describe(`Visual tests: ${name}`, () => {
         await basicTimepicker.toggle();
         await basicTimepicker.menuPopup.clickItemByText("2");
         await basicTimepicker.toggle();
-        await basicTimepicker.menuPopup.hover(basicTimepicker.menuPopup.getSelectedItem());
-        await camera.say.cheese("Selected menuitem in Basic Timepicker is focused");
+        await basicTimepicker.menuPopup.hover(
+            basicTimepicker.menuPopup.getSelectedItem()
+        );
+        await camera.say.cheese(
+            "Selected menuitem in Basic Timepicker is focused"
+        );
 
         await Helpers.switchDarkTheme("on");
         await camera.say.cheese("Dark theme");
         await Helpers.switchDarkTheme("off");
 
-        await basicTimepicker.menuPopup.hover(basicTimepicker.menuPopup.getItemByIndex(2));
-        await camera.say.cheese("Unelected menuitem in Basic Timepicker is focused");
+        await basicTimepicker.menuPopup.hover(
+            basicTimepicker.menuPopup.getItemByIndex(2)
+        );
+        await camera.say.cheese(
+            "Unelected menuitem in Basic Timepicker is focused"
+        );
 
         await Helpers.switchDarkTheme("on");
         await camera.say.cheese(`Dark theme with focus`);

@@ -1,4 +1,5 @@
 import { Component, Inject, Input, Optional } from "@angular/core";
+
 import { RepeatComponent } from "@nova-ui/bits";
 
 export enum SchematicsDocsComponentType {
@@ -18,19 +19,16 @@ export class SchematicsDocsCliOptionComponent {
     public fetch = `fetchURI = "\${this.url\}/?page=\${end / (end - start)}&results=\${end - start}"`;
 
     public dataSourceSetup = {
-        extendDS:
-            `@Injectable()
+        extendDS: `@Injectable()
 export class RandomuserTableDataSource extends DataSourceService<ITableModel> {
     constructor(private searchService: SearchService) {
         super();
     }
 }`,
-        defineFields:
-            `private readonly url = "https://yourserver.com/api";
+        defineFields: `private readonly url = "https://yourserver.com/api";
 private cache = Array.from<ITableModel>({ length: 0 });
 public busy = new BehaviorSubject(false);`,
-        getData:
-            `public async getData(start: number = 0, end: number= 20): Promise<INovaFilteringOutputs> {
+        getData: `public async getData(start: number = 0, end: number= 20): Promise<INovaFilteringOutputs> {
     let response: IRandomuserResponse = null;
     try {
         response = await
@@ -56,8 +54,7 @@ public busy = new BehaviorSubject(false);`,
         console.error("Error responding from server. Please visit https://https://randomuser.me/ to see if it's available");
     }
 }`,
-        getFilteredData:
-            `public async getFilteredData(filters: INovaFilters): Promise<INovaFilteringOutputs> {
+        getFilteredData: `public async getFilteredData(filters: INovaFilters): Promise<INovaFilteringOutputs> {
     this.busy.next(true);
     const virtualScrollFilter = filters.virtualScroll && filters.virtualScroll.value;
     const start = virtualScrollFilter ? filters.virtualScroll.value.start : 0;
@@ -81,8 +78,7 @@ public busy = new BehaviorSubject(false);`,
     };
 
     public tableScrollingSetup = {
-        vars:
-            `
+        vars: `
 // will store the table data received from the server
 public totalItems: number = 0;
 public isBusy: boolean = false;
@@ -104,40 +100,33 @@ public displayedColumns = ["name", "location", "status"];
 private dataSource: TableWithVirtualScrollDataSource;
 `,
         viewportManagerImport: `import { VirtualViewportManager } from "@nova-ui/bits";`,
-        viewChildren:
-            `
+        viewChildren: `
 @ViewChild(CdkVirtualScrollViewport, { static: false }) viewport: CdkVirtualScrollViewport;
 `,
-        provideViewport:
-            `
+        provideViewport: `
 @Component({
     //
     providers: [VirtualViewportManager]
 })
 `,
-        injectViewport:
-            `
+        injectViewport: `
 constructor(private viewportManager: VirtualViewportManager) {}
 `,
-        oninitSubscribeBusy:
-            `
+        oninitSubscribeBusy: `
 ngOnInit(): void {
     this.dataSource.busy.subscribe(busy => {
         this._isBusy = busy;
     });
 }`,
-        registerScroll:
-            `private registerVirtualScroll() {
+        registerScroll: `private registerVirtualScroll() {
     this.dataSource.registerComponent({
         virtualScroll: { componentInstance: this.viewportManager },
     });
  }`,
-        ngAfterViewInitStart:
-            `ngAfterViewInit(): void {
+        ngAfterViewInitStart: `ngAfterViewInit(): void {
     this.registerVirtualScroll();
 }`,
-        ngAfterViewInitViewport:
-            `this.viewportManager
+        ngAfterViewInitViewport: `this.viewportManager
     // Note: Initializing viewportManager with the repeat's CDK Viewport Ref
     .setViewport(this.viewport)
     // Note: Initializing the stream with the desired page size, based on which
@@ -159,11 +148,12 @@ ngOnInit(): void {
     takeUntil(this.onDestroy$)
 ).subscribe();
         `,
-
     };
 
     public constructor(
-        @Optional() @Inject(SchematicsDocsComponentType) public forComponent?: SchematicsDocsComponentType
+        @Optional()
+        @Inject(SchematicsDocsComponentType)
+        public forComponent?: SchematicsDocsComponentType
     ) {}
 
     public getRepeatPropKey(key: keyof RepeatComponent): string {

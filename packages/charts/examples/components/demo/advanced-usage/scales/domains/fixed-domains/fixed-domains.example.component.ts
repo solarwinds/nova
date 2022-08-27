@@ -1,8 +1,19 @@
 import { Component, OnInit } from "@angular/core";
-import {
-    Chart, IChartSeries, ILineAccessors, IScale, LineAccessors, LinearScale, LineRenderer, Scales, TimeScale, XYGrid, XYGridConfig,
-} from "@nova-ui/charts";
 import moment from "moment/moment";
+
+import {
+    Chart,
+    IChartSeries,
+    ILineAccessors,
+    IScale,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    Scales,
+    TimeScale,
+    XYGrid,
+    XYGridConfig,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-chart-fixed-domains-example",
@@ -29,7 +40,7 @@ export class FixedDomainsExampleComponent implements OnInit {
         gridConfig.axis.bottom.fit = true;
         this.chart = new Chart(new XYGrid(gridConfig));
 
-        this.seriesSet = getData(this.format).map(d => ({
+        this.seriesSet = getData(this.format).map((d) => ({
             ...d,
             scales,
             accessors: new LineAccessors(),
@@ -41,8 +52,14 @@ export class FixedDomainsExampleComponent implements OnInit {
     }
 
     public fixXDomain() {
-        const startDatetime = moment("2016-12-29T06:00:00.000Z", this.format).toDate();
-        const endDatetime = moment("2017-01-04T06:00:00.000Z", this.format).toDate();
+        const startDatetime = moment(
+            "2016-12-29T06:00:00.000Z",
+            this.format
+        ).toDate();
+        const endDatetime = moment(
+            "2017-01-04T06:00:00.000Z",
+            this.format
+        ).toDate();
 
         this.xScale.fixDomain([startDatetime, endDatetime]);
         this.chart.update(this.seriesSet);

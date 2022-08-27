@@ -16,14 +16,14 @@
             top: 8px;
             left: 8px;
             z-index: 1;
-            transform: scale(0.75,0.75) translate(-2.5px,-2.5px);
+            transform: scale(0.75, 0.75) translate(-2.5px, -2.5px);
         }
         &__grand-child {
             position: absolute;
             top: 14px;
             left: 14px;
             z-index: 2;
-            transform:  scale(0.5,0.5) translate(-9.5px,-9.5px);
+            transform: scale(0.5, 0.5) translate(-9.5px, -9.5px);
         }
     }
 }
@@ -70,52 +70,66 @@
 
     // Supported colors for icon recoloring
     // white
-    &.white-icon.stroked svg *, &.white-hover-icon.stroked:hover svg * {
+    &.white-icon.stroked svg *,
+    &.white-hover-icon.stroked:hover svg * {
         .setCssVariable(stroke, nui-color-bg-light);
     }
-    &.white-icon.filled svg *, &.white-hover-icon.filled:hover svg * {
+    &.white-icon.filled svg *,
+    &.white-hover-icon.filled:hover svg * {
         .setCssVariable(fill, nui-color-bg-light);
     }
     // gray
-    &.gray-icon.stroked svg *, &.gray-hover-icon.stroked:hover svg * {
+    &.gray-icon.stroked svg *,
+    &.gray-hover-icon.stroked:hover svg * {
         .setCssVariable(stroke, nui-color-icon-default);
     }
-    &.gray-icon.filled svg *, &.gray-hover-icon.filled:hover svg * {
+    &.gray-icon.filled svg *,
+    &.gray-hover-icon.filled:hover svg * {
         .setCssVariable(fill, nui-color-icon-default);
     }
     // black
-    &.primary-black-icon.stroked svg *, &.primary-black-hover-icon.stroked:hover svg * {
+    &.primary-black-icon.stroked svg *,
+    &.primary-black-hover-icon.stroked:hover svg * {
         .setCssVariable(stroke, nui-color-icon-highlight-default);
     }
-    &.black-icon.filled svg *, &.black-hover-icon.filled:hover svg * {
+    &.black-icon.filled svg *,
+    &.black-hover-icon.filled:hover svg * {
         .setCssVariable(fill, nui-color-icon-highlight-default);
     }
     // primary-blue
-    &.primary-blue-icon.stroked svg *, &.primary-blue-hover-icon.stroked:hover svg * {
+    &.primary-blue-icon.stroked svg *,
+    &.primary-blue-hover-icon.stroked:hover svg * {
         .setCssVariable(stroke, nui-color-icon-active);
     }
-    &.primary-blue-icon.filled svg *, &.primary-blue-hover-icon.filled:hover svg * {
+    &.primary-blue-icon.filled svg *,
+    &.primary-blue-hover-icon.filled:hover svg * {
         .setCssVariable(fill, nui-color-icon-active);
     }
     // orange
-    &.orange-icon.filled svg *, &.orange-hover-icon.filled:hover svg * {
+    &.orange-icon.filled svg *,
+    &.orange-hover-icon.filled:hover svg * {
         .setCssVariable(fill, nui-color-icon-highlight-platform_bar);
     }
-    &.orange-icon.stroked svg *, &.orange-hover-icon.stroked:hover svg * {
+    &.orange-icon.stroked svg *,
+    &.orange-hover-icon.stroked:hover svg * {
         .setCssVariable(stroke, nui-color-icon-highlight-platform_bar);
     }
     // red
-    &.red-icon.filled svg *, &.red-hover-icon.filled:hover svg * {
+    &.red-icon.filled svg *,
+    &.red-hover-icon.filled:hover svg * {
         .setCssVariable(fill, nui-color-icon-critical);
     }
-    &.red-icon.stroked svg *, &.red-hover-icon.stroked:hover svg * {
+    &.red-icon.stroked svg *,
+    &.red-hover-icon.stroked:hover svg * {
         .setCssVariable(stroke, nui-color-icon-critical);
     }
     // disabled-gray
-    &.disabled-gray-icon.filled svg *, &.red-hover-icon.filled:hover svg * {
+    &.disabled-gray-icon.filled svg *,
+    &.red-hover-icon.filled:hover svg * {
         .setCssVariable(fill, nui-color-icon-disabled);
     }
-    &.disabled-gray-icon.stroked svg *, &.red-hover-icon.stroked:hover svg * {
+    &.disabled-gray-icon.stroked svg *,
+    &.red-hover-icon.stroked:hover svg * {
         .setCssVariable(stroke, nui-color-icon-disabled);
     }
 
@@ -132,7 +146,7 @@
         border-radius: 50%;
         content: attr(counter);
         background: @nui-color-active no-repeat;
-        background: var(--nui-color-active,@nui-color-active) no-repeat;
+        background: var(--nui-color-active, @nui-color-active) no-repeat;
     }
 
     &::after {
@@ -148,16 +162,17 @@
         height: @icon-size-small;
         background-size: @icon-size-small;
         line-height: @icon-size-small;
-        font-size: (@icon-size-default/2);
+        font-size: (@icon-size-default / 2);
     }
 
-    &[status]:not([status=""]), &[counter]:not([counter=""]) {
+    &[status]:not([status=""]),
+    &[counter]:not([counter=""]) {
         margin-right: @nui-space-sm;
 
         &::after {
             position: absolute;
-            top: (@icon-size-default/2);
-            left: (@icon-size-default/2);
+            top: (@icon-size-default / 2);
+            left: (@icon-size-default / 2);
         }
     }
 
@@ -172,13 +187,14 @@
             height: @icon-size-small;
             background-size: @icon-size-small;
             line-height: @icon-size-small;
-            font-size: (@icon-size-default/2);
+            font-size: (@icon-size-default / 2);
         }
 
-        &[status]:not([status=""])::after, &[counter]:not([counter=""])::after {
+        &[status]:not([status=""])::after,
+        &[counter]:not([counter=""])::after {
             position: absolute;
-            top: (@icon-size-small/2);
-            left: (@icon-size-small/2);
+            top: (@icon-size-small / 2);
+            left: (@icon-size-small / 2);
         }
     }
 
@@ -193,13 +209,14 @@
             height: @icon-size-medium;
             background-size: @icon-size-medium;
             line-height: @icon-size-medium;
-            font-size: @icon-size-default/2;
+            font-size: @icon-size-default / 2;
         }
 
-        &[status]:not([status=""])::after, &[counter]:not([counter=""])::after {
+        &[status]:not([status=""])::after,
+        &[counter]:not([counter=""])::after {
             position: absolute;
-            top: (@icon-size-medium/2);
-            left: (@icon-size-medium/2);
+            top: (@icon-size-medium / 2);
+            left: (@icon-size-medium / 2);
         }
     }
 

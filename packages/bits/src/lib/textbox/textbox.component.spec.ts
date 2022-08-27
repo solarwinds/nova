@@ -5,7 +5,6 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { NuiFormFieldModule } from "../../nui-api";
 import { SpinnerComponent } from "../spinner/spinner.component";
-
 import { TextboxComponent } from "./textbox.component";
 
 @Component({
@@ -18,29 +17,23 @@ import { TextboxComponent } from "./textbox.component";
     `,
 })
 class TextboxFormComponent {
-
     @ViewChild(TextboxComponent) input: TextboxComponent;
 
     public form = this.fb.group({
         input: this.fb.control(""),
     });
 
-    constructor(private fb: FormBuilder) {
-    }
+    constructor(private fb: FormBuilder) {}
 }
 
 describe("components >", () => {
     describe("textbox >", () => {
-
         let fixture: ComponentFixture<TextboxComponent>;
         let testComponent: TextboxComponent;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [
-                    TextboxComponent,
-                    SpinnerComponent,
-                ],
+                declarations: [TextboxComponent, SpinnerComponent],
             }).compileComponents();
 
             fixture = TestBed.createComponent(TextboxComponent);
@@ -51,10 +44,14 @@ describe("components >", () => {
 
         describe("general > ", () => {
             it("should set focus on textbox programmatically", () => {
-                expect(testComponent.textboxInput.nativeElement).not.toBe(document.activeElement);
+                expect(testComponent.textboxInput.nativeElement).not.toBe(
+                    document.activeElement
+                );
 
                 testComponent.focus();
-                expect(testComponent.textboxInput.nativeElement).toBe(document.activeElement);
+                expect(testComponent.textboxInput.nativeElement).toBe(
+                    document.activeElement
+                );
             });
         });
     });
@@ -62,7 +59,6 @@ describe("components >", () => {
 
 describe("components >", () => {
     describe("textbox >", () => {
-
         let fixture: ComponentFixture<TextboxFormComponent>;
         let testComponent: TextboxFormComponent;
 
@@ -90,8 +86,11 @@ describe("components >", () => {
         describe("reactive form > ", () => {
             it("shouldn't emit valueChanges on blur", () => {
                 const callback = () => {};
-                const spy = jasmine.createSpy("valueChangesSpy", callback).and.callThrough();
-                const textbox = testComponent.input.textboxInput.nativeElement as HTMLInputElement;
+                const spy = jasmine
+                    .createSpy("valueChangesSpy", callback)
+                    .and.callThrough();
+                const textbox = testComponent.input.textboxInput
+                    .nativeElement as HTMLInputElement;
 
                 testComponent.form.valueChanges.subscribe(spy);
 

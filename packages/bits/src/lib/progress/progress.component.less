@@ -12,9 +12,9 @@
     &__header {
         text-align: center;
 
-        &--stacked{
+        &--stacked {
             text-align: left;
-        };
+        }
     }
 
     &__bar {
@@ -53,19 +53,32 @@
                 }
 
                 &:before {
-                    animation: progress-bar-ripple 1.2s ease-in-out 200ms infinite;
+                    animation: progress-bar-ripple 1.2s ease-in-out 200ms
+                        infinite;
                 }
 
                 &:after {
-                    animation: progress-bar-ripple 1.2s ease-in-out 400ms infinite;
+                    animation: progress-bar-ripple 1.2s ease-in-out 400ms
+                        infinite;
                 }
             }
 
             @keyframes progress-bar-ripple {
-                0% { transform: scale(0, 1); opacity: 0.8; }
-                30% { opacity: 0.3; }
-                50% { transform: scale(200, 1); opacity: 0; }
-                100% { transform: scale(200, 1); opacity: 0; }
+                0% {
+                    transform: scale(0, 1);
+                    opacity: 0.8;
+                }
+                30% {
+                    opacity: 0.3;
+                }
+                50% {
+                    transform: scale(200, 1);
+                    opacity: 0;
+                }
+                100% {
+                    transform: scale(200, 1);
+                    opacity: 0;
+                }
             }
         }
     }
@@ -103,7 +116,7 @@
             animation-name: indeterminate-progress;
             animation-duration: 1.6s;
             animation-iteration-count: infinite;
-            animation-timing-function: cubic-bezier(.30,.5,.30,.90);
+            animation-timing-function: cubic-bezier(0.3, 0.5, 0.3, 0.9);
         }
 
         @keyframes indeterminate-progress {

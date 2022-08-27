@@ -5,7 +5,6 @@ import moment, { Moment } from "moment/moment";
     selector: "nui-date-time-picker-disabled-example",
     templateUrl: "./date-time-picker-disabled.example.component.html",
 })
-
 export class DateTimePickerDisabledExampleComponent {
     public dt: Moment;
     public selectedDate: Date;

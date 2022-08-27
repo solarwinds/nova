@@ -1,7 +1,18 @@
 import { Component, OnInit } from "@angular/core";
+
 import {
-    barAccessors, barGrid, BarHighlightStrategy, BarRenderer, barScales,
-    Chart, ChartAssist, IBarAccessors, IBarChartConfig, IChart, IChartSeries, XYGridConfig,
+    barAccessors,
+    barGrid,
+    BarHighlightStrategy,
+    BarRenderer,
+    barScales,
+    Chart,
+    ChartAssist,
+    IBarAccessors,
+    IBarChartConfig,
+    IChart,
+    IChartSeries,
+    XYGridConfig,
 } from "@nova-ui/charts";
 
 @Component({
@@ -14,16 +25,18 @@ export class BarChartTickLabelMaxWidthTestComponent implements OnInit {
     public ngOnInit() {
         const config: IBarChartConfig = { horizontal: true };
         const accessors = barAccessors(config);
-        const renderer = new BarRenderer({ highlightStrategy: new BarHighlightStrategy("y") });
+        const renderer = new BarRenderer({
+            highlightStrategy: new BarHighlightStrategy("y"),
+        });
         const scales = barScales(config);
-        
+
         this.chart = new Chart(barGrid(config));
         this.chartAssist = new ChartAssist(this.chart);
 
         const gridConfig = this.chart.getGrid().config() as XYGridConfig;
         gridConfig.axis.left.tickLabel.maxWidth = 100;
 
-        const seriesSet: IChartSeries<IBarAccessors>[] = getData().map(d => ({
+        const seriesSet: IChartSeries<IBarAccessors>[] = getData().map((d) => ({
             ...d,
             accessors,
             renderer,

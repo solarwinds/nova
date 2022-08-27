@@ -7,9 +7,11 @@
     display: flex;
     margin-top: 15px;
     .setCssVariable(background-color, nui-color-bg-light);
-    padding: @nui-space-md @nui-space-md (@nui-space-md - @nui-space-xs) @nui-space-md;
+    padding: @nui-space-md @nui-space-md (@nui-space-md - @nui-space-xs)
+        @nui-space-md;
 
-    nui-chip, .nui-chips__group-name {
+    nui-chip,
+    .nui-chips__group-name {
         margin-bottom: @nui-space-xs;
     }
 
@@ -45,7 +47,9 @@
         white-space: nowrap;
     }
 
-    &__group-name, &__group-values, &__clear {
+    &__group-name,
+    &__group-values,
+    &__clear {
         display: inline-block;
         font-size: @nui-font-size-small;
         line-height: @nui-line-height-default;
@@ -109,7 +113,8 @@
     &__vertical {
         padding: 0;
         flex-wrap: wrap;
-        nui-chip, .nui-chips__group-name {
+        nui-chip,
+        .nui-chips__group-name {
             margin-bottom: 0;
         }
         .group-last .nui-chip__value {
@@ -125,12 +130,14 @@
                 nui-chip {
                     &:first-of-type {
                         .nui-chip__value {
-                            border-radius: @nui-radius-default @nui-radius-default 0 0;
+                            border-radius: @nui-radius-default
+                                @nui-radius-default 0 0;
                         }
                     }
                     &:last-of-type {
                         .nui-chip__value {
-                            border-radius: 0 0 @nui-radius-default @nui-radius-default;
+                            border-radius: 0 0 @nui-radius-default
+                                @nui-radius-default;
                         }
                     }
                     &:only-of-type {
@@ -165,7 +172,8 @@
                     nui-chip {
                         &:last-of-type {
                             .nui-chip__value {
-                                border-radius: 0 0 @nui-radius-default @nui-radius-default;
+                                border-radius: 0 0 @nui-radius-default
+                                    @nui-radius-default;
                             }
                         }
                     }

@@ -1,4 +1,9 @@
-import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+    AbstractControl,
+    FormBuilder,
+    FormGroup,
+    Validators,
+} from "@angular/forms";
 
 import { thresholdsValidator } from "./thresholds-validator";
 
@@ -125,5 +130,4 @@ describe("thresholdsValidator > ", () => {
 
         expect(thresholdsValidator(form)).toEqual(null);
     });
-
 });

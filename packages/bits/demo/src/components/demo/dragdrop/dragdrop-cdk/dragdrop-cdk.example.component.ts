@@ -5,5 +5,4 @@ import { Component } from "@angular/core";
     templateUrl: "./dragdrop-cdk.example.component.html",
     styleUrls: ["./dragdrop-cdk.example.component.less"],
 })
-export class DragdropCdkExampleComponent {
-}
+export class DragdropCdkExampleComponent {}

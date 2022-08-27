@@ -4,19 +4,19 @@ import { By } from "@angular/platform-browser";
 import _noop from "lodash/noop";
 
 import { UtilService } from "../../../services/util.service";
-
 import { DragAndDropService } from "./drag-and-drop.service";
 import { DraggableDirective } from "./draggable.directive";
 
 @Component({
-    template: `<div nuiDraggable
-                    id="test-draggable"
-                    [payload]="draggableString"
-                    [adornerDragClass]="'demoDragClass'"
-                    (dragStart)="onDragStart($event)"
-                    (dragEnd)="onDragEnd()"></div>`,
+    template: `<div
+        nuiDraggable
+        id="test-draggable"
+        [payload]="draggableString"
+        [adornerDragClass]="'demoDragClass'"
+        (dragStart)="onDragStart($event)"
+        (dragEnd)="onDragEnd()"
+    ></div>`,
 })
-
 class DraggableTestingComponent {
     public draggableString = "this is a string";
     public onDragStart(event: DragEvent) {
@@ -31,18 +31,24 @@ class DraggableTestingComponent {
 describe("directives >", () => {
     describe("draggable >", () => {
         type DragEventType = "drag" | "dragstart" | "dragend" | "dragover";
-        const dragAndDropServiceMock = jasmine.createSpyObj("DragAndDropService", [
-            "onDragStateChanged",
-            "setDragPayload",
-            "getDragPayload",
-            "resetPayload",
-        ]);
+        const dragAndDropServiceMock = jasmine.createSpyObj(
+            "DragAndDropService",
+            [
+                "onDragStateChanged",
+                "setDragPayload",
+                "getDragPayload",
+                "resetPayload",
+            ]
+        );
         let component: DraggableTestingComponent;
         let fixture: ComponentFixture<DraggableTestingComponent>;
         let draggableElement: DebugElement;
         let draggableDirective: DraggableDirective;
 
-        const emitEvent = (eventType: DragEventType, element: HTMLElement | Document) => {
+        const emitEvent = (
+            eventType: DragEventType,
+            element: HTMLElement | Document
+        ) => {
             const event = new DragEvent(eventType, {
                 dataTransfer: new DataTransfer(),
             });
@@ -53,7 +59,10 @@ describe("directives >", () => {
             TestBed.configureTestingModule({
                 declarations: [DraggableDirective, DraggableTestingComponent],
                 providers: [
-                    { provide: DragAndDropService, useValue: dragAndDropServiceMock },
+                    {
+                        provide: DragAndDropService,
+                        useValue: dragAndDropServiceMock,
+                    },
                     UtilService,
                     { provide: "windowObject", useValue: window },
                 ],
@@ -62,8 +71,12 @@ describe("directives >", () => {
             fixture = TestBed.createComponent(DraggableTestingComponent);
             fixture.autoDetectChanges(true);
             component = fixture.componentInstance;
-            draggableElement = fixture.debugElement.query(By.directive(DraggableDirective));
-            draggableDirective = draggableElement.injector.get(DraggableDirective) as DraggableDirective;
+            draggableElement = fixture.debugElement.query(
+                By.directive(DraggableDirective)
+            );
+            draggableDirective = draggableElement.injector.get(
+                DraggableDirective
+            ) as DraggableDirective;
         });
 
         afterEach(() => {
@@ -71,11 +84,17 @@ describe("directives >", () => {
         });
 
         it("should set draggable attribute to a draggable element", () => {
-            expect(draggableElement.nativeElement.hasAttribute("draggable")).toBeTruthy();
+            expect(
+                draggableElement.nativeElement.hasAttribute("draggable")
+            ).toBeTruthy();
         });
 
         it("should set draggable decoration class", () => {
-            expect(draggableElement.nativeElement.classList.contains("nui-drag__draggable") !== -1).toBeTruthy();
+            expect(
+                draggableElement.nativeElement.classList.contains(
+                    "nui-drag__draggable"
+                ) !== -1
+            ).toBeTruthy();
         });
 
         it("should trigger emission of dragstart event", () => {
@@ -102,11 +121,18 @@ describe("directives >", () => {
 
         it("should create overlay of draggable element", async () => {
             emitEvent("dragstart", draggableElement.nativeElement);
-            expect(draggableDirective["dragsourceOverlay"]?.classList.contains("nui-drag__drag-source--overlay"))
-                .toBeTruthy();
+            expect(
+                draggableDirective["dragsourceOverlay"]?.classList.contains(
+                    "nui-drag__drag-source--overlay"
+                )
+            ).toBeTruthy();
             await fixture.whenStable().then(() => {
                 const firstChild = draggableElement.nativeElement.firstChild;
-                expect(firstChild.classList.contains("nui-drag__drag-source--overlay")).toBeTruthy();
+                expect(
+                    firstChild.classList.contains(
+                        "nui-drag__drag-source--overlay"
+                    )
+                ).toBeTruthy();
             });
         });
 
@@ -119,7 +145,9 @@ describe("directives >", () => {
             emitEvent("dragstart", draggableElement.nativeElement);
             const haloChild = draggableDirective["adorner"]?.firstElementChild;
             expect(haloChild).not.toBeUndefined();
-            expect(haloChild?.classList.contains("nui-drag__drag-halo")).toBeTruthy();
+            expect(
+                haloChild?.classList.contains("nui-drag__drag-halo")
+            ).toBeTruthy();
         });
 
         it("should add draggable element to adorner", () => {
@@ -131,18 +159,23 @@ describe("directives >", () => {
 
         it("should remove overlay on dragend", () => {
             emitEvent("dragstart", draggableElement.nativeElement);
-            expect(draggableDirective["dragsourceOverlay"]?.classList.contains("nui-drag__drag-source--overlay"))
-                .toBeTruthy();
+            expect(
+                draggableDirective["dragsourceOverlay"]?.classList.contains(
+                    "nui-drag__drag-source--overlay"
+                )
+            ).toBeTruthy();
             emitEvent("dragend", draggableElement.nativeElement);
             expect(draggableDirective["dragsourceOverlay"]).toBeUndefined();
         });
 
-        it("should autoscroll on drag over", async() => {
+        it("should autoscroll on drag over", async () => {
             spyOn<any>(draggableDirective, "moveDragAdorner");
             emitEvent("dragstart", draggableElement.nativeElement);
             emitEvent("dragover", document);
             await fixture.whenStable().then(() => {
-                expect(draggableDirective["moveDragAdorner"]).toHaveBeenCalled();
+                expect(
+                    draggableDirective["moveDragAdorner"]
+                ).toHaveBeenCalled();
             });
         });
     });

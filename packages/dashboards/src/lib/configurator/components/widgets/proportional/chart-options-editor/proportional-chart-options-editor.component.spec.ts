@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+
 import { EventBus } from "@nova-ui/bits";
 
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
 import { PIZZAGNA_EVENT_BUS } from "../../../../../types";
-
 import { ProportionalChartOptionsEditorComponent } from "./proportional-chart-options-editor.component";
 
 describe("ProportionalChartOptionsEditorComponent", () => {
@@ -21,12 +21,13 @@ describe("ProportionalChartOptionsEditorComponent", () => {
                     useClass: EventBus,
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ProportionalChartOptionsEditorComponent);
+        fixture = TestBed.createComponent(
+            ProportionalChartOptionsEditorComponent
+        );
         component = fixture.componentInstance;
     });
 

@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+
 import { EventBus } from "@nova-ui/bits";
 
 import { NuiDashboardsModule } from "../../../dashboards.module";
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
 import { ProviderRegistryService } from "../../../services/provider-registry.service";
 import { PIZZAGNA_EVENT_BUS } from "../../../types";
-
 import { WidgetEditorAccordionComponent } from "./widget-editor-accordion.component";
 
 describe("WidgetEditorAccordionComponent", () => {
@@ -23,8 +23,7 @@ describe("WidgetEditorAccordionComponent", () => {
                     useClass: EventBus,
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -38,7 +37,10 @@ describe("WidgetEditorAccordionComponent", () => {
 
     describe("ngOnInit > ", () => {
         it("should register itself with the WidgetEditorSectionCoordinatorService", () => {
-            const registrationSpy = spyOn((<any>component).accordionCoordinator, "registerAccordion");
+            const registrationSpy = spyOn(
+                (<any>component).accordionCoordinator,
+                "registerAccordion"
+            );
             component.ngOnInit();
             expect(registrationSpy).toHaveBeenCalledWith(component);
         });
@@ -79,5 +81,4 @@ describe("WidgetEditorAccordionComponent", () => {
             expect(destroyNextSpy).toHaveBeenCalled();
         });
     });
-
 });

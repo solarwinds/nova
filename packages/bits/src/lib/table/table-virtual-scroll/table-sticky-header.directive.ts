@@ -1,11 +1,31 @@
-import { CdkVirtualForOf, CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
-import { AfterViewInit, ContentChild, Directive, Input, OnDestroy, Renderer2 } from "@angular/core";
+import {
+    CdkVirtualForOf,
+    CdkVirtualScrollViewport,
+} from "@angular/cdk/scrolling";
+import {
+    AfterViewInit,
+    ContentChild,
+    Directive,
+    Input,
+    OnDestroy,
+    Renderer2,
+} from "@angular/core";
 import isBoolean from "lodash/isBoolean";
 import isEmpty from "lodash/isEmpty";
 import { asyncScheduler, EMPTY, merge, Observable, Subject } from "rxjs";
-import { delay, exhaustMap, filter, finalize, map, take, takeUntil, tap, throttleTime } from "rxjs/operators";
-import { FIXED_WIDTH_CLASS } from "../constants";
+import {
+    delay,
+    exhaustMap,
+    filter,
+    finalize,
+    map,
+    take,
+    takeUntil,
+    tap,
+    throttleTime,
+} from "rxjs/operators";
 
+import { FIXED_WIDTH_CLASS } from "../constants";
 import { TableComponent } from "../table.component";
 
 export enum TableVirtualScrollHeaderPosition {
@@ -17,7 +37,7 @@ export enum TableVirtualScrollHeaderPosition {
     selector: "cdk-virtual-scroll-viewport[tableStickyHeader]",
     host: {
         "[class.sticky-table-header]": "true",
-        "style": "overflow-y:overlay",
+        style: "overflow-y:overlay",
     },
 })
 export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
@@ -63,8 +83,10 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
         return !!this.tableElRef;
     }
 
-    constructor(private renderer: Renderer2, private viewport: CdkVirtualScrollViewport) {
-    }
+    constructor(
+        private renderer: Renderer2,
+        private viewport: CdkVirtualScrollViewport
+    ) {}
 
     public ngAfterViewInit(): void {
         this.assignRequiredProperties();
@@ -98,7 +120,10 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
         if (isEmpty(this.userProvidedHeight)) {
             this.viewportEl.style.removeProperty("height");
         } else {
-            this.viewportEl.style.setProperty("height", this.userProvidedHeight);
+            this.viewportEl.style.setProperty(
+                "height",
+                this.userProvidedHeight
+            );
         }
 
         this.headPosition = TableVirtualScrollHeaderPosition.Native;
@@ -131,12 +156,22 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
 
     public updateContainerToFitHead = (): void => {
         if (this._sticky) {
-            this.origViewportHeight = this.origViewportHeight || this.viewportEl?.offsetHeight;
-            const viewportComputedHeight: string = isEmpty(this.userProvidedHeight) ? this.origViewportHeight + "px" : this.userProvidedHeight;
-            this.viewportEl.style.setProperty("height",
-                                              `calc(${viewportComputedHeight} - ${this.headRef?.rows.item(0)?.offsetHeight ?? 0}px)`, "important");
+            this.origViewportHeight =
+                this.origViewportHeight || this.viewportEl?.offsetHeight;
+            const viewportComputedHeight: string = isEmpty(
+                this.userProvidedHeight
+            )
+                ? this.origViewportHeight + "px"
+                : this.userProvidedHeight;
+            this.viewportEl.style.setProperty(
+                "height",
+                `calc(${viewportComputedHeight} - ${
+                    this.headRef?.rows.item(0)?.offsetHeight ?? 0
+                }px)`,
+                "important"
+            );
         }
-    }
+    };
 
     public updateViewportHeightOnHeadResize(): void {
         if (this.headResizeObserver) {
@@ -146,15 +181,16 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
         // This resize observer is needed in case a parent element has a height of zero upon instantiation
         // thereby prohibiting the header from having its intended height when its initially rendered.
         if (this.headRef) {
-            this.headResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) =>
-                // We wrap this in requestAnimationFrame to avoid "ResizeObserver loop limit exceeded" error in unit tests
-                // https://stackoverflow.com/questions/49384120/resizeobserver-loop-limit-exceeded
-                window.requestAnimationFrame(() => {
-                    if (!Array.isArray(entries) || !entries.length) {
-                        return;
-                    }
-                    this.updateContainerToFitHead();
-                })
+            this.headResizeObserver = new ResizeObserver(
+                (entries: ResizeObserverEntry[]) =>
+                    // We wrap this in requestAnimationFrame to avoid "ResizeObserver loop limit exceeded" error in unit tests
+                    // https://stackoverflow.com/questions/49384120/resizeobserver-loop-limit-exceeded
+                    window.requestAnimationFrame(() => {
+                        if (!Array.isArray(entries) || !entries.length) {
+                            return;
+                        }
+                        this.updateContainerToFitHead();
+                    })
             );
             this.headResizeObserver.observe(this.headRef);
         }
@@ -163,10 +199,18 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
     public handleColumnsUpdate$: () => Observable<unknown> = () => {
         // TODO: Perform a dirty check before starting assigning new values
         // Note: Setting the width of stickyHeadContainer container to be able to simulate horizontal scroll of the sticky header
-        this.renderer.setStyle(this.stickyHeadContainer, "width", `${this.viewport._contentWrapper.nativeElement.scrollWidth}px`);
+        this.renderer.setStyle(
+            this.stickyHeadContainer,
+            "width",
+            `${this.viewport._contentWrapper.nativeElement.scrollWidth}px`
+        );
 
-        const headColumns: HTMLTableHeaderCellElement[] = Array.from(this.stickyHeadContainer?.getElementsByTagName("th") || []);
-        const firstDataRowCells: HTMLTableDataCellElement[] = Array.from(this.bodyRef?.rows.item(0)?.cells || []);
+        const headColumns: HTMLTableHeaderCellElement[] = Array.from(
+            this.stickyHeadContainer?.getElementsByTagName("th") || []
+        );
+        const firstDataRowCells: HTMLTableDataCellElement[] = Array.from(
+            this.bodyRef?.rows.item(0)?.cells || []
+        );
 
         // Note: If head columns are not in sync with data columns skip
         if (headColumns.length !== firstDataRowCells.length) {
@@ -174,37 +218,53 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
         }
 
         // TODO: Find a better way to pair placeholderHeader columns with header columns
-        firstDataRowCells.forEach((cell: HTMLTableDataCellElement, index: number) => {
-            const fixedWidth = headColumns[index].classList.contains(FIXED_WIDTH_CLASS);
-            if (!fixedWidth) {
-                // Note: Assigning data cell width to the corresponding header column
-                // (using the style width if specified; otherwise, falling back to the offsetWidth)
-                headColumns[index].style.width = cell.style.width || `${cell.offsetWidth}px`;
+        firstDataRowCells.forEach(
+            (cell: HTMLTableDataCellElement, index: number) => {
+                const fixedWidth =
+                    headColumns[index].classList.contains(FIXED_WIDTH_CLASS);
+                if (!fixedWidth) {
+                    // Note: Assigning data cell width to the corresponding header column
+                    // (using the style width if specified; otherwise, falling back to the offsetWidth)
+                    headColumns[index].style.width =
+                        cell.style.width || `${cell.offsetWidth}px`;
+                }
             }
-        });
+        );
 
         // update the header placeholder to match the updated column widths
         this.updateNativeHeaderPlaceholder();
 
         // Note: Returning empty observable to be able to create an execution queue
         return EMPTY;
-    }
+    };
 
     private assignRequiredProperties(): void {
-        this.tableElRef = this.viewportEl.getElementsByTagName("table").item(0) || undefined;
-        this.headRef = this.viewportEl.getElementsByTagName("thead").item(0) || undefined;
+        this.tableElRef =
+            this.viewportEl.getElementsByTagName("table").item(0) || undefined;
+        this.headRef =
+            this.viewportEl.getElementsByTagName("thead").item(0) || undefined;
         this.userProvidedHeight = this.viewportEl.style.height;
-        Array.from(this.headRef?.getElementsByTagName("th") || []).forEach(th => th.classList.add("virtual-sticky"));
-        this.bodyRef = this.viewportEl.getElementsByTagName("tbody").item(0) || undefined;
+        Array.from(this.headRef?.getElementsByTagName("th") || []).forEach(
+            (th) => th.classList.add("virtual-sticky")
+        );
+        this.bodyRef =
+            this.viewportEl.getElementsByTagName("tbody").item(0) || undefined;
     }
 
     private syncColumnWidths(): void {
         const resize$: Subject<unknown> = new Subject();
         // Note: Passing the resize event to resize$ subject to be able
         // to handle all the columnWidth update trigger in a single stream
-        const resizeObserver: ResizeObserver = new ResizeObserver(() => resize$.next());
+        const resizeObserver: ResizeObserver = new ResizeObserver(() =>
+            resize$.next()
+        );
         resizeObserver.observe(this.viewportEl);
-        this.unsubscribe$.pipe(take(1), tap(() => resize$.complete())).subscribe();
+        this.unsubscribe$
+            .pipe(
+                take(1),
+                tap(() => resize$.complete())
+            )
+            .subscribe();
 
         const onResize$ = resize$.pipe(
             // Note: Performing the resizeObserver cleanup
@@ -215,7 +275,10 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             // by scheduling the scroll events via trailing throttling
             throttleTime(50, asyncScheduler, { trailing: true })
         );
-        const tableColumnsUpdate$ = merge(this.table.columnsOrderChange, this.table._contentColumnDefs.changes).pipe(
+        const tableColumnsUpdate$ = merge(
+            this.table.columnsOrderChange,
+            this.table._contentColumnDefs.changes
+        ).pipe(
             // Note: Using delay(0) to grant some time to the table
             // to update the rows and then proceed with the event
             delay(0),
@@ -227,28 +290,42 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             throw new Error("Unable to find CdkVirtualForOf");
         }
 
-        merge(onScroll$, onResize$, tableColumnsUpdate$, this.virtualFor.dataStream).pipe(
-            // Note: Preventing function to be invoked multiple times
-            // by merging new observable only if the previous one was completed
-            exhaustMap(this.handleColumnsUpdate$),
-            takeUntil(this.unsubscribe$)
-        ).subscribe();
+        merge(
+            onScroll$,
+            onResize$,
+            tableColumnsUpdate$,
+            this.virtualFor.dataStream
+        )
+            .pipe(
+                // Note: Preventing function to be invoked multiple times
+                // by merging new observable only if the previous one was completed
+                exhaustMap(this.handleColumnsUpdate$),
+                takeUntil(this.unsubscribe$)
+            )
+            .subscribe();
     }
 
     private syncHorizontalScroll(): void {
         let previousScrollLeft: number = 0;
 
-        this.viewport.elementScrolled().pipe(
-            map(() => this.viewportEl.scrollLeft),
-            // Note: Filtering out vertical scroll events
-            filter(scrollLeft => scrollLeft !== previousScrollLeft),
-            tap((scrollLeft: number) => {
-                previousScrollLeft = scrollLeft;
-                // Note: Simulating horizontal scroll by assigning margin-left to be equal to scrolled distance
-                this.renderer.setStyle(this.stickyHeadContainer, "margin-left", `-${scrollLeft}px`);
-            }),
-            takeUntil(this.unsubscribe$)
-        ).subscribe();
+        this.viewport
+            .elementScrolled()
+            .pipe(
+                map(() => this.viewportEl.scrollLeft),
+                // Note: Filtering out vertical scroll events
+                filter((scrollLeft) => scrollLeft !== previousScrollLeft),
+                tap((scrollLeft: number) => {
+                    previousScrollLeft = scrollLeft;
+                    // Note: Simulating horizontal scroll by assigning margin-left to be equal to scrolled distance
+                    this.renderer.setStyle(
+                        this.stickyHeadContainer,
+                        "margin-left",
+                        `-${scrollLeft}px`
+                    );
+                }),
+                takeUntil(this.unsubscribe$)
+            )
+            .subscribe();
     }
 
     private createStickyHeaderContainer(): void {
@@ -260,19 +337,30 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
         this.renderer.setStyle(wrapper, "width", `100%`);
 
         // Assigning original table classes
-        const originalTableClasses: string[] = Array.from(this.tableElRef?.classList || []);
+        const originalTableClasses: string[] = Array.from(
+            this.tableElRef?.classList || []
+        );
         originalTableClasses.push("sticky-table-header-container");
-        originalTableClasses.forEach(cssClass => this.renderer.addClass(this.stickyHeadContainer, cssClass));
+        originalTableClasses.forEach((cssClass) =>
+            this.renderer.addClass(this.stickyHeadContainer, cssClass)
+        );
 
-        this.renderer.insertBefore(this.viewportEl.parentElement, wrapper, this.viewportEl);
+        this.renderer.insertBefore(
+            this.viewportEl.parentElement,
+            wrapper,
+            this.viewportEl
+        );
     }
 
     private updateNativeHeaderPlaceholder(): void {
         if (!this.headRef || !this.tableElRef || !this.bodyRef) {
-            throw new Error("Can't append thead placeholder. TableRef, BodyRef or HeaderRef is undefined");
+            throw new Error(
+                "Can't append thead placeholder. TableRef, BodyRef or HeaderRef is undefined"
+            );
         }
 
-        const headPlaceholder = this.tableElRef.getElementsByTagName("thead")[0];
+        const headPlaceholder =
+            this.tableElRef.getElementsByTagName("thead")[0];
         if (headPlaceholder) {
             headPlaceholder.remove();
         }
@@ -284,7 +372,11 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
         // Note: Adding an identifier for the header placeholder to avoid confusion
         this.renderer.addClass(theadPlaceholder, "sticky-header-placeholder");
         // Note: Appending head placeholder to the table
-        this.renderer.insertBefore(this.tableElRef, theadPlaceholder, this.bodyRef);
+        this.renderer.insertBefore(
+            this.tableElRef,
+            theadPlaceholder,
+            this.bodyRef
+        );
     }
 
     private updateHeadPosition(isSticky: boolean): void {

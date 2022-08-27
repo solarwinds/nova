@@ -1,6 +1,16 @@
 import { Component, OnInit } from "@angular/core";
+
 import {
-    Chart, ChartAssist, CHART_PALETTE_CS_S, MappedValueProvider, radial, RadialAccessors, radialGrid, RadialPopoverPlugin, RadialRenderer, radialScales,
+    Chart,
+    ChartAssist,
+    CHART_PALETTE_CS_S,
+    MappedValueProvider,
+    radial,
+    RadialAccessors,
+    radialGrid,
+    RadialPopoverPlugin,
+    RadialRenderer,
+    radialScales,
 } from "@nova-ui/charts";
 
 @Component({
@@ -25,12 +35,14 @@ export class DonutChartWithPopoverExampleComponent implements OnInit {
         const scales = radialScales();
 
         // chart assist setup
-        this.chartAssist.update(getData().map(s => ({
-            ...s,
-            accessors,
-            scales,
-            renderer,
-        })));
+        this.chartAssist.update(
+            getData().map((s) => ({
+                ...s,
+                accessors,
+                scales,
+                renderer,
+            }))
+        );
     }
 }
 
@@ -52,7 +64,7 @@ function getData() {
         { status: Status.Down, value: 7 },
         { status: Status.Unmanaged, value: 5 },
         { status: Status.Unknown, value: 3 },
-    ].map(d => ({ id: d.status, name: d.status, data: [d.value] }));
+    ].map((d) => ({ id: d.status, name: d.status, data: [d.value] }));
 }
 
 function createStatusColorProvider() {

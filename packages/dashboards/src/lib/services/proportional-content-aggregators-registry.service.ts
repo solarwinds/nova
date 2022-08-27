@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
+
 import { LoggerService } from "@nova-ui/bits";
 
 import { IProportionalDonutContentAggregatorDefinition } from "../functions/proportional-aggregators/types";
-
 import { RegistryService } from "./registry-service";
 
 @Injectable({ providedIn: "root" })

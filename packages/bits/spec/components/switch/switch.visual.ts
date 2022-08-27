@@ -10,7 +10,7 @@ describe(`Visual tests: ${name}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("switch/switch-visual-test");
-        
+
         camera = new Camera().loadFilm(browser, name);
     });
 

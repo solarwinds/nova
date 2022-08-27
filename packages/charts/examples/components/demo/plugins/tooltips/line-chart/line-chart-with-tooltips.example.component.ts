@@ -1,8 +1,24 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import {
-    Chart, ChartAssist, ChartTooltipsPlugin, IChartSeries, ILineAccessors, IXYScales, LineAccessors, LinearScale, LineRenderer, TimeScale, XYGrid,
-} from "@nova-ui/charts";
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    OnInit,
+} from "@angular/core";
 import moment from "moment/moment";
+
+import {
+    Chart,
+    ChartAssist,
+    ChartTooltipsPlugin,
+    IChartSeries,
+    ILineAccessors,
+    IXYScales,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    TimeScale,
+    XYGrid,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-line-chart-with-tooltips-example",
@@ -14,8 +30,7 @@ export class LineChartWithTooltipsExampleComponent implements OnInit {
     public chartAssist = new ChartAssist(this.chart);
     public tooltipsPlugin = new ChartTooltipsPlugin();
 
-    constructor(private changeDetector: ChangeDetectorRef) {
-    }
+    constructor(private changeDetector: ChangeDetectorRef) {}
 
     public ngOnInit() {
         // this is necessary to make the chart work in OnPush change detection mode
@@ -25,19 +40,24 @@ export class LineChartWithTooltipsExampleComponent implements OnInit {
         this.chart.addPlugin(this.tooltipsPlugin);
 
         // providing chartAssist colors and markers to LineAccessors will share them with the line chart
-        const accessors = new LineAccessors(this.chartAssist.palette.standardColors, this.chartAssist.markers);
+        const accessors = new LineAccessors(
+            this.chartAssist.palette.standardColors,
+            this.chartAssist.markers
+        );
         const renderer = new LineRenderer();
         const scales: IXYScales = {
             x: new TimeScale(),
             y: new LinearScale(),
         };
 
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
-            ...d,
-            accessors,
-            renderer,
-            scales,
-        }));
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
+            (d) => ({
+                ...d,
+                accessors,
+                renderer,
+                scales,
+            })
+        );
 
         // chart assist needs to be used to update the chart's data
         this.chartAssist.update(seriesSet);

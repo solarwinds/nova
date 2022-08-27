@@ -9,7 +9,6 @@ import { NuiPopoverModule } from "../../popover/popover.module";
 import { NuiTimeFramePickerModule } from "../../time-frame-picker/time-frame-picker.module";
 import { NuiTimePickerModule } from "../../time-picker/time-picker.module";
 import { NuiTooltipModule } from "../../tooltip/tooltip.module";
-
 import { TimeFrameBarComponent } from "./time-frame-bar.component";
 
 /**
@@ -27,13 +26,8 @@ import { TimeFrameBarComponent } from "./time-frame-bar.component";
         NuiTimePickerModule,
         NuiTooltipModule,
     ],
-    declarations: [
-        TimeFrameBarComponent,
-    ],
-    exports: [
-        TimeFrameBarComponent,
-    ],
+    declarations: [TimeFrameBarComponent],
+    exports: [TimeFrameBarComponent],
     providers: [],
 })
-export class NuiTimeFrameBarModule {
-}
+export class NuiTimeFrameBarModule {}

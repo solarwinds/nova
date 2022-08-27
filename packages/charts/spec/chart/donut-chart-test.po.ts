@@ -1,5 +1,6 @@
-import { Atom } from "@nova-ui/bits/sdk/atoms";
 import { by, element, ElementFinder } from "protractor";
+
+import { Atom } from "@nova-ui/bits/sdk/atoms";
 
 import { ChartAtom } from "./atoms/chart.atom";
 

@@ -1,4 +1,15 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    SimpleChanges,
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 import { IHasChangeDetector, IHasForm } from "../../../../../types";
@@ -9,18 +20,24 @@ import { IHasChangeDetector, IHasForm } from "../../../../../types";
     styleUrls: ["./timeseries-tile-description-configuration.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TimeseriesTileDescriptionConfigurationComponent implements OnInit, OnDestroy, OnChanges, IHasChangeDetector, IHasForm {
+export class TimeseriesTileDescriptionConfigurationComponent
+    implements OnInit, OnDestroy, OnChanges, IHasChangeDetector, IHasForm
+{
     static lateLoadKey = "TimeseriesTileDescriptionConfigurationComponent";
 
     @Input() label: string;
 
-    @Output() formReady: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
-    @Output() formDestroy: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
+    @Output() formReady: EventEmitter<FormGroup> =
+        new EventEmitter<FormGroup>();
+    @Output() formDestroy: EventEmitter<FormGroup> =
+        new EventEmitter<FormGroup>();
 
     public form: FormGroup;
 
-    constructor(private formBuilder: FormBuilder, public changeDetector: ChangeDetectorRef) {
-    }
+    constructor(
+        private formBuilder: FormBuilder,
+        public changeDetector: ChangeDetectorRef
+    ) {}
 
     ngOnInit(): void {
         this.form = this.formBuilder.group({

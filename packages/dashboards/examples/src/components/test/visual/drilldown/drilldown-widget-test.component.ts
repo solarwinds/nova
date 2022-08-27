@@ -1,5 +1,16 @@
 import { HttpClient } from "@angular/common/http";
-import { Component, Injectable, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import {
+    Component,
+    Injectable,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+} from "@angular/core";
+import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import groupBy from "lodash/groupBy";
+import { BehaviorSubject, Observable, of, Subject } from "rxjs";
+import { catchError, finalize, map, switchMap, tap } from "rxjs/operators";
+
 import { DataSourceService, IFilters, INovaFilters } from "@nova-ui/bits";
 import {
     DashboardComponent,
@@ -18,20 +29,18 @@ import {
     WellKnownProviders,
     WidgetTypesService,
 } from "@nova-ui/dashboards";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
-import groupBy from "lodash/groupBy";
-import { BehaviorSubject, Observable, of, Subject } from "rxjs";
-import { catchError, finalize, map, switchMap, tap } from "rxjs/operators";
 
 import { UnitTestRegistryService } from "../../../../../../src/lib/services/unit-test-registry.service";
-
 import { GRAPH_DATA_MOCK } from "./data-mock";
 
 /**
  * A simple KPI data source to retrieve the average rating of Harry Potter and the Sorcerer's Stone (book) via googleapis
  */
 @Injectable()
-export class DrilldownDataSource extends DataSourceService<any> implements OnDestroy {
+export class DrilldownDataSource
+    extends DataSourceService<any>
+    implements OnDestroy
+{
     // This is the ID we'll use to identify the provider
     public static providerId = "DrilldownDataSource";
 
@@ -47,11 +56,11 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
 
     constructor() {
         super();
-        this.applyFilters$.pipe(
-            switchMap(filters => this.getData(filters))
-        ).subscribe(async (res) => {
-            this.outputsSubject.next(await this.getFilteredData(res));
-        });
+        this.applyFilters$
+            .pipe(switchMap((filters) => this.getData(filters)))
+            .subscribe(async (res) => {
+                this.outputsSubject.next(await this.getFilteredData(res));
+            });
     }
 
     private groupedDataHistory: any[] = [];
@@ -59,23 +68,26 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
     // In this example, getFilteredData is invoked every 10 minutes (Take a look at the refresher
     // provider definition in the widget configuration below to see how the interval is set)
     public async getFilteredData(data: any): Promise<any> {
-        return of(data).pipe(
-            map(countries => {
-                const widgetInput = this.getOutput(countries);
+        return of(data)
+            .pipe(
+                map((countries) => {
+                    const widgetInput = this.getOutput(countries);
 
-                if (this.isDrillDown()) {
-                    const activeDrillLvl = this.drillState.length;
-                    const group = this.groupBy[activeDrillLvl];
-                    const [lastGroupedValue, groupedData] = this.getTransformedDataForGroup(widgetInput, group);
+                    if (this.isDrillDown()) {
+                        const activeDrillLvl = this.drillState.length;
+                        const group = this.groupBy[activeDrillLvl];
+                        const [lastGroupedValue, groupedData] =
+                            this.getTransformedDataForGroup(widgetInput, group);
 
-                    this.groupedDataHistory.push(lastGroupedValue);
+                        this.groupedDataHistory.push(lastGroupedValue);
 
-                    return groupedData;
-                }
+                        return groupedData;
+                    }
 
-                return widgetInput;
-            })
-        ).toPromise();
+                    return widgetInput;
+                })
+            )
+            .toPromise();
     }
 
     public ngOnDestroy(): void {
@@ -93,27 +105,35 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
 
         this.busy.next(true);
 
-        return of(this.cache || GRAPH_DATA_MOCK)
-            .pipe(
-                // delay(1000),
-                tap(data => this.cache = data),
-                map(data => data.data.countries),
-                catchError(e => of([])),
-                finalize(() => this.busy.next(false))
-            );
+        return of(this.cache || GRAPH_DATA_MOCK).pipe(
+            // delay(1000),
+            tap((data) => (this.cache = data)),
+            map((data) => data.data.countries),
+            catchError((e) => of([])),
+            finalize(() => this.busy.next(false))
+        );
     }
 
     private getTransformedDataForGroup(data: any, groupName: string) {
         const groupedDict = groupBy(data, groupName);
-        const dataArr = Object.keys(groupedDict).map(property => ({
+        const dataArr = Object.keys(groupedDict).map((property) => ({
             id: property,
             label: property,
             // TODO: apply groups mapping here
             statuses: [
                 { key: "state_ok", value: groupedDict[property].length },
-                { key: "status_unreachable", value: groupedDict[property].length + 98255 },
-                { key: "status_warning", value: groupedDict[property].length + 8345 },
-                { key: "status_unknown", value: groupedDict[property].length + 517 },
+                {
+                    key: "status_unreachable",
+                    value: groupedDict[property].length + 98255,
+                },
+                {
+                    key: "status_warning",
+                    value: groupedDict[property].length + 8345,
+                },
+                {
+                    key: "status_unknown",
+                    value: groupedDict[property].length + 517,
+                },
             ],
         }));
 
@@ -125,7 +145,10 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
     }
 
     private isBack(): boolean {
-        return (this.groupedDataHistory.length > this.drillState.length) && !this.isHome();
+        return (
+            this.groupedDataHistory.length > this.drillState.length &&
+            !this.isHome()
+        );
     }
 
     private isDrillDown(): boolean {
@@ -169,14 +192,15 @@ export class DrilldownWidgetTestComponent implements OnInit {
     // Boolean passed as an input to the dashboard. When true, widgets can be moved, resized, removed, or edited
     public editMode: boolean = false;
 
-    @ViewChild(DashboardComponent) public dashboardComponent: DashboardComponent;
+    @ViewChild(DashboardComponent)
+    public dashboardComponent: DashboardComponent;
 
     constructor(
         // WidgetTypesService provides the widget's necessary structure information
         private drilldownRegistry: UnitTestRegistryService,
         private widgetTypesService: WidgetTypesService,
         private providerRegistry: ProviderRegistryService
-    ) { }
+    ) {}
 
     public ngOnInit(): void {
         // this.prepareNovaDashboards();
@@ -200,7 +224,8 @@ export class DrilldownWidgetTestComponent implements OnInit {
         const drilldownWidget = widgetConfig;
         const widgets: IWidgets = {
             // Complete the widget with information coming from its type definition
-            [drilldownWidget.id]: this.widgetTypesService.mergeWithWidgetType(drilldownWidget),
+            [drilldownWidget.id]:
+                this.widgetTypesService.mergeWithWidgetType(drilldownWidget),
         };
 
         // Setting the widget dimensions and position (this is for gridster)
@@ -216,7 +241,6 @@ export class DrilldownWidgetTestComponent implements OnInit {
         // Finally, assigning the variables we created above to the dashboard
         this.dashboard = { positions, widgets };
     }
-
 }
 
 const widgetConfig: IWidget = {
@@ -224,10 +248,10 @@ const widgetConfig: IWidget = {
     type: "drilldown",
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
-            "header": {
-                "properties": {
-                    "title": "Drilldown Widget",
-                    "subtitle": "Countries BY continent THEN currency",
+            header: {
+                properties: {
+                    title: "Drilldown Widget",
+                    subtitle: "Countries BY continent THEN currency",
                 },
             },
             listWidget: {
@@ -242,14 +266,13 @@ const widgetConfig: IWidget = {
 
                             // adapter props
                             // drillstate: [""],
-                            groupBy: [
-                                "continent.name",
-                            ],
+                            groupBy: ["continent.name"],
 
                             // components
                             componentsConfig: {
                                 group: {
-                                    componentType: ListGroupItemComponent.lateLoadKey,
+                                    componentType:
+                                        ListGroupItemComponent.lateLoadKey,
                                     properties: {
                                         dataFieldIds: {
                                             id: "id",
@@ -262,7 +285,8 @@ const widgetConfig: IWidget = {
                                     },
                                 },
                                 leaf: {
-                                    componentType: ListLeafItemComponent.lateLoadKey,
+                                    componentType:
+                                        ListLeafItemComponent.lateLoadKey,
                                     properties: {
                                         dataFieldIds: {
                                             icon: "icon",
@@ -282,9 +306,7 @@ const widgetConfig: IWidget = {
                     [WellKnownProviders.DataSource]: {
                         // Setting the data source providerId for the tile with id "kpi1"
                         providerId: DrilldownDataSource.providerId,
-                        properties: {
-
-                        },
+                        properties: {},
                     } as IProviderConfiguration,
                 },
                 properties: {
@@ -301,7 +323,6 @@ const widgetConfig: IWidget = {
                         // },
                         //
                     } as IListWidgetConfiguration,
-
                 },
             },
         },

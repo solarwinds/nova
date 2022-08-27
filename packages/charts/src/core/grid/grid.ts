@@ -9,9 +9,15 @@ import { ScalesIndex } from "../common/scales/types";
 import { IChart, IChartEvent, IChartPlugin } from "../common/types";
 import { D3Selection } from "../common/types";
 import { UtilityService } from "../common/utility.service";
-
 import { GridConfig } from "./config/grid-config";
-import { IAllAround, IBorderConfig, IBorders, IDimensions, IGrid, IGridConfig } from "./types";
+import {
+    IAllAround,
+    IBorderConfig,
+    IBorders,
+    IDimensions,
+    IGrid,
+    IGridConfig,
+} from "./types";
 
 export const borderMidpoint = 0.5;
 
@@ -83,7 +89,6 @@ export abstract class Grid implements IGrid {
     /** Property value of the grid's target d3 selection */
     protected _target: D3Selection<SVGSVGElement>;
 
-
     /** See {@link IGrid#getInteractiveArea} */
     public getInteractiveArea(): D3Selection<SVGRectElement> {
         return this.interactiveArea;
@@ -122,7 +127,9 @@ export abstract class Grid implements IGrid {
     /** See {@link IGrid#target} */
     public target(target: D3Selection<SVGSVGElement>): IGrid;
     /** See {@link IGrid#target} */
-    public target(target?: D3Selection<SVGSVGElement>): D3Selection<SVGSVGElement> | IGrid {
+    public target(
+        target?: D3Selection<SVGSVGElement>
+    ): D3Selection<SVGSVGElement> | IGrid {
         if (target === undefined) {
             return this._target;
         }
@@ -137,16 +144,19 @@ export abstract class Grid implements IGrid {
             this.config(config);
         }
 
-        this.container = this._target.append("g")
-            .attrs({
-                "class": Grid.GRID_CLASS_NAME,
-            });
+        this.container = this._target.append("g").attrs({
+            class: Grid.GRID_CLASS_NAME,
+        });
 
-        const clipPathId = Grid.RENDERING_AREA_CLIP_PATH_PREFIX + UtilityService.uuid();
+        const clipPathId =
+            Grid.RENDERING_AREA_CLIP_PATH_PREFIX + UtilityService.uuid();
         // Asserting similar type to avoid refactoring all the grids
         // TODO: Refactor lasagna service to accept multiple D3Selection types
         //  or refactor grid implementations/interfaces to maintain the same selection type
-        this.lasagna = new Lasagna(<D3Selection<SVGSVGElement>>(<unknown>this.container), clipPathId);
+        this.lasagna = new Lasagna(
+            <D3Selection<SVGSVGElement>>(<unknown>this.container),
+            clipPathId
+        );
         this.renderingArea = this.buildRenderingArea(clipPathId);
         this.adjustRenderingArea();
 
@@ -191,7 +201,9 @@ export abstract class Grid implements IGrid {
         const dimensionConfig = this.config().dimension;
 
         if (dimensions.width) {
-            dimensionConfig.outerWidth(dimensions.width - this.getOuterWidthDimensionCorrection());
+            dimensionConfig.outerWidth(
+                dimensions.width - this.getOuterWidthDimensionCorrection()
+            );
         }
         if (dimensions.height) {
             dimensionConfig.outerHeight(dimensions.height);
@@ -222,7 +234,9 @@ export abstract class Grid implements IGrid {
      *
      * @returns {Partial<IBorders>} The grid's borders
      */
-    protected buildBorders(container: D3Selection): Partial<IBorders> | undefined {
+    protected buildBorders(
+        container: D3Selection
+    ): Partial<IBorders> | undefined {
         if (!this.config() || !this.config().borders) {
             return;
         }
@@ -233,7 +247,9 @@ export abstract class Grid implements IGrid {
         each(borderKeys, (side: BorderKey) => {
             // We're creating even invisible borders and updating visibility afterwards
             if (borderConfigs[side]) {
-                borders[side] = this.createBorder(container, borderConfigs[side]) ?? undefined;
+                borders[side] =
+                    this.createBorder(container, borderConfigs[side]) ??
+                    undefined;
             }
         });
 
@@ -245,27 +261,42 @@ export abstract class Grid implements IGrid {
      */
     protected adjustRenderingArea = (): void => {
         const d = this.config().dimension;
-        const disableHeightCorrection = this.config().disableRenderAreaHeightCorrection;
-        const disableWidthCorrection = this.config().disableRenderAreaWidthCorrection;
+        const disableHeightCorrection =
+            this.config().disableRenderAreaHeightCorrection;
+        const disableWidthCorrection =
+            this.config().disableRenderAreaWidthCorrection;
 
         const renderingAreaClipPathAttrs = {
-            "width": Math.max(0, d.width()),
-            "height": Math.max(0, d.height() + (disableHeightCorrection ? 0 : Grid.RENDER_AREA_HEIGHT_CORRECTION)),
+            width: Math.max(0, d.width()),
+            height: Math.max(
+                0,
+                d.height() +
+                    (disableHeightCorrection
+                        ? 0
+                        : Grid.RENDER_AREA_HEIGHT_CORRECTION)
+            ),
         } as any;
 
         if (!disableHeightCorrection) {
-            renderingAreaClipPathAttrs["y"] = -Grid.RENDER_AREA_HEIGHT_CORRECTION;
+            renderingAreaClipPathAttrs["y"] =
+                -Grid.RENDER_AREA_HEIGHT_CORRECTION;
         }
 
         const renderingAreaAttrs = {
             ...renderingAreaClipPathAttrs,
             // Width correction needed to prevent interaction gap between right side of grid and the edge of the rendering area
-            "width": Math.max(0, d.width() - (disableWidthCorrection ? 0 : Grid.RENDER_AREA_WIDTH_CORRECTION)),
+            width: Math.max(
+                0,
+                d.width() -
+                    (disableWidthCorrection
+                        ? 0
+                        : Grid.RENDER_AREA_WIDTH_CORRECTION)
+            ),
         };
 
         this.renderingAreaClipPath.attrs(renderingAreaClipPathAttrs);
         this.renderingArea.attrs(renderingAreaAttrs);
-    }
+    };
 
     /**
      * Builds the grid's rendering area as a layer on the lasagna
@@ -274,8 +305,11 @@ export abstract class Grid implements IGrid {
      *
      * @returns {D3Selection} The grid's rendering area
      */
-    private buildRenderingArea(clipPathId: string): D3Selection<SVGRectElement> {
-        this.renderingAreaClipPath = this._target.append("clipPath")
+    private buildRenderingArea(
+        clipPathId: string
+    ): D3Selection<SVGRectElement> {
+        this.renderingAreaClipPath = this._target
+            .append("clipPath")
             .attr("id", clipPathId)
             .append("rect");
 
@@ -284,11 +318,10 @@ export abstract class Grid implements IGrid {
             order: -1,
             clipped: true,
         });
-        return renderingAreaContainer.append("rect")
-            .attrs({
-                "pointer-events": "all",
-                "fill": "transparent",
-            });
+        return renderingAreaContainer.append("rect").attrs({
+            "pointer-events": "all",
+            fill: "transparent",
+        });
     }
 
     /**
@@ -299,8 +332,12 @@ export abstract class Grid implements IGrid {
      *
      * @returns {SVGElement} The created border
      */
-    private createBorder(container: D3Selection, config: IBorderConfig): SVGElement | null {
-        const border = container.append("line")
+    private createBorder(
+        container: D3Selection,
+        config: IBorderConfig
+    ): SVGElement | null {
+        const border = container
+            .append("line")
             .attr("class", config.className || Grid.DEFAULT_BORDER_CLASS_NAME);
 
         if (config.width) {
@@ -323,10 +360,12 @@ export abstract class Grid implements IGrid {
         }
         select(this.borders.bottom)
             .attrs({
-                "x1": 0,
-                "y1": this.config().dimension.height() - borderMidpoint,
-                "x2": this.config().dimension.width() + Grid.TICK_DIMENSION_CORRECTION, // to get nice alignment with ticks
-                "y2": this.config().dimension.height() - borderMidpoint,
+                x1: 0,
+                y1: this.config().dimension.height() - borderMidpoint,
+                x2:
+                    this.config().dimension.width() +
+                    Grid.TICK_DIMENSION_CORRECTION, // to get nice alignment with ticks
+                y2: this.config().dimension.height() - borderMidpoint,
             })
             .classed("hidden", !this._config.borders.bottom?.visible);
     }
@@ -341,30 +380,36 @@ export abstract class Grid implements IGrid {
         if (this.borders.top) {
             select(this.borders.top)
                 .attrs({
-                    "x1": 0,
-                    "y1": borderMidpoint, // the line was outside of the viewport in some browser when set to 0
-                    "x2": this.config().dimension.width() + Grid.TICK_DIMENSION_CORRECTION, // to get nice alignment with ticks
-                    "y2": borderMidpoint,
+                    x1: 0,
+                    y1: borderMidpoint, // the line was outside of the viewport in some browser when set to 0
+                    x2:
+                        this.config().dimension.width() +
+                        Grid.TICK_DIMENSION_CORRECTION, // to get nice alignment with ticks
+                    y2: borderMidpoint,
                 })
                 .classed("hidden", !this._config.borders.top?.visible);
         }
         if (this.borders.right) {
             select(this.borders.right)
                 .attrs({
-                    "x1": this.config().dimension.width() - borderMidpoint,
-                    "y1": 0,
-                    "x2": this.config().dimension.width() - borderMidpoint,
-                    "y2": this.config().dimension.height() + Grid.TICK_DIMENSION_CORRECTION, // to get nice alignment with ticks
+                    x1: this.config().dimension.width() - borderMidpoint,
+                    y1: 0,
+                    x2: this.config().dimension.width() - borderMidpoint,
+                    y2:
+                        this.config().dimension.height() +
+                        Grid.TICK_DIMENSION_CORRECTION, // to get nice alignment with ticks
                 })
                 .classed("hidden", !this._config.borders.right?.visible);
         }
         if (this.borders.left) {
             select(this.borders.left)
                 .attrs({
-                    "x1": borderMidpoint,
-                    "y1": 0,
-                    "x2": borderMidpoint,
-                    "y2": this.config().dimension.height() + Grid.TICK_DIMENSION_CORRECTION, // to get nice alignment with ticks
+                    x1: borderMidpoint,
+                    y1: 0,
+                    x2: borderMidpoint,
+                    y2:
+                        this.config().dimension.height() +
+                        Grid.TICK_DIMENSION_CORRECTION, // to get nice alignment with ticks
                 })
                 .classed("hidden", !this._config.borders.left?.visible);
         }

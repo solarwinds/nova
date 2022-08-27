@@ -1,5 +1,14 @@
 import { Component, OnInit } from "@angular/core";
-import { Chart, ChartAssist, radial, RadialAccessors, radialGrid, RadialRenderer, radialScales } from "@nova-ui/charts";
+
+import {
+    Chart,
+    ChartAssist,
+    radial,
+    RadialAccessors,
+    radialGrid,
+    RadialRenderer,
+    radialScales,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-donut-chart-example",
@@ -21,12 +30,14 @@ export class DonutChartExampleComponent implements OnInit {
         const renderer = new RadialRenderer();
 
         // Invoke the chart assist's update method with the IChartAssistSeries collection as the argument
-        this.chartAssist.update(getData().map(s => ({
-            ...s,
-            accessors,
-            scales,
-            renderer,
-        })));
+        this.chartAssist.update(
+            getData().map((s) => ({
+                ...s,
+                accessors,
+                scales,
+                renderer,
+            }))
+        );
     }
 }
 

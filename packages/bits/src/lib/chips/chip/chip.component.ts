@@ -37,7 +37,11 @@ export class ChipComponent implements AfterViewInit {
     @Input() public closeButtonTooltip: string;
 
     /** Custom css class to be added to the chip element */
-    @Input() public customClass: string | string[] | Set<string> | { [klass: string]: any };
+    @Input() public customClass:
+        | string
+        | string[]
+        | Set<string>
+        | { [klass: string]: any };
 
     /**
      * Event that is fired when single item is cleared (by clicking on remove icon).
@@ -48,12 +52,12 @@ export class ChipComponent implements AfterViewInit {
 
     @ViewChild("projection") private contentTemplate: TemplateRef<any>;
 
-    constructor(public host: ElementRef,
-                private cdRef: ChangeDetectorRef) {
-    }
+    constructor(public host: ElementRef, private cdRef: ChangeDetectorRef) {}
 
     public ngAfterViewInit(): void {
-        this.isContentProjected = Boolean(this.contentTemplate.createEmbeddedView(undefined).rootNodes.length);
+        this.isContentProjected = Boolean(
+            this.contentTemplate.createEmbeddedView(undefined).rootNodes.length
+        );
         this.cdRef.detectChanges();
     }
 

@@ -1,6 +1,17 @@
 import { Component, OnInit } from "@angular/core";
-import { Chart, IChartSeries, ILineAccessors, IXYScales, LineAccessors, LinearScale, LineRenderer, TimeScale, XYGrid } from "@nova-ui/charts";
 import moment from "moment/moment";
+
+import {
+    Chart,
+    IChartSeries,
+    ILineAccessors,
+    IXYScales,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    TimeScale,
+    XYGrid,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-line-chart-basic-example",
@@ -25,12 +36,14 @@ export class LineChartBasicExampleComponent implements OnInit {
         };
 
         // Here we assemble the complete chart series.
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
-            ...d,
-            accessors,
-            renderer,
-            scales,
-        }));
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
+            (d) => ({
+                ...d,
+                accessors,
+                renderer,
+                scales,
+            })
+        );
 
         // Finally, pass the series set to the chart's update method
         this.chart.update(seriesSet);

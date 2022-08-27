@@ -17,11 +17,13 @@ export class DatePickerVisualTestComponent implements OnInit {
     });
     public emptyDate = moment("");
 
-    constructor(private formBuilder: FormBuilder) { }
+    constructor(private formBuilder: FormBuilder) {}
 
     ngOnInit() {
         this.myForm = this.formBuilder.group({
-            datePickerFormControl: this.formBuilder.control( this.emptyDate, [Validators.required]),
+            datePickerFormControl: this.formBuilder.control(this.emptyDate, [
+                Validators.required,
+            ]),
         });
     }
 }

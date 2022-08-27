@@ -1,6 +1,13 @@
-
-export type WizardStepState = "active" | "visited" | "initial" | "error" | string;
-export type WizardStepStateConfig = Record<WizardStepState, IWizardStepStateConfig>;
+export type WizardStepState =
+    | "active"
+    | "visited"
+    | "initial"
+    | "error"
+    | string;
+export type WizardStepStateConfig = Record<
+    WizardStepState,
+    IWizardStepStateConfig
+>;
 
 export interface IWizardState {
     finished: boolean;

@@ -1,8 +1,14 @@
-<p>The <code>&lt;nui-combobox-v2&gt;</code> component allows users to select item(s) from a list.</p>
 <p>
-    Combobox works best when the options list is big enough and you need to filter it using typeahead.
-    In case your list contains few items or you need to use custom input, consider using
-    <a href="../components/SelectV2Component.html" target="_blank">Select Component</a>
+    The <code>&lt;nui-combobox-v2&gt;</code> component allows users to select
+    item(s) from a list.
+</p>
+<p>
+    Combobox works best when the options list is big enough and you need to
+    filter it using typeahead. In case your list contains few items or you need
+    to use custom input, consider using
+    <a href="../components/SelectV2Component.html" target="_blank"
+        >Select Component</a
+    >
 </p>
 
 <h2>Required Modules</h2>
@@ -13,30 +19,47 @@
 </ul>
 
 <h2>Basic Usage</h2>
-<p>To use <code>&lt;nui-combobox-v2&gt;</code>, wrap each of the options within a <code>&lt;select-v2-option&gt;</code> instance.
-    <code>&lt;select-v2-option&gt;</code> has the <code>value</code> input so that it's <strong>unique</strong> for each
-    option.</p>
+<p>
+    To use <code>&lt;nui-combobox-v2&gt;</code>, wrap each of the options within
+    a <code>&lt;select-v2-option&gt;</code> instance.
+    <code>&lt;select-v2-option&gt;</code> has the <code>value</code> input so
+    that it's <strong>unique</strong> for each option.
+</p>
 
 <p>
     You can use a <code>string</code> or an <code>object</code> as a
-    <code>value</code>.
-    In some cases, e.g. if using <em>Grouped items</em>, it's recommended
-    to use <code>object</code> and provide some id's, because you can have the same option title
-    in the different groups and it's necessary to distinguish them somehow.
-    Also, using <code>string</code> may cause <code>i18n</code> issues as far as the same value is used for model and displaying on the view.
+    <code>value</code>. In some cases, e.g. if using <em>Grouped items</em>,
+    it's recommended to use <code>object</code> and provide some id's, because
+    you can have the same option title in the different groups and it's
+    necessary to distinguish them somehow. Also, using <code>string</code> may
+    cause <code>i18n</code> issues as far as the same value is used for model
+    and displaying on the view.
 </p>
 
-<p>Wrap all of the options inside a <code>&lt;nui-combobox-v2&gt;</code> instance as a content
-    projection for the dropdown.</p>
+<p>
+    Wrap all of the options inside a
+    <code>&lt;nui-combobox-v2&gt;</code> instance as a content projection for
+    the dropdown.
+</p>
 
-<p>You can put pretty much anything inside a
-    <code>&lt;nui-combobox-v2&gt;</code> dropdown. For example, if you need the dropdown to display some
-    info text, you can project <em>standard HTML</em> into the dropdown and it will be shown as <em>standard HTML</em>
-    rather than a select option.</p>
+<p>
+    You can put pretty much anything inside a
+    <code>&lt;nui-combobox-v2&gt;</code> dropdown. For example, if you need the
+    dropdown to display some info text, you can project
+    <em>standard HTML</em> into the dropdown and it will be shown as
+    <em>standard HTML</em> rather than a select option.
+</p>
 
-<p>Highlighting of the searching string is the <b>default</b> functionality, read more about it in the <a (click)="scrollTo(typeahead)">Typeahead</a> section.</p>
+<p>
+    Highlighting of the searching string is the <b>default</b> functionality,
+    read more about it in the
+    <a (click)="scrollTo(typeahead)">Typeahead</a> section.
+</p>
 
-<nui-example-wrapper filenamePrefix="combobox-v2-basic" exampleTitle="Basic Usage">
+<nui-example-wrapper
+    filenamePrefix="combobox-v2-basic"
+    exampleTitle="Basic Usage"
+>
     <nui-combobox-v2-basic-example></nui-combobox-v2-basic-example>
 </nui-example-wrapper>
 
@@ -46,70 +69,102 @@
 <p>You can use the following ways to get a value from a combobox component:</p>
 <ul>
     <li>Access the <code>value</code> property on the component</li>
-    <li>Bind to the <code>valueSelected</code> output - emits the selected value</li>
-    <li>Bind to the <code>valueChanged</code> output - emits after <strong>input</strong> was changed</li>
+    <li>
+        Bind to the <code>valueSelected</code> output - emits the selected value
+    </li>
+    <li>
+        Bind to the <code>valueChanged</code> output - emits after
+        <strong>input</strong> was changed
+    </li>
 </ul>
 
-<nui-example-wrapper filenamePrefix="combobox-v2-getting-value" exampleTitle="Getting Value">
+<nui-example-wrapper
+    filenamePrefix="combobox-v2-getting-value"
+    exampleTitle="Getting Value"
+>
     <nui-combobox-v2-getting-value-example></nui-combobox-v2-getting-value-example>
 </nui-example-wrapper>
 
 <h3>Setting a Value</h3>
 <p>
-    To set a value for a combobox, you can use either the <code>value</code> input or
-    the reactive form control
-    <code><a href="https://angular.io/guide/reactive-forms#replacing-a-form-control-value" target="_blank">setValue</a></code>
+    To set a value for a combobox, you can use either the
+    <code>value</code> input or the reactive form control
+    <code
+        ><a
+            href="https://angular.io/guide/reactive-forms#replacing-a-form-control-value"
+            target="_blank"
+            >setValue</a
+        ></code
+    >
     method, to provide an option from the list.
 </p>
 
-<nui-example-wrapper filenamePrefix="combobox-v2-setting-value" exampleTitle="Setting Value">
+<nui-example-wrapper
+    filenamePrefix="combobox-v2-setting-value"
+    exampleTitle="Setting Value"
+>
     <nui-combobox-v2-setting-value-example></nui-combobox-v2-setting-value-example>
 </nui-example-wrapper>
 
 <h2 #typeahead>Typeahead</h2>
 <p>
-    <code>&lt;nui-combobox-v2&gt;</code> comes with built-in typeahead functionality so you can filter options
-    in the list.
+    <code>&lt;nui-combobox-v2&gt;</code> comes with built-in typeahead
+    functionality so you can filter options in the list.
 </p>
 <p>
-    To enable highlighting of the search string within the combobox options, you can use the default
-    highlighting functionality provided by the <code>nuiComboboxV2OptionHighlight</code>
+    To enable highlighting of the search string within the combobox options, you
+    can use the default highlighting functionality provided by the
+    <code>nuiComboboxV2OptionHighlight</code>
     directive:
 </p>
 <p>
     <code>&lt;span [nuiComboboxV2OptionHighlight]="item"&gt;&lt;span&gt;</code>
 </p>
 <p>
-    For more detail on how to get this working, take a look at the code inside the source expander of the
+    For more detail on how to get this working, take a look at the code inside
+    the source expander of the
     <strong>Basic Usage</strong> example above.
 </p>
 <nui-message type="info" [allowDismiss]="false">
-    <strong>Note:</strong> If you want more customization, you can implement custom highlighting via the
-    <a href="../pipes/HighlightPipe.html" target="_blank"><code>HighlightPipe</code></a> instead of <code>nuiComboboxV2OptionHighlight</code>.
+    <strong>Note:</strong> If you want more customization, you can implement
+    custom highlighting via the
+    <a href="../pipes/HighlightPipe.html" target="_blank"
+        ><code>HighlightPipe</code></a
+    >
+    instead of <code>nuiComboboxV2OptionHighlight</code>.
 </nui-message>
 <nui-message type="info" [allowDismiss]="false">
-    <strong>Note:</strong> You can disable or use custom <em>typeahead</em> behavior if the default
-    behavior doesn't meet your requirements. For that, please see the <strong>Custom Typeahead</strong>
-    section. As always, before implementing a custom behavior, it's important to consult with UX
-    leadership. This will ensure that the desired behavior conforms to the Nova Design Language.
+    <strong>Note:</strong> You can disable or use custom
+    <em>typeahead</em> behavior if the default behavior doesn't meet your
+    requirements. For that, please see the <strong>Custom Typeahead</strong>
+    section. As always, before implementing a custom behavior, it's important to
+    consult with UX leadership. This will ensure that the desired behavior
+    conforms to the Nova Design Language.
 </nui-message>
-<nui-example-wrapper filenamePrefix="combobox-v2-typeahead" exampleTitle="Typeahead">
+<nui-example-wrapper
+    filenamePrefix="combobox-v2-typeahead"
+    exampleTitle="Typeahead"
+>
     <nui-combobox-v2-typeahead-example></nui-combobox-v2-typeahead-example>
 </nui-example-wrapper>
 
 <h2>Options Customization</h2>
 <p>
-    It's possible to use a custom template for the <code>option</code>s in the list. You can use pretty
-    much any layout for the options by putting the template inside a
-    <code>&lt;select-v2-option&gt;</code> instance.
+    It's possible to use a custom template for the <code>option</code>s in the
+    list. You can use pretty much any layout for the options by putting the
+    template inside a <code>&lt;select-v2-option&gt;</code> instance.
 </p>
-<nui-example-wrapper filenamePrefix="combobox-v2-customize-options" exampleTitle="Options Customization">
+<nui-example-wrapper
+    filenamePrefix="combobox-v2-customize-options"
+    exampleTitle="Options Customization"
+>
     <nui-combobox-v2-customize-options-example></nui-combobox-v2-customize-options-example>
 </nui-example-wrapper>
 
 <h2>Grouped Options</h2>
 <p>
-    If you want to group options you can wrap them in a <code>&lt;nui-select-v2-option-group&gt;</code>
+    If you want to group options you can wrap them in a
+    <code>&lt;nui-select-v2-option-group&gt;</code>
     instance. You can also provide a header for a group (optionally).
 </p>
 <p>
@@ -117,135 +172,207 @@
     <code>.nui-select-v2-option-group--header</code> class to the header.
 </p>
 <nui-message type="info" [allowDismiss]="false">
-    <strong>Note:</strong> Technically you can use any template instead of, or in addition to, the header.
+    <strong>Note:</strong> Technically you can use any template instead of, or
+    in addition to, the header.
 </nui-message>
-<nui-example-wrapper filenamePrefix="combobox-v2-grouped-options" exampleTitle="Grouped Options Usage">
+<nui-example-wrapper
+    filenamePrefix="combobox-v2-grouped-options"
+    exampleTitle="Grouped Options Usage"
+>
     <nui-combobox-v2-grouped-options-example></nui-combobox-v2-grouped-options-example>
 </nui-example-wrapper>
 
 <h2 #reactiveForms>Using With Reactive Forms</h2>
 <p>
-    To use <code>nui-combobox-v2</code> with reactive forms, create a <code>FormControl</code> that
-    represents the form model. Then, bind <code>nui-combobox-v2</code> to this form element.
+    To use <code>nui-combobox-v2</code> with reactive forms, create a
+    <code>FormControl</code> that represents the form model. Then, bind
+    <code>nui-combobox-v2</code> to this form element.
 </p>
 <nui-message type="info" [allowDismiss]="false">
     <strong>Note:</strong> It's recommended to use the
-    <code><a href="../components/FormFieldComponent.html" target="_blank">&lt;nui-form-field&gt;</a></code>
-    component as a wrapper if you are going to use validation, captions, labels, etc.
+    <code
+        ><a href="../components/FormFieldComponent.html" target="_blank"
+            >&lt;nui-form-field&gt;</a
+        ></code
+    >
+    component as a wrapper if you are going to use validation, captions, labels,
+    etc.
 </nui-message>
-<nui-example-wrapper filenamePrefix="combobox-v2-reactive-form-field" exampleTitle="Reactive Form Field">
+<nui-example-wrapper
+    filenamePrefix="combobox-v2-reactive-form-field"
+    exampleTitle="Reactive Form Field"
+>
     <nui-combobox-v2-reactive-form-field-example></nui-combobox-v2-reactive-form-field-example>
 </nui-example-wrapper>
 
 <h2>Multiselect</h2>
 <p>
-    Combobox has a multiselect mode. To turn it on, set the <code>multiselect</code> input to
-    <code>true</code>. This allows the template you pass to the <code>inputTemplate</code> input to
-    render the selected items in a special container within the main input.
+    Combobox has a multiselect mode. To turn it on, set the
+    <code>multiselect</code> input to <code>true</code>. This allows the
+    template you pass to the <code>inputTemplate</code> input to render the
+    selected items in a special container within the main input.
 </p>
 <nui-message type="info" [allowDismiss]="false">
-    <strong>Note:</strong> It's possible to use another component for this feature in place of
-    <code><a href="../components/ChipsComponent.html" target="_blank">nui-chips</a></code>. In fact, you
-    can technically pass any template to <code>inputTemplate</code>.
+    <strong>Note:</strong> It's possible to use another component for this
+    feature in place of
+    <code
+        ><a href="../components/ChipsComponent.html" target="_blank"
+            >nui-chips</a
+        ></code
+    >. In fact, you can technically pass any template to
+    <code>inputTemplate</code>.
 </nui-message>
-<nui-example-wrapper filenamePrefix="combobox-v2-multiselect" exampleTitle="Multiselect">
+<nui-example-wrapper
+    filenamePrefix="combobox-v2-multiselect"
+    exampleTitle="Multiselect"
+>
     <nui-combobox-v2-multiselect-example></nui-combobox-v2-multiselect-example>
 </nui-example-wrapper>
 
 <h2>Creating an Option</h2>
 <p>
-    You can create new options and add them to the list. To do that, just add the option to the initial
-    list e.g. <code>options.push(option);</code>. To immediately set an added option as the selected
-    value you can use either <code>FormControl.setValue(option);</code> or the <code>value</code> input
+    You can create new options and add them to the list. To do that, just add
+    the option to the initial list e.g. <code>options.push(option);</code>. To
+    immediately set an added option as the selected value you can use either
+    <code>FormControl.setValue(option);</code> or the <code>value</code> input
     on the component.
 </p>
 <p>
-    If you want to add options using the <em>Create Option</em> button as in the example below, you
-    should add the button as a content projection along with the options themselves.
+    If you want to add options using the <em>Create Option</em> button as in the
+    example below, you should add the button as a content projection along with
+    the options themselves.
 </p>
 <nui-message type="info" [allowDismiss]="false">
-    <strong>Note:</strong> You can use the <code>.nui-combobox-v2__create-option</code> class for the
+    <strong>Note:</strong> You can use the
+    <code>.nui-combobox-v2__create-option</code> class for the
     <em>Create Option</em> block to have the same styles as the example.
 </nui-message>
-<p><code>nui-combobox-v2</code> comes with the following outputs which are useful when implementing the
-    create-option functionality:</p>
+<p>
+    <code>nui-combobox-v2</code> comes with the following outputs which are
+    useful when implementing the create-option functionality:
+</p>
 <ul>
-    <li><code>canCreateOption</code> - emits <code>true</code> when there's no such option already</li>
     <li>
-        <code>searchEmpty</code> - emits <code>true</code> when there's no option that fits search term
-        in the textbox.
+        <code>canCreateOption</code> - emits <code>true</code> when there's no
+        such option already
+    </li>
+    <li>
+        <code>searchEmpty</code> - emits <code>true</code> when there's no
+        option that fits search term in the textbox.
         <nui-message type="warning" [allowDismiss]="false">
-            <strong>Note:</strong> This is valid only if the <code>isTypeaheadEnabled</code> property is
+            <strong>Note:</strong> This is valid only if the
+            <code>isTypeaheadEnabled</code> property is
             <code>true</code> (default behavior).
         </nui-message>
     </li>
 </ul>
 <h3>Single select</h3>
-<nui-example-wrapper filenamePrefix="combobox-v2-create-option" exampleTitle="Create option">
+<nui-example-wrapper
+    filenamePrefix="combobox-v2-create-option"
+    exampleTitle="Create option"
+>
     <nui-combobox-v2-create-option-example></nui-combobox-v2-create-option-example>
 </nui-example-wrapper>
 
 <h3>Multiselect</h3>
-<nui-example-wrapper filenamePrefix="combobox-v2-create-option-multiselect" exampleTitle="Create option (Multiselect)">
+<nui-example-wrapper
+    filenamePrefix="combobox-v2-create-option-multiselect"
+    exampleTitle="Create option (Multiselect)"
+>
     <nui-combobox-v2-create-option-multiselect-example></nui-combobox-v2-create-option-multiselect-example>
 </nui-example-wrapper>
 
 <h2>Virtual Scroll</h2>
 <p>
-    The options dropdown can use virtual scroll. For that, wrap the options list in a
-    <code><a href="https://material.angular.io/cdk/scrolling/overview#virtual-scrolling" target="_blank">cdk-virtual-scroll-viewport</a></code>.
-    You can adjust virtual scroll container to your needs according to
-    <a href="https://material.angular.io/cdk/scrolling/api">Virtual Scroll API</a>.
+    The options dropdown can use virtual scroll. For that, wrap the options list
+    in a
+    <code
+        ><a
+            href="https://material.angular.io/cdk/scrolling/overview#virtual-scrolling"
+            target="_blank"
+            >cdk-virtual-scroll-viewport</a
+        ></code
+    >. You can adjust virtual scroll container to your needs according to
+    <a href="https://material.angular.io/cdk/scrolling/api"
+        >Virtual Scroll API</a
+    >.
 </p>
 <nui-message type="warning" [allowDismiss]="false">
-    <p><strong>Warning:</strong> All the items inside a dropdown <strong>must</strong> be of the same height!</p>
-    You should set <code>itemSize</code> property of <code>cdk-virtual-scroll-viewport</code> to the <strong>exact</strong> value of an option height. Otherwise, some features may not work.
+    <p>
+        <strong>Warning:</strong> All the items inside a dropdown
+        <strong>must</strong> be of the same height!
+    </p>
+    You should set <code>itemSize</code> property of
+    <code>cdk-virtual-scroll-viewport</code> to the <strong>exact</strong> value
+    of an option height. Otherwise, some features may not work.
 </nui-message>
 <nui-message type="warning" [allowDismiss]="false">
-    <strong>Note:</strong> If using virtual scroll, custom typeahead must be used. See the
-    <strong>Custom Typeahead</strong> section for how to implement that.
+    <strong>Note:</strong> If using virtual scroll, custom typeahead must be
+    used. See the <strong>Custom Typeahead</strong> section for how to implement
+    that.
 </nui-message>
-<nui-example-wrapper filenamePrefix="combobox-v2-virtual-scroll" exampleTitle="Virtual Scroll">
+<nui-example-wrapper
+    filenamePrefix="combobox-v2-virtual-scroll"
+    exampleTitle="Virtual Scroll"
+>
     <nui-combobox-v2-virtual-scroll-example></nui-combobox-v2-virtual-scroll-example>
 </nui-example-wrapper>
 
 <h2>Disabled Mode</h2>
 <p>
-    It is possible to disable either the entire <code>combobox-v2</code> or one or more
-    <code>select-v2-option</code>s. To do that, set the <code>isDisabled</code> input to true on the
-    appropriate component.
+    It is possible to disable either the entire <code>combobox-v2</code> or one
+    or more <code>select-v2-option</code>s. To do that, set the
+    <code>isDisabled</code> input to true on the appropriate component.
 </p>
-<nui-example-wrapper filenamePrefix="combobox-v2-disabled" exampleTitle="Disabled Mode">
+<nui-example-wrapper
+    filenamePrefix="combobox-v2-disabled"
+    exampleTitle="Disabled Mode"
+>
     <nui-combobox-v2-disabled-example></nui-combobox-v2-disabled-example>
 </nui-example-wrapper>
 
 <h2>Error State</h2>
 <p>
-    The <code>isInErrorState</code> input is used to set/change the visual validation state of the
-    component. This can be used in custom situations in which you need to manually indicate that the
-    component is in error state.
+    The <code>isInErrorState</code> input is used to set/change the visual
+    validation state of the component. This can be used in custom situations in
+    which you need to manually indicate that the component is in error state.
 </p>
 <nui-message type="warning" [allowDismiss]="false">
-    <strong>Note:</strong> If you want to use a combobox as a form field with validation, consider using
-    the <code><a href="../components/FormFieldComponent.html" target="_blank">nui-form-field</a></code>
-    component. For information about that, see the <strong>Using With Reactive Forms</strong> section.
+    <strong>Note:</strong> If you want to use a combobox as a form field with
+    validation, consider using the
+    <code
+        ><a href="../components/FormFieldComponent.html" target="_blank"
+            >nui-form-field</a
+        ></code
+    >
+    component. For information about that, see the
+    <strong>Using With Reactive Forms</strong> section.
 </nui-message>
-<nui-example-wrapper filenamePrefix="combobox-v2-error" exampleTitle="Error State">
+<nui-example-wrapper
+    filenamePrefix="combobox-v2-error"
+    exampleTitle="Error State"
+>
     <nui-combobox-v2-error-example></nui-combobox-v2-error-example>
 </nui-example-wrapper>
 
 <h2>Styling</h2>
 <p>
-    To style the combobox's dropdown simply use <code>overlayConfig</code> input and fill in its <code>panelClass</code> property with the global CSS class with
-    the desired styles.
+    To style the combobox's dropdown simply use <code>overlayConfig</code> input
+    and fill in its <code>panelClass</code> property with the global CSS class
+    with the desired styles.
 </p>
-<nui-example-wrapper filenamePrefix="combobox-v2-styling" exampleTitle="Styling">
+<nui-example-wrapper
+    filenamePrefix="combobox-v2-styling"
+    exampleTitle="Styling"
+>
     <nui-combobox-v2-styling-example></nui-combobox-v2-styling-example>
 </nui-example-wrapper>
 
 <h2>Inline Display Mode</h2>
 <p>
-    To put a combobox in inline display mode, add necessary styles to the component. For example, you can add bootstrap <code>d-inline-flex</code> style.
+    To put a combobox in inline display mode, add necessary styles to the
+    component. For example, you can add bootstrap
+    <code>d-inline-flex</code> style.
 </p>
 <nui-example-wrapper filenamePrefix="combobox-v2-inline" exampleTitle="Inline">
     <nui-combobox-v2-inline-example></nui-combobox-v2-inline-example>
@@ -253,73 +380,112 @@
 
 <h2>Value Removal</h2>
 <p>
-    Combobox has a "remove value" button by default. If you don't want to use it, set the
+    Combobox has a "remove value" button by default. If you don't want to use
+    it, set the
     <code>isRemoveValueEnabled</code> input to <code>false</code>.
 </p>
 
 <nui-message type="warning" [allowDismiss]="false">
-    <strong>Note:</strong> You should probably add validation as in <a (click)="scrollTo(reactiveForms)">Reactive Forms</a> section.
+    <strong>Note:</strong> You should probably add validation as in
+    <a (click)="scrollTo(reactiveForms)">Reactive Forms</a> section.
 </nui-message>
 
-<nui-example-wrapper filenamePrefix="combobox-v2-remove-value" exampleTitle="Value Removal">
+<nui-example-wrapper
+    filenamePrefix="combobox-v2-remove-value"
+    exampleTitle="Value Removal"
+>
     <nui-combobox-v2-remove-value-example></nui-combobox-v2-remove-value-example>
 </nui-example-wrapper>
 
 <h2>Overlay Configuration</h2>
 <p>
-    To adjust <code>ComboboxComponent</code>'s popup overlay properties, such as <code>width</code>,
-    <code>height</code> or other properties, set the <code>overlayConfig</code> input in accordance with
-    the Angular CDK Overlay Config
-    <a href="https://material.angular.io/cdk/overlay/api#OverlayConfig">interface</a>.<br>
-    <mark>NOTE: in case you need to set the <code>width</code> using the overlay config make sure you disable the
-    automatic width synchronization, which is enabled by default. This can be done by setting the <code>syncWidth</code>
-    input to <code>false</code></mark>
+    To adjust <code>ComboboxComponent</code>'s popup overlay properties, such as
+    <code>width</code>, <code>height</code> or other properties, set the
+    <code>overlayConfig</code> input in accordance with the Angular CDK Overlay
+    Config
+    <a href="https://material.angular.io/cdk/overlay/api#OverlayConfig"
+        >interface</a
+    >.<br />
+    <mark
+        >NOTE: in case you need to set the <code>width</code> using the overlay
+        config make sure you disable the automatic width synchronization, which
+        is enabled by default. This can be done by setting the
+        <code>syncWidth</code> input to <code>false</code></mark
+    >
     <nui-message type="info" [allowDismiss]="false">
-        <strong>Note:</strong> Select-v2 and Combobox-v2 contain default <code>with-popup-styles</code> (you can import it <code>POPUP_STYLES_CLASS</code> from <code>@nova-ui/bits</code>) class which styles the popup according to the
-        Nova Design Language. Setting custom styles through the global classes using the `panelClass` will override the default styles of the overlay.
-        If you want to preserve default overlay styles please consider adding the <code>with-popup-styles</code> class when setting styles using the <code>overlayConfig</code>.
-        Please see the example below.
+        <strong>Note:</strong> Select-v2 and Combobox-v2 contain default
+        <code>with-popup-styles</code> (you can import it
+        <code>POPUP_STYLES_CLASS</code> from <code>@nova-ui/bits</code>) class
+        which styles the popup according to the Nova Design Language. Setting
+        custom styles through the global classes using the `panelClass` will
+        override the default styles of the overlay. If you want to preserve
+        default overlay styles please consider adding the
+        <code>with-popup-styles</code> class when setting styles using the
+        <code>overlayConfig</code>. Please see the example below.
     </nui-message>
 </p>
-<nui-example-wrapper filenamePrefix="combobox-v2-overlay-config" exampleTitle="Overlay configuration">
+<nui-example-wrapper
+    filenamePrefix="combobox-v2-overlay-config"
+    exampleTitle="Overlay configuration"
+>
     <nui-combobox-v2-overlay-config-example></nui-combobox-v2-overlay-config-example>
 </nui-example-wrapper>
 
 <h2>Custom Typeahead</h2>
 <p>
-    Combobox comes with default typeahead functionality. Nevertheless, it's possible to use custom
-    typeahead logic. To do so, disable the default typeahead by setting the
-    <code>isTypeaheadEnabled</code> input to <code>false</code>. Custom typeahead involves filtering the
-    options list and updating it manually.
+    Combobox comes with default typeahead functionality. Nevertheless, it's
+    possible to use custom typeahead logic. To do so, disable the default
+    typeahead by setting the
+    <code>isTypeaheadEnabled</code> input to <code>false</code>. Custom
+    typeahead involves filtering the options list and updating it manually.
 </p>
-<nui-example-wrapper filenamePrefix="combobox-v2-custom-typeahead" exampleTitle="Custom typeahead">
+<nui-example-wrapper
+    filenamePrefix="combobox-v2-custom-typeahead"
+    exampleTitle="Custom typeahead"
+>
     <nui-combobox-v2-custom-typeahead-example></nui-combobox-v2-custom-typeahead-example>
 </nui-example-wrapper>
 
 <h2>Custom Dropdown Control</h2>
 <p>
-    Similar to <code>select-v2</code>, the <code>manualDropdownControl</code> boolean input gives you
-    total control over opening and closing the dropdown. When set to <code>true</code>, the default behavior of the
-    dropdown is blocked, and you can provide your own behavior.
+    Similar to <code>select-v2</code>, the
+    <code>manualDropdownControl</code> boolean input gives you total control
+    over opening and closing the dropdown. When set to <code>true</code>, the
+    default behavior of the dropdown is blocked, and you can provide your own
+    behavior.
 </p>
 <nui-message type="info" [allowDismiss]="false">
-    <strong>Note:</strong> The <code>clickOutsideDropdown</code> output can be used to close the dropdown
-    manually on clicks outside both the host element and the dropdown.
+    <strong>Note:</strong> The <code>clickOutsideDropdown</code> output can be
+    used to close the dropdown manually on clicks outside both the host element
+    and the dropdown.
 </nui-message>
 <nui-message type="info" [allowDismiss]="false">
-    <strong>Note:</strong> In order for keyboard navigation work as you open the dropdown you have to manually set focus to the <code>inputElement</code> in case you are triggering the dropdown outside the host element.
-    For that, you can do <code>combobox.inputElement.nativeElement.focus()</code>
+    <strong>Note:</strong> In order for keyboard navigation work as you open the
+    dropdown you have to manually set focus to the <code>inputElement</code> in
+    case you are triggering the dropdown outside the host element. For that, you
+    can do <code>combobox.inputElement.nativeElement.focus()</code>
 </nui-message>
-<nui-example-wrapper filenamePrefix="combobox-v2-custom-control" exampleTitle="Combobox custom dropdown control">
+<nui-example-wrapper
+    filenamePrefix="combobox-v2-custom-control"
+    exampleTitle="Combobox custom dropdown control"
+>
     <nui-combobox-v2-custom-control-example></nui-combobox-v2-custom-control-example>
 </nui-example-wrapper>
 
 <h2>Keyboard interaction</h2>
-<p><code>&lt;nui-combobox-v2&gt;</code> comes with built-in accessibility features:</p>
+<p>
+    <code>&lt;nui-combobox-v2&gt;</code> comes with built-in accessibility
+    features:
+</p>
 <ul>
     <li><code>TAB/Shift+TAB</code> for focusing the component.</li>
-    <li><code>ARROW UP/ARROW DOWN</code> for navigation inside an option list.</li>
-    <li><code>PAGE UP/PAGE DOWN</code> for navigation inside the list to top/bottom.</li>
+    <li>
+        <code>ARROW UP/ARROW DOWN</code> for navigation inside an option list.
+    </li>
+    <li>
+        <code>PAGE UP/PAGE DOWN</code> for navigation inside the list to
+        top/bottom.
+    </li>
     <li><code>ENTER</code> to select an option.</li>
 </ul>
 

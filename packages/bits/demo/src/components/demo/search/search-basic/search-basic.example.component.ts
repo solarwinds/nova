@@ -4,6 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-search-basic-example",
     templateUrl: "search-basic.example.component.html",
 })
-
-export class SearchBasicExampleComponent {
-}
+export class SearchBasicExampleComponent {}

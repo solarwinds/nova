@@ -1,5 +1,17 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+    ViewChild,
+} from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
+
 import { IDataField, LoggerService, SelectV2Component } from "@nova-ui/bits";
 
 import { IHasChangeDetector } from "../../../../../../types";
@@ -15,7 +27,9 @@ export interface IAggregatorConfiguratorProperties {
     templateUrl: "./aggregator-configurator.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AggregatorMetricSelectorConfigurationComponent implements OnInit, OnChanges, IHasChangeDetector {
+export class AggregatorMetricSelectorConfigurationComponent
+    implements OnInit, OnChanges, IHasChangeDetector
+{
     static lateLoadKey = "AggregatorMetricSelectorConfigurationComponent";
 
     @Input() public metrics: IDataField[];
@@ -30,10 +44,11 @@ export class AggregatorMetricSelectorConfigurationComponent implements OnInit, O
     @ViewChild("metricsSelect")
     public meticsSelect: SelectV2Component;
 
-    constructor(public changeDetector: ChangeDetectorRef,
+    constructor(
+        public changeDetector: ChangeDetectorRef,
         protected formBuilder: FormBuilder,
         protected logger: LoggerService
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         this.formReady.emit(this.form);
@@ -41,11 +56,17 @@ export class AggregatorMetricSelectorConfigurationComponent implements OnInit, O
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.activeMetricId) {
-            this.form.get("activeMetricId")?.setValue(changes.activeMetricId.currentValue);
+            this.form
+                .get("activeMetricId")
+                ?.setValue(changes.activeMetricId.currentValue);
 
-            const currentMetricConfig = this.metrics.find(m => m.id === changes.activeMetricId.currentValue);
+            const currentMetricConfig = this.metrics.find(
+                (m) => m.id === changes.activeMetricId.currentValue
+            );
             if (!currentMetricConfig) {
-                this.logger.warn(`AggregatorMetricSelectorConfigurationComponent: No metric found for id: ${changes.activeMetricId.currentValue}`);
+                this.logger.warn(
+                    `AggregatorMetricSelectorConfigurationComponent: No metric found for id: ${changes.activeMetricId.currentValue}`
+                );
             }
         }
     }
@@ -54,5 +75,4 @@ export class AggregatorMetricSelectorConfigurationComponent implements OnInit, O
         this.form.controls["activeMetricId"].reset();
         this.meticsSelect.hideDropdown();
     }
-
 }

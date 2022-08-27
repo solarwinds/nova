@@ -1,5 +1,16 @@
 import {
-    AfterContentInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Host, HostBinding, HostListener, Input, Optional, Output, ViewChild,
+    AfterContentInit,
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Host,
+    HostBinding,
+    HostListener,
+    Input,
+    Optional,
+    Output,
+    ViewChild,
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
 
@@ -12,13 +23,12 @@ export const LEGEND_SERIES_CLASS_NAME = "nui-legend-series";
 
 @Component({
     // eslint-disable-next-line
-    host: { "class": LEGEND_SERIES_CLASS_NAME },
+    host: { class: LEGEND_SERIES_CLASS_NAME },
     selector: "nui-legend-series",
     templateUrl: "./legend-series.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LegendSeriesComponent implements AfterContentInit {
-
     /**
      * Sets the series active status
      *
@@ -96,7 +106,8 @@ export class LegendSeriesComponent implements AfterContentInit {
         return this._interactive;
     }
 
-    @HostBinding(`class.${LEGEND_SERIES_CLASS_NAME}--horizontal`) public isHorizontalClassApplied = false;
+    @HostBinding(`class.${LEGEND_SERIES_CLASS_NAME}--horizontal`)
+    public isHorizontalClassApplied = false;
 
     @HostBinding(`class.inverse`)
     public get isActiveClassApplied(): boolean {
@@ -107,16 +118,19 @@ export class LegendSeriesComponent implements AfterContentInit {
     private _active = false;
     private _interactive: boolean;
 
-    constructor(@Optional() @Host() private legend: LegendComponent) { }
+    constructor(@Optional() @Host() private legend: LegendComponent) {}
 
     public ngAfterContentInit(): void {
         if (this.legend) {
-            this.legend.activeChanged.subscribe((active: boolean) => this._active = active);
+            this.legend.activeChanged.subscribe(
+                (active: boolean) => (this._active = active)
+            );
 
             this.icon = this.icon || this.legend.seriesIcon;
             this._active = this.legend.active;
             this.interactive = this.interactive ?? this.legend.interactive;
-            this.isHorizontalClassApplied = this.legend.orientation === LegendOrientation.horizontal;
+            this.isHorizontalClassApplied =
+                this.legend.orientation === LegendOrientation.horizontal;
         }
     }
 
@@ -134,13 +148,19 @@ export class LegendSeriesComponent implements AfterContentInit {
      * @returns boolean indicating whether the series has a primary or secondary description
      */
     public hasInputDescription(): boolean {
-        return !_isEmpty(this.descriptionPrimary) || !_isEmpty(this.descriptionSecondary);
+        return (
+            !_isEmpty(this.descriptionPrimary) ||
+            !_isEmpty(this.descriptionSecondary)
+        );
     }
 
     /**
      * @returns boolean indicating whether the series has a projected description
      */
     public hasProjectedDescription(): boolean {
-        return !!this.projectedDescription && this.projectedDescription.nativeElement.children.length !== 0;
+        return (
+            !!this.projectedDescription &&
+            this.projectedDescription.nativeElement.children.length !== 0
+        );
     }
 }

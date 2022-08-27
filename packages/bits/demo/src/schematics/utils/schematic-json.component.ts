@@ -6,17 +6,19 @@ import { Component, Input, OnInit } from "@angular/core";
         <div>
             <code>Schema.json <b>options:</b></code>
         </div>
-        <div *ngFor="let item of schemaViewData | keyvalue"
-                class="d-inline-block p-2">
-            <nui-popover [template]="popoverWithBasicUsage"
-                            placement="top">
-                <span class="nui-text-default--hoverable">{{item.key}}</span>
+        <div
+            *ngFor="let item of schemaViewData | keyvalue"
+            class="d-inline-block p-2"
+        >
+            <nui-popover [template]="popoverWithBasicUsage" placement="top">
+                <span class="nui-text-default--hoverable">{{ item.key }}</span>
             </nui-popover>
             <ng-template #popoverWithBasicUsage>
                 <div *ngFor="let field of fieldsToDisplay">
                     <ng-container *ngIf="item.value[field] !== undefined">
                         <div class="nui-text-default">
-                            <i style="font-weight: bold">{{ field }}: </i> <span>{{item.value[field]}}</span>
+                            <i style="font-weight: bold">{{ field }}: </i>
+                            <span>{{ item.value[field] }}</span>
                         </div>
                     </ng-container>
                 </div>
@@ -29,7 +31,13 @@ export class SchematicJsonComponent implements OnInit {
     @Input() schematicFolderName: string;
 
     public schemaViewData: any = {};
-    public fieldsToDisplay: Array<string> = ["description", "type", "enum", "alias", "default"];
+    public fieldsToDisplay: Array<string> = [
+        "description",
+        "type",
+        "enum",
+        "alias",
+        "default",
+    ];
 
     ngOnInit() {
         const schemaJson = require(`../../../../schematics/src/${this.schematicFolderName}/schema.json`);
@@ -37,8 +45,14 @@ export class SchematicJsonComponent implements OnInit {
     }
 
     private fillViewData(schemaJsonFields: any) {
-        Object.keys(schemaJsonFields).forEach(fieldName => {
-            const { description, type, enum: enumField, default: defaultField, alias: aliasField } = schemaJsonFields[fieldName];
+        Object.keys(schemaJsonFields).forEach((fieldName) => {
+            const {
+                description,
+                type,
+                enum: enumField,
+                default: defaultField,
+                alias: aliasField,
+            } = schemaJsonFields[fieldName];
             this.schemaViewData[fieldName] = {
                 description,
                 type,

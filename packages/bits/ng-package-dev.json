@@ -1,5 +1,6 @@
 {
     "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
+    "allowedNonPeerDependencies": ["."],
     "deleteDestPath": false,
     "lib": {
         "entryFile": "./src/public_api.ts",
@@ -90,6 +91,5 @@
             "angular2-logger/core": "angular2-logger/core",
             "webpack-rxjs-externals": "webpack-rxjs-externals"
         }
-    },
-    "allowedNonPeerDependencies": ["."]
+    }
 }

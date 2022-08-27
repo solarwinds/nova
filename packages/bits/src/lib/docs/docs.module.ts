@@ -12,7 +12,6 @@ import { NuiSwitchModule } from "../switch/switch.module";
 import { NuiTabsModule } from "../tabgroup/tabs.module";
 import { NuiToastModule } from "../toast/toast.module";
 import { NuiTooltipModule } from "../tooltip/tooltip.module";
-
 import { CopyTextComponent } from "./copy-text/copy-text.component";
 import { ExampleCodeComponent } from "./example-code/example-code.component";
 import { ExampleWrapperComponent } from "./example-wrapper/example-wrapper.component";
@@ -54,4 +53,4 @@ import { ThemeSwitcherComponent } from "./theme-switcher/theme-switcher.componen
         ExampleCodeComponent,
     ],
 })
-export class NuiDocsModule { }
+export class NuiDocsModule {}

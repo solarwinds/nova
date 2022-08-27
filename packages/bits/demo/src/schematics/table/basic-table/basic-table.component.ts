@@ -6,6 +6,9 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
+import { Subject } from "rxjs";
+import { takeUntil, tap } from "rxjs/operators";
+
 import {
     ClientSideDataSource,
     DataSourceService,
@@ -13,16 +16,8 @@ import {
     PaginatorComponent,
     TableComponent,
 } from "@nova-ui/bits";
-import { Subject } from "rxjs";
-import {
-    takeUntil,
-    tap,
-} from "rxjs/operators";
 
-import {
-    LOCAL_DATA,
-    RESULTS_PER_PAGE,
-} from "./basic-table-data";
+import { LOCAL_DATA, RESULTS_PER_PAGE } from "./basic-table-data";
 import { IServer } from "./types";
 
 @Component({
@@ -55,7 +50,8 @@ export class BasicTableComponent implements OnDestroy, AfterViewInit {
     private destroy$ = new Subject();
 
     constructor(
-        @Inject(DataSourceService) private dataSource: ClientSideDataSource<IServer>
+        @Inject(DataSourceService)
+        private dataSource: ClientSideDataSource<IServer>
     ) {
         this.dataSource.setData(LOCAL_DATA);
     }
@@ -65,14 +61,16 @@ export class BasicTableComponent implements OnDestroy, AfterViewInit {
             paginator: { componentInstance: this.paginator },
         });
 
-        this.dataSource.outputsSubject.pipe(
-            tap((data: INovaFilteringOutputs) => {
-                // update the list of items to be rendered
-                this.items = data.repeat?.itemsSource || [];
-                this.totalItems = data.paginator?.total ?? 0;
-            }),
-            takeUntil(this.destroy$)
-        ).subscribe();
+        this.dataSource.outputsSubject
+            .pipe(
+                tap((data: INovaFilteringOutputs) => {
+                    // update the list of items to be rendered
+                    this.items = data.repeat?.itemsSource || [];
+                    this.totalItems = data.paginator?.total ?? 0;
+                }),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
 
         await this.applyFilters();
     }

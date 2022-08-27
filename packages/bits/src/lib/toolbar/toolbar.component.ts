@@ -21,7 +21,6 @@ import { debounceTime, take, takeUntil } from "rxjs/operators";
 import { LoggerService } from "../../services/log-service";
 import { ButtonComponent } from "../button/button.component";
 import { MenuComponent } from "../menu";
-
 import {
     IToolbarGroupContent,
     IToolbarSelectionState,

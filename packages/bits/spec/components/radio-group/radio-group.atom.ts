@@ -6,13 +6,17 @@ export class RadioGroupAtom extends Atom {
     public static CSS_CLASS = "nui-radio-group";
 
     public async getValue(): Promise<string> {
-        return this.getElement().element(by.css("input:checked")).getAttribute("value");
+        return this.getElement()
+            .element(by.css("input:checked"))
+            .getAttribute("value");
     }
 
     // Finds and returns label element (clickable wrapper of radio button input element),
     // because actual input element is hidden with "appearance: none" and is not clickable
     public getRadioByValue(value: string): ElementFinder {
-        return this.getElement().element(by.css(`input[value="${value}"]`)).element(by.xpath("../.."));
+        return this.getElement()
+            .element(by.css(`input[value="${value}"]`))
+            .element(by.xpath("../.."));
     }
 
     // Finds and returns radio button input element
@@ -21,7 +25,10 @@ export class RadioGroupAtom extends Atom {
     }
 
     public async getHelpHintText(index: number): Promise<string> {
-        return this.getElement().all(by.css(".nui-help-hint")).get(index).getText();
+        return this.getElement()
+            .all(by.css(".nui-help-hint"))
+            .get(index)
+            .getText();
     }
 
     public async getNumberOfItems(): Promise<number> {
@@ -33,7 +40,9 @@ export class RadioGroupAtom extends Atom {
     }
 
     public async getNumberOfDisabledItems(): Promise<number> {
-        return this.getElement().all(by.css(".nui-radio__input[disabled]")).count();
+        return this.getElement()
+            .all(by.css(".nui-radio__input[disabled]"))
+            .count();
     }
 
     public async isRadioSelected(value: string): Promise<boolean> {

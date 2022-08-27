@@ -8,7 +8,6 @@ import { EdgeDetectionService } from "../../services/edge-detection.service";
 import { LoggerService } from "../../services/log-service";
 import { PositionService } from "../../services/position.service";
 import { OverlayArrowComponent } from "../overlay/arrow-component/overlay-arrow.component";
-
 import { PopoverModalComponent } from "./popover-modal.component";
 
 describe("components >", () => {
@@ -19,8 +18,17 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [PopoverModalComponent, IconComponent, OverlayArrowComponent],
-                providers: [EdgeDetectionService, LoggerService, IconService, PositionService],
+                declarations: [
+                    PopoverModalComponent,
+                    IconComponent,
+                    OverlayArrowComponent,
+                ],
+                providers: [
+                    EdgeDetectionService,
+                    LoggerService,
+                    IconService,
+                    PositionService,
+                ],
             });
             fixture = TestBed.createComponent(PopoverModalComponent);
             subject = fixture.componentInstance;
@@ -32,14 +40,18 @@ describe("components >", () => {
                 subject.popoverModalEventSubject = new Subject();
                 spyOn(subject.popoverModalEventSubject, "next");
                 debugElement.triggerEventHandler("mouseenter", null);
-                expect(subject.popoverModalEventSubject.next).toHaveBeenCalledWith("mouse-enter");
+                expect(
+                    subject.popoverModalEventSubject.next
+                ).toHaveBeenCalledWith("mouse-enter");
             });
 
             it("should call popoverHoverSubject.next with mouse-leave param", () => {
                 subject.popoverModalEventSubject = new Subject();
                 spyOn(subject.popoverModalEventSubject, "next");
                 debugElement.triggerEventHandler("mouseleave", null);
-                expect(subject.popoverModalEventSubject.next).toHaveBeenCalledWith("mouse-leave");
+                expect(
+                    subject.popoverModalEventSubject.next
+                ).toHaveBeenCalledWith("mouse-leave");
             });
         });
 

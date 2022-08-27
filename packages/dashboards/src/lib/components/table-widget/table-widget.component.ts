@@ -19,6 +19,12 @@ import {
     ViewChild,
     ViewChildren,
 } from "@angular/core";
+import get from "lodash/get";
+import isEqual from "lodash/isEqual";
+import omit from "lodash/omit";
+import { BehaviorSubject, merge, Observable, of, Subject } from "rxjs";
+import { filter, map, take, takeUntil, tap } from "rxjs/operators";
+
 import {
     DEFAULT_INTERACTIVE_ELEMENTS,
     EventBus,
@@ -34,19 +40,23 @@ import {
     TableRowComponent,
     VirtualViewportManager,
 } from "@nova-ui/bits";
-import get from "lodash/get";
-import isEqual from "lodash/isEqual";
-import omit from "lodash/omit";
-import { BehaviorSubject, merge, Observable, of, Subject } from "rxjs";
-import { filter, map, take, takeUntil, tap } from "rxjs/operators";
 
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { TableFormatterRegistryService } from "../../services/table-formatter-registry.service";
-import { INTERACTION, REFRESH, WIDGET_READY, WIDGET_RESIZE } from "../../services/types";
+import {
+    INTERACTION,
+    REFRESH,
+    WIDGET_READY,
+    WIDGET_RESIZE,
+} from "../../services/types";
 import { WidgetConfigurationService } from "../../services/widget-configuration.service";
-import { DATA_SOURCE, PizzagnaLayer, PIZZAGNA_EVENT_BUS, WellKnownDataSourceFeatures } from "../../types";
+import {
+    DATA_SOURCE,
+    PizzagnaLayer,
+    PIZZAGNA_EVENT_BUS,
+    WellKnownDataSourceFeatures,
+} from "../../types";
 import { ITableFormatterDefinition } from "../types";
-
 import { SearchFeatureAddonService } from "./addons/search-feature-addon.service";
 import { VirtualScrollFeatureAddonService } from "./addons/virtual-scroll-feature-addon.service";
 import { ITableWidgetColumnConfig, ITableWidgetConfig } from "./types";
@@ -66,7 +76,9 @@ import { ITableWidgetColumnConfig, ITableWidgetConfig } from "./types";
         "[class.table-widget-fullwidth]": "true",
     },
 })
-export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy, OnInit {
+export class TableWidgetComponent
+    implements AfterViewInit, OnChanges, OnDestroy, OnInit
+{
     static lateLoadKey = "TableWidgetComponent";
 
     @Input() public widgetData: any[];
@@ -99,7 +111,10 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
     public headers: string[];
     public sortedColumn: ISortedItem;
     public columns: ITableWidgetColumnConfig[] = [];
-    public columnsWidthMap: Map<string, (number | undefined)> = new Map<string, (number | undefined)>();
+    public columnsWidthMap: Map<string, number | undefined> = new Map<
+        string,
+        number | undefined
+    >();
     public hasVirtualScroll: boolean = true;
     public tableContainerHeight: number;
     public isSearchEnabled: boolean = false;
@@ -107,12 +122,15 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
     public searchValue: string;
     public onDestroy$: Subject<void> = new Subject<void>();
     public tableUpdate$: Subject<void> = new Subject<void>();
-    public mousePresent$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    public mousePresent$: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
     public rowHeight: number = 24;
 
     public set scrollBuffer(value: number) {
         if (value > 100 || value < 0) {
-            throw new Error("Invalid scroll buffer provided. Required range 1..100");
+            throw new Error(
+                "Invalid scroll buffer provided. Required range 1..100"
+            );
         }
         this._scrollBuffer = value;
     }
@@ -135,27 +153,35 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
     public isBusy: boolean = this.lastPageFetched !== this.totalPages;
 
     @ViewChild("widgetTable") table: TableComponent<any>;
-    @ViewChild(CdkVirtualScrollViewport) vscrollViewport?: CdkVirtualScrollViewport;
-    @ViewChildren(TableRowComponent, { read: ElementRef }) tableRows: QueryList<ElementRef>;
+    @ViewChild(CdkVirtualScrollViewport)
+    vscrollViewport?: CdkVirtualScrollViewport;
+    @ViewChildren(TableRowComponent, { read: ElementRef })
+    tableRows: QueryList<ElementRef>;
 
     public get interactive() {
-        return this.configuration?.interactive ||
-            this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.Interactivity)?.enabled;
+        return (
+            this.configuration?.interactive ||
+            this.dataSource?.features?.getFeatureConfig(
+                WellKnownDataSourceFeatures.Interactivity
+            )?.enabled
+        );
     }
 
-    constructor(@Inject(PIZZAGNA_EVENT_BUS) public eventBus: EventBus<IEvent>,
-                @Optional() @Inject(DATA_SOURCE) public dataSource: IDataSource,
-                @Optional() private widgetConfigurationService: WidgetConfigurationService,
-                public changeDetector: ChangeDetectorRef,
-                public pizzagnaService: PizzagnaService,
-                public viewportManager: VirtualViewportManager,
-                public zone: NgZone,
-                private el: ElementRef,
-                private logger: LoggerService,
-                private searchAddon: SearchFeatureAddonService,
-                public virtualScrollAddon: VirtualScrollFeatureAddonService,
-                private formattersRegistryService: TableFormatterRegistryService) {
-    }
+    constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) public eventBus: EventBus<IEvent>,
+        @Optional() @Inject(DATA_SOURCE) public dataSource: IDataSource,
+        @Optional()
+        private widgetConfigurationService: WidgetConfigurationService,
+        public changeDetector: ChangeDetectorRef,
+        public pizzagnaService: PizzagnaService,
+        public viewportManager: VirtualViewportManager,
+        public zone: NgZone,
+        private el: ElementRef,
+        private logger: LoggerService,
+        private searchAddon: SearchFeatureAddonService,
+        public virtualScrollAddon: VirtualScrollFeatureAddonService,
+        private formattersRegistryService: TableFormatterRegistryService
+    ) {}
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.dataFields) {
@@ -175,16 +201,26 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
         if (changes.configuration) {
             // Note: We don't have to trigger sorting in case sortable flag is false.
             // Note: Using true as a default sortable value to maintain backward compatibility
-            if (this.isSortByUpdated(changes.configuration) && (changes.configuration.currentValue.sortable ?? true)) {
+            if (
+                this.isSortByUpdated(changes.configuration) &&
+                (changes.configuration.currentValue.sortable ?? true)
+            ) {
                 const sortedColumn = {
-                    direction: changes.configuration.currentValue.sorterConfiguration.descendantSorting ?
-                        SorterDirection.descending : SorterDirection.ascending,
-                    sortBy: changes.configuration.currentValue.sorterConfiguration.sortBy,
+                    direction: changes.configuration.currentValue
+                        .sorterConfiguration.descendantSorting
+                        ? SorterDirection.descending
+                        : SorterDirection.ascending,
+                    sortBy: changes.configuration.currentValue
+                        .sorterConfiguration.sortBy,
                 };
                 this.onSortOrderChanged(sortedColumn);
             }
 
-            const newHasVirtualScroll = get(changes, "configuration.currentValue.hasVirtualScroll", true) as boolean;
+            const newHasVirtualScroll = get(
+                changes,
+                "configuration.currentValue.hasVirtualScroll",
+                true
+            ) as boolean;
             if (this.hasVirtualScroll !== newHasVirtualScroll) {
                 this.hasVirtualScroll = newHasVirtualScroll;
                 this.virtualScrollAddon.initVirtualScroll();
@@ -194,7 +230,6 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
         if (changes.totalItems) {
             this.totalPages = Math.floor((this.totalItems ?? 0) / this.range);
         }
-
     }
 
     public ngOnInit(): void {
@@ -211,20 +246,30 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
             return;
         }
 
-        this.dataSource.busy?.pipe(
-            tap(isBusy => this.isBusy = isBusy),
-            takeUntil(this.onDestroy$)
-        ).subscribe();
+        this.dataSource.busy
+            ?.pipe(
+                tap((isBusy) => (this.isBusy = isBusy)),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe();
 
         this.virtualScrollAddon.initVirtualScroll();
         this.searchAddon.initWidget(this);
-        const tableHeightChanged$: Observable<number> = this.eventBus.getStream(WIDGET_RESIZE).pipe(
-            filter(event => event.payload.widgetId === this.widgetConfigurationService.getWidget().id),
-            map(event => event.payload.height));
+        const tableHeightChanged$: Observable<number> = this.eventBus
+            .getStream(WIDGET_RESIZE)
+            .pipe(
+                filter(
+                    (event) =>
+                        event.payload.widgetId ===
+                        this.widgetConfigurationService.getWidget().id
+                ),
+                map((event) => event.payload.height)
+            );
 
         // subscribing to widget resize event from dashboard and update virtual scroll viewport size
-        tableHeightChanged$.pipe(takeUntil(this.onDestroy$))
-            .subscribe(height => {
+        tableHeightChanged$
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((height) => {
                 this.tableContainerHeight = height - this.indentFromTop;
                 this.vscrollViewport?.checkViewportSize();
                 this.changeDetector.detectChanges();
@@ -239,17 +284,18 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
                 of(this.range * this.rowHeight),
                 tableHeightChanged$,
                 of(this.el.nativeElement.getBoundingClientRect().height)
-            ).pipe(
-                filter(value => !!value),
-                take(1),
-                tap((value) => {
-                    this.tableWidgetHeight = value;
-                    this.virtualScrollAddon.subscribeToVirtualScroll();
-                    this.eventBus.getStream(WIDGET_READY).next();
-                })
-            ).subscribe();
+            )
+                .pipe(
+                    filter((value) => !!value),
+                    take(1),
+                    tap((value) => {
+                        this.tableWidgetHeight = value;
+                        this.virtualScrollAddon.subscribeToVirtualScroll();
+                        this.eventBus.getStream(WIDGET_READY).next();
+                    })
+                )
+                .subscribe();
         });
-
     }
 
     public ngOnDestroy(): void {
@@ -259,11 +305,14 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
         this.searchTerm$?.complete();
 
         // erase the error status when this component gets destroyed to prevent an error status leak when changing data sources
-        this.pizzagnaService.setProperty({
-            componentId: "bodyContent",
-            propertyPath: ["fallbackKey"],
-            pizzagnaKey: PizzagnaLayer.Data,
-        }, undefined);
+        this.pizzagnaService.setProperty(
+            {
+                componentId: "bodyContent",
+                propertyPath: ["fallbackKey"],
+                pizzagnaKey: PizzagnaLayer.Data,
+            },
+            undefined
+        );
     }
 
     /** Checks if table should be displayed */
@@ -271,7 +320,8 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
         const columnsCondition = this.columns.length > 0;
         const dataCondition = this.tableData?.length > 0;
 
-        return this.isSearchEnabled || (this.hasVirtualScroll && (this.isBusy || this.idle))
+        return this.isSearchEnabled ||
+            (this.hasVirtualScroll && (this.isBusy || this.idle))
             ? columnsCondition
             : columnsCondition && dataCondition;
     }
@@ -290,9 +340,11 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
      */
     public updateColumns(configuration: ITableWidgetConfig): void {
         this.headers = configuration.columns
-            .filter(item => item.isActive)
-            .map(item => item.id);
-        const allColumnsHaveWidthSpecified = configuration.columns.every(column => Boolean(column.width));
+            .filter((item) => item.isActive)
+            .map((item) => item.id);
+        const allColumnsHaveWidthSpecified = configuration.columns.every(
+            (column) => Boolean(column.width)
+        );
 
         const columns = configuration.columns.map((column, index, array) => {
             this.columnsWidthMap.set(column.id, column.width);
@@ -302,12 +354,17 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
             }
             return {
                 ...column,
-                sortable: this.sortableSet[column?.formatter?.properties?.dataFieldIds?.value] ?? true,
+                sortable:
+                    this.sortableSet[
+                        column?.formatter?.properties?.dataFieldIds?.value
+                    ] ?? true,
             };
         });
 
         if (columns.length > 0 && allColumnsHaveWidthSpecified) {
-            this.logger.warn(`Cannot set width for all columns. Resetting last column width.`);
+            this.logger.warn(
+                `Cannot set width for all columns. Resetting last column width.`
+            );
         }
 
         if (this.columns.length !== columns.length) {
@@ -331,31 +388,44 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
      * @param dataFields
      * @returns any[]
      */
-    public mapTableData(tableData: any[], columns: ITableWidgetColumnConfig[], dataFields: IDataField[]): any[] {
+    public mapTableData(
+        tableData: any[],
+        columns: ITableWidgetColumnConfig[],
+        dataFields: IDataField[]
+    ): any[] {
         if (!dataFields || dataFields.length === 0) {
-            this.logger.warn("There are no data fields defined, so table data cannot be displayed.");
+            this.logger.warn(
+                "There are no data fields defined, so table data cannot be displayed."
+            );
             return [];
         }
 
-        return tableData.map(record => {
-            const row = columns.reduce((result: Record<string, any>, column) => {
-                const dataFieldIds = column.formatter?.properties?.dataFieldIds;
-                if (!dataFieldIds) {
+        return tableData.map((record) => {
+            const row = columns.reduce(
+                (result: Record<string, any>, column) => {
+                    const dataFieldIds =
+                        column.formatter?.properties?.dataFieldIds;
+                    if (!dataFieldIds) {
+                        return result;
+                    }
+
+                    const data = Object.keys(dataFieldIds).reduce(
+                        (mapping: Record<string, any>, next) => {
+                            mapping[next] = record[dataFieldIds[next]];
+                            return mapping;
+                        },
+                        {}
+                    );
+
+                    result[column.id] = {
+                        data,
+                        ...omit(column.formatter?.properties, "dataFieldIds"),
+                    };
+
                     return result;
-                }
-
-                const data = Object.keys(dataFieldIds).reduce((mapping: Record<string, any>, next) => {
-                    mapping[next] = record[dataFieldIds[next]];
-                    return mapping;
-                }, {});
-
-                result[column.id] = {
-                    data,
-                    ...omit(column.formatter?.properties, "dataFieldIds"),
-                };
-
-                return result;
-            }, {});
+                },
+                {}
+            );
 
             // we want to include original record for row interaction
             row.__record = record;
@@ -370,7 +440,9 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
      */
     public onSortOrderChanged(event: ISortedItem) {
         this.sortedColumn = event;
-        const columnToSort = this.columns.find(column => column.id === event.sortBy);
+        const columnToSort = this.columns.find(
+            (column) => column.id === event.sortBy
+        );
         if (!columnToSort) {
             return;
         }
@@ -403,14 +475,18 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
             return;
         }
 
-        const ignoredSelectors = this.configuration.interactionIgnoredSelectors || DEFAULT_INTERACTIVE_ELEMENTS;
+        const ignoredSelectors =
+            this.configuration.interactionIgnoredSelectors ||
+            DEFAULT_INTERACTIVE_ELEMENTS;
 
         // avoid emitting events when an ignored element was clicked
         if ((event.target as HTMLElement).closest(ignoredSelectors.join(","))) {
             return;
         }
 
-        this.eventBus.getStream(INTERACTION).next({ payload: { data: row.__record } });
+        this.eventBus
+            .getStream(INTERACTION)
+            .next({ payload: { data: row.__record } });
     }
 
     public onSearchInputChanged(searchTerm: string) {
@@ -418,34 +494,55 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
         this.searchTerm$.next();
     }
 
-    public getColumnAlignment(column: ITableWidgetColumnConfig): TableAlignmentOptions {
+    public getColumnAlignment(
+        column: ITableWidgetColumnConfig
+    ): TableAlignmentOptions {
         // Note: In case we have provided formatters by old manner (via config)
         // we don't have to proceed with calculations
-        if (!column?.formatter?.componentType || this.formattersRegistryService.isEmpty) {
+        if (
+            !column?.formatter?.componentType ||
+            this.formattersRegistryService.isEmpty
+        ) {
             return this.defaultColumnAlignment;
         }
 
         // Note: We don't want to invoke getFormattersMap() on every change detection cycle
         // but only when it was changed
-        if (this.formatters?.version !== this.formattersRegistryService.stateVersion) {
+        if (
+            this.formatters?.version !==
+            this.formattersRegistryService.stateVersion
+        ) {
             this.formatters = {
                 // Transforming array into map
-                items: this.formattersRegistryService.getItems()
-                    .reduce((prev, next) => ({ ...prev, [next.componentType]: next }), {}),
+                items: this.formattersRegistryService.getItems().reduce(
+                    (prev, next) => ({
+                        ...prev,
+                        [next.componentType]: next,
+                    }),
+                    {}
+                ),
                 version: this.formattersRegistryService.stateVersion,
             };
         }
 
-        return this.formatters.items[column.formatter.componentType]?.alignment || this.defaultColumnAlignment;
+        return (
+            this.formatters.items[column.formatter.componentType]?.alignment ||
+            this.defaultColumnAlignment
+        );
     }
 
     private setSortFilter() {
         if (this.configuration) {
             const sortBy = this.configuration.sorterConfiguration?.sortBy;
-            const columnValue = this.configuration.columns?.find(column => column.id === sortBy)?.formatter?.properties?.dataFieldIds?.value;
+            const columnValue = this.configuration.columns?.find(
+                (column) => column.id === sortBy
+            )?.formatter?.properties?.dataFieldIds?.value;
 
             this.sortFilter = {
-                direction: this.configuration.sorterConfiguration?.descendantSorting ? SorterDirection.descending : SorterDirection.ascending,
+                direction: this.configuration.sorterConfiguration
+                    ?.descendantSorting
+                    ? SorterDirection.descending
+                    : SorterDirection.ascending,
                 sortBy: columnValue,
             };
         }
@@ -456,16 +553,20 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
      * @param state
      */
     private isSortByUpdated(configuration: SimpleChange) {
-        const oldSorterConfiguration = configuration.previousValue?.sorterConfiguration;
-        const newSorterConfiguration = configuration.currentValue.sorterConfiguration;
+        const oldSorterConfiguration =
+            configuration.previousValue?.sorterConfiguration;
+        const newSorterConfiguration =
+            configuration.currentValue.sorterConfiguration;
         const oldSortById = oldSorterConfiguration?.sortBy;
         const newSortById = newSorterConfiguration?.sortBy;
         if (!newSortById) {
             return Boolean(oldSortById);
         }
 
-        const equalSortingState = oldSortById === newSortById
-            && newSorterConfiguration.descendantSorting === oldSorterConfiguration.descendantSorting;
+        const equalSortingState =
+            oldSortById === newSortById &&
+            newSorterConfiguration.descendantSorting ===
+                oldSorterConfiguration.descendantSorting;
 
         return !equalSortingState;
     }
@@ -477,7 +578,11 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
         if (this.widgetData && this.dataFields && this.configuration.columns) {
             this.updateColumns(this.configuration);
             this.idle = false;
-            this.tableData = this.mapTableData(this.widgetData, this.configuration.columns, this.dataFields);
+            this.tableData = this.mapTableData(
+                this.widgetData,
+                this.configuration.columns,
+                this.dataFields
+            );
             this.tableUpdate$.next();
             this.changeDetector.detectChanges();
         }
@@ -490,10 +595,11 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
         this.dataSource.registerComponent({
             sorter: {
                 componentInstance: {
-                    getFilters: () => <IFilter<ISortedItem>>({
-                        type: "sorter",
-                        value: this.sortFilter,
-                    }),
+                    getFilters: () =>
+                        <IFilter<ISortedItem>>{
+                            type: "sorter",
+                            value: this.sortFilter,
+                        },
                 },
             },
         });
@@ -518,7 +624,7 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
         // will not be scrollable/work properly because all the items fits the screen.
         // We're adding 50% more items and in this case, we're covered even the user provides 0% buffer.
         const internalBuffer: number = 2;
-        const scrollBuffer: number = ((this._scrollBuffer ?? 0) / 100) + 1;
+        const scrollBuffer: number = (this._scrollBuffer ?? 0) / 100 + 1;
 
         if (this._range) {
             // Note: In case user provided a range we don't need
@@ -526,6 +632,10 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
             return Math.floor(this._range * scrollBuffer);
         }
 
-        return Math.floor(this.tableWidgetHeight / this.rowHeight * internalBuffer * scrollBuffer);
+        return Math.floor(
+            (this.tableWidgetHeight / this.rowHeight) *
+                internalBuffer *
+                scrollBuffer
+        );
     }
 }

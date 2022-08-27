@@ -14,8 +14,8 @@ import { IFilter, IFilterPub } from "../../services/data-source/public-api";
 @Component({
     selector: "nui-search",
     host: {
-        "class": "nui-search",
-        "role": "search",
+        class: "nui-search",
+        role: "search",
     },
     templateUrl: "./search.component.html",
     styleUrls: ["./search.component.less"],
@@ -83,7 +83,7 @@ export class SearchComponent implements IFilterPub, OnDestroy {
     public searchIconColor: string = "gray";
 
     constructor() {
-        this.defaultPlaceholder = $localize `Search`;
+        this.defaultPlaceholder = $localize`Search`;
     }
 
     public getFilters(): IFilter<string> {
@@ -131,5 +131,4 @@ export class SearchComponent implements IFilterPub, OnDestroy {
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }
-
 }

@@ -45,8 +45,12 @@
             z-index: @zindex-modal-background;
             .setCssVariable(background-color, nui-color-overlay-modal);
             // Fade for backdrop
-            &.fade { .opacity(0); }
-            &.in { .opacity(@dialog-backdrop-opacity); }
+            &.fade {
+                .opacity(0);
+            }
+            &.in {
+                .opacity(@dialog-backdrop-opacity);
+            }
         }
     }
 
@@ -58,7 +62,8 @@
     &__header {
         &--with-border {
             border-bottom: 1px solid @nui-color-line-default;
-            border-bottom: 1px solid var(--nui-color-line-default,@nui-color-line-default);
+            border-bottom: 1px solid
+                var(--nui-color-line-default, @nui-color-line-default);
         }
     }
 
@@ -79,7 +84,8 @@
 
     &__icon {
         float: left;
-        margin: (@nui-space-sm + @nui-space-xxs) @nui-space-xs @nui-space-sm @nui-space-sm;
+        margin: (@nui-space-sm + @nui-space-xxs) @nui-space-xs @nui-space-sm
+            @nui-space-sm;
 
         .nui-icon {
             margin: 0;
@@ -98,7 +104,8 @@
 
     &--shadow {
         box-shadow: 0 3px 9px @nui-color-overlay-dark;
-        box-shadow: 0 3px 9px var(--nui-color-overlay-dark,@nui-color-overlay-dark);
+        box-shadow: 0 3px 9px
+            var(--nui-color-overlay-dark, @nui-color-overlay-dark);
     }
 
     &--hidden {

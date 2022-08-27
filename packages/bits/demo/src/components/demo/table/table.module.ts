@@ -2,6 +2,7 @@ import { ScrollingModule } from "@angular/cdk/scrolling";
 import { DatePipe } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
+
 import {
     DEMO_PATH_TOKEN,
     NuiButtonModule,
@@ -58,8 +59,8 @@ const routes = [
         path: "",
         component: TableDocsComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.ga,
+            srlc: {
+                stage: SrlcStage.ga,
             },
             showThemeSwitcher: true,
         },
@@ -68,8 +69,8 @@ const routes = [
         path: "table-test",
         component: TableTestComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.ga,
+            srlc: {
+                stage: SrlcStage.ga,
             },
         },
     },
@@ -77,8 +78,8 @@ const routes = [
         path: "basic",
         component: TableBasicExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -86,8 +87,8 @@ const routes = [
         path: "width-set",
         component: TableCellWidthSetExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -95,8 +96,8 @@ const routes = [
         path: "pagination",
         component: TablePaginationExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -104,8 +105,8 @@ const routes = [
         path: "search",
         component: TableSearchExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -113,8 +114,8 @@ const routes = [
         path: "height",
         component: TableRowHeightSetExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -122,8 +123,8 @@ const routes = [
         path: "custom-actions",
         component: TableColumnsAddRemoveExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -131,8 +132,8 @@ const routes = [
         path: "sorting",
         component: TableSortingExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -140,8 +141,8 @@ const routes = [
         path: "reorder",
         component: TableReorderExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -149,8 +150,8 @@ const routes = [
         path: "resize",
         component: TableResizeExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -158,8 +159,8 @@ const routes = [
         path: "selectable-toggle",
         component: TableSelectableToggleExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -167,8 +168,8 @@ const routes = [
         path: "select",
         component: TableSelectExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -176,8 +177,8 @@ const routes = [
         path: "visual-test",
         component: TableVisualTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -185,8 +186,8 @@ const routes = [
         path: "table-row-clickable",
         component: TableRowClickableExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -194,8 +195,8 @@ const routes = [
         path: "virtual-1",
         component: TableVirtualScrollRealApiExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -203,8 +204,8 @@ const routes = [
         path: "virtual-2",
         component: TableVirtualScrollRealApiMinimalistExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -212,8 +213,8 @@ const routes = [
         path: "step",
         component: TableVirtualScrollStepsAndButtonExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -221,8 +222,8 @@ const routes = [
         path: "sticky",
         component: TableVirtualScrollStickyHeaderExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -230,8 +231,8 @@ const routes = [
         path: "sticky-test",
         component: TableVirtualScrollStickyHeaderTestExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -239,8 +240,8 @@ const routes = [
         path: "select-sticky",
         component: TableVirtualScrollSelectStickyHeaderExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -300,12 +301,14 @@ const routes = [
         DatePipe,
         {
             provide: DEMO_PATH_TOKEN,
-            useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/),
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
         },
     ],
-    exports: [
-        RouterModule,
-    ],
+    exports: [RouterModule],
 })
-export class TableModule {
-}
+export class TableModule {}

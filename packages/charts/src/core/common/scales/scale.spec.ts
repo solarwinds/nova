@@ -3,10 +3,12 @@ import { Scale } from "./scale";
 class TestScale extends Scale<any> {
     public mockDomain = [0, 0];
 
-    constructor() { super(); }
+    constructor() {
+        super();
+    }
 
     protected createD3Scale(): any {
-        return { domain: (): any[] => this.mockDomain};
+        return { domain: (): any[] => this.mockDomain };
     }
 
     // @ts-ignore: Disabled for testing purposes

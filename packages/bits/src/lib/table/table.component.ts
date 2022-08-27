@@ -47,7 +47,6 @@ import { Subscription } from "rxjs";
 import { IFilteringParticipants, ISelection } from "../../services/public-api";
 import { ComponentChanges } from "../../types";
 import { ISortedItem, SorterDirection } from "../sorter/public-api";
-
 import { TableStateHandlerService } from "./table-state-handler.service";
 
 // <example-url>./../examples/index.html#/table</example-url>
@@ -83,7 +82,8 @@ interface TableRowData {
 })
 export class TableComponent<T>
     extends CdkTable<T>
-    implements OnInit, AfterViewInit, AfterContentInit, OnDestroy, OnChanges {
+    implements OnInit, AfterViewInit, AfterContentInit, OnDestroy, OnChanges
+{
     @Input() reorderable = false;
     @Input() sortable = false;
     @Input() resizable = false;
@@ -155,21 +155,21 @@ export class TableComponent<T>
         return !this.sortable
             ? {}
             : {
-                sorter: {
-                    componentInstance: {
-                        // mark this filter to be monitored by our datasource for any changes in order reset other filters(eg: pagination)
-                        // before any new search is performed
-                        detectFilterChanges: true,
-                        getFilters: () => ({
-                            type: "sorter",
-                            value: {
-                                sortBy: this.sortBy,
-                                direction: this.sortDirection,
-                            },
-                        }),
-                    },
-                },
-            };
+                  sorter: {
+                      componentInstance: {
+                          // mark this filter to be monitored by our datasource for any changes in order reset other filters(eg: pagination)
+                          // before any new search is performed
+                          detectFilterChanges: true,
+                          getFilters: () => ({
+                              type: "sorter",
+                              value: {
+                                  sortBy: this.sortBy,
+                                  direction: this.sortDirection,
+                              },
+                          }),
+                      },
+                  },
+              };
     }
 
     public getPreselectedItems(items: T[]): T[] {

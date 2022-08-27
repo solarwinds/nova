@@ -4,7 +4,6 @@ import { NuiCommonModule } from "../../common/common.module";
 import { NuiIconModule } from "../icon/icon.module";
 import { NuiOverlayAdditionsModule } from "../overlay/overlay-additions.module";
 import { NuiOverlayModule } from "../overlay/overlay.module";
-
 import { PopoverModalComponent } from "./popover-modal.component";
 import { PopoverComponent } from "./popover.component";
 
@@ -18,15 +17,8 @@ import { PopoverComponent } from "./popover.component";
         NuiOverlayModule,
         NuiOverlayAdditionsModule,
     ],
-    declarations: [
-        PopoverModalComponent,
-        PopoverComponent,
-    ],
-    exports: [
-        PopoverComponent,
-        PopoverModalComponent,
-    ],
+    declarations: [PopoverModalComponent, PopoverComponent],
+    exports: [PopoverComponent, PopoverModalComponent],
     providers: [],
 })
-export class NuiPopoverModule {
-}
+export class NuiPopoverModule {}

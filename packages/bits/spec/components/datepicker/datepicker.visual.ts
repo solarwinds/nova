@@ -3,7 +3,6 @@ import { browser } from "protractor";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-
 import { DatepickerAtom } from "./datepicker.atom";
 
 const name: string = "DatePicker";
@@ -14,8 +13,11 @@ describe(`Visual tests: ${name}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("date-picker/date-picker-visual-test");
-        datepickerBasic = Atom.find(DatepickerAtom, "nui-basic-usage-datepicker");
-        
+        datepickerBasic = Atom.find(
+            DatepickerAtom,
+            "nui-basic-usage-datepicker"
+        );
+
         camera = new Camera().loadFilm(browser, name);
     });
 

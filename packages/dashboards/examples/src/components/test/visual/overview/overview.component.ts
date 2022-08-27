@@ -1,13 +1,38 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { SearchService, ThemeSwitchService } from "@nova-ui/bits";
-import { DATA_SOURCE, IDashboard, IWidget, PIZZAGNA_EVENT_BUS, ProviderRegistryService, WidgetTypesService } from "@nova-ui/dashboards";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    OnInit,
+    ViewEncapsulation,
+} from "@angular/core";
 import keyBy from "lodash/keyBy";
 
-import { TestKpiDataSource, TestKpiDataSource2 } from "../../data/kpi-data-sources";
-import { TestProportionalDataSource, TestProportionalDataSource2, TestProportionalDataSource3 } from "../../data/proportional-data-sources";
-import { TestTableDataSource, TestTableDataSource2 } from "../../data/table-datasources";
-import { TestTimeseriesDataSource, TestTimeseriesDataSource2 } from "../../data/timeseries-data-sources";
+import { SearchService, ThemeSwitchService } from "@nova-ui/bits";
+import {
+    DATA_SOURCE,
+    IDashboard,
+    IWidget,
+    PIZZAGNA_EVENT_BUS,
+    ProviderRegistryService,
+    WidgetTypesService,
+} from "@nova-ui/dashboards";
 
+import {
+    TestKpiDataSource,
+    TestKpiDataSource2,
+} from "../../data/kpi-data-sources";
+import {
+    TestProportionalDataSource,
+    TestProportionalDataSource2,
+    TestProportionalDataSource3,
+} from "../../data/proportional-data-sources";
+import {
+    TestTableDataSource,
+    TestTableDataSource2,
+} from "../../data/table-datasources";
+import {
+    TestTimeseriesDataSource,
+    TestTimeseriesDataSource2,
+} from "../../data/timeseries-data-sources";
 import { AcmeFormSubmitHandler } from "./acme-form-submit-handler";
 import { positions, widgets } from "./widgets";
 
@@ -37,10 +62,12 @@ export class AcmeDashboardComponent implements OnInit {
     public editMode = false;
     public dsError = false;
 
-    constructor(private providerRegistry: ProviderRegistryService,
+    constructor(
+        private providerRegistry: ProviderRegistryService,
         public submitHandler: AcmeFormSubmitHandler,
         public themeSwitcherService: ThemeSwitchService,
-        private widgetTypesService: WidgetTypesService) {
+        private widgetTypesService: WidgetTypesService
+    ) {
         this.providerRegistry.setProviders({
             [TestKpiDataSource.providerId]: {
                 provide: DATA_SOURCE,
@@ -91,10 +118,11 @@ export class AcmeDashboardComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        const widgetsWithStructure = widgets.map(w => ({
+        const widgetsWithStructure = widgets.map((w) => ({
             ...w,
             pizzagna: {
-                ...this.widgetTypesService.getWidgetType(w.type, w.version).widget,
+                ...this.widgetTypesService.getWidgetType(w.type, w.version)
+                    .widget,
                 ...w.pizzagna,
             },
         }));

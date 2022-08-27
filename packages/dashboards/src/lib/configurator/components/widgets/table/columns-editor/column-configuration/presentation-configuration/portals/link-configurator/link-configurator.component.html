@@ -1,13 +1,21 @@
 <div [formGroup]="form">
     <div formGroupName="dataFieldIds">
         <div class="mb-4">
-            <nui-form-field caption="Label"
-                            i18n-caption="label field caption| the entity field to be selected for the html label property"
-                            class="mb-3"
-                            [control]="dataFieldIds.controls['value']">
-                 <nui-select-v2 formControlName="value">
-                    <nui-select-v2-option *ngFor="let itemValue of dropdownItems.value" [value]="itemValue.id">
-                        {{itemValue.label}}
+            <nui-form-field
+                caption="Label"
+                i18n-caption="
+                    label field caption| the entity field to be selected for the
+                    html label property
+                "
+                class="mb-3"
+                [control]="dataFieldIds.controls['value']"
+            >
+                <nui-select-v2 formControlName="value">
+                    <nui-select-v2-option
+                        *ngFor="let itemValue of dropdownItems.value"
+                        [value]="itemValue.id"
+                    >
+                        {{ itemValue.label }}
                     </nui-select-v2-option>
                 </nui-select-v2>
                 <nui-validation-message for="required" i18n>
@@ -16,13 +24,21 @@
             </nui-form-field>
         </div>
         <div>
-            <nui-form-field caption="URL"
-                            i18n-caption="url field caption| the entity field to be selected for the url html property"
-                            class="mb-3"
-                            [control]="dataFieldIds.controls['link']">
+            <nui-form-field
+                caption="URL"
+                i18n-caption="
+                    url field caption| the entity field to be selected for the
+                    url html property
+                "
+                class="mb-3"
+                [control]="dataFieldIds.controls['link']"
+            >
                 <nui-select-v2 formControlName="link">
-                    <nui-select-v2-option *ngFor="let itemLink of dropdownItems.link" [value]="itemLink.id">
-                        {{itemLink.label}}
+                    <nui-select-v2-option
+                        *ngFor="let itemLink of dropdownItems.link"
+                        [value]="itemLink.id"
+                    >
+                        {{ itemLink.label }}
                     </nui-select-v2-option>
                 </nui-select-v2>
                 <nui-validation-message for="required" i18n>
@@ -32,10 +48,15 @@
         </div>
     </div>
     <div>
-        <nui-form-field caption="Open in the same window"
-                        i18n-caption="form field caption|switch configuring whether formatted link should open in new window/tab"
-                        class="mb-3"
-                        [control]="form.controls.targetSelf">
+        <nui-form-field
+            caption="Open in the same window"
+            i18n-caption="
+                form field caption|switch configuring whether formatted link
+                should open in new window/tab
+            "
+            class="mb-3"
+            [control]="form.controls.targetSelf"
+        >
             <nui-switch id="nui-switch-target" formControlName="targetSelf">
             </nui-switch>
         </nui-form-field>

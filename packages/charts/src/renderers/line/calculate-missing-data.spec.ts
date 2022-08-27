@@ -1,12 +1,10 @@
 import { duration } from "moment/moment";
 
 import { IDataSeries } from "../../core/common/types";
-
 import { calculateMissingData } from "./calculate-missing-data";
 import { LineAccessors } from "./line-accessors";
 
 describe("calculateMissingData", () => {
-
     it("calculates additional points indicating missing data", () => {
         const series: IDataSeries<LineAccessors> = {
             id: "series-1",
@@ -30,5 +28,4 @@ describe("calculateMissingData", () => {
         expect(newData[4].defined).toBe(false);
         expect(newData[4].x).toEqual(newData[5].x); // same data as next
     });
-
 });

@@ -5,7 +5,6 @@ import { NuiCommonModule } from "../../common/common.module";
 import { NuiButtonModule } from "../button/button.module";
 import { NuiPopupModule } from "../popup/popup.module";
 import { NuiSelectV2Module } from "../select-v2/select-v2.module";
-
 import { PaginatorComponent } from "./paginator.component";
 
 /**
@@ -19,13 +18,8 @@ import { PaginatorComponent } from "./paginator.component";
         ScrollingModule,
         NuiSelectV2Module,
     ],
-    declarations: [
-        PaginatorComponent,
-    ],
-    exports: [
-        PaginatorComponent,
-    ],
+    declarations: [PaginatorComponent],
+    exports: [PaginatorComponent],
     providers: [],
 })
-export class NuiPaginatorModule {
-}
+export class NuiPaginatorModule {}

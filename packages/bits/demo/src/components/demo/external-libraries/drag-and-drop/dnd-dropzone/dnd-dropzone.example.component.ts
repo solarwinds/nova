@@ -1,5 +1,9 @@
-import {CdkDragDrop, CdkDropList, copyArrayItem} from "@angular/cdk/drag-drop";
-import {ChangeDetectionStrategy, Component} from "@angular/core";
+import {
+    CdkDragDrop,
+    CdkDropList,
+    copyArrayItem,
+} from "@angular/cdk/drag-drop";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 
 @Component({
     selector: "dnd-dropzone",
@@ -8,7 +12,7 @@ import {ChangeDetectionStrategy, Component} from "@angular/core";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DndDropzoneExampleComponent {
-    public sourceItems: string[] = ["Adobe", "IBM" ];
+    public sourceItems: string[] = ["Adobe", "IBM"];
     public destinationItems: string[] = ["Dell"];
 
     // prevent user from putting back already displaced items
@@ -16,7 +20,10 @@ export class DndDropzoneExampleComponent {
         return false;
     }
 
-    public destinationAcceptsItem(item: string, dropList?: CdkDropList): boolean {
+    public destinationAcceptsItem(
+        item: string,
+        dropList?: CdkDropList
+    ): boolean {
         return item === "Adobe" || item === "Dell";
     }
 
@@ -25,6 +32,11 @@ export class DndDropzoneExampleComponent {
             return;
         }
 
-        copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+        copyArrayItem(
+            event.previousContainer.data,
+            event.container.data,
+            event.previousIndex,
+            event.currentIndex
+        );
     }
 }

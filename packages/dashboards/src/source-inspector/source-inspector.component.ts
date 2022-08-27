@@ -1,7 +1,16 @@
-import { Component, Inject, Input, OnInit, Optional, SkipSelf, ViewEncapsulation } from "@angular/core";
-import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
+import {
+    Component,
+    Inject,
+    Input,
+    OnInit,
+    Optional,
+    SkipSelf,
+    ViewEncapsulation,
+} from "@angular/core";
 import _filter from "lodash/filter";
 import _keys from "lodash/keys";
+
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 
 import { SourceInspectorModes } from "./types";
 
@@ -38,17 +47,24 @@ export class SourceInspectorComponent implements OnInit {
 
     constructor(
         @SkipSelf() @Optional() @Inject(DEMO_PATH_TOKEN) private context: any
-    ) { }
+    ) {}
 
     ngOnInit() {
-        this.componentSources = this.getSourcesByFilenamePrefix(this.filenamePrefix);
+        this.componentSources = this.getSourcesByFilenamePrefix(
+            this.filenamePrefix
+        );
         this.selectedFile = this.getFileNames(this.componentSources)[0];
     }
 
-    public getSourcesByFilenamePrefix(prefix: string): { [fileName: string]: string } {
+    public getSourcesByFilenamePrefix(prefix: string): {
+        [fileName: string]: string;
+    } {
         const matchingFilePaths = _filter(this.context.keys(), (filePath) => {
             const prefixIndex = filePath.indexOf(prefix);
-            const nextChar = prefixIndex !== -1 ? filePath[prefixIndex + prefix.length] : undefined;
+            const nextChar =
+                prefixIndex !== -1
+                    ? filePath[prefixIndex + prefix.length]
+                    : undefined;
             return prefixIndex !== -1 && (nextChar === "." || nextChar === "/");
         });
 
@@ -66,10 +82,12 @@ export class SourceInspectorComponent implements OnInit {
     private getFileData(fileName: string): { [fileName: string]: string } {
         const regExResultArray = this.fileExtensionsRegex.exec(fileName);
         // this.context returns source code (because of raw loading) of the requested module
-        return regExResultArray ? {
-            // @ts-ignore: Suppressing to avoid changing default behaviour
-            [fileName.split("/").pop()]: this.context(fileName),
-        } : {};
+        return regExResultArray
+            ? {
+                  // @ts-ignore: Suppressing to avoid changing default behaviour
+                  [fileName.split("/").pop()]: this.context(fileName),
+              }
+            : {};
     }
 
     public getFileNames(componentSources: any): Array<string> {

@@ -7,7 +7,6 @@ import { LinearScale } from "../common/scales/linear-scale";
 import { NoopScale } from "../common/scales/noop-scale";
 import { IAccessors, IChartSeries, IDataPoint } from "../common/types";
 import { XYGrid } from "../grid/xy-grid";
-
 import { ChartAssist } from "./chart-assist";
 import { ChartAssistEventType, ChartAssistRenderStateData } from "./types";
 
@@ -30,10 +29,12 @@ describe("chart assist >", () => {
         series = {
             id: seriesId,
             name: "Series 1",
-            data: [{
-                x: 1,
-                y: 0.5,
-            }],
+            data: [
+                {
+                    x: 1,
+                    y: 0.5,
+                },
+            ],
             renderer: renderer,
             accessors: new LineAccessors(),
             scales: {
@@ -62,7 +63,9 @@ describe("chart assist >", () => {
         it("should not throw if the data series is empty and the data point index is less than zero", () => {
             series.data = [];
             dataPoint.index = DATA_POINT_INTERACTION_RESET;
-            expect(() => ChartAssist.getLabel(series, dataPoint, "x")).not.toThrow();
+            expect(() =>
+                ChartAssist.getLabel(series, dataPoint, "x")
+            ).not.toThrow();
         });
 
         it("should return null if the data series is empty", () => {
@@ -81,7 +84,9 @@ describe("chart assist >", () => {
         });
 
         it("returns raw value for missing formatter", () => {
-            expect(ca.getHighlightedValue(series, "y", "nonexistent")).toBe(0.5);
+            expect(ca.getHighlightedValue(series, "y", "nonexistent")).toBe(
+                0.5
+            );
         });
     });
 
@@ -100,10 +105,12 @@ describe("chart assist >", () => {
                 {
                     id: "series1",
                     name: "Series 1",
-                    data: [{
-                        x: 1,
-                        y: 0.5,
-                    }],
+                    data: [
+                        {
+                            x: 1,
+                            y: 0.5,
+                        },
+                    ],
                     renderer,
                     accessors,
                     scales,
@@ -111,10 +118,12 @@ describe("chart assist >", () => {
                 {
                     id: "series2",
                     name: "Series 2",
-                    data: [{
-                        x: 1,
-                        y: 0.5,
-                    }],
+                    data: [
+                        {
+                            x: 1,
+                            y: 0.5,
+                        },
+                    ],
                     renderer,
                     accessors,
                     scales,
@@ -124,21 +133,26 @@ describe("chart assist >", () => {
 
         it("creates data arrays on the legend series set in the case of null data", () => {
             // @ts-ignore: Disabled for testing purposes
-            seriesSet.forEach(s => s.data = null);
+            seriesSet.forEach((s) => (s.data = null));
             ca.update(seriesSet);
-            ca.legendSeriesSet.forEach(async s => expect(s.data).toEqual([]));
+            ca.legendSeriesSet.forEach(async (s) => expect(s.data).toEqual([]));
         });
 
         it("leaves the data of the input series set untouched in the case of null data", () => {
             // @ts-ignore: Disabled for testing purposes
-            seriesSet.forEach(s => s.data = null);
+            seriesSet.forEach((s) => (s.data = null));
             ca.update(seriesSet);
-            ca.inputSeriesSet.forEach(async s => expect(s.data).toBeNull());
+            ca.inputSeriesSet.forEach(async (s) => expect(s.data).toBeNull());
         });
 
-        it("sets the render status into the series", ()=> {
+        it("sets the render status into the series", () => {
             const seriesId = seriesSet[0].id;
-            ca.renderStatesIndex[seriesId] = new ChartAssistRenderStateData(seriesId, seriesSet[0], RenderState.default, false);
+            ca.renderStatesIndex[seriesId] = new ChartAssistRenderStateData(
+                seriesId,
+                seriesSet[0],
+                RenderState.default,
+                false
+            );
 
             let capturedSeriesSet: IChartSeries<IAccessors>[] = [];
             spyOn(chart, "update").and.callFake((series) => {
@@ -156,18 +170,28 @@ describe("chart assist >", () => {
         it("doesn't reset legend on visibility toggle", () => {
             ca.update(seriesSet);
 
-            expect(ca.renderStatesIndex["series1"].state).toBe(RenderState.default);
+            expect(ca.renderStatesIndex["series1"].state).toBe(
+                RenderState.default
+            );
 
             ca.emphasizeSeries("series1");
 
-            expect(ca.renderStatesIndex["series1"].state).toBe(RenderState.emphasized);
-            expect(ca.renderStatesIndex["series2"].state).toBe(RenderState.deemphasized);
+            expect(ca.renderStatesIndex["series1"].state).toBe(
+                RenderState.emphasized
+            );
+            expect(ca.renderStatesIndex["series2"].state).toBe(
+                RenderState.deemphasized
+            );
 
             ca.toggleSeries("series1", false);
 
-            expect(ca.renderStatesIndex["series1"].state).toBe(RenderState.hidden);
+            expect(ca.renderStatesIndex["series1"].state).toBe(
+                RenderState.hidden
+            );
             // series 2 state remained deemphasized
-            expect(ca.renderStatesIndex["series2"].state).toBe(RenderState.deemphasized);
+            expect(ca.renderStatesIndex["series2"].state).toBe(
+                RenderState.deemphasized
+            );
         });
     });
 
@@ -180,18 +204,34 @@ describe("chart assist >", () => {
         });
 
         it("should have the correct sync handler map", () => {
-            expect((<any>syncedAssist).syncHandlerMap[ChartAssistEventType.ToggleSeries]).toBe(syncedAssist.toggleSeries);
-            expect((<any>syncedAssist).syncHandlerMap[ChartAssistEventType.EmphasizeSeries]).toBe(syncedAssist.emphasizeSeries);
-            expect((<any>syncedAssist).syncHandlerMap[ChartAssistEventType.ResetVisibleSeries]).toBe(syncedAssist.resetVisibleSeries);
+            expect(
+                (<any>syncedAssist).syncHandlerMap[
+                    ChartAssistEventType.ToggleSeries
+                ]
+            ).toBe(syncedAssist.toggleSeries);
+            expect(
+                (<any>syncedAssist).syncHandlerMap[
+                    ChartAssistEventType.EmphasizeSeries
+                ]
+            ).toBe(syncedAssist.emphasizeSeries);
+            expect(
+                (<any>syncedAssist).syncHandlerMap[
+                    ChartAssistEventType.ResetVisibleSeries
+                ]
+            ).toBe(syncedAssist.resetVisibleSeries);
         });
 
         it("should override the chart assist's getVisibleSeriesWithLegend method with that of the specified chart assist", () => {
-            expect(syncedAssist.getVisibleSeriesWithLegend).toBe(ca.getVisibleSeriesWithLegend);
+            expect(syncedAssist.getVisibleSeriesWithLegend).toBe(
+                ca.getVisibleSeriesWithLegend
+            );
         });
 
         it("should invoke the method mapped to the toggle series event", () => {
             const spy = jasmine.createSpy("toggleSeriesSpy");
-            (<any>syncedAssist).syncHandlerMap[ChartAssistEventType.ToggleSeries] = spy;
+            (<any>syncedAssist).syncHandlerMap[
+                ChartAssistEventType.ToggleSeries
+            ] = spy;
             const args: [string, boolean] = ["seriesId", true];
             ca.toggleSeries(...args);
             expect(spy).toHaveBeenCalledWith(...args);
@@ -199,7 +239,9 @@ describe("chart assist >", () => {
 
         it("should invoke the method mapped to the emphasize series event", () => {
             const spy = jasmine.createSpy("emphasizeSeriesSpy");
-            (<any>syncedAssist).syncHandlerMap[ChartAssistEventType.EmphasizeSeries] = spy;
+            (<any>syncedAssist).syncHandlerMap[
+                ChartAssistEventType.EmphasizeSeries
+            ] = spy;
             const seriesId = "seriesId";
             ca.emphasizeSeries(seriesId);
             expect(spy).toHaveBeenCalledWith(seriesId);
@@ -207,27 +249,37 @@ describe("chart assist >", () => {
 
         it("should invoke the method mapped to the reset visible series event", () => {
             const spy = jasmine.createSpy("resetSeriesSpy");
-            (<any>syncedAssist).syncHandlerMap[ChartAssistEventType.ResetVisibleSeries] = spy;
+            (<any>syncedAssist).syncHandlerMap[
+                ChartAssistEventType.ResetVisibleSeries
+            ] = spy;
             ca.resetVisibleSeries();
             expect(spy).toHaveBeenCalled();
         });
 
         it("should remove the sync observer if the master chart assist chart emits a destroy event", () => {
-            ca.chart.getEventBus().getStream(DESTROY_EVENT).next({ data: null });
+            ca.chart
+                .getEventBus()
+                .getStream(DESTROY_EVENT)
+                .next({ data: null });
             const spy = jasmine.createSpy("resetSeriesSpy");
-            (<any>syncedAssist).syncHandlerMap[ChartAssistEventType.ResetVisibleSeries] = spy;
+            (<any>syncedAssist).syncHandlerMap[
+                ChartAssistEventType.ResetVisibleSeries
+            ] = spy;
             ca.resetVisibleSeries();
             expect(ca.chartAssistSubject.observers.length).toEqual(0);
             expect(spy).not.toHaveBeenCalled();
         });
 
         it("should unsync from the master chart assist", () => {
-            expect((<any>syncedAssist).getVisibleSeriesWithLegendBackup).not.toBe(syncedAssist.getVisibleSeriesWithLegend);
+            expect(
+                (<any>syncedAssist).getVisibleSeriesWithLegendBackup
+            ).not.toBe(syncedAssist.getVisibleSeriesWithLegend);
             expect(ca.chartAssistSubject.observers.length).toEqual(1);
             syncedAssist.unsyncChartAssist();
-            expect((<any>syncedAssist).getVisibleSeriesWithLegendBackup).toBe(syncedAssist.getVisibleSeriesWithLegend);
+            expect((<any>syncedAssist).getVisibleSeriesWithLegendBackup).toBe(
+                syncedAssist.getVisibleSeriesWithLegend
+            );
             expect(ca.chartAssistSubject.observers.length).toEqual(0);
         });
     });
-
 });

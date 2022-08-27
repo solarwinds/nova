@@ -1,13 +1,41 @@
-import { animate, state, style, transition, trigger } from "@angular/animations";
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, Inject, Input, OnDestroy, OnInit, Optional, ViewChild } from "@angular/core";
-import { EventBus, IEvent } from "@nova-ui/bits";
+import {
+    animate,
+    state,
+    style,
+    transition,
+    trigger,
+} from "@angular/animations";
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    HostBinding,
+    Inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Optional,
+    ViewChild,
+} from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
+import { EventBus, IEvent } from "@nova-ui/bits";
+
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
-import { DASHBOARD_EDIT_MODE, REFRESH, WIDGET_EDIT, WIDGET_REMOVE } from "../../../services/types";
+import {
+    DASHBOARD_EDIT_MODE,
+    REFRESH,
+    WIDGET_EDIT,
+    WIDGET_REMOVE,
+} from "../../../services/types";
 import { WidgetToDashboardEventProxyService } from "../../../services/widget-to-dashboard-event-proxy.service";
-import { HEADER_LINK_PROVIDER, PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../../types";
+import {
+    HEADER_LINK_PROVIDER,
+    PIZZAGNA_EVENT_BUS,
+    PizzagnaLayer,
+} from "../../../types";
 import { IHeaderLinkProvider } from "./types";
 
 @Component({
@@ -55,7 +83,8 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         return true;
     }
 
-    @ViewChild("widgetHeaderCustomElement") public widgetHeaderCustomElement: ElementRef;
+    @ViewChild("widgetHeaderCustomElement")
+    public widgetHeaderCustomElement: ElementRef;
 
     public withCustomElement: boolean;
     private onDestroy$: Subject<void> = new Subject<void>();
@@ -66,20 +95,26 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
     public linkTooltip = $localize`Explore this data`;
 
-    constructor(@Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
-                public pizzagnaService: PizzagnaService,
-                public changeDetector: ChangeDetectorRef,
-                @Optional() private eventProxy: WidgetToDashboardEventProxyService,
-                @Inject(HEADER_LINK_PROVIDER) @Optional() private linkProvider: IHeaderLinkProvider) {
-    }
+    constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
+        public pizzagnaService: PizzagnaService,
+        public changeDetector: ChangeDetectorRef,
+        @Optional() private eventProxy: WidgetToDashboardEventProxyService,
+        @Inject(HEADER_LINK_PROVIDER)
+        @Optional()
+        private linkProvider: IHeaderLinkProvider
+    ) {}
 
     public ngOnInit(): void {
         if (this.collapsible) {
-            this.pizzagnaService.setProperty({
-                componentId: this.componentId,
-                pizzagnaKey: PizzagnaLayer.Data,
-                propertyPath: ["isCollapsed"],
-            }, true);
+            this.pizzagnaService.setProperty(
+                {
+                    componentId: this.componentId,
+                    pizzagnaKey: PizzagnaLayer.Data,
+                    propertyPath: ["isCollapsed"],
+                },
+                true
+            );
         }
 
         if (this.eventProxy) {
@@ -89,28 +124,36 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         }
 
         // subscribing to dashboard event to set 'edit mode'
-        this.eventBus.getStream(DASHBOARD_EDIT_MODE)
+        this.eventBus
+            .getStream(DASHBOARD_EDIT_MODE)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(event => {
+            .subscribe((event) => {
+                this.pizzagnaService.setProperty(
+                    {
+                        componentId: this.componentId,
+                        pizzagnaKey: PizzagnaLayer.Data,
+                        propertyPath: ["collapsed"],
+                    },
+                    !event.payload
+                );
 
-                this.pizzagnaService.setProperty({
-                    componentId: this.componentId,
-                    pizzagnaKey: PizzagnaLayer.Data,
-                    propertyPath: ["collapsed"],
-                }, !event.payload);
-
-                this.pizzagnaService.setProperty({
-                    componentId: this.componentId,
-                    pizzagnaKey: PizzagnaLayer.Data,
-                    propertyPath: ["editMode"],
-                }, !!event.payload);
+                this.pizzagnaService.setProperty(
+                    {
+                        componentId: this.componentId,
+                        pizzagnaKey: PizzagnaLayer.Data,
+                        propertyPath: ["editMode"],
+                    },
+                    !!event.payload
+                );
             });
     }
 
     public ngAfterViewInit() {
         // we can't set values in ngAfterViewInit directly - it causes ExpressionChangedAfterViewChecked error, so setTimeout has to be used
         setTimeout(() => {
-            this.withCustomElement = this.widgetHeaderCustomElement.nativeElement.childNodes.length !== 0;
+            this.withCustomElement =
+                this.widgetHeaderCustomElement.nativeElement.childNodes
+                    .length !== 0;
         });
     }
 
@@ -124,11 +167,14 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     public toggleCollapsed() {
-        this.pizzagnaService.setProperty({
-            componentId: this.componentId,
-            pizzagnaKey: PizzagnaLayer.Data,
-            propertyPath: ["collapsed"],
-        }, !this.collapsed);
+        this.pizzagnaService.setProperty(
+            {
+                componentId: this.componentId,
+                pizzagnaKey: PizzagnaLayer.Data,
+                propertyPath: ["collapsed"],
+            },
+            !this.collapsed
+        );
     }
 
     public onEditWidget() {
@@ -137,7 +183,9 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
     public onReloadData() {
         if (!this.reloadable) {
-            throw new Error("The widget is not reloadable, so it can't be reloaded manually.");
+            throw new Error(
+                "The widget is not reloadable, so it can't be reloaded manually."
+            );
         }
         this.eventBus.getStream(REFRESH).next();
     }
@@ -152,5 +200,4 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         return true;
     }
-
 }

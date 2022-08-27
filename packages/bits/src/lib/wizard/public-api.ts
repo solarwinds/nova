@@ -1,6 +1,6 @@
-import {EventEmitter, TemplateRef} from "@angular/core";
+import { EventEmitter, TemplateRef } from "@angular/core";
 
-import {IBusyConfig} from "../busy/public-api";
+import { IBusyConfig } from "../busy/public-api";
 
 export interface IWizardSelectionEvent {
     /** Index of the step now selected. */

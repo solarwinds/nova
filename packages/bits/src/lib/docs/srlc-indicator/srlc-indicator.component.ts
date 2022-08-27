@@ -5,16 +5,13 @@ import { filter, map } from "rxjs/operators";
 
 import { ISrlcDetails, SrlcStage } from "./public-api";
 
-
 /** @ignore */
 @Component({
     selector: "nui-srlc-indicator",
     templateUrl: "./srlc-indicator.component.html",
 })
 export class SrlcIndicatorComponent implements OnInit {
-    constructor(
-        private router: Router
-    ) { }
+    constructor(private router: Router) {}
 
     public globalSrlc: ISrlcDetails = {
         stage: SrlcStage.preAlpha,
@@ -25,33 +22,44 @@ export class SrlcIndicatorComponent implements OnInit {
     public componentSrlc: ISrlcDetails;
 
     ngOnInit() {
-        this.router.events.pipe(
-            filter((event) => event instanceof RoutesRecognized),
-            map((event) => {
-                let route = (<RoutesRecognized>event).state.root;
-                while (route.firstChild) {
-                    route = route.firstChild;
-                }
-                return route;
-            })
-        )
-            .subscribe(route => {
+        this.router.events
+            .pipe(
+                filter((event) => event instanceof RoutesRecognized),
+                map((event) => {
+                    let route = (<RoutesRecognized>event).state.root;
+                    while (route.firstChild) {
+                        route = route.firstChild;
+                    }
+                    return route;
+                })
+            )
+            .subscribe((route) => {
                 const routeDataSrlc = (route.data || {}).srlc;
-                this.componentSrlc = defaults(routeDataSrlc || {}, this.globalSrlc);
+                this.componentSrlc = defaults(
+                    routeDataSrlc || {},
+                    this.globalSrlc
+                );
             });
     }
 
     public getMessageType = () => {
         switch (this.componentSrlc.stage) {
-            case SrlcStage.preAlpha: return "critical";
-            case SrlcStage.alpha: return "warning";
-            case SrlcStage.beta: return "info";
-            case SrlcStage.ga: return "ok";
-            case SrlcStage.support: return "hint";
-            case SrlcStage.eol: return "error";
-            default: return "error";
+            case SrlcStage.preAlpha:
+                return "critical";
+            case SrlcStage.alpha:
+                return "warning";
+            case SrlcStage.beta:
+                return "info";
+            case SrlcStage.ga:
+                return "ok";
+            case SrlcStage.support:
+                return "hint";
+            case SrlcStage.eol:
+                return "error";
+            default:
+                return "error";
         }
-    }
+    };
 
     public getMessageText = () => {
         switch (this.componentSrlc.stage) {
@@ -76,6 +84,5 @@ export class SrlcIndicatorComponent implements OnInit {
             default:
                 return `Current state of this component is unknown. Please, contact Nova team for more details.`;
         }
-
-    }
+    };
 }

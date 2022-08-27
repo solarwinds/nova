@@ -5,7 +5,6 @@ import noop from "lodash/noop";
 
 import { ClipboardExampleComponent } from "../../../../demo/src/components/demo/common/clipboard/clipboard.example.component";
 import { LoggerService } from "../../../services/log-service";
-
 import { ClipboardDirective } from "./clipboard.directive";
 
 describe("directives >", () => {
@@ -30,7 +29,8 @@ describe("directives >", () => {
             spyOnProperty(logger, "warn").and.returnValue(noop);
 
             de = fixture.debugElement;
-            button = de.query(By.directive(ClipboardDirective)).nativeElement as HTMLButtonElement;
+            button = de.query(By.directive(ClipboardDirective))
+                .nativeElement as HTMLButtonElement;
             event = new Event("click");
         });
 

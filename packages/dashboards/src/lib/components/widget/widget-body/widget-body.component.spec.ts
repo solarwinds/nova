@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+
 import { EventBus, IEvent } from "@nova-ui/bits";
 
 import { NuiDashboardsModule } from "../../../dashboards.module";
@@ -6,7 +7,6 @@ import { DynamicComponentCreator } from "../../../pizzagna/services/dynamic-comp
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
 import { DASHBOARD_EDIT_MODE } from "../../../services/types";
 import { IPizza, PIZZAGNA_EVENT_BUS } from "../../../types";
-
 import { WidgetBodyComponent } from "./widget-body.component";
 
 describe("WidgetBodyComponent", () => {
@@ -29,7 +29,10 @@ describe("WidgetBodyComponent", () => {
     beforeEach(waitForAsync(() => {
         eventBus = new EventBus();
         dynamicComponentCreator = new DynamicComponentCreator();
-        pizzagnaService = new PizzagnaService(eventBus, dynamicComponentCreator);
+        pizzagnaService = new PizzagnaService(
+            eventBus,
+            dynamicComponentCreator
+        );
         pizzagnaService.updateComponents(testComponents);
 
         TestBed.configureTestingModule({
@@ -45,8 +48,7 @@ describe("WidgetBodyComponent", () => {
                     useValue: pizzagnaService,
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -63,7 +65,9 @@ describe("WidgetBodyComponent", () => {
         it("should initialize 'classNames'", () => {
             component.elementClass = "test-class";
             component.ngOnInit();
-            expect(component.classNames).toEqual(`${component.defaultClasses} ${component.elementClass}`);
+            expect(component.classNames).toEqual(
+                `${component.defaultClasses} ${component.elementClass}`
+            );
         });
 
         it("should subscribe to the 'DASHBOARD_EDIT_MODE' event", () => {
@@ -71,19 +75,25 @@ describe("WidgetBodyComponent", () => {
             component.ngOnInit();
             eventBus.getStream(DASHBOARD_EDIT_MODE).next({ payload: true });
 
-            expect(spy).toHaveBeenCalledWith({
-                componentId: "body",
-                pizzagnaKey: "data",
-                propertyPath: ["editMode"],
-            }, true);
+            expect(spy).toHaveBeenCalledWith(
+                {
+                    componentId: "body",
+                    pizzagnaKey: "data",
+                    propertyPath: ["editMode"],
+                },
+                true
+            );
 
             eventBus.getStream(DASHBOARD_EDIT_MODE).next({ payload: false });
 
-            expect(spy).toHaveBeenCalledWith({
-                componentId: "body",
-                pizzagnaKey: "data",
-                propertyPath: ["editMode"],
-            }, false);
+            expect(spy).toHaveBeenCalledWith(
+                {
+                    componentId: "body",
+                    pizzagnaKey: "data",
+                    propertyPath: ["editMode"],
+                },
+                false
+            );
         });
     });
 

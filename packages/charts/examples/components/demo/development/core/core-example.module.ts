@@ -1,12 +1,19 @@
 import { NgModule, Provider } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+
 import {
-    LoggerService, LogLevel, NuiButtonModule, NuiCheckboxModule, NuiDocsModule, NuiEnvironment, NuiIconModule, NuiSwitchModule,
+    LoggerService,
+    LogLevel,
+    NuiButtonModule,
+    NuiCheckboxModule,
+    NuiDocsModule,
+    NuiEnvironment,
+    NuiIconModule,
+    NuiSwitchModule,
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
 import { DemoCommonModule } from "../../common/demo-common.module";
-
 import { ChartExampleComponent } from "./chart/chart.example.component";
 import { ChartDomainExampleComponent } from "./domain/chart-domain.example.component";
 import { ChartEventBusTestComponent } from "./event-bus/chart-event-bus-test.component";
@@ -52,8 +59,10 @@ environment.logLevel = LogLevel.debug;
         RouterModule.forChild(coreRoutes),
     ],
     providers: [
-        { provide: LoggerService, useValue: new LoggerService(environment) } as Provider,
+        {
+            provide: LoggerService,
+            useValue: new LoggerService(environment),
+        } as Provider,
     ],
 })
-export class CoreExampleModule {
-}
+export class CoreExampleModule {}

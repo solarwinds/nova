@@ -1,13 +1,24 @@
 import { Portal } from "@angular/cdk/portal";
-import { ChangeDetectorRef, Component, ComponentRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from "@angular/core";
-import { OVERLAY_CONTAINER } from "@nova-ui/bits";
+import {
+    ChangeDetectorRef,
+    Component,
+    ComponentRef,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+    ViewChild,
+} from "@angular/core";
 import { Subject } from "rxjs";
 
+import { OVERLAY_CONTAINER } from "@nova-ui/bits";
+
+import { IWidget } from "../../../components/widget/types";
 import { PizzagnaComponent } from "../../../pizzagna/components/pizzagna/pizzagna.component";
 import { WidgetTypesService } from "../../../services/widget-types.service";
 import { IPizzagna } from "../../../types";
 import { PreviewService } from "../../services/preview.service";
-import { IWidget } from "../../../components/widget/types"
 
 /** @ignore */
 @Component({
@@ -16,7 +27,10 @@ import { IWidget } from "../../../components/widget/types"
     styleUrls: ["./configurator.component.less"],
     providers: [
         PreviewService,
-        { provide: OVERLAY_CONTAINER, useValue: ".nui-dashwiz-step--active .configurator-scrollable" },
+        {
+            provide: OVERLAY_CONTAINER,
+            useValue: ".nui-dashwiz-step--active .configurator-scrollable",
+        },
     ],
     host: { class: "nui-configurator" },
 })
@@ -30,13 +44,16 @@ export class ConfiguratorComponent implements OnInit, OnDestroy {
     @Output() result = new EventEmitter<IWidget | null>();
     @Output() formPortalAttached = new EventEmitter<ComponentRef<any>>();
 
-    @ViewChild("previewPizzagnaComponent", { static: true }) previewPizzagnaComponent: PizzagnaComponent;
+    @ViewChild("previewPizzagnaComponent", { static: true })
+    previewPizzagnaComponent: PizzagnaComponent;
 
     public submitError = new Subject();
     private destroy$ = new Subject();
 
-    constructor(public widgetTypesService: WidgetTypesService, public changeDetector: ChangeDetectorRef) {
-    }
+    constructor(
+        public widgetTypesService: WidgetTypesService,
+        public changeDetector: ChangeDetectorRef
+    ) {}
 
     // ----- LIFECYCLE -----
 
@@ -47,7 +64,9 @@ export class ConfiguratorComponent implements OnInit, OnDestroy {
                 // @ts-ignore: Type 'null' is not assignable to type 'string'.
                 id: null,
                 type: "previewPlaceholder",
-                pizzagna: this.widgetTypesService.getWidgetType("previewPlaceholder").widget,
+                pizzagna:
+                    this.widgetTypesService.getWidgetType("previewPlaceholder")
+                        .widget,
             };
         }
     }
@@ -86,4 +105,3 @@ export class ConfiguratorComponent implements OnInit, OnDestroy {
         }
     }
 }
-

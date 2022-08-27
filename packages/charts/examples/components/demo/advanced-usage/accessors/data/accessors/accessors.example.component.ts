@@ -1,5 +1,14 @@
 import { Component, OnInit } from "@angular/core";
-import { Chart, IChartSeries, ILineAccessors, LineAccessors, LinearScale, LineRenderer, XYGrid } from "@nova-ui/charts";
+
+import {
+    Chart,
+    IChartSeries,
+    ILineAccessors,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    XYGrid,
+} from "@nova-ui/charts";
 
 interface IMyDataPoint {
     x: number;

@@ -1,12 +1,18 @@
 import { SimpleChange, SimpleChanges } from "@angular/core";
-import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    flush,
+    TestBed,
+    waitForAsync,
+} from "@angular/core/testing";
+
 import { EventBus } from "@nova-ui/bits";
 
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { DynamicComponentCreator } from "../../../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
 import { PIZZAGNA_EVENT_BUS } from "../../../../../types";
-
 import { TimeseriesSeriesCollectionConfigurationComponent } from "./timeseries-series-collection-configuration.component";
 
 describe("TimeseriesSeriesCollectionConfigurationComponent", () => {
@@ -14,8 +20,11 @@ describe("TimeseriesSeriesCollectionConfigurationComponent", () => {
     let fixture: ComponentFixture<TimeseriesSeriesCollectionConfigurationComponent>;
     const eventBus = new EventBus();
     const dynamicComponentCreator = new DynamicComponentCreator();
-    // @ts-ignore: Suppressed for test purposes
-    const pizzagnaService = new PizzagnaService(eventBus, dynamicComponentCreator);
+    const pizzagnaService = new PizzagnaService(
+        // @ts-ignore: Suppressed for test purposes
+        eventBus,
+        dynamicComponentCreator
+    );
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
@@ -38,7 +47,9 @@ describe("TimeseriesSeriesCollectionConfigurationComponent", () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TimeseriesSeriesCollectionConfigurationComponent);
+        fixture = TestBed.createComponent(
+            TimeseriesSeriesCollectionConfigurationComponent
+        );
         component = fixture.componentInstance;
     });
 
@@ -48,10 +59,12 @@ describe("TimeseriesSeriesCollectionConfigurationComponent", () => {
 
     describe("ngOnChanges > ", () => {
         it("should invoke 'PizzagnaService.createComponentsFromTemplate' if 'allSeries' has changed and it's not the first change", () => {
-            component.series = [{
-                id: "testConfigId",
-                selectedSeriesId: "testSeriesId",
-            }];
+            component.series = [
+                {
+                    id: "testConfigId",
+                    selectedSeriesId: "testSeriesId",
+                },
+            ];
             const changes: SimpleChanges = {
                 allSeries: { isFirstChange: () => false } as SimpleChange,
             };
@@ -59,7 +72,10 @@ describe("TimeseriesSeriesCollectionConfigurationComponent", () => {
             const spy = spyOn(pizzagnaService, "createComponentsFromTemplate");
             component.ngOnChanges(changes);
 
-            expect(spy).toHaveBeenCalledWith("series", component.series.map(config => config.id));
+            expect(spy).toHaveBeenCalledWith(
+                "series",
+                component.series.map((config) => config.id)
+            );
         });
 
         it("should not invoke 'PizzagnaService.createComponentsFromTemplate' if 'allSeries' hasn't changed", () => {
@@ -88,5 +104,4 @@ describe("TimeseriesSeriesCollectionConfigurationComponent", () => {
             expect(spy).toHaveBeenCalled();
         }));
     });
-
 });

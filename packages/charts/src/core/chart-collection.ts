@@ -3,8 +3,13 @@ import findKey from "lodash/findKey";
 import isUndefined from "lodash/isUndefined";
 import { Observable, Subscription } from "rxjs";
 
-import { DESTROY_EVENT, INTERACTION_COORDINATES_EVENT, INTERACTION_VALUES_EVENT, MOUSE_ACTIVE_EVENT, REFRESH_EVENT } from "../constants";
-
+import {
+    DESTROY_EVENT,
+    INTERACTION_COORDINATES_EVENT,
+    INTERACTION_VALUES_EVENT,
+    MOUSE_ACTIVE_EVENT,
+    REFRESH_EVENT,
+} from "../constants";
 import { EventBus } from "./common/event-bus";
 import { IChart, IChartCollectionEvent, IChartEvent } from "./common/types";
 
@@ -14,7 +19,6 @@ import { IChart, IChartCollectionEvent, IChartEvent } from "./common/types";
  * Chart collection takes care of charts grouping and rebroadcasting selected events coming from one charts to other charts
  */
 export class ChartCollection {
-
     public lastIndex = -1;
 
     /**
@@ -22,14 +26,18 @@ export class ChartCollection {
      *
      * @type {[string]}
      */
-    public events = [INTERACTION_VALUES_EVENT, INTERACTION_COORDINATES_EVENT, MOUSE_ACTIVE_EVENT, REFRESH_EVENT];
+    public events = [
+        INTERACTION_VALUES_EVENT,
+        INTERACTION_COORDINATES_EVENT,
+        MOUSE_ACTIVE_EVENT,
+        REFRESH_EVENT,
+    ];
 
     private charts: { [key: string]: IChart } = {};
     private subscriptions: { [key: string]: Subscription[] } = {};
     private eventBus?: EventBus<IChartCollectionEvent>;
 
-    constructor() {
-    }
+    constructor() {}
 
     /**
      * Register chart in this collection and subscribe to all configured events
@@ -46,21 +54,31 @@ export class ChartCollection {
         }
 
         each(this.events, (event) => {
-            this.subscribe(index, chart.getEventBus().getStream(event), (value: IChartEvent) => {
-                // this is where we check for the __broadcast__ flag, which means it originated in the chart collection
-                if (!value.broadcast) {
-                    this.eventBus?.getStream(event).next({chartIndex: index, event: value});
+            this.subscribe(
+                index,
+                chart.getEventBus().getStream(event),
+                (value: IChartEvent) => {
+                    // this is where we check for the __broadcast__ flag, which means it originated in the chart collection
+                    if (!value.broadcast) {
+                        this.eventBus
+                            ?.getStream(event)
+                            .next({ chartIndex: index, event: value });
+                    }
                 }
-            });
+            );
         });
 
-        this.subscribe(index, chart.getEventBus().getStream(DESTROY_EVENT), (value: any) => {
-            this.removeChart(chart);
+        this.subscribe(
+            index,
+            chart.getEventBus().getStream(DESTROY_EVENT),
+            (value: any) => {
+                this.removeChart(chart);
 
-            if (Object.keys(this.charts).length === 0) {
-                this.destroy();
+                if (Object.keys(this.charts).length === 0) {
+                    this.destroy();
+                }
             }
-        });
+        );
     }
 
     /**
@@ -90,15 +108,20 @@ export class ChartCollection {
         this.eventBus = new EventBus<IChartCollectionEvent>();
 
         for (const event of this.events) {
-            this.eventBus.getStream(event).subscribe((e: IChartCollectionEvent) => {
-                for (const i of Object.keys(this.charts)) {
-                    if (i !== e.chartIndex) {
-                        // setting this flag prevents the event from looping infinitely
-                        e.event.broadcast = true;
-                        this.charts[i].getEventBus().getStream(event).next(e.event);
+            this.eventBus
+                .getStream(event)
+                .subscribe((e: IChartCollectionEvent) => {
+                    for (const i of Object.keys(this.charts)) {
+                        if (i !== e.chartIndex) {
+                            // setting this flag prevents the event from looping infinitely
+                            e.event.broadcast = true;
+                            this.charts[i]
+                                .getEventBus()
+                                .getStream(event)
+                                .next(e.event);
+                        }
                     }
-                }
-            });
+                });
         }
     }
 
@@ -109,7 +132,11 @@ export class ChartCollection {
      * @param {Observable<any>} observable
      * @param {(value: any) => void} next
      */
-    private subscribe(chartKey: string, observable: Observable<any>, next: (value: any) => void) {
+    private subscribe(
+        chartKey: string,
+        observable: Observable<any>,
+        next: (value: any) => void
+    ) {
         const sub = observable.subscribe(next);
 
         let chartSubscriptions = this.subscriptions[chartKey];
@@ -135,5 +162,4 @@ export class ChartCollection {
     private getChartKey(chart: IChart): string | undefined {
         return findKey(this.charts, (c: IChart) => c === chart);
     }
-
 }

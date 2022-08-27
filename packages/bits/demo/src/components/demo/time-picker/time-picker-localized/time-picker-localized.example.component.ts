@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { ITimeframe } from "@nova-ui/bits";
 import moment, { Moment } from "moment/moment";
+
+import { ITimeframe } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-time-picker-localized",
     templateUrl: "./time-picker-localized.example.component.html",
 })
 export class TimePickerLocalizedExampleComponent implements OnInit, OnDestroy {
-
     public minDate: Moment;
     public maxDate: Moment;
     public timeFrame: ITimeframe;

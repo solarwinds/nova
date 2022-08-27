@@ -1,10 +1,27 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
-import { LoggerService, SearchService } from "@nova-ui/bits";
-import { DashboardComponent, DATA_SOURCE, IDashboard, IWidget, ProviderRegistryService, WidgetTypesService } from "@nova-ui/dashboards";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    OnInit,
+    ViewChild,
+    ViewEncapsulation,
+} from "@angular/core";
 import keyBy from "lodash/keyBy";
 
+import { LoggerService, SearchService } from "@nova-ui/bits";
+import {
+    DashboardComponent,
+    DATA_SOURCE,
+    IDashboard,
+    IWidget,
+    ProviderRegistryService,
+    WidgetTypesService,
+} from "@nova-ui/dashboards";
+
 import { AcmeKpiDataSource, AcmeKpiDataSource2 } from "../data/kpi-datasources";
-import { AcmeProportionalDataSource, AcmeProportionalDataSource2 } from "../data/proportional-datasources";
+import {
+    AcmeProportionalDataSource,
+    AcmeProportionalDataSource2,
+} from "../data/proportional-datasources";
 import { AcmeTableDataSource } from "../data/table/acme-table-data-source.service";
 import { AcmeTableDataSource2 } from "../data/table/acme-table-data-source2.service";
 import { AcmeTableDataSourceNoColumnGeneration } from "../data/table/acme-table-data-source3.service";
@@ -15,7 +32,6 @@ import {
     AcmeTimeseriesStatusDataSource,
     AcmeTimeseriesStatusIntervalDataSource,
 } from "../data/timeseries-data-sources";
-
 import { AcmeFormSubmitHandler } from "./acme-form-submit-handler";
 import { positions, widgetConfigs } from "./widget-configs";
 
@@ -30,16 +46,19 @@ import { positions, widgetConfigs } from "./widget-configs";
     providers: [AcmeFormSubmitHandler],
 })
 export class AcmeDashboardComponent implements OnInit {
-    @ViewChild(DashboardComponent, { static: true }) dashboardComponent: DashboardComponent;
+    @ViewChild(DashboardComponent, { static: true })
+    dashboardComponent: DashboardComponent;
 
     public dashboard: IDashboard;
     public gridsterConfig = {};
 
     public editMode = false;
 
-    constructor(public submitHandler: AcmeFormSubmitHandler,
-                private providerRegistry: ProviderRegistryService,
-                private widgetTypesService: WidgetTypesService) {
+    constructor(
+        public submitHandler: AcmeFormSubmitHandler,
+        private providerRegistry: ProviderRegistryService,
+        private widgetTypesService: WidgetTypesService
+    ) {
         this.providerRegistry.setProviders({
             [AcmeKpiDataSource.providerId]: {
                 provide: DATA_SOURCE,
@@ -105,7 +124,9 @@ export class AcmeDashboardComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        const widgetsWithStructure = widgetConfigs.map(w => this.widgetTypesService.mergeWithWidgetType(w));
+        const widgetsWithStructure = widgetConfigs.map((w) =>
+            this.widgetTypesService.mergeWithWidgetType(w)
+        );
         const widgetsIndex = keyBy(widgetsWithStructure, (w: IWidget) => w.id);
 
         this.dashboard = {
@@ -113,5 +134,4 @@ export class AcmeDashboardComponent implements OnInit {
             widgets: widgetsIndex,
         };
     }
-
 }

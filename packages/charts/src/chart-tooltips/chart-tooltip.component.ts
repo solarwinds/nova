@@ -1,5 +1,10 @@
 import { animate, style, transition, trigger } from "@angular/animations";
-import { ChangeDetectionStrategy, Component, Input, TemplateRef } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Input,
+    TemplateRef,
+} from "@angular/core";
 
 @Component({
     selector: "nui-chart-tooltip",
@@ -12,9 +17,7 @@ import { ChangeDetectionStrategy, Component, Input, TemplateRef } from "@angular
                 style({ opacity: 0 }),
                 animate(300, style({ opacity: 1 })),
             ]),
-            transition(":leave", [
-                animate(300, style({ opacity: 0 })),
-            ]),
+            transition(":leave", [animate(300, style({ opacity: 0 }))]),
         ]),
     ],
 })

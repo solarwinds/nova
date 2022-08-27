@@ -30,8 +30,9 @@ describe("Lasagna >", () => {
                 clipped: true,
             };
             lasagna.addLayer(newLayer);
-            expect(lasagna.getLayerContainer(testLayerName).attr("pointer-events")).toEqual("none");
+            expect(
+                lasagna.getLayerContainer(testLayerName).attr("pointer-events")
+            ).toEqual("none");
         });
     });
-
 });

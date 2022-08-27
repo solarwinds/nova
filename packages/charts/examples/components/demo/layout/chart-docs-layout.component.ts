@@ -26,5 +26,4 @@ export class ChartDocsLayoutComponent {
     public getCodeLine(className: string, text: string): string {
         return `<div class="${className}">${text}</div>`;
     }
-
 }

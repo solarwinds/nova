@@ -9,11 +9,13 @@ import {
     Output,
     SimpleChanges,
 } from "@angular/core";
-import { takeUntil } from "rxjs/operators";
-import { Subject } from "rxjs";
-import { IDataSourceError } from "../../../../../components/providers/types";
-import { IDataSource } from "@nova-ui/bits";
 import isUndefined from "lodash/isUndefined";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
+
+import { IDataSource } from "@nova-ui/bits";
+
+import { IDataSourceError } from "../../../../../components/providers/types";
 
 @Component({
     selector: "nui-data-source-error",
@@ -33,12 +35,10 @@ export class DataSourceErrorComponent implements OnDestroy, OnChanges {
 
     private dataSourceClear$: Subject<void> = new Subject<void>();
 
-    constructor(
-        public changeDetector: ChangeDetectorRef
-    ) {}
+    constructor(public changeDetector: ChangeDetectorRef) {}
 
     ngOnChanges(changes: SimpleChanges) {
-        if(changes.dataSource) {
+        if (changes.dataSource) {
             this.onDataSourceChanged();
         }
     }
@@ -46,13 +46,15 @@ export class DataSourceErrorComponent implements OnDestroy, OnChanges {
     onDataSourceChanged() {
         this.dataSourceClear$.next();
 
-        this.dataSource?.busy?.pipe(takeUntil(this.dataSourceClear$))
+        this.dataSource?.busy
+            ?.pipe(takeUntil(this.dataSourceClear$))
             .subscribe((isBusy: boolean) => {
                 this.busy = isBusy;
                 this.changeDetector.markForCheck();
             });
 
-        this.dataSource?.outputsSubject.pipe(takeUntil(this.dataSourceClear$))
+        this.dataSource?.outputsSubject
+            .pipe(takeUntil(this.dataSourceClear$))
             .subscribe((value) => {
                 this.data = isUndefined(value?.result) ? value : value?.result;
                 this.dataSourceError = value?.error;

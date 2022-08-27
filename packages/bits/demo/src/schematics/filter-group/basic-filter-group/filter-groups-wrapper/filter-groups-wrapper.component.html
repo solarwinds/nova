@@ -1,17 +1,24 @@
 <div class="nui-filter-groups-wrapper">
     <ng-content></ng-content>
-    <div *ngIf="emptyFilterGroupsExist()"
-         class="nui-filter-groups-wrapper__hidden-filters d-flex align-items-center">
+    <div
+        *ngIf="emptyFilterGroupsExist()"
+        class="nui-filter-groups-wrapper__hidden-filters d-flex align-items-center"
+    >
         <nui-popover [template]="hiddenFiltersPopover">
-            {{emptyFilterGroupsCount() | i18nPlural: i18nHiddenFiltersMapping}}
+            {{
+                emptyFilterGroupsCount() | i18nPlural: i18nHiddenFiltersMapping
+            }}
         </nui-popover>
     </div>
 </div>
 
 <ng-template #hiddenFiltersPopover>
     <span class="nui-filter-groups-wrapper__popover-hint" i18n>
-        Following filter properties are turned on, but there are no existing values for them in the system.
+        Following filter properties are turned on, but there are no existing
+        values for them in the system.
     </span>
     <nui-divider size="small"></nui-divider>
-    <span class="nui-filter-groups-wrapper__popover-hidden-filters">{{emptyFilterGroupsTitles()}}</span>
+    <span class="nui-filter-groups-wrapper__popover-hidden-filters">{{
+        emptyFilterGroupsTitles()
+    }}</span>
 </ng-template>

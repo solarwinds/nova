@@ -44,7 +44,9 @@ describe("USERCONTROL Spinner", () => {
     it("should have 'small' default size if no 'size' input provided", async () => {
         await button2.click();
         await spinner2.waitForDisplayed(SpinnerAtom.defaultDelay * 1.5);
-        expect(await spinner2.hasClass("nui-spinner__container--small")).toBe(true);
+        expect(await spinner2.hasClass("nui-spinner__container--small")).toBe(
+            true
+        );
     });
 
     it("will respect size", async () => {
@@ -66,5 +68,4 @@ describe("USERCONTROL Spinner", () => {
 
         expect(endPoint - startPoint).toBeGreaterThan(spinnerDelay);
     });
-
 });

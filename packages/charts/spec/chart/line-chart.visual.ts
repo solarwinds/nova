@@ -1,6 +1,7 @@
+import { browser, by, element } from "protractor";
+
 import { Atom, Camera } from "@nova-ui/bits/sdk/atoms";
 import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
-import { browser, by, element } from "protractor";
 
 import { LegendAtom } from "../legend/legend.atom";
 
@@ -12,7 +13,10 @@ describe(`Visual Tests: Charts - ${name}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("chart-types/line/visual-test");
-        legend = Atom.findIn(LegendAtom, element(by.tagName("line-chart-with-axis-labels-example")));
+        legend = Atom.findIn(
+            LegendAtom,
+            element(by.tagName("line-chart-with-axis-labels-example"))
+        );
 
         camera = new Camera().loadFilm(browser, name);
     });

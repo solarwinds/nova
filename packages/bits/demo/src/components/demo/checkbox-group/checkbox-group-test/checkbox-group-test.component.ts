@@ -5,7 +5,6 @@ import { FormBuilder, FormGroup } from "@angular/forms";
     selector: "nui-checkbox-group-test-example",
     templateUrl: "checkbox-group-test.component.html",
 })
-
 export class CheckboxGroupTestComponent implements OnInit {
     public testForm: FormGroup;
     public cabbage = "Cabbage";
@@ -22,10 +21,12 @@ export class CheckboxGroupTestComponent implements OnInit {
     ngOnInit() {
         this.testForm = this.formBuilder.group({
             checkboxGroup: this.formBuilder.control({
-                value: this.selectedVegetables, disabled: true,
+                value: this.selectedVegetables,
+                disabled: true,
             }),
             checkboxGroup2: this.formBuilder.control({
-                value: this.selectedVegetables, disabled: false,
+                value: this.selectedVegetables,
+                disabled: false,
             }),
         });
     }

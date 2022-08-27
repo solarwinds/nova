@@ -1,5 +1,7 @@
+import { LiveAnnouncer } from "@angular/cdk/a11y";
 import { DOWN_ARROW, ENTER, UP_ARROW } from "@angular/cdk/keycodes";
 import { OverlayConfig } from "@angular/cdk/overlay";
+import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
     AfterContentInit,
     AfterViewInit,
@@ -29,17 +31,24 @@ import pull from "lodash/pull";
 import { Observable, Subject } from "rxjs";
 import { delay, takeUntil, tap } from "rxjs/operators";
 
-import { OVERLAY_ITEM, OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
+import {
+    OVERLAY_ITEM,
+    OVERLAY_WITH_POPUP_STYLES_CLASS,
+} from "../overlay/constants";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
 import { OverlayUtilitiesService } from "../overlay/overlay-utilities.service";
-import { IOption, OptionValueType, OverlayContainerType } from "../overlay/types";
-
+import {
+    IOption,
+    OptionValueType,
+    OverlayContainerType,
+} from "../overlay/types";
+import {
+    ANNOUNCER_CLOSE_MESSAGE,
+    ANNOUNCER_OPEN_MESSAGE_SUFFIX,
+} from "./constants";
 import { OptionKeyControlService } from "./option-key-control.service";
 import { SelectV2OptionComponent } from "./option/select-v2-option.component";
 import { InputValueTypes, IOptionedComponent } from "./types";
-import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
-import { LiveAnnouncer } from "@angular/cdk/a11y";
-import { ANNOUNCER_CLOSE_MESSAGE, ANNOUNCER_OPEN_MESSAGE_SUFFIX } from "./constants";
 
 const DEFAULT_SELECT_OVERLAY_CONFIG: OverlayConfig = {
     panelClass: OVERLAY_WITH_POPUP_STYLES_CLASS,
@@ -50,8 +59,15 @@ const V_SCROLL_HEIGHT_BUFFER = 10;
 // Will be renamed in scope of the NUI-5797
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, ControlValueAccessor, IOptionedComponent, OnDestroy, OnChanges {
-
+export abstract class BaseSelectV2
+    implements
+        AfterViewInit,
+        AfterContentInit,
+        ControlValueAccessor,
+        IOptionedComponent,
+        OnDestroy,
+        OnChanges
+{
     /** Value used as a placeholder for the select. */
     @Input() public placeholder: string = "";
 
@@ -88,11 +104,13 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
 
     /** Whether the Select/Combobox disabled */
     @HostBinding("class.disabled")
-    @Input() public isDisabled = false;
+    @Input()
+    public isDisabled = false;
 
     /** Input to apply error state styles */
     @HostBinding("class.has-error")
-    @Input() public isInErrorState: boolean;
+    @Input()
+    public isInErrorState: boolean;
 
     /** Input to set aria label text */
     @Input() public get ariaLabel(): string {
@@ -109,12 +127,15 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     }
 
     /** Corresponds to the Textbox of the Combobox */
-    @ViewChild("input", { static: false}) inputElement: ElementRef;
+    @ViewChild("input", { static: false }) inputElement: ElementRef;
 
-    @ContentChild(CdkVirtualScrollViewport) cdkVirtualScroll: CdkVirtualScrollViewport;
+    @ContentChild(CdkVirtualScrollViewport)
+    cdkVirtualScroll: CdkVirtualScrollViewport;
 
     /** Corresponds to the Options listed in the Dropdown */
-    @ContentChildren(forwardRef(() => SelectV2OptionComponent), { descendants: true })
+    @ContentChildren(forwardRef(() => SelectV2OptionComponent), {
+        descendants: true,
+    })
     public options: QueryList<SelectV2OptionComponent>;
 
     /** Corresponds to the All Items listed in the Dropdown */
@@ -139,7 +160,8 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
 
     @ViewChild(OverlayComponent)
     public dropdown: OverlayComponent;
-    protected popupUtilities: OverlayUtilitiesService = new OverlayUtilitiesService();
+    protected popupUtilities: OverlayUtilitiesService =
+        new OverlayUtilitiesService();
     protected destroy$: Subject<void> = new Subject();
     protected mouseDown: boolean;
     private _selectedOptions: SelectV2OptionComponent[] = [];
@@ -148,7 +170,9 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     private virtualScrollResizeObserver: ResizeObserver;
 
     /** Emits value which has been selected */
-    @Output() public valueSelected = new EventEmitter<OptionValueType | OptionValueType[] | null>();
+    @Output() public valueSelected = new EventEmitter<
+        OptionValueType | OptionValueType[] | null
+    >();
 
     /** Emits value which has been changed */
     @Output() public valueChanged = new EventEmitter<InputValueTypes>();
@@ -156,11 +180,12 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     /** Emits MouseEvent when click occurs outside Select/Combobox */
     @Output() public clickOutsideDropdown = new EventEmitter<MouseEvent>();
 
-    protected constructor(protected optionKeyControlService: OptionKeyControlService<IOption>,
-                          protected cdRef: ChangeDetectorRef,
-                          public elRef: ElementRef<HTMLElement>,
-                          public liveAnnouncer: LiveAnnouncer) {
-    }
+    protected constructor(
+        protected optionKeyControlService: OptionKeyControlService<IOption>,
+        protected cdRef: ChangeDetectorRef,
+        public elRef: ElementRef<HTMLElement>,
+        public liveAnnouncer: LiveAnnouncer
+    ) {}
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.value) {
@@ -188,10 +213,10 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     }
 
     /** `View -> model callback called when value changes` */
-    public onChange: (value: any) => void = (): void => { };
+    public onChange: (value: any) => void = (): void => {};
 
     /** `View -> model callback called when autocomplete has been touched` */
-    public onTouched = (): void => { };
+    public onTouched = (): void => {};
 
     /** Handles mousedown event */
     @HostListener("mousedown")
@@ -231,7 +256,11 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
             this.optionKeyControlService.handleKeydown(event);
         }
 
-        if (this.manualDropdownControl && this.dropdown.showing && this.isAllowedKeyOnManualDropdown(event)) {
+        if (
+            this.manualDropdownControl &&
+            this.dropdown.showing &&
+            this.isAllowedKeyOnManualDropdown(event)
+        ) {
             this.optionKeyControlService.handleKeydown(event);
         }
     }
@@ -275,12 +304,17 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
 
     /** Selects specific option and set its value to the model */
     public selectOption(option: SelectV2OptionComponent): void {
-        if (includes(this.selectedOptions, option) && !this.manualDropdownControl) {
+        if (
+            includes(this.selectedOptions, option) &&
+            !this.manualDropdownControl
+        ) {
             this.hideDropdown();
             return;
         }
 
-        this.selectedOptions = this.multiselect ? this.selectedOptions.concat(option) : [option];
+        this.selectedOptions = this.multiselect
+            ? this.selectedOptions.concat(option)
+            : [option];
         this.optionKeyControlService.setActiveItem(option);
 
         if (!this.manualDropdownControl) {
@@ -290,7 +324,9 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
 
     /** Removes selected options or passed option if multi-select mode enabled */
     public removeSelected(option?: SelectV2OptionComponent): void {
-        if (!this.multiselect) { return; }
+        if (!this.multiselect) {
+            return;
+        }
 
         this.selectedOptions = option ? pull(this.selectedOptions, option) : [];
     }
@@ -336,15 +372,23 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         this.destroy$.complete();
 
         if (this.virtualScrollResizeObserver) {
-            this.virtualScrollResizeObserver.unobserve(this.cdkVirtualScroll.elementRef.nativeElement);
+            this.virtualScrollResizeObserver.unobserve(
+                this.cdkVirtualScroll.elementRef.nativeElement
+            );
         }
     }
 
-    protected getValueFromOptions(options = this.selectedOptions): OptionValueType | OptionValueType[] | null {
-        return this.multiselect ? options.map(o => o.value) : options[0]?.value || "";
+    protected getValueFromOptions(
+        options = this.selectedOptions
+    ): OptionValueType | OptionValueType[] | null {
+        return this.multiselect
+            ? options.map((o) => o.value)
+            : options[0]?.value || "";
     }
 
-    protected handleValueChange(value: OptionValueType | OptionValueType[] | null): void {
+    protected handleValueChange(
+        value: OptionValueType | OptionValueType[] | null
+    ): void {
         if (isUndefined(value)) {
             this.value = "";
             this._selectedOptions = [];
@@ -356,13 +400,21 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
 
         if (this.multiselect && Array.isArray(value)) {
             // Using type assertion to avoid compilation error, undefined elements are filtered but compiler do not infer the type properly
-            this._selectedOptions = <SelectV2OptionComponent[]>(value.map(v => this.options?.find(option => isEqual(option.value, v)))
-                .filter(_ => _)); // removes 'undefined' elements out of the array if any
-            this._selectedOptions.forEach(option => option.outfiltered = true);
-
+            this._selectedOptions = <SelectV2OptionComponent[]>(
+                value
+                    .map((v) =>
+                        this.options?.find((option) => isEqual(option.value, v))
+                    )
+                    .filter((_) => _)
+            ); // removes 'undefined' elements out of the array if any
+            this._selectedOptions.forEach(
+                (option) => (option.outfiltered = true)
+            );
         } else {
             const modelValue: OptionValueType = value;
-            const selectedValue = this.options?.find(option => isEqual(option.value, modelValue));
+            const selectedValue = this.options?.find((option) =>
+                isEqual(option.value, modelValue)
+            );
             this._selectedOptions = selectedValue ? [selectedValue] : [];
         }
 
@@ -372,35 +424,47 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     }
 
     protected optionsChanged(): Observable<QueryList<IOption>> {
-        return this.allPopupItems.changes
-            .pipe(
-                takeUntil(this.destroy$),
-                delay(0), // because we handle options as list of COMPONENTS, so we need to wait till next check
-                tap(() => {
-                    this.handleValueChange(this.value);
-                    this.validateValueWithSelectedOptions();
-                    this.optionKeyControlService.setFirstItemActive();
-                })
-            );
+        return this.allPopupItems.changes.pipe(
+            takeUntil(this.destroy$),
+            delay(0), // because we handle options as list of COMPONENTS, so we need to wait till next check
+            tap(() => {
+                this.handleValueChange(this.value);
+                this.validateValueWithSelectedOptions();
+                this.optionKeyControlService.setFirstItemActive();
+            })
+        );
     }
 
     private validateValueWithSelectedOptions() {
-        const selectedOptionValues = this.selectedOptions.map(option => option.value);
+        const selectedOptionValues = this.selectedOptions.map(
+            (option) => option.value
+        );
         const valuePropToCompare = !isUndefined(this.value)
-            ? this.multiselect ? this.value : [this.value]
+            ? this.multiselect
+                ? this.value
+                : [this.value]
             : [];
 
         if (!isEqual(selectedOptionValues, valuePropToCompare)) {
-            this.value = this.multiselect ? selectedOptionValues : selectedOptionValues[0];
+            this.value = this.multiselect
+                ? selectedOptionValues
+                : selectedOptionValues[0];
             this.onChange(this.value);
-            console.warn("Options changed, no correspondent 'value' found. Current value: ", this.value, "Previous value: ", valuePropToCompare);
+            console.warn(
+                "Options changed, no correspondent 'value' found. Current value: ",
+                this.value,
+                "Previous value: ",
+                valuePropToCompare
+            );
         }
     }
 
     private scrollToOption() {
         // setTimeout is necessary because scrolling to the selected item should occur only when overlay rendered
         if (!isUndefined(this.value) && !this.multiselect) {
-            setTimeout(() => this.selectedOptions[0]?.scrollIntoView({ block: "center" }));
+            setTimeout(() =>
+                this.selectedOptions[0]?.scrollIntoView({ block: "center" })
+            );
         }
     }
 
@@ -408,16 +472,22 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         this.optionKeyControlService.optionItems = this.allPopupItems;
         this.optionKeyControlService.popup = this.dropdown;
         this.optionKeyControlService.initKeyboardManager();
-        this.optionKeyControlService.setSkipPredicate((option: IOption) => !!(option.outfiltered || option.isDisabled));
+        this.optionKeyControlService.setSkipPredicate(
+            (option: IOption) => !!(option.outfiltered || option.isDisabled)
+        );
     }
 
     private setActiveItemOnDropdown(): void {
         let selectedValue;
-        if(!this.multiselect) {
-            selectedValue = this.options?.find(option => isEqual(option.value, this.value));
+        if (!this.multiselect) {
+            selectedValue = this.options?.find((option) =>
+                isEqual(option.value, this.value)
+            );
         }
         selectedValue && !this.multiselect
-            ? this.optionKeyControlService.setActiveItem(this.selectedOptions[0])
+            ? this.optionKeyControlService.setActiveItem(
+                  this.selectedOptions[0]
+              )
             : this.optionKeyControlService.setFirstItemActive();
     }
 
@@ -425,22 +495,26 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         this.dropdown.clickOutside
             .pipe(takeUntil(this.destroy$))
             .subscribe((v) => {
-                if (!this.manualDropdownControl) { this.hideDropdown(); }
+                if (!this.manualDropdownControl) {
+                    this.hideDropdown();
+                }
                 this.clickOutsideDropdown.emit(v);
             });
     }
 
     private initOnTouch() {
-        this.dropdown.hide$
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(() => {
-                this.onTouched();
-                this.cdRef.markForCheck(); // so caret icon will update properly
-            });
+        this.dropdown.hide$.pipe(takeUntil(this.destroy$)).subscribe(() => {
+            this.onTouched();
+            this.cdRef.markForCheck(); // so caret icon will update properly
+        });
     }
 
     private isAllowedKeyOnManualDropdown(event: KeyboardEvent): Boolean {
-        return Boolean([UP_ARROW, DOWN_ARROW, ENTER].find((i: number) => i === event.keyCode));
+        return Boolean(
+            [UP_ARROW, DOWN_ARROW, ENTER].find(
+                (i: number) => i === event.keyCode
+            )
+        );
     }
 
     private defineDropdownContainer(): void {
@@ -473,13 +547,20 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
 
         const element = this.cdkVirtualScroll.elementRef.nativeElement;
         const height = parseInt(element.style.height, 10);
-        const minHeight = Number.isNaN(height) ? 0 : height + V_SCROLL_HEIGHT_BUFFER;
+        const minHeight = Number.isNaN(height)
+            ? 0
+            : height + V_SCROLL_HEIGHT_BUFFER;
 
-        this.dropdown.overlayConfig = { ...this.overlayConfig, ...{ minHeight }};
-        this.virtualScrollResizeObserver = new ResizeObserver(entries => {
+        this.dropdown.overlayConfig = {
+            ...this.overlayConfig,
+            ...{ minHeight },
+        };
+        this.virtualScrollResizeObserver = new ResizeObserver((entries) => {
             for (const entry of entries) {
                 const content = entry.contentRect;
-                const minHeight = content.height ? content.height + V_SCROLL_HEIGHT_BUFFER : 0;
+                const minHeight = content.height
+                    ? content.height + V_SCROLL_HEIGHT_BUFFER
+                    : 0;
 
                 this.dropdown.updateSize({ minHeight });
             }
@@ -489,18 +570,25 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     }
 
     private isOpenOnFocus(): boolean {
-        return !this.mouseDown && !this.manualDropdownControl
-            && document.activeElement === this.inputElement.nativeElement;
+        return (
+            !this.mouseDown &&
+            !this.manualDropdownControl &&
+            document.activeElement === this.inputElement.nativeElement
+        );
     }
 
     private announceDropdown(open: boolean): void {
         if (open) {
-            this.liveAnnouncer.announce(`${this.options.length} ${ANNOUNCER_OPEN_MESSAGE_SUFFIX}`);
+            this.liveAnnouncer.announce(
+                `${this.options.length} ${ANNOUNCER_OPEN_MESSAGE_SUFFIX}`
+            );
 
             return;
         }
 
-        const msg = this.value ? `${this.value} selected ${ANNOUNCER_CLOSE_MESSAGE}` : ANNOUNCER_CLOSE_MESSAGE;
+        const msg = this.value
+            ? `${this.value} selected ${ANNOUNCER_CLOSE_MESSAGE}`
+            : ANNOUNCER_CLOSE_MESSAGE;
 
         this.liveAnnouncer.announce(msg);
     }

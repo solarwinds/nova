@@ -1,13 +1,13 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { EventBus, IEvent } from "@nova-ui/bits";
 import get from "lodash/get";
+
+import { EventBus, IEvent } from "@nova-ui/bits";
 
 import { DynamicComponentCreator } from "../../../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
 import { IPizzagnaLayer, IProperties } from "../../../../../types";
 import { PreviewService } from "../../../preview.service";
 import { BaseConverter } from "../../base-converter";
-
 import { TitleAndDescriptionConverterService } from "./title-and-description-converter.service";
 
 describe("TitleAndDescriptionConverterService", () => {
@@ -23,8 +23,15 @@ describe("TitleAndDescriptionConverterService", () => {
         eventBus = new EventBus();
         previewService = new PreviewService();
         dynamicComponentCreator = new DynamicComponentCreator();
-        pizzagnaService = new PizzagnaService(eventBus, dynamicComponentCreator);
-        service = new TitleAndDescriptionConverterService(eventBus, previewService, pizzagnaService);
+        pizzagnaService = new PizzagnaService(
+            eventBus,
+            dynamicComponentCreator
+        );
+        service = new TitleAndDescriptionConverterService(
+            eventBus,
+            previewService,
+            pizzagnaService
+        );
         const formBuilder = new FormBuilder();
         form = formBuilder.group({
             title: "",
@@ -58,7 +65,12 @@ describe("TitleAndDescriptionConverterService", () => {
             };
             preview.header.properties = testValue;
             service.buildForm();
-            expect(get(pizzagnaService.pizzagna, TitleAndDescriptionConverterService.PROPERTIES_PATH)).toEqual(testValue);
+            expect(
+                get(
+                    pizzagnaService.pizzagna,
+                    TitleAndDescriptionConverterService.PROPERTIES_PATH
+                )
+            ).toEqual(testValue);
         });
     });
 
@@ -92,7 +104,6 @@ describe("TitleAndDescriptionConverterService", () => {
             expect(spy).toHaveBeenCalled();
         });
     });
-
 
     describe("ngOnDestroy", () => {
         it("should unsubscribe from form value changes", () => {

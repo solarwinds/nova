@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    OnInit,
+    ViewEncapsulation,
+} from "@angular/core";
+import keyBy from "lodash/keyBy";
+
 import { ThemeSwitchService } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
@@ -11,10 +18,13 @@ import {
     ProviderRegistryService,
     WidgetTypesService,
 } from "@nova-ui/dashboards";
-import keyBy from "lodash/keyBy";
 
-import { TestProportionalDataSource, TestProportionalDataSource2, TestProportionalDataSource3, TestProportionalDataSource4 } from "../../data/proportional-data-sources";
-
+import {
+    TestProportionalDataSource,
+    TestProportionalDataSource2,
+    TestProportionalDataSource3,
+    TestProportionalDataSource4,
+} from "../../data/proportional-data-sources";
 import { positions, widgets } from "./widgets";
 
 /**
@@ -71,15 +81,18 @@ export class AcmeDashboardComponent implements OnInit {
                 deps: [],
             },
         });
-        contentFormattersRegistry.addItems(DEFAULT_PROPORTIONAL_CONTENT_FORMATTERS);
+        contentFormattersRegistry.addItems(
+            DEFAULT_PROPORTIONAL_CONTENT_FORMATTERS
+        );
         aggregatorRegistry.addItems(DEFAULT_PROPORTIONAL_CONTENT_AGGREGATORS);
     }
 
     public ngOnInit(): void {
-        const widgetsWithStructure = widgets.map(w => ({
+        const widgetsWithStructure = widgets.map((w) => ({
             ...w,
             pizzagna: {
-                ...this.widgetTypesService.getWidgetType(w.type, w.version).widget,
+                ...this.widgetTypesService.getWidgetType(w.type, w.version)
+                    .widget,
                 ...w.pizzagna,
             },
         }));

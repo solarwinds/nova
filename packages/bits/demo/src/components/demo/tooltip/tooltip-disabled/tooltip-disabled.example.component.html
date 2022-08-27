@@ -5,8 +5,12 @@
         </span>
     </div>
     <div class="d-flex flex-row">
-        <nui-switch [value]="isDisabled" (valueChange)="onValueChanged($event)" i18n>
-            {{message}}
+        <nui-switch
+            [value]="isDisabled"
+            (valueChange)="onValueChanged($event)"
+            i18n
+        >
+            {{ message }}
         </nui-switch>
     </div>
 </div>

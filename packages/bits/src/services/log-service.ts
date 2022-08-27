@@ -1,13 +1,7 @@
-import {
-    Injectable,
-    Optional,
-} from "@angular/core";
+import { Injectable, Optional } from "@angular/core";
 import noop from "lodash/noop";
 
-import {
-    LogLevel,
-    NuiEnvironment,
-} from "../environment";
+import { LogLevel, NuiEnvironment } from "../environment";
 
 /**
  * __Name : __
@@ -19,7 +13,7 @@ import {
 /**
  * @ignore
  */
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class LoggerService {
     private logLevel: LogLevel = LogLevel.warn;
 
@@ -49,8 +43,10 @@ export class LoggerService {
      * @param ...msgs multiple arguments to be logged.
      */
     get info() {
-        if (this.logLevel === LogLevel.debug ||
-            this.logLevel === LogLevel.info) {
+        if (
+            this.logLevel === LogLevel.debug ||
+            this.logLevel === LogLevel.info
+        ) {
             // eslint-disable-next-line no-console
             return console.info.bind(console);
         }
@@ -63,9 +59,11 @@ export class LoggerService {
      * @param ...msgs multiple arguments to be logged.
      */
     get log() {
-        if (this.logLevel === LogLevel.debug ||
+        if (
+            this.logLevel === LogLevel.debug ||
             this.logLevel === LogLevel.info ||
-            this.logLevel === LogLevel.log) {
+            this.logLevel === LogLevel.log
+        ) {
             return console.log.bind(console);
         }
         return noop;
@@ -77,10 +75,12 @@ export class LoggerService {
      * @param ...msgs multiple arguments to be logged.
      */
     get warn() {
-        if (this.logLevel === LogLevel.debug ||
+        if (
+            this.logLevel === LogLevel.debug ||
             this.logLevel === LogLevel.info ||
             this.logLevel === LogLevel.log ||
-            this.logLevel === LogLevel.warn) {
+            this.logLevel === LogLevel.warn
+        ) {
             return console.warn.bind(console);
         }
         return noop;
@@ -92,11 +92,13 @@ export class LoggerService {
      * @param ...msgs multiple arguments to be logged.
      */
     get error() {
-        if (this.logLevel === LogLevel.debug ||
+        if (
+            this.logLevel === LogLevel.debug ||
             this.logLevel === LogLevel.info ||
             this.logLevel === LogLevel.log ||
             this.logLevel === LogLevel.warn ||
-            this.logLevel === LogLevel.error) {
+            this.logLevel === LogLevel.error
+        ) {
             return console.error.bind(console);
         }
         return noop;

@@ -14,7 +14,6 @@ import {
 import throttle from "lodash/throttle";
 
 import { UtilService } from "../../../services/util.service";
-
 import { DragAndDropService } from "./drag-and-drop.service";
 import { scrollConstants } from "./dragdrop.constants";
 import { IDragEvent } from "./public-api";
@@ -71,18 +70,22 @@ export class DraggableDirective implements OnInit {
 
     private adorner?: HTMLElement;
     private dragsourceOverlay?: HTMLElement;
-    private moveDragAdorner = throttle((coordinates: { x: number, y: number }) => {
-        requestAnimationFrame(() => {
-            if (this.adorner) {
-                this.adorner.style.left = coordinates.x + "px";
-                this.adorner.style.top = coordinates.y + "px";
-            }
-            this.autoScroll(coordinates.x, coordinates.y);
-        });
-    }, scrollConstants.adornerUpdateThrottleInMs);
+    private moveDragAdorner = throttle(
+        (coordinates: { x: number; y: number }) => {
+            requestAnimationFrame(() => {
+                if (this.adorner) {
+                    this.adorner.style.left = coordinates.x + "px";
+                    this.adorner.style.top = coordinates.y + "px";
+                }
+                this.autoScroll(coordinates.x, coordinates.y);
+            });
+        },
+        scrollConstants.adornerUpdateThrottleInMs
+    );
 
     @HostBinding(`class.${DraggableDirective.draggableClass}`)
-    @HostBinding("attr.draggable") draggable: boolean;
+    @HostBinding("attr.draggable")
+    draggable: boolean;
 
     @HostListener("dragstart", ["$event"])
     onDragStart(event: IDragEvent) {
@@ -104,7 +107,9 @@ export class DraggableDirective implements OnInit {
     @HostListener("dragend", ["$event"])
     onDragEnd(event: IDragEvent) {
         this.dragEnd.emit(event);
-        this.elRef.nativeElement.classList.remove(DraggableDirective.dragSourceClass);
+        this.elRef.nativeElement.classList.remove(
+            DraggableDirective.dragSourceClass
+        );
         if (this.adorner) {
             this.adorner.remove();
             this.adorner = undefined;
@@ -122,11 +127,13 @@ export class DraggableDirective implements OnInit {
         });
     }
 
-    constructor(private elRef: ElementRef,
+    constructor(
+        private elRef: ElementRef,
         private zone: NgZone,
         private utilService: UtilService,
         private dragAndDropService: DragAndDropService,
-        @Inject(DOCUMENT) private document: Document) { }
+        @Inject(DOCUMENT) private document: Document
+    ) {}
     ngOnInit() {
         this.draggable = true;
     }
@@ -135,7 +142,7 @@ export class DraggableDirective implements OnInit {
         const clientX = event.clientX;
         const clientY = event.clientY;
         this.moveDragAdorner({ x: clientX, y: clientY });
-    }
+    };
 
     private createDragVisuals = (event: DragEvent) => {
         // copy the node being dragged, and add effects
@@ -153,8 +160,10 @@ export class DraggableDirective implements OnInit {
         // Safari shows the dragImage natively, so we don't have to fake it
         if (!this.utilService.browser?.isSafari()) {
             const copiedNode = (<any>event.currentTarget).cloneNode(true);
-            copiedNode.style.width = this.elRef.nativeElement.offsetWidth + "px";
-            copiedNode.style.height = this.elRef.nativeElement.offsetHeight + "px";
+            copiedNode.style.width =
+                this.elRef.nativeElement.offsetWidth + "px";
+            copiedNode.style.height =
+                this.elRef.nativeElement.offsetHeight + "px";
             copiedNode.classList.add(DraggableDirective.draggingClass);
             copiedNode.removeAttribute("draggable");
             this.adorner.appendChild(copiedNode);
@@ -166,24 +175,35 @@ export class DraggableDirective implements OnInit {
 
         // this should be the overlay that fades out the existing node
         const dragSourceOverlay = this.document.createElement("div");
-        dragSourceOverlay.classList.add(DraggableDirective.dragsourceOverlayClass);
+        dragSourceOverlay.classList.add(
+            DraggableDirective.dragsourceOverlayClass
+        );
 
         // Fix for Google Chrome, appending of overlay in regular way cause unreasonable dispatch of "dragend" event
         setTimeout(() => {
             this.elRef.nativeElement.appendChild(dragSourceOverlay);
         }, 0);
 
-        this.elRef.nativeElement.classList.add(DraggableDirective.dragSourceClass);
+        this.elRef.nativeElement.classList.add(
+            DraggableDirective.dragSourceClass
+        );
 
         return dragSourceOverlay;
-    }
+    };
 
     private setImageAndData(event: DragEvent) {
-        if ((typeof DragEvent !== "undefined" && event instanceof DragEvent) || event.dataTransfer) {
+        if (
+            (typeof DragEvent !== "undefined" && event instanceof DragEvent) ||
+            event.dataTransfer
+        ) {
             if (event.dataTransfer?.setDragImage) {
                 if (this.utilService.browser?.isSafari()) {
                     // Safari supports dragImage in a usable way
-                    event.dataTransfer.setDragImage(this.elRef.nativeElement, 0, -10);
+                    event.dataTransfer.setDragImage(
+                        this.elRef.nativeElement,
+                        0,
+                        -10
+                    );
                 } else {
                     // but other browsers don't so we have to disable it
                     const emptyItem = this.document.createElement("div");
@@ -208,12 +228,16 @@ export class DraggableDirective implements OnInit {
         if (!this.document.defaultView) {
             throw new Error("Document does not contain defaultView property");
         }
-        const verticalDistPercentage = (clientY / this.document.defaultView.innerHeight) * 100;
-        const horizontalDistPercentage = (clientX / this.document.defaultView.innerWidth) * 100;
+        const verticalDistPercentage =
+            (clientY / this.document.defaultView.innerHeight) * 100;
+        const horizontalDistPercentage =
+            (clientX / this.document.defaultView.innerWidth) * 100;
         const topScrollBoundary = scrollConstants.verticalScrollPercentage;
-        const bottomScrollBoundary = 100 - scrollConstants.verticalScrollPercentage;
+        const bottomScrollBoundary =
+            100 - scrollConstants.verticalScrollPercentage;
         const leftScrollBoundary = scrollConstants.horizontalScrollPercentage;
-        const rightScrollBoundary = 100 - scrollConstants.horizontalScrollPercentage;
+        const rightScrollBoundary =
+            100 - scrollConstants.horizontalScrollPercentage;
 
         let newX = this.document.defaultView.pageXOffset;
         let newY = this.document.defaultView.pageYOffset;
@@ -221,25 +245,29 @@ export class DraggableDirective implements OnInit {
         let scrollNeeded = false;
         if (verticalDistPercentage < topScrollBoundary) {
             const throttleDistance =
-                (topScrollBoundary - verticalDistPercentage) * scrollConstants.accelerationFactor;
+                (topScrollBoundary - verticalDistPercentage) *
+                scrollConstants.accelerationFactor;
             newY = newY - throttleDistance;
             scrollNeeded = true;
         }
         if (verticalDistPercentage > bottomScrollBoundary) {
             const throttleDistance =
-                (verticalDistPercentage - bottomScrollBoundary) * scrollConstants.accelerationFactor;
+                (verticalDistPercentage - bottomScrollBoundary) *
+                scrollConstants.accelerationFactor;
             newY = newY + throttleDistance;
             scrollNeeded = true;
         }
         if (horizontalDistPercentage < leftScrollBoundary) {
             const throttleDistance =
-                (leftScrollBoundary - horizontalDistPercentage) * scrollConstants.accelerationFactor;
+                (leftScrollBoundary - horizontalDistPercentage) *
+                scrollConstants.accelerationFactor;
             newX = newX - throttleDistance;
             scrollNeeded = true;
         }
         if (horizontalDistPercentage > rightScrollBoundary) {
             const throttleDistance =
-                (horizontalDistPercentage - rightScrollBoundary) * scrollConstants.accelerationFactor;
+                (horizontalDistPercentage - rightScrollBoundary) *
+                scrollConstants.accelerationFactor;
             newX = newX + throttleDistance;
             scrollNeeded = true;
         }

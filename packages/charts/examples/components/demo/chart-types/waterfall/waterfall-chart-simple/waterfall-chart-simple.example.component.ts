@@ -1,9 +1,19 @@
 import { Component, OnInit } from "@angular/core";
+import zipObject from "lodash/zipObject";
+
 import {
-    BandScale, barAccessors, barGrid, BarHighlightStrategy, BarRenderer, barScales, Chart, CHART_PALETTE_CS1, IBarChartConfig, InteractionLinePlugin,
+    BandScale,
+    barAccessors,
+    barGrid,
+    BarHighlightStrategy,
+    BarRenderer,
+    barScales,
+    Chart,
+    CHART_PALETTE_CS1,
+    IBarChartConfig,
+    InteractionLinePlugin,
     MappedValueProvider,
 } from "@nova-ui/charts";
-import zipObject from "lodash/zipObject";
 
 @Component({
     selector: "nui-waterfall-chart-simple-example",
@@ -21,27 +31,37 @@ export class WaterfallChartSimpleComponent implements OnInit {
         // Step 1 - Optionally, add interaction highlighting behavior.
         // If highlighting behavior is not desired, the renderer can be instantiated without a 'highlightStrategy' configuration
         // and the InteractionLinePlugin registration can be skipped.
-        const renderer = new BarRenderer({ highlightStrategy: new BarHighlightStrategy("x") });
+        const renderer = new BarRenderer({
+            highlightStrategy: new BarHighlightStrategy("x"),
+        });
         this.chart.addPlugin(new InteractionLinePlugin());
 
         // Step 2 - Create a color provider that maps the statuses (or types) of categories to their corresponding colors
-        const colorProvider = new MappedValueProvider(zipObject(["connect", "dns", "send", "ttfb", "cdownload"], CHART_PALETTE_CS1));
+        const colorProvider = new MappedValueProvider(
+            zipObject(
+                ["connect", "dns", "send", "ttfb", "cdownload"],
+                CHART_PALETTE_CS1
+            )
+        );
 
         // Step 3 - Adjust the color accessor, to retrieve the color or the bar by the corresponding data type.
         accessors.data.color = (d) => colorProvider.get(d.type);
 
         // Step 4 - Configure the format of the bottom label by setting custom scales.x.formatter function.
-        scales.x.formatters.tick = (value: number) => `${parseFloat(Number(value / 1000).toFixed(1)).toLocaleString()}s`;
+        scales.x.formatters.tick = (value: number) =>
+            `${parseFloat(Number(value / 1000).toFixed(1)).toLocaleString()}s`;
 
         // Step 5 - Configure the thickness of the bar using the BandScale.padding method on your scales.y.
         (<BandScale>scales.y).padding(0.5);
 
-        this.chart.update(getData().map(s => ({
-            ...s,
-            accessors,
-            scales,
-            renderer,
-        })));
+        this.chart.update(
+            getData().map((s) => ({
+                ...s,
+                accessors,
+                scales,
+                renderer,
+            }))
+        );
     }
 }
 
@@ -78,7 +98,8 @@ function getData() {
                     end: 178,
                 },
             ],
-        }, {
+        },
+        {
             id: "2",
             name: "Category 2",
             data: [
@@ -172,5 +193,4 @@ function getData() {
             ],
         },
     ];
-
 }

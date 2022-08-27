@@ -1,62 +1,114 @@
-<nui-widget-editor-accordion [formGroup]="formLocal"
-                             [state]="formLocal | nuiWidgetEditorAccordionFormState | async">
+<nui-widget-editor-accordion
+    [formGroup]="formLocal"
+    [state]="formLocal | nuiWidgetEditorAccordionFormState | async"
+>
     <div accordionHeader class="d-flex align-items-center px-4 py-2">
-        <nui-icon class="align-self-start pt-2" [icon]="formLocal | nuiFormHeaderIconPipe:'color' | async"></nui-icon>
+        <nui-icon
+            class="align-self-start pt-2"
+            [icon]="formLocal | nuiFormHeaderIconPipe: 'color' | async"
+        ></nui-icon>
         <div class="d-flex flex-column ml-4 pt-1">
             <span class="nui-text-label" i18n>Background color rules</span>
-            <div class="nui-text-secondary"
-                 [title]="getColorRulesSubtitle()">
-
-                 {{ getColorRulesSubtitle() }}
+            <div class="nui-text-secondary" [title]="getColorRulesSubtitle()">
+                {{ getColorRulesSubtitle() }}
             </div>
         </div>
     </div>
     <div class="kpi-color-rules-configuration__accordion-content">
         <div class="mb-4">
-            <p class="mb-3">We can automatically change the background color when the value meets certain conditions.</p>
+            <p class="mb-3">
+                We can automatically change the background color when the value
+                meets certain conditions.
+            </p>
             <div cdkDropList (cdkDropListDropped)="drop($event)">
-                <ng-container *ngFor="let rule of formLocal.get('rules')?.value.controls; index as i">
-                    <div class="kpi-color-rule d-flex pt-3" [formGroup]="rule" cdkDrag (cdkDragStarted)="cdkDragStarted($event)">
-                        <div class="kpi-color-rule__control justify-content-center d-flex">
-                            <nui-icon icon="drag" class="kpi-color-rule__drag align-items-center" cdkDragHandle></nui-icon>
+                <ng-container
+                    *ngFor="
+                        let rule of formLocal.get('rules')?.value.controls;
+                        index as i
+                    "
+                >
+                    <div
+                        class="kpi-color-rule d-flex pt-3"
+                        [formGroup]="rule"
+                        cdkDrag
+                        (cdkDragStarted)="cdkDragStarted($event)"
+                    >
+                        <div
+                            class="kpi-color-rule__control justify-content-center d-flex"
+                        >
+                            <nui-icon
+                                icon="drag"
+                                class="kpi-color-rule__drag align-items-center"
+                                cdkDragHandle
+                            ></nui-icon>
                         </div>
                         <div class="d-flex flex-grow-1 flex-wrap">
-                            <nui-form-field class="mr-3 mb-3 flex-grow-1" [control]="rule.get('comparisonType')">
-                                <nui-select-v2 placeholder="Select Item"
-                                               i18n-placeholder
-                                               style="min-width: 220px;"
-                                               [formControl]="rule.get('comparisonType')">
-                                    <nui-select-v2-option *ngFor="let item of availableComparators | keyvalue" [value]="item.key">
+                            <nui-form-field
+                                class="mr-3 mb-3 flex-grow-1"
+                                [control]="rule.get('comparisonType')"
+                            >
+                                <nui-select-v2
+                                    placeholder="Select Item"
+                                    i18n-placeholder
+                                    style="min-width: 220px"
+                                    [formControl]="rule.get('comparisonType')"
+                                >
+                                    <nui-select-v2-option
+                                        *ngFor="
+                                            let item of availableComparators
+                                                | keyvalue
+                                        "
+                                        [value]="item.key"
+                                    >
                                         {{ getLabel(item.key) }}
                                     </nui-select-v2-option>
                                 </nui-select-v2>
                             </nui-form-field>
 
-                            <nui-form-field class="mr-3 mb-3" [control]="rule.get('value')" style="max-width: 100px;">
-                                <nui-textbox formControlName="value"></nui-textbox>
+                            <nui-form-field
+                                class="mr-3 mb-3"
+                                [control]="rule.get('value')"
+                                style="max-width: 100px"
+                            >
+                                <nui-textbox
+                                    formControlName="value"
+                                ></nui-textbox>
                             </nui-form-field>
 
-                            <nui-form-field class="mr-3 mb-3" [control]="rule.get('color')">
-                                <nui-color-picker formControlName="color" [colorPalette]="palette"></nui-color-picker>
+                            <nui-form-field
+                                class="mr-3 mb-3"
+                                [control]="rule.get('color')"
+                            >
+                                <nui-color-picker
+                                    formControlName="color"
+                                    [colorPalette]="palette"
+                                ></nui-color-picker>
                             </nui-form-field>
                         </div>
-                        <button nui-button
-                                icon="delete"
-                                displayStyle="action"
-                                type="button"
-                                class="kpi-color-rule__control"
-                                (click)="removeRule(i)">
-                        </button>
-                        <nui-drop-area *cdkDragPlaceholder [style.height.px]="height"></nui-drop-area>
+                        <button
+                            nui-button
+                            icon="delete"
+                            displayStyle="action"
+                            type="button"
+                            class="kpi-color-rule__control"
+                            (click)="removeRule(i)"
+                        ></button>
+                        <nui-drop-area
+                            *cdkDragPlaceholder
+                            [style.height.px]="height"
+                        ></nui-drop-area>
                     </div>
                 </ng-container>
             </div>
-            <button nui-button
-                    icon="add"
-                    displayStyle="action"
-                    type="button"
-                    (click)="addRule()"
-                    i18n>Add new rule
+            <button
+                nui-button
+                icon="add"
+                displayStyle="action"
+                type="button"
+                (click)="addRule()"
+                i18n
+            >
+                Add new rule
             </button>
         </div>
     </div>

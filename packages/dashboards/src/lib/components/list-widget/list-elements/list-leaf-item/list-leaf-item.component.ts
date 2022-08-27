@@ -1,7 +1,17 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Output } from "@angular/core";
-import { EventBus, IEvent } from "@nova-ui/bits";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Inject,
+    Input,
+    OnInit,
+    Output,
+} from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+
+import { EventBus, IEvent } from "@nova-ui/bits";
 
 import { WIDGET_SEARCH } from "../../../../services/types";
 import { IHasChangeDetector, PIZZAGNA_EVENT_BUS } from "../../../../types";
@@ -34,12 +44,15 @@ export class ListLeafItemComponent implements IHasChangeDetector, OnInit {
         }
     }
 
-    constructor(public changeDetector: ChangeDetectorRef,
-        @Inject(PIZZAGNA_EVENT_BUS) public eventBus: EventBus<IEvent>) {
-    }
+    constructor(
+        public changeDetector: ChangeDetectorRef,
+        @Inject(PIZZAGNA_EVENT_BUS) public eventBus: EventBus<IEvent>
+    ) {}
 
     public ngOnInit() {
-        this.eventBus.getStream(WIDGET_SEARCH).pipe(takeUntil(this.destroy$))
+        this.eventBus
+            .getStream(WIDGET_SEARCH)
+            .pipe(takeUntil(this.destroy$))
             .subscribe((event) => {
                 this.searchTerm = event.payload;
                 this.changeDetector.markForCheck();

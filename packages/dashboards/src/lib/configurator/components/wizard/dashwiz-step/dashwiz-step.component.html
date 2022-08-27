@@ -1,12 +1,20 @@
-<div class="nui-dashwiz-step animated h-100" [ngClass]="{ 'nui-dashwiz-step--active': active }"
-     nui-busy
-     [busy]="busyConfig.busy">
-    <div cdkScrollable class="h-100 overflow-auto nui-scroll-shadows configurator-scrollable">
+<div
+    class="nui-dashwiz-step animated h-100"
+    [ngClass]="{ 'nui-dashwiz-step--active': active }"
+    nui-busy
+    [busy]="busyConfig.busy"
+>
+    <div
+        cdkScrollable
+        class="h-100 overflow-auto nui-scroll-shadows configurator-scrollable"
+    >
         <ng-container *ngTemplateOutlet="stepTemplate"></ng-container>
     </div>
-    <nui-spinner [percent]="busyConfig.percent"
-                 [allowCancel]="busyConfig.allowCancel"
-                 [message]="busyConfig.message"
-                 [size]="spinnerSize">
+    <nui-spinner
+        [percent]="busyConfig.percent"
+        [allowCancel]="busyConfig.allowCancel"
+        [message]="busyConfig.message"
+        [size]="spinnerSize"
+    >
     </nui-spinner>
 </div>

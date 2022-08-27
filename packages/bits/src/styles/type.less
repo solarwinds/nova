@@ -5,92 +5,111 @@
 // Typography
 // --------------------------------------------------
 
-
 // Headings
 // -------------------------
 
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: @headings-font-family;
-  font-weight: @nui-font-weight-semibold;
-  line-height: @headings-line-height;
-  .setCssVariable(color, nui-color-text-default);
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    font-family: @headings-font-family;
+    font-weight: @nui-font-weight-semibold;
+    line-height: @headings-line-height;
+    .setCssVariable(color, nui-color-text-default);
 
-  small,
-  .small {
-    font-weight: @nui-font-weight-regular;
-    line-height: 1;
-    .setCssVariable(color, headings-small-color);
-  }
+    small,
+    .small {
+        font-weight: @nui-font-weight-regular;
+        line-height: 1;
+        .setCssVariable(color, headings-small-color);
+    }
 }
 
-h1, .h1,
-h2, .h2,
-h3, .h3 {
-  margin-top: @line-height-computed;
-  margin-bottom: (@line-height-computed / 2);
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3 {
+    margin-top: @line-height-computed;
+    margin-bottom: (@line-height-computed / 2);
 
-  small,
-  .small {
-    font-size: 65%;
-  }
+    small,
+    .small {
+        font-size: 65%;
+    }
 }
-h4, .h4,
-h5, .h5,
-h6, .h6 {
-  margin-top: (@line-height-computed / 2);
-  margin-bottom: (@line-height-computed / 2);
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+    margin-top: (@line-height-computed / 2);
+    margin-bottom: (@line-height-computed / 2);
 
-  small,
-  .small {
-    font-size: 75%;
-  }
+    small,
+    .small {
+        font-size: 75%;
+    }
 }
 
-h1, .h1 {
+h1,
+.h1 {
     .nui-text-page();
 }
 
-h2, .h2 {
+h2,
+.h2 {
     .nui-text-widget();
 }
 
-h3, .h3 {
+h3,
+.h3 {
     .nui-text-panel(@nui-color-text-default, nui-color-text-default);
 }
 
-h4, .h4 {
+h4,
+.h4 {
     .nui-text-title-secondary(@nui-color-text-secondary, nui-color-text-secondary);
 }
 
-h5, .h5 {
+h5,
+.h5 {
     .nui-text-label(@nui-color-text-default, nui-color-text-default);
 }
 
-h6, .h6 {
+h6,
+.h6 {
     font-size: @nui-font-size-small;
     font-weight: @nui-font-weight-regular;
 }
-
 
 // Body text
 // -------------------------
 
 p {
-  margin: 0 0 (@line-height-computed / 2);
+    margin: 0 0 (@line-height-computed / 2);
 }
 
 .lead {
-  margin-bottom: @line-height-computed;
-  font-size: floor((@nui-font-size-default * 1.15));
-  font-weight: @nui-font-weight-regular;
-  line-height: 1.4;
+    margin-bottom: @line-height-computed;
+    font-size: floor((@nui-font-size-default * 1.15));
+    font-weight: @nui-font-weight-regular;
+    line-height: 1.4;
 
-  @media (min-width: @screen-sm-min) {
-    font-size: (@nui-font-size-default * 1.5);
-  }
+    @media (min-width: @screen-sm-min) {
+        font-size: (@nui-font-size-default * 1.5);
+    }
 }
-
 
 // Emphasis & misc
 // -------------------------
@@ -98,97 +117,105 @@ p {
 // Ex: (12px small font / 14px base font) * 100% = about 85%
 small,
 .small {
-  font-size: floor((100% * @nui-font-size-small / @nui-font-size-default));
+    font-size: floor((100% * @nui-font-size-small / @nui-font-size-default));
 }
 
 mark,
 .mark {
-  .setCssVariable(background-color, nui-color-semantic-warning-bg);
-  padding: .2em;
+    .setCssVariable(background-color, nui-color-semantic-warning-bg);
+    padding: 0.2em;
 }
 
 // Alignment
-.text-left           { text-align: left; }
-.text-right          { text-align: right; }
-.text-center         { text-align: center; }
-.text-justify        { text-align: justify; }
-.text-nowrap         { white-space: nowrap; }
+.text-left {
+    text-align: left;
+}
+.text-right {
+    text-align: right;
+}
+.text-center {
+    text-align: center;
+}
+.text-justify {
+    text-align: justify;
+}
+.text-nowrap {
+    white-space: nowrap;
+}
 
 // Transformation
-.text-lowercase      { text-transform: lowercase; }
-.text-uppercase      { text-transform: uppercase; }
-.text-capitalize     { text-transform: capitalize; }
+.text-lowercase {
+    text-transform: lowercase;
+}
+.text-uppercase {
+    text-transform: uppercase;
+}
+.text-capitalize {
+    text-transform: capitalize;
+}
 
 // Contextual colors
 .text-muted {
-  .setCssVariable(color, text-muted);
+    .setCssVariable(color, text-muted);
 }
 .text-primary {
-  .text-emphasis-variant(@nui-color-text-link, nui-color-text-link,
+    .text-emphasis-variant(@nui-color-text-link, nui-color-text-link,
                          @nui-color-active-hover, nui-color-active-hover);
-
 }
 .text-success {
-  .text-emphasis-variant(@nui-color-text-default,nui-color-text-default,
+    .text-emphasis-variant(@nui-color-text-default,nui-color-text-default,
                          @nui-color-text-default-hover,nui-color-text-default-hover);
-
 }
 .text-info {
-  .text-emphasis-variant(@nui-color-text-default,nui-color-text-default,
+    .text-emphasis-variant(@nui-color-text-default,nui-color-text-default,
                          @nui-color-text-default-hover,nui-color-text-default-hover);
-
 }
 .text-warning {
-  .text-emphasis-variant(@nui-color-text-default,nui-color-text-default,
+    .text-emphasis-variant(@nui-color-text-default,nui-color-text-default,
                          @nui-color-text-default-hover,nui-color-text-default-hover);
-
 }
 .text-danger {
-  .text-emphasis-variant(@nui-color-text-critical,nui-color-text-critical,
+    .text-emphasis-variant(@nui-color-text-critical,nui-color-text-critical,
                          @nui-color-semantic-critical-hover, nui-color-semantic-critical-hover);
-
 }
 
 // Contextual backgrounds
 // For now we'll leave these alongside the text classes until v4 when we can
 // safely shift things around (per SemVer rules).
 .bg-primary {
-  // Given the contrast here, this is the only class to have its color inverted
-  // automatically.
-  .setCssVariable(color, nui-color-bg-light);
-  .bg-variant(@nui-color-active,nui-color-active,
+    // Given the contrast here, this is the only class to have its color inverted
+    // automatically.
+    .setCssVariable(color, nui-color-bg-light);
+    .bg-variant(@nui-color-active,nui-color-active,
               @nui-color-active-hover,nui-color-active-hover);
 }
 .bg-success {
-  .bg-variant(@nui-color-semantic-ok-bg,nui-color-semantic-ok-bg,
+    .bg-variant(@nui-color-semantic-ok-bg,nui-color-semantic-ok-bg,
               @nui-color-semantic-ok-bg-hover,nui-color-semantic-ok-bg-hover);
 }
 .bg-info {
-  .bg-variant(@nui-color-semantic-info-bg,nui-color-semantic-info-bg,
+    .bg-variant(@nui-color-semantic-info-bg,nui-color-semantic-info-bg,
               @nui-color-semantic-info-bg-hover,nui-color-semantic-info-bg);
 }
 .bg-warning {
-  .bg-variant(@nui-color-semantic-warning-bg,nui-color-semantic-warning-bg,
+    .bg-variant(@nui-color-semantic-warning-bg,nui-color-semantic-warning-bg,
               @nui-color-semantic-warning-bg-hover,nui-color-semantic-warning-bg-hover);
-
 }
 .bg-danger {
-  .bg-variant(@nui-color-semantic-critical-bg,nui-color-semantic-critical-bg,
+    .bg-variant(@nui-color-semantic-critical-bg,nui-color-semantic-critical-bg,
               @nui-color-semantic-critical-bg-hover,nui-color-semantic-critical-bg);
-
 }
-
 
 // Page header
 // -------------------------
 
 .page-header {
-  padding-bottom: ((@line-height-computed / 2) - 1);
-  margin: (@line-height-computed * 2) 0 @line-height-computed;
-  border-bottom: 1px solid @page-header-border-color;
-  border-bottom: 1px solid var(--page-header-border-color,@page-header-border-color);
+    padding-bottom: ((@line-height-computed / 2) - 1);
+    margin: (@line-height-computed * 2) 0 @line-height-computed;
+    border-bottom: 1px solid @page-header-border-color;
+    border-bottom: 1px solid
+        var(--page-header-border-color, @page-header-border-color);
 }
-
 
 // Lists
 // -------------------------
@@ -196,48 +223,48 @@ mark,
 // Unordered and Ordered lists
 ul,
 ol {
-  margin-top: 0;
-  margin-bottom: (@line-height-computed / 2);
-  ul,
-  ol {
-    margin-bottom: 0;
-  }
+    margin-top: 0;
+    margin-bottom: (@line-height-computed / 2);
+    ul,
+    ol {
+        margin-bottom: 0;
+    }
 }
 
 // List options
 
 // Unstyled keeps list items block level, just removes default browser padding and list-style
 .list-unstyled {
-  padding-left: 0;
-  list-style: none;
+    padding-left: 0;
+    list-style: none;
 }
 
 // Inline turns list items into inline-block
 .list-inline {
-  .list-unstyled();
-  margin-left: -5px;
+    .list-unstyled();
+    margin-left: -5px;
 
-  > li {
-    display: inline-block;
-    padding-left: 5px;
-    padding-right: 5px;
-  }
+    > li {
+        display: inline-block;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
 }
 
 // Description Lists
 dl {
-  margin-top: 0; // Remove browser default
-  margin-bottom: @line-height-computed;
+    margin-top: 0; // Remove browser default
+    margin-bottom: @line-height-computed;
 }
 dt,
 dd {
-  line-height: @line-height-base;
+    line-height: @line-height-base;
 }
 dt {
-  font-weight: @nui-font-weight-semibold;
+    font-weight: @nui-font-weight-semibold;
 }
 dd {
-  margin-left: 0; // Undo browser default
+    margin-left: 0; // Undo browser default
 }
 
 // Horizontal description lists
@@ -246,24 +273,24 @@ dd {
 // grid breakpoint is reached (default of ~768px).
 
 .dl-horizontal {
-  dd {
-    &:extend(.clearfix all); // Clear the floated `dt` if an empty `dd` is present
-  }
-
-  @media (min-width: @grid-float-breakpoint) {
-    dt {
-      float: left;
-      width: (@dl-horizontal-offset - 20);
-      clear: left;
-      text-align: right;
-      .text-overflow();
-    }
     dd {
-      margin-left: @dl-horizontal-offset;
+        &:extend(.clearfix
+            all); // Clear the floated `dt` if an empty `dd` is present
     }
-  }
-}
 
+    @media (min-width: @grid-float-breakpoint) {
+        dt {
+            float: left;
+            width: (@dl-horizontal-offset - 20);
+            clear: left;
+            text-align: right;
+            .text-overflow();
+        }
+        dd {
+            margin-left: @dl-horizontal-offset;
+        }
+    }
+}
 
 // Misc
 // -------------------------
@@ -272,45 +299,45 @@ dd {
 abbr[title],
 // Add data-* attribute to help out our tooltip plugin, per https://github.com/twbs/bootstrap/issues/5257
 abbr[data-original-title] {
-  cursor: help;
-  border-bottom: 1px dotted @abbr-border-color;
-  border-bottom: 1px dotted var(--abbr-border-color,@abbr-border-color);
-
+    cursor: help;
+    border-bottom: 1px dotted @abbr-border-color;
+    border-bottom: 1px dotted var(--abbr-border-color, @abbr-border-color);
 }
 .initialism {
-  font-size: 90%;
-  .text-uppercase();
+    font-size: 90%;
+    .text-uppercase();
 }
 
 // Blockquotes
 blockquote {
-  padding: (@line-height-computed / 2) @line-height-computed;
-  margin: 0 0 @line-height-computed;
-  font-size: @blockquote-font-size;
-  border-left: 5px solid @nui-color-line-default;
-  border-left: 5px solid var(--nui-color-line-default,@nui-color-line-default);
+    padding: (@line-height-computed / 2) @line-height-computed;
+    margin: 0 0 @line-height-computed;
+    font-size: @blockquote-font-size;
+    border-left: 5px solid @nui-color-line-default;
+    border-left: 5px solid
+        var(--nui-color-line-default, @nui-color-line-default);
 
-  p,
-  ul,
-  ol {
-    &:last-child {
-      margin-bottom: 0;
+    p,
+    ul,
+    ol {
+        &:last-child {
+            margin-bottom: 0;
+        }
     }
-  }
 
-  // Note: Deprecated small and .small as of v3.1.0
-  // Context: https://github.com/twbs/bootstrap/issues/11660
-  footer,
-  small,
-  .small {
-    display: block;
-    font-size: 80%; // back to default font-size
-    line-height: @line-height-base;
-    .setCssVariable(color, blockquote-small-color);
-    &:before {
-      content: '\2014 \00A0'; // em dash, nbsp
+    // Note: Deprecated small and .small as of v3.1.0
+    // Context: https://github.com/twbs/bootstrap/issues/11660
+    footer,
+    small,
+    .small {
+        display: block;
+        font-size: 80%; // back to default font-size
+        line-height: @line-height-base;
+        .setCssVariable(color, blockquote-small-color);
+        &:before {
+            content: "\2014 \00A0"; // em dash, nbsp
+        }
     }
-  }
 }
 
 // Opposite alignment of blockquote
@@ -318,27 +345,30 @@ blockquote {
 // Heads up: `blockquote.pull-right` has been deprecated as of v3.1.0.
 .blockquote-reverse,
 blockquote.pull-right {
-  padding-right: 15px;
-  padding-left: 0;
-  border-right: 5px solid @nui-color-line-default;
-  border-right: 5px solid var(--nui-color-line-default,@nui-color-line-default);
-  border-left: 0;
-  text-align: right;
+    padding-right: 15px;
+    padding-left: 0;
+    border-right: 5px solid @nui-color-line-default;
+    border-right: 5px solid
+        var(--nui-color-line-default, @nui-color-line-default);
+    border-left: 0;
+    text-align: right;
 
-  // Account for citation
-  footer,
-  small,
-  .small {
-    &:before { content: ''; }
-    &:after {
-      content: '\00A0 \2014'; // nbsp, em dash
+    // Account for citation
+    footer,
+    small,
+    .small {
+        &:before {
+            content: "";
+        }
+        &:after {
+            content: "\00A0 \2014"; // nbsp, em dash
+        }
     }
-  }
 }
 
 // Addresses
 address {
-  margin-bottom: @line-height-computed;
-  font-style: normal;
-  line-height: @line-height-base;
+    margin-bottom: @line-height-computed;
+    font-style: normal;
+    line-height: @line-height-base;
 }

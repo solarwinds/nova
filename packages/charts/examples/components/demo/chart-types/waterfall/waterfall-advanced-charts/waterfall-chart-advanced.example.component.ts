@@ -18,6 +18,7 @@ import {
     ViewChild,
     ViewContainerRef,
 } from "@angular/core";
+
 import {
     BandScale,
     BarHighlightStrategy,
@@ -50,19 +51,23 @@ import {
 })
 export class WaterfallChartAdvancedComponent implements AfterViewInit, OnInit {
     // Declaring chart config for charts in series
-    private seriesChartConfig = new BarStatusGridConfig({showBottomAxis: false});
+    private seriesChartConfig = new BarStatusGridConfig({
+        showBottomAxis: false,
+    });
 
     // Icon and row sizes are used to properly place cdk overlay with grid over the chart
     public iconSize: number = 20;
     public rowSize: number = 200;
 
-    public palette = new ChartPalette(new MappedValueProvider<string>({
-        "connect": CHART_PALETTE_CS1[0],
-        "dns": CHART_PALETTE_CS1[1],
-        "send": CHART_PALETTE_CS1[2],
-        "ttfb": CHART_PALETTE_CS1[3],
-        "cdownload": CHART_PALETTE_CS1[4],
-    }));
+    public palette = new ChartPalette(
+        new MappedValueProvider<string>({
+            connect: CHART_PALETTE_CS1[0],
+            dns: CHART_PALETTE_CS1[1],
+            send: CHART_PALETTE_CS1[2],
+            ttfb: CHART_PALETTE_CS1[3],
+            cdownload: CHART_PALETTE_CS1[4],
+        })
+    );
 
     public gridChart = new Chart(new XYGrid());
 
@@ -71,7 +76,7 @@ export class WaterfallChartAdvancedComponent implements AfterViewInit, OnInit {
     public templatePortal: TemplatePortal<any>;
     public listItems = getData(this.seriesChartConfig);
 
-    private scales: { x: LinearScale, y: BandScale };
+    private scales: { x: LinearScale; y: BandScale };
     private overlayRef: OverlayRef;
 
     @ViewChild("templatePortalGrid") templatePortalGrid: TemplateRef<any>;
@@ -84,45 +89,52 @@ export class WaterfallChartAdvancedComponent implements AfterViewInit, OnInit {
         this.overlayRef.updatePosition();
     }
 
-    constructor(private overlay: Overlay,
-                private overlayPositionBuilder: OverlayPositionBuilder,
-                private _viewContainerRef: ViewContainerRef,
-                private scrollStrategyOptions: ScrollStrategyOptions) {
-    }
+    constructor(
+        private overlay: Overlay,
+        private overlayPositionBuilder: OverlayPositionBuilder,
+        private _viewContainerRef: ViewContainerRef,
+        private scrollStrategyOptions: ScrollStrategyOptions
+    ) {}
 
     public ngOnInit() {
         this.gridChart.addPlugin(new ZoomPlugin());
 
-        this.gridChart.getEventBus().getStream(SET_DOMAIN_EVENT).subscribe((event) => {
-            const payload = <ISetDomainEventPayload>event.data;
-            this.listItems.forEach(item => {
-                this.scales.x.fixDomain(payload[this.scales.x.id]);
-                item.chart.updateDimensions();
+        this.gridChart
+            .getEventBus()
+            .getStream(SET_DOMAIN_EVENT)
+            .subscribe((event) => {
+                const payload = <ISetDomainEventPayload>event.data;
+                this.listItems.forEach((item) => {
+                    this.scales.x.fixDomain(payload[this.scales.x.id]);
+                    item.chart.updateDimensions();
+                });
             });
-        });
     }
 
     public ngAfterViewInit() {
         // Here you configure the template portal and overlay
 
-        this.templatePortal = new TemplatePortal(this.templatePortalGrid, this._viewContainerRef);
-        const positions: ConnectionPositionPair[] =
-            [
-                {
-                    originX: "start",
-                    originY: "top",
-                    overlayX: "start",
-                    overlayY: "top",
-                },
-                {
-                    originX: "start",
-                    originY: "top",
-                    overlayX: "start",
-                    overlayY: "top",
-                },
-            ];
+        this.templatePortal = new TemplatePortal(
+            this.templatePortalGrid,
+            this._viewContainerRef
+        );
+        const positions: ConnectionPositionPair[] = [
+            {
+                originX: "start",
+                originY: "top",
+                overlayX: "start",
+                overlayY: "top",
+            },
+            {
+                originX: "start",
+                originY: "top",
+                overlayX: "start",
+                overlayY: "top",
+            },
+        ];
 
-        this.positionStrategy = this.overlay.position()
+        this.positionStrategy = this.overlay
+            .position()
             .flexibleConnectedTo(this.gridChartPlaceholder)
             .withPositions(positions)
             .withPush(false);
@@ -143,19 +155,23 @@ export class WaterfallChartAdvancedComponent implements AfterViewInit, OnInit {
             x: linearScale,
             y: bandScale,
         };
-        this.scales.x.formatters.tick = (value: number) => `${Number(value / 1000).toFixed(1)}s`;
-        const renderer = new BarRenderer({highlightStrategy: new BarHighlightStrategy("x")});
+        this.scales.x.formatters.tick = (value: number) =>
+            `${Number(value / 1000).toFixed(1)}s`;
+        const renderer = new BarRenderer({
+            highlightStrategy: new BarHighlightStrategy("x"),
+        });
         const accessors = new HorizontalBarAccessors();
-        accessors.data.color = (d: any) => this.palette.standardColors.get(d.type);
+        accessors.data.color = (d: any) =>
+            this.palette.standardColors.get(d.type);
 
         let commonWidth = 0;
 
-        this.listItems.forEach(item => {
+        this.listItems.forEach((item) => {
             const seriesSet = [
                 {
                     id: "series-1",
                     name: "Series 1",
-                    data: item.data.map(d => ({
+                    data: item.data.map((d) => ({
                         value: d.end - d.start,
                         start: d.start,
                         end: d.end,
@@ -165,12 +181,12 @@ export class WaterfallChartAdvancedComponent implements AfterViewInit, OnInit {
                     accessors,
                     scales: this.scales,
                     renderer,
-                }];
+                },
+            ];
 
             item.chart.update(seriesSet);
 
             commonWidth = item.chart.getGrid().config().dimension.width(); // TODO: executed n times
-
         });
 
         // Here you configure grid
@@ -178,7 +194,9 @@ export class WaterfallChartAdvancedComponent implements AfterViewInit, OnInit {
         const config = this.gridChart.getGrid().config() as XYGridConfig;
         // This handles the automatic resize of the grid depending on the number of series
         // We also use the height defined by BarStatusGridConfig() at the very top for each chart in series.
-        config.dimension.height(this.listItems.length * this.seriesChartConfig.dimension.height());
+        config.dimension.height(
+            this.listItems.length * this.seriesChartConfig.dimension.height()
+        );
         config.dimension.width(commonWidth);
         config.dimension.autoHeight = false; // We must disable this option to let the grid to properly adjust
         config.axis.left.visible = false;
@@ -202,7 +220,11 @@ export class WaterfallChartAdvancedComponent implements AfterViewInit, OnInit {
     }
 
     drop(event: CdkDragDrop<string[]>) {
-        moveItemInArray(this.listItems, event.previousIndex, event.currentIndex);
+        moveItemInArray(
+            this.listItems,
+            event.previousIndex,
+            event.currentIndex
+        );
     }
 }
 
@@ -240,7 +262,8 @@ function getData(config: XYGridConfig) {
                     end: 178,
                 },
             ],
-        }, {
+        },
+        {
             url: "http://www2.google.com",
             size: 924, // in Bytes
             icon: "xml-file",

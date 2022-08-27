@@ -4,13 +4,19 @@
             Attempts to change my checked state will fail when busy is enabled
         </nui-checkbox>
     </div>
-    <nui-progress id="nui-demo-progress" i18n-message message="Hello from custom busy"></nui-progress>
+    <nui-progress
+        id="nui-demo-progress"
+        i18n-message
+        message="Hello from custom busy"
+    ></nui-progress>
 </div>
-<button id="nui-demo-progress-button"
-        nui-button
-        type="button"
-        displayStyle="primary"
-        (click)="switchBusy()"
-        i18n>
+<button
+    id="nui-demo-progress-button"
+    nui-button
+    type="button"
+    displayStyle="primary"
+    (click)="switchBusy()"
+    i18n
+>
     Switch busy state
 </button>

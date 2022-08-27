@@ -1,6 +1,6 @@
 import { DatePipe } from "@angular/common";
-import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
-import {TestBed} from "@angular/core/testing";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { TestBed } from "@angular/core/testing";
 import noop from "lodash/noop";
 
 import { LoggerService } from "./log-service";
@@ -36,7 +36,7 @@ describe("services >", () => {
                 providers: [
                     SearchService,
                     LoggerService,
-                    {provide : DatePipe, useValue: new DatePipe("en") },
+                    { provide: DatePipe, useValue: new DatePipe("en") },
                 ],
                 schemas: [CUSTOM_ELEMENTS_SCHEMA],
             });
@@ -54,15 +54,27 @@ describe("services >", () => {
                 expect(result.length).toBe(3);
             });
             it("should return the whole array if null or empty searchValue specified", () => {
-                const result: any[] = subject.search(items, ["stringValue"], "");
+                const result: any[] = subject.search(
+                    items,
+                    ["stringValue"],
+                    ""
+                );
                 expect(result.length).toBe(3);
             });
             it("should not throw error if property does not exist on the items and return empty result", () => {
-                const result: any[] = subject.search(items, ["nonexisting"], "abc");
+                const result: any[] = subject.search(
+                    items,
+                    ["nonexisting"],
+                    "abc"
+                );
                 expect(result.length).toBe(0);
             });
             it("should work also with only 1 property of 1 item contains the value", () => {
-                const result: any[] = subject.search(items, ["extraStringField"], "xxx");
+                const result: any[] = subject.search(
+                    items,
+                    ["extraStringField"],
+                    "xxx"
+                );
                 expect(result.length).toBe(1);
             });
             it("should work also with only 1 property of 1 item contains the value and fields not specified", () => {
@@ -70,37 +82,89 @@ describe("services >", () => {
                 expect(result.length).toBe(1);
             });
             it("should return expected items searched by a string type prop", () => {
-                const resultOf1: any[] = subject.search(items, ["stringValue"], "ghi");
-                const resultOf2: any[] = subject.search(items, ["stringValue"], "def");
-                const resultOf3: any[] = subject.search(items, ["stringValue"], "abc");
+                const resultOf1: any[] = subject.search(
+                    items,
+                    ["stringValue"],
+                    "ghi"
+                );
+                const resultOf2: any[] = subject.search(
+                    items,
+                    ["stringValue"],
+                    "def"
+                );
+                const resultOf3: any[] = subject.search(
+                    items,
+                    ["stringValue"],
+                    "abc"
+                );
 
                 expect(resultOf1.length).toBe(1);
                 expect(resultOf2.length).toBe(2);
                 expect(resultOf3.length).toBe(3);
             });
             it("should return expected items searched by a number type prop", () => {
-                const resultOf1: any[] = subject.search(items, ["numValue"], 789);
-                const resultOf2: any[] = subject.search(items, ["numValue"], 456);
-                const resultOf3: any[] = subject.search(items, ["numValue"], 123);
+                const resultOf1: any[] = subject.search(
+                    items,
+                    ["numValue"],
+                    789
+                );
+                const resultOf2: any[] = subject.search(
+                    items,
+                    ["numValue"],
+                    456
+                );
+                const resultOf3: any[] = subject.search(
+                    items,
+                    ["numValue"],
+                    123
+                );
 
                 expect(resultOf1.length).toBe(1);
                 expect(resultOf2.length).toBe(2);
                 expect(resultOf3.length).toBe(3);
             });
             it("should return expected items searched by a date type prop", () => {
-                const resultOf1: any[] = subject.search(items, ["dateValue"], bieberDate);
-                const resultOf2: any[] = subject.search(items, ["dateValue"], "mar");
-                const resultOf3: any[] = subject.search(items, ["dateValue"], 1994);
+                const resultOf1: any[] = subject.search(
+                    items,
+                    ["dateValue"],
+                    bieberDate
+                );
+                const resultOf2: any[] = subject.search(
+                    items,
+                    ["dateValue"],
+                    "mar"
+                );
+                const resultOf3: any[] = subject.search(
+                    items,
+                    ["dateValue"],
+                    1994
+                );
 
                 expect(resultOf1.length).toBe(1);
                 expect(resultOf2.length).toBe(2);
                 expect(resultOf3.length).toBe(3);
             });
             it("should return expected items searched by combined props", () => {
-                const resultOf0: any[] = subject.search(items, ["stringValue", "dateValue"], 123);
-                const resultOf1: any[] = subject.search(items, ["stringValue", "numValue"], "ghi");
-                const resultOf2: any[] = subject.search(items, ["stringValue", "numValue"], 789);
-                const resultOf3: any[] = subject.search(items, ["dateValue", "numValue"], 1994);
+                const resultOf0: any[] = subject.search(
+                    items,
+                    ["stringValue", "dateValue"],
+                    123
+                );
+                const resultOf1: any[] = subject.search(
+                    items,
+                    ["stringValue", "numValue"],
+                    "ghi"
+                );
+                const resultOf2: any[] = subject.search(
+                    items,
+                    ["stringValue", "numValue"],
+                    789
+                );
+                const resultOf3: any[] = subject.search(
+                    items,
+                    ["dateValue", "numValue"],
+                    1994
+                );
 
                 expect(resultOf0.length).toBe(0);
                 expect(resultOf1.length).toBe(1);
@@ -108,10 +172,29 @@ describe("services >", () => {
                 expect(resultOf3.length).toBe(3);
             });
             it("should return expected items searched by a date type prop with custom set date format", () => {
-                const resultOf0: any[] = subject.search(items, ["dateValue"], "march");
-                const resultOf1: any[] = subject.search(items, ["dateValue"], bieberDate, "longDate");
-                const resultOf2: any[] = subject.search(items, ["dateValue"], "march", "longDate");
-                const resultOf3: any[] = subject.search(items, ["dateValue"], 1994, "longDate");
+                const resultOf0: any[] = subject.search(
+                    items,
+                    ["dateValue"],
+                    "march"
+                );
+                const resultOf1: any[] = subject.search(
+                    items,
+                    ["dateValue"],
+                    bieberDate,
+                    "longDate"
+                );
+                const resultOf2: any[] = subject.search(
+                    items,
+                    ["dateValue"],
+                    "march",
+                    "longDate"
+                );
+                const resultOf3: any[] = subject.search(
+                    items,
+                    ["dateValue"],
+                    1994,
+                    "longDate"
+                );
 
                 expect(resultOf0.length).toBe(0);
                 expect(resultOf1.length).toBe(1);

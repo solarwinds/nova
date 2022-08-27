@@ -1,36 +1,59 @@
-<nui-widget-editor-accordion [formGroup]="form"
-                             [state]="form | nuiWidgetEditorAccordionFormState | async">
-    <div accordionHeader
-         class="d-flex align-items-center pl-4 py-2">
-        <nui-icon class="align-self-start pt-2" [icon]="form | nuiFormHeaderIconPipe:'database' | async"></nui-icon>
+<nui-widget-editor-accordion
+    [formGroup]="form"
+    [state]="form | nuiWidgetEditorAccordionFormState | async"
+>
+    <div accordionHeader class="d-flex align-items-center pl-4 py-2">
+        <nui-icon
+            class="align-self-start pt-2"
+            [icon]="form | nuiFormHeaderIconPipe: 'database' | async"
+        ></nui-icon>
         <div class="d-flex flex-column ml-4 pt1">
             <span class="nui-text-label" i18n>Data Source</span>
-            <div class="nui-text-secondary" [title]="form.get('providerId')?.value">
-                {{form.get('providerId')?.value}}
+            <div
+                class="nui-text-secondary"
+                [title]="form.get('providerId')?.value"
+            >
+                {{ form.get("providerId")?.value }}
             </div>
         </div>
     </div>
     <div class="datasource-configuration__accordion-content">
-        <nui-form-field caption="Select Data Source" i18n-caption [control]="form.get('providerId')">
-            <nui-select-v2 placeholder="Data Sources" i18n-placeholder
-                           [title]="form.get('providerId')?.value"
-                           formControlName="providerId"
-                           [popupViewportMargin]="configuratorHeading.height$ | async"
-                           (valueSelected)="onDataSourceChange($event)"
-                           class="datasource-configuration__accordion-content__datasource-input">
-                <nui-select-v2-option *ngFor="let dataSourceProvider of dataSourceProviders" [title]="dataSourceProvider" [value]="dataSourceProvider">
-                    {{dataSourceProvider}}
+        <nui-form-field
+            caption="Select Data Source"
+            i18n-caption
+            [control]="form.get('providerId')"
+        >
+            <nui-select-v2
+                placeholder="Data Sources"
+                i18n-placeholder
+                [title]="form.get('providerId')?.value"
+                formControlName="providerId"
+                [popupViewportMargin]="configuratorHeading.height$ | async"
+                (valueSelected)="onDataSourceChange($event)"
+                class="datasource-configuration__accordion-content__datasource-input"
+            >
+                <nui-select-v2-option
+                    *ngFor="let dataSourceProvider of dataSourceProviders"
+                    [title]="dataSourceProvider"
+                    [value]="dataSourceProvider"
+                >
+                    {{ dataSourceProvider }}
                 </nui-select-v2-option>
             </nui-select-v2>
         </nui-form-field>
-        <ng-container nuiComponentPortal
-                      [componentId]="errorComponent"
-                      [componentType]="errorComponent"
-                      [outputs]="['errorState']"
-                      [properties]="{ dataSource: dataSource }"
-                      (output)="onErrorState($event.payload)"
-                      #componentPortal="nuiComponentPortal">
-            <ng-template [cdkPortalOutlet]="componentPortal.portal" (attached)="componentPortal.attached($event)">
+        <ng-container
+            nuiComponentPortal
+            [componentId]="errorComponent"
+            [componentType]="errorComponent"
+            [outputs]="['errorState']"
+            [properties]="{ dataSource: dataSource }"
+            (output)="onErrorState($event.payload)"
+            #componentPortal="nuiComponentPortal"
+        >
+            <ng-template
+                [cdkPortalOutlet]="componentPortal.portal"
+                (attached)="componentPortal.attached($event)"
+            >
             </ng-template>
         </ng-container>
     </div>

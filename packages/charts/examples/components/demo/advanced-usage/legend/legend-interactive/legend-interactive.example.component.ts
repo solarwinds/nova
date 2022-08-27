@@ -1,12 +1,18 @@
 import { Component, OnInit } from "@angular/core";
-import { Chart, ChartAssist, LineAccessors, LineRenderer, XYGrid } from "@nova-ui/charts";
+
+import {
+    Chart,
+    ChartAssist,
+    LineAccessors,
+    LineRenderer,
+    XYGrid,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-legend-interactive-example",
     templateUrl: "./legend-interactive.example.component.html",
 })
 export class LegendInteractiveExampleComponent implements OnInit {
-
     // Set up the chart assist to keep track of the series selection and emphasis states
     public chartAssist: ChartAssist = new ChartAssist(new Chart(new XYGrid()));
 

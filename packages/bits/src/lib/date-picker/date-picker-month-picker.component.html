@@ -2,51 +2,66 @@
     <thead>
         <tr>
             <th>
-                <button nui-button
-                        type="button"
-                        displayStyle="action"
-                        icon="caret-left"
-                        (click)="datePicker.move(-1, $event)"
-                        tabindex="-1">
-                </button>
+                <button
+                    nui-button
+                    type="button"
+                    displayStyle="action"
+                    icon="caret-left"
+                    (click)="datePicker.move(-1, $event)"
+                    tabindex="-1"
+                ></button>
             </th>
             <th>
-                <button nui-button
-                        type="button"
-                        [id]="datePicker.uniqueId + '-title'"
-                        displayStyle="action"
-                        [disabled]="datePicker.datepickerMode === maxMode"
-                        class="change-mode-button"
-                        [ngClass]="{disabled: datePicker.datepickerMode === maxMode}"
-                        (click)="datePicker.toggleMode($event)"
-                        tabindex="-1">
+                <button
+                    nui-button
+                    type="button"
+                    [id]="datePicker.uniqueId + '-title'"
+                    displayStyle="action"
+                    [disabled]="datePicker.datepickerMode === maxMode"
+                    class="change-mode-button"
+                    [ngClass]="{
+                        disabled: datePicker.datepickerMode === maxMode
+                    }"
+                    (click)="datePicker.toggleMode($event)"
+                    tabindex="-1"
+                >
                     <span>{{ title }}</span>
                 </button>
             </th>
             <th>
-                <button nui-button
-                        type="button"
-                        displayStyle="action"
-                        icon="caret-right"
-                        (click)="datePicker.move(1, $event)"
-                        tabindex="-1">
-                </button>
+                <button
+                    nui-button
+                    type="button"
+                    displayStyle="action"
+                    icon="caret-right"
+                    (click)="datePicker.move(1, $event)"
+                    tabindex="-1"
+                ></button>
             </th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let row of rows">
-            <td *ngFor="let cell of row"
+            <td
+                *ngFor="let cell of row"
                 class="text-center month"
-                id="{{cell.uid}}">
-                <button nui-button
-                        type="button"
-                        displayStyle="action"
-                        [ngClass]="{'selected': cell.selected, disabled: cell.disabled}"
-                        [disabled]="cell.disabled"
-                        (click)="datePicker.select(cell.date, $event)"
-                        tabindex="-1">
-                    <span [ngClass]="{'text-info': cell.current}">{{ cell.label }}</span>
+                id="{{ cell.uid }}"
+            >
+                <button
+                    nui-button
+                    type="button"
+                    displayStyle="action"
+                    [ngClass]="{
+                        selected: cell.selected,
+                        disabled: cell.disabled
+                    }"
+                    [disabled]="cell.disabled"
+                    (click)="datePicker.select(cell.date, $event)"
+                    tabindex="-1"
+                >
+                    <span [ngClass]="{ 'text-info': cell.current }">{{
+                        cell.label
+                    }}</span>
                 </button>
             </td>
         </tr>

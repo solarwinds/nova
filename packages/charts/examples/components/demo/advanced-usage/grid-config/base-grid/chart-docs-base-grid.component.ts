@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+
 import { XYGridConfig } from "@nova-ui/charts";
 
 @Component({

@@ -1,17 +1,13 @@
-import {
-    AfterViewInit,
-    Component,
-    Inject,
-    OnDestroy,
-} from "@angular/core";
+import { AfterViewInit, Component, Inject, OnDestroy } from "@angular/core";
+import _get from "lodash/get";
+import _isEmpty from "lodash/isEmpty";
+import { Subscription } from "rxjs";
+
 import {
     DataSourceService,
     INovaFilteringOutputs,
     LocalFilteringDataSource,
 } from "@nova-ui/bits";
-import _get from "lodash/get";
-import _isEmpty from "lodash/isEmpty";
-import { Subscription } from "rxjs";
 
 import { IFilterGroupItem, IFilterGroupOption } from "./public-api";
 
@@ -30,27 +26,31 @@ interface CustomTemplateFilterGroupItem extends IFilterGroupItem {
 }
 
 const RANDOM_ARRAY = [
-    {color: "regular-azure", status: "Critical"},
-    {color: "regular-black", status: "Warning"},
-    {color: "regular-blue", status: "Up"},
-    {color: "regular-yellow", status: "Critical"},
-    {color: "regular-yellow", status: "Warning"},
-    {color: "regular-black", status: "Up"},
-    {color: "regular-blue", status: "Up"},
-    {color: "regular-azure", status: "Up"},
-    {color: "regular-blue", status: "Up"},
-    {color: "regular-azure", status: "Critical"},
+    { color: "regular-azure", status: "Critical" },
+    { color: "regular-black", status: "Warning" },
+    { color: "regular-blue", status: "Up" },
+    { color: "regular-yellow", status: "Critical" },
+    { color: "regular-yellow", status: "Warning" },
+    { color: "regular-black", status: "Up" },
+    { color: "regular-blue", status: "Up" },
+    { color: "regular-azure", status: "Up" },
+    { color: "regular-blue", status: "Up" },
+    { color: "regular-azure", status: "Critical" },
 ];
 
 @Component({
     selector: "app-custom-template-filter-group-composite-example",
     templateUrl: "custom-template-filter-group.example.component.html",
-    providers: [{
-        provide: DataSourceService,
-        useClass: LocalFilteringDataSource,
-    }],
+    providers: [
+        {
+            provide: DataSourceService,
+            useClass: LocalFilteringDataSource,
+        },
+    ],
 })
-export class CustomTemplateFilterGroupExampleComponent implements AfterViewInit, OnDestroy {
+export class CustomTemplateFilterGroupExampleComponent
+    implements AfterViewInit, OnDestroy
+{
     public filterGroupItems: CustomTemplateFilterGroupItem[] = [
         {
             id: "color",
@@ -61,22 +61,26 @@ export class CustomTemplateFilterGroupExampleComponent implements AfterViewInit,
                     icon: "copy",
                     value: "azure",
                     displayValue: "Azure",
-                }, {
+                },
+                {
                     icon: "clock",
                     value: "black",
                     displayValue: "Black",
-                }, {
+                },
+                {
                     icon: "status_up",
                     value: "blue",
                     displayValue: "Blue",
-                }, {
+                },
+                {
                     icon: "signal-0",
                     value: "yellow",
                     displayValue: "Yellow",
                 },
             ],
             selectedFilterValues: ["azure"],
-        }, {
+        },
+        {
             id: "status",
             title: "Status",
             count: 3,
@@ -85,7 +89,8 @@ export class CustomTemplateFilterGroupExampleComponent implements AfterViewInit,
                     icon: "status_warning",
                     value: "warning",
                     displayValue: "Warning",
-                }, {
+                },
+                {
                     icon: "status_critical",
                     value: "critical",
                     displayValue: "Critical",
@@ -110,16 +115,24 @@ export class CustomTemplateFilterGroupExampleComponent implements AfterViewInit,
 
     private outputsSubscription: Subscription;
 
-    constructor(@Inject(DataSourceService) public dataSourceService: DataSourceService<ExampleItem>) {
-        (this.dataSourceService as LocalFilteringDataSource<ExampleItem>).setData(RANDOM_ARRAY);
+    constructor(
+        @Inject(DataSourceService)
+        public dataSourceService: DataSourceService<ExampleItem>
+    ) {
+        (
+            this.dataSourceService as LocalFilteringDataSource<ExampleItem>
+        ).setData(RANDOM_ARRAY);
     }
 
     ngAfterViewInit(): void {
-        this.outputsSubscription = this.dataSourceService.outputsSubject.subscribe((data: INovaFilteringOutputs) => {
-            this.filteringState = data;
-            // get counts of filters
-            this.recalculateCounts(data);
-        });
+        this.outputsSubscription =
+            this.dataSourceService.outputsSubject.subscribe(
+                (data: INovaFilteringOutputs) => {
+                    this.filteringState = data;
+                    // get counts of filters
+                    this.recalculateCounts(data);
+                }
+            );
         this.dataSourceService.applyFilters();
     }
 
@@ -132,8 +145,8 @@ export class CustomTemplateFilterGroupExampleComponent implements AfterViewInit,
     }
 
     private recalculateCounts(filterData: INovaFilteringOutputs) {
-        this.filterGroupItems.forEach(filterGroupItem => {
-            filterGroupItem.allFilterOptions.forEach(filterOption => {
+        this.filterGroupItems.forEach((filterGroupItem) => {
+            filterGroupItem.allFilterOptions.forEach((filterOption) => {
                 const counts = filterData[filterGroupItem.id];
                 filterOption.count = counts[filterOption.value];
             });

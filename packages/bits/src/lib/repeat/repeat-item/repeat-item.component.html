@@ -1,9 +1,11 @@
-<li class="nui-repeat-item"
+<li
+    class="nui-repeat-item"
     [class.nui-repeat-item--selected]="selected"
     [class.text-nowrap]="nowrap"
     [class.nui-repeat-item--clickable]="clickable"
     (click)="clickable ? rowClicked.emit($event) : null"
-    tabindex="-1">
+    tabindex="-1"
+>
     <div class="nui-repeat-item__content">
         <ng-content></ng-content>
     </div>

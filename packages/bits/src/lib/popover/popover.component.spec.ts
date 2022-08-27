@@ -1,6 +1,12 @@
 import { OverlayModule } from "@angular/cdk/overlay";
 import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement } from "@angular/core";
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    flush,
+    TestBed,
+    tick,
+} from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import _noop from "lodash/noop";
 import { Subject } from "rxjs";
@@ -8,20 +14,16 @@ import { Subject } from "rxjs";
 import { PositionService } from "../../services/position.service";
 import { UtilService } from "../../services/util.service";
 import { NuiOverlayModule } from "../overlay/overlay.module";
-
 import { PopoverModalComponent } from "./popover-modal.component";
 import { PopoverComponent } from "./popover.component";
 
-
-
 @Component({
-    template: `
-        <nui-popover trigger="click mouseenter focus"
-                     (shown)="handleShowPopover()"
-                     (hidden)="handleHidePopover()"></nui-popover>`,
-    entryComponents: [
-        PopoverModalComponent,
-    ],
+    template: ` <nui-popover
+        trigger="click mouseenter focus"
+        (shown)="handleShowPopover()"
+        (hidden)="handleHidePopover()"
+    ></nui-popover>`,
+    entryComponents: [PopoverModalComponent],
 })
 class PopoverComponentTestingComponent {
     public handleShowPopover() {
@@ -49,17 +51,18 @@ describe("components >", () => {
                     PopoverComponentTestingComponent,
                     PopoverModalComponent,
                 ],
-                providers: [
-                    UtilService,
-                    PositionService,
-                ],
+                providers: [UtilService, PositionService],
                 schemas: [CUSTOM_ELEMENTS_SCHEMA],
             });
             fixture = TestBed.createComponent(PopoverComponentTestingComponent);
             fixture.autoDetectChanges(true);
             component = fixture.componentInstance;
-            popoverDebugElement = fixture.debugElement.query(By.directive(PopoverComponent));
-            subject = popoverDebugElement.injector.get(PopoverComponent) as PopoverComponent;
+            popoverDebugElement = fixture.debugElement.query(
+                By.directive(PopoverComponent)
+            );
+            subject = popoverDebugElement.injector.get(
+                PopoverComponent
+            ) as PopoverComponent;
         });
 
         describe("showPopover >", () => {
@@ -68,7 +71,10 @@ describe("components >", () => {
             beforeEach(() => {
                 spyOn(subject.overlayComponent, "show");
                 spyOn(component, "handleShowPopover");
-                resizeObserverSpy = spyOn<any>(subject, "initializeResizeObserver");
+                resizeObserverSpy = spyOn<any>(
+                    subject,
+                    "initializeResizeObserver"
+                );
 
                 subject.showPopover();
             });
@@ -174,28 +180,38 @@ describe("components >", () => {
 
             describe("onBackdropClick >", () => {
                 it("should call popoverHoverSubject.next with backdrop-click param", () => {
-                    const eventSubject = subject["popoverModalEventSubject"] = new Subject();
+                    const eventSubject = (subject["popoverModalEventSubject"] =
+                        new Subject());
                     subject.modal = true;
                     spyOn(eventSubject, "next");
                     subject.onBackdropClick();
-                    expect(eventSubject.next).toHaveBeenCalledWith("backdrop-click");
+                    expect(eventSubject.next).toHaveBeenCalledWith(
+                        "backdrop-click"
+                    );
                 });
             });
-
         });
 
         describe("popover resize >", () => {
-            it("when overlay changes in size and resetSize gets called the height and width of the popover is undefined", ()=> {
+            it("when overlay changes in size and resetSize gets called the height and width of the popover is undefined", () => {
                 subject.showPopover();
                 subject.overlayComponent.getOverlayRef().updateSize({
                     height: 100,
                     width: 100,
                 });
-                expect(subject.overlayComponent.getOverlayRef().getConfig().height).toEqual(100);
-                expect(subject.overlayComponent.getOverlayRef().getConfig().width).toEqual(100);
+                expect(
+                    subject.overlayComponent.getOverlayRef().getConfig().height
+                ).toEqual(100);
+                expect(
+                    subject.overlayComponent.getOverlayRef().getConfig().width
+                ).toEqual(100);
                 subject.resetSize();
-                expect(subject.overlayComponent.getOverlayRef().getConfig().height).toBeUndefined();
-                expect(subject.overlayComponent.getOverlayRef().getConfig().width).toBeUndefined();
+                expect(
+                    subject.overlayComponent.getOverlayRef().getConfig().height
+                ).toBeUndefined();
+                expect(
+                    subject.overlayComponent.getOverlayRef().getConfig().width
+                ).toBeUndefined();
             });
         });
 
@@ -203,9 +219,11 @@ describe("components >", () => {
             it("should set the withGrowAfterOpen to true if the input is true", () => {
                 subject.withGrowAfterOpen = true;
                 subject.showPopover();
-                // @ts-ignore
-                expect(subject.overlayConfig.positionStrategy._growAfterOpen).toBeTrue();
-            }) ;
+                expect(
+                    // @ts-ignore
+                    subject.overlayConfig.positionStrategy._growAfterOpen
+                ).toBeTrue();
+            });
         });
     });
 });

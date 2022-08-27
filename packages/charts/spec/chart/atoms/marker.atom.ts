@@ -1,13 +1,17 @@
-import { Atom } from "@nova-ui/bits/sdk/atoms";
 import { by, ElementFinder } from "protractor";
 import { ILocation } from "selenium-webdriver";
+
+import { Atom } from "@nova-ui/bits/sdk/atoms";
 
 export class MarkerAtom extends Atom {
     public static CSS_CLASS = "marker";
     private root: ElementFinder = this.getElement();
 
     public async getColor(): Promise<string> {
-        return this.root.all(by.css(`.${MarkerAtom.CSS_CLASS} > g`)).first().getAttribute("fill");
+        return this.root
+            .all(by.css(`.${MarkerAtom.CSS_CLASS} > g`))
+            .first()
+            .getAttribute("fill");
     }
 
     public async getPosition(): Promise<ILocation> {

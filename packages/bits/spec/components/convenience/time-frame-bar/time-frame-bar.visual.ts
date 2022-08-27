@@ -4,21 +4,32 @@ import { Atom } from "../../../atom";
 import { TooltipAtom } from "../../../directives/tooltip/tooltip.atom";
 import { Helpers } from "../../../helpers";
 import { Camera } from "../../../virtual-camera/Camera";
-
 import { TimeFrameBarAtom } from "./time-frame-bar.atom";
 
 const name: string = "TimeFrameBar";
 
 describe(`Visual tests: ${name}`, () => {
     let camera: Camera;
-    const timeFrameBarFirst: TimeFrameBarAtom = Atom.find(TimeFrameBarAtom, "first");
-    const timeFrameBarSecond: TimeFrameBarAtom = Atom.find(TimeFrameBarAtom, "second");
-    const timeFrameBarNoQuickPick: TimeFrameBarAtom = Atom.find(TimeFrameBarAtom, "bar-no-quick-pick");
-    const tooltip: TooltipAtom = Atom.findIn(TooltipAtom, $(".cdk-overlay-container"));
+    const timeFrameBarFirst: TimeFrameBarAtom = Atom.find(
+        TimeFrameBarAtom,
+        "first"
+    );
+    const timeFrameBarSecond: TimeFrameBarAtom = Atom.find(
+        TimeFrameBarAtom,
+        "second"
+    );
+    const timeFrameBarNoQuickPick: TimeFrameBarAtom = Atom.find(
+        TimeFrameBarAtom,
+        "bar-no-quick-pick"
+    );
+    const tooltip: TooltipAtom = Atom.findIn(
+        TooltipAtom,
+        $(".cdk-overlay-container")
+    );
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("convenience/time-frame-bar/visual");
-        
+
         camera = new Camera().loadFilm(browser, name);
     });
 
@@ -43,7 +54,6 @@ describe(`Visual tests: ${name}`, () => {
         await timeFrameBarNoQuickPick.popover.open();
         await camera.say.cheese(`With opened popover and no quick picker`);
         await timeFrameBarNoQuickPick.popover.closeModal();
-
 
         await camera.turn.off();
     }, 100000);

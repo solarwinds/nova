@@ -1,7 +1,6 @@
 import { BandScale } from "../../core/common/scales/band-scale";
 import { LinearScale } from "../../core/common/scales/linear-scale";
 import { IXYScales } from "../../core/common/scales/types";
-
 import { IBarChartConfig } from "./types";
 
 /**
@@ -10,7 +9,10 @@ import { IBarChartConfig } from "./types";
  * @param config
  * @param valueScale
  */
-export function barScales(config?: IBarChartConfig, valueScale = new LinearScale()): IXYScales {
+export function barScales(
+    config?: IBarChartConfig,
+    valueScale = new LinearScale()
+): IXYScales {
     const bandScale = new BandScale();
     if (config && config.grouped) {
         bandScale.padding(0.25);

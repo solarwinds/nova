@@ -1,4 +1,12 @@
-import { ChangeDetectorRef, Component, HostBinding, Input, OnDestroy, OnInit } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    Component,
+    HostBinding,
+    Input,
+    OnDestroy,
+    OnInit,
+} from "@angular/core";
+
 import { LoggerService } from "@nova-ui/bits";
 
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
@@ -18,9 +26,11 @@ export class StackComponent extends BaseLayout implements OnInit, OnDestroy {
     @HostBinding("class") public classNames: string;
     public readonly defaultClassNames = "h-100 w-100 d-flex";
 
-    constructor(changeDetector: ChangeDetectorRef,
-                pizzagnaService: PizzagnaService,
-                logger: LoggerService) {
+    constructor(
+        changeDetector: ChangeDetectorRef,
+        pizzagnaService: PizzagnaService,
+        logger: LoggerService
+    ) {
         super(changeDetector, pizzagnaService, logger);
     }
 

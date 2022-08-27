@@ -2,7 +2,6 @@ import each from "lodash/each";
 import { Subject } from "rxjs";
 
 export class EventBus<T> {
-
     private streams: { [key: string]: Subject<T> } = {};
 
     public getStream(streamId: string): Subject<T> {
@@ -17,5 +16,4 @@ export class EventBus<T> {
             this.streams[key].complete();
         });
     }
-
 }

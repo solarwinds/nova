@@ -1,21 +1,28 @@
-import { LoggerService } from "@nova-ui/bits";
 import uniq from "lodash/uniq";
 import moment from "moment/moment";
+
+import { LoggerService } from "@nova-ui/bits";
 
 import { SequentialColorProvider } from "../core/common/palette/sequential-color-provider";
 import { LinearScale } from "../core/common/scales/linear-scale";
 import { TimeScale } from "../core/common/scales/time-scale";
 import { Scales } from "../core/common/scales/types";
-import { DataAccessor, IChartSeries, IDataSeries, IZoneCrossPoint } from "../core/common/types";
+import {
+    DataAccessor,
+    IChartSeries,
+    IDataSeries,
+    IZoneCrossPoint,
+} from "../core/common/types";
 import { IAreaAccessors } from "../renderers/area/area-accessors";
-import { ILineAccessors, LineAccessors } from "../renderers/line/line-accessors";
+import {
+    ILineAccessors,
+    LineAccessors,
+} from "../renderers/line/line-accessors";
 import { LineRenderer } from "../renderers/line/line-renderer";
-
 import { ThresholdsService } from "./thresholds-service";
 import { ISimpleThresholdZone, ZoneBoundary } from "./types";
 
 describe("thresholds service", () => {
-
     let thresholdsService: ThresholdsService;
     let scales: Scales;
     let sourceSeries: IChartSeries<ILineAccessors>;
@@ -56,7 +63,11 @@ describe("thresholds service", () => {
             { status: "ok", start: 40, end: 60 },
         ];
 
-        zones = thresholdsService.getThresholdZones(sourceSeries, zoneDefinitions, mockColorProvider);
+        zones = thresholdsService.getThresholdZones(
+            sourceSeries,
+            zoneDefinitions,
+            mockColorProvider
+        );
     });
 
     describe("injectThresholdsData", () => {
@@ -71,7 +82,7 @@ describe("thresholds service", () => {
         });
 
         it("should mark entered zones as entered", () => {
-            expect(zones.filter(z => z.entered).length).toEqual(3);
+            expect(zones.filter((z) => z.entered).length).toEqual(3);
         });
 
         it("should sort zones in priority order, so first definition wins", () => {
@@ -84,9 +95,9 @@ describe("thresholds service", () => {
             ];
 
             sourceSeries.data.forEach((d, i) => {
-                expectedValues[i] == null ?
-                    expect(d.__thresholds.status).toBeUndefined() :
-                    expect(d.__thresholds.status).toEqual(expectedValues[i]);
+                expectedValues[i] == null
+                    ? expect(d.__thresholds.status).toBeUndefined()
+                    : expect(d.__thresholds.status).toEqual(expectedValues[i]);
             });
         });
     });
@@ -97,16 +108,34 @@ describe("thresholds service", () => {
         });
 
         it("generates background data series", () => {
-            const backgrounds = thresholdsService.getBackgrounds(sourceSeries, zones, scales, new SequentialColorProvider(["magenta"]));
-            const expectedStatuses = ["ok", "ok", "warning", "error", "warning", "ok"];
+            const backgrounds = thresholdsService.getBackgrounds(
+                sourceSeries,
+                zones,
+                scales,
+                new SequentialColorProvider(["magenta"])
+            );
+            const expectedStatuses = [
+                "ok",
+                "ok",
+                "warning",
+                "error",
+                "warning",
+                "ok",
+            ];
 
-            expect(backgrounds.data.map(d => d.status)).toEqual(expectedStatuses);
+            expect(backgrounds.data.map((d) => d.status)).toEqual(
+                expectedStatuses
+            );
         });
     });
 
     describe("getThresholdZones", () => {
         it("generates zones series from simplified zone definition", () => {
-            const testZones = thresholdsService.getThresholdZones(sourceSeries, zoneDefinitions, mockColorProvider);
+            const testZones = thresholdsService.getThresholdZones(
+                sourceSeries,
+                zoneDefinitions,
+                mockColorProvider
+            );
 
             expect(testZones.length).toBe(zoneDefinitions.length);
 
@@ -140,10 +169,16 @@ describe("thresholds service", () => {
                 { status: "error", start: 75, end: 90 },
                 { status: "warning", start: 40, end: 70 },
             ];
-            zones = thresholdsService.getThresholdZones(sourceSeries, zoneDefinitions, mockColorProvider);
+            zones = thresholdsService.getThresholdZones(
+                sourceSeries,
+                zoneDefinitions,
+                mockColorProvider
+            );
             const testSeriesSet = thresholdsService.getThresholdLines(zones);
 
-            expect(testSeriesSet.length).toEqual(uniq(testSeriesSet.map(series => series.id)).length);
+            expect(testSeriesSet.length).toEqual(
+                uniq(testSeriesSet.map((series) => series.id)).length
+            );
         });
 
         it("should generate a unique id for each threshold line series even if the 'start' of one zone is the same value as the 'end' of another", () => {
@@ -151,10 +186,16 @@ describe("thresholds service", () => {
                 { status: "error", start: 70, end: 90 },
                 { status: "warning", start: 40, end: 70 },
             ];
-            zones = thresholdsService.getThresholdZones(sourceSeries, zoneDefinitions, mockColorProvider);
+            zones = thresholdsService.getThresholdZones(
+                sourceSeries,
+                zoneDefinitions,
+                mockColorProvider
+            );
             const testSeriesSet = thresholdsService.getThresholdLines(zones);
 
-            expect(testSeriesSet.length).toEqual(uniq(testSeriesSet.map(series => series.id)).length);
+            expect(testSeriesSet.length).toEqual(
+                uniq(testSeriesSet.map((series) => series.id)).length
+            );
         });
 
         it("should result in no lines if no zones are entered", () => {
@@ -162,7 +203,11 @@ describe("thresholds service", () => {
                 { status: "error", start: 95 },
                 { status: "warning", end: 5 },
             ];
-            zones = thresholdsService.getThresholdZones(sourceSeries, zoneDefinitions, mockColorProvider);
+            zones = thresholdsService.getThresholdZones(
+                sourceSeries,
+                zoneDefinitions,
+                mockColorProvider
+            );
             thresholdsService.injectThresholdsData(sourceSeries, zones);
             const testSeriesSet = thresholdsService.getThresholdLines(zones);
 
@@ -186,8 +231,15 @@ describe("thresholds service", () => {
                 { status: "error", start: 75, end: 90 },
                 { status: "warning", start: 40, end: 70 },
             ];
-            zones = thresholdsService.getThresholdZones(sourceSeries, zoneDefinitions, mockColorProvider);
-            const sideIndicators = thresholdsService.getSideIndicators(zones, scales);
+            zones = thresholdsService.getThresholdZones(
+                sourceSeries,
+                zoneDefinitions,
+                mockColorProvider
+            );
+            const sideIndicators = thresholdsService.getSideIndicators(
+                zones,
+                scales
+            );
 
             expect(sideIndicators.length).toEqual(zoneDefinitions.length);
         });
@@ -197,11 +249,20 @@ describe("thresholds service", () => {
                 { status: "error", start: 75, end: 90 },
                 { status: "warning", end: 5 },
             ];
-            zones = thresholdsService.getThresholdZones(sourceSeries, zoneDefinitions, mockColorProvider);
+            zones = thresholdsService.getThresholdZones(
+                sourceSeries,
+                zoneDefinitions,
+                mockColorProvider
+            );
             thresholdsService.injectThresholdsData(sourceSeries, zones);
-            const sideIndicators = thresholdsService.getSideIndicators(zones, scales);
+            const sideIndicators = thresholdsService.getSideIndicators(
+                zones,
+                scales
+            );
 
-            expect(sideIndicators.filter(si => si.data[0].active).length).toEqual(zoneDefinitions.length);
+            expect(
+                sideIndicators.filter((si) => si.data[0].active).length
+            ).toEqual(zoneDefinitions.length);
         });
 
         it("should mark all side indicators as inactive if no zones are entered", () => {
@@ -209,18 +270,30 @@ describe("thresholds service", () => {
                 { status: "error", start: 95 },
                 { status: "warning", end: 5 },
             ];
-            zones = thresholdsService.getThresholdZones(sourceSeries, zoneDefinitions, mockColorProvider);
+            zones = thresholdsService.getThresholdZones(
+                sourceSeries,
+                zoneDefinitions,
+                mockColorProvider
+            );
             thresholdsService.injectThresholdsData(sourceSeries, zones);
-            const sideIndicators = thresholdsService.getSideIndicators(zones, scales);
+            const sideIndicators = thresholdsService.getSideIndicators(
+                zones,
+                scales
+            );
 
-            expect(sideIndicators.filter(si => si.data[0].active).length).toEqual(0);
+            expect(
+                sideIndicators.filter((si) => si.data[0].active).length
+            ).toEqual(0);
         });
     });
 
     describe("getThresholdLine", () => {
         it("creates a threshold line from original data with given accessor", () => {
             const fiveAccessor: DataAccessor = () => 5;
-            const thresholdLine = thresholdsService.getThresholdLine(zones[0], fiveAccessor);
+            const thresholdLine = thresholdsService.getThresholdLine(
+                zones[0],
+                fiveAccessor
+            );
 
             expect(thresholdLine.data).toEqual(zones[0].data);
             expect(thresholdLine.accessors.data.y).toEqual(fiveAccessor);
@@ -228,23 +301,36 @@ describe("thresholds service", () => {
 
         it("creates a threshold line series that includes the substring '__start__' in the id", () => {
             const fiveAccessor: DataAccessor = () => 5;
-            const thresholdLine = thresholdsService.getThresholdLine(zones[0], fiveAccessor);
+            const thresholdLine = thresholdsService.getThresholdLine(
+                zones[0],
+                fiveAccessor
+            );
 
             expect(thresholdLine.id.indexOf("__start__") >= 0).toEqual(true);
         });
 
         it("creates a threshold line series that includes the substring '__end__' in the id", () => {
             const fiveAccessor: DataAccessor = () => 5;
-            const thresholdLine = thresholdsService.getThresholdLine(zones[0], fiveAccessor, ZoneBoundary.End);
+            const thresholdLine = thresholdsService.getThresholdLine(
+                zones[0],
+                fiveAccessor,
+                ZoneBoundary.End
+            );
 
             expect(thresholdLine.id.indexOf("__end__") >= 0).toEqual(true);
         });
 
         it("ignores the threshold line for domain calculation (NUI-5262)", () => {
             const fiveAccessor: DataAccessor = () => 5;
-            const thresholdLine = thresholdsService.getThresholdLine(zones[0], fiveAccessor, ZoneBoundary.End);
+            const thresholdLine = thresholdsService.getThresholdLine(
+                zones[0],
+                fiveAccessor,
+                ZoneBoundary.End
+            );
 
-            expect(thresholdLine.renderer.config.ignoreForDomainCalculation).toEqual(true);
+            expect(
+                thresholdLine.renderer.config.ignoreForDomainCalculation
+            ).toEqual(true);
         });
     });
 
@@ -331,12 +417,22 @@ describe("thresholds service", () => {
                     isZoneEdge: false,
                 },
             ];
-            zones = thresholdsService.getThresholdZones(sourceSeries, zoneDefinitions, mockColorProvider);
-            const breakPoints = (thresholdsService as any).getBreakPoints(sourceSeries, zones);
+            zones = thresholdsService.getThresholdZones(
+                sourceSeries,
+                zoneDefinitions,
+                mockColorProvider
+            );
+            const breakPoints = (thresholdsService as any).getBreakPoints(
+                sourceSeries,
+                zones
+            );
             testCases.forEach((testCase) => {
                 let isZoneEdge = false;
                 breakPoints.forEach((breakPoint: IZoneCrossPoint) => {
-                    if (breakPoint.y === testCase.data && breakPoint.isZoneEdge === true) {
+                    if (
+                        breakPoint.y === testCase.data &&
+                        breakPoint.isZoneEdge === true
+                    ) {
                         isZoneEdge = true;
                     }
                 });
@@ -345,5 +441,3 @@ describe("thresholds service", () => {
         });
     });
 });
-
-

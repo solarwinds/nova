@@ -1,6 +1,11 @@
 import { Injectable } from "@angular/core";
 
-import { IActiveToast, IToastConfig, IToastDeclaration, IToastService } from "./public-api";
+import {
+    IActiveToast,
+    IToastConfig,
+    IToastDeclaration,
+    IToastService,
+} from "./public-api";
 
 /**
  * @ignore

@@ -15,7 +15,13 @@ interface IExampleTableModel {
 })
 export class TableCellWidthSetExampleComponent {
     public positionWidth = 50;
-    public displayedColumns = ["position", "item", "description", "status", "location"];
+    public displayedColumns = [
+        "position",
+        "item",
+        "description",
+        "status",
+        "location",
+    ];
     public dataSource = getData();
     public onOptionChange(value: number) {
         this.positionWidth = value;
@@ -28,7 +34,8 @@ function getData(): IExampleTableModel[] {
         {
             position: 1,
             item: "FOCUS-SVR-02258123",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            description:
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
             status: "status_inactive",
             location: "Brno",
         },
@@ -42,21 +49,24 @@ function getData(): IExampleTableModel[] {
         {
             position: 3,
             item: "FOCUS-SVR-02258",
-            description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            description:
+                "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             status: "status_up",
             location: "Brno",
         },
         {
             position: 4,
             item: "Man-LT-JYJ4AD5",
-            description: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            description:
+                "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
             status: "status_up",
             location: "Brno",
         },
         {
             position: 5,
             item: "Man-LT-JYJ4AD5",
-            description: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            description:
+                "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             status: "status_up",
             location: "Brno",
         },

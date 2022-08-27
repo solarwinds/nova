@@ -1,8 +1,24 @@
 import { PortalModule } from "@angular/cdk/portal";
 import { ScrollingModule } from "@angular/cdk/scrolling";
-import { ChangeDetectorRef, Component, Input, LOCALE_ID, SimpleChange, SimpleChanges, TRANSLATIONS, TRANSLATIONS_FORMAT } from "@angular/core";
-import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from "@angular/core/testing";
+import {
+    ChangeDetectorRef,
+    Component,
+    Input,
+    LOCALE_ID,
+    SimpleChange,
+    SimpleChanges,
+    TRANSLATIONS,
+    TRANSLATIONS_FORMAT,
+} from "@angular/core";
+import {
+    ComponentFixture,
+    fakeAsync,
+    flush,
+    TestBed,
+    waitForAsync,
+} from "@angular/core/testing";
 import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
+
 import {
     LoggerService,
     NuiBusyModule,
@@ -32,20 +48,17 @@ import {
 } from "../../../services/types";
 import { IPizzagna, WellKnownProviders } from "../../../types";
 import { ComponentPortalDirective } from "../../directives/component-portal/component-portal.directive";
-
 import { PizzagnaComponent } from "./pizzagna.component";
 
 @Component({
     selector: "pizzagna-test",
-    template: `
-        <nui-pizzagna [(pizzagna)]="pizzagna"></nui-pizzagna>`,
+    template: ` <nui-pizzagna [(pizzagna)]="pizzagna"></nui-pizzagna>`,
 })
 class PizzagnaTestComponent {
     @Input()
     public pizzagna: IPizzagna;
 
-    constructor(public changeDetector: ChangeDetectorRef) {
-    }
+    constructor(public changeDetector: ChangeDetectorRef) {}
 }
 
 describe("Pizzagna", () => {
@@ -90,7 +103,8 @@ describe("Pizzagna", () => {
             providers: [
                 ProviderRegistryService,
                 {
-                    provide: LoggerService, useValue: mockLoggerService,
+                    provide: LoggerService,
+                    useValue: mockLoggerService,
                 },
                 // format of translations that you use
                 { provide: TRANSLATIONS_FORMAT, useValue: "xlf" },
@@ -99,9 +113,11 @@ describe("Pizzagna", () => {
                 // locale id that you're using (default en-US)
                 { provide: LOCALE_ID, useValue: "fr" },
             ],
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: { entryComponents },
-        }).compileComponents();
+        })
+            .overrideModule(BrowserDynamicTestingModule, {
+                set: { entryComponents },
+            })
+            .compileComponents();
     }));
 
     beforeEach(() => {
@@ -127,8 +143,13 @@ describe("Pizzagna", () => {
             path: "testPath",
             value: "test value",
         };
-        component.eventBus.getStream(SET_PROPERTY_VALUE).next({ payload: propertyPathPayload });
-        expect(spy).toHaveBeenCalledWith({ [propertyPathPayload.path]: propertyPathPayload.value, ...emptyPizzagna });
+        component.eventBus
+            .getStream(SET_PROPERTY_VALUE)
+            .next({ payload: propertyPathPayload });
+        expect(spy).toHaveBeenCalledWith({
+            [propertyPathPayload.path]: propertyPathPayload.value,
+            ...emptyPizzagna,
+        });
     });
 
     describe("ngOnChanges > ", () => {
@@ -144,7 +165,11 @@ describe("Pizzagna", () => {
                 },
             };
             const changes: SimpleChanges = {
-                pizzagna: new SimpleChange(component.pizzagna, changedPizzagna, false),
+                pizzagna: new SimpleChange(
+                    component.pizzagna,
+                    changedPizzagna,
+                    false
+                ),
             };
             component.pizzagna = changedPizzagna;
             const spy = spyOn(component.pizzagnaService, "updatePizzagna");
@@ -165,7 +190,11 @@ describe("Pizzagna", () => {
             };
             const expectedPizza = { ...changedPizzagna.structure };
             const changes: SimpleChanges = {
-                pizzagna: new SimpleChange(component.pizzagna, changedPizzagna, false),
+                pizzagna: new SimpleChange(
+                    component.pizzagna,
+                    changedPizzagna,
+                    false
+                ),
             };
             component.pizzagna = changedPizzagna;
             component.ngOnChanges(changes);
@@ -185,7 +214,11 @@ describe("Pizzagna", () => {
             };
             const expectedPizza = { ...changedPizzagna.structure };
             const changes: SimpleChanges = {
-                pizzagna: new SimpleChange(component.pizzagna, changedPizzagna, false),
+                pizzagna: new SimpleChange(
+                    component.pizzagna,
+                    changedPizzagna,
+                    false
+                ),
             };
             component.pizzagna = changedPizzagna;
             const spy = spyOn(component.pizzagnaService, "updateComponents");
@@ -204,7 +237,6 @@ describe("Pizzagna", () => {
     });
 
     describe("pizzagna change detection", () => {
-
         it("works", fakeAsync(() => {
             const pizzagnaTest = TestBed.createComponent(PizzagnaTestComponent);
             const instance = pizzagnaTest.componentInstance;
@@ -212,98 +244,108 @@ describe("Pizzagna", () => {
             instance.changeDetector.detectChanges();
 
             const kpi = {
-                "structure": {
+                structure: {
                     "/": {
-                        "id": "/",
+                        id: "/",
                         componentType: StackComponent.lateLoadKey,
-                        "providers": {
+                        providers: {
                             [WellKnownProviders.Refresher]: {
-                                "providerId": NOVA_DATASOURCE_INTERVAL_REFRESHER,
-                                "properties": {
-                                    "interval": 5,
+                                providerId: NOVA_DATASOURCE_INTERVAL_REFRESHER,
+                                properties: {
+                                    interval: 5,
                                 },
                             },
                             [WellKnownProviders.EventProxy]: {
-                                "providerId": NOVA_DASHBOARD_EVENT_PROXY,
+                                providerId: NOVA_DASHBOARD_EVENT_PROXY,
                             },
                         },
-                        "properties": {
-                            "direction": "column",
-                            "nodes": [
-                                "header",
-                                "tiles",
-                            ],
+                        properties: {
+                            direction: "column",
+                            nodes: ["header", "tiles"],
                         },
                     },
-                    "header": {
-                        "id": "header",
+                    header: {
+                        id: "header",
                         componentType: WidgetHeaderComponent.lateLoadKey,
                     },
-                    "tiles": {
-                        "id": "tiles",
+                    tiles: {
+                        id: "tiles",
                         componentType: TilesComponent.lateLoadKey,
-                        "properties": {
-                            "elementClass": "flex-grow-1 mx-3 mb-3 overflow-auto",
+                        properties: {
+                            elementClass: "flex-grow-1 mx-3 mb-3 overflow-auto",
                         },
                     },
                 },
             };
             const table = {
-                "structure": {
+                structure: {
                     "/": {
-                        "id": "/",
+                        id: "/",
                         componentType: StackComponent.lateLoadKey,
-                        "providers": {
+                        providers: {
                             [WellKnownProviders.EventProxy]: {
-                                "providerId": NOVA_DASHBOARD_EVENT_PROXY,
-                                "properties": {
-                                    "downstreams": [WIDGET_RESIZE],
+                                providerId: NOVA_DASHBOARD_EVENT_PROXY,
+                                properties: {
+                                    downstreams: [WIDGET_RESIZE],
                                 },
                             },
                         },
-                        "properties": {
-                            "direction": "column",
-                            "nodes": [
-                                "header",
-                                "stack",
-                            ],
+                        properties: {
+                            direction: "column",
+                            nodes: ["header", "stack"],
                         },
                     },
-                    "header": {
-                        "id": "header",
+                    header: {
+                        id: "header",
                         componentType: WidgetHeaderComponent.lateLoadKey,
                     },
-                    "stack": {
-                        "id": "stack",
+                    stack: {
+                        id: "stack",
                         componentType: StackComponent.lateLoadKey,
-                        "properties": {
-                            "nodes": [
-                                "table",
-                            ],
+                        properties: {
+                            nodes: ["table"],
                         },
                     },
-                    "table": {
-                        "id": "table",
+                    table: {
+                        id: "table",
                         componentType: TableWidgetComponent.lateLoadKey,
-                        "properties": {
-                            "elementClass": "flex-grow-1 m-3",
+                        properties: {
+                            elementClass: "flex-grow-1 m-3",
                         },
                     },
                 },
-                "configuration": {
-                    "header": {
-                        "properties": {
-                            "title": $localize`Table Widget!`,
-                            "subtitle": $localize`Basic table widget`,
+                configuration: {
+                    header: {
+                        properties: {
+                            title: $localize`Table Widget!`,
+                            subtitle: $localize`Basic table widget`,
                         },
                     },
-                    "table": {
-                        "properties": {
-                            "configuration": {
-                                "columns": [
-                                    { "id": "column1", "label": $localize`No.`, "isActive": true, "dataFieldIds": ["position"], "formatterId": "raw" },
-                                    { "id": "column2", "label": $localize`Name`, "isActive": true, "dataFieldIds": ["name"], "formatterId": "raw" },
-                                    { "id": "column3", "label": $localize`CPU Load`, "isActive": true, "dataFieldIds": ["cpu-load"], "formatterId": "raw" },
+                    table: {
+                        properties: {
+                            configuration: {
+                                columns: [
+                                    {
+                                        id: "column1",
+                                        label: $localize`No.`,
+                                        isActive: true,
+                                        dataFieldIds: ["position"],
+                                        formatterId: "raw",
+                                    },
+                                    {
+                                        id: "column2",
+                                        label: $localize`Name`,
+                                        isActive: true,
+                                        dataFieldIds: ["name"],
+                                        formatterId: "raw",
+                                    },
+                                    {
+                                        id: "column3",
+                                        label: $localize`CPU Load`,
+                                        isActive: true,
+                                        dataFieldIds: ["cpu-load"],
+                                        formatterId: "raw",
+                                    },
                                 ],
                             },
                         },
@@ -327,7 +369,5 @@ describe("Pizzagna", () => {
                 flush();
             }).not.toThrow();
         }));
-
     });
-
 });

@@ -1,7 +1,8 @@
-import {ElementRef, Injectable} from "@angular/core";
+import { ElementRef, Injectable } from "@angular/core";
 import isNull from "lodash/isNull";
 
-export const focusableElementsCSSSelector = "[tabindex], button, a, input:not([type=hidden])";
+export const focusableElementsCSSSelector =
+    "[tabindex], button, a, input:not([type=hidden])";
 
 interface IFocusableElement {
     nativeElement: Element;
@@ -40,7 +41,7 @@ export class TabNavigationService implements ITabNavigationService {
     public restoreTabNavigation() {
         // dom manipulation to restore the tabIndex for the cached elements
         // and remove the tabIndex for those who didn't had it at all
-        this.tabFocusableElements.forEach(e => {
+        this.tabFocusableElements.forEach((e) => {
             if (e?.tabIndex?.length) {
                 e.nativeElement.setAttribute("tabindex", e.tabIndex);
             } else {
@@ -49,4 +50,3 @@ export class TabNavigationService implements ITabNavigationService {
         });
     }
 }
-

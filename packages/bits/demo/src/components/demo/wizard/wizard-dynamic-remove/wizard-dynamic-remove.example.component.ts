@@ -1,7 +1,12 @@
 import { Component, OnDestroy, ViewChild } from "@angular/core";
-import { IWizardSelectionEvent, WizardComponent, WizardStepComponent } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+
+import {
+    IWizardSelectionEvent,
+    WizardComponent,
+    WizardStepComponent,
+} from "@nova-ui/bits";
 
 @Component({
     selector: "nui-wizard-dynamic-remove-example",
@@ -21,13 +26,26 @@ export class WizardDynamicRemoveExampleComponent implements OnDestroy {
 
     public addStep(): void {
         const index = this.selectedIndex + 1;
-        const step: WizardStepComponent = this.wizardComponent.addStepDynamic(this.dynamicStep, index);
+        const step: WizardStepComponent = this.wizardComponent.addStepDynamic(
+            this.dynamicStep,
+            index
+        );
 
-        step.enter.pipe(takeUntil(this.destroy$))
-            .subscribe(() => console.log(`Enter event has been emitted from WizardStepComponent`));
+        step.enter
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(() =>
+                console.log(
+                    `Enter event has been emitted from WizardStepComponent`
+                )
+            );
 
-        step.exit.pipe(takeUntil(this.destroy$))
-            .subscribe(() => console.log(`Exit event has been emitted from WizardStepComponent`));
+        step.exit
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(() =>
+                console.log(
+                    `Exit event has been emitted from WizardStepComponent`
+                )
+            );
     }
 
     public removeStep(index: number): void {

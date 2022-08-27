@@ -1,9 +1,8 @@
 import { ComponentRef, EventEmitter } from "@angular/core";
 import noop from "lodash/noop";
 
-import {ContentRef} from "../../services/content-ref";
-
-import {DialogBackdropComponent} from "./dialog-backdrop.component";
+import { ContentRef } from "../../services/content-ref";
+import { DialogBackdropComponent } from "./dialog-backdrop.component";
 
 /**
  * @ignore
@@ -27,13 +26,15 @@ export class NuiDialogRef {
         public windowCmptRef?: ComponentRef<any>,
         private contentRef?: ContentRef,
         private backdropCmptRef?: ComponentRef<DialogBackdropComponent>,
-        private beforeDismiss?: Function) {
-
+        private beforeDismiss?: Function
+    ) {
         windowCmptRef?.instance.dismissEvent.subscribe((reason: any) => {
             this.dismiss(reason);
         });
         if (windowCmptRef?.instance.closeEvent) {
-            windowCmptRef.instance.closeEvent.subscribe((result: any) => { this.close(result); });
+            windowCmptRef.instance.closeEvent.subscribe((result: any) => {
+                this.close(result);
+            });
         }
 
         this.result = new Promise((resolve, reject) => {
@@ -68,7 +69,8 @@ export class NuiDialogRef {
         this.windowCmptRef?.destroy();
 
         if (this.backdropCmptRef) {
-            const backdropNativeEl = this.backdropCmptRef.location.nativeElement;
+            const backdropNativeEl =
+                this.backdropCmptRef.location.nativeElement;
             backdropNativeEl.parentNode.removeChild(backdropNativeEl);
             this.backdropCmptRef.destroy();
         }
@@ -84,6 +86,10 @@ export class NuiDialogRef {
 }
 /** @ignore */
 export class NuiActiveDialog {
-    close(result?: any): void { noop(); }
-    dismiss(reason?: any): void { noop(); }
+    close(result?: any): void {
+        noop();
+    }
+    dismiss(reason?: any): void {
+        noop();
+    }
 }

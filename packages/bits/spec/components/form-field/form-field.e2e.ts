@@ -39,21 +39,47 @@ describe("USERCONTROL form-field >", () => {
     beforeAll(async () => {
         await Helpers.prepareBrowser("form-field/form-field-test");
         atom = Atom.find(FormFieldAtom, "nui-demo-form-field");
-        hintWithTemplate = Atom.find(FormFieldAtom, "nui-demo-form-field-hint-with-template");
-        atomWithTemplate = Atom.find(FormFieldAtom, "nui-demo-form-field-with-template");
+        hintWithTemplate = Atom.find(
+            FormFieldAtom,
+            "nui-demo-form-field-hint-with-template"
+        );
+        atomWithTemplate = Atom.find(
+            FormFieldAtom,
+            "nui-demo-form-field-with-template"
+        );
         textbox = Atom.find(TextboxAtom, "nui-form-field-test-textbox");
-        textboxNumber = Atom.find(TextboxNumberAtom, "nui-form-field-test-textbox-number");
-        datepicker = Atom.find(DatepickerAtom, "nui-form-field-test-datepicker");
-        toggleButton = Atom.find(ButtonAtom, "nui-form-field-test-toggle-disable-state-button");
+        textboxNumber = Atom.find(
+            TextboxNumberAtom,
+            "nui-form-field-test-textbox-number"
+        );
+        datepicker = Atom.find(
+            DatepickerAtom,
+            "nui-form-field-test-datepicker"
+        );
+        toggleButton = Atom.find(
+            ButtonAtom,
+            "nui-form-field-test-toggle-disable-state-button"
+        );
         radioGroup = Atom.find(RadioGroupAtom, "nui-form-field-test-radio");
         select = Atom.find(SelectV2Atom, "nui-form-field-test-select");
         combobox = Atom.find(ComboboxV2Atom, "nui-form-field-test-combobox");
         switchElement = Atom.find(SwitchAtom, "nui-form-field-test-switch");
-        timepicker = Atom.find(TimepickerAtom, "nui-form-field-test-timepicker");
+        timepicker = Atom.find(
+            TimepickerAtom,
+            "nui-form-field-test-timepicker"
+        );
         checkbox = Atom.find(CheckboxAtom, "nui-form-field-test-checkbox");
-        checkboxGroup = Atom.find(CheckboxGroupAtom, "nui-form-field-test-checkbox-group");
-        dateTimepicker = Atom.find(DateTimepickerAtom, "nui-form-field-test-datetimepicker");
-        dateTimepickerModelElement = element(by.id("nui-form-field-test-datetimepicker-model"));
+        checkboxGroup = Atom.find(
+            CheckboxGroupAtom,
+            "nui-form-field-test-checkbox-group"
+        );
+        dateTimepicker = Atom.find(
+            DateTimepickerAtom,
+            "nui-form-field-test-datetimepicker"
+        );
+        dateTimepickerModelElement = element(
+            by.id("nui-form-field-test-datetimepicker-model")
+        );
     });
 
     it("should display hint template", async () => {
@@ -68,7 +94,9 @@ describe("USERCONTROL form-field >", () => {
         const iconPopover = atomWithTemplate.getInfoPopover();
         await iconPopover.openByHover();
         const popoverAppendedToBody = iconPopover.getPopoverBody();
-        expect(await popoverAppendedToBody.getText()).toBe("Template with link");
+        expect(await popoverAppendedToBody.getText()).toBe(
+            "Template with link"
+        );
 
         // Clean-up: Un-hovering icon to hide popover
         await iconPopover.hover(undefined, { x: -1, y: -1 });
@@ -77,14 +105,20 @@ describe("USERCONTROL form-field >", () => {
 
     describe("aria-label attribute >", () => {
         const elementAriaLabel = async (at: Atom) =>
-            at.getElement().all(by.css("*[aria-label]")).first().getAttribute("aria-label");
+            at
+                .getElement()
+                .all(by.css("*[aria-label]"))
+                .first()
+                .getAttribute("aria-label");
 
         it("should be set for textbox", async () => {
             expect(await elementAriaLabel(textbox)).toEqual("Textbox");
         });
 
         it("should be set for textbox-number", async () => {
-            expect(await elementAriaLabel(textboxNumber)).toEqual("Textbox number input");
+            expect(await elementAriaLabel(textboxNumber)).toEqual(
+                "Textbox number input"
+            );
         });
 
         it("should be set for switch", async () => {
@@ -108,7 +142,9 @@ describe("USERCONTROL form-field >", () => {
         });
 
         it("should be set for date-time-picker", async () => {
-            expect(await elementAriaLabel(dateTimepicker)).toEqual("Date Time Picker date");
+            expect(await elementAriaLabel(dateTimepicker)).toEqual(
+                "Date Time Picker date"
+            );
         });
 
         it("should be set for select-v2", async () => {
@@ -194,8 +230,9 @@ describe("USERCONTROL form-field >", () => {
 
         it("should switch focus to textbox on icon click", async () => {
             await timepicker.icon.getElement().click();
-            expect(await timepicker.textbox.input.getId())
-                .toEqual(await (await browser.switchTo().activeElement()).getId());
+            expect(await timepicker.textbox.input.getId()).toEqual(
+                await (await browser.switchTo().activeElement()).getId()
+            );
             await timepicker.icon.getElement().click();
         });
 
@@ -204,9 +241,13 @@ describe("USERCONTROL form-field >", () => {
             await dateTimepicker.getDatePicker().deleteTextManually();
             await dateTimepicker.getDatePicker().acceptText("01 Jan 2020");
             const timeToSelect = TimepickerAtom.createTimeString(2, 0);
-            await dateTimepicker.getTimePicker().textbox.acceptText(timeToSelect);
+            await dateTimepicker
+                .getTimePicker()
+                .textbox.acceptText(timeToSelect);
             await dateTimepicker.getTimePicker().selectTime("2:00 AM");
-            expect(await dateTimepickerModelElement.getText()).toBe("Wednesday, January 1, 2020 2:00 AM");
+            expect(await dateTimepickerModelElement.getText()).toBe(
+                "Wednesday, January 1, 2020 2:00 AM"
+            );
         });
 
         it("should disable all components back", async () => {

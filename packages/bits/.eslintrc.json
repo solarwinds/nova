@@ -1,17 +1,12 @@
 {
-  "extends": "../../.eslintrc.json",
-  "overrides": [
-    {
-      "files": [
-        "*.ts"
-      ],
-      "parserOptions": {
-        "project": [
-            "tsconfig.lib.json",
-            "src/tsconfig.spec.json"
-          ],
-        "createDefaultProgram": true
-      }
-    }
-  ]
+    "extends": "../../.eslintrc.json",
+    "overrides": [
+        {
+            "files": ["*.ts"],
+            "parserOptions": {
+                "project": ["tsconfig.lib.json", "src/tsconfig.spec.json"],
+                "createDefaultProgram": true
+            }
+        }
+    ]
 }

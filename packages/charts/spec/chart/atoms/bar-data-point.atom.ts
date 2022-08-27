@@ -1,5 +1,6 @@
-import { Atom } from "@nova-ui/bits/sdk/atoms";
 import { by, ElementFinder } from "protractor";
+
+import { Atom } from "@nova-ui/bits/sdk/atoms";
 
 export class BarDataPointAtom extends Atom {
     public static CSS_CLASS = "bar-container";

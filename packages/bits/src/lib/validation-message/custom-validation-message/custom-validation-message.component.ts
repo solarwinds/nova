@@ -19,10 +19,15 @@ import { ValidationMessageComponent } from "../validation-message.component";
 @Component({
     selector: "nui-custom-validation-message",
     template: `
-      <ng-container *ngIf="show">
-          <ng-content></ng-content>
-      </ng-container>
-  `,
-    providers: [{provide: ValidationMessageComponent, useExisting: forwardRef(() => CustomValidationMessageComponent)}],
+        <ng-container *ngIf="show">
+            <ng-content></ng-content>
+        </ng-container>
+    `,
+    providers: [
+        {
+            provide: ValidationMessageComponent,
+            useExisting: forwardRef(() => CustomValidationMessageComponent),
+        },
+    ],
 })
 export class CustomValidationMessageComponent extends ValidationMessageComponent {}

@@ -43,7 +43,10 @@ export class TabGroupComponent implements OnDestroy, AfterViewInit {
     protected isDestroyed: boolean;
     protected _vertical: boolean;
 
-    constructor (private el: ElementRef, private changeDetectorRef: ChangeDetectorRef) {}
+    constructor(
+        private el: ElementRef,
+        private changeDetectorRef: ChangeDetectorRef
+    ) {}
 
     ngAfterViewInit() {
         this.checkTraverse();
@@ -59,7 +62,8 @@ export class TabGroupComponent implements OnDestroy, AfterViewInit {
 
     public addTab(tab: TabComponent): void {
         this.tabs.push(tab);
-        tab.active = this.tabs.length === 1 && typeof tab.active === "undefined";
+        tab.active =
+            this.tabs.length === 1 && typeof tab.active === "undefined";
     }
 
     public selectTab(selectedTab: TabComponent): void {
@@ -79,18 +83,24 @@ export class TabGroupComponent implements OnDestroy, AfterViewInit {
         if (this.vertical) {
             return false;
         }
-        return holderSize +  this.traverseButtonsWidth <= contentSize;
+        return holderSize + this.traverseButtonsWidth <= contentSize;
     }
 
     public traverseRight(): void {
         const margin = this.getCurrentShift();
         if (this.isTraverseRightAllowed(margin)) {
             const traverseStep =
-                Math.abs(this.getNumberFromPixels(margin)) < this.traverseStepSize ?
-                    Math.abs(this.getNumberFromPixels(margin)) : this.traverseStepSize;
+                Math.abs(this.getNumberFromPixels(margin)) <
+                this.traverseStepSize
+                    ? Math.abs(this.getNumberFromPixels(margin))
+                    : this.traverseStepSize;
             this.setNewShift(this.addPixels(margin, traverseStep));
-            this.rightTraverseEnabled = this.isTraverseRightAllowed(this.addPixels(margin, traverseStep));
-            this.leftTraverseEnabled = this.isTraverseLeftAllowed(this.addPixels(margin, traverseStep));
+            this.rightTraverseEnabled = this.isTraverseRightAllowed(
+                this.addPixels(margin, traverseStep)
+            );
+            this.leftTraverseEnabled = this.isTraverseLeftAllowed(
+                this.addPixels(margin, traverseStep)
+            );
         }
     }
 
@@ -99,26 +109,36 @@ export class TabGroupComponent implements OnDestroy, AfterViewInit {
         if (this.isTraverseLeftAllowed(margin)) {
             const tabsSize = this.getElementSize("nui-tabs__container");
             const tabHolderSize = this.getElementSize("nui-tabs__holder");
-            const maxAllowedMargin = Math.abs(tabsSize - tabHolderSize + this.traverseButtonsWidth);
+            const maxAllowedMargin = Math.abs(
+                tabsSize - tabHolderSize + this.traverseButtonsWidth
+            );
             const leftMarginValue = Math.abs(this.getNumberFromPixels(margin));
-            const traverseStep = Math.min(maxAllowedMargin - leftMarginValue, this.traverseStepSize);
+            const traverseStep = Math.min(
+                maxAllowedMargin - leftMarginValue,
+                this.traverseStepSize
+            );
             this.setNewShift(this.addPixels(margin, -traverseStep));
-            this.rightTraverseEnabled = this.isTraverseRightAllowed(this.addPixels(margin, -traverseStep));
-            this.leftTraverseEnabled = this.isTraverseLeftAllowed(this.addPixels(margin, -traverseStep));
+            this.rightTraverseEnabled = this.isTraverseRightAllowed(
+                this.addPixels(margin, -traverseStep)
+            );
+            this.leftTraverseEnabled = this.isTraverseLeftAllowed(
+                this.addPixels(margin, -traverseStep)
+            );
         }
-
     }
 
     private isTraverseLeftAllowed(leftMargin: string): boolean {
         const tabsSize = this.getElementSize("nui-tabs__container");
         const tabHolderSize = this.getElementSize("nui-tabs__holder");
-        const maxAllowedMargin = Math.abs(tabsSize - tabHolderSize + this.traverseButtonsWidth);
+        const maxAllowedMargin = Math.abs(
+            tabsSize - tabHolderSize + this.traverseButtonsWidth
+        );
 
         const margin = Math.abs(this.getNumberFromPixels(leftMargin));
         return margin < maxAllowedMargin;
     }
 
-    private isTraverseRightAllowed (margin: string): boolean {
+    private isTraverseRightAllowed(margin: string): boolean {
         return this.getNumberFromPixels(margin) < 0;
     }
 
@@ -127,21 +147,28 @@ export class TabGroupComponent implements OnDestroy, AfterViewInit {
     }
 
     private getNumberFromPixels(pixels: string): number {
-        return pixels.indexOf("px") ? Number(pixels.substring(0, pixels.indexOf("px"))) : 0;
+        return pixels.indexOf("px")
+            ? Number(pixels.substring(0, pixels.indexOf("px")))
+            : 0;
     }
 
     private getCurrentShift(): string {
-        return this.el.nativeElement.querySelector(".nui-tabs__container").style.marginLeft;
+        return this.el.nativeElement.querySelector(".nui-tabs__container").style
+            .marginLeft;
     }
 
     private setNewShift(newShift: string): void {
-        this.el.nativeElement.querySelector(".nui-tabs__container").style.marginTop = "0px";
-        this.el.nativeElement.querySelector(".nui-tabs__container").style.marginLeft = newShift;
+        this.el.nativeElement.querySelector(
+            ".nui-tabs__container"
+        ).style.marginTop = "0px";
+        this.el.nativeElement.querySelector(
+            ".nui-tabs__container"
+        ).style.marginLeft = newShift;
     }
 
     private addPixels(currentValue: string, increment: number): string {
         const value = this.getNumberFromPixels(currentValue);
-        return (value + increment) + "px";
+        return value + increment + "px";
     }
 
     ngOnDestroy(): void {

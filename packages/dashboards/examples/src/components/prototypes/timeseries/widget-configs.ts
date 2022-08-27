@@ -1,3 +1,6 @@
+import { GridsterItem } from "angular-gridster2";
+import moment from "moment/moment";
+
 import {
     DEFAULT_PIZZAGNA_ROOT,
     IProviderConfiguration,
@@ -12,13 +15,15 @@ import {
     TimeseriesScaleType,
     WellKnownProviders,
 } from "@nova-ui/dashboards";
-import { GridsterItem } from "angular-gridster2";
-import moment from "moment/moment";
 
-import { AcmeTimeseriesDataSource, AcmeTimeseriesStatusDataSource, AcmeTimeseriesStatusIntervalDataSource } from "../data/timeseries-data-sources";
+import {
+    AcmeTimeseriesDataSource,
+    AcmeTimeseriesStatusDataSource,
+    AcmeTimeseriesStatusIntervalDataSource,
+} from "../data/timeseries-data-sources";
 
 export const positions: Record<string, GridsterItem> = {
-    "widget1": {
+    widget1: {
         cols: 6,
         rows: 6,
         y: 0,
@@ -30,7 +35,7 @@ export const positions: Record<string, GridsterItem> = {
         y: 0,
         x: 6,
     },
-    "widget2": {
+    widget2: {
         cols: 6,
         rows: 6,
         y: 6,
@@ -42,7 +47,7 @@ export const positions: Record<string, GridsterItem> = {
         y: 6,
         x: 6,
     },
-    "widget3": {
+    widget3: {
         cols: 6,
         rows: 6,
         y: 12,
@@ -54,7 +59,7 @@ export const positions: Record<string, GridsterItem> = {
         y: 12,
         x: 6,
     },
-    "widget4": {
+    widget4: {
         cols: 6,
         rows: 6,
         y: 18,
@@ -66,7 +71,7 @@ export const positions: Record<string, GridsterItem> = {
         y: 18,
         x: 6,
     },
-    "widget5": {
+    widget5: {
         cols: 6,
         rows: 6,
         y: 24,
@@ -87,9 +92,9 @@ export const widgetConfigs: IWidget[] = [
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
                 [DEFAULT_PIZZAGNA_ROOT]: {
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AcmeTimeseriesDataSource.providerId,
+                            providerId: AcmeTimeseriesDataSource.providerId,
                         } as IProviderConfiguration,
                         [WellKnownProviders.InteractionHandler]: {
                             providerId: NOVA_URL_INTERACTION_HANDLER,
@@ -99,17 +104,17 @@ export const widgetConfigs: IWidget[] = [
                         },
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Line chart",
-                        "subtitle": "Basic timeseries widget",
+                header: {
+                    properties: {
+                        title: "Line chart",
+                        subtitle: "Basic timeseries widget",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
-                                "series": [
+                            properties: {
+                                series: [
                                     {
                                         id: "series-2",
                                         label: "Average CPU Load",
@@ -119,22 +124,22 @@ export const widgetConfigs: IWidget[] = [
                             },
                         } as Partial<IProviderConfiguration> as any,
                     },
-                    "properties": {
-                        "configuration": {
-                            "interaction": "series",
-                            "legendPlacement": LegendPlacement.Right,
-                            "enableZoom": true,
-                            "leftAxisLabel": "Utilization (%)",
+                    properties: {
+                        configuration: {
+                            interaction: "series",
+                            legendPlacement: LegendPlacement.Right,
+                            enableZoom: true,
+                            leftAxisLabel: "Utilization (%)",
                             preset: TimeseriesChartPreset.Line,
                         } as ITimeseriesWidgetConfig,
                     },
                 },
-                "timeframeSelection": {
-                    "properties": {
-                        "timeframe": {
-                            "selectedPresetId": "last7Days",
+                timeframeSelection: {
+                    properties: {
+                        timeframe: {
+                            selectedPresetId: "last7Days",
                         } as ISerializableTimeframe,
-                        "maxDate": moment().format(),
+                        maxDate: moment().format(),
                     },
                 },
             },
@@ -146,9 +151,9 @@ export const widgetConfigs: IWidget[] = [
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
                 [DEFAULT_PIZZAGNA_ROOT]: {
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AcmeTimeseriesDataSource.providerId,
+                            providerId: AcmeTimeseriesDataSource.providerId,
                         } as IProviderConfiguration,
                         [WellKnownProviders.InteractionHandler]: {
                             providerId: NOVA_URL_INTERACTION_HANDLER,
@@ -158,17 +163,17 @@ export const widgetConfigs: IWidget[] = [
                         },
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Line chart",
-                        "subtitle": "Basic timeseries widget",
+                header: {
+                    properties: {
+                        title: "Line chart",
+                        subtitle: "Basic timeseries widget",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
-                                "series": [
+                            properties: {
+                                series: [
                                     {
                                         id: "series-1",
                                         label: "Average GPU Load",
@@ -183,11 +188,11 @@ export const widgetConfigs: IWidget[] = [
                             },
                         } as Partial<IProviderConfiguration> as any,
                     },
-                    "properties": {
-                        "configuration": {
-                            "legendPlacement": LegendPlacement.Right,
-                            "enableZoom": true,
-                            "leftAxisLabel": "Utilization (%)",
+                    properties: {
+                        configuration: {
+                            legendPlacement: LegendPlacement.Right,
+                            enableZoom: true,
+                            leftAxisLabel: "Utilization (%)",
                             preset: TimeseriesChartPreset.Line,
                             scales: {
                                 x: {
@@ -200,12 +205,12 @@ export const widgetConfigs: IWidget[] = [
                         } as ITimeseriesWidgetConfig,
                     },
                 },
-                "timeframeSelection": {
-                    "properties": {
-                        "timeframe": {
-                            "selectedPresetId": "last7Days",
+                timeframeSelection: {
+                    properties: {
+                        timeframe: {
+                            selectedPresetId: "last7Days",
                         } as ISerializableTimeframe,
-                        "maxDate": moment().format(),
+                        maxDate: moment().format(),
                     },
                 },
             },
@@ -217,23 +222,23 @@ export const widgetConfigs: IWidget[] = [
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
                 [DEFAULT_PIZZAGNA_ROOT]: {
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AcmeTimeseriesDataSource.providerId,
+                            providerId: AcmeTimeseriesDataSource.providerId,
                         } as IProviderConfiguration,
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Area chart",
-                        "subtitle": "Basic timeseries widget",
+                header: {
+                    properties: {
+                        title: "Area chart",
+                        subtitle: "Basic timeseries widget",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
-                                "series": [
+                            properties: {
+                                series: [
                                     {
                                         id: "series-1",
                                         label: "Average GPU Load",
@@ -248,21 +253,21 @@ export const widgetConfigs: IWidget[] = [
                             },
                         } as Partial<IProviderConfiguration> as any,
                     },
-                    "properties": {
-                        "configuration": {
-                            "legendPlacement": LegendPlacement.Right,
-                            "enableZoom": true,
-                            "leftAxisLabel": "Utilization (%)",
+                    properties: {
+                        configuration: {
+                            legendPlacement: LegendPlacement.Right,
+                            enableZoom: true,
+                            leftAxisLabel: "Utilization (%)",
                             preset: TimeseriesChartPreset.StackedArea,
                         } as ITimeseriesWidgetConfig,
                     },
                 },
-                "timeframeSelection": {
-                    "properties": {
-                        "timeframe": {
-                            "selectedPresetId": "last7Days",
+                timeframeSelection: {
+                    properties: {
+                        timeframe: {
+                            selectedPresetId: "last7Days",
                         } as ISerializableTimeframe,
-                        "maxDate": moment().format(),
+                        maxDate: moment().format(),
                     },
                 },
             },
@@ -274,23 +279,23 @@ export const widgetConfigs: IWidget[] = [
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
                 [DEFAULT_PIZZAGNA_ROOT]: {
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AcmeTimeseriesDataSource.providerId,
+                            providerId: AcmeTimeseriesDataSource.providerId,
                         } as IProviderConfiguration,
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Area chart",
-                        "subtitle": "Basic timeseries widget",
+                header: {
+                    properties: {
+                        title: "Area chart",
+                        subtitle: "Basic timeseries widget",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
-                                "series": [
+                            properties: {
+                                series: [
                                     {
                                         id: "series-1",
                                         label: "Average GPU Load",
@@ -305,11 +310,11 @@ export const widgetConfigs: IWidget[] = [
                             },
                         } as Partial<IProviderConfiguration> as any,
                     },
-                    "properties": {
-                        "configuration": {
-                            "legendPlacement": LegendPlacement.Right,
-                            "enableZoom": true,
-                            "leftAxisLabel": "Utilization (%)",
+                    properties: {
+                        configuration: {
+                            legendPlacement: LegendPlacement.Right,
+                            enableZoom: true,
+                            leftAxisLabel: "Utilization (%)",
                             preset: TimeseriesChartPreset.StackedArea,
                             scales: {
                                 x: {
@@ -322,12 +327,12 @@ export const widgetConfigs: IWidget[] = [
                         } as ITimeseriesWidgetConfig,
                     },
                 },
-                "timeframeSelection": {
-                    "properties": {
-                        "timeframe": {
-                            "selectedPresetId": "last7Days",
+                timeframeSelection: {
+                    properties: {
+                        timeframe: {
+                            selectedPresetId: "last7Days",
                         } as ISerializableTimeframe,
-                        "maxDate": moment().format(),
+                        maxDate: moment().format(),
                     },
                 },
             },
@@ -339,23 +344,23 @@ export const widgetConfigs: IWidget[] = [
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
                 [DEFAULT_PIZZAGNA_ROOT]: {
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AcmeTimeseriesDataSource.providerId,
+                            providerId: AcmeTimeseriesDataSource.providerId,
                         } as IProviderConfiguration,
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Stacked percentage area",
-                        "subtitle": "Basic timeseries widget",
+                header: {
+                    properties: {
+                        title: "Stacked percentage area",
+                        subtitle: "Basic timeseries widget",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
-                                "series": [
+                            properties: {
+                                series: [
                                     {
                                         id: "series-2",
                                         label: "Average CPU Load",
@@ -365,21 +370,21 @@ export const widgetConfigs: IWidget[] = [
                             },
                         } as Partial<IProviderConfiguration> as any,
                     },
-                    "properties": {
-                        "configuration": {
-                            "legendPlacement": LegendPlacement.Right,
-                            "enableZoom": true,
-                            "leftAxisLabel": "Utilization (%)",
+                    properties: {
+                        configuration: {
+                            legendPlacement: LegendPlacement.Right,
+                            enableZoom: true,
+                            leftAxisLabel: "Utilization (%)",
                             preset: TimeseriesChartPreset.StackedPercentageArea,
                         } as ITimeseriesWidgetConfig,
                     },
                 },
-                "timeframeSelection": {
-                    "properties": {
-                        "timeframe": {
-                            "selectedPresetId": "last7Days",
+                timeframeSelection: {
+                    properties: {
+                        timeframe: {
+                            selectedPresetId: "last7Days",
                         } as ISerializableTimeframe,
-                        "maxDate": moment().format(),
+                        maxDate: moment().format(),
                     },
                 },
             },
@@ -391,23 +396,23 @@ export const widgetConfigs: IWidget[] = [
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
                 [DEFAULT_PIZZAGNA_ROOT]: {
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AcmeTimeseriesDataSource.providerId,
+                            providerId: AcmeTimeseriesDataSource.providerId,
                         } as IProviderConfiguration,
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Stacked percentage area",
-                        "subtitle": "Basic timeseries widget",
+                header: {
+                    properties: {
+                        title: "Stacked percentage area",
+                        subtitle: "Basic timeseries widget",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
-                                "series": [
+                            properties: {
+                                series: [
                                     {
                                         id: "series-2",
                                         label: "Average CPU Load",
@@ -417,11 +422,11 @@ export const widgetConfigs: IWidget[] = [
                             },
                         } as Partial<IProviderConfiguration> as any,
                     },
-                    "properties": {
-                        "configuration": {
-                            "legendPlacement": LegendPlacement.Right,
-                            "enableZoom": true,
-                            "leftAxisLabel": "Utilization (%)",
+                    properties: {
+                        configuration: {
+                            legendPlacement: LegendPlacement.Right,
+                            enableZoom: true,
+                            leftAxisLabel: "Utilization (%)",
                             preset: TimeseriesChartPreset.StackedPercentageArea,
                             scales: {
                                 x: {
@@ -434,12 +439,12 @@ export const widgetConfigs: IWidget[] = [
                         } as ITimeseriesWidgetConfig,
                     },
                 },
-                "timeframeSelection": {
-                    "properties": {
-                        "timeframe": {
-                            "selectedPresetId": "last7Days",
+                timeframeSelection: {
+                    properties: {
+                        timeframe: {
+                            selectedPresetId: "last7Days",
                         } as ISerializableTimeframe,
-                        "maxDate": moment().format(),
+                        maxDate: moment().format(),
                     },
                 },
             },
@@ -451,23 +456,23 @@ export const widgetConfigs: IWidget[] = [
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
                 [DEFAULT_PIZZAGNA_ROOT]: {
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AcmeTimeseriesDataSource.providerId,
+                            providerId: AcmeTimeseriesDataSource.providerId,
                         } as IProviderConfiguration,
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Bar chart",
-                        "subtitle": "Basic timeseries widget",
+                header: {
+                    properties: {
+                        title: "Bar chart",
+                        subtitle: "Basic timeseries widget",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
-                                "series": [
+                            properties: {
+                                series: [
                                     {
                                         id: "series-2",
                                         label: "Average CPU Load",
@@ -477,22 +482,22 @@ export const widgetConfigs: IWidget[] = [
                             },
                         } as Partial<IProviderConfiguration> as any,
                     },
-                    "properties": {
-                        "configuration": {
-                            "legendPlacement": LegendPlacement.Right,
-                            "enableZoom": true,
-                            "leftAxisLabel": "Utilization (%)",
+                    properties: {
+                        configuration: {
+                            legendPlacement: LegendPlacement.Right,
+                            enableZoom: true,
+                            leftAxisLabel: "Utilization (%)",
                             preset: TimeseriesChartPreset.StackedBar,
                             scales: {},
                         } as ITimeseriesWidgetConfig,
                     },
                 },
-                "timeframeSelection": {
-                    "properties": {
-                        "timeframe": {
-                            "selectedPresetId": "last7Days",
+                timeframeSelection: {
+                    properties: {
+                        timeframe: {
+                            selectedPresetId: "last7Days",
                         } as ISerializableTimeframe,
-                        "maxDate": moment().format(),
+                        maxDate: moment().format(),
                     },
                 },
             },
@@ -504,23 +509,23 @@ export const widgetConfigs: IWidget[] = [
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
                 [DEFAULT_PIZZAGNA_ROOT]: {
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AcmeTimeseriesDataSource.providerId,
+                            providerId: AcmeTimeseriesDataSource.providerId,
                         } as IProviderConfiguration,
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Bar chart",
-                        "subtitle": "Basic timeseries widget",
+                header: {
+                    properties: {
+                        title: "Bar chart",
+                        subtitle: "Basic timeseries widget",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
-                                "series": [
+                            properties: {
+                                series: [
                                     {
                                         id: "series-2",
                                         label: "Average CPU Load",
@@ -530,11 +535,11 @@ export const widgetConfigs: IWidget[] = [
                             },
                         } as Partial<IProviderConfiguration> as any,
                     },
-                    "properties": {
-                        "configuration": {
-                            "legendPlacement": LegendPlacement.Right,
-                            "enableZoom": true,
-                            "leftAxisLabel": "Utilization (%)",
+                    properties: {
+                        configuration: {
+                            legendPlacement: LegendPlacement.Right,
+                            enableZoom: true,
+                            leftAxisLabel: "Utilization (%)",
                             preset: TimeseriesChartPreset.StackedBar,
                             scales: {
                                 x: {
@@ -547,12 +552,12 @@ export const widgetConfigs: IWidget[] = [
                         } as ITimeseriesWidgetConfig,
                     },
                 },
-                "timeframeSelection": {
-                    "properties": {
-                        "timeframe": {
-                            "selectedPresetId": "last7Days",
+                timeframeSelection: {
+                    properties: {
+                        timeframe: {
+                            selectedPresetId: "last7Days",
                         } as ISerializableTimeframe,
-                        "maxDate": moment().format(),
+                        maxDate: moment().format(),
                     },
                 },
             },
@@ -564,23 +569,24 @@ export const widgetConfigs: IWidget[] = [
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
                 [DEFAULT_PIZZAGNA_ROOT]: {
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AcmeTimeseriesStatusDataSource.providerId,
+                            providerId:
+                                AcmeTimeseriesStatusDataSource.providerId,
                         } as IProviderConfiguration,
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Status chart",
-                        "subtitle": "Basic timeseries widget",
+                header: {
+                    properties: {
+                        title: "Status chart",
+                        subtitle: "Basic timeseries widget",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
-                                "series": [
+                            properties: {
+                                series: [
                                     {
                                         id: "series-1",
                                         label: "Average GPU Load",
@@ -595,21 +601,21 @@ export const widgetConfigs: IWidget[] = [
                             },
                         } as Partial<IProviderConfiguration> as any,
                     },
-                    "properties": {
-                        "configuration": {
-                            "legendPlacement": LegendPlacement.Right,
-                            "enableZoom": true,
-                            "leftAxisLabel": "Utilization (%)",
+                    properties: {
+                        configuration: {
+                            legendPlacement: LegendPlacement.Right,
+                            enableZoom: true,
+                            leftAxisLabel: "Utilization (%)",
                             preset: TimeseriesChartPreset.StatusBar,
                         } as ITimeseriesWidgetConfig,
                     },
                 },
-                "timeframeSelection": {
-                    "properties": {
-                        "timeframe": {
-                            "selectedPresetId": "last7Days",
+                timeframeSelection: {
+                    properties: {
+                        timeframe: {
+                            selectedPresetId: "last7Days",
                         } as ISerializableTimeframe,
-                        "maxDate": moment().format(),
+                        maxDate: moment().format(),
                     },
                 },
             },
@@ -621,23 +627,24 @@ export const widgetConfigs: IWidget[] = [
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
                 [DEFAULT_PIZZAGNA_ROOT]: {
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AcmeTimeseriesStatusIntervalDataSource.providerId,
+                            providerId:
+                                AcmeTimeseriesStatusIntervalDataSource.providerId,
                         } as IProviderConfiguration,
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Status chart",
-                        "subtitle": "Basic timeseries widget",
+                header: {
+                    properties: {
+                        title: "Status chart",
+                        subtitle: "Basic timeseries widget",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
-                                "series": [
+                            properties: {
+                                series: [
                                     {
                                         id: "series-1",
                                         label: "Average GPU Load",
@@ -652,11 +659,11 @@ export const widgetConfigs: IWidget[] = [
                             },
                         } as Partial<IProviderConfiguration> as any,
                     },
-                    "properties": {
-                        "configuration": {
-                            "legendPlacement": LegendPlacement.Right,
-                            "enableZoom": true,
-                            "leftAxisLabel": "Utilization (%)",
+                    properties: {
+                        configuration: {
+                            legendPlacement: LegendPlacement.Right,
+                            enableZoom: true,
+                            leftAxisLabel: "Utilization (%)",
                             preset: TimeseriesChartPreset.StatusBar,
                             scales: {
                                 x: {
@@ -669,12 +676,12 @@ export const widgetConfigs: IWidget[] = [
                         } as ITimeseriesWidgetConfig,
                     },
                 },
-                "timeframeSelection": {
-                    "properties": {
-                        "timeframe": {
-                            "selectedPresetId": "last7Days",
+                timeframeSelection: {
+                    properties: {
+                        timeframe: {
+                            selectedPresetId: "last7Days",
                         } as ISerializableTimeframe,
-                        "maxDate": moment().format(),
+                        maxDate: moment().format(),
                     },
                 },
             },

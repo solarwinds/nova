@@ -1,6 +1,7 @@
 import { Component, Inject } from "@angular/core";
-import { IToastService, ToastService } from "@nova-ui/bits";
 import moment, { Moment } from "moment/moment";
+
+import { IToastService, ToastService } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-date-picker-value-change-example",
@@ -13,6 +14,8 @@ export class DatePickerValueChangeExampleComponent {
 
     public dateChanged(event: Moment) {
         this.selectedDate = new Date(event.valueOf());
-        this.toastService.info({message: $localize `Selected date: ${event.toString()}`});
+        this.toastService.info({
+            message: $localize`Selected date: ${event.toString()}`,
+        });
     }
 }

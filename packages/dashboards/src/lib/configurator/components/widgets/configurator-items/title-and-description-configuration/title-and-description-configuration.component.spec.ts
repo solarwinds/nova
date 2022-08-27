@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
-
 import { TitleAndDescriptionConfigurationComponent } from "./title-and-description-configuration.component";
 
 describe("DataSourceConfigurationComponent", () => {
@@ -15,16 +14,16 @@ describe("DataSourceConfigurationComponent", () => {
             providers: [
                 ProviderRegistryService,
                 {
-                    useValue: () => {
-                    },
+                    useValue: () => {},
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TitleAndDescriptionConfigurationComponent);
+        fixture = TestBed.createComponent(
+            TitleAndDescriptionConfigurationComponent
+        );
         component = fixture.componentInstance;
     });
 

@@ -5,7 +5,6 @@ import { IPizzagnaLayer } from "../../types";
 
 @Injectable()
 export class PreviewService {
-
     private _preview: IPizzagnaLayer;
 
     public get preview(): IPizzagnaLayer {
@@ -18,5 +17,4 @@ export class PreviewService {
     }
 
     public previewChanged = new Subject<IPizzagnaLayer>();
-
 }

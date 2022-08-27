@@ -1,9 +1,10 @@
 import { browser } from "protractor";
+
 import { assertA11y, Helpers } from "../../helpers";
 import { SorterAtom } from "../public_api";
 
 describe("a11y: sorter", () => {
-    let rulesToDisable: string[] = [];
+    const rulesToDisable: string[] = [];
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("sorter/visual-test");

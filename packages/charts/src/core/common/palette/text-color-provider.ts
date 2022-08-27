@@ -1,7 +1,6 @@
 import { rgb, RGBColor } from "d3-color";
 
 import { IValueProvider } from "../types";
-
 import { getColorValueByName } from "./color.helper";
 import { ProcessedColorProvider } from "./processed-color-provider";
 
@@ -18,16 +17,26 @@ const lowc = 1 / 12.92;
  * This color provider calculates foreground color based on contrast ratio of provided colors
  */
 export class TextColorProvider extends ProcessedColorProvider {
-
-    constructor(sourceProvider: IValueProvider<string>, colorDefinitions: { light: string, dark: string }) {
+    constructor(
+        sourceProvider: IValueProvider<string>,
+        colorDefinitions: { light: string; dark: string }
+    ) {
         super(sourceProvider, (input: string) => {
             const color = getColorValueByName(input);
             const rgbInput = rgb(color);
 
-            const ratioToLight = this.getContrastRatio(rgbInput, rgb(colorDefinitions.light));
-            const ratioToDark = this.getContrastRatio(rgbInput, rgb(colorDefinitions.dark));
+            const ratioToLight = this.getContrastRatio(
+                rgbInput,
+                rgb(colorDefinitions.light)
+            );
+            const ratioToDark = this.getContrastRatio(
+                rgbInput,
+                rgb(colorDefinitions.dark)
+            );
 
-            return ratioToDark > ratioToLight ? colorDefinitions.dark : colorDefinitions.light;
+            return ratioToDark > ratioToLight
+                ? colorDefinitions.dark
+                : colorDefinitions.light;
         });
     }
 

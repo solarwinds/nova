@@ -8,8 +8,10 @@ export class TooltipAtom extends Atom {
 
     private root = this.getElement();
 
-    public waitToBeDisplayed = async(delay: number = TooltipAtom.animationDuration * 1.5): Promise<void> =>
-        browser.wait(ExpectedConditions.visibilityOf(this.root), delay)
+    public waitToBeDisplayed = async (
+        delay: number = TooltipAtom.animationDuration * 1.5
+    ): Promise<void> =>
+        browser.wait(ExpectedConditions.visibilityOf(this.root), delay);
 
     public isTooltipDisplayed = async (): Promise<boolean> => this.isPresent();
 

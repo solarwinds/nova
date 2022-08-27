@@ -8,13 +8,13 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
 export class SelectRemoveValueExampleComponent {
     public dataset = {
         items: [
-            $localize `Item 1`,
-            $localize `Item 2`,
-            $localize `Item 3`,
-            $localize `Item 4`,
-            $localize `Item 5`,
+            $localize`Item 1`,
+            $localize`Item 2`,
+            $localize`Item 3`,
+            $localize`Item 4`,
+            $localize`Item 5`,
         ],
     };
 
-    constructor() { }
+    constructor() {}
 }

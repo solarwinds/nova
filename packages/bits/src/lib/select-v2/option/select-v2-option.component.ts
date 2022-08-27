@@ -1,5 +1,15 @@
 import { Highlightable } from "@angular/cdk/a11y";
-import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, HostBinding, HostListener, Inject, Input, Optional } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    forwardRef,
+    HostBinding,
+    HostListener,
+    Inject,
+    Input,
+    Optional,
+} from "@angular/core";
 
 import { OVERLAY_ITEM } from "../../overlay/constants";
 import { OverlayItemComponent } from "../../overlay/overlay-item/overlay-item.component";
@@ -17,14 +27,20 @@ import { IOptionedComponent } from "../types";
     styleUrls: ["./select-v2-option.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
-        "class": "nui-select-v2-option",
-        "role": "option",
+        class: "nui-select-v2-option",
+        role: "option",
     },
     providers: [
-        { provide: OVERLAY_ITEM, useExisting: forwardRef(() => SelectV2OptionComponent) },
+        {
+            provide: OVERLAY_ITEM,
+            useExisting: forwardRef(() => SelectV2OptionComponent),
+        },
     ],
 })
-export class SelectV2OptionComponent extends OverlayItemComponent implements Highlightable, IOption {
+export class SelectV2OptionComponent
+    extends OverlayItemComponent
+    implements Highlightable, IOption
+{
     /** Sets value */
     @Input() public value: OptionValueType;
 
@@ -36,7 +52,8 @@ export class SelectV2OptionComponent extends OverlayItemComponent implements Hig
 
     /** Whether the Option outfiltered */
     @HostBinding("class.hidden")
-    @Input() public outfiltered: boolean = false;
+    @Input()
+    public outfiltered: boolean = false;
 
     /** Whether the Option selected */
     @HostBinding("class.selected")
@@ -50,8 +67,12 @@ export class SelectV2OptionComponent extends OverlayItemComponent implements Hig
 
     private select: IOptionedComponent;
 
-    constructor(@Optional() @Inject(NUI_SELECT_V2_OPTION_PARENT_COMPONENT) parent: IOptionedComponent,
-                public element: ElementRef<HTMLElement>) {
+    constructor(
+        @Optional()
+        @Inject(NUI_SELECT_V2_OPTION_PARENT_COMPONENT)
+        parent: IOptionedComponent,
+        public element: ElementRef<HTMLElement>
+    ) {
         super(element);
         this.select = parent;
     }

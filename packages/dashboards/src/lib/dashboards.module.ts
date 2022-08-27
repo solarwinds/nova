@@ -6,6 +6,8 @@ import { ReactiveFormsModule } from "@angular/forms";
 // noinspection ES6UnusedImports
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { LocalizeFn } from "@angular/localize/init";
+import { GridsterModule } from "angular-gridster2";
+
 import {
     NuiBusyModule,
     NuiButtonModule,
@@ -25,7 +27,6 @@ import {
     NuiTooltipModule,
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
-import { GridsterModule } from "angular-gridster2";
 
 import { NuiDashboardsCommonModule } from "./common/common.module";
 import { WidgetErrorComponent } from "./common/components/widget-error/widget-error.component";
@@ -63,7 +64,10 @@ import { GridsterItemWidgetIdDirective } from "./directives/gridster-item-widget
 import { WidgetEditorDirective } from "./directives/widget-editor/widget-editor.directive";
 import { NuiPizzagnaModule } from "./pizzagna/pizzagna.module";
 import { ComponentPortalService } from "./pizzagna/services/component-portal.service";
-import { ComponentRegistryService, IComponentWithLateLoadKey } from "./pizzagna/services/component-registry.service";
+import {
+    ComponentRegistryService,
+    IComponentWithLateLoadKey,
+} from "./pizzagna/services/component-registry.service";
 import { EventRegistryService } from "./services/event-registry.service";
 import { KpiFormattersRegistryService } from "./services/table-formatter-registry.service";
 import {
@@ -197,11 +201,21 @@ export class NuiDashboardsModule {
         widgetTypesService.registerWidgetType("table", 1, table);
         widgetTypesService.registerWidgetType("proportional", 1, proportional);
         widgetTypesService.registerWidgetType("timeseries", 1, timeseries);
-        widgetTypesService.registerWidgetType("previewPlaceholder", 1, previewPlaceholder);
-        widgetTypesService.registerWidgetType("embedded-content", 1, embeddedContent);
+        widgetTypesService.registerWidgetType(
+            "previewPlaceholder",
+            1,
+            previewPlaceholder
+        );
+        widgetTypesService.registerWidgetType(
+            "embedded-content",
+            1,
+            embeddedContent
+        );
         widgetTypesService.registerWidgetType("drilldown", 1, drilldown);
 
-        for (const ec of entryComponents.filter((c: IComponentWithLateLoadKey) => c.lateLoadKey)) {
+        for (const ec of entryComponents.filter(
+            (c: IComponentWithLateLoadKey) => c.lateLoadKey
+        )) {
             componentRegistry.registerByLateLoadKey(ec);
         }
 

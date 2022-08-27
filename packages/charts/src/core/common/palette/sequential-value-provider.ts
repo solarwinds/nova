@@ -5,7 +5,6 @@ import { IValueProvider } from "../types";
  * It keeps track of already given instances to given entities to avoid conflicts.
  */
 export class SequentialValueProvider<T> implements IValueProvider<T> {
-
     private providedValues: { [key: string]: T };
     private lastUsedIndex: number;
 
@@ -21,7 +20,7 @@ export class SequentialValueProvider<T> implements IValueProvider<T> {
             this.providedValues[entityId] = value;
         }
         return value;
-    }
+    };
 
     public reset(): void {
         this.providedValues = {};

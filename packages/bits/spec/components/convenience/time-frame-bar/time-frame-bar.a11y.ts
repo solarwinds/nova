@@ -1,9 +1,9 @@
 import { browser } from "protractor";
+
 import { assertA11y, Helpers } from "../../../helpers";
 import { TimeFrameBarAtom } from "../../public_api";
 
 describe("a11y: time frame bar", () => {
-
     beforeAll(async () => {
         await Helpers.prepareBrowser("convenience/time-frame-bar/visual");
     });

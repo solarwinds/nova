@@ -8,6 +8,9 @@ import {
     OnInit,
     ViewChild,
 } from "@angular/core";
+import { BehaviorSubject, Subject } from "rxjs";
+import { filter, switchMap, takeUntil, tap } from "rxjs/operators";
+
 import {
     DataSourceService,
     IFilteringOutputs,
@@ -22,24 +25,9 @@ import {
     SorterDirection,
     VirtualViewportManager,
 } from "@nova-ui/bits";
-import {
-    BehaviorSubject,
-    Subject,
-} from "rxjs";
-import {
-    filter,
-    switchMap,
-    takeUntil,
-    tap,
-} from "rxjs/operators";
 
-import {
-    IServer,
-    IServerFilters,
-} from "./types";
-import {
-    RESULTS_PER_PAGE,
-} from "./virtual-scroll-list-data";
+import { IServer, IServerFilters } from "./types";
+import { RESULTS_PER_PAGE } from "./virtual-scroll-list-data";
 import { VirtualScrollListDataSource } from "./virtual-scroll-list-data-source.service";
 
 @Component({
@@ -55,7 +43,9 @@ import { VirtualScrollListDataSource } from "./virtual-scroll-list-data-source.s
         },
     ],
 })
-export class VirtualScrollListComponent implements OnInit, AfterViewInit, OnDestroy {
+export class VirtualScrollListComponent
+    implements OnInit, AfterViewInit, OnDestroy
+{
     public listItems$ = new BehaviorSubject<IServer[]>([]);
     public readonly sorterItems: IMenuItem[] = [
         {
@@ -92,20 +82,22 @@ export class VirtualScrollListComponent implements OnInit, AfterViewInit, OnDest
     private destroy$ = new Subject();
 
     constructor(
-        @Inject(DataSourceService) private dataSource: VirtualScrollListDataSource<IServer>,
+        @Inject(DataSourceService)
+        private dataSource: VirtualScrollListDataSource<IServer>,
         private changeDetection: ChangeDetectorRef,
         private viewportManager: VirtualViewportManager
-    ) {
-    }
+    ) {}
 
     public ngOnInit() {
-        this.dataSource.busy.pipe(
-            tap(val => {
-                this.isBusy = val;
-                this.changeDetection.detectChanges();
-            }),
-            takeUntil(this.destroy$)
-        ).subscribe();
+        this.dataSource.busy
+            .pipe(
+                tap((val) => {
+                    this.isBusy = val;
+                    this.changeDetection.detectChanges();
+                }),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
     }
 
     public async ngAfterViewInit() {
@@ -123,7 +115,7 @@ export class VirtualScrollListComponent implements OnInit, AfterViewInit, OnDest
             // Note: Initializing the stream with the desired page size, based on which
             // ViewportManager will perform the observations and will emit
             // distinct ranges with step equal to provided pageSize
-            .observeNextPage$({pageSize: RESULTS_PER_PAGE})
+            .observeNextPage$({ pageSize: RESULTS_PER_PAGE })
             .pipe(
                 // Since we know the total number of items we can stop the stream when dataset end is reached
                 // Otherwise we can let VirtualViewportManager to stop when last received page range will not match requested range
@@ -131,35 +123,46 @@ export class VirtualScrollListComponent implements OnInit, AfterViewInit, OnDest
                     const items = this.listItems$.getValue();
                     return !items.length || items.length < this.totalItems;
                 }),
-                tap(() => this.applyFilters(false)),
+                tap(async () => this.applyFilters(false)),
                 // Note: Using the same stream to subscribe to the outputsSubject and update the items list
-                switchMap(() => this.dataSource.outputsSubject.pipe(
-                    tap((data: IFilteringOutputs) => {
-                        // update the list of items to be rendered
-                        const items = data.repeat?.itemsSource || [];
+                switchMap(() =>
+                    this.dataSource.outputsSubject.pipe(
+                        tap((data: IFilteringOutputs) => {
+                            // update the list of items to be rendered
+                            const items = data.repeat?.itemsSource || [];
 
-                        // after receiving data we need to append it to our previous fetched results
-                        this.listItems$.next(this.listItems$.getValue().concat(items));
+                            // after receiving data we need to append it to our previous fetched results
+                            this.listItems$.next(
+                                this.listItems$.getValue().concat(items)
+                            );
 
-                        this.totalItems = data.paginator?.total || 0;
+                            this.totalItems = data.paginator?.total || 0;
 
-                        this.changeDetection.detectChanges();
-                    })
-                )
+                            this.changeDetection.detectChanges();
+                        })
+                    )
                 ),
                 takeUntil(this.destroy$)
-            ).subscribe();
+            )
+            .subscribe();
 
-        this.search.focusChange.pipe(
-            tap(async(focused: boolean) => {
-                // we want to perform a new search on blur event
-                // only if the search filter changed
-                if (!focused && this.dataSource.filterChanged(nameof<IServerFilters>("search"))) {
-                    await this.applyFilters();
-                }
-            }),
-            takeUntil(this.destroy$)
-        ).subscribe();
+        this.search.focusChange
+            .pipe(
+                tap(async (focused: boolean) => {
+                    // we want to perform a new search on blur event
+                    // only if the search filter changed
+                    if (
+                        !focused &&
+                        this.dataSource.filterChanged(
+                            nameof<IServerFilters>("search")
+                        )
+                    ) {
+                        await this.applyFilters();
+                    }
+                }),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
     }
 
     public ngOnDestroy() {
@@ -179,7 +182,7 @@ export class VirtualScrollListComponent implements OnInit, AfterViewInit, OnDest
         if (resetVirtualScroll) {
             // it is important to reset viewportManager to start page
             // so that the datasource performs the search with 1st page
-            this.viewportManager.reset({emitFirstPage: false});
+            this.viewportManager.reset({ emitFirstPage: false });
         }
 
         // Every new search request or filter change should

@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 
-import {ThemeSwitchService} from "../../../services/theme-switch.service";
+import { ThemeSwitchService } from "../../../services/theme-switch.service";
 
 /**
  * @ignore
@@ -10,8 +10,7 @@ import {ThemeSwitchService} from "../../../services/theme-switch.service";
     templateUrl: "./theme-switcher.component.html",
 })
 export class ThemeSwitcherComponent {
-
-    constructor(public themeSwitcherService: ThemeSwitchService) { }
+    constructor(public themeSwitcherService: ThemeSwitchService) {}
 
     onThemeChange(isDarkThemeEnabled: boolean): void {
         this.themeSwitcherService.setDarkTheme(isDarkThemeEnabled);

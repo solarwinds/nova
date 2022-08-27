@@ -24,17 +24,47 @@ describe(`Visual tests: ${name}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("paginator/paginator-visual-test");
-        basicPaginator = Atom.find(PaginatorAtom, "nui-visual-test-basic-paginator");
-        adjacentPaginator = Atom.find(PaginatorAtom, "nui-visual-test-adjacent-paginator");
-        customPaginator = Atom.find(PaginatorAtom, "nui-visual-test-custom-page-set-paginator");
-        customStylingPaginator = Atom.find(PaginatorAtom, "nui-visual-test-paginator-styling");
-        virtualScrollPaginator = Atom.find(PaginatorAtom, "nui-demo-custom-page-size-set-paginator");
-        selectBasicPaginator = Atom.findIn(SelectV2Atom, basicPaginator.getElement());
-        selectCustomPaginator = Atom.findIn(SelectV2Atom, customPaginator.getElement());
-        virtualScrollPaginatorSelect = Atom.findIn(SelectV2Atom, virtualScrollPaginator.getElement());
-        dotsBasicButton = Atom.findIn(ButtonAtom, customPaginator.ellipsisLink(0));
-        dotsCustomStylingButton = Atom.findIn(ButtonAtom, customStylingPaginator.ellipsisLink(1));
-        
+        basicPaginator = Atom.find(
+            PaginatorAtom,
+            "nui-visual-test-basic-paginator"
+        );
+        adjacentPaginator = Atom.find(
+            PaginatorAtom,
+            "nui-visual-test-adjacent-paginator"
+        );
+        customPaginator = Atom.find(
+            PaginatorAtom,
+            "nui-visual-test-custom-page-set-paginator"
+        );
+        customStylingPaginator = Atom.find(
+            PaginatorAtom,
+            "nui-visual-test-paginator-styling"
+        );
+        virtualScrollPaginator = Atom.find(
+            PaginatorAtom,
+            "nui-demo-custom-page-size-set-paginator"
+        );
+        selectBasicPaginator = Atom.findIn(
+            SelectV2Atom,
+            basicPaginator.getElement()
+        );
+        selectCustomPaginator = Atom.findIn(
+            SelectV2Atom,
+            customPaginator.getElement()
+        );
+        virtualScrollPaginatorSelect = Atom.findIn(
+            SelectV2Atom,
+            virtualScrollPaginator.getElement()
+        );
+        dotsBasicButton = Atom.findIn(
+            ButtonAtom,
+            customPaginator.ellipsisLink(0)
+        );
+        dotsCustomStylingButton = Atom.findIn(
+            ButtonAtom,
+            customStylingPaginator.ellipsisLink(1)
+        );
+
         camera = new Camera().loadFilm(browser, name);
     });
 
@@ -50,12 +80,14 @@ describe(`Visual tests: ${name}`, () => {
 
         await selectCustomPaginator.toggle();
         await dotsCustomStylingButton.hover();
-        await camera.say.cheese(`Menu with custom pageSizeSet is toggled and button is hovered`);
+        await camera.say.cheese(
+            `Menu with custom pageSizeSet is toggled and button is hovered`
+        );
 
         await customStylingPaginator.ellipsisLink(1).click();
         await camera.say.cheese(`Paginator's ellipsis-pages are shown`);
         await selectBasicPaginator.toggle();
-        
+
         await virtualScrollPaginator.ellipsisLink(1).click();
         await camera.say.cheese(`Paginator with virtual scroll is shown`);
         await virtualScrollPaginatorSelect.toggle();

@@ -1,13 +1,14 @@
 # FAQ
+
 ## What is Nova UI?
 
 Nova UI is the collection of design specs and developer tools that define an application's user experience. Nova UI is comprised of:
 
-* [Nova Design System](https://ux.solarwinds.io/design/)
-* Nova UI Framework
-  * [bits](../packages/bits/README.md)
-  * [charts](../packages/charts/README.md)
-  * [dashboards](../packages/dashboards/README.md)
+-   [Nova Design System](https://ux.solarwinds.io/design/)
+-   Nova UI Framework
+    -   [bits](../packages/bits/README.md)
+    -   [charts](../packages/charts/README.md)
+    -   [dashboards](../packages/dashboards/README.md)
 
 ## What's the Nova Design System?
 
@@ -23,12 +24,12 @@ Please create an issue using the GitHub [issue portal](https://github.com/solarw
 
 ## What Browsers are supported by Nova UI?
 
-| Browser         | Notes                                |
-| -----------     | -----------                          |
-| Google Chrome   | last 2 versions at time of release   |
-| Mozilla Firefox | last 2 versions at time of release   |
-| Microsoft Edge  | last 2 versions at time of release   |
-| Safari          | last 2 versions at time of release   |
+| Browser         | Notes                              |
+| --------------- | ---------------------------------- |
+| Google Chrome   | last 2 versions at time of release |
+| Mozilla Firefox | last 2 versions at time of release |
+| Microsoft Edge  | last 2 versions at time of release |
+| Safari          | last 2 versions at time of release |
 
 ## What's the best way to provide feedback on APIs?
 
@@ -54,10 +55,10 @@ Our ideas, understanding, and solutions to this problem are always evolving. To 
 
 If a component is marked as Beta on our API docs it essentially means the following:
 
-* We've built the component to UX specs
-* It meets our [Definition of Done](./DEFINITION_OF_DONE.md#definition-of-done), including comprehensive automation that's integrated into the build pipeline (unit, e2e and visual tests)
-* There are no major outstanding defects (though there could be some minor defects)
-* We've had little to no external feedback on the API
+-   We've built the component to UX specs
+-   It meets our [Definition of Done](./DEFINITION_OF_DONE.md#definition-of-done), including comprehensive automation that's integrated into the build pipeline (unit, e2e and visual tests)
+-   There are no major outstanding defects (though there could be some minor defects)
+-   We've had little to no external feedback on the API
 
 So, Beta is not an indication of the quality of the component, but rather an indication that we may have to eventually tweak the API based on new user feedback. However, once a component is marked Beta, we guarantee no API changes will be made until the next major version.
 
@@ -65,11 +66,11 @@ So, Beta is not an indication of the quality of the component, but rather an ind
 
 There are a number of factors that contribute to the calculus of defect priority, including:
 
-* Does the issue affect the user's ability to accomplish something or is it just cosmetic?
-* Is there an acceptable work-around?
-* Is the related work small or large?
-* Does the related work require API breaking changes?
-* Other priorities
+-   Does the issue affect the user's ability to accomplish something or is it just cosmetic?
+-   Is there an acceptable work-around?
+-   Is the related work small or large?
+-   Does the related work require API breaking changes?
+-   Other priorities
 
 ## Where can I find Nova UI releases/packages?
 

@@ -6,6 +6,4 @@ import { Component, ViewEncapsulation } from "@angular/core";
     styleUrls: ["overlay-test.example.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
-export class OverlayTestComponent {
-
-}
+export class OverlayTestComponent {}

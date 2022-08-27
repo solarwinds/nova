@@ -23,7 +23,7 @@
 // eslint-disable-next-line
 import "@angular/localize/init";
 import "core-js/es7/reflect";
-import "zone.js";  // Included with Angular CLI.
+import "zone.js"; // Included with Angular CLI.
 
 /** localize polyfill **/
 
@@ -42,13 +42,10 @@ import "zone.js";  // Included with Angular CLI.
 // (window as any).__Zone_disable_on_property = true; // disable patch onProperty such as onclick
 // (window as any).__zone_symbol__BLACK_LISTED_EVENTS = ['scroll', 'mousemove']; // disable patch specified eventNames
 
-
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
 // eslint-disable-next-line
-
-
 
 /***************************************************************************************************
  * APPLICATION IMPORTS

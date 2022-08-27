@@ -19,7 +19,9 @@ export class SpinnerWithDelayToggleExampleComponent implements OnDestroy {
     public startProgress() {
         this.clearInterval();
         this.interval = setInterval(() => {
-            this.spinPercentage < 100 ? this.spinPercentage += 10 : this.onCancel();
+            this.spinPercentage < 100
+                ? (this.spinPercentage += 10)
+                : this.onCancel();
         }, 500);
     }
 

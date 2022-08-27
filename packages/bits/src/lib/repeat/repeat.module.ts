@@ -1,13 +1,12 @@
-import {DragDropModule} from "@angular/cdk/drag-drop";
-import {ScrollingModule} from "@angular/cdk/scrolling";
-import {NgModule} from "@angular/core";
+import { DragDropModule } from "@angular/cdk/drag-drop";
+import { ScrollingModule } from "@angular/cdk/scrolling";
+import { NgModule } from "@angular/core";
 
-import {NuiCommonModule} from "../../common/common.module";
-import {NuiCheckboxModule} from "../checkbox/checkbox.module";
-import {NuiRadioModule} from "../radio/radio.module";
-
-import {RepeatItemComponent} from "./repeat-item/repeat-item.component";
-import {RepeatComponent} from "./repeat.component";
+import { NuiCommonModule } from "../../common/common.module";
+import { NuiCheckboxModule } from "../checkbox/checkbox.module";
+import { NuiRadioModule } from "../radio/radio.module";
+import { RepeatItemComponent } from "./repeat-item/repeat-item.component";
+import { RepeatComponent } from "./repeat.component";
 
 /**
  * @ignore
@@ -20,15 +19,8 @@ import {RepeatComponent} from "./repeat.component";
         ScrollingModule,
         DragDropModule,
     ],
-    declarations: [
-        RepeatComponent,
-        RepeatItemComponent,
-    ],
-    exports: [
-        RepeatComponent,
-        RepeatItemComponent,
-    ],
+    declarations: [RepeatComponent, RepeatItemComponent],
+    exports: [RepeatComponent, RepeatItemComponent],
     providers: [],
 })
-export class NuiRepeatModule {
-}
+export class NuiRepeatModule {}

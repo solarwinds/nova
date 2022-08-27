@@ -3,8 +3,8 @@ import { browser, by, element, ExpectedConditions } from "protractor";
 import { Atom } from "../../atom";
 import { TooltipAtom } from "../../directives/public_api";
 import { Helpers } from "../../helpers";
-import { ProgressAtom } from "../public_api";
 import { ButtonAtom } from "../button/button.atom";
+import { ProgressAtom } from "../public_api";
 
 describe("USERCONTROL progress", () => {
     let indeterminateProgress: ProgressAtom;

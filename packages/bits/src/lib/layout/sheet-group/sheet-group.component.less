@@ -30,8 +30,7 @@
         }
     }
 }
-:host-context(.nui-sheet-group--joined-sheets)
-:host {
+:host-context(.nui-sheet-group--joined-sheets) :host {
     &.nui-sheet-group--joined-sheets {
         box-shadow: none;
     }
@@ -41,15 +40,16 @@
     width: auto;
     height: auto;
 }
-:host-context(.nui-sheet-group--separate-sheets.sheet-group-direction-column>) {
+:host-context(.nui-sheet-group--separate-sheets.sheet-group-direction-column
+        >) {
     .nui-sheet-group-margin--column();
 }
-:host-context(.nui-sheet-group--separate-sheets.sheet-group-direction-row>) {
+:host-context(.nui-sheet-group--separate-sheets.sheet-group-direction-row >) {
     .nui-sheet-group-margin--row();
 }
-:host-context(.nui-sheet-group--joined-sheets.sheet-group-direction-column>) {
+:host-context(.nui-sheet-group--joined-sheets.sheet-group-direction-column >) {
     .nui-sheet-group-border--column();
 }
-:host-context(.nui-sheet-group--joined-sheets.sheet-group-direction-row>) {
+:host-context(.nui-sheet-group--joined-sheets.sheet-group-direction-row >) {
     .nui-sheet-group-border--row();
 }

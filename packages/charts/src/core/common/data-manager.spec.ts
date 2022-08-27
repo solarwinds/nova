@@ -1,7 +1,6 @@
 import { LineAccessors } from "../../renderers/line/line-accessors";
 import { LineRenderer } from "../../renderers/line/line-renderer";
 import { RenderState } from "../../renderers/types";
-
 import { DataManager } from "./data-manager";
 import { LinearScale } from "./scales/linear-scale";
 import { IAccessors, IChartSeries } from "./types";
@@ -12,7 +11,7 @@ describe("data manager", () => {
     let xScale: LinearScale;
 
     beforeEach(() => {
-        dataManager = new DataManager({ } as any);
+        dataManager = new DataManager({} as any);
 
         xScale = new LinearScale();
 
@@ -50,7 +49,6 @@ describe("data manager", () => {
                 accessors: new LineAccessors(),
             },
         ];
-
     });
 
     it("doesn't recalculate fixed domain", () => {
@@ -70,12 +68,11 @@ describe("data manager", () => {
         expect(xScale.domain()).toEqual([1, 10]);
     });
 
-    it("doesn't include hidden series in the domain calculation", ()=> {
+    it("doesn't include hidden series in the domain calculation", () => {
         seriesSet[0].renderState = RenderState.hidden;
         dataManager.update(seriesSet);
         dataManager.updateScaleDomains();
 
         expect(xScale.domain()).toEqual([6, 10]);
     });
-
 });

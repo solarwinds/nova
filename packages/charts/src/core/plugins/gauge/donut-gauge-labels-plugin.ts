@@ -5,16 +5,27 @@ import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { DATA_POINT_NOT_FOUND, INTERACTION_DATA_POINTS_EVENT, STANDARD_RENDER_LAYERS } from "../../../constants";
+import {
+    DATA_POINT_NOT_FOUND,
+    INTERACTION_DATA_POINTS_EVENT,
+    STANDARD_RENDER_LAYERS,
+} from "../../../constants";
 import { DonutGaugeRenderingUtil } from "../../../renderers/radial/gauge/donut-gauge-rendering-util";
 import { DonutGaugeThresholdsRenderer } from "../../../renderers/radial/gauge/donut-gauge-thresholds-renderer";
 import { RenderLayerName } from "../../../renderers/types";
 import { ChartPlugin } from "../../common/chart-plugin";
-import { D3Selection, IAccessors, IChartEvent, IChartSeries } from "../../common/types";
-
-import { GAUGE_LABELS_CONTAINER_CLASS, GAUGE_LABEL_FORMATTER_NAME_DEFAULT, GAUGE_THRESHOLD_LABEL_CLASS } from "./constants";
+import {
+    D3Selection,
+    IAccessors,
+    IChartEvent,
+    IChartSeries,
+} from "../../common/types";
+import {
+    GAUGE_LABELS_CONTAINER_CLASS,
+    GAUGE_LABEL_FORMATTER_NAME_DEFAULT,
+    GAUGE_THRESHOLD_LABEL_CLASS,
+} from "./constants";
 import { IGaugeLabelsPluginConfig } from "./types";
-
 
 /**
  * A chart plugin that handles the rendering of labels for a donut gauge
@@ -44,16 +55,25 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
             clipped: false,
         });
 
-        this.chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT as string).pipe(
-            takeUntil(this.destroy$)
-        ).subscribe((event: IChartEvent) => {
-            const gaugeThresholdLabelsGroup = this.lasagnaLayer.select(`.${GAUGE_LABELS_CONTAINER_CLASS}`);
-            if (!gaugeThresholdLabelsGroup.empty()) {
-                const dataPoints = event.data.dataPoints;
-                const labelOpacity = Object.keys(dataPoints).find((key, index) => dataPoints[key].index === DATA_POINT_NOT_FOUND) ? 0 : 1;
-                gaugeThresholdLabelsGroup.style("opacity", labelOpacity);
-            }
-        });
+        this.chart
+            .getEventBus()
+            .getStream(INTERACTION_DATA_POINTS_EVENT as string)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((event: IChartEvent) => {
+                const gaugeThresholdLabelsGroup = this.lasagnaLayer.select(
+                    `.${GAUGE_LABELS_CONTAINER_CLASS}`
+                );
+                if (!gaugeThresholdLabelsGroup.empty()) {
+                    const dataPoints = event.data.dataPoints;
+                    const labelOpacity = Object.keys(dataPoints).find(
+                        (key, index) =>
+                            dataPoints[key].index === DATA_POINT_NOT_FOUND
+                    )
+                        ? 0
+                        : 1;
+                    gaugeThresholdLabelsGroup.style("opacity", labelOpacity);
+                }
+            });
     }
 
     public update(): void {
@@ -72,23 +92,37 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
     }
 
     private drawThresholdLabels() {
-        const thresholdsSeries = this.chart.getDataManager().chartSeriesSet.find((series: IChartSeries<IAccessors<any>>) =>
-            series.renderer instanceof DonutGaugeThresholdsRenderer);
+        const thresholdsSeries = this.chart
+            .getDataManager()
+            .chartSeriesSet.find(
+                (series: IChartSeries<IAccessors<any>>) =>
+                    series.renderer instanceof DonutGaugeThresholdsRenderer
+            );
 
         if (isUndefined(thresholdsSeries)) {
-            console.warn("Threshold series is undefined. As a result, threshold labels for the donut gauge will not be rendered.");
+            console.warn(
+                "Threshold series is undefined. As a result, threshold labels for the donut gauge will not be rendered."
+            );
             return;
         }
 
-        let gaugeThresholdsLabelsGroup = this.lasagnaLayer.select(`.${GAUGE_LABELS_CONTAINER_CLASS}`);
+        let gaugeThresholdsLabelsGroup = this.lasagnaLayer.select(
+            `.${GAUGE_LABELS_CONTAINER_CLASS}`
+        );
         if (gaugeThresholdsLabelsGroup.empty()) {
-            gaugeThresholdsLabelsGroup = this.lasagnaLayer.append("svg:g")
+            gaugeThresholdsLabelsGroup = this.lasagnaLayer
+                .append("svg:g")
                 .attr("class", GAUGE_LABELS_CONTAINER_CLASS)
                 .style("opacity", 0);
         }
 
-        const renderer = (thresholdsSeries?.renderer as DonutGaugeThresholdsRenderer);
-        const labelRadius = renderer?.getOuterRadius(thresholdsSeries?.scales.r.range() ?? [0, 0], 0) + (this.config.padding as number);
+        const renderer =
+            thresholdsSeries?.renderer as DonutGaugeThresholdsRenderer;
+        const labelRadius =
+            renderer?.getOuterRadius(
+                thresholdsSeries?.scales.r.range() ?? [0, 0],
+                0
+            ) + (this.config.padding as number);
         if (isUndefined(labelRadius)) {
             throw new Error("Radius is undefined");
         }
@@ -97,9 +131,14 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
             .outerRadius(labelRadius)
             .innerRadius(labelRadius);
 
-        const formatter = thresholdsSeries?.scales.r.formatters[this.config.formatterName as string] ?? (d => d);
+        const formatter =
+            thresholdsSeries?.scales.r.formatters[
+                this.config.formatterName as string
+            ] ?? ((d) => d);
 
-        const data = cloneDeep(this.config.disableThresholdLabels ? [] : thresholdsSeries?.data);
+        const data = cloneDeep(
+            this.config.disableThresholdLabels ? [] : thresholdsSeries?.data
+        );
         if (isUndefined(data)) {
             throw new Error("Gauge threshold series data is undefined");
         }
@@ -107,17 +146,24 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
         // ensure the data is sorted in ascending order by value since we're using it to calculate circle arcs
         data.sort((a, b) => a.value - b.value);
 
-        const labelSelection = gaugeThresholdsLabelsGroup.selectAll(`text.${GAUGE_THRESHOLD_LABEL_CLASS}`)
+        const labelSelection = gaugeThresholdsLabelsGroup
+            .selectAll(`text.${GAUGE_THRESHOLD_LABEL_CLASS}`)
             .data(DonutGaugeRenderingUtil.generateThresholdArcData(data));
         labelSelection.exit().remove();
-        labelSelection.enter()
+        labelSelection
+            .enter()
             .append("text")
             .attr("class", GAUGE_THRESHOLD_LABEL_CLASS)
             .merge(labelSelection as any)
-            .attr("transform", (d) => `translate(${labelGenerator.centroid(d)})`)
+            .attr(
+                "transform",
+                (d) => `translate(${labelGenerator.centroid(d)})`
+            )
             .attr("title", (d, i) => formatter(data[i].value))
             .style("text-anchor", (d) => this.getTextAnchor(d.startAngle))
-            .style("dominant-baseline", (d) => this.getAlignmentBaseline(d.startAngle))
+            .style("dominant-baseline", (d) =>
+                this.getAlignmentBaseline(d.startAngle)
+            )
             .text((d, i) => formatter(data[i].value));
     }
 

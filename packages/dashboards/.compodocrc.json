@@ -1,23 +1,23 @@
 {
-  "navTabConfig": [
-    {
-      "id": "example",
-      "label": "Overview"
-    },
-    {
-      "id": "info",
-      "label": "API"
-    },
-    {
-      "id": "source",
-      "label": "Source"
-    }
-  ],
-  "tsconfig": "tsconfig.lib.json",
-  "output":"sdk/api-docs-ng2",
-  "includes": "src/docs/production",
-  "hideGenerator":"true",
-  "disablePrivate": "true",
-  "disableProtected": "true",
-  "disableLifeCycleHooks": "true"
+    "disableLifeCycleHooks": "true",
+    "disablePrivate": "true",
+    "disableProtected": "true",
+    "hideGenerator": "true",
+    "includes": "src/docs/production",
+    "navTabConfig": [
+        {
+            "id": "example",
+            "label": "Overview"
+        },
+        {
+            "id": "info",
+            "label": "API"
+        },
+        {
+            "id": "source",
+            "label": "Source"
+        }
+    ],
+    "output": "sdk/api-docs-ng2",
+    "tsconfig": "tsconfig.lib.json"
 }

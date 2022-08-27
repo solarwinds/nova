@@ -2,7 +2,6 @@ import { ConnectedPosition } from "@angular/cdk/overlay";
 import { Injectable } from "@angular/core";
 
 import { OVERLAY_ARROW_SIZE } from "../overlay/constants";
-
 import { PopoverOverlayPosition, PopoverPlacement } from "./public-api";
 
 enum PopoverOverlayPlacement {
@@ -25,14 +24,20 @@ enum PanelClass {
 
 @Injectable()
 export class PopoverPositionService {
-
-    private readonly popoverPositions: Record<PopoverOverlayPosition, ConnectedPosition>;
+    private readonly popoverPositions: Record<
+        PopoverOverlayPosition,
+        ConnectedPosition
+    >;
 
     constructor() {
         this.popoverPositions = getPopoverPositions();
     }
 
-    public setPopoverOffset(panelClass: string | string[], elRefHeight: number, overlayRefElement: HTMLElement) {
+    public setPopoverOffset(
+        panelClass: string | string[],
+        elRefHeight: number,
+        overlayRefElement: HTMLElement
+    ) {
         const ARROW_SIZE = OVERLAY_ARROW_SIZE;
         const popoverOffsetY = this.calculateOffsetY(elRefHeight);
 
@@ -85,28 +90,38 @@ export class PopoverPositionService {
         }
     }
 
-    public possiblePositionsForPlacement(placement: PopoverPlacement): ConnectedPosition[] {
+    public possiblePositionsForPlacement(
+        placement: PopoverPlacement
+    ): ConnectedPosition[] {
         const possiblePositions: ConnectedPosition[] = [];
 
         switch (placement) {
             case PopoverOverlayPlacement.Left:
                 possiblePositions.push(
-                    ...this.getPositionsForPlacement(PopoverOverlayPlacement.Left)
+                    ...this.getPositionsForPlacement(
+                        PopoverOverlayPlacement.Left
+                    )
                 );
                 break;
             case PopoverOverlayPlacement.Right:
                 possiblePositions.push(
-                    ...this.getPositionsForPlacement(PopoverOverlayPlacement.Right)
+                    ...this.getPositionsForPlacement(
+                        PopoverOverlayPlacement.Right
+                    )
                 );
                 break;
             case PopoverOverlayPlacement.Top:
                 possiblePositions.push(
-                    ...this.getPositionsForPlacement(PopoverOverlayPlacement.Top)
+                    ...this.getPositionsForPlacement(
+                        PopoverOverlayPlacement.Top
+                    )
                 );
                 break;
             case PopoverOverlayPlacement.Bottom:
                 possiblePositions.push(
-                    ...this.getPositionsForPlacement(PopoverOverlayPlacement.Bottom)
+                    ...this.getPositionsForPlacement(
+                        PopoverOverlayPlacement.Bottom
+                    )
                 );
                 break;
         }
@@ -114,8 +129,13 @@ export class PopoverPositionService {
         return possiblePositions;
     }
 
-    public getConnectedPositions(positions: PopoverOverlayPosition[]): ConnectedPosition[] {
-        return positions.map((positionName: PopoverOverlayPosition) => this.popoverPositions[positionName]);
+    public getConnectedPositions(
+        positions: PopoverOverlayPosition[]
+    ): ConnectedPosition[] {
+        return positions.map(
+            (positionName: PopoverOverlayPosition) =>
+                this.popoverPositions[positionName]
+        );
     }
 
     /**
@@ -125,7 +145,9 @@ export class PopoverPositionService {
      * @param placement
      * @returns ConnectedPosition[]
      */
-    private getPositionsForPlacement(placement: PopoverOverlayPlacement): ConnectedPosition[] {
+    private getPositionsForPlacement(
+        placement: PopoverOverlayPlacement
+    ): ConnectedPosition[] {
         let possiblePositionNames: PopoverOverlayPosition[] = [];
         switch (placement) {
             case PopoverOverlayPlacement.Left:
@@ -172,7 +194,7 @@ export class PopoverPositionService {
         let result;
         for (const panelClassKey in PanelClass) {
             if (PanelClass.hasOwnProperty(panelClassKey)) {
-                result = panelClass.find(i => i === panelClassKey);
+                result = panelClass.find((i) => i === panelClassKey);
             }
         }
         return result || "";
@@ -187,7 +209,10 @@ export class PopoverPositionService {
     }
 }
 
-export function getPopoverPositions(): Record<PopoverOverlayPosition, ConnectedPosition> {
+export function getPopoverPositions(): Record<
+    PopoverOverlayPosition,
+    ConnectedPosition
+> {
     return {
         [PopoverOverlayPosition.topLeft]: {
             panelClass: "overlay-top-left",

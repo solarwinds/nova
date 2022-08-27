@@ -1,10 +1,5 @@
-import {
-    Component,
-    EventEmitter,
-    Inject,
-    Input,
-    Output,
-} from "@angular/core";
+import { Component, EventEmitter, Inject, Input, Output } from "@angular/core";
+
 import { ISelection, NuiActiveDialog, SelectorService } from "@nova-ui/bits";
 
 import { IFilterGroupOption } from "../public-api";
@@ -21,7 +16,10 @@ export class FilterGroupDialogComponent {
 
     @Output() dialogClosed: EventEmitter<string[]> = new EventEmitter();
 
-    constructor(@Inject(NuiActiveDialog) private activeDialog: NuiActiveDialog, private selectorService: SelectorService) {}
+    constructor(
+        @Inject(NuiActiveDialog) private activeDialog: NuiActiveDialog,
+        private selectorService: SelectorService
+    ) {}
 
     public acceptDialogFilters() {
         this.dialogClosed.emit(this.selectedValues);
@@ -33,7 +31,10 @@ export class FilterGroupDialogComponent {
     }
 
     public onSelectionChanged(selection: ISelection) {
-        const selectedOptions = this.selectorService.getSelectedItems(selection, this.itemPickerOptions);
+        const selectedOptions = this.selectorService.getSelectedItems(
+            selection,
+            this.itemPickerOptions
+        );
         this.selectedValues = selectedOptions.map((item) => item.value);
     }
 }

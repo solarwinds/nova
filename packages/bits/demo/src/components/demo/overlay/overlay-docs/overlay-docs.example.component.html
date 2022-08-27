@@ -1,17 +1,26 @@
 <p>
-    <code>&lt;nui-overlay&gt;</code> is a base component for the most of dropdown-like Nova components, but this doesn't limit it's abilities.
-    It allows you to put any content into it's body to build more complex and exciting components. <br><br>
+    <code>&lt;nui-overlay&gt;</code> is a base component for the most of
+    dropdown-like Nova components, but this doesn't limit it's abilities. It
+    allows you to put any content into it's body to build more complex and
+    exciting components. <br /><br />
 
-    How <code>nui-overlay</code> is different from the legacy <code>nui-popup</code>? The <code>nui-overlay</code> it is built using the modern and powerful
-    <code>CDK Overlay</code> kindly provided, and well supported by <code>Angular CDK</code> team. It provides a better flexibility, customization,
-    and in general is extremely easy to use.
+    How <code>nui-overlay</code> is different from the legacy
+    <code>nui-popup</code>? The <code>nui-overlay</code> it is built using the
+    modern and powerful <code>CDK Overlay</code> kindly provided, and well
+    supported by <code>Angular CDK</code> team. It provides a better
+    flexibility, customization, and in general is extremely easy to use.
 </p>
 <nui-message [allowDismiss]="false" type="warning">
-    <strong>Pay attention!</strong> The following examples demonstrate only basic scenarios. To get familiar with more complex use cases, you can refer to
-    the documentation for components built on top of the <code>nui-overlay</code>, such as
-    <a href="../components/ComboboxV2Component.html#example" target="_blank">nui-combobox-v2</a>,
-    <a href="../components/SelectV2Component.html#example" target="_blank">nui-select-v2</a>, etc.,
-    and explore their internal structure in the codebase.
+    <strong>Pay attention!</strong> The following examples demonstrate only
+    basic scenarios. To get familiar with more complex use cases, you can refer
+    to the documentation for components built on top of the
+    <code>nui-overlay</code>, such as
+    <a href="../components/ComboboxV2Component.html#example" target="_blank"
+        >nui-combobox-v2</a
+    >,
+    <a href="../components/SelectV2Component.html#example" target="_blank"
+        >nui-select-v2</a
+    >, etc., and explore their internal structure in the codebase.
 </nui-message>
 
 <!-- ------------------------------------------------------------------------------------------- -->
@@ -24,31 +33,47 @@
 
 <h2>Basic Usage</h2>
 <p>
-    A simple popup can be added to the page by adding a <code>&lt;nui-overlay&gt;</code> element.
-    Inside the <code>nui-overlay</code> element put anything you see as its content. Then define an element which will be a toggle for the
-    <code>nui-overlay</code> at the same level, and sent it as a reference to the popup's <code>toggleReference</code> @Input. That is it!
+    A simple popup can be added to the page by adding a
+    <code>&lt;nui-overlay&gt;</code> element. Inside the
+    <code>nui-overlay</code> element put anything you see as its content. Then
+    define an element which will be a toggle for the <code>nui-overlay</code> at
+    the same level, and sent it as a reference to the popup's
+    <code>toggleReference</code> @Input. That is it!
 
     <nui-message type="info">
-        By default, <code>nui-overlay</code> can be closed only by toggling it via its <code>toggleReference</code> component, which means
-        it won't close if click evens are triggered anywhere else on the page. Meaning this, it is recommended to subscribe to the popup's
-        <code>clickOutside</code> @Output and close the nui-overlay using it's public <code>toggle()</code> method.
+        By default, <code>nui-overlay</code> can be closed only by toggling it
+        via its <code>toggleReference</code> component, which means it won't
+        close if click evens are triggered anywhere else on the page. Meaning
+        this, it is recommended to subscribe to the popup's
+        <code>clickOutside</code> @Output and close the nui-overlay using it's
+        public <code>toggle()</code> method.
     </nui-message>
 </p>
-<nui-example-wrapper filenamePrefix="overlay-simple-usage.example" exampleTitle="Basic Usage">
+<nui-example-wrapper
+    filenamePrefix="overlay-simple-usage.example"
+    exampleTitle="Basic Usage"
+>
     <nui-overlay-simple-usage-example></nui-overlay-simple-usage-example>
 </nui-example-wrapper>
 
 <!-- ------------------------------------------------------------------------------------------- -->
 <h2>Using with popup styles</h2>
 <p>
-    By default, overlay doesn't have a specific styling. You can apply popup styles to the basic overlay component.
-    It includes such properties as <code>paddings</code>, <code>background-color</code> etc.
+    By default, overlay doesn't have a specific styling. You can apply popup
+    styles to the basic overlay component. It includes such properties as
+    <code>paddings</code>, <code>background-color</code> etc.
 </p>
 <p>
-    To do that, you have to pass <code>"with-popup-styles"</code> class as a <code>panelClass</code> for the <code>overlayConfig</code>.
-    You can import <code>OVERLAY_WITH_POPUP_STYLES_CLASS</code> from <code>@nova-ui/bits</code> or just pass <code>"with-popup-styles"</code> as a string.
+    To do that, you have to pass <code>"with-popup-styles"</code> class as a
+    <code>panelClass</code> for the <code>overlayConfig</code>. You can import
+    <code>OVERLAY_WITH_POPUP_STYLES_CLASS</code> from
+    <code>@nova-ui/bits</code> or just pass <code>"with-popup-styles"</code> as
+    a string.
 </p>
-<nui-example-wrapper filenamePrefix="overlay-popup-styles.example" exampleTitle="Using with popup styles">
+<nui-example-wrapper
+    filenamePrefix="overlay-popup-styles.example"
+    exampleTitle="Using with popup styles"
+>
     <nui-overlay-popup-styles-example></nui-overlay-popup-styles-example>
 </nui-example-wrapper>
 
@@ -56,21 +81,31 @@
 
 <h2>Overlay Configuration</h2>
 <p>
-    <code>nui-overlay</code> has all the benefits the <code>Angular CDK Overlay</code> provides, including a rich and flexible configuration.
-    Use <code>overlayConfig</code> @Input of the component and follow the interface to configure the overlay to your likings. Please also reference
-    the <a href="https://material.angular.io/cdk/overlay/api#OverlayConfig"> official Angular CDK documentation</a> to see more information on how to configure the overlay.
+    <code>nui-overlay</code> has all the benefits the
+    <code>Angular CDK Overlay</code> provides, including a rich and flexible
+    configuration. Use <code>overlayConfig</code> @Input of the component and
+    follow the interface to configure the overlay to your likings. Please also
+    reference the
+    <a href="https://material.angular.io/cdk/overlay/api#OverlayConfig">
+        official Angular CDK documentation</a
+    >
+    to see more information on how to configure the overlay.
 </p>
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
 <h2>Viewport Margin</h2>
 <p>
-    You can easily manage edges of the container using <code>viewportMargin</code> input.
-    It sets a minimum distance in px the overlay may be positioned to the edge of the viewport.
-    Default value of <code>viewportMargin</code> is 30px.
+    You can easily manage edges of the container using
+    <code>viewportMargin</code> input. It sets a minimum distance in px the
+    overlay may be positioned to the edge of the viewport. Default value of
+    <code>viewportMargin</code> is 30px.
 </p>
 
-<nui-example-wrapper filenamePrefix="overlay-viewport-margin.example" exampleTitle="Viewport Margin Example">
+<nui-example-wrapper
+    filenamePrefix="overlay-viewport-margin.example"
+    exampleTitle="Viewport Margin Example"
+>
     <nui-overlay-viewport-margin-example></nui-overlay-viewport-margin-example>
 </nui-example-wrapper>
 
@@ -78,17 +113,26 @@
 
 <h2>Toggle Types</h2>
 <p>
-    Not only the <code>toggleReference</code> is bale to show the <code>nui-overlay</code> up. The popover can be toggled with any other clickable element on the page.
-    The public methods responsible for this are quite self-descriptive: <code>show()</code> will only pop the popup up, <code>hide()</code> will hide the popup from the view, and
-    <code>toggle()</code> will do both. This adds a flexibiility on how you want your popup-ve to get toggled.
+    Not only the <code>toggleReference</code> is bale to show the
+    <code>nui-overlay</code> up. The popover can be toggled with any other
+    clickable element on the page. The public methods responsible for this are
+    quite self-descriptive: <code>show()</code> will only pop the popup up,
+    <code>hide()</code> will hide the popup from the view, and
+    <code>toggle()</code> will do both. This adds a flexibiility on how you want
+    your popup-ve to get toggled.
 </p>
 
 <nui-message type="info">
-    Notice below how <code>nui-overlay</code> is not closed if you click outside of its <code>toggleReference</code>. This is because we do not subscribe to its
-    <code>clickOutside</code> @Output, and so we are only able to close the popup via a specific button, like <code>Hide</code>, or <code>Toggle</code>.
+    Notice below how <code>nui-overlay</code> is not closed if you click outside
+    of its <code>toggleReference</code>. This is because we do not subscribe to
+    its <code>clickOutside</code> @Output, and so we are only able to close the
+    popup via a specific button, like <code>Hide</code>, or <code>Toggle</code>.
 </nui-message>
 
-<nui-example-wrapper filenamePrefix="overlay-show-hide-toggle.example" exampleTitle="Types of Overlay component Toggle">
+<nui-example-wrapper
+    filenamePrefix="overlay-show-hide-toggle.example"
+    exampleTitle="Types of Overlay component Toggle"
+>
     <nui-overlay-show-hide-toggle-example></nui-overlay-show-hide-toggle-example>
 </nui-example-wrapper>
 
@@ -96,11 +140,16 @@
 
 <h2>Custom Styles</h2>
 <p>
-    In case tweaking the <code>nui-overlay</code> overlay styles via the <code>overlayConfig</code> was not enough, and brute force is needed, one can use the
-    <code>styles</code> @Input to pass in the object with the inline styles to throw into the overlay.
+    In case tweaking the <code>nui-overlay</code> overlay styles via the
+    <code>overlayConfig</code> was not enough, and brute force is needed, one
+    can use the <code>styles</code> @Input to pass in the object with the inline
+    styles to throw into the overlay.
 </p>
 
-<nui-example-wrapper filenamePrefix="overlay-custom-styles.example" exampleTitle="Custom Styles Example">
+<nui-example-wrapper
+    filenamePrefix="overlay-custom-styles.example"
+    exampleTitle="Custom Styles Example"
+>
     <nui-overlay-custom-styles-example></nui-overlay-custom-styles-example>
 </nui-example-wrapper>
 
@@ -108,12 +157,19 @@
 
 <h2>Custom Container</h2>
 <p>
-    By default, the <code>nui-overlay</code> container appends to body. This is a default behavior suggested by the angular material cdk overlay. But there are cases when
-    it is necessary to have overlay container append to some custom container. It is possible to attache the popup container to any custom container by simply providing
-    either a <code>selector</code>, or an <code>element reference</code> to the <code>customContainer</code> @Input. See two ways of doing that in the example below.
+    By default, the <code>nui-overlay</code> container appends to body. This is
+    a default behavior suggested by the angular material cdk overlay. But there
+    are cases when it is necessary to have overlay container append to some
+    custom container. It is possible to attache the popup container to any
+    custom container by simply providing either a <code>selector</code>, or an
+    <code>element reference</code> to the <code>customContainer</code> @Input.
+    See two ways of doing that in the example below.
 </p>
 
-<nui-example-wrapper filenamePrefix="overlay-custom-container.example" exampleTitle="Custom Container Example">
+<nui-example-wrapper
+    filenamePrefix="overlay-custom-container.example"
+    exampleTitle="Custom Container Example"
+>
     <nui-overlay-custom-container-example></nui-overlay-custom-container-example>
 </nui-example-wrapper>
 
@@ -121,64 +177,105 @@
 
 <h2>Positioning and Arrow</h2>
 <p>
-    By default, <code>&lt;nui-overlay&gt;</code> can be opened <code>top</code> or <code>bottom</code>.
+    By default, <code>&lt;nui-overlay&gt;</code> can be opened
+    <code>top</code> or <code>bottom</code>.
 </p>
 <p>
-    It's possible to apply custom positioning to the <code>&lt;nui-overlay&gt;</code>.
-    For that, use <a href="../../classes/OverlayPositionService.html" target="_blank">OverlayPositionService</a> (see usage in the example).
-    It returns a set of available positions prioritizing them e.g. for <code>top</code> it will be: <code>top</code>, <code>bottom</code>, <code>left</code>, <code>right</code>.
+    It's possible to apply custom positioning to the
+    <code>&lt;nui-overlay&gt;</code>. For that, use
+    <a href="../../classes/OverlayPositionService.html" target="_blank"
+        >OverlayPositionService</a
+    >
+    (see usage in the example). It returns a set of available positions
+    prioritizing them e.g. for <code>top</code> it will be: <code>top</code>,
+    <code>bottom</code>, <code>left</code>, <code>right</code>.
 </p>
 <p>
-    Also, <code>&lt;nui-overlay&gt;</code> support using arrow at the edge of the overlay that points to the toggle reference.
-    To use that, you need to put <code>&lt;nui-overlay-arrow&gt;</code> inside the <code>&lt;nui-overlay&gt;</code> (as in the example).
+    Also, <code>&lt;nui-overlay&gt;</code> support using arrow at the edge of
+    the overlay that points to the toggle reference. To use that, you need to
+    put <code>&lt;nui-overlay-arrow&gt;</code> inside the
+    <code>&lt;nui-overlay&gt;</code> (as in the example).
 </p>
 <p>
-    Arrow positioning uses specific CSS classes that are added automatically if using <a href="../../classes/OverlayPositionService.html" target="_blank">OverlayPositionService</a>.
-    So, to use arrow inside the overlay you need to get a set of available positions with OverlayPositionService, pass them to the overlay component (see example)
-    and put <code>&lt;nui-overlay-arrow&gt;</code> inside the <code>&lt;nui-overlay&gt;</code> template.
+    Arrow positioning uses specific CSS classes that are added automatically if
+    using
+    <a href="../../classes/OverlayPositionService.html" target="_blank"
+        >OverlayPositionService</a
+    >. So, to use arrow inside the overlay you need to get a set of available
+    positions with OverlayPositionService, pass them to the overlay component
+    (see example) and put <code>&lt;nui-overlay-arrow&gt;</code> inside the
+    <code>&lt;nui-overlay&gt;</code> template.
 </p>
 <p>
-    <strong>Drag the toggle to the edges of the viewport to see how it behaves.</strong>
+    <strong
+        >Drag the toggle to the edges of the viewport to see how it
+        behaves.</strong
+    >
 </p>
 
-<nui-example-wrapper filenamePrefix="overlay-arrow.example" exampleTitle="Positioning and Arrow">
+<nui-example-wrapper
+    filenamePrefix="overlay-arrow.example"
+    exampleTitle="Positioning and Arrow"
+>
     <nui-overlay-arrow-example></nui-overlay-arrow-example>
 </nui-example-wrapper>
 
 <!-- ------------------------------------------------------------------------------------------- -->
 <h2>Setting Up Scrollable Containers</h2>
 <p>
-    By default, <code>cdk-overlay</code> reacts on <code>document</code> scroll events, but there are numerous cases when multiple scrollable containers on the
-    page are possible, or the scrollable container appears is a different place in the DOM, e.g. inside the appended to body overlay container. In
-    this case it is advised to set the <code><a href="https://material.angular.io/cdk/scrolling/api#CdkScrollable" target="_blank">cdkScrollable</a></code> directive
-    to the container considered scrollable.
+    By default, <code>cdk-overlay</code> reacts on <code>document</code> scroll
+    events, but there are numerous cases when multiple scrollable containers on
+    the page are possible, or the scrollable container appears is a different
+    place in the DOM, e.g. inside the appended to body overlay container. In
+    this case it is advised to set the
+    <code
+        ><a
+            href="https://material.angular.io/cdk/scrolling/api#CdkScrollable"
+            target="_blank"
+            >cdkScrollable</a
+        ></code
+    >
+    directive to the container considered scrollable.
 </p>
 <!-- ------------------------------------------------------------------------------------------- -->
 
 <h2>Custom Dialog Overlay</h2>
 <p>
-    There are numerous cases when a user would want a lightweight dialog-looking overlay placed over the parent container
-    to quickly confirm things, or make sure a users are immediately informed about any sort of state, progress etc. This can be
-    done fast and easily with <code>nui-overlay</code> component with a few lines of code involved. By default, the <code>nui-overlay</code>
-    position strategy is configured to attach the created cdk overlay to the bottom-left corner of the toggle reference, so it could be easily used
-    for the most common use cases - selects, menus, comboboxes etc. To fill the parent container with the overlay we need to set new positions,
-    so that the overlay would be attached to the top-left corner of the toggle reference container. Afterwards, all we need is toggle the overlay
-    and using its overlay reference adjust the size of the overlay to the dimensions of the toggle reference container. And that's it! Please check
-    the comments in the code snippets below.
+    There are numerous cases when a user would want a lightweight dialog-looking
+    overlay placed over the parent container to quickly confirm things, or make
+    sure a users are immediately informed about any sort of state, progress etc.
+    This can be done fast and easily with <code>nui-overlay</code> component
+    with a few lines of code involved. By default, the <code>nui-overlay</code>
+    position strategy is configured to attach the created cdk overlay to the
+    bottom-left corner of the toggle reference, so it could be easily used for
+    the most common use cases - selects, menus, comboboxes etc. To fill the
+    parent container with the overlay we need to set new positions, so that the
+    overlay would be attached to the top-left corner of the toggle reference
+    container. Afterwards, all we need is toggle the overlay and using its
+    overlay reference adjust the size of the overlay to the dimensions of the
+    toggle reference container. And that's it! Please check the comments in the
+    code snippets below.
 </p>
 
-<nui-example-wrapper filenamePrefix="overlay-custom-dialog" exampleTitle="Custom Dialog Overlay">
+<nui-example-wrapper
+    filenamePrefix="overlay-custom-dialog"
+    exampleTitle="Custom Dialog Overlay"
+>
     <nui-overlay-custom-dialog></nui-overlay-custom-dialog>
 </nui-example-wrapper>
 <!-- ------------------------------------------------------------------------------------------- -->
 
 <h2>Custom Dialog Overlay Inside the nui-dialog</h2>
 <p>
-    This is yet another use case of the dialog-like overlay, this time inside the <code>nui-dialog</code> component.
-    Click the button in the exampel below and attempt to cancel the dialog.
+    This is yet another use case of the dialog-like overlay, this time inside
+    the <code>nui-dialog</code> component. Click the button in the exampel below
+    and attempt to cancel the dialog.
 </p>
 
-<nui-example-wrapper filenamePrefix="custom-confirmation-inside-dialog" exampleTitle="Custom Overlay Dialog inside the nui-dialog">
+<nui-example-wrapper
+    filenamePrefix="custom-confirmation-inside-dialog"
+    exampleTitle="Custom Overlay Dialog inside the nui-dialog"
+>
     <nui-custom-confirmation-inside-dialog></nui-custom-confirmation-inside-dialog>
 </nui-example-wrapper>
 <!-- ------------------------------------------------------------------------------------------- -->

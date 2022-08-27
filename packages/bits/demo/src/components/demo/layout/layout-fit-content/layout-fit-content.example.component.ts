@@ -5,6 +5,4 @@ import { Component } from "@angular/core";
     templateUrl: "./layout-fit-content.example.component.html",
     styleUrls: ["./layout-fit-content.example.component.less"],
 })
-export class LayoutFitContentComponent {
-
-}
+export class LayoutFitContentComponent {}

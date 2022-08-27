@@ -12,19 +12,18 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [
-                    CheckboxComponent,
-                ],
+                declarations: [CheckboxComponent],
                 schemas: [CUSTOM_ELEMENTS_SCHEMA],
             });
 
             fixture = TestBed.createComponent(CheckboxComponent);
             subject = fixture.componentInstance;
-            checkboxInput = fixture.debugElement.query(By.css(".nui-checkbox__input")).nativeElement;
+            checkboxInput = fixture.debugElement.query(
+                By.css(".nui-checkbox__input")
+            ).nativeElement;
         });
 
         describe("default >", () => {
-
             it("should be created", () => {
                 expect(subject).toBeTruthy();
             });
@@ -41,12 +40,13 @@ describe("components >", () => {
             it("should help hint be displayed", () => {
                 subject.hint = "Some Useful Help Hint";
                 fixture.detectChanges();
-                expect(fixture.nativeElement.textContent).toContain(subject.hint);
+                expect(fixture.nativeElement.textContent).toContain(
+                    subject.hint
+                );
             });
         });
 
         describe("output handling logic >", () => {
-
             it("should output emit event if clicked", () => {
                 spyOn(subject.valueChange, "emit").and.callThrough();
                 checkboxInput.click();

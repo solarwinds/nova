@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
-
 @Component({
     selector: "nui-radio-group-in-form-example",
     templateUrl: "./radio-group-in-form.example.component.html",
@@ -9,7 +8,12 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 export class RadioGroupInFormExampleComponent implements OnInit {
     public fancyForm: FormGroup;
 
-    public vegetables = [$localize `Cabbage`, $localize `Potato`, $localize `Tomato`, $localize `Carrot`];
+    public vegetables = [
+        $localize`Cabbage`,
+        $localize`Potato`,
+        $localize`Tomato`,
+        $localize`Carrot`,
+    ];
     constructor(private formBuilder: FormBuilder) {}
     public ngOnInit() {
         this.fancyForm = this.formBuilder.group({

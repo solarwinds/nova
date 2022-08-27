@@ -1,4 +1,7 @@
-import { getPizzagnaPropertyPath, IPizzagnaProperty } from "./get-pizzagna-property-path";
+import {
+    getPizzagnaPropertyPath,
+    IPizzagnaProperty,
+} from "./get-pizzagna-property-path";
 
 describe("getPizzagnaPropertyPath > ", () => {
     it("should get the property path from an IPizzagnaProperty", () => {

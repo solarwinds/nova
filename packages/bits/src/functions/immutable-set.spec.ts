@@ -8,7 +8,9 @@ describe("immutableSet >", () => {
         };
 
         const newObject = immutableSet(object, "someProp.propToUpdate", {});
-        expect(newObject.someProp.propToUpdate).not.toBe(object.someProp.propToUpdate);
+        expect(newObject.someProp.propToUpdate).not.toBe(
+            object.someProp.propToUpdate
+        );
         expect(newObject.someProp).not.toBe(object.someProp);
         expect(newObject).not.toBe(object);
     });
@@ -19,8 +21,12 @@ describe("immutableSet >", () => {
             otherProp: {},
         };
 
-        const newObject = immutableSet(object, "someProp.propToUpdate", { someProp: {}} );
-        expect(newObject.someProp.propToUpdate).not.toBe(object.someProp.propToUpdate);
+        const newObject = immutableSet(object, "someProp.propToUpdate", {
+            someProp: {},
+        });
+        expect(newObject.someProp.propToUpdate).not.toBe(
+            object.someProp.propToUpdate
+        );
         expect(newObject.otherProp).toBe(object.otherProp);
     });
 });

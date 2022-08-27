@@ -10,11 +10,9 @@ import {
 } from "@angular/animations";
 
 export const expand = trigger("expandedState", [
-    state("expanded", style({height: "*"})),
-    state("collapsed", style({height: 0})),
-    transition("expanded <=> collapsed", [
-        animate("350ms ease-in-out"),
-    ]),
+    state("expanded", style({ height: "*" })),
+    state("collapsed", style({ height: 0 })),
+    transition("expanded <=> collapsed", [animate("350ms ease-in-out")]),
 ]);
 
 /**
@@ -24,21 +22,29 @@ export const expand = trigger("expandedState", [
 export const expandV2 = trigger("expandContent", [
     transition(":enter", [
         group([
-            query(":self", [
-                style({ height: 0}),
-                animate("350ms ease-in-out", style({ height: "*" })),
-            ], {optional: true}),
-            query("@*", [
-                style({ height: 0}),
-                stagger(10, [
-                    animate("250ms ease-in-out", style({ height: "*" })),
-                ]),
-            ], {optional: true}),
+            query(
+                ":self",
+                [
+                    style({ height: 0 }),
+                    animate("350ms ease-in-out", style({ height: "*" })),
+                ],
+                { optional: true }
+            ),
+            query(
+                "@*",
+                [
+                    style({ height: 0 }),
+                    stagger(10, [
+                        animate("250ms ease-in-out", style({ height: "*" })),
+                    ]),
+                ],
+                { optional: true }
+            ),
         ]),
     ]),
     transition(":leave", [
         query(":self", [
-            style({ height: "*"}),
+            style({ height: "*" }),
             animate("350ms ease-in-out", style({ height: 0 })),
         ]),
     ]),

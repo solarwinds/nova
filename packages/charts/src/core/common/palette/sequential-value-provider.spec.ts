@@ -1,9 +1,7 @@
 import { IValueProvider } from "../types";
-
 import { SequentialValueProvider } from "./sequential-value-provider";
 
 describe("SequentialValueProvider >", () => {
-
     let svp: IValueProvider<string>;
 
     beforeEach(() => {

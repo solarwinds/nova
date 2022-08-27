@@ -1,10 +1,13 @@
 import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
-import {
-    ClientSideDataSource,
-    INovaFilteringOutputs, SearchComponent, TableComponent,
-} from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
+
+import {
+    ClientSideDataSource,
+    INovaFilteringOutputs,
+    SearchComponent,
+    TableComponent,
+} from "@nova-ui/bits";
 
 interface IExampleTableModel {
     position: number;
@@ -24,17 +27,29 @@ interface IExampleTableModel {
     styleUrls: ["./table-search.example.component.less"],
 })
 export class TableSearchExampleComponent implements AfterViewInit, OnDestroy {
-    public displayedColumns = ["position", "name", "features", "asset", "location", "status", "outages", "checks"];
+    public displayedColumns = [
+        "position",
+        "name",
+        "features",
+        "asset",
+        "location",
+        "status",
+        "outages",
+        "checks",
+    ];
     public dataSource: any = [];
     public searchTerm: string;
     public columnsToApplySearch: any = [];
     @ViewChild("filteringSearch") filteringSearch: SearchComponent;
-    @ViewChild("filteringTable") filteringTable: TableComponent<IExampleTableModel>;
+    @ViewChild("filteringTable")
+    filteringTable: TableComponent<IExampleTableModel>;
 
     private outputsSubscription: Subscription;
     private searchSubscription: Subscription;
 
-    constructor(public dataSourceService: ClientSideDataSource<IExampleTableModel>) {
+    constructor(
+        public dataSourceService: ClientSideDataSource<IExampleTableModel>
+    ) {
         dataSourceService.setData(getData());
     }
 
@@ -44,10 +59,14 @@ export class TableSearchExampleComponent implements AfterViewInit, OnDestroy {
                 componentInstance: this.filteringSearch,
             },
         };
-        this.outputsSubscription = this.dataSourceService.outputsSubject.subscribe((data: INovaFilteringOutputs) => {
-            this.dataSource = data.repeat?.itemsSource;
-        });
-        this.searchSubscription = this.filteringSearch.inputChange.pipe(debounceTime(500))
+        this.outputsSubscription =
+            this.dataSourceService.outputsSubject.subscribe(
+                (data: INovaFilteringOutputs) => {
+                    this.dataSource = data.repeat?.itemsSource;
+                }
+            );
+        this.searchSubscription = this.filteringSearch.inputChange
+            .pipe(debounceTime(500))
             .subscribe(() => {
                 this.onSearch(undefined);
             });
@@ -84,67 +103,107 @@ function getData(): IExampleTableModel[] {
         {
             position: 1,
             name: "FOCUS-SVR-02258",
-            features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+            features: [
+                "remote-access-vpn-tunnel",
+                "tools",
+                "database",
+                "orion-ape-backup",
+                "patch-manager01",
+            ],
             asset: "Workstation",
             location: "Brno",
             status: "Active",
             outages: 90,
-            checks: [{
-                icon: "status_up",
-                num: 25,
-            }],
+            checks: [
+                {
+                    icon: "status_up",
+                    num: 25,
+                },
+            ],
         },
         {
             position: 2,
             name: "Man-LT-JYJ4AD5",
-            features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+            features: [
+                "remote-access-vpn-tunnel",
+                "tools",
+                "database",
+                "orion-ape-backup",
+                "patch-manager01",
+            ],
             asset: "Workstation",
             location: "Brno",
             status: "Active",
             outages: 9,
-            checks: [{
-                icon: "status_critical",
-                num: 25,
-            }],
+            checks: [
+                {
+                    icon: "status_critical",
+                    num: 25,
+                },
+            ],
         },
         {
             position: 3,
             name: "FOCUS-SVR-02258",
-            features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+            features: [
+                "remote-access-vpn-tunnel",
+                "tools",
+                "database",
+                "orion-ape-backup",
+                "patch-manager01",
+            ],
             asset: "Workstation",
             location: "Brno",
             status: "Active",
             outages: 17,
-            checks: [{
-                icon: "status_down",
-                num: 25,
-            }],
+            checks: [
+                {
+                    icon: "status_down",
+                    num: 25,
+                },
+            ],
         },
         {
             position: 4,
             name: "Man-ATFLT-BRNO1",
-            features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+            features: [
+                "remote-access-vpn-tunnel",
+                "tools",
+                "database",
+                "orion-ape-backup",
+                "patch-manager01",
+            ],
             asset: "Workstation",
             location: "Austin",
             status: "Active",
             outages: 3,
-            checks: [{
-                icon: "status_up",
-                num: 25,
-            }],
+            checks: [
+                {
+                    icon: "status_up",
+                    num: 25,
+                },
+            ],
         },
         {
             position: 5,
             name: "Man-LTF-JYAF75J4AD5",
-            features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+            features: [
+                "remote-access-vpn-tunnel",
+                "tools",
+                "database",
+                "orion-ape-backup",
+                "patch-manager01",
+            ],
             asset: "Workstation",
             location: "Austin",
             status: "Active",
             outages: 56,
-            checks: [{
-                icon: "status_up",
-                num: 25,
-            }],
+            checks: [
+                {
+                    icon: "status_up",
+                    num: 25,
+                },
+            ],
         },
     ];
 }

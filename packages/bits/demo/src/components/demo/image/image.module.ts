@@ -1,6 +1,12 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiDocsModule, NuiImageModule, SrlcStage } from "@nova-ui/bits";
+
+import {
+    DEMO_PATH_TOKEN,
+    NuiDocsModule,
+    NuiImageModule,
+    SrlcStage,
+} from "@nova-ui/bits";
 
 import {
     ImageBasicExampleComponent,
@@ -20,8 +26,8 @@ const routes = [
         path: "",
         component: ImageDocsExampleComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.ga,
+            srlc: {
+                stage: SrlcStage.ga,
             },
             showThemeSwitcher: true,
         },
@@ -30,8 +36,8 @@ const routes = [
         path: "image-visual-test",
         component: ImageVisualTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -39,19 +45,15 @@ const routes = [
         path: "image-test",
         component: ImageTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
 ];
 
 @NgModule({
-    imports: [
-        NuiImageModule,
-        NuiDocsModule,
-        RouterModule.forChild(routes),
-    ],
+    imports: [NuiImageModule, NuiDocsModule, RouterModule.forChild(routes)],
     declarations: [
         ImageBasicExampleComponent,
         ImageDocsExampleComponent,
@@ -67,12 +69,14 @@ const routes = [
     providers: [
         {
             provide: DEMO_PATH_TOKEN,
-            useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/),
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
         },
     ],
-    exports: [
-        RouterModule,
-    ],
+    exports: [RouterModule],
 })
-export class ImageModule {
-}
+export class ImageModule {}

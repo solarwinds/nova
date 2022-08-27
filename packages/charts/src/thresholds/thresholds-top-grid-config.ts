@@ -5,7 +5,9 @@ import { XYGridConfig } from "../core/grid/config/xy-grid-config";
  *
  * @param c
  */
-export function thresholdsTopGridConfig(c: XYGridConfig = new XYGridConfig()): XYGridConfig {
+export function thresholdsTopGridConfig(
+    c: XYGridConfig = new XYGridConfig()
+): XYGridConfig {
     c.axis.bottom.visible = false;
     c.dimension.margin.bottom = 0;
     c.dimension.padding.bottom = 5;

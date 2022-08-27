@@ -1,4 +1,14 @@
-import { ChangeDetectorRef, Inject, Injectable, OnChanges, OnDestroy, Optional } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    Inject,
+    Injectable,
+    OnChanges,
+    OnDestroy,
+    Optional,
+} from "@angular/core";
+import { merge } from "rxjs";
+import { takeUntil } from "rxjs/operators";
+
 import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
 import {
     ChartAssist,
@@ -15,43 +25,54 @@ import {
     INTERACTION_VALUES_EVENT,
     ISetDomainEventPayload,
     IValueProvider,
-    IXYScales, Renderer,
+    IXYScales,
+    Renderer,
     SequentialColorProvider,
     SET_DOMAIN_EVENT,
     ZoomPlugin,
 } from "@nova-ui/charts";
-import { merge } from "rxjs";
-import { takeUntil } from "rxjs/operators";
 
-import { LegendPlacement } from "../../../../widget-types/common/widget/legend"
 import { INTERACTION, SET_TIMEFRAME } from "../../../../services/types";
-import { DATA_SOURCE, IHasChangeDetector, PIZZAGNA_EVENT_BUS } from "../../../../types";
+import {
+    DATA_SOURCE,
+    IHasChangeDetector,
+    PIZZAGNA_EVENT_BUS,
+} from "../../../../types";
+import { LegendPlacement } from "../../../../widget-types/common/widget/legend";
 import { TimeseriesScalesService } from "../../timeseries-scales.service";
 import { TimeseriesInteractionType } from "../../types";
 import { TimeseriesChartComponent } from "../timeseries-chart.component";
 
 @Injectable()
-export abstract class XYChartComponent extends TimeseriesChartComponent
-    implements OnChanges, OnDestroy, IHasChangeDetector {
-
+export abstract class XYChartComponent
+    extends TimeseriesChartComponent
+    implements OnChanges, OnDestroy, IHasChangeDetector
+{
     public chartAssist: ChartAssist;
     public valueAccessorKey: string = "y";
 
     protected renderer: Renderer<IAccessors>;
     protected accessors: IAccessors;
 
-    constructor(@Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,
-                @Optional() @Inject(DATA_SOURCE) dataSource: IDataSource,
-                public timeseriesScalesService: TimeseriesScalesService,
-                public changeDetector: ChangeDetectorRef) {
+    constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,
+        @Optional() @Inject(DATA_SOURCE) dataSource: IDataSource,
+        public timeseriesScalesService: TimeseriesScalesService,
+        public changeDetector: ChangeDetectorRef
+    ) {
         super(timeseriesScalesService, dataSource);
     }
 
-    protected abstract createAccessors(colorProvider: IValueProvider<string>): IAccessors;
+    protected abstract createAccessors(
+        colorProvider: IValueProvider<string>
+    ): IAccessors;
 
     protected abstract createChartAssist(palette: ChartPalette): ChartAssist;
 
-    public mapSeriesSet(data: any[], scales: IXYScales): IChartAssistSeries<IAccessors>[] {
+    public mapSeriesSet(
+        data: any[],
+        scales: IXYScales
+    ): IChartAssistSeries<IAccessors>[] {
         return data.map((series: any) => ({
             ...series,
             scales: scales,
@@ -62,7 +83,10 @@ export abstract class XYChartComponent extends TimeseriesChartComponent
 
     /** Checks if legend should be shown. */
     public hasLegend(): boolean {
-        return this.configuration.legendPlacement && this.configuration.legendPlacement !== LegendPlacement.None;
+        return (
+            this.configuration.legendPlacement &&
+            this.configuration.legendPlacement !== LegendPlacement.None
+        );
     }
 
     /** Checks if legend should be aligned to right. */
@@ -70,7 +94,10 @@ export abstract class XYChartComponent extends TimeseriesChartComponent
         return this.configuration.legendPlacement === LegendPlacement.Right;
     }
 
-    public onPrimaryDescClick(event: MouseEvent, legendSeries: IChartAssistSeries<IAccessors>) {
+    public onPrimaryDescClick(
+        event: MouseEvent,
+        legendSeries: IChartAssistSeries<IAccessors>
+    ) {
         if (!this.seriesInteractive) {
             return;
         }
@@ -86,7 +113,9 @@ export abstract class XYChartComponent extends TimeseriesChartComponent
 
     /** Updates chart data. */
     protected updateChartData(): void {
-        this.chartAssist.update(this.mapSeriesSet(this.widgetData.series, this.scales));
+        this.chartAssist.update(
+            this.mapSeriesSet(this.widgetData.series, this.scales)
+        );
     }
 
     /**
@@ -95,9 +124,11 @@ export abstract class XYChartComponent extends TimeseriesChartComponent
     protected buildChart() {
         this.buildChart$.next();
 
-        const colorProvider = (this.configuration.chartColors && this.configuration.chartColors?.length > 0)
-            ? new SequentialColorProvider(this.configuration.chartColors)
-            : defaultColorProvider();
+        const colorProvider =
+            this.configuration.chartColors &&
+            this.configuration.chartColors?.length > 0
+                ? new SequentialColorProvider(this.configuration.chartColors)
+                : defaultColorProvider();
 
         const palette = new ChartPalette(colorProvider);
         this.accessors = this.createAccessors(palette.standardColors);
@@ -108,7 +139,9 @@ export abstract class XYChartComponent extends TimeseriesChartComponent
             chart.addPlugin(new ZoomPlugin());
         }
 
-        chart.getEventBus().getStream(SET_DOMAIN_EVENT)
+        chart
+            .getEventBus()
+            .getStream(SET_DOMAIN_EVENT)
             .pipe(takeUntil(merge(this.destroy$, this.buildChart$)))
             .subscribe((event) => {
                 const payload = <ISetDomainEventPayload>event.data;
@@ -130,7 +163,9 @@ export abstract class XYChartComponent extends TimeseriesChartComponent
      */
     protected setupInteraction() {
         // interaction with chart data points
-        this.chartAssist.chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT)
+        this.chartAssist.chart
+            .getEventBus()
+            .getStream(INTERACTION_DATA_POINTS_EVENT)
             .pipe(takeUntil(merge(this.destroy$, this.buildChart$)))
             .subscribe((values: IChartEvent) => {
                 const payload: IInteractionDataPointsEvent = values.data;
@@ -138,14 +173,17 @@ export abstract class XYChartComponent extends TimeseriesChartComponent
                     this.eventBus.getStream(INTERACTION).next({
                         payload: {
                             data: payload.dataPoints as IDataPointsPayload,
-                            interactionType: TimeseriesInteractionType.DataPoints,
+                            interactionType:
+                                TimeseriesInteractionType.DataPoints,
                         },
                     });
                 }
             });
 
         // interaction with values
-        this.chartAssist.chart.getEventBus().getStream(INTERACTION_VALUES_EVENT)
+        this.chartAssist.chart
+            .getEventBus()
+            .getStream(INTERACTION_VALUES_EVENT)
             .pipe(takeUntil(merge(this.destroy$, this.buildChart$)))
             .subscribe((values: IChartEvent) => {
                 const payload: IInteractionValuesPayload = values.data;
@@ -159,5 +197,4 @@ export abstract class XYChartComponent extends TimeseriesChartComponent
                 }
             });
     }
-
 }

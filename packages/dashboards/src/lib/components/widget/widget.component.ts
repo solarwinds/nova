@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    SimpleChanges,
+} from "@angular/core";
 
 import { DEFAULT_PIZZAGNA_ROOT } from "../../services/types";
 import { WidgetConfigurationService } from "../../services/widget-configuration.service";
@@ -10,29 +17,33 @@ import { IWidget } from "./types";
     selector: "nui-widget",
     templateUrl: "./widget.component.html",
     styleUrls: ["./widget.component.less"],
-    providers: [
-        WidgetConfigurationService,
-    ],
+    providers: [WidgetConfigurationService],
     host: { class: "nui-widget" },
 })
 export class WidgetComponent implements OnChanges {
-
     @Input() widget: IWidget;
     @Output() widgetChange = new EventEmitter<IWidget>();
 
     public rootNode = DEFAULT_PIZZAGNA_ROOT;
 
-    constructor(private widgetConfigurationService: WidgetConfigurationService,
-                private widgetTypesService: WidgetTypesService) {
-    }
+    constructor(
+        private widgetConfigurationService: WidgetConfigurationService,
+        private widgetTypesService: WidgetTypesService
+    ) {}
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.widget) {
             const type = this.widget.type;
-            const previousType = changes.widget.previousValue && changes.widget.previousValue.type;
+            const previousType =
+                changes.widget.previousValue &&
+                changes.widget.previousValue.type;
             if (previousType !== type) {
-                const widgetType = this.widgetTypesService.getWidgetType(type, this.widget.version);
-                this.rootNode = widgetType?.paths?.widget?.root || DEFAULT_PIZZAGNA_ROOT;
+                const widgetType = this.widgetTypesService.getWidgetType(
+                    type,
+                    this.widget.version
+                );
+                this.rootNode =
+                    widgetType?.paths?.widget?.root || DEFAULT_PIZZAGNA_ROOT;
             }
             this.widgetConfigurationService.updateWidget(this.widget);
         }
@@ -44,5 +55,4 @@ export class WidgetComponent implements OnChanges {
             pizzagna: pizzagna,
         });
     }
-
 }

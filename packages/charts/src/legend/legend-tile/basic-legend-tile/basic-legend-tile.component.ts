@@ -1,7 +1,4 @@
-import {
-    Component,
-    ViewEncapsulation,
-} from "@angular/core";
+import { Component, ViewEncapsulation } from "@angular/core";
 
 @Component({
     selector: "nui-basic-legend-tile",
@@ -9,4 +6,4 @@ import {
     styleUrls: ["./basic-legend-tile.component.less"],
     encapsulation: ViewEncapsulation.Emulated,
 })
-export class BasicLegendTileComponent { }
+export class BasicLegendTileComponent {}

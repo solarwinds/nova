@@ -66,7 +66,10 @@
 /* texts */
 /* SECTION: texts */
 @nui-color-text-default: @black;
-@nui-color-text-default-hover: darken(@nui-color-text-default, 10%); // unofficial
+@nui-color-text-default-hover: darken(
+    @nui-color-text-default,
+    10%
+); // unofficial
 @nui-color-text-secondary: fade(@black, 60%);
 @nui-color-text-link: @primary_blue;
 @nui-color-text-link-inverse: tint(@primary_blue, 30%);
@@ -116,7 +119,7 @@
 @nui-color-icon-disabled: fade(@black, 30%);
 @nui-color-icon-highlight-platform_bar: @swi_orange;
 @nui-color-icon-highlight: @black;
-@nui-color-icon-highlight-default: @black;  // unofficial
+@nui-color-icon-highlight-default: @black; // unofficial
 @nui-color-icon-warning: @warning_yellow;
 @nui-color-icon-ok: @ok_green;
 @nui-color-icon-info: @info_blue;
@@ -133,7 +136,6 @@
 @nui-color-bg-scroll_handle_container: @transparent;
 @nui-color-bg-scroll_handle: fade(@black, 20%);
 @nui-color-bg-scroll_handle-hover: fade(@black, 30%);
-
 
 /* brand */
 /* SECTION: brand */
@@ -156,12 +158,18 @@
 @nui-color-semantic-critical-hover: shade(@critical_red, 10%);
 @nui-color-semantic-critical-bg: tint(@critical_red, 90%);
 @nui-color-semantic-critical-bg-hover: tint(@critical_red, 80%);
-@nui-color-semantic-critical-bg-threshold: fade(@nui-color-semantic-critical, 30%);
+@nui-color-semantic-critical-bg-threshold: fade(
+    @nui-color-semantic-critical,
+    30%
+);
 @nui-color-semantic-warning: @warning_yellow;
 @nui-color-semantic-warning-hover: shade(@warning_yellow, 10%);
 @nui-color-semantic-warning-bg: tint(@warning_yellow, 90%);
 @nui-color-semantic-warning-bg-hover: tint(@warning_yellow, 80%);
-@nui-color-semantic-warning-bg-threshold: fade(@nui-color-semantic-warning, 30%);
+@nui-color-semantic-warning-bg-threshold: fade(
+    @nui-color-semantic-warning,
+    30%
+);
 @nui-color-semantic-down-bg: tint(@down_red, 90%);
 @nui-color-semantic-down-bg-hover: tint(@down_red, 80%);
 @nui-color-semantic-ok: @ok_green;
@@ -176,7 +184,6 @@
 @nui-color-semantic-info-bg-hover: tint(@info_blue, 80%);
 @nui-color-semantic-unknown-bg: tint(@unknown_gray, 90%);
 @nui-color-semantic-unknown-bg-hover: tint(@unknown_gray, 80%);
-
 
 /* chart colors */
 /* SECTION: charts */
@@ -259,10 +266,15 @@
 @nui-color-tab-link: @mid_gray; // unofficial
 @nui-color-line-offset: fade(@nui-color-line-default, 50%); // unofficial
 
-
 @nui-color-btn1-focusBrd: darken(@nui-color-line-default, 5.5%); // unofficial
-@nui-color-btn1-activeOpenBrd: darken(@nui-color-line-default, 12%); // unofficial
-@nui-color-btn1-activeHoverBrd: darken(@nui-color-line-default, 25%); // unofficial
+@nui-color-btn1-activeOpenBrd: darken(
+    @nui-color-line-default,
+    12%
+); // unofficial
+@nui-color-btn1-activeHoverBrd: darken(
+    @nui-color-line-default,
+    25%
+); // unofficial
 @nui-color-btn2-focusBk: darken(@nui-color-text-link, 5.5%); // unofficial
 @nui-color-btn2-activeOpenBk: darken(@nui-color-text-link, 12%); // unofficial
 @nui-color-btn2-activeHoverBk: darken(@nui-color-text-link, 25%); // unofficial
@@ -270,56 +282,59 @@
 @nui-color-btn4-activeOpen: darken(@nui-color-active, 12%); // unofficial
 @nui-color-btn4-activeHover: darken(@nui-color-active, 25%); // unofficial
 
-@nui-color-input-box-shadow: fade(@nui-color-line-default,50%); // unofficial
-@nui-color-input-box-shadow-hover: fade(@nui-color-line-default, 60%); // unofficial
+@nui-color-input-box-shadow: fade(@nui-color-line-default, 50%); // unofficial
+@nui-color-input-box-shadow-hover: fade(
+    @nui-color-line-default,
+    60%
+); // unofficial
 
 //** Shadow color
 @nui-shadow-color: fade(@black, 30%);
 @nui-shadow-color-stronger: fade(@black, 60%);
 
 //** Background color for `<body>`.
-@body-bg:               @nui-color-bg-workspace; // unofficial
+@body-bg: @nui-color-bg-workspace; // unofficial
 //** Global text color on `<body>`.
-@text-color:            @nui-color-text-default; // unofficial
+@text-color: @nui-color-text-default; // unofficial
 
 //** Global textual link color.
-@link-color:            @nui-color-text-link; // unofficial
+@link-color: @nui-color-text-link; // unofficial
 //** Link hover color set via `darken()` function.
-@link-hover-color:      @nui-color-text-link; // unofficial
+@link-hover-color: @nui-color-text-link; // unofficial
 
 //** Border color for inputs on focus
-@input-border-focus:             @nui-color-line-active; // unofficial
+@input-border-focus: @nui-color-line-active; // unofficial
 
 //** Placeholder text color
-@input-color-placeholder:        @nui-color-text-secondary; // unofficial
+@input-color-placeholder: @nui-color-text-secondary; // unofficial
 
-@kbd-color:                   @white; // unofficial
-@kbd-bg:                      @light_black; // unofficial
+@kbd-color: @white; // unofficial
+@kbd-bg: @light_black; // unofficial
 
-@pre-color:                   @light_black; // unofficial
-@pre-border-color:            @nui-color-line-default; // unofficial
+@pre-color: @light_black; // unofficial
+@pre-border-color: @nui-color-line-default; // unofficial
 
 //** Text muted color
-@text-muted:                  @nui-color-text-secondary; // unofficial
+@text-muted: @nui-color-text-secondary; // unofficial
 //** Abbreviations and acronyms border color
-@abbr-border-color:           @nui-color-line-default; // unofficial
+@abbr-border-color: @nui-color-line-default; // unofficial
 //** Headings small color
-@headings-small-color:        @nui-color-text-secondary; // unofficial
+@headings-small-color: @nui-color-text-secondary; // unofficial
 //** Blockquote small color
-@blockquote-small-color:      @nui-color-text-secondary; // unofficial
+@blockquote-small-color: @nui-color-text-secondary; // unofficial
 
 //** Page header border color
-@page-header-border-color:    @nui-color-line-default; // unofficial
+@page-header-border-color: @nui-color-line-default; // unofficial
 
 //** Horizontal line color.
-@hr-border:                   @nui-color-line-default; // unofficial
+@hr-border: @nui-color-line-default; // unofficial
 
 //** Thumbnail background color
-@thumbnail-bg:                @body-bg; // unofficial
+@thumbnail-bg: @body-bg; // unofficial
 
 //** Background color, that .nui-scroll-shadow class will try to simulate
-@nui-color-bg-scroll:         @nui-color-bg-content; // unofficial
+@nui-color-bg-scroll: @nui-color-bg-content; // unofficial
 
 //** Code component colors
-@nui-code-bg-color:           @nui-color-bg-mid_dark; // unofficial
-@nui-code-color:              @nui-color-bg-content; // unofficial
+@nui-code-bg-color: @nui-color-bg-mid_dark; // unofficial
+@nui-code-color: @nui-color-bg-content; // unofficial

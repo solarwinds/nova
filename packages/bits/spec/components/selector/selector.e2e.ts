@@ -1,13 +1,7 @@
-import {
-    browser,
-    by,
-    element,
-    ElementFinder,
-} from "protractor";
+import { browser, by, element, ElementFinder } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
-
 import { SelectorAtom } from "./selector.atom";
 
 export enum SelectionType {
@@ -18,7 +12,6 @@ export enum SelectionType {
 }
 
 describe("USERCONTROL Selector", () => {
-
     const demoElementId = "nui-demo-selector";
 
     let subject: SelectorAtom;
@@ -53,7 +46,9 @@ describe("USERCONTROL Selector", () => {
 
         await subject.select(SelectionType.All);
         await subject.select(SelectionType.AllPages);
-        expect(await selectionElement.getText()).toEqual(SelectionType.AllPages);
+        expect(await selectionElement.getText()).toEqual(
+            SelectionType.AllPages
+        );
     });
 
     it("should get 'SelectionType' (All, None) by changing checkbox state", async () => {
@@ -63,7 +58,9 @@ describe("USERCONTROL Selector", () => {
         expect(await selectionElement.getText()).toEqual(SelectionType.All);
 
         await selectorCheckbox.toggle();
-        expect(await selectionElement.getText()).toEqual(SelectionType.UnselectAll);
+        expect(await selectionElement.getText()).toEqual(
+            SelectionType.UnselectAll
+        );
     });
 
     it("should set 'Indeterminate'", async () => {
@@ -81,7 +78,9 @@ describe("USERCONTROL Selector", () => {
         expect(await selectionElement.getText()).toEqual(SelectionType.All);
 
         await selectorButton.click();
-        expect(await selectionElement.getText()).toEqual(SelectionType.UnselectAll);
+        expect(await selectionElement.getText()).toEqual(
+            SelectionType.UnselectAll
+        );
     });
 
     describe("appended to body >", () => {
@@ -91,10 +90,14 @@ describe("USERCONTROL Selector", () => {
             expect(await selectionElement.getText()).toEqual(SelectionType.All);
 
             await subject.selectAppendedToBodyItem(SelectionType.None);
-            expect(await selectionElement.getText()).toEqual(SelectionType.None);
+            expect(await selectionElement.getText()).toEqual(
+                SelectionType.None
+            );
 
             await subject.selectAppendedToBodyItem(SelectionType.AllPages);
-            expect(await selectionElement.getText()).toEqual(SelectionType.AllPages);
+            expect(await selectionElement.getText()).toEqual(
+                SelectionType.AllPages
+            );
         });
     });
 });

@@ -1,5 +1,6 @@
 // border
-.nui-sheet-group-border--row, .nui-sheet-border--row {
+.nui-sheet-group-border--row,
+.nui-sheet-border--row {
     &:not(:last-of-type):not(:first-of-type) {
         .setCssVariable(border-right-color, nui-color-line-dark);
         .setCssVariable(border-right-width, nui-line-default);
@@ -22,7 +23,8 @@
         border: none;
     }
 }
-.nui-sheet-group-border--column, .nui-sheet-border--column {
+.nui-sheet-group-border--column,
+.nui-sheet-border--column {
     &:not(:last-of-type):not(:first-of-type) {
         .setCssVariable(border-bottom-color, nui-color-line-dark);
         .setCssVariable(border-bottom-width, nui-line-default);
@@ -47,12 +49,14 @@
     }
 }
 // margin
-.nui-sheet-group-margin--row, .nui-sheet-margin--row {
+.nui-sheet-group-margin--row,
+.nui-sheet-margin--row {
     &:not(:last-of-type) {
         margin-right: @nui-space-md;
     }
 }
-.nui-sheet-group-margin--column, .nui-sheet-margin--column {
+.nui-sheet-group-margin--column,
+.nui-sheet-margin--column {
     &:not(:last-of-type) {
         margin-bottom: @nui-space-md;
     }

@@ -6,7 +6,6 @@ import moment, { Moment } from "moment/moment";
     selector: "time-picker-visual-test",
     templateUrl: "./time-picker-visual-test.component.html",
 })
-
 export class TimePickerVisualTestComponent implements OnInit {
     public time: Moment;
     public myTime: Moment;
@@ -18,7 +17,9 @@ export class TimePickerVisualTestComponent implements OnInit {
 
     public ngOnInit() {
         this.myForm = this.formBuilder.group({
-            timePickerFormControl: this.formBuilder.control( this.time, [Validators.required]),
+            timePickerFormControl: this.formBuilder.control(this.time, [
+                Validators.required,
+            ]),
         });
     }
 

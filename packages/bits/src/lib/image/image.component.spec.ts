@@ -5,7 +5,6 @@ import _sample from "lodash/sample";
 
 import { LoggerService } from "../../services/log-service";
 import { UtilService } from "../../services/util.service";
-
 import { ImageComponent } from "./image.component";
 import { IImagesPresetItem } from "./public-api";
 
@@ -45,7 +44,14 @@ describe("components >", () => {
             const utilService = TestBed.inject(UtilService);
             const changeDetector = TestBed.inject(ChangeDetectorRef);
 
-            subject = new ImageComponent(new LoggerService(), utilService, changeDetector, imagesPreset, domSanitizer, elRef);
+            subject = new ImageComponent(
+                new LoggerService(),
+                utilService,
+                changeDetector,
+                imagesPreset,
+                domSanitizer,
+                elRef
+            );
         });
 
         describe("getImageTemplate", () => {

@@ -1,5 +1,11 @@
 import { RenderState } from "../../renderers/types";
-import { IAccessors, IChart, IChartAssistSeries, IChartSeries, IRenderStateData } from "../common/types";
+import {
+    IAccessors,
+    IChart,
+    IChartAssistSeries,
+    IChartSeries,
+    IRenderStateData,
+} from "../common/types";
 
 /**
  * Interface representing the spark chart assist's
@@ -31,7 +37,11 @@ export interface IChartAssist {
      *
      * @returns {string} The highlighted value
      */
-    getHighlightedValue(chartSeries: IChartSeries<IAccessors>, scaleKey: string, formatterName?: string): string | number | undefined;
+    getHighlightedValue(
+        chartSeries: IChartSeries<IAccessors>,
+        scaleKey: string,
+        formatterName?: string
+    ): string | number | undefined;
 
     /**
      * Returns visible series that are represented by a legend
@@ -56,16 +66,17 @@ export interface IChartAssistEvent {
  * Legend interaction assist uses this class to present the state that consists of emphasisState+visible as one state
  */
 export class ChartAssistRenderStateData implements IRenderStateData {
-    constructor(public seriesId: string,
-                public series: IChartAssistSeries<IAccessors>,
-                public emphasisState = RenderState.default,
-                public visible = true) {
-    }
+    constructor(
+        public seriesId: string,
+        public series: IChartAssistSeries<IAccessors>,
+        public emphasisState = RenderState.default,
+        public visible = true
+    ) {}
 
     get state(): RenderState {
         return this.visible ? this.emphasisState : RenderState.hidden;
     }
 }
 
-export interface IRenderStatesIndex extends Record<string, ChartAssistRenderStateData> {
-}
+export interface IRenderStatesIndex
+    extends Record<string, ChartAssistRenderStateData> {}

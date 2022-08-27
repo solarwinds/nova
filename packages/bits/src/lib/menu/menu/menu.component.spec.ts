@@ -1,4 +1,9 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, ViewChild } from "@angular/core";
+import {
+    Component,
+    CUSTOM_ELEMENTS_SCHEMA,
+    DebugElement,
+    ViewChild,
+} from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
@@ -24,22 +29,22 @@ import { MenuOptionComponent } from "../menu-item/menu-option/menu-option.compon
 import { MenuSwitchComponent } from "../menu-item/menu-switch/menu-switch.component";
 import { MenuPopupComponent } from "../menu-popup/menu-popup.component";
 import { IMenuGroup } from "../public-api";
-
 import { MenuComponent } from "./menu.component";
 
 @Component({
     selector: "nui-test-app",
     template: `
-    <html>
-    <body>
-   <nui-menu
-        [title]="title"
-        [size]="size"
-        [icon]="icon"
-        [itemsSource]="itemsSource">
-    </nui-menu>
-    </body>
-    </html>
+        <html>
+            <body>
+                <nui-menu
+                    [title]="title"
+                    [size]="size"
+                    [icon]="icon"
+                    [itemsSource]="itemsSource"
+                >
+                </nui-menu>
+            </body>
+        </html>
     `,
 })
 class TestAppComponent {
@@ -48,20 +53,22 @@ class TestAppComponent {
     public icon = "add";
     public title = "menu filled by json data";
     public itemsSource = [
-        { header: "Header", itemsSource: [
-
-            {
-                itemType: "link",
-                title: "Disabled link",
-                disabled: true,
-            },
-            {
-                itemType: "action",
-                title: "Action",
-                disabled: false,
-            }],
-        }] as IMenuGroup[];
-
+        {
+            header: "Header",
+            itemsSource: [
+                {
+                    itemType: "link",
+                    title: "Disabled link",
+                    disabled: true,
+                },
+                {
+                    itemType: "action",
+                    title: "Action",
+                    disabled: false,
+                },
+            ],
+        },
+    ] as IMenuGroup[];
 }
 
 describe("components >", () => {
@@ -74,23 +81,24 @@ describe("components >", () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [NuiOverlayModule],
-                declarations: [TestAppComponent,
-                               MenuComponent,
-                               MenuActionComponent,
-                               MenuLinkComponent,
-                               MenuOptionComponent,
-                               MenuPopupComponent,
-                               MenuSwitchComponent,
-                               MenuGroupComponent,
-                               MenuItemComponent,
-                               ButtonComponent,
-                               PopupComponent,
-                               PopupToggleDirective,
-                               CheckboxComponent,
-                               IconComponent,
-                               DividerComponent,
-                               SwitchComponent,
-                               ButtonComponent,
+                declarations: [
+                    TestAppComponent,
+                    MenuComponent,
+                    MenuActionComponent,
+                    MenuLinkComponent,
+                    MenuOptionComponent,
+                    MenuPopupComponent,
+                    MenuSwitchComponent,
+                    MenuGroupComponent,
+                    MenuItemComponent,
+                    ButtonComponent,
+                    PopupComponent,
+                    PopupToggleDirective,
+                    CheckboxComponent,
+                    IconComponent,
+                    DividerComponent,
+                    SwitchComponent,
+                    ButtonComponent,
                 ],
                 providers: [
                     IconService,

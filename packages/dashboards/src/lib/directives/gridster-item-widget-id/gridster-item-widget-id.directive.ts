@@ -1,4 +1,11 @@
-import { Directive, Host, Input, OnChanges, Self, SimpleChanges } from "@angular/core";
+import {
+    Directive,
+    Host,
+    Input,
+    OnChanges,
+    Self,
+    SimpleChanges,
+} from "@angular/core";
 import { GridsterItemComponent } from "angular-gridster2";
 
 /**
@@ -11,13 +18,11 @@ import { GridsterItemComponent } from "angular-gridster2";
 export class GridsterItemWidgetIdDirective implements OnChanges {
     @Input() nuiGridsterItemWidgetId: string;
 
-    constructor(@Host() @Self() private gridsterItem: GridsterItemComponent) {
-    }
+    constructor(@Host() @Self() private gridsterItem: GridsterItemComponent) {}
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.nuiGridsterItemWidgetId) {
             (this.gridsterItem as any).widgetId = this.nuiGridsterItemWidgetId;
         }
     }
-
 }
