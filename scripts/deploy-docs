@@ -62,6 +62,10 @@ mv ../packages/dashboards/sdk/api-docs-ng2 ./projects/dashboards/
 rm -rf $DASHBOARDS_DOCS_PATH
 mv ./projects/dashboards/api-docs-ng2 $DASHBOARDS_DOCS_PATH
 
+# build nova-docs client
+yarn install
+yarn run build
+
 # creating artifact for the VM
 zip -r nova-docs.zip *
 mv ./nova-docs.zip ../
