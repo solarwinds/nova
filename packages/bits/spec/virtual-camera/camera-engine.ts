@@ -81,6 +81,6 @@ export class CameraEngine {
     }
 
     private cleanFileName(name: string) {
-        return name.replace(/[\\\/\s]/g, "");
+        return name.replace(/[\\\/\s]/g, "_");
     }
 }
