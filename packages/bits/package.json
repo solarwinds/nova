@@ -133,7 +133,7 @@
         "@angular/router": "^12.2.13",
         "@axe-core/webdriverjs": "^4.1.1",
         "@compodoc/compodoc": "1.1.11",
-        "@percy/cli": "^1.0.0-beta.74",
+        "@percy/cli": "^1.0.0",
         "@percy/protractor": "^2.0.0",
         "@schematics/angular": "^12.2.14",
         "@types/jasmine": "~3.5.0",
