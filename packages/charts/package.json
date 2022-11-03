@@ -95,7 +95,7 @@
     "@angular/router": "^12.2.16",
     "@compodoc/compodoc": "1.1.11",
     "@nova-ui/bits": "~12.0.17-0",
-    "@percy/cli": "^1.0.0-beta.74",
+    "@percy/cli": "^1.0.0",
     "@percy/protractor": "^2.0.0",
     "@types/d3": "^5.7.2",
     "@types/d3-selection-multi": "^1.0.7",
