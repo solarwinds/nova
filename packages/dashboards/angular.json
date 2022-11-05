@@ -45,13 +45,9 @@
                         "scripts": [],
                         "sourceMap": true,
                         "stylePreprocessorOptions": {
-                            "includePaths": [
-                                "node_modules"
-                            ]
+                            "includePaths": ["node_modules"]
                         },
-                        "styles": [
-                            "./examples/src/styles.less"
-                        ],
+                        "styles": ["./examples/src/styles.less"],
                         "tsConfig": "./examples/src/tsconfig.json",
                         "vendorChunk": true
                     }
@@ -115,10 +111,7 @@
                 "lint": {
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
-                        "lintFilePatterns": [
-                            "spec/**/*.ts",
-                            "spec/**/*.html"
-                        ]
+                        "lintFilePatterns": ["spec/**/*.ts", "spec/**/*.html"]
                     }
                 }
             },
@@ -132,9 +125,7 @@
                     "builder": "@angular-devkit/build-angular:browser",
                     "defaultConfiguration": "",
                     "options": {
-                        "allowedCommonJsDependencies": [
-                            "lodash"
-                        ],
+                        "allowedCommonJsDependencies": ["lodash"],
                         "buildOptimizer": false,
                         "extractLicenses": false,
                         "index": "./src/index.html",
@@ -183,10 +174,7 @@
                 "lint": {
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
-                        "lintFilePatterns": [
-                            "src/**/*.ts",
-                            "src/**/*.html"
-                        ]
+                        "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
                     }
                 },
                 "test": {
@@ -197,9 +185,7 @@
                         "polyfills": "src/polyfills.ts",
                         "preserveSymlinks": true,
                         "stylePreprocessorOptions": {
-                            "includePaths": [
-                                "src/**/*.less"
-                            ]
+                            "includePaths": ["src/**/*.less"]
                         },
                         "tsConfig": "tsconfig.spec.json"
                     }

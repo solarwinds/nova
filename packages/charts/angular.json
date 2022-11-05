@@ -64,9 +64,7 @@
                         "scripts": [],
                         "sourceMap": true,
                         "stylePreprocessorOptions": {
-                            "includePaths": [
-                                "node_modules"
-                            ]
+                            "includePaths": ["node_modules"]
                         },
                         "styles": [
                             "./examples/styles.less",
@@ -135,10 +133,7 @@
                 "lint": {
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
-                        "lintFilePatterns": [
-                            "spec/**/*.ts",
-                            "spec/**/*.html"
-                        ]
+                        "lintFilePatterns": ["spec/**/*.ts", "spec/**/*.html"]
                     }
                 }
             },
@@ -162,13 +157,9 @@
                         "outputPath": "./.tmp/css",
                         "sourceMap": true,
                         "stylePreprocessorOptions": {
-                            "includePaths": [
-                                "node_modules"
-                            ]
+                            "includePaths": ["node_modules"]
                         },
-                        "styles": [
-                            "src/styles.less"
-                        ],
+                        "styles": ["src/styles.less"],
                         "tsConfig": "tsconfig.json",
                         "vendorChunk": true
                     }
@@ -184,9 +175,7 @@
                     "builder": "@angular-devkit/build-angular:browser",
                     "defaultConfiguration": "",
                     "options": {
-                        "allowedCommonJsDependencies": [
-                            "lodash"
-                        ],
+                        "allowedCommonJsDependencies": ["lodash"],
                         "buildOptimizer": false,
                         "extractLicenses": false,
                         "index": "./src/index.html",
@@ -235,10 +224,7 @@
                 "lint": {
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
-                        "lintFilePatterns": [
-                            "src/**/*.ts",
-                            "src/**/*.html"
-                        ]
+                        "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
                     }
                 },
                 "test": {
@@ -249,9 +235,7 @@
                         "polyfills": "src/polyfills.ts",
                         "preserveSymlinks": true,
                         "stylePreprocessorOptions": {
-                            "includePaths": [
-                                "node_modules"
-                            ]
+                            "includePaths": ["node_modules"]
                         },
                         "tsConfig": "tsconfig.spec.json"
                     }
