@@ -1,5 +1,5 @@
 {
-  "extends": "../../../tsconfig.main",
+  "extends": "../../../tsconfig.main.json",
   "compilerOptions": {
     "baseUrl": "tsconfig",
     "lib": [

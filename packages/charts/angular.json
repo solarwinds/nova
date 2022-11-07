@@ -5,147 +5,73 @@
     },
     "newProjectRoot": "projects",
     "projects": {
-        "lib": {
-            "root": "src",
-            "sourceRoot": "src",
-            "projectType": "library",
-            "architect": {
-                "build": {
-                    "builder": "@angular-devkit/build-angular:ng-packagr",
-                    "options": {
-                        "tsConfig": "tsconfig.lib.json",
-                        "project": "ng-package.json"
-                    },
-                    "configurations": {
-                        "production": {
-                            "project": "ng-package.json",
-                            "tsConfig": "tsconfig.lib.prod.json"
-                        },
-                        "dev": {
-                            "project": "ng-package-dev.json"
-                        },
-                        "locl": {
-                            "tsConfig": "./tsconfig.lib.locl.json"
-                        }
-                    }
-                },
-                "extract-i18n": {
-                    "builder": "@angular-devkit/build-angular:extract-i18n",
-                    "options": {
-                        "browserTarget": "i18n:build",
-                        "outputPath": "../.tmp"
-                    }
-                },
-                "test": {
-                    "builder": "@angular-devkit/build-angular:karma",
-                    "options": {
-                        "main": "src/test.ts",
-                        "tsConfig": "tsconfig.spec.json",
-                        "preserveSymlinks": true,
-                        "karmaConfig": "karma.conf.js",
-                        "polyfills": "src/polyfills.ts",
-                        "stylePreprocessorOptions": {
-                            "includePaths": ["node_modules"]
-                        }
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-eslint/builder:lint",
-                    "options": {
-                        "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
-                    }
-                }
-            }
-        },
         "examples": {
-            "root": "examples",
-            "sourceRoot": "examples",
-            "projectType": "application",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
-                    "options": {
-                        "outputPath": "./sdk/api-docs-ng2/examples",
-                        "index": "./examples/index.html",
-                        "main": "./examples/index.ts",
-                        "tsConfig": "./examples/tsconfig.app.json",
-                        "polyfills": "./examples/polyfills.ts",
-                        "preserveSymlinks": true,
-                        "styles": [
-                            "./examples/styles.less",
-                            "./src/styles.less"
-                        ],
-                        "stylePreprocessorOptions": {
-                            "includePaths": ["node_modules"]
-                        },
-                        "scripts": [],
-                        "aot": false,
-                        "vendorChunk": true,
-                        "extractLicenses": false,
-                        "buildOptimizer": false,
-                        "sourceMap": true,
-                        "optimization": false,
-                        "namedChunks": true
-                    },
                     "configurations": {
-                        "production": {
-                            "budgets": [
-                                {
-                                    "type": "anyComponentStyle",
-                                    "maximumWarning": "6kb"
-                                }
-                            ],
-                            "optimization": true,
-                            "outputHashing": "all",
-                            "sourceMap": false,
-                            "namedChunks": false,
-                            "extractLicenses": true,
-                            "vendorChunk": false,
-                            "aot": true,
-                            "buildOptimizer": true
-                        },
                         "e2e": {
+                            "aot": true,
                             "budgets": [
                                 {
-                                    "type": "anyComponentStyle",
-                                    "maximumWarning": "6kb"
+                                    "maximumWarning": "6kb",
+                                    "type": "anyComponentStyle"
                                 }
                             ],
+                            "buildOptimizer": true,
+                            "extractLicenses": true,
                             "fileReplacements": [
                                 {
                                     "replace": "./examples/environments/environment.ts",
                                     "with": "./examples/environments/environment.e2e.ts"
                                 }
                             ],
+                            "namedChunks": false,
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
-                            "namedChunks": false,
-                            "extractLicenses": true,
-                            "vendorChunk": false,
-                            "aot": true,
-                            "buildOptimizer": true
-                        }
-                    },
-                    "defaultConfiguration": ""
-                },
-                "serve": {
-                    "builder": "@angular-devkit/build-angular:dev-server",
-                    "options": {
-                        "browserTarget": "examples:build"
-                    },
-                    "configurations": {
-                        "production": {
-                            "optimization": true,
-                            "sourceMap": false,
                             "vendorChunk": false
                         },
-                        "e2e": {
+                        "production": {
+                            "aot": true,
+                            "budgets": [
+                                {
+                                    "maximumWarning": "6kb",
+                                    "type": "anyComponentStyle"
+                                }
+                            ],
+                            "buildOptimizer": true,
+                            "extractLicenses": true,
+                            "namedChunks": false,
                             "optimization": true,
+                            "outputHashing": "all",
                             "sourceMap": false,
-                            "vendorChunk": false,
-                            "browserTarget": "examples:build:e2e"
+                            "vendorChunk": false
                         }
+                    },
+                    "defaultConfiguration": "",
+                    "options": {
+                        "aot": false,
+                        "buildOptimizer": false,
+                        "extractLicenses": false,
+                        "index": "./examples/index.html",
+                        "main": "./examples/index.ts",
+                        "namedChunks": true,
+                        "optimization": false,
+                        "outputPath": "./sdk/api-docs-ng2/examples",
+                        "polyfills": "./examples/polyfills.ts",
+                        "preserveSymlinks": true,
+                        "scripts": [],
+                        "sourceMap": true,
+                        "stylePreprocessorOptions": {
+                            "includePaths": ["node_modules"]
+                        },
+                        "styles": [
+                            "./examples/styles.less",
+                            "./src/styles.less"
+                        ],
+                        "tsConfig": "./examples/tsconfig.app.json",
+                        "vendorChunk": true
                     }
                 },
                 "lint": {
@@ -156,33 +82,52 @@
                             "examples/**/*.html"
                         ]
                     }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "configurations": {
+                        "e2e": {
+                            "browserTarget": "examples:build:e2e",
+                            "optimization": true,
+                            "sourceMap": false,
+                            "vendorChunk": false
+                        },
+                        "production": {
+                            "optimization": true,
+                            "sourceMap": false,
+                            "vendorChunk": false
+                        }
+                    },
+                    "options": {
+                        "browserTarget": "examples:build"
+                    }
                 }
-            }
+            },
+            "projectType": "application",
+            "root": "examples",
+            "sourceRoot": "examples"
         },
         "examples-e2e": {
-            "root": "spec",
-            "sourceRoot": "spec",
-            "projectType": "application",
             "architect": {
                 "e2e": {
                     "builder": "@angular-devkit/build-angular:protractor",
-                    "options": {
-                        "devServerTarget": "",
-                        "protractorConfig": "./protractor.conf.js",
-                        "webdriverUpdate": false,
-                        "suite": "e2e"
-                    },
                     "configurations": {
-                        "serve": {
-                            "devServerTarget": "demo:serve:e2e"
+                        "full": {
+                            "devServerTarget": "demo:serve:e2e",
+                            "protractorConfig": "./protractor-gui.conf.js"
                         },
                         "gui": {
                             "protractorConfig": "./protractor-gui.conf.js"
                         },
-                        "full": {
-                            "devServerTarget": "demo:serve:e2e",
-                            "protractorConfig": "./protractor-gui.conf.js"
+                        "serve": {
+                            "devServerTarget": "demo:serve:e2e"
                         }
+                    },
+                    "options": {
+                        "devServerTarget": "",
+                        "protractorConfig": "./protractor.conf.js",
+                        "suite": "e2e",
+                        "webdriverUpdate": false
                     }
                 },
                 "lint": {
@@ -191,59 +136,114 @@
                         "lintFilePatterns": ["spec/**/*.ts", "spec/**/*.html"]
                     }
                 }
-            }
+            },
+            "projectType": "application",
+            "root": "spec",
+            "sourceRoot": "spec"
         },
         "generate-css": {
-            "root": "./src/styles",
-            "sourceRoot": "./src/styles",
-            "projectType": "application",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
+                    "defaultConfiguration": "",
                     "options": {
-                        "outputPath": "./.tmp/css",
-                        "main": "",
-                        "tsConfig": "tsconfig.json",
-                        "index": "index.html",
+                        "aot": false,
+                        "buildOptimizer": false,
                         "deleteOutputPath": false,
-                        "styles": ["src/styles.less"],
+                        "extractLicenses": false,
+                        "index": "index.html",
+                        "main": "",
+                        "namedChunks": true,
+                        "outputPath": "./.tmp/css",
+                        "sourceMap": true,
                         "stylePreprocessorOptions": {
                             "includePaths": ["node_modules"]
                         },
-                        "aot": false,
-                        "vendorChunk": true,
-                        "extractLicenses": false,
-                        "buildOptimizer": false,
-                        "sourceMap": true,
-                        "namedChunks": true
-                    },
-                    "defaultConfiguration": ""
+                        "styles": ["src/styles.less"],
+                        "tsConfig": "tsconfig.json",
+                        "vendorChunk": true
+                    }
                 }
-            }
+            },
+            "projectType": "application",
+            "root": "./src/styles",
+            "sourceRoot": "./src/styles"
         },
         "i18n": {
-            "root": "src",
-            "sourceRoot": "src",
-            "projectType": "library",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
+                    "defaultConfiguration": "",
                     "options": {
-                        "outputPath": "./.tmp",
                         "allowedCommonJsDependencies": ["lodash"],
+                        "buildOptimizer": false,
+                        "extractLicenses": false,
                         "index": "./src/index.html",
                         "main": "./src/public-api.ts",
-                        "tsConfig": "tsconfig.lib.json",
-                        "vendorChunk": true,
-                        "extractLicenses": false,
-                        "buildOptimizer": false,
-                        "sourceMap": true,
+                        "namedChunks": true,
                         "optimization": false,
-                        "namedChunks": true
-                    },
-                    "defaultConfiguration": ""
+                        "outputPath": "./.tmp",
+                        "sourceMap": true,
+                        "tsConfig": "tsconfig.lib.json",
+                        "vendorChunk": true
+                    }
                 }
-            }
+            },
+            "projectType": "library",
+            "root": "src",
+            "sourceRoot": "src"
+        },
+        "lib": {
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:ng-packagr",
+                    "configurations": {
+                        "dev": {
+                            "project": "ng-package-dev.json"
+                        },
+                        "locl": {
+                            "tsConfig": "./tsconfig.lib.locl.json"
+                        },
+                        "production": {
+                            "project": "ng-package.json",
+                            "tsConfig": "tsconfig.lib.prod.json"
+                        }
+                    },
+                    "options": {
+                        "project": "ng-package.json",
+                        "tsConfig": "tsconfig.lib.json"
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "i18n:build",
+                        "outputPath": "../.tmp"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-eslint/builder:lint",
+                    "options": {
+                        "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "karmaConfig": "karma.conf.js",
+                        "main": "src/test.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "preserveSymlinks": true,
+                        "stylePreprocessorOptions": {
+                            "includePaths": ["node_modules"]
+                        },
+                        "tsConfig": "tsconfig.spec.json"
+                    }
+                }
+            },
+            "projectType": "library",
+            "root": "src",
+            "sourceRoot": "src"
         }
     },
     "version": 1
