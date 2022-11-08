@@ -30,7 +30,7 @@ import { ChartCollection } from "../core/chart-collection";
 export class ChartCollectionService {
     private collections: { [key: string]: ChartCollection } = {};
 
-    public getChartCollection(collectionId: string) {
+    public getChartCollection(collectionId: string): ChartCollection {
         let collection = this.collections[collectionId];
         if (isUndefined(collection)) {
             collection = new ChartCollection();

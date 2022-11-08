@@ -70,6 +70,7 @@ export abstract class XYChartComponent
 {
     public chartAssist: ChartAssist;
     public valueAccessorKey: string = "y";
+    public collectionId: string = "";
 
     protected renderer: Renderer<IAccessors>;
     protected accessors: IAccessors;

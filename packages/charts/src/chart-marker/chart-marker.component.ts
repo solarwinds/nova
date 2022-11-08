@@ -60,7 +60,7 @@ export class ChartMarkerComponent
 
     constructor(private changeDetector: ChangeDetectorRef) {}
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.svg.subscribe((svg: string) => {
             this.renderMarkerSvg(svg);
         });

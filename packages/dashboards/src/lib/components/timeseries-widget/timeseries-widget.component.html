@@ -3,7 +3,11 @@
         nuiComponentPortal
         componentId="timeseriesWidgetChart"
         [componentType]="chartPreset.componentType"
-        [properties]="{ widgetData: widgetData, configuration: configuration }"
+        [properties]="{
+            widgetData: widgetData,
+            configuration: configuration,
+            collectionId: collectionId || configuration?.collectionId
+        }"
         #componentPortal="nuiComponentPortal"
     >
         <ng-template

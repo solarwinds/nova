@@ -46,9 +46,10 @@ export class TimeseriesWidgetComponent
 {
     public static lateLoadKey = "TimeseriesWidgetComponent";
 
-    @Input() public widgetData: ITimeseriesOutput = {} as ITimeseriesOutput;
-    @Input() public configuration: ITimeseriesWidgetConfig =
-        {} as ITimeseriesWidgetConfig;
+    @Input() public widgetData?: ITimeseriesOutput;
+    @Input() public configuration?: ITimeseriesWidgetConfig;
+    @Input() public collectionId?: string;
+
     @Input() @HostBinding("class") public elementClass = "";
 
     public chartPreset: IChartPreset;
@@ -58,7 +59,7 @@ export class TimeseriesWidgetComponent
         public changeDetector: ChangeDetectorRef
     ) {}
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.configuration) {
             const configurationCurrent: ITimeseriesWidgetConfig =
                 changes.configuration.currentValue;
@@ -78,6 +79,6 @@ export class TimeseriesWidgetComponent
 
     /** Checks if chart should be shown. */
     public shouldShowChart(): boolean {
-        return this.widgetData?.series?.length > 0;
+        return (this.widgetData?.series?.length ?? 0) > 0;
     }
 }

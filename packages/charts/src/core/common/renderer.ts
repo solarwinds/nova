@@ -270,7 +270,7 @@ export abstract class Renderer<TA extends IAccessors> {
         target: Selection<any, any, any, any>,
         dataPointSubject: Subject<IRendererEventPayload>,
         dataPoint: Partial<IDataPoint>
-    ) {
+    ): void {
         const eventList: string[] = get(this.interaction, path, {})[
             nativeEvent
         ];

@@ -1540,13 +1540,6 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@nova-ui/bits@~12.0.14-0":
-  version "12.0.14-3739"
-  resolved "https://registry.yarnpkg.com/@nova-ui/bits/-/bits-12.0.14-3739.tgz#846f8e2feb0a3ae84658f99fc87dc70b44a9bb52"
-  integrity sha512-TyqnK/+1eMSoQe+SpoqJM7nxyA/gXxrDQEtE6/vlcfMK/+xE20n8pql7LJJjUjYwqmP4NzL0Iaei+XPQVHQZpw==
-  dependencies:
-    tslib "^2.1.0"
-
 "@npmcli/fs@^1.0.0":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@npmcli/fs/-/fs-1.1.1.tgz#72f719fe935e687c56a4faecf3c03d06ba593257"

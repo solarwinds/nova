@@ -41,7 +41,6 @@ import {
 
 export const borderMidpoint = 0.5;
 
-// eslint-disable-next-line @typescript-eslint/no-type-alias
 type BorderKey = keyof IAllAround<IBorderConfig>;
 
 /**
@@ -243,7 +242,7 @@ export abstract class Grid implements IGrid {
     /**
      * Calculate the width correction needed for accommodating grid elements that may extend beyond the chart's configured width
      */
-    protected getOuterWidthDimensionCorrection() {
+    protected getOuterWidthDimensionCorrection(): number {
         return Grid.TICK_DIMENSION_CORRECTION;
     }
 
@@ -374,7 +373,7 @@ export abstract class Grid implements IGrid {
 
     // TODO: borders are evil. reconsider!
     // We're using borders instead of axis line and because of that we need to do these weird size adjustments
-    protected updateBottomBorder() {
+    protected updateBottomBorder(): void {
         if (!this.borders.bottom) {
             throw new Error("BottomBorder is not defined");
         }
@@ -393,7 +392,7 @@ export abstract class Grid implements IGrid {
     /**
      * Updates the d3 line positioning and visibility attributes of each of the configured borders
      */
-    protected updateBorders() {
+    protected updateBorders(): void {
         if (this.borders.bottom) {
             this.updateBottomBorder();
         }

@@ -100,8 +100,10 @@ export class InteractionLinePlugin extends ChartPlugin {
         }
 
         const xValue = this.lastInteractionValuesPayload.values.x
-            ? this.lastInteractionValuesPayload.values.x[xScale.id]
+            ? this.lastInteractionValuesPayload.values.x[xScale.id] ??
+              Object.values(this.lastInteractionValuesPayload.values.x)[0]
             : null;
+
         this.updateLine(this.interactionLineLayer, xScale, xValue);
     }
 
