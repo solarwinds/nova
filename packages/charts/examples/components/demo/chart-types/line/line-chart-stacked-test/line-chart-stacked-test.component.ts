@@ -93,7 +93,6 @@ export class LineChartStackedTestComponent implements OnInit {
             const upper = Math.round(
                 (serieCount * (chartIndex + 1)) / chartCount
             );
-            console.debug("series slice", lower, upper);
             chart.update(this.seriesSet.slice(lower, upper));
         });
     }
