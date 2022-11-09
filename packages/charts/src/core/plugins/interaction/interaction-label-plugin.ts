@@ -115,10 +115,10 @@ export class InteractionLabelPlugin extends ChartPlugin {
             throw new Error("xScale is not defined");
         }
 
-        const xValue = this.lastInteractionValuesPayload.values.x
-            ? this.lastInteractionValuesPayload.values.x[xScale.id] ??
-              Object.values(this.lastInteractionValuesPayload.values.x)[0]
-            : null;
+        const xValue = UtilityService.getInteractionValues(
+            this.lastInteractionValuesPayload.values.x,
+            xScale.id
+        );
 
         this.updateLabel(
             xScale,

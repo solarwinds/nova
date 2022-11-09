@@ -20,13 +20,14 @@
 
 import { curveLinear, line } from "d3-shape";
 import defaultsDeep from "lodash/defaultsDeep";
-import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 
 import {
     DATA_POINT_INTERACTION_RESET,
     STANDARD_RENDER_LAYERS,
 } from "../../constants";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Renderer } from "../../core/common/renderer";
 import { IXYScales, Scales } from "../../core/common/scales/types";
 import {
     D3Selection,
@@ -35,7 +36,6 @@ import {
     IPosition,
     IRendererEventPayload,
 } from "../../core/common/types";
-import { UtilityService } from "../../core/common/utility.service";
 import { DEFAULT_MARKER_INTERACTION_CONFIG } from "../constants";
 import { MarkerUtils } from "../marker-utils";
 import { ILineRendererConfig, IRenderSeries, RenderLayerName } from "../types";
@@ -49,12 +49,12 @@ export class LineRenderer extends XYRenderer<ILineAccessors> {
     public static UNCLIPPED_DATA_LAYER_NAME = "unclipped-data";
     public static LINE_CAP_CLASS_NAME = "nui-chart-line-cap";
 
-    public static getStrokeStyleDashed(width: number) {
+    public static getStrokeStyleDashed(width: number): string {
         const dash = width * 2;
         return `${dash},${dash}`;
     }
 
-    public static getStrokeStyleDotted(width: number) {
+    public static getStrokeStyleDotted(width: number): string {
         return `${width},${width}`;
     }
 
@@ -123,7 +123,9 @@ export class LineRenderer extends XYRenderer<ILineAccessors> {
      *
      * @param renderSeries
      */
-    public isInfiniteLineData(renderSeries: IRenderSeries<ILineAccessors>) {
+    public isInfiniteLineData(
+        renderSeries: IRenderSeries<ILineAccessors>
+    ): boolean {
         const dataSeries = renderSeries.dataSeries;
         return (
             dataSeries.data.length === 1 &&
@@ -145,7 +147,7 @@ export class LineRenderer extends XYRenderer<ILineAccessors> {
     public drawLine(
         renderSeries: IRenderSeries<ILineAccessors>,
         path: D3Selection<SVGPathElement>
-    ) {
+    ): void {
         if (this.isInfiniteLineData(renderSeries)) {
             this.drawInfiniteLine(renderSeries, path);
         } else {

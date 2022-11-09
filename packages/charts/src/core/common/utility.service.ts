@@ -288,4 +288,19 @@ export class UtilityService {
         }
         return scales.reduce(callbackFn, {});
     }
+
+    /**
+     * get values for interaction
+     * @param valueMap map of values by scaleId
+     * @param scaleId preferred scaleId
+     * @returns value from scaleId or first availabel scale
+     */
+    public static getInteractionValues(
+        valueMap: Record<string, any> | null | undefined,
+        scaleId: string
+    ): any {
+        return valueMap
+            ? valueMap[scaleId] ?? Object.values(valueMap)[0]
+            : null;
+    }
 }
