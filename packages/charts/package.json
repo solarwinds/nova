@@ -101,8 +101,7 @@
         "@compodoc/compodoc/marked": "^2.0.0"
     },
     "scripts": {
-        "assemble": "run-s prettier-check lint build-lib:locl build-lib:prod compodoc-custom-theme build-examples:prod",
-        "assemble-dev": "yarn run build-lib:prod",
+        "assemble": "run-s prettier-check lint build-lib:locl build-lib:prod dist-copy compodoc-custom-theme build-examples:prod",
         "build-examples": "ng b examples",
         "build-examples:prod": "npm run build-examples -- -c production",
         "build-examples:watch": "ng b examples --watch",
