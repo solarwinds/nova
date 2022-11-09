@@ -98,7 +98,12 @@ export class InteractionLabelPlugin extends ChartPlugin {
     }
 
     protected handleLabelUpdate(): void {
-        const scales = this.chart.getGrid().scales;
+        const grid = this.chart.getGrid();
+        if (!(grid instanceof XYGrid)) {
+            throw new Error(`${InteractionLabelPlugin.name} requires XYGrid`);
+        }
+
+        const scales = grid.scales;
         if (
             !this.areLabelUpdatesEnabled ||
             this.lastInteractionValuesPayload.interactionType !==
@@ -108,7 +113,6 @@ export class InteractionLabelPlugin extends ChartPlugin {
             return;
         }
 
-        const grid: XYGrid = <any>this.chart.getGrid();
         const xScale = find(scales["x"].index, { id: grid.bottomScaleId });
 
         if (!xScale) {

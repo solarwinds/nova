@@ -84,7 +84,12 @@ export class InteractionLinePlugin extends ChartPlugin {
     }
 
     private handleLineUpdate() {
-        const scales = this.chart.getGrid().scales;
+        const grid = this.chart.getGrid();
+        if (!(grid instanceof XYGrid)) {
+            throw new Error(`${InteractionLinePlugin.name} requires XYGrid`);
+        }
+
+        const scales = grid.scales;
         if (
             this.lastInteractionValuesPayload.interactionType !==
                 InteractionType.MouseMove ||
@@ -93,7 +98,6 @@ export class InteractionLinePlugin extends ChartPlugin {
             return;
         }
 
-        const grid: XYGrid = <any>this.chart.getGrid();
         const xScale = find(scales["x"].index, { id: grid.bottomScaleId });
 
         if (!xScale) {

@@ -23,14 +23,14 @@ import {
     INTERACTION_VALUES_EVENT,
 } from "../../../constants";
 import { Chart } from "../../chart";
+import { TimeScale } from "../../common/scales/time-scale";
 import { InteractionType } from "../../common/types";
-import { IGrid } from "../../grid/types";
 import { XYGrid } from "../../grid/xy-grid";
 import { IInteractionValuesPayload } from "../types";
 import { InteractionLabelPlugin } from "./interaction-label-plugin";
 
-describe("InteractionLabelPlugin >", () => {
-    let grid: IGrid;
+describe(`${InteractionLabelPlugin.name} >`, () => {
+    let grid: XYGrid;
     let chart: Chart;
     let plugin: InteractionLabelPlugin;
 
@@ -38,15 +38,19 @@ describe("InteractionLabelPlugin >", () => {
         grid = new XYGrid();
 
         chart = new Chart(grid);
-
         plugin = new InteractionLabelPlugin();
-        (<any>plugin).isChartInView = true;
 
         chart.addPlugin(plugin);
 
         const element = document.createElement("div");
         chart.build(element);
     });
+
+    const setIsChartInView = (value: boolean) => {
+        (<any>plugin).isChartInView = value;
+    };
+
+    const getIsChartInView = () => (<any>plugin).isChartInView;
 
     describe("INTERACTION_VALUES_EVENT", () => {
         it("should not trigger a label update if the chart is not in the viewport", () => {
@@ -56,7 +60,7 @@ describe("InteractionLabelPlugin >", () => {
             };
 
             const spy = spyOn(<any>plugin, "handleLabelUpdate");
-            (<any>plugin).isChartInView = false;
+            setIsChartInView(false);
 
             chart
                 .getEventBus()
@@ -73,7 +77,7 @@ describe("InteractionLabelPlugin >", () => {
             };
 
             const spy = spyOn(<any>plugin, "handleLabelUpdate");
-            (<any>plugin).isChartInView = true;
+            setIsChartInView(true);
 
             chart
                 .getEventBus()
@@ -98,18 +102,67 @@ describe("InteractionLabelPlugin >", () => {
                 expectedStoredPayload
             );
         });
+
+        describe("should trigger label update with correct xValue", () => {
+            const value = {};
+
+            let timeScale: TimeScale;
+            let payload: IInteractionValuesPayload;
+            let spyUpdateLabel: jasmine.Spy;
+
+            const trigger = () =>
+                chart
+                    .getEventBus()
+                    .getStream(INTERACTION_VALUES_EVENT)
+                    .next({ data: payload });
+
+            beforeEach(() => {
+                timeScale = new TimeScale();
+                grid.scales = {
+                    x: {
+                        index: {
+                            [timeScale.id]: timeScale,
+                        },
+                        list: [timeScale],
+                    },
+                };
+                grid.bottomScaleId = timeScale.id;
+                payload = {
+                    interactionType: InteractionType.MouseMove,
+                    values: {
+                        x: {},
+                    },
+                };
+                spyUpdateLabel = spyOn(<any>plugin, "updateLabel");
+                setIsChartInView(true);
+            });
+
+            it("when scale from current graph", () => {
+                payload.values.x[timeScale.id] = value;
+                trigger();
+                expect(spyUpdateLabel).toHaveBeenCalledWith(timeScale, value);
+            });
+
+            it("when scale not from current graph", () => {
+                grid.bottomScaleId = timeScale.id;
+                payload.values.x["otherId"] = value;
+                trigger();
+                expect(spyUpdateLabel).toHaveBeenCalledWith(timeScale, value);
+            });
+        });
     });
 
     describe("CHART_VIEW_STATUS_EVENT", () => {
         it("should update the viewport status", () => {
-            (<any>plugin).isChartInView = true;
+            setIsChartInView(true);
+            expect(getIsChartInView()).toEqual(true);
 
             chart
                 .getEventBus()
                 .getStream(CHART_VIEW_STATUS_EVENT)
                 .next({ data: { isChartInView: false } });
 
-            expect((<any>plugin).isChartInView).toEqual(false);
+            expect(getIsChartInView()).toEqual(false);
         });
 
         it("should trigger a label update when the chart enters the viewport", () => {
@@ -119,7 +172,7 @@ describe("InteractionLabelPlugin >", () => {
             };
 
             const spy = spyOn(<any>plugin, "handleLabelUpdate");
-            (<any>plugin).isChartInView = false;
+            setIsChartInView(false);
 
             chart
                 .getEventBus()
