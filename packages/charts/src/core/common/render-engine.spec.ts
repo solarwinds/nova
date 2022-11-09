@@ -20,7 +20,6 @@
 
 import { BaseType, select, Selection } from "d3-selection";
 import { ValueMap } from "d3-selection-multi";
-import { indexOf } from "lodash";
 import cloneDeep from "lodash/cloneDeep";
 import { Subject, Subscription } from "rxjs";
 
