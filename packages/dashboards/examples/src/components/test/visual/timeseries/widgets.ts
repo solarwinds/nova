@@ -113,6 +113,9 @@ export const positions: Record<string, GridsterItem> = {
     },
 };
 
+const collectionId1 = "test-collection-left";
+const collectionId2 = "test-collection-right";
+
 export const widgetConfigs: IWidget[] = [
     {
         id: "widget1",
@@ -163,6 +166,7 @@ export const widgetConfigs: IWidget[] = [
                             legendPlacement: LegendPlacement.Bottom,
                             enableZoom: true,
                             preset: TimeseriesChartPreset.Line,
+                            collectionId: collectionId1,
                         } as ITimeseriesWidgetConfig,
                     },
                 },
@@ -236,6 +240,7 @@ export const widgetConfigs: IWidget[] = [
                                     },
                                 } as ITimeseriesScaleConfig,
                             },
+                            collectionId: collectionId2,
                         } as ITimeseriesWidgetConfig,
                     },
                 },
@@ -306,6 +311,7 @@ export const widgetConfigs: IWidget[] = [
                             enableZoom: true,
                             leftAxisLabel: "Utilization (%)",
                             preset: TimeseriesChartPreset.StackedArea,
+                            collectionId: collectionId1,
                         } as ITimeseriesWidgetConfig,
                     },
                 },
@@ -384,6 +390,7 @@ export const widgetConfigs: IWidget[] = [
                                     },
                                 } as ITimeseriesScaleConfig,
                             },
+                            collectionId: collectionId2,
                         } as ITimeseriesWidgetConfig,
                     },
                 },
@@ -454,6 +461,7 @@ export const widgetConfigs: IWidget[] = [
                             enableZoom: true,
                             leftAxisLabel: "Utilization (%)",
                             preset: TimeseriesChartPreset.StackedPercentageArea,
+                            collectionId: collectionId1,
                         } as ITimeseriesWidgetConfig,
                     },
                 },
@@ -532,6 +540,7 @@ export const widgetConfigs: IWidget[] = [
                                     },
                                 } as ITimeseriesScaleConfig,
                             },
+                            collectionId: collectionId2,
                         } as ITimeseriesWidgetConfig,
                     },
                 },
@@ -597,6 +606,7 @@ export const widgetConfigs: IWidget[] = [
                             enableZoom: true,
                             leftAxisLabel: "Utilization (%)",
                             preset: TimeseriesChartPreset.StackedBar,
+                            collectionId: collectionId1,
                         } as Partial<ITimeseriesWidgetConfig>,
                     },
                 },
@@ -670,6 +680,7 @@ export const widgetConfigs: IWidget[] = [
                                     },
                                 } as ITimeseriesScaleConfig,
                             },
+                            collectionId: collectionId2,
                         } as Partial<ITimeseriesWidgetConfig>,
                     },
                 },
@@ -731,6 +742,7 @@ export const widgetConfigs: IWidget[] = [
                             enableZoom: true,
                             leftAxisLabel: "Utilization (%)",
                             preset: TimeseriesChartPreset.StatusBar,
+                            collectionId: collectionId1,
                         } as ITimeseriesWidgetConfig,
                     },
                 },
@@ -800,6 +812,7 @@ export const widgetConfigs: IWidget[] = [
                                     },
                                 } as ITimeseriesScaleConfig,
                             },
+                            collectionId: collectionId2,
                         } as ITimeseriesWidgetConfig,
                     },
                 },

@@ -35,6 +35,7 @@ import {
 } from "../../renderers/types";
 import { DataManager } from "./data-manager";
 import { Lasagna } from "./lasagna";
+import { TimeScale } from "./public-api";
 import { RenderEngine } from "./render-engine";
 import { Renderer } from "./renderer";
 import { IScale, Scales } from "./scales/types";
@@ -43,6 +44,7 @@ import {
     IAccessors,
     IChartSeries,
     IDataPoint,
+    IDataPointsPayload,
     IDataSeries,
     ILasagnaLayer,
     InteractionType,
@@ -156,6 +158,12 @@ describe("components >", () => {
         const seriesContainerSelector = `#${layerName}-${seriesId}`;
         return dataLayer.selectAll(seriesContainerSelector);
     };
+
+    const getHighlightedPoints = (): IDataPointsPayload =>
+        (<any>renderEngine).highlightedDataPoints;
+
+    const getHighlightedPoint = (index: number): IDataPoint =>
+        getHighlightedPoints()[index];
 
     describe("render-engine >", () => {
         beforeEach(() => {
@@ -335,9 +343,51 @@ describe("components >", () => {
                     interactionType: InteractionType.MouseMove,
                     values: {},
                 });
-                expect(
-                    (<any>renderEngine).highlightedDataPoints[1]
-                ).toBeDefined();
+                expect(getHighlightedPoint(1)).toBeDefined();
+            });
+
+            // TODO: still needs work
+            xit("should find correct data point based on scale", () => {
+                const serie1 = mockSingleSeriesSet[0];
+                const timeScale = new TimeScale();
+                serie1.scales = {
+                    x: timeScale,
+                };
+                serie1.data = [
+                    {
+                        x: 1,
+                    },
+                    {
+                        x: 2,
+                    },
+                ];
+                dataManager.update(mockSingleSeriesSet);
+
+                renderEngine.emitInteractionDataPoints({
+                    interactionType: InteractionType.MouseMove,
+                    values: {
+                        x: {
+                            [timeScale.id]: 1,
+                        },
+                    },
+                });
+
+                console.log(getHighlightedPoints());
+
+                expect(getHighlightedPoint(1)).toBeDefined();
+
+                renderEngine.emitInteractionDataPoints({
+                    interactionType: InteractionType.MouseMove,
+                    values: {
+                        x: {
+                            unknown: 1,
+                        },
+                    },
+                });
+
+                console.log(getHighlightedPoints());
+
+                expect(getHighlightedPoint(1)).toBeDefined();
             });
 
             it(`should add a data point with the DATA_POINT_INTERACTION_RESET index for a series with
@@ -350,12 +400,10 @@ describe("components >", () => {
                     interactionType: InteractionType.MouseMove,
                     values: {},
                 });
-                expect(
-                    (<any>renderEngine).highlightedDataPoints[1].index
-                ).toEqual(DATA_POINT_INTERACTION_RESET);
-                expect(
-                    (<any>renderEngine).highlightedDataPoints[2]
-                ).toBeDefined();
+                expect(getHighlightedPoint(1).index).toEqual(
+                    DATA_POINT_INTERACTION_RESET
+                );
+                expect(getHighlightedPoint(2)).toBeDefined();
             });
 
             it("should not add a data point for a series with empty data to the collection of highlighted data points", () => {
@@ -366,12 +414,10 @@ describe("components >", () => {
                     interactionType: InteractionType.MouseMove,
                     values: {},
                 });
-                expect(
-                    (<any>renderEngine).highlightedDataPoints[1].index
-                ).toEqual(DATA_POINT_INTERACTION_RESET);
-                expect(
-                    (<any>renderEngine).highlightedDataPoints[2]
-                ).toBeDefined();
+                expect(getHighlightedPoint(1).index).toEqual(
+                    DATA_POINT_INTERACTION_RESET
+                );
+                expect(getHighlightedPoint(2)).toBeDefined();
             });
 
             it(`should trigger a HIGHLIGHT_DATA_POINT_EVENT and the interactionDataPointsSubject if the dataIndex

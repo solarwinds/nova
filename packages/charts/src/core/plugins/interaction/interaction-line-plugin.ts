@@ -35,6 +35,7 @@ import {
     IChartViewStatusEventPayload,
     InteractionType,
 } from "../../common/types";
+import { UtilityService } from "../../common/utility.service";
 import { XYGrid } from "../../grid/xy-grid";
 import { IInteractionValuesPayload } from "../types";
 
@@ -83,7 +84,12 @@ export class InteractionLinePlugin extends ChartPlugin {
     }
 
     private handleLineUpdate() {
-        const scales = this.chart.getGrid().scales;
+        const grid = this.chart.getGrid();
+        if (!(grid instanceof XYGrid)) {
+            throw new Error(`${InteractionLinePlugin.name} requires XYGrid`);
+        }
+
+        const scales = grid.scales;
         if (
             this.lastInteractionValuesPayload.interactionType !==
                 InteractionType.MouseMove ||
@@ -92,16 +98,17 @@ export class InteractionLinePlugin extends ChartPlugin {
             return;
         }
 
-        const grid: XYGrid = <any>this.chart.getGrid();
         const xScale = find(scales["x"].index, { id: grid.bottomScaleId });
 
         if (!xScale) {
             throw new Error("xScale is not defined");
         }
 
-        const xValue = this.lastInteractionValuesPayload.values.x
-            ? this.lastInteractionValuesPayload.values.x[xScale.id]
-            : null;
+        const xValue = UtilityService.getInteractionValues(
+            this.lastInteractionValuesPayload.values.x,
+            xScale.id
+        );
+
         this.updateLine(this.interactionLineLayer, xScale, xValue);
     }
 

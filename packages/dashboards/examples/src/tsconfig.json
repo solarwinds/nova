@@ -6,7 +6,6 @@
         "declaration": false,
         "types": ["node"],
         "paths": {
-            "@angular/*": ["../../node_modules/@angular/*"],
             "@nova-ui/dashboards": ["../../src/public-api.ts"]
         }
     },

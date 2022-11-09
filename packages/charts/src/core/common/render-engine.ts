@@ -153,7 +153,10 @@ export class RenderEngine {
                 const chartValues: { [axis: string]: any } = {};
                 each(Object.keys(payload.values), (scaleKey) => {
                     const myScaleId = chartSeries.scales[scaleKey].id;
-                    chartValues[scaleKey] = payload.values[scaleKey][myScaleId];
+                    chartValues[scaleKey] = UtilityService.getInteractionValues(
+                        payload.values[scaleKey],
+                        myScaleId
+                    );
                 });
 
                 let dataIndex = DATA_POINT_INTERACTION_RESET;

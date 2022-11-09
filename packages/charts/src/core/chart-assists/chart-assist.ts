@@ -63,7 +63,9 @@ import {
  * Helper class that helps to bootstrap a chart with legend, using data pre-processor.
  * It will use the most common settings.
  */
-export class ChartAssist<T = IAccessors> implements IChartAssist {
+export class ChartAssist<T extends IAccessors = IAccessors>
+    implements IChartAssist
+{
     /**
      * Retrieves the display value for a data point on the specified series
      *
@@ -148,7 +150,6 @@ export class ChartAssist<T = IAccessors> implements IChartAssist {
             this.seriesProcessor = seriesProcessor;
         }
 
-        /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
         this.legendInteractionAssist = new LegendInteractionAssist(this);
 
         this.syncHandlerMap = {

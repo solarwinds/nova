@@ -26,7 +26,6 @@
         "@angular/platform-browser-dynamic": "^12.2.16",
         "@angular/router": "^12.2.16",
         "@compodoc/compodoc": "1.1.11",
-        "@nova-ui/bits": "~12.0.17-0",
         "@percy/cli": "^1.0.0-beta.74",
         "@percy/protractor": "^2.0.0",
         "@types/d3": "^5.7.2",
@@ -102,7 +101,7 @@
         "@compodoc/compodoc/marked": "^2.0.0"
     },
     "scripts": {
-        "assemble": "run-s prettier-check lint build-lib:locl build-lib:prod compodoc-custom-theme build-examples:prod",
+        "assemble": "run-s prettier-check lint build-lib:locl build-lib:prod dist-copy compodoc-custom-theme build-examples:prod",
         "build-examples": "ng b examples",
         "build-examples:prod": "npm run build-examples -- -c production",
         "build-examples:watch": "ng b examples --watch",
@@ -139,6 +138,10 @@
         "serve-examples": "ng s examples",
         "serve-examples:prod": "npx local-web-server -p 4200 -d sdk/api-docs-ng2/examples --spa index.html",
         "start": "run-p -lr compodoc:serve build-examples:watch",
+        "symlink": "run-s symlink:*",
+        "symlink:bits": "npx rimraf node_modules/@nova-ui/bits && npx symlink-dir ../bits/dist/ node_modules/@nova-ui/bits",
+        "symunlink": "run-s symunlink:*",
+        "symunlink:bits": "npx rimraf node_modules/@nova-ui/bits && yarn --check",
         "test": "ng t lib --watch=false --code-coverage",
         "test:dev": "ng t",
         "visual": "npx start-server-and-test serve-examples:prod 4200 visual:base",

@@ -97,8 +97,13 @@ export class InteractionLabelPlugin extends ChartPlugin {
             });
     }
 
-    protected handleLabelUpdate() {
-        const scales = this.chart.getGrid().scales;
+    protected handleLabelUpdate(): void {
+        const grid = this.chart.getGrid();
+        if (!(grid instanceof XYGrid)) {
+            throw new Error(`${InteractionLabelPlugin.name} requires XYGrid`);
+        }
+
+        const scales = grid.scales;
         if (
             !this.areLabelUpdatesEnabled ||
             this.lastInteractionValuesPayload.interactionType !==
@@ -108,23 +113,24 @@ export class InteractionLabelPlugin extends ChartPlugin {
             return;
         }
 
-        const grid: XYGrid = <any>this.chart.getGrid();
         const xScale = find(scales["x"].index, { id: grid.bottomScaleId });
 
         if (!xScale) {
             throw new Error("xScale is not defined");
         }
 
-        const xValue = this.lastInteractionValuesPayload.values.x
-            ? this.lastInteractionValuesPayload.values.x[xScale.id]
-            : null;
+        const xValue = UtilityService.getInteractionValues(
+            this.lastInteractionValuesPayload.values.x,
+            xScale.id
+        );
+
         this.updateLabel(
             xScale,
             isArray(xValue) ? xValue.slice(0, xValue.length - 1) : xValue
         );
     }
 
-    protected updateLabel(scale: IScale<any>, value: any) {
+    protected updateLabel(scale: IScale<any>, value: any): void {
         let interactionLabel: D3Selection<SVGGElement> =
             this.interactionLabelLayer.select(
                 `.${InteractionLabelPlugin.LAYER_NAME}`

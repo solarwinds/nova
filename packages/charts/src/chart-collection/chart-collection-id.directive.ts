@@ -34,7 +34,6 @@ import { ChartCollectionService } from "./chart-collection.service";
     selector: "[nuiChartCollectionId]",
 })
 export class ChartCollectionIdDirective implements AfterViewInit {
-    /* eslint-disable-next-line @angular-eslint/no-input-rename */
     @Input("nuiChartCollectionId")
     public collectionId: string;
 

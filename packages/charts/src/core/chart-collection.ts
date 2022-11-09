@@ -64,7 +64,7 @@ export class ChartCollection {
      *
      * @param {IChart} chart
      */
-    public addChart(chart: IChart) {
+    public addChart(chart: IChart): void {
         const index = (++this.lastIndex).toString();
 
         this.charts[index] = chart;
@@ -106,7 +106,7 @@ export class ChartCollection {
      *
      * @param {IChart} chart
      */
-    public removeChart(chart: IChart) {
+    public removeChart(chart: IChart): void {
         const key = this.getChartKey(chart);
         if (isUndefined(key)) {
             throw new Error("Chart not registered!");
@@ -119,7 +119,7 @@ export class ChartCollection {
     /**
      * Destroy this collection and release related resources
      */
-    public destroy() {
+    public destroy(): void {
         this.eventBus?.destroy();
         this.eventBus = undefined;
     }

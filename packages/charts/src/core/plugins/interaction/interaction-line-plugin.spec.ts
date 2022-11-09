@@ -23,16 +23,17 @@ import {
     INTERACTION_VALUES_EVENT,
 } from "../../../constants";
 import { Chart } from "../../chart";
+import { TimeScale } from "../../common/scales/time-scale";
 import { InteractionType } from "../../common/types";
-import { IGrid } from "../../grid/types";
 import { XYGrid } from "../../grid/xy-grid";
 import { IInteractionValuesPayload } from "../types";
 import { InteractionLinePlugin } from "./interaction-line-plugin";
 
 describe("InteractionLinePlugin >", () => {
-    let grid: IGrid;
+    let grid: XYGrid;
     let chart: Chart;
     let plugin: InteractionLinePlugin;
+    let interactionLineLayer: InteractionLinePlugin["interactionLineLayer"];
 
     beforeEach(() => {
         grid = new XYGrid();
@@ -40,13 +41,20 @@ describe("InteractionLinePlugin >", () => {
         chart = new Chart(grid);
 
         plugin = new InteractionLinePlugin();
-        (<any>plugin).isChartInView = true;
 
         chart.addPlugin(plugin);
 
         const element = document.createElement("div");
         chart.build(element);
+
+        interactionLineLayer = (<any>plugin).interactionLineLayer;
     });
+
+    const setIsChartInView = (value: boolean) => {
+        (<any>plugin).isChartInView = value;
+    };
+
+    const getIsChartInView = () => (<any>plugin).isChartInView;
 
     describe("INTERACTION_VALUES_EVENT", () => {
         it("should not trigger a line update if the chart is not in view", () => {
@@ -73,7 +81,7 @@ describe("InteractionLinePlugin >", () => {
             };
 
             const spy = spyOn(<any>plugin, "handleLineUpdate");
-            (<any>plugin).isChartInView = true;
+            setIsChartInView(true);
 
             chart
                 .getEventBus()
@@ -98,18 +106,74 @@ describe("InteractionLinePlugin >", () => {
                 expectedStoredPayload
             );
         });
+
+        describe("should trigger label update with correct xValue", () => {
+            const value = {};
+
+            let timeScale: TimeScale;
+            let payload: IInteractionValuesPayload;
+            let spyUpdateLine: jasmine.Spy;
+
+            const trigger = () =>
+                chart
+                    .getEventBus()
+                    .getStream(INTERACTION_VALUES_EVENT)
+                    .next({ data: payload });
+
+            beforeEach(() => {
+                timeScale = new TimeScale();
+                grid.scales = {
+                    x: {
+                        index: {
+                            [timeScale.id]: timeScale,
+                        },
+                        list: [timeScale],
+                    },
+                };
+                grid.bottomScaleId = timeScale.id;
+                payload = {
+                    interactionType: InteractionType.MouseMove,
+                    values: {
+                        x: {},
+                    },
+                };
+                spyUpdateLine = spyOn(<any>plugin, "updateLine");
+                setIsChartInView(true);
+            });
+
+            it("when scale from current graph", () => {
+                payload.values.x[timeScale.id] = value;
+                trigger();
+                expect(spyUpdateLine).toHaveBeenCalledWith(
+                    interactionLineLayer,
+                    timeScale,
+                    value
+                );
+            });
+
+            it("when scale not from current graph", () => {
+                grid.bottomScaleId = timeScale.id;
+                payload.values.x["otherId"] = value;
+                trigger();
+                expect(spyUpdateLine).toHaveBeenCalledWith(
+                    interactionLineLayer,
+                    timeScale,
+                    value
+                );
+            });
+        });
     });
 
     describe("CHART_VIEW_STATUS_EVENT", () => {
         it("should update the view status", () => {
-            (<any>plugin).isChartInView = true;
+            setIsChartInView(true);
 
             chart
                 .getEventBus()
                 .getStream(CHART_VIEW_STATUS_EVENT)
                 .next({ data: { isChartInView: false } });
 
-            expect((<any>plugin).isChartInView).toEqual(false);
+            expect(getIsChartInView()).toEqual(false);
         });
 
         it("should trigger a line update when the chart enters view", () => {
@@ -119,7 +183,7 @@ describe("InteractionLinePlugin >", () => {
             };
 
             const spy = spyOn(<any>plugin, "handleLineUpdate");
-            (<any>plugin).isChartInView = false;
+            setIsChartInView(false);
 
             chart
                 .getEventBus()

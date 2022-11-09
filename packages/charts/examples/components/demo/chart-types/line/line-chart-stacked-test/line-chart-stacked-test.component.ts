@@ -35,28 +35,38 @@ import {
     XYGridConfig,
 } from "@nova-ui/charts";
 
-interface ChartDatum {
-    x: moment.Moment;
-    y: number;
-}
+const rand = (lower: number, upper: number): number =>
+    lower + Math.round(Math.random() * (upper - lower));
+
+const range = (count: number) =>
+    new Array(count).fill(null).map((_, index) => index);
+
+const createRandomData = () =>
+    range(rand(3, 12)).map(() => range(rand(3, 12)).map(() => rand(0, 100)));
 
 @Component({
-    selector: "nui-line-chart-test",
-    templateUrl: "./line-chart-test.component.html",
+    selector: "nui-line-chart-stacked-test",
+    templateUrl: "./line-chart-stacked-test.component.html",
 })
-export class LineChartTestComponent implements OnInit {
+export class LineChartStackedTestComponent implements OnInit {
+    public readonly collectionId = "test-collection";
+
     public input: string;
-    public chart: Chart;
+    public chart1: Chart;
+    public chart2: Chart;
+    public chart3: Chart;
+
     private seriesSet: IChartSeries<ILineAccessors>[];
     private initialInput = [
+        [30, 95, 15, 60, 35],
+        [60, 40, 70, 45, 90],
         [30, 95, 15, 60, 35],
         [60, 40, 70, 45, 90],
     ];
 
     public ngOnInit(): void {
         this.input = JSON.stringify(this.initialInput);
-        this.configureChart();
-        this.buildSeriesSet();
+        this.configureCharts();
 
         this.update(this.initialInput);
     }
@@ -65,44 +75,53 @@ export class LineChartTestComponent implements OnInit {
         this.update(JSON.parse(value));
     }
 
-    private update(input: number[][]) {
-        this.seriesSet.forEach((s: IChartSeries<ILineAccessors>, i: number) => {
-            const seriesInput = input[i] || [];
-            s.data.forEach((datum: ChartDatum, j: number) => {
-                const newValue = seriesInput[j] || 0;
-                datum.y = newValue;
-            });
-        });
-
-        this.chart.update(this.seriesSet);
+    public generateRandomData(): void {
+        const data = createRandomData();
+        this.input = JSON.stringify(data);
+        this.update(data);
     }
 
-    private configureChart() {
+    private update(input: number[][]) {
+        this.seriesSet = this.buildSeriesSet(input);
+        const serieCount = this.seriesSet.length;
+
+        const charts = [this.chart1, this.chart2, this.chart3];
+        const chartCount = charts.length;
+
+        charts.forEach((chart, chartIndex) => {
+            const lower = Math.round((serieCount * chartIndex) / chartCount);
+            const upper = Math.round(
+                (serieCount * (chartIndex + 1)) / chartCount
+            );
+            chart.update(this.seriesSet.slice(lower, upper));
+        });
+    }
+
+    private configureCharts() {
         const gridConfig = new XYGridConfig();
         gridConfig.dimension.autoHeight = false;
         gridConfig.dimension.autoWidth = false;
         gridConfig.dimension.height(110);
         gridConfig.dimension.width(400);
-        this.chart = new Chart(new XYGrid(gridConfig));
+        this.chart1 = new Chart(new XYGrid(gridConfig));
+        this.chart2 = new Chart(new XYGrid(gridConfig));
+        this.chart3 = new Chart(new XYGrid(gridConfig));
     }
 
-    private buildSeriesSet() {
+    private buildSeriesSet(input: number[][]): IChartSeries<ILineAccessors>[] {
         const colors = [
             "red",
             "orange",
             "yellow",
+            "lime",
             "green",
             "blue",
             "purple",
             "black",
-            "white",
-        ];
-        const dates = [
-            "2016-12-25",
-            "2016-12-26",
-            "2016-12-27",
-            "2016-12-28",
-            "2016-12-29",
+            "gray",
+            "olive",
+            "gold",
+            "silver",
         ];
         const format = "YYYY-MM-DD";
         const renderer = new LineRenderer();
@@ -111,28 +130,28 @@ export class LineChartTestComponent implements OnInit {
         );
         const yScale = new LinearScale();
         yScale.fixDomain([0, 100]);
-        const scales: IXYScales = {
-            x: new TimeScale(),
-            y: yScale,
-        };
 
-        this.seriesSet = [
-            {
-                id: "1",
-                name: "Series 1",
-                data: dates.map((d: string) => ({
-                    x: moment(d, format),
-                    y: 0,
-                })),
+        // const scales: IXYScales[] = new Array(2).fill(null).map(() => ({
+        //     x: new TimeScale(),
+        //     y: yScale,
+        // }));
+
+        return input.map((row, rowIndex) => ({
+            id: `series-${rowIndex}`,
+            name: "Series ${index + 1}",
+            data: row.map((value, valueIndex) => ({
+                x: moment("2020-01-15", format).add(
+                    (24 * 7 * valueIndex) / (row.length - 1),
+                    "hour"
+                ),
+                y: value,
+            })),
+            scales: {
+                x: new TimeScale(),
+                y: yScale,
             },
-            {
-                id: "2",
-                name: "Series 2",
-                data: dates.map((d: string) => ({
-                    x: moment(d, format),
-                    y: 0,
-                })),
-            },
-        ].map((s) => ({ ...s, scales, renderer, accessors }));
+            renderer,
+            accessors,
+        }));
     }
 }

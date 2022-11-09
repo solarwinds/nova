@@ -135,7 +135,7 @@ export class XYGrid extends Grid implements IGrid {
     /**
      * Returns the id of the right axis scale
      */
-    public get rightScaleId() {
+    public get rightScaleId(): string {
         return this._rightScaleId;
     }
 
@@ -246,7 +246,9 @@ export class XYGrid extends Grid implements IGrid {
      * @param e
      * @private
      */
-    public handleSeriesStateChange(e: IChartEvent) {
+    public handleSeriesStateChange(
+        e: IChartEvent
+    ): Record<string, Record<string, any>> | undefined {
         if (!this.rightScaleId) {
             return;
         }
@@ -362,7 +364,7 @@ export class XYGrid extends Grid implements IGrid {
         axis: IAxis,
         scale: IScale<any>,
         axisGenerator: any
-    ) {
+    ): void {
         if (config.visible) {
             const bottomLabelAxis = axisGenerator(scale.d3Scale)
                 .ticks(config.approximateTicks)
@@ -398,7 +400,7 @@ export class XYGrid extends Grid implements IGrid {
         axisGenerator: any,
         scale: IScale<any>,
         size: number
-    ) {
+    ): void {
         const modifyZeroLines = (gridGroupSelection: any) =>
             gridGroupSelection
                 .selectAll(".tick line")
@@ -444,7 +446,7 @@ export class XYGrid extends Grid implements IGrid {
         return this;
     }
 
-    protected updateXAxis() {
+    protected updateXAxis(): void {
         const xScale = this.bottomScaleId
             ? this.scales["x"].index[this.bottomScaleId]
             : undefined;
@@ -479,7 +481,7 @@ export class XYGrid extends Grid implements IGrid {
         );
     }
 
-    protected updateYAxes() {
+    protected updateYAxes(): void {
         const axis = this.config().axis;
         const yLeftScale = this.leftScaleId
             ? this.scales["y"].index[this.leftScaleId]
@@ -533,7 +535,7 @@ export class XYGrid extends Grid implements IGrid {
     protected adjustAxisTicks(
         labelGroup: D3Selection<SVGGElement>,
         scale: IScale<any>
-    ) {
+    ): void {
         const textOfTicks: HTMLElement[] = [];
 
         labelGroup.attr("cursor", "default");
@@ -578,7 +580,7 @@ export class XYGrid extends Grid implements IGrid {
         labelGroup: D3Selection<SVGGElement>,
         scale: IScale<any>,
         axisLabels: HTMLElement[]
-    ) {
+    ): void {
         const axisConfig = this.config().axis;
         if (
             scale.id === this.bottomScaleId &&
@@ -748,7 +750,9 @@ export class XYGrid extends Grid implements IGrid {
         }, XYGrid.TICK_LABEL_OVERFLOW_DEBOUNCE_INTERVAL);
     }
 
-    protected selectAllAxisLabels(axisGroup: D3Selection<SVGGElement>) {
+    protected selectAllAxisLabels(
+        axisGroup: D3Selection<SVGGElement>
+    ): HTMLElement[] {
         const actualTextElements: HTMLElement[] = [];
         axisGroup.selectAll("g:not(.tick-hidden-text)").each(function () {
             actualTextElements.push(<HTMLElement>this);
@@ -756,7 +760,7 @@ export class XYGrid extends Grid implements IGrid {
         return actualTextElements;
     }
 
-    protected getOuterWidthDimensionCorrection() {
+    protected getOuterWidthDimensionCorrection(): number {
         return this.config().axis.bottom.visible
             ? Grid.TICK_DIMENSION_CORRECTION
             : 0;
@@ -834,7 +838,6 @@ export class XYGrid extends Grid implements IGrid {
         measurement: number,
         isBottomAxis: boolean
     ) {
-        let elementsToDisplay: HTMLElement[];
         const measureType = isBottomAxis ? "width" : "height";
         const measurementComparison =
             this.getTextMeasurement(elementsToFilter, measureType) <
@@ -851,7 +854,7 @@ export class XYGrid extends Grid implements IGrid {
             return [];
         }
 
-        elementsToDisplay = this.elementsFiltering(
+        const elementsToDisplay = this.elementsFiltering(
             elementsToFilter,
             measurement,
             measureType
@@ -866,7 +869,7 @@ export class XYGrid extends Grid implements IGrid {
         elementsToFilter: HTMLElement[],
         parameter: number,
         measureType: string
-    ) {
+    ): HTMLElement[] {
         let elementsToDisplay: HTMLElement[];
         let counter = 2;
         const condition = (array: HTMLElement[]) =>

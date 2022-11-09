@@ -3,7 +3,11 @@
         <strong>{{ configuration.leftAxisLabel }}</strong>
     </div>
     <div class="chart">
-        <nui-chart class="w-100" [chart]="chartAssist.chart"></nui-chart>
+        <nui-chart
+            [nuiChartCollectionId]="collectionId"
+            class="w-100"
+            [chart]="chartAssist.chart"
+        ></nui-chart>
     </div>
     <div
         class="d-flex"

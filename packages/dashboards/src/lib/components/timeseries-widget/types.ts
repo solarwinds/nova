@@ -34,6 +34,7 @@ export interface ITimeseriesWidgetConfig {
     preset: TimeseriesChartPreset;
     scales: ITimeseriesScalesConfig;
     units: UnitOption;
+    collectionId?: string;
 }
 
 export interface ITimeseriesWidgetSeries {

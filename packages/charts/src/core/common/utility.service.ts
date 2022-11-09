@@ -99,7 +99,7 @@ export class UtilityService {
      * @param {[number , number]} range
      * @returns {number}
      */
-    public static clampToRange(value: number, range: [number, number]) {
+    public static clampToRange(value: number, range: [number, number]): number {
         if (value < range[0]) {
             return range[0];
         }
@@ -111,7 +111,7 @@ export class UtilityService {
         return value;
     }
 
-    public static uuid() {
+    public static uuid(): string {
         let dt = new Date().getTime();
         const uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
             /[xy]/g,
@@ -221,7 +221,7 @@ export class UtilityService {
         haystack: T[],
         needle: any,
         selector: (d: T, index: number) => any = identity
-    ) {
+    ): number {
         let low = 0,
             high = haystack == null ? low : haystack.length;
 
@@ -253,7 +253,7 @@ export class UtilityService {
         yScales: IScale<any>[],
         xCoordinate: number,
         yCoordinate: number
-    ) {
+    ): IInteractionValues {
         const xValue = UtilityService.getScaleValues(xScales, xCoordinate);
         const yValue = UtilityService.getScaleValues(yScales, yCoordinate);
 
@@ -287,5 +287,20 @@ export class UtilityService {
             return result;
         }
         return scales.reduce(callbackFn, {});
+    }
+
+    /**
+     * get values for interaction
+     * @param valueMap map of values by scaleId
+     * @param scaleId preferred scaleId
+     * @returns value from scaleId or first availabel scale
+     */
+    public static getInteractionValues(
+        valueMap: Record<string, any> | null | undefined,
+        scaleId: string
+    ): any {
+        return valueMap
+            ? valueMap[scaleId] ?? Object.values(valueMap)[0]
+            : null;
     }
 }

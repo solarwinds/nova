@@ -49,4 +49,23 @@ describe("utility service", () => {
             );
         });
     });
+
+    describe("getInteractionValues(valueMap, preferredScaleId", () => {
+        const value1 = {};
+        const value2 = {};
+        const valueMap = {
+            id1: value1,
+            id2: value2,
+        };
+        it("returns value for preferredScaleId if that key is present", () => {
+            expect(UtilityService.getInteractionValues(valueMap, "id2")).toBe(
+                value2
+            );
+        });
+        it("returns first value if preferredScaleId not present", () => {
+            expect(UtilityService.getInteractionValues(valueMap, "id")).toBe(
+                value1
+            );
+        });
+    });
 });
