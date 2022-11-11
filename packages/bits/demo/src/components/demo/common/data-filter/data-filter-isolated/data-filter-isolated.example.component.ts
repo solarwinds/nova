@@ -292,8 +292,8 @@ export class FilteringIsolatedTimeFramePickerComponent
     public maxDate = moment();
 
     public showFooter: boolean = false;
-    public closePopoverSubject = new Subject();
-    public openPopoverSubject = new Subject();
+    public closePopoverSubject = new Subject<void>();
+    public openPopoverSubject = new Subject<void>();
 
     ngOnInit() {
         this.acceptedTimeframe = this.tf;

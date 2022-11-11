@@ -72,7 +72,7 @@ class ViewportInRepeatComponent implements AfterViewInit, OnDestroy {
     public pageSize: number = 20;
     public items$ = new BehaviorSubject<number[]>([]);
     public nextPage$: Observable<ListRange>;
-    public destroy$ = new Subject<unknown>();
+    public destroy$ = new Subject<void>();
     public totalItems: number = 132;
 
     constructor(public viewportManager: VirtualViewportManager) {}

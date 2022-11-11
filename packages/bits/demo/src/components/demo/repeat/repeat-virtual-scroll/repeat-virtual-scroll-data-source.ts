@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
+import { firstValueFrom, Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 
 import {
@@ -39,8 +39,8 @@ export class RepeatVirtualScrollDataSource<T>
     public async getFilteredData(
         data: IServersCollection
     ): Promise<INovaFilteringOutputs> {
-        return of(data)
-            .pipe(
+        return firstValueFrom(
+            of(data).pipe(
                 map((response: IServersCollection) => {
                     const itemsSource = response.items;
 
@@ -49,7 +49,7 @@ export class RepeatVirtualScrollDataSource<T>
                     };
                 })
             )
-            .toPromise();
+        );
     }
 
     protected getBackendData(

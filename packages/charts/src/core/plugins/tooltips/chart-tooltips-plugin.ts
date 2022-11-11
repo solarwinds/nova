@@ -103,17 +103,17 @@ export class ChartTooltipsPlugin extends ChartPlugin {
     /**
      * This publishes an event to show tooltips
      */
-    public showSubject = new Subject();
+    public showSubject = new Subject<void>();
 
     /**
      * This publishes an event to hide tooltips
      */
-    public hideSubject = new Subject();
+    public hideSubject = new Subject<void>();
 
     protected overlaySetup: ConnectedPosition[];
 
     private isChartInView = false;
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
     private seriesVisibilityMap: Record<string, boolean> = {};
 
     /**

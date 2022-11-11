@@ -77,7 +77,7 @@ export class FieldMapperAggregatorConfiguratorComponent
         chartSeriesDataFieldId: [],
     });
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         changeDetector: ChangeDetectorRef,

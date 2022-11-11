@@ -99,7 +99,7 @@ export class AcmeDashboardComponent
 
     public editMode = false;
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         private providerRegistry: ProviderRegistryService,

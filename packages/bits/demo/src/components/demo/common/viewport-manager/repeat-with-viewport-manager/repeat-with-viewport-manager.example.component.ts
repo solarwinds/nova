@@ -30,7 +30,7 @@ import {
 } from "@angular/core";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
-import { BehaviorSubject, Observable, of, Subject } from "rxjs";
+import { BehaviorSubject, firstValueFrom, Observable, of, Subject } from "rxjs";
 import {
     catchError,
     delay,
@@ -128,8 +128,8 @@ export class GBooksDataSourceWithSearch
     public async getFilteredData(
         booksData: IGBooksFrontendCollection
     ): Promise<IDataSourceOutput<INovaFilteringOutputs>> {
-        return of(booksData)
-            .pipe(
+        return firstValueFrom(
+            of(booksData).pipe(
                 tap((response: IGBooksFrontendCollection) => {
                     // after receiving data we need to append it to our previous fetched results
                     this.cache = this.cache.concat(response.books);
@@ -141,11 +141,11 @@ export class GBooksDataSourceWithSearch
                     },
                 }))
             )
-            .toPromise();
+        );
     }
 
     // redefine parent method
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         this.applyFilters$.next(this.getFilters());
     }
 
@@ -246,7 +246,7 @@ export class RepeatWithViewportManagerExampleComponent
     @ViewChild(RepeatComponent) private repeat: RepeatComponent;
     @ViewChild(SearchComponent) private search: SearchComponent;
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         private viewportManager: VirtualViewportManager,
@@ -254,7 +254,7 @@ export class RepeatWithViewportManagerExampleComponent
         private dataSource: GBooksDataSourceWithSearch
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource.busy
             .pipe(
                 tap((val) => {
@@ -302,11 +302,11 @@ export class RepeatWithViewportManagerExampleComponent
         this.destroy$.complete();
     }
 
-    public onSearch() {
+    public onSearch(): void {
         this.doSearch();
     }
 
-    public onCancelSearch() {
+    public onCancelSearch(): void {
         this.doSearch();
     }
 

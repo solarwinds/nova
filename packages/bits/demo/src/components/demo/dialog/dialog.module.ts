@@ -174,6 +174,5 @@ const routes = [
         },
     ],
     exports: [RouterModule],
-    entryComponents: [DialogContentExampleComponent],
 })
 export class DialogModule {}

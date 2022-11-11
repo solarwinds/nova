@@ -54,7 +54,7 @@ export class WidgetSearchComponent implements OnInit, OnDestroy, OnChanges {
     public enabled: boolean = false;
 
     public searchTerm$ = new Subject<string>();
-    public onDestroy$ = new Subject();
+    public onDestroy$ = new Subject<void>();
     private searchTermSubscription: Subscription;
 
     constructor(
@@ -122,7 +122,7 @@ export class WidgetSearchComponent implements OnInit, OnDestroy, OnChanges {
                 )
             )
             .subscribe((searchTerm) => {
-                this.eventBus.getStream(REFRESH).next();
+                this.eventBus.getStream(REFRESH).next(undefined);
                 this.eventBus.getStream(WIDGET_SEARCH).next({
                     payload: searchTerm,
                 });

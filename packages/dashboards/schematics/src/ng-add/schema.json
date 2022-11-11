@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "id": "SchematicsNovaAdd",
+    "$id": "SchematicsNovaAdd",
     "title": "ng-add schematic for dashboards",
     "type": "object",
     "description": "bootstraps a project for dashboards consumption",

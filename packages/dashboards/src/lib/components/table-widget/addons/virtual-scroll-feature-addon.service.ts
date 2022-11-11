@@ -112,7 +112,9 @@ export class VirtualScrollFeatureAddonService {
                         // @ts-ignore: Provide a proper interface to DS
                         this.widget.dataSource.page =
                             range.end / (range.end - range.start);
-                        this.widget.eventBus.getStream(SCROLL_NEXT_PAGE).next();
+                        this.widget.eventBus
+                            .getStream(SCROLL_NEXT_PAGE)
+                            .next(undefined);
                         this.widget.changeDetector.detectChanges();
                     })
                 ),

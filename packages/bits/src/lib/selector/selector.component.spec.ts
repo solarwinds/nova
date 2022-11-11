@@ -18,8 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-describe("components >", () => {
-    describe("selector >", () => {
-        // ToDo: Reimplement these tests in scope of NUI-2098
-    });
-});
+// describe("components >", () => {
+//     describe("selector >", () => {
+//         // ToDo: Reimplement these tests in scope of NUI-2098
+//     });
+// });

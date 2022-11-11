@@ -218,7 +218,7 @@ export class PanelComponent
 
     private _isCollapsed: boolean;
     private _isHidden: boolean = false;
-    private toggles = new Subject();
+    private toggles = new Subject<boolean>();
     private togglesSubscription: Subscription;
     private _expandAnimationFactory?: AnimationFactory;
     private _collapseAnimationFactory?: AnimationFactory;
@@ -293,19 +293,19 @@ export class PanelComponent
         return panelMap[this.orientation].icon[this.panelState];
     }
 
-    public toggleEnter() {
+    public toggleEnter(): void {
         if (this.isHoverable) {
             this.toggles.next(true);
         }
     }
 
-    public toggleLeave() {
+    public toggleLeave(): void {
         if (this.isHoverable) {
             this.toggles.next(false);
         }
     }
 
-    public isPanelResizable() {
+    public isPanelResizable(): boolean {
         return this.isResizable && !this.isCollapsed;
     }
 
@@ -394,7 +394,7 @@ export class PanelComponent
         }
     }
 
-    public applyBoundarySizes() {
+    public applyBoundarySizes(): void {
         if (this.isResizable) {
             this.renderer.setStyle(
                 this.getPaneContainerElement(),
@@ -409,7 +409,7 @@ export class PanelComponent
         }
     }
 
-    public removeMinSize() {
+    public removeMinSize(): void {
         if (this.isResizable) {
             this.renderer.setStyle(
                 this.getPaneContainerElement(),
@@ -419,7 +419,7 @@ export class PanelComponent
         }
     }
 
-    public toggleCollapsedOnClick() {
+    public toggleCollapsedOnClick(): void {
         if (this.isHoverable) {
             return;
         } else {

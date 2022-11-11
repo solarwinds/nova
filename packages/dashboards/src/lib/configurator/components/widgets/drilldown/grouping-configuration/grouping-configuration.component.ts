@@ -82,7 +82,7 @@ export class GroupingConfigurationComponent
 
     public selectData: Array<Array<string>>;
 
-    private destroy$: Subject<any> = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         public changeDetector: ChangeDetectorRef,

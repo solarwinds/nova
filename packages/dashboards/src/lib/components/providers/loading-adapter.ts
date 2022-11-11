@@ -33,7 +33,7 @@ import { IDataSourceBusyPayload } from "./types";
 @Injectable()
 export class LoadingAdapter implements OnDestroy, IHasComponent {
     private loadingMap: Record<string, boolean> = {};
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
     private componentId: string;
 
     constructor(

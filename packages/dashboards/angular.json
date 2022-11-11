@@ -65,16 +65,9 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "e2e": {
-                            "browserTarget": "examples:build:e2e",
-                            "optimization": true,
-                            "sourceMap": false,
-                            "vendorChunk": false
+                            "browserTarget": "examples:build:e2e"
                         },
-                        "production": {
-                            "optimization": true,
-                            "sourceMap": false,
-                            "vendorChunk": false
-                        }
+                        "production": {}
                     },
                     "options": {
                         "browserTarget": "examples:build"
@@ -198,11 +191,9 @@
     },
     "schematics": {
         "@schematics/angular:component": {
-            "lintFix": true,
             "prefix": "nui"
         },
         "@schematics/angular:directive": {
-            "lintFix": true,
             "prefix": "nui"
         }
     },

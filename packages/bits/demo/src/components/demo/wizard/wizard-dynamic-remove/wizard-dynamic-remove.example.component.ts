@@ -38,7 +38,7 @@ export class WizardDynamicRemoveExampleComponent implements OnDestroy {
 
     public selectedIndex: number;
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     public select(event: IWizardSelectionEvent): void {
         this.selectedIndex = event.selectedIndex;

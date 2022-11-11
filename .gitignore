@@ -1,5 +1,7 @@
-.idea/
-.vscode/
+.idea
+.vscode
+.angular/cache
+.tmp*
+node_modules
 *.log
-node_modules/
 response.txt

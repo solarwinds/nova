@@ -34,6 +34,5 @@ import { OverlayPositionService } from "./overlay-position.service";
     exports: [OverlayComponent],
     imports: [OverlayModule, PortalModule, CommonModule],
     providers: [OverlayPositionService],
-    entryComponents: [OverlayComponent],
 })
 export class NuiOverlayModule {}

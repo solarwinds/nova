@@ -59,7 +59,7 @@ export class ListWidgetComponent
     @Input() @HostBinding("class") public elementClass: string;
 
     private itemFormatterProps = new Map();
-    private destroy$: Subject<void> = new Subject();
+    private destroy$: Subject<void> = new Subject<void>();
     private widgetWidth: number;
 
     constructor(

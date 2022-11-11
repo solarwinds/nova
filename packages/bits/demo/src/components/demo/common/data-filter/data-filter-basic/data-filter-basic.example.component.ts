@@ -428,8 +428,8 @@ export class FilteringTimeFramePickerComponent implements IFilterPub, OnInit {
 
     constructor(public timeframeService: TimeframeService) {}
 
-    public closePopoverSubject = new Subject();
-    public openPopoverSubject = new Subject();
+    public closePopoverSubject = new Subject<void>();
+    public openPopoverSubject = new Subject<void>();
 
     ngOnInit() {
         this.acceptedTimeframe = this.tf;

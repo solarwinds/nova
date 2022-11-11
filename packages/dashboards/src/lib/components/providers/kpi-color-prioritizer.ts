@@ -32,7 +32,7 @@ import { IDataSourceOutput, IKpiColorRules } from "./types";
 
 @Injectable()
 export class KpiColorPrioritizer implements IConfigurable, OnDestroy {
-    protected destroy$ = new Subject();
+    protected destroy$ = new Subject<void>();
     protected componentId: string;
     protected propertyPath: string = "backgroundColor";
     protected rules: IKpiColorRules[] | undefined;

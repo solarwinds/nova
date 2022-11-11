@@ -34,7 +34,7 @@ import { MenuItemAtom } from "./menu-item.atom";
 export class MenuAtom extends Atom {
     public static CSS_CLASS = "nui-menu";
 
-    public static getAllMenuItems = () =>
+    public static getAllMenuItems = (): ElementArrayFinder =>
         element.all(by.css(".nui-menu-item:not(.nui-menu-item--header"));
 
     public menuContentId: string;

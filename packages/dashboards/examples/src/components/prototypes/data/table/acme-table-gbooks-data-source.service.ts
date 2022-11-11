@@ -22,7 +22,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
-import { BehaviorSubject, Observable, of, Subject } from "rxjs";
+import { BehaviorSubject, firstValueFrom, Observable, of, Subject } from "rxjs";
 import {
     catchError,
     delay,
@@ -128,8 +128,8 @@ export class AcmeTableGBooksDataSource
     public async getFilteredData(
         booksData: IGBooksData
     ): Promise<IDataSourceOutput<INovaFilteringOutputs>> {
-        return of(booksData)
-            .pipe(
+        return firstValueFrom(
+            of(booksData).pipe(
                 tap((response) => {
                     this.cache = this.cache.concat(response.books);
                 }),
@@ -141,7 +141,7 @@ export class AcmeTableGBooksDataSource
                     },
                 }))
             )
-            .toPromise();
+        );
     }
 
     private getData(filters: INovaFilters): Observable<IGBooksData> {

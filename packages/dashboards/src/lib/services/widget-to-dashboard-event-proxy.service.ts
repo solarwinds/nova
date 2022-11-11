@@ -65,7 +65,7 @@ export class WidgetToDashboardEventProxyService
 {
     private upstreamSubscriptions: Record<string, Subscription> = {};
     private downstreamSubscriptions: Record<string, Subscription> = {};
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
     private component: { componentId: string };
 
     private upstreams?: string[];

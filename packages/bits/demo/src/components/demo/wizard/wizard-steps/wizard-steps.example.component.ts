@@ -39,7 +39,7 @@ export class WizardStepsExampleComponent implements OnDestroy, OnInit {
 
     public selectedIndex: number;
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     public myForm: FormGroup;
 

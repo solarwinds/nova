@@ -79,7 +79,7 @@ export class TimeseriesTileIndicatorDataConfigurationComponent
 
     public form: FormGroup;
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
     private _selectedSeries?: ITimeseriesWidgetData;
 
     constructor(

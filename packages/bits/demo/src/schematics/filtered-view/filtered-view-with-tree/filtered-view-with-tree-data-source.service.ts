@@ -23,7 +23,7 @@ import { Apollo, gql } from "apollo-angular";
 import { DocumentNode } from "graphql";
 import isArray from "lodash/isArray";
 import isPlainObject from "lodash/isPlainObject";
-import { Observable, of } from "rxjs";
+import { firstValueFrom, Observable, of } from "rxjs";
 import { catchError, delay, map } from "rxjs/operators";
 
 import {
@@ -58,8 +58,8 @@ export class FilteredViewWithTreeDataSource<T>
     public async getFilteredData(
         data: IServersCollection
     ): Promise<INovaFilteringOutputs> {
-        return of(data)
-            .pipe(
+        return firstValueFrom(
+            of(data).pipe(
                 map((response: IServersCollection) => {
                     const itemsSource = response.Subregion;
 
@@ -68,7 +68,7 @@ export class FilteredViewWithTreeDataSource<T>
                     };
                 })
             )
-            .toPromise();
+        );
     }
 
     // This method is expected to return all data needed for repeat/paginator/filterGroups in order to work.

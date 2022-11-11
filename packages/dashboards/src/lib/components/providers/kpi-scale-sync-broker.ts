@@ -43,7 +43,7 @@ export class KpiScaleSyncBroker implements IConfigurable {
     private valuesObject: Record<string, Array<Partial<IBrokerValue>>>;
     private brokers: IBroker[] = [];
     private builder = new KpiScaleSyncBrokerBuilder(this.brokers);
-    private destroySubscriptions$: Subject<any> = new Subject();
+    private destroySubscriptions$ = new Subject<void>();
     private tileNodes: string[];
 
     constructor(

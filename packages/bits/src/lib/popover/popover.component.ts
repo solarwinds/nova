@@ -81,7 +81,7 @@ import {
 export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
     public static getHostView(
         componentInstance: ComponentRef<PopoverModalComponent>
-    ) {
+    ): HTMLElement {
         return (componentInstance.hostView as EmbeddedViewRef<any>)
             .rootNodes[0] as HTMLElement;
     }
@@ -199,7 +199,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
     private resizeObserver: ResizeObserver;
 
     @HostListener("click", ["$event"])
-    public onClick(event: MouseEvent) {
+    public onClick(event: MouseEvent): void {
         if (this.isTriggerPresent("click") && this.popover) {
             this.hidePopover();
         } else {
@@ -212,24 +212,24 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
     }
 
     @HostListener("mouseenter")
-    public onMouseEnter() {
+    public onMouseEnter(): void {
         this.onTrigger("mouseenter");
         this.mouseEnterResolver();
     }
 
     @HostListener("mouseleave")
-    public onMouseLeave() {
+    public onMouseLeave(): void {
         this.onTrigger("mouseleave");
         this.mouseLeaveResolver();
     }
 
     @HostListener("focusin")
-    public onFocusIn() {
+    public onFocusIn(): void {
         this.onTrigger("focus");
     }
 
     @HostListener("focusout")
-    public onFocusOut() {
+    public onFocusOut(): void {
         if (!this.closePopover) {
             if (this.isTriggerPresent("focus") && !this.preventClosing) {
                 this.hidePopover();
@@ -247,7 +247,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         private popoverPositionService: PopoverPositionService
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         if (this.container) {
             this.containerElementRef = new ElementRef(this.container);
         }
@@ -279,7 +279,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         }
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this.mouseEnterTimeout) {
             clearTimeout(this.mouseEnterTimeout);
             this.mouseEnterTimeout = undefined;
@@ -306,7 +306,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         }
     }
 
-    public showPopover() {
+    public showPopover(): void {
         if (this.disabled) {
             return;
         }
@@ -333,14 +333,14 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
      * Updates the position of the popup based on its overlay's current position strategy.
      * This method is currently used in Charts by the ChartPopoverComponent.
      */
-    public updatePosition() {
+    public updatePosition(): void {
         this.overlayComponent?.getOverlayRef()?.updatePosition();
     }
 
     /**
      * Resets the size of the popover.
      */
-    public resetSize() {
+    public resetSize(): void {
         // This is set to undefined so that angular cdk will set the height and width automatically
         this.overlayComponent?.getOverlayRef()?.updateSize({
             height: undefined,
@@ -368,7 +368,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
     }
 
     private activatePopover() {
-        this.eventBusService.getStream({ id: "close-popover" }).next();
+        this.eventBusService.getStream({ id: "close-popover" }).next(undefined);
         this.showPopover();
     }
 
@@ -376,7 +376,9 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         this.popoverModalSubscriptions = [];
         const closePopoverSubscription = merge(
             !this.preventClosing
-                ? this.eventBusService.getStream({ id: "close-popover" })
+                ? this.eventBusService
+                      .getStream({ id: "close-popover" })
+                      .asObservable()
                 : EMPTY,
             this.closePopover || EMPTY
         ).subscribe(() => {
@@ -394,9 +396,9 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         this.popover.instance.unlimited = this.unlimited;
         this.popover.instance.placement = this.placement;
         this.popoverDisplaySubject = new BehaviorSubject<boolean>(true);
-        this.popoverBeforeHiddenSubject = new Subject();
-        this.popoverAfterHiddenSubject = new Subject();
-        this.popoverModalEventSubject = new Subject();
+        this.popoverBeforeHiddenSubject = new Subject<void>();
+        this.popoverAfterHiddenSubject = new Subject<void>();
+        this.popoverModalEventSubject = new Subject<PopoverModalEvents>();
         this.popover.instance.popoverBeforeHiddenSubject =
             this.popoverBeforeHiddenSubject;
         this.popover.instance.popoverAfterHiddenSubject =

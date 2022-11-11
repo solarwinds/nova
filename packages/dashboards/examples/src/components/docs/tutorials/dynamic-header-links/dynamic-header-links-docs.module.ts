@@ -39,6 +39,5 @@ const routes = [
 @NgModule({
     imports: [RouterModule.forChild(routes)],
     declarations: [DynamicHeaderLinksDocsComponent],
-    entryComponents: [],
 })
 export class DynamicHeaderLinksDocsModule {}

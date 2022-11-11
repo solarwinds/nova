@@ -133,7 +133,7 @@ export class PopupComponent
     private _visible: boolean;
     private _overlayConfig: OverlayConfig = ADAPTER_OVERLAY_CONFIG;
     private isContentInitialized: boolean;
-    private destroy$: Subject<void> = new Subject();
+    private destroy$: Subject<void> = new Subject<void>();
     private lastEventType: string;
 
     constructor(

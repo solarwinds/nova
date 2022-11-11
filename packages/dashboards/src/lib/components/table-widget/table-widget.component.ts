@@ -311,7 +311,7 @@ export class TableWidgetComponent
                     tap((value) => {
                         this.tableWidgetHeight = value;
                         this.virtualScrollAddon.subscribeToVirtualScroll();
-                        this.eventBus.getStream(WIDGET_READY).next();
+                        this.eventBus.getStream(WIDGET_READY).next(undefined);
                     })
                 )
                 .subscribe();
@@ -346,11 +346,14 @@ export class TableWidgetComponent
             : columnsCondition && dataCondition;
     }
 
-    public dataTrackBy(index: number, item: any) {
+    public dataTrackBy(index: number, item: any): any {
         return item ? item.id : index;
     }
 
-    public columnTrackBy(index: number, item: ITableWidgetColumnConfig) {
+    public columnTrackBy(
+        index: number,
+        item: ITableWidgetColumnConfig
+    ): string {
         return item.id;
     }
 
@@ -458,7 +461,7 @@ export class TableWidgetComponent
      * Handles change of sorting. Gets sorted column from columns array.
      * @param event
      */
-    public onSortOrderChanged(event: ISortedItem) {
+    public onSortOrderChanged(event: ISortedItem): void {
         this.sortedColumn = event;
         const columnToSort = this.columns.find(
             (column) => column.id === event.sortBy
@@ -487,10 +490,10 @@ export class TableWidgetComponent
         // So we're flushing the old data and waiting for new one to avoid confusion.
         this.flushTableData();
 
-        this.eventBus.getStream(REFRESH).next();
+        this.eventBus.getStream(REFRESH).next(undefined);
     }
 
-    public onInteraction(row: any, event: MouseEvent) {
+    public onInteraction(row: any, event: MouseEvent): void {
         if (!this.interactive) {
             return;
         }
@@ -509,9 +512,9 @@ export class TableWidgetComponent
             .next({ payload: { data: row.__record } });
     }
 
-    public onSearchInputChanged(searchTerm: string) {
+    public onSearchInputChanged(searchTerm: string): void {
         this.searchValue = searchTerm;
-        this.searchTerm$.next();
+        this.searchTerm$.next("");
     }
 
     public getColumnAlignment(

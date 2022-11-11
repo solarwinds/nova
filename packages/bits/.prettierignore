@@ -1,5 +1,8 @@
-/.tmp
+/.angular/cache
+/.tmp*
 /coverage
 /dist
-/schematics
+/schematics/dist
+/schematics/src/*/files
 /sdk
+/src/styles/data

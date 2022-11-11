@@ -98,7 +98,7 @@ export class ColorPickerComponent
         new OverlayUtilitiesService();
 
     private selectResizeObserver: ResizeObserver;
-    private destroy$: Subject<any> = new Subject<any>();
+    private destroy$ = new Subject<void>();
 
     constructor(
         protected changeDetection: ChangeDetectorRef,

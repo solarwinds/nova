@@ -29,6 +29,7 @@ import {
 } from "../../constants";
 import { Chart } from "../chart";
 import {
+    IChart,
     IChartEvent,
     IDataPoint,
     IDataPointsPayload,
@@ -184,10 +185,10 @@ describe("ChartPopoverPlugin >", () => {
                 offsetHeight: 200,
             };
 
-            // @ts-ignore: Disabled for testing purposes
-            spyOnProperty(chart.target?.node(), "parentNode").and.returnValue(
-                parentNodeValues
-            );
+            spyOnProperty(
+                chart.target?.node() as any,
+                "parentNode"
+            ).and.returnValue(parentNodeValues);
             chart
                 .getEventBus()
                 .getStream(INTERACTION_DATA_POINTS_EVENT)

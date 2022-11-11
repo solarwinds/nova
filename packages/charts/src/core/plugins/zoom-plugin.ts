@@ -63,7 +63,7 @@ export class ZoomPlugin extends ChartPlugin {
     private brush: BrushBehavior<any>;
     private zoomBrushLayer: D3Selection;
     private brushElement: D3Selection<SVGGElement>;
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
     private brushStartX: number | undefined;
     private interactionHandlerMap: Record<string, Function>;
 

@@ -142,12 +142,12 @@ export class PresentationConfigurationV2Component
     public subtitleText: string;
 
     private _dataFields: Array<IDataField> = [];
-    private onDestroy$: Subject<void> = new Subject();
+    private onDestroy$: Subject<void> = new Subject<void>();
     private providedFormatters: Array<IFormatterDefinition> = [];
     private _formatters: Array<IFormatterDefinition> = [];
     private changeFn: Function;
     private touchFn: Function;
-    private propertiesFormReady = new Subject();
+    private propertiesFormReady = new Subject<void>();
     private input: IFormatter;
 
     constructor(

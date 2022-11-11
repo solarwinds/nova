@@ -59,8 +59,8 @@ export class TimeFramePickerCustomExampleComponent {
         this.tf = this.acceptedTimeframe;
     }
 
-    public closePopoverSubject = new Subject();
-    public openPopoverSubject = new Subject();
+    public closePopoverSubject = new Subject<void>();
+    public openPopoverSubject = new Subject<void>();
 
     public updateTf(value: ITimeframe) {
         this.tf = value;

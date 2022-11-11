@@ -41,7 +41,7 @@ export class WidgetEditorDirective implements OnInit, OnDestroy {
     @Input("nuiWidgetEditor")
     dashboardPersistenceHandler: IDashboardPersistenceHandler;
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         @Host() @Self() private dashboardComponent: DashboardComponent,

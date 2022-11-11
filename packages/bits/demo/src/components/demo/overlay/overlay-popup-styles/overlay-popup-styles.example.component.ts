@@ -35,7 +35,7 @@ import {
 export class OverlayPopupStylesExampleComponent
     implements AfterViewInit, OnDestroy
 {
-    private destroy$: Subject<any> = new Subject();
+    private destroy$ = new Subject<void>();
 
     public overlayConfig: OverlayConfig = {
         panelClass: [OVERLAY_WITH_POPUP_STYLES_CLASS],

@@ -1,6 +1,7 @@
+/.angular/cache
+/.tmp*
+/_snapshots
+/coverage
+/dist
+/sdk
 package-lock.json
-sdk/
-dist/
-**/coverage/
-.tmp
-_snapshots

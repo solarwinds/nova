@@ -67,8 +67,8 @@ export class ConfiguratorComponent implements OnInit, OnDestroy {
     @ViewChild("previewPizzagnaComponent", { static: true })
     previewPizzagnaComponent: PizzagnaComponent;
 
-    public submitError = new Subject();
-    private destroy$ = new Subject();
+    public submitError = new Subject<void>();
+    private destroy$ = new Subject<void>();
 
     constructor(
         public widgetTypesService: WidgetTypesService,

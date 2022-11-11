@@ -107,7 +107,7 @@ export class AcmeDashboardComponent
     public systemRefreshInterval: number = 60;
     public searchQuery = "solarwinds";
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         private providerRegistry: ProviderRegistryService,

@@ -18,8 +18,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-/// <reference path="../../../../node_modules/highlight.js/types/index.d.ts" />
-
 import { ElementRef } from "@angular/core";
 import hljs from "highlight.js/lib/core";
 

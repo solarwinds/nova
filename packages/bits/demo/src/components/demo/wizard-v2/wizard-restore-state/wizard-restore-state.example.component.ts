@@ -56,7 +56,7 @@ export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
     public dynamicSteps: IWizardStepData[] = [];
     public awesome: boolean = false;
 
-    private destroy$: Subject<any> = new Subject();
+    private destroy$ = new Subject<void>();
 
     @ViewChild("dynamicTemplate1") public template1: TemplateRef<string>;
     @ViewChild("dynamicTemplate2") public template2: TemplateRef<string>;

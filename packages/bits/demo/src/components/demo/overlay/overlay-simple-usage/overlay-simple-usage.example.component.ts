@@ -29,7 +29,7 @@ import { OverlayComponent } from "@nova-ui/bits";
     templateUrl: "./overlay-simple-usage.example.component.html",
 })
 export class OverlaySimpleExampleComponent implements AfterViewInit {
-    private destroy$: Subject<any> = new Subject();
+    private destroy$ = new Subject<void>();
 
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
 

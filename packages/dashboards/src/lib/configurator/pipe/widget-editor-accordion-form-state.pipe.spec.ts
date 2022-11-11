@@ -28,7 +28,7 @@ import { WidgetEditorAccordionFormStatePipe } from "./widget-editor-accordion-fo
 describe("WidgetEditorAccordionFormStatePipe > ", () => {
     let pipe: WidgetEditorAccordionFormStatePipe;
     let form: FormGroup;
-    const unsubscribe$ = new Subject();
+    const unsubscribe$ = new Subject<void>();
 
     beforeEach(() => {
         const formBuilder = new FormBuilder();

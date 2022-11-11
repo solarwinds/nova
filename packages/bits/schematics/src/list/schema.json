@@ -1,8 +1,6 @@
 {
+    "$id": "SchematicsNovaListComponent",
     "$schema": "http://json-schema.org/schema",
-    "id": "SchematicsNovaListComponent",
-    "title": "Nova list Schema",
-    "type": "object",
     "description": "Adds a list",
     "properties": {
         "path": {
@@ -56,7 +54,7 @@
             "format": "html-selector",
             "description": "The HTML selector to use for this component"
         },
-        "module":  {
+        "module": {
             "type": "string",
             "description": "The declaring NgModule",
             "alias": "m"
@@ -75,7 +73,14 @@
             "description": "Selection mode to be used for the list",
             "type": "string",
             "default": "none",
-            "enum": ["none", "multi", "single", "singleWithRequiredSelection", "radio", "radioWithNonRequiredSelection"],
+            "enum": [
+                "none",
+                "multi",
+                "single",
+                "singleWithRequiredSelection",
+                "radio",
+                "radioWithNonRequiredSelection"
+            ],
             "x-prompt": {
                 "message": "What selection mode would you like the list to use?",
                 "type": "list",
@@ -83,9 +88,18 @@
                     { "value": "none", "label": "None (Selection Disabled)" },
                     { "value": "multi", "label": "Multi-Select (Checkboxes)" },
                     { "value": "radio", "label": "Radio Buttons" },
-                    { "value": "radioWithNonRequiredSelection", "label": "Radio Buttons with Deselection Allowed" },
-                    { "value": "singleWithRequiredSelection", "label": "Single-Select with No Radio Buttons" },
-                    { "value": "single", "label": "Single-Select with No Radio Buttons and Deselection Allowed" }
+                    {
+                        "value": "radioWithNonRequiredSelection",
+                        "label": "Radio Buttons with Deselection Allowed"
+                    },
+                    {
+                        "value": "singleWithRequiredSelection",
+                        "label": "Single-Select with No Radio Buttons"
+                    },
+                    {
+                        "value": "single",
+                        "label": "Single-Select with No Radio Buttons and Deselection Allowed"
+                    }
                 ]
             }
         },
@@ -122,10 +136,22 @@
                 "message": "What is the source of your data?",
                 "type": "list",
                 "items": [
-                    { "value": "clientSide", "label": "The generated data source will retrieve data locally from a client side source." },
-                    { "value": "serverSide", "label": "The generated data source will retrieve data remotely from a server side API." },
-                    { "value": "custom", "label": "No data source will be generated, allowing you to create one from scratch." },
-                    { "value": "none", "label": "No data source will be generated and no accommodations for a data source, e.g. sorting or search, will be added to the generated code." }
+                    {
+                        "value": "clientSide",
+                        "label": "The generated data source will retrieve data locally from a client side source."
+                    },
+                    {
+                        "value": "serverSide",
+                        "label": "The generated data source will retrieve data remotely from a server side API."
+                    },
+                    {
+                        "value": "custom",
+                        "label": "No data source will be generated, allowing you to create one from scratch."
+                    },
+                    {
+                        "value": "none",
+                        "label": "No data source will be generated and no accommodations for a data source, e.g. sorting or search, will be added to the generated code."
+                    }
                 ]
             }
         },
@@ -134,5 +160,7 @@
             "description": "Specifies the datasource class name"
         }
     },
-    "required": ["name", "selectionMode", "pagingMode"]
+    "required": ["name", "selectionMode", "pagingMode"],
+    "title": "Nova list Schema",
+    "type": "object"
 }

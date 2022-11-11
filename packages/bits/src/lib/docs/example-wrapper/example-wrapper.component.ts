@@ -18,11 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-/// <reference path="../../../../node_modules/highlight.js/types/index.d.ts" />
-
 import { DOCUMENT } from "@angular/common";
 import { Component, Inject, Input, OnInit } from "@angular/core";
-import * as hljs from "highlight.js/lib/core";
+import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
 import json from "highlight.js/lib/languages/json";
 import less from "highlight.js/lib/languages/less";
@@ -62,11 +60,11 @@ export class ExampleWrapperComponent implements OnInit {
         [key: string]: any;
     };
 
-    public getTooltip() {
+    public getTooltip(): string {
         return this.showSource ? "Hide source code" : "Show source code";
     }
 
-    public openPlunker() {
+    public openPlunker(): void {
         this.plunkerProjectService.open(
             this.filenamePrefix,
             this.componentSources,
@@ -86,7 +84,7 @@ export class ExampleWrapperComponent implements OnInit {
         hljs.registerLanguage("less", less);
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.componentSources = this.sourcesService.getSourcesByFilenamePrefix(
             this.filenamePrefix
         );

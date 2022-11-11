@@ -45,6 +45,5 @@ import { AcmeProportionalDSConfigComponent } from "./data-source-configuration/p
         NuiValidationMessageModule,
     ],
     declarations: [AcmeProportionalDSConfigComponent],
-    entryComponents: [AcmeProportionalDSConfigComponent],
 })
 export class AcmeComponentsModule {}

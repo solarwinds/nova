@@ -59,7 +59,7 @@ export class DataSourceAdapter<T extends IFilteringOutputs = IFilteringOutputs>
 {
     protected componentId: string;
     protected lastValue: T;
-    protected destroy$ = new Subject();
+    protected destroy$ = new Subject<void>();
     protected dataSourceConfiguration: Record<string, any>;
 
     private propertyPath: string;
@@ -101,12 +101,12 @@ export class DataSourceAdapter<T extends IFilteringOutputs = IFilteringOutputs>
             .subscribe(() => this.handleRefresh());
     }
 
-    protected handleRefresh() {
-        this.eventBus.getStream(DATA_SOURCE_INVOKED).next();
+    protected handleRefresh(): void {
+        this.eventBus.getStream(DATA_SOURCE_INVOKED).next(undefined);
         this.dataSource.applyFilters();
     }
 
-    protected handleDataSourceUpdate(value: T | IDataSourceOutput<T>) {
+    protected handleDataSourceUpdate(value: T | IDataSourceOutput<T>): void {
         this.lastValue = isUndefined(value?.result) ? value : value?.result;
         this.updateOutput(this.lastValue);
         this.eventBus
@@ -131,7 +131,7 @@ export class DataSourceAdapter<T extends IFilteringOutputs = IFilteringOutputs>
         this.destroy$.complete();
     }
 
-    public updateConfiguration(properties: IProperties) {
+    public updateConfiguration(properties: IProperties): void {
         if (properties.componentId) {
             this.componentId = properties.componentId;
         }
@@ -144,11 +144,11 @@ export class DataSourceAdapter<T extends IFilteringOutputs = IFilteringOutputs>
         }
     }
 
-    protected updateAdapterProperties(properties: IProperties) {
+    protected updateAdapterProperties(properties: IProperties): void {
         this.propertyPath = properties.propertyPath;
     }
 
-    protected updateDataSourceProperties(properties: IProperties) {
+    protected updateDataSourceProperties(properties: IProperties): void {
         const dataSourceConfiguration = properties?.dataSource?.properties;
         if (this.dataSourceConfiguration !== dataSourceConfiguration) {
             this.dataSourceConfiguration = dataSourceConfiguration;
@@ -159,7 +159,7 @@ export class DataSourceAdapter<T extends IFilteringOutputs = IFilteringOutputs>
                     properties.dataSource?.properties
                 );
             }
-            this.eventBus.getStream(REFRESH).next();
+            this.eventBus.getStream(REFRESH).next(undefined);
         }
 
         // check if this is the first call of updateConfiguration and there is no dataSource configuration present in the incoming properties
@@ -170,11 +170,11 @@ export class DataSourceAdapter<T extends IFilteringOutputs = IFilteringOutputs>
             typeof dataSourceConfiguration === "undefined"
         ) {
             // using a setTimeout here to give configurable data sources time to receive their configurations before they're invoked
-            setTimeout(() => this.eventBus.getStream(REFRESH).next());
+            setTimeout(() => this.eventBus.getStream(REFRESH).next(undefined));
         }
     }
 
-    protected updateOutput(value: T | undefined) {
+    protected updateOutput(value: T | undefined): void {
         this.pizzagnaService.setProperty(
             {
                 pizzagnaKey: PizzagnaLayer.Data,

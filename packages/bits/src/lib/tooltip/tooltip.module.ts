@@ -32,6 +32,5 @@ import { TooltipDirective } from "./tooltip.directive";
     imports: [A11yModule, CommonModule, OverlayModule, NuiOverlayModule],
     exports: [TooltipDirective, TooltipComponent],
     declarations: [TooltipDirective, TooltipComponent],
-    entryComponents: [TooltipComponent],
 })
 export class NuiTooltipModule {}

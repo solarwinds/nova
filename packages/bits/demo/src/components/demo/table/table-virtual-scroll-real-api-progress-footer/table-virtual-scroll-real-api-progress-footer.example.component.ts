@@ -77,7 +77,7 @@ export class TableVirtualScrollRealApiProgressFooterExampleComponent
     }
     // The dynamically changed array of items to render by the table
     public users: IRandomUserTableModel[] = [];
-    public dataSourceObs: Subject<Array<any>> = new Subject();
+    public dataSourceObs = new Subject<any[]>();
     public displayedColumns: string[] = [
         "no",
         "nameTitle",

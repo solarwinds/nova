@@ -120,17 +120,17 @@ export class SelectV2TestExampleComponent
         panelClass: [OVERLAY_WITH_POPUP_STYLES_CLASS, "custom-select-styles"],
     };
 
-    private destroy$: Subject<any> = new Subject<any>();
+    private destroy$ = new Subject<void>();
     private activeDialog: NuiDialogRef;
 
     @ViewChild("custom_control") private select: SelectV2Component;
 
     // Dialog
-    public open(content: TemplateRef<string>) {
+    public open(content: TemplateRef<string>): void {
         this.activeDialog = this.dialogService.open(content, { size: "sm" });
     }
 
-    public isInErrorState() {
+    public isInErrorState(): boolean {
         return !this.selectedItem;
     }
 
@@ -163,7 +163,7 @@ export class SelectV2TestExampleComponent
             });
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.select.clickOutsideDropdown.subscribe(() => {
             if (this.handleClicksOutside) {
                 this.select.hideDropdown();
@@ -171,7 +171,7 @@ export class SelectV2TestExampleComponent
         });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }

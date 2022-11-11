@@ -73,7 +73,7 @@ export class DescriptionConfigurationV2Component
     public form: FormGroup;
     public changeFn: Function;
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         private formBuilder: FormBuilder,

@@ -59,8 +59,8 @@ export class TimeFramePickerVisualTestComponent {
         );
     }
 
-    public closePopoverSubject = new Subject();
-    public openPopoverSubject = new Subject();
+    public closePopoverSubject = new Subject<void>();
+    public openPopoverSubject = new Subject<void>();
 
     public updateTf(value: ITimeframe) {
         this.tf = value;

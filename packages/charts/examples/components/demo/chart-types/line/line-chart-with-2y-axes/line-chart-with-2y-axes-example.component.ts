@@ -50,7 +50,7 @@ export class LineChartWith2YAxesExampleComponent implements OnInit, OnDestroy {
     public yRightScale: LinearScale;
     public axesStyles: IAxesStyleChangeEventPayload;
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     public get leftAxisStyles() {
         return this.axesStyles?.[this.yLeftScale.id] ?? {};

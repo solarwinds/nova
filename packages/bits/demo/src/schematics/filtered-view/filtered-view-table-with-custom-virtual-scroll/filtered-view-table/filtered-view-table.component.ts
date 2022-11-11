@@ -79,7 +79,7 @@ export class FilteredViewTableComponent
 
     private previouslyLoadedCount: number;
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         @Inject(DataSourceService)

@@ -69,7 +69,7 @@ export class FilteredViewTreeComponent implements OnDestroy, AfterViewInit {
     public items: IServer[] = [];
     public filteringState: INovaFilteringOutputs = {};
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         @Inject(DataSourceService)

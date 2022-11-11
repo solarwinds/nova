@@ -150,7 +150,7 @@ export class ChipsComponent
         this.chipsOverflowService.overflowCounter = el;
     }
 
-    private destroy$: Subject<void> = new Subject();
+    private destroy$: Subject<void> = new Subject<void>();
 
     get role(): string | null {
         return this.getItemsCount() ? "list" : null;

@@ -114,8 +114,8 @@ export class TimeFramePickerMultipleCustomPickersExampleComponent
 
     public showFooter: boolean = false;
 
-    public closePopoverSubject = new Subject();
-    public openPopoverSubject = new Subject();
+    public closePopoverSubject = new Subject<void>();
+    public openPopoverSubject = new Subject<void>();
 
     constructor(private cdRef: ChangeDetectorRef) {}
 

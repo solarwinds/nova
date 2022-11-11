@@ -83,7 +83,7 @@ export class ProportionalChartOptionsEditorV2Component
     // used by Broadcaster
     public chartTypeChanged$ = new Subject<ProportionalWidgetChartTypes>();
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         public changeDetector: ChangeDetectorRef,

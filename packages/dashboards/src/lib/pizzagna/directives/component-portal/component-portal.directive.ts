@@ -66,7 +66,7 @@ export class ComponentPortalDirective
     private component: any;
     private propertiesChanges = new ReplaySubject<SimpleChange>();
     private providerInstances: Record<string, any> = {};
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
     private changesSubscription?: Subscription;
 
     constructor(

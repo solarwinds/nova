@@ -57,7 +57,7 @@ export class EmbeddedContentConfigurationComponent
 
     @Output() formReady = new EventEmitter<FormGroup>();
 
-    private destroyed$ = new Subject();
+    private destroyed$ = new Subject<void>();
 
     public form: FormGroup = this.formBuilder.group({
         mode: [this.mode],

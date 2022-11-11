@@ -40,7 +40,7 @@ import {
 } from "@angular/core";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
-import { Observable, of, Subject } from "rxjs";
+import { firstValueFrom, Observable, of, Subject } from "rxjs";
 import { catchError, delay, map, take, takeUntil, tap } from "rxjs/operators";
 
 import {
@@ -165,8 +165,8 @@ export class VirtualScrollListDataSource<T = any>
         if (reset || filters.virtualScroll?.value.start === 0) {
             this.cache = [];
         }
-        return this.getBackendData(filters)
-            .pipe(
+        return firstValueFrom(
+            this.getBackendData(filters).pipe(
                 tap((response: IServersCollection) => {
                     // after receiving data we need to append it to our previous fetched results
                     this.cache = this.cache.concat(response.items);
@@ -182,7 +182,7 @@ export class VirtualScrollListDataSource<T = any>
                     };
                 })
             )
-            .toPromise();
+        );
     }
 
     public reset(): void {
@@ -264,7 +264,7 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
     private get activeDialogComponent(): TreeDialogContentExampleComponent {
         return this.activeDialogRef.componentInstance;
     }
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
     @ViewChild(CdkTree) private cdkTree: CdkTree<IServerNode>;
 
     public nodesTotalItems: { [key: string]: number } = {};
@@ -348,7 +348,9 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
         node: IServerNode,
         nestedNode: CdkNestedTreeNode<any>
     ): void {
-        this.eventBusService.getStream({ id: "document-click" }).next();
+        this.eventBusService
+            .getStream({ id: "document-click" })
+            .next(undefined);
 
         if (node.hasChildren && node.children && !node.children.length) {
             node.isLoading = true;

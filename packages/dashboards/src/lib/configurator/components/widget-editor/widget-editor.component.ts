@@ -89,7 +89,7 @@ export class WidgetEditorComponent
     public busy = false;
     public configuratorTitle: string;
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         public changeDetector: ChangeDetectorRef,

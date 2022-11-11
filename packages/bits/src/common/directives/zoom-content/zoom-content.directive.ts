@@ -54,7 +54,7 @@ export interface IBrokerValue {
 export class ZoomContentDirective
     implements OnDestroy, AfterViewInit, OnChanges
 {
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     @HostBinding("style.zoom")
     public zoom = 1;

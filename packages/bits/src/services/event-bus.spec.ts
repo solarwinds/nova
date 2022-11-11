@@ -59,7 +59,7 @@ describe("EventBus > ", () => {
             const newStream = new EventDefinition("new_stream");
             const spy = jasmine.createSpy();
             eventBus.getStream(newStream).subscribe(spy);
-            eventBus.getStream(newStream).next();
+            eventBus.getStream(newStream).next(undefined);
             expect(spy).toHaveBeenCalledWith({ id: newStream.id });
         });
     });
@@ -70,7 +70,7 @@ describe("EventBus > ", () => {
             const spy = jasmine.createSpy();
             eventBus.getStream(newStream).subscribe(spy);
             eventBus.ngOnDestroy();
-            eventBus.getStream(newStream).next();
+            eventBus.getStream(newStream).next(undefined);
             expect(spy).not.toHaveBeenCalled();
         });
     });

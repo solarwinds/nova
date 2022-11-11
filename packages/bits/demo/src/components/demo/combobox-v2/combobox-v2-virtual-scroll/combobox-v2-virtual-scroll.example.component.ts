@@ -49,7 +49,7 @@ export class ComboboxV2VirtualScrollExampleComponent
     public filteredItems: Observable<any[]> = of([...this.items]);
     public containerHeight: number = defaultContainerHeight;
 
-    private destroy$: Subject<void> = new Subject();
+    private destroy$: Subject<void> = new Subject<void>();
     private scrollOffset: number = 0;
 
     @ViewChild(CdkVirtualScrollViewport)

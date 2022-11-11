@@ -248,7 +248,6 @@ const exportedDeclarations = [
         TimeseriesScalesService,
     ],
     exports: exportedDeclarations,
-    entryComponents: entryComponents,
 })
 export class NuiDashboardConfiguratorModule {
     constructor(componentRegistry: ComponentRegistryService) {

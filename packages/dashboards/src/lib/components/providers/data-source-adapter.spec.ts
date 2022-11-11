@@ -77,7 +77,7 @@ describe("DataSourceAdapter > ", () => {
 
     it("should invoke dataSource.applyFilters on eventBus REFRESH", () => {
         const spy = spyOn(dataSource, "applyFilters");
-        eventBus.getStream(REFRESH).next();
+        eventBus.getStream(REFRESH).next(undefined);
         expect(spy).toHaveBeenCalled();
     });
 

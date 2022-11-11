@@ -55,8 +55,8 @@ export class ChartPopoverComponent implements OnChanges, OnInit, OnDestroy {
 
     @ViewChild(PopoverComponent) popover: PopoverComponent;
 
-    private destroy$ = new Subject();
-    private initPlugin$ = new Subject();
+    private destroy$ = new Subject<void>();
+    private initPlugin$ = new Subject<void>();
 
     constructor(
         private changeDetector: ChangeDetectorRef,

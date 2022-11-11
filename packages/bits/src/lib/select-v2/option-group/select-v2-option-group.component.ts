@@ -59,7 +59,7 @@ export class SelectV2OptionGroupComponent
     @ContentChildren(forwardRef(() => SelectV2OptionComponent))
     private options: QueryList<SelectV2OptionComponent>;
     private select: IOptionedComponent;
-    private onDestroy$ = new Subject();
+    private onDestroy$ = new Subject<void>();
 
     constructor(
         @Optional()

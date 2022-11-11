@@ -106,11 +106,10 @@ export class TableCellDirective
         if (this.tableStateHandlerService.reorderable) {
             this.subscribeToDraggedOverCell =
                 this.tableStateHandlerService.draggedOverCell.subscribe(
-                    (draggedOverCell: DraggedOverCell) => {
+                    (draggedOverCell) => {
                         this.rightEdgeActive = this.leftEdgeActive = false;
                         if (
-                            _get(draggedOverCell, "cellIndex") ===
-                            this.currentCellIndex
+                            draggedOverCell?.cellIndex === this.currentCellIndex
                         ) {
                             this.rightEdgeActive =
                                 draggedOverCell.dropAlignment === "right";
@@ -138,7 +137,7 @@ export class TableCellDirective
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes: SimpleChanges): void {
         if (changes.alignment && !changes.alignment.firstChange) {
             const newAlignment = `align-${changes.alignment.currentValue}`;
             const oldAlignment = `align-${changes.alignment.previousValue}`;
@@ -147,7 +146,7 @@ export class TableCellDirective
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         if (this.subscribeToDraggedOverCell) {
             this.subscribeToDraggedOverCell.unsubscribe();
         }

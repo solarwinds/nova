@@ -6,11 +6,12 @@ module.exports = function (config) {
         basePath: "",
         frameworks: ["jasmine", "@angular-devkit/build-angular"],
         plugins: [
-            require("karma-jasmine"),
-            require("karma-chrome-launcher"),
-            require("karma-jasmine-html-reporter"),
-            require("karma-coverage"),
             require("@angular-devkit/build-angular/plugins/karma"),
+            require("karma-chrome-launcher"),
+            require("karma-coverage"),
+            require("karma-jasmine-html-reporter"),
+            require("karma-jasmine"),
+            require("karma-spec-reporter"),
         ],
         client: {
             clearContext: false, // leave Jasmine Spec Runner output visible in browser
@@ -46,7 +47,7 @@ module.exports = function (config) {
         },
         files: [
             {
-                pattern: "dist/bundles/nova-ui-charts.umd.js",
+                pattern: "dist/fesm2015/nova-ui-charts.mjs",
                 watched: false,
                 included: false,
                 served: true,

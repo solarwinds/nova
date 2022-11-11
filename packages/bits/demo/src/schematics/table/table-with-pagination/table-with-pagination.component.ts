@@ -86,7 +86,7 @@ export class TableWithPaginationComponent
     @ViewChild(SearchComponent) search: SearchComponent;
     @ViewChild(PaginatorComponent) paginator: PaginatorComponent;
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         @Inject(DataSourceService)

@@ -42,6 +42,11 @@ const keyBoardEventFactory = (code: KEYBOARD_CODE): KeyboardEvent =>
         code,
     } as KeyboardEvent);
 
+type ActiveItem = Exclude<
+    TimePickerKeyboardService["keyboardEventsManager"]["activeItem"],
+    null
+>;
+
 describe("Services >", () => {
     describe("TimePickerKeyboardService", () => {
         const service = new TimePickerKeyboardService();
@@ -106,7 +111,9 @@ describe("Services >", () => {
 
             it("should call doAction on press ENTER button", () => {
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ENTER);
-                const activeItem = { doAction: (even: any) => {} };
+                const activeItem = {
+                    doAction: (even: any) => {},
+                } as ActiveItem;
                 const spy = spyOn(activeItem, "doAction");
 
                 spyOnProperty(
@@ -143,7 +150,7 @@ describe("Services >", () => {
                             scrollIntoView: (event: any) => {},
                         },
                     },
-                };
+                } as ActiveItem;
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
                 const spy = spyOn(
                     activeItem.menuItem.nativeElement,

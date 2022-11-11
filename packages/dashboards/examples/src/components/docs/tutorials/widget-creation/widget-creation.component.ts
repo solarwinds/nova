@@ -248,7 +248,7 @@ export class WidgetCreationComponent implements OnInit {
     public editMode: boolean = false;
 
     // Subject used for auto-unsubscribing from subscriptions on component destruction
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         // WidgetTypesService provides the widget's necessary structure information

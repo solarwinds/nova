@@ -68,6 +68,5 @@ const routes = [
         RouterModule.forChild(routes),
     ],
     declarations: [WidgetEditorDocsComponent, WidgetEditorSetupComponent],
-    entryComponents: [],
 })
 export class WidgetEditorSetupModule {}

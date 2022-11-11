@@ -90,7 +90,7 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
     private tableElRef?: HTMLTableElement;
     private userProvidedHeight: string;
 
-    private unsubscribe$: Subject<unknown> = new Subject<unknown>();
+    private unsubscribe$ = new Subject<void>();
     private headResizeObserver: ResizeObserver;
     // this is for keeping track of the original viewport height on head resize
     private origViewportHeight: number;
@@ -216,47 +216,50 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
         }
     }
 
-    public handleColumnsUpdate$: () => Observable<unknown> = () => {
-        // TODO: Perform a dirty check before starting assigning new values
-        // Note: Setting the width of stickyHeadContainer container to be able to simulate horizontal scroll of the sticky header
-        this.renderer.setStyle(
-            this.stickyHeadContainer,
-            "width",
-            `${this.viewport._contentWrapper.nativeElement.scrollWidth}px`
-        );
+    public handleColumnsUpdate$: () => Observable<unknown> =
+        (): Observable<unknown> => {
+            // TODO: Perform a dirty check before starting assigning new values
+            // Note: Setting the width of stickyHeadContainer container to be able to simulate horizontal scroll of the sticky header
+            this.renderer.setStyle(
+                this.stickyHeadContainer,
+                "width",
+                `${this.viewport._contentWrapper.nativeElement.scrollWidth}px`
+            );
 
-        const headColumns: HTMLTableHeaderCellElement[] = Array.from(
-            this.stickyHeadContainer?.getElementsByTagName("th") || []
-        );
-        const firstDataRowCells: HTMLTableDataCellElement[] = Array.from(
-            this.bodyRef?.rows.item(0)?.cells || []
-        );
+            const headColumns: HTMLTableHeaderCellElement[] = Array.from(
+                this.stickyHeadContainer?.getElementsByTagName("th") || []
+            );
+            const firstDataRowCells: HTMLTableDataCellElement[] = Array.from(
+                this.bodyRef?.rows.item(0)?.cells || []
+            );
 
-        // Note: If head columns are not in sync with data columns skip
-        if (headColumns.length !== firstDataRowCells.length) {
-            return EMPTY;
-        }
-
-        // TODO: Find a better way to pair placeholderHeader columns with header columns
-        firstDataRowCells.forEach(
-            (cell: HTMLTableDataCellElement, index: number) => {
-                const fixedWidth =
-                    headColumns[index].classList.contains(FIXED_WIDTH_CLASS);
-                if (!fixedWidth) {
-                    // Note: Assigning data cell width to the corresponding header column
-                    // (using the style width if specified; otherwise, falling back to the offsetWidth)
-                    headColumns[index].style.width =
-                        cell.style.width || `${cell.offsetWidth}px`;
-                }
+            // Note: If head columns are not in sync with data columns skip
+            if (headColumns.length !== firstDataRowCells.length) {
+                return EMPTY;
             }
-        );
 
-        // update the header placeholder to match the updated column widths
-        this.updateNativeHeaderPlaceholder();
+            // TODO: Find a better way to pair placeholderHeader columns with header columns
+            firstDataRowCells.forEach(
+                (cell: HTMLTableDataCellElement, index: number) => {
+                    const fixedWidth =
+                        headColumns[index].classList.contains(
+                            FIXED_WIDTH_CLASS
+                        );
+                    if (!fixedWidth) {
+                        // Note: Assigning data cell width to the corresponding header column
+                        // (using the style width if specified; otherwise, falling back to the offsetWidth)
+                        headColumns[index].style.width =
+                            cell.style.width || `${cell.offsetWidth}px`;
+                    }
+                }
+            );
 
-        // Note: Returning empty observable to be able to create an execution queue
-        return EMPTY;
-    };
+            // update the header placeholder to match the updated column widths
+            this.updateNativeHeaderPlaceholder();
+
+            // Note: Returning empty observable to be able to create an execution queue
+            return EMPTY;
+        };
 
     private assignRequiredProperties(): void {
         this.tableElRef =
@@ -272,12 +275,10 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
     }
 
     private syncColumnWidths(): void {
-        const resize$: Subject<unknown> = new Subject();
+        const resize$ = new Subject<void>();
         // Note: Passing the resize event to resize$ subject to be able
         // to handle all the columnWidth update trigger in a single stream
-        const resizeObserver: ResizeObserver = new ResizeObserver(() =>
-            resize$.next()
-        );
+        const resizeObserver = new ResizeObserver(() => resize$.next());
         resizeObserver.observe(this.viewportEl);
         this.unsubscribe$
             .pipe(

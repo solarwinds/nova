@@ -68,7 +68,7 @@ export class TimeseriesSeriesCollectionConfigurationComponent
     public form: FormGroup;
     public emptySeries$: Observable<boolean>;
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         public pizzagnaService: PizzagnaService,

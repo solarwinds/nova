@@ -29,6 +29,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 import momentTz from "moment-timezone";
 import moment from "moment/moment";
+import { firstValueFrom } from "rxjs";
 
 import { IconService } from "../../lib/icon/icon.service";
 import {
@@ -156,13 +157,13 @@ describe("components >", () => {
             );
         });
 
-        it("should emit Moment object with invalid date if input value is cleared", fakeAsync(() => {
+        it("should emit Moment object with invalid date if input value is cleared", fakeAsync(async () => {
             componentInstance.ngOnInit();
             componentInstance.onInputActiveDateChanged("");
             tick(501);
-            componentInstance.valueChange.subscribe((value: any) =>
-                expect(value).toEqual(moment(""))
-            );
+            firstValueFrom(componentInstance.valueChange).then((value) => {
+                expect(value).toEqual(moment(""));
+            });
         }));
 
         it("should set innerDatePicker.value to 'undefined' if popup is closed", () => {
@@ -185,7 +186,7 @@ describe("components >", () => {
                 "next"
             ).and.callThrough();
 
-            componentInstance._datePicker.calendarMoved.next();
+            componentInstance._datePicker.calendarMoved.next(moment());
 
             expect(
                 componentInstance._datePicker.calendarMoved.next

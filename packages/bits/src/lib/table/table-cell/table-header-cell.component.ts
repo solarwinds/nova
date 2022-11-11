@@ -32,7 +32,6 @@ import {
     OnInit,
     SimpleChanges,
 } from "@angular/core";
-import _get from "lodash/get";
 import _isNil from "lodash/isNil";
 import _isUndefined from "lodash/isUndefined";
 import { fromEvent, Subscription } from "rxjs";
@@ -44,7 +43,6 @@ import { FIXED_WIDTH_CLASS } from "../constants";
 import { TableResizePhase } from "../table-resizer/table-resizer.directive";
 import {
     ColumnType,
-    DraggedOverCell,
     ITableSortingState,
     TableStateHandlerService,
 } from "../table-state-handler.service";
@@ -321,11 +319,10 @@ export class TableHeaderCellComponent
         if (this.isReorderable) {
             this.subscriptions.push(
                 this.tableStateHandlerService.draggedOverCell.subscribe(
-                    (draggedOverCell: DraggedOverCell) => {
+                    (draggedOverCell) => {
                         this.rightEdgeActive = this.leftEdgeActive = false;
                         if (
-                            _get(draggedOverCell, "cellIndex") ===
-                            this.currentCellIndex
+                            draggedOverCell?.cellIndex === this.currentCellIndex
                         ) {
                             this.rightEdgeActive =
                                 draggedOverCell.dropAlignment === "right";

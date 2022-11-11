@@ -46,7 +46,7 @@ export class ComboboxV2CustomControlExampleComponent
 
     @ViewChild("combobox") public combobox: ComboboxV2Component;
 
-    private destroy$: Subject<void> = new Subject();
+    private destroy$: Subject<void> = new Subject<void>();
 
     public ngAfterViewInit() {
         this.combobox.clickOutsideDropdown.subscribe(() => {

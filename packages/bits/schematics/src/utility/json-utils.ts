@@ -25,7 +25,13 @@
  *
  *****************************************************************/
 
-import { JsonAstArray, JsonAstKeyValue, JsonAstNode, JsonAstObject, JsonValue } from "@angular-devkit/core";
+import { JsonValue } from "@angular-devkit/core";
+import {
+    JsonAstArray,
+    JsonAstKeyValue,
+    JsonAstNode,
+    JsonAstObject,
+} from "@angular-devkit/core/src/json/parser_ast";
 import { UpdateRecorder } from "@angular-devkit/schematics";
 
 function _stringifyContent(value: JsonValue, indentStr: string): string {
@@ -55,7 +61,7 @@ export function appendValueInAstArray(
     node: JsonAstArray,
     inputValue: JsonValue,
     indent = 4
-) {
+): void {
     let indentStr = _buildIndent(indent);
     let index = node.start.offset + 1;
     // tslint:disable-next-line: no-any
@@ -68,11 +74,11 @@ export function appendValueInAstArray(
 
         if (isClosingOnSameLine && indent) {
             // Reformat the entire array
-            recorder.remove(node.start.offset, node.end.offset - node.start.offset);
-            newNodes = [
-                ...node.elements.map(({ value }) => value),
-                inputValue,
-            ];
+            recorder.remove(
+                node.start.offset,
+                node.end.offset - node.start.offset
+            );
+            newNodes = [...node.elements.map(({ value }) => value), inputValue];
             index = node.start.offset;
             // In case we are generating the entire node we need to reduce the spacing as
             // otherwise we'd end up having incorrect double spacing
@@ -86,9 +92,11 @@ export function appendValueInAstArray(
 
     recorder.insertRight(
         index,
-        (newNodes ? "" : indentStr)
-        + _stringifyContent(newNodes || inputValue, indentStr)
-        + (node.elements.length === 0 && indent ? indentStr.substr(0, -indent) + "\n" : "")
+        (newNodes ? "" : indentStr) +
+            _stringifyContent(newNodes || inputValue, indentStr) +
+            (node.elements.length === 0 && indent
+                ? indentStr.substr(0, -indent) + "\n"
+                : "")
     );
 }
 
@@ -98,7 +106,7 @@ export function appendPropertyInAstObject(
     propertyName: string,
     value: JsonValue,
     indent: number
-) {
+): void {
     const indentStr = _buildIndent(indent);
     let index = node.start.offset + 1;
     if (node.properties.length > 0) {
@@ -112,10 +120,10 @@ export function appendPropertyInAstObject(
     const content = _stringifyContent(value, indentStr);
     recorder.insertRight(
         index,
-        (node.properties.length === 0 && indent ? "\n" : "")
-        + " ".repeat(indent)
-        + `"${propertyName}":${indent ? " " : ""}${content}`
-        + indentStr.slice(0, -indent)
+        (node.properties.length === 0 && indent ? "\n" : "") +
+            " ".repeat(indent) +
+            `"${propertyName}":${indent ? " " : ""}${content}` +
+            indentStr.slice(0, -indent)
     );
 }
 
@@ -125,8 +133,7 @@ export function insertPropertyInAstObjectInOrder(
     propertyName: string,
     value: JsonValue,
     indent: number
-) {
-
+): void {
     if (node.properties.length === 0) {
         appendPropertyInAstObject(recorder, node, propertyName, value, indent);
 
@@ -159,14 +166,13 @@ export function insertPropertyInAstObjectInOrder(
     }
 
     const indentStr = _buildIndent(indent);
-    const insertIndex = insertAfterProp === null
-        ? node.start.offset + 1
-        : insertAfterProp.end.offset + 1;
+    const insertIndex =
+        insertAfterProp === null
+            ? node.start.offset + 1
+            : insertAfterProp.end.offset + 1;
     const content = _stringifyContent(value, indentStr);
     recorder.insertRight(
         insertIndex,
-        indentStr
-        + `"${propertyName}":${indent ? " " : ""}${content}`
-        + ","
+        indentStr + `"${propertyName}":${indent ? " " : ""}${content}` + ","
     );
 }

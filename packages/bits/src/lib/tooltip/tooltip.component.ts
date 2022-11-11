@@ -108,8 +108,8 @@ export class TooltipComponent implements OnDestroy, OnInit {
     private _closeOnInteraction: boolean = false;
 
     /** Subject for notifying that the tooltip has been hidden from the view */
-    private readonly _onHide: Subject<any> = new Subject();
-    private destroy$ = new Subject();
+    private readonly _onHide = new Subject<void>();
+    private destroy$ = new Subject<void>();
     private hiding$ = new BehaviorSubject<boolean>(false);
 
     constructor(
@@ -119,11 +119,11 @@ export class TooltipComponent implements OnDestroy, OnInit {
         protected overlay: Overlay
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.updatePopupOverlayConfig();
     }
 
-    public updatePossiblePositions(positions: ConnectedPosition[]) {
+    public updatePossiblePositions(positions: ConnectedPosition[]): void {
         this.possiblePositions = positions;
         const positionStrategy = this.overlayComponent
             .getOverlayRef()
@@ -181,14 +181,14 @@ export class TooltipComponent implements OnDestroy, OnInit {
         return this._visibility === true;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.overlayComponent.hide();
         this._onHide.complete();
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    _animationStart() {
+    _animationStart(): void {
         this._closeOnInteraction = false;
     }
 

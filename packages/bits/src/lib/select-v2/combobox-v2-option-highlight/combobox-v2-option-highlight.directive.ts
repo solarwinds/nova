@@ -53,7 +53,7 @@ export class ComboboxV2OptionHighlightDirective
     // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input("nuiComboboxV2OptionHighlight") public value: string;
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         private el: ElementRef<HTMLElement>,

@@ -40,7 +40,7 @@ export abstract class BaseConverter
     public component: any;
     public componentId: string;
 
-    public destroy$ = new Subject();
+    public destroy$ = new Subject<void>();
 
     constructor(
         @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,

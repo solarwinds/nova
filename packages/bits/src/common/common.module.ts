@@ -118,6 +118,5 @@ import { ZoomContentDirective } from "./directives/zoom-content/zoom-content.dir
         HighlightPipe,
         ZoomContentDirective,
     ],
-    entryComponents: [],
 })
 export class NuiCommonModule {}

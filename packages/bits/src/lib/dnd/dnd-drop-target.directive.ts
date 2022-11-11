@@ -64,8 +64,8 @@ export class DndDropTargetDirective implements AfterContentInit, OnDestroy {
     public showDropZone$: Observable<boolean>;
     public canLastDragItemBeDropped$: Observable<boolean>;
 
-    private itemDragStarted$: Subject<CdkDrag> = new Subject();
-    private _destroy$: Subject<unknown> = new Subject();
+    private itemDragStarted$ = new Subject<CdkDrag>();
+    private _destroy$ = new Subject<void>();
 
     // true when the drag has started
     public get isDropZoneActive(): boolean {
@@ -128,10 +128,10 @@ export class DndDropTargetDirective implements AfterContentInit, OnDestroy {
 
         // Drop zone state stream used to return the result of the predicate provided by user.
         // Here we're taking the current moving item in case the drop zone is active to be able to execute the callback.
-        this.canLastDragItemBeDropped$ = combineLatest<
-            Observable<boolean>,
-            Observable<CdkDrag>
-        >([this.showDropZone$, draggedItem$]).pipe(
+        this.canLastDragItemBeDropped$ = combineLatest([
+            this.showDropZone$,
+            draggedItem$,
+        ]).pipe(
             switchMap(([showDropZone, drag]) => {
                 let result: boolean = false;
                 if (showDropZone) {
@@ -161,9 +161,7 @@ export class DndDropTargetDirective implements AfterContentInit, OnDestroy {
             .pipe(
                 startWith(this.draggables.toArray()),
                 switchMap((items: CdkDrag[]) =>
-                    merge<CdkDragStart>(
-                        ...items.map((drag: CdkDrag) => drag.started)
-                    )
+                    merge(...items.map((drag: CdkDrag) => drag.started))
                 ),
                 tap((item: CdkDragStart) =>
                     this.itemDragStarted$.next(item.source)

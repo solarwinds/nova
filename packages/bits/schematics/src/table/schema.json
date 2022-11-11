@@ -1,8 +1,6 @@
 {
+    "$id": "SchematicsNovaTableComponent",
     "$schema": "http://json-schema.org/schema",
-    "id": "SchematicsNovaTableComponent",
-    "title": "Generates table component",
-    "type": "object",
     "description": "Adds a table",
     "properties": {
         "name": {
@@ -88,10 +86,22 @@
                 "message": "What is the source of your data?",
                 "type": "list",
                 "items": [
-                    { "value": "clientSide", "label": "The generated data source will retrieve data locally from a client side source." },
-                    { "value": "serverSide", "label": "The generated data source will retrieve data remotely from a server side API." },
-                    { "value": "custom", "label": "No data source will be generated, allowing you to create one from scratch." },
-                    { "value": "none", "label": "No data source will be generated and no accommodations for a data source, e.g. sorting or search, will be added to the generated code." }
+                    {
+                        "value": "clientSide",
+                        "label": "The generated data source will retrieve data locally from a client side source."
+                    },
+                    {
+                        "value": "serverSide",
+                        "label": "The generated data source will retrieve data remotely from a server side API."
+                    },
+                    {
+                        "value": "custom",
+                        "label": "No data source will be generated, allowing you to create one from scratch."
+                    },
+                    {
+                        "value": "none",
+                        "label": "No data source will be generated and no accommodations for a data source, e.g. sorting or search, will be added to the generated code."
+                    }
                 ]
             }
         },
@@ -135,5 +145,7 @@
             "enum": ["standard", "custom"]
         }
     },
-    "required": ["name"]
+    "required": ["name"],
+    "title": "Generates table component",
+    "type": "object"
 }

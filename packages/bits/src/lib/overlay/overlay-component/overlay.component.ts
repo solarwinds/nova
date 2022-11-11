@@ -22,6 +22,7 @@ import {
     Overlay,
     OverlayConfig,
     OverlayContainer,
+    OverlayRef,
     OverlaySizeConfig,
 } from "@angular/cdk/overlay";
 import { CdkPortal } from "@angular/cdk/portal";
@@ -115,7 +116,7 @@ export class OverlayComponent
     public hide$: Subject<void>;
 
     /** Emits when content of the Popup is empty */
-    public empty$ = new Subject();
+    public empty$ = new Subject<boolean>();
 
     /** Indicates open/close state */
     public get showing(): boolean {
@@ -134,7 +135,7 @@ export class OverlayComponent
         this.hide$ = this.overlayService.hide$;
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         const overlayPropsToMap = ["toggleReference", "customContainer"];
 
         if (changes) {
@@ -146,11 +147,11 @@ export class OverlayComponent
         }
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.overlayService.contentTemplate = this.contentTemplate;
     }
 
-    public ngAfterContentChecked() {
+    public ngAfterContentChecked(): void {
         this.empty$.next(this.isPopupContentEmpty());
     }
 
@@ -159,7 +160,7 @@ export class OverlayComponent
     }
 
     /** Shows Popup */
-    public show() {
+    public show(): void {
         this.setOverlayConfig();
         this.overlayService.show();
         this.handleOutsideClicks();
@@ -168,17 +169,17 @@ export class OverlayComponent
     }
 
     /** Hides Popup */
-    public hide() {
+    public hide(): void {
         this.overlayService.hide();
         this.positionStrategySubscription?.unsubscribe();
     }
 
     /** Toggles Popup */
-    public toggle() {
+    public toggle(): void {
         this.overlayService.showing ? this.hide() : this.show();
     }
 
-    public getOverlayRef() {
+    public getOverlayRef(): OverlayRef {
         return this.overlayService.getOverlayRef();
     }
 

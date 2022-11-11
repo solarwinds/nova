@@ -76,7 +76,7 @@ export class FilteredViewTableComponent
     // the height in px of a single row from the table
     public rowHeight = 40;
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         @Inject(DataSourceService)
