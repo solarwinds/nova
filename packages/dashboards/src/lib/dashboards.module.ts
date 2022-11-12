@@ -208,7 +208,6 @@ const entryComponents: IComponentWithLateLoadKey[] = [
         RefresherSettingsService,
     ],
     exports: dashboardComponents,
-    entryComponents: entryComponents,
 })
 export class NuiDashboardsModule {
     constructor(

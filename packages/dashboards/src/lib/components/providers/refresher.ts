@@ -50,7 +50,7 @@ export class Refresher implements OnDestroy, IConfigurable {
     protected interval = DEFAULT_REFRESH_INTERVAL;
     protected eventDef = REFRESH;
 
-    public destroy$ = new Subject();
+    public destroy$ = new Subject<void>();
 
     constructor(
         @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IWidgetEvent>,
@@ -66,7 +66,7 @@ export class Refresher implements OnDestroy, IConfigurable {
             });
     }
 
-    public updateConfiguration(properties: IRefresherProperties) {
+    public updateConfiguration(properties: IRefresherProperties): void {
         this.interval = properties.interval ?? DEFAULT_REFRESH_INTERVAL;
         this.enabled = properties.enabled ?? true;
         this.overrideDefaultSettings =
@@ -104,8 +104,8 @@ export class Refresher implements OnDestroy, IConfigurable {
         });
     }
 
-    protected performAction() {
-        this.eventBus.getStream(this.eventDef).next();
+    protected performAction(): void {
+        this.eventBus.getStream(this.eventDef).next(undefined);
     }
 
     private getInterval() {

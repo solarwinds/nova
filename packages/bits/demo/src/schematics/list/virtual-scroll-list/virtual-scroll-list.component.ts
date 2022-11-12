@@ -99,7 +99,7 @@ export class VirtualScrollListComponent
     @ViewChild(SearchComponent) search: SearchComponent;
     @ViewChild(SorterComponent) sorter: SorterComponent;
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         @Inject(DataSourceService)

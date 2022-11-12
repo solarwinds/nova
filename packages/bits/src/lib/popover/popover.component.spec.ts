@@ -43,7 +43,6 @@ import { PopoverComponent } from "./popover.component";
         (shown)="handleShowPopover()"
         (hidden)="handleHidePopover()"
     ></nui-popover>`,
-    entryComponents: [PopoverModalComponent],
 })
 class PopoverComponentTestingComponent {
     public handleShowPopover() {

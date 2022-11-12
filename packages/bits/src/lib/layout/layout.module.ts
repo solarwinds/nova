@@ -44,7 +44,6 @@ import { SheetComponent } from "./sheet/sheet.component";
         CardGroupComponent,
         LayoutResizerComponent,
     ],
-    entryComponents: [LayoutResizerComponent],
     providers: [],
 })
 export class NuiLayoutModule {}

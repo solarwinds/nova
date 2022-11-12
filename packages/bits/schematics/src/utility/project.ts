@@ -26,7 +26,11 @@
  *****************************************************************/
 
 import { Tree } from "@angular-devkit/schematics/src/tree/interface";
-import { ProjectType, WorkspaceProject, WorkspaceSchema } from "@schematics/angular/utility/workspace-models";
+import {
+    ProjectType,
+    WorkspaceProject,
+    WorkspaceSchema,
+} from "@schematics/angular/utility/workspace-models";
 
 import { getWorkspace } from "./workspace";
 
@@ -35,12 +39,15 @@ export function buildDefaultPath(project: WorkspaceProject): string {
         ? `/${project.sourceRoot}/`
         : `/${project.root}/src/`;
 
-    const projectDirName = project.projectType === ProjectType.Application ? "app" : "lib";
+    const projectDirName =
+        project.projectType === ProjectType.Application ? "app" : "lib";
 
     return `${root}${projectDirName}`;
 }
 
-export function getProject<TProjectType extends ProjectType = ProjectType.Application>(
+export function getProject<
+    TProjectType extends ProjectType = ProjectType.Application
+>(
     workspaceOrHost: WorkspaceSchema | Tree,
     projectName: string
 ): WorkspaceProject<TProjectType> {
@@ -51,7 +58,9 @@ export function getProject<TProjectType extends ProjectType = ProjectType.Applic
     return workspace.projects[projectName] as WorkspaceProject<TProjectType>;
 }
 
-export function isWorkspaceSchema(workspace: any): workspace is WorkspaceSchema {
+export function isWorkspaceSchema(
+    workspace: any
+): workspace is WorkspaceSchema {
     return !!(workspace && (workspace as WorkspaceSchema).projects);
 }
 

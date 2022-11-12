@@ -84,7 +84,7 @@ export class WizardStepV2Component
     @ContentChild(WizardStepFooterDirective)
     stepFooter: WizardStepFooterDirective;
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         private changeDetectorRef: ChangeDetectorRef,

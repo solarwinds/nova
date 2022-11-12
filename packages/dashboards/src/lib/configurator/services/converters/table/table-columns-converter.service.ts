@@ -133,8 +133,8 @@ export class TableColumnsConverterService
                         formPizzagna,
                         `${PizzagnaLayer.Structure}.presentation.properties.nodes`,
                         [
-                            ...formPizzagna?.structure?.presentation?.properties
-                                ?.nodes,
+                            ...(formPizzagna?.structure?.presentation
+                                ?.properties?.nodes ?? []),
                         ]
                     );
 

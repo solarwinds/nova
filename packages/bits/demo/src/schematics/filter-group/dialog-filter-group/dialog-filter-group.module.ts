@@ -58,6 +58,5 @@ import { ItemPickerCompositeModule } from "./item-picker/item-picker.module";
         DialogFilterGroupCompositeComponent,
     ],
     providers: [FilterGroupService],
-    entryComponents: [FilterGroupCompositeDialogComponent],
 })
 export class DialogFilterGroupCompositeModule {}

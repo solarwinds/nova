@@ -36,7 +36,7 @@ import { IInteractionValues } from "./types";
 
 /** @ignore */
 export class MouseInteractiveAreaPlugin extends ChartPlugin {
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
     private interactionValuesActive = true;
 
     constructor(private mouseInteractiveArea: MouseInteractiveArea) {

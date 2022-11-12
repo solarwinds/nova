@@ -235,7 +235,7 @@ export class TableColumnsConfigurationComponent
                 // pizzagna don't generate valueChange events
                 this.form
                     .get("columns")
-                    ?.setValue([...this.form.get("columns")?.value]);
+                    ?.setValue([...(this.form.get("columns")?.value ?? [])]);
             });
         }
     }

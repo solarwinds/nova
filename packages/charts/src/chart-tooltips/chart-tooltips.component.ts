@@ -67,7 +67,7 @@ export class ChartTooltipsComponent implements OnChanges, OnDestroy {
     public openTooltips = new Subject<void>();
     public closeTooltips = new Subject<void>();
 
-    private unsubscribe$ = new Subject();
+    private unsubscribe$ = new Subject<void>();
     private simulation: Simulation<ITooltipNode, undefined>;
     // index we use for fast access of tooltip directives by seriesId
     private tooltipDirectivesIndex: {

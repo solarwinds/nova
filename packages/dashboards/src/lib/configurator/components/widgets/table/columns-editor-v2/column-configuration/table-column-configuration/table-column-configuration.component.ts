@@ -65,7 +65,7 @@ export class TableColumnConfigurationComponent
     public form: FormGroup;
     public changeFn: Function;
 
-    private onDestroy$ = new Subject();
+    private onDestroy$ = new Subject<void>();
     private input: ITableWidgetColumnConfig;
 
     @Input() formControl: AbstractControl;

@@ -18,9 +18,9 @@
             "files": "*.json",
             "options": {
                 "jsonRecursiveSort": true,
-                "parser": "json"
+                "parser": "json",
+                "plugins": ["prettier-plugin-sort-json"]
             }
         }
-    ],
-    "plugins": ["prettier-plugin-sort-json"]
+    ]
 }

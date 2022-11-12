@@ -26,7 +26,6 @@ import {
     filter,
     mergeWith,
     move,
-    noop,
     Rule,
     SchematicsException,
     template,
@@ -35,14 +34,19 @@ import {
 } from "@angular-devkit/schematics";
 import { addExportToModule } from "@schematics/angular/utility/ast-utils";
 import { InsertChange } from "@schematics/angular/utility/change";
-import { buildRelativePath, findModuleFromOptions } from "@schematics/angular/utility/find-module";
-import { applyLintFix } from "@schematics/angular/utility/lint-fix";
+import {
+    buildRelativePath,
+    findModuleFromOptions,
+} from "@schematics/angular/utility/find-module";
 import { parseName } from "@schematics/angular/utility/parse-name";
-import { validateHtmlSelector, validateName } from "@schematics/angular/utility/validation";
+import { validateHtmlSelector } from "@schematics/angular/utility/validation";
 
 import { buildDefaultPath, getProject } from "../utility/project";
-import { buildSelector, readIntoSourceFile, updateModuleChanges } from "../utility/schematics-helper";
-
+import {
+    buildSelector,
+    readIntoSourceFile,
+    updateModuleChanges,
+} from "../utility/schematics-helper";
 import { Schema as ComponentOptions } from "./schema";
 
 function addDeclarationToNgModule(options: ComponentOptions): Rule {
@@ -54,42 +58,51 @@ function addDeclarationToNgModule(options: ComponentOptions): Rule {
         const modulePath = options.module;
         let moduleSource = readIntoSourceFile(host, modulePath);
 
-        const componentPath = `/${options.path}/`
-            + (options.flat ? "" : strings.dasherize(options.name) + "/")
-            + strings.dasherize(options.name)
-            + ".component";
+        const componentPath =
+            `/${options.path}/` +
+            (options.flat ? "" : strings.dasherize(options.name) + "/") +
+            strings.dasherize(options.name) +
+            ".component";
         const relativePath = buildRelativePath(modulePath, componentPath);
         const componentName = strings.classify(`${options.name}Component`);
 
         // default modules to be imported
         const modules = [
-            {item: "NuiSorterModule", path: "@nova-ui/bits"},
-            {item: "NuiRepeatModule", path: "@nova-ui/bits"},
+            { item: "NuiSorterModule", path: "@nova-ui/bits" },
+            { item: "NuiRepeatModule", path: "@nova-ui/bits" },
         ];
 
         // additional module(s) used only for search functionality
         if (options.enableSearch) {
-            modules.push({item: "NuiSearchModule", path: "@nova-ui/bits"});
+            modules.push({ item: "NuiSearchModule", path: "@nova-ui/bits" });
         }
 
         // additional module(s) used only for pagination
         if (options.pagingMode === "pagination") {
-            modules.push({item: "NuiPaginatorModule", path: "@nova-ui/bits"});
+            modules.push({ item: "NuiPaginatorModule", path: "@nova-ui/bits" });
         }
 
         // additional module(s) used only for virtual scroll
         if (options.dataSource === "serverSide") {
             if (options.dataSource === "serverSide") {
-                modules.push({item: "HttpClientModule", path: "@angular/common/http"});
+                modules.push({
+                    item: "HttpClientModule",
+                    path: "@angular/common/http",
+                });
             }
             modules.push(
-                {item: "NuiBusyModule", path: "@nova-ui/bits"},
-                {item: "NuiSpinnerModule", path: "@nova-ui/bits"}
+                { item: "NuiBusyModule", path: "@nova-ui/bits" },
+                { item: "NuiSpinnerModule", path: "@nova-ui/bits" }
             );
         }
 
-        updateModuleChanges(host, options, moduleSource, modules, [],
-            [{item: componentName, path: relativePath }]
+        updateModuleChanges(
+            host,
+            options,
+            moduleSource,
+            modules,
+            [],
+            [{ item: componentName, path: relativePath }]
         );
 
         if (options.export) {
@@ -97,9 +110,12 @@ function addDeclarationToNgModule(options: ComponentOptions): Rule {
             moduleSource = readIntoSourceFile(host, modulePath);
 
             const exportRecorder = host.beginUpdate(modulePath);
-            const exportChanges = addExportToModule(moduleSource, modulePath,
+            const exportChanges = addExportToModule(
+                moduleSource,
+                modulePath,
                 strings.classify(`${options.name}Component`),
-                relativePath);
+                relativePath
+            );
 
             for (const change of exportChanges) {
                 if (change instanceof InsertChange) {
@@ -114,7 +130,7 @@ function addDeclarationToNgModule(options: ComponentOptions): Rule {
     };
 }
 
-export default function(options: ComponentOptions): Rule {
+export default function (options: ComponentOptions): Rule {
     return (host: Tree) => {
         if (!options.project) {
             throw new SchematicsException("Option (project) is required.");
@@ -131,51 +147,52 @@ export default function(options: ComponentOptions): Rule {
         const parsedPath = parseName(options.path, options.name);
         options.name = parsedPath.name;
         options.path = parsedPath.path;
-        options.selector = options.selector || buildSelector(options, project.prefix);
+        options.selector =
+            options.selector || buildSelector(options, project.prefix);
         options.dataSourceName = options.dataSourceName || options.name;
 
-        validateName(options.name);
         validateHtmlSelector(options.selector);
 
         const templateSource = apply(url("./files"), [
             template({
                 ...strings,
-                "if-flat": (s: string) => options.flat ? "" : s,
+                "if-flat": (s: string) => (options.flat ? "" : s),
                 ...options,
             }),
             filter((path: string) => {
-                if (options.dataSource === "custom" && (
-                    path.endsWith("data-source.service.ts") || path.endsWith("types.ts")
-                )) {
+                if (
+                    options.dataSource === "custom" &&
+                    (path.endsWith("data-source.service.ts") ||
+                        path.endsWith("types.ts"))
+                ) {
                     return false;
                 }
 
-                if (options.dataSource === "none" && (
+                if (
+                    options.dataSource === "none" &&
                     path.endsWith("data-source.service.ts")
-                )) {
+                ) {
                     return false;
                 }
 
                 return (
-                        options.dataSourceName === options.name
-                    )
-                    ||
-                    (
-                        options.dataSourceName !== options.name
-                        && !path.endsWith("data-source.service.ts")
-                        && !path.endsWith("types.ts")
-                        && !path.endsWith("data.ts")
-                    );
+                    options.dataSourceName === options.name ||
+                    (options.dataSourceName !== options.name &&
+                        !path.endsWith("data-source.service.ts") &&
+                        !path.endsWith("types.ts") &&
+                        !path.endsWith("data.ts"))
+                );
             }),
             move(`${parsedPath.path}/${parsedPath.name}`),
         ]);
 
         return chain([
-            branchAndMerge(chain([
-                addDeclarationToNgModule(options),
-                mergeWith(templateSource),
-            ])),
-            options.lintFix ? applyLintFix(options.path) : noop(),
+            branchAndMerge(
+                chain([
+                    addDeclarationToNgModule(options),
+                    mergeWith(templateSource),
+                ])
+            ),
         ]);
     };
 }

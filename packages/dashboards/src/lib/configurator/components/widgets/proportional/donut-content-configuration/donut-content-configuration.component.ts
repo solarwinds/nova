@@ -93,7 +93,7 @@ export class DonutContentConfigurationComponent
         | undefined;
     public aggregatorConfiguratorProps: IAggregatorConfiguratorProperties;
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         private formBuilder: FormBuilder,

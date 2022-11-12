@@ -45,11 +45,6 @@ import { DialogService } from "./dialog.service";
         DialogBackdropComponent,
     ],
     exports: [DialogHeaderComponent, DialogFooterComponent],
-    entryComponents: [
-        DialogComponent,
-        DialogBackdropComponent,
-        ConfirmationDialogComponent,
-    ],
     providers: [DialogService, DialogStackService],
 })
 export class NuiDialogModule {}

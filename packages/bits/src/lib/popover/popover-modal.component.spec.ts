@@ -28,7 +28,10 @@ import { EdgeDetectionService } from "../../services/edge-detection.service";
 import { LoggerService } from "../../services/log-service";
 import { PositionService } from "../../services/position.service";
 import { OverlayArrowComponent } from "../overlay/arrow-component/overlay-arrow.component";
-import { PopoverModalComponent } from "./popover-modal.component";
+import {
+    PopoverModalComponent,
+    PopoverModalEvents,
+} from "./popover-modal.component";
 
 describe("components >", () => {
     describe("popover-modal >", () => {
@@ -57,7 +60,8 @@ describe("components >", () => {
 
         describe("popover modal events >", () => {
             it("should call popoverHoverSubject.next with mouse-enter param", () => {
-                subject.popoverModalEventSubject = new Subject();
+                subject.popoverModalEventSubject =
+                    new Subject<PopoverModalEvents>();
                 spyOn(subject.popoverModalEventSubject, "next");
                 debugElement.triggerEventHandler("mouseenter", null);
                 expect(
@@ -66,7 +70,8 @@ describe("components >", () => {
             });
 
             it("should call popoverHoverSubject.next with mouse-leave param", () => {
-                subject.popoverModalEventSubject = new Subject();
+                subject.popoverModalEventSubject =
+                    new Subject<PopoverModalEvents>();
                 spyOn(subject.popoverModalEventSubject, "next");
                 debugElement.triggerEventHandler("mouseleave", null);
                 expect(
@@ -78,7 +83,7 @@ describe("components >", () => {
         describe("displayChange>", () => {
             it("should update fadeIn", () => {
                 subject.fadeIn = true;
-                subject.popoverBeforeHiddenSubject = new Subject();
+                subject.popoverBeforeHiddenSubject = new Subject<void>();
                 subject.displayChange = new BehaviorSubject<boolean>(true);
                 subject.ngOnInit();
                 subject.displayChange.next(false);

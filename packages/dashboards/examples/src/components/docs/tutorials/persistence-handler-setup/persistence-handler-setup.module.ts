@@ -73,6 +73,5 @@ const routes = [
         PersistenceHandlerSetupDocsComponent,
         PersistenceHandlerSetupComponent,
     ],
-    entryComponents: [],
 })
 export class PersistenceHandlerSetupModule {}

@@ -26,29 +26,36 @@ import {
     filter,
     mergeWith,
     move,
-    noop,
     Rule,
     schematic,
     SchematicsException,
     template,
     Tree,
-    url
+    url,
 } from "@angular-devkit/schematics";
-import { buildRelativePath, findModuleFromOptions } from "@schematics/angular/utility/find-module";
-import { applyLintFix } from "@schematics/angular/utility/lint-fix";
+import {
+    buildRelativePath,
+    findModuleFromOptions,
+} from "@schematics/angular/utility/find-module";
 import { getAppModulePath } from "@schematics/angular/utility/ng-ast-utils";
 import { parseName } from "@schematics/angular/utility/parse-name";
-import { validateHtmlSelector, validateName } from "@schematics/angular/utility/validation";
+import { validateHtmlSelector } from "@schematics/angular/utility/validation";
 import { BrowserBuilderTarget } from "@schematics/angular/utility/workspace-models";
 
 import { buildDefaultPath, getProject } from "../utility/project";
 import { getProjectTargets } from "../utility/project-targets";
-import { buildSelector, readIntoSourceFile, updateModuleChanges } from "../utility/schematics-helper";
+import {
+    buildSelector,
+    readIntoSourceFile,
+    updateModuleChanges,
+} from "../utility/schematics-helper";
 import { getWorkspace } from "../utility/workspace";
-
 import { Schema as ComponentOptions } from "./schema";
 
-function getBrowserProjectTargets(host: Tree, options: any): BrowserBuilderTarget {
+function getBrowserProjectTargets(
+    host: Tree,
+    options: any
+): BrowserBuilderTarget {
     const workspace = getWorkspace(host);
     const clientProject = getProject(workspace, options.project);
     return <any>getProjectTargets(clientProject)["build"];
@@ -63,28 +70,38 @@ function addDeclarationToNgModule(options: any): Rule {
 
         const mainPath = projectTargets.options.main;
         const appModulePath = getAppModulePath(host, mainPath);
-        const moduleSource = readIntoSourceFile(host, appModulePath );
+        const moduleSource = readIntoSourceFile(host, appModulePath);
         const modulePath = options.module;
-        const importedModulePath = `/${options.path}/`
-            + (options.flat ? "" : strings.dasherize(options.name) + "/")
-            + strings.dasherize(options.name)
-            + ".module";
+        const importedModulePath =
+            `/${options.path}/` +
+            (options.flat ? "" : strings.dasherize(options.name) + "/") +
+            strings.dasherize(options.name) +
+            ".module";
 
         const relativePath = buildRelativePath(modulePath, importedModulePath);
 
-        updateModuleChanges(host, options, moduleSource,
+        updateModuleChanges(
+            host,
+            options,
+            moduleSource,
             [
-                {item: `${strings.classify(options.name)}Module`, path: relativePath},
-                {item: "BrowserAnimationsModule", path: "@angular/platform-browser/animations"},
+                {
+                    item: `${strings.classify(options.name)}Module`,
+                    path: relativePath,
+                },
+                {
+                    item: "BrowserAnimationsModule",
+                    path: "@angular/platform-browser/animations",
+                },
             ],
-            [{item: "DatePipe", path: "@angular/common"}]
+            [{ item: "DatePipe", path: "@angular/common" }]
         );
 
         return host;
     };
 }
 
-export default function(options: ComponentOptions): Rule {
+export default function (options: ComponentOptions): Rule {
     return (host: Tree) => {
         if (!options.project) {
             throw new SchematicsException("Option (project) is required.");
@@ -102,21 +119,23 @@ export default function(options: ComponentOptions): Rule {
         const targetFolder = strings.dasherize(options.name);
         options.name = parsedPath.name;
         options.path = parsedPath.path;
-        options.selector = options.selector || buildSelector(options, project.prefix);
+        options.selector =
+            options.selector || buildSelector(options, project.prefix);
 
         addDeclarationToNgModule(options);
 
-        validateName(options.name);
         validateHtmlSelector(options.selector);
 
-        const filterGroupOptions: ComponentOptions = {...options};
+        const filterGroupOptions: ComponentOptions = { ...options };
         filterGroupOptions.name = "filter-group";
-        filterGroupOptions.selector = `${options.prefix || project.prefix}-filter-group`;
+        filterGroupOptions.selector = `${
+            options.prefix || project.prefix
+        }-filter-group`;
         filterGroupOptions.path = `${options.path}/${targetFolder}`;
         filterGroupOptions.module = `${options.name}.module.ts`;
         filterGroupOptions.skipImport = true;
 
-        const listOptions: any = {...options};
+        const listOptions: any = { ...options };
         listOptions.name = "filtered-view-list";
         listOptions.selector = `${options.selector}-list`;
         listOptions.path = `${options.path}/${targetFolder}`;
@@ -124,37 +143,39 @@ export default function(options: ComponentOptions): Rule {
         listOptions.dataSourceName = options.name;
 
         // TODO: validate after creating proper schematic for table
-        const tableOptions: any = {...options};
+        const tableOptions: any = { ...options };
         tableOptions.name = "filtered-view-table";
         tableOptions.selector = `${options.selector}-table`;
         tableOptions.path = `${options.path}/${targetFolder}`;
         tableOptions.skipImport = true;
         tableOptions.dataSourceName = options.name;
 
-        options.childSelector = options.presentationType === "table"
-            ? tableOptions.selector
-            : listOptions.selector;
+        options.childSelector =
+            options.presentationType === "table"
+                ? tableOptions.selector
+                : listOptions.selector;
 
         const templateSource = apply(url("./files"), [
             template({
                 ...strings,
-                "if-flat": (s: string) => options.flat ? "" : s,
+                "if-flat": (s: string) => (options.flat ? "" : s),
                 ...options,
             }),
             filter((path: string) => {
-                if (options.dataSource === "none" && (
+                if (
+                    options.dataSource === "none" &&
                     path.endsWith("data-source.service.ts")
-                )) {
+                ) {
                     return false;
                 }
 
-                return options.dataSource !== "custom" ||
-                    (
-                        options.dataSource === "custom"
-                        && !path.endsWith("data-source.service.ts")
-                        && !path.endsWith("data.ts")
-                        && !path.endsWith("types.ts")
-                    );
+                return (
+                    options.dataSource !== "custom" ||
+                    (options.dataSource === "custom" &&
+                        !path.endsWith("data-source.service.ts") &&
+                        !path.endsWith("data.ts") &&
+                        !path.endsWith("types.ts"))
+                );
             }),
             move(parsedPath.path),
         ]);
@@ -165,7 +186,6 @@ export default function(options: ComponentOptions): Rule {
             options.presentationType === "table"
                 ? branchAndMerge(schematic("table", tableOptions))
                 : branchAndMerge(schematic("list", listOptions)),
-            options.lintFix ? applyLintFix(options.path) : noop(),
         ]);
     };
 }

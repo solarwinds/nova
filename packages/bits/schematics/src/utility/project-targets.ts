@@ -26,7 +26,11 @@
  *****************************************************************/
 
 import { Tree } from "@angular-devkit/schematics/src/tree/interface";
-import { WorkspaceProject, WorkspaceSchema, WorkspaceTargets } from "@schematics/angular/utility/workspace-models";
+import {
+    WorkspaceProject,
+    WorkspaceSchema,
+    WorkspaceTargets,
+} from "@schematics/angular/utility/workspace-models";
 
 import { getProject, isWorkspaceProject } from "./project";
 

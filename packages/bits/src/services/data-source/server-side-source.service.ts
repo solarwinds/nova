@@ -40,7 +40,7 @@ export abstract class ServerSideDataSource<
     public busy = new BehaviorSubject(false);
 
     protected applyFilters$ = new Subject<F>();
-    protected destroy$: Subject<void> = new Subject();
+    protected destroy$: Subject<void> = new Subject<void>();
 
     constructor() {
         super();

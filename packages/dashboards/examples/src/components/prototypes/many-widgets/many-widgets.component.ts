@@ -89,7 +89,7 @@ export class ManyWidgetsDashboardComponent
         enabled: true,
     };
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         private providerRegistry: ProviderRegistryService,

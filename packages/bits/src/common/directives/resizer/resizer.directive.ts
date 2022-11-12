@@ -397,7 +397,9 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
             `${this.resizeClass}--active`
         );
         this._isDragging = false;
-        this.eventBusService.getStream({ id: "complete-resize" }).next();
+        this.eventBusService
+            .getStream({ id: "complete-resize" })
+            .next(undefined);
     }
 
     private calculatePosition() {

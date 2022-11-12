@@ -66,8 +66,8 @@ export class WidgetClonerComponent
             allowStepChange: true,
         });
 
-    private destroy$ = new Subject();
-    private resetForm$ = new Subject();
+    private destroy$ = new Subject<void>();
+    private resetForm$ = new Subject<void>();
     public busy = false;
     public isFormDisplayed = false;
 

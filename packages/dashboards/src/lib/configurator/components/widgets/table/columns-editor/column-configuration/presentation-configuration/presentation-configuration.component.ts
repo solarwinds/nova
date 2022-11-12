@@ -118,7 +118,7 @@ export class PresentationConfigurationComponent
     public formatterConfiguratorProps: IFormatterConfigurator;
     public readonly formatterFormGroupName = "formatter";
     public subtitleText: string;
-    private onDestroy$: Subject<void> = new Subject();
+    private onDestroy$: Subject<void> = new Subject<void>();
 
     constructor(
         private formBuilder: FormBuilder,

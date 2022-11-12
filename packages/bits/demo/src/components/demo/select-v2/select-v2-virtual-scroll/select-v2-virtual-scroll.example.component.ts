@@ -49,7 +49,7 @@ export class SelectV2VirtualScrollExampleComponent
     public selectControl = new FormControl();
     public containerHeight: number = 300;
 
-    private destroy$: Subject<void> = new Subject();
+    private destroy$: Subject<void> = new Subject<void>();
     private scrollOffset: number = 0;
 
     @ViewChild(CdkVirtualScrollViewport)

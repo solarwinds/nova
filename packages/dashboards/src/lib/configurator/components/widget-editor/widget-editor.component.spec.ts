@@ -55,7 +55,7 @@ import { DashwizComponent } from "../wizard/dashwiz/dashwiz.component";
 import { WidgetEditorComponent } from "./widget-editor.component";
 
 class MockConfiguratorComponent {
-    public submitError = new Subject();
+    public submitError = new Subject<void>();
     public previewWidget: Partial<IWidget> = {
         pizzagna: {
             [PizzagnaLayer.Configuration]: {

@@ -207,6 +207,5 @@ const routes = [
         },
     ],
     exports: [RouterModule],
-    entryComponents: [TreeDialogContentExampleComponent],
 })
 export class TreeModule {}

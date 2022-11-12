@@ -56,7 +56,7 @@ export class ListLeafItemComponent implements IHasChangeDetector, OnInit {
     @Output() public navigated = new EventEmitter<ListLeafItemComponent>();
 
     public searchTerm: string = "";
-    protected destroy$ = new Subject();
+    protected destroy$ = new Subject<void>();
 
     onButtonClick() {
         if (this.canNavigate) {

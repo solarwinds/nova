@@ -94,7 +94,7 @@ export class TableStateHandlerService {
     public tableParentWidth: number;
     public columnsState = new Subject<string[]>();
     public sortingState = new Subject<ISortedItem>();
-    public draggedOverCell = new Subject<DraggedOverCell>();
+    public draggedOverCell = new Subject<DraggedOverCell | undefined>();
     public shouldHighlightEdge = new Subject<TableCellEdgeHighlight>();
     public dataSourceChanged = new Subject<Array<any>>();
     public selectionChanged = new Subject<ISelection>();
@@ -149,7 +149,7 @@ export class TableStateHandlerService {
         this._sortable = isSortable;
     }
 
-    get sortable() {
+    get sortable(): boolean {
         return this._sortable;
     }
 
@@ -157,7 +157,7 @@ export class TableStateHandlerService {
         this._dragCellIndex = cellIndex;
     }
 
-    get dragCellIndex() {
+    get dragCellIndex(): number {
         return this._dragCellIndex;
     }
 
@@ -165,7 +165,7 @@ export class TableStateHandlerService {
         this._draggedOverCellIndex = cellIndex;
     }
 
-    get draggedOverCellIndex() {
+    get draggedOverCellIndex(): number {
         return this._draggedOverCellIndex;
     }
 
@@ -173,7 +173,7 @@ export class TableStateHandlerService {
         this._newCellIndex = cellIndex;
     }
 
-    get newCellIndex() {
+    get newCellIndex(): number {
         return this._newCellIndex;
     }
 
@@ -181,7 +181,7 @@ export class TableStateHandlerService {
         this._dropCellOffsetX = cellIndex;
     }
 
-    get dropCellOffsetX() {
+    get dropCellOffsetX(): number {
         return this._dropCellOffsetX;
     }
 
@@ -189,7 +189,7 @@ export class TableStateHandlerService {
         this._dropCellWidth = cellIndex;
     }
 
-    get dropCellWidth() {
+    get dropCellWidth(): number {
         return this._dropCellWidth;
     }
 
@@ -197,7 +197,7 @@ export class TableStateHandlerService {
         this._dragOverDirection = cellIndex;
     }
 
-    get dragOverDirection() {
+    get dragOverDirection(): string {
         return this._dragOverDirection;
     }
 
@@ -205,7 +205,7 @@ export class TableStateHandlerService {
         this._reorderable = isDraggable;
     }
 
-    get reorderable() {
+    get reorderable(): boolean {
         return this._reorderable;
     }
 
@@ -213,7 +213,7 @@ export class TableStateHandlerService {
         this._resizable = isResizable;
     }
 
-    get resizable() {
+    get resizable(): boolean {
         return this._resizable;
     }
 
@@ -221,7 +221,7 @@ export class TableStateHandlerService {
         this.state.columns = columns;
     }
 
-    get tableColumns() {
+    get tableColumns(): string[] {
         return this.state.columns;
     }
 
@@ -230,7 +230,7 @@ export class TableStateHandlerService {
         this.state.columnsTypes[columnIndex] = column.columnType;
     }
 
-    get columnsTypes() {
+    get columnsTypes(): string[] {
         return this.state.columnsTypes;
     }
 
@@ -245,7 +245,7 @@ export class TableStateHandlerService {
         this._selectable = isSelectable;
     }
 
-    get selectable() {
+    get selectable(): boolean {
         return this._selectable;
     }
 
@@ -261,7 +261,7 @@ export class TableStateHandlerService {
         this._totalItems = paginationTotal;
     }
 
-    get totalItems() {
+    get totalItems(): number {
         return this._totalItems;
     }
 
@@ -269,7 +269,7 @@ export class TableStateHandlerService {
         this._dataSource = dataSource;
     }
 
-    get dataSource() {
+    get dataSource(): any[] {
         return this._dataSource;
     }
 
@@ -277,7 +277,7 @@ export class TableStateHandlerService {
         this._selection = selection;
     }
 
-    get selection() {
+    get selection(): ISelection {
         return this._selection;
     }
 
@@ -285,7 +285,7 @@ export class TableStateHandlerService {
         return this._trackBy || DEFAULT_TRACK_BY;
     }
 
-    set trackBy(value) {
+    set trackBy(value: TrackByFunction<any>) {
         this._trackBy = value;
     }
 
@@ -360,7 +360,7 @@ export class TableStateHandlerService {
      * Updates the state's columnWidths for each column and sets the state's widthCalculationPerformed property
      * to true once the calculation is complete
      */
-    public calculateWidthsOfColumns() {
+    public calculateWidthsOfColumns(): void {
         // Apply width of 40px for non-resizable columns of type "icon"
         this.state.columns
             .filter((columnName) => {
@@ -414,7 +414,7 @@ export class TableStateHandlerService {
      *
      * @param sortCellIndex the index of the column to sort by
      */
-    public sortColumn(sortCellIndex: number) {
+    public sortColumn(sortCellIndex: number): void {
         const newSortedColumn = this.state.columns[sortCellIndex];
         const prevSortedColumn =
             this.state.sortedColumn && this.state.sortedColumn.sortBy;
@@ -585,7 +585,7 @@ export class TableStateHandlerService {
      *
      * @param dataSource
      */
-    public changeDataSource(dataSource: any[]) {
+    public changeDataSource(dataSource: any[]): void {
         this.dataSource = dataSource;
         this.dataSourceChanged.next(dataSource);
     }
@@ -595,7 +595,7 @@ export class TableStateHandlerService {
      *
      * @returns An array of all currently selected items
      */
-    public getSelectedItems() {
+    public getSelectedItems(): any[] {
         const trackedItems = this.dataSource.map((d) => this.trackBy(d?.id, d));
         return this.selectorService.getSelectedItems(
             this.selection,
@@ -644,7 +644,7 @@ export class TableStateHandlerService {
      *
      * @param rowObject
      */
-    public handleRowCheckbox(rowObject: Object) {
+    public handleRowCheckbox(rowObject: Object): void {
         const excludedRows = this.selection.exclude;
         const includedRows = this.selection.include;
 

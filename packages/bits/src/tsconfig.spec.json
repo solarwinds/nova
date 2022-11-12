@@ -1,11 +1,11 @@
 {
     "compilerOptions": {
-        "outDir": "./out-tsc/spec",
-        "baseUrl": "./",
+        "outDir": "../.tmp-spec",
+        "baseUrl": ".",
         "types": ["jasmine", "node"]
     },
     "exclude": ["../node_modules"],
     "extends": "../tsconfig.json",
-    "files": ["test.ts", "polyfills.ts"],
-    "include": ["**/*.spec.ts", "**/*.d.ts"]
+    "files": ["./test.ts", "./polyfills.ts"],
+    "include": ["./**/*.spec.ts", "./**/*.d.ts"]
 }

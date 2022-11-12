@@ -18,15 +18,31 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { chain, noop, Rule, SchematicContext, SchematicsException, Tree } from "@angular-devkit/schematics";
-import { addImportToModule, isImported } from "@schematics/angular/utility/ast-utils";
+import {
+    chain,
+    noop,
+    Rule,
+    SchematicContext,
+    SchematicsException,
+    Tree,
+} from "@angular-devkit/schematics";
+import {
+    addImportToModule,
+    isImported,
+} from "@schematics/angular/utility/ast-utils";
 import { InsertChange } from "@schematics/angular/utility/change";
-import { addPackageJsonDependency, NodeDependency } from "@schematics/angular/utility/dependencies";
+import {
+    addPackageJsonDependency,
+    NodeDependency,
+} from "@schematics/angular/utility/dependencies";
 import { getAppModulePath } from "@schematics/angular/utility/ng-ast-utils";
 
 import {
-    addStylesToAngularJson, assembleDependencies, getBrowserProjectTargets,
-    installPackageJsonDependencies, readIntoSourceFile
+    addStylesToAngularJson,
+    assembleDependencies,
+    getBrowserProjectTargets,
+    installPackageJsonDependencies,
+    readIntoSourceFile,
 } from "@nova-ui/bits/sdk/schematics";
 
 const stylePaths = ["./node_modules/@nova-ui/charts/bundles/css/styles.css"];
@@ -37,10 +53,18 @@ export default function (options: any): Rule {
     }
 
     return chain([
-        options && options.skipPackageJson ? noop() : addPackageJsonDependencies(),
-        options && options.skipPackageJson ? noop() : installPackageJsonDependencies(),
-        options && options.skipModuleUpdate ? noop() : updateModuleFile(options),
-        options && options.skipCss ? noop() : addStylesToAngularJson(options, stylePaths),
+        options && options.skipPackageJson
+            ? noop()
+            : addPackageJsonDependencies(),
+        options && options.skipPackageJson
+            ? noop()
+            : installPackageJsonDependencies(),
+        options && options.skipModuleUpdate
+            ? noop()
+            : updateModuleFile(options),
+        options && options.skipCss
+            ? noop()
+            : addStylesToAngularJson(options, stylePaths),
     ]);
 }
 
@@ -48,10 +72,13 @@ function addPackageJsonDependencies(): Rule {
     return (host: Tree, context: SchematicContext) => {
         const { peerDependencies } = require("../../../package.json");
 
-        const dependencies: NodeDependency[] = assembleDependencies(peerDependencies);
-        dependencies.forEach(dependency => {
+        const dependencies: NodeDependency[] =
+            assembleDependencies(peerDependencies);
+        dependencies.forEach((dependency) => {
             addPackageJsonDependency(host, dependency);
-            context.logger.info(`✅️ Added "${dependency.name}" into ${dependency.type}`);
+            context.logger.info(
+                `✅️ Added "${dependency.name}" into ${dependency.type}`
+            );
         });
 
         return host;
@@ -70,16 +97,27 @@ function updateModuleFile(options: any): Rule {
             const declarationRecorder = host.beginUpdate(modulePath);
 
             const modules = [
-                { item: `BrowserAnimationsModule`, path: `@angular/platform-browser/animations` },
+                {
+                    item: `BrowserAnimationsModule`,
+                    path: `@angular/platform-browser/animations`,
+                },
                 { item: `NuiDashboardsModule`, path: `@nova-ui/dashboards` },
             ];
 
-            modules.forEach(module => {
+            modules.forEach((module) => {
                 if (!isImported(moduleSource, module.item, module.path)) {
-                    const moduleChanges = addImportToModule(moduleSource, modulePath, module.item, module.path);
-                    moduleChanges.forEach(change => {
+                    const moduleChanges = addImportToModule(
+                        moduleSource,
+                        modulePath,
+                        module.item,
+                        module.path
+                    );
+                    moduleChanges.forEach((change) => {
                         if (change instanceof InsertChange) {
-                            declarationRecorder.insertLeft(change.pos, change.toAdd);
+                            declarationRecorder.insertLeft(
+                                change.pos,
+                                change.toAdd
+                            );
                         }
                     });
                     context.logger.info(`   recorded ${module.item} add`);
@@ -91,7 +129,6 @@ function updateModuleFile(options: any): Rule {
             host.commitUpdate(declarationRecorder);
 
             context.logger.info(`✅️ Updated module file`);
-
         } catch (ex) {
             context.logger.error(`🚫 Failed updating module: ${ex.toString()}`);
         }

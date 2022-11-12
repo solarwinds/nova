@@ -479,7 +479,7 @@ describe("convenience components >", () => {
         it("should invoke next on the destroy$ subject", () => {
             const nextSpy = spyOn((<any>component).destroy$, "next");
             component.ngOnDestroy();
-            expect(nextSpy).toHaveBeenCalledWith(true);
+            expect(nextSpy).toHaveBeenCalled();
         });
     });
 });

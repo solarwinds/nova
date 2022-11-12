@@ -27,8 +27,8 @@ import { Subject } from "rxjs";
         "./popover-open-and-close-programmatically.example.component.html",
 })
 export class PopoverOpenAndCloseProgrammaticallyExampleComponent {
-    public closePopoverSubject = new Subject();
-    public openPopoverSubject = new Subject();
+    public closePopoverSubject = new Subject<void>();
+    public openPopoverSubject = new Subject<void>();
 
     public closePopover() {
         this.closePopoverSubject.next();

@@ -183,7 +183,7 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     public removeWidget() {
-        this.eventBus.getStream(WIDGET_REMOVE).next();
+        this.eventBus.getStream(WIDGET_REMOVE).next(undefined);
     }
 
     public toggleCollapsed() {
@@ -198,7 +198,7 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     public onEditWidget() {
-        this.eventBus.getStream(WIDGET_EDIT).next();
+        this.eventBus.getStream(WIDGET_EDIT).next(undefined);
     }
 
     public onReloadData() {
@@ -207,7 +207,7 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
                 "The widget is not reloadable, so it can't be reloaded manually."
             );
         }
-        this.eventBus.getStream(REFRESH).next();
+        this.eventBus.getStream(REFRESH).next(undefined);
     }
 
     public prepareLink($event: MouseEvent) {

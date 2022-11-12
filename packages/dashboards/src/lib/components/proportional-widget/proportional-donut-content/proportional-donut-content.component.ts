@@ -78,7 +78,7 @@ export class ProportionalDonutContentComponent
     private contentAggregatorDefinition: IProportionalDonutContentAggregatorDefinition;
     /** Hovered series Id */
     private emphasizedSeriesId: string;
-    private destroy$: Subject<unknown> = new Subject();
+    private destroy$ = new Subject<void>();
     private chartAssistSubscription: Subscription;
 
     constructor(
@@ -116,7 +116,7 @@ export class ProportionalDonutContentComponent
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }

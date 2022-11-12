@@ -42,16 +42,10 @@
 // Used for reflect-metadata in JIT. If you use AOT (and only Angular decorators), you can remove.
 // eslint-disable-next-line
 import "@angular/localize/init";
-import "core-js/es7/reflect";
+import "core-js/es/reflect";
 import "zone.js"; // Included with Angular CLI.
 
 /** localize polyfill **/
-
-/**
- * Required to support Web Animations `@angular/platform-browser/animations`.
- * Needed for: All but Chrome, Firefox and Opera. http://caniuse.com/#feat=web-animation
- **/
-// import 'web-animations-js';  // Run `npm install --save web-animations-js`.
 
 /**
  * By default, zone.js will patch all possible macroTask and DomEvents

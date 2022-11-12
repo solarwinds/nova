@@ -48,7 +48,7 @@ const CUSTOM_OVERLAY_PANEL_CLASS = "custom-overlay-panel-class";
     encapsulation: ViewEncapsulation.None,
 })
 export class OverlayArrowExampleComponent implements AfterViewInit, OnDestroy {
-    private destroy$: Subject<any> = new Subject();
+    private destroy$ = new Subject<void>();
 
     public possiblePositions: OverlayPlacement[] = [
         OverlayPlacement.Top,

@@ -18,13 +18,32 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { chain, noop, Rule, SchematicContext, SchematicsException, Tree } from "@angular-devkit/schematics";
-import { addProviderToModule, insertImport } from "@schematics/angular/utility/ast-utils";
+import {
+    chain,
+    noop,
+    Rule,
+    SchematicContext,
+    SchematicsException,
+    Tree,
+} from "@angular-devkit/schematics";
+import {
+    addProviderToModule,
+    insertImport,
+} from "@schematics/angular/utility/ast-utils";
 import { InsertChange } from "@schematics/angular/utility/change";
-import { addPackageJsonDependency, NodeDependency } from "@schematics/angular/utility/dependencies";
+import {
+    addPackageJsonDependency,
+    NodeDependency,
+} from "@schematics/angular/utility/dependencies";
 import { getAppModulePath } from "@schematics/angular/utility/ng-ast-utils";
 
-import { assembleDependencies, getBrowserProjectTargets, installPackageJsonDependencies, readIntoSourceFile, updateJsonFile } from "../utility/schematics-helper";
+import {
+    assembleDependencies,
+    getBrowserProjectTargets,
+    installPackageJsonDependencies,
+    readIntoSourceFile,
+    updateJsonFile,
+} from "../utility/schematics-helper";
 
 export default function (options: any): Rule {
     if (!options.project) {
@@ -32,23 +51,32 @@ export default function (options: any): Rule {
     }
 
     return chain([
-        options && options.skipPackageJson ? noop() : addPackageJsonDependencies(),
-        options && options.skipPackageJson ? noop() : installPackageJsonDependencies(),
+        options && options.skipPackageJson
+            ? noop()
+            : addPackageJsonDependencies(),
+        options && options.skipPackageJson
+            ? noop()
+            : installPackageJsonDependencies(),
         options && options.skipProviders ? noop() : addProviders(options),
         options && options.skipCss ? noop() : addRootCssClass(options),
         options && options.skipCss ? noop() : addCssToAngularJson(options),
         addPreprocessorOptionsToAngularJson(options),
-        options && options.skipTsConfig ? noop() : addSyntheticImportsToTsConfig(options),
+        options && options.skipTsConfig
+            ? noop()
+            : addSyntheticImportsToTsConfig(options),
     ]);
 }
 function addPackageJsonDependencies(): Rule {
     return (host: Tree, context: SchematicContext) => {
         const { peerDependencies } = require("../../../package.json");
 
-        const dependencies: NodeDependency[] = assembleDependencies(peerDependencies);
-        dependencies.forEach(dependency => {
+        const dependencies: NodeDependency[] =
+            assembleDependencies(peerDependencies);
+        dependencies.forEach((dependency) => {
             addPackageJsonDependency(host, dependency);
-            context.logger.info(`✅️ Added "${dependency.name}" into ${dependency.type}`);
+            context.logger.info(
+                `✅️ Added "${dependency.name}" into ${dependency.type}`
+            );
         });
 
         return host;
@@ -71,25 +99,40 @@ function addProviders(options: any): Rule {
 
             const declarationRecorder = host.beginUpdate(modulePath);
             const spaceRegex = /\r?\n|\r| /g;
-            providers.forEach(provider => {
-                const moduleSourceMinified = moduleSource.text.replace(spaceRegex, "");
+            providers.forEach((provider) => {
+                const moduleSourceMinified = moduleSource.text.replace(
+                    spaceRegex,
+                    ""
+                );
                 const providerIndex = provider.indexOf("provide:");
                 const commaIndex = provider.indexOf(",");
-                const providerString = provider.replace(spaceRegex, "").substring(providerIndex, commaIndex);
+                const providerString = provider
+                    .replace(spaceRegex, "")
+                    .substring(providerIndex, commaIndex);
+
                 // since we are doing a "usevalue" provide, we can't use the nice isImported
                 if (!moduleSourceMinified.includes(providerString)) {
+                    const providerChanges = addProviderToModule(
+                        moduleSource,
+                        modulePath,
+                        provider,
+                        // @ts-ignore: Avoiding strict mode errors, preserving old behaviour
+                        undefined
+                    );
 
-                    // @ts-ignore: Avoiding strict mode errors, preserving old behaviour
-                    const providerChanges = addProviderToModule(moduleSource, modulePath, provider, undefined);
-
-                    providerChanges.forEach(change => {
+                    providerChanges.forEach((change) => {
                         if (change instanceof InsertChange) {
-                            declarationRecorder.insertLeft(change.pos, change.toAdd);
+                            declarationRecorder.insertLeft(
+                                change.pos,
+                                change.toAdd
+                            );
                         }
                     });
                     context.logger.info(`   recorded provider add`);
                 } else {
-                    context.logger.info(`   translation providers already present`);
+                    context.logger.info(
+                        `   translation providers already present`
+                    );
                 }
             });
 
@@ -99,23 +142,32 @@ function addProviders(options: any): Rule {
                 { item: `TRANSLATIONS_FORMAT`, path: `@angular/core` },
             ];
 
-            imports.forEach(importable => {
+            imports.forEach((importable) => {
                 if (!moduleSource.text.includes(importable.item)) {
                     // since we are doing a "useValue" provide, we can't use the nice isImported
-                    const importChange = insertImport(moduleSource, modulePath, importable.item, importable.path);
+                    const importChange = insertImport(
+                        moduleSource,
+                        modulePath,
+                        importable.item,
+                        importable.path
+                    );
                     if (importChange instanceof InsertChange) {
-                        declarationRecorder.insertLeft(importChange.pos, importChange.toAdd);
+                        declarationRecorder.insertLeft(
+                            importChange.pos,
+                            importChange.toAdd
+                        );
                     }
                     context.logger.info(`   recorded translation imports`);
                 } else {
-                    context.logger.info(`   translation imports already present`);
+                    context.logger.info(
+                        `   translation imports already present`
+                    );
                 }
             });
 
             host.commitUpdate(declarationRecorder);
 
             context.logger.info(`✅️ Updated module file`);
-
         } catch (ex) {
             context.logger.error(`🚫 Failed updating module: ${ex.toString()}`);
         }
@@ -136,15 +188,17 @@ function addRootCssClass(options: any) {
 
                 if (!rootHtml.match(/<html.*(class=".*nui.*").*>/)) {
                     // TODO need a proper html parser here
-                    rootHtml = rootHtml.replace("<html", "<html class=\"nui\"");
+                    rootHtml = rootHtml.replace("<html", '<html class="nui"');
 
-                    host.overwrite((filePath ?? ""), rootHtml);
+                    host.overwrite(filePath ?? "", rootHtml);
                 } else {
                     context.logger.info(`️ root html already contains class`);
                 }
             }
         } catch (ex) {
-            context.logger.error(`🚫 Failed to add root Css class to body: ${ex.toString()}`);
+            context.logger.error(
+                `🚫 Failed to add root Css class to body: ${ex.toString()}`
+            );
         }
         context.logger.info(`✅️ Added root Css class to body`);
         return host;
@@ -156,13 +210,11 @@ function addSyntheticImportsToTsConfig(options: any) {
         const projectTargets = getBrowserProjectTargets(host, options);
         const tsConfigPath = projectTargets.options.tsConfig;
 
-        updateJsonFile(host,
+        updateJsonFile(
+            host,
             context,
             tsConfigPath,
-            [
-                "compilerOptions",
-                "allowSyntheticDefaultImports",
-            ],
+            ["compilerOptions", "allowSyntheticDefaultImports"],
             true
         );
     };
@@ -170,7 +222,8 @@ function addSyntheticImportsToTsConfig(options: any) {
 
 function addCssToAngularJson(options: any) {
     return (host: Tree, context: SchematicContext) => {
-        updateJsonFile(host,
+        updateJsonFile(
+            host,
             context,
             "angular.json",
             [
@@ -187,7 +240,8 @@ function addCssToAngularJson(options: any) {
 }
 function addPreprocessorOptionsToAngularJson(options: any) {
     return (host: Tree, context: SchematicContext) => {
-        updateJsonFile(host,
+        updateJsonFile(
+            host,
             context,
             "angular.json",
             [
@@ -199,7 +253,7 @@ function addPreprocessorOptionsToAngularJson(options: any) {
                 "stylePreprocessorOptions",
             ],
             {
-                "includePaths": ["node_modules"],
+                includePaths: ["node_modules"],
             }
         );
     };

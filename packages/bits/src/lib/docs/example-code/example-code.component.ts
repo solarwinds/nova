@@ -18,8 +18,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-/// <reference path="../../../../node_modules/highlight.js/types/index.d.ts" />
-
 /** @ignore */
 import {
     AfterViewInit,
@@ -29,7 +27,7 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
-import * as hljs from "highlight.js/lib/core";
+import hljs from "highlight.js/lib/core";
 
 /**
  * <example-url>./../examples/index.html#/code</example-url><br />

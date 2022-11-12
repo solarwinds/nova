@@ -36,7 +36,6 @@ import { ToastServiceBase } from "./toast.servicebase";
     imports: [NuiCommonModule, NuiIconModule, NuiButtonModule],
     declarations: [ToastComponent, ToastDirective],
     exports: [ToastComponent, ToastDirective],
-    entryComponents: [ToastComponent],
     providers: [
         ToastService,
         ToastContainerService,

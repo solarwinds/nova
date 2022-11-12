@@ -65,7 +65,7 @@ export class ConfiguratorDataSourceManagerService implements OnDestroy {
                 if (event.payload?.error) {
                     this.error$.next(event.payload.error);
                 } else {
-                    this.error$.next(undefined);
+                    this.error$.next(null);
                     const payload = isUndefined(event.payload.result)
                         ? event.payload
                         : event.payload.result || {};

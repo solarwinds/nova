@@ -117,7 +117,7 @@ export class SearchFeatureAddonService {
                     },
                     this.widget.searchValue
                 );
-                this.widget.eventBus.getStream(REFRESH).next();
+                this.widget.eventBus.getStream(REFRESH).next(undefined);
             });
     }
 }

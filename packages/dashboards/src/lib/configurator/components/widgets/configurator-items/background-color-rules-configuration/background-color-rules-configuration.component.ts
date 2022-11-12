@@ -70,7 +70,7 @@ export class BackgroundColorRulesConfigurationComponent
     public palette: Partial<IPaletteColor[]>;
     public height: number;
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         public changeDetector: ChangeDetectorRef,

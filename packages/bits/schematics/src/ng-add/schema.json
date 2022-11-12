@@ -1,8 +1,6 @@
 {
+    "$id": "SchematicsNovaAdd",
     "$schema": "http://json-schema.org/schema",
-    "id": "SchematicsNovaAdd",
-    "title": "ng-add schematic for bits",
-    "type": "object",
     "description": "bootstraps a project for bits consumption",
     "properties": {
         "project": {
@@ -38,5 +36,7 @@
             "default": false
         }
     },
-    "required": []
+    "required": [],
+    "title": "ng-add schematic for bits",
+    "type": "object"
 }

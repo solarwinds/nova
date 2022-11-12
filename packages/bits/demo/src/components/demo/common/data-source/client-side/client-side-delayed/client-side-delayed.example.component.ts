@@ -25,8 +25,7 @@ import {
     OnDestroy,
     ViewChild,
 } from "@angular/core";
-import { Subject } from "rxjs";
-import { Subscription } from "rxjs";
+import { Subject, Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 
 import {
@@ -85,7 +84,7 @@ export class DataSourceClientSideDelayedExampleComponent
     public filters: any[];
     public selectedFilters: any[];
 
-    private delayActionSubject: Subject<any> = new Subject();
+    private delayActionSubject = new Subject<void>();
     private outputsSubscription: Subscription;
 
     @ViewChild("filteringPaginator") filteringPaginator: PaginatorComponent;
@@ -102,7 +101,7 @@ export class DataSourceClientSideDelayedExampleComponent
         this.selectedFilters = [];
     }
 
-    async ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.dataSourceService.componentTree = {
             search: {
                 componentInstance: this.filteringSearch,
@@ -122,18 +121,18 @@ export class DataSourceClientSideDelayedExampleComponent
             this.dataSourceService.applyFilters();
         });
 
-        await this.dataSourceService.applyFilters();
+        this.dataSourceService.applyFilters();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 
-    public onSearch() {
+    public onSearch(): void {
         this.delayActionSubject.next();
     }
 
-    public async changePagination() {
+    public async changePagination(): Promise<void> {
         await this.dataSourceService.applyFilters();
     }
 }

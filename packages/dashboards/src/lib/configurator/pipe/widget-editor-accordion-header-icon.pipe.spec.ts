@@ -27,7 +27,7 @@ import { FormHeaderIconPipePipe } from "./widget-editor-accordion-header-icon.pi
 describe("FormHeaderIconPipePipe > ", () => {
     let pipe: FormHeaderIconPipePipe;
     let form: FormGroup;
-    const unsubscribe$ = new Subject();
+    const unsubscribe$ = new Subject<void>();
     const testIcon = "testIcon";
 
     beforeEach(() => {

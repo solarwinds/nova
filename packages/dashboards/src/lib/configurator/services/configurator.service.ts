@@ -48,7 +48,7 @@ import { IConfigurator, IConfiguratorSource } from "./types";
 export class ConfiguratorService {
     private renderer: Renderer2;
     private componentRef: ComponentRef<ConfiguratorComponent>;
-    private close$: Subject<void> = new Subject();
+    private close$: Subject<void> = new Subject<void>();
 
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,

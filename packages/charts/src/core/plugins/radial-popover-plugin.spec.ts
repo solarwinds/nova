@@ -73,9 +73,10 @@ describe("RadialPopoverPlugin >", () => {
         };
 
         // @ts-ignore: Disabled for testing purposes
-        spyOnProperty(chart.target?.node(), "parentNode").and.returnValue(
-            parentNodeValues
-        );
+        spyOnProperty(
+            chart.target?.node() as any,
+            "parentNode"
+        ).and.returnValue(parentNodeValues);
         chart
             .getEventBus()
             .getStream(INTERACTION_DATA_POINTS_EVENT)

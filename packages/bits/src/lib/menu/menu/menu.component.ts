@@ -136,7 +136,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         }
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         // setting data for key-control service
         this.setKeyboardManagerServiceData();
         // initializing key-control manager
@@ -168,23 +168,23 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
             });
     }
 
-    public isMenuCompact() {
+    public isMenuCompact(): boolean {
         return this.size === "compact";
     }
 
-    public isTitlePresent() {
+    public isTitlePresent(): boolean {
         return !_isEmpty(this.title);
     }
 
-    public onBlur(event: any) {
+    public onBlur(event: any): void {
         this.blurred.emit(event);
     }
 
-    public onMenuOpen() {
-        this.menuOpenStream.next();
+    public onMenuOpen(): void {
+        this.menuOpenStream.next(true);
     }
 
-    public isJustified() {
+    public isJustified(): boolean {
         return this.contextClass?.includes("nui-select--justified");
     }
 

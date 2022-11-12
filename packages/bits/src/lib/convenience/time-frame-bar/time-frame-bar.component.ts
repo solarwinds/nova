@@ -92,14 +92,14 @@ export class TimeFrameBarComponent
 
     public presets = this.timeframeService.getDefaultPresets();
     public pickerTimeframe: ITimeframe;
-    public closePopoverSubject = new Subject();
+    public closePopoverSubject = new Subject<void>();
     public changed: boolean = false;
     public isLeftmostRange = false;
     public isRightmostRange = false;
     public humanizedTimeframe: string;
     public readonly defaultPickerTitle = $localize`:Label indicating that the user can select a custom start date and/or end date:Custom Range`;
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         public timeframeService: TimeframeService,
@@ -107,7 +107,7 @@ export class TimeFrameBarComponent
         private changeDetectorRef: ChangeDetectorRef
     ) {}
 
-    public ngAfterContentInit() {
+    public ngAfterContentInit(): void {
         if (!this.timeFramePicker) {
             throw new Error(
                 "TimeFramePickerComponent must be present in 'timeFrameSelection' slot"
@@ -161,7 +161,7 @@ maxDate, and timeFrame inputs on the TimeFrameBarComponent instead.`);
         }
     }
 
-    public onPopoverShown() {
+    public onPopoverShown(): void {
         this.timeFramePicker.model = this.pickerTimeframe;
         this.timeFramePicker.changeDetector.markForCheck();
 
@@ -171,15 +171,15 @@ maxDate, and timeFrame inputs on the TimeFrameBarComponent instead.`);
         }
     }
 
-    public onUndo() {
+    public onUndo(): void {
         this.undo.emit();
     }
 
-    public onClear() {
+    public onClear(): void {
         this.clear.emit();
     }
 
-    public updatePickerTf(value: ITimeframe) {
+    public updatePickerTf(value: ITimeframe): void {
         this.pickerTimeframe = value;
         this.changed = !this.timeframeService.isEqual(
             this.pickerTimeframe,
@@ -188,7 +188,7 @@ maxDate, and timeFrame inputs on the TimeFrameBarComponent instead.`);
         this.changeDetectorRef.markForCheck();
     }
 
-    public handlePresetSelection(presetKey: string) {
+    public handlePresetSelection(presetKey: string): void {
         this.pickerTimeframe =
             this.timeframeService.getTimeframeByPresetId(presetKey);
 
@@ -198,7 +198,7 @@ maxDate, and timeFrame inputs on the TimeFrameBarComponent instead.`);
         this.closePopover(true);
     }
 
-    public closePopover(confirmed = false) {
+    public closePopover(confirmed = false): void {
         if (confirmed) {
             this.changeTimeFrame(
                 TimeframeService.cloneTimeFrame(this.pickerTimeframe)
@@ -208,7 +208,7 @@ maxDate, and timeFrame inputs on the TimeFrameBarComponent instead.`);
         this.changed = false;
     }
 
-    public shiftRange(factor: number) {
+    public shiftRange(factor: number): void {
         const tf = this.timeFrame;
         const shiftDuration = moment.duration(
             factor * tf.endDatetime.diff(tf.startDatetime)
@@ -218,8 +218,8 @@ maxDate, and timeFrame inputs on the TimeFrameBarComponent instead.`);
         );
     }
 
-    public ngOnDestroy() {
-        this.destroy$.next(true);
+    public ngOnDestroy(): void {
+        this.destroy$.next();
     }
 
     private changeTimeFrame(value: ITimeframe) {

@@ -42,7 +42,7 @@ export class TimeFramePickerDateExampleComponent {
         this.selectedDate = this.getDateFromPreset(this.selectedPresetKey);
     }
 
-    public closePopoverSubject = new Subject();
+    public closePopoverSubject = new Subject<void>();
 
     public handlePresetSelection(presetKey: string) {
         this.selectedDate = this.getDateFromPreset(presetKey);

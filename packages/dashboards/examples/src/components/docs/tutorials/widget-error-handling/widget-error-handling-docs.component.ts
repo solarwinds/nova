@@ -29,7 +29,7 @@ export class WidgetErrorHandlingDocsComponent {
 @Injectable()
 export class StatusContentFallbackAdapter implements OnDestroy, IHasComponent {
 
-    protected destroy$ = new Subject();
+    protected destroy$ = new Subject<void>();
     protected componentId: string;
 
     constructor(@Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,

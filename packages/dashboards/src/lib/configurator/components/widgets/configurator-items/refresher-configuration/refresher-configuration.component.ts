@@ -64,7 +64,7 @@ export class RefresherConfigurationComponent
 
     public form: FormGroup;
 
-    private destroyed$ = new Subject();
+    private destroyed$ = new Subject<void>();
     @ViewChild(RefreshRateConfiguratorComponent)
     private refreshRateComp: RefreshRateConfiguratorComponent;
 

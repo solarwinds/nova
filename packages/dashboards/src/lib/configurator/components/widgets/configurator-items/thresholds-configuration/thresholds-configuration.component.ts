@@ -78,7 +78,7 @@ export class ThresholdsConfigurationComponent
 
     public form: FormGroup;
 
-    private destroyed$ = new Subject();
+    private destroyed$ = new Subject<void>();
 
     constructor(
         public changeDetector: ChangeDetectorRef,

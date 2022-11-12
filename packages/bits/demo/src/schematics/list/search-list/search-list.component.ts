@@ -78,7 +78,7 @@ export class SearchListComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild(PaginatorComponent) paginator: PaginatorComponent;
     @ViewChild(SearchComponent) search: SearchComponent;
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         @Inject(DataSourceService)

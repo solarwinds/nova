@@ -90,7 +90,7 @@ export class TimeseriesMetadataConfigurationComponent
 
     public form: FormGroup;
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         public changeDetector: ChangeDetectorRef,

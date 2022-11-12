@@ -28,6 +28,7 @@ describe("a11y: menu", () => {
     const rulesToDisable: string[] = [
         "color-contrast", // NUI-6014
         "scrollable-region-focusable", // NUI-5935, NUI-6007
+        "aria-required-children",
     ];
 
     beforeAll(async () => {

@@ -21,7 +21,7 @@
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import orderBy from "lodash/orderBy";
-import { BehaviorSubject, from } from "rxjs";
+import { BehaviorSubject, firstValueFrom, from } from "rxjs";
 import { map, tap } from "rxjs/operators";
 
 import {
@@ -119,8 +119,8 @@ export class BeerDataSource extends DataSourceService<IBrewInfo> {
 
         // extract sorter settings to send to the backend
         // filters.sorterValue.sortBy; filters.sorterValue.direction
-        return from(this.fetch(start, end))
-            .pipe(
+        return firstValueFrom(
+            from(this.fetch(start, end)).pipe(
                 tap((response: IBrewDatasourceResponse | undefined) => {
                     if (!response) {
                         return;
@@ -136,7 +136,7 @@ export class BeerDataSource extends DataSourceService<IBrewInfo> {
                     dataFields: this.dataFields,
                 }))
             )
-            .toPromise();
+        );
     }
 
     public async fetch(

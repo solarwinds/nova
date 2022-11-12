@@ -146,7 +146,7 @@ export class <%= classify(name) %>Component implements <% if (dataSource === "se
     if (enableSort) { %>
     @ViewChild(SorterComponent) sorter: SorterComponent;<% } %>
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         @Inject(DataSourceService) private dataSource:

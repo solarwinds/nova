@@ -102,7 +102,7 @@ export class TimeframeSelectionComponent
             }
             this.currentTimeframe = timeframe;
             if (!changes.timeframe.isFirstChange()) {
-                this.eventBus.getStream(REFRESH).next();
+                this.eventBus.getStream(REFRESH).next(undefined);
             }
         }
 

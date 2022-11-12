@@ -87,7 +87,6 @@ const routes = [
     ],
     declarations: [AcmeDashboardComponent],
     providers: [ProviderRegistryService],
-    entryComponents: [],
 })
 export class TimeseriesWidgetPrototypeModule {
     constructor(

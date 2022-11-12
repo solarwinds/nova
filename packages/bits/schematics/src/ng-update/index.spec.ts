@@ -18,10 +18,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {SchematicTestRunner, UnitTestTree} from "@angular-devkit/schematics/testing";
+import {
+    SchematicTestRunner,
+    UnitTestTree,
+} from "@angular-devkit/schematics/testing";
 
 describe("ng-update", () => {
-    const runner = new SchematicTestRunner("schematics", require.resolve("../migration.json"));
+    const runner = new SchematicTestRunner(
+        "schematics",
+        require.resolve("../migration.json")
+    );
 
     let appTree: UnitTestTree;
 
@@ -41,8 +47,21 @@ describe("ng-update", () => {
             skipTests: false,
             skipPackageJson: false,
         };
-        appTree = await runner.runExternalSchematicAsync("@schematics/angular", "workspace", workspaceOptions).toPromise();
-        appTree = await runner.runExternalSchematicAsync("@schematics/angular", "application", appOptions, appTree).toPromise();
+        appTree = await runner
+            .runExternalSchematicAsync(
+                "@schematics/angular",
+                "workspace",
+                workspaceOptions
+            )
+            .toPromise();
+        appTree = await runner
+            .runExternalSchematicAsync(
+                "@schematics/angular",
+                "application",
+                appOptions,
+                appTree
+            )
+            .toPromise();
     });
 
     it("adds style to angular.json without property", async () => {
@@ -53,17 +72,26 @@ describe("ng-update", () => {
                     bar: {
                         architect: {
                             build: {
-                                options: {
-                                },
+                                options: {},
                             },
                         },
                     },
                 },
             })
         );
-        const afterTree = await runner.runSchematicAsync("nova-migration-v8", {skipTsConfig: true, project: "bar", skipCss: false}, appTree).toPromise();
-        const file = JSON.parse((afterTree.read("angular.json") ?? "").toString("utf-8"));
-        expect(file.projects.bar.architect.build.options.styles[0]).toEqual("./node_modules/@nova-ui/bits/bundles/css/styles-v7-compat.css");
+        const afterTree = await runner
+            .runSchematicAsync(
+                "nova-migration-v8",
+                { skipTsConfig: true, project: "bar", skipCss: false },
+                appTree
+            )
+            .toPromise();
+        const file = JSON.parse(
+            (afterTree.read("angular.json") ?? "").toString("utf-8")
+        );
+        expect(file.projects.bar.architect.build.options.styles[0]).toEqual(
+            "./node_modules/@nova-ui/bits/bundles/css/styles-v7-compat.css"
+        );
     });
 
     it("does not re-add style to angular.json", async () => {
@@ -86,14 +114,34 @@ describe("ng-update", () => {
             })
         );
 
-        const afterTree = await runner.runSchematicAsync("nova-migration-v8", {skipTsConfig: true, project: "bar", skipCss: false}, appTree).toPromise();
-        const file = JSON.parse((afterTree.read("angular.json") ?? "")?.toString("utf-8"));
-        expect(file.projects.bar.architect.build.options.styles.length).toEqual(1);
+        const afterTree = await runner
+            .runSchematicAsync(
+                "nova-migration-v8",
+                { skipTsConfig: true, project: "bar", skipCss: false },
+                appTree
+            )
+            .toPromise();
+        const file = JSON.parse(
+            (afterTree.read("angular.json") ?? "")?.toString("utf-8")
+        );
+        expect(file.projects.bar.architect.build.options.styles.length).toEqual(
+            1
+        );
     });
 
     it("updates style array in angular.json", async () => {
-        const afterTree = await runner.runSchematicAsync("nova-migration-v8", {skipTsConfig: true, project: "bar"}, appTree).toPromise();
-        const file = JSON.parse((afterTree.read("angular.json") ?? "").toString("utf-8"));
-        expect(file.projects.bar.architect.build.options.styles[1]).toContain("@nova-ui/bits");
+        const afterTree = await runner
+            .runSchematicAsync(
+                "nova-migration-v8",
+                { skipTsConfig: true, project: "bar" },
+                appTree
+            )
+            .toPromise();
+        const file = JSON.parse(
+            (afterTree.read("angular.json") ?? "").toString("utf-8")
+        );
+        expect(file.projects.bar.architect.build.options.styles[1]).toContain(
+            "@nova-ui/bits"
+        );
     });
 });

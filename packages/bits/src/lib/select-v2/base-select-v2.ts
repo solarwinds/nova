@@ -182,7 +182,7 @@ export abstract class BaseSelectV2
     public dropdown: OverlayComponent;
     protected popupUtilities: OverlayUtilitiesService =
         new OverlayUtilitiesService();
-    protected destroy$: Subject<void> = new Subject();
+    protected destroy$: Subject<void> = new Subject<void>();
     protected mouseDown: boolean;
     private _selectedOptions: SelectV2OptionComponent[] = [];
 

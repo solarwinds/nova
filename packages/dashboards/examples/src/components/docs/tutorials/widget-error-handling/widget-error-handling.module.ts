@@ -85,6 +85,5 @@ const routes = [
         WidgetErrorHandlingDocsComponent,
         WidgetErrorHandlingComponent,
     ],
-    entryComponents: [],
 })
 export class WidgetErrorHandlingModule {}

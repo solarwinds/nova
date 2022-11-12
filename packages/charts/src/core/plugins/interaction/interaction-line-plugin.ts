@@ -51,7 +51,7 @@ export class InteractionLinePlugin extends ChartPlugin {
     private isChartInView = false;
     private lastInteractionValuesPayload: IInteractionValuesPayload;
     private interactionLineLayer: D3Selection<SVGElement>;
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     public initialize(): void {
         this.interactionLineLayer = this.chart.getGrid().getLasagna().addLayer({

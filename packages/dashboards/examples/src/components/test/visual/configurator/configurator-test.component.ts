@@ -78,7 +78,7 @@ import { positions, widgets } from "./widgets";
 export class AcmeDashboardComponent implements OnInit, OnDestroy {
     @ViewChild(DashboardComponent, { static: true })
     dashboardComponent: DashboardComponent;
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     public dashboard: IDashboard = {
         positions: {},

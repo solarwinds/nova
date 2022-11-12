@@ -81,6 +81,5 @@ const routes = [
         WidgetCreationComponent,
         WidgetTemplateSelectionComponent,
     ],
-    entryComponents: [],
 })
 export class WidgetCreationModule {}

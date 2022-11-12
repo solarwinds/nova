@@ -71,7 +71,7 @@
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
                         "browserTarget": "demo:build",
-                        "outputPath": "../../.tmp"
+                        "outputPath": "./.tmp-i18n"
                     }
                 },
                 "lint": {
@@ -84,18 +84,9 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "e2e": {
-                            "aot": true,
-                            "browserTarget": "demo:build:e2e",
-                            "optimization": true,
-                            "sourceMap": false,
-                            "vendorChunk": false
+                            "browserTarget": "demo:build:e2e"
                         },
-                        "production": {
-                            "aot": true,
-                            "optimization": true,
-                            "sourceMap": false,
-                            "vendorChunk": false
-                        }
+                        "production": {}
                     },
                     "options": {
                         "browserTarget": "demo:build"
@@ -175,17 +166,13 @@
                         "index": "index.html",
                         "main": "",
                         "namedChunks": true,
-                        "outputPath": "./.tmp/css",
+                        "outputPath": "./.tmp-css",
                         "sourceMap": true,
                         "styles": [
                             "src/styles.less",
                             "src/component-styles.less",
                             "src/styles/cdk-overlay-override.less",
                             "src/styles/nui-framework-theme.less",
-                            {
-                                "bundleName": "styles-v7-compat",
-                                "input": "src/styles/styles-v7-compat.less"
-                            },
                             {
                                 "bundleName": "styles-font-roboto",
                                 "input": "src/styles/styles-font-roboto.less"
@@ -230,7 +217,7 @@
         "lib": {
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-ng-packagr:build",
+                    "builder": "@angular-devkit/build-angular:ng-packagr",
                     "configurations": {
                         "dev": {
                             "project": "ng-package-dev.json"
@@ -252,7 +239,7 @@
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
                         "browserTarget": "i18n:build",
-                        "outputPath": "../.tmp"
+                        "outputPath": "./.tmp-i18n"
                     }
                 },
                 "lint": {
@@ -271,18 +258,24 @@
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
                     "configurations": {
+                        "coverage": {
+                            "codeCoverage": true
+                        },
                         "dev": {
-                            "reporters": ["spec"]
+                            "reporters": ["spec"],
+                            "watch": true
                         }
                     },
                     "options": {
                         "assets": [],
+                        "codeCoverage": false,
                         "karmaConfig": "./karma.conf.js",
                         "main": "src/test.ts",
                         "polyfills": "src/polyfills.ts",
                         "scripts": [],
                         "styles": [],
-                        "tsConfig": "src/tsconfig.spec.json"
+                        "tsConfig": "src/tsconfig.spec.json",
+                        "watch": false
                     }
                 }
             },
@@ -293,11 +286,9 @@
     },
     "schematics": {
         "@schematics/angular:component": {
-            "lintFix": true,
             "prefix": "nui"
         },
         "@schematics/angular:directive": {
-            "lintFix": true,
             "prefix": "nui"
         }
     },

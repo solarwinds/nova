@@ -33,6 +33,5 @@ const commonComponents = [PreviewOverlayComponent, WidgetErrorComponent];
     imports: [CommonModule, NuiImageModule],
     declarations: [DashboardUnitConversionPipe, ...commonComponents],
     exports: [CommonModule, DashboardUnitConversionPipe, ...commonComponents],
-    entryComponents: commonComponents,
 })
 export class NuiDashboardsCommonModule {}

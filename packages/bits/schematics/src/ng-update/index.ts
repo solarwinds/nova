@@ -18,7 +18,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { chain, noop, Rule, SchematicContext, SchematicsException, Tree } from "@angular-devkit/schematics";
+import {
+    chain,
+    noop,
+    Rule,
+    SchematicContext,
+    SchematicsException,
+    Tree,
+} from "@angular-devkit/schematics";
 
 import { updateJsonFile } from "../utility/schematics-helper";
 
@@ -32,9 +39,10 @@ export default function (options: any): Rule {
     ]);
 }
 
-function addCssToAngularJson(options: any) {
+function addCssToAngularJson(options: any): Rule {
     return (host: Tree, context: SchematicContext) => {
-        updateJsonFile(host,
+        updateJsonFile(
+            host,
             context,
             "angular.json",
             [
@@ -45,7 +53,7 @@ function addCssToAngularJson(options: any) {
                 "options",
                 "styles",
             ],
-            ["./node_modules/@nova-ui/bits/bundles/css/styles-v7-compat.css"]
+            ["./node_modules/@nova-ui/bits/bundles/css/styles.css"]
         );
     };
 }

@@ -91,7 +91,7 @@ describe("WidgetToDashboardEventProxyService", () => {
                 dashboardBus.getStream(UPSTREAM_TEST_EVENT_1),
                 "next"
             );
-            pizzagnaBus.getStream(UPSTREAM_TEST_EVENT_1).next();
+            pizzagnaBus.getStream(UPSTREAM_TEST_EVENT_1).next(undefined);
             expect(upstreamSpy).toHaveBeenCalledWith({
                 id: UPSTREAM_TEST_EVENT_1.id,
                 widgetId: testWidgetId,
@@ -100,7 +100,7 @@ describe("WidgetToDashboardEventProxyService", () => {
                 pizzagnaBus.getStream(DOWNSTREAM_TEST_EVENT_1),
                 "next"
             );
-            dashboardBus.getStream(DOWNSTREAM_TEST_EVENT_1).next();
+            dashboardBus.getStream(DOWNSTREAM_TEST_EVENT_1).next(undefined);
             expect(downstreamSpy).toHaveBeenCalledWith({
                 id: DOWNSTREAM_TEST_EVENT_1.id,
             });
@@ -183,13 +183,13 @@ describe("WidgetToDashboardEventProxyService", () => {
                 dashboardBus.getStream(UPSTREAM_TEST_EVENT_2),
                 "next"
             );
-            pizzagnaBus.getStream(UPSTREAM_TEST_EVENT_2).next();
+            pizzagnaBus.getStream(UPSTREAM_TEST_EVENT_2).next(undefined);
             expect(upstreamSpy).toHaveBeenCalled();
             const downstreamSpy = spyOn(
                 pizzagnaBus.getStream(DOWNSTREAM_TEST_EVENT_2),
                 "next"
             );
-            dashboardBus.getStream(DOWNSTREAM_TEST_EVENT_2).next();
+            dashboardBus.getStream(DOWNSTREAM_TEST_EVENT_2).next(undefined);
             expect(downstreamSpy).toHaveBeenCalled();
         });
     });
@@ -206,13 +206,13 @@ describe("WidgetToDashboardEventProxyService", () => {
                 dashboardBus.getStream(UPSTREAM_TEST_EVENT_1),
                 "next"
             );
-            pizzagnaBus.getStream(UPSTREAM_TEST_EVENT_1).next();
+            pizzagnaBus.getStream(UPSTREAM_TEST_EVENT_1).next(undefined);
             expect(upstreamSpy).not.toHaveBeenCalled();
             const downstreamSpy = spyOn(
                 pizzagnaBus.getStream(DOWNSTREAM_TEST_EVENT_1),
                 "next"
             );
-            dashboardBus.getStream(DOWNSTREAM_TEST_EVENT_1).next();
+            dashboardBus.getStream(DOWNSTREAM_TEST_EVENT_1).next(undefined);
             expect(downstreamSpy).not.toHaveBeenCalled();
         });
     });

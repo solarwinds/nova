@@ -58,9 +58,9 @@ export class ChartPopoverPlugin extends ChartPlugin {
     /** Emits the popover's target position */
     public updatePositionSubject = new Subject<IElementPosition>();
     /** Emits an event indicating the popover should open */
-    public openPopoverSubject = new Subject();
+    public openPopoverSubject = new Subject<void>();
     /** Emits an event indicating the popover should close */
-    public closePopoverSubject = new Subject();
+    public closePopoverSubject = new Subject<void>();
     /** The target position of the popover */
     public popoverTargetPosition: IElementPosition = {
         top: 0,
@@ -75,7 +75,7 @@ export class ChartPopoverPlugin extends ChartPlugin {
     };
 
     private isOpen = false;
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(public config: IPopoverPluginConfig = {}) {
         super();

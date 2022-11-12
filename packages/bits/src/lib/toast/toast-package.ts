@@ -30,7 +30,7 @@ import { ToastRef } from "./toast-ref";
  */
 /** @ignore */
 export class ToastPackage {
-    private onClickSubject: Subject<any> = new Subject();
+    private onClickSubject = new Subject<void>();
 
     constructor(
         public toastId: number,

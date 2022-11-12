@@ -41,7 +41,6 @@ import { WizardComponent } from "./wizard.component";
     ],
     declarations: [WizardComponent, WizardStepComponent],
     exports: [WizardComponent, WizardStepComponent],
-    entryComponents: [WizardStepComponent],
     providers: [],
 })
 export class NuiWizardModule {}

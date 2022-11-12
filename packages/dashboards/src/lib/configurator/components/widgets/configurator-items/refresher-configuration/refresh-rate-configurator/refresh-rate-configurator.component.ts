@@ -82,7 +82,7 @@ export class RefreshRateConfiguratorComponent
     valueChangeFix = noop; // TODO this can be removed after NUI-3442 is fixed
 
     private onChange: (value: number | null) => void;
-    private destroy$$ = new Subject();
+    private destroy$$ = new Subject<void>();
 
     constructor(private fb: FormBuilder, private cd: ChangeDetectorRef) {}
 

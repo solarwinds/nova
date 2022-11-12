@@ -20,7 +20,7 @@
 
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
+import { firstValueFrom, Observable, of } from "rxjs";
 import { catchError, delay, map } from "rxjs/operators";
 
 import {
@@ -81,8 +81,8 @@ export class TableWithSortDataSource<T>
     public async getFilteredData(
         data: IServersCollection
     ): Promise<INovaFilteringOutputs> {
-        return of(data)
-            .pipe(
+        return firstValueFrom(
+            of(data).pipe(
                 map((response: IServersCollection) => {
                     const itemsSource = response.items;
 
@@ -94,7 +94,7 @@ export class TableWithSortDataSource<T>
                     };
                 })
             )
-            .toPromise();
+        );
     }
 
     // This method is expected to return all data needed for repeat/paginator/filterGroups in order to work.

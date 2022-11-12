@@ -89,7 +89,7 @@ export class DepreacatedDataSourceClientSideDelayedExampleComponent
     public filters: any[];
     public selectedFilters: any[];
 
-    private delayActionSubject: Subject<any> = new Subject();
+    private delayActionSubject = new Subject<void>();
     private outputsSubscription: Subscription;
 
     @ViewChild("filteringPaginator") filteringPaginator: PaginatorComponent;

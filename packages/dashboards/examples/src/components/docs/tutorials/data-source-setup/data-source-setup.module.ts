@@ -61,6 +61,5 @@ const routes = [
         RouterModule.forChild(routes),
     ],
     declarations: [DataSourceDocsComponent, DataSourceSetupComponent],
-    entryComponents: [],
 })
 export class DataSourceSetupModule {}

@@ -69,15 +69,15 @@ export class TableVirtualScrollRealApiMinimalistExampleComponent
     private virtualScrollFilterValue: ListRange = { start: 0, end: this.range };
     private onDestroy$: Subject<void> = new Subject<void>();
 
-    get totalItems() {
+    get totalItems(): number {
         return this._totalItems;
     }
-    get isBusy() {
+    get isBusy(): boolean {
         return this._isBusy;
     }
     // The dynamically changed array of items to render by the table
     public users: IRandomUserTableModel[] = [];
-    public dataSourceObs: Subject<Array<any>> = new Subject();
+    public dataSourceObs = new Subject<any[]>();
     public displayedColumns: string[] = [
         "no",
         "nameTitle",

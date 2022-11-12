@@ -167,7 +167,7 @@ export class <%= classify(name) %>Component implements <% if (dataSource === "se
 
     private previouslyLoadedCount: number;<% }} %>
 
-    private destroy$ = new Subject();
+    private destroy$ = new Subject<void>();
 
     constructor(
         @Inject(DataSourceService) private dataSource: <%

@@ -1,8 +1,7 @@
 {
+    "$id": "@angular-extensions/model/model",
     "$schema": "http://json-schema.org/schema",
-    "id": "@angular-extensions/model/model",
-    "title": "Generates filter-group component",
-    "type": "object",
+    "additionalProperties": true,
     "properties": {
         "path": {
             "type": "string",
@@ -55,7 +54,7 @@
             "format": "html-selector",
             "description": "The HTML selector to use for this component"
         },
-        "module":  {
+        "module": {
             "type": "string",
             "description": "The declaring NgModule",
             "alias": "m"
@@ -71,6 +70,7 @@
             "description": "When true, applies lint fixes after generating the component"
         }
     },
-    "additionalProperties": true,
-    "required": ["name"]
+    "required": ["name"],
+    "title": "Generates filter-group component",
+    "type": "object"
 }
