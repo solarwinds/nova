@@ -235,13 +235,19 @@ describe("USERCONTROL Combobox v2 >", () => {
 
             afterEach(async () => {
                 await showButton.click();
-                const comboboxWidth = (
-                    await comboboxCustomControl.getElement().getSize()
-                ).width;
-                const overlayWidth = (
-                    await comboboxCustomControl.getPopupElement().getSize()
-                ).width;
-                await expect(comboboxWidth).toEqual(overlayWidth);
+                expect(
+                    await Atom.wait(async () => {
+                        const comboboxWidth = (
+                            await comboboxCustomControl.getElement().getSize()
+                        ).width;
+                        const overlayWidth = (
+                            await comboboxCustomControl
+                                .getPopupElement()
+                                .getSize()
+                        ).width;
+                        return comboboxWidth === overlayWidth;
+                    })
+                ).toBe(true);
             });
 
             it("width should match on initial state", async () => {
