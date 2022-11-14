@@ -34,7 +34,7 @@ interface AccordionCoordinatorState {
 export class WidgetConfiguratorSectionCoordinatorService {
     private accordions: Array<AccordionCoordinatorState> = [];
 
-    public registerAccordion(accordion: WidgetEditorAccordionComponent) {
+    public registerAccordion(accordion: WidgetEditorAccordionComponent): void {
         this.accordions.push({
             instance: accordion,
             openSubscription: accordion.openSubject.subscribe(() => {

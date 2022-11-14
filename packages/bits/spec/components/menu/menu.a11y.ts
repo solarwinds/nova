@@ -41,6 +41,6 @@ describe("a11y: menu", () => {
 
     it("should check a11y of menu", async () => {
         await menuBasic.toggleMenu();
-        await assertA11y(browser, MenuAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, MenuAtom, rulesToDisable);
     });
 });

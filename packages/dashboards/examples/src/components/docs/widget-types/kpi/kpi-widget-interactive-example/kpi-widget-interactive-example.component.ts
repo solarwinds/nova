@@ -27,17 +27,12 @@ import { finalize } from "rxjs/operators";
 import { DataSourceService, IFilteringOutputs } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
-    DEFAULT_PIZZAGNA_ROOT,
     IDashboard,
     IKpiData,
     IProviderConfiguration,
-    IRefresherProperties,
     IWidget,
     IWidgets,
     KpiComponent,
-    IKpiConfiguration,
-    IconFormatterComponent,
-    KpiFormatterTypes,
     NOVA_KPI_DATASOURCE_ADAPTER,
     NOVA_URL_INTERACTION_HANDLER,
     PizzagnaLayer,

@@ -82,7 +82,7 @@ export class GroupingConfigurationComponent
 
     public selectData: Array<Array<string>>;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         public changeDetector: ChangeDetectorRef,
@@ -149,7 +149,7 @@ export class GroupingConfigurationComponent
         this.fillGroupsOptions();
     }
 
-    public isAddRestricted() {
+    public isAddRestricted(): boolean {
         return this.selectData.some((i) => i.length === 1);
     }
 
@@ -166,7 +166,7 @@ export class GroupingConfigurationComponent
             : $localize`${subtitle}`;
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }

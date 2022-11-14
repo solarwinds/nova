@@ -18,12 +18,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AbstractControl, ValidatorFn } from "@angular/forms";
+import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
 import _isNil from "lodash/isNil";
 
 import { removeErrors } from "@nova-ui/bits";
 
-export const thresholdsValidator: ValidatorFn = (form: AbstractControl) => {
+export const thresholdsValidator: ValidatorFn = (
+    form: AbstractControl
+): ValidationErrors | null => {
     const critical = form.get("criticalThresholdValue");
     const warning = form.get("warningThresholdValue");
     const reverse = form.get("reversedThresholds");

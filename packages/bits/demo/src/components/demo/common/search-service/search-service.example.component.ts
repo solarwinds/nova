@@ -55,11 +55,11 @@ export class SearchServiceExampleComponent {
 
     constructor(@Inject(SearchService) private searchService: ISearchService) {}
 
-    public valuesChanged(values: any[]) {
+    public valuesChanged(values: any[]): void {
         this.props = [...values];
     }
 
-    public search() {
+    public search(): void {
         const props = this.getProps();
         this.searchResult = this.searchService.search(
             this.items,

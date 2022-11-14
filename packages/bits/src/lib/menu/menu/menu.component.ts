@@ -107,7 +107,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
      */
     @Output() public blurred = new EventEmitter();
 
-    public menuOpenStream = new Subject<boolean>();
+    public menuOpenStream = new Subject<void>();
     // Only menu that resolves *ngIf on <ng-content> with these menuItems can correctly get ContentChildren
     @ContentChildren(MenuItemBaseComponent, { descendants: true })
     public menuItems: QueryList<MenuItemBaseComponent>;
@@ -136,7 +136,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         }
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         // setting data for key-control service
         this.setKeyboardManagerServiceData();
         // initializing key-control manager
@@ -181,7 +181,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     public onMenuOpen(): void {
-        this.menuOpenStream.next(true);
+        this.menuOpenStream.next();
     }
 
     public isJustified(): boolean {
@@ -198,7 +198,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.keyControlService.menuOpenListener = this.menuOpenStream;
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.menuKeyControlListeners.forEach((listener) => listener());
         this.focusMonitorSubscription.unsubscribe();
     }

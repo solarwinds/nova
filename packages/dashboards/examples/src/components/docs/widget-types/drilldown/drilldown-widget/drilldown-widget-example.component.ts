@@ -242,7 +242,7 @@ export class DrilldownDataSourceRealApi<T = any>
     // Overrides default ServerSideDataSource.beforeApplyFilters implementation
     // to save some filters that are used internally
     // -- !DS specific
-    protected beforeApplyFilters(filters: INovaFilters) {
+    protected beforeApplyFilters(filters: INovaFilters): void {
         this.busy.next(true);
 
         this.drillState = filters.drillstate?.value;
@@ -381,7 +381,7 @@ export class DrilldownWidgetExampleComponent implements OnInit {
         this.dashboard = { positions, widgets };
     }
 
-    public reInitializeDashboard() {
+    public reInitializeDashboard(): void {
         // destroys the components and their providers so the dashboard can re init data
         this.dashboard = undefined;
         this.changeDetectorRef.detectChanges();

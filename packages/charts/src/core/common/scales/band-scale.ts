@@ -18,8 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { bisect } from "d3-array";
-import { scaleBand } from "d3-scale";
+import { bisect } from "d3";
+import { scaleBand } from "d3";
 import isUndefined from "lodash/isUndefined";
 import toString from "lodash/toString";
 

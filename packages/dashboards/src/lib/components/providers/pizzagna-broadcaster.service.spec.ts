@@ -66,8 +66,8 @@ describe("PizzagnaBroadcasterService > ", () => {
         const testPath = "configuration.customPath";
 
         eventBus.getStream(SET_PROPERTY_VALUE).subscribe((v) => {
-            expect(v.payload.value).toEqual(testValue);
-            expect(v.payload.path).toEqual(testPath);
+            expect(v.payload?.value).toEqual(testValue);
+            expect(v.payload?.path).toEqual(testPath);
         });
 
         broadcaster["configs"] = [
@@ -87,8 +87,8 @@ describe("PizzagnaBroadcasterService > ", () => {
         const testPath = "configuration.customPath";
 
         eventBus.getStream(SET_PROPERTY_VALUE).subscribe((v) => {
-            expect(v.payload.value).toEqual(testValue);
-            expect(v.payload.path).toEqual(testPath);
+            expect(v.payload?.value).toEqual(testValue);
+            expect(v.payload?.path).toEqual(testPath);
         });
 
         broadcaster["configs"] = [

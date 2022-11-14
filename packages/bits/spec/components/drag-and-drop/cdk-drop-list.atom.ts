@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { by, ElementFinder } from "protractor";
+import { ElementFinder } from "protractor";
 
 import { Atom } from "../../atom";
 import { CdkDraggableItemAtom } from "./cdk-drop-item.atom";
@@ -28,7 +28,7 @@ export class CdkDropListAtom extends Atom {
 
     public async getItems(): Promise<CdkDraggableItemAtom[]> {
         return this.getElement()
-            .all(by.className(CdkDraggableItemAtom.CSS_CLASS))
+            .all(Atom.getLocator(CdkDraggableItemAtom))
             .reduce(
                 (acc: CdkDraggableItemAtom[], item: ElementFinder) =>
                     acc.concat(new CdkDraggableItemAtom(item)),

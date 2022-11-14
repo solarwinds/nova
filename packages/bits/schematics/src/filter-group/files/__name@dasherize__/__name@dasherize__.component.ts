@@ -62,7 +62,7 @@ export class <%= classify(name) %>Component implements IFilterPub, OnInit, OnDes
 
     constructor(@Inject(DialogService) private dialogService: DialogService) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.filterGroupItem.allFilterOptions = _orderBy(this.filterGroupItem.allFilterOptions, "value", "asc");
     }
 
@@ -123,7 +123,7 @@ export class <%= classify(name) %>Component implements IFilterPub, OnInit, OnDes
         return filterGroupItems.map((item) => item.value);
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }

@@ -18,8 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { by } from "protractor";
-import { ElementArrayFinder } from "protractor/built/element";
+import { by, ElementFinder, ElementArrayFinder } from "protractor";
 
 import { Atom } from "../../atom";
 import { WizardV2FooterAtom } from "./wizard-v2-footer.atom";
@@ -69,11 +68,11 @@ export class WizardV2Atom extends Atom {
         return new WizardV2FooterAtom(footer);
     }
 
-    public get leftOverflowElement() {
+    public get leftOverflowElement(): ElementFinder {
         return this.root.element(by.css(".overflow-left"));
     }
 
-    public get rightOverflowElement() {
+    public get rightOverflowElement(): ElementFinder {
         return this.root.element(by.css(".overflow-right"));
     }
 
@@ -84,12 +83,12 @@ export class WizardV2Atom extends Atom {
     }
 
     public async moveToFinalStep(): Promise<void> {
-        const steps = await this.steps;
-
-        for (const step of steps) {
-            if (await this.footer.nextButton.isPresent()) {
-                await this.footer.nextButton.click();
+        const count = await this.steps.count();
+        for (let i = 0; i < count; i++) {
+            if (!(await this.footer.nextButton.isPresent())) {
+                return;
             }
+            await this.footer.nextButton.click();
         }
     }
 }

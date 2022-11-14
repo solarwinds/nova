@@ -26,11 +26,11 @@ import { IWidget } from "../components/widget/types";
 export class WidgetConfigurationService {
     private widget: IWidget;
 
-    public updateWidget(widget: IWidget) {
+    public updateWidget(widget: IWidget): void {
         this.widget = widget;
     }
 
-    public getWidget() {
+    public getWidget(): IWidget {
         return this.widget;
     }
 }

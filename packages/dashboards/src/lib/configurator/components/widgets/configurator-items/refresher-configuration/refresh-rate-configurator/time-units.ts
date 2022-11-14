@@ -42,6 +42,9 @@ export const TIME_UNITS_SHORT = {
     [TimeUnit.Second]: $localize`:seconds unit (short):sec`,
 };
 
-export function getTimeUnitsRatio(fromUnit: TimeUnit, toUnit: TimeUnit) {
+export function getTimeUnitsRatio(
+    fromUnit: TimeUnit,
+    toUnit: TimeUnit
+): number {
     return TIME_UNITS_TO_MS[fromUnit] / TIME_UNITS_TO_MS[toUnit];
 }

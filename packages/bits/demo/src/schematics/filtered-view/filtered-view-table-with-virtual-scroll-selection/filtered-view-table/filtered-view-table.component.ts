@@ -30,7 +30,13 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 import { Subject } from "rxjs";
-import { filter, switchMap, takeUntil, tap } from "rxjs/operators";
+import {
+    filter,
+    // eslint-disable-next-line import/no-deprecated
+    switchMap,
+    takeUntil,
+    tap,
+} from "rxjs/operators";
 
 import {
     DataSourceService,
@@ -76,7 +82,7 @@ export class FilteredViewTableComponent
     // the height in px of a single row from the table
     public rowHeight = 40;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         @Inject(DataSourceService)
@@ -85,7 +91,7 @@ export class FilteredViewTableComponent
         private changeDetection: ChangeDetectorRef
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource.busy
             .pipe(
                 tap((val) => {
@@ -97,7 +103,7 @@ export class FilteredViewTableComponent
             .subscribe();
     }
 
-    public async ngAfterViewInit() {
+    public async ngAfterViewInit(): Promise<void> {
         this.dataSource.registerComponent({
             virtualScroll: { componentInstance: this.viewportManager },
         });
@@ -118,6 +124,7 @@ export class FilteredViewTableComponent
                 ),
                 tap(async () => this.applyFilters(false)),
                 // Note: Using the same stream to subscribe to the outputsSubject and update the items list
+                // eslint-disable-next-line import/no-deprecated
                 switchMap(() =>
                     this.dataSource.outputsSubject.pipe(
                         tap((data: IFilteringOutputs) => {
@@ -136,12 +143,12 @@ export class FilteredViewTableComponent
             .subscribe();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    public onSelectionChanged(selection: ISelection) {
+    public onSelectionChanged(selection: ISelection): void {
         // do something with the selection
 
         // make component aware of the new selection value
@@ -150,11 +157,13 @@ export class FilteredViewTableComponent
     }
 
     // trackBy handler used to identify uniquely each item in the table
-    public trackBy(index: number, item: IServer) {
+    public trackBy(index: number, item: IServer): string {
         return item.name;
     }
 
-    public async applyFilters(resetVirtualScroll: boolean = true) {
+    public async applyFilters(
+        resetVirtualScroll: boolean = true
+    ): Promise<void> {
         if (resetVirtualScroll) {
             // it is important to reset viewportManager to start page
             // so that the datasource performs the search with 1st page

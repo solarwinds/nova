@@ -207,7 +207,7 @@ export class CustomConfiguratorSectionComponent
         }
     }
 
-    public onChanged(newValue: string) {
+    public onChanged(newValue: string): void {
         // Keeping the display value updated as the user changes the dropdown selection
         this.imageDisplayValue = this.imageItems.find(
             (item: IMenuItem) => item.url === newValue
@@ -260,7 +260,7 @@ export class CustomWidgetComponent implements OnInit {
     }
 
     /** Used for restoring widgets state */
-    public reInitializeDashboard() {
+    public reInitializeDashboard(): void {
         // destroys the components and their providers so the dashboard can re init data
         this.dashboard = undefined;
         this.changeDetectorRef.detectChanges();

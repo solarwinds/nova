@@ -155,9 +155,9 @@ describe("ng-add", () => {
             )
             .toPromise();
         const file = readJsonFile(afterTree, "angular.json");
-        expect(file.projects.bar.architect.build.options.styles.length).toEqual(
-            1
-        );
+        expect(file.projects.bar.architect.build.options.styles).toEqual([
+            "./node_modules/@nova-ui/bits/bundles/css/styles.css",
+        ]);
     });
 
     it("updates style array in angular.json", async () => {

@@ -44,7 +44,7 @@ export class AcmeEditWithClonerComponent
         super(widgetTypesService);
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const titleCasePipe = new TitleCasePipe();
 
         this.widgetItems = widgets.map((w) => {

@@ -136,7 +136,7 @@ export class ChipsCustomCssExampleComponent {
         },
     ];
 
-    public onClear(event: IChipRemoved) {
+    public onClear(event: IChipRemoved): void {
         const source = event.group
             ? this.nuiChipsSet.groupedItems?.find(
                   (group) => group.id === event.group?.id
@@ -145,7 +145,7 @@ export class ChipsCustomCssExampleComponent {
         _pull(source || [], event.item);
     }
 
-    public onClearAll() {
+    public onClearAll(): void {
         this.nuiChipsSet.flatItems = [];
         this.nuiChipsSet.groupedItems = [];
     }

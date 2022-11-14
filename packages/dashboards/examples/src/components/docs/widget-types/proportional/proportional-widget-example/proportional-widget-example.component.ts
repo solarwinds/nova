@@ -53,6 +53,8 @@ import {
     WidgetTypesService,
 } from "@nova-ui/dashboards";
 
+import { IMockBeerReview } from "../models";
+
 /**
  * A simple proportional data source to retrieve beer review counts by city
  */
@@ -145,7 +147,7 @@ export class ProportionalWidgetExampleComponent implements OnInit {
     }
 
     /** Used for restoring widgets state */
-    public reInitializeDashboard() {
+    public reInitializeDashboard(): void {
         // destroys the components and their providers so the dashboard can re init data
         this.dashboard = undefined;
         this.changeDetectorRef.detectChanges();
@@ -242,7 +244,7 @@ const widgetConfig: IWidget = {
     },
 };
 
-export function getMockBeerReviewCountsByCity() {
+export function getMockBeerReviewCountsByCity(): IMockBeerReview[] {
     return [
         {
             id: "Brno",

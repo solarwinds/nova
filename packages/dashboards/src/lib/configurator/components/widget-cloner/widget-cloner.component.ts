@@ -66,7 +66,7 @@ export class WidgetClonerComponent
             allowStepChange: true,
         });
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     private resetForm$ = new Subject<void>();
     public busy = false;
     public isFormDisplayed = false;
@@ -108,7 +108,7 @@ export class WidgetClonerComponent
 
     // --------------------------------------------------------------------------------
 
-    public onPreviewPizzagnaUpdate(configLayer: IPizzagnaLayer) {
+    public onPreviewPizzagnaUpdate(configLayer: IPizzagnaLayer): void {
         if (!this.isFormDisplayed) {
             return;
         }
@@ -125,14 +125,14 @@ export class WidgetClonerComponent
         this.configurator.updateWidget(previewWidget);
     }
 
-    public canFinish() {
+    public canFinish(): boolean {
         return (
             !!this.widgetTemplate?.pizzagna?.configuration &&
             !this.widgetTemplate?.metadata?.needsConfiguration
         );
     }
 
-    public onFinish() {
+    public onFinish(): void {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
             // is used to trigger valueChanges to detect changes in forms
@@ -147,11 +147,11 @@ export class WidgetClonerComponent
         this.configurator.formSubmit();
     }
 
-    public onCancel() {
+    public onCancel(): void {
         this.configurator.formCancel();
     }
 
-    public onStepNavigated(event: IDashwizStepNavigatedEvent) {
+    public onStepNavigated(event: IDashwizStepNavigatedEvent): void {
         this.isFormDisplayed = event.currentStepIndex === 1;
 
         if (event.currentStepIndex === 0 && event.previousStepIndex === 1) {
@@ -168,7 +168,7 @@ export class WidgetClonerComponent
         }
     }
 
-    public onSelect(widget: IWidget) {
+    public onSelect(widget: IWidget): void {
         this.widgetTemplate = widget;
         const previewWidget = {
             ...widget,

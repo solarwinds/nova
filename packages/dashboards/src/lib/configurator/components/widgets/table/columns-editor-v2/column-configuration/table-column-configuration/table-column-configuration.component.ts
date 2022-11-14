@@ -23,6 +23,7 @@ import {
     Component,
     forwardRef,
     Input,
+    OnDestroy,
     OnInit,
 } from "@angular/core";
 import {
@@ -58,14 +59,14 @@ import { onMarkAsTouched } from "../../../../../../../functions/on-mark-as-touch
     ],
 })
 export class TableColumnConfigurationComponent
-    implements ControlValueAccessor, OnInit
+    implements ControlValueAccessor, OnInit, OnDestroy
 {
     public static lateLoadKey = "TableColumnConfigurationComponent";
 
     public form: FormGroup;
     public changeFn: Function;
 
-    private onDestroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     private input: ITableWidgetColumnConfig;
 
     @Input() formControl: AbstractControl;
@@ -81,7 +82,7 @@ export class TableColumnConfigurationComponent
         });
 
         this.form.valueChanges
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntil(this.destroy$))
             .subscribe((value) => {
                 const newValue = {
                     id: this.input?.id,
@@ -125,7 +126,7 @@ export class TableColumnConfigurationComponent
     }
 
     public ngOnDestroy(): void {
-        this.onDestroy$.next();
-        this.onDestroy$.complete();
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 }

@@ -38,9 +38,9 @@ export class EventBusService extends EventBus<Event> {
         // This is moved from popup code.
         // Every event that is triggered for document should be handled by popup,
         // but we should register listener only once
-        this.renderer.listen("document", "click", (event: Event) => {
+        this.renderer.listen("document", "click", (event: MouseEvent) => {
             // separate stream to detect document-body clicks in case of popup in popover
-            this.getStream({ id: DOCUMENT_CLICK_EVENT }).next(event);
+            this.getStream(DOCUMENT_CLICK_EVENT).next(event);
         });
     }
 }

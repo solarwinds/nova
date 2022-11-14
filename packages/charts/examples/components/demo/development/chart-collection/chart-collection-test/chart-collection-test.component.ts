@@ -82,9 +82,9 @@ export class ChartCollectionTestComponent implements OnInit, AfterViewInit {
         }
     }
 
-    public ngOnInit() {}
+    public ngOnInit(): void {}
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.myCharts.forEach((myChart, index: number) => {
             myChart.chartAssist.update(
                 this.generateChartAssistSeriesSet(myChart, 4, index)

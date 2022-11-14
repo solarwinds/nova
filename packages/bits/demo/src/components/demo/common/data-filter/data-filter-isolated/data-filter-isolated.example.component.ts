@@ -58,7 +58,7 @@ export class DataFilterIsolatedExampleComponent implements AfterViewInit {
 
     constructor(private filterService: DataFilterService) {}
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this.filterService.registerFilter({
             timeFramePicker: {
                 componentInstance: this.timeFramePicker,
@@ -67,7 +67,7 @@ export class DataFilterIsolatedExampleComponent implements AfterViewInit {
         this.filterService.applyFilters();
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.filterService.applyFilters();
     }
 }
@@ -132,7 +132,7 @@ export class NuiDataFilterIsolatedTableComponent
         private dataSourceService: TableDatasource
     ) {}
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.dataFilter.registerFilter({
             search: {
                 componentInstance: this.search,
@@ -147,11 +147,11 @@ export class NuiDataFilterIsolatedTableComponent
             );
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.dataFilter.applyFilters();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 }
@@ -202,7 +202,7 @@ export class NuiDataFilterIsolatedListComponent
         private dataSourceService: ListDatasource
     ) {}
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.filterService.registerFilter({
             search: {
                 componentInstance: this.search,
@@ -217,11 +217,11 @@ export class NuiDataFilterIsolatedListComponent
             );
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.filterService.applyFilters();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 }
@@ -295,21 +295,21 @@ export class FilteringIsolatedTimeFramePickerComponent
     public closePopoverSubject = new Subject<void>();
     public openPopoverSubject = new Subject<void>();
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.acceptedTimeframe = this.tf;
     }
 
-    public updateTf(value: any) {
+    public updateTf(value: any): void {
         this.tf = value;
     }
 
-    public confirmPopover() {
+    public confirmPopover(): void {
         this.closePopoverSubject.next();
         this.acceptedTimeframe = this.tf;
         this.timeFrameChanged.emit(this.acceptedTimeframe);
     }
 
-    public cancelPopover() {
+    public cancelPopover(): void {
         this.showFooter = false;
         this.closePopoverSubject.next();
     }

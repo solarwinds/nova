@@ -105,7 +105,7 @@ export class WaterfallChartAdvancedComponent implements AfterViewInit, OnInit {
     // This listener updates the grid position to follow the chart if client size changes on user interaction with the page.
     // In case client size changes dynamically another solution is needed.
     @HostListener("document:click")
-    public updateGridPosition() {
+    public updateGridPosition(): void {
         this.overlayRef.updatePosition();
     }
 
@@ -116,7 +116,7 @@ export class WaterfallChartAdvancedComponent implements AfterViewInit, OnInit {
         private scrollStrategyOptions: ScrollStrategyOptions
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.gridChart.addPlugin(new ZoomPlugin());
 
         this.gridChart
@@ -131,7 +131,7 @@ export class WaterfallChartAdvancedComponent implements AfterViewInit, OnInit {
             });
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         // Here you configure the template portal and overlay
 
         this.templatePortal = new TemplatePortal(
@@ -239,7 +239,7 @@ export class WaterfallChartAdvancedComponent implements AfterViewInit, OnInit {
         this.overlayRef.attach(this.templatePortal);
     }
 
-    drop(event: CdkDragDrop<string[]>) {
+    drop(event: CdkDragDrop<string[]>): void {
         moveItemInArray(
             this.listItems,
             event.previousIndex,

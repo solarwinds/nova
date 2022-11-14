@@ -68,7 +68,7 @@ class MockConfiguratorComponent {
         },
     };
 
-    public updateWidget(previewWidget: IWidget) {
+    public updateWidget(previewWidget: IWidget): void {
         this.previewWidget = previewWidget;
     }
 }

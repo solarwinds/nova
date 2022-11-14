@@ -20,7 +20,9 @@
 
 import { Pipe, PipeTransform } from "@angular/core";
 import { AbstractControl, FormGroup } from "@angular/forms";
+// eslint-disable-next-line import/no-deprecated
 import { combineLatest, Observable } from "rxjs";
+// eslint-disable-next-line import/no-deprecated
 import { map, startWith } from "rxjs/operators";
 
 import { hasControlInErrorState } from "../functions/has-control-in-error-state";
@@ -40,7 +42,9 @@ export class FormHeaderIconPipePipe implements PipeTransform {
         if (!form) {
             throw new Error("Provided form is undefined");
         }
+        // eslint-disable-next-line import/no-deprecated
         return combineLatest([form.statusChanges, form.valueChanges]).pipe(
+            // eslint-disable-next-line import/no-deprecated
             startWith(null),
             map(() => (hasControlInErrorState(form) ? errorIcon : defaultIcon))
         );

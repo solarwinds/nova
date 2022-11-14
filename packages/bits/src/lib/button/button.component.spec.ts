@@ -67,7 +67,7 @@ class TestAppButtonOnDivNoTypeComponent {}
 })
 class TestAppButtonInRepeaterComponent implements OnInit {
     public buttonLabels: string[];
-    ngOnInit() {
+    public ngOnInit(): void {
         this.buttonLabels = ["testText", "testText"];
     }
 }

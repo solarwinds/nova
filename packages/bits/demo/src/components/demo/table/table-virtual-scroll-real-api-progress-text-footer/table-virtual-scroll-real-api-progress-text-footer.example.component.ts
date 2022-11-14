@@ -29,6 +29,7 @@ import {
     ViewChild,
 } from "@angular/core";
 import { Subject } from "rxjs";
+// eslint-disable-next-line import/no-deprecated
 import { filter, switchMap, takeUntil, tap } from "rxjs/operators";
 
 import {
@@ -61,11 +62,11 @@ export class TableVirtualScrollRealApiProgressTextFooterExampleComponent
     private _isBusy: boolean = false;
     private onDestroy$: Subject<void> = new Subject<void>();
 
-    get totalItems() {
+    get totalItems(): number {
         return this._totalItems;
     }
 
-    get isBusy() {
+    get isBusy(): boolean {
         return this._isBusy;
     }
 
@@ -97,7 +98,7 @@ export class TableVirtualScrollRealApiProgressTextFooterExampleComponent
     @ViewChild(CdkVirtualScrollViewport, { static: false })
     viewport: CdkVirtualScrollViewport;
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource.busy
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((busy) => {
@@ -105,7 +106,7 @@ export class TableVirtualScrollRealApiProgressTextFooterExampleComponent
             });
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this.registerVirtualScroll();
         this.viewportManager
             // Note: Initializing viewportManager with the repeat's CDK Viewport Ref
@@ -128,6 +129,7 @@ export class TableVirtualScrollRealApiProgressTextFooterExampleComponent
                     this.dataSource.applyFilters();
                 }),
                 // Note: Using the same stream to subscribe to the outputsSubject and update the items list
+                // eslint-disable-next-line import/no-deprecated
                 switchMap(() =>
                     this.dataSource.outputsSubject.pipe(
                         tap((outputs: IFilteringOutputs) => {

@@ -22,6 +22,7 @@ import { ProtractorBrowser } from "protractor";
 
 import { getCurrentBranchName } from "../helpers";
 import { ICameraSettings, ILens } from "./types";
+
 export class EyesLens implements ILens {
     public eyes: any;
 

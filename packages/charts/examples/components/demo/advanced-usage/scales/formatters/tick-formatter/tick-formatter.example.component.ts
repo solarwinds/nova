@@ -39,7 +39,7 @@ import {
 export class TickFormatterExampleComponent implements OnInit {
     public chart: Chart;
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const scales = {
             x: new TimeScale(),
             y: new LinearScale(),

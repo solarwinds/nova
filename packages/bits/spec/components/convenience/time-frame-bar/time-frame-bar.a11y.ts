@@ -29,6 +29,6 @@ describe("a11y: time frame bar", () => {
     });
 
     it("should verify a11y of time frame bar", async () => {
-        await assertA11y(browser, TimeFrameBarAtom.CSS_CLASS);
+        await assertA11y(browser, TimeFrameBarAtom);
     });
 });

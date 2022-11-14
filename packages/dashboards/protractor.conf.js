@@ -25,6 +25,7 @@ exports.config = {
             ],
         },
     },
+    grep: process.env["npm_config_grep"],
     baseUrl: process.env.E2E_BASE_URL || "http://localhost:4200/",
     directConnect: !process.env.SELENIUM_ADDRESS,
     framework: "jasmine",
@@ -39,7 +40,7 @@ exports.config = {
     },
     onPrepare() {
         require("ts-node").register({
-            project: require("path").join(__dirname, "./tsconfig.json"),
+            project: require("path").join(__dirname, "./tsconfig.e2e.json"),
         });
         jasmine
             .getEnv()

@@ -31,14 +31,10 @@ import {
     OnInit,
     SimpleChanges,
 } from "@angular/core";
-import _get from "lodash/get";
 import { Subscription } from "rxjs";
 import { filter } from "rxjs/operators";
 
-import {
-    DraggedOverCell,
-    TableStateHandlerService,
-} from "../table-state-handler.service";
+import { TableStateHandlerService } from "../table-state-handler.service";
 import { TableAlignmentOptions } from "../types";
 import { TableColumnDefDirective } from "./table-column-def.directive";
 
@@ -47,7 +43,6 @@ import { TableColumnDefDirective } from "./table-column-def.directive";
  */
 
 @Directive({
-    // eslint-disable-next-line
     selector: "nui-cell, td[nui-cell]",
     host: {
         role: "gridcell",
@@ -65,7 +60,7 @@ export class TableCellDirective
     private resizeSubscription: Subscription;
 
     @HostBinding("attr.title")
-    get tooltip() {
+    get tooltip(): string {
         return this.tooltipText;
     }
 
@@ -76,7 +71,7 @@ export class TableCellDirective
 
     // Prevents dragging of table cells content
     @HostListener("mousedown")
-    mouseDown() {
+    mouseDown(): void {
         const selection: Selection | null = window.getSelection();
         if (selection) {
             selection.removeAllRanges();
@@ -92,7 +87,7 @@ export class TableCellDirective
         super(columnDef, elementRef);
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         const alignment = this.alignment
             ? `align-${this.alignment}`
             : this.tableStateHandlerService.getAlignment(this.columnDef.name);
@@ -112,9 +107,9 @@ export class TableCellDirective
                             draggedOverCell?.cellIndex === this.currentCellIndex
                         ) {
                             this.rightEdgeActive =
-                                draggedOverCell.dropAlignment === "right";
+                                draggedOverCell?.dropAlignment === "right";
                             this.leftEdgeActive =
-                                draggedOverCell.dropAlignment === "left";
+                                draggedOverCell?.dropAlignment === "left";
                             this.cd.detectChanges();
                         }
                     }
@@ -137,7 +132,7 @@ export class TableCellDirective
         }
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.alignment && !changes.alignment.firstChange) {
             const newAlignment = `align-${changes.alignment.currentValue}`;
             const oldAlignment = `align-${changes.alignment.previousValue}`;
@@ -146,7 +141,7 @@ export class TableCellDirective
         }
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         if (this.subscribeToDraggedOverCell) {
             this.subscribeToDraggedOverCell.unsubscribe();
         }

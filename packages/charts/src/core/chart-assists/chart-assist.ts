@@ -22,6 +22,7 @@ import each from "lodash/each";
 import keyBy from "lodash/keyBy";
 import values from "lodash/values";
 import { Observable, of, Subject, Subscription } from "rxjs";
+// eslint-disable-next-line import/no-deprecated
 import { filter, map, switchMap, takeUntil } from "rxjs/operators";
 
 import {
@@ -189,6 +190,7 @@ export class ChartAssist<T extends IAccessors = IAccessors>
             highlightData && highlightData.index >= 0;
 
         return seriesHighlight$.pipe(
+            // eslint-disable-next-line import/no-deprecated
             switchMap((highlightData) =>
                 highlightDataPresentPredicate(highlightData)
                     ? of(highlightData.data)

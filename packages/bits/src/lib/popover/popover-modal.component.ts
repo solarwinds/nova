@@ -102,17 +102,17 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
     private popoverModalSubscriptions: Subscription[] = [];
 
     @HostListener("click", ["$event"])
-    onClick(event: MouseEvent) {
+    onClick(event: MouseEvent): void {
         event.stopPropagation();
     }
 
     @HostListener("mouseenter")
-    onMouseEnter() {
+    onMouseEnter(): void {
         this.popoverModalEventSubject.next("mouse-enter");
     }
 
     @HostListener("mouseleave")
-    onMouseLeave() {
+    onMouseLeave(): void {
         this.popoverModalEventSubject.next("mouse-leave");
     }
 
@@ -122,7 +122,7 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
         private cdRef: ChangeDetectorRef
     ) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         const displayChangeSubscription = this.displayChange.subscribe(
             (show: boolean) => {
                 if (!show) {
@@ -136,7 +136,7 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
         this.popoverModalSubscriptions.push(displayChangeSubscription);
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         // To prevent from exception 'expression was changed after check'
         const zoneSubscription = this.zone.onStable
             .asObservable()
@@ -148,13 +148,13 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
         this.popoverModalSubscriptions.push(zoneSubscription);
     }
 
-    public onAnimationEnd(event: AnimationEvent) {
+    public onAnimationEnd(event: AnimationEvent): void {
         if (_isBoolean(event.fromState) && event.fromState) {
             this.popoverAfterHiddenSubject.next();
         }
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.popoverModalSubscriptions.forEach((sub) => {
             sub.unsubscribe();
         });

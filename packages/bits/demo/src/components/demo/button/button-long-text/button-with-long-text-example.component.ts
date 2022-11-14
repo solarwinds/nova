@@ -27,7 +27,7 @@ import { Component } from "@angular/core";
 export class ButtonWithLongTextExampleComponent {
     public disableWidthRestriction = true;
 
-    public toggleWidthRestriction() {
+    public toggleWidthRestriction(): void {
         this.disableWidthRestriction = !this.disableWidthRestriction;
     }
 }

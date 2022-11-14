@@ -67,7 +67,9 @@ export class PanelAtom extends Atom {
             .mouseMove(
                 this.getElement().element(
                     by.css(
-                        `.${PanelAtom.CSS_CLASS} .${PanelAtom.SIDE_PANE_CSS}`
+                        `${Atom.getSelector(PanelAtom)} .${
+                            PanelAtom.SIDE_PANE_CSS
+                        }`
                     )
                 )
             )

@@ -55,11 +55,12 @@ export class DataManager {
 
     constructor(private chart?: IChart) {}
 
-    public update(seriesSet: IChartSeries<IAccessors>[]) {
+    public update(seriesSet: IChartSeries<IAccessors>[]): void {
         const duplicateIds = filter(
             seriesSet.map((series) => series.id),
             (val, i, iteratee) => includes(iteratee, val, i + 1)
         );
+
         if (duplicateIds.length > 0) {
             console.warn("Series set contains duplicate IDs:", duplicateIds);
         }
@@ -70,6 +71,7 @@ export class DataManager {
             this._chartSeriesSet,
             (s: IChartSeries<IAccessors>) => s.id
         );
+
         this._scalesIndexByKey = this.buildScalesIndex(this._chartSeriesSet);
         this._scalesIndexById = keyBy(
             flatten(values(this._scalesIndexByKey).map((v) => v.list)),
@@ -77,7 +79,7 @@ export class DataManager {
         );
     }
 
-    public getChartSeries(seriesId: string) {
+    public getChartSeries(seriesId: string): IChartSeries<IAccessors> {
         return this.dataIndex[seriesId];
     }
 
@@ -132,7 +134,7 @@ export class DataManager {
         return scales;
     }
 
-    public updateScaleDomains() {
+    public updateScaleDomains(): void {
         each(Object.keys(this._scalesIndexByKey), (scaleKey) => {
             each(this._scalesIndexByKey[scaleKey].list, (scale) => {
                 this.updateScaleDomain(scale, scaleKey);

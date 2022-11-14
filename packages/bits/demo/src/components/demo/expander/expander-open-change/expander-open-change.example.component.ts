@@ -29,11 +29,11 @@ export class ExpanderOpenChangeExampleComponent {
 
     constructor() {}
 
-    public getButtonLabel() {
+    public getButtonLabel(): string {
         return this.bindingExampleOpen ? $localize`Close` : $localize`Open`;
     }
 
-    public onOpenChange(event: boolean) {
+    public onOpenChange(event: boolean): void {
         this.bindingExampleOpen = event;
     }
 }

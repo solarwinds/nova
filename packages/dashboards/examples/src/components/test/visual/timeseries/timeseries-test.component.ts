@@ -123,7 +123,7 @@ export class AcmeDashboardComponent implements OnInit {
         };
     }
 
-    public onDsErrorChange(error: boolean) {
+    public onDsErrorChange(error: boolean): void {
         TestTimeseriesDataSource.mockError = error;
     }
 }

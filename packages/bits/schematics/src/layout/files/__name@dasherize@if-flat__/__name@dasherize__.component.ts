@@ -31,7 +31,7 @@ export class <%= classify(name) %>Component implements OnInit {
 
     constructor() { }
 
-    ngOnInit() {
+    public ngOnInit(): void {
     }
 
 }

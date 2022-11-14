@@ -32,6 +32,6 @@ describe("a11y: button", () => {
     });
 
     it("should verify a11y of button", async () => {
-        await assertA11y(browser, ButtonAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, ButtonAtom, rulesToDisable);
     });
 });

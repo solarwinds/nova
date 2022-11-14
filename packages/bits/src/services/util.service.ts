@@ -36,6 +36,7 @@ enum ByteCount {
     Boolean = 4,
     Number = 8,
 }
+
 /** @ignore */
 export enum BrowserName {
     Chrome = "Chrome",
@@ -43,6 +44,24 @@ export enum BrowserName {
     Firefox = "Firefox",
     Opera = "Opera",
     Safari = "Safari",
+}
+
+/** @ignore */
+export interface BrowserInfo {
+    name(): string | undefined;
+    version(): string | undefined;
+    isChrome(): boolean;
+    isEdge(): boolean;
+    isFirefox(): boolean;
+    isOpera(): boolean;
+    isSafari(): boolean;
+    mobileDevice: {
+        isAndroid(): boolean;
+        isBlackberry(): boolean;
+        isIOS(): boolean;
+        isOpera(): boolean;
+        isAny(): boolean;
+    };
 }
 
 /**
@@ -55,7 +74,7 @@ export enum BrowserName {
  */
 @Injectable({ providedIn: "root" })
 export class UtilService {
-    public static getSvgFromString(s: string) {
+    public static getSvgFromString(s: string): DocumentFragment {
         const div = document.createElementNS(
             "http://www.w3.org/1999/xhtml",
             "div"
@@ -68,17 +87,19 @@ export class UtilService {
         return frag;
     }
 
-    public static getEventPath(event: MouseEvent) {
+    public static getEventPath(event: MouseEvent): EventTarget[] {
         if (isFunction(event.composedPath)) {
             return event.composedPath();
         }
+
         let element: HTMLElement | null = event.target as HTMLElement;
-        const path = [];
+
         // Hack for EDGE
         if (!(element as any).path) {
             element = event.currentTarget as HTMLElement;
         }
 
+        const path = [];
         while (element) {
             path.push(element);
             if (element.tagName === "HTML") {
@@ -88,19 +109,21 @@ export class UtilService {
             }
             element = element.parentElement;
         }
+
+        return [];
     }
 
     private nextUniqueId = ["0", "0", "0"];
     private browserName?: string;
 
-    public isBrowser() {
+    public isBrowser(): boolean {
         return isPlatformBrowser(this.platformId);
     }
 
     /**
      * Object for getting information about the browser
      */
-    public get browser() {
+    public get browser(): BrowserInfo | undefined {
         if (this.isBrowser()) {
             return {
                 name: () => this.browserName,
@@ -128,10 +151,12 @@ export class UtilService {
                             /Opera Mini/i
                         ) !== null,
                     isAny: () =>
-                        this.browser?.mobileDevice.isIOS() ||
-                        this.browser?.mobileDevice.isAndroid() ||
-                        this.browser?.mobileDevice.isBlackberry() ||
-                        this.browser?.mobileDevice.isOpera(),
+                        !!(
+                            this.browser?.mobileDevice.isIOS() ||
+                            this.browser?.mobileDevice.isAndroid() ||
+                            this.browser?.mobileDevice.isBlackberry() ||
+                            this.browser?.mobileDevice.isOpera()
+                        ),
                 },
             };
         }

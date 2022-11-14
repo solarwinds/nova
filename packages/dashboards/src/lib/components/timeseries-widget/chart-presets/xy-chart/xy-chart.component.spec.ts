@@ -34,19 +34,19 @@ import {
     XYGrid,
     ZoomPlugin,
 } from "@nova-ui/charts";
-
-import { ISerializableTimeframe } from "../../../../configurator/services/types";
-import { NuiDashboardsModule } from "../../../../dashboards.module";
-import { ProviderRegistryService } from "../../../../services/provider-registry.service";
-import { INTERACTION, SET_TIMEFRAME } from "../../../../services/types";
-import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../types";
 import {
+    DATA_SOURCE,
+    NuiDashboardsModule,
+    INTERACTION,
+    ISerializableTimeframe,
     ITimeseriesWidgetConfig,
     ITimeseriesWidgetData,
+    PIZZAGNA_EVENT_BUS,
+    ProviderRegistryService,
+    SET_TIMEFRAME,
     TimeseriesInteractionType,
-    ITimeseriesWidgetSeriesData,
-} from "../../types";
-import { XYChartComponent } from "./xy-chart.component";
+    XYChartComponent,
+} from "@nova-ui/dashboards";
 
 @Component({
     selector: "test-component",
@@ -194,8 +194,7 @@ describe("XYChartComponent", () => {
             const timeframe: ISerializableTimeframe = {
                 startDatetime: "2019-11-11T18:09:03-06:00",
                 endDatetime: "2019-11-18T18:09:03-06:00",
-                // @ts-ignore: Suppressed for test purposes
-                selectedPresetId: null,
+                selectedPresetId: undefined,
             };
             component.ngOnChanges(initializationChanges);
             const spy = spyOn(eventBus.getStream(SET_TIMEFRAME), "next");

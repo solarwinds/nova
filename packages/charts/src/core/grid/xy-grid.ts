@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { axisBottom, axisLeft, axisRight, axisTop } from "d3-axis";
+import { axisBottom, axisLeft, axisRight, axisTop } from "d3";
 import { select } from "d3-selection";
 import clone from "lodash/clone";
 import each from "lodash/each";

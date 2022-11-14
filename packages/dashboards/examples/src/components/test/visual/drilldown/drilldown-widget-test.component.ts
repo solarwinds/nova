@@ -29,6 +29,7 @@ import {
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import groupBy from "lodash/groupBy";
 import { BehaviorSubject, Observable, of, Subject } from "rxjs";
+// eslint-disable-next-line import/no-deprecated
 import { catchError, finalize, map, switchMap, tap } from "rxjs/operators";
 
 import { DataSourceService, IFilters, INovaFilters } from "@nova-ui/bits";
@@ -77,6 +78,7 @@ export class DrilldownDataSource
     constructor() {
         super();
         this.applyFilters$
+            // eslint-disable-next-line import/no-deprecated
             .pipe(switchMap((filters) => this.getData(filters)))
             .subscribe(async (res) => {
                 this.outputsSubject.next(await this.getFilteredData(res));
@@ -87,27 +89,21 @@ export class DrilldownDataSource
 
     // In this example, getFilteredData is invoked every 10 minutes (Take a look at the refresher
     // provider definition in the widget configuration below to see how the interval is set)
-    public async getFilteredData(data: any): Promise<any> {
-        return of(data)
-            .pipe(
-                map((countries) => {
-                    const widgetInput = this.getOutput(countries);
+    public async getFilteredData(countries: any): Promise<any> {
+        const widgetInput = this.getOutput(countries);
 
-                    if (this.isDrillDown()) {
-                        const activeDrillLvl = this.drillState.length;
-                        const group = this.groupBy[activeDrillLvl];
-                        const [lastGroupedValue, groupedData] =
-                            this.getTransformedDataForGroup(widgetInput, group);
+        if (this.isDrillDown()) {
+            const activeDrillLvl = this.drillState.length;
+            const group = this.groupBy[activeDrillLvl];
+            const [lastGroupedValue, groupedData] =
+                this.getTransformedDataForGroup(widgetInput, group);
 
-                        this.groupedDataHistory.push(lastGroupedValue);
+            this.groupedDataHistory.push(lastGroupedValue);
 
-                        return groupedData;
-                    }
+            return groupedData;
+        }
 
-                    return widgetInput;
-                })
-            )
-            .toPromise();
+        return widgetInput;
     }
 
     public ngOnDestroy(): void {
@@ -127,7 +123,9 @@ export class DrilldownDataSource
 
         return of(this.cache || GRAPH_DATA_MOCK).pipe(
             // delay(1000),
+            // eslint-disable-next-line import/no-deprecated
             tap((data) => (this.cache = data)),
+            // eslint-disable-next-line import/no-deprecated
             map((data) => data.data.countries),
             catchError((e) => of([])),
             finalize(() => this.busy.next(false))

@@ -56,9 +56,9 @@ export class ListLeafItemComponent implements IHasChangeDetector, OnInit {
     @Output() public navigated = new EventEmitter<ListLeafItemComponent>();
 
     public searchTerm: string = "";
-    protected destroy$ = new Subject<void>();
+    protected readonly destroy$ = new Subject<void>();
 
-    onButtonClick() {
+    public onButtonClick(): void {
         if (this.canNavigate) {
             this.navigated.emit(this);
         }
@@ -69,12 +69,12 @@ export class ListLeafItemComponent implements IHasChangeDetector, OnInit {
         @Inject(PIZZAGNA_EVENT_BUS) public eventBus: EventBus<IEvent>
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.eventBus
             .getStream(WIDGET_SEARCH)
             .pipe(takeUntil(this.destroy$))
             .subscribe((event) => {
-                this.searchTerm = event.payload;
+                this.searchTerm = event.payload ?? "";
                 this.changeDetector.markForCheck();
             });
     }

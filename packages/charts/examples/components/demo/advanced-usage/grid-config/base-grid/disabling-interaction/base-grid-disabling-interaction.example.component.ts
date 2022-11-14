@@ -38,7 +38,7 @@ import {
 export class BaseGridDisablingInteractionExampleComponent implements OnInit {
     public chart: Chart;
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const gridConfig = new XYGridConfig();
         gridConfig.interactive = false;
         this.chart = new Chart(new XYGrid(gridConfig));

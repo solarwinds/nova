@@ -31,7 +31,7 @@ import { PIZZAGNA_EVENT_BUS } from "../../types";
  */
 @Injectable()
 export class EventBusDebugger implements OnDestroy {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>

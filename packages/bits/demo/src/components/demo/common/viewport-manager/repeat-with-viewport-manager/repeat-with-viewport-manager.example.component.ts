@@ -35,9 +35,12 @@ import {
     catchError,
     delay,
     finalize,
+    // eslint-disable-next-line import/no-deprecated
     map,
+    // eslint-disable-next-line import/no-deprecated
     switchMap,
     takeUntil,
+    // eslint-disable-next-line import/no-deprecated
     tap,
 } from "rxjs/operators";
 
@@ -118,6 +121,7 @@ export class GBooksDataSourceWithSearch
         this.applyFilters$
             .pipe(
                 // cancel any previous requests
+                // eslint-disable-next-line import/no-deprecated
                 switchMap((filters) => this.getData(filters))
             )
             .subscribe(async (res) => {
@@ -130,10 +134,12 @@ export class GBooksDataSourceWithSearch
     ): Promise<IDataSourceOutput<INovaFilteringOutputs>> {
         return firstValueFrom(
             of(booksData).pipe(
+                // eslint-disable-next-line import/no-deprecated
                 tap((response: IGBooksFrontendCollection) => {
                     // after receiving data we need to append it to our previous fetched results
                     this.cache = this.cache.concat(response.books);
                 }),
+                // eslint-disable-next-line import/no-deprecated
                 map((response: IGBooksFrontendCollection) => ({
                     result: {
                         repeat: { itemsSource: this.cache },
@@ -165,6 +171,7 @@ export class GBooksDataSourceWithSearch
             })
             .pipe(
                 // show the loader
+                // eslint-disable-next-line import/no-deprecated
                 tap(() => this.busy.next(true)),
 
                 // since API being used (Google Books ) sends the response almost immediately,
@@ -175,6 +182,7 @@ export class GBooksDataSourceWithSearch
 
                 // transform backend API response (IGBooksApiResponse)
                 // to our frontend books collection (IGBooksFrontendCollection)
+                // eslint-disable-next-line import/no-deprecated
                 map((response) => ({
                     books:
                         response.items?.map((volume) => ({
@@ -246,7 +254,7 @@ export class RepeatWithViewportManagerExampleComponent
     @ViewChild(RepeatComponent) private repeat: RepeatComponent;
     @ViewChild(SearchComponent) private search: SearchComponent;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         private viewportManager: VirtualViewportManager,
@@ -257,6 +265,7 @@ export class RepeatWithViewportManagerExampleComponent
     public ngOnInit(): void {
         this.dataSource.busy
             .pipe(
+                // eslint-disable-next-line import/no-deprecated
                 tap((val) => {
                     this.busy = val;
                     this.cd.detectChanges();
@@ -278,12 +287,15 @@ export class RepeatWithViewportManagerExampleComponent
             // distinct ranges with step equal to provided pageSize
             .observeNextPage$({ pageSize: RESULTS_PER_PAGE })
             .pipe(
+                // eslint-disable-next-line import/no-deprecated
                 tap(() => {
                     this.dataSource.applyFilters();
                 }),
                 // Note: Using the same stream to subscribe to the outputsSubject and update the items list
+                // eslint-disable-next-line import/no-deprecated
                 switchMap(() =>
                     this.dataSource.outputsSubject.pipe(
+                        // eslint-disable-next-line import/no-deprecated
                         tap((outputs: IFilteringOutputs) => {
                             this.books$.next(
                                 outputs.result.repeat.itemsSource || []

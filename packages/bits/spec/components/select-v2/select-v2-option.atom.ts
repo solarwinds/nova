@@ -27,7 +27,7 @@ export class SelectV2OptionAtom extends Atom {
         return this.getElement().click();
     }
 
-    public async isActive() {
+    public async isActive(): Promise<boolean> {
         return this.hasClass("active");
     }
 

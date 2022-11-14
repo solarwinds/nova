@@ -49,7 +49,7 @@ export class SelectV2CustomContentExampleComponent {
 
     constructor(@Inject(ToastService) private toastService: ToastService) {}
 
-    public actionSimulation(event: Event) {
+    public actionSimulation(event: Event): void {
         this.toastService.info({
             message: $localize`Action Occurred!`,
         });

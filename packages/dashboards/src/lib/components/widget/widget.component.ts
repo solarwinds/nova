@@ -69,7 +69,7 @@ export class WidgetComponent implements OnChanges {
         }
     }
 
-    public onPizzagnaChange(pizzagna: IPizzagna) {
+    public onPizzagnaChange(pizzagna: IPizzagna): void {
         this.widgetChange.emit({
             ...this.widget,
             pizzagna: pizzagna,

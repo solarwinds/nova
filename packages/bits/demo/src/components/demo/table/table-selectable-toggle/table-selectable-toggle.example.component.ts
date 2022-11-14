@@ -81,7 +81,7 @@ export class TableSelectableToggleExampleComponent
         public changeDetector: ChangeDetectorRef
     ) {}
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.dataSourceService.componentTree = {
             paginator: {
                 componentInstance: this.filteringPaginator,
@@ -98,24 +98,24 @@ export class TableSelectableToggleExampleComponent
         this.applyFilters();
     }
 
-    public changePagination($event: any) {
+    public changePagination($event: any): void {
         this.applyFilters();
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.dataSourceService.setData(getData());
         this.dataSourceService.applyFilters();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 
-    public trackBy(index: number, item: IExampleTableModel) {
+    public trackBy(index: number, item: IExampleTableModel): number {
         return item.position;
     }
 
-    public toggleSelectable() {
+    public toggleSelectable(): void {
         this.selectable = !this.selectable;
         this.selection = new SelectionModel();
     }

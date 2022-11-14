@@ -72,9 +72,9 @@ export class TimeFrameBarComponent
     @Input() maxDate: Moment;
 
     /** Current time frame value */
-    @Input() timeFrame: ITimeframe = <any>{
-        startDatetime: undefined,
-        endDatetime: undefined,
+    @Input() timeFrame: ITimeframe = {
+        startDatetime: moment(undefined),
+        endDatetime: moment(undefined),
     };
     @Output() timeFrameChange = new EventEmitter<ITimeframe>();
 
@@ -99,7 +99,7 @@ export class TimeFrameBarComponent
     public humanizedTimeframe: string;
     public readonly defaultPickerTitle = $localize`:Label indicating that the user can select a custom start date and/or end date:Custom Range`;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         public timeframeService: TimeframeService,

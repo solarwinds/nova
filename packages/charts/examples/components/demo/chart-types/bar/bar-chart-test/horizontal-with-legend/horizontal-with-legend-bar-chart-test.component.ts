@@ -39,7 +39,7 @@ export class HorizontalWithLegendBarChartTestComponent implements OnInit {
     public grid = barGrid(this.barConfig);
     public chartAssist = new ChartAssist(new Chart(this.grid));
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.grid.config().axis.left.visible = false;
         this.grid.config().dimension.margin.left = 0;
 

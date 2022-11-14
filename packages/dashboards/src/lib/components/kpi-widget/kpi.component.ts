@@ -98,7 +98,7 @@ export class KpiComponent implements IHasChangeDetector, OnChanges {
         @Inject(PIZZAGNA_EVENT_BUS) public eventBus: EventBus<IEvent>
     ) {}
 
-    public onInteraction() {
+    public onInteraction(): void {
         if (!this.interactive) {
             return;
         }
@@ -113,7 +113,7 @@ export class KpiComponent implements IHasChangeDetector, OnChanges {
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.configuration) {
             const formattersConfiguration: IKpiFormattersConfiguration =
                 changes.configuration.currentValue.formatters;

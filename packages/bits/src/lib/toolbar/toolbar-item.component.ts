@@ -40,21 +40,22 @@ export class ToolbarItemComponent implements AfterContentInit {
     @Input() public type = ToolbarItemType.primary;
     @Input() public icon: string;
     @Input() public title: string;
+
     /**
      * Property for add destructive style to toolbar item.
      * Destructive item should be added always last by user.
      */
-
     @Input() public displayStyle = ToolbarItemDisplayStyle.action;
+
     public menuHidden: boolean;
 
     @Output() public actionDone = new EventEmitter();
 
-    public get isDestructive() {
+    public get isDestructive(): boolean {
         return this.displayStyle === ToolbarItemDisplayStyle.destructive;
     }
 
-    ngAfterContentInit() {
+    public ngAfterContentInit(): void {
         this.menuHidden = this.type === ToolbarItemType.secondary;
     }
 }

@@ -40,17 +40,17 @@ export class DragdropExampleComponent {
     public draggableList = ["item 1", "item2", "item3"];
     public destObject: {};
 
-    public onDrop(payload: any) {
+    public onDrop(payload: any): void {
         this.destObject = payload;
     }
 
-    public onDragStart(event: DragEvent) {}
+    public onDragStart(event: DragEvent): void {}
 
-    public onDragEnd(event: DragEvent) {}
+    public onDragEnd(event: DragEvent): void {}
 
-    public onDragOver(event: DragEvent) {}
+    public onDragOver(event: DragEvent): void {}
 
-    public onDragEnter(event: DragEvent) {}
+    public onDragEnter(event: DragEvent): void {}
 
-    public onDragLeave(event: DragEvent) {}
+    public onDragLeave(event: DragEvent): void {}
 }

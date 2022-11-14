@@ -42,7 +42,7 @@ export class CustomConfirmationInsideDialogComponent implements OnDestroy {
 
     constructor(private dialogService: DialogService) {}
 
-    triggerOverlay(overlay: OverlayComponent) {
+    triggerOverlay(overlay: OverlayComponent): void {
         this.overlayTriggered$.next();
 
         // Toggling the overlay to get an access to the 'overlayRef'
@@ -72,7 +72,7 @@ export class CustomConfirmationInsideDialogComponent implements OnDestroy {
             .subscribe(() => overlay.hide());
     }
 
-    public open(content: TemplateRef<string>) {
+    public open(content: TemplateRef<string>): void {
         this.activeDialog = this.dialogService.open(content, {
             size: "lg",
             backdrop: "static",
@@ -84,11 +84,11 @@ export class CustomConfirmationInsideDialogComponent implements OnDestroy {
         this.activeDialog.close();
     }
 
-    public onContainerResize(overlay: OverlayComponent) {
+    public onContainerResize(overlay: OverlayComponent): void {
         this.updateOverlayDimensions(overlay);
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();
         this.overlayTriggered$.complete();

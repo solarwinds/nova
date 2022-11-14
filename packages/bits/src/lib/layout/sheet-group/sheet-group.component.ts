@@ -111,7 +111,7 @@ export class SheetGroupComponent implements OnInit, AfterViewInit, OnDestroy {
         );
     }
 
-    public addResizers(resizableList: QueryList<any>) {
+    public addResizers(resizableList: QueryList<any>): void {
         resizableList.forEach((resizableItem, index) => {
             if (index === resizableList.length - 1) {
                 return;
@@ -122,7 +122,7 @@ export class SheetGroupComponent implements OnInit, AfterViewInit, OnDestroy {
         this.calculateFlexBasis(resizableList, resizableList.length);
     }
 
-    public appendResizer(factory: any, resizeEl: any) {
+    public appendResizer(factory: any, resizeEl: any): void {
         const componentRef =
             this.componentFactoryResolver.resolveComponentFactory(factory);
 
@@ -140,7 +140,7 @@ export class SheetGroupComponent implements OnInit, AfterViewInit, OnDestroy {
     public calculateFlexBasis(
         resizableList: QueryList<Element>,
         numOfItems: number
-    ) {
+    ): void {
         let availableSpace: string = "100%";
         const hasInitSize = resizableList.some(
             (element: Element) => !!element.initialSizeValue
@@ -203,7 +203,7 @@ export class SheetGroupComponent implements OnInit, AfterViewInit, OnDestroy {
         private componentFactoryResolver: ComponentFactoryResolver
     ) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.applyJoinedSheetsClass =
             (this.applyJoinedSheetsClass && !this.applySeparateSheetsClass) ||
             this.sheetsType === "joined";
@@ -218,7 +218,7 @@ export class SheetGroupComponent implements OnInit, AfterViewInit, OnDestroy {
                 : ResizeDirection.bottom;
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         // 2 addResizers needed for correct handling sheetGroups and sheets elements,
         // f.e. flex basis calculation or detection last element of correspondent type
         if (this.isResizable) {
@@ -233,7 +233,7 @@ export class SheetGroupComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this.resizersList.length > 0) {
             this.resizersList.forEach((resizer) => {
                 resizer.destroy();

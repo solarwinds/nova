@@ -34,6 +34,7 @@ import {
     Validators,
 } from "@angular/forms";
 import { Observable, of, Subject } from "rxjs";
+// eslint-disable-next-line import/no-deprecated
 import { delay, filter, takeUntil, tap } from "rxjs/operators";
 
 import {
@@ -149,16 +150,16 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
         private toastService: ToastService
     ) {}
 
-    public closePopover() {
+    public closePopover(): void {
         this.closePopoverSubject.next();
     }
 
-    public createOption(option: string) {
+    public createOption(option: string): void {
         this.options.push(option);
         this.comboboxControlSingle.setValue(option);
     }
 
-    public createOptionMulti(optionName: string) {
+    public createOptionMulti(optionName: string): void {
         const option = {
             id: `value-${this.options.length}`,
             name: optionName,
@@ -175,22 +176,28 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
         return item?.name || "";
     }
 
-    public convertToChip(value: IExampleItem) {
+    public convertToChip(value: IExampleItem): {
+        id: IExampleItem["id"];
+        label: IExampleItem["name"];
+    } {
         return {
             id: value.id,
             label: value.name,
         };
     }
 
-    public isInErrorState() {
+    public isInErrorState(): boolean {
         return !!this.selectedItem;
     }
 
-    public isDisabled(option: string) {
+    public isDisabled(option: string): boolean {
         return !!(parseInt(option.slice(-1), 10) % 2);
     }
 
-    public getOptions(amount: number, isDisabled?: boolean) {
+    public getOptions(
+        amount: number,
+        isDisabled?: boolean
+    ): { id: string; name: string; disabled: boolean }[] {
         return Array.from({ length: amount }).map((_, i) => ({
             id: `value-${i}`,
             name: $localize`Item ${i}`,
@@ -215,7 +222,7 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
         this.comboboxMultiDimensions.inputElement.nativeElement.focus();
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.fancyForm = this.formBuilder.group({
             combobox: this.formBuilder.control("", Validators.required),
         });
@@ -232,7 +239,7 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
             });
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.virtualCombobox.valueSelected
             .pipe(takeUntil(this.destroy$))
             .subscribe(() => {
@@ -242,22 +249,24 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
         this.virtualCombobox.valueChanged
             .pipe(
                 filter((v) => v !== undefined),
+                // eslint-disable-next-line import/no-deprecated
                 tap(
                     (v) =>
                         (this.filteredItems = of(this.filterItems(v as string)))
                 ),
                 delay(0),
+                // eslint-disable-next-line import/no-deprecated
                 tap(this.calculateContainerHeight),
                 takeUntil(this.destroy$)
             )
             .subscribe();
     }
 
-    public open(content: TemplateRef<string>) {
+    public open(content: TemplateRef<string>): void {
         this.activeDialog = this.dialogService.open(content, { size: "sm" });
     }
 
-    public confirm(event: MouseEvent) {
+    public confirm(event: MouseEvent): void {
         event?.stopPropagation();
         this.activeDialog = this.dialogService.confirm({
             message: "IS THIS SPARTA?",
@@ -265,7 +274,7 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
         });
     }
 
-    public openInOverlay(content: TemplateRef<string>) {
+    public openInOverlay(content: TemplateRef<string>): void {
         this.activeDialog = this.dialogService.open(content, {
             size: "lg",
             useOverlay: true,
@@ -288,7 +297,7 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
         this.activeDialog.close();
     }
 
-    public onButtonClick(title: string) {
+    public onButtonClick(title: string): void {
         title === "Action" ? this.actionDone() : this.actionCanceled();
         this.activeDialog.close();
     }

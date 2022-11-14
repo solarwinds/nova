@@ -77,7 +77,7 @@ export class TimeFrameBarTestComponent implements AfterContentInit, OnDestroy {
         private dataSourceService: NoopDataSourceService<ITimeframe>
     ) {}
 
-    public ngAfterContentInit() {
+    public ngAfterContentInit(): void {
         this.yScale.domainCalculator = getAutomaticDomainWithIncludedInterval([
             0, 100,
         ]);
@@ -110,17 +110,17 @@ export class TimeFrameBarTestComponent implements AfterContentInit, OnDestroy {
         );
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this.filteringSubscription) {
             this.filteringSubscription.unsubscribe();
         }
     }
 
-    public updateTimeFrame(value?: ITimeframe) {
+    public updateTimeFrame(value?: ITimeframe): void {
         this.applyFilters(this.history.restart(value));
     }
 
-    public zoomUndo() {
+    public zoomUndo(): void {
         this.applyFilters(this.history.undo());
     }
 

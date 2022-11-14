@@ -40,7 +40,7 @@ export class TabNavigationService implements ITabNavigationService {
     // cache to remember the altered DOM elements that will be later restored
     private tabFocusableElements: IFocusableElement[] = [];
 
-    public disableTabNavigation(domElRef: ElementRef) {
+    public disableTabNavigation(domElRef: ElementRef): void {
         // dom manipulation to cache the altered elements
         // and do tabIndex=-1 on focusable HTML elements
         this.tabFocusableElements = [];
@@ -58,7 +58,7 @@ export class TabNavigationService implements ITabNavigationService {
             });
     }
 
-    public restoreTabNavigation() {
+    public restoreTabNavigation(): void {
         // dom manipulation to restore the tabIndex for the cached elements
         // and remove the tabIndex for those who didn't had it at all
         this.tabFocusableElements.forEach((e) => {

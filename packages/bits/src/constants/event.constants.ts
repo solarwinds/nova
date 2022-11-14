@@ -18,4 +18,20 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export const DOCUMENT_CLICK_EVENT = "document-click";
+import { IEventDefinition } from "../services/public-api";
+
+export const DOCUMENT_CLICK_EVENT: IEventDefinition<MouseEvent> = {
+    id: "document-click",
+};
+export const COMPLETE_RESIZE_EVENT: IEventDefinition<Event> = {
+    id: "complete-resize",
+};
+export const CHECKBOX_KEYDOWN_EVENT: IEventDefinition<KeyboardEvent> = {
+    id: "checkbox-keydown",
+};
+export const CLOSE_POPOVER_EVENT: IEventDefinition<void> = {
+    id: "close-popover",
+};
+export const POPOVER_CLOSED_EVENT: IEventDefinition<void> = {
+    id: "popover-closed",
+};

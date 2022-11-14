@@ -36,8 +36,6 @@ import { SpinnerComponent } from "../spinner/spinner.component";
 /**
  * <example-url>./../examples/index.html#/busy</example-url>
  */
-
-/* eslint-disable @angular-eslint/component-selector */
 @Component({
     selector: "[nui-busy]",
     templateUrl: "./busy.component.html",
@@ -67,7 +65,7 @@ export class BusyComponent implements AfterContentInit, OnChanges {
         private elRef: ElementRef
     ) {}
 
-    public ngAfterContentInit() {
+    public ngAfterContentInit(): void {
         this.setBusyStateForContentComponents();
 
         this.isSpinnerTemplate = Boolean(this.spinnerComponent);
@@ -82,7 +80,7 @@ export class BusyComponent implements AfterContentInit, OnChanges {
         }
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (
             this.disableTabNavigation &&
             changes.busy?.currentValue !== undefined

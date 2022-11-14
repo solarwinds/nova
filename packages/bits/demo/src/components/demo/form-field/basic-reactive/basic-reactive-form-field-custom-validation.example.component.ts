@@ -33,7 +33,7 @@ export class FormFieldBasicReactiveCustomValidationExampleComponent
 
     constructor(private formBuilder: FormBuilder) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.reactiveForm = this.formBuilder.group({
             email: this.formBuilder.control("", [
                 Validators.required,

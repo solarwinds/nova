@@ -39,7 +39,7 @@ export class BarChartExampleComponent implements OnInit {
 
     public chart = new Chart(barGrid(this.config));
 
-    ngOnInit() {
+    public ngOnInit(): void {
         const accessors = barAccessors(this.config);
         const renderer = new BarRenderer();
         const scales = barScales(this.config);

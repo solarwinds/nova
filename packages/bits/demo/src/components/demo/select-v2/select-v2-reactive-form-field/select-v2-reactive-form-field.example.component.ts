@@ -34,7 +34,7 @@ export class SelectV2ReactiveFormFieldExampleComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder) {}
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.fancyForm = this.formBuilder.group({
             select: this.formBuilder.control("", Validators.required),
         });

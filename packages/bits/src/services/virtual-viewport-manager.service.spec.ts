@@ -108,7 +108,7 @@ class ViewportInRepeatComponent implements AfterViewInit, OnDestroy {
         this.items$.next(this.getMockData(this.pageSize));
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }

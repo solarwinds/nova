@@ -33,7 +33,7 @@ export class DateTimePickerReactiveFormExampleComponent {
 
     constructor() {}
 
-    onModelChanged(event: Moment) {
+    public onModelChanged(event: Moment): void {
         this.selectedDate = new Date(event.valueOf());
     }
 }

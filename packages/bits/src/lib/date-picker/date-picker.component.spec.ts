@@ -29,7 +29,6 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 import momentTz from "moment-timezone";
 import moment from "moment/moment";
-import { firstValueFrom } from "rxjs";
 
 import { IconService } from "../../lib/icon/icon.service";
 import {
@@ -161,7 +160,7 @@ describe("components >", () => {
             componentInstance.ngOnInit();
             componentInstance.onInputActiveDateChanged("");
             tick(501);
-            firstValueFrom(componentInstance.valueChange).then((value) => {
+            componentInstance.valueChange.subscribe((value: any) => {
                 expect(value).toEqual(moment(""));
             });
         }));
@@ -199,7 +198,9 @@ describe("components >", () => {
             const marchDateISO = "2020-03-01T11:00:00.000+11:00";
 
             componentInstance.ngOnInit();
-            componentInstance.value = momentTz().tz(australiaTimezone);
+            componentInstance.value = momentTz().tz(
+                australiaTimezone
+            ) as unknown as moment.Moment;
             fixture.detectChanges();
 
             componentInstance._datePicker.select(marchDateISO, eventMock);

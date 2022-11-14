@@ -31,7 +31,7 @@ export class PopoverPreventCloseOnClickExampleComponent {
     };
     public closePopoverSubject = new Subject<void>();
 
-    public closePopover() {
+    public closePopover(): void {
         this.closePopoverSubject.next();
     }
 }

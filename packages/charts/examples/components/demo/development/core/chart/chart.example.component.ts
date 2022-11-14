@@ -25,7 +25,7 @@ import {
     Chart,
     ChartAssist,
     ChartPalette,
-    CHART_PALETTE_CS_S,
+    CHART_PALETTE_CS_S_EXTENDED,
     IChartAssistSeries,
     ILineAccessors,
     INTERACTION_SERIES_EVENT,
@@ -40,6 +40,7 @@ import {
 } from "@nova-ui/charts";
 
 import { DataGenerator } from "../../../../../data-generator";
+import { isEvenIndex } from "../../../../utility/isEvenIndex";
 
 /** @ignore */
 const statuses = ["down", "critical", "warning", "unknown", "up"];
@@ -63,10 +64,12 @@ export class ChartExampleComponent implements OnInit {
     private statusScales: Scales;
 
     public statusPalette = new ChartPalette(
-        new MappedValueProvider<string>(zipObject(statuses, CHART_PALETTE_CS_S))
+        new MappedValueProvider<string>(
+            zipObject(statuses, CHART_PALETTE_CS_S_EXTENDED.filter(isEvenIndex))
+        )
     );
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         // status chart setup
         this.statusLineRenderer = new LineRenderer({
             interactionStrategy: new LineSelectSeriesInteractionStrategy(),
@@ -92,13 +95,13 @@ export class ChartExampleComponent implements OnInit {
         this.update();
     }
 
-    public update() {
+    public update(): void {
         this.statusChartAssist.update(
             this.generateStatusSeriesSet(Math.floor(Math.random() * 5 + 1))
         );
     }
 
-    public isStatusSignificant(highlightedValue: string) {
+    public isStatusSignificant(highlightedValue: string): boolean {
         return highlightedValue !== "unknown" && highlightedValue !== "up";
     }
 

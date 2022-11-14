@@ -39,7 +39,7 @@ export class MenuVisualTestComponent {
                 {
                     title: "Item 2",
                     itemType: "action",
-                    action: () => alert("hello"),
+                    action: (): void => alert("hello"),
                 },
                 {
                     title: "Item 3",
@@ -183,7 +183,7 @@ export class MenuVisualTestComponent {
         console.log("Action Done");
     }
 
-    public actionWithParams(index: number) {
+    public actionWithParams(index: number): void {
         console.log("action", this.itemsSource[0].itemsSource[index].title);
     }
 }

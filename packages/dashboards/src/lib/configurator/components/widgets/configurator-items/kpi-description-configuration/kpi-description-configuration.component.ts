@@ -30,7 +30,9 @@ import {
     SimpleChanges,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+// eslint-disable-next-line import/no-deprecated
 import { combineLatest, Observable } from "rxjs";
+// eslint-disable-next-line import/no-deprecated
 import { map, startWith } from "rxjs/operators";
 
 import {
@@ -90,12 +92,15 @@ export class KpiDescriptionConfigurationComponent
         }
 
         const label = this.form.get("label");
+        // eslint-disable-next-line import/no-deprecated
         const labelValue = label?.valueChanges.pipe(startWith(label.value));
 
         const backgroundColor = this.form.get("backgroundColor");
         const backgroundColorValue = backgroundColor?.valueChanges.pipe(
+            // eslint-disable-next-line import/no-deprecated
             startWith(backgroundColor?.value)
         );
+        // eslint-disable-next-line import/no-deprecated
         this.subtitle$ = combineLatest([
             labelValue?.pipe(map((t) => t || $localize`no label`)),
             backgroundColorValue?.pipe(
@@ -106,7 +111,7 @@ export class KpiDescriptionConfigurationComponent
         this.formReady.emit(this.form);
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.label) {
             this.form?.patchValue({ label: changes.label.currentValue });
         }

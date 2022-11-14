@@ -24,6 +24,7 @@ import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import isUndefined from "lodash/isUndefined";
+// eslint-disable-next-line import/no-deprecated
 import { combineLatest, Subject } from "rxjs";
 import { distinctUntilChanged, map, takeUntil } from "rxjs/operators";
 
@@ -300,6 +301,7 @@ export class TimeseriesSeriesConverterService
     }
 
     private subscribeToAvailableDataFieldsChange() {
+        // eslint-disable-next-line import/no-deprecated
         combineLatest([this.dataSourceSeries$, this.selectedSeriesIds$])
             .pipe(
                 takeUntil(this.destroy$),

@@ -44,7 +44,7 @@ export class ChartDonutContentComponent implements OnDestroy, OnChanges {
 
     private contentPositionUpdateSubscription: Subscription;
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.plugin) {
             this.contentPositionUpdateSubscription?.unsubscribe();
 
@@ -59,7 +59,7 @@ export class ChartDonutContentComponent implements OnDestroy, OnChanges {
         }
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this.contentPositionUpdateSubscription) {
             this.contentPositionUpdateSubscription.unsubscribe();
         }

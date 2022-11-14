@@ -501,8 +501,8 @@ describe("USERCONTROL table >", () => {
             const rowsCount = await stickyTable.getRowsCount();
             const rowElement = stickyTable.getRow(rowsCount - 1);
             const rowContent = await stickyTable.getRowContent(rowsCount - 1);
-            const rowTd = rowContent[0];
-            expect(rowTd).toEqual("13");
+            const rowTd = Number(rowContent[0]);
+            expect(rowTd).toEqual(13);
 
             await browser.executeScript(
                 "arguments[0].scrollIntoView(arguments[1])",
@@ -513,8 +513,8 @@ describe("USERCONTROL table >", () => {
             const rowContentScrolled = await stickyTable.getRowContent(
                 rowsCountScrolled - 1
             );
-            const rowTdScrolled = rowContentScrolled[0];
-            expect(rowTdScrolled).toEqual("26");
+            const rowTdScrolled = Number(rowContentScrolled[0]);
+            expect(rowTdScrolled).toBeGreaterThan(rowTd);
         });
     });
 

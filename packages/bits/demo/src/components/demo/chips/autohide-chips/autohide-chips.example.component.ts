@@ -40,12 +40,12 @@ export class AutohideChipsExampleComponent {
         flatItems: horizontalFlatItems,
     };
 
-    public onClear(event: { item: IChipsItem }) {
+    public onClear(event: { item: IChipsItem }): void {
         console.log(`'onClear' event fired. $event.item.id=${event.item.id}`);
         _pull(this.horizontalFlatItemsSource.flatItems || [], event.item);
     }
 
-    public onClearAll() {
+    public onClearAll(): void {
         this.horizontalFlatItemsSource.flatItems = [];
     }
 }

@@ -29,7 +29,7 @@ export class BusyVisualTestComponent {
     public busy: boolean;
     public busyAtTheStart: boolean = true;
 
-    public switchBusy() {
+    public switchBusy(): void {
         this.busy = !this.busy;
     }
 }

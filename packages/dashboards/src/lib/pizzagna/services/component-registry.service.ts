@@ -35,15 +35,15 @@ export class ComponentRegistryService {
 
     constructor(private logger: LoggerService) {}
 
-    public registerByLateLoadKey(component: IComponentWithLateLoadKey) {
+    public registerByLateLoadKey(component: IComponentWithLateLoadKey): void {
         this.registerComponentType(component.lateLoadKey, component);
     }
 
-    public registerComponentType(key: string, component: any) {
+    public registerComponentType(key: string, component: any): void {
         this.components[key] = component;
     }
 
-    public getComponentType(key: string) {
+    public getComponentType(key: string): any {
         const component = this.components[key];
 
         if (!component) {

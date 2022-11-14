@@ -31,7 +31,7 @@ import {
     ViewChild,
 } from "@angular/core";
 
-import { EventBusService, expand } from "@nova-ui/bits";
+import { DOCUMENT_CLICK_EVENT, EventBusService, expand } from "@nova-ui/bits";
 
 import { FoodNode, HttpMock, IApiResponse, TREE_DATA_PAGINATOR } from "../data";
 
@@ -54,7 +54,7 @@ export class TreePaginatorTestComponent {
 
     @ViewChild(CdkTree) private cdkTree: CdkTree<FoodNode>;
 
-    hasChild = (_: number, node: FoodNode) => node.children;
+    hasChild = (_: number, node: FoodNode): boolean => !!node.children;
 
     constructor(
         private http: HttpMock,
@@ -63,10 +63,13 @@ export class TreePaginatorTestComponent {
     ) {}
 
     /** Load first page on first open */
-    public onToggleClick(node: FoodNode, nestedNode: CdkNestedTreeNode<any>) {
+    public onToggleClick(
+        node: FoodNode,
+        nestedNode: CdkNestedTreeNode<any>
+    ): void {
         this.eventBusService
-            .getStream({ id: "document-click" })
-            .next(undefined);
+            .getStream(DOCUMENT_CLICK_EVENT)
+            .next(new MouseEvent("click"));
 
         if (node.hasPagination && node.children && !node.children.length) {
             const paginatorOptions = {

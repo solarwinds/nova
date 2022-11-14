@@ -68,7 +68,7 @@ export class TimeseriesSeriesCollectionConfigurationComponent
     public form: FormGroup;
     public emptySeries$: Observable<boolean>;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         public pizzagnaService: PizzagnaService,
@@ -81,7 +81,7 @@ export class TimeseriesSeriesCollectionConfigurationComponent
         this.destroy$.complete();
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.allSeries && !changes.allSeries.isFirstChange()) {
             // if we receive 'allSeries' data from the data source after component initialization, we
             // re-create the series config components to make them aware of this change
@@ -90,7 +90,7 @@ export class TimeseriesSeriesCollectionConfigurationComponent
         }
     }
 
-    public onFormReady(form: AbstractControl) {
+    public onFormReady(form: AbstractControl): void {
         this.form = form as FormGroup;
         this.formReady.emit(form);
         this.emptySeries$ = this.form.valueChanges.pipe(
@@ -98,7 +98,7 @@ export class TimeseriesSeriesCollectionConfigurationComponent
         );
     }
 
-    public onItemsChange(series: ITimeseriesItemConfiguration[]) {
+    public onItemsChange(series: ITimeseriesItemConfiguration[]): void {
         this.createSeriesConfigComponents(series);
 
         const property: IPizzagnaProperty = {
@@ -109,14 +109,14 @@ export class TimeseriesSeriesCollectionConfigurationComponent
         this.pizzagnaService.setProperty(property, series);
     }
 
-    public isPossibleToAddSeries() {
+    public isPossibleToAddSeries(): boolean {
         const total = this.allSeries && this.allSeries.length;
         const present = this.series && this.series.length;
 
         return total > present;
     }
 
-    public addSeries() {
+    public addSeries(): void {
         this.onItemsChange([
             // @ts-ignore: Types of property 'selectedSeriesId' are incompatible.
             ...this.series,

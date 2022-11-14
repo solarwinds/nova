@@ -24,12 +24,13 @@ import { assertA11y, Helpers } from "../../helpers";
 import { BusyAtom } from "../public_api";
 
 describe("a11y: busy", () => {
-    let switchBusyState: ElementFinder;
     const rulesToDisable: string[] = [
         "color-contrast",
         "aria-progressbar-name",
         "duplicate-id",
     ];
+
+    let switchBusyState: ElementFinder;
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("busy/busy-visual-test");
@@ -37,11 +38,11 @@ describe("a11y: busy", () => {
     });
 
     it("should check a11y of busy - on", async () => {
-        await assertA11y(browser, BusyAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, BusyAtom, rulesToDisable);
     });
 
     it("should check a11y of busy - off", async () => {
         await switchBusyState.click();
-        await assertA11y(browser, BusyAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, BusyAtom, rulesToDisable);
     });
 });

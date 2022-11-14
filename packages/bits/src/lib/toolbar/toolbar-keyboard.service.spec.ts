@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { KEYBOARD_CODE } from "../../constants";
+import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import { ToolbarKeyboardService } from "./toolbar-keyboard.service";
 
 const keyboardEventMock: KeyboardEvent = {

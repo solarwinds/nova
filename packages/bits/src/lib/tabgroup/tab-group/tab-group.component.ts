@@ -68,7 +68,7 @@ export class TabGroupComponent implements OnDestroy, AfterViewInit {
         private changeDetectorRef: ChangeDetectorRef
     ) {}
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.checkTraverse();
     }
 
@@ -191,7 +191,7 @@ export class TabGroupComponent implements OnDestroy, AfterViewInit {
         return value + increment + "px";
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.isDestroyed = true;
     }
 }

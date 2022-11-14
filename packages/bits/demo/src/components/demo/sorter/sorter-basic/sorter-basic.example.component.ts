@@ -54,11 +54,11 @@ export class SorterBasicExampleComponent implements OnInit {
     public sortBy = this.columns[1].value;
     public items: IFilm[] = getData();
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.sortItems(this.sortBy, this.initialSortDirection);
     }
 
-    public onSorterAction(changeEvent: ISorterChanges) {
+    public onSorterAction(changeEvent: ISorterChanges): void {
         this.sortBy = changeEvent.newValue.sortBy;
         this.sortItems(
             changeEvent.newValue.sortBy,

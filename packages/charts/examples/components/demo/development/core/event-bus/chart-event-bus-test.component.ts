@@ -89,7 +89,7 @@ export class ChartEventBusTestComponent implements OnInit {
         return this.selectedEventFilters.indexOf(filter) > -1;
     }
 
-    public onEventFilterChange(filters: string[]) {
+    public onEventFilterChange(filters: string[]): void {
         this.selectedEventFilters = filters;
     }
 
@@ -97,7 +97,7 @@ export class ChartEventBusTestComponent implements OnInit {
         return this.selectedInteractionTypeFilters.indexOf(filter) > -1;
     }
 
-    public onInteractionTypeFilterChange(filters: InteractionType[]) {
+    public onInteractionTypeFilterChange(filters: InteractionType[]): void {
         this.selectedInteractionTypeFilters = filters;
     }
 
@@ -106,7 +106,7 @@ export class ChartEventBusTestComponent implements OnInit {
         private changeDetector: ChangeDetectorRef
     ) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         const gridConfig = new XYGridConfig();
         gridConfig.cursor = "pointer";
         this.chart = new Chart(new XYGrid(gridConfig));
@@ -147,14 +147,14 @@ export class ChartEventBusTestComponent implements OnInit {
         });
     }
 
-    public selectAllFilters() {
+    public selectAllFilters(): void {
         this.selectedEventFilters = cloneDeep(this.eventFilters);
         this.selectedInteractionTypeFilters = cloneDeep(
             this.interactionTypeFilters
         );
     }
 
-    public deselectAllFilters() {
+    public deselectAllFilters(): void {
         this.selectedEventFilters = [];
         this.selectedInteractionTypeFilters = [];
     }

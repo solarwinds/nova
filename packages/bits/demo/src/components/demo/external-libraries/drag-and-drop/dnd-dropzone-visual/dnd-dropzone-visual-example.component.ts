@@ -78,7 +78,7 @@ export class DndDropzoneVisualExampleComponent {
         return company.name === "Adobe" || company.name === "Dell";
     }
 
-    public onItemDropped(event: CdkDragDrop<Company[]>) {
+    public onItemDropped(event: CdkDragDrop<Company[]>): void {
         if (!this.destinationAcceptsItem(event.item.data)) {
             return;
         }
@@ -88,26 +88,26 @@ export class DndDropzoneVisualExampleComponent {
                 event.previousIndex,
                 event.currentIndex
             );
-        } else {
-            if (
-                event.previousContainer.element.nativeElement.classList.contains(
-                    "dragzone"
-                )
-            ) {
-                copyArrayItem(
-                    event.previousContainer.data,
-                    event.container.data,
-                    event.previousIndex,
-                    event.currentIndex
-                );
-            } else {
-                transferArrayItem(
-                    event.previousContainer.data,
-                    event.container.data,
-                    event.previousIndex,
-                    event.currentIndex
-                );
-            }
+            return;
         }
+        if (
+            event.previousContainer.element.nativeElement.classList.contains(
+                "dragzone"
+            )
+        ) {
+            copyArrayItem(
+                event.previousContainer.data,
+                event.container.data,
+                event.previousIndex,
+                event.currentIndex
+            );
+            return;
+        }
+        transferArrayItem(
+            event.previousContainer.data,
+            event.container.data,
+            event.previousIndex,
+            event.currentIndex
+        );
     }
 }

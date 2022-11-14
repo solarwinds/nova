@@ -96,19 +96,19 @@ export class DashwizButtonsComponent implements IDashwizButtonsComponent {
     @Output() public back = new EventEmitter<void>();
     @Output() public finish = new EventEmitter<void>();
 
-    public onCancel() {
+    public onCancel(): void {
         this.cancel.emit();
     }
 
-    public onNext() {
+    public onNext(): void {
         this.next.emit();
     }
 
-    public onBack() {
+    public onBack(): void {
         this.back.emit();
     }
 
-    public onFinish() {
+    public onFinish(): void {
         this.finish.emit();
     }
 }

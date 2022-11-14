@@ -70,21 +70,21 @@ export class TimeFramePickerComponent implements OnChanges, OnInit {
         public changeDetector: ChangeDetectorRef
     ) {}
 
-    ngOnChanges(changes: any): void {
+    public ngOnChanges(changes: any): void {
         if (changes["startModel"]) {
             this.model = TimeframeService.cloneTimeFrame(this.startModel);
             this.validateCombination();
         }
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         if (this.startModel) {
             this.model = TimeframeService.cloneTimeFrame(this.startModel);
             this.validateCombination();
         }
     }
 
-    public selectPreset(key: string, value: ITimeFramePreset) {
+    public selectPreset(key: string, value: ITimeFramePreset): void {
         const timeframe = this.timeFrameService.getTimeframe(
             value.startDatetimePattern,
             value.endDatetimePattern
@@ -93,21 +93,21 @@ export class TimeFramePickerComponent implements OnChanges, OnInit {
         this.model = timeframe;
     }
 
-    public isPresetSelected(key: string) {
+    public isPresetSelected(key: string): boolean {
         return this.model && this.model.selectedPresetId === key;
     }
 
-    public onChangeInternalStart(event: any) {
+    public onChangeInternalStart(event: any): void {
         this.model.startDatetime = event;
         this.onChangeInternal();
     }
 
-    public onChangeInternalEnd(event: any) {
+    public onChangeInternalEnd(event: any): void {
         this.model.endDatetime = event;
         this.onChangeInternal();
     }
 
-    public onBlurInternal() {
+    public onBlurInternal(): void {
         this.validateCombination();
 
         if (!this.model.startDatetime || !this.model.endDatetime) {
@@ -118,7 +118,7 @@ export class TimeFramePickerComponent implements OnChanges, OnInit {
         this.isFocused = false;
     }
 
-    public onFocusInternal() {
+    public onFocusInternal(): void {
         this.modelDefault = _cloneDeep(this.model);
         this.isFocused = true;
     }

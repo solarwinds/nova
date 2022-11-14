@@ -29,12 +29,12 @@ import { ToastService } from "@nova-ui/bits";
 export class SearchOnSearchCancelExampleComponent {
     constructor(@Inject(ToastService) public toastService: ToastService) {}
 
-    public onSearch(value: string) {
+    public onSearch(value: string): void {
         this.toastService.success({
             message: `OnSearch triggered. Current value is: ${value}`,
         });
     }
-    public onCancel(value: string) {
+    public onCancel(value: string): void {
         this.toastService.success({
             message: `OnCancel triggered. Current value is: ${value}`,
         });

@@ -61,7 +61,7 @@ export class TimeFrameBarVisualTestComponent implements OnInit {
 
     constructor(private timeframeService: TimeframeService) {}
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         setTimeout(() => {
             // No zoom on bar[0]
             this.zoomBar(this.bars[1]);
@@ -70,7 +70,7 @@ export class TimeFrameBarVisualTestComponent implements OnInit {
         });
     }
 
-    public zoomBar(bar: TestBar) {
+    public zoomBar(bar: TestBar): void {
         bar.zoomIn(this.zoomTF(bar.timeFrame));
     }
 
@@ -81,7 +81,7 @@ export class TimeFrameBarVisualTestComponent implements OnInit {
         };
     }
 
-    public changeTimeFrame(value: ITimeframe, bar: TestBar) {
+    public changeTimeFrame(value: ITimeframe, bar: TestBar): void {
         const tf = this.timeframeService.reconcileTimeframe(
             value,
             undefined,

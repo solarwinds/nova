@@ -33,7 +33,7 @@ export class CardComponent implements OnInit {
     @HostBinding("class.card-direction-column") directionColumn: boolean;
     @HostBinding("class.card-direction-row") directionRow: boolean;
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.directionColumn =
             (this.directionColumn && !this.directionRow) ||
             this.direction === "column";

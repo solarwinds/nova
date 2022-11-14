@@ -33,7 +33,7 @@ export class PizzagnaRootPipe implements PipeTransform {
     public transform(
         widget: IWidget | null,
         key: "configurator" | "widget" = "widget"
-    ) {
+    ): string | null | undefined {
         if (!widget?.type) {
             return null;
         }

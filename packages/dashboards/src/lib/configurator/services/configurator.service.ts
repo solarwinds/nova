@@ -33,6 +33,7 @@ import { NavigationEnd, Router } from "@angular/router";
 import cloneDeep from "lodash/cloneDeep";
 import isFunction from "lodash/isFunction";
 import { EMPTY, Observable, of, Subject } from "rxjs";
+// eslint-disable-next-line import/no-deprecated
 import { catchError, filter, switchMap, takeUntil } from "rxjs/operators";
 
 import { LoggerService, uuid } from "@nova-ui/bits";
@@ -113,7 +114,7 @@ export class ConfiguratorService {
 
     public handleSubmit =
         (confSource: IConfiguratorSource, trySubmit: WidgetUpdateOperation) =>
-        (source: Observable<IWidget>) =>
+        (source: Observable<IWidget>): Observable<void> =>
             source.pipe(
                 this.trySubmit(trySubmit, confSource),
                 this.updateDashboard(confSource.dashboardComponent)
@@ -123,6 +124,7 @@ export class ConfiguratorService {
         (trySubmit: WidgetUpdateOperation, confSource: IConfigurator) =>
         (source: Observable<IWidget>) =>
             source.pipe(
+                // eslint-disable-next-line import/no-deprecated
                 switchMap((widget: IWidget) => {
                     if (widget && isFunction(trySubmit)) {
                         return trySubmit(widget, confSource).pipe(

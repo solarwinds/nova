@@ -70,7 +70,7 @@ export class TabHeadingGroupWithRouterExampleComponent implements OnDestroy {
         },
     ];
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.routeSubscription.unsubscribe();
     }
 }

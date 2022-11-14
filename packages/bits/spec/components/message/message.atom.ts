@@ -48,7 +48,8 @@ export class MessageAtom extends Atom {
     public isDismissable = async (): Promise<boolean> =>
         this.getDismissButton().isDisplayed();
 
-    public getBorderStyle = async () => this.root.getCssValue("border-color");
+    public getBorderStyle = async (): Promise<string> =>
+        this.root.getCssValue("border-color");
 
     public getStatusIcon = (): IconAtom =>
         Atom.findIn(

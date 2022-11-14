@@ -1,3 +1,4 @@
+/* eslint-env es2020 */
 const { config } = require("./protractor.conf.js");
 
 exports.config = {

@@ -44,7 +44,7 @@ export class RendererAccessorsExampleComponent implements OnInit {
     public chart = new Chart(new XYGrid());
     public seriesSet: IChartSeries<ILineAccessors>[];
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const renderer = new LineRenderer();
         const scales = {
             x: new LinearScale(),

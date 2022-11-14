@@ -51,7 +51,7 @@ class MockDataSource implements IDataSource, IConfigurable {
         components: Partial<IFilteringParticipants>
     ): void {}
 
-    public deregisterComponent(componentKey: string) {}
+    public deregisterComponent(componentKey: string): void {}
 
     public updateConfiguration(properties: IProperties): void {}
 }
@@ -77,7 +77,7 @@ describe("DataSourceAdapter > ", () => {
 
     it("should invoke dataSource.applyFilters on eventBus REFRESH", () => {
         const spy = spyOn(dataSource, "applyFilters");
-        eventBus.getStream(REFRESH).next(undefined);
+        eventBus.getStream(REFRESH).next({});
         expect(spy).toHaveBeenCalled();
     });
 

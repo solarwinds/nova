@@ -41,7 +41,7 @@ export class ComboboxV2CreateOptionMultiselectExampleComponent {
 
     constructor(private domSanitizer: DomSanitizer) {}
 
-    public createOption(optionName: string) {
+    public createOption(optionName: string): void {
         const sanitizedOption = this.domSanitizer
             .sanitize(SecurityContext.HTML, optionName)
             ?.trim();
@@ -54,7 +54,7 @@ export class ComboboxV2CreateOptionMultiselectExampleComponent {
         }
     }
 
-    public convertToChip(value: string) {
+    public convertToChip(value: string): { label: string } {
         return { label: value };
     }
 }

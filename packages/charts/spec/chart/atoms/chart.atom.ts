@@ -40,9 +40,7 @@ export class ChartAtom extends Atom {
         this.grid = rootElement.element(by.className("nui-chart-grid"));
         this.lasagna = Atom.findIn(LasagnaAtom, this.grid);
     }
-    // eslint-ignoring to accommodate ElementFinder's optional "then" method
-    // eslint-disable-next-line @typescript-eslint/promise-function-async
-    public getLayer(name: string): Promise<ElementFinder | undefined> {
+    public async getLayer(name: string): Promise<ElementFinder[]> {
         return this.lasagna.layer(name);
     }
 
@@ -58,61 +56,60 @@ export class ChartAtom extends Atom {
         return await this.getNumberOfVisibleSeriesInLayer("foreground");
     }
 
-    public async getNumberOfVisibleSeriesInLayer(layerName: string) {
-        return this.getLayer(layerName).then((layer) =>
-            !layer
-                ? 0
-                : layer
-                      .all(by.className(this.SERIES_CLASS))
-                      .filter(this.isVisible)
-                      .count()
-        );
+    public async getNumberOfVisibleSeriesInLayer(
+        layerName: string
+    ): Promise<number> {
+        const [layer] = await this.getLayer(layerName);
+        if (!layer) {
+            return 0;
+        }
+        return await layer
+            .all(by.className(this.SERIES_CLASS))
+            .filter(this.isVisible)
+            .count();
     }
 
     public async getMarkerSeriesById(
         seriesId: string
     ): Promise<MarkerSeriesAtom | undefined> {
-        return this.getLayer("foreground").then((layer) => {
-            if (layer) {
-                return Atom.findIn(
-                    MarkerSeriesAtom,
-                    layer.element(by.id(`foreground-${seriesId}`))
-                );
-            }
-        });
+        const [layer] = await this.getLayer("foreground");
+        return layer
+            ? Atom.findIn(
+                  MarkerSeriesAtom,
+                  layer.element(by.id(`foreground-${seriesId}`))
+              )
+            : undefined;
     }
 
     public async getAllVisibleDataSeries<T extends SeriesAtom>(
         atomClass: IAtomClass<T>
-    ): Promise<T[] | undefined> {
+    ): Promise<T[]> {
         return this.getAllVisibleSeriesInLayer("data", atomClass);
     }
 
     public async getAllVisibleBackgroundSeries<T extends SeriesAtom>(
         atomClass: IAtomClass<T>
-    ): Promise<T[] | undefined> {
+    ): Promise<T[]> {
         return this.getAllVisibleSeriesInLayer("background", atomClass);
     }
 
     public async getAllVisibleSeriesInLayer<T extends SeriesAtom>(
         layerName: string,
         atomClass: IAtomClass<T>
-    ): Promise<T[] | undefined> {
-        return this.getLayer(layerName).then(async (layer) => {
-            if (layer) {
-                const visibleSeries = layer
-                    .all(by.className(atomClass.CSS_CLASS))
-                    .filter(this.isVisible);
-
-                const seriesIds: string[] = await visibleSeries.map(
-                    (series: ElementFinder | undefined) =>
-                        series?.getAttribute("id")
-                );
-                return seriesIds.map((seriesId: string) =>
-                    Atom.findIn(atomClass, layer.element(by.id(seriesId)))
-                );
-            }
-        });
+    ): Promise<T[]> {
+        const [layer] = await this.getLayer(layerName);
+        if (!layer) {
+            return [];
+        }
+        const visibleSeries = layer
+            .all(Atom.getLocator(atomClass))
+            .filter(async (e) => this.isVisible(e));
+        const seriesIds: string[] = await visibleSeries.map(
+            (series: ElementFinder | undefined) => series?.getAttribute("id")
+        );
+        return seriesIds.map((seriesId: string) =>
+            Atom.findIn(atomClass, layer.element(by.id(seriesId)))
+        );
     }
 
     public async getDataSeriesById<T extends SeriesAtom>(
@@ -134,14 +131,13 @@ export class ChartAtom extends Atom {
         layerName: string,
         seriesId: string
     ): Promise<T | undefined> {
-        return this.getLayer(layerName).then((layer) => {
-            if (layer) {
-                return Atom.findIn(
-                    atomClass,
-                    layer.element(by.id(`${layerName}-${seriesId}`))
-                );
-            }
-        });
+        const [layer] = await this.getLayer(layerName);
+        if (layer) {
+            return Atom.findIn(
+                atomClass,
+                layer.element(by.id(`${layerName}-${seriesId}`))
+            );
+        }
     }
 
     public async clickElementByCoordinates(

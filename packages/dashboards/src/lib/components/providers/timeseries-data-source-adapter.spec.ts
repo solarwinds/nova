@@ -47,7 +47,7 @@ class MockDataSource implements IDataSource {
         components: Partial<IFilteringParticipants>
     ): void {}
 
-    public deregisterComponent(componentKey: string) {}
+    public deregisterComponent(componentKey: string): void {}
 }
 
 describe("TimeseriesDataSourceAdapter > ", () => {
@@ -74,7 +74,7 @@ describe("TimeseriesDataSourceAdapter > ", () => {
 
     it("should invoke dataSource.applyFilters on eventBus REFRESH", () => {
         const spy = spyOn(dataSource, "applyFilters");
-        eventBus.getStream(REFRESH).next(undefined);
+        eventBus.getStream(REFRESH).next({});
         expect(spy).toHaveBeenCalled();
     });
 

@@ -28,7 +28,7 @@ import {
     BarRenderer,
     BarStatusGridConfig,
     Chart,
-    CHART_PALETTE_CS_S,
+    CHART_PALETTE_CS_S_EXTENDED,
     IChartSeries,
     IStatusAccessors,
     IValueProvider,
@@ -72,7 +72,7 @@ export class ChartStatusTestComponent implements AfterViewInit {
         });
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.chartThreshold.updateDimensions();
         this.chartBand.updateDimensions();
 
@@ -145,9 +145,9 @@ export class ChartStatusTestComponent implements AfterViewInit {
 
 function getStatusValueMap() {
     return {
-        [Status.Up]: CHART_PALETTE_CS_S[4],
-        [Status.Warning]: CHART_PALETTE_CS_S[2],
-        [Status.Critical]: CHART_PALETTE_CS_S[1],
+        [Status.Up]: CHART_PALETTE_CS_S_EXTENDED[9],
+        [Status.Warning]: CHART_PALETTE_CS_S_EXTENDED[5],
+        [Status.Critical]: CHART_PALETTE_CS_S_EXTENDED[3],
     };
 }
 

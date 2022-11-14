@@ -1,12 +1,11 @@
 {
     "compilerOptions": {
-        "outDir": "../out-tsc/app",
-        "baseUrl": "./",
-        "skipLibCheck": true,
+        "baseUrl": ".",
         "declaration": false,
         "paths": {
             "@nova-ui/bits": ["../../src/public_api.ts"]
-        }
+        },
+        "skipLibCheck": true
     },
     "extends": "../../tsconfig.json",
     "files": ["index.ts", "polyfills.ts"],

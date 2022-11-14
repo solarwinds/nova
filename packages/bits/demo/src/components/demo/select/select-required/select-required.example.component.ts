@@ -46,11 +46,11 @@ export class SelectRequiredExampleComponent {
 
     constructor() {}
 
-    public valueChange(changedEvent: ISelectChangedEvent<string>) {
+    public valueChange(changedEvent: ISelectChangedEvent<string>): void {
         this.dataset.selectedItem = changedEvent.newValue;
     }
 
-    public isInErrorState() {
+    public isInErrorState(): boolean {
         return this.isRequired && !this.dataset.selectedItem;
     }
 }

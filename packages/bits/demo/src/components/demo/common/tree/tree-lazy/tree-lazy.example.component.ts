@@ -82,7 +82,7 @@ export class TreeLazyExampleComponent {
 
     @ViewChild(CdkTree) private cdkTree: CdkTree<FoodNode>;
 
-    hasChild = (_: number, node: FoodNode) => node.length;
+    hasChild = (_: number, node: FoodNode): boolean => !!node.length;
 
     constructor(private http: HttpMock, private differ: IterableDiffers) {}
 

@@ -70,7 +70,7 @@ export class WizardCustomExampleComponent implements OnInit, AfterViewInit {
 
     constructor(private formBuilder: FormBuilder) {}
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.formGroup = new FormGroup({
             personDetails: this.formBuilder.group({
                 name: ["", [Validators.required, Validators.minLength(3)]],
@@ -86,7 +86,7 @@ export class WizardCustomExampleComponent implements OnInit, AfterViewInit {
         });
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         const update = (selectedIndex?: number, steps?: number) => {
             setTimeout(() => {
                 if (steps) {

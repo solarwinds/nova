@@ -20,7 +20,7 @@
 
 import { timerFlush } from "d3-timer";
 /** @ignore */
-export function flushAllD3Transitions() {
+export function flushAllD3Transitions(): void {
     const now = performance.now;
     performance.now = () => Infinity;
     timerFlush();

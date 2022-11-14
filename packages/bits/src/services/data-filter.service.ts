@@ -51,7 +51,7 @@ export class DataFilterService implements IFilterPub, OnDestroy {
         }
     }
 
-    public registerFilter(filter: IFilteringParticipants) {
+    public registerFilter(filter: IFilteringParticipants): void {
         this._filters = {
             ...this._filters,
             ...filter,
@@ -70,7 +70,7 @@ export class DataFilterService implements IFilterPub, OnDestroy {
         this.filteringSubject.next();
     }
 
-    public unregisterFilters(filtersToUnregister: string[]) {
+    public unregisterFilters(filtersToUnregister: string[]): void {
         this._filters = _omit(this._filters, filtersToUnregister);
         this.filteringSubject.next();
     }
@@ -95,11 +95,11 @@ export class DataFilterService implements IFilterPub, OnDestroy {
         return filters;
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.filteringSubject.next();
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();
         this.destroySubscriptions.forEach((subscription) =>

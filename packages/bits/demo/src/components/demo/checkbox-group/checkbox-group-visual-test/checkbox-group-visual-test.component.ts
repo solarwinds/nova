@@ -37,7 +37,7 @@ export class CheckboxGroupVisualTestComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.testForm = this.formBuilder.group({
             checkboxGroup: this.formBuilder.control({
                 value: this.selectedVegetables,

@@ -35,11 +35,11 @@ describe("a11y: wizard", () => {
     });
 
     it("should check a11y of wizard", async () => {
-        await assertA11y(browser, WizardAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, WizardAtom, rulesToDisable);
     });
 
     it("should check a11y of wizard", async () => {
         await basicWizard.next();
-        await assertA11y(browser, WizardAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, WizardAtom, rulesToDisable);
     });
 });

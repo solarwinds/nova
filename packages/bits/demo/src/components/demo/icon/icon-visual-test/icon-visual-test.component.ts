@@ -20,17 +20,20 @@
 
 import { Component, OnInit } from "@angular/core";
 
-import { IconStatus } from "@nova-ui/bits";
+import { IconStatus, IconCategory } from "@nova-ui/bits";
 
-import { icons as iconsData } from "../../../../../../src/lib/icon/icons";
+import {
+    icons as iconsData,
+    ITypedIconData,
+} from "../../../../../../src/lib/icon/icons";
 
 @Component({
     selector: "nui-icon-visual-test",
     templateUrl: "./icon-visual-test.component.html",
 })
 export class IconVisualTestComponent implements OnInit {
-    public icons: any[];
-    public categories: any[];
+    public icons: ITypedIconData[];
+    public categories: IconCategory[];
     public iconStatuses: string[] = Object.values(IconStatus);
 
     public ngOnInit(): void {
@@ -38,13 +41,7 @@ export class IconVisualTestComponent implements OnInit {
         this.categories = this.getCategories(iconsData);
     }
 
-    public getCategories(icons: any[]) {
-        const categories = [];
-        for (const icon of icons) {
-            if (categories.indexOf(icon.category) === -1) {
-                categories.push(icon.category);
-            }
-        }
-        return categories;
+    public getCategories(icons: ITypedIconData[]): IconCategory[] {
+        return Array.from(new Set(icons.flatMap((icon) => icon.category)));
     }
 }

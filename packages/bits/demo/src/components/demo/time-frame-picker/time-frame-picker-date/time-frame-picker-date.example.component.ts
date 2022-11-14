@@ -44,13 +44,13 @@ export class TimeFramePickerDateExampleComponent {
 
     public closePopoverSubject = new Subject<void>();
 
-    public handlePresetSelection(presetKey: string) {
+    public handlePresetSelection(presetKey: string): void {
         this.selectedDate = this.getDateFromPreset(presetKey);
         this.selectedPresetKey = presetKey;
         this.confirmPopover();
     }
 
-    public dateChanged(value: Moment) {
+    public dateChanged(value: Moment): void {
         if (!this.selectedDate.isSame(value, "day")) {
             this.selectedDate = value;
             this.selectedPresetKey = this.getPresetFromDate(value); // will return undefined if not found, exactly what's needed
@@ -58,7 +58,7 @@ export class TimeFramePickerDateExampleComponent {
         }
     }
 
-    public confirmPopover() {
+    public confirmPopover(): void {
         this.closePopoverSubject.next();
     }
 

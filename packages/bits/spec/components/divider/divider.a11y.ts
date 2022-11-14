@@ -29,6 +29,6 @@ describe("a11y: divider", () => {
     });
 
     it("should check a11y of divider", async () => {
-        await assertA11y(browser, DividerAtom.CSS_CLASS);
+        await assertA11y(browser, DividerAtom);
     });
 });

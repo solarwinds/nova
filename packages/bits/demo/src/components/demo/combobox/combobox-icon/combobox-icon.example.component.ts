@@ -32,7 +32,7 @@ export class ComboboxIconExampleComponent {
         selectedItem: "Item 1",
     };
 
-    public valueChange(changedEvent: ISelectChangedEvent<string>) {
+    public valueChange(changedEvent: ISelectChangedEvent<string>): void {
         this.dataset.selectedItem = changedEvent.newValue;
     }
 }

@@ -26,6 +26,7 @@ import {
     AfterViewInit,
     Component,
     Inject,
+    OnDestroy,
     TemplateRef,
     ViewChild,
 } from "@angular/core";
@@ -51,7 +52,7 @@ interface IWizardStepData {
     templateUrl: "./wizard-test.component.html",
     styleUrls: ["./wizard-test.less"],
 })
-export class WizardV2TestComponent implements AfterViewInit {
+export class WizardV2TestComponent implements AfterViewInit, OnDestroy {
     public onDestroy$ = new Subject<void>();
     public overlayTriggered$ = new Subject<void>();
     public responsiveSteps: Array<any> = Array.from({ length: 20 });
@@ -74,7 +75,7 @@ export class WizardV2TestComponent implements AfterViewInit {
 
     @ViewChild("normalStep") normalStep: TemplateRef<string>;
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this.addStep(this.normalStep);
     }
 

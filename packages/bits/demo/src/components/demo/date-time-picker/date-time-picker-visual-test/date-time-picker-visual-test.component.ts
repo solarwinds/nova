@@ -34,7 +34,7 @@ export class DateTimePickerVisualTestComponent {
 
     constructor(@Inject(DialogService) private dialogService: DialogService) {}
 
-    public open(content: TemplateRef<string>) {
+    public open(content: TemplateRef<string>): void {
         this.dialogService.open(content, { size: "sm" });
     }
 }

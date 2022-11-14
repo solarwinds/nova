@@ -50,7 +50,7 @@ export class TimeseriesDataSourceAdapter extends DataSourceAdapter {
 
     public updateConfiguration(
         properties: ITimeseriesDataSourceAdapterConfiguration
-    ) {
+    ): void {
         this.seriesIndex = clone(properties.series);
 
         super.updateConfiguration(properties);

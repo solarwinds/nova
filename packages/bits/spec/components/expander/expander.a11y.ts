@@ -37,6 +37,9 @@ describe("a11y: expander", () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("expander/expander-visual-test");
+        await Atom.wait(
+            async () => (await Atom.findCount(ExpanderAtom)) === 10
+        );
         basicExpander = Atom.find(
             ExpanderAtom,
             "nui-visual-test-expander-basic"
@@ -50,6 +53,6 @@ describe("a11y: expander", () => {
     it("should check a11y of expander", async () => {
         await basicExpander.toggle();
         await lineLessExpander.toggle();
-        await assertA11y(browser, ExpanderAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, ExpanderAtom, rulesToDisable);
     });
 });

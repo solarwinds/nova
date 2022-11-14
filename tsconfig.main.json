@@ -5,13 +5,18 @@
         "emitDecoratorMetadata": true,
         "esModuleInterop": true,
         "experimentalDecorators": true,
-        "moduleResolution": "node",
+        "forceConsistentCasingInFileNames": true,
+        "importHelpers": true,
+        "lib": ["ES2019", "DOM"],
+        "module": "ESNext",
+        "moduleResolution": "Node",
         "noImplicitAny": true,
         "noImplicitThis": true,
+        "preserveSymlinks": true,
         "sourceMap": true,
         "strictBindCallApply": true,
         "strictFunctionTypes": true,
         "strictNullChecks": true,
-        "target": "es6"
+        "target": "ES6"
     }
 }

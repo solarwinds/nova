@@ -44,7 +44,7 @@ export class BarChartPercentageExampleComponent implements OnInit {
 
     constructor() {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.chartAssist = new ChartAssist(new Chart(barGrid()), stack);
 
         // We're manually adding Interaction Label plugin (without Interaction Line plugin) to have only label
@@ -84,7 +84,7 @@ export class BarChartPercentageExampleComponent implements OnInit {
         this.chartAssist.update(chartSeriesSet);
     }
 
-    public getTitleFromDataPoint(dataPoint: any) {
+    public getTitleFromDataPoint(dataPoint: any): string {
         // This generates content for a tooltip.
         // Both seriesId and the data of the corresponding bar are available in the tooltip.
         return `${dataPoint.seriesId}: ${dataPoint.data.value}${

@@ -30,6 +30,6 @@ xdescribe("a11y: datepicker", () => {
     });
 
     it("should verify a11y of datepicker", async () => {
-        await assertA11y(browser, DatepickerAtom.CSS_CLASS);
+        await assertA11y(browser, DatepickerAtom);
     });
 });

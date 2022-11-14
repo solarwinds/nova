@@ -37,7 +37,8 @@ import {
 })
 export class TabHeadingComponent {
     /** This adds 'disabled' class to the host component depending on the 'disabled' @Input to properly style disabled tabs */
-    @HostBinding("class.disabled") get isDisabled() {
+    @HostBinding("class.disabled")
+    get isDisabled(): boolean {
         return this.disabled;
     }
 
@@ -45,12 +46,12 @@ export class TabHeadingComponent {
     @Input() disabled: boolean;
 
     /** Tab active state toggle */
-    @Input() set active(isActive: boolean) {
+    @Input()
+    set active(isActive: boolean) {
         this._active = isActive;
         this.changeDetector.detectChanges();
     }
-
-    get active() {
+    get active(): boolean {
         return this._active;
     }
 

@@ -50,7 +50,7 @@ class MockDataSource implements IDataSource {
         this.filterParticipants = components;
     }
 
-    public deregisterComponent(componentKey: string) {
+    public deregisterComponent(componentKey: string): void {
         delete this.filterParticipants?.[componentKey];
     }
 }

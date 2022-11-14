@@ -26,43 +26,20 @@ import { PanelAtom } from "../public_api";
 
 describe("a11y: panel", () => {
     const rulesToDisable: string[] = [];
-    let closablePanel: PanelAtom;
-    let collapsiblePanel: PanelAtom;
-    let customStylesPanel: PanelAtom;
-    let hoverablePanel: PanelAtom;
-    let topOrientedPanel: PanelAtom;
-    let nestedPanelOuter: PanelAtom;
-    let resizablePanel: PanelAtom;
     let expanders: { [key: string]: ElementFinder };
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("panel/panel-visual-test");
 
-        collapsiblePanel = Atom.find(
-            PanelAtom,
-            "nui-visual-test-embedded-content-panel"
-        );
-        closablePanel = Atom.find(PanelAtom, "nui-visual-test-hidden-panel");
-        customStylesPanel = Atom.find(
-            PanelAtom,
-            "nui-visual-test-custom-styles-panel"
-        );
-        hoverablePanel = Atom.find(
-            PanelAtom,
-            "nui-visual-test-hoverable-panel"
-        );
-        topOrientedPanel = Atom.find(
-            PanelAtom,
-            "nui-visual-test-top-oriented-panel"
-        );
-        nestedPanelOuter = Atom.find(
-            PanelAtom,
-            "nui-visual-test-nested-panel-outer"
-        );
-        resizablePanel = Atom.find(
-            PanelAtom,
-            "nui-visual-test-resizable-panel"
-        );
+        await Atom.wait(async () => (await Atom.findCount(PanelAtom)) === 10);
+
+        Atom.find(PanelAtom, "nui-visual-test-embedded-content-panel");
+        Atom.find(PanelAtom, "nui-visual-test-hidden-panel");
+        Atom.find(PanelAtom, "nui-visual-test-custom-styles-panel");
+        Atom.find(PanelAtom, "nui-visual-test-hoverable-panel");
+        Atom.find(PanelAtom, "nui-visual-test-top-oriented-panel");
+        Atom.find(PanelAtom, "nui-visual-test-nested-panel-outer");
+        Atom.find(PanelAtom, "nui-visual-test-resizable-panel");
 
         expanders = {
             detailsBasicPanel: element(by.id("nui-visual-basic-panel-details")),
@@ -93,6 +70,6 @@ describe("a11y: panel", () => {
         for (const key of Object.keys(expanders)) {
             await expanders[key].click();
         }
-        await assertA11y(browser, PanelAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, PanelAtom, rulesToDisable);
     });
 });

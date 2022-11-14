@@ -71,7 +71,7 @@ export class DataSourceWithSelectionExampleComponent
         dataSourceService.setData(getData());
     }
 
-    async ngAfterViewInit() {
+    async ngAfterViewInit(): Promise<void> {
         this.dataSourceService.registerComponent({
             search: {
                 componentInstance: this.search,
@@ -99,19 +99,19 @@ export class DataSourceWithSelectionExampleComponent
         await this.applyFilters();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         await this.dataSourceService.applyFilters();
     }
 
-    public onSelectorOutput(selectionType: SelectionType) {
+    public onSelectorOutput(selectionType: SelectionType): void {
         this.state = this.listService.applySelector(selectionType, this.state);
     }
 
-    public onRepeatOutput(selectedItems: IExampleItem[]) {
+    public onRepeatOutput(selectedItems: IExampleItem[]): void {
         this.state = this.listService.selectItems(
             selectedItems,
             RepeatSelectionMode.multi,

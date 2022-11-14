@@ -68,7 +68,7 @@ export class TablePaginationExampleComponent
         dataSourceService.setData(getData());
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.dataSourceService.componentTree = {
             paginator: {
                 componentInstance: this.filteringPaginator,
@@ -85,11 +85,11 @@ export class TablePaginationExampleComponent
         this.dataSourceService.applyFilters();
     }
 
-    public changePagination() {
+    public changePagination(): void {
         this.dataSourceService.applyFilters();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 }

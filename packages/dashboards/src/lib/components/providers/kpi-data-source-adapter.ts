@@ -49,7 +49,9 @@ export class KpiDataSourceAdapter extends DataSourceAdapter<IKpiData> {
         super(eventBus, dataSource, pizzagnaService);
     }
 
-    public updateConfiguration(properties: IKpiDataSourceAdapterConfiguration) {
+    public updateConfiguration(
+        properties: IKpiDataSourceAdapterConfiguration
+    ): void {
         this.thresholds = properties.thresholds;
 
         super.updateConfiguration(properties);
@@ -61,7 +63,7 @@ export class KpiDataSourceAdapter extends DataSourceAdapter<IKpiData> {
         return this.processNumberFormat(processedValue);
     }
 
-    public setComponent(component: any, componentId: string) {
+    public setComponent(component: any, componentId: string): void {
         if (componentId) {
             this.componentId = componentId;
         }

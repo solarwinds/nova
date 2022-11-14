@@ -34,7 +34,7 @@ export class DateTimePickerEmptyStateComponent {
 
     constructor() {}
 
-    onModelChanged(event: Moment): void {
+    public onModelChanged(event: Moment): void {
         this.selectedDate = new Date(event.valueOf());
     }
 }

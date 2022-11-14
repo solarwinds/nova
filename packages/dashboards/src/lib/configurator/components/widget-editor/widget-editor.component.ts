@@ -70,12 +70,11 @@ export class WidgetEditorComponent
             .pipe(takeUntil(this.destroy$))
             .subscribe((event: IEvent<IPreviewEventPayload>) => {
                 const payload = event.payload;
-                // TODO: Ensure that we have payload
-                this.configurator?.previewPizzagnaComponent?.eventBus
-                    // @ts-ignore
-                    ?.getStream(payload.id)
-                    // @ts-ignore
-                    .next(payload.payload);
+                if (payload && payload.id) {
+                    this.configurator?.previewPizzagnaComponent?.eventBus
+                        ?.getStream(payload.id)
+                        .next(payload.payload);
+                }
             });
         this._formPizzagnaComponent = value;
     }
@@ -89,7 +88,7 @@ export class WidgetEditorComponent
     public busy = false;
     public configuratorTitle: string;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         public changeDetector: ChangeDetectorRef,
@@ -100,7 +99,7 @@ export class WidgetEditorComponent
         this.form = this.formBuilder.group({});
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         // TODO: Reconsider this
         // @ts-ignore: We can depend on preview being undefined somewhere
         this.previewService.preview =
@@ -130,7 +129,7 @@ export class WidgetEditorComponent
 
     // --------------------------------------------------------------------------------
 
-    public onPreviewPizzagnaUpdate(configLayer: IPizzagnaLayer) {
+    public onPreviewPizzagnaUpdate(configLayer: IPizzagnaLayer): void {
         const previewWidget = {
             ...this.configurator.previewWidget,
             pizzagna: {
@@ -149,7 +148,7 @@ export class WidgetEditorComponent
         this.configuratorTitle = $localize`Editing ${widgetTitle}`;
     }
 
-    public onFinish() {
+    public onFinish(): void {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
             // is used to trigger valueChanges to detect changes in forms
@@ -167,7 +166,7 @@ export class WidgetEditorComponent
         this.configurator.formSubmit();
     }
 
-    public onCancel() {
+    public onCancel(): void {
         this.configurator.formCancel();
     }
 

@@ -40,7 +40,7 @@ export class LegendDescriptionProjectionExampleComponent {
 
     public active: boolean = false;
 
-    public toggleActive() {
+    public toggleActive(): void {
         this.active = !this.active;
     }
 }

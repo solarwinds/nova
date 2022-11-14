@@ -33,7 +33,7 @@ export class DynamicComponentCreator {
         pizzagna: IPizzagna,
         parentPath: string,
         componentIds: string[]
-    ) {
+    ): IPizzagna {
         const parent = pizzagna[PizzagnaLayer.Structure][parentPath];
         const template = parent.properties
             ?.template as Partial<IComponentConfiguration>[];

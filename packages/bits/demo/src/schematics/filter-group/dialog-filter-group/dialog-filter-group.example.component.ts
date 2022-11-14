@@ -263,7 +263,7 @@ export class DialogFilterGroupExampleComponent
         ).setData(RANDOM_ARRAY);
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this.outputsSubscription =
             this.dataSourceService.outputsSubject.subscribe(
                 (data: INovaFilteringOutputs) => {
@@ -275,7 +275,7 @@ export class DialogFilterGroupExampleComponent
         this.dataSourceService.applyFilters();
     }
 
-    public changeFilters(event: IFilterGroupItem) {
+    public changeFilters(event: IFilterGroupItem): void {
         this.dataSourceService.applyFilters();
     }
 
@@ -283,7 +283,7 @@ export class DialogFilterGroupExampleComponent
         return !_isEmpty(_get(this, "filteringState.repeat.itemsSource"));
     }
 
-    public handleFilterDialog(filterGroupItem: IFilterGroupItem) {
+    public handleFilterDialog(filterGroupItem: IFilterGroupItem): void {
         const dialogRef = this.dialogService.open(
             FilterGroupCompositeDialogComponent
         );
@@ -314,7 +314,7 @@ export class DialogFilterGroupExampleComponent
         });
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this.outputsSubscription) {
             this.outputsSubscription.unsubscribe();
         }

@@ -29,7 +29,6 @@ import {
     IChartAssistSeries,
     IGaugeConfig,
     LinearGaugeLabelsPlugin,
-    LINEAR_GAUGE_LABEL_CLEARANCE_DEFAULTS,
 } from "@nova-ui/charts";
 
 @Component({

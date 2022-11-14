@@ -61,7 +61,7 @@ export class ListGroupItemComponent implements IHasChangeDetector {
 
     constructor(public changeDetector: ChangeDetectorRef) {}
 
-    onButtonClick() {
+    public onButtonClick(): void {
         if (this.canNavigate) {
             this.navigated.emit(this);
         }

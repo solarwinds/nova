@@ -109,7 +109,7 @@ export class ChipsOverflowExampleComponent {
 
     @ViewChild(PopoverComponent) private popover: PopoverComponent;
 
-    public onClear(event: { item: IChipsItem; group?: IChipsGroup }) {
+    public onClear(event: { item: IChipsItem; group?: IChipsGroup }): void {
         console.log(
             `'onClear' event fired. $event.item.id=${event.item.id} $event.group.id=${event.group?.id}`
         );
@@ -123,13 +123,13 @@ export class ChipsOverflowExampleComponent {
         }
     }
 
-    public onClearAll(e: MouseEvent) {
+    public onClearAll(e: MouseEvent): void {
         this.horizontalGroupedItemsSource.groupedItems = [];
         this.horizontalGroupedItemsSource.flatItems = [];
         this.popover?.onClick(e);
     }
 
-    onChipsOverflow(source: IChipsItemsSource) {
+    onChipsOverflow(source: IChipsItemsSource): void {
         this.overflowSource = source;
         const reducer = (accumulator: number, currentValue: IChipsGroup) =>
             accumulator + currentValue.items.length;

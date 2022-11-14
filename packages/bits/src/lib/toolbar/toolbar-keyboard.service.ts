@@ -20,7 +20,7 @@
 
 import { Injectable } from "@angular/core";
 
-import { KEYBOARD_CODE } from "../../constants";
+import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import { MenuComponent } from "../menu";
 
 @Injectable()

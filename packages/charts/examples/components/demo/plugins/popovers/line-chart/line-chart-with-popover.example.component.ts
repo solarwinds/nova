@@ -45,7 +45,7 @@ export class LineChartWithPopoverExampleComponent implements OnInit {
     public chartAssist: ChartAssist = new ChartAssist(this.chart);
     public popoverPlugin = new ChartPopoverPlugin();
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const scales: IXYScales = {
             x: new TimeScale(),
             y: new LinearScale(),

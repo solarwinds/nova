@@ -38,7 +38,7 @@ export class BreadcrumbVisualTestComponent implements OnInit, OnDestroy {
         private breadcrumbStateService: BreadcrumbStateService
     ) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.breadcrumbSource = this.breadcrumbStateService.getBreadcrumbState(
             this.routerState
         );
@@ -61,7 +61,7 @@ export class BreadcrumbVisualTestComponent implements OnInit, OnDestroy {
         this.router.navigate([routerState], { relativeTo: this.routerState });
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.routerSubscription.unsubscribe();
     }
 }
@@ -89,7 +89,7 @@ export class BreadcrumbVisualTestComponent implements OnInit, OnDestroy {
 export class BreadcrumbFirstSubviewLevelComponent {
     constructor(private router: Router, private routerState: ActivatedRoute) {}
 
-    goNext() {
+    goNext(): void {
         this.router.navigate(["second-subroute"], {
             relativeTo: this.routerState,
         });

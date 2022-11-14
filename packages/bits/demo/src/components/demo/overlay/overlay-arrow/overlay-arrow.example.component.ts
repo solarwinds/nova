@@ -48,7 +48,7 @@ const CUSTOM_OVERLAY_PANEL_CLASS = "custom-overlay-panel-class";
     encapsulation: ViewEncapsulation.None,
 })
 export class OverlayArrowExampleComponent implements AfterViewInit, OnDestroy {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     public possiblePositions: OverlayPlacement[] = [
         OverlayPlacement.Top,
@@ -65,7 +65,7 @@ export class OverlayArrowExampleComponent implements AfterViewInit, OnDestroy {
     public arrowSelectControl = new FormControl(true);
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.handlePosition();
 
         this.overlay.clickOutside
@@ -73,7 +73,7 @@ export class OverlayArrowExampleComponent implements AfterViewInit, OnDestroy {
             .subscribe((_) => this.overlay.hide());
     }
 
-    public handlePosition() {
+    public handlePosition(): void {
         // set the positions when showing the popup
         this.overlay.show$.subscribe(() => {
             this.overlay.overlayPositionService.setOverlayPositionConfig(

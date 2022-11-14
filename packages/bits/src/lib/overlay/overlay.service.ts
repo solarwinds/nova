@@ -70,14 +70,14 @@ export class OverlayService implements OnDestroy {
         private customContainerInjection: OverlayContainerType
     ) {}
 
-    public createOverlay() {
+    public createOverlay(): void {
         this.appendToContainer();
         this.overlayRef = this.overlay.create(this.overlayConfig);
         this.overlayRef.attach(this.contentTemplate);
         this.overlayRef.addPanelClass(OVERLAY_PANEL_CLASS);
     }
 
-    public show() {
+    public show(): void {
         if (this.showing) {
             return;
         }
@@ -87,7 +87,7 @@ export class OverlayService implements OnDestroy {
         this.show$.next();
     }
 
-    public hide() {
+    public hide(): void {
         if (!this.showing) {
             return;
         }
@@ -97,7 +97,7 @@ export class OverlayService implements OnDestroy {
         this.hide$.next();
     }
 
-    public getOverlayRef() {
+    public getOverlayRef(): OverlayRef {
         return this.overlayRef;
     }
 
@@ -105,7 +105,7 @@ export class OverlayService implements OnDestroy {
         this.overlayRef.updateSize(size);
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.show$.complete();
         this.hide$.complete();
     }

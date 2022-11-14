@@ -36,7 +36,7 @@ export class FilterGroupsWrapperComponent implements AfterViewInit {
 
     constructor(@Inject(DataSourceService) public dataSourceService: DataSourceService<any>) { }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.dataSourceService.registerComponent(this.getFilterComponents());
         this.filterGroups.changes.subscribe(() => {
             this.dataSourceService.registerComponent(this.getFilterComponents());

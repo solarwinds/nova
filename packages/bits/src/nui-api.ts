@@ -23,6 +23,7 @@ export { NuiButtonModule } from "./lib/button/button.module";
 export { NuiCheckboxModule } from "./lib/checkbox/checkbox.module";
 export { NuiCommonModule } from "./common/common.module";
 export { NuiDividerModule } from "./lib/divider/divider.module";
+export { NuiDragDropModule } from "./lib/dragdrop/dragdrop.module";
 export { NuiIconModule } from "./lib/icon/icon.module";
 export { NuiMessageModule } from "./lib/message/message.module";
 export { NuiImageModule } from "./lib/image/image.module";
@@ -71,7 +72,7 @@ export { NuiDocsModule } from "./lib/docs/docs.module";
 
 export * from "./lib/public-api";
 export * from "./types";
-export * from "./constants";
+export * from "./constants/public-api";
 export * from "./common/directives/public-api";
 export * from "./services/public-api";
 export * from "./validators";

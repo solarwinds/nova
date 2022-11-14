@@ -21,18 +21,13 @@
 import { max, min } from "d3-array";
 import { area, curveLinear } from "d3-shape";
 import defaultsDeep from "lodash/defaultsDeep";
-import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 
-import {
-    DATA_POINT_INTERACTION_RESET,
-    STANDARD_RENDER_LAYERS,
-} from "../../constants";
+import { STANDARD_RENDER_LAYERS } from "../../constants";
 import {
     EMPTY_CONTINUOUS_DOMAIN,
     IScale,
     IXYScales,
-    Scales,
 } from "../../core/common/scales/types";
 import {
     D3Selection,
@@ -40,7 +35,6 @@ import {
     ILasagnaLayer,
     IRendererEventPayload,
 } from "../../core/common/types";
-import { UtilityService } from "../../core/common/utility.service";
 import { DEFAULT_MARKER_INTERACTION_CONFIG } from "../constants";
 import { MarkerUtils } from "../marker-utils";
 import { IAreaRendererConfig, IRenderSeries, RenderLayerName } from "../types";
@@ -107,7 +101,7 @@ export class AreaRenderer extends XYRenderer<IAreaAccessors> {
     public drawArea(
         renderSeries: IRenderSeries<IAreaAccessors>,
         path: D3Selection<SVGPathElement>
-    ) {
+    ): void {
         const dataSeries = renderSeries.dataSeries;
         const accessors = dataSeries.accessors;
 
@@ -303,7 +297,7 @@ export class AreaRenderer extends XYRenderer<IAreaAccessors> {
         );
     }
 
-    public safetyCheck(value: number) {
-        return isNaN(value) || typeof value === "undefined" ? 0 : value;
+    public safetyCheck(value: number | undefined): number {
+        return typeof value === "undefined" || isNaN(value) ? 0 : value;
     }
 }

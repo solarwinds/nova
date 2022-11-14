@@ -92,7 +92,7 @@ export class LayoutResizerComponent
         return super.isResizeHorizontal();
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.resizerDirection = this.resizeDirection;
         this.resizerDisabled = this.disabled;
         this.resizerValue = this.resizeUnit;
@@ -100,7 +100,7 @@ export class LayoutResizerComponent
         this.offsetSize = this.enableSeparateOffsetSize ? 0 : this._size / 2;
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         // This Overrides ResizerDirective's ngAfterViewInit
         this.resizePropObj = resizeDirectionHelpers[this.resizeDirection];
         this.targetElement = this.resizeElement.elRef;
@@ -114,7 +114,7 @@ export class LayoutResizerComponent
         this.refreshStyle();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.unlistenEvents();
     }
 }

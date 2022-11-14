@@ -50,13 +50,6 @@ export interface IWidgetEditor<T = any> extends IConfigurator<T> {
     paths: Record<string, string>;
 }
 
-export interface ISerializableTimeframe {
-    startDatetime: string;
-    endDatetime: string;
-    selectedPresetId?: string;
-    title?: string;
-}
-
 export type WidgetUpdateOperation = (
     widget: IWidget,
     source: IConfiguratorSource

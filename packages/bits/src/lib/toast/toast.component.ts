@@ -123,7 +123,7 @@ export class ToastComponent implements OnDestroy {
     /**
      * triggers fade in animation and sets timeout till the toast will be dismissed
      */
-    public activateToast() {
+    public activateToast(): void {
         this.state = ToastState.Active;
         this.fadeOut = false;
 
@@ -146,7 +146,7 @@ export class ToastComponent implements OnDestroy {
     /**
      * tells toastService to remove this toast after animation time
      */
-    public remove() {
+    public remove(): void {
         if (this.state === ToastState.Removed) {
             return;
         }
@@ -164,7 +164,7 @@ export class ToastComponent implements OnDestroy {
      * handles click on toast itself
      */
     @HostListener("click")
-    public clickToast() {
+    public clickToast(): void {
         if (this.state === ToastState.Removed) {
             return;
         }
@@ -180,7 +180,7 @@ export class ToastComponent implements OnDestroy {
      * disables progressBar and prevents toast from closing
      */
     @HostListener("mouseenter")
-    public stickAround() {
+    public stickAround(): void {
         if (this.state === ToastState.Removed) {
             return;
         }
@@ -197,7 +197,7 @@ export class ToastComponent implements OnDestroy {
      *  using extendedTimeOut value to delay toast's closure
      */
     @HostListener("mouseleave")
-    public delayedHideToast() {
+    public delayedHideToast(): void {
         clearInterval(this.intervalId);
 
         if (
@@ -262,7 +262,7 @@ export class ToastComponent implements OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.subscriptions.forEach((subscription) =>
             subscription.unsubscribe()
         );

@@ -48,13 +48,13 @@ export class RadioGroupTestComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.disabledForm = this.formBuilder.group({
             radioGroup: this.formBuilder.control({ value: "", disabled: true }),
         });
     }
 
-    public toggleDisabled(event: CheckboxChangeEvent) {
+    public toggleDisabled(event: CheckboxChangeEvent): void {
         this.disabledForm
             .get("radioGroup")
             ?.[!event.target.checked ? "enable" : "disable"]();

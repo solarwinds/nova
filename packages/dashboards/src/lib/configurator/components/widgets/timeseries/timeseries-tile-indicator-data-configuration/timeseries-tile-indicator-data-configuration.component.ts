@@ -79,7 +79,7 @@ export class TimeseriesTileIndicatorDataConfigurationComponent
 
     public form: FormGroup;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     private _selectedSeries?: ITimeseriesWidgetData;
 
     constructor(
@@ -89,7 +89,7 @@ export class TimeseriesTileIndicatorDataConfigurationComponent
         private pizzagnaService: PizzagnaService
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.form = this.formBuilder.group({
             id: [this.selectedSeriesId || null, [Validators.required]],
         });
@@ -114,7 +114,7 @@ export class TimeseriesTileIndicatorDataConfigurationComponent
         }
     }
 
-    public onSelect(selectedSeries: ITimeseriesWidgetData) {
+    public onSelect(selectedSeries: ITimeseriesWidgetData): void {
         this.selectedSeriesId = selectedSeries.id;
         this.selectedSeries = selectedSeries;
         this.form.patchValue({ id: selectedSeries.id });

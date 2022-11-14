@@ -32,7 +32,7 @@ import {
     ChartAssist,
     ChartPalette,
     CHART_PALETTE_CS1,
-    CHART_PALETTE_CS_S,
+    CHART_PALETTE_CS_S_EXTENDED,
     IAccessors,
     IBarAccessors,
     IChartAssistSeries,
@@ -125,14 +125,19 @@ export class TwoDimensionalDataExampleComponent implements OnInit {
     private renderer: Renderer<IAccessors>;
     private scales: Scales;
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.updateMainCategory();
     }
 
-    public updateMainCategory() {
+    public updateMainCategory(): void {
         const statusPalette = new ChartPalette(
             new MappedValueProvider<string>(
-                zipObject(this.statuses, CHART_PALETTE_CS_S)
+                zipObject(
+                    this.statuses,
+                    CHART_PALETTE_CS_S_EXTENDED.filter(
+                        (_, index) => index % 2 === 0
+                    )
+                )
             )
         );
         const standardPalette = new ChartPalette(CHART_PALETTE_CS1);
@@ -150,7 +155,7 @@ export class TwoDimensionalDataExampleComponent implements OnInit {
         this.updateChartType();
     }
 
-    public updateChartType() {
+    public updateChartType(): void {
         this.buildChart();
         this.updateChart();
     }

@@ -31,7 +31,7 @@ import { DialogContentExampleComponent } from "./dialog-content.example.componen
 export class ComponentAsContentExampleComponent {
     constructor(@Inject(DialogService) private dialogService: DialogService) {}
 
-    public openWithComponent() {
+    public openWithComponent(): void {
         const dialogRef = this.dialogService.open(
             DialogContentExampleComponent,
             { size: "sm" }

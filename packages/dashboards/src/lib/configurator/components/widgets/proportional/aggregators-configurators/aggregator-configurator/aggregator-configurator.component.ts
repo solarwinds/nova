@@ -70,11 +70,11 @@ export class AggregatorMetricSelectorConfigurationComponent
         protected logger: LoggerService
     ) {}
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.formReady.emit(this.form);
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.activeMetricId) {
             this.form
                 .get("activeMetricId")
@@ -91,7 +91,7 @@ export class AggregatorMetricSelectorConfigurationComponent
         }
     }
 
-    unsetMetric() {
+    public unsetMetric(): void {
         this.form.controls["activeMetricId"].reset();
         this.meticsSelect.hideDropdown();
     }

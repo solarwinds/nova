@@ -27,7 +27,7 @@ import {
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import noop from "lodash/noop";
 
-import { KEYBOARD_CODE } from "../../constants";
+import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import { ButtonComponent } from "../../lib/button/button.component";
 import { IconComponent } from "../../lib/icon/icon.component";
 import { IconService } from "../../lib/icon/icon.service";

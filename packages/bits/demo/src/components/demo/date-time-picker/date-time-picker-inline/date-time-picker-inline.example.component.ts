@@ -33,7 +33,7 @@ export class DateTimePickerInlineExampleComponent {
         this.selectedDate = new Date(this.dt.valueOf());
     }
 
-    onModelChanged(event: any) {
+    public onModelChanged(event: any): void {
         this.selectedDate = new Date(event.valueOf());
     }
 }

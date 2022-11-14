@@ -34,6 +34,7 @@ import {
     delay,
     finalize,
     map,
+    // eslint-disable-next-line import/no-deprecated
     switchMap,
     tap,
 } from "rxjs/operators";
@@ -146,6 +147,7 @@ export class AcmeTableGBooksDataSource
         this.features = new DataSourceFeatures(this.supportedFeatures);
 
         this.applyFilters$
+            // eslint-disable-next-line import/no-deprecated
             .pipe(switchMap((filters) => this.getData(filters)))
             .subscribe(async (res) => {
                 this.outputsSubject.next(await this.getFilteredData(res));
@@ -235,7 +237,7 @@ export class AcmeTableGBooksDataSource
     }
 
     // redefine parent method
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         this.applyFilters$.next(this.getFilters());
     }
 }
@@ -283,7 +285,7 @@ export class TableWidgetSearchExampleComponent implements OnInit {
     }
 
     /** Used for restoring widgets state */
-    public reInitializeDashboard() {
+    public reInitializeDashboard(): void {
         // destroys the components and their providers so the dashboard can re init data
         this.dashboard = undefined;
         this.changeDetectorRef.detectChanges();

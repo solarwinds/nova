@@ -44,10 +44,10 @@ import { imagesPresetToken } from "../../constants/images.constants";
 import { LoggerService } from "../../services/log-service";
 import { UtilService } from "../../services/util.service";
 import { IImagesPresetItem } from "./public-api";
+
 /**
  * <example-url>./../examples/index.html#/image</example-url>
  */
-
 @Component({
     selector: "nui-image",
     templateUrl: "./image.component.html",
@@ -128,7 +128,7 @@ export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
         }
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         if (this.autoFill) {
             try {
                 const svg = this.el.nativeElement.querySelector("svg");

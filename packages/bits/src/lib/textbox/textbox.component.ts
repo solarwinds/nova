@@ -143,35 +143,35 @@ export class TextboxComponent
     // i18n nui_textbox_optional
     private optionalText = "Optional";
 
-    public focus() {
+    public focus(): void {
         this.textboxInput.nativeElement.focus();
     }
 
-    public onBlurEventEmit() {
+    public onBlurEventEmit(): void {
         this._onTouched();
         this.blurred.emit(this.value);
     }
 
-    public onChangeEvent($event: any) {
+    public onChangeEvent($event: any): void {
         if ($event.target.value !== this.value) {
             this.changeValue($event);
             this.textChange.emit(this.value);
         }
     }
 
-    onChange(value: any) {}
+    onChange(value: any): void {}
 
-    _onTouched() {}
+    _onTouched(): void {}
 
-    public writeValue(value: string) {
+    public writeValue(value: string): void {
         this.value = value;
     }
 
-    public registerOnChange(fn: () => void) {
+    public registerOnChange(fn: () => void): void {
         this.onChange = fn;
     }
 
-    public registerOnTouched(fn: () => {}) {
+    public registerOnTouched(fn: () => {}): void {
         this._onTouched = fn;
     }
 

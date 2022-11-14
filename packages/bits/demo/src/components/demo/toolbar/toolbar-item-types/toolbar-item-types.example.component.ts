@@ -25,7 +25,7 @@ import { Component } from "@angular/core";
     templateUrl: "./toolbar-item-types.example.component.html",
 })
 export class ToolbarItemTypesExampleComponent {
-    public actionDone() {
+    public actionDone(): void {
         console.log("action");
     }
 }

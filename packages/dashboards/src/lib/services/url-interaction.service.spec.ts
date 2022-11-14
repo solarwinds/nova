@@ -32,9 +32,7 @@ const interaction: IInteractionPayload<any> = {
 };
 
 describe("UrlInteractionService > ", () => {
-    const service: UrlInteractionService = new UrlInteractionService(
-        mockLoggerService
-    );
+    const service = new UrlInteractionService(mockLoggerService);
 
     it("should parse template correctly", () => {
         expect(service.template("${data.link2}", interaction)).toBe(

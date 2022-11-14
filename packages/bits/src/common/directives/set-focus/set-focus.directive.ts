@@ -80,7 +80,7 @@ export class SetFocusDirective implements AfterViewInit, OnChanges {
         }
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.focusableElement = this.getFirstFocusable(this.el.nativeElement);
         this.focusableElement.addEventListener("focus", this.onFocus);
         this.focusableElement.addEventListener("blur", this.onBlur);

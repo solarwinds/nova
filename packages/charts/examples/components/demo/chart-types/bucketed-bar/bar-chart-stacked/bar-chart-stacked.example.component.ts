@@ -41,7 +41,7 @@ export class BarChartStackedExampleComponent implements OnInit {
     public chartAssist: ChartAssist;
     public tooltipsPlugin = new BarTooltipsPlugin();
 
-    ngOnInit() {
+    public ngOnInit(): void {
         const chart = new Chart(barGrid());
 
         // We're manually adding Interaction Label plugin (without Interaction Line plugin) to have only label

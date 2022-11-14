@@ -39,7 +39,7 @@ export class ComboboxReactiveFormExampleComponent implements OnInit {
         @Inject(ToastService) private toastService: ToastService
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
             item: this.formBuilder.control(this.dataset.selectedItem, [
                 Validators.required,
@@ -51,7 +51,7 @@ export class ComboboxReactiveFormExampleComponent implements OnInit {
         );
     }
 
-    public onSubmit() {
+    public onSubmit(): void {
         this.myForm.valid
             ? this.toastService.success({ message: "Your form is valid!" })
             : this.toastService.error({ message: `Your form is invalid!` });

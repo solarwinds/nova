@@ -29,7 +29,7 @@ import { Component } from "@angular/core";
 export class DndDragPlaceholderExampleComponent {
     public listItems: string[] = ["Adobe", "IBM", "Dell"];
 
-    public onItemDropped(event: CdkDragDrop<string[]>) {
+    public onItemDropped(event: CdkDragDrop<string[]>): void {
         moveItemInArray(
             this.listItems,
             event.previousIndex,

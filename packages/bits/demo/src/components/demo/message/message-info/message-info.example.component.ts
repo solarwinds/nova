@@ -25,7 +25,7 @@ import { Component } from "@angular/core";
     templateUrl: "./message-info.example.component.html",
 })
 export class MessageInfoExampleComponent {
-    onMessageDismiss() {
+    onMessageDismiss(): void {
         console.log("Message was dismissed");
     }
 }

@@ -27,12 +27,14 @@ export interface IDateValue {
     y: number;
 }
 
+export type IDataSet<T> = { id: string; name: string; data: T[] }[];
+
 export class DataGenerator {
     public static generateMockStatusSeriesSet(
         seriesCount: number,
         pointCountPerSeries: number,
         statuses: string[]
-    ) {
+    ): IDataSet<{ x: any; y: string }> {
         const dataSet = [];
         for (let i = 0; i < seriesCount; i++) {
             dataSet.push({
@@ -50,7 +52,7 @@ export class DataGenerator {
     public static generateMockLineSeriesSet(
         seriesCount: number,
         pointCountPerSeries: number
-    ) {
+    ): IDataSet<{ x: number; y: number }> {
         const dataSet = [];
         for (let i = 0; i < seriesCount; i++) {
             dataSet.push({
@@ -67,7 +69,7 @@ export class DataGenerator {
         pointCountPerSeries: number,
         startTime?: string,
         endTime?: string
-    ) {
+    ): IDataSet<IDateValue> {
         const dataSet = [];
         for (let i = 0; i < seriesCount; i++) {
             dataSet.push({
@@ -146,13 +148,13 @@ export class DataGenerator {
         pointCount = 40,
         startData = 0,
         endData = 400
-    ) => {
+    ): { x: number; y: number }[] => {
         const step = (endData - startData) / pointCount;
         let prev: any;
         const generateValue = () => Math.random() * 100 + 50;
         const maxThreshold = 10;
 
-        return DataGenerator.range(0, pointCount).map((index: any) => {
+        return DataGenerator.range(0, pointCount).map((index) => {
             let next = generateValue();
             if (prev) {
                 while (Math.abs(next - prev) > maxThreshold) {
@@ -167,10 +169,13 @@ export class DataGenerator {
         });
     };
 
-    public static mockStatusData = (pointCount = 40, statuses: string[]) => {
+    public static mockStatusData = (
+        pointCount = 40,
+        statuses: string[]
+    ): { x: number; y: string }[] => {
         const generateValue = () =>
             statuses[Math.floor(Math.random() * statuses.length)];
-        return DataGenerator.range(0, pointCount).map((index: any) => ({
+        return DataGenerator.range(0, pointCount).map((index: number) => ({
             x: index,
             y: generateValue(),
         }));
@@ -193,7 +198,7 @@ export class DataGenerator {
         }));
     }
 
-    private static range(start: number, end: number) {
+    private static range(start: number, end: number): number[] {
         return new Array(end - start + 1)
             .fill(undefined)
             .map((_, i) => i + start);

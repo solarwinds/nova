@@ -30,15 +30,15 @@ export class PanelCollapseOutsideControlExampleComponent {
     public isCollapsed: boolean = false;
     public heading = $localize`Header`;
 
-    public collapse() {
+    public collapse(): void {
         this.isCollapsed = true;
     }
 
-    public expand() {
+    public expand(): void {
         this.isCollapsed = false;
     }
 
-    public onCollapseChange($event: boolean) {
+    public onCollapseChange($event: boolean): void {
         this.isCollapsed = $event;
         this.toastService.info({
             message: this.isCollapsed

@@ -25,6 +25,7 @@ import {
     OnInit,
     Optional,
 } from "@angular/core";
+// eslint-disable-next-line import/no-deprecated
 import { merge, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -91,7 +92,7 @@ export class StatusBarChartComponent
         super(timeseriesScalesService, dataSource);
     }
 
-    public ngOnInit() {}
+    public ngOnInit(): void {}
 
     public getDataPointData(
         series: IChartAssistSeries<IAccessors>,
@@ -178,6 +179,7 @@ export class StatusBarChartComponent
                 .getStream(SET_DOMAIN_EVENT)
                 .pipe(
                     takeUntil(
+                        // eslint-disable-next-line import/no-deprecated
                         merge(
                             this.chartUpdate$,
                             (
@@ -194,7 +196,7 @@ export class StatusBarChartComponent
                         payload: {
                             startDatetime: newDomain[0],
                             endDatetime: newDomain[1],
-                            selectedPresetId: null,
+                            selectedPresetId: undefined,
                         },
                     });
                 });

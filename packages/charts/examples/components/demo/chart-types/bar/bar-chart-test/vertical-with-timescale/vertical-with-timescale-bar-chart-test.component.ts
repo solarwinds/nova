@@ -43,7 +43,7 @@ import {
 export class VerticalWithTimescaleBarChartTestComponent implements OnInit {
     public chart = new Chart(barGrid());
 
-    ngOnInit() {
+    public ngOnInit(): void {
         const accessors = barAccessors();
         const renderer = new BarRenderer();
 

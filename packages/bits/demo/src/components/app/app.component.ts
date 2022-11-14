@@ -20,7 +20,7 @@
 
 import { Component, ViewEncapsulation } from "@angular/core";
 
-import { ThemeSwitchService } from "../../../../src/services/theme-switch.service";
+import { ThemeSwitchService } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-app",

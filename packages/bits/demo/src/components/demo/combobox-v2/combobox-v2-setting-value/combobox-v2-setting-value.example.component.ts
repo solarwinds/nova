@@ -32,7 +32,7 @@ export class ComboboxV2SettingValueExampleComponent implements OnInit {
     );
     public comboboxControl: FormControl = new FormControl();
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.comboboxControl.setValue(this.items[1]);
     }
 }

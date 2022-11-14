@@ -65,8 +65,9 @@ export class TimepickerAtom extends Atom {
             .click();
 
     public selectTime = async (time: string): Promise<void> => {
-        await this.toggle();
-        return this.menuPopup.clickItemByText(time);
+        await this.textbox.clearText();
+        await this.textbox.acceptText(`${time}\n`);
+        // await this.menuPopup.clickItemByText(time);
     };
 
     public getHighlightedMenuValue = async (): Promise<string> => {

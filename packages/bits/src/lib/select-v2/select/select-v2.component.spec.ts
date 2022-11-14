@@ -20,13 +20,6 @@
 
 import { LiveAnnouncer } from "@angular/cdk/a11y";
 import {
-    DOWN_ARROW,
-    ESCAPE,
-    PAGE_DOWN,
-    PAGE_UP,
-    TAB,
-} from "@angular/cdk/keycodes";
-import {
     ChangeDetectorRef,
     Component,
     ElementRef,
@@ -45,7 +38,7 @@ import {
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 
-import { KEYBOARD_CODE } from "../../../constants";
+import { KEYBOARD_CODE } from "../../../constants/keycode.constants";
 import { NuiOverlayModule } from "../../overlay/overlay.module";
 import { IOptionValueObject, OptionValueType } from "../../overlay/types";
 import { OptionKeyControlService } from "../option-key-control.service";
@@ -249,7 +242,7 @@ describe("components >", () => {
             }));
         });
 
-        it("should initKeyboardManager on ngAfterViewInit lifeCycle hook", () => {
+        it("should initKeyboardManager on ngAfterViewInit lifeCycle hook", (): void => {
             const initKeyboardManagerSpy = spyOn<any>(
                 component["optionKeyControlService"],
                 "initKeyboardManager"
@@ -486,7 +479,7 @@ describe("components >", () => {
             describe("if dropdown is not showing", () => {
                 it("should open dropdown, when we press DOWN_ARROW key", () => {
                     const event = new KeyboardEvent("keydown", {
-                        keyCode: DOWN_ARROW,
+                        code: KEYBOARD_CODE.ARROW_DOWN,
                     } as KeyboardEventInit);
                     component.onKeyDown(event);
                     expect(component["dropdown"].showing).toEqual(true);

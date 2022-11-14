@@ -1,18 +1,16 @@
 {
     "angularCompilerOptions": {
-        "skipTemplateCodegen": true,
-        "strictMetadataEmit": true,
+        "enableResourceInlining": true,
         "fullTemplateTypeCheck": true,
+        "skipTemplateCodegen": true,
         "strictInjectionParameters": true,
-        "enableResourceInlining": true
+        "strictMetadataEmit": true
     },
     "compilerOptions": {
-        "outDir": "../../out-tsc/lib",
-        "declarationMap": true,
         "declaration": true,
+        "declarationMap": true,
         "inlineSources": true,
-        "target": "es2015",
-        "module": "es2015",
+        "target": "ES2015",
         "types": []
     },
     "exclude": ["src/**/*.d.ts", "src/**/*.spec.ts"],

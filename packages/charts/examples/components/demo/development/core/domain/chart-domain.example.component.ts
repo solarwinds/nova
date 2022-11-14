@@ -69,7 +69,7 @@ export class ChartDomainExampleComponent implements OnInit, AfterViewInit {
 
     constructor(private changeDetector: ChangeDetectorRef) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         const numCharts = 3;
         for (let i = 0; i < numCharts; ++i) {
             this.scales.push({
@@ -88,7 +88,7 @@ export class ChartDomainExampleComponent implements OnInit, AfterViewInit {
         this.dataRenderer = new LineRenderer();
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         const timeLineSeriesSet: any[] =
             DataGenerator.generateMockTimeLineSeriesSet(2, 40);
 
@@ -115,7 +115,7 @@ export class ChartDomainExampleComponent implements OnInit, AfterViewInit {
         }));
     }
 
-    public fixDomain() {
+    public fixDomain(): void {
         const startDatetime = new Date("2017-02-15T16:00:00Z");
         const endDatetime = new Date("2017-02-15T16:14:29.909Z");
 
@@ -125,14 +125,14 @@ export class ChartDomainExampleComponent implements OnInit, AfterViewInit {
         });
     }
 
-    public resetDomain() {
+    public resetDomain(): void {
         this.xScale.isDomainFixed = false;
         this.chartAssists.forEach((chartAssist) => {
             chartAssist.update(chartAssist.inputSeriesSet);
         });
     }
 
-    public refresh() {
+    public refresh(): void {
         const seriesSet: any[] = DataGenerator.generateMockTimeLineSeriesSet(
             Math.floor(Math.random() * 6),
             40

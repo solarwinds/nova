@@ -78,7 +78,7 @@ export class ComboboxAtom extends BasicSelectAtom {
 
     public clearText = async (): Promise<void> => this.textbox.clearText();
 
-    public acceptInput = async (input: string) =>
+    public acceptInput = async (input: string): Promise<void> =>
         this.textbox.acceptText(input);
 
     public getLayoutBlock = (): ElementFinder =>

@@ -192,13 +192,13 @@ export class TableComponent<T>
               };
     }
 
-    public getPreselectedItems(items: T[]): T[] {
+    public getPreselectedItems(items: ReadonlyArray<T>): T[] {
         return this.dataSource.filter((item) => _some(items, item));
     }
 
     // using on changes hook for datasource because if we use pagination,
     // datasource changes when we change page and rows should know about this
-    ngOnChanges(changes: ComponentChanges<TableComponent<T>>): void {
+    public ngOnChanges(changes: ComponentChanges<TableComponent<T>>): void {
         if (changes.resizable) {
             this.tableStateHandlerService.resizable =
                 changes.resizable.currentValue;
@@ -231,7 +231,7 @@ export class TableComponent<T>
         }
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         super.ngOnInit();
         const dataSet = this.dataSource as Array<T>;
         const firstRow: TableRowData = dataSet && dataSet[0];
@@ -333,7 +333,7 @@ export class TableComponent<T>
         this.tableStateHandlerService.changeDataSource(changedDataSource);
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         if (this.tableSortingSubscription) {
             this.tableSortingSubscription.unsubscribe();
         }
@@ -352,7 +352,7 @@ export class TableComponent<T>
         super.ngOnDestroy();
     }
 
-    ngAfterContentInit(): void {
+    public ngAfterContentInit(): void {
         // @ts-ignore: Call parent method in case cdk adds it later
         super.ngAfterContentInit?.();
         // Note: Identifying if table is using virtual scroll.

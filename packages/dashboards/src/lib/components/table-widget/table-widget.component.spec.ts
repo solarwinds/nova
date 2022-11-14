@@ -24,6 +24,7 @@ import { Xliff } from "@angular/compiler";
 import { SimpleChange, TRANSLATIONS, TRANSLATIONS_FORMAT } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { BehaviorSubject } from "rxjs";
+// eslint-disable-next-line import/no-deprecated
 import { skip, take, tap } from "rxjs/operators";
 
 import {
@@ -576,6 +577,7 @@ describe("TableWidgetComponent", () => {
             component.eventBus
                 .getStream(SCROLL_NEXT_PAGE)
                 .pipe(
+                    // eslint-disable-next-line import/no-deprecated
                     tap(() => {
                         // Note: Simulating data source response assignment
                         component.tableData = Array.from({
@@ -586,6 +588,7 @@ describe("TableWidgetComponent", () => {
                     }),
                     skip(pagesToFillTheViewport),
                     take(1),
+                    // eslint-disable-next-line import/no-deprecated
                     tap(() => {
                         expect(
                             component.viewportManager.currentPageRange.start

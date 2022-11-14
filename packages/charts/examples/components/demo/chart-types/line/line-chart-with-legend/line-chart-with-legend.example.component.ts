@@ -42,7 +42,7 @@ export class LineChartWithLegendExampleComponent implements OnInit {
     public chart = new Chart(new XYGrid());
     public chartAssist: ChartAssist = new ChartAssist(this.chart);
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         // providing chartAssist colors and markers to LineAccessors will share them with the line chart
         const accessors = new LineAccessors(
             this.chartAssist.palette.standardColors,

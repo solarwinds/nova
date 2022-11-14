@@ -169,9 +169,9 @@ describe("components >", () => {
             // @ts-ignore: Suppressing error for testing purposes
             datetimePicker.onDateChanged(null);
 
-            datetimePicker.modelChanged.subscribe((val: any) =>
-                expect(val).toEqual(moment(""))
-            );
+            datetimePicker.modelChanged.subscribe((val: any) => {
+                expect(val).toEqual(moment(""));
+            });
         });
 
         it("should emit invalid Moment object if time is missing", () => {
@@ -179,9 +179,9 @@ describe("components >", () => {
             // @ts-ignore: Suppressing error for testing purposes
             datetimePicker.onTimeChanged(null);
 
-            datetimePicker.modelChanged.subscribe((val: any) =>
-                expect(val).toEqual(moment(""))
-            );
+            datetimePicker.modelChanged.subscribe((val: any) => {
+                expect(val).toEqual(moment(""));
+            });
         });
     });
 });

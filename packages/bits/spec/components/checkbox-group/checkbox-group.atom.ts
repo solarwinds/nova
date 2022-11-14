@@ -18,16 +18,17 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { by, ElementArrayFinder, ElementFinder } from "protractor";
+import { ElementArrayFinder, ElementFinder } from "protractor";
 
 import { Atom } from "../../atom";
 import { CheckboxAtom } from "../checkbox/checkbox.atom";
 
 export class CheckboxGroupAtom extends Atom {
     public static CSS_CLASS = "nui-checkbox-group";
+
     private root: ElementFinder = this.getElement();
     private children: ElementArrayFinder = this.root.all(
-        by.className(CheckboxAtom.CSS_CLASS)
+        Atom.getLocator(CheckboxAtom)
     );
 
     // Used to return specific checkbox element from the group

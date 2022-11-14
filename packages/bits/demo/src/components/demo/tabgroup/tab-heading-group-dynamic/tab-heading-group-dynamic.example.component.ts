@@ -36,12 +36,12 @@ export class TabHeadingGroupDynamicExampleComponent {
         this.addTab();
     }
 
-    public updateContent(tabId: string) {
+    public updateContent(tabId: string): void {
         this.currentTabId = tabId;
         this.changeDetector.detectChanges();
     }
 
-    public addTab() {
+    public addTab(): void {
         const nextIndex = this.tabsetContent.length + 1;
         this.tabsetContent.push({
             id: `${nextIndex}`,
@@ -50,7 +50,7 @@ export class TabHeadingGroupDynamicExampleComponent {
         });
     }
 
-    public popTab() {
+    public popTab(): void {
         const lastIndex = this.tabsetContent.length - 1;
         if (lastIndex < 1) {
             // no sense to remove last tab

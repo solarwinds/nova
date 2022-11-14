@@ -89,7 +89,7 @@ export class ManyWidgetsDashboardComponent
         enabled: true,
     };
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         private providerRegistry: ProviderRegistryService,
@@ -127,11 +127,11 @@ export class ManyWidgetsDashboardComponent
         };
     }
 
-    public onDsErrorSwitch(value: boolean) {
+    public onDsErrorSwitch(value: boolean): void {
         AcmeKpiDataSource.mockError = value;
     }
 
-    public onShowButtonSwitch(value: boolean, property: string) {
+    public onShowButtonSwitch(value: boolean, property: string): void {
         for (const widget of Object.keys(this.dashboard.widgets)) {
             this.dashboard = immutableSet(
                 this.dashboard,
@@ -161,7 +161,7 @@ export class ManyWidgetsDashboardComponent
         );
     }
 
-    public onCloneWidget() {
+    public onCloneWidget(): void {
         const cloner: IWidgetSelector = {
             dashboardComponent: this.dashboardComponent,
             trySubmit: this.submitHandler.trySubmit,
@@ -173,7 +173,7 @@ export class ManyWidgetsDashboardComponent
             .subscribe();
     }
 
-    public onEditWithCloner() {
+    public onEditWithCloner(): void {
         // this simulates invoking WIDGET_CREATE event from inside of the first widget
         this.dashboardComponent.eventBus.next(WIDGET_CREATE, {
             widgetId: widgets[0].id,
@@ -185,7 +185,7 @@ export class ManyWidgetsDashboardComponent
         this.destroy$.complete();
     }
 
-    public onSystemRefreshIntervalClick() {
+    public onSystemRefreshIntervalClick(): void {
         this.refreshSettings.refreshRateSeconds = this.systemRefreshInterval;
     }
 }

@@ -155,7 +155,7 @@ export class SideIndicatorRenderer extends XYRenderer<ISideIndicatorAccessors> {
         series: IDataSeries<ISideIndicatorAccessors>,
         values: { [p: string]: any },
         scales: Scales
-    ) {
+    ): number {
         return -1;
     }
 

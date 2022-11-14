@@ -27,7 +27,7 @@ import {
     IconState,
 } from "./types";
 
-interface ITypedIconData extends IconData {
+export interface ITypedIconData extends IconData {
     cat_namespace?: IconCategoryNamespace;
     category: IconCategory;
 }

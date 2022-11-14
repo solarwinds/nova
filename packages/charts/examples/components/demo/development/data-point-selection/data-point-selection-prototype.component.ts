@@ -34,7 +34,7 @@ import {
     BorderConfig,
     Chart,
     CHART_PALETTE_CS1,
-    CHART_PALETTE_CS_S,
+    CHART_PALETTE_CS_S_EXTENDED,
     convert,
     DataAccessor,
     DATA_POINT_NOT_FOUND,
@@ -95,12 +95,12 @@ export class DataPointSelectionPrototypeComponent implements OnInit {
         reset: () => {},
     };
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.setUpBarChart();
         this.setUpStatusChart();
     }
 
-    public onReset() {
+    public onReset(): void {
         // Reset the stored selection
         this.selectedDataPoints = {};
         this.selectedLabelPosition = undefined;
@@ -543,9 +543,9 @@ function getData() {
 
 function getStatusValueMap() {
     return {
-        [Status.Up]: CHART_PALETTE_CS_S[4],
-        [Status.Warning]: CHART_PALETTE_CS_S[2],
-        [Status.Critical]: CHART_PALETTE_CS_S[1],
+        [Status.Up]: CHART_PALETTE_CS_S_EXTENDED[8],
+        [Status.Warning]: CHART_PALETTE_CS_S_EXTENDED[4],
+        [Status.Critical]: CHART_PALETTE_CS_S_EXTENDED[2],
     };
 }
 

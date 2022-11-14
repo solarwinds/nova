@@ -39,7 +39,6 @@ import {
 } from "../public_api";
 
 describe("USERCONTROL form-field >", () => {
-    let atom: FormFieldAtom;
     let hintWithTemplate: FormFieldAtom;
     let atomWithTemplate: FormFieldAtom;
     let textbox: TextboxAtom;
@@ -58,7 +57,7 @@ describe("USERCONTROL form-field >", () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("form-field/form-field-test");
-        atom = Atom.find(FormFieldAtom, "nui-demo-form-field");
+        Atom.find(FormFieldAtom, "nui-demo-form-field");
         hintWithTemplate = Atom.find(
             FormFieldAtom,
             "nui-demo-form-field-hint-with-template"

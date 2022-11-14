@@ -34,17 +34,17 @@ export class DialogWithKeyboardExampleComponent {
         @Inject(ToastService) private toastService: ToastService
     ) {}
 
-    public openWith(content: TemplateRef<string>) {
+    public openWith(content: TemplateRef<string>): void {
         this.activeDialog = this.dialogService.open(content, { size: "sm" });
     }
-    public openWithout(content: TemplateRef<string>) {
+    public openWithout(content: TemplateRef<string>): void {
         this.activeDialog = this.dialogService.open(content, {
             size: "sm",
             keyboard: false,
         });
     }
 
-    private actionDone(): void {
+    public actionDone(): void {
         this.toastService.success({
             message: $localize`Action Done!`,
             title: $localize`Event`,
@@ -52,7 +52,7 @@ export class DialogWithKeyboardExampleComponent {
         this.activeDialog.close();
     }
 
-    private actionCanceled(): void {
+    public actionCanceled(): void {
         this.toastService.info({
             message: $localize`Action Cancelled!`,
             title: $localize`Event`,

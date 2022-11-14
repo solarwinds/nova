@@ -48,7 +48,7 @@ export abstract class ServerSideDataSource<
         this.setupFilters();
     }
 
-    protected setupFilters() {
+    protected setupFilters(): void {
         this.applyFilters$
             .pipe(
                 tap((filters) => this.beforeApplyFilters(filters)),
@@ -60,20 +60,20 @@ export abstract class ServerSideDataSource<
     }
 
     // make sure we clean upon service destruction
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
         this.busy.complete();
     }
 
-    protected beforeApplyFilters(filters: F) {
+    protected beforeApplyFilters(filters: F): void {
         // show the loader
         this.busy.next(true);
 
         this.shouldResetFilters(filters);
     }
 
-    protected async afterApplyFilters(data: D) {
+    protected async afterApplyFilters(data: D): Promise<void> {
         await super.afterApplyFilters(data);
 
         // no matter if the backend response was successful or not,
@@ -81,7 +81,7 @@ export abstract class ServerSideDataSource<
         this.busy.next(false);
     }
 
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         this.applyFilters$.next(this.getFilters() as F);
     }
 

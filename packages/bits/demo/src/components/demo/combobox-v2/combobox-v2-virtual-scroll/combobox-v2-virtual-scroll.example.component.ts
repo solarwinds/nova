@@ -28,6 +28,7 @@ import {
 } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { Observable, of, Subject } from "rxjs";
+// eslint-disable-next-line import/no-deprecated
 import { delay, filter, takeUntil, tap } from "rxjs/operators";
 
 import { ComboboxV2Component } from "@nova-ui/bits";
@@ -49,7 +50,7 @@ export class ComboboxV2VirtualScrollExampleComponent
     public filteredItems: Observable<any[]> = of([...this.items]);
     public containerHeight: number = defaultContainerHeight;
 
-    private destroy$: Subject<void> = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     private scrollOffset: number = 0;
 
     @ViewChild(CdkVirtualScrollViewport)
@@ -57,13 +58,13 @@ export class ComboboxV2VirtualScrollExampleComponent
     @ViewChild(ComboboxV2Component) private combobox: ComboboxV2Component;
 
     @HostListener("click")
-    public handleClick() {
+    public handleClick(): void {
         if (this.viewport) {
             this.viewport.scrollToOffset(this.scrollOffset);
         }
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this.combobox.valueSelected
             .pipe(takeUntil(this.destroy$))
             .subscribe(() => {
@@ -73,11 +74,13 @@ export class ComboboxV2VirtualScrollExampleComponent
         this.combobox.valueChanged
             .pipe(
                 filter((v) => v !== undefined),
+                // eslint-disable-next-line import/no-deprecated
                 tap(
                     (v) =>
                         (this.filteredItems = of(this.filterItems(v as string)))
                 ),
                 delay(0),
+                // eslint-disable-next-line import/no-deprecated
                 tap(this.calculateContainerHeight),
                 takeUntil(this.destroy$)
             )
@@ -106,7 +109,7 @@ export class ComboboxV2VirtualScrollExampleComponent
         this.containerHeight = defaultContainerHeight;
     };
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }

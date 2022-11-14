@@ -22,7 +22,6 @@ import { by, ElementArrayFinder, ElementFinder } from "protractor";
 
 import { Atom } from "../../atom";
 import { CheckboxAtom } from "../checkbox/checkbox.atom";
-import { RadioGroupAtom } from "../public_api";
 
 export class RepeatAtom extends Atom {
     public static CSS_CLASS = "nui-repeat";

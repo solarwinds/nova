@@ -40,7 +40,7 @@ export class FormFieldInFormExampleComponent implements OnInit {
         private formBuilder: FormBuilder,
         private changeDetector: ChangeDetectorRef
     ) {}
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.fancyForm = this.formBuilder.group({
             textbox: this.formBuilder.control("", [Validators.required]),
             textNumber: this.formBuilder.control(0, [Validators.required]),

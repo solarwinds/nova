@@ -44,7 +44,7 @@ export class OverlayCustomContainer
         super(document, platform);
     }
 
-    public setContainer(element: Element) {
+    public setContainer(element: Element): void {
         this._containerElement =
             this.overlayService.getOverlayContainer(element);
     }

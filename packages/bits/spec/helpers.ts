@@ -24,6 +24,8 @@ import * as path from "path";
 import { browser, by, ProtractorBrowser } from "protractor";
 import { WebElementPromise } from "selenium-webdriver";
 
+import { Atom, IAtomClass } from "./atom";
+
 export enum Animations {
     ALL,
     TRANSITIONS,
@@ -61,18 +63,23 @@ export function getCurrentBranchName(
     return getCurrentBranchName(path.resolve(potentialGitRoot, ".."));
 }
 
-export async function assertA11y(
+export async function assertA11y<T extends Atom>(
     browser: ProtractorBrowser,
-    atomSelector: string,
+    atomClassOrSelector: IAtomClass<T> | string,
     disabledRules?: string[]
 ): Promise<void> {
     const AxeBuilder = require("@axe-core/webdriverjs");
+    const selector =
+        typeof atomClassOrSelector === "string"
+            ? atomClassOrSelector
+            : Atom.getSelector(atomClassOrSelector);
+
     const accessibilityScanResults = await new AxeBuilder(browser.driver)
-        .include(`.${atomSelector}`)
+        .include(selector)
         .disableRules(disabledRules || [])
         .analyze();
 
-    await expect(accessibilityScanResults.violations).toEqual([]);
+    expect(accessibilityScanResults.violations).toEqual([]);
 }
 
 export class Helpers {
@@ -135,7 +142,6 @@ export class Helpers {
             eyes.close = async () => true;
             eyes.abortIfNotClosed = async () => true;
             eyes.setStitchMode = () => true;
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             eyes.checkWindow = async (s: string) => {
                 console.log(s);
                 await browser.sleep(3000);
@@ -279,5 +285,11 @@ export class Helpers {
             (pUrl: string) => (window.location.href = `/#/${pUrl}`),
             url
         );
+    }
+
+    static async delayPromise(timeout: number): Promise<void> {
+        return new Promise<void>((resolve) => {
+            setTimeout(() => resolve(), timeout);
+        });
     }
 }

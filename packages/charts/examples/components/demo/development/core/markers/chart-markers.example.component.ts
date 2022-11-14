@@ -113,7 +113,7 @@ export class ChartMarkersExampleComponent implements OnInit {
     public markers: IValueProvider<IChartMarker>;
     public useCustomMarkers = true;
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.chartAssist.palette = new ChartPalette(CHART_PALETTE_CS2);
         this.dataScales.x.formatters.tick = (value: any) =>
             Math.round(value).toString();
@@ -122,12 +122,12 @@ export class ChartMarkersExampleComponent implements OnInit {
         this.updateData();
     }
 
-    public updateData() {
+    public updateData(): void {
         const data = this.generateDataSeriesSet(12, this.dataScales);
         this.chartAssist.update(data);
     }
 
-    public updateMarkers() {
+    public updateMarkers(): void {
         this.markers = this.useCustomMarkers
             ? this.customMarkers
             : this.standardMarkers;

@@ -38,7 +38,7 @@ import {
 export class BaseGridHeightAndWidthExampleComponent implements OnInit {
     public chart: Chart;
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const gridConfig = new XYGridConfig();
         gridConfig.dimension.autoHeight = false;
         gridConfig.dimension.autoWidth = false;

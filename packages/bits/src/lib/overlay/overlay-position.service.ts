@@ -58,7 +58,9 @@ export class OverlayPositionService {
     private arrowPadding: number;
     public config: IOverlayPositionServiceConfig;
 
-    public setOverlayPositionConfig(config?: IOverlayPositionServiceConfig) {
+    public setOverlayPositionConfig(
+        config?: IOverlayPositionServiceConfig
+    ): void {
         this.arrowSize = !isNil(config?.arrowSize)
             ? <number>config?.arrowSize
             : OVERLAY_ARROW_SIZE;

@@ -1,17 +1,8 @@
 {
     "compilerOptions": {
-        "baseUrl": "./",
+        "baseUrl": ".",
         "declaration": false,
-        "importHelpers": true,
-        "module": "esnext",
-        "outDir": "./dist/out-tsc",
-        "preserveSymlinks": true,
-        "typeRoots": ["node_modules/@types"],
-        "lib": ["es2018", "dom"],
-        "paths": {
-            "@nova-ui/charts": ["./src/public-api.ts"]
-        }
+        "lib": ["ES2019", "DOM"]
     },
-    "exclude": ["node_modules"],
     "extends": "../../tsconfig.main.json"
 }

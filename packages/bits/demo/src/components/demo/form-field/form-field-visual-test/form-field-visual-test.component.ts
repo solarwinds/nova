@@ -31,7 +31,7 @@ export class FormFieldVisualTestComponent implements OnInit {
     public vegetables = ["Cabbage", "Potato", "Tomato", "Carrot"];
 
     constructor(private formBuilder: FormBuilder) {}
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.fancyForm = this.formBuilder.group({
             nickname: this.formBuilder.control("", [
                 Validators.required,
@@ -51,11 +51,11 @@ export class FormFieldVisualTestComponent implements OnInit {
         });
     }
 
-    formInitialized(name: string, form: FormGroup) {
+    formInitialized(name: string, form: FormGroup): void {
         this.fancyForm.setControl(name, form);
     }
 
-    markAsTouched() {
+    markAsTouched(): void {
         Object.keys(this.fancyForm.controls).forEach((key) => {
             this.fancyForm.controls[key].markAsDirty();
             this.fancyForm.controls[key].updateValueAndValidity();

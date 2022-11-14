@@ -213,7 +213,7 @@ export class DepreacatedDataSourceClientSideFilteringExampleComponent
         ).setData(RANDOM_ARRAY);
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this.chosenColors = [...this.selectedCriteriaColors];
         this.chosenStatuses = [...this.selectedColorTypes];
         this.dataSourceService.registerComponent({
@@ -233,7 +233,7 @@ export class DepreacatedDataSourceClientSideFilteringExampleComponent
             );
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this.outputsSubscription) {
             this.outputsSubscription.unsubscribe();
         }
@@ -276,21 +276,21 @@ export class DepreacatedDataSourceClientSideFilteringExampleComponent
         },
     });
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.dataSourceService.applyFilters();
     }
 
-    public onSorterAction(changes: ISorterChanges) {
+    public onSorterAction(changes: ISorterChanges): void {
         this.sortBy = changes.newValue.sortBy;
         this.dataSourceService.applyFilters();
     }
 
-    public onSelectedCriteriaChange($event: string[]) {
+    public onSelectedCriteriaChange($event: string[]): void {
         this.chosenColors = $event;
         this.dataSourceService.applyFilters();
     }
 
-    public onSelectedColorTypesChange($event: string[]) {
+    public onSelectedColorTypesChange($event: string[]): void {
         this.chosenStatuses = $event;
         this.dataSourceService.applyFilters();
     }
@@ -307,13 +307,13 @@ export class DepreacatedDataSourceClientSideFilteringExampleComponent
         return !_isEmpty(_get(this, "filteringState.repeat.itemsSource"));
     }
 
-    public showStatus(status: string) {
+    public showStatus(status: string): string {
         return this.filteringState.status
             ? this.filteringState.status[status]
             : this.filteringState.status;
     }
 
-    public showColor(color: string) {
+    public showColor(color: string): string {
         return this.filteringState.color
             ? this.filteringState.color[color]
             : this.filteringState.color;

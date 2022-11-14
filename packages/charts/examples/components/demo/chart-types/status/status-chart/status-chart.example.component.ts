@@ -29,7 +29,7 @@ import {
     BarStatusGridConfig,
     BarTooltipsPlugin,
     Chart,
-    CHART_PALETTE_CS_S,
+    CHART_PALETTE_CS_S_EXTENDED,
     HIGHLIGHT_DATA_POINT_EVENT,
     InteractionLabelPlugin,
     InteractionLinePlugin,
@@ -63,7 +63,7 @@ export class StatusChartExampleComponent implements OnInit {
 
     constructor(private iconService: IconService) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         // Configure the tooltips plugin (if needed)
         this.tooltipsStatusMarkers = createTooltipMarkerProvider(
             this.iconService
@@ -156,11 +156,11 @@ function createTooltipMarkerProvider(
 
 function createColorProvider(): IValueProvider<string> {
     return new MappedValueProvider<string>({
-        [Status.Unknown]: CHART_PALETTE_CS_S[3],
-        [Status.Up]: CHART_PALETTE_CS_S[4],
-        [Status.Warning]: CHART_PALETTE_CS_S[2],
-        [Status.Down]: CHART_PALETTE_CS_S[0],
-        [Status.Critical]: CHART_PALETTE_CS_S[1],
+        [Status.Unknown]: CHART_PALETTE_CS_S_EXTENDED[6],
+        [Status.Up]: CHART_PALETTE_CS_S_EXTENDED[8],
+        [Status.Warning]: CHART_PALETTE_CS_S_EXTENDED[4],
+        [Status.Down]: CHART_PALETTE_CS_S_EXTENDED[0],
+        [Status.Critical]: CHART_PALETTE_CS_S_EXTENDED[2],
     });
 }
 

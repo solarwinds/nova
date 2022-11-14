@@ -53,20 +53,18 @@ export abstract class InteractionHandler<
         this.properties = properties;
     }
 
-    protected initializeSubscriptions() {
-        this.eventBus
-            .getStream(INTERACTION)
-            .subscribe((event: IEvent<IInteractionPayload<any>>) => {
-                if (
-                    !this.properties?.interactionType ||
-                    this.properties?.interactionType ===
-                        event.payload?.interactionType
-                ) {
-                    // TODO: ensure that payload is defined
-                    // @ts-ignore
-                    this.handleInteraction(event.payload);
-                }
-            });
+    protected initializeSubscriptions(): void {
+        this.eventBus.getStream(INTERACTION).subscribe((event) => {
+            if (
+                !this.properties?.interactionType ||
+                this.properties?.interactionType ===
+                    event.payload?.interactionType
+            ) {
+                // TODO: ensure that payload is defined
+                // @ts-ignore
+                this.handleInteraction(event.payload);
+            }
+        });
     }
 
     protected abstract handleInteraction(

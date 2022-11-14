@@ -39,7 +39,7 @@ import {
 export class BarChartTimeIntervalExampleComponent implements OnInit {
     public chart = new Chart(barGrid());
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         const accessors = barAccessors();
         accessors.data.category = (d) => d.x;
         accessors.data.value = (d) => d.y;

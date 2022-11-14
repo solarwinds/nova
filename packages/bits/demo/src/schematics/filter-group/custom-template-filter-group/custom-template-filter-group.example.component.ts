@@ -144,7 +144,7 @@ export class CustomTemplateFilterGroupExampleComponent
         ).setData(RANDOM_ARRAY);
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this.outputsSubscription =
             this.dataSourceService.outputsSubject.subscribe(
                 (data: INovaFilteringOutputs) => {
@@ -156,7 +156,7 @@ export class CustomTemplateFilterGroupExampleComponent
         this.dataSourceService.applyFilters();
     }
 
-    public changeFilters(event: IFilterGroupItem) {
+    public changeFilters(event: IFilterGroupItem): void {
         this.dataSourceService.applyFilters();
     }
 
@@ -173,7 +173,7 @@ export class CustomTemplateFilterGroupExampleComponent
         });
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this.outputsSubscription) {
             this.outputsSubscription.unsubscribe();
         }

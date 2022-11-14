@@ -39,7 +39,7 @@ export class RadioGroupVisualTestComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.disabledForm = this.formBuilder.group({
             radioGroup: this.formBuilder.control({ value: "", disabled: true }),
         });

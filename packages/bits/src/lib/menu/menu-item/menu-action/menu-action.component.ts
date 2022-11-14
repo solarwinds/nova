@@ -98,9 +98,10 @@ export class MenuActionComponent extends MenuItemBaseComponent {
         }
     }
 
-    public getIconColor() {
+    public getIconColor(): string {
         return this.type === "destructive" ? "red" : "";
     }
+
     public doAction(event: any): void {
         this.handleClick(event);
     }

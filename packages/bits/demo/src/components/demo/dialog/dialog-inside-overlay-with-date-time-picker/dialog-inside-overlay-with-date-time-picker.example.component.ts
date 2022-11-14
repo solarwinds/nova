@@ -42,7 +42,7 @@ export class DialogInsideOverlayWithDateTimePickerExampleComponent {
     /**
      * Notice that the 'useOverlay' option is being passed in here
      */
-    public openInOverlay(content: TemplateRef<string>) {
+    public openInOverlay(content: TemplateRef<string>): void {
         this.activeDialog = this.dialogService.open(content, {
             size: "sm",
             useOverlay: true,
@@ -57,7 +57,7 @@ export class DialogInsideOverlayWithDateTimePickerExampleComponent {
         this.activeDialog.close();
     }
 
-    public onModelChanged(event: any) {
+    public onModelChanged(event: any): void {
         this.selectedDate = new Date(event.valueOf());
     }
 }

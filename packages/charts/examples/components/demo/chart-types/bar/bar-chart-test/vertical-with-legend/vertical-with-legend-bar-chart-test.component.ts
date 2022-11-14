@@ -28,7 +28,7 @@ import {
     BarSeriesHighlightStrategy,
     Chart,
     ChartAssist,
-    CHART_PALETTE_CS_S,
+    CHART_PALETTE_CS_S_EXTENDED,
     MappedValueProvider,
 } from "@nova-ui/charts";
 
@@ -48,7 +48,7 @@ enum Status {
 export class VerticalWithLegendBarChartTestComponent implements OnInit {
     public chartAssist = new ChartAssist(new Chart(barGrid()));
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const statusColorProvider = createColorProvider();
 
         const accessors = barAccessors();
@@ -75,12 +75,12 @@ export class VerticalWithLegendBarChartTestComponent implements OnInit {
 
 function createColorProvider() {
     return new MappedValueProvider<string>({
-        [Status.Up]: CHART_PALETTE_CS_S[4],
-        [Status.Warning]: CHART_PALETTE_CS_S[2],
-        [Status.Critical]: CHART_PALETTE_CS_S[1],
-        [Status.Down]: CHART_PALETTE_CS_S[0],
-        [Status.Unmanaged]: CHART_PALETTE_CS_S[5],
-        [Status.Unknown]: CHART_PALETTE_CS_S[3],
+        [Status.Up]: CHART_PALETTE_CS_S_EXTENDED[8],
+        [Status.Warning]: CHART_PALETTE_CS_S_EXTENDED[4],
+        [Status.Critical]: CHART_PALETTE_CS_S_EXTENDED[2],
+        [Status.Down]: CHART_PALETTE_CS_S_EXTENDED[0],
+        [Status.Unmanaged]: CHART_PALETTE_CS_S_EXTENDED[10],
+        [Status.Unknown]: CHART_PALETTE_CS_S_EXTENDED[6],
     });
 }
 

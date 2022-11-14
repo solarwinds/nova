@@ -56,14 +56,14 @@ export class RecursiveObjectViewComponent implements OnInit {
 
     public orderOfKeys: Array<string>;
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.orderOfKeys = _sortBy(
             Object.keys(this.object),
             (key: string) => key.length
         );
     }
 
-    public checkInstance(key: string) {
+    public checkInstance(key: string): boolean {
         return _isObject(this.object[key]);
     }
 }

@@ -55,7 +55,7 @@ class CustomSpyService {
 export class CustomInjectorComponent implements OnDestroy {
     constructor(private _spyService: CustomSpyService) {}
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this._spyService.called = true;
     }
 }
@@ -64,7 +64,7 @@ export class CustomInjectorComponent implements OnDestroy {
 export class DestroyableComponent implements OnDestroy {
     constructor(private _spyService: SpyService) {}
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this._spyService.called = true;
     }
 }
@@ -77,7 +77,7 @@ export class DestroyableComponent implements OnDestroy {
 export class WithActiveDialogComponent {
     constructor(public activeDialog: NuiActiveDialog) {}
 
-    close() {
+    close(): void {
         this.activeDialog.close("from inside");
     }
 }
@@ -123,7 +123,7 @@ class TestComponent {
 
     constructor(public dialogService: DialogService) {}
 
-    open(content: string, options?: Object) {
+    open(content: string, options?: Object): NuiDialogRef {
         this.openedDialog = this.dialogService.open(content, options);
         return this.openedDialog;
     }

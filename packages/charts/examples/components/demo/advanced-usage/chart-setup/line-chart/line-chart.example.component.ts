@@ -38,7 +38,7 @@ export class LineChartExampleComponent implements OnInit {
     public chart = new Chart(new XYGrid());
     public seriesSet: IChartSeries<ILineAccessors>[];
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.seriesSet = [
             {
                 id: "series-1",

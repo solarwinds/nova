@@ -35,18 +35,18 @@ export class ComboboxV2MultiselectExampleComponent implements OnDestroy {
     public comboboxControl = new FormControl();
     public placeholder: string = $localize`Select Item`;
 
-    private destroy$: Subject<void> = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    public convertToChip(value: string) {
+    public convertToChip(value: string): { label: string } {
         return { label: value };
     }
 
-    public setModel() {
+    public setModel(): void {
         this.comboboxControl.setValue([
             $localize`Item 10`,
             $localize`Item 12`,

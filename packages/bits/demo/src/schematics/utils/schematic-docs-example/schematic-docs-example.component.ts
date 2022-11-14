@@ -29,7 +29,7 @@ import {
 } from "@angular/core";
 import _set from "lodash/set";
 
-import { DEMO_PATH_TOKEN } from "../../../../../src/constants/path.constant";
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-schematic-docs-example",
@@ -48,7 +48,7 @@ export class SchematicDocsExampleComponent implements OnInit {
     private _selectedFile: string;
     private selectedFileOpen: boolean;
 
-    get selectedFile() {
+    get selectedFile(): string {
         return this._selectedFile;
     }
 
@@ -65,17 +65,17 @@ export class SchematicDocsExampleComponent implements OnInit {
         @SkipSelf() @Optional() @Inject(DEMO_PATH_TOKEN) private context: any
     ) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.componentSources = this.getSourcesByFilenamePrefix(
             this.exampleFolderName
         );
     }
 
-    public getSource(fileName: string) {
-        return this.rawData[fileName];
+    public getSource(fileName: string): string {
+        return this.rawData[fileName] ?? "";
     }
 
-    public selectFile(name: string) {
+    public selectFile(name: string): void {
         this.selectedFile = name;
         this.selectedFileOpen = true;
     }
@@ -84,7 +84,7 @@ export class SchematicDocsExampleComponent implements OnInit {
         return this.selectedFileOpen;
     }
 
-    public onSelectedFileOpenChange(event: boolean) {
+    public onSelectedFileOpenChange(event: boolean): void {
         this.selectedFileOpen = event;
     }
 

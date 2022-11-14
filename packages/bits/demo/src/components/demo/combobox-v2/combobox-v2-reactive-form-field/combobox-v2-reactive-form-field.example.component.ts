@@ -35,7 +35,7 @@ export class ComboboxV2ReactiveFormFieldExampleComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.fancyForm = this.formBuilder.group({
             combobox: this.formBuilder.control("", Validators.required),
         });

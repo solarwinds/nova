@@ -66,7 +66,7 @@ export class ComponentPortalDirective
     private component: any;
     private propertiesChanges = new ReplaySubject<SimpleChange>();
     private providerInstances: Record<string, any> = {};
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     private changesSubscription?: Subscription;
 
     constructor(
@@ -134,7 +134,7 @@ export class ComponentPortalDirective
         this.destroy$.complete();
     }
 
-    public attached(componentRef: ComponentRef<any>) {
+    public attached(componentRef: ComponentRef<any>): void {
         this.component = componentRef.instance;
 
         // ctrl+shift+click on a pizzagna to get a dump of its properties

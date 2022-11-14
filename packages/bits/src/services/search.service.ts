@@ -71,12 +71,12 @@ export class SearchService implements ISearchService {
      */
     constructor(private logger: LoggerService, private datePipe: DatePipe) {}
 
-    public search = (
-        items: any[],
+    public search = <T>(
+        items: T[],
         properties: string[],
         searchValue: any,
         dateFormat?: string
-    ): any[] => {
+    ): T[] => {
         // TODO: in case of interest, create options as object, put dateFormat in, put caseSensitive in
         if (!isArray(items)) {
             this.logger.error(
@@ -104,18 +104,18 @@ export class SearchService implements ISearchService {
         return this.filterResults(items, properties, searchValue, dateFormat);
     };
 
-    protected filterResults(
-        items: any[],
+    protected filterResults<T>(
+        items: T[],
         properties: string[],
         searchValue: any,
         dateFormat?: string
-    ) {
+    ): T[] {
         return items.filter((item) => {
             if (isString(item) || isNumber(item)) {
                 return this.filterPredicate(item, searchValue);
             }
             for (const prop of properties) {
-                let value = has(item, prop) ? item[prop] : item;
+                let value = has(item, prop) ? (item as any)[prop] : item;
 
                 if (isDate(value)) {
                     value = this.transformDate(value, dateFormat);
@@ -137,7 +137,7 @@ export class SearchService implements ISearchService {
         return this.datePipe.transform(value, dateFormat);
     }
 
-    protected filterPredicate(item: any, searchValue: any) {
+    protected filterPredicate(item: any, searchValue: any): boolean {
         return (
             item
                 .toString()

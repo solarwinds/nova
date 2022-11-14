@@ -40,7 +40,7 @@ export class PopupWithCustomContentComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.demoFormGroup = this.formBuilder.group({
             checkboxGroup: this.formBuilder.control(
                 [this.itemsSource[0], this.itemsSource[1], this.itemsSource[2]],
@@ -49,7 +49,7 @@ export class PopupWithCustomContentComponent implements OnInit {
         });
     }
 
-    public handleClick(event: MouseEvent) {
+    public handleClick(event: MouseEvent): void {
         event.stopPropagation();
     }
 }

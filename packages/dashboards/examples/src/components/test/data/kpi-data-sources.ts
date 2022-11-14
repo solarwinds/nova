@@ -34,7 +34,7 @@ export class TestKpiDataSource implements OnDestroy {
 
     public outputsSubject = new Subject<IDataSourceOutput<Partial<IKpiData>>>();
 
-    public applyFilters() {
+    public applyFilters(): void {
         if (!TestKpiDataSource.mockError) {
             this.outputsSubject.next({
                 result: {
@@ -66,7 +66,7 @@ export class TestKpiDataSource2 implements OnDestroy {
 
     public outputsSubject = new Subject<Partial<IKpiData>>();
 
-    public applyFilters() {
+    public applyFilters(): void {
         if (!TestKpiDataSource2.mockError) {
             this.outputsSubject.next({
                 value: 2,
@@ -93,7 +93,7 @@ export class TestKpiDataSourceSmallNumber implements OnDestroy {
 
     public outputsSubject = new Subject<Partial<IKpiData>>();
 
-    public applyFilters() {
+    public applyFilters(): void {
         if (!TestKpiDataSourceSmallNumber.mockError) {
             this.outputsSubject.next({
                 value: 0.000000000000432453453,
@@ -120,7 +120,7 @@ export class TestKpiDataSourceBigNumber implements OnDestroy {
 
     public outputsSubject = new Subject<Partial<IKpiData>>();
 
-    public applyFilters() {
+    public applyFilters(): void {
         if (!TestKpiDataSourceBigNumber.mockError) {
             this.outputsSubject.next({
                 value: 32472894785734,

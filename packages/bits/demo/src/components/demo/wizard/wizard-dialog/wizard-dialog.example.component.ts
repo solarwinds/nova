@@ -53,15 +53,15 @@ export class WizardDialogExampleComponent {
         return this.selectedVegetables.indexOf(vegetable) > -1;
     }
 
-    public valuesChanged(values: any[]) {
+    public valuesChanged(values: any[]): void {
         this.selectedVegetables = [...values];
     }
 
-    public openDialog(content: TemplateRef<string>) {
+    public openDialog(content: TemplateRef<string>): void {
         this.activeDialog = this.dialogService.open(content, { size: "lg" });
     }
 
-    public closeDialog() {
+    public closeDialog(): void {
         this.activeDialog.close();
     }
 }

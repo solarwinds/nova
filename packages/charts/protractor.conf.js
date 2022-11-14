@@ -25,6 +25,7 @@ exports.config = {
             ],
         },
     },
+    grep: process.env["npm_config_grep"],
     baseUrl: process.env.E2E_BASE_URL || "http://localhost:4200/",
     directConnect: !process.env.SELENIUM_ADDRESS,
     framework: "jasmine",

@@ -4,7 +4,14 @@
         {
             "files": ["*.ts"],
             "parserOptions": {
-                "project": ["tsconfig.lib.json", "src/tsconfig.spec.json"],
+                "project": ["./tsconfig.lib.json"],
+                "createDefaultProgram": true
+            }
+        },
+        {
+            "files": ["*.spec.ts"],
+            "parserOptions": {
+                "project": ["./tsconfig.spec.json"],
                 "createDefaultProgram": true
             }
         }

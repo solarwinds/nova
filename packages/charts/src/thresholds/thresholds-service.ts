@@ -77,7 +77,7 @@ export class ThresholdsService {
     public injectThresholdsData(
         dataSeries: IDataSeries<ILineAccessors>,
         zones: IDataSeries<IAreaAccessors>[]
-    ) {
+    ): void {
         const zoneIndexes: Record<string, number> = {};
         zones.forEach((z) => (z.entered = false));
 
@@ -541,7 +541,7 @@ export class ThresholdsService {
         dataFrom: IPosition,
         dataTo: IPosition,
         y: number
-    ) {
+    ): IPosition | undefined {
         return this.getCrossPoint(
             dataFrom,
             dataTo,

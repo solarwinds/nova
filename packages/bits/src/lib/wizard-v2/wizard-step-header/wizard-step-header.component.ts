@@ -108,7 +108,7 @@ export class WizardStepHeaderComponent
         this.createStepStateConfigMap();
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes?.stepStateConfig?.currentValue) {
             this.updateStepStateConfig(changes?.stepStateConfig?.currentValue);
             this.createStepStateConfigMap();
@@ -117,11 +117,11 @@ export class WizardStepHeaderComponent
         this.stepState = this.getStepState(this.step);
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this._focusMonitor.monitor(this._elementRef, true);
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this._focusMonitor.stopMonitoring(this._elementRef);
     }
 

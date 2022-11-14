@@ -251,7 +251,12 @@ function dispatchMouseEvent(
 /**
  * Creates a browser MouseEvent with the specified options.
  */
-export function createMouseEvent(type: string, x = 0, y = 0, button = 0) {
+export function createMouseEvent(
+    type: string,
+    x = 0,
+    y = 0,
+    button = 0
+): MouseEvent {
     const event = document.createEvent("MouseEvent");
     const originalPreventDefault = event.preventDefault.bind(event);
 

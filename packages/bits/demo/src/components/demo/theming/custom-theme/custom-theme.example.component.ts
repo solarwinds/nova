@@ -50,12 +50,12 @@ export class CustomThemeExampleComponent implements OnDestroy {
         this.renderer = rendererFactory.createRenderer(null, null);
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         // cleanup
         this.renderer.removeClass(this.containerElement, this.customClassName);
     }
 
-    public setTheme(value: boolean) {
+    public setTheme(value: boolean): void {
         // add/remove the custom class to the root html element based on the switch's value
         this.renderer[value ? "addClass" : "removeClass"](
             this.containerElement,

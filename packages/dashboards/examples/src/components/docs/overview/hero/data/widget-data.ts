@@ -32,7 +32,7 @@ export interface IProportionalWidgetData {
     value: string;
 }
 
-export function getMockBeerReviewCountsByCity() {
+export function getMockBeerReviewCountsByCity(): IProportionalWidgetData[] {
     return [
         {
             id: "Brno",
@@ -79,7 +79,7 @@ export function getMockBeerReviewCountsByCity() {
     ].sort((a, b) => a.data[0] - b.data[0]);
 }
 
-export function getMockBeerReviewCountsByCity2() {
+export function getMockBeerReviewCountsByCity2(): IProportionalWidgetData[] {
     return [
         {
             id: "london",

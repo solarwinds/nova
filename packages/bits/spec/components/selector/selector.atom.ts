@@ -38,8 +38,7 @@ export class SelectorAtom extends Atom {
         if (!(await this.isOpened())) {
             await this.getToggle().click();
         }
-
-        return await this.clickItemByText(selectionType);
+        await this.clickItemByText(selectionType);
     }
 
     public async selectAppendedToBodyItem(
@@ -51,9 +50,12 @@ export class SelectorAtom extends Atom {
         const menuPopup = Atom.findIn(
             MenuPopupAtom,
             this.getElement().element(by.className("nui-menu-popup"))
-        ).getElement();
-        await browser.wait(ExpectedConditions.stalenessOf(menuPopup), 3000); // this is mostly for table. 1000ms may be not enough
-        return await this.clickAppendedToBodyItemByText(selectionType);
+        );
+        await browser.wait(
+            ExpectedConditions.stalenessOf(menuPopup.getElement()),
+            3000 // this is mostly for table. 1000ms may be not enough
+        );
+        await this.clickAppendedToBodyItemByText(selectionType);
     }
 
     public getCheckbox(): CheckboxAtom {
@@ -67,15 +69,15 @@ export class SelectorAtom extends Atom {
         return Atom.findIn(ButtonAtom, buttonContainer);
     }
 
-    public async clickItemByText(title: string) {
-        return Atom.findIn(
+    public async clickItemByText(title: string): Promise<void> {
+        await Atom.findIn(
             MenuPopupAtom,
             this.getElement().element(by.className("nui-menu-popup"))
         ).clickItemByText(title);
     }
 
-    public async clickAppendedToBodyItemByText(title: string) {
-        return Atom.findIn(
+    public async clickAppendedToBodyItemByText(title: string): Promise<void> {
+        await Atom.findIn(
             MenuPopupAtom,
             browser.element(by.css("body .nui-overlay .nui-menu-popup"))
         ).clickItemByText(title);

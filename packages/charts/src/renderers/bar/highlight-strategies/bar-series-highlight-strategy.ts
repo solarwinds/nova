@@ -46,7 +46,7 @@ export class BarSeriesHighlightStrategy
         series: IDataSeries<IRectangleAccessors>,
         values: { [p: string]: any },
         scales: Scales
-    ) {
+    ): number {
         const value = values[this.scaleKey];
         if (typeof value === "undefined") {
             // if there is no value we're returning -2 (DATA_POINT_INTERACTION_RESET) which helps highlightDataPoint
@@ -61,7 +61,7 @@ export class BarSeriesHighlightStrategy
         series: IDataSeries<IRectangleAccessors>,
         value: any,
         scaleKey: keyof IXYScales
-    ) {
+    ): number {
         const accessorSuffix = (scaleKey as string).toUpperCase();
         const dataAccessors = series.accessors.data;
 
@@ -125,9 +125,9 @@ export class BarSeriesHighlightStrategy
         }
     }
 
-    draw(
+    public draw(
         renderer: BarRenderer,
         renderSeries: IRenderSeries<IRectangleAccessors>,
         rendererSubject: Subject<IRendererEventPayload>
-    ) {}
+    ): void {}
 }

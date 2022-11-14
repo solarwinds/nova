@@ -120,7 +120,7 @@ private dataSource: RandomuserTableDataSource;
 constructor(private viewportManager: VirtualViewportManager) {}
 `,
         oninitSubscribeBusy: `
-ngOnInit(): void {
+public ngOnInit(): void {
     this.dataSource.busy.subscribe(busy => {
         this._isBusy = busy;
     });

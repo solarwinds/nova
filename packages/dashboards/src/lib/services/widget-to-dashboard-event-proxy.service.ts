@@ -65,7 +65,7 @@ export class WidgetToDashboardEventProxyService
 {
     private upstreamSubscriptions: Record<string, Subscription> = {};
     private downstreamSubscriptions: Record<string, Subscription> = {};
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     private component: { componentId: string };
 
     private upstreams?: string[];
@@ -88,7 +88,7 @@ export class WidgetToDashboardEventProxyService
         this.destroy$.complete();
     }
 
-    public setComponent(component: any) {
+    public setComponent(component: any): void {
         this.component = component;
     }
 
@@ -109,11 +109,11 @@ export class WidgetToDashboardEventProxyService
         }
     }
 
-    public addUpstream(stream: IEventDefinition) {
+    public addUpstream(stream: IEventDefinition): void {
         this.addStream(stream, "upstreams");
     }
 
-    public addDownstream(stream: IEventDefinition) {
+    public addDownstream(stream: IEventDefinition): void {
         this.addStream(stream, "downstreams");
     }
 

@@ -39,7 +39,7 @@ import {
 export class BasicStackedHorizontalBarChartTestComponent implements OnInit {
     public chartAssist: ChartAssist;
 
-    ngOnInit() {
+    public ngOnInit(): void {
         const config = { horizontal: true } as IBarChartConfig;
 
         const chart = new Chart(barGrid(config));

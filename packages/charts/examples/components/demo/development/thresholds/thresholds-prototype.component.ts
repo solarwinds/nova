@@ -26,7 +26,7 @@ import {
     Chart,
     ChartAssist,
     ChartPalette,
-    CHART_PALETTE_CS_S,
+    CHART_PALETTE_CS_S_EXTENDED,
     IAccessors,
     IChartAssistSeries,
     IChartSeries,
@@ -62,14 +62,14 @@ export class ThresholdsPrototypeComponent implements OnInit {
 
     private thresholdsPalette = new ChartPalette(
         new MappedValueProvider({
-            [Status.Error]: CHART_PALETTE_CS_S[1],
-            [Status.Warning]: CHART_PALETTE_CS_S[2],
+            [Status.Error]: CHART_PALETTE_CS_S_EXTENDED[2],
+            [Status.Warning]: CHART_PALETTE_CS_S_EXTENDED[4],
         })
     );
 
     constructor(private thresholdsService: ThresholdsService) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const accessors = new LineAccessors(
             this.chartAssist.palette.standardColors,
             this.chartAssist.markers

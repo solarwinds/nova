@@ -36,8 +36,9 @@ export class PopupAtom extends Atom {
     private popupBox = Atom.findIn(OverlayContentAtom, this.getElement());
     private popupBoxDetached = Atom.findIn(OverlayContentAtom, this.body);
 
-    public getPopupToggle = (): ElementFinder =>
-        this.getElement().element(by.css("[nuiPopupToggle]"));
+    public getPopupToggle(): ElementFinder {
+        return this.getElement().element(by.css("[nuiPopupToggle]"));
+    }
 
     public async isOpened(): Promise<boolean> {
         return (await this.popupBox.count(this.getElement())) === 1;
@@ -56,8 +57,17 @@ export class PopupAtom extends Atom {
         );
     }
 
-    public getPopupBox = () => this.popupBox.getElement();
-    public getPopupBoxDetached = () => this.popupBoxDetached;
-    public getPopupBoxDetachedArea = () =>
-        this.popupBoxDetached.getElement().element(by.css(".nui-popup__area"));
+    public getPopupBox(): ElementFinder {
+        return this.popupBox.getElement();
+    }
+
+    public getPopupBoxDetached(): OverlayContentAtom {
+        return this.popupBoxDetached;
+    }
+
+    public getPopupBoxDetachedArea(): ElementFinder {
+        return this.popupBoxDetached
+            .getElement()
+            .element(by.css(".nui-popup__area"));
+    }
 }

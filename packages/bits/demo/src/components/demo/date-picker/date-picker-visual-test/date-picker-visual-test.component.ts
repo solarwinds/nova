@@ -39,7 +39,7 @@ export class DatePickerVisualTestComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
             datePickerFormControl: this.formBuilder.control(this.emptyDate, [
                 Validators.required,

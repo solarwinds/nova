@@ -21,9 +21,10 @@
 import moment from "moment/moment";
 
 import { ITimeframe } from "@nova-ui/bits";
-
-import { TimeframeSerializationService } from "./timeframe-serialization.service";
-import { ISerializableTimeframe } from "./types";
+import {
+    ISerializableTimeframe,
+    TimeframeSerializationService,
+} from "@nova-ui/dashboards";
 
 describe("TimeframeSerializationService > ", () => {
     const startDatetime = "2019-11-09T10:14:33-06:00";

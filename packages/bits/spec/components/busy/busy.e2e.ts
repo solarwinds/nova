@@ -22,26 +22,18 @@ import { browser, by, element, Key } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
-import { BusyAtom, ButtonAtom, SelectAtom, SpinnerAtom } from "../public_api";
+import { BusyAtom, ButtonAtom, SelectAtom } from "../public_api";
 
 describe("USERCONTROL Busy", () => {
     let busy: BusyAtom;
-    let progressBusy: BusyAtom;
     let busyBtn: ButtonAtom;
-    let spinner: SpinnerAtom;
     let select: SelectAtom;
+
+    const busyById = (id: string) => Atom.findIn(BusyAtom, element(by.id(id)));
 
     beforeAll(async () => {
         busyBtn = Atom.find(ButtonAtom, "nui-busy-test-button");
-        busy = Atom.findIn(BusyAtom, element(by.id("nui-busy-test-basic")));
-        progressBusy = Atom.findIn(
-            BusyAtom,
-            element(by.id("nui-busy-test-progress"))
-        );
-        spinner = Atom.findIn(
-            SpinnerAtom,
-            element(by.id("nui-busy-test-custom"))
-        );
+        busy = busyById("nui-busy-test-basic");
         select = Atom.findIn(
             SelectAtom,
             element(by.id("nui-busy-select-overlay"))
@@ -67,6 +59,19 @@ describe("USERCONTROL Busy", () => {
 
         afterEach(async () => {
             await busyBtn.click();
+        });
+
+        it("in default mode shows spinner", async () => {
+            const spinner = busy.getSpinner();
+            await spinner.waitForDisplayed();
+            expect(await busy.getSpinner().isDisplayed()).toBe(true);
+        });
+
+        it("in progress mode shows progress bar", async () => {
+            const progress = busyById("nui-busy-test-progress").getProgress();
+            expect(await Atom.wait(async () => progress.isDisplayed())).toBe(
+                true
+            );
         });
 
         it("any appended to body popup (select) should not be overlapped by busy", async () => {

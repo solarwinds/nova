@@ -37,7 +37,7 @@ export class BarChartHorizontalExampleComponent implements OnInit {
     public barConfig: IBarChartConfig = { horizontal: true };
     public chart = new Chart(barGrid(this.barConfig));
 
-    ngOnInit() {
+    public ngOnInit(): void {
         const accessors = barAccessors(this.barConfig);
         const renderer = new BarRenderer();
         const scales = barScales(this.barConfig);

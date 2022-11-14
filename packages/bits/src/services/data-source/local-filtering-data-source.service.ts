@@ -65,11 +65,11 @@ export class LocalFilteringDataSource<
         super();
     }
 
-    public setData(initialData: T[] = []) {
+    public setData(initialData: T[] = []): void {
         this._allData = initialData;
     }
 
-    public setSearchProperties(properties: string[]) {
+    public setSearchProperties(properties: string[]): void {
         this._searchProps = properties;
     }
 
@@ -134,11 +134,11 @@ export class LocalFilteringDataSource<
         };
     }
 
-    protected prepareData() {
+    protected prepareData(): T[] {
         return this._allData;
     }
 
-    protected searchHandler(searchTerm: any) {
+    protected searchHandler(searchTerm: any): T[] {
         return this.searchService.search(
             this._allData,
             this._searchProps,
@@ -146,7 +146,7 @@ export class LocalFilteringDataSource<
         );
     }
 
-    protected multiFilterHandler(nextChunk: any, multiFiltersArr: any) {
+    protected multiFilterHandler(nextChunk: T[], multiFiltersArr: any): T[] {
         const allCategoriesArr: IFilterItem<string[]>[] = multiFiltersArr.map(
             (el: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>) =>
                 this.getAllCategories(el)
@@ -167,7 +167,7 @@ export class LocalFilteringDataSource<
         return nextChunk;
     }
 
-    protected sortingHandler(filters: any, nextChunk: any) {
+    protected sortingHandler(filters: any, nextChunk: T[]): T[] {
         if (
             _get(filters, "sorter.value.sortBy") &&
             _get(filters, "sorter.value.direction")
@@ -184,7 +184,7 @@ export class LocalFilteringDataSource<
         return nextChunk;
     }
 
-    protected paginationHandler(filters: any, nextChunk: any) {
+    protected paginationHandler(filters: any, nextChunk: T[]): T[] {
         if (filters?.paginator) {
             return nextChunk.slice(
                 filters.paginator.value.start,
@@ -194,7 +194,7 @@ export class LocalFilteringDataSource<
         return nextChunk;
     }
 
-    protected virtualScrollHandler(filters: any, nextChunk: any) {
+    protected virtualScrollHandler(filters: any, nextChunk: T[]): T[] {
         let data = nextChunk;
         if (filters?.virtualScroll) {
             data = nextChunk.slice(
@@ -212,11 +212,11 @@ export class LocalFilteringDataSource<
     /**
      * @deprecated in v11 - Use filtersChanged instead - Removal: NUI-5796
      */
-    protected paginationReset(filters: any, itemsToCompare: any) {
+    protected paginationReset(filters: any, itemsToCompare: any): boolean {
         return this.filtersChanged(filters, itemsToCompare);
     }
 
-    public filtersChanged(filters: any, itemsToCompare: any) {
+    public filtersChanged(filters: any, itemsToCompare: any): boolean {
         if (this._previousFilters) {
             if (this.isValueChanged(itemsToCompare)) {
                 return true;
@@ -230,7 +230,7 @@ export class LocalFilteringDataSource<
         nextChunk: T[],
         searchTerm: string | undefined,
         multiFiltersArr: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>[]
-    ) {
+    ): ComparisonItems[] {
         // GET FILTERS from previous filtering
         const previousSortBy = _get(
             this._previousFilters,
@@ -300,7 +300,7 @@ export class LocalFilteringDataSource<
     ): IFilterGroup<IFilterItem<number>> {
         const allCategoriesResult: IFilterGroup<IFilterItem<number>[]>[] =
             allCategoriesArr.map((el, index) => {
-                const key = Object.keys(el)[0];
+                const key: string = Object.keys(el)[0];
                 const valuesArr: string[] = allCategoriesArr[index][key];
                 const resultArr = valuesArr.map((element: string) => {
                     const r: T[] = this.searchService.search(

@@ -43,7 +43,8 @@ export class TableCellWidthSetExampleComponent {
         "location",
     ];
     public dataSource = getData();
-    public onOptionChange(value: number) {
+
+    public onOptionChange(value: number): void {
         this.positionWidth = value;
     }
 }

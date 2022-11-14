@@ -29,7 +29,7 @@ import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../types";
 import { TimeseriesScalesService } from "../../timeseries-scales.service";
 import { StatusBarChartComponent } from "./status-bar-chart.component";
 
-describe("StatusChartComponent", () => {
+describe(StatusBarChartComponent.name, () => {
     const frozenTime = moment("2020-11-06T00:00:00-06:00")
         .startOf("day")
         .toDate();
@@ -168,7 +168,7 @@ describe("StatusChartComponent", () => {
                 payload: {
                     startDatetime: expectedDomain[0],
                     endDatetime: expectedDomain[1],
-                    selectedPresetId: null,
+                    selectedPresetId: undefined,
                 },
             });
         });
@@ -196,7 +196,7 @@ describe("StatusChartComponent", () => {
                 payload: {
                     startDatetime: expectedDomain[0],
                     endDatetime: expectedDomain[1],
-                    selectedPresetId: null,
+                    selectedPresetId: undefined,
                 },
             });
         });

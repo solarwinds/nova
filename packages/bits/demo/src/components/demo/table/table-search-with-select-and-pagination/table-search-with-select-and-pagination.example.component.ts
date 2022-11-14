@@ -86,7 +86,7 @@ export class TableSearchWithSelectAndPaginationComponent
         dataSourceService.setData(getData());
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.dataSourceService.componentTree = {
             search: {
                 componentInstance: this.filteringSearch,
@@ -111,23 +111,23 @@ export class TableSearchWithSelectAndPaginationComponent
         this.dataSourceService.applyFilters();
     }
 
-    public onSearch(value?: string) {
+    public onSearch(value?: string): void {
         this.dataSourceService.applyFilters();
     }
 
-    public onSearchCancel() {
+    public onSearchCancel(): void {
         this.dataSourceService.applyFilters();
     }
 
-    public changePagination($event: any) {
+    public changePagination($event: any): void {
         this.dataSourceService.applyFilters();
     }
 
-    public trackBy(index: number, item: IExampleTableModel) {
+    public trackBy(index: number, item: IExampleTableModel): number {
         return item.position;
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.searchSubscription.unsubscribe();
         this.outputsSubscription.unsubscribe();
     }

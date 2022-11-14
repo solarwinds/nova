@@ -31,7 +31,7 @@ import {
     InteractionType,
     IRenderStateData,
 } from "../../common/types";
-import { IGrid, IGridConfig } from "../../grid/types";
+import { IGrid } from "../../grid/types";
 import { XYGrid } from "../../grid/xy-grid";
 import { ChartTooltipsPlugin } from "./chart-tooltips-plugin";
 

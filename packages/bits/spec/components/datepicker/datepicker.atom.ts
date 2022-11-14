@@ -167,7 +167,7 @@ export class DatepickerAtom extends Atom {
             .getText();
     }
 
-    public async goNext() {
+    public async goNext(): Promise<void> {
         return super
             .getElement()
             .element(by.css("button[icon='caret-right']"))

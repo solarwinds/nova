@@ -196,6 +196,7 @@ export class FilteredViewTableWithVirtualScrollDataSource<T>
             return mapObj;
         };
 
+        // eslint-disable-next-line import/no-deprecated
         return forkJoin(requests).pipe(
             // since API being used sends the response almost immediately,
             // we need to fake it takes longer to be able the show the spinner component

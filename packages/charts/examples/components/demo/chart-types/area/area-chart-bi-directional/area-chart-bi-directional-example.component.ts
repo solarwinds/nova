@@ -42,7 +42,7 @@ export class AreaChartBiDirectionalExampleComponent implements OnInit {
     public chart: Chart;
     public chartAssist: ChartAssist;
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         // areaGrid returns an XYGrid configured for displaying an area chart's axes and other grid elements.
         this.chart = new Chart(areaGrid());
         // ChartAssist helps with synchronizing hover events between the chart and the legend

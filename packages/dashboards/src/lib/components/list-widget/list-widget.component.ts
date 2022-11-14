@@ -59,7 +59,7 @@ export class ListWidgetComponent
     @Input() @HostBinding("class") public elementClass: string;
 
     private itemFormatterProps = new Map();
-    private destroy$: Subject<void> = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     private widgetWidth: number;
 
     constructor(
@@ -69,11 +69,11 @@ export class ListWidgetComponent
         @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>
     ) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.initResizeObserver();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.data?.currentValue) {
             changes.data.currentValue.forEach((v: any) =>
                 this.itemFormatterProps.set(v, this.calcItemProps(v))
@@ -83,17 +83,17 @@ export class ListWidgetComponent
 
     // TODO: think of how to get rid of this logic on listWidget
     // since it's very specific for drilldown and appstack
-    onListItemEvent(item: any) {
+    public onListItemEvent(item: any): void {
         this.eventBus.getStream(DRILLDOWN).next({ payload: item });
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
         this.itemFormatterProps.clear();
     }
 
-    public getPropsFor(item: any) {
+    public getPropsFor(item: any): any {
         return {
             ...this.itemFormatterProps.get(item),
             widgetWidth: this.widgetWidth,

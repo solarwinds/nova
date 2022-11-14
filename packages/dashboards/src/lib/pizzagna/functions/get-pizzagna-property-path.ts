@@ -27,7 +27,7 @@ export interface IPizzagnaProperty {
     propertyPath: string[];
 }
 
-export function getPizzagnaPropertyPath(definition: IPizzagnaProperty) {
+export function getPizzagnaPropertyPath(definition: IPizzagnaProperty): string {
     if (definition.providerKey) {
         return [
             definition.pizzagnaKey || PizzagnaLayer.Data,

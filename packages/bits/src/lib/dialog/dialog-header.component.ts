@@ -54,7 +54,7 @@ export class DialogHeaderComponent implements OnInit {
         }
     }
 
-    public innerClose(event: any) {
+    public innerClose(event: any): void {
         this.closed.emit(event);
     }
 }

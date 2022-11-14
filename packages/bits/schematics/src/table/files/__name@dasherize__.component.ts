@@ -167,7 +167,7 @@ export class <%= classify(name) %>Component implements <% if (dataSource === "se
 
     private previouslyLoadedCount: number;<% }} %>
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         @Inject(DataSourceService) private dataSource: <%
@@ -186,7 +186,7 @@ export class <%= classify(name) %>Component implements <% if (dataSource === "se
     }<%
     if (dataSource === "serverSide") {%>
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource.busy.pipe(
             tap(val => {
                 this.isBusy = val;
@@ -196,7 +196,7 @@ export class <%= classify(name) %>Component implements <% if (dataSource === "se
         ).subscribe();
     }<% } %>
 
-    public async ngAfterViewInit() {<%
+    public async ngAfterViewInit(): Promise<void> {<%
         if (enableSort) {%>
         // register filter to be able to sort
         this.dataSource.registerComponent(this.table.getFilterComponents());<% }
@@ -305,7 +305,7 @@ export class <%= classify(name) %>Component implements <% if (dataSource === "se
         await this.applyFilters();<% } %>
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }<%

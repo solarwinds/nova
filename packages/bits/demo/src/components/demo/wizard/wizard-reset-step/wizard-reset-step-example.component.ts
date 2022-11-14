@@ -34,22 +34,25 @@ export class WizardResetStepExampleComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
-            name: this.formBuilder.control("", Validators.required),
-            email: this.formBuilder.control("", [
-                Validators.required,
-                Validators.pattern("[^ @]*@[^ @]*"),
-                Validators.email,
-            ]),
-            password: this.formBuilder.control("", [Validators.required]),
+            name: ["", Validators.required],
+            email: [
+                "",
+                [
+                    Validators.required,
+                    Validators.pattern("[^ @]*@[^ @]*"),
+                    Validators.email,
+                ],
+            ],
+            password: ["", [Validators.required]],
         });
         this.secondStepForm = this.formBuilder.group({
             formCheckbox: [false, [Validators.requiredTrue]],
         });
     }
 
-    public updateValidity() {
+    public updateValidity(): void {
         this.secondStepForm.get("formCheckbox")?.updateValueAndValidity();
     }
 

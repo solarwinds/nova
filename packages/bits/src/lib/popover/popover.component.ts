@@ -48,9 +48,19 @@ import {
 import _includes from "lodash/includes";
 import _isNil from "lodash/isNil";
 import _isUndefined from "lodash/isUndefined";
-import { BehaviorSubject, EMPTY, merge, Subject, Subscription } from "rxjs";
+import {
+    BehaviorSubject,
+    EMPTY,
+    merge,
+    Observable,
+    Subject,
+    Subscription,
+} from "rxjs";
 
-import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
+import {
+    CLOSE_POPOVER_EVENT,
+    DOCUMENT_CLICK_EVENT,
+} from "../../constants/event.constants";
 import { popoverConstants } from "../../constants/popover.constants";
 import { EventBusService } from "../../services/event-bus.service";
 import { UtilService } from "../../services/util.service";
@@ -169,6 +179,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
 
     @ViewChild("modalContainer", { read: ViewContainerRef })
     modalContainer: ViewContainerRef;
+
     @ViewChild(OverlayComponent) overlayComponent: OverlayComponent;
 
     public overlayConfig: OverlayConfig = { width: "auto" };
@@ -205,9 +216,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         } else {
             this.onTrigger("click");
         }
-        this.eventBusService
-            .getStream({ id: DOCUMENT_CLICK_EVENT })
-            .next(event);
+        this.eventBusService.getStream(DOCUMENT_CLICK_EVENT).next(event);
         event.stopPropagation();
     }
 
@@ -368,18 +377,16 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
     }
 
     private activatePopover() {
-        this.eventBusService.getStream({ id: "close-popover" }).next(undefined);
+        this.eventBusService.getStream(CLOSE_POPOVER_EVENT).next();
         this.showPopover();
     }
 
     private initializePopover() {
         this.popoverModalSubscriptions = [];
         const closePopoverSubscription = merge(
-            !this.preventClosing
-                ? this.eventBusService
-                      .getStream({ id: "close-popover" })
-                      .asObservable()
-                : EMPTY,
+            (!this.preventClosing
+                ? this.eventBusService.getStream(CLOSE_POPOVER_EVENT)
+                : EMPTY) as Observable<void>,
             this.closePopover || EMPTY
         ).subscribe(() => {
             this.hidePopover();
@@ -419,7 +426,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
 
         if (this.isTriggerPresent("click") && !this.preventClosing) {
             const documentClickSubscription = this.eventBusService
-                .getStream({ id: DOCUMENT_CLICK_EVENT })
+                .getStream(DOCUMENT_CLICK_EVENT)
                 .subscribe((event: any) => {
                     const popoverModalNativeElement =
                         this.popover?.instance.elRef.nativeElement;

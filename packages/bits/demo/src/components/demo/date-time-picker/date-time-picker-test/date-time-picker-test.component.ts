@@ -40,7 +40,7 @@ export class DateTimePickerTestComponent {
         this.selectedDate = moment(this.dt).format("YYYY-MM-DD HH:mm");
     }
 
-    onModelChanged(event: any) {
+    public onModelChanged(event: any): void {
         this.selectedDate = moment(event).format("YYYY-MM-DD HH:mm");
     }
 }

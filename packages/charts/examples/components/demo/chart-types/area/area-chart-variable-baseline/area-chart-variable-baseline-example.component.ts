@@ -40,7 +40,7 @@ import {
 export class AreaChartVariableBaselineExampleComponent implements OnInit {
     public chart: Chart;
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         // areaGrid returns an XYGrid configured for displaying an area chart's axes and other grid elements
         const grid = areaGrid();
         // set the 'axis.left.fit' property to 'true' to accommodate the extra width required by the negative sign on the left axis labels

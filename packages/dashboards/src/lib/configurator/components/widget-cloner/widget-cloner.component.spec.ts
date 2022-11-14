@@ -294,7 +294,7 @@ describe("WidgetClonerComponent", () => {
                     expect(spy).not.toHaveBeenCalled();
                 });
 
-                it("should unsubscribe from status changes on ngOnDestroy", () => {
+                it("should unsubscribe from status changes on ngOnDestroy", (): void => {
                     const spy = spyOn(component.changeDetector, "markForCheck");
                     component.onStepNavigated({
                         currentStepIndex: 0,

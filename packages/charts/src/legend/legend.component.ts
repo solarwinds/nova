@@ -32,7 +32,6 @@ import { LegendOrientation } from "./types";
 
 @Component({
     selector: "nui-legend",
-    // eslint-disable-next-line
     host: { class: "d-inline-block" },
     templateUrl: "./legend.component.html",
     encapsulation: ViewEncapsulation.Emulated,
@@ -73,7 +72,7 @@ export class LegendComponent implements OnChanges, OnDestroy {
      */
     @Input() public seriesUnitLabel: string;
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes["active"]) {
             this.activeChanged.emit(this.active);
         }

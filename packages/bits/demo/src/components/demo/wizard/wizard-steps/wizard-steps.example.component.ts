@@ -39,7 +39,7 @@ export class WizardStepsExampleComponent implements OnDestroy, OnInit {
 
     public selectedIndex: number;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     public myForm: FormGroup;
 
@@ -47,16 +47,16 @@ export class WizardStepsExampleComponent implements OnDestroy, OnInit {
 
     public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
-            name: this.formBuilder.control("", Validators.required),
-            email: this.formBuilder.control("", [
-                Validators.required,
-                Validators.pattern("[^ @]*@[^ @]*"),
-                Validators.email,
-            ]),
-            password: this.formBuilder.control("", [
-                Validators.required,
-                Validators.minLength(8),
-            ]),
+            name: ["", Validators.required],
+            email: [
+                "",
+                [
+                    Validators.required,
+                    Validators.pattern("[^ @]*@[^ @]*"),
+                    Validators.email,
+                ],
+            ],
+            password: ["", [Validators.required, Validators.minLength(8)]],
         });
     }
 
@@ -66,13 +66,13 @@ export class WizardStepsExampleComponent implements OnDestroy, OnInit {
 
     public addStep(): void {
         // addStepDynamic returns an instance of WizardStepComponent that was dynamically added
-        const step: WizardStepComponent = this.wizardComponent.addStepDynamic(
+        const step = this.wizardComponent.addStepDynamic(
             this.dynamicStep,
             this.selectedIndex + 1
         );
 
         step.enter
-            .pipe(takeUntil(this.destroy$))
+            ?.pipe(takeUntil(this.destroy$))
             .subscribe(() =>
                 console.log(
                     `Enter event has been emitted from WizardStepComponent`
@@ -80,7 +80,7 @@ export class WizardStepsExampleComponent implements OnDestroy, OnInit {
             );
 
         step.exit
-            .pipe(takeUntil(this.destroy$))
+            ?.pipe(takeUntil(this.destroy$))
             .subscribe(() =>
                 console.log(
                     `Exit event has been emitted from WizardStepComponent`

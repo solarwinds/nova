@@ -31,6 +31,6 @@ describe("a11y: message", () => {
     });
 
     it("should check a11y of message", async () => {
-        await assertA11y(browser, MessageAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, MessageAtom, rulesToDisable);
     });
 });

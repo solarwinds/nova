@@ -26,6 +26,7 @@ import {
     delay,
     finalize,
     map,
+    // eslint-disable-next-line import/no-deprecated
     switchMap,
     tap,
 } from "rxjs/operators";
@@ -74,6 +75,7 @@ export class DrilldownDataSource
         ).next(this.dataFields);
 
         this.applyFilters$
+            // eslint-disable-next-line import/no-deprecated
             .pipe(switchMap((filters) => this.getData(filters)))
             .subscribe(async (res) => {
                 this.outputsSubject.next(await this.getFilteredData(res));

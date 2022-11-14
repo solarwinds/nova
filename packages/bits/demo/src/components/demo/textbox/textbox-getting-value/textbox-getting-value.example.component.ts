@@ -40,7 +40,7 @@ export class TextboxGettingValueExampleComponent implements AfterViewInit {
 
     @ViewChild("textboxValueChangedExample") textbox: TextboxComponent;
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.textbox.textChange
             .pipe(
                 tap(

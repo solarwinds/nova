@@ -151,7 +151,7 @@ export class SelectV2TestExampleComponent
         this.select.inputElement.nativeElement.focus();
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.fancyForm = this.formBuilder.group({
             select: this.formBuilder.control("", Validators.required),
         });
@@ -163,7 +163,7 @@ export class SelectV2TestExampleComponent
             });
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this.select.clickOutsideDropdown.subscribe(() => {
             if (this.handleClicksOutside) {
                 this.select.hideDropdown();
@@ -171,7 +171,7 @@ export class SelectV2TestExampleComponent
         });
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }

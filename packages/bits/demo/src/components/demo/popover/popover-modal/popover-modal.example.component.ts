@@ -28,7 +28,7 @@ import { Subject } from "rxjs";
 export class PopoverModalExampleComponent {
     public closePopoverSubject: Subject<void> = new Subject<void>();
 
-    public closePopover() {
+    public closePopover(): void {
         this.closePopoverSubject.next();
     }
 }

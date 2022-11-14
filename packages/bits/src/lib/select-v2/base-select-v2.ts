@@ -19,7 +19,6 @@
 //  THE SOFTWARE.
 
 import { LiveAnnouncer } from "@angular/cdk/a11y";
-import { DOWN_ARROW, ENTER, UP_ARROW } from "@angular/cdk/keycodes";
 import { OverlayConfig } from "@angular/cdk/overlay";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
@@ -51,6 +50,7 @@ import pull from "lodash/pull";
 import { Observable, Subject } from "rxjs";
 import { delay, takeUntil, tap } from "rxjs/operators";
 
+import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import {
     OVERLAY_ITEM,
     OVERLAY_WITH_POPUP_STYLES_CLASS,
@@ -78,7 +78,6 @@ const V_SCROLL_HEIGHT_BUFFER = 10;
 
 // Will be renamed in scope of the NUI-5797
 @Directive()
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class BaseSelectV2
     implements
         AfterViewInit,
@@ -131,6 +130,12 @@ export abstract class BaseSelectV2
     @HostBinding("class.has-error")
     @Input()
     public isInErrorState: boolean;
+
+    private allowedKeys = [
+        KEYBOARD_CODE.ARROW_UP,
+        KEYBOARD_CODE.ARROW_DOWN,
+        KEYBOARD_CODE.ENTER,
+    ].map(String);
 
     /** Input to set aria label text */
     @Input() public get ariaLabel(): string {
@@ -426,7 +431,8 @@ export abstract class BaseSelectV2
                         this.options?.find((option) => isEqual(option.value, v))
                     )
                     .filter((_) => _)
-            ); // removes 'undefined' elements out of the array if any
+            );
+            // removes 'undefined' elements out of the array if any
             this._selectedOptions.forEach(
                 (option) => (option.outfiltered = true)
             );
@@ -530,11 +536,7 @@ export abstract class BaseSelectV2
     }
 
     private isAllowedKeyOnManualDropdown(event: KeyboardEvent): Boolean {
-        return Boolean(
-            [UP_ARROW, DOWN_ARROW, ENTER].find(
-                (i: number) => i === event.keyCode
-            )
-        );
+        return this.allowedKeys.includes(event.code);
     }
 
     private defineDropdownContainer(): void {

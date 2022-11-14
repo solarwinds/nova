@@ -59,7 +59,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
      */
     @Output() selected: EventEmitter<string> = new EventEmitter();
 
-    @HostBinding("class.vertical") get isVertical() {
+    @HostBinding("class.vertical") get isVertical(): boolean {
         return this.vertical;
     }
 
@@ -79,7 +79,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
         private ngZone: NgZone
     ) {}
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         // Observing the size of the component to check traverse
         this._ro = new ResizeObserver((entries) =>
             entries.forEach(() => this.checkTraverse())
@@ -105,7 +105,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
         );
     }
 
-    public setActiveTab() {
+    public setActiveTab(): void {
         if (this._tabs.length && !this.getActiveTab()) {
             this._tabs.first.active = true;
             this.selected.emit(this._tabs.first.tabId);
@@ -243,7 +243,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
         return value + increment + "px";
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this._changesSubscription.unsubscribe();
         this._tabSelectedSubscriptions.forEach((sub) => sub.unsubscribe());
         this._ro.disconnect();

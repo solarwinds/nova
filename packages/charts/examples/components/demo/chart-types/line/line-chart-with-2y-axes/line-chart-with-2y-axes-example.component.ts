@@ -50,19 +50,19 @@ export class LineChartWith2YAxesExampleComponent implements OnInit, OnDestroy {
     public yRightScale: LinearScale;
     public axesStyles: IAxesStyleChangeEventPayload;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
-    public get leftAxisStyles() {
+    public get leftAxisStyles(): Record<string, any> {
         return this.axesStyles?.[this.yLeftScale.id] ?? {};
     }
 
-    public get rightAxisStyles() {
+    public get rightAxisStyles(): Record<string, any> {
         return this.axesStyles?.[this.yRightScale.id] ?? {};
     }
 
     constructor(public changeDetector: ChangeDetectorRef) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const xScale = new TimeScale();
         this.yLeftScale = new LinearScale();
         this.yLeftScale.formatters.tick = (value: Number) => `${value}%`;

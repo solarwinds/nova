@@ -27,7 +27,7 @@ import {
     BandScale,
     CHART_MARKERS,
     CHART_PALETTE_CS1,
-    CHART_PALETTE_CS_S,
+    CHART_PALETTE_CS_S_EXTENDED,
     getColorValueByName,
     IChartSeries,
     ILineAccessors,
@@ -56,8 +56,8 @@ export class ThresholdsSparkExampleComponent implements OnInit {
     public chartAssist: SparkChartAssist;
     public statusBgColors = new MappedValueProvider(
         {
-            [Status.Error]: addOpacity(CHART_PALETTE_CS_S[1], 0.2),
-            [Status.Warning]: addOpacity(CHART_PALETTE_CS_S[2], 0.3),
+            [Status.Error]: addOpacity(CHART_PALETTE_CS_S_EXTENDED[2], 0.2),
+            [Status.Warning]: addOpacity(CHART_PALETTE_CS_S_EXTENDED[4], 0.3),
         },
         "transparent"
     );
@@ -72,7 +72,7 @@ export class ThresholdsSparkExampleComponent implements OnInit {
 
     constructor(private thresholdsService: ThresholdsService) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.chartAssist = new SparkChartAssist();
         this.renderer = new LineRenderer();
         this.accessors = new LineAccessors(

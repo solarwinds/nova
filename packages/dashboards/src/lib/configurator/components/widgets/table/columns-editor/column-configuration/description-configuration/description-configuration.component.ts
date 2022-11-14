@@ -62,7 +62,7 @@ export class DescriptionConfigurationComponent
         public changeDetector: ChangeDetectorRef
     ) {}
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.form = this.formBuilder.group({
             label: [this.label || null, [Validators.required]],
             isActive: this.isActive ?? true,
@@ -72,7 +72,7 @@ export class DescriptionConfigurationComponent
         this.formReady.emit(this.form);
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.label) {
             this.form?.patchValue({ label: changes.label.currentValue });
         }
@@ -84,9 +84,9 @@ export class DescriptionConfigurationComponent
         }
     }
 
-    public stub() {}
+    public stub(): void {}
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.formDestroy.emit(this.form);
     }
 }

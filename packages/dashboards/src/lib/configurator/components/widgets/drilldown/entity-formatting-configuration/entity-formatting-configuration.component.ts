@@ -70,7 +70,7 @@ export class EntityFormattingConfigurationComponent
         this.formReady.emit(this.form);
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.dataFieldIds) {
             this.getFieldMappingsControl.setValue(
                 changes.dataFieldIds.currentValue

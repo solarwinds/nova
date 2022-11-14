@@ -29,7 +29,6 @@ import {
     OnChanges,
     OnDestroy,
     Output,
-    SimpleChange,
     SimpleChanges,
     ViewEncapsulation,
 } from "@angular/core";
@@ -103,15 +102,15 @@ export class SpinnerComponent implements OnChanges, OnDestroy {
         this._size = SpinnerComponent.defaultSize;
     }
 
-    public get size() {
+    public get size(): SpinnerSize {
         return this._size || SpinnerComponent.defaultSize;
     }
 
-    public get icon() {
+    public get icon(): ButtonIcon {
         return ButtonIcon[this.size];
     }
 
-    public get showText() {
+    public get showText(): boolean {
         return this.size !== SpinnerSize.Small;
     }
 
@@ -121,7 +120,7 @@ export class SpinnerComponent implements OnChanges, OnDestroy {
         private ngZone: NgZone
     ) {}
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes?.percent) {
             this.ariaValueNow = this.percent ? String(this.percent) : undefined;
         }
@@ -148,17 +147,17 @@ export class SpinnerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    public cancelShowTimer() {
+    public cancelShowTimer(): void {
         if (this.showTimer) {
             clearTimeout(this.showTimer);
         }
     }
 
-    public cancelProgress() {
+    public cancelProgress(): void {
         this.cancel.emit();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.cancelShowTimer();
     }
 }

@@ -34,11 +34,11 @@ export class HeaderButtonsExampleComponent {
         @Inject(ToastService) private toastService: ToastService
     ) {}
 
-    public open(content: TemplateRef<string>) {
+    public open(content: TemplateRef<string>): void {
         this.activeDialog = this.dialogService.open(content, { size: "sm" });
     }
 
-    public onButtonClick(title: string) {
+    public onButtonClick(title: string): void {
         title === "Action" ? this.actionDone() : this.actionCanceled();
         this.activeDialog.close();
     }

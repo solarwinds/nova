@@ -150,7 +150,7 @@ export class ChipsComponent
         this.chipsOverflowService.overflowCounter = el;
     }
 
-    private destroy$: Subject<void> = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     get role(): string | null {
         return this.getItemsCount() ? "list" : null;
@@ -161,7 +161,7 @@ export class ChipsComponent
         private chipsOverflowService: ChipsOverflowService
     ) {}
 
-    ngOnChanges(changes: SimpleChanges): void {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.itemsSource) {
             this.chipsOverflowService.itemsSource =
                 changes.itemsSource.currentValue;
@@ -175,11 +175,11 @@ export class ChipsComponent
         }
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.removeAllLinkText = this.removeAllLinkText || $localize`Clear all`;
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         if (this.overflow) {
             this.initChipsOverflow();
         }
@@ -187,7 +187,7 @@ export class ChipsComponent
 
     /** Handles Popup on window resize */
     @HostListener("window:resize")
-    public onWinResize() {
+    public onWinResize(): void {
         if (this.overflow && this.getItemsCount()) {
             this.chipsOverflowService.handleOverflow();
         }
@@ -203,11 +203,11 @@ export class ChipsComponent
         return count;
     }
 
-    public onRemove(data: { item: IChipsItem; group?: IChipsGroup }) {
+    public onRemove(data: { item: IChipsItem; group?: IChipsGroup }): void {
         this.chipRemoved.emit(data);
     }
 
-    public onRemoveAll(event: MouseEvent) {
+    public onRemoveAll(event: MouseEvent): void {
         this.removeAll.emit(event);
         event.preventDefault();
     }

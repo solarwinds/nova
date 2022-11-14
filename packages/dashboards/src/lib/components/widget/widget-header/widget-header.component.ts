@@ -99,7 +99,7 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
      */
     @Input() public collapsed: boolean = false;
 
-    @HostBinding("class.nui-widget-header") get hostClass() {
+    @HostBinding("class.nui-widget-header") get hostClass(): boolean {
         return true;
     }
 
@@ -168,7 +168,7 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
             });
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         // we can't set values in ngAfterViewInit directly - it causes ExpressionChangedAfterViewChecked error, so setTimeout has to be used
         setTimeout(() => {
             this.withCustomElement =
@@ -183,10 +183,10 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     public removeWidget() {
-        this.eventBus.getStream(WIDGET_REMOVE).next(undefined);
+        this.eventBus.getStream(WIDGET_REMOVE).next({});
     }
 
-    public toggleCollapsed() {
+    public toggleCollapsed(): void {
         this.pizzagnaService.setProperty(
             {
                 componentId: this.componentId,
@@ -197,20 +197,20 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         );
     }
 
-    public onEditWidget() {
-        this.eventBus.getStream(WIDGET_EDIT).next(undefined);
+    public onEditWidget(): void {
+        this.eventBus.getStream(WIDGET_EDIT).next({});
     }
 
-    public onReloadData() {
+    public onReloadData(): void {
         if (!this.reloadable) {
             throw new Error(
                 "The widget is not reloadable, so it can't be reloaded manually."
             );
         }
-        this.eventBus.getStream(REFRESH).next(undefined);
+        this.eventBus.getStream(REFRESH).next({});
     }
 
-    public prepareLink($event: MouseEvent) {
+    public prepareLink($event: MouseEvent): boolean {
         const target: HTMLElement = $event.target as HTMLElement;
         if (target && this.linkProvider) {
             const link = this.linkProvider.getLink(this.url);

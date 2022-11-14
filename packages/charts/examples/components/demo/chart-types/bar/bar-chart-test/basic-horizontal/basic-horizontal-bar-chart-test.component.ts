@@ -47,7 +47,7 @@ export class BasicHorizontalBarChartTestComponent implements AfterViewInit {
         gridConfig.dimension.margin.left = 150;
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         const accessors = barAccessors(this.config);
         const renderer = new BarRenderer({
             highlightStrategy: new BarHighlightStrategy("y"),

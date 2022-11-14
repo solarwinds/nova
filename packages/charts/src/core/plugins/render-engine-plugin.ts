@@ -42,7 +42,7 @@ export class RenderEnginePlugin extends ChartPlugin {
     // initializing isChartInView to true to ensure emission of initial data point events
     private isChartInView = true;
     private lastInteractionValuesPayload: IInteractionValuesPayload;
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     public initialize(): void {
         this.renderEngine = this.chart.getRenderEngine();

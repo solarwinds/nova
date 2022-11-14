@@ -44,7 +44,6 @@ export class TableColumnDefDirective
     extends CdkColumnDef
     implements OnInit, OnChanges
 {
-    /* eslint-disable @angular-eslint/no-input-rename */
     public get name(): string {
         return super.name;
     }
@@ -52,7 +51,6 @@ export class TableColumnDefDirective
     public set name(value: string) {
         super.name = value;
     }
-    /* eslint-enable @angular-eslint/no-input-rename */
     @Input() type: ColumnTypes;
     @Input() columnWidth: number;
 
@@ -60,7 +58,7 @@ export class TableColumnDefDirective
         super();
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         if (this.columnWidth) {
             this.tableStateHandlerService.setColumnWidth(
                 this.name,
@@ -76,7 +74,7 @@ export class TableColumnDefDirective
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.columnWidth && !changes.columnWidth.firstChange) {
             this.tableStateHandlerService.setColumnWidth(
                 this.name,

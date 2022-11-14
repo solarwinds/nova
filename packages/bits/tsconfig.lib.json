@@ -1,19 +1,19 @@
 {
     "angularCompilerOptions": {
-        "skipTemplateCodegen": true,
-        "strictMetadataEmit": true,
+        "enableResourceInlining": true,
         "fullTemplateTypeCheck": true,
+        "skipTemplateCodegen": true,
         "strictInjectionParameters": true,
-        "enableResourceInlining": true
+        "strictMetadataEmit": true
     },
     "compilerOptions": {
-        "outDir": "./dist/aot",
+        "baseUrl": ".",
         "declaration": false,
-        "target": "es6",
-        "module": "es6",
-        "baseUrl": "."
+        "forceConsistentCasingInFileNames": true,
+        "module": "ES6",
+        "strict": false,
+        "target": "ES6"
     },
-    "exclude": [],
     "extends": "./tsconfig.json",
     "files": ["./src/public_api.ts"],
     "typeRoots": ["node_modules/@types"]

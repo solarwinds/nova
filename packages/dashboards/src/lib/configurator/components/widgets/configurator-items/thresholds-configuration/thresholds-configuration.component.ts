@@ -78,7 +78,7 @@ export class ThresholdsConfigurationComponent
 
     public form: FormGroup;
 
-    private destroyed$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         public changeDetector: ChangeDetectorRef,
@@ -110,7 +110,7 @@ export class ThresholdsConfigurationComponent
         this.handleWarningThreshold(this.warningThresholdValue);
 
         this.form.statusChanges
-            .pipe(takeUntil(this.destroyed$))
+            .pipe(takeUntil(this.destroy$))
             .subscribe((change) => {
                 this.form.markAllAsTouched();
                 this.cd.detectChanges();
@@ -119,7 +119,7 @@ export class ThresholdsConfigurationComponent
         this.formReady.emit(this.form);
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         const formKeys = [
             "criticalThresholdValue",
             "warningThresholdValue",
@@ -155,9 +155,9 @@ export class ThresholdsConfigurationComponent
             : $localize`No thresholds`;
     }
 
-    public ngOnDestroy() {
-        this.destroyed$.next();
-        this.destroyed$.complete();
+    public ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     private validateRadioButtonsGroupValue() {

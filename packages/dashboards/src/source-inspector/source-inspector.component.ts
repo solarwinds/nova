@@ -48,7 +48,8 @@ export class SourceInspectorComponent implements OnInit {
     private fileExtensionsRegex = /.*\.(ts|html|less)$/;
 
     public componentSources: any;
-    get selectedFile() {
+
+    get selectedFile(): string {
         return this._selectedFile;
     }
 
@@ -69,7 +70,7 @@ export class SourceInspectorComponent implements OnInit {
         @SkipSelf() @Optional() @Inject(DEMO_PATH_TOKEN) private context: any
     ) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.componentSources = this.getSourcesByFilenamePrefix(
             this.filenamePrefix
         );

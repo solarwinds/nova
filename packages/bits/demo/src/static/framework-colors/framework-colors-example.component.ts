@@ -35,12 +35,12 @@ export class FrameworkColorsExampleComponent {
 
     constructor(private toastService: ToastService) {}
 
-    public onClipboardSuccess() {
+    public onClipboardSuccess(): void {
         this.toastService.success({
             message: $localize`Color successfully copied to clipboard`,
         });
     }
-    public keyValueCompare(a: any, b: any) {
+    public keyValueCompare(a: any, b: any): number {
         return parseInt(a.key, 10) - parseInt(b.key, 10);
     }
 }

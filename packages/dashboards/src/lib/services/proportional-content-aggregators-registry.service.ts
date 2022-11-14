@@ -31,7 +31,7 @@ export class ProportionalContentAggregatorsRegistryService extends RegistryServi
         super(logger, "ProportionalContentAggregatorsRegistryService");
     }
 
-    getItemKey(item: IProportionalDonutContentAggregatorDefinition) {
+    getItemKey(item: IProportionalDonutContentAggregatorDefinition): string {
         return item.aggregatorType;
     }
 }

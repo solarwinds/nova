@@ -66,7 +66,7 @@ export class RadialGrid extends Grid implements IGrid {
         return this;
     }
 
-    protected adjustRenderingArea = () => {
+    protected adjustRenderingArea = (): void => {
         const d = this.config().dimension;
         const attrs = {
             width: d.outerWidth(),

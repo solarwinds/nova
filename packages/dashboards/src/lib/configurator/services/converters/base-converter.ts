@@ -40,7 +40,7 @@ export abstract class BaseConverter
     public component: any;
     public componentId: string;
 
-    public destroy$ = new Subject<void>();
+    public readonly destroy$ = new Subject<void>();
 
     constructor(
         @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,
@@ -48,7 +48,7 @@ export abstract class BaseConverter
         protected pizzagnaService: PizzagnaService
     ) {}
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this.buildForm();
 
         this.toPreview(this.component.form);
@@ -58,7 +58,7 @@ export abstract class BaseConverter
 
     public abstract toPreview(form: FormGroup): void;
 
-    public setComponent(component: any, componentId: string) {
+    public setComponent(component: any, componentId: string): void {
         this.component = component;
         this.componentId = componentId;
     }
@@ -67,11 +67,11 @@ export abstract class BaseConverter
         return this.previewService.preview;
     }
 
-    public updatePreview(preview: IPizzagnaLayer) {
+    public updatePreview(preview: IPizzagnaLayer): void {
         this.previewService.preview = preview;
     }
 
-    public updateFormPizzagna(pizzagna: IPizzagna) {
+    public updateFormPizzagna(pizzagna: IPizzagna): void {
         this.pizzagnaService.updatePizzagna(pizzagna);
         this.eventBus.getStream(SET_PROPERTY_VALUE).next({
             payload: { path: "", value: pizzagna } as ISetPropertyPayload,

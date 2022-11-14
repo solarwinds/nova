@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { SorterDirection } from "../../sorter/public-api";
+import { ISortedItem, SorterDirection } from "../../sorter/public-api";
 
 interface TestTableModel {
     position: string;
@@ -49,10 +49,11 @@ const ELEMENT_DATA: TestTableModel[] = [
 ];
 
 export class TableSpecHelpers {
-    public static getTableInitialData() {
+    public static getTableInitialData(): TestTableModel[] {
         return ELEMENT_DATA;
     }
 
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public static basicTableCase() {
         return {
             dropCellIndex: 1,
@@ -82,6 +83,7 @@ export class TableSpecHelpers {
         };
     }
 
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public static getColumnReorderTestCases() {
         return [
             {
@@ -249,7 +251,7 @@ export class TableSpecHelpers {
         ];
     }
 
-    public static getColumnSortTestStates() {
+    public static getColumnSortTestStates(): ISortedItem[] {
         return [
             {
                 sortBy: "first",
@@ -276,7 +278,7 @@ export class TableSpecHelpers {
         clientWidth: number,
         dragCellIndex: number,
         dropCellIndex: number
-    ) {
+    ): void {
         const dragover = new DragEvent("dragover");
         const drop = new DragEvent("drop");
 
@@ -312,7 +314,10 @@ export class TableSpecHelpers {
         droppedElement.dispatchEvent(drop);
     }
 
-    public static dragElement(draggedElement: Element, dragCellIndex: number) {
+    public static dragElement(
+        draggedElement: Element,
+        dragCellIndex: number
+    ): void {
         const drag = new DragEvent("dragstart");
 
         Object.defineProperty(drag, "dataTransfer", {
@@ -400,16 +405,15 @@ export class TableSpecHelpers {
         actualTableContent = actualTableContent.concat(rows);
 
         // Convert the nodes into their text content;
-        // eslint-disable-next-line
         return actualTableContent.map((row) =>
-            row.map((cell) => cell.textContent!.trim())
+            row.map((cell) => cell.textContent?.trim() ?? "")
         );
     }
 
     public static expectTableToMatchContent(
         tableElement: Element,
         expected: any[]
-    ) {
+    ): void {
         const actual = TableSpecHelpers.getActualTableContent(tableElement);
         const missedExpectations: string[] = [];
 

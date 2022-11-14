@@ -145,6 +145,7 @@ export class TableColumnsConfigurationComponent
                     const presentationIndex = columnsTemplate.findIndex(
                         (val: { id: string }) => val.id === "presentation"
                     );
+                    // eslint-disable-next-line max-len
                     const presentationPizzagnaPath: string = `${PizzagnaLayer.Structure}.columns.properties.template[${presentationIndex}].properties.dataFields`;
                     formPizzagna = immutableSet(
                         formPizzagna,
@@ -182,7 +183,7 @@ export class TableColumnsConfigurationComponent
         );
     }
 
-    public ngOnInit() {}
+    public ngOnInit(): void {}
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.dataFields && changes.dataFields.currentValue) {
@@ -240,7 +241,7 @@ export class TableColumnsConfigurationComponent
         }
     }
 
-    public onFormReady(form: AbstractControl) {
+    public onFormReady(form: AbstractControl): void {
         this.form = this.formBuilder.group({
             columns: form as FormArray,
             // this form field serves as a source of truth for anybody interesting in reading/modifying the columns value
@@ -281,7 +282,7 @@ export class TableColumnsConfigurationComponent
         });
     }
 
-    public onItemsChange(columns: ITableWidgetColumnConfig[]) {
+    public onItemsChange(columns: ITableWidgetColumnConfig[]): void {
         const parentPath = "columns";
         const componentIds = columns.map((tile) => tile.id);
         this.pizzagnaService.createComponentsFromTemplate(
@@ -297,7 +298,7 @@ export class TableColumnsConfigurationComponent
         this.pizzagnaService.setProperty(property, columns);
     }
 
-    public addColumn() {
+    public addColumn(): void {
         // @ts-ignore: Types of property 'formatter' are incompatible.
         this.onItemsChange([
             ...this.columns,
@@ -309,11 +310,11 @@ export class TableColumnsConfigurationComponent
         ]);
     }
 
-    public onResetColumns() {
+    public onResetColumns(): void {
         this.resetColumns(!!this.columns?.length);
     }
 
-    public resetColumns(confirmation: boolean) {
+    public resetColumns(confirmation: boolean): void {
         const reset = () => {
             const columns: ITableWidgetColumnConfig[] =
                 this.lastValidDataFields.map((df) => ({
@@ -380,7 +381,7 @@ export class TableColumnsConfigurationComponent
         });
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }

@@ -34,8 +34,8 @@ import {
     forceSimulation,
     Simulation,
     SimulationNodeDatum,
-} from "d3-force";
-import { select } from "d3-selection";
+} from "d3";
+import { select } from "d3";
 import each from "lodash/each";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
@@ -81,7 +81,7 @@ export class ChartTooltipsComponent implements OnChanges, OnDestroy {
 
     constructor(private changeDetector: ChangeDetectorRef) {}
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (!(changes["plugin"] && changes["plugin"].currentValue)) {
             return;
         }
@@ -101,7 +101,7 @@ export class ChartTooltipsComponent implements OnChanges, OnDestroy {
         this.unsubscribe$.complete();
     }
 
-    public trackByFn(index: number, item: any) {
+    public trackByFn(index: number, item: any): string | undefined {
         return item.value.seriesId;
     }
 
@@ -131,11 +131,11 @@ export class ChartTooltipsComponent implements OnChanges, OnDestroy {
         if (this.closePending || directivesChanged || !this.isOpen) {
             clearTimeout(this.openTimeout);
 
-            this.openTimeout = setTimeout(() => {
+            this.openTimeout = window.setTimeout(() => {
                 this.openTooltips.next();
                 clearTimeout(this.collisionTimeout);
 
-                this.collisionTimeout = setTimeout(() => {
+                this.collisionTimeout = window.setTimeout(() => {
                     this.avoidTooltipCollisions();
                     this.isOpen = true;
                 });
@@ -155,7 +155,7 @@ export class ChartTooltipsComponent implements OnChanges, OnDestroy {
         this.closePending = true;
         clearTimeout(this.closeTimeout);
 
-        this.closeTimeout = setTimeout(() => {
+        this.closeTimeout = window.setTimeout(() => {
             this.closeTooltips.next();
             this.closePending = false;
             this.isOpen = false;

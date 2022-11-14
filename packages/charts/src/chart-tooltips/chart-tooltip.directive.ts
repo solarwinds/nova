@@ -32,7 +32,6 @@ import {
 } from "@angular/cdk/overlay";
 import { ComponentPortal } from "@angular/cdk/portal";
 import {
-    ComponentRef,
     Directive,
     ElementRef,
     Input,
@@ -92,19 +91,18 @@ export class ChartTooltipDirective implements OnInit, OnDestroy {
         }
     }
 
-    public show() {
+    public show(): void {
         if (this.overlayRef.hasAttached()) {
             this.positionStrategy.apply();
-        } else {
-            const tooltipRef: ComponentRef<ChartTooltipComponent> =
-                this.overlayRef.attach(
-                    new ComponentPortal(ChartTooltipComponent)
-                );
-            tooltipRef.instance.template = this.template;
+            return;
         }
+        const tooltipRef = this.overlayRef.attach(
+            new ComponentPortal(ChartTooltipComponent)
+        );
+        tooltipRef.instance.template = this.template;
     }
 
-    public hide() {
+    public hide(): void {
         this.overlayRef.detach();
     }
 

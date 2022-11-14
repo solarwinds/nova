@@ -37,6 +37,6 @@ describe("a11y: progress", () => {
 
     it("should check a11y of progress", async () => {
         await startProgressBasic.click();
-        await assertA11y(browser, ProgressAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, ProgressAtom, rulesToDisable);
     });
 });

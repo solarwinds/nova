@@ -40,7 +40,7 @@ import {
 export class AreaChartVerticalExampleComponent implements OnInit {
     public chart: Chart;
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const gridConfig = new XYGridConfig();
         // Disable interaction because we don't support a horizontal interaction line yet
         gridConfig.interactionPlugins = false;

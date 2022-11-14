@@ -36,7 +36,7 @@ export class FormFieldDynamicDisablingExampleComponent implements OnInit {
         @Inject(ToastService) private toastService: ToastService
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dynamicForm = this.formBuilder.group({
             password: this.formBuilder.control("", Validators.required),
             confirmPassword: this.formBuilder.control(
@@ -46,7 +46,7 @@ export class FormFieldDynamicDisablingExampleComponent implements OnInit {
         });
     }
 
-    public onPasswordBlurred() {
+    public onPasswordBlurred(): void {
         if (this.dynamicForm.controls.password.valid) {
             this.dynamicForm.controls.confirmPassword.enable();
         } else {
@@ -54,7 +54,7 @@ export class FormFieldDynamicDisablingExampleComponent implements OnInit {
         }
     }
 
-    public toggleRadio() {
+    public toggleRadio(): void {
         this.visibleRadio = !this.visibleRadio;
     }
 }

@@ -45,15 +45,14 @@ export class MenuAtom extends Atom {
     public getMenuButton = (): ButtonAtom =>
         Atom.findIn(ButtonAtom, this.getElement());
 
-    public getMenuButtonIconName = async (): Promise<string | undefined> =>
-        this.getMenuButton()
-            .getIcon()
-            .then((icon) => icon?.getName());
+    public getMenuButtonIconName = async (): Promise<string> =>
+        await this.getMenuButton().getIcon().getName();
 
     public toggleMenu = async (): Promise<void> => this.getMenuButton().click();
 
     public getMenuItemByContainingText = (text: string): MenuItemAtom =>
-        new MenuItemAtom(
+        Atom.findIn(
+            MenuItemAtom,
             this.getElementByCssContainingText(".nui-menu-item", text)
         );
 
@@ -70,7 +69,7 @@ export class MenuAtom extends Atom {
         browser.actions().mouseUp().perform();
 
     public getMenuItemByIndex = (idx: number): MenuItemAtom =>
-        new MenuItemAtom(this.getItemElements().get(idx));
+        Atom.findIn(MenuItemAtom, this.getItemElements().get(idx));
 
     // DO NOT USE. The following method is broken and will be fixed in the scope of NUI-6105
     public getMenuItems = async (): Promise<MenuItemAtom[]> =>
@@ -84,22 +83,28 @@ export class MenuAtom extends Atom {
         );
 
     public getItemTextArray = async (): Promise<string[]> =>
-        this.getItemElements().map<string>(
+        await this.getItemElements().map<string>(
             (elementFinder: ElementFinder | undefined) =>
                 elementFinder?.getText()
         );
 
     public getHeaderTextArray = async (): Promise<string[]> =>
-        this.getHeaderElements().map<string>(
+        await this.getHeaderElements().map<string>(
             (elementFinder: ElementFinder | undefined) =>
                 elementFinder?.getText()
         );
 
-    public clickHeaderByIndex = async (idx: number): Promise<void> =>
-        this.getHeaderElements().get(idx).click();
+    public clickHeaderByIndex = async (idx: number): Promise<void> => {
+        const headers = this.getHeaderElements();
+        await browser.wait(async () => headers.get(idx).isDisplayed());
+        await headers.get(idx).click();
+    };
 
-    public clickDividerByIndex = async (idx: number): Promise<void> =>
-        this.getElement().all(by.className("nui-divider")).get(idx).click();
+    public clickDividerByIndex = async (idx: number): Promise<void> => {
+        const dividers = this.getElement().all(by.className("nui-divider"));
+        await browser.wait(async () => dividers.get(idx).isDisplayed());
+        await dividers.get(idx).element(by.xpath("..")).click();
+    };
 
     /**
      * Returns array of checked checkboxes

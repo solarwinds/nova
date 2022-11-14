@@ -19,11 +19,12 @@
 //  THE SOFTWARE.
 
 import { browser, by, element, ElementFinder } from "protractor";
-import { ILocation } from "selenium-webdriver";
+import { By, ILocation } from "selenium-webdriver";
 
 export interface IAtomClass<T extends Atom> {
     new (element: ElementFinder): T;
-    CSS_CLASS: string;
+    CSS_CLASS?: string;
+    CSS_SELECTOR?: string;
     findIn<M extends Atom>(
         atomClass: IAtomClass<M>,
         parentElement: ElementFinder,
@@ -31,9 +32,29 @@ export interface IAtomClass<T extends Atom> {
     ): M;
 }
 
-export class Atom {
-    public static CSS_CLASS = "UNDEFINED-ATOM-CLASS";
+const byCssWithRoot = (selector: string): By => {
+    if (!Object.hasOwnProperty.call(by, "cssWithRoot")) {
+        by.addLocator(
+            "cssWithRoot",
+            // This function is executed inside browser, needs to be inline
+            (selector: string, rootElement: HTMLElement) => {
+                if (!rootElement) {
+                    rootElement = window.document.body;
+                }
+                if (!rootElement) {
+                    return;
+                }
+                if (rootElement.matches(selector)) {
+                    return rootElement;
+                }
+                return rootElement.querySelectorAll(selector);
+            }
+        );
+    }
+    return (by as any).cssWithRoot(selector);
+};
 
+export class Atom {
     /**
      * Finds given component based on unique css id
      */
@@ -44,25 +65,22 @@ export class Atom {
         return atomClass.findIn(atomClass, element(by.id(id)));
     }
 
-    private static addProperLocator() {
-        // We need locator which can match root element
-        by.addLocator(
-            "properClassName",
-            // This function is executed inside browser, needs to be inline
-            (className: string, rootElement: any) => {
-                const classString = rootElement.getAttribute("class");
-                if (classString) {
-                    const allClasses =
-                        " " + classString.replace(/\s+/g, " ") + " ";
-                    if (allClasses.indexOf(" " + className + " ") > -1) {
-                        // Class is set in root element, let's return it
-                        return rootElement;
-                    }
-                }
-                // Return matching sub-elements
-                return rootElement.getElementsByClassName(className);
-            }
+    public static getSelector<T extends Atom>(
+        atomClass: IAtomClass<T>
+    ): string {
+        if (atomClass.CSS_CLASS) {
+            return `.${atomClass.CSS_CLASS}`;
+        }
+        if (atomClass.CSS_SELECTOR) {
+            return atomClass.CSS_SELECTOR;
+        }
+        throw new ReferenceError(
+            `expected atom class ${atomClass.name} to have either CSS_CLASS or CSS_SELECTOR nonempty`
         );
+    }
+
+    public static getLocator<T extends Atom>(atomClass: IAtomClass<T>): By {
+        return byCssWithRoot(Atom.getSelector(atomClass));
     }
 
     /**
@@ -79,73 +97,62 @@ export class Atom {
         if (atomClass.findIn !== Atom.findIn) {
             return atomClass.findIn(atomClass, parentElement, index);
         }
-        if ((<any>by).properClassName === undefined) {
-            Atom.addProperLocator();
-        }
-        let componentRootElement: ElementFinder;
+        const locator = Atom.getLocator(atomClass);
+        const create = (root: ElementFinder) => new atomClass(root);
         if (index !== undefined) {
             if (!parentElement) {
-                componentRootElement = element
-                    .all(by.className(atomClass.CSS_CLASS))
-                    .get(index);
-            } else {
-                componentRootElement = parentElement
-                    .all(by.className(atomClass.CSS_CLASS))
-                    .get(index);
+                return create(element.all(locator).get(index));
             }
-        } else {
-            if (!parentElement) {
-                componentRootElement = element(
-                    (<any>by).properClassName(atomClass.CSS_CLASS)
-                );
-            } else {
-                componentRootElement = parentElement.element(
-                    (<any>by).properClassName(atomClass.CSS_CLASS)
-                );
-            }
+            return create(parentElement.all(locator).get(index));
         }
-        return new atomClass(componentRootElement);
+        if (!parentElement) {
+            return create(element(locator));
+        }
+        return create(parentElement.element(locator));
     }
 
     public static async findCount<T extends Atom>(
         atomClass: IAtomClass<T>,
         parentElement?: ElementFinder
     ): Promise<number> {
-        if (!parentElement) {
-            return <any>element.all(by.className(atomClass.CSS_CLASS)).count();
-        }
-        return <any>(
-            parentElement.all(by.className(atomClass.CSS_CLASS)).count()
-        );
+        const locator = Atom.getLocator(atomClass);
+        return await (parentElement ?? element).all(locator).count();
+    }
+
+    public static async getClasses(el: ElementFinder): Promise<string[]> {
+        return (await el.getAttribute("class"))
+            .split(/\s+/)
+            .filter((name) => !!name);
     }
 
     public static async hasClass(
         el: ElementFinder,
         className: string
     ): Promise<boolean> {
-        return el
-            .getAttribute("class")
-            .then(
-                (classes: string) =>
-                    classes.split(" ").indexOf(className) !== -1
-            );
+        const classes = await Atom.getClasses(el);
+        return classes.includes(className);
     }
 
     public static async hasAnyClass(
         el: ElementFinder,
         classNamesToSearch: string[]
     ): Promise<boolean> {
-        return el.getAttribute("class").then((classesInElement: string) => {
-            let found = false;
-            const classesInElementArray = classesInElement.split(" ");
-            classNamesToSearch.forEach((name: string) => {
-                found = classesInElementArray.indexOf(name) !== -1 || found;
-            });
-            return found;
-        });
+        const classes = await Atom.getClasses(el);
+        return classes.some((name) => classNamesToSearch.includes(name));
+    }
+
+    public static async wait<T>(
+        callback: () => Promise<T>,
+        timeout = 5000
+    ): Promise<T> {
+        return await browser.wait(callback, timeout);
     }
 
     private element: ElementFinder;
+
+    constructor(element: ElementFinder) {
+        this.element = element;
+    }
 
     public async isDisabled(): Promise<boolean> {
         return !(await this.element.isEnabled());
@@ -159,17 +166,8 @@ export class Atom {
         return this.element.isPresent();
     }
 
-    constructor(elementFinder: ElementFinder) {
-        this.element = elementFinder;
-    }
-
     public async hasClass(className: string): Promise<boolean> {
-        return this.element
-            .getAttribute("class")
-            .then(
-                (classes: string) =>
-                    classes.split(" ").indexOf(className) !== -1
-            );
+        return Atom.hasClass(this.element, className);
     }
 
     public getElement(): ElementFinder {
@@ -177,7 +175,7 @@ export class Atom {
     }
 
     public async isChildElementPresent(locator: any): Promise<boolean> {
-        return <any>this.element.isElementPresent(locator);
+        return await this.element.isElementPresent(locator);
     }
 
     /**
@@ -198,10 +196,19 @@ export class Atom {
             .perform();
     }
 
-    public scrollTo = async (options?: ScrollIntoViewOptions) =>
+    public readonly scrollTo = async (
+        options?: ScrollIntoViewOptions
+    ): Promise<void> =>
         browser.executeScript(
             "arguments[0].scrollIntoView(arguments[1])",
             this.getElement(),
             options || null
         );
+
+    public async wait<T>(
+        callback: () => Promise<T>,
+        timeout = 5000
+    ): Promise<T> {
+        return await Atom.wait(callback, timeout);
+    }
 }

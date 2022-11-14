@@ -37,7 +37,7 @@ export function stackedPreprocessor(
     const categories = gatherCategories(chartSeriesSet);
 
     // This is adding metadata to the dataset and filling missing
-    const forExtents = chartSeriesSet.reduce((acc: number[], chartSeries) => {
+    chartSeriesSet.reduce((acc: number[], chartSeries) => {
         if (!isUndefined(chartSeries.preprocess) && !chartSeries.preprocess) {
             return acc;
         }

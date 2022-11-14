@@ -56,7 +56,7 @@ export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
     public dynamicSteps: IWizardStepData[] = [];
     public awesome: boolean = false;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     @ViewChild("dynamicTemplate1") public template1: TemplateRef<string>;
     @ViewChild("dynamicTemplate2") public template2: TemplateRef<string>;
@@ -67,7 +67,7 @@ export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
         private toastService: ToastService
     ) {}
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.form = new FormGroup({
             personDetails: this.formBuilder.group({
                 name: ["", [Validators.required, Validators.minLength(3)]],
@@ -108,7 +108,7 @@ export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
             });
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }

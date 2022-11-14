@@ -200,7 +200,7 @@ export class HarryPotterDataSourceConfiguratorComponent
     }
 
     // Overriding 'ngOnInit' to add custom controls to the 'properties' form group
-    ngOnInit(): void {
+    public ngOnInit(): void {
         super.ngOnInit();
 
         // Overriding the 'properties' control on the form to create a form group that accommodates our custom properties

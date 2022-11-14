@@ -109,7 +109,7 @@ export class TreeCheckboxLazyComponent {
 
     @ViewChild(CdkTree) private cdkTree: CdkTree<ServerNode>;
 
-    hasChild = (_: number, node: ServerNode) => node.length;
+    hasChild = (_: number, node: ServerNode): boolean => !!node.length;
 
     constructor(private http: HttpMock, private differ: IterableDiffers) {}
 
@@ -172,7 +172,7 @@ export class TreeCheckboxLazyComponent {
         this.checkAllParentsSelection(node);
     }
 
-    public isParentNodeCheckedOn(node: ServerNode) {
+    public isParentNodeCheckedOn(node: ServerNode): boolean {
         if (
             this.selectionModel.isSelected(<ServerNode>this.getParentNode(node))
         ) {

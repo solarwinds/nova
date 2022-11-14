@@ -75,41 +75,41 @@ export class DragdropBasicExampleComponent {
 
     constructor(@Inject(ToastService) private toastService: IToastService) {}
 
-    public onDropObject(dropEvent: IDropEvent) {
+    public onDropObject(dropEvent: IDropEvent): void {
         this.toastService.info({ message: $localize`Drop object!` });
         this.destObject = dropEvent.payload;
     }
 
-    public onDropString(dropEvent: IDropEvent) {
+    public onDropString(dropEvent: IDropEvent): void {
         this.toastService.info({ message: $localize`Drop string!` });
         this.destString = JSON.stringify(dropEvent.payload);
     }
 
-    public onDropAnything(dropEvent: IDropEvent) {
+    public onDropAnything(dropEvent: IDropEvent): void {
         this.toastService.info({ message: $localize`Drop anything!` });
         this.destAnything = dropEvent.payload;
     }
 
-    public onDragStart(event: DragEvent) {
+    public onDragStart(event: DragEvent): void {
         this.toastService.info({ message: $localize`Drag start` });
     }
 
-    public onDragEnd(event: DragEvent) {
+    public onDragEnd(event: DragEvent): void {
         this.toastService.info({ message: $localize`Drag end` });
     }
 
-    public onDragOver(event: DragEvent) {
+    public onDragOver(event: DragEvent): void {
         this.toastService.info({
             message: $localize`Drag over`,
             options: { preventDuplicates: true },
         });
     }
 
-    public onDragEnter(event: DragEvent) {
+    public onDragEnter(event: DragEvent): void {
         this.toastService.info({ message: $localize`Drag enter` });
     }
 
-    public onDragLeave(event: DragEvent) {
+    public onDragLeave(event: DragEvent): void {
         this.toastService.info({ message: $localize`Drag leave` });
     }
 }

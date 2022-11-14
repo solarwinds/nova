@@ -40,7 +40,7 @@ export class RadioGroupAtom extends Atom {
     }
 
     // Finds and returns radio button input element
-    public getRadioInputByValue(value: string) {
+    public getRadioInputByValue(value: string): ElementFinder {
         return this.getElement().element(by.css(`input[value="${value}"]`));
     }
 

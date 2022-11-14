@@ -42,7 +42,6 @@ import { MenuGroupComponent } from "../menu-group/menu-group.component";
  * Base class for menu items. Adds styles to host element
  */
 @Directive()
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class MenuItemBaseComponent
     implements OnChanges, Highlightable
 {
@@ -56,7 +55,7 @@ export abstract class MenuItemBaseComponent
     @HostBinding("class.nui-menu-item--disabled")
     public setDisabledClass: boolean;
 
-    @HostBinding("class.nui-menu-item--active") get active() {
+    @HostBinding("class.nui-menu-item--active") get active(): boolean {
         return this.isActive;
     }
 
@@ -78,7 +77,7 @@ export abstract class MenuItemBaseComponent
         this.setDisabledClass = disabled;
     }
 
-    public setActive(val: boolean) {
+    public setActive(val: boolean): void {
         this.isActive = val;
     }
 

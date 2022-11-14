@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { extent, Numeric } from "d3-array";
+import { extent, Numeric } from "d3";
 import { Selection } from "d3-selection";
 import { ValueMap } from "d3-selection-multi";
 import defaultsDeep from "lodash/defaultsDeep";

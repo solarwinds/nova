@@ -71,7 +71,7 @@ export class CustomDataSourceFilterGroupExampleComponent
         private filterGroupCustomDataSourceService: FilterGroupCustomDataSourceService
     ) {}
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this.filterGroupSubscriptions.push(
             this.filterGroupCustomDataSourceService.outputsSubject.subscribe(
                 (filteredData: ICustomDSFilteredData) => {
@@ -91,7 +91,7 @@ export class CustomDataSourceFilterGroupExampleComponent
         this.filterGroupCustomDataSourceService.applyFilters();
     }
 
-    public changeFilters(event: IFilterGroupItem) {
+    public changeFilters(event: IFilterGroupItem): void {
         this.filterGroupCustomDataSourceService.applyFilters();
     }
 
@@ -112,7 +112,7 @@ export class CustomDataSourceFilterGroupExampleComponent
         );
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.filterGroupSubscriptions.forEach((subscription) =>
             subscription.unsubscribe()
         );

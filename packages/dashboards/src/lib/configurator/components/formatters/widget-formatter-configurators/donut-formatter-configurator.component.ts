@@ -56,7 +56,7 @@ export abstract class DonutChartFormatterConfiguratorComponent
         public logger: LoggerService
     ) {}
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         // In case we change the formatter the configurator's form gets destroyed.
         // We need it recreated if it is selected once again
         if (!this.form) {
@@ -73,7 +73,7 @@ export abstract class DonutChartFormatterConfiguratorComponent
         }
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.initForm();
     }
 

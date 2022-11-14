@@ -151,7 +151,7 @@ export class <%= classify(name) %>Component implements AfterViewInit, OnDestroy 
         this.dataSource.setData(LOCAL_DATA);<% } %>
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.outputsSubscription = this.dataSource.outputsSubject.subscribe((data: INovaFilteringOutputs) => {<%
             if(dataSource === "custom") {%>this.isBusy = false;<% } %>
             this.recalculateCounts(data);
@@ -208,7 +208,7 @@ export class <%= classify(name) %>Component implements AfterViewInit, OnDestroy 
         });
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 }

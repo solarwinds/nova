@@ -18,14 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    Input,
-    LOCALE_ID,
-    OnChanges,
-} from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnChanges } from "@angular/core";
 import sumBy from "lodash/sumBy";
 
 import { UnitConversionService } from "@nova-ui/bits";
@@ -76,7 +69,7 @@ export class DonutContentRawFormatterComponent implements OnChanges {
     @Input() data: IFormatterData[];
     @Input() config: IProportionalWidgetConfig;
 
-    ngOnChanges(): void {
+    public ngOnChanges(): void {
         this.sum = sumBy(this.data, (s) => s.data[0]);
         this.convertedValue = this.unitConversionPipe.transform(this.sum);
     }

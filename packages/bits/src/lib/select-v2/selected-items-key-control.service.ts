@@ -19,10 +19,10 @@
 //  THE SOFTWARE.
 
 import { ActiveDescendantKeyManager, LiveAnnouncer } from "@angular/cdk/a11y";
-import { BACKSPACE, LEFT_ARROW, RIGHT_ARROW } from "@angular/cdk/keycodes";
 import { Injectable, QueryList } from "@angular/core";
 import isNil from "lodash/isNil";
 
+import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import { ComboboxV2Component } from "./combobox-v2/combobox-v2.component";
 import { MarkAsSelectedItemDirective } from "./mark-as-selected-item.directive";
 
@@ -176,7 +176,7 @@ export class SelectedItemsKeyControlService {
     }
 
     private isBackspace(event: KeyboardEvent): boolean {
-        return event.keyCode === BACKSPACE;
+        return event.code === KEYBOARD_CODE.BACKSPACE;
     }
 
     private isLeftOrRightArrow(event: KeyboardEvent) {
@@ -184,11 +184,11 @@ export class SelectedItemsKeyControlService {
     }
 
     private isRightArrow(event: KeyboardEvent) {
-        return event.keyCode === RIGHT_ARROW;
+        return event.code === KEYBOARD_CODE.ARROW_RIGHT;
     }
 
     private isLeftArrow(event: KeyboardEvent) {
-        return event.keyCode === LEFT_ARROW;
+        return event.code === KEYBOARD_CODE.ARROW_LEFT;
     }
 
     private get activeItem() {

@@ -26,8 +26,8 @@ import { ButtonAtom } from "../button/button.atom";
 export class SearchAtom extends Atom {
     public static CSS_CLASS = "nui-search";
 
-    public async acceptInput(input: string) {
-        return super
+    public async acceptInput(input: string): Promise<void> {
+        await super
             .getElement()
             .element(by.css(".nui-search__input-control"))
             .sendKeys(input);
@@ -37,17 +37,19 @@ export class SearchAtom extends Atom {
         return super.getElement().click();
     }
 
-    public getCancelButton = (): ButtonAtom =>
-        Atom.findIn(
+    public getCancelButton(): ButtonAtom {
+        return Atom.findIn(
             ButtonAtom,
             this.getElement().element(by.css(".nui-search__button-cancel"))
         );
+    }
 
-    public getSearchButton = (): ButtonAtom =>
-        Atom.findIn(
+    public getSearchButton(): ButtonAtom {
+        return Atom.findIn(
             ButtonAtom,
             this.getElement().element(by.css(".nui-button[icon=search]"))
         );
+    }
 
     public async getValueAttr(): Promise<string> {
         return super
@@ -56,9 +58,12 @@ export class SearchAtom extends Atom {
             .getAttribute("value");
     }
 
-    // please, call 'browser.driver.switchTo().defaultContent()' after each calling this method (just in case)
-    public isFocused = async (): Promise<boolean> =>
-        this.getElement()
+    public async isFocused(): Promise<boolean> {
+        const isFocused = this.getElement()
             .element(by.tagName("input"))
             .equals(await browser.driver.switchTo().activeElement());
+        // please, call 'browser.driver.switchTo().defaultContent()' after each calling this method (just in case)
+        await browser.driver.switchTo().defaultContent();
+        return isFocused;
+    }
 }

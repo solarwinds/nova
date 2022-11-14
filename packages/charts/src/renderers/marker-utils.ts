@@ -145,7 +145,7 @@ export class MarkerUtils {
         >,
         className: string = MarkerUtils.DEFAULT_MARKER_CONTAINER_CLASS,
         markerInteractionConfig = DEFAULT_MARKER_INTERACTION_CONFIG
-    ) {
+    ): void {
         let markerTarget: D3Selection | D3Selection<SVGGElement> =
             target.select(`g.${className}`);
         const xCoord = dataPoint?.position?.x;
@@ -242,7 +242,7 @@ export class MarkerUtils {
     public static removeMarker(
         target: D3Selection<SVGGElement>,
         className: string = MarkerUtils.DEFAULT_MARKER_CONTAINER_CLASS
-    ) {
+    ): void {
         target.select(`g.${className}`).remove();
     }
 }

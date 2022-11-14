@@ -186,7 +186,7 @@ export class TableColumnsConfigurationV2Component
             });
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.formReady.emit(this.form);
 
         if (this.template && !this.tableFormatterRegistry.getItems()?.length) {
@@ -207,14 +207,14 @@ export class TableColumnsConfigurationV2Component
         this.onDestroy$.complete();
     }
 
-    public getColumns() {
+    public getColumns(): any[] {
         return this.form.controls["columns"].value;
     }
 
     public updateColumns(
         columns: ITableWidgetColumnConfig[],
         emitEvent: boolean = true
-    ) {
+    ): void {
         const cols = this.form.controls["columns"] as FormArray;
         cols.controls = columns.map((c) => {
             const fc = new FormControl(c);
@@ -236,11 +236,11 @@ export class TableColumnsConfigurationV2Component
         this.changeDetector.markForCheck();
     }
 
-    public trackBy(index: number, item: FormControl) {
+    public trackBy(index: number, item: FormControl): string | undefined {
         return item?.value?.id;
     }
 
-    public addColumn() {
+    public addColumn(): void {
         (this.form.controls["columns"] as FormArray).push(
             new FormControl({
                 id: uuid("column"),
@@ -251,11 +251,11 @@ export class TableColumnsConfigurationV2Component
         );
     }
 
-    public onResetColumns() {
+    public onResetColumns(): void {
         this.resetColumns(!!this.getColumns()?.length);
     }
 
-    public resetColumns(confirmation: boolean) {
+    public resetColumns(confirmation: boolean): void {
         const reset = () => {
             const columns: ITableWidgetColumnConfig[] =
                 this.dataSourceFields?.map((df) => ({
@@ -343,7 +343,7 @@ export class TableColumnsConfigurationV2Component
 
     // ------------------------------------------------- items dynamic stuff ------------------------------------------------
 
-    public moveItem(index: number, toIndex: number) {
+    public moveItem(index: number, toIndex: number): void {
         const columns = this.form.controls["columns"] as FormArray;
 
         const column = columns.at(index);
@@ -360,7 +360,7 @@ export class TableColumnsConfigurationV2Component
         this.changeDetector.detectChanges();
     }
 
-    public drop(event: CdkDragDrop<string[]>) {
+    public drop(event: CdkDragDrop<string[]>): void {
         this.moveItem(event.previousIndex, event.currentIndex);
     }
 

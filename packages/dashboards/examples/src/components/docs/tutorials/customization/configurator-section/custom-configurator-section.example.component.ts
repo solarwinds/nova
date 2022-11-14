@@ -34,7 +34,9 @@ import {
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
+// eslint-disable-next-line import/no-deprecated
 import { BehaviorSubject, combineLatest, Observable } from "rxjs";
+// eslint-disable-next-line import/no-deprecated
 import { finalize, map, startWith } from "rxjs/operators";
 
 import { DataSourceService, IFilteringOutputs } from "@nova-ui/bits";
@@ -173,8 +175,10 @@ export class CustomKpiDescriptionConfigurationComponent
         }
 
         const label = this.form.get("label");
+        // eslint-disable-next-line import/no-deprecated
         const labelValue = label?.valueChanges.pipe(startWith(label?.value));
 
+        // eslint-disable-next-line import/no-deprecated
         this.subtitle$ = combineLatest([
             labelValue?.pipe(map((t) => t || $localize`no label`)),
         ]).pipe(map((labels) => labels.join(", ")));
@@ -182,7 +186,7 @@ export class CustomKpiDescriptionConfigurationComponent
         this.formReady.emit(this.form);
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.label) {
             this.form.patchValue({ label: changes.label.currentValue });
         }
@@ -410,7 +414,7 @@ export class CustomConfiguratorSectionExampleComponent implements OnInit {
     }
 
     /** Used for restoring widgets state */
-    public reInitializeDashboard() {
+    public reInitializeDashboard(): void {
         // destroys the components and their providers so the dashboard can re init data
         this.dashboard = undefined;
         this.changeDetectorRef.detectChanges();

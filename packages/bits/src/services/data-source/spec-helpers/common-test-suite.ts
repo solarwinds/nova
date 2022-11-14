@@ -33,7 +33,7 @@ import {
 export class CommonTestSuite {
     public static expected: INovaFilters;
     public static service: LocalFilteringDataSource<INovaFilteringOutputs>;
-    public static execute = () => {
+    public static execute = (): void => {
         describe("common specs for getFilters", () => {
             it("should get correct results when call getFilteredData with search value 'blue' (0 - 5) ", async () => {
                 if (!CommonTestSuite.expected.search) {
@@ -51,7 +51,7 @@ export class CommonTestSuite {
                         CommonTestSuite.expected
                     );
 
-                result.repeat?.itemsSource.forEach((el, index) =>
+                result.repeat?.itemsSource.forEach(async (el, index) =>
                     expect(el.color).toBe(resultForBlue[index].color)
                 );
             });
@@ -63,7 +63,7 @@ export class CommonTestSuite {
                         CommonTestSuite.expected
                     );
 
-                result.repeat?.itemsSource.forEach((el, index) =>
+                result.repeat?.itemsSource.forEach(async (el, index) =>
                     expect(el.color).toBe(resultForLightFirstPage[index].color)
                 );
             });
@@ -85,7 +85,7 @@ export class CommonTestSuite {
                         CommonTestSuite.expected
                     );
 
-                result.repeat?.itemsSource.forEach((el, index) =>
+                result.repeat?.itemsSource.forEach(async (el, index) =>
                     expect(el.color).toBe(resultForLightSecondPage[index].color)
                 );
             });
@@ -107,7 +107,7 @@ export class CommonTestSuite {
                         CommonTestSuite.expected
                     );
 
-                result.repeat?.itemsSource.forEach((el, index) =>
+                result.repeat?.itemsSource.forEach(async (el, index) =>
                     expect(el.color).toBe(
                         resultsForLightFirstPageDesc[index].color
                     )

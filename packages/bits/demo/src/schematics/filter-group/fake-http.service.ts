@@ -221,7 +221,7 @@ export class FakeServer implements OnDestroy {
         return !_isEmpty(_get(this, "filteringState.repeat.itemsSource"));
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.filterGroupSubscriptions.forEach((subscription) =>
             subscription.unsubscribe()
         );

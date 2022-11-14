@@ -55,7 +55,7 @@ export class SelectReactiveFormTestComponent implements OnInit {
         @Inject(ToastService) public toastService: ToastService
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
             item: this.formBuilder.control(this.dataset.selectedItem, [
                 Validators.required,
@@ -63,11 +63,11 @@ export class SelectReactiveFormTestComponent implements OnInit {
         });
     }
 
-    public valueChange(changedEvent: ISelectChangedEvent<string>) {
+    public valueChange(changedEvent: ISelectChangedEvent<string>): void {
         this.dataset.selectedItem = changedEvent.newValue;
     }
 
-    public onSubmit() {
+    public onSubmit(): void {
         this.myForm.valid
             ? this.toastService.success({ message: "Your form is valid!" })
             : this.toastService.error({ message: "Your form is invalid!" });
@@ -105,7 +105,7 @@ export class ComboboxReactiveFormTestComponent implements OnInit {
         @Inject(ToastService) public toastService: ToastService
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
             item: this.formBuilder.control(this.dataset.selectedItem, [
                 Validators.required,
@@ -113,7 +113,7 @@ export class ComboboxReactiveFormTestComponent implements OnInit {
         });
     }
 
-    public onSubmit() {
+    public onSubmit(): void {
         this.myForm.valid
             ? this.toastService.success({ title: "Your form is valid!" })
             : this.toastService.error({ title: "Your form is invalid!" });

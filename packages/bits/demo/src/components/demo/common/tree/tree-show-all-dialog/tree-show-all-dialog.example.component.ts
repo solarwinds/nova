@@ -41,11 +41,13 @@ import {
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
 import { firstValueFrom, Observable, of, Subject } from "rxjs";
+// eslint-disable-next-line import/no-deprecated
 import { catchError, delay, map, take, takeUntil, tap } from "rxjs/operators";
 
 import {
     DataSourceService,
     DialogService,
+    DOCUMENT_CLICK_EVENT,
     EventBusService,
     expand,
     IDataSource,
@@ -167,10 +169,12 @@ export class VirtualScrollListDataSource<T = any>
         }
         return firstValueFrom(
             this.getBackendData(filters).pipe(
+                // eslint-disable-next-line import/no-deprecated
                 tap((response: IServersCollection) => {
                     // after receiving data we need to append it to our previous fetched results
                     this.cache = this.cache.concat(response.items);
                 }),
+                // eslint-disable-next-line import/no-deprecated
                 map((response: IServersCollection) => {
                     const itemsSource = this.cache;
 
@@ -212,6 +216,7 @@ export class VirtualScrollListDataSource<T = any>
             .get<IServersApiResponse>(API_URL, { params: requestParams })
             .pipe(
                 delay(300),
+                // eslint-disable-next-line import/no-deprecated
                 map((response) => ({
                     items:
                         response.items?.map((item) => ({
@@ -322,24 +327,21 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
 
             viewPortManager
                 .observeNextPage$({ pageSize: RESULTS_PER_PAGE })
-                .pipe(
-                    tap(() => {
-                        this.virtualScrollListDataSource.applyFilters();
-                        this.virtualScrollListDataSource.outputsSubject.subscribe(
-                            (v: any) => {
-                                if (!this.activeDialogComponent) {
-                                    return;
-                                } // in case dialog was closed early
-                                const items = v.repeat.itemsSource as IServer[];
-                                this.activeDialogComponent.items = items;
-                                this.activeDialogComponent.isLoading = false;
-                                this.activeDialogComponent.cdRef.detectChanges();
-                            }
-                        );
-                    }),
-                    takeUntil(this.destroy$)
-                )
-                .subscribe();
+                .pipe(takeUntil(this.destroy$))
+                .subscribe(() => {
+                    this.virtualScrollListDataSource.applyFilters();
+                    this.virtualScrollListDataSource.outputsSubject.subscribe(
+                        (v) => {
+                            if (!this.activeDialogComponent) {
+                                return;
+                            } // in case dialog was closed early
+                            const items = v.repeat.itemsSource as IServer[];
+                            this.activeDialogComponent.items = items;
+                            this.activeDialogComponent.isLoading = false;
+                            this.activeDialogComponent.cdRef.detectChanges();
+                        }
+                    );
+                });
         });
     }
 
@@ -349,8 +351,8 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
         nestedNode: CdkNestedTreeNode<any>
     ): void {
         this.eventBusService
-            .getStream({ id: "document-click" })
-            .next(undefined);
+            .getStream(DOCUMENT_CLICK_EVENT)
+            .next(new MouseEvent("click"));
 
         if (node.hasChildren && node.children && !node.children.length) {
             node.isLoading = true;
@@ -485,7 +487,7 @@ export class TreeDialogContentExampleComponent implements AfterViewInit {
         @Inject(NuiActiveDialog) public activeDialog: any
     ) {}
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this.viewPortManager.setViewport(this.repeat.viewportRef);
     }
 

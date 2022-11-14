@@ -51,28 +51,30 @@ export class DividerComponent {
      */
     @Input() size: DividerSize;
 
-    @HostBinding("class.nui-divider--vertical") public get isVerticalDivider() {
+    @HostBinding("class.nui-divider--vertical")
+    public get isVerticalDivider(): boolean {
         return this.isVertical;
     }
 
     @HostBinding("class.nui-divider--horizontal")
-    public get isHorizontalDivider() {
+    public get isHorizontalDivider(): boolean {
         return !this.isVertical;
     }
 
-    @HostBinding("class.nui-divider--no-margin") public get isNoMargins() {
+    @HostBinding("class.nui-divider--no-margin")
+    public get isNoMargins(): boolean {
         return this.size === "no-margin";
     }
 
-    @HostBinding("class.xs") public get isExtraSmall() {
+    @HostBinding("class.xs") public get isExtraSmall(): boolean {
         return this.size === "extra-small";
     }
 
-    @HostBinding("class.sm") public get isSmall() {
+    @HostBinding("class.sm") public get isSmall(): boolean {
         return this.size === "small";
     }
 
-    @HostBinding("class.md") public get isMedium() {
+    @HostBinding("class.md") public get isMedium(): boolean {
         return this.size === "medium";
     }
 }

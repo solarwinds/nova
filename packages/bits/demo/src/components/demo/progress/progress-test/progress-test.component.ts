@@ -29,15 +29,15 @@ export class ProgressTestComponent {
     public percent = 50;
     public isCanceled = false;
 
-    public startProgress() {
+    public startProgress(): void {
         this.show = true;
     }
 
-    public toggleProgress() {
+    public toggleProgress(): void {
         this.show = !this.show;
     }
 
-    public onCancel() {
+    public onCancel(): void {
         this.isCanceled = true;
         this.show = false;
         this.percent = 0;

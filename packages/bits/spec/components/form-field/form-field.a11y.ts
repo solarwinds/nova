@@ -22,7 +22,7 @@ import { browser } from "protractor";
 
 import { Atom } from "../../atom";
 import { assertA11y, Helpers } from "../../helpers";
-import { ButtonAtom } from "../public_api";
+import { ButtonAtom, FormFieldAtom } from "../public_api";
 
 describe("a11y: form-field", () => {
     let toggleButton: ButtonAtom;
@@ -45,11 +45,11 @@ describe("a11y: form-field", () => {
     });
 
     it("button", async () => {
-        await assertA11y(browser, "nui-demo", rulesToDisable);
+        await assertA11y(browser, FormFieldAtom, rulesToDisable);
     });
 
     it("textbox", async () => {
         await toggleButton.click();
-        await assertA11y(browser, "nui-demo", rulesToDisable);
+        await assertA11y(browser, FormFieldAtom, rulesToDisable);
     });
 });

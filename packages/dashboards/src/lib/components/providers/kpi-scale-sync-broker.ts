@@ -61,15 +61,15 @@ export class KpiScaleSyncBroker implements IConfigurable {
         }
     }
 
-    public configure() {
+    public configure(): KpiScaleSyncBrokerBuilder {
         return this.builder;
     }
 
-    public getBrokers() {
+    public getBrokers(): readonly IBroker[] {
         return this.brokers;
     }
 
-    public subscribeToBrokers() {
+    public subscribeToBrokers(): void {
         this.destroy();
 
         this.brokers.forEach((broker) => {
@@ -85,12 +85,12 @@ export class KpiScaleSyncBroker implements IConfigurable {
         });
     }
 
-    public setComponent(component: any, componentId: string) {
+    public setComponent(component: any, componentId: string): void {
         this.componentId = componentId;
         this.updateConfiguration(this.properties);
     }
 
-    public destroy() {
+    public destroy(): void {
         this.destroySubscriptions$.next();
         this.destroySubscriptions$.complete();
     }
@@ -162,7 +162,7 @@ class KpiScaleSyncBrokerBuilder {
 
     constructor(private brokers: IBroker[]) {}
 
-    public addBroker(broker: IBrokerUserConfig) {
+    public addBroker(broker: IBrokerUserConfig): KpiScaleSyncBrokerBuilder {
         const newBrokerSetting: IBrokerValue = {
             id: broker.id,
             targetID: "",

@@ -236,7 +236,7 @@ describe("USERCONTROL Dialog", () => {
         it("should focus element inside dialog on TAB when focus outside the dialog", async () => {
             await themeSwitcher.click();
             const actionButtonId = await dialog.getActionButton().getId();
-            await Helpers.pressKey(Key.TAB, 1);
+            await Helpers.pressKey(Key.TAB);
             const focusedElementId = await (
                 await browser.switchTo().activeElement()
             ).getId();
@@ -247,7 +247,7 @@ describe("USERCONTROL Dialog", () => {
         it("should focus element inside dialog on SHIFT+TAB when focus outside the dialog", async () => {
             await themeSwitcher.click();
             const actionButtonId = await dialog.getActionButton().getId();
-            await Helpers.pressKey(Key.chord(Key.SHIFT, Key.TAB), 1);
+            await Helpers.pressKey(Key.chord(Key.SHIFT, Key.TAB));
             const focusedElementId = await (
                 await browser.switchTo().activeElement()
             ).getId();
@@ -284,7 +284,7 @@ describe("USERCONTROL Dialog", () => {
             it("should append to cdk overlay custom container (NUI-5169)", async () => {
                 expect(
                     await overlayContainer
-                        ?.$(`.${DialogAtom.CSS_CLASS}`)
+                        ?.$(Atom.getSelector(DialogAtom))
                         .isPresent()
                 ).toBeTruthy();
             });

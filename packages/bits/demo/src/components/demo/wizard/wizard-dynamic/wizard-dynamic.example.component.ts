@@ -19,7 +19,8 @@
 //  THE SOFTWARE.
 
 import { Component, OnDestroy, ViewChild } from "@angular/core";
-import { Subscription } from "rxjs";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 import {
     IWizardSelectionEvent,
@@ -37,39 +38,34 @@ export class WizardDynamicExampleComponent implements OnDestroy {
 
     public selectedIndex: number;
 
-    private dynamicStepsSubscriptions: Subscription[] = [];
+    private onDestroy$ = new Subject<void>();
 
-    public select(event: IWizardSelectionEvent) {
+    public select(event: IWizardSelectionEvent): void {
         this.selectedIndex = event.selectedIndex;
     }
 
-    public addStep() {
+    public addStep(): void {
         // addStepDynamic returns an instance of WizardStepComponent that was dynamically added
-        const step: WizardStepComponent = this.wizardComponent.addStepDynamic(
+        const step = this.wizardComponent.addStepDynamic(
             this.dynamicStep,
             this.selectedIndex + 1
         );
+
         // subscribe to entering the dynamic step and push it to subscriptions array
-        this.dynamicStepsSubscriptions.push(
-            step.enter.subscribe(() => {
-                console.log(
-                    "Enter event has been emitted from WizardStepComponent"
-                );
-            })
-        );
+        step.enter?.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            console.log(
+                "Enter event has been emitted from WizardStepComponent"
+            );
+        });
+
         // subscribe to exiting the dynamic step and push it to subscriptions array
-        this.dynamicStepsSubscriptions.push(
-            step.exit.subscribe(() => {
-                console.log(
-                    "Exit event has been emitted from WizardStepComponent"
-                );
-            })
-        );
+        step.exit?.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            console.log("Exit event has been emitted from WizardStepComponent");
+        });
     }
 
     public ngOnDestroy(): void {
-        this.dynamicStepsSubscriptions.forEach((subscription) =>
-            subscription.unsubscribe()
-        );
+        this.onDestroy$.next();
+        this.onDestroy$.complete();
     }
 }

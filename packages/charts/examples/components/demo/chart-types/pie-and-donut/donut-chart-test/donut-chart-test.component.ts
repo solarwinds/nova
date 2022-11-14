@@ -39,7 +39,7 @@ export class DonutChartTestComponent implements OnInit {
     public chartAssist = new ChartAssist(new Chart(radialGrid()), radial);
     public contentPlugin: ChartDonutContentPlugin;
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.contentPlugin = new ChartDonutContentPlugin();
         this.chartAssist.chart.addPlugin(this.contentPlugin);
 

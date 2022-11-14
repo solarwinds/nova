@@ -57,13 +57,13 @@ export class DataSourceErrorComponent implements OnDestroy, OnChanges {
 
     constructor(public changeDetector: ChangeDetectorRef) {}
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.dataSource) {
             this.onDataSourceChanged();
         }
     }
 
-    onDataSourceChanged() {
+    public onDataSourceChanged(): void {
         this.dataSourceClear$.next();
 
         this.dataSource?.busy
@@ -83,7 +83,7 @@ export class DataSourceErrorComponent implements OnDestroy, OnChanges {
             });
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();
         this.dataSourceClear$.next();

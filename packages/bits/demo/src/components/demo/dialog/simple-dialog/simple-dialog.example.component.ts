@@ -34,11 +34,11 @@ export class SimpleDialogExampleComponent {
         private toastService: ToastService
     ) {}
 
-    public open(content: TemplateRef<string>) {
+    public open(content: TemplateRef<string>): void {
         this.activeDialog = this.dialogService.open(content, { size: "sm" });
     }
 
-    private actionDone(): void {
+    public actionDone(): void {
         this.toastService.success({
             message: $localize`Action Done!`,
             title: $localize`Event`,
@@ -46,7 +46,7 @@ export class SimpleDialogExampleComponent {
         this.activeDialog.close();
     }
 
-    private actionCanceled(): void {
+    public actionCanceled(): void {
         this.toastService.info({
             message: $localize`Action Cancelled!`,
             title: $localize`Event`,

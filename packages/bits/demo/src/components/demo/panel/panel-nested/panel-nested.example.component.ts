@@ -75,7 +75,7 @@ export class PanelNestedExampleComponent {
     public headerIcon = "filter";
     public headerIconCounter = 4;
 
-    public onCollapseChange($event: boolean) {
+    public onCollapseChange($event: boolean): void {
         this.isCollapsed = $event;
     }
 }

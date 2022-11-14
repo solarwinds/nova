@@ -106,7 +106,7 @@ export class WidgetTemplateSelectionComponent
 
     constructor(private widgetTypesService: WidgetTypesService) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         // Here we combine the widget structure from the WidgetTypesService with the corresponding widget
         // configuration to create an array of widget objects for the itemSource on the repeat component.
         this.widgetItems = [
@@ -131,7 +131,7 @@ export class WidgetTemplateSelectionComponent
         // this.onSelect([this.widgetItems[0]]);
     }
 
-    public onSelect(selectedItems: any[]) {
+    public onSelect(selectedItems: any[]): void {
         // We emit the selected widget to communicate the selection to the configurator
         this.widgetSelected.emit(selectedItems[0].widget);
         this.widgetSelection = selectedItems;
@@ -248,7 +248,7 @@ export class WidgetCreationComponent implements OnInit {
     public editMode: boolean = false;
 
     // Subject used for auto-unsubscribing from subscriptions on component destruction
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         // WidgetTypesService provides the widget's necessary structure information
@@ -322,7 +322,7 @@ export class WidgetCreationComponent implements OnInit {
         this.initializeDashboard();
     }
 
-    public onCreateWidget() {
+    public onCreateWidget(): void {
         const widgetSelector: IWidgetSelector = {
             // Template ref of the dashboard component.
             dashboardComponent: this.dashboardComponent,
@@ -390,7 +390,7 @@ export class RandomCitiesProportionalDataSource implements OnDestroy {
     >();
 
     // Every time applyFilters gets ran we are changing the data source.
-    public applyFilters() {
+    public applyFilters(): void {
         setTimeout(() => {
             this.outputsSubject.next({
                 result: this.getRandomProportionalWidgetData(),

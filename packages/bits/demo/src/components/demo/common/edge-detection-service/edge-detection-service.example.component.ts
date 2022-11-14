@@ -65,7 +65,7 @@ export class EdgeDetectionServiceExampleComponent implements AfterViewInit {
         this.update();
     }
 
-    public update() {
+    public update(): void {
         setTimeout(() => {
             const parent = this.parentElement.nativeElement;
             const basePointElement = parent.querySelector(
@@ -98,7 +98,7 @@ export class EdgeDetectionServiceExampleComponent implements AfterViewInit {
         this.update();
     }
 
-    public changeText(path: string, value: any) {
+    public changeText(path: string, value: any): void {
         _set(this, path, value);
         this.update();
     }

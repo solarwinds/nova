@@ -48,17 +48,17 @@ export class OverlayViewportMarginExampleComponent
         panelClass: OVERLAY_WITH_POPUP_STYLES_CLASS,
     };
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.overlay.clickOutside
             .pipe(takeUntil(this.destroy$))
             .subscribe((_) => this.overlay.hide());
     }
 
-    public setViewportMargin(margin: number) {
+    public setViewportMargin(margin: number): void {
         this.viewportMargin = margin;
     }
 

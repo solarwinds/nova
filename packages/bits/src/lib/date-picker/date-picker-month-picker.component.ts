@@ -37,7 +37,7 @@ export class MonthPickerComponent implements OnInit {
         this.datePicker = datePicker;
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.datePicker.stepMonth = { years: 1 };
 
         this.datePicker.setRefreshViewHandler((): void => {

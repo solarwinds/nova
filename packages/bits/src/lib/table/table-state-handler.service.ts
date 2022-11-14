@@ -47,10 +47,15 @@ export const enum DropAlignment {
     right = "right",
 }
 
+export interface ColumnWidthInfo {
+    width: number;
+    autoCalculated?: boolean;
+}
+
 export interface ITableState {
     columnAlignments: { [key: string]: string };
     columnsWidths: {
-        [key: string]: { width: number; autoCalculated?: boolean };
+        [key: string]: ColumnWidthInfo;
     };
     columns: string[];
     sortedColumn?: ISortedItem;

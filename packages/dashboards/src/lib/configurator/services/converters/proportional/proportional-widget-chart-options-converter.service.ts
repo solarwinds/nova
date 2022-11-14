@@ -46,7 +46,7 @@ export class ProportionalWidgetChartOptionsConverterService
         super(eventBus, previewService, pizzagnaService);
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         super.ngAfterViewInit();
     }
 

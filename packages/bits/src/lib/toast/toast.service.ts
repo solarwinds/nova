@@ -185,7 +185,7 @@ export class ToastService implements IToastService {
      * @param toastId
      * @return void
      */
-    public clear(toastId?: number) {
+    public clear(toastId?: number): void {
         for (const toast of this.toasts) {
             if (toastId !== undefined) {
                 if (toast.toastId === toastId) {
@@ -273,15 +273,9 @@ export class ToastService implements IToastService {
             return null;
         }
 
-        const toastContainer = this.toastContainerService.getContainerElement(
-            config.positionClass
-        );
+        this.toastContainerService.getContainerElement(config.positionClass);
         let keepInactive = false;
         let sanitizedBody: string | undefined = body;
-        let toastRef: ToastRef<ToastComponent>;
-        let toastPackage: ToastPackage;
-        let toastInjector: ToastInjector;
-        let toastInstance: IActiveToast;
 
         if (
             this.toastConfig.maxOpened &&
@@ -301,8 +295,8 @@ export class ToastService implements IToastService {
             );
         }
 
-        toastRef = new ToastRef(this.toastContainerService);
-        toastPackage = new ToastPackage(
+        const toastRef = new ToastRef(this.toastContainerService);
+        const toastPackage = new ToastPackage(
             this.index,
             config,
             sanitizedBody,
@@ -310,13 +304,13 @@ export class ToastService implements IToastService {
             toastType,
             toastRef
         );
-        toastInjector = new ToastInjector(toastPackage, this._injector);
+        const toastInjector = new ToastInjector(toastPackage, this._injector);
         toastRef.componentInstance = this.toastContainerService.attachToast(
             ToastComponent,
             toastInjector,
             !!config.newestOnTop
         );
-        toastInstance = {
+        const toastInstance = {
             toastId: this.index,
             body: sanitizedBody,
             toastRef,

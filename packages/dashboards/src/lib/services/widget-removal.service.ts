@@ -38,7 +38,7 @@ export class WidgetRemovalService {
         widgetId: string,
         configuratorSource: IConfiguratorSource,
         tryRemove?: WidgetRemovalOperation
-    ) {
+    ): Observable<void> {
         // TODO: Handle the case when tryRemove is undefined
         // @ts-ignore
         return this.tryRemove(tryRemove, widgetId, configuratorSource).pipe(

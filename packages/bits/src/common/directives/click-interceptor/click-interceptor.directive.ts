@@ -39,11 +39,9 @@ import { EventBusService } from "../../../services/event-bus.service";
 })
 export class ClickInterceptorDirective {
     @HostListener("click", ["$event"])
-    catchClick(event: MouseEvent) {
+    catchClick(event: MouseEvent): void {
         event.stopPropagation();
-        this.eventBusService
-            .getStream({ id: DOCUMENT_CLICK_EVENT })
-            .next(event);
+        this.eventBusService.getStream(DOCUMENT_CLICK_EVENT).next(event);
     }
 
     constructor(private eventBusService: EventBusService) {}

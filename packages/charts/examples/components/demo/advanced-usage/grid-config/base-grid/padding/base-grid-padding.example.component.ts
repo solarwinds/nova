@@ -38,7 +38,7 @@ import {
 export class BaseGridPaddingExampleComponent implements OnInit {
     public chart: Chart;
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const gridConfig = new XYGridConfig();
         gridConfig.dimension.padding = {
             top: 25,

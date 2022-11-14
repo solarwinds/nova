@@ -22,7 +22,7 @@ import isArray from "lodash/isArray";
 
 import { hasInnerScale, IHasInnerScale, IScale } from "../types";
 
-export function domain(scale: IScale<any>, theDomain: any[]) {
+export function domain(scale: IScale<any>, theDomain: any[]): void {
     if (!theDomain || theDomain.length === 0) {
         return;
     }

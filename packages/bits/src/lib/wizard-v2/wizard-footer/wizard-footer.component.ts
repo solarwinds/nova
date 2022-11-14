@@ -54,11 +54,11 @@ export class WizardFooterComponent
         private _elementRef: ElementRef<HTMLElement>
     ) {}
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this._focusMonitor.monitor(this._elementRef, true);
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this._focusMonitor.stopMonitoring(this._elementRef);
     }
 

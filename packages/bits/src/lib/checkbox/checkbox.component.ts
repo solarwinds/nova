@@ -18,7 +18,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ENTER, SPACE } from "@angular/cdk/keycodes";
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
@@ -38,7 +37,11 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { Subscription } from "rxjs";
 
-import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
+import {
+    CHECKBOX_KEYDOWN_EVENT,
+    DOCUMENT_CLICK_EVENT,
+} from "../../constants/event.constants";
+import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import { EventBusService } from "../../services/event-bus.service";
 import { NuiFormFieldControl } from "../form-field/public-api";
 import { CheckboxChangeEvent, ICheckboxComponent } from "./public-api";
@@ -189,28 +192,30 @@ export class CheckboxComponent
 
     private _ariaLabel: string = "Checkbox";
 
+    private keysAction = [KEYBOARD_CODE.SPACE, KEYBOARD_CODE.ENTER].map(String);
+
     constructor(
         private changeDetector: ChangeDetectorRef,
         private eventBusService: EventBusService,
         private renderer: Renderer2
     ) {}
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.rendererListener = this.renderer.listen(
             this.checkboxLabel.nativeElement,
             "keydown",
-            (event) => {
+            (event: KeyboardEvent) => {
                 this.eventBusService
-                    .getStream({ id: "checkbox-keydown" })
+                    .getStream(CHECKBOX_KEYDOWN_EVENT)
                     .next(event);
             }
         );
 
         this.sub = this.eventBusService
-            .getStream({ id: "checkbox-keydown" })
-            .subscribe((event: KeyboardEvent) => {
+            .getStream(CHECKBOX_KEYDOWN_EVENT)
+            .subscribe((event) => {
                 if (event.target === this.checkboxLabel.nativeElement) {
-                    if (event.keyCode === ENTER || event.keyCode === SPACE) {
+                    if (this.keysAction.includes(event.code)) {
                         event.stopPropagation();
                         event.preventDefault();
                         if (!this.disabled) {
@@ -220,6 +225,7 @@ export class CheckboxComponent
                 }
             });
     }
+
     public getAriaChecked(): "true" | "false" | "mixed" {
         if (this.checked) {
             return "true";
@@ -231,7 +237,7 @@ export class CheckboxComponent
     /**
      * Used for changing of css style when nui-checkbox is hovered
      */
-    public hoverHandler() {
+    public hoverHandler(): void {
         this.hovered = !this.hovered;
     }
 
@@ -239,25 +245,24 @@ export class CheckboxComponent
      * nui-checkbox check/uncheck state handler
      * @param event Changed nui-checkbox component
      */
-    public changeHandler(event: CheckboxChangeEvent) {
+    public changeHandler(event: CheckboxChangeEvent): void {
         this.valueChange.emit(event);
-        this.onChange(event.target.checked);
+        const checked = !!event.target?.checked;
+        this.onChange(checked);
         this.onTouched();
-        this.writeValue(event.target.checked);
+        this.writeValue(checked);
     }
 
-    public onClick(event: Event) {
+    public onClick(event: MouseEvent): void {
         event.stopPropagation();
-        this.eventBusService
-            .getStream({ id: DOCUMENT_CLICK_EVENT })
-            .next(event);
+        this.eventBusService.getStream(DOCUMENT_CLICK_EVENT).next(event);
     }
 
-    public onChange(value: any) {}
+    public onChange(value: any): void {}
 
-    public onTouched() {}
+    public onTouched(): void {}
 
-    public writeValue(value: any) {
+    public writeValue(value: any): void {
         this.checked = value;
     }
 
@@ -273,7 +278,7 @@ export class CheckboxComponent
         this.disabled = isDisabled;
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this.rendererListener) {
             this.rendererListener();
         }
