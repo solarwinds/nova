@@ -41,5 +41,5 @@
         "trigger-pipeline-build-ci": "bash scripts/trigger-pipeline-build",
         "verify-ci": "bash scripts/verify-published"
     },
-    "version": "13.0.2-0"
+    "version": "13.0.3-0"
 }
