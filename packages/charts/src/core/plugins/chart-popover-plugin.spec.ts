@@ -29,7 +29,6 @@ import {
 } from "../../constants";
 import { Chart } from "../chart";
 import {
-    IChart,
     IChartEvent,
     IDataPoint,
     IDataPointsPayload,

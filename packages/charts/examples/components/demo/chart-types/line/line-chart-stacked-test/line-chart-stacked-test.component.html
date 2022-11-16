@@ -14,14 +14,21 @@
         class="d-flex"
         [chart]="chart3"
     ></nui-chart>
-    <input
-        id="data-input"
-        type="text"
-        class="w-100 mt-5"
-        [ngModel]="input"
-        (ngModelChange)="inputChanged($event)"
-    />
-    <button nui-button (click)="generateRandomData()">
-        generate random data
-    </button>
+    <p>
+        <nui-switch (valueChange)="onSyncUpdate($event)"
+            >Synchronize Chart Cursor</nui-switch
+        >
+    </p>
+    <p>
+        <input
+            id="data-input"
+            type="text"
+            class="w-100 mt-5"
+            [ngModel]="input"
+            (ngModelChange)="inputChanged($event)"
+        />
+        <button nui-button (click)="generateRandomData()">
+            Generate Random Data
+        </button>
+    </p>
 </div>

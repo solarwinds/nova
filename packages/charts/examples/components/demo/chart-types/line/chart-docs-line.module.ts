@@ -27,6 +27,7 @@ import {
     NuiDocsModule,
     NuiIconModule,
     NuiMessageModule,
+    NuiSwitchModule,
     SrlcStage,
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
@@ -163,10 +164,11 @@ const exampleRoutes: Routes = [
     imports: [
         DemoCommonModule,
         FormsModule,
-        NuiChartsModule,
+        NuiSwitchModule,
         NuiIconModule,
         NuiDocsModule,
         NuiMessageModule,
+        NuiChartsModule,
         RouterModule.forChild(exampleRoutes),
     ],
     providers: [
