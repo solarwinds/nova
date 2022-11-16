@@ -202,5 +202,5 @@
     "xliff:lib": "ng extract-i18n lib && ngx-extractor -i \"src/**/*.ts\" -f xlf -o .tmp-i18n/messages.xlf && xliffmerge --profile xliffmerge.json"
   },
   "typings": "public_api.d.ts",
-  "version": "13.0.3-0"
+  "version": "13.0.4-0"
 }
