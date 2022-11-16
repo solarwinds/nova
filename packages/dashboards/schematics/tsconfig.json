@@ -10,14 +10,14 @@
         "noImplicitThis": true,
         "noUnusedParameters": true,
         "noUnusedLocals": true,
-        "outDir": "dist",
-        "rootDir": "src/",
+        "outDir": "./dist",
+        "rootDir": "./src",
         "resolveJsonModule": true,
         "skipDefaultLibCheck": true,
         "skipLibCheck": true,
         "types": ["jasmine", "node"]
     },
-    "exclude": ["src/*/files/**/*"],
+    "exclude": ["./src/*/files/**/*"],
     "extends": "../../../tsconfig.main.json",
     "include": ["./src/**/*"]
 }

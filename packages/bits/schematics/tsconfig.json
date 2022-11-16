@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "baseUrl": "tsconfig",
+        "baseUrl": ".",
         "lib": ["es2017"],
         "declaration": true,
         "module": "commonjs",
@@ -10,13 +10,13 @@
         "noImplicitThis": true,
         "noUnusedParameters": true,
         "noUnusedLocals": true,
-        "outDir": "dist",
-        "rootDir": "src/",
+        "outDir": "./dist",
+        "rootDir": "./src",
         "skipDefaultLibCheck": true,
         "skipLibCheck": true,
         "types": ["jasmine", "node"]
     },
-    "exclude": ["src/*/files/**/*"],
+    "exclude": ["./src/*/files/**/*"],
     "extends": "../../../tsconfig.main.json",
-    "include": ["src/**/*"]
+    "include": ["./src/**/*"]
 }

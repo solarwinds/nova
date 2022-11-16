@@ -5,10 +5,10 @@
   "scripts": {
     "assemble": "run-s build copy:json copy:data test copy:dist",
     "build": "tsc -p tsconfig.json",
-    "test": "jasmine dist/src/**/*.spec.js",
+    "test": "jasmine ./dist/**/*.spec.js",
     "copy:json": "npx copyfiles -u 1 \"src/**/*.json\" ./dist",
     "copy:data": "npx copyfiles -u 1 \"src/**/files/**\" ./dist",
-    "copy:dist": "npx copyfiles -u 1 \"dist/**/*\" ../dist/sdk/schematics/"
+    "copy:dist": "npx copyfiles -u 1 \"dist/**/*\" -e \"*.spec.*\" ../dist/sdk/schematics/"
   },
   "keywords": [
     "schematics"
