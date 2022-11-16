@@ -45,11 +45,11 @@ export class VirtualScrollCustomStrategyService
         };
     }
 
-    public reset() {
+    public reset(): void {
         this.virtualScrollRange = { start: 0, end: this.itemsPerPage };
     }
 
-    public prepareNextPage(fetchedItemsCount: number) {
+    public prepareNextPage(fetchedItemsCount: number): void {
         if (fetchedItemsCount < this.itemsPerPage) {
             // keep requesting the same page if not all expected items per page were loaded
         } else {

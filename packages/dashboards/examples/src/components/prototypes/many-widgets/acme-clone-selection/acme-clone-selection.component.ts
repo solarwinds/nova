@@ -54,7 +54,7 @@ export class AcmeCloneSelectionComponent
 
     constructor(protected widgetTypesService: WidgetTypesService) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const titleCasePipe = new TitleCasePipe();
 
         this.widgetItems = widgets.map((w) => {
@@ -121,7 +121,7 @@ export class AcmeCloneSelectionComponent
         );
     }
 
-    public onSelect(selectedItems: any[]) {
+    public onSelect(selectedItems: any[]): void {
         this.widgetSelected.emit(selectedItems[0].widget);
         this.widgetSelection = selectedItems;
     }

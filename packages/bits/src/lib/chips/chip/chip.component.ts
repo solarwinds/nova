@@ -81,7 +81,7 @@ export class ChipComponent implements AfterViewInit {
         this.cdRef.detectChanges();
     }
 
-    public onRemove() {
+    public onRemove(): void {
         this.remove.emit();
     }
 }

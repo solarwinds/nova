@@ -47,7 +47,7 @@ export class LineTimeSeriesTestComponent implements OnInit {
     public chart = new Chart(new XYGrid());
     public palette = new ChartPalette(CHART_PALETTE_CS1);
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.chart.addPlugin(new ZoomPlugin());
 
         // In case of a line chart, the scale definitions are flexible.

@@ -31,6 +31,7 @@ import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import _cloneDeep from "lodash/cloneDeep";
 import groupBy from "lodash/groupBy";
 import { BehaviorSubject, Observable, of, Subject } from "rxjs";
+// eslint-disable-next-line import/no-deprecated
 import { catchError, finalize, map, switchMap, tap } from "rxjs/operators";
 
 import { DataSourceService, IFilters, INovaFilters } from "@nova-ui/bits";
@@ -82,6 +83,7 @@ export class DrilldownDataSource
     constructor() {
         super();
         this.applyFilters$
+            // eslint-disable-next-line import/no-deprecated
             .pipe(switchMap((filters) => this.getData(filters)))
             .subscribe(async (res) => {
                 this.outputsSubject.next(await this.getFilteredData(res));
@@ -95,6 +97,7 @@ export class DrilldownDataSource
     public async getFilteredData(data: any): Promise<any> {
         return of(data)
             .pipe(
+                // eslint-disable-next-line import/no-deprecated
                 map((countries) => {
                     const widgetInput = this.getOutput(countries);
 
@@ -132,7 +135,9 @@ export class DrilldownDataSource
 
         return of(this.cache || GRAPH_DATA_MOCK).pipe(
             // delay(1000),
+            // eslint-disable-next-line import/no-deprecated
             tap((data) => (this.cache = data)),
+            // eslint-disable-next-line import/no-deprecated
             map((data) => data.data.countries),
             catchError((e) => of([])),
             finalize(() => this.busy.next(false))
@@ -231,7 +236,7 @@ export class DrilldownWidgetTestComponent implements OnInit {
     }
 
     /** Used for restoring widgets state */
-    public reInitializeDashboard() {
+    public reInitializeDashboard(): void {
         // destroys the components and their providers so the dashboard can re init data
         this.dashboard = undefined;
         this.changeDetectorRef.detectChanges();

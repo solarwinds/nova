@@ -41,6 +41,6 @@ describe("a11y: timepicker", () => {
 
     it("should check a11y of timepicker", async () => {
         await basicTimepicker.toggle();
-        await assertA11y(browser, TimepickerAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, TimepickerAtom, rulesToDisable);
     });
 });

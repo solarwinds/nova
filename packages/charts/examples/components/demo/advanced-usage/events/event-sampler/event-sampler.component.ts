@@ -39,7 +39,7 @@ import {
     Chart,
     ChartAssist,
     ChartPalette,
-    CHART_PALETTE_CS_S,
+    CHART_PALETTE_CS_S_EXTENDED,
     CHART_VIEW_STATUS_EVENT,
     HIGHLIGHT_DATA_POINT_EVENT,
     HIGHLIGHT_SERIES_EVENT,
@@ -69,6 +69,8 @@ import {
     stackedPreprocessor,
     XYGrid,
 } from "@nova-ui/charts";
+
+import { isEvenIndex } from "../../../../utility/isEvenIndex";
 
 interface IEventInfo {
     id: string;
@@ -204,31 +206,34 @@ export class EventSamplerComponent implements OnInit {
     private scales: Scales;
     private seriesProcessor?: SeriesProcessor<IBarAccessors> | SeriesProcessor;
 
-    public onEventFilterChange(selectedEvent: IEventInfo) {
+    public onEventFilterChange(selectedEvent: IEventInfo): void {
         this.selectedEvent = selectedEvent;
         this.selectedInteractionType = this.selectedEvent.interactionTypes
             ? this.selectedEvent.interactionTypes[0]
             : "";
     }
 
-    public onInteractionTypeChange(type: InteractionType) {
+    public onInteractionTypeChange(type: InteractionType): void {
         this.selectedInteractionType = type;
     }
 
     constructor(private changeDetector: ChangeDetectorRef) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.valueAccessor = (i, j) => this.values[j][i];
         this.palette = new ChartPalette(
             new MappedValueProvider<string>(
-                zipObject(this.subCategories, CHART_PALETTE_CS_S)
+                zipObject(
+                    this.subCategories,
+                    CHART_PALETTE_CS_S_EXTENDED.filter(isEvenIndex)
+                )
             )
         );
 
         this.updateChartType(this.chartTypes[0]);
     }
 
-    public updateChartType(chartType: ChartType) {
+    public updateChartType(chartType: ChartType): void {
         this.selectedChartType = chartType;
         this.buildChart();
         this.subscribeToChart();

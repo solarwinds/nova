@@ -72,12 +72,12 @@ export class TableSortingExampleComponent implements AfterViewInit, OnDestroy {
         dataSourceService.setData(this.dataSource);
     }
 
-    public sortData(sortedColumn: ISortedItem) {
+    public sortData(sortedColumn: ISortedItem): void {
         this.sortedColumn = sortedColumn;
         this.dataSourceService.applyFilters();
     }
 
-    public sortByName() {
+    public sortByName(): void {
         this.nameSortedDesc = !this.nameSortedDesc;
         this.sortedColumn = {
             sortBy: "name",
@@ -87,7 +87,7 @@ export class TableSortingExampleComponent implements AfterViewInit, OnDestroy {
         };
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.dataSourceService.registerComponent(
             this.sortableTable.getFilterComponents()
         );
@@ -101,7 +101,7 @@ export class TableSortingExampleComponent implements AfterViewInit, OnDestroy {
         this.dataSourceService.applyFilters();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 }

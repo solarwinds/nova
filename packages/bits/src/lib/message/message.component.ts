@@ -89,7 +89,7 @@ export class MessageComponent implements OnInit, OnDestroy {
 
     constructor(private element: ElementRef, private renderer: Renderer2) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         if (this.manualControl) {
             this.dismissSubscription = this.manualControl.subscribe(
                 (shown: boolean) => {
@@ -99,19 +99,19 @@ export class MessageComponent implements OnInit, OnDestroy {
         }
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.dismiss.complete();
         if (this.dismissSubscription) {
             this.dismissSubscription.unsubscribe();
         }
     }
 
-    public dismissMessage() {
+    public dismissMessage(): void {
         this.dismissState = "dismissed";
         this.dismiss.emit();
     }
 
-    public animationFinished(event: AnimationEvent) {
+    public animationFinished(event: AnimationEvent): void {
         if (event.toState === "dismissed") {
             if (this.manualControl) {
                 this.isHidden = true;
@@ -124,7 +124,7 @@ export class MessageComponent implements OnInit, OnDestroy {
         }
     }
 
-    public animationStart(event: AnimationEvent) {
+    public animationStart(event: AnimationEvent): void {
         if (event.fromState === "dismissed") {
             this.isHidden = false;
         }
@@ -134,9 +134,10 @@ export class MessageComponent implements OnInit, OnDestroy {
         return this.type ? `nui-message-${this.type.toLowerCase()}` : "";
     }
 
-    public get icon() {
-        // @ts-ignore: Type 'null' cannot be used as an index type.
-        const icon = MessageComponent.ICON_MAP[this.type];
-        return icon ? icon : MessageComponent.UNKNOWN_ICON;
+    public get icon(): string {
+        return (
+            MessageComponent.ICON_MAP[this.type ?? ""] ||
+            MessageComponent.UNKNOWN_ICON
+        );
     }
 }

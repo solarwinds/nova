@@ -42,7 +42,7 @@ import {
 export class BarChartTickLabelMaxWidthTestComponent implements OnInit {
     public chart: IChart;
     public chartAssist: ChartAssist;
-    public ngOnInit() {
+    public ngOnInit(): void {
         const config: IBarChartConfig = { horizontal: true };
         const accessors = barAccessors(config);
         const renderer = new BarRenderer({

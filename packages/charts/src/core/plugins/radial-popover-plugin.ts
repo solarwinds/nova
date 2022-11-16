@@ -19,12 +19,13 @@
 //  THE SOFTWARE.
 
 import { ChartPopoverPlugin } from "./chart-popover-plugin";
+import { IElementPosition } from "./types";
 
 /**
  * Extends ChartPopoverPlugin to handle popover positioning for radial charts.
  */
 export class RadialPopoverPlugin extends ChartPopoverPlugin {
-    protected getAbsolutePosition(valArr: any[]) {
+    protected getAbsolutePosition(valArr: any[]): IElementPosition {
         const chartElement: any = this.chart.target?.node()?.parentNode; // the one above svg
 
         if (!chartElement) {

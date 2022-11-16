@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Key } from "protractor";
+import { browser, Key } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
@@ -26,14 +26,14 @@ import { ButtonAtom, IconAtom, SorterAtom } from "../public_api";
 
 describe("USERCONTROL Sorter >", () => {
     let sorter: SorterAtom;
-    let sorterButton: ButtonAtom;
-    let icon: IconAtom | undefined;
+    let button: ButtonAtom;
+    let icon: IconAtom;
 
     beforeAll(async () => {
-        await Helpers.prepareBrowser("sorter");
+        await Helpers.prepareBrowser("sorter/sorter-test");
         sorter = Atom.find(SorterAtom, "nui-demo-sorter");
-        sorterButton = sorter.getSorterButton();
-        icon = await sorterButton.getIcon();
+        button = sorter.getSorterButton();
+        icon = button.getIcon();
     });
 
     beforeEach(async () => {
@@ -43,14 +43,15 @@ describe("USERCONTROL Sorter >", () => {
         if ((await sorter.getCurrentValue()) !== "Year") {
             await sorter.select("Year");
         }
-        if ((await icon?.getName()) === "arrow-down") {
-            await sorterButton.click();
+        if ((await icon.getName()) === "arrow-down") {
+            await button.click();
         }
     });
 
     describe("sorter >", () => {
-        it("should contains expected items", async () => {
+        it("should contain expected items", async () => {
             await sorter.click();
+            expect(await sorter.isPopupDisplayed()).toBe(true);
             expect(await sorter.getNumberOfItems()).toBe(3);
             expect(await sorter.getItemText(0)).toBe("Title");
             expect(await sorter.getItemText(1)).toBe("Year");
@@ -58,8 +59,8 @@ describe("USERCONTROL Sorter >", () => {
         });
 
         it("should change icon direction on click", async () => {
-            await sorterButton.click();
-            expect(await icon?.getName()).toBe("arrow-down");
+            await button.click();
+            expect(await icon.getName()).toBe("arrow-down");
         });
 
         it("should have correct text in caption", async () => {
@@ -69,8 +70,11 @@ describe("USERCONTROL Sorter >", () => {
 
         describe("when a value is picked from select, it", () => {
             const selectedColumn = "Title";
+
             beforeEach(async () => {
+                await browser.sleep(1000);
                 await sorter.select(selectedColumn);
+                await browser.sleep(1000);
             });
 
             it("should display selected item on sorter button", async () => {

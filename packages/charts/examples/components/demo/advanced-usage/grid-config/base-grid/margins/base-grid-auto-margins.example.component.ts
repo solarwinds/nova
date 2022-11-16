@@ -41,7 +41,7 @@ export class BaseGridAutoMarginsExampleComponent implements OnInit {
 
     @ViewChild(ChartComponent) chartComponent: ChartComponent;
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const gridConfig = new XYGridConfig();
         gridConfig.axis.bottom.fit = false;
         gridConfig.axis.left.fit = false;
@@ -62,7 +62,7 @@ export class BaseGridAutoMarginsExampleComponent implements OnInit {
         this.chart.update(seriesSet);
     }
 
-    public toggleFit() {
+    public toggleFit(): void {
         const gridConfig = this.chart.getGrid().config() as XYGridConfig;
         gridConfig.axis.bottom.fit = !gridConfig.axis.bottom.fit;
         gridConfig.axis.left.fit = !gridConfig.axis.left.fit;

@@ -18,17 +18,17 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser, by, element } from "protractor";
+import { browser } from "protractor";
 
-import { Atom, Camera } from "@nova-ui/bits/sdk/atoms";
+import { Camera } from "@nova-ui/bits/sdk/atoms";
 import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
 
-import { LegendAtom } from "../legend/legend.atom";
+// import { LegendAtom } from "../legend/legend.atom";
 
 const name: string = "Stacked Area Chart Two Directional";
 
 describe(`Visual Tests: Charts - ${name}`, () => {
-    let legend: LegendAtom;
+    // let legend: LegendAtom;
     let camera: Camera;
 
     beforeAll(async () => {

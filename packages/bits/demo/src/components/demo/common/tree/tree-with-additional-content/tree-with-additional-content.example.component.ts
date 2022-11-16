@@ -22,7 +22,7 @@ import { ArrayDataSource } from "@angular/cdk/collections";
 import { NestedTreeControl } from "@angular/cdk/tree";
 import { Component } from "@angular/core";
 
-import { EventBusService, expand } from "@nova-ui/bits";
+import { DOCUMENT_CLICK_EVENT, EventBusService, expand } from "@nova-ui/bits";
 
 interface FoodNode {
     name: string;
@@ -72,14 +72,14 @@ export class TreeWithAdditionalContentExampleComponent {
 
     public items = ["Item 1", "Item 2", "Item 3"];
 
-    public hasChild = (_: number, node: FoodNode) =>
-        !!node.children && node.children.length > 0;
+    public hasChild = (_: number, node: FoodNode): boolean =>
+        !!node.children?.length;
 
     constructor(private eventBusService: EventBusService) {}
 
-    public onToggleClick() {
+    public onToggleClick(): void {
         this.eventBusService
-            .getStream({ id: "document-click" })
+            .getStream(DOCUMENT_CLICK_EVENT)
             .next(new MouseEvent("click"));
     }
 }

@@ -38,7 +38,7 @@ export class ToastVisualTestComponent implements OnInit {
 
     constructor(@Inject(ToastService) private toastService: IToastService) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.toastService.setConfig({}, "id");
     }
 
@@ -91,7 +91,7 @@ export class ToastVisualTestComponent implements OnInit {
         highlightMode: boolean,
         timeout: number,
         progress: boolean = false
-    ) {
+    ): void {
         this.onShowSuccess(
             highlightMode,
             timeout,
@@ -235,7 +235,7 @@ export class ToastVisualTestComponent implements OnInit {
         });
     }
 
-    public callStickyToast(highlightMode: boolean) {
+    public callStickyToast(highlightMode: boolean): void {
         this.toastService.error({
             title: "Failure",
             message: "This error is sticky!",

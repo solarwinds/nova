@@ -404,7 +404,7 @@ const widgetConfigs: IWidget[] = [
     },
 ];
 
-export const startOfToday = () => moment().startOf("day");
+export const startOfToday = (): Moment => moment().startOf("day");
 
 export const getContinuousData =
     (): ITimeseriesWidgetData<ITimeseriesWidgetStatusData>[] => {

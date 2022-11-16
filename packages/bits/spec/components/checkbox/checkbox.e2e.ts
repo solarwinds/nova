@@ -18,21 +18,23 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser, Key } from "protractor";
+import { browser, by, element, ElementFinder, Key } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { CheckboxAtom } from "../public_api";
 
 describe("USERCONTROL Checkbox", () => {
-    let atom: CheckboxAtom;
     let atomBasic: CheckboxAtom;
     let atomDisabled: CheckboxAtom;
     let atomIndeterminate: CheckboxAtom;
+    let atomWithHint: CheckboxAtom;
+    let columnBasic: ElementFinder;
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("checkbox/checkbox-test");
-        atom = Atom.find(CheckboxAtom, "nui-demo-checkbox");
+        columnBasic = element(by.id("nui-demo-checkbox-basic"));
+        atomWithHint = Atom.find(CheckboxAtom, "nui-demo-checkbox");
         atomBasic = Atom.find(CheckboxAtom, "nui-demo-checkbox-basic");
         atomDisabled = Atom.find(CheckboxAtom, "nui-demo-checkbox-disabled");
         atomIndeterminate = Atom.find(
@@ -43,19 +45,25 @@ describe("USERCONTROL Checkbox", () => {
 
     describe("Value section:", () => {
         it("should check and uncheck when clicked", async () => {
-            expect(await atom.isChecked()).toBe(false);
+            expect(await atomWithHint.isChecked()).toBe(false);
 
-            await atom.toggle();
-            expect(await atom.isChecked()).toBe(true);
+            await atomWithHint.toggle();
+            expect(await atomWithHint.isChecked()).toBe(true);
 
-            await atom.toggle();
-            expect(await atom.isChecked()).toBe(false);
+            await atomWithHint.toggle();
+            expect(await atomWithHint.isChecked()).toBe(false);
+        });
+
+        it("should not check on disabled items", async () => {
+            expect(await atomDisabled.isChecked()).toBe(true);
+            await atomDisabled.toggle();
+            expect(await atomDisabled.isChecked()).toBe(true);
         });
     });
 
     describe("Attribute section:", () => {
         it("should be required", async () => {
-            expect(await atom.isRequired()).toBe(true);
+            expect(await atomWithHint.isRequired()).toBe(true);
         });
 
         it("should set indeterminate value on script object from 'is-indeterminate' attribute", async () => {
@@ -65,17 +73,19 @@ describe("USERCONTROL Checkbox", () => {
 
     describe("Keyboard navigation", () => {
         it("should focus checkbox and toggle with space and enter, propagating TAB", async () => {
-            expect(await atomBasic.isChecked()).toBeTruthy();
+            expect(await atomBasic.isChecked()).toBeTruthy("initial state");
+            await columnBasic.click();
 
-            await Helpers.pressKey(Key.TAB, 2);
-            await Helpers.pressKey(Key.SPACE, 1);
-            expect(await atomBasic.isChecked()).toBeFalsy();
+            await Helpers.pressKey(Key.TAB);
 
-            await Helpers.pressKey(Key.ENTER, 1);
-            expect(await atomBasic.isChecked()).toBeTruthy();
+            await Helpers.pressKey(Key.SPACE);
+            expect(await atomBasic.isChecked()).toBeFalsy("after space");
 
-            await Helpers.pressKey(Key.TAB, 1);
-            expect(await atomBasic.getLabel().getId()).not.toBe(
+            await Helpers.pressKey(Key.ENTER);
+            expect(await atomBasic.isChecked()).toBeTruthy("after enter");
+
+            await Helpers.pressKey(Key.TAB);
+            expect(await atomIndeterminate.getLabel().getId()).toBe(
                 await (await browser.driver.switchTo().activeElement()).getId()
             );
         });

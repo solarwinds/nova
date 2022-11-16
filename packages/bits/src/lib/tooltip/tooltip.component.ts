@@ -109,7 +109,7 @@ export class TooltipComponent implements OnDestroy, OnInit {
 
     /** Subject for notifying that the tooltip has been hidden from the view */
     private readonly _onHide = new Subject<void>();
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     private hiding$ = new BehaviorSubject<boolean>(false);
 
     constructor(
@@ -181,7 +181,7 @@ export class TooltipComponent implements OnDestroy, OnInit {
         return this._visibility === true;
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.overlayComponent.hide();
         this._onHide.complete();
         this.destroy$.next();

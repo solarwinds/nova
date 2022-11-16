@@ -198,6 +198,7 @@ describe("services >", () => {
                 startDatetimePattern: { [value]: -1 },
                 endDatetimePattern: {},
             });
+
             const presetStrings: string[] = ["day", "week"];
             const testPresets: ITimeFramePresetDictionary = mapValues(
                 keyBy(presetStrings),
@@ -208,9 +209,8 @@ describe("services >", () => {
             it("should use baseDate provided for pattern calculations", () => {
                 const presetId = presetStrings[1];
                 initialTimeFrame = timeFrameFactory(
-                    // @ts-ignore: Suppressing error for testing purposes
-                    undefined,
-                    undefined,
+                    moment(undefined),
+                    moment(undefined),
                     presetId,
                     testPresets[presetId].name
                 );
@@ -226,9 +226,8 @@ describe("services >", () => {
             it("should use now() if baseDate is not provided", () => {
                 const presetId = presetStrings[1];
                 initialTimeFrame = timeFrameFactory(
-                    // @ts-ignore: Suppressing error for testing purposes
-                    undefined,
-                    undefined,
+                    moment(undefined),
+                    moment(undefined),
                     presetId,
                     testPresets[presetId].name
                 );
@@ -246,9 +245,8 @@ describe("services >", () => {
                 const currentPresets = timeframeService.currentPresets;
                 const presetId = Object.keys(currentPresets)[0];
                 initialTimeFrame = timeFrameFactory(
-                    // @ts-ignore: Suppressing error for testing purposes
-                    undefined,
-                    undefined,
+                    moment(undefined),
+                    moment(undefined),
                     presetId,
                     currentPresets[presetId].name
                 );
@@ -276,9 +274,8 @@ describe("services >", () => {
                 beforeEach(() => {
                     const presetId = presetStrings[0];
                     initialTimeFrame = timeFrameFactory(
-                        // @ts-ignore: Suppressing error for testing purposes
-                        undefined,
-                        undefined,
+                        moment(undefined),
+                        moment(undefined),
                         presetId,
                         "my title"
                     );
@@ -305,8 +302,7 @@ describe("services >", () => {
                     initialTimeFrame = timeFrameFactory(
                         moment([1999]),
                         moment([2000]),
-                        // @ts-ignore: Suppressing error for testing purposes
-                        null
+                        ""
                     );
                     updatedTimeFrame =
                         timeframeService.reconcileTimeframe(initialTimeFrame);

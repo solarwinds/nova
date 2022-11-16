@@ -31,6 +31,7 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+// eslint-disable-next-line import/no-deprecated
 import { startWith, takeUntil } from "rxjs/operators";
 
 import { IEvent, LoggerService } from "@nova-ui/bits";
@@ -84,7 +85,7 @@ export class ItemsDynamicComponent
         return this.items.find((item) => item.id === node.id);
     }
 
-    public getNodes() {
+    public getNodes(): string[] {
         return this.nodes;
     }
 
@@ -93,7 +94,7 @@ export class ItemsDynamicComponent
         this.formReady.emit(this.form);
     }
 
-    public onEvent(componentId: string, event: IEvent) {
+    public onEvent(componentId: string, event: IEvent): void {
         // TODO: refactor
         const item = this.items.find((i) => i.id === componentId);
         const index = this.items.findIndex((i) => i.id === componentId);
@@ -111,7 +112,7 @@ export class ItemsDynamicComponent
         item: IItemConfiguration,
         form: FormGroup,
         index: number
-    ) {
+    ): void {
         const childForm = this.formBuilder.group({
             id: [item.id],
             componentType: [item.componentType],
@@ -123,6 +124,7 @@ export class ItemsDynamicComponent
         setTimeout(() => {
             const label = form.get(`${item.id}/description`)?.get("label");
             label?.valueChanges
+                // eslint-disable-next-line import/no-deprecated
                 .pipe(startWith(label.value), takeUntil(this.destroyed$))
                 .subscribe((value: string) => {
                     this.headerMap.set(item.id, value || "");
@@ -131,7 +133,7 @@ export class ItemsDynamicComponent
         });
     }
 
-    public onFormDestroy(form: FormGroup) {
+    public onFormDestroy(form: FormGroup): void {
         // using setTimeout to allow the change detection cycle to finish before updating the form
         setTimeout(() => {
             // remove form
@@ -148,7 +150,7 @@ export class ItemsDynamicComponent
         });
     }
 
-    public trackBy(index: number, item: IItemConfiguration) {
+    public trackBy(index: number, item: IItemConfiguration): string {
         return item.id;
     }
 
@@ -168,7 +170,7 @@ export class ItemsDynamicComponent
         this.pizzagnaService.removeComponents(item.id);
     }
 
-    public moveItem(index: number, toIndex: number) {
+    public moveItem(index: number, toIndex: number): void {
         const items = [...this.items];
         const item = items.splice(index, 1);
         items.splice(toIndex, 0, ...item);
@@ -187,7 +189,7 @@ export class ItemsDynamicComponent
         });
     }
 
-    public drop(event: CdkDragDrop<string[]>) {
+    public drop(event: CdkDragDrop<string[]>): void {
         this.moveItem(event.previousIndex, event.currentIndex);
     }
 
@@ -201,7 +203,7 @@ export class ItemsDynamicComponent
         this.form.insert(toIndex, oldValue);
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         // Ensures that any base class observables are unsubscribed.
         super.ngOnDestroy();
     }

@@ -36,6 +36,6 @@ xdescribe("a11y: toolbar", () => {
     });
 
     it("should check a11y of toolbar", async () => {
-        await assertA11y(browser, ToolbarAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, ToolbarAtom, rulesToDisable);
     });
 });

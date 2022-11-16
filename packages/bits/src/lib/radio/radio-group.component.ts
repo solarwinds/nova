@@ -108,7 +108,6 @@ export class RadioGroupComponent
      */
     @Output() public valueChange = new EventEmitter<any>();
 
-    /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
     @ContentChildren(forwardRef(() => RadioComponent), { descendants: true })
     private children: QueryList<RadioComponent>;
     private _value: any = null;
@@ -152,11 +151,11 @@ export class RadioGroupComponent
         );
     }
 
-    public onChange(value: any) {}
+    public onChange(value: any): void {}
 
-    public onTouched() {}
+    public onTouched(): void {}
 
-    public writeValue(value: any) {
+    public writeValue(value: any): void {
         this.value = value;
     }
 
@@ -329,7 +328,7 @@ export class RadioComponent implements OnInit, OnDestroy {
         this.valueChange.emit(this.value);
     }
 
-    public onInputClick(event: Event) {
+    public onInputClick(event: MouseEvent): void {
         // We have to stop propagation for click events on the visual hidden input element.
         // By default, when a user clicks on a label element, a generated click event will be
         // dispatched on the associated input element. Since we are using a label element as our
@@ -338,8 +337,6 @@ export class RadioComponent implements OnInit, OnDestroy {
         // This will lead to multiple click events.
         // Preventing bubbling for the second event will solve that issue.
         event.stopPropagation();
-        this.eventBusService
-            .getStream({ id: DOCUMENT_CLICK_EVENT })
-            .next(event);
+        this.eventBusService.getStream(DOCUMENT_CLICK_EVENT).next(event);
     }
 }

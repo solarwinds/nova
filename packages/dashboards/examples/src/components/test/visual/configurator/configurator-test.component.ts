@@ -78,7 +78,7 @@ import { positions, widgets } from "./widgets";
 export class AcmeDashboardComponent implements OnInit, OnDestroy {
     @ViewChild(DashboardComponent, { static: true })
     dashboardComponent: DashboardComponent;
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     public dashboard: IDashboard = {
         positions: {},
@@ -167,14 +167,14 @@ export class AcmeDashboardComponent implements OnInit, OnDestroy {
         };
     }
 
-    public onDsErrorChange(error: boolean) {
+    public onDsErrorChange(error: boolean): void {
         TestKpiDataSource.mockError = error;
         TestTimeseriesDataSource.mockError = error;
         TestTableDataSource.mockError = error;
         TestProportionalDataSource2.mockError = error;
     }
 
-    public onCloneWidget() {
+    public onCloneWidget(): void {
         const cloner: IWidgetSelector = {
             dashboardComponent: this.dashboardComponent,
             trySubmit: this.submitHandler.trySubmit,

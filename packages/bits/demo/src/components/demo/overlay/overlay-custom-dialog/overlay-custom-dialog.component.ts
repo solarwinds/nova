@@ -41,7 +41,7 @@ export class OverlayCustomDialogComponent {
 
     constructor(private dialogService: DialogService) {}
 
-    triggerOverlay(ref: HTMLElement, overlay: OverlayComponent) {
+    triggerOverlay(ref: HTMLElement, overlay: OverlayComponent): void {
         // Here we set the new element reference to the overlay conponent. The overlay will now connect to it
         overlay.toggleReference = ref;
         // Toggling the overlay to get an access to the 'overlayRef'

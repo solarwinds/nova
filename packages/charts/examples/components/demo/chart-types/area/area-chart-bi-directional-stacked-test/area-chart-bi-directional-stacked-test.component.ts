@@ -55,7 +55,7 @@ export class AreaChartBiDirectionalStackedTestComponent implements OnInit {
 
     constructor(public changeDetector: ChangeDetectorRef) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         // areaGrid returns an XYGrid configured for displaying an area chart's axes and other grid elements.
         this.chartTop = new Chart(new XYGrid(topChartConfig()), {
             updateDomainForEmptySeries: true,
@@ -156,7 +156,7 @@ export class AreaChartBiDirectionalStackedTestComponent implements OnInit {
         legendSeries: IChartAssistSeries<any>,
         value: boolean,
         currentChartAssist: ChartAssist
-    ) {
+    ): void {
         let chartAssists = [this.chartAssistTop, this.chartAssistBottom];
         if (currentChartAssist === this.chartAssistBottom) {
             chartAssists = chartAssists.reverse();

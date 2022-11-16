@@ -32,7 +32,7 @@ export interface IXYDataAccessors {
 export class XYAccessors implements IAccessors {
     /** The default data accessors for using with renderers deriving from XYRenderer */
     public data: IXYDataAccessors = {
-        x: (d: any) => d.x,
-        y: (d: any) => d.y,
+        x: (d: any): number | undefined => d.x,
+        y: (d: any): number | undefined => d.y,
     };
 }

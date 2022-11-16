@@ -41,7 +41,6 @@ import { ButtonSizeType } from "./public-api";
 
 // <example-url>./../examples/index.html#/button</example-url>
 
-/* eslint-disable @angular-eslint/component-selector */
 @Component({
     selector: "[nui-button]",
     templateUrl: "./button.component.html",
@@ -53,7 +52,6 @@ import { ButtonSizeType } from "./public-api";
     styleUrls: ["./button.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
-/* eslint-enable @angular-eslint/component-selector */
 export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
     /**
      * Optionally, specify the display style. Supported values are "default", "primary", "action", and "destructive".
@@ -69,7 +67,7 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
     @Input() public get iconColor(): string {
         return this._iconColor ? this._iconColor : "";
     }
-    public set iconColor(value) {
+    public set iconColor(value: string) {
         this._iconColor = value;
     }
     /**
@@ -107,41 +105,53 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
             (value as string) === "small" ? ButtonSizeType.compact : value;
     }
 
-    @HostBinding("class.btn-lg") public get sizeClassLarge() {
+    @HostBinding("class.btn-lg")
+    public get sizeClassLarge(): boolean {
         return this.size === "large";
     }
-    @HostBinding("class.btn-xs") public get sizeClassCompact() {
+
+    @HostBinding("class.btn-xs")
+    public get sizeClassCompact(): boolean {
         return this.size === "compact";
     }
 
-    @HostBinding("class.icon-right") public get iconRightClass() {
+    @HostBinding("class.icon-right")
+    public get iconRightClass(): boolean {
         return this.iconRight;
     }
-    @HostBinding("class.icon-left") public get iconleftClass() {
+
+    @HostBinding("class.icon-left")
+    public get iconleftClass(): boolean {
         return !this.iconRight;
     }
 
-    @HostBinding("class.is-busy") public get isBusyClass() {
+    @HostBinding("class.is-busy")
+    public get isBusyClass(): boolean {
         return this.isBusy;
     }
-    @HostBinding("class.is-empty") public get isEmptyClass() {
-        if (this.isEmpty === undefined) {
-            return this._isContentEmpty;
-        } else {
-            return this.isEmpty;
-        }
+
+    @HostBinding("class.is-empty")
+    public get isEmptyClass(): boolean {
+        return this.isEmpty ?? this._isContentEmpty;
     }
-    @HostBinding("class.btn-primary") public get dispStylePrimClass() {
+
+    @HostBinding("class.btn-primary")
+    public get dispStylePrimClass(): boolean {
         return this.displayStyle === "primary";
     }
-    @HostBinding("class.btn-action") public get dispStyleActionClass() {
+
+    @HostBinding("class.btn-action")
+    public get dispStyleActionClass(): boolean {
         return this.displayStyle === "action";
     }
+
     @HostBinding("class.btn-destructive")
-    public get displayStyleDestructiveClass() {
+    public get displayStyleDestructiveClass(): boolean {
         return this.displayStyle === "destructive";
     }
-    @HostBinding("class.btn-default") public get dispStyleDefaultClass() {
+
+    @HostBinding("class.btn-default")
+    public get dispStyleDefaultClass(): boolean {
         return (
             this.displayStyle === "default" ||
             !(
@@ -152,7 +162,8 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
         );
     }
 
-    @HostBinding("attr.aria-label") public get ariaIconLabel() {
+    @HostBinding("attr.aria-label")
+    public get ariaIconLabel(): string {
         return this.ariaLabel || this.getAriaLabel();
     }
 
@@ -205,7 +216,7 @@ should be set explicitly: `,
     /**
      * Passes correct styles to inner HTML template for displaying busy state.
      */
-    public getRippleContainerStyle() {
+    public getRippleContainerStyle(): Partial<CSSStyleDeclaration> {
         const host = this.getHostElement();
         const d = Math.max(host.offsetWidth, host.offsetHeight);
         const x = Math.floor((host.offsetWidth - d) / 2);

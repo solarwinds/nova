@@ -138,7 +138,7 @@ export class FilteredViewTableWithCustomVirtualScrollComponent
         private cd: ChangeDetectorRef
     ) {}
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.outputsSubscription = this.dataSource.outputsSubject.subscribe(
             (data: INovaFilteringOutputs) => {
                 this.recalculateCounts(data);
@@ -147,12 +147,12 @@ export class FilteredViewTableWithCustomVirtualScrollComponent
         );
     }
 
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         await this.child.applyFilters();
         this.updateChips();
     }
 
-    public onChipsOverflow(source: IChipsItemsSource) {
+    public onChipsOverflow(source: IChipsItemsSource): void {
         this.overflowSource = source;
         const reducer = (accumulator: number, currentValue: IChipsGroup) =>
             accumulator + currentValue.items.length;
@@ -162,7 +162,10 @@ export class FilteredViewTableWithCustomVirtualScrollComponent
         this.popover?.updatePosition();
     }
 
-    public async onClear(event: { item: IChipsItem; group?: IChipsGroup }) {
+    public async onClear(event: {
+        item: IChipsItem;
+        group?: IChipsGroup;
+    }): Promise<void> {
         if (event.group) {
             _pull(event.group.items || [], event.item);
         } else {
@@ -174,7 +177,7 @@ export class FilteredViewTableWithCustomVirtualScrollComponent
         group?.deselectFilterItemByValue(event.item.label);
     }
 
-    public onClearAll(e: MouseEvent) {
+    public onClearAll(e: MouseEvent): void {
         this.chipsDataSource.groupedItems = [];
         this.popover?.onClick(e);
         this.filterGroups.forEach((i) => i.deselectAllFilterItems());
@@ -200,7 +203,7 @@ export class FilteredViewTableWithCustomVirtualScrollComponent
         });
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 }

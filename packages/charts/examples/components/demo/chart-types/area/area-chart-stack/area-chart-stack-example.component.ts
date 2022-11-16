@@ -43,7 +43,7 @@ export class AreaChartStackExampleComponent implements OnInit {
     public chart: Chart;
     public chartAssist: ChartAssist;
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         // areaGrid returns an XYGrid configured for displaying an area chart's axes and other grid elements.
         this.chart = new Chart(areaGrid());
         // ChartAssist will use the preprocessor to stack the series' numeric values on the same progression domain

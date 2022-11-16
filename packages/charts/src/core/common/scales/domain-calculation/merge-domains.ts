@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { max, min, Numeric } from "d3-array";
+import { max, min, Numeric } from "d3";
 import flatten from "lodash/flatten";
 import uniq from "lodash/uniq";
 

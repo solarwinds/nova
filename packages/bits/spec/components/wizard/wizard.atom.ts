@@ -75,7 +75,7 @@ export class WizardAtom extends Atom {
             });
     }
 
-    public async getSteps() {
+    public async getSteps(): Promise<WizardStepAtom[]> {
         const stepsEl = this.root.element(by.className("nui-wizard__header"));
 
         // this should really be a map operation.  However, map has a bug- if you put an element finder

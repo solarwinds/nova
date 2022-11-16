@@ -37,7 +37,7 @@ import {
 export class PieChartTestComponent implements OnInit {
     public chartAssist = new ChartAssist(new Chart(radialGrid()), radial);
 
-    ngOnInit() {
+    public ngOnInit(): void {
         const accessors = new RadialAccessors();
         const scales = radialScales();
         const renderer = new PieRenderer();

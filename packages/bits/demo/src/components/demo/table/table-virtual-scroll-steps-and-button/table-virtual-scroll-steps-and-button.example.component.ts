@@ -52,16 +52,16 @@ export class TableVirtualScrollStepsAndButtonExampleComponent
     private _loadedItems: number = 0;
     private _isBusy: boolean = false;
 
-    get loadedItems() {
+    get loadedItems(): number {
         return this._loadedItems;
     }
-    get isBusy() {
+    get isBusy(): boolean {
         return this._isBusy;
     }
 
     // The dynamically changed array of items to render by the table
-    public users: BehaviorSubject<IRandomUserTableModel[]> =
-        new BehaviorSubject<IRandomUserTableModel[]>([]);
+    public users = new BehaviorSubject<IRandomUserTableModel[]>([]);
+
     public displayedColumns: string[] = [
         "no",
         "nameTitle",
@@ -74,6 +74,7 @@ export class TableVirtualScrollStepsAndButtonExampleComponent
         "email",
         "cell",
     ];
+
     public gridHeight = 400;
     public makeSticky: boolean = true;
     public step: number = 100;
@@ -92,47 +93,47 @@ export class TableVirtualScrollStepsAndButtonExampleComponent
         this.dataSource.itemsToLoad.next(this.itemsToLoad);
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource.outputsSubject.subscribe(
             (outputs: IFilteringOutputs) => {
-                if (outputs) {
-                    this.users.next(outputs.repeat.itemsSource);
-                    this._loadedItems = outputs.itemsToLoad;
-                    this.totalItems = outputs.totalItems;
-                    this.dataSource.step.next(this.step);
-
-                    /**
-                     * Option 1:
-                     * When Option 2 code snippet (see below) is commented out, and the following one is uncommented,
-                     * lets the table to load all available items in API step by step without user interaction.
-                     */
-
-                    // if (this.users.value.length < this.totalItems) {
-                    //     this.loadAll();
-                    // }
-
-                    /**
-                     * Option 2:
-                     * When Option 1 code snippet (see above) is commented out, and the following one is uncommented,
-                     * lets the table ot load only the amount of items set in the ${itemsToLoad} variable. Requires user action to fetch another chunk of data.
-                     */
-                    if (this.users.value.length < this.loadedItems) {
-                        const leftover =
-                            this.users.value.length -
-                            this.itemsToLoad *
-                                Math.round(
-                                    this.users.value.length / this.itemsToLoad
-                                );
-                        if (this.step > Math.abs(leftover)) {
-                            this.dataSource.step.next(
-                                this.itemsToLoad % this.step
-                            );
-                        }
-                        this.dataSource.applyFilters();
-                    }
-
-                    this.cd.detectChanges();
+                if (!outputs) {
+                    return;
                 }
+
+                this.users.next(outputs.repeat.itemsSource);
+                this._loadedItems = outputs.itemsToLoad;
+                this.totalItems = outputs.totalItems;
+                this.dataSource.step.next(this.step);
+
+                /**
+                 * Option 1:
+                 * When Option 2 code snippet (see below) is commented out, and the following one is uncommented,
+                 * lets the table to load all available items in API step by step without user interaction.
+                 */
+
+                // if (this.users.value.length < this.totalItems) {
+                //     this.loadAll();
+                // }
+
+                /**
+                 * Option 2:
+                 * When Option 1 code snippet (see above) is commented out, and the following one is uncommented,
+                 * lets the table ot load only the amount of items set in the ${itemsToLoad} variable. Requires user action to fetch another chunk of data.
+                 */
+                if (this.users.value.length < this.loadedItems) {
+                    const leftover =
+                        this.users.value.length -
+                        this.itemsToLoad *
+                            Math.round(
+                                this.users.value.length / this.itemsToLoad
+                            );
+                    if (this.step > Math.abs(leftover)) {
+                        this.dataSource.step.next(this.itemsToLoad % this.step);
+                    }
+                    this.dataSource.applyFilters();
+                }
+
+                this.cd.detectChanges();
             }
         );
         this.dataSource.applyFilters();
@@ -148,7 +149,7 @@ export class TableVirtualScrollStepsAndButtonExampleComponent
         this.users.complete();
     }
 
-    public loadAll() {
+    public loadAll(): void {
         const delta = this.totalItems - this.users.value.length;
 
         if (this.step > delta) {
@@ -157,11 +158,11 @@ export class TableVirtualScrollStepsAndButtonExampleComponent
         this.dataSource.applyFilters();
     }
 
-    public loadMore() {
-        const toLoad =
-            this.totalItems - this.loadedItems < this.itemsToLoad
-                ? this.totalItems - this.loadedItems
-                : this.itemsToLoad;
+    public loadMore(): void {
+        const toLoad = Math.min(
+            this.totalItems - this.loadedItems,
+            this.itemsToLoad
+        );
         if (toLoad < this.itemsToLoad) {
             this.dataSource.step.next(toLoad);
         }
@@ -169,14 +170,14 @@ export class TableVirtualScrollStepsAndButtonExampleComponent
         this.dataSource.applyFilters();
     }
 
-    public isAllLoaded() {
+    public isAllLoaded(): boolean {
         return (
             this.users.value.length === this.totalItems &&
             this.users.value.length !== 0
         );
     }
 
-    public isChunkLoaded() {
+    public isChunkLoaded(): boolean {
         return (
             this.users.value.length === this.loadedItems &&
             this.users.value.length !== 0

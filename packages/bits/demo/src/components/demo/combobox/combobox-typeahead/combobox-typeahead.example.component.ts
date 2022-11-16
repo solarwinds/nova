@@ -56,19 +56,17 @@ export class ComboboxTypeaheadExampleComponent {
     ];
     public displayedItems = this.dataset;
 
-    public textboxChanged(searchQuery: ISelectChangedEvent<any>) {
+    public textboxChanged(searchQuery: ISelectChangedEvent<any>): void {
+        // searchQuery.newValue.label is necessary, since combobox can emit event with 2 possible values:
+        // either string or complex object ({label: x, value: y} in this case). Users should be careful dealing with this emitters
+        // and handle them properly.
+        const val = searchQuery?.newValue?.toLowerCase();
+        const label = searchQuery?.newValue?.label?.toLowerCase();
         this.displayedItems = _cloneDeep(this.dataset);
         this.displayedItems.forEach((group) => {
             group.items = group.items.filter((item) => {
-                // searchQuery.newValue.label is necessary, since combobox can emit event with 2 possible values:
-                // either string or complex object ({label: x, value: y} in this case). Users should be careful dealing with this emitters
-                // and handle them properly.
                 const itemLabel = item.label.toLowerCase();
-                const val = searchQuery.newValue;
-                return (
-                    itemLabel.includes(val.toLowerCase()) ||
-                    itemLabel.includes(val.label && val.label.toLowerCase())
-                );
+                return itemLabel.includes(val) || itemLabel.includes(label);
             });
         });
     }

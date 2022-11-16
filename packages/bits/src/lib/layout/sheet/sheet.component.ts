@@ -49,7 +49,7 @@ export class SheetComponent implements OnInit {
 
     constructor(public elRef: ElementRef) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.directionColumn =
             (this.directionColumn && !this.directionRow) ||
             this.direction === "column";

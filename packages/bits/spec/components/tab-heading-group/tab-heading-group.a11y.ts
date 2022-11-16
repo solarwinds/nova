@@ -33,14 +33,10 @@ describe("a11y: tab-heading-group", () => {
     });
 
     it("should check a11y of tab-heading-group", async () => {
-        await assertA11y(browser, TabHeadingAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, TabHeadingAtom, rulesToDisable);
     });
 
     it("should check a11y of tab-heading-group", async () => {
-        await assertA11y(
-            browser,
-            TabHeadingGroupAtom.CSS_CLASS,
-            rulesToDisable
-        );
+        await assertA11y(browser, TabHeadingGroupAtom, rulesToDisable);
     });
 });

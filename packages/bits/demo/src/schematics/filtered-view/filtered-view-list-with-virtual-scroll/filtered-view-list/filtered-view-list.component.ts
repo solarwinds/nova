@@ -29,7 +29,13 @@ import {
     ViewChild,
 } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
-import { filter, switchMap, takeUntil, tap } from "rxjs/operators";
+import {
+    filter,
+    // eslint-disable-next-line import/no-deprecated
+    switchMap,
+    takeUntil,
+    tap,
+} from "rxjs/operators";
 
 import {
     DataSourceService,
@@ -85,14 +91,14 @@ export class FilteredViewListComponent
     public totalItems: number = 0;
 
     public itemConfig: IRepeatItemConfig<IServer> = {
-        trackBy: (index, item) => item?.name,
+        trackBy: (_: number, item: IServer): string => item?.name,
     };
 
     @ViewChild(RepeatComponent) repeat: RepeatComponent;
     @ViewChild(SearchComponent) search: SearchComponent;
     @ViewChild(SorterComponent) sorter: SorterComponent;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         @Inject(DataSourceService)
@@ -101,7 +107,7 @@ export class FilteredViewListComponent
         private viewportManager: VirtualViewportManager
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource.busy
             .pipe(
                 tap((val) => {
@@ -113,7 +119,7 @@ export class FilteredViewListComponent
             .subscribe();
     }
 
-    public async ngAfterViewInit() {
+    public async ngAfterViewInit(): Promise<void> {
         this.dataSource.registerComponent({
             virtualScroll: { componentInstance: this.viewportManager },
             search: { componentInstance: this.search },
@@ -138,6 +144,7 @@ export class FilteredViewListComponent
                 }),
                 tap(async () => this.applyFilters(false)),
                 // Note: Using the same stream to subscribe to the outputsSubject and update the items list
+                // eslint-disable-next-line import/no-deprecated
                 switchMap(() =>
                     this.dataSource.outputsSubject.pipe(
                         tap((data: IFilteringOutputs) => {
@@ -178,20 +185,22 @@ export class FilteredViewListComponent
             .subscribe();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    public async onSearch() {
+    public async onSearch(): Promise<void> {
         await this.applyFilters();
     }
 
-    public async onCancelSearch() {
+    public async onCancelSearch(): Promise<void> {
         await this.applyFilters();
     }
 
-    public async applyFilters(resetVirtualScroll: boolean = true) {
+    public async applyFilters(
+        resetVirtualScroll: boolean = true
+    ): Promise<void> {
         if (resetVirtualScroll) {
             // it is important to reset viewportManager to start page
             // so that the datasource performs the search with 1st page
@@ -210,7 +219,7 @@ export class FilteredViewListComponent
         await this.dataSource.applyFilters();
     }
 
-    public async onSorterAction(changes: ISorterChanges) {
+    public async onSorterAction(changes: ISorterChanges): Promise<void> {
         this.sortBy = changes.newValue.sortBy;
         await this.applyFilters();
     }

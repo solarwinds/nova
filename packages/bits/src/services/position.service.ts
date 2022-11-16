@@ -27,6 +27,8 @@ import _isNil from "lodash/isNil";
  * For now has one public method 'getCoordinates' (see method description).
  */
 
+type OurCSS = CSSStyleDeclaration & { [key: string]: any };
+
 /**
  * @dynamic
  * @ignore
@@ -195,14 +197,12 @@ export class PositionService {
             return (
                 this.document.defaultView.getComputedStyle(
                     nativeElement
-                ) as CSSStyleDeclaration & { [key: string]: any }
+                ) as OurCSS
             )[cssProp];
         }
 
         // finally try and get inline style
-        return (
-            nativeElement.style as CSSStyleDeclaration & { [key: string]: any }
-        )[cssProp];
+        return (nativeElement.style as OurCSS)[cssProp];
     }
 
     private isStaticPositioned(nativeElement: HTMLElement): boolean {

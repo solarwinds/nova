@@ -23,7 +23,7 @@ import { ElementRef, Injectable, OnDestroy, QueryList } from "@angular/core";
 import isNull from "lodash/isNull";
 import { Subject, Subscription } from "rxjs";
 
-import { KEYBOARD_CODE } from "../../constants";
+import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import { MenuActionComponent } from "../menu/menu-item/menu-action/menu-action.component";
 import { MenuItemBaseComponent } from "../menu/menu-item/menu-item/menu-item-base";
 import { PopupComponent } from "../popup-adapter/popup-adapter.component";
@@ -39,18 +39,20 @@ export class MenuKeyControlService implements OnDestroy {
     public menuItems: QueryList<MenuItemBaseComponent>;
     public menuToggle: ElementRef;
     public menuPopup: MenuPopupComponent;
-    public set scrollContainer(container: ElementRef) {
-        this._scrollContainer = container;
-    }
-    public get scrollContainer() {
-        return this._scrollContainer || this.popup?.popupAreaContainer;
-    }
-    public menuOpenListener: Subject<boolean>;
+    public menuOpenListener: Subject<void>;
     public keyControlItemsSource: boolean = false;
     public keyboardEventsManager: ActiveDescendantKeyManager<MenuItemBaseComponent>;
     public menuOpenListenerSubscription: Subscription;
     private keyboardEventsSubscription: Subscription;
     private _scrollContainer: ElementRef;
+
+    public set scrollContainer(container: ElementRef) {
+        this._scrollContainer = container;
+    }
+
+    public get scrollContainer(): ElementRef<any> {
+        return this._scrollContainer || this.popup?.popupAreaContainer;
+    }
 
     constructor(private live: LiveAnnouncer) {}
 
@@ -290,7 +292,7 @@ export class MenuKeyControlService implements OnDestroy {
         );
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         if (this.keyboardEventsSubscription) {
             this.keyboardEventsSubscription.unsubscribe();
         }

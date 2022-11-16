@@ -41,6 +41,6 @@ describe("a11y: breadcrumb", () => {
     });
 
     it("should check a11y of breadcrumb", async () => {
-        await assertA11y(browser, BreadcrumbAtom.CSS_CLASS);
+        await assertA11y(browser, BreadcrumbAtom);
     });
 });

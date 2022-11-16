@@ -52,7 +52,7 @@ export class SparkPrototypeComponent implements OnInit {
     private sparkLineRenderer: LineRenderer;
     private sparkXScale = new LinearScale();
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.sparkLineRenderer = new LineRenderer();
 
         this.sparkXScale.formatters.tick = (value: any) =>
@@ -62,7 +62,7 @@ export class SparkPrototypeComponent implements OnInit {
         this.update();
     }
 
-    public update() {
+    public update(): void {
         this.chartAssist.updateSparks(
             this.generateSparkSeriesSet(Math.floor(Math.random() * 6 + 1))
         );

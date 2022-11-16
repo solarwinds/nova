@@ -51,7 +51,7 @@ export class DndCustomHandleExampleComponent {
         },
     ];
 
-    public onItemDropped(event: CdkDragDrop<IListItem[]>) {
+    public onItemDropped(event: CdkDragDrop<IListItem[]>): void {
         moveItemInArray(
             this.listItems,
             event.previousIndex,

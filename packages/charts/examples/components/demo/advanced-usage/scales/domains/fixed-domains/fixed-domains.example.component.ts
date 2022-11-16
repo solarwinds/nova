@@ -47,7 +47,7 @@ export class FixedDomainsExampleComponent implements OnInit {
     private seriesSet: IChartSeries<ILineAccessors>[];
     private format = "YYYY-MM-DDTHH:mm:ssZ";
 
-    ngOnInit() {
+    public ngOnInit(): void {
         const scales: Scales = {
             x: this.xScale,
             y: this.yScale,
@@ -71,7 +71,7 @@ export class FixedDomainsExampleComponent implements OnInit {
         this.chart.updateDimensions();
     }
 
-    public fixXDomain() {
+    public fixXDomain(): void {
         const startDatetime = moment(
             "2016-12-29T06:00:00.000Z",
             this.format
@@ -85,12 +85,12 @@ export class FixedDomainsExampleComponent implements OnInit {
         this.chart.update(this.seriesSet);
     }
 
-    public fixYDomain() {
+    public fixYDomain(): void {
         this.yScale.fixDomain([0, 100]);
         this.chart.update(this.seriesSet);
     }
 
-    public resetDomains() {
+    public resetDomains(): void {
         this.xScale.isDomainFixed = false;
         this.yScale.isDomainFixed = false;
         this.chart.update(this.seriesSet);

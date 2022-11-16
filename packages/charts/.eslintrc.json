@@ -1,10 +1,26 @@
 {
     "extends": "../../.eslintrc.json",
+    "ignorePatterns": ["node_modules/**/*"],
     "overrides": [
         {
             "files": ["*.ts"],
             "parserOptions": {
                 "project": ["tsconfig.json"],
+                "createDefaultProgram": true
+            },
+            "settings": {
+                "import/resolver": {
+                    "node": {
+                        "extensions": [".js", ".ts"],
+                        "paths": ["./src"]
+                    }
+                }
+            }
+        },
+        {
+            "files": ["*.spec.ts"],
+            "parserOptions": {
+                "project": ["tsconfig.spec.json"],
                 "createDefaultProgram": true
             },
             "settings": {

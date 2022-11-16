@@ -103,7 +103,7 @@ export class PopupComponent
         setTimeout(() => this.isOpenHandler(open));
     }
     get isOpen(): boolean {
-        return this.popup?.showing;
+        return !!this.popup?.showing;
     }
 
     @Output()
@@ -133,7 +133,7 @@ export class PopupComponent
     private _visible: boolean;
     private _overlayConfig: OverlayConfig = ADAPTER_OVERLAY_CONFIG;
     private isContentInitialized: boolean;
-    private destroy$: Subject<void> = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     private lastEventType: string;
 
     constructor(
@@ -195,7 +195,7 @@ export class PopupComponent
         }
 
         this.eventBusService
-            .getStream({ id: DOCUMENT_CLICK_EVENT })
+            .getStream(DOCUMENT_CLICK_EVENT)
             .pipe(takeUntil(this.destroy$))
             .subscribe((event: Event) => {
                 const isToggle =
@@ -242,7 +242,7 @@ export class PopupComponent
         this.hide();
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         if (this.isOpen) {
             this.hide();
         }

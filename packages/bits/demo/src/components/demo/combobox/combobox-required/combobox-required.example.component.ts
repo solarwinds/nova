@@ -34,7 +34,7 @@ export class ComboboxRequiredExampleComponent implements OnInit {
         selectedItem: "",
     };
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.isInErrorState();
     }
 

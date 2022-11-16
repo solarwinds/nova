@@ -93,12 +93,12 @@ export class SelectComponent
     }, 300);
 
     @HostBinding("class.nui-select--justified")
-    get isJustified() {
+    get isJustified(): boolean {
         return this.justified;
     }
 
     @HostBinding("class.nui-select--inline")
-    get isInline() {
+    get isInline(): boolean {
         return this.inline;
     }
 
@@ -118,7 +118,7 @@ export class SelectComponent
 
     private unsubscriber: () => void;
 
-    ngOnInit() {
+    public ngOnInit(): void {
         super.ngOnInit();
         this.unsubscriber = this.renderer.listen(
             this.elRef.nativeElement,
@@ -130,7 +130,7 @@ export class SelectComponent
         );
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         super.ngOnChanges(changes);
     }
 
@@ -144,7 +144,7 @@ export class SelectComponent
             : _toString(this.getDisplayValueFormatted(this.getSelectedItem()));
     }
 
-    public handleBlur() {
+    public handleBlur(): void {
         this.select(this.selectedItem);
     }
 
@@ -155,7 +155,7 @@ export class SelectComponent
             : "";
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         if (this.unsubscriber) {
             this.unsubscriber();
         }

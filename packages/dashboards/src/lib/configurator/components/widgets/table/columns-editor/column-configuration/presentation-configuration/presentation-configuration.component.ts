@@ -89,7 +89,7 @@ export class PresentationConfigurationComponent
         this.handleFormattersUpdate(formatters);
     }
 
-    public get formatters() {
+    public get formatters(): IFormatterDefinition[] {
         return this._formatters;
     }
 
@@ -136,7 +136,7 @@ export class PresentationConfigurationComponent
         this.subscribeToFormattersRegistry();
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.formatterForm = this.formBuilder.group({
             componentType: [
                 (this.formatter && this.formatter.componentType) ||
@@ -165,9 +165,9 @@ export class PresentationConfigurationComponent
             });
     }
 
-    ngAfterViewInit() {}
+    public ngAfterViewInit(): void {}
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.dataFieldIds) {
             const { currentValue, previousValue } = changes.dataFieldIds;
 
@@ -235,7 +235,7 @@ export class PresentationConfigurationComponent
         return null;
     }
 
-    public onFormReady(form: FormGroup) {
+    public onFormReady(form: FormGroup): void {
         (this.form.get(this.formatterFormGroupName) as FormGroup).setControl(
             "properties",
             form
@@ -340,7 +340,7 @@ export class PresentationConfigurationComponent
         );
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.formDestroy.emit(this.form);
         this.onDestroy$.next();
         this.onDestroy$.complete();

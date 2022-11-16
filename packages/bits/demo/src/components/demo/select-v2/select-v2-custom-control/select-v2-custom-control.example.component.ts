@@ -35,7 +35,7 @@ export class SelectV2CustomControlExampleComponent implements AfterViewInit {
 
     @ViewChild(SelectV2Component) private select: SelectV2Component;
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.select.clickOutsideDropdown.subscribe(() => {
             if (this.handleClicksOutside) {
                 this.select.hideDropdown();

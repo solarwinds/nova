@@ -18,9 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Input } from "@angular/core";
-
-import { IMenuGroup, PanelBackgroundColor } from "@nova-ui/bits";
+import { Component } from "@angular/core";
 
 @Component({
     selector: "nui-panel-test",

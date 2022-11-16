@@ -43,7 +43,7 @@ import {
 export class AreaSparkMinimalTestComponent implements OnInit {
     public chart: IChart;
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const gridConfig = new XYGridConfig();
         gridConfig.axis.left.visible = false;
         gridConfig.axis.bottom.visible = false;

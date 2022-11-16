@@ -133,7 +133,7 @@ private dataSource: TableWithVirtualScrollDataSource;
 constructor(private viewportManager: VirtualViewportManager) {}
 `,
         oninitSubscribeBusy: `
-ngOnInit(): void {
+public ngOnInit(): void {
     this.dataSource.busy.subscribe(busy => {
         this._isBusy = busy;
     });
@@ -180,7 +180,7 @@ ngOnInit(): void {
         return key;
     }
 
-    public for(forComponent: SchematicsDocsComponentType) {
+    public for(forComponent: SchematicsDocsComponentType): boolean {
         return this.forComponent === forComponent || !this.forComponent;
     }
 }

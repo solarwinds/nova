@@ -38,7 +38,10 @@ export class DomUtilService {
      * @param selector the selector to match
      * @returns the matching element
      */
-    public getClosest = (elem: HTMLElement | undefined, selector: string) => {
+    public getClosest = (
+        elem: HTMLElement | undefined,
+        selector: string
+    ): HTMLElement | null => {
         // Element.matches() polyfill
         if (!Element.prototype.matches) {
             Element.prototype.matches =

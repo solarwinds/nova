@@ -34,11 +34,11 @@ export class DialogSizesExampleComponent {
         @Inject(ToastService) private toastService: ToastService
     ) {}
 
-    public open(content: TemplateRef<string>, size: any) {
+    public open(content: TemplateRef<string>, size: any): void {
         this.activeDialog = this.dialogService.open(content, { size });
     }
 
-    public onButtonClick(title: string) {
+    public onButtonClick(title: string): void {
         title === "Action" ? this.actionDone() : this.actionCanceled();
         this.activeDialog.close();
     }

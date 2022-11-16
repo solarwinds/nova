@@ -75,7 +75,7 @@ export class TitleAndDescriptionConfigurationComponent
         this.formReady.emit(this.form);
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.title) {
             this.form.get("title")?.setValue(this.title);
         }
@@ -93,7 +93,7 @@ export class TitleAndDescriptionConfigurationComponent
         }
     }
 
-    public getSecondaryText() {
+    public getSecondaryText(): string {
         const forTitle =
             this.form.controls["title"].value || $localize`No title`;
         const forSubtitle =

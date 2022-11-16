@@ -31,6 +31,6 @@ describe("a11y: chips", () => {
     });
 
     it("should verify a11y of chips", async () => {
-        await assertA11y(browser, ChipsAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, ChipsAtom, rulesToDisable);
     });
 });

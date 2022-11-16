@@ -44,11 +44,11 @@ export class SelectV2OptionsChangedExampleComponent implements OnInit {
     ];
     public selectControl = new FormControl();
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.items = this.itemSet[0];
     }
 
-    public setItems(i: number) {
+    public setItems(i: number): void {
         this.items = this.itemSet[i];
     }
 }

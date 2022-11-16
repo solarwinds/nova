@@ -69,12 +69,13 @@ export class TableVirtualScrollRealApiProgressFooterExampleComponent
     private virtualScrollFilterValue: ListRange = { start: 0, end: this.range };
     private onDestroy$: Subject<void> = new Subject<void>();
 
-    get totalItems() {
+    get totalItems(): number {
         return this._totalItems;
     }
-    get isBusy() {
+    get isBusy(): boolean {
         return this._isBusy;
     }
+
     // The dynamically changed array of items to render by the table
     public users: IRandomUserTableModel[] = [];
     public dataSourceObs = new Subject<any[]>();
@@ -108,7 +109,7 @@ export class TableVirtualScrollRealApiProgressFooterExampleComponent
     @ViewChild(CdkVirtualScrollViewport, { static: false })
     viewport: CdkVirtualScrollViewport;
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource.outputsSubject.subscribe(
             (outputs: IFilteringOutputs) => {
                 if (outputs) {
@@ -138,7 +139,7 @@ export class TableVirtualScrollRealApiProgressFooterExampleComponent
         });
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this.registerVirtualScroll();
 
         // Setting the items range to properly evaluate the virtual scroll viewport size

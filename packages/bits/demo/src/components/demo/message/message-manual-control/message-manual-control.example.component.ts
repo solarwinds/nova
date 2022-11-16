@@ -33,7 +33,7 @@ export class MessageManualControlExampleComponent {
         this.isVisible = !this.isVisible;
     }
 
-    public toggleMessage() {
+    public toggleMessage(): void {
         this.isVisible = !this.isVisible;
         this.messageVisibilitySubject.next(this.isVisible);
     }

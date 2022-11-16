@@ -28,6 +28,7 @@ export * from "./dnd/public-api";
 export * from "./dialog/public-api";
 export * from "./divider/public-api";
 export * from "./docs/public-api";
+export * from "./dragdrop/public-api";
 export * from "./form-field/public-api";
 export * from "./icon/public-api";
 export * from "./image/public-api";

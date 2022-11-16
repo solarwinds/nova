@@ -88,7 +88,7 @@ export class ProportionalDonutContentComponent
         private logger: LoggerService
     ) {}
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.donutConfig) {
             const donutConfig: IDonutContentConfig =
                 changes.donutConfig.currentValue;
@@ -116,7 +116,7 @@ export class ProportionalDonutContentComponent
         }
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }

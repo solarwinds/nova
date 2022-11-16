@@ -76,11 +76,11 @@ export class WidgetConfiguratorSectionComponent
         return this.nodes;
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.form = this.formBuilder.group({});
     }
 
-    public onEvent(componentId: string, event: IEvent) {
+    public onEvent(componentId: string, event: IEvent): void {
         if (event.id === "formReady") {
             this.addFormGroup(componentId, event.payload);
         }
@@ -89,7 +89,7 @@ export class WidgetConfiguratorSectionComponent
         }
     }
 
-    public addFormGroup(name: string, formGroup: FormGroup) {
+    public addFormGroup(name: string, formGroup: FormGroup): void {
         this.form.addControl(name, formGroup);
     }
 

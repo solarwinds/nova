@@ -22,13 +22,8 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    OnChanges,
     OnDestroy,
-    OnInit,
-    SimpleChanges,
 } from "@angular/core";
-
-import { IDataField } from "@nova-ui/bits";
 
 import { DataSourceErrorComponent } from "../data-source-error.component";
 
@@ -47,7 +42,7 @@ export class TableDataSourceErrorComponent
         super(changeDetector);
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         super.ngOnDestroy();
     }
 }

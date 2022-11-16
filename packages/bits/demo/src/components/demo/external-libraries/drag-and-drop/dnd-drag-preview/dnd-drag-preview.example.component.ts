@@ -52,7 +52,7 @@ export class DndDragPreviewExampleComponent {
         },
     ];
 
-    public onItemDropped(event: CdkDragDrop<IListItem[]>) {
+    public onItemDropped(event: CdkDragDrop<IListItem[]>): void {
         moveItemInArray(
             this.listItems,
             event.previousIndex,

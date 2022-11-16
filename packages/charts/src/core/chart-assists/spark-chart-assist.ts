@@ -150,8 +150,11 @@ export class SparkChartAssist implements IChartAssist {
      * To use the for-cycle trackBy, set the id value on each spark
      * and assign this function to the ngFor trackBy property
      */
-    public trackByFn(_index: number, spark: ISpark<IAccessors>) {
-        return spark.id;
+    public trackByFn(
+        _index: number,
+        spark: ISpark<IAccessors>
+    ): string | undefined {
+        return spark?.id;
     }
 
     public setRenderState(_seriesId: string, _state: RenderState): void {
@@ -162,7 +165,7 @@ export class SparkChartAssist implements IChartAssist {
         return [];
     }
 
-    protected createChart(lastSpark: boolean) {
+    protected createChart(lastSpark: boolean): Chart {
         const grid = new XYGrid(
             lastSpark ? this.lastGridConfig : this.gridConfig
         );

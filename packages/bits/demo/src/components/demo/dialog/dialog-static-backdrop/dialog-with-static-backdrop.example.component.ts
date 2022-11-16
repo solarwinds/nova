@@ -34,13 +34,13 @@ export class DialogWithStaticBackdropExampleComponent {
         @Inject(ToastService) private toastService: ToastService
     ) {}
 
-    public openWith(content: TemplateRef<string>) {
+    public openWith(content: TemplateRef<string>): void {
         this.activeDialog = this.dialogService.open(content, {
             size: "sm",
             backdrop: "static",
         });
     }
-    public openWithout(content: TemplateRef<string>) {
+    public openWithout(content: TemplateRef<string>): void {
         this.activeDialog = this.dialogService.open(content, {
             size: "sm",
             keyboard: false,

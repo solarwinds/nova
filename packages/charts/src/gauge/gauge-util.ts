@@ -19,7 +19,6 @@
 //  THE SOFTWARE.
 
 import isEmpty from "lodash/isEmpty";
-import isNil from "lodash/isNil";
 import isUndefined from "lodash/isUndefined";
 
 import { Chart } from "../core/chart";

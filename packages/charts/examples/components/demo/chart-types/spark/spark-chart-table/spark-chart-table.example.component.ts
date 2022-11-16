@@ -41,7 +41,7 @@ export class SparkChartTableExampleComponent implements OnInit {
     public displayedColumns = ["name", "chart"];
     public dataSource: any[] = [];
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.generateTableData();
     }
 

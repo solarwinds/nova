@@ -40,7 +40,7 @@ export class CheckboxGroupBasicExampleComponent {
         return this.selectedVegetables.indexOf(vegetable) > -1;
     }
 
-    public onValueChange(event: any) {
+    public onValueChange(event: any): void {
         this.toastService.success({
             message: $localize`Selected checkboxes: ` + event,
         });

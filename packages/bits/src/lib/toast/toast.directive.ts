@@ -61,7 +61,7 @@ export class ToastDirective implements OnInit, OnDestroy {
         private notificationService: NotificationService
     ) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.notificationSubscription = this.notificationService.subscribe(
             "Highlight",
             this.onHighlight
@@ -102,7 +102,7 @@ export class ToastDirective implements OnInit, OnDestroy {
         }
     };
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.notificationSubscription.unsubscribe();
     }
 }

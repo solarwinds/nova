@@ -43,7 +43,7 @@ export class GroupedHorizontalBarChartTestComponent implements OnInit {
     public chartAssist: ChartAssist;
     public barConfig: IBarChartConfig = { horizontal: true };
 
-    ngOnInit() {
+    public ngOnInit(): void {
         const chart = new Chart(barGrid(this.barConfig));
         this.chartAssist = new ChartAssist(chart);
 

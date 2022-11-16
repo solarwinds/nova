@@ -81,7 +81,7 @@ export class ItemPickerComponent implements OnInit, AfterViewInit {
         public changeDetection: ChangeDetectorRef
     ) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         (this.dataSource as ClientSideDataSource<IFilterGroupOption>).setData(
             this.itemPickerOptions
         );
@@ -92,17 +92,17 @@ export class ItemPickerComponent implements OnInit, AfterViewInit {
         };
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this.changeDetection.markForCheck();
 
         this.dataSource.applyFilters();
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.dataSource.applyFilters();
     }
 
-    public onSelection(selection: ISelection) {
+    public onSelection(selection: ISelection): void {
         this.selection = selection;
         this.selectionChanged.emit(this.selection);
     }

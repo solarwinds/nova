@@ -86,7 +86,7 @@ export class BarRenderer extends XYRenderer<IRectangleAccessors> {
     public draw(
         renderSeries: IRenderSeries<IRectangleAccessors>,
         rendererSubject: Subject<IRendererEventPayload>
-    ) {
+    ): void {
         const target = renderSeries.containers[RenderLayerName.data];
         const dataSeries = renderSeries.dataSeries;
         const accessors = dataSeries.accessors;
@@ -132,7 +132,6 @@ export class BarRenderer extends XYRenderer<IRectangleAccessors> {
             .merge(bars as any)
             .property(generatedAttrs, (d, i) => attrsGenerator(d, i)) // This saves attrsGenerator() output to local d3 variable generatedAttrs
             .select<Element>("rect")
-            // eslint-disable-next-line max-len
             .attr(
                 "class",
                 (d, i) =>
@@ -315,7 +314,7 @@ export class BarRenderer extends XYRenderer<IRectangleAccessors> {
         data: any,
         i: number,
         rendererSubject: Subject<IRendererEventPayload>
-    ) {
+    ): void {
         rendererSubject.next({
             eventName: SELECT_DATA_POINT_EVENT,
             data: this.getDataPoint(renderSeries, data, i),
@@ -332,7 +331,7 @@ export class BarRenderer extends XYRenderer<IRectangleAccessors> {
     protected getAttrsGenerator(
         dataSeries: IDataSeries<IRectangleAccessors>,
         scales: Scales
-    ) {
+    ): (d: any, i: number) => IPosition {
         const accessors = dataSeries.accessors.data;
         return (d: any, i: number): IPosition => {
             const x = this.getDimensions(

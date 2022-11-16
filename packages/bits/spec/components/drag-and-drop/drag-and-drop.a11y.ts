@@ -33,14 +33,10 @@ describe("a11y: drag-and-drop", () => {
     });
 
     it("should check a11y of draggable item", async () => {
-        await assertA11y(
-            browser,
-            CdkDraggableItemAtom.CSS_CLASS,
-            rulesToDisable
-        );
+        await assertA11y(browser, CdkDraggableItemAtom, rulesToDisable);
     });
 
     it("should check a11y of drop list", async () => {
-        await assertA11y(browser, CdkDropListAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, CdkDropListAtom, rulesToDisable);
     });
 });

@@ -45,9 +45,8 @@ import { ComponentRegistryService } from "../../services/component-registry.serv
 import { ComponentPortalDirective } from "./component-portal.directive";
 
 @Directive()
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 class MockProvider implements IConfigurable, OnInit, AfterViewInit, OnDestroy {
-    public setComponent(component: any) {}
+    public setComponent(component: any): void {}
 
     public updateConfiguration(properties: IProperties): void {}
 
@@ -59,7 +58,6 @@ class MockProvider implements IConfigurable, OnInit, AfterViewInit, OnDestroy {
 }
 
 @Directive()
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 class MockProviderWithProperties extends MockProvider {
     public properties: IProperties = {};
 }
@@ -76,7 +74,7 @@ class Mock1Component implements OnChanges {
 
     constructor(public changeDetector: ChangeDetectorRef) {}
 
-    public ngOnChanges(changes: SimpleChanges) {}
+    public ngOnChanges(changes: SimpleChanges): void {}
 }
 
 @Component({
@@ -90,7 +88,7 @@ class Mock2Component implements OnChanges {
 
     constructor(public changeDetector: ChangeDetectorRef) {}
 
-    public ngOnChanges(changes: SimpleChanges) {}
+    public ngOnChanges(changes: SimpleChanges): void {}
 }
 
 @Component({
@@ -186,7 +184,7 @@ describe("ComponentPortalDirective >", () => {
     });
 
     describe("ngAfterViewInit > ", () => {
-        it("should invoke ngAfterViewInit on each of the providers", () => {
+        it("should invoke ngAfterViewInit on each of the providers", (): void => {
             fixture.detectChanges();
             const providerId = "provider1";
             componentPortalDirective.providers = {
@@ -696,7 +694,7 @@ describe("ComponentPortalDirective >", () => {
             );
         });
 
-        it("should subscribe the component instance to properties changes which results in the invocation of the component's ngOnChanges", () => {
+        it("should subscribe the component instance to properties changes which results in the invocation of the component's ngOnChanges", (): void => {
             const newValue = "new value";
             const changes: SimpleChanges = {
                 properties: {

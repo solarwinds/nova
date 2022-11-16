@@ -53,11 +53,11 @@ export class PizzagnaService {
     public pizzaChanged = new ReplaySubject<IPizza>(1);
     private components: IPizza;
 
-    public updatePizzagna(pizzagna: IPizzagna) {
+    public updatePizzagna(pizzagna: IPizzagna): void {
         this.pizzagna = pizzagna;
     }
 
-    public updateComponents(components: IPizza) {
+    public updateComponents(components: IPizza): void {
         this.components = components;
         this.pizzaChanged.next(components);
     }
@@ -70,7 +70,7 @@ export class PizzagnaService {
         return component;
     }
 
-    public setProperty(property: IPizzagnaProperty | string, value: any) {
+    public setProperty(property: IPizzagnaProperty | string, value: any): void {
         const path =
             typeof property === "string"
                 ? property
@@ -83,7 +83,7 @@ export class PizzagnaService {
     public createComponentsFromTemplateWithProperties(
         parentPath: string,
         components: any
-    ) {
+    ): void {
         const componentIds = components.map((c: any) => c.id);
         let updatedPizzagna: IPizzagna =
             this.dynamicComponentCreator.getPizzagnaUpdatedWithComponents(
@@ -116,7 +116,7 @@ export class PizzagnaService {
     public createComponentsFromTemplate(
         parentPath: string,
         componentIds: string[]
-    ) {
+    ): void {
         const updatedPizzagna =
             this.dynamicComponentCreator.getPizzagnaUpdatedWithComponents(
                 this.pizzagna,
@@ -133,7 +133,7 @@ export class PizzagnaService {
         });
     }
 
-    public removeComponents(ids: string | string[]) {
+    public removeComponents(ids: string | string[]): void {
         if (isArray(ids)) {
             ids.forEach((id) => this.removeComponent(id));
         } else {

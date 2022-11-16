@@ -33,21 +33,21 @@ export class PanelEmbeddedContentExampleComponent {
 
     constructor(@Inject(ToastService) private toastService: ToastService) {}
 
-    onClickCancel() {
+    onClickCancel(): void {
         this.toastService.info({
             message: $localize`Cancel clicked!`,
             title: $localize`Action`,
         });
     }
 
-    onClickConfirm() {
+    onClickConfirm(): void {
         this.toastService.success({
             message: $localize`Confirm clicked!`,
             title: $localize`Action`,
         });
     }
 
-    public toggleFooter() {
+    public toggleFooter(): void {
         this.displayFooter = !this.displayFooter;
     }
 }

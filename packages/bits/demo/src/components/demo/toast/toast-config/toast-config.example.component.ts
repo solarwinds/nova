@@ -36,7 +36,7 @@ export class ToastConfigExampleComponent implements OnInit {
 
     constructor(@Inject(ToastService) private toastService: IToastService) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.toastService.setConfig({}, "id");
     }
 

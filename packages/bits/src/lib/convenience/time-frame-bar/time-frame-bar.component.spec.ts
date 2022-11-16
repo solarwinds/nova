@@ -62,7 +62,7 @@ class TestWrapperComponent implements OnInit {
 
     public baseDate = moment([2018, 5, 1, 15, 0, 0]);
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.minDate = this.baseDate.clone().subtract(1, "months");
         this.maxDate = this.baseDate.clone().add(1, "months");
 
@@ -444,9 +444,7 @@ describe("convenience components >", () => {
             it("should shift the range left by emitting the timeFrameChange event with the correct output value", () => {
                 spyOn(component.timeFrameChange, "emit");
                 component.shiftRange(-1);
-                expect(component.timeFrameChange.emit).toHaveBeenCalledWith(<
-                    any
-                >{
+                expect(component.timeFrameChange.emit).toHaveBeenCalledWith({
                     startDatetime:
                         fixture.componentInstance.timeFrame.startDatetime
                             .clone()
@@ -454,6 +452,7 @@ describe("convenience components >", () => {
                     endDatetime: fixture.componentInstance.timeFrame.endDatetime
                         .clone()
                         .subtract(1, "weeks"),
+                    // @ts-ignore some wird hack, should fix
                     selectedPresetId: null,
                 });
             });
@@ -461,9 +460,7 @@ describe("convenience components >", () => {
             it("should shift the range left by emitting the timeFrameChange event with the correct output value", () => {
                 spyOn(component.timeFrameChange, "emit");
                 component.shiftRange(1);
-                expect(component.timeFrameChange.emit).toHaveBeenCalledWith(<
-                    any
-                >{
+                expect(component.timeFrameChange.emit).toHaveBeenCalledWith({
                     startDatetime:
                         fixture.componentInstance.timeFrame.startDatetime
                             .clone()
@@ -471,6 +468,7 @@ describe("convenience components >", () => {
                     endDatetime: fixture.componentInstance.timeFrame.endDatetime
                         .clone()
                         .add(1, "weeks"),
+                    // @ts-ignore some wird hack, should fix
                     selectedPresetId: null,
                 });
             });

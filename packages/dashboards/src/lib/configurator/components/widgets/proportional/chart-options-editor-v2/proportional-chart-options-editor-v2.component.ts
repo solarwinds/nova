@@ -83,7 +83,7 @@ export class ProportionalChartOptionsEditorV2Component
     // used by Broadcaster
     public chartTypeChanged$ = new Subject<ProportionalWidgetChartTypes>();
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         public changeDetector: ChangeDetectorRef,
@@ -99,7 +99,7 @@ export class ProportionalChartOptionsEditorV2Component
             .subscribe((v) => this.chartTypeChanged$.next(v));
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.formReady.emit(this.form);
     }
 
@@ -121,14 +121,14 @@ export class ProportionalChartOptionsEditorV2Component
         }
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
         this.chartTypeChanged$.complete();
     }
 
-    public get chartTitle() {
-        const currentChartType: string = this.form.get("type")?.value;
+    public get chartTitle(): string | undefined {
+        const currentChartType = this.form.get("type")?.value;
         const currentChartTypeDefinition = this.chartTypes.find(
             (chartType) => chartType.id === currentChartType
         );

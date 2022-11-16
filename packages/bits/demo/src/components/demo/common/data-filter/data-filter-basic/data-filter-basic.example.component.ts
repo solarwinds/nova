@@ -58,7 +58,7 @@ export class ListDatasource
     extends LocalFilteringDataSource<ListModel>
     implements OnDestroy
 {
-    private onDestroy$ = new Subject<boolean>();
+    private onDestroy$ = new Subject<void>();
     constructor(
         searchService: SearchService,
         private filterService: DataFilterService
@@ -97,8 +97,8 @@ export class ListDatasource
         return filteredData;
     }
 
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
+    public ngOnDestroy(): void {
+        this.onDestroy$.next();
         this.onDestroy$.complete();
     }
 }
@@ -108,7 +108,7 @@ export class TableDatasource
     extends LocalFilteringDataSource<TableModel>
     implements OnDestroy
 {
-    private onDestroy$ = new Subject<boolean>();
+    private onDestroy$ = new Subject<void>();
     constructor(
         searchService: SearchService,
         private filterService: DataFilterService
@@ -147,8 +147,8 @@ export class TableDatasource
         return filteredData;
     }
 
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
+    public ngOnDestroy(): void {
+        this.onDestroy$.next();
         this.onDestroy$.complete();
     }
 }
@@ -164,7 +164,7 @@ export class DataFilterBasicExampleComponent implements AfterViewInit {
 
     constructor(private filterService: DataFilterService) {}
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         // registering top-level filter which will be applied to all children
         this.filterService.registerFilter({
             timeFramePicker: {
@@ -174,7 +174,7 @@ export class DataFilterBasicExampleComponent implements AfterViewInit {
         this.filterService.applyFilters();
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.filterService.applyFilters();
     }
 }
@@ -229,7 +229,6 @@ export class DataFilterBasicExampleComponent implements AfterViewInit {
                 ></tr>
             </table>
             <nui-data-filter-list-example></nui-data-filter-list-example>
-            <div></div>
         </div>
     `,
     providers: [DataFilterService, TableDatasource],
@@ -257,7 +256,7 @@ export class NuiDataFilterTableComponent implements AfterViewInit, OnDestroy {
         private dataSourceService: TableDatasource
     ) {}
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         // this filter will be applied in this component and NuiDataFilterListComponent
         this.dataFilter.registerFilter({
             sorter: {
@@ -273,16 +272,16 @@ export class NuiDataFilterTableComponent implements AfterViewInit, OnDestroy {
             );
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.dataFilter.applyFilters();
     }
 
-    public onSorterAction(changes: ISorterChanges) {
+    public onSorterAction(changes: ISorterChanges): void {
         this.sortBy = changes.newValue.sortBy;
         this.applyFilters();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 }
@@ -336,7 +335,7 @@ export class NuiDataFilterListComponent implements AfterViewInit, OnDestroy {
         private dataSourceService: ListDatasource
     ) {}
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         // this filter will be applied only in this component
         this.filterService.registerFilter({
             search: {
@@ -352,11 +351,11 @@ export class NuiDataFilterListComponent implements AfterViewInit, OnDestroy {
             );
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.filterService.applyFilters();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 }
@@ -431,20 +430,21 @@ export class FilteringTimeFramePickerComponent implements IFilterPub, OnInit {
     public closePopoverSubject = new Subject<void>();
     public openPopoverSubject = new Subject<void>();
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.acceptedTimeframe = this.tf;
     }
 
-    public updateTf(value: any) {
+    public updateTf(value: any): void {
         this.tf = value;
     }
 
-    public confirmPopover() {
+    public confirmPopover(): void {
         this.closePopoverSubject.next();
         this.acceptedTimeframe = this.tf;
         this.timeFrameChanged.emit(this.acceptedTimeframe);
     }
-    public cancelPopover() {
+
+    public cancelPopover(): void {
         this.showFooter = false;
         this.closePopoverSubject.next();
     }

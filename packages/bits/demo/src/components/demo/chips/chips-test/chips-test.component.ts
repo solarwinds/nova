@@ -81,23 +81,26 @@ export class ChipsTestComponent {
         groupedItems: _cloneDeep(groupedItems),
     };
 
-    public onClear(event: { item: IChipsItem }) {
+    public onClear(event: { item: IChipsItem }): void {
         _pull(this.horizontalFlatItemsSource.flatItems || [], event.item);
     }
 
-    public onClearVertical(event: { item: IChipsItem }) {
+    public onClearVertical(event: { item: IChipsItem }): void {
         _pull(this.verticalFlatItemsSource.flatItems || [], event.item);
     }
 
-    public onClearGroup(event: { item: IChipsItem; group?: IChipsGroup }) {
+    public onClearGroup(event: {
+        item: IChipsItem;
+        group?: IChipsGroup;
+    }): void {
         _pull(event.group?.items || [], event.item);
     }
 
-    public onClearAll() {
+    public onClearAll(): void {
         this.verticalGroupedItemsSource.groupedItems = [];
     }
 
-    public onClearAllVerticalFlat() {
+    public onClearAllVerticalFlat(): void {
         this.verticalFlatItemsSource.flatItems = [];
     }
 }

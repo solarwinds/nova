@@ -48,7 +48,7 @@ export class TreeAtom extends Atom {
         );
     }
 
-    public async expandAll(el: ElementFinder = this.root) {
+    public async expandAll(el: ElementFinder = this.root): Promise<void> {
         for (const expander of await this.getNestedNodes(el)) {
             const expanded = await this.isExpanded(expander);
             if (!expanded) {
@@ -61,8 +61,8 @@ export class TreeAtom extends Atom {
         }
     }
 
-    public expandLevel = async () => {
-        this.getCollapsedExpanders().each(
+    public async expandLevel(): Promise<void> {
+        await this.getCollapsedExpanders().each(
             async (i: ElementFinder | undefined) => {
                 const displayed = await i?.isDisplayed();
                 if (displayed) {
@@ -70,7 +70,7 @@ export class TreeAtom extends Atom {
                 }
             }
         );
-    };
+    }
 
     public getBranchCheckboxNodes(): ElementArrayFinder {
         return this.root.all(by.css(".branch-control"));

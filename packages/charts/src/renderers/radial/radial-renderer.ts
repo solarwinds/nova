@@ -214,17 +214,18 @@ export class RadialRenderer extends Renderer<IRadialAccessors> {
             .innerRadius(innerRadius);
     }
 
-    protected getSegmentWidth(renderSeries: IRenderSeries<IRadialAccessors>) {
+    protected getSegmentWidth(
+        renderSeries: IRenderSeries<IRadialAccessors>
+    ): number | undefined {
         if (!(this.config.maxThickness && this.config.annularGrowth)) {
             return this.config.annularWidth;
-        } else {
-            return Math.min(
-                (renderSeries.scales.r.range()[1] -
-                    renderSeries.scales.r.range()[0]) *
-                    this.config.annularGrowth,
-                this.config.maxThickness
-            );
         }
+        return Math.min(
+            (renderSeries.scales.r.range()[1] -
+                renderSeries.scales.r.range()[0]) *
+                this.config.annularGrowth,
+            this.config.maxThickness
+        );
     }
 
     private emitDataPointHighlight(

@@ -154,7 +154,7 @@ export class AcmeDashboardComponent implements OnInit {
         };
     }
 
-    public onDsErrorChange(error: boolean) {
+    public onDsErrorChange(error: boolean): void {
         TestKpiDataSource.mockError = error;
         TestTimeseriesDataSource.mockError = error;
         TestTableDataSource.mockError = error;

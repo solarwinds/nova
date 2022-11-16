@@ -64,25 +64,22 @@ export class WizardVisualTestComponent implements OnInit {
         @Inject(DialogService) private dialogService: DialogService
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
-            name: this.formBuilder.control("", Validators.required),
-            email: this.formBuilder.control("", [
-                Validators.required,
-                Validators.pattern("[^ @]*@[^ @]*"),
-            ]),
-            password: this.formBuilder.control("", [
-                Validators.required,
-                Validators.minLength(8),
-            ]),
+            name: ["", Validators.required],
+            email: [
+                "",
+                [Validators.required, Validators.pattern("[^ @]*@[^ @]*")],
+            ],
+            password: ["", [Validators.required, Validators.minLength(8)]],
         });
     }
 
-    public onOptionChange(value: string) {
+    public onOptionChange(value: string): void {
         this.hint = value;
     }
 
-    public makeSecondStepBusy() {
+    public makeSecondStepBusy(): void {
         this.secondStepBusyConfig.busy = true;
         this.wizardComponent.navigationControl.next({
             busyState: this.secondStepBusyConfig,
@@ -97,24 +94,22 @@ export class WizardVisualTestComponent implements OnInit {
         }, 1000);
     }
 
-    public onCancelClick(content: TemplateRef<string>) {
-        if (
-            this.wizardComponent.steps
-                .toArray()
-                .filter((step: WizardStepComponent) => step.complete).length !==
-            0
-        ) {
+    public onCancelClick(content: TemplateRef<string>): void {
+        const completeSteps = this.wizardComponent.steps
+            .toArray()
+            .filter((step: WizardStepComponent) => step.complete);
+        if (completeSteps.length) {
             this.activeDialog = this.dialogService.open(content, {
                 size: "sm",
             });
         }
     }
 
-    public select(event: IWizardSelectionEvent) {
+    public select(event: IWizardSelectionEvent): void {
         this.selectedIndex = event.selectedIndex;
     }
 
-    public preventGoingNext() {
+    public preventGoingNext(): void {
         this.busyConfig.busy = true;
         this.wizardComponent.navigationControl.next({
             busyState: this.busyConfig,
@@ -129,15 +124,15 @@ export class WizardVisualTestComponent implements OnInit {
         }, 1000);
     }
 
-    public openDialog(content: TemplateRef<string>) {
+    public openDialog(content: TemplateRef<string>): void {
         this.activeDialog = this.dialogService.open(content, { size: "lg" });
     }
 
-    public closeDialog() {
+    public closeDialog(): void {
         this.activeDialog.close();
     }
 
-    public makeStepBusy() {
+    public makeStepBusy(): void {
         this.busyConfig.busy = true;
         this.dialogWizardBusy.navigationControl.next({
             busyState: this.busyConfig,

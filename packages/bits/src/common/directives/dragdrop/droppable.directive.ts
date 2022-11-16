@@ -121,7 +121,7 @@ export class DroppableDirective implements OnInit, OnDestroy {
     );
 
     @HostListener("dragenter", ["$event"])
-    onDragEnter(event: IDragEvent) {
+    onDragEnter(event: IDragEvent): void {
         const payload = this.dragAndDropService.getDragPayload(event);
         if (this.validateDrop(payload) && this.dragElements.length === 0) {
             this.elRef.nativeElement.classList.remove(this.dropIndicatorClass);
@@ -138,7 +138,7 @@ export class DroppableDirective implements OnInit, OnDestroy {
     }
 
     @HostListener("dragover", ["$event"])
-    onDragOver(event: IDragEvent) {
+    onDragOver(event: IDragEvent): void {
         const payload = this.dragAndDropService.getDragPayload(event);
         if (this.validateDrop(payload)) {
             this.dragThrottle(event);
@@ -147,7 +147,7 @@ export class DroppableDirective implements OnInit, OnDestroy {
     }
 
     @HostListener("dragleave", ["$event"])
-    onDragLeave(event: IDragEvent) {
+    onDragLeave(event: IDragEvent): void {
         const payload = this.dragAndDropService.getDragPayload(event);
         this.dragElements = this.dragElements.filter(
             (el) => el !== event.target
@@ -170,7 +170,7 @@ export class DroppableDirective implements OnInit, OnDestroy {
     }
 
     @HostListener("drop", ["$event"])
-    onDrop(event: IDragEvent) {
+    onDrop(event: IDragEvent): boolean {
         const payload = this.dragAndDropService.getDragPayload(event);
         event.preventDefault();
         if (this.validateDrop(payload)) {
@@ -197,7 +197,7 @@ export class DroppableDirective implements OnInit, OnDestroy {
         private elRef: ElementRef,
         private dragAndDropService: DragAndDropService
     ) {}
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.onDragStateChangedSubscription =
             this.dragAndDropService.onDragStateChanged.subscribe(
                 (item: IDragState) => {
@@ -232,7 +232,7 @@ export class DroppableDirective implements OnInit, OnDestroy {
         );
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         if (!_isNil(this.onDragStateChangedSubscription)) {
             this.onDragStateChangedSubscription.unsubscribe();
         }

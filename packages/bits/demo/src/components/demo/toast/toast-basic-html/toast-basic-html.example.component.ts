@@ -29,7 +29,7 @@ import { IToastService, ToastService } from "@nova-ui/bits";
 export class ToastBasicHtmlExampleComponent implements OnInit {
     constructor(@Inject(ToastService) private toastService: IToastService) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.toastService.setConfig(
             { timeOut: 5000, extendedTimeOut: 2000 },
             "id"

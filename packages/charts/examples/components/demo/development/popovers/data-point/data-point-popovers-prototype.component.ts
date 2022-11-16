@@ -57,12 +57,12 @@ export class DataPointPopoversPrototypeComponent implements OnInit {
     public chartAssist: ChartAssist;
     public popoverPlugin: ChartPopoverPlugin;
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.buildChart();
         this.updateChart();
     }
 
-    public onReset() {
+    public onReset(): void {
         // send INTERACTION_DATA_POINT_EVENT with index DATA_POINT_INTERACTION_RESET to hide popover if its displayed
         const data: IInteractionDataPointEvent = {
             interactionType: InteractionType.Click,
@@ -74,7 +74,7 @@ export class DataPointPopoversPrototypeComponent implements OnInit {
             .next({ data });
     }
 
-    public onToggleClickHandling(enable: boolean) {
+    public onToggleClickHandling(enable: boolean): void {
         // enable the pointer cursor when the data point markers are hovered
         const markerInteraction = this.renderer.config?.markerInteraction;
         if (markerInteraction) {

@@ -26,7 +26,10 @@ import { AbstractControl } from "@angular/forms";
  * @param field
  * @param errorKeys
  */
-export function removeErrors(field: AbstractControl, ...errorKeys: string[]) {
+export function removeErrors(
+    field: AbstractControl,
+    ...errorKeys: string[]
+): void {
     if (!field.errors) {
         return;
     }

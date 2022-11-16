@@ -119,7 +119,7 @@ export class TimeFramePickerMultipleCustomPickersExampleComponent
 
     constructor(private cdRef: ChangeDetectorRef) {}
 
-    public updateTf(value: ITimeframe, index: number) {
+    public updateTf(value: ITimeframe, index: number): void {
         const picker = this.pickers[index];
         picker.tf = value;
 
@@ -137,7 +137,7 @@ export class TimeFramePickerMultipleCustomPickersExampleComponent
         picker.selectedPresetKey = <string>picker.tf.selectedPresetId;
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.tfScopers.forEach((scoper, i) => {
             const picker = this.pickers[i];
             const timeframeService = scoper.timeframeService;
@@ -152,19 +152,20 @@ export class TimeFramePickerMultipleCustomPickersExampleComponent
         this.cdRef.detectChanges();
     }
 
-    public confirmPopover(index: number) {
+    public confirmPopover(index: number): void {
         const picker = this.pickers[index];
 
         this.showFooter = false;
         this.closePopoverSubject.next();
         picker.acceptedTimeframe = picker.tf;
     }
-    public cancelPopover(index: number) {
+
+    public cancelPopover(index: number): void {
         this.showFooter = false;
         this.closePopoverSubject.next();
     }
 
-    public handlePresetSelection(presetKey: string, index: number) {
+    public handlePresetSelection(presetKey: string, index: number): void {
         const picker = this.pickers[index];
 
         picker.selectedPresetKey = presetKey;

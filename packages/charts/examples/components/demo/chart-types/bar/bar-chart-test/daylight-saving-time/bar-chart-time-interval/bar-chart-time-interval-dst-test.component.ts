@@ -46,7 +46,7 @@ export class BarChartTimeIntervalDstTestComponent implements OnInit {
 
     public chart = new Chart(barGrid());
 
-    ngOnInit() {
+    public ngOnInit(): void {
         const accessors = barAccessors();
         accessors.data.category = (d) => d.x;
         accessors.data.value = (d) => d.y;

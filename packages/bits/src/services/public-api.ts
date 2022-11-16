@@ -127,6 +127,7 @@ export class SelectionModel implements ISelection {
 export class IEvent<T = any> {
     id?: string;
     payload?: T;
+    [key: string]: any;
 }
 
 export interface IEventDefinition<T = any> {
@@ -140,7 +141,7 @@ export class EventDefinition<T> implements IEventDefinition<IEvent<T>> {
         public subjectFactory?: () => Subject<IEvent<T>>
     ) {}
 
-    public toString() {
+    public toString(): string {
         return this.id;
     }
 }

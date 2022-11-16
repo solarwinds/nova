@@ -64,7 +64,7 @@ export class BarHighlightStrategy
         series: IDataSeries<IRectangleAccessors>,
         values: { [p: string]: any },
         scales: Scales
-    ) {
+    ): number {
         const value = values[this.scaleKey];
         if (typeof value === "undefined") {
             // if there is no value we're returning -2 (DATA_POINT_INTERACTION_RESET) which helps highlightDataPoint
@@ -80,7 +80,7 @@ export class BarHighlightStrategy
         value: any,
         scaleKey: keyof IXYScales,
         scales?: Scales
-    ) {
+    ): number {
         const accessorSuffix = (scaleKey as string).toUpperCase();
         const dataAccessors = series.accessors.data;
 
@@ -92,7 +92,8 @@ export class BarHighlightStrategy
                 series.data,
                 (d, i) => value === startAccessor?.(d, i, series.data, series)
             );
-        } else if (isArray(value)) {
+        }
+        if (isArray(value)) {
             return findIndex(series.data, (d, i) => {
                 const start = startAccessor?.(d, i, series.data, series);
                 const lengthLimit = Math.min(
@@ -108,7 +109,8 @@ export class BarHighlightStrategy
                 }
                 return true;
             });
-        } else if (value.valueOf) {
+        }
+        if (value.valueOf) {
             const valueOf = value.valueOf();
             if (scales && scales[scaleKey]?.isContinuous()) {
                 let index = findIndex(
@@ -208,9 +210,9 @@ export class BarHighlightStrategy
         // });
     }
 
-    draw(
+    public draw(
         renderer: BarRenderer,
         renderSeries: IRenderSeries<IRectangleAccessors>,
         rendererSubject: Subject<IRendererEventPayload>
-    ) {}
+    ): void {}
 }

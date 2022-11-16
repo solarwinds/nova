@@ -20,20 +20,19 @@
 
 import noop from "lodash/noop";
 
-import { UnitBase, UnitOption } from "../constants";
+import { UnitBase, UnitOption } from "../constants/unit-conversion.constants";
 import { LoggerService } from "./log-service";
 import { UnitConversionService } from "./unit-conversion.service";
 
 describe("services >", () => {
     describe("unit conversion >", () => {
         let logger: LoggerService;
-        let logWarnSpy: jasmine.Spy;
         let subject: UnitConversionService;
 
         beforeEach(() => {
             logger = new LoggerService();
             spyOnProperty(logger, "error").and.returnValue(noop);
-            logWarnSpy = spyOnProperty(logger, "warn").and.returnValue(noop);
+            spyOnProperty(logger, "warn").and.returnValue(noop);
 
             subject = new UnitConversionService(logger);
         });

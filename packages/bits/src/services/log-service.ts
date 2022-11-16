@@ -49,7 +49,7 @@ export class LoggerService {
      * __Description:__ Log to debug
      * @param ...msgs multiple arguments to be logged.
      */
-    get debug() {
+    get debug(): Console["debug"] {
         if (this.logLevel === LogLevel.debug) {
             // eslint-disable-next-line no-console
             return console.debug.bind(console);
@@ -62,7 +62,7 @@ export class LoggerService {
      * __Description:__ Log to info
      * @param ...msgs multiple arguments to be logged.
      */
-    get info() {
+    get info(): Console["info"] {
         if (
             this.logLevel === LogLevel.debug ||
             this.logLevel === LogLevel.info
@@ -78,7 +78,7 @@ export class LoggerService {
      * __Description:__ Log without specifying log level
      * @param ...msgs multiple arguments to be logged.
      */
-    get log() {
+    get log(): Console["log"] {
         if (
             this.logLevel === LogLevel.debug ||
             this.logLevel === LogLevel.info ||
@@ -94,7 +94,7 @@ export class LoggerService {
      * __Description:__ Log to warn
      * @param ...msgs multiple arguments to be logged.
      */
-    get warn() {
+    get warn(): Console["warn"] {
         if (
             this.logLevel === LogLevel.debug ||
             this.logLevel === LogLevel.info ||
@@ -111,7 +111,7 @@ export class LoggerService {
      * __Description:__ Log to error
      * @param ...msgs multiple arguments to be logged.
      */
-    get error() {
+    get error(): Console["error"] {
         if (
             this.logLevel === LogLevel.debug ||
             this.logLevel === LogLevel.info ||

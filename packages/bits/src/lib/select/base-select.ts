@@ -46,7 +46,6 @@ import { ISelectChangedEvent, ISelectGroup } from "./public-api";
  * @deprecated in v11 - Use BaseSelectV2 instead - Removal: NUI-5796
  */
 @Directive()
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class BaseSelect
     implements OnInit, OnChanges, ControlValueAccessor, NuiFormFieldControl
 {
@@ -126,12 +125,12 @@ export abstract class BaseSelect
 
     protected constructor(protected utilService: UtilService) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.selectedItem = this.value;
         this.inputValue = this.value ? this.value : "";
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes["value"] && !changes["value"].firstChange) {
             const value = changes["value"].currentValue;
             const isInArray = this.displayValue
@@ -204,7 +203,7 @@ export abstract class BaseSelect
         return this.getItemDisplay(item);
     }
 
-    public getIconColor() {
+    public getIconColor(): string {
         return this.isDisabled ? "gray" : "primary-blue";
     }
 
@@ -239,13 +238,13 @@ export abstract class BaseSelect
         }
     }
 
-    public getItemModel(item: any) {
+    public getItemModel(item: any): any {
         return item && this.modelValue ? item[this.modelValue] : item;
     }
 
-    public onChange(value: any) {}
+    public onChange(value: any): void {}
 
-    public onTouched() {}
+    public onTouched(): void {}
 
     public writeValue(value: any): void {
         let selectedItem: any;
@@ -263,7 +262,7 @@ export abstract class BaseSelect
             : selectedItem;
     }
 
-    public registerOnChange(fn: () => void) {
+    public registerOnChange(fn: () => void): void {
         this.onChange = fn;
     }
 
@@ -271,7 +270,7 @@ export abstract class BaseSelect
         this.onTouched = fn;
     }
 
-    public changeValue(value: any) {
+    public changeValue(value: any): void {
         this.writeValue(value);
         this.onChange(value);
         this.onTouched();

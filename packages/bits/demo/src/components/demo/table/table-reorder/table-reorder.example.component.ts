@@ -53,7 +53,7 @@ export class TableReorderExampleComponent {
 
     constructor(@Inject(ToastService) private toastService: IToastService) {}
 
-    public toastColumns(event: string[]) {
+    public toastColumns(event: string[]): void {
         this.toastService.info({
             message:
                 "Current order of columns is: " +

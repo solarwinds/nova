@@ -24,7 +24,7 @@ import zipObject from "lodash/zipObject";
 import {
     Chart,
     ChartAssist,
-    CHART_PALETTE_CS_S,
+    CHART_PALETTE_CS_S_EXTENDED,
     MappedValueProvider,
     radial,
     RadialAccessors,
@@ -49,7 +49,7 @@ enum Status {
 export class DonutChartInteractiveExampleComponent implements OnInit {
     public chartAssist: ChartAssist;
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         // Instantiate the chart and chart assist
         this.chartAssist = new ChartAssist(new Chart(radialGrid()), radial);
 
@@ -66,7 +66,9 @@ export class DonutChartInteractiveExampleComponent implements OnInit {
                     Status.Up,
                     Status.Unmanaged,
                 ],
-                CHART_PALETTE_CS_S
+                CHART_PALETTE_CS_S_EXTENDED.filter(
+                    (_, index) => index % 2 === 0
+                )
             )
         );
 

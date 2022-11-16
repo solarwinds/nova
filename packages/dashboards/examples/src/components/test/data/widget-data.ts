@@ -18,9 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import moment from "moment/moment";
+import moment, { Moment } from "moment/moment";
 
-import { CHART_PALETTE_CS_S } from "@nova-ui/charts";
+import { CHART_PALETTE_CS_S_EXTENDED } from "@nova-ui/charts";
 import {
     ITimeseriesWidgetData,
     ITimeseriesWidgetStatusData,
@@ -316,9 +316,10 @@ export const PROPORTIONAL_WIDGET_DATA_BIG_NUMBERS: IProportionalWidgetData[] = [
     },
 ];
 
-export const frozenTime = () => moment([2020, 1, 6, 15, 0, 0]).startOf("day");
+export const frozenTime = (): Moment =>
+    moment([2020, 1, 6, 15, 0, 0]).startOf("day");
 
-export const getTimeseriesWidgetData = () => [
+export const getTimeseriesWidgetData = (): ITimeseriesWidgetData[] => [
     {
         id: "series-1",
         name: "Average CPU Load",
@@ -431,7 +432,7 @@ export const getTimeseriesWidgetData = () => [
     },
 ];
 
-export const getTimeseriesWidgetData2 = () => [
+export const getTimeseriesWidgetData2 = (): ITimeseriesWidgetData[] => [
     {
         id: "series-a",
         name: "Average CPU Load",
@@ -515,7 +516,7 @@ export const getTimeseriesWidgetData2 = () => [
     },
 ];
 
-export const getTimeseriesEventsData = () => [
+export const getTimeseriesEventsData = (): ITimeseriesWidgetData[] => [
     {
         id: "series-a",
         name: "Events",
@@ -608,11 +609,11 @@ enum Status {
 }
 
 const statusColors: Record<Status, string> = {
-    [Status.Unknown]: CHART_PALETTE_CS_S[3],
-    [Status.Up]: CHART_PALETTE_CS_S[4],
-    [Status.Warning]: CHART_PALETTE_CS_S[2],
-    [Status.Down]: CHART_PALETTE_CS_S[0],
-    [Status.Critical]: CHART_PALETTE_CS_S[1],
+    [Status.Unknown]: CHART_PALETTE_CS_S_EXTENDED[6],
+    [Status.Up]: CHART_PALETTE_CS_S_EXTENDED[8],
+    [Status.Warning]: CHART_PALETTE_CS_S_EXTENDED[4],
+    [Status.Down]: CHART_PALETTE_CS_S_EXTENDED[0],
+    [Status.Critical]: CHART_PALETTE_CS_S_EXTENDED[2],
 };
 
 export function getTimeseriesStatusData(): ITimeseriesWidgetData<ITimeseriesWidgetStatusData>[] {

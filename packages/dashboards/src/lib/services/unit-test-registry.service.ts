@@ -26,11 +26,11 @@ export class UnitTestRegistryService {
     public componentMap: any = {};
     public providersMap: any = {};
 
-    setComponent(component: any, componentId: string) {
+    setComponent(component: any, componentId: string): void {
         this.componentMap[componentId] = component;
     }
 
-    setProviders(services: any, componentId: string) {
+    setProviders(services: any, componentId: string): void {
         this.providersMap[componentId] = services;
     }
 }

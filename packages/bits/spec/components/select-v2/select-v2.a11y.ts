@@ -54,13 +54,13 @@ describe("a11y: select-v2", () => {
     });
 
     it("should check a11y of select-v2", async () => {
-        await assertA11y(browser, SelectV2Atom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, SelectV2Atom, rulesToDisable);
     });
 
     it("should check a11y of select-v2", async () => {
         await Helpers.pressKey(Key.TAB, 3);
         await (await selectBasic.getOption(3)).hover();
-        await assertA11y(browser, SelectV2Atom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, SelectV2Atom, rulesToDisable);
     });
 
     it("should check a11y of select-v2", async () => {
@@ -72,18 +72,18 @@ describe("a11y: select-v2", () => {
         await (await selectGrouped.getLastOption()).click();
         await (await selectDisplayValueSmall.getOption(6)).click();
         await (await selectDisplayValueSmall.getOption(3)).hover();
-        await assertA11y(browser, SelectV2Atom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, SelectV2Atom, rulesToDisable);
     });
 
     it("should check a11y of select-v2", async () => {
         await Helpers.switchDarkTheme("off");
         await selectGrouped.toggle();
         await (await selectGrouped.getLastOption()).hover();
-        await assertA11y(browser, SelectV2Atom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, SelectV2Atom, rulesToDisable);
     });
 
     it("should check a11y of select-v2", async () => {
         await selectOverlayStyles.toggle();
-        await assertA11y(browser, SelectV2Atom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, SelectV2Atom, rulesToDisable);
     });
 });

@@ -40,7 +40,7 @@ export class BarChartWithLegendExampleComponent implements OnInit {
     // the usage of ChartAssist helps with connecting the chart with the legend
     public chartAssist = new ChartAssist(new Chart(barGrid(this.barConfig)));
 
-    ngOnInit() {
+    public ngOnInit(): void {
         const accessors = barAccessors(
             this.barConfig,
             this.chartAssist.palette.standardColors

@@ -65,7 +65,7 @@ export class DndDropTargetDirective implements AfterContentInit, OnDestroy {
     public canLastDragItemBeDropped$: Observable<boolean>;
 
     private itemDragStarted$ = new Subject<CdkDrag>();
-    private _destroy$ = new Subject<void>();
+    private readonly _destroy$ = new Subject<void>();
 
     // true when the drag has started
     public get isDropZoneActive(): boolean {
@@ -133,15 +133,12 @@ export class DndDropTargetDirective implements AfterContentInit, OnDestroy {
             draggedItem$,
         ]).pipe(
             switchMap(([showDropZone, drag]) => {
-                let result: boolean = false;
-                if (showDropZone) {
-                    const ACCEPT_ALL_ITEMS: boolean = true;
-                    result =
-                        this.canBeDropped?.(drag.data, this.targetDropList) ??
-                        ACCEPT_ALL_ITEMS;
-                }
-                this._canLastDragItemBeDropped = result;
-                return of(result);
+                const canBeDropped = showDropZone
+                    ? this.canBeDropped?.(drag.data, this.targetDropList) ??
+                      true
+                    : false;
+                this._canLastDragItemBeDropped = canBeDropped;
+                return of(canBeDropped);
             }),
             distinctUntilChanged(),
             shareReplay()

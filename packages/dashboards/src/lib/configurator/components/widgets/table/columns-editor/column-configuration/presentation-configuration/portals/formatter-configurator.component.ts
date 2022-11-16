@@ -60,7 +60,7 @@ export abstract class FormatterConfiguratorComponent
         public logger: LoggerService
     ) {}
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.formatterDefinition) {
             this.mapDropdownItems();
             this.initForm();
@@ -76,7 +76,7 @@ export abstract class FormatterConfiguratorComponent
     /**
      * This method pregenerates lists of dropdown items for all required formatter columns mappings based on their type
      */
-    public mapDropdownItems() {
+    public mapDropdownItems(): void {
         if (!this.dataFields) {
             this.logger.error(
                 "There are no dataFields defined for formatter:",

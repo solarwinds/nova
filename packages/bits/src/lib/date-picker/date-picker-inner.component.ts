@@ -114,7 +114,7 @@ export class DatePickerInnerComponent
         this._value = value;
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.uniqueId = _uniqueId("date-picker--");
 
         if (this.initDate) {
@@ -126,13 +126,13 @@ export class DatePickerInnerComponent
         }
     }
 
-    ngAfterContentInit(): void {
+    public ngAfterContentInit(): void {
         this.refreshView();
         this.isTodayButtonDisabled = this.isDisabled(this._todayDate);
     }
 
     // this.refreshView should be called here to reflect the changes on the fly
-    ngOnChanges(changes: SimpleChanges): void {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (this.shouldRefreshViewOnChanges(changes)) {
             this.refreshView();
         }
@@ -382,7 +382,7 @@ export class DatePickerInnerComponent
         return undefined;
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.calendarMoved.complete();
     }
 }

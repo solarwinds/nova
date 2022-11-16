@@ -34,7 +34,7 @@ import { LayoutResizerComponent } from "./layout-resizer.component";
 })
 class LayoutResizerTestingComponent implements AfterViewInit {
     constructor(public elRef: ElementRef) {}
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.elRef.nativeElement.parentElement = document.createElement("div");
     }
 }

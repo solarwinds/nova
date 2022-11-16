@@ -27,11 +27,11 @@ import { IEventDefinition } from "@nova-ui/bits";
 export class EventRegistryService {
     private events: Record<string, IEventDefinition> = {};
 
-    public registerEvent(eventDefinition: IEventDefinition) {
+    public registerEvent(eventDefinition: IEventDefinition): void {
         this.events[eventDefinition.id] = eventDefinition;
     }
 
-    public getEvent(id: string) {
+    public getEvent(id: string): IEventDefinition {
         const event = this.events[id];
 
         if (!event) {

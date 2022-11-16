@@ -198,7 +198,7 @@ export class TimeseriesWidgetInteractiveExampleComponent implements OnInit {
     }
 
     /** Used for restoring widgets state */
-    public reInitializeDashboard() {
+    public reInitializeDashboard(): void {
         // destroys the components and their providers so the dashboard can re init data
         this.dashboard = undefined;
         this.changeDetectorRef.detectChanges();

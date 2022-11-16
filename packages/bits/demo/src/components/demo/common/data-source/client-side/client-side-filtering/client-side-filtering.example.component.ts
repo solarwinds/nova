@@ -210,7 +210,7 @@ export class DataSourceClientSideFilteringExampleComponent
         this.dataSourceService.setData(RANDOM_ARRAY);
     }
 
-    async ngAfterViewInit() {
+    async ngAfterViewInit(): Promise<void> {
         this.chosenColors = [...this.selectedCriteriaColors];
         this.chosenStatuses = [...this.selectedColorTypes];
         this.dataSourceService.registerComponent({
@@ -231,7 +231,7 @@ export class DataSourceClientSideFilteringExampleComponent
         await this.applyFilters();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this.outputsSubscription) {
             this.outputsSubscription.unsubscribe();
         }
@@ -280,21 +280,21 @@ export class DataSourceClientSideFilteringExampleComponent
         },
     });
 
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         await this.dataSourceService.applyFilters();
     }
 
-    public async onSorterAction(changes: ISorterChanges) {
+    public async onSorterAction(changes: ISorterChanges): Promise<void> {
         this.sortBy = changes.newValue.sortBy;
         await this.applyFilters();
     }
 
-    public async onSelectedCriteriaChange($event: string[]) {
+    public async onSelectedCriteriaChange($event: string[]): Promise<void> {
         this.chosenColors = $event;
         await this.applyFilters();
     }
 
-    public async onSelectedColorTypesChange($event: string[]) {
+    public async onSelectedColorTypesChange($event: string[]): Promise<void> {
         this.chosenStatuses = $event;
         await this.applyFilters();
     }
@@ -311,13 +311,13 @@ export class DataSourceClientSideFilteringExampleComponent
         return !_isEmpty(_get(this, "filteringState.repeat.itemsSource"));
     }
 
-    public showStatus(status: string) {
+    public showStatus(status: string): string {
         return this.filteringState.status
             ? this.filteringState.status[status]
             : this.filteringState.status;
     }
 
-    public showColor(color: string) {
+    public showColor(color: string): string {
         return this.filteringState.color
             ? this.filteringState.color[color]
             : this.filteringState.color;

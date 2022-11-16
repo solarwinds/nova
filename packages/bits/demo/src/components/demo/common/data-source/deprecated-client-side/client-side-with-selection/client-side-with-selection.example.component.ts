@@ -76,7 +76,7 @@ export class DepreacatedDataSourceWithSelectionExampleComponent
         dataSourceService.setData(getData());
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.dataSourceService.registerComponent({
             search: {
                 componentInstance: this.search,
@@ -124,19 +124,19 @@ export class DepreacatedDataSourceWithSelectionExampleComponent
         this.dataSourceService.applyFilters();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.dataSourceService.applyFilters();
     }
 
-    public onSelectorOutput(selectionType: SelectionType) {
+    public onSelectorOutput(selectionType: SelectionType): void {
         this.state = this.listService.applySelector(selectionType, this.state);
     }
 
-    public onRepeatOutput(selectedItems: IExampleItem[]) {
+    public onRepeatOutput(selectedItems: IExampleItem[]): void {
         this.state = this.listService.selectItems(
             selectedItems,
             RepeatSelectionMode.multi,

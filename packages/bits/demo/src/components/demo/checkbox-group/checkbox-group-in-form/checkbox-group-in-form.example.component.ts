@@ -41,7 +41,7 @@ export class CheckboxGroupInFormExampleComponent implements OnInit {
         private toastService: ToastService
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
             checkboxGroup: this.formBuilder.control(
                 [this.cabbage, this.potato],
@@ -50,7 +50,7 @@ export class CheckboxGroupInFormExampleComponent implements OnInit {
         });
     }
 
-    public onSubmit() {
+    public onSubmit(): void {
         console.log(this.myForm);
         this.toastService.success({ message: $localize`Your form is valid!` });
     }

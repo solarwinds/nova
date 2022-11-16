@@ -38,7 +38,7 @@ export class DialogAfterOpenedExampleComponent implements OnInit, OnDestroy {
 
     public destroy$$: Subject<void> = new Subject<void>();
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dialogService.afterOpened$
             .pipe(takeUntil(this.destroy$$))
             .subscribe((dialog: NuiDialogRef) => {
@@ -50,12 +50,12 @@ export class DialogAfterOpenedExampleComponent implements OnInit, OnDestroy {
             });
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$$.next();
         this.destroy$$.complete();
     }
 
-    public openConfirmationDialog() {
+    public openConfirmationDialog(): void {
         this.dialogService.confirm({
             message: $localize`Are you sure you want to do it?`,
             severity: "info",
@@ -64,7 +64,7 @@ export class DialogAfterOpenedExampleComponent implements OnInit, OnDestroy {
         });
     }
 
-    public openWithComponent() {
+    public openWithComponent(): void {
         const dialogRef = this.dialogService.open(
             DialogContentExampleComponent,
             { size: "sm" }

@@ -85,12 +85,12 @@ export class Chart implements IChart {
         return this.grid;
     }
 
-    public addPlugin(plugin: IChartPlugin) {
+    public addPlugin(plugin: IChartPlugin): void {
         plugin.chart = this;
         this.plugins.push(plugin);
     }
 
-    public removePlugin(classRef: typeof ChartPlugin) {
+    public removePlugin(classRef: typeof ChartPlugin): void {
         const pluginIndex = this.plugins.findIndex(
             (plugin) => plugin instanceof classRef
         );
@@ -100,26 +100,26 @@ export class Chart implements IChart {
         }
     }
 
-    public addPlugins(...plugins: IChartPlugin[]) {
+    public addPlugins(...plugins: IChartPlugin[]): void {
         for (const plugin of plugins) {
             this.addPlugin(plugin);
         }
     }
 
-    public removePlugins(...classRefs: typeof ChartPlugin[]) {
+    public removePlugins(...classRefs: typeof ChartPlugin[]): void {
         for (const classRef of classRefs) {
             this.removePlugin(classRef);
         }
     }
 
-    public hasPlugin(classRef: typeof ChartPlugin) {
+    public hasPlugin(classRef: typeof ChartPlugin): boolean {
         return (
             -1 !==
             this.plugins.findIndex((plugin) => plugin instanceof classRef)
         );
     }
 
-    public build(element: HTMLElement) {
+    public build(element: HTMLElement): void {
         this.element = element;
 
         // @ts-ignore: Workaround to avoid strict build crash because of type
@@ -180,7 +180,7 @@ export class Chart implements IChart {
         return new DataManager(this);
     }
 
-    protected buildGrid() {
+    protected buildGrid(): void {
         if (this.target) {
             this.grid.target(this.target);
             this.grid.build();
@@ -196,21 +196,21 @@ export class Chart implements IChart {
         return new RenderEngine(lasagna, dataManager);
     }
 
-    public update(seriesSet: IChartSeries<IAccessors>[]) {
+    public update(seriesSet: IChartSeries<IAccessors>[]): void {
         this.updateSubject.next(seriesSet);
     }
 
-    public updateDimensions() {
+    public updateDimensions(): void {
         this.updateDimensionsSubject.next();
     }
 
-    public initialize() {
+    public initialize(): void {
         each(this.plugins, (p: IChartPlugin) => {
             p.initialize();
         });
     }
 
-    public destroy() {
+    public destroy(): void {
         this.eventBus.getStream(DESTROY_EVENT).next({ data: null });
         this.eventBus.destroy();
 
@@ -220,7 +220,7 @@ export class Chart implements IChart {
         this.target = undefined;
     }
 
-    public setSeriesStates(renderStateData: IRenderStateData[]) {
+    public setSeriesStates(renderStateData: IRenderStateData[]): void {
         this.seriesStatesSubject.next(renderStateData);
         this.eventBus
             .getStream(SERIES_STATE_CHANGE_EVENT)

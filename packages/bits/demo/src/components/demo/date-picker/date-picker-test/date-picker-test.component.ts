@@ -114,29 +114,29 @@ export class DatePickerTestComponent implements OnInit {
         ];
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.reactiveDatepickerForm = this.formBuilder.group({
             datePicker: this.formBuilder.control(moment()),
         });
     }
 
-    public dateChanged(event: any) {
+    public dateChanged(event: any): void {
         this.localActiveDate = event;
     }
 
-    public dateChangedPreserved(event: any) {
+    public dateChangedPreserved(event: any): void {
         this.localActiveDatePreserve = event;
     }
 
-    public dateChangedMinMax(event: any) {
+    public dateChangedMinMax(event: any): void {
         this.localActiveDateMinMax = event;
     }
 
-    public dateChangedDisabledDates(event: any) {
+    public dateChangedDisabledDates(event: any): void {
         this.localActiveDateDisabledDates = event;
     }
 
-    public initDateChangedPreserved(event: any) {
+    public initDateChangedPreserved(event: any): void {
         this.initDatePreserve = event;
     }
 }

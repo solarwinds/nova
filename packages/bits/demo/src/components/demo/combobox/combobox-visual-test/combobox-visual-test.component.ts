@@ -63,7 +63,7 @@ export class ComboboxVisualTestComponent implements OnInit {
     };
     public displayedItems = this.datasetInGroups.itemsInGroups;
 
-    public textboxChanged(searchQuery: ISelectChangedEvent<string>) {
+    public textboxChanged(searchQuery: ISelectChangedEvent<string>): void {
         this.displayedItems = _cloneDeep(this.datasetInGroups.itemsInGroups);
         this.displayedItems.forEach((items) => {
             items.items = items.items.filter((item) =>
@@ -72,7 +72,7 @@ export class ComboboxVisualTestComponent implements OnInit {
         });
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.isInErrorState();
     }
 

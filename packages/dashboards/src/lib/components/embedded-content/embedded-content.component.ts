@@ -63,11 +63,11 @@ export class EmbeddedContentComponent
         private domSanitizer: DomSanitizer
     ) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.validateAndApplyEmbeddedContent();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (
             changes.customEmbeddedContent &&
             !changes.customEmbeddedContent.firstChange

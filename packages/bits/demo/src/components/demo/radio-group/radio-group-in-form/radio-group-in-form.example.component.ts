@@ -35,7 +35,7 @@ export class RadioGroupInFormExampleComponent implements OnInit {
         $localize`Carrot`,
     ];
     constructor(private formBuilder: FormBuilder) {}
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.fancyForm = this.formBuilder.group({
             radioGroup: this.formBuilder.control(this.vegetables[1], [
                 Validators.required,

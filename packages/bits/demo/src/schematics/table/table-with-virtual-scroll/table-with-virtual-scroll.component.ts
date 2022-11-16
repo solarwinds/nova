@@ -33,6 +33,7 @@ import { Subject } from "rxjs";
 import {
     debounceTime,
     filter,
+    // eslint-disable-next-line import/no-deprecated
     switchMap,
     takeUntil,
     tap,
@@ -94,7 +95,7 @@ export class TableWithVirtualScrollComponent
     // the height in px of a single row from the table
     public rowHeight = 40;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         @Inject(DataSourceService)
@@ -103,7 +104,7 @@ export class TableWithVirtualScrollComponent
         private changeDetection: ChangeDetectorRef
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource.busy
             .pipe(
                 tap((val) => {
@@ -115,7 +116,7 @@ export class TableWithVirtualScrollComponent
             .subscribe();
     }
 
-    public async ngAfterViewInit() {
+    public async ngAfterViewInit(): Promise<void> {
         // register filter to be able to sort
         this.dataSource.registerComponent(this.table.getFilterComponents());
         this.dataSource.registerComponent({
@@ -139,6 +140,7 @@ export class TableWithVirtualScrollComponent
                 ),
                 tap(async () => this.applyFilters(false)),
                 // Note: Using the same stream to subscribe to the outputsSubject and update the items list
+                // eslint-disable-next-line import/no-deprecated
                 switchMap(() =>
                     this.dataSource.outputsSubject.pipe(
                         tap((data: IFilteringOutputs) => {
@@ -167,25 +169,27 @@ export class TableWithVirtualScrollComponent
             .subscribe();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    public async onSearch() {
+    public async onSearch(): Promise<void> {
         await this.applyFilters();
     }
 
-    public async onSearchCancel() {
+    public async onSearchCancel(): Promise<void> {
         await this.applyFilters();
     }
 
-    public async sortData(sortedColumn: ISortedItem) {
+    public async sortData(sortedColumn: ISortedItem): Promise<void> {
         this.sortedColumn = sortedColumn;
         await this.applyFilters();
     }
 
-    public async applyFilters(resetVirtualScroll: boolean = true) {
+    public async applyFilters(
+        resetVirtualScroll: boolean = true
+    ): Promise<void> {
         if (resetVirtualScroll) {
             // it is important to reset viewportManager to start page
             // so that the datasource performs the search with 1st page

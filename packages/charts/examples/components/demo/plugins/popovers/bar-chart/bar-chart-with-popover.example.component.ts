@@ -41,7 +41,7 @@ export class BarChartWithPopoverExampleComponent implements OnInit {
     public chartAssist = new ChartAssist(new Chart(barGrid()));
     public popoverPlugin = new ChartPopoverPlugin();
 
-    ngOnInit() {
+    public ngOnInit(): void {
         // plugin setup (absence of InteractionLinePlugin setup will result in no interaction line)
         this.chartAssist.chart.addPlugin(new InteractionLabelPlugin());
         this.chartAssist.chart.addPlugin(this.popoverPlugin);

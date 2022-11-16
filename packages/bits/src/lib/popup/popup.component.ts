@@ -39,7 +39,7 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 import _isUndefined from "lodash/isUndefined";
-import { Subject, Subscription } from "rxjs";
+import { filter, Subject, Subscription } from "rxjs";
 
 import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
 import { EdgeDetectionService } from "../../services/edge-detection.service";
@@ -48,6 +48,9 @@ import { LoggerService } from "../../services/log-service";
 import { PopupContainerComponent } from "./popup-container.component";
 import { PopupContainerService } from "./popup-container.service";
 import { PopupToggleDirective } from "./popup-toggle.directive";
+
+const isMouseEvent = (event: Event): event is MouseEvent =>
+    event instanceof MouseEvent;
 
 // <example-url>./../examples/index.html#/popup</example-url>
 /**
@@ -64,7 +67,6 @@ import { PopupToggleDirective } from "./popup-toggle.directive";
  * 1st layer of content to define "popup area". DO NOT USE "opened" WITH "nuiPopupToggle".
  * IT IS NEEDED TO CHOOSE ONE.
  */
-/* eslint-disable @angular-eslint/no-host-metadata-property */
 @Component({
     selector: "nui-popup-deprecated",
     host: {
@@ -104,7 +106,6 @@ import { PopupToggleDirective } from "./popup-toggle.directive";
     styleUrls: ["./popup.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
-/* eslint-disable @angular-eslint/no-host-metadata-property */
 export class PopupDeprecatedComponent
     implements AfterContentInit, OnDestroy, OnInit
 {
@@ -185,7 +186,8 @@ export class PopupDeprecatedComponent
             "<nui-popup-deprecated> is deprecated as of Nova v11. Please use <nui-popup> instead."
         );
     }
-    public ngOnInit() {
+
+    public ngOnInit(): void {
         if (this.manualOpenControl) {
             this.popupSubscriptions.push(
                 this.manualOpenControl.subscribe((event) => {
@@ -195,7 +197,8 @@ export class PopupDeprecatedComponent
         }
         this.popupSubscriptions.push(
             this.eventBusService
-                .getStream({ id: DOCUMENT_CLICK_EVENT })
+                .getStream(DOCUMENT_CLICK_EVENT)
+                .pipe(filter(isMouseEvent))
                 .subscribe((event: MouseEvent) => {
                     if (this.isOpen) {
                         this.closePopup(event);

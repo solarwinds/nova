@@ -1,17 +1,11 @@
 {
     "compilerOptions": {
-        "baseUrl": "./",
+        "baseUrl": ".",
         "declaration": false,
-        "importHelpers": true,
-        "module": "commonjs",
-        "outDir": "./dist/out-tsc",
-        "preserveSymlinks": true,
-        "typeRoots": ["node_modules/@types"],
-        "lib": ["es2018", "dom"],
+        "lib": ["ES2018", "DOM"],
         "paths": {
             "@nova-ui/dashboards": ["./src/public-api.ts"]
-        },
-        "allowSyntheticDefaultImports": true
+        }
     },
     "extends": "../../tsconfig.main.json"
 }

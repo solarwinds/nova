@@ -32,7 +32,7 @@ import { IDataSourceOutput, IKpiColorRules } from "./types";
 
 @Injectable()
 export class KpiColorPrioritizer implements IConfigurable, OnDestroy {
-    protected destroy$ = new Subject<void>();
+    protected readonly destroy$ = new Subject<void>();
     protected componentId: string;
     protected propertyPath: string = "backgroundColor";
     protected rules: IKpiColorRules[] | undefined;
@@ -49,12 +49,12 @@ export class KpiColorPrioritizer implements IConfigurable, OnDestroy {
         this.comparators = comparatorsRegistry.getComparators();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    public updateConfiguration(properties: any) {
+    public updateConfiguration(properties: any): void {
         if (properties?.rules) {
             this.rules = properties?.rules;
             this.subscribeToDataChanges();
@@ -62,7 +62,7 @@ export class KpiColorPrioritizer implements IConfigurable, OnDestroy {
         }
     }
 
-    public setComponent(component: any, componentId: string) {
+    public setComponent(component: any, componentId: string): void {
         this.subscribeToDataChanges();
 
         this.componentId = componentId;

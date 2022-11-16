@@ -51,7 +51,7 @@ export class EventsBasicExampleComponent implements OnInit {
 
     constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const accessors = new LineAccessors();
         const renderer = new LineRenderer();
 

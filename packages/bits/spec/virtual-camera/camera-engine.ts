@@ -96,7 +96,7 @@ export class CameraEngine {
         }
     }
 
-    public getToolConfig() {
+    public getToolConfig(): ReturnType<ILens["toolConfig"]> {
         return this.currentLensInstance.toolConfig();
     }
 

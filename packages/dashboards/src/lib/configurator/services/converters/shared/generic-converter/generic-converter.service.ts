@@ -46,13 +46,13 @@ export class GenericConverterService extends BaseConverter {
 
     public updateConfiguration(properties: {
         formParts: IConverterFormPartsProperties[];
-    }) {
+    }): void {
         if (properties && properties.formParts) {
             this.formParts = properties.formParts;
         }
     }
 
-    public buildForm() {
+    public buildForm(): void {
         const preview = this.getPreview();
 
         const updatedPizzagna = this.formParts.reduce((res, v) => {
@@ -79,7 +79,7 @@ export class GenericConverterService extends BaseConverter {
         this.updateFormPizzagna(updatedPizzagna);
     }
 
-    public toPreview(form: FormGroup) {
+    public toPreview(form: FormGroup): void {
         form.valueChanges
             .pipe(takeUntil(this.destroy$))
             .subscribe((formData) => {

@@ -41,7 +41,7 @@ import {
 export class BasicStackedVerticalBarChartTestComponent implements OnInit {
     public chartAssist: ChartAssist;
 
-    ngOnInit() {
+    public ngOnInit(): void {
         const chart = new Chart(barGrid());
 
         // We're manually adding Interaction Label plugin (without Interaction Line plugin) to have only label

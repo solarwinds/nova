@@ -31,6 +31,6 @@ describe("a11y: radio group", () => {
     });
 
     it("should check a11y of radio group", async () => {
-        await assertA11y(browser, RadioGroupAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, RadioGroupAtom, rulesToDisable);
     });
 });

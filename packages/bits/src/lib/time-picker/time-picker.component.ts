@@ -154,7 +154,7 @@ export class TimePickerComponent
         private cdr: ChangeDetectorRef
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.times = this.generateTimeItems(this.timeStep);
         this.times.map((value: Moment) => {
             this.itemsSource[0].itemsSource.push({
@@ -181,13 +181,13 @@ export class TimePickerComponent
         this.onAppendToBodyChange(this.appendToBody);
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.appendToBody) {
             this.onAppendToBodyChange(changes.appendToBody.currentValue);
         }
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.overlay.clickOutside
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((_) => this.overlay.hide());
@@ -201,9 +201,9 @@ export class TimePickerComponent
         this.cdr.detectChanges();
     }
 
-    onChange(value: any) {}
+    onChange(value: any): void {}
 
-    onTouched() {}
+    onTouched(): void {}
 
     @HostListener("keydown", ["$event"])
     public onKeyDown(event: KeyboardEvent): void {
@@ -233,7 +233,7 @@ export class TimePickerComponent
         }
     }
 
-    updateInnerModel(value: any) {
+    updateInnerModel(value: any): void {
         setTimeout(() => this.inputBlurred.emit(), 100);
         if (value instanceof moment && !this.preserveInsignificant) {
             (value as Moment).year(0);
@@ -268,20 +268,20 @@ export class TimePickerComponent
         this.setErrorState(value);
     }
 
-    writeValue(value: any) {
+    writeValue(value: any): void {
         this.textbox.writeValue(this.formatValue(value));
         this.updateInnerModel(this.formatValue(value));
     }
 
-    setErrorState(value: string) {
+    setErrorState(value: string): void {
         this.isInErrorState = !moment(value, this.timeFormat, true).isValid();
     }
 
-    registerOnChange(fn: (value: any) => {}) {
+    registerOnChange(fn: (value: any) => {}): void {
         this.onChange = fn;
     }
 
-    registerOnTouched(fn: () => {}) {
+    registerOnTouched(fn: () => {}): void {
         this.onTouched = fn;
     }
 
@@ -289,7 +289,7 @@ export class TimePickerComponent
         this.isDisabled = isDisabled;
     }
 
-    focusOnForm() {
+    focusOnForm(): void {
         this.textbox.focus();
     }
 
@@ -297,7 +297,7 @@ export class TimePickerComponent
         this.inputChanged.next(value);
     }
 
-    public select(time: IMenuItem) {
+    public select(time: IMenuItem): void {
         this.updateInnerModel(time.title);
         this.textbox.writeValue(this.formatValue() as string);
         this.timeChanged.emit(this.innerModel);
@@ -305,7 +305,7 @@ export class TimePickerComponent
         this.overlay.hide();
     }
 
-    public scrollToView() {
+    public scrollToView(): void {
         if (!this.isDisabled) {
             this.overlay.toggle();
         }
@@ -330,7 +330,7 @@ export class TimePickerComponent
         return times;
     }
 
-    public isItemSelected(timeItem: Moment) {
+    public isItemSelected(timeItem: Moment): boolean {
         return moment(timeItem).isSame(this.itemToSelect.title);
     }
 
@@ -345,7 +345,7 @@ export class TimePickerComponent
         return index === times.length ? 0 : index;
     }
 
-    public getItemToSelect() {
+    public getItemToSelect(): IMenuItem | undefined {
         if (_isEmpty(this.innerModel) || _isNil(this.innerModel)) {
             this.unselectAllItems();
             return;
@@ -363,13 +363,13 @@ export class TimePickerComponent
         }
     }
 
-    public unselectAllItems() {
+    public unselectAllItems(): void {
         this.itemsSource[0].itemsSource.forEach(
             (el: IMenuItem) => (el.isSelected = false)
         );
     }
 
-    public formatValue(value: any = this.innerModel) {
+    public formatValue(value: any = this.innerModel): string {
         return moment(value).isValid()
             ? moment(value).format(this.timeFormat)
             : value;
@@ -398,7 +398,7 @@ export class TimePickerComponent
         });
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this.overlay?.showing) {
             this.overlay.hide();
         }

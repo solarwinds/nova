@@ -113,7 +113,7 @@ export class PresentationConfigurationV2Component
         this.handleFormattersUpdate(formatters);
     }
 
-    public get formatters() {
+    public get formatters(): IFormatterDefinition[] {
         return this._formatters;
     }
 
@@ -214,7 +214,7 @@ export class PresentationConfigurationV2Component
         this.onDestroy$.complete();
     }
 
-    public ngOnChanges(changes: SimpleChanges) {}
+    public ngOnChanges(changes: SimpleChanges): void {}
 
     public registerOnChange(fn: any): void {
         this.changeFn = fn;
@@ -272,7 +272,7 @@ export class PresentationConfigurationV2Component
         return null;
     }
 
-    public ngDoCheck() {
+    public ngDoCheck(): void {
         if (!this.form || !this.propertiesForm) {
             return;
         }
@@ -288,7 +288,7 @@ export class PresentationConfigurationV2Component
         }
     }
 
-    public onFormReady(form: FormGroup) {
+    public onFormReady(form: FormGroup): void {
         this.propertiesFormReady.next();
 
         this.propertiesForm = form;
@@ -309,7 +309,7 @@ export class PresentationConfigurationV2Component
         this.propertiesForm.patchValue(this.formatter.properties);
     }
 
-    public onValueChange() {
+    public onValueChange(): void {
         this.changeFn?.(this.form.value);
     }
 

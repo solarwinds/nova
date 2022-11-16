@@ -22,6 +22,7 @@ import get from "lodash/get";
 
 import {
     IProportionalAggregatorFn,
+    IProportionalAggregatorOrigin,
     IProportionalDonutContentAggregatorProperties,
 } from "./types";
 
@@ -31,9 +32,9 @@ export interface IFieldMapperAggregatorProperties
 }
 
 export const fieldMapper: IProportionalAggregatorFn = (
-    origin,
+    origin: IProportionalAggregatorOrigin,
     properties?: IFieldMapperAggregatorProperties
-) => {
+): any => {
     const chartSeriesDataFieldId =
         properties?.chartSeriesDataFieldId || "data[0]";
 

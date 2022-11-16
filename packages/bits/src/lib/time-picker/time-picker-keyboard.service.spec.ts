@@ -18,8 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { KEYBOARD_CODE } from "../../constants";
-import { MenuPopupComponent } from "../menu";
+import { KEYBOARD_CODE } from "../../constants/keycode.constants";
+import { MenuItemBaseComponent, MenuPopupComponent } from "../menu";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
 import { TimePickerKeyboardService } from "./time-picker-keyboard.service";
 
@@ -41,11 +41,6 @@ const keyBoardEventFactory = (code: KEYBOARD_CODE): KeyboardEvent =>
         preventDefault: () => {},
         code,
     } as KeyboardEvent);
-
-type ActiveItem = Exclude<
-    TimePickerKeyboardService["keyboardEventsManager"]["activeItem"],
-    null
->;
 
 describe("Services >", () => {
     describe("TimePickerKeyboardService", () => {
@@ -113,7 +108,7 @@ describe("Services >", () => {
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ENTER);
                 const activeItem = {
                     doAction: (even: any) => {},
-                } as ActiveItem;
+                } as MenuItemBaseComponent;
                 const spy = spyOn(activeItem, "doAction");
 
                 spyOnProperty(
@@ -150,7 +145,7 @@ describe("Services >", () => {
                             scrollIntoView: (event: any) => {},
                         },
                     },
-                } as ActiveItem;
+                } as MenuItemBaseComponent;
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
                 const spy = spyOn(
                     activeItem.menuItem.nativeElement,

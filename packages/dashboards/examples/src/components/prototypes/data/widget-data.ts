@@ -20,7 +20,7 @@
 
 import moment from "moment/moment";
 
-import { CHART_PALETTE_CS_S } from "@nova-ui/charts";
+import { CHART_PALETTE_CS_S_EXTENDED } from "@nova-ui/charts";
 import { ITimeseriesWidgetData } from "@nova-ui/dashboards";
 
 import { BasicTableModel } from "./table/types";
@@ -35,7 +35,9 @@ export interface IProportionalWidgetData {
     color?: string;
 }
 
-export function getFixedProportionalWidgetData(citiesToInclude?: string[]) {
+export function getFixedProportionalWidgetData(
+    citiesToInclude?: string[]
+): IProportionalWidgetData[] {
     let data: IProportionalWidgetData[] = [
         {
             id: "Down",
@@ -73,7 +75,9 @@ export function getFixedProportionalWidgetData(citiesToInclude?: string[]) {
     return data;
 }
 
-export function getRandomProportionalWidgetData(citiesToInclude?: string[]) {
+export function getRandomProportionalWidgetData(
+    citiesToInclude?: string[]
+): IProportionalWidgetData[] {
     let data: IProportionalWidgetData[] = [
         {
             id: "Down",
@@ -346,7 +350,7 @@ export function getTimeseriesWidgetData(): ITimeseriesWidgetData[] {
     ];
 }
 
-export function getTimeseriesWidgetData2() {
+export function getTimeseriesWidgetData2(): ITimeseriesWidgetData[] {
     return [
         {
             id: "series-a",
@@ -442,11 +446,11 @@ enum Status {
 }
 
 const statusColors: Record<Status, string> = {
-    [Status.Unknown]: CHART_PALETTE_CS_S[3],
-    [Status.Up]: CHART_PALETTE_CS_S[4],
-    [Status.Warning]: CHART_PALETTE_CS_S[2],
-    [Status.Down]: CHART_PALETTE_CS_S[0],
-    [Status.Critical]: CHART_PALETTE_CS_S[1],
+    [Status.Unknown]: CHART_PALETTE_CS_S_EXTENDED[6],
+    [Status.Up]: CHART_PALETTE_CS_S_EXTENDED[8],
+    [Status.Warning]: CHART_PALETTE_CS_S_EXTENDED[4],
+    [Status.Down]: CHART_PALETTE_CS_S_EXTENDED[0],
+    [Status.Critical]: CHART_PALETTE_CS_S_EXTENDED[2],
 };
 
 export function getTimeseriesStatusData(): ITimeseriesWidgetData[] {

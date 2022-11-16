@@ -89,11 +89,13 @@ export class ColorPickerComponent
 
     public overlayConfig: OverlayConfig;
     public value: string | IOptionValueObject;
-    public isInErrorState: boolean;
     public defaultColor: string = "var(--nui-color-bg-secondary)";
     public maxWidth: string;
     public palette: Partial<IPaletteColor[]>;
     public isBlackTick: boolean;
+    public isInErrorState: boolean;
+    public ariaLabel?: string | undefined;
+
     protected overlayUtilities: OverlayUtilitiesService =
         new OverlayUtilitiesService();
 
@@ -106,7 +108,7 @@ export class ColorPickerComponent
         private cdkOverlay: Overlay
     ) {}
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.colors) {
             this.colors = changes.colors.currentValue;
         }
@@ -116,7 +118,7 @@ export class ColorPickerComponent
         }
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         if (this.value) {
             this.select?.writeValue(this.value);
             this.isBlackTick = this.determineBlackTick(this.value.toString());
@@ -163,33 +165,33 @@ export class ColorPickerComponent
         };
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    onChange(value: any) {}
+    onChange(value: any): void {}
 
-    _onTouched() {}
+    _onTouched(): void {}
 
-    public writeValue(value: string | IOptionValueObject) {
+    public writeValue(value: string | IOptionValueObject): void {
         this.value = value;
         this.select?.writeValue(value);
     }
 
-    public registerOnChange(fn: () => void) {
+    public registerOnChange(fn: () => void): void {
         this.onChange = fn;
     }
 
-    public registerOnTouched(fn: () => {}) {
+    public registerOnTouched(fn: () => {}): void {
         this._onTouched = fn;
     }
 
-    public setStyles = (color: string) => ({
+    public setStyles = (color: string): Record<string, any> => ({
         "background-color": color || this.defaultColor,
     });
 
-    public determineBlackTick(color: string) {
+    public determineBlackTick(color: string): boolean {
         let hexColorValue = "#fff";
 
         if (this.colorService.isHEX(color)) {

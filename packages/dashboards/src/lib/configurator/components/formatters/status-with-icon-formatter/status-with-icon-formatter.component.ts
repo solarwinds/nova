@@ -78,7 +78,7 @@ export class StatusWithIconFormatterComponent
         link?: string;
     };
 
-    ngOnChanges() {
+    public ngOnChanges(): void {
         this.isValid = !!(
             this.data &&
             this.data.icon &&

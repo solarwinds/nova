@@ -38,12 +38,12 @@ describe("a11y: popover", () => {
 
     it("should check a11y of popover hover", async () => {
         await popoverBasic.openByHover();
-        await assertA11y(browser, PopoverAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, PopoverAtom, rulesToDisable);
         await Helpers.clickOnEmptySpace();
     });
 
     it("should check a11y of popover modal", async () => {
         await popoverModal.open();
-        await assertA11y(browser, PopoverAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, PopoverAtom, rulesToDisable);
     });
 });

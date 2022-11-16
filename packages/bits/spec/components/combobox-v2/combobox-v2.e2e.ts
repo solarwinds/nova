@@ -24,7 +24,7 @@ import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { ComboboxV2Atom } from "./combobox-v2.atom";
 
-describe("USERCONTROL Combobox >", () => {
+describe("USERCONTROL Combobox v2 >", () => {
     let comboboxBasic: ComboboxV2Atom;
     let comboboxError: ComboboxV2Atom;
     let comboboxMulti: ComboboxV2Atom;
@@ -141,7 +141,7 @@ describe("USERCONTROL Combobox >", () => {
                 await (await comboboxError.getFirstOption()).click();
                 await comboboxError.toggleButton.click();
                 await Helpers.pressKey(Key.DOWN, 3);
-                await Helpers.pressKey(Key.UP, 1);
+                await Helpers.pressKey(Key.UP);
                 await expect(
                     await (await comboboxError.getOption(2)).getText()
                 ).toEqual("Item 2");
@@ -228,30 +228,37 @@ describe("USERCONTROL Combobox >", () => {
             });
         });
 
-        describe("should popup follow the dimensions of its toggle reference", () => {
+        describe("when popup follows the dimensions of its toggle reference", () => {
             beforeAll(async () => {
                 await browser.refresh();
             });
 
             afterEach(async () => {
-                const comboboxWidth = (
-                    await comboboxCustomControl.getElement().getSize()
-                ).width;
-                const overlayWidth = (
-                    await comboboxCustomControl.getPopupElement().getSize()
-                ).width;
-                await expect(comboboxWidth).toEqual(overlayWidth);
+                await showButton.click();
+                expect(
+                    await Atom.wait(async () => {
+                        const comboboxWidth = (
+                            await comboboxCustomControl.getElement().getSize()
+                        ).width;
+                        const overlayWidth = (
+                            await comboboxCustomControl
+                                .getPopupElement()
+                                .getSize()
+                        ).width;
+                        return comboboxWidth === overlayWidth;
+                    })
+                ).toBe(true);
             });
 
-            it("should width match on initial state", async () => {
+            it("width should match on initial state", async () => {
                 await toggleButton.click();
             });
 
-            it("should width match if selected items", async () => {
+            it("width should match if selected items", async () => {
                 await comboboxCustomControl.selectFirst(18);
             });
 
-            it("should width match if removed items", async () => {
+            it("width should match if removed items", async () => {
                 await comboboxCustomControl.removeChips(10);
             });
 
@@ -282,14 +289,18 @@ describe("USERCONTROL Combobox >", () => {
             it("should delete selected item on backspace", async () => {
                 await comboboxMulti.selectAll();
 
-                await expect(await comboboxMulti.chips.count()).toBe(3);
+                expect(
+                    await Atom.wait(
+                        async () => (await comboboxMulti.chips.count()) === 3
+                    )
+                ).toBe(true);
 
                 await comboboxMulti.toggleButton.click();
 
                 await Helpers.pressKey(Key.LEFT);
                 await Helpers.pressKey(Key.BACK_SPACE, 2);
 
-                await expect(await comboboxMulti.chips.count()).toBe(1);
+                expect(await comboboxMulti.chips.count()).toBe(1);
             });
 
             it("selected item should lost focus on not allowed key keydown", async () => {
@@ -338,7 +349,7 @@ describe("USERCONTROL Combobox >", () => {
                     await Atom.hasClass(comboboxMulti.chips.first(), "active")
                 ).toBe(true);
 
-                await Helpers.pressKey(Key.RIGHT, 1);
+                await Helpers.pressKey(Key.RIGHT);
 
                 await expect(
                     await Atom.hasClass(comboboxMulti.chips.get(1), "active")

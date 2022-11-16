@@ -35,7 +35,7 @@ export class TimePickerVisualTestComponent implements OnInit {
         this.myTime = moment("2018-12-14T12:00:00+02:00");
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
             timePickerFormControl: this.formBuilder.control(this.time, [
                 Validators.required,

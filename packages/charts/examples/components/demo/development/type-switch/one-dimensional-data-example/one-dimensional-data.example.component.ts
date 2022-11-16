@@ -28,7 +28,7 @@ import {
     Chart,
     ChartAssist,
     ChartDonutContentPlugin,
-    CHART_PALETTE_CS_S,
+    CHART_PALETTE_CS_S_EXTENDED,
     getAutomaticDomainWithIncludedInterval,
     HorizontalBarAccessors,
     IAccessors,
@@ -75,17 +75,20 @@ export class OneDimensionalDataExampleComponent implements OnInit {
         this.iconNames.map((n) => `status_${n}`)
     );
     private colorProvider = new MappedValueProvider<string>(
-        zipObject(this.categories, CHART_PALETTE_CS_S)
+        zipObject(
+            this.categories,
+            CHART_PALETTE_CS_S_EXTENDED.filter((_, index) => index % 2 === 0)
+        )
     );
 
     public chartAssist: ChartAssist;
     public donutContentPlugin?: ChartDonutContentPlugin;
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.updateChartType();
     }
 
-    public updateChartType() {
+    public updateChartType(): void {
         this.buildChart();
         this.chartAssist.chart.updateDimensions();
 

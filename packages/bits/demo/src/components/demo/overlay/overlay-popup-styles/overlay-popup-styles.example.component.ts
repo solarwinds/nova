@@ -35,7 +35,7 @@ import {
 export class OverlayPopupStylesExampleComponent
     implements AfterViewInit, OnDestroy
 {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     public overlayConfig: OverlayConfig = {
         panelClass: [OVERLAY_WITH_POPUP_STYLES_CLASS],
@@ -44,7 +44,7 @@ export class OverlayPopupStylesExampleComponent
     @ViewChild("overlayWithStyles") public overlayWithStyles: OverlayComponent;
     @ViewChild("overlayNoStyles") public overlayNoStyles: OverlayComponent;
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.overlayWithStyles.clickOutside
             .pipe(takeUntil(this.destroy$))
             .subscribe((_) => this.overlayWithStyles.hide());
@@ -54,7 +54,7 @@ export class OverlayPopupStylesExampleComponent
             .subscribe((_) => this.overlayNoStyles.hide());
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }

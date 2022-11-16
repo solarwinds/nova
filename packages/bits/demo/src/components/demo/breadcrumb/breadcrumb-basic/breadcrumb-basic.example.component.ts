@@ -38,7 +38,7 @@ export class BreadcrumbBasicExampleComponent implements OnInit, OnDestroy {
         private breadcrumbStateService: BreadcrumbStateService
     ) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.breadcrumbSource = this.breadcrumbStateService.getBreadcrumbState(
             this.routerState,
             "/breadcrumb/"
@@ -65,7 +65,7 @@ export class BreadcrumbBasicExampleComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.routerSubscription.unsubscribe();
     }
 }

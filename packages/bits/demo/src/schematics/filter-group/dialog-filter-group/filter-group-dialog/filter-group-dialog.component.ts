@@ -41,16 +41,16 @@ export class FilterGroupCompositeDialogComponent {
         private selectorService: SelectorService
     ) {}
 
-    public acceptDialogFilters() {
+    public acceptDialogFilters(): void {
         this.dialogClosed.emit(this.selectedValues);
         this.closeDialog();
     }
 
-    public closeDialog() {
+    public closeDialog(): void {
         this.activeDialog.close();
     }
 
-    public onSelectionChanged(selection: IFilterGroupOption[]) {
+    public onSelectionChanged(selection: IFilterGroupOption[]): void {
         this.selectedValues = selection.map((item) => item.value);
     }
 }

@@ -31,7 +31,7 @@ export class WidgetHeaderAtom extends Atom {
         return Atom.findIn(MenuAtom, this.root);
     }
 
-    public async clickEdit() {
+    public async clickEdit(): Promise<void> {
         return Atom.findIn(
             ButtonAtom,
             this.root.element(by.className("nui-widget-header__action-edit"))

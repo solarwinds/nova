@@ -37,7 +37,7 @@ import {
 export class BasicVerticalBarChartTestComponent implements OnInit {
     public chartAssist = new ChartAssist(new Chart(barGrid()));
 
-    ngOnInit() {
+    public ngOnInit(): void {
         const accessors = barAccessors();
         const renderer = new BarRenderer({
             highlightStrategy: new BarSeriesHighlightStrategy("x"),

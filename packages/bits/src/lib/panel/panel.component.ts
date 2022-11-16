@@ -230,17 +230,17 @@ export class PanelComponent
         private changeDetectorRef: ChangeDetectorRef
     ) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.defineSizes();
         this.defineState();
         this.togglesSubscription = this.toggles
             .pipe(filter((toggle) => toggle === this._isCollapsed))
             .pipe(distinctUntilChanged())
             .pipe(debounceTime(PanelComponent.ANIMATION_TIME))
-            .subscribe((toggle) => this.toggleHideOrCollapsed());
+            .subscribe((_) => this.toggleHideOrCollapsed());
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes["panelMode"] && changes["panelMode"].isFirstChange()) {
             this.defineSizes();
         }
@@ -256,7 +256,7 @@ export class PanelComponent
         }
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         if (this.orientation === panelMap.bottom.orientation) {
             this.isResizable = false;
         }
@@ -266,7 +266,7 @@ export class PanelComponent
         this.updatePaneContainerSizeWithoutAnimation();
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.destroyLastAnimationPlayer();
         this.destroyAnimationFactories();
         if (this.togglesSubscription) {
@@ -274,7 +274,7 @@ export class PanelComponent
         }
     }
 
-    public onSizeChanged(newSize: string) {
+    public onSizeChanged(newSize: string): void {
         this.paneSize = newSize;
     }
 
@@ -420,9 +420,7 @@ export class PanelComponent
     }
 
     public toggleCollapsedOnClick(): void {
-        if (this.isHoverable) {
-            return;
-        } else {
+        if (!this.isHoverable) {
             this.toggleHideOrCollapsed();
         }
     }
@@ -536,9 +534,7 @@ export class PanelComponent
                 }),
                 animate(
                     `${PanelComponent.ANIMATION_TIME}ms ease-in-out`,
-                    style({
-                        height: endSize,
-                    })
+                    style({ height: endSize })
                 ),
             ]);
         }
@@ -548,9 +544,7 @@ export class PanelComponent
             }),
             animate(
                 `${PanelComponent.ANIMATION_TIME}ms ease-in-out`,
-                style({
-                    width: endSize,
-                })
+                style({ width: endSize })
             ),
         ]);
     }

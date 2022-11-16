@@ -71,14 +71,14 @@ export class SearchListComponent implements OnInit, AfterViewInit, OnDestroy {
     public pageSize: number = RESULTS_PER_PAGE;
 
     public itemConfig: IRepeatItemConfig<IServer> = {
-        trackBy: (index, item) => item?.name,
+        trackBy: (index, item): string | undefined => item?.name,
     };
 
     @ViewChild(RepeatComponent) repeat: RepeatComponent;
     @ViewChild(PaginatorComponent) paginator: PaginatorComponent;
     @ViewChild(SearchComponent) search: SearchComponent;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         @Inject(DataSourceService)
@@ -86,7 +86,7 @@ export class SearchListComponent implements OnInit, AfterViewInit, OnDestroy {
         private changeDetection: ChangeDetectorRef
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource.busy
             .pipe(
                 tap((val) => {
@@ -98,7 +98,7 @@ export class SearchListComponent implements OnInit, AfterViewInit, OnDestroy {
             .subscribe();
     }
 
-    public async ngAfterViewInit() {
+    public async ngAfterViewInit(): Promise<void> {
         this.dataSource.registerComponent({
             paginator: { componentInstance: this.paginator },
             search: { componentInstance: this.search },
@@ -143,20 +143,20 @@ export class SearchListComponent implements OnInit, AfterViewInit, OnDestroy {
         await this.applyFilters();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    public async onSearch() {
+    public async onSearch(): Promise<void> {
         await this.applyFilters();
     }
 
-    public async onCancelSearch() {
+    public async onCancelSearch(): Promise<void> {
         await this.applyFilters();
     }
 
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         await this.dataSource.applyFilters();
     }
 }

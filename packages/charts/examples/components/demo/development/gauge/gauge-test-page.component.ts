@@ -25,7 +25,6 @@ import {
     DEFAULT_RADIAL_RENDERER_CONFIG,
     GaugeUtil,
     IGaugeConfig,
-    GaugeThresholdDefs,
     StandardGaugeThresholdId,
     StandardLinearGaugeThickness,
     IGaugeThresholdsConfig,

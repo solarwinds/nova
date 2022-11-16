@@ -56,11 +56,12 @@ export class RepeatReorderItemConfigExampleComponent {
     public reorderable: boolean = true;
 
     public itemConfig: IRepeatItemConfig<IRepeatColorItem> = {
-        isDraggable: (item) =>
+        isDraggable: (item: IRepeatColorItem): boolean =>
             item.color === $localize`blue` || item.color === $localize`orange`,
         // Note: Using both cases to check if item is disabled, normally we should use only one method
-        isDisabled: (item) => item.color === $localize`green` || item.disabled,
-        trackBy: (index, item) => item.color,
+        isDisabled: (item: IRepeatColorItem): boolean =>
+            item.color === $localize`green` || item.disabled,
+        trackBy: (index: number, item: IRepeatColorItem): string => item.color,
     };
 
     public onItemsReordered(

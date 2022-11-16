@@ -23,7 +23,7 @@ import moment from "moment/moment";
 
 import { ITimeframe } from "@nova-ui/bits";
 
-import { ISerializableTimeframe } from "./types";
+import { ISerializableTimeframe } from "../../types";
 
 @Injectable({
     providedIn: "root",

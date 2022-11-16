@@ -31,6 +31,7 @@ import {
     ViewChild,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+// eslint-disable-next-line import/no-deprecated
 import { combineLatest, Subject } from "rxjs";
 import { filter, takeUntil, tap } from "rxjs/operators";
 
@@ -93,6 +94,7 @@ export class RefresherConfigurationComponent
                 this.cd.detectChanges();
             });
 
+        // eslint-disable-next-line import/no-deprecated
         combineLatest([
             this.form.controls["enabled"].valueChanges,
             this.form.controls["overrideDefaultSettings"].valueChanges,
@@ -107,7 +109,7 @@ export class RefresherConfigurationComponent
         this.formReady.emit(this.form);
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.enabled) {
             this.form?.get("enabled")?.patchValue(this.enabled);
         }
@@ -121,12 +123,12 @@ export class RefresherConfigurationComponent
         }
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroyed$.next();
         this.destroyed$.complete();
     }
 
-    public getHeaderSubtitle() {
+    public getHeaderSubtitle(): string {
         let result = "";
         if (this.form.get("enabled")?.value) {
             result += $localize`Enabled`;

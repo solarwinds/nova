@@ -50,7 +50,7 @@ export class TimeFramePickerBasicExampleComponent {
     public closePopoverSubject = new Subject<void>();
     public openPopoverSubject = new Subject<void>();
 
-    public updateTf(value: ITimeframe) {
+    public updateTf(value: ITimeframe): void {
         this.tf = value;
 
         const timeFrameDatesValid = () =>
@@ -64,17 +64,18 @@ export class TimeFramePickerBasicExampleComponent {
         this.selectedPresetKey = this.tf.selectedPresetId;
     }
 
-    public confirmPopover() {
+    public confirmPopover(): void {
         this.showFooter = false;
         this.closePopoverSubject.next();
         this.acceptedTimeframe = this.tf;
     }
-    public cancelPopover() {
+
+    public cancelPopover(): void {
         this.showFooter = false;
         this.closePopoverSubject.next();
     }
 
-    public handlePresetSelection(presetKey: string) {
+    public handlePresetSelection(presetKey: string): void {
         this.selectedPresetKey = presetKey;
         this.tf = this.timeframeService.getTimeframeByPresetId(presetKey);
         this.acceptedTimeframe = this.tf;

@@ -58,7 +58,7 @@ export class StackComponent extends BaseLayout implements OnInit, OnDestroy {
         this.classNames = `${this.defaultClassNames} flex-${this.direction} ${this.elementClass}`;
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         // Ensures that any base class observables are unsubscribed.
         super.ngOnDestroy();
     }

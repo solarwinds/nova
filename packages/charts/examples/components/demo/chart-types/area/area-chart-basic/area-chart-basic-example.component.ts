@@ -40,7 +40,7 @@ import {
 export class AreaChartBasicExampleComponent implements OnInit {
     public chart: Chart;
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         // areaGrid returns an XYGrid configured for displaying an area chart's axes and other grid elements
         this.chart = new Chart(areaGrid());
 

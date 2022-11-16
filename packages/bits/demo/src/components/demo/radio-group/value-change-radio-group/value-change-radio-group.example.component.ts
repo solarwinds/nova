@@ -37,7 +37,7 @@ export class ValueChangeRadioGroupExampleComponent {
 
     constructor(@Inject(ToastService) private toastService: IToastService) {}
 
-    public showSelected() {
+    public showSelected(): void {
         this.toastService.success({
             message: $localize`You selected ${this.selectedColor}. Nice!`,
         });

@@ -70,7 +70,7 @@ export class TimeFrameBarBasicExampleComponent implements OnInit, OnDestroy {
         private dataSourceService: NoopDataSourceService<ITimeframe>
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const accessors = new LineAccessors(
             this.chartAssist.palette.standardColors,
             this.chartAssist.markers
@@ -121,31 +121,31 @@ export class TimeFrameBarBasicExampleComponent implements OnInit, OnDestroy {
         void this.dataSourceService.applyFilters();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this.filteringSubscription) {
             this.filteringSubscription.unsubscribe();
         }
     }
 
-    public updateTimeFrame(value: ITimeframe) {
+    public updateTimeFrame(value: ITimeframe): void {
         this.timeFrame = this.history.restart(value);
-        void this.dataSourceService.applyFilters();
+        this.dataSourceService.applyFilters();
     }
 
     // Use the history storage to go back one time frame
-    public zoomUndo() {
+    public zoomUndo(): void {
         this.timeFrame = this.history.undo();
-        void this.dataSourceService.applyFilters();
+        this.dataSourceService.applyFilters();
     }
 
     // Reset the history storage and save a new initial value if provided
     // Otherwise preserve the previous one
-    public zoomReset(value?: ITimeframe) {
+    public zoomReset(value?: ITimeframe): void {
         this.timeFrame = this.history.restart(value);
-        void this.dataSourceService.applyFilters();
+        this.dataSourceService.applyFilters();
     }
 
-    private setUpFiltering(): any {
+    private setUpFiltering(): Subscription {
         this.dataSourceService.registerComponent({
             timeframe: {
                 componentInstance: {

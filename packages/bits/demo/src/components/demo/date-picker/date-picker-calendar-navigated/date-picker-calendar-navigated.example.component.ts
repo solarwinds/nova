@@ -28,7 +28,7 @@ import { Moment } from "moment/moment";
 export class DatePickerCalendarNavigatedExampleComponent {
     public calendarChangedDate: Date;
 
-    public dateChanged(event: Moment) {
+    public dateChanged(event: Moment): void {
         this.calendarChangedDate = new Date(event.valueOf());
     }
 }

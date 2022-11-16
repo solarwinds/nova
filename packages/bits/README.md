@@ -1,8 +1,6 @@
 # Bits Overview
 
 In Bits, the philosophy is all about flexibility – it provides the Legos, plumbing and styles, while you control the layouts. Bits aims to provide high-quality, atomic building blocks, services and tools while allowing feature developers the ability to create whatever layouts they need.
-<br>
-<br>
 
 ## Prerequisites
 
@@ -25,7 +23,7 @@ The Angular CLI is a command-line interface tool that you can use to initialize,
 
 You may want to check first whether it's already installed by running the following command:
 
-```
+```bash
 ng --version
 ```
 
@@ -43,16 +41,13 @@ Nova uses Angular CDK as part of its schematics functionality. To install it, yo
 npm install @angular/cdk@^12 --save-dev
 ```
 
-<br>
-<br>
-
-# Install Nova Bits
+### Install Nova Bits
 
 #### Using Angular CLI
 
 In order to install bits in your project root using the CLI, run the following command:
 
-```
+```bash
 ng add @nova-ui/bits
 ```
 
@@ -67,7 +62,7 @@ ng add @nova-ui/bits --skipPackageJson
 But, there's one additional step that needs to be done manually. Since bits uses `@angular/localize` for localization, this dependency
 needs to be imported in your app's polyfills.ts file. The easiest way to do this is to run the following command:
 
-```
+```bash
 ng add @angular/localize
 ```
 
@@ -75,13 +70,11 @@ ng add @angular/localize
 
 Installation is quite simple using npm. Nui includes all of its dependencies as part of the final build such as Angular, RxJs and more.
 
-```
-$ npm install @nova-ui/bits
+```bash
+npm install @nova-ui/bits
 ```
 
-<br><br>
-
-# Module Usage
+### Module Usage
 
 #### Adding Modules to Your Project
 
@@ -118,8 +111,6 @@ export class OverriddenNuiEnv extends NuiEnvironment {
 
 The Nova modules you consume will search for the NuiEnvironment provider and use it; otherwise, they will use the default one. At the moment, only log levels can be configured this way.
 
-<br>
-
 #### Add root dependencies
 
 In your root module, you need to add these imports:
@@ -144,7 +135,6 @@ providers: [
 ```
 
 The `TRANSLATIONS` provider can be used to internationalize bits. Details can be found [here](<https://ux.solarwinds.io/nova/docs/nova-bits/develop/sdk/api-docs-ng2/additional-documentation/internationalization-(i18n).html>).
-<br>
 
 #### Set root CSS class
 
@@ -156,59 +146,53 @@ To get some of the styles to display, you have to add the `nui` css class to the
 </html>
 ```
 
-<br>
-
 #### Styles
 
-###### Configuration
+##### Configuration
 
 To add styling for Bits, you need to modify angular.json corresponding to the targeted project with the following additions:
 
 1. Add the styles path to stylePreprocessorOptions.includePaths:
 
-```json
- "architect": {
-    "build": {
-      "builder": "@angular-devkit/build-angular:browser",
-      "options": {
-        "stylePreprocessorOptions": {
-         "includePaths": [
-              "./node_modules/@nova-ui/bits/sdk/less"
-          ]
-        },
-        ...
-     }
+    ```json
+    "architect": {
+        "build": {
+            "builder": "@angular-devkit/build-angular:browser",
+            "options": {
+                "stylePreprocessorOptions": {
+                "includePaths": [
+                    "./node_modules/@nova-ui/bits/sdk/less"
+                ]
+                },
+                ...
+            }
+        }
     }
- }
-```
+    ```
 
 2. Add the styles path to the source paths:
 
-```json
-"architect": {
-   "build": {
-      "options": {
-          "styles": [
-             "./node_modules/@nova-ui/bits/bundles/css/styles.css"
-             ...
-          ],
-          ...
-       }
-   }
-}
-```
+    ```json
+    "architect": {
+        "build": {
+            "options": {
+                "styles": [
+                    "./node_modules/@nova-ui/bits/bundles/css/styles.css"
+                    ...
+                ],
+                ...
+            }
+        }
+    }
+    ```
 
 **FYI - Bits does not use the Bootstrap component library nor does it include custom fonts.**
 
 ###### Naming Convention
 
 We recommend the [BEM](http://getbem.com/) naming convention for your css/less variable names, but you're free to use whatever convention you prefer.
-<br>
 
 #### Typescript Compiler Options
-
-Information about this can be found [here](../../README.md#Typescript-Compiler-Options).
-<br>
 
 ## Schematics
 
@@ -221,11 +205,9 @@ Nova Bits offers the following [schematics](https://nova-ui.solarwinds.io/bits/r
 schematic provides the ability to create a generic filtered view that can cover many use cases for filtering a set of data. Its main responsibility is to integrate a filter group panel with a list or table view that displays the filtered data. More details can be found [here](https://solarwinds.sharepoint.com/portals/hub/_layouts/15/PointPublishing.aspx?app=video&p=p&chid=8511af43-214a-435d-a605-dbe722ca04a0&vid=a5dbbef3-3582-49bf-b537-f789f946d09f)
 To add a filtered view to your project, run the following command:
 
-```
+```bash
 ng generate @nova-ui/bits:filtered-view --name=custom-name-for-filtered-view
 ```
-
-<br>
 
 #### Filtered Group
 
@@ -237,8 +219,6 @@ This code can be generated using the following command:
 ng generate @nova-ui/bits:filter-group --name=basic-filter-group --p=app
 ```
 
-<br>
-
 #### List
 
 [The List](https://nova-ui.solarwinds.io/bits/release_v12.x/additional-documentation/schematics/list.html) schematic provides the
@@ -248,8 +228,6 @@ This code can be generated using the following command:
 ```
 ng g @nova-ui/bits:list --name=basic-list --p=app
 ```
-
-<br>
 
 ## What are Atoms?
 
@@ -261,9 +239,7 @@ Bits atoms can be imported from here: `@nova-ui/bits/sdk/atoms`.
 Nova Nui supports AoT. For a primer on AoT, you can go [here](https://angular-2-training-book.rangle.io/handout/aot/) or for
 a more detailed overview you can go [here](https://angular.io/guide/aot-compiler).
 
-<br><br>
-
-# Additional Information
+## Additional Information
 
 ### Supported browsers
 
@@ -273,7 +249,6 @@ Nova formally supports the following browsers. Support for IE11 has been dropped
 2. Firefox
 3. Edge
 4. Safari
-   <br>
 
 ### Date pipe Safari issue
 

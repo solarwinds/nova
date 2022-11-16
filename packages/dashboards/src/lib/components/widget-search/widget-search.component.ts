@@ -54,7 +54,7 @@ export class WidgetSearchComponent implements OnInit, OnDestroy, OnChanges {
     public enabled: boolean = false;
 
     public searchTerm$ = new Subject<string>();
-    public onDestroy$ = new Subject<void>();
+    public readonly destroy$ = new Subject<void>();
     private searchTermSubscription: Subscription;
 
     constructor(
@@ -70,31 +70,31 @@ export class WidgetSearchComponent implements OnInit, OnDestroy, OnChanges {
         this.handleSearchTermSubscription(this.configuration?.searchOnKeyUp);
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.configuration) {
             const searchCfg = changes.configuration.currentValue;
             this.handleSearchTermSubscription(searchCfg.searchOnKeyUp);
         }
     }
 
-    public onSearchInputChanged(searchTerm: string) {
+    public onSearchInputChanged(searchTerm: string): void {
         if (this.configuration?.searchOnKeyUp?.enabled) {
             this.searchValue = searchTerm;
             this.searchTerm$.next(searchTerm);
         }
     }
 
-    public onSearch(searchTerm: string) {
+    public onSearch(searchTerm: string): void {
         this.searchValue = searchTerm;
         this.searchTerm$.next(searchTerm);
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.eventBus.getStream(WIDGET_SEARCH).next({
             payload: "",
         });
-        this.onDestroy$.next();
-        this.onDestroy$.complete();
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     private registerFilters() {
@@ -115,14 +115,14 @@ export class WidgetSearchComponent implements OnInit, OnDestroy, OnChanges {
         this.searchTermSubscription?.unsubscribe();
         this.searchTermSubscription = this.searchTerm$
             .pipe(
-                takeUntil(this.onDestroy$),
+                takeUntil(this.destroy$),
                 debounceTime(
                     searchOnKeyUpCfg?.debounceTime ||
                         WidgetSearchComponent.defaultSearchDebounce
                 )
             )
             .subscribe((searchTerm) => {
-                this.eventBus.getStream(REFRESH).next(undefined);
+                this.eventBus.getStream(REFRESH).next({});
                 this.eventBus.getStream(WIDGET_SEARCH).next({
                     payload: searchTerm,
                 });

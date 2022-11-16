@@ -27,10 +27,12 @@ import { Component } from "@angular/core";
 })
 export class MenuCustomItemExampleComponent {
     public checked: boolean = false;
-    public doNotClosePopup(event: Event) {
+
+    public doNotClosePopup(event: Event): void {
         event.stopPropagation();
     }
-    public switchClick(event: Event) {
+
+    public switchClick(event: Event): void {
         this.doNotClosePopup(event);
         this.checked = !this.checked;
         console.log(`Switch is ${this.checked}`);

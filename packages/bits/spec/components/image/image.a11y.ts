@@ -33,6 +33,6 @@ describe("a11y: image", () => {
     });
 
     it("should check a11y of images", async () => {
-        await assertA11y(browser, ImageAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, ImageAtom, rulesToDisable);
     });
 });

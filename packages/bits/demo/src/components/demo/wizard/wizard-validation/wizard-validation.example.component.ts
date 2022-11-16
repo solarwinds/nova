@@ -33,7 +33,7 @@ export class WizardValidationExampleComponent implements OnInit {
     public secondStepForm: FormGroup;
 
     constructor(private formBuilder: FormBuilder) {}
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
             name: this.formBuilder.control("", Validators.required),
             email: this.formBuilder.control("", [
@@ -51,7 +51,7 @@ export class WizardValidationExampleComponent implements OnInit {
         });
     }
 
-    public updateValidity() {
+    public updateValidity(): void {
         this.secondStepForm.get("formCheckbox")?.updateValueAndValidity();
     }
 }

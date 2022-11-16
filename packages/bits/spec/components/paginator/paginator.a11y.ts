@@ -31,6 +31,6 @@ describe("a11y: paginator", () => {
     });
 
     it("should check a11y of paginator", async () => {
-        await assertA11y(browser, PaginatorAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, PaginatorAtom, rulesToDisable);
     });
 });

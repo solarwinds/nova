@@ -28,7 +28,7 @@ import { Component } from "@angular/core";
 export class BusyProgressExampleComponent {
     public busy: boolean;
 
-    public switchBusy() {
+    public switchBusy(): void {
         this.busy = !this.busy;
     }
 }

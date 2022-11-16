@@ -72,12 +72,12 @@ export abstract class BaseLayout
         }
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroyed$.next();
         this.destroyed$.complete();
     }
 
-    public trackByFn(index: number, node: IComponentConfiguration) {
+    public trackByFn(index: number, node: IComponentConfiguration): string {
         return node.id;
     }
 

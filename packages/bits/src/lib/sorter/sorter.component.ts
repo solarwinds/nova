@@ -33,7 +33,6 @@ import {
     SimpleChanges,
     ViewChild,
     ViewEncapsulation,
-    forwardRef,
 } from "@angular/core";
 import _assign from "lodash/assign";
 import _isEqual from "lodash/isEqual";
@@ -117,11 +116,11 @@ export class SorterComponent
         private renderer: Renderer2
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.onAppendToBodyChange(this.appendToBody);
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (
             changes.itemsSource &&
             !_isEqual(
@@ -179,7 +178,7 @@ export class SorterComponent
         }
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.initSelectedItem();
         this.initSortDirection();
 
@@ -204,7 +203,7 @@ export class SorterComponent
         );
     }
 
-    public select(item: IMenuItem) {
+    public select(item: IMenuItem): void {
         // perform update only if the new value actually changes
         if (this.selectedItem !== item.value) {
             const oldValue = this.sortConfig;
@@ -255,7 +254,7 @@ export class SorterComponent
         };
     }
 
-    public updateOverlayWidth() {
+    public updateOverlayWidth(): void {
         this.overlayConfig.minWidth = (
             this.toggleRef.nativeElement as HTMLElement
         ).offsetWidth;
@@ -267,7 +266,7 @@ export class SorterComponent
             : `${this.getSelectedItemTitle()}. Sorter direction - ascending`;
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.menuKeyControlListeners.forEach((listener) => listener());
         this.onDestroy$.next();
         this.onDestroy$.complete();
@@ -292,7 +291,7 @@ export class SorterComponent
                 : (firstItem as IMenuItem).value;
     }
 
-    private initPopupItems() {
+    private initPopupItems(): void {
         this.items[0].itemsSource = (this.itemsSource as any[]).map(
             (item: string | IMenuItem) => {
                 const menuItem: IMenuItem =
@@ -317,7 +316,7 @@ export class SorterComponent
         });
     }
 
-    private triggerSorterAction(oldValue: ISortedItem) {
+    private triggerSorterAction(oldValue: ISortedItem): void {
         this.sorterAction.emit({ newValue: this.sortConfig, oldValue });
     }
 

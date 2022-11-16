@@ -34,6 +34,7 @@ import {
     filter,
     map,
     pluck,
+    // eslint-disable-next-line import/no-deprecated
     startWith,
     takeUntil,
     tap,
@@ -61,7 +62,7 @@ export class TableColumnsConverterService
         super(eventBus, previewService, pizzagnaService);
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         super.ngAfterViewInit();
     }
 
@@ -150,6 +151,7 @@ export class TableColumnsConverterService
             .get("columnsOutput")
             ?.valueChanges.pipe(
                 // trigger subscription after tableColumnsFormArray is filled with values
+                // eslint-disable-next-line import/no-deprecated
                 startWith(this.component.form.get("columnsOutput").value),
                 filter((columns: IItemConfiguration[]) => columns.length > 0),
                 tap(() => this.handleWidthValidation()),

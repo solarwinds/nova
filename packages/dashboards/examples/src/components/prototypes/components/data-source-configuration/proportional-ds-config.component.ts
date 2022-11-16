@@ -71,7 +71,7 @@ export class AcmeProportionalDSConfigComponent
     // used by the Broadcaster
     public dsOutput = new ReplaySubject<any>(1);
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         public changeDetector: ChangeDetectorRef,
@@ -115,17 +115,17 @@ export class AcmeProportionalDSConfigComponent
         }
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    public onDataSourceChange(providerId: string) {
+    public onDataSourceChange(providerId: string): void {
         this.eventBus.next(DATA_SOURCE_CHANGE, {});
         this.invokeDataSource(providerId);
     }
 
-    public invokeDataSource(providerId: string) {
+    public invokeDataSource(providerId: string): void {
         if (!providerId) {
             return;
         }

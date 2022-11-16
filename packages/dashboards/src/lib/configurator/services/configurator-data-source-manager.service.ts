@@ -95,7 +95,7 @@ export class ConfiguratorDataSourceManagerService implements OnDestroy {
             });
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }

@@ -143,7 +143,7 @@ export class AcmeKpiDataSource2
         }
     }
 
-    public updateConfiguration(properties: any) {
+    public updateConfiguration(properties: any): void {
         this.properties = properties;
     }
 

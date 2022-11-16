@@ -29,6 +29,7 @@ import {
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import { Apollo, gql } from "apollo-angular";
 import { BehaviorSubject, Observable, of, Subject } from "rxjs";
+// eslint-disable-next-line import/no-deprecated
 import { finalize, map, switchMap, tap } from "rxjs/operators";
 
 import {
@@ -96,6 +97,7 @@ export class DrilldownDataSource
         ).next(this.dataFields);
 
         this.applyFilters$
+            // eslint-disable-next-line import/no-deprecated
             .pipe(switchMap((filters) => this.getData(filters)))
             .subscribe(async (res) => {
                 this.outputsSubject.next(await this.getFilteredData(res));
@@ -110,8 +112,6 @@ export class DrilldownDataSource
         return of(data)
             .pipe(
                 map((entries) => {
-                    let widgetInput, mapIconsToEntries;
-
                     if (this.isDrillDown()) {
                         const activeDrillLvl = this.drillState.length;
                         const group = this.groupBy[activeDrillLvl];
@@ -127,13 +127,13 @@ export class DrilldownDataSource
                         return lastGroupedValue;
                     }
 
-                    mapIconsToEntries = entries.map((item: any) => ({
+                    const mapIconsToEntries = entries.map((item: any) => ({
                         ...item,
                         icon: "virtual-host",
                         icon_status: IconStatus.Up,
                     }));
                     this.groupedDataHistory.push(mapIconsToEntries);
-                    widgetInput = this.getOutput(entries);
+                    const widgetInput = this.getOutput(entries);
 
                     return widgetInput;
                 })
@@ -300,7 +300,7 @@ export class DrilldownMultiRequestWidgetExampleComponent implements OnInit {
     }
 
     /** Used for restoring widgets state */
-    public reInitializeDashboard() {
+    public reInitializeDashboard(): void {
         // destroys the components and their providers so the dashboard can re init data
         this.dashboard = undefined;
         this.changeDetectorRef.detectChanges();

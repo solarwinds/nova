@@ -53,7 +53,7 @@ export class ConfiguratorAtom extends Atom {
         return section?.getAccordionByLabel(accordionLabel);
     }
 
-    public getResetColumnsButton() {
+    public getResetColumnsButton(): ElementFinder {
         return this.root.element(by.id("table-widget-reset-indicator-btn"));
     }
     public async getSectionByHeaderText(

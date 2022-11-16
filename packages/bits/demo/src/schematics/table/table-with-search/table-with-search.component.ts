@@ -78,7 +78,7 @@ export class TableWithSearchComponent
     @ViewChild(SearchComponent) search: SearchComponent;
     @ViewChild(PaginatorComponent) paginator: PaginatorComponent;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         @Inject(DataSourceService)
@@ -86,7 +86,7 @@ export class TableWithSearchComponent
         private changeDetection: ChangeDetectorRef
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource.busy
             .pipe(
                 tap((val) => {
@@ -98,7 +98,7 @@ export class TableWithSearchComponent
             .subscribe();
     }
 
-    public async ngAfterViewInit() {
+    public async ngAfterViewInit(): Promise<void> {
         this.dataSource.registerComponent({
             search: { componentInstance: this.search },
             paginator: { componentInstance: this.paginator },
@@ -128,24 +128,24 @@ export class TableWithSearchComponent
         await this.applyFilters();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    public async onSearch() {
+    public async onSearch(): Promise<void> {
         await this.applyFilters();
     }
 
-    public async onSearchCancel() {
+    public async onSearchCancel(): Promise<void> {
         await this.applyFilters();
     }
 
-    public async changePagination($event: any) {
+    public async changePagination($event: any): Promise<void> {
         await this.applyFilters();
     }
 
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         await this.dataSource.applyFilters();
     }
 }

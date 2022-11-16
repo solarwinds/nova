@@ -19,10 +19,13 @@
 //  THE SOFTWARE.
 
 import { Inject, Optional } from "@angular/core";
+// eslint-disable-next-line import/no-deprecated
 import { merge, Observable, zip } from "rxjs";
 import {
     debounceTime,
+    map,
     startWith,
+    // eslint-disable-next-line import/no-deprecated
     switchMap,
     takeUntil,
     tap,
@@ -62,7 +65,7 @@ export class TableDataSourceAdapter<
         super(eventBus, dataSource, pizzagnaService);
     }
 
-    protected setupRefreshListener() {
+    protected setupRefreshListener(): void {
         // Note: We should wait until TableWidget is ready to be able to proceed with reset event
         // We can also listen after SCROLL_NEXT_PAGE instead of WIDGET_READY because right now
         // they are executed simultaneously but we don't know how things will change in the future
@@ -71,12 +74,16 @@ export class TableDataSourceAdapter<
             this.eventBus.getStream(REFRESH)
         ).pipe(
             // Note: Using startWith() to re-trigger the REFRESH stream that was triggered at least on time before WIDGET_READY
+            // eslint-disable-next-line import/no-deprecated
             switchMap(() =>
+                // eslint-disable-next-line import/no-deprecated
                 this.eventBus.getStream(REFRESH).pipe(startWith(undefined))
             ),
-            tap(() => this.virtualViewport.reset({ emitFirstPage: false }))
+            tap(() => this.virtualViewport.reset({ emitFirstPage: false })),
+            map(() => {})
         );
 
+        // eslint-disable-next-line import/no-deprecated
         merge(refresh$, this.eventBus.getStream(SCROLL_NEXT_PAGE))
             .pipe(
                 // Note: While SCROLL_NEXT_PAGE is triggered on TableWidget initialization aka WIDGET_READY
@@ -89,13 +96,13 @@ export class TableDataSourceAdapter<
             .subscribe();
     }
 
-    protected updateAdapterProperties(properties: IProperties) {
+    protected updateAdapterProperties(properties: IProperties): void {
         this.dataPath = properties.dataPath;
         this.dataFieldsPath = properties.dataFieldsPath;
         this.totalItemsPath = properties.totalItemsPath;
     }
 
-    protected updateOutput(output: IFilteringOutputs | undefined) {
+    protected updateOutput(output: IFilteringOutputs | undefined): void {
         const total = output?.paginator?.total;
         const items = output?.repeat?.itemsSource;
         const dataFields = output?.dataFields;

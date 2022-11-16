@@ -30,7 +30,7 @@ export class PopoverDisabledExampleComponent {
 
     constructor() {}
 
-    changeStatus() {
+    changeStatus(): void {
         this.disabled = !this.disabled;
         this.buttonName = this.disabled
             ? $localize`Enable`

@@ -34,7 +34,7 @@ export class AccordionAtom extends Atom {
 
     private expander = Atom.findIn(ExpanderAtom, this.root);
 
-    public toggle = async () => {
+    public toggle = async (): Promise<void> => {
         await this.expander.toggle();
     };
 

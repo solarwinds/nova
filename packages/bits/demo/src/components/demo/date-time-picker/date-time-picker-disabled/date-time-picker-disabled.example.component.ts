@@ -28,12 +28,13 @@ import moment, { Moment } from "moment/moment";
 export class DateTimePickerDisabledExampleComponent {
     public dt: Moment;
     public selectedDate: Date;
+
     constructor() {
         this.dt = moment();
         this.selectedDate = new Date(this.dt.valueOf());
     }
 
-    onModelChanged(event: any) {
+    public onModelChanged(event: any): void {
         this.selectedDate = new Date(event.valueOf());
     }
 }

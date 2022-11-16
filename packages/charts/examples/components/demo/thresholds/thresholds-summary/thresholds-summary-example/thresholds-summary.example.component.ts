@@ -28,7 +28,7 @@ import {
     Chart,
     ChartAssist,
     ChartPalette,
-    CHART_PALETTE_CS_S,
+    CHART_PALETTE_CS_S_EXTENDED,
     getAutomaticDomainWithIncludedInterval,
     IAccessors,
     IChartAssistSeries,
@@ -68,7 +68,7 @@ export class ThresholdsSummaryExampleComponent implements OnInit {
 
     constructor(private thresholdsService: ThresholdsService) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         // When instantiating the charts, use the provided grid configuration functions for the main grid and summary grid
         const mainChart = new Chart(new XYGrid(thresholdsTopGridConfig()));
         const summaryChart = new Chart(
@@ -103,9 +103,9 @@ export class ThresholdsSummaryExampleComponent implements OnInit {
         this.thresholdsPalette = new ChartPalette(
             new MappedValueProvider(
                 {
-                    [Status.Error]: CHART_PALETTE_CS_S[1],
-                    [Status.Warning]: CHART_PALETTE_CS_S[2],
-                    [Status.Ok]: CHART_PALETTE_CS_S[4],
+                    [Status.Error]: CHART_PALETTE_CS_S_EXTENDED[2],
+                    [Status.Warning]: CHART_PALETTE_CS_S_EXTENDED[4],
+                    [Status.Ok]: CHART_PALETTE_CS_S_EXTENDED[8],
                 },
                 "transparent"
             )

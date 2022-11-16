@@ -122,7 +122,7 @@ export class SelectVisualTestComponent implements OnInit {
         ],
     };
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
             item: this.formBuilder.control(this.datasetBasic.selectedItem, [
                 Validators.required,
@@ -130,7 +130,7 @@ export class SelectVisualTestComponent implements OnInit {
         });
     }
 
-    public onSubmit() {
+    public onSubmit(): void {
         if (!this.myForm.valid) {
             // if form is invalid mark all controls as touched to trigger isInErrorState
             Object.keys(this.myForm.controls).forEach((field) => {
@@ -140,11 +140,11 @@ export class SelectVisualTestComponent implements OnInit {
         }
     }
 
-    public valueChange(changedEvent: ISelectChangedEvent<string>) {
+    public valueChange(changedEvent: ISelectChangedEvent<string>): void {
         this.datasetBasic.selectedItem = changedEvent.newValue;
     }
 
-    public isInErrorState() {
+    public isInErrorState(): boolean {
         return this.isRequired && !this.datasetBasic.selectedItem;
     }
 }

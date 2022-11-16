@@ -36,6 +36,6 @@ describe("a11y: table", () => {
     });
 
     it("should check a11y of table", async () => {
-        await assertA11y(browser, TableAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, TableAtom, rulesToDisable);
     });
 });

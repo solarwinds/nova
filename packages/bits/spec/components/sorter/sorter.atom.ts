@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { by, ElementArrayFinder, ElementFinder } from "protractor";
+import { browser, by, ElementArrayFinder, ElementFinder } from "protractor";
 
 import { Atom } from "../../atom";
 import { ButtonAtom } from "../button/button.atom";
@@ -26,13 +26,16 @@ import { MenuPopupAtom } from "../menu-popup/menu-popup.atom";
 import { OverlayAtom } from "../overlay/overlay.atom";
 
 export class SorterAtom extends Atom {
-    public static CSS_CLASS = "nui-sorter";
+    public static CSS_SELECTOR = "nui-sorter";
 
     public menuPopup: MenuPopupAtom = Atom.findIn(
         MenuPopupAtom,
-        this.getElement().element(by.className("nui-menu-popup"))
+        this.getElement()
     );
-    public click = async (): Promise<void> => this.getToggleElement().click();
+
+    public async click(): Promise<void> {
+        await this.getToggleElement().click();
+    }
 
     /**
      * Toggle sorter and select a new item from the options.
@@ -41,14 +44,17 @@ export class SorterAtom extends Atom {
         // Have to click (toggle the repeat) first because
         // you can't interact with hidden elements.
         await this.click();
-        return this.getItemByText(title);
+        await this.clickItemByText(title);
+        await browser.wait(async () => this.isPopupHidden());
     }
 
-    public getItemByIndex = (index: number): ElementFinder =>
-        this.getItems().get(index);
+    public getItemByIndex(index: number): ElementFinder {
+        return this.getItems().get(index);
+    }
 
-    public getNumberOfItems = async (): Promise<number> =>
-        this.getItems().count();
+    public async getNumberOfItems(): Promise<number> {
+        return this.getItems().count();
+    }
 
     public async getItemText(idx: number): Promise<string> {
         const item = this.getItemByIndex(idx);
@@ -57,8 +63,9 @@ export class SorterAtom extends Atom {
             .then((text: string) => text.trim());
     }
 
-    public getItemByText = async (title: string): Promise<void> =>
+    public async clickItemByText(title: string): Promise<void> {
         this.menuPopup.clickItemByText(title);
+    }
 
     public async getCaptionText(): Promise<string> {
         const item = this.getLabelElement();
@@ -78,20 +85,29 @@ export class SorterAtom extends Atom {
     /**
      * @returns {string} The value displayed in sorter.
      */
-    public getCurrentValue = async (): Promise<string> =>
-        await this.getMainTitleElement().getText();
+    public async getCurrentValue(): Promise<string> {
+        return await this.getMainTitleElement().getText();
+    }
 
     public getLabelElement(): ElementFinder {
         return super.getElement().element(by.className("nui-sorter__label"));
     }
 
-    public getItems = (): ElementArrayFinder => this.menuPopup.getItems();
+    public getItems(): ElementArrayFinder {
+        return this.menuPopup.getItems();
+    }
 
-    public getSelectedItems = (): ElementArrayFinder =>
-        this.menuPopup.getSelectedItems();
+    public getSelectedItems(): ElementArrayFinder {
+        return this.menuPopup.getSelectedItems();
+    }
 
-    public isPopupDisplayed = async () =>
-        Atom.findIn(OverlayAtom, this.getElement()).isOpened();
+    public async isPopupDisplayed(): Promise<boolean> {
+        return Atom.findIn(OverlayAtom, this.getElement()).isOpened();
+    }
+
+    public async isPopupHidden(): Promise<boolean> {
+        return !(await this.isPopupDisplayed());
+    }
 
     // private helpers
     private getToggleElement(): ElementFinder {

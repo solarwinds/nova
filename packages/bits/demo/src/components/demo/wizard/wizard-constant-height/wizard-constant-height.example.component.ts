@@ -27,11 +27,11 @@ import { Component } from "@angular/core";
 export class WizardConstantHeightExampleComponent {
     public wizardBodyHeight: string = "200px";
 
-    public increaseHeight() {
+    public increaseHeight(): void {
         this.wizardBodyHeight = `${parseInt(this.wizardBodyHeight, 10) + 20}px`;
     }
 
-    public decreaseHeight() {
+    public decreaseHeight(): void {
         this.wizardBodyHeight = `${parseInt(this.wizardBodyHeight, 10) - 20}px`;
     }
 }

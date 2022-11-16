@@ -33,7 +33,7 @@ export class DatePickerReactiveFormExampleComponent {
 
     constructor() {}
 
-    onValueChange(event: Moment) {
+    onValueChange(event: Moment): void {
         this.selectedDate = new Date(event.valueOf());
     }
 }

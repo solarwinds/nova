@@ -58,36 +58,30 @@ export class ComboboxV2Atom extends BaseSelectV2Atom {
         return this.removeAllButton.click();
     }
 
-    public async removeChips(amount: number) {
-        await this.chips.each(async (chip?: ElementFinder, i?: number) => {
+    public async removeChips(amount: number): Promise<void> {
+        this.chips.each(async (chip?: ElementFinder, i?: number) => {
             if (!chip || isNil(i)) {
                 throw new Error("chip is not defined");
             }
             if (amount > i) {
                 await Atom.findIn(IconAtom, chip).getElement().click();
             }
-            return;
         });
     }
 
-    public async selectAll() {
-        let i: number = await this.countOptions();
+    public async selectAll(): Promise<void> {
+        await this.selectFirst(await this.countOptions());
+    }
 
-        while (i > 0) {
-            await (await this.getOption(i - 1)).click();
-            i--;
+    public async selectFirst(numberOfItems?: number): Promise<void> {
+        let index = numberOfItems || 1;
+        while (index > 0) {
+            index--;
+            await (await this.getOption(index)).click();
         }
     }
 
-    public async selectFirst(numberOfItems?: number) {
-        let items = numberOfItems || 1;
-        while (items > 0) {
-            await (await this.getOption(items)).click();
-            items--;
-        }
-    }
-
-    public async getInputValue(): Promise<any> {
+    public async getInputValue(): Promise<string> {
         return this.input.getAttribute("value");
     }
 

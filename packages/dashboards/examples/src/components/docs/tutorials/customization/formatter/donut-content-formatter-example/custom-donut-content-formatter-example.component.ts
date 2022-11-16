@@ -118,7 +118,7 @@ export class CustomDonutContentFormatterComponent
     // Units which user can select from the configuration
     public units: Units = Units.Days;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(public changeDetector: ChangeDetectorRef) {}
 

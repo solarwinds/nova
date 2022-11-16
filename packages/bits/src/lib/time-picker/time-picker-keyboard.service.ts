@@ -21,7 +21,7 @@
 import { ActiveDescendantKeyManager } from "@angular/cdk/a11y";
 import { Injectable } from "@angular/core";
 
-import { KEYBOARD_CODE } from "../../constants";
+import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import { MenuItemBaseComponent, MenuPopupComponent } from "../menu";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
 

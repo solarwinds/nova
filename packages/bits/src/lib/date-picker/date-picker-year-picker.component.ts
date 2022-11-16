@@ -36,7 +36,7 @@ export class YearPickerComponent implements OnInit {
         this.datePicker = datePicker;
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.datePicker.stepYear = { years: this.datePicker.yearRange };
 
         this.datePicker.setRefreshViewHandler((): void => {

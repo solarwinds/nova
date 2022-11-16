@@ -34,7 +34,7 @@ export class SearchFeatureAddonService {
 
     private searchDebounceTime = 500;
 
-    public initWidget(widget: TableWidgetComponent) {
+    public initWidget(widget: TableWidgetComponent): void {
         this.widget = widget;
         this.initSearch();
     }
@@ -117,7 +117,7 @@ export class SearchFeatureAddonService {
                     },
                     this.widget.searchValue
                 );
-                this.widget.eventBus.getStream(REFRESH).next(undefined);
+                this.widget.eventBus.getStream(REFRESH).next({});
             });
     }
 }

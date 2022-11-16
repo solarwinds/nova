@@ -59,7 +59,7 @@ export class TimeseriesTileDescriptionConfigurationComponent
         public changeDetector: ChangeDetectorRef
     ) {}
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.form = this.formBuilder.group({
             label: [this.label, Validators.required],
         });
@@ -67,7 +67,7 @@ export class TimeseriesTileDescriptionConfigurationComponent
         this.formReady.emit(this.form);
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.label) {
             const value = changes.label.currentValue;
             if (value) {
@@ -76,7 +76,7 @@ export class TimeseriesTileDescriptionConfigurationComponent
         }
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.formDestroy.emit(this.form);
     }
 }

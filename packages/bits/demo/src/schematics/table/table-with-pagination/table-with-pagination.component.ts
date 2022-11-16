@@ -86,7 +86,7 @@ export class TableWithPaginationComponent
     @ViewChild(SearchComponent) search: SearchComponent;
     @ViewChild(PaginatorComponent) paginator: PaginatorComponent;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         @Inject(DataSourceService)
@@ -94,7 +94,7 @@ export class TableWithPaginationComponent
         private changeDetection: ChangeDetectorRef
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource.busy
             .pipe(
                 tap((val) => {
@@ -106,7 +106,7 @@ export class TableWithPaginationComponent
             .subscribe();
     }
 
-    public async ngAfterViewInit() {
+    public async ngAfterViewInit(): Promise<void> {
         // register filter to be able to sort
         this.dataSource.registerComponent(this.table.getFilterComponents());
         this.dataSource.registerComponent({
@@ -138,29 +138,29 @@ export class TableWithPaginationComponent
         await this.applyFilters();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    public async onSearch() {
+    public async onSearch(): Promise<void> {
         await this.applyFilters();
     }
 
-    public async onSearchCancel() {
+    public async onSearchCancel(): Promise<void> {
         await this.applyFilters();
     }
 
-    public async sortData(sortedColumn: ISortedItem) {
+    public async sortData(sortedColumn: ISortedItem): Promise<void> {
         this.sortedColumn = sortedColumn;
         await this.applyFilters();
     }
 
-    public async changePagination($event: any) {
+    public async changePagination($event: any): Promise<void> {
         await this.applyFilters();
     }
 
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         await this.dataSource.applyFilters();
     }
 }

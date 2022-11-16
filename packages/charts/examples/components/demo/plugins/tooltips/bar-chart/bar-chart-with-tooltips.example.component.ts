@@ -42,7 +42,7 @@ export class BarChartWithTooltipsExampleComponent implements OnInit {
     public chartAssist = new ChartAssist(new Chart(this.grid));
     public tooltipsPlugin = new BarTooltipsPlugin();
 
-    ngOnInit() {
+    public ngOnInit(): void {
         // plugin setup (absence of InteractionLinePlugin setup will result in no interaction line)
         this.chartAssist.chart.addPlugin(new InteractionLabelPlugin());
         this.chartAssist.chart.addPlugin(this.tooltipsPlugin);

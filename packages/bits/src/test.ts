@@ -22,7 +22,6 @@
 
 import "zone.js"; // this needs to be first
 import "zone.js/testing"; // this needs to be second
-// eslint-disable-next-line
 import { getTestBed } from "@angular/core/testing";
 import {
     BrowserDynamicTestingModule,

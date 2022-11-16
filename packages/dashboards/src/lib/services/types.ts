@@ -19,11 +19,14 @@
 //  THE SOFTWARE.
 
 import { StaticProvider } from "@angular/core";
+import { GridsterItem } from "angular-gridster2";
 import { BehaviorSubject, ReplaySubject } from "rxjs";
 
 import { EventDefinition, IEvent, IEventDefinition } from "@nova-ui/bits";
 
+import { IInteractionPayload } from "../components/providers/interaction/interaction-handler";
 import { IDataSourceBusyPayload } from "../components/providers/types";
+import { ISerializableTimeframe } from "../types";
 
 export const DEFAULT_PIZZAGNA_ROOT = "/";
 
@@ -47,32 +50,50 @@ export interface IRegistryAddOptions {
 export interface IAddFormattersOptions
     extends Pick<IRegistryAddOptions, "overrideExisting"> {}
 
-export const REFRESH = new EventDefinition("REFRESH");
-export const SCROLL_NEXT_PAGE = new EventDefinition("SCROLL_NEXT_PAGE");
-export const WIDGET_REMOVE = new EventDefinition("WIDGET_REMOVE");
-export const WIDGET_EDIT = new EventDefinition("WIDGET_EDIT");
-export const WIDGET_CREATE = new EventDefinition("WIDGET_CREATE");
-export const WIDGET_READY = new EventDefinition("WIDGET_READY");
-export const WIDGET_RESIZE = new EventDefinition("WIDGET_RESIZE");
-export const WIDGET_POSITION_CHANGE = new EventDefinition(
+export interface IWidgetResizePayload {
+    widgetId: number;
+    height: number;
+    width: number;
+}
+
+export const REFRESH = new EventDefinition<void>("REFRESH");
+export const SCROLL_NEXT_PAGE = new EventDefinition<void>("SCROLL_NEXT_PAGE");
+export const WIDGET_REMOVE = new EventDefinition<void>("WIDGET_REMOVE");
+export const WIDGET_EDIT = new EventDefinition<void>("WIDGET_EDIT");
+export const WIDGET_CREATE = new EventDefinition<void>("WIDGET_CREATE");
+export const WIDGET_READY = new EventDefinition<void>("WIDGET_READY");
+export const WIDGET_RESIZE = new EventDefinition<IWidgetResizePayload>(
+    "WIDGET_RESIZE"
+);
+export const WIDGET_POSITION_CHANGE = new EventDefinition<GridsterItem>(
     "WIDGET_POSITION_CHANGE"
 );
-export const WIDGET_SEARCH = new EventDefinition(
+export const WIDGET_SEARCH = new EventDefinition<string>(
     "WIDGET_SEARCH",
     () => new BehaviorSubject<IEvent>({ payload: "" })
 );
-export const SET_PROPERTY_VALUE = new EventDefinition("SET_PROPERTY_VALUE");
-export const SET_TIMEFRAME = new EventDefinition("SET_TIMEFRAME");
-export const PREVIEW_EVENT = new EventDefinition("PREVIEW_EVENT");
+export const SET_PROPERTY_VALUE = new EventDefinition<ISetPropertyPayload>(
+    "SET_PROPERTY_VALUE"
+);
+export const SET_TIMEFRAME = new EventDefinition<ISerializableTimeframe>(
+    "SET_TIMEFRAME"
+);
+export const PREVIEW_EVENT = new EventDefinition<IPreviewEventPayload>(
+    "PREVIEW_EVENT"
+);
 export const DATA_SOURCE_BUSY = new EventDefinition<IDataSourceBusyPayload>(
     "DATA_SOURCE_BUSY"
 );
-export const DASHBOARD_EDIT_MODE = new EventDefinition(
+export const DASHBOARD_EDIT_MODE = new EventDefinition<boolean>(
     "DASHBOARD_EDIT_MODE",
     () => new ReplaySubject<IEvent>(1)
 );
-export const INTERACTION = new EventDefinition("INTERACTION");
-export const DATA_SOURCE_INVOKED = new EventDefinition("DATA_SOURCE_INVOKED");
+export const INTERACTION = new EventDefinition<IInteractionPayload<any>>(
+    "INTERACTION"
+);
+export const DATA_SOURCE_INVOKED = new EventDefinition<void>(
+    "DATA_SOURCE_INVOKED"
+);
 export const DRILLDOWN = new EventDefinition("DRILLDOWN");
 
 export const NOVA_DATASOURCE_INTERVAL_REFRESHER =

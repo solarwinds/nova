@@ -47,7 +47,7 @@ export class DonutChartWithContentExampleComponent implements OnInit {
     public contentPlugin: ChartDonutContentPlugin;
     public series: any[];
 
-    ngOnInit() {
+    public ngOnInit(): void {
         // Instantiate the charts and chart assists
         this.chartAssist1 = new ChartAssist(new Chart(radialGrid()), radial);
         this.chartAssist2 = new ChartAssist(new Chart(radialGrid()), radial);
@@ -86,8 +86,8 @@ export class DonutChartWithContentExampleComponent implements OnInit {
         );
     }
 
-    public value = (s: IExampleSeries) => s.data[0];
-    public name = (s: IExampleSeries) => s.name;
+    public value = (s: IExampleSeries): number => s.data[0];
+    public name = (s: IExampleSeries): string => s.name;
 }
 
 /* Chart data */

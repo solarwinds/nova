@@ -29,7 +29,7 @@ import {
 } from "@angular/core";
 import debounce from "lodash/debounce";
 
-import { RESIZE_DEBOUNCE_TIME } from "../../../constants/index";
+import { RESIZE_DEBOUNCE_TIME } from "../../../constants/resize.constants";
 
 /**
  * @ignore
@@ -67,7 +67,7 @@ export class ResizeObserverDirective implements OnDestroy, AfterViewInit {
         });
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         if (this.resizeObserver) {
             this.resizeObserver.unobserve(<Element>this._element.nativeElement);
         }

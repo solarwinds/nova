@@ -80,7 +80,7 @@ export class TabHeadingGroupHorizontalWithIconsOnlyExampleComponent {
 
     constructor(private changeDetector: ChangeDetectorRef) {}
 
-    public updateContent(tabId: string) {
+    public updateContent(tabId: string): void {
         this.currentTabId = tabId;
         this.changeDetector.detectChanges();
     }

@@ -108,7 +108,7 @@ export class DashwizStepComponent
 
     constructor() {}
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.nextText = this.nextText || $localize`Next`;
     }
 

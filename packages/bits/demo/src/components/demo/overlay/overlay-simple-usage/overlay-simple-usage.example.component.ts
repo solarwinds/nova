@@ -29,11 +29,11 @@ import { OverlayComponent } from "@nova-ui/bits";
     templateUrl: "./overlay-simple-usage.example.component.html",
 })
 export class OverlaySimpleExampleComponent implements AfterViewInit {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.overlay.clickOutside
             .pipe(takeUntil(this.destroy$))
             .subscribe((_) => this.overlay.hide());

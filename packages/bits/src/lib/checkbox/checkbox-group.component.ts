@@ -143,11 +143,11 @@ export class CheckboxGroupComponent
         );
     }
 
-    public onChange(value: any[]) {}
+    public onChange(value: any[]): void {}
 
-    public onTouched() {}
+    public onTouched(): void {}
 
-    public writeValue(value: any) {
+    public writeValue(value: any): void {
         this.values = value;
     }
 

@@ -57,7 +57,7 @@ export class PopoverPositionService {
         panelClass: string | string[],
         elRefHeight: number,
         overlayRefElement: HTMLElement
-    ) {
+    ): void {
         const ARROW_SIZE = OVERLAY_ARROW_SIZE;
         const popoverOffsetY = this.calculateOffsetY(elRefHeight);
 

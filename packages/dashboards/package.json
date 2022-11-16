@@ -119,6 +119,7 @@
   "schematics": "./sdk/schematics/collection.json",
   "scripts": {
     "assemble": "run-s prettier-check lint build-lib:locl build-lib:prod compodoc build-examples:prod build-schematics",
+    "assemble-dev": "run-s build-lib:prod",
     "build-examples": "ng b examples",
     "build-examples:prod": "yarn run build-examples -c production",
     "build-examples:watch": "yarn run build-examples -c dev",
@@ -161,8 +162,8 @@
     "symunlink": "run-s symunlink:*",
     "symunlink:bits": "npx rimraf node_modules/@nova-ui/bits && yarn --check",
     "symunlink:charts": "npx rimraf node_modules/@nova-ui/charts && yarn --check",
-    "test": "ng t lib --watch=false --code-coverage",
-    "test:dev": "ng t",
+    "test": "ng t lib -c coverage",
+    "test:dev": "ng t lib -c dev",
     "visual": "npx start-server-and-test serve-examples:prod 4200 visual:base",
     "visual:base": "yarn run e2e:base --suite visual",
     "visual:ci": "yarn run e2e:ci --suite visual",

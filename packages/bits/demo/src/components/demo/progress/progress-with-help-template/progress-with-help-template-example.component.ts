@@ -29,7 +29,7 @@ export class ProgressWithHelpTemplateExampleComponent implements OnDestroy {
     public percent = 0;
     private intervalId?: NodeJS.Timeout;
 
-    public toggleProgress() {
+    public toggleProgress(): void {
         this.show = !this.show;
 
         if (!this.show) {
@@ -47,7 +47,7 @@ export class ProgressWithHelpTemplateExampleComponent implements OnDestroy {
         }
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.clearInterval();
     }
 

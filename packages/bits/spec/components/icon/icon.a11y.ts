@@ -33,6 +33,6 @@ describe("a11y: icon", () => {
     });
 
     it("should check a11y of icon", async () => {
-        await assertA11y(browser, IconAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, IconAtom, rulesToDisable);
     });
 });

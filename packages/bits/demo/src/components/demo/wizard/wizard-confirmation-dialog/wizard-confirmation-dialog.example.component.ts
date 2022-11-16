@@ -37,7 +37,7 @@ export class WizardConfirmationDialogExampleComponent {
     public openConfirmationDialog(
         $event: boolean,
         content: TemplateRef<string>
-    ) {
+    ): void {
         if ($event) {
             this.activeDialog = this.dialogService.open(content, {
                 size: "sm",
@@ -50,7 +50,7 @@ export class WizardConfirmationDialogExampleComponent {
         }
     }
 
-    public onButtonClick(title: string) {
+    public onButtonClick(title: string): void {
         title === "Leave" ? this.actionDone() : this.actionCanceled();
         this.activeDialog.close();
     }

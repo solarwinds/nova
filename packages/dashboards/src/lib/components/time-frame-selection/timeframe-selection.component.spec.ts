@@ -33,16 +33,20 @@ import {
     ITimeframe,
     TimeFrameBarComponent,
 } from "@nova-ui/bits";
-
-import { TimeframeSerializationService } from "../../configurator/services/timeframe-serialization.service";
-import { ISerializableTimeframe } from "../../configurator/services/types";
-import { NuiDashboardsModule } from "../../dashboards.module";
-import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
-import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
-import { ProviderRegistryService } from "../../services/provider-registry.service";
-import { REFRESH, SET_TIMEFRAME } from "../../services/types";
-import { DATA_SOURCE, PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../types";
-import { TimeframeSelectionComponent } from "./timeframe-selection.component";
+import {
+    DATA_SOURCE,
+    DynamicComponentCreator,
+    ISerializableTimeframe,
+    NuiDashboardsModule,
+    PIZZAGNA_EVENT_BUS,
+    PizzagnaLayer,
+    PizzagnaService,
+    ProviderRegistryService,
+    REFRESH,
+    SET_TIMEFRAME,
+    TimeframeSelectionComponent,
+    TimeframeSerializationService,
+} from "@nova-ui/dashboards";
 
 class MockDataSource implements IDataSource {
     public outputsSubject = new Subject<IFilteringOutputs>();
@@ -60,7 +64,7 @@ class MockDataSource implements IDataSource {
         this.filterParticipants = components;
     }
 
-    public deregisterComponent(componentKey: string) {
+    public deregisterComponent(componentKey: string): void {
         delete this.filterParticipants?.[componentKey];
     }
 }

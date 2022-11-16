@@ -20,15 +20,19 @@
 
 import sum from "lodash/sum";
 
-import { IProportionalAggregatorFn } from "./types";
+import {
+    IProportionalAggregatorFn,
+    IProportionalAggregatorOrigin,
+    IProportionalDonutContentAggregatorProperties,
+} from "./types";
 
 /**
  * Receives all the metrics from the donut and gets their sum.
  */
 export const sumAggregator: IProportionalAggregatorFn = (
-    origin,
-    properties?
-) => {
+    origin: IProportionalAggregatorOrigin,
+    properties?: IProportionalDonutContentAggregatorProperties
+): string => {
     const { activeMetricId } = properties || {};
 
     if (activeMetricId) {

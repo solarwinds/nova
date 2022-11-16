@@ -32,7 +32,7 @@ export class SelectV2SettingValueExampleComponent implements OnInit {
     );
     public selectControl: FormControl = new FormControl();
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.selectControl.setValue(this.items[1]);
     }
 }

@@ -20,7 +20,7 @@
 
 import { AriaDescriber, FocusMonitor } from "@angular/cdk/a11y";
 import { coerceBooleanProperty } from "@angular/cdk/coercion";
-import { ESCAPE, hasModifierKey } from "@angular/cdk/keycodes";
+import { hasModifierKey } from "@angular/cdk/keycodes";
 import {
     ComponentFactoryResolver,
     Directive,
@@ -33,6 +33,7 @@ import {
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
+import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import { OverlayPositionService } from "../overlay/overlay-position.service";
 import { OverlayPlacement } from "../overlay/types";
 import { TooltipPosition } from "./public-api";
@@ -77,7 +78,7 @@ export class TooltipDirective implements OnDestroy {
     get disabled(): boolean {
         return this._disabled;
     }
-    set disabled(value) {
+    set disabled(value: boolean) {
         this._disabled = coerceBooleanProperty(value);
 
         // If tooltip is disabled, hide immediately.
@@ -90,7 +91,7 @@ export class TooltipDirective implements OnDestroy {
 
     /** The message to be displayed in the tooltip */
     @Input("nuiTooltip")
-    get message() {
+    get message(): string {
         return this._message;
     }
     set message(value: string) {
@@ -160,7 +161,7 @@ export class TooltipDirective implements OnDestroy {
     /**
      * Dispose the tooltip when destroyed.
      */
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this._tooltipInstance) {
             this._tooltipInstance = undefined;
         }
@@ -223,10 +224,10 @@ export class TooltipDirective implements OnDestroy {
     }
 
     /** Handles the keydown events on the host element. */
-    _handleKeydown(e: KeyboardEvent) {
+    _handleKeydown(e: KeyboardEvent): void {
         if (
             this._isTooltipVisible() &&
-            e.keyCode === ESCAPE &&
+            e.code === KEYBOARD_CODE.ESCAPE &&
             !hasModifierKey(e)
         ) {
             e.preventDefault();
@@ -236,7 +237,7 @@ export class TooltipDirective implements OnDestroy {
     }
 
     /** Handles the touchend events on the host element. */
-    _handleTouchend() {
+    _handleTouchend(): void {
         this.hide();
     }
 

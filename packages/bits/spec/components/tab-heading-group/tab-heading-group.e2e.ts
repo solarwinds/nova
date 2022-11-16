@@ -23,10 +23,12 @@ import { by, element } from "protractor";
 import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
 import { TabHeadingGroupAtom } from "./tab-heading-group.atom";
+import { TabHeadingAtom } from "./tab-heading.atom";
 
 describe("USERCONTROL tab heading group", () => {
     let tabGroupHorizontal: TabHeadingGroupAtom;
     let tabGroupResponsive: TabHeadingGroupAtom;
+
     const tabContent = [
         "Tab with really long content",
         "Tab 2",
@@ -47,6 +49,11 @@ describe("USERCONTROL tab heading group", () => {
         );
     });
 
+    const getFirstLast = async (
+        group: TabHeadingGroupAtom
+    ): Promise<[TabHeadingAtom, TabHeadingAtom]> =>
+        Promise.all([group.getFirstTab(), group.getLastTab()]);
+
     it("should tab content be visible", async () => {
         const tabs = await tabGroupHorizontal.getTabs();
         const amountOfTabs = await tabGroupHorizontal.getNumberOfTabs();
@@ -57,13 +64,10 @@ describe("USERCONTROL tab heading group", () => {
     });
 
     it("should switch between tabs", async () => {
-        await (await tabGroupHorizontal.getLastTab()).click();
-        expect(await (await tabGroupHorizontal.getFirstTab()).isActive()).toBe(
-            false
-        );
-        expect(await (await tabGroupHorizontal.getLastTab()).isActive()).toBe(
-            true
-        );
+        const [firstTab, lastTab] = await getFirstLast(tabGroupHorizontal);
+        await lastTab.click();
+        expect(await firstTab.isActive()).toBe(false);
+        expect(await lastTab.isActive()).toBe(true);
     });
 
     it("should not allow disabled tabs to get selected", async () => {
@@ -78,25 +82,17 @@ describe("USERCONTROL tab heading group", () => {
     });
 
     it("should navigate through responsive tabs", async () => {
-        expect(
-            await (await tabGroupResponsive.getFirstTab()).isDisplayed()
-        ).toBe(true);
+        const [firstTab, lastTab] = await getFirstLast(tabGroupResponsive);
+        expect(await firstTab.isDisplayed()).toBe(true);
         await tabGroupResponsive.clickCaretRight(10);
-        expect(
-            await (await tabGroupResponsive.getFirstTab()).isDisplayed()
-        ).toBe(false);
-        expect(
-            await (await tabGroupResponsive.getLastTab()).isDisplayed()
-        ).toBe(true);
+        expect(await firstTab.isDisplayed()).toBe(false);
+        expect(await lastTab.isDisplayed()).toBe(true);
     });
 
     it("should the last item in responsive tabs be clickable", async () => {
         await tabGroupResponsive.clickCaretRight(10);
-        await (await tabGroupResponsive.getLastTab()).click();
-        expect(
-            await tabGroupResponsive
-                .getLastTab()
-                .then(async (tab) => tab.isActive())
-        ).toBe(true);
+        const lastTab = await tabGroupResponsive.getLastTab();
+        await lastTab.click();
+        expect(await lastTab.isActive()).toBe(true);
     });
 });

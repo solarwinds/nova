@@ -62,7 +62,7 @@ export class TimeFramePickerVisualTestComponent {
     public closePopoverSubject = new Subject<void>();
     public openPopoverSubject = new Subject<void>();
 
-    public updateTf(value: ITimeframe) {
+    public updateTf(value: ITimeframe): void {
         this.tf = value;
         const timeFrameDatesValid = () =>
             this.timeframeService.areTimeFrameDatesValid(value);
@@ -74,17 +74,18 @@ export class TimeFramePickerVisualTestComponent {
         this.selectedPresetKey = this.tf.selectedPresetId;
     }
 
-    public confirmPopover() {
+    public confirmPopover(): void {
         this.showFooter = false;
         this.closePopoverSubject.next();
         this.acceptedTimeframe = this.tf;
     }
-    public cancelPopover() {
+
+    public cancelPopover(): void {
         this.showFooter = false;
         this.closePopoverSubject.next();
     }
 
-    public handlePresetSelection(presetKey: string) {
+    public handlePresetSelection(presetKey: string): void {
         this.selectedPresetKeyDatePicker = presetKey;
         this.tf = this.timeframeService.getTimeframeByPresetId(
             presetKey,
@@ -94,17 +95,17 @@ export class TimeFramePickerVisualTestComponent {
         this.closePopoverSubject.next();
     }
 
-    public confirmPopoverDatePicker() {
+    public confirmPopoverDatePicker(): void {
         this.closePopoverSubject.next();
     }
 
-    public handlePresetSelectionDatePicker(presetKey: string) {
+    public handlePresetSelectionDatePicker(presetKey: string): void {
         this.selectedDate = this.getDateFromPreset(presetKey);
         this.selectedPresetKeyDatePicker = presetKey;
         this.confirmPopoverDatePicker();
     }
 
-    public dateChanged(value: Moment) {
+    public dateChanged(value: Moment): void {
         if (!this.selectedDate.isSame(value, "day")) {
             this.selectedDate = value;
             this.selectedPresetKeyDatePicker = this.getPresetFromDate(value); // will return undefined if not found, exactly what's needed

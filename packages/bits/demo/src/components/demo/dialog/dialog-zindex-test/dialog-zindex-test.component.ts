@@ -85,11 +85,11 @@ export class DialogZIndexTestComponent implements OnInit {
         };
     }
 
-    public toggleBusy() {
+    public toggleBusy(): void {
         this.busy = !this.busy;
     }
 
-    public toggleAppendToBody() {
+    public toggleAppendToBody(): void {
         this.appendToBody = !this.appendToBody;
     }
 
@@ -97,7 +97,7 @@ export class DialogZIndexTestComponent implements OnInit {
         templateRef: TemplateRef<string>,
         width: string,
         height: string
-    ) {
+    ): void {
         const positionStrategy = this.overlay
             .position()
             .global()
@@ -116,11 +116,11 @@ export class DialogZIndexTestComponent implements OnInit {
         this.overlayRef.attach(portal);
     }
 
-    public closeOverlay() {
+    public closeOverlay(): void {
         this.overlayRef.detach();
     }
 
-    public openInnerDialog(templateRef: TemplateRef<string>) {
+    public openInnerDialog(templateRef: TemplateRef<string>): void {
         this.activeDialogs.push(
             this.dialogService.open(templateRef, {
                 windowClass: "inner-dialog",
@@ -128,7 +128,7 @@ export class DialogZIndexTestComponent implements OnInit {
         );
     }
 
-    public closeDialog() {
+    public closeDialog(): void {
         this.activeDialogs.pop()?.close();
     }
 

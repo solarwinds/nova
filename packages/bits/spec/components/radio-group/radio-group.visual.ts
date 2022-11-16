@@ -25,25 +25,19 @@ import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
 import { RadioGroupAtom } from "./radio-group.atom";
 
-const name: string = "Radio Group";
+const name = "Radio Group";
 
 describe(`Visual tests: ${name}`, () => {
-    let camera: Camera,
-        fruitGroup: RadioGroupAtom,
-        disabledGroup: RadioGroupAtom;
-
     beforeAll(async () => {
         await Helpers.prepareBrowser("radio-group/radio-group-visual-test");
-        fruitGroup = Atom.find(RadioGroupAtom, "fruit-radio-group");
-        disabledGroup = Atom.find(RadioGroupAtom, "fruit-radio-group-disabled");
-
-        camera = new Camera().loadFilm(browser, name);
     });
 
     it(`${name} visual test`, async () => {
+        const camera = new Camera().loadFilm(browser, name);
         await camera.turn.on();
         await camera.say.cheese(`Default`);
 
+        const fruitGroup = Atom.find(RadioGroupAtom, "fruit-radio-group");
         await fruitGroup.getRadioByValue("Banana").click();
         await fruitGroup.hover(fruitGroup.getRadioByValue("Papaya"));
         await camera.say.cheese(`Click Banana and Hover on Papaya`);

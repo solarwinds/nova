@@ -166,7 +166,7 @@ export class TableSelectTestComponent {
     tableComponent: TableComponent<any>;
     constructor(public changeDetection: ChangeDetectorRef) {}
 
-    public onSelectorChange(selection: ISelection) {
+    public onSelectorChange(selection: ISelection): void {
         this.selectedItems = selection;
     }
 }

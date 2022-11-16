@@ -32,7 +32,7 @@ export class CardGroupComponent implements OnInit {
     @Input() direction: ILayoutElementDirection = "row";
     @HostBinding("class.card-group-direction-column") directionColumn = false;
     @HostBinding("class.card-group-direction-row") directionRow = true;
-    ngOnInit() {
+    public ngOnInit(): void {
         this.directionColumn =
             (this.directionColumn && !this.directionRow) ||
             this.direction === "column";

@@ -27,29 +27,29 @@ import {
 } from "@angular/core";
 import { AbstractControl, FormGroup } from "@angular/forms";
 
-import { EventBus } from "@nova-ui/bits";
+import { EventBus, IEvent } from "@nova-ui/bits";
 
 /**
- * Same as Partial<T> but goes deeper and makes all of its properties and sub-properties Partial<T>.
+ * Same as Partial<T> but goes deeper and makes all of its properties and sub-properties Parti al<T>.
  */
 export type DeepPartial<T> = T extends object
     ? { [K in keyof T]?: DeepPartial<T[K]> }
     : T;
 
-export const PIZZAGNA_EVENT_BUS = new InjectionToken<EventBus<Event>>(
+export const PIZZAGNA_EVENT_BUS = new InjectionToken<EventBus<IEvent>>(
     "PIZZAGNA_EVENT_BUS"
 );
-export const DASHBOARD_EVENT_BUS = new InjectionToken<EventBus<Event>>(
+export const DASHBOARD_EVENT_BUS = new InjectionToken<EventBus<IEvent>>(
     "DASHBOARD_EVENT_BUS"
 );
-export const DATA_SOURCE = new InjectionToken<EventBus<Event>>("DATA_SOURCE");
-export const FORMATTERS_REGISTRY = new InjectionToken<EventBus<Event>>(
+export const DATA_SOURCE = new InjectionToken<EventBus<IEvent>>("DATA_SOURCE");
+export const FORMATTERS_REGISTRY = new InjectionToken<EventBus<IEvent>>(
     "FORMATTERS_REGISTRY"
 );
-export const TEST_REGISTRY = new InjectionToken<EventBus<Event>>(
+export const TEST_REGISTRY = new InjectionToken<EventBus<IEvent>>(
     "TEST_REGISTRY"
 );
-export const HEADER_LINK_PROVIDER = new InjectionToken<EventBus<Event>>(
+export const HEADER_LINK_PROVIDER = new InjectionToken<EventBus<IEvent>>(
     "HEADER_LINK_PROVIDER"
 );
 
@@ -89,6 +89,13 @@ export interface IProperties extends Record<string, any> {}
 export interface IProviderProperties extends IProperties {
     /** This is property is set by the component portal directive to give providers self-awareness they need to update properties in pizzagna. */
     providerKey?: string;
+}
+
+export interface ISerializableTimeframe {
+    startDatetime: string;
+    endDatetime: string;
+    selectedPresetId?: string;
+    title?: string;
 }
 
 export interface IComponentConfiguration {

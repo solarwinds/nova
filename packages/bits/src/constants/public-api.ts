@@ -18,11 +18,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+export * from "./button.constants";
 export * from "./dragdrop.constants";
+export * from "./event.constants";
 export * from "./images.constants";
 export * from "./interaction.constants";
 export * from "./keycode.constants";
-export * from "./path.constant";
+export * from "./path.constants";
+export * from "./popover.constants";
+export * from "./regex.constants";
 export * from "./resize.constants";
 export * from "./unit-conversion.constants";
 export * from "./wizard.constants";

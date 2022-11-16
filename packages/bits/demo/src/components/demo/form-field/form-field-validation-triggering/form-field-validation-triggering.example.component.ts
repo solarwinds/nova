@@ -30,19 +30,19 @@ export class FormFieldValidationTriggeringxampleComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.reactiveForm = this.formBuilder.group({
             email: this.formBuilder.control(""),
         });
     }
 
-    public onAddValidators() {
+    public onAddValidators(): void {
         this.reactiveForm
             .get("email")
             ?.setValidators([Validators.required, Validators.email]);
     }
 
-    public onTouch() {
+    public onTouch(): void {
         if (
             this.reactiveForm.get("email")?.value === "" &&
             this.reactiveForm.get("email")?.errors === null &&
@@ -53,7 +53,7 @@ export class FormFieldValidationTriggeringxampleComponent implements OnInit {
         this.reactiveForm.get("email")?.markAsTouched();
     }
 
-    public onValueChange() {
+    public onValueChange(): void {
         const text =
             this.reactiveForm.get("email")?.value === ""
                 ? "some text here"
@@ -61,12 +61,12 @@ export class FormFieldValidationTriggeringxampleComponent implements OnInit {
         this.reactiveForm.get("email")?.setValue(text);
     }
 
-    public onStatusChange() {
+    public onStatusChange(): void {
         const errors = this.reactiveForm.valid ? { hasError: true } : null;
         this.reactiveForm.get("email")?.setErrors(errors);
     }
 
-    public onReset() {
+    public onReset(): void {
         this.reactiveForm.get("email")?.reset("");
         this.reactiveForm.get("email")?.setErrors(null);
         this.reactiveForm.get("email")?.setValidators(null);

@@ -35,7 +35,7 @@ export class DragdropFilesExampleComponent {
 
     public files: File[] = [];
 
-    dropHandler(ev: DragEvent) {
+    dropHandler(ev: DragEvent): void {
         if (!ev.dataTransfer) {
             throw new Error("dataTransfer is not defined");
         }
@@ -48,7 +48,7 @@ export class DragdropFilesExampleComponent {
         this.invalidateFiles();
     }
 
-    onFileRead(ev: Event) {
+    onFileRead(ev: Event): void {
         const files: FileList | null = (ev.target as HTMLInputElement).files;
         if (!files) {
             throw new Error("fileList is not defined");
@@ -57,7 +57,7 @@ export class DragdropFilesExampleComponent {
         this.files.push(...Array.from(files));
     }
 
-    dragEnterHandler(ev: DragEvent) {
+    dragEnterHandler(ev: DragEvent): void {
         // This naively checks only first file
 
         if (ev.dataTransfer && ev.dataTransfer.items) {
@@ -71,13 +71,13 @@ export class DragdropFilesExampleComponent {
             : FileDropState.active;
     }
 
-    invalidateFiles() {
+    invalidateFiles(): void {
         // Change it if you want to have some error highlight even after dragLeave
         this.fileDropState = FileDropState.default;
         this.gifError = false;
     }
 
-    rmFile(fileInput: File) {
+    rmFile(fileInput: File): void {
         this.files = this.files.filter((file) => file !== fileInput);
     }
 

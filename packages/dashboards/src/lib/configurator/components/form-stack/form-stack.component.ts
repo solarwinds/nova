@@ -76,7 +76,7 @@ export class FormStackComponent
         super(changeDetector, pizzagnaService, logger);
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.form = this.formDirective.form;
     }
 
@@ -84,13 +84,13 @@ export class FormStackComponent
         super.ngOnChanges(changes);
     }
 
-    public onEvent(componentId: string, event: IEvent) {
+    public onEvent(componentId: string, event: IEvent): void {
         if (event.id === "formReady") {
             this.addFormGroup(componentId, event.payload);
         }
     }
 
-    public addFormGroup(name: string, formGroup: FormGroup) {
+    public addFormGroup(name: string, formGroup: FormGroup): void {
         this.form.addControl(name, formGroup);
     }
 

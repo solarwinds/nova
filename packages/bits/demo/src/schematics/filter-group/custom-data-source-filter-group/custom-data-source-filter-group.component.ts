@@ -55,7 +55,7 @@ export class CustomDataSourceFilterGroupCompositeComponent
 
     constructor(@Inject(DialogService) private dialogService: DialogService) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.filterGroupItem.allFilterOptions = _orderBy(
             this.filterGroupItem.allFilterOptions,
             "value",
@@ -89,11 +89,11 @@ export class CustomDataSourceFilterGroupCompositeComponent
         };
     }
 
-    public showFilterDialog() {
+    public showFilterDialog(): void {
         this.showAllButtonClicked.emit();
     }
 
-    public getDisplayedFiltersCount() {
+    public getDisplayedFiltersCount(): number {
         return this.filterGroupItem.itemsToDisplay
             ? this.filterGroupItem.itemsToDisplay
             : 10;

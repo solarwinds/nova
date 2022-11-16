@@ -38,13 +38,13 @@ export class ThresholdsSummaryTestHarnessComponent implements OnInit {
     ];
     public startDate = moment([2016, 11, 25, 15, 14, 29]); // "2016-12-25T15:14:29.000Z"
 
-    public ngOnInit() {}
+    public ngOnInit(): void {}
 
-    public dataChanged(value: string) {
+    public dataChanged(value: string): void {
         this.data = this.validateInput(value) || this.data;
     }
 
-    public zonesChanged(value: string) {
+    public zonesChanged(value: string): void {
         this.zones = this.validateInput(value) || this.zones;
     }
 

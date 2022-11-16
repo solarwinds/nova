@@ -18,12 +18,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { by, element, Key } from "protractor";
+import { by, Key } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { ButtonAtom } from "../button/button.atom";
-import { SpinnerAtom } from "../spinner/spinner.atom";
 import { WizardV2Atom } from "./wizard-v2.atom";
 
 describe("USERCONTROL Wizard V2: ", () => {

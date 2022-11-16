@@ -78,11 +78,11 @@ export class PanelVisualTestComponent {
 
     constructor() {}
 
-    public toggleFooter() {
+    public toggleFooter(): void {
         this.displayFooter = !this.displayFooter;
     }
 
-    public onCollapseChange($event: boolean) {
+    public onCollapseChange($event: boolean): void {
         this.isCollapsed = $event;
     }
 }

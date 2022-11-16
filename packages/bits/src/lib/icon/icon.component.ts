@@ -85,14 +85,14 @@ export class IconComponent implements OnChanges {
         private sanitizer: DomSanitizer
     ) {}
 
-    getIconByStatus(status: string) {
+    getIconByStatus(status: string): string {
         if (!status) {
-            return;
+            return "";
         }
         return this.iconService.getStatusIcon(status);
     }
 
-    get iconClass() {
+    get iconClass(): string {
         const iconClass: string[] = ["nui-icon"];
 
         if (!this.iconFound) {
@@ -148,7 +148,7 @@ export class IconComponent implements OnChanges {
         return isNil(this._counter) ? this._counter : this._counter.toString();
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes["status"] || changes["childStatus"] || changes["icon"]) {
             this.generateIcon();
         }

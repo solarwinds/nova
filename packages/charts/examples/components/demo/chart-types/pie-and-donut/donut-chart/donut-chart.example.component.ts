@@ -37,7 +37,7 @@ import {
 export class DonutChartExampleComponent implements OnInit {
     public chartAssist: ChartAssist;
 
-    ngOnInit() {
+    public ngOnInit(): void {
         // Create a Chart instance using the result of the radialGrid configuration function as the constructor argument
         const chart = new Chart(radialGrid());
 

@@ -47,7 +47,7 @@ export class DndDropzoneExampleComponent {
         return item === "Adobe" || item === "Dell";
     }
 
-    public onItemDropped(event: CdkDragDrop<string[]>) {
+    public onItemDropped(event: CdkDragDrop<string[]>): void {
         if (!this.destinationAcceptsItem(event.item.data)) {
             return;
         }

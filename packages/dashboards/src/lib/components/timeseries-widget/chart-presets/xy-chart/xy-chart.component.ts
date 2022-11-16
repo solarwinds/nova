@@ -26,6 +26,7 @@ import {
     OnDestroy,
     Optional,
 } from "@angular/core";
+// eslint-disable-next-line import/no-deprecated
 import { merge } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -118,7 +119,7 @@ export abstract class XYChartComponent
     public onPrimaryDescClick(
         event: MouseEvent,
         legendSeries: IChartAssistSeries<IAccessors>
-    ) {
+    ): void {
         if (!this.seriesInteractive) {
             return;
         }
@@ -142,7 +143,7 @@ export abstract class XYChartComponent
     /**
      * Initialize chart
      */
-    protected buildChart() {
+    protected buildChart(): void {
         this.buildChart$.next();
 
         const colorProvider =
@@ -163,6 +164,7 @@ export abstract class XYChartComponent
         chart
             .getEventBus()
             .getStream(SET_DOMAIN_EVENT)
+            // eslint-disable-next-line import/no-deprecated
             .pipe(takeUntil(merge(this.destroy$, this.buildChart$)))
             .subscribe((event) => {
                 const payload = <ISetDomainEventPayload>event.data;
@@ -171,7 +173,7 @@ export abstract class XYChartComponent
                     payload: {
                         startDatetime: newDomain[0],
                         endDatetime: newDomain[1],
-                        selectedPresetId: null,
+                        selectedPresetId: undefined,
                     },
                 });
             });
@@ -182,11 +184,12 @@ export abstract class XYChartComponent
     /**
      * Subscribe to chart events and emit
      */
-    protected setupInteraction() {
+    protected setupInteraction(): void {
         // interaction with chart data points
         this.chartAssist.chart
             .getEventBus()
             .getStream(INTERACTION_DATA_POINTS_EVENT)
+            // eslint-disable-next-line import/no-deprecated
             .pipe(takeUntil(merge(this.destroy$, this.buildChart$)))
             .subscribe((values: IChartEvent) => {
                 const payload: IInteractionDataPointsEvent = values.data;
@@ -205,6 +208,7 @@ export abstract class XYChartComponent
         this.chartAssist.chart
             .getEventBus()
             .getStream(INTERACTION_VALUES_EVENT)
+            // eslint-disable-next-line import/no-deprecated
             .pipe(takeUntil(merge(this.destroy$, this.buildChart$)))
             .subscribe((values: IChartEvent) => {
                 const payload: IInteractionValuesPayload = values.data;

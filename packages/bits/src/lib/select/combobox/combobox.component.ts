@@ -124,12 +124,12 @@ export class ComboboxComponent
     private focusMonitorSubscription: Subscription;
 
     @HostBinding("class.nui-combobox--justified")
-    get isJustified() {
+    get isJustified(): boolean {
         return this.justified;
     }
 
     @HostBinding("class.nui-combobox--inline")
-    get isInline() {
+    get isInline(): boolean {
         return this.inline;
     }
 
@@ -155,11 +155,11 @@ export class ComboboxComponent
         );
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         super.ngOnInit();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         super.ngOnChanges(changes);
     }
 
@@ -167,23 +167,23 @@ export class ComboboxComponent
         return !_isUndefined(this.placeholder) && _isEmpty(this.inputValue);
     }
 
-    public displayPlaceholderValue() {
+    public displayPlaceholderValue(): string {
         return this.displayPlaceholder() ? this.placeholder : "";
     }
 
-    public showIcon() {
+    public showIcon(): boolean {
         return !_isNil(this.icon);
     }
 
-    public showRightBorder() {
+    public showRightBorder(): boolean {
         return !this.isRemoveValueDisplayed() && !_isEmpty(this.inputValue);
     }
 
-    public isRemoveValueDisplayed() {
+    public isRemoveValueDisplayed(): boolean {
         return this.isRemoveValueEnabled && !_isEmpty(this.inputValue);
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         // setting data for key-control service
         this.setKeyboardManagerServiceData();
         // initializing key-control manager
@@ -239,12 +239,12 @@ export class ComboboxComponent
         this.keyControlService.menuToggle = this.comboboxToggle;
     }
 
-    public openChange(currentValue: boolean) {
+    public openChange(currentValue: boolean): void {
         this.keyControlService.setActiveItem(-1);
         this.isOpened = currentValue;
     }
 
-    public onInputChange(value: any) {
+    public onInputChange(value: any): void {
         const oldValue = this.selectedItem;
         const newValue = this.displayValue
             ? this.findObjectByValue(value)
@@ -254,7 +254,7 @@ export class ComboboxComponent
         this.changed.emit({ newValue, oldValue });
     }
 
-    public handleBlur() {
+    public handleBlur(): void {
         const newValue = this.displayValue
             ? this.findObjectByValue(_unescape(this.inputValue))
             : _unescape(this.inputValue);
@@ -278,13 +278,12 @@ export class ComboboxComponent
         this.select(valueToSelect);
     }
 
-    public select(item: any) {
+    public select(item: any): void {
         super.select(item);
     }
 
-    public findObjectByValue(value: any) {
+    public findObjectByValue(value: any): any {
         let arrayOfValues: any[];
-        let foundObject: any;
 
         // for itemsSource passed as ISelectGroup[]
         if (this.isGroupedData(this.itemsSource)) {
@@ -293,7 +292,7 @@ export class ComboboxComponent
             arrayOfValues = this.itemsSource;
         }
 
-        foundObject = _find(arrayOfValues, [this.displayValue, value]);
+        const foundObject = _find(arrayOfValues, [this.displayValue, value]);
         return foundObject ? foundObject : value;
     }
 
@@ -315,7 +314,7 @@ export class ComboboxComponent
         return _unescape(item);
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this.itemsChangeSubscription) {
             this.itemsChangeSubscription.unsubscribe();
         }
@@ -339,7 +338,7 @@ export class ComboboxComponent
         }nui-combobox-popup-host`;
     }
 
-    public clearValue(event: Event) {
+    public clearValue(event: Event): void {
         if (this.isRemoveValueEnabled) {
             this.changeValue(null);
             event.stopPropagation(); // To avoid triggering dropdown open/close

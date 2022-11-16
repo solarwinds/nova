@@ -49,7 +49,7 @@ export class SelectV2VirtualScrollExampleComponent
     public selectControl = new FormControl();
     public containerHeight: number = 300;
 
-    private destroy$: Subject<void> = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     private scrollOffset: number = 0;
 
     @ViewChild(CdkVirtualScrollViewport)
@@ -57,13 +57,13 @@ export class SelectV2VirtualScrollExampleComponent
     @ViewChild(SelectV2Component) private select: SelectV2Component;
 
     @HostListener("click", ["$event"])
-    public handleClick(event: MouseEvent) {
+    public handleClick(event: MouseEvent): void {
         if (this.viewport) {
             this.viewport.scrollToOffset(this.scrollOffset);
         }
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.selectControl.valueChanges
             .pipe(takeUntil(this.destroy$))
             .subscribe((value) => {
@@ -71,7 +71,7 @@ export class SelectV2VirtualScrollExampleComponent
             });
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this.select.valueSelected
             .pipe(takeUntil(this.destroy$))
             .subscribe((selectionText) => {
@@ -79,7 +79,7 @@ export class SelectV2VirtualScrollExampleComponent
             });
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }

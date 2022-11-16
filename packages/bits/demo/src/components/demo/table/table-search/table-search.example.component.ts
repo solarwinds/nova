@@ -73,7 +73,7 @@ export class TableSearchExampleComponent implements AfterViewInit, OnDestroy {
         dataSourceService.setData(getData());
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.dataSourceService.componentTree = {
             search: {
                 componentInstance: this.filteringSearch,
@@ -94,7 +94,7 @@ export class TableSearchExampleComponent implements AfterViewInit, OnDestroy {
         this.dataSourceService.applyFilters();
     }
 
-    public applySearchField() {
+    public applySearchField(): void {
         if (!this.columnsToApplySearch.length) {
             this.columnsToApplySearch = ["location"];
         } else {
@@ -102,16 +102,16 @@ export class TableSearchExampleComponent implements AfterViewInit, OnDestroy {
         }
     }
 
-    public onSearch(value?: string) {
+    public onSearch(value?: string): void {
         this.dataSourceService.setSearchProperties(this.columnsToApplySearch);
         this.dataSourceService.applyFilters();
     }
 
-    public onSearchCancel() {
+    public onSearchCancel(): void {
         this.dataSourceService.applyFilters();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.searchSubscription.unsubscribe();
         this.outputsSubscription.unsubscribe();
     }

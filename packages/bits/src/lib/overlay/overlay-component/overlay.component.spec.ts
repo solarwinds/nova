@@ -55,7 +55,7 @@ class PopupWrapperComponent implements AfterViewInit {
 
     constructor(public elRef: ElementRef) {}
 
-    ngAfterViewInit() {}
+    public ngAfterViewInit(): void {}
 }
 
 describe("components >", () => {
@@ -170,7 +170,9 @@ describe("components >", () => {
                 ).toBeFalsy();
                 expect(wrapperComponent.dropdown.showing).toBe(false);
                 wrapperComponent.dropdown.clickOutside.subscribe(
-                    (e: MouseEvent) => expect(e).toBeTruthy()
+                    (e: MouseEvent) => {
+                        expect(e).toBeTruthy();
+                    }
                 );
             });
         });

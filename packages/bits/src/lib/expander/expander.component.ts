@@ -31,7 +31,7 @@ import {
 } from "@angular/core";
 
 import { expandV2 } from "../../animations/expand";
-import { KEYBOARD_CODE } from "../../constants";
+import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 
 /**
  * <example-url>./../examples/index.html#/expander</example-url>
@@ -84,9 +84,11 @@ export class ExpanderComponent implements AfterContentInit {
     public state: "expanded" | "collapsed" = "collapsed";
     public isCustomHeaderContentEmpty: boolean = false;
 
+    private actionKeys = [KEYBOARD_CODE.SPACE, KEYBOARD_CODE.ENTER].map(String);
+
     constructor(private cdRef: ChangeDetectorRef) {}
 
-    ngAfterContentInit(): void {
+    public ngAfterContentInit(): void {
         this.isCustomHeaderContentEmpty =
             this.customHeaderContent.nativeElement.childNodes.length === 0;
     }
@@ -104,10 +106,7 @@ export class ExpanderComponent implements AfterContentInit {
     }
 
     public onKeyDown(event: KeyboardEvent): void {
-        if (
-            event.code === KEYBOARD_CODE.SPACE ||
-            event.code === KEYBOARD_CODE.ENTER
-        ) {
+        if (this.actionKeys.includes(event.code)) {
             if (event.target === event.currentTarget) {
                 event.preventDefault();
                 this.toggle();

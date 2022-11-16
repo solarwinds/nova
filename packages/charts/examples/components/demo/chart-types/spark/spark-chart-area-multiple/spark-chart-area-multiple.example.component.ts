@@ -38,7 +38,7 @@ import {
 export class SparkChartAreaMultipleExampleComponent implements OnInit {
     public chartAssist: SparkChartAssist;
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         // spark chart setup
         this.chartAssist = new SparkChartAssist();
 

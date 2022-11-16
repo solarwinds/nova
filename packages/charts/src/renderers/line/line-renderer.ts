@@ -22,12 +22,7 @@ import { curveLinear, line } from "d3-shape";
 import defaultsDeep from "lodash/defaultsDeep";
 import { Subject } from "rxjs";
 
-import {
-    DATA_POINT_INTERACTION_RESET,
-    STANDARD_RENDER_LAYERS,
-} from "../../constants";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Renderer } from "../../core/common/renderer";
+import { STANDARD_RENDER_LAYERS } from "../../constants";
 import { IXYScales, Scales } from "../../core/common/scales/types";
 import {
     D3Selection,

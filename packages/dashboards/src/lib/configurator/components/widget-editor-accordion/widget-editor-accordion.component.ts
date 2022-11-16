@@ -54,11 +54,11 @@ export class WidgetEditorAccordionComponent implements OnInit, OnDestroy {
         public cd: ChangeDetectorRef
     ) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.accordionCoordinator.registerAccordion(this);
     }
 
-    public openChange(isOpened: boolean) {
+    public openChange(isOpened: boolean): void {
         if (isOpened) {
             this.openSubject.next();
         } else {
@@ -66,12 +66,12 @@ export class WidgetEditorAccordionComponent implements OnInit, OnDestroy {
         }
     }
 
-    public closeAccordion() {
+    public closeAccordion(): void {
         this.cd.markForCheck();
         this.open = false;
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroySubject.next();
         this.destroySubject.complete();
     }

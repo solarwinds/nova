@@ -84,7 +84,7 @@ export class ToolbarEmbeddedContentExampleComponent {
 
     public constructor(@Inject(LoggerService) private logger: LoggerService) {}
 
-    public onCancel(value: string) {
+    public onCancel(value: string): void {
         this.logger.warn("Example onCancel fired. Value passed: " + value);
         if (value === "") {
             this.value = "";
@@ -94,19 +94,19 @@ export class ToolbarEmbeddedContentExampleComponent {
         }
     }
 
-    public onSearch(value: string) {
+    public onSearch(value: string): void {
         this.logger.warn(
             "Example onSearch fired. Current input value passed: " + value
         );
         this.doSearch(value);
     }
 
-    private doCancel() {
+    private doCancel(): void {
         clearTimeout(this.timerHandler);
         this.busy = false;
     }
 
-    private doSearch(value: string) {
+    private doSearch(value: string): void {
         this.logger.warn("Example search started.");
         const _this = this;
         clearTimeout(_this.timerHandler);

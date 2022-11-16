@@ -118,7 +118,7 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
         dataSourceService.setData(ELEMENT_DATA);
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
             checkboxGroup: this.formBuilder.control(this.displayedColumnsCopy, [
                 Validators.required,
@@ -147,7 +147,7 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
             });
     }
 
-    async ngAfterViewInit() {
+    async ngAfterViewInit(): Promise<void> {
         this.dataSourceService.componentTree = {
             paginator: {
                 componentInstance: this.filteringPaginator,
@@ -177,19 +177,19 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
         await this.dataSourceService.applyFilters();
     }
 
-    public sortData() {
+    public sortData(): void {
         this.dataSourceService.applyFilters();
     }
 
-    public async onSearch(value: string) {
+    public async onSearch(value: string): Promise<void> {
         await this.dataSourceService.applyFilters();
     }
 
-    public async onSearchCancel() {
+    public async onSearchCancel(): Promise<void> {
         await this.dataSourceService.applyFilters();
     }
 
-    public toastColumns(event: Array<string>) {
+    public toastColumns(event: Array<string>): void {
         this.toastService.info({
             message:
                 "Current order of columns is: " +
@@ -197,7 +197,7 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
         });
     }
 
-    public async changePagination() {
+    public async changePagination(): Promise<void> {
         await this.dataSourceService.applyFilters();
     }
 
@@ -244,7 +244,7 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
 
     // TODO: temporary solution for changing table state dynamically, remove this after NUI-1999
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
         this.searchSubscription.unsubscribe();
     }

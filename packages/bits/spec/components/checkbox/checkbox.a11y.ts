@@ -36,6 +36,6 @@ describe("a11y: checkbox", () => {
     });
 
     it("should verify a11y of checkbox", async () => {
-        await assertA11y(browser, CheckboxAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, CheckboxAtom, rulesToDisable);
     });
 });

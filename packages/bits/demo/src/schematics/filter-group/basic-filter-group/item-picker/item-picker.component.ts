@@ -102,7 +102,7 @@ export class ItemPickerCompositeComponent
         public changeDetection: ChangeDetectorRef
     ) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         (
             this.dataSource as LocalFilteringDataSource<IFilterGroupOption>
         ).setData(this.itemPickerOptions);
@@ -113,7 +113,7 @@ export class ItemPickerCompositeComponent
         };
     }
 
-    async ngAfterViewInit() {
+    async ngAfterViewInit(): Promise<void> {
         this.changeDetection.markForCheck();
 
         // this.dataSource.registerComponent(this.listComposite.getFilterComponents());
@@ -127,17 +127,17 @@ export class ItemPickerCompositeComponent
         await this.dataSource.applyFilters();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this.outputsSubscription) {
             this.outputsSubscription.unsubscribe();
         }
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.dataSource.applyFilters();
     }
 
-    public onSelection(selection: ISelection) {
+    public onSelection(selection: ISelection): void {
         this.selection = selection;
         this.selectionChanged.emit(this.selection);
     }

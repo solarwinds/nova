@@ -36,7 +36,7 @@ export const domainWithAuxiliarySeries =
         chartSeriesSet: IChartSeries<any>[],
         scaleId: string,
         scale: IScale<any>
-    ) =>
+    ): any[] =>
         domainCalculator(
             additionalSeriesFn().concat(chartSeriesSet),
             scaleId,

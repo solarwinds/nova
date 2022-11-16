@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { timeDay, timeMinute, timeMonth, timeYear } from "d3-time";
+import { timeDay, timeMinute, timeMonth, timeYear } from "d3";
 import moment from "moment/moment";
 
 import { Formatter } from "../types";
@@ -27,27 +27,37 @@ const intlFormat = (date: Date, options: Intl.DateTimeFormatOptions) =>
     new Intl.DateTimeFormat(moment.locale(), options).format(date);
 
 const formatSecond = (d: Date) =>
-        intlFormat(d, {
-            hour: "numeric",
-            minute: "2-digit",
-            second: "2-digit",
-        }),
-    formatMinute = (d: Date) =>
-        intlFormat(d, { hour: "numeric", minute: "2-digit" }),
-    formatWeek = (d: Date) => intlFormat(d, { month: "short", day: "2-digit" }),
-    formatMonth = (d: Date) => intlFormat(d, { month: "short" }),
-    formatYear = (d: Date) => intlFormat(d, { year: "numeric" });
+    intlFormat(d, {
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit",
+    });
+
+const formatMinute = (d: Date) =>
+    intlFormat(d, { hour: "numeric", minute: "2-digit" });
+
+const formatWeek = (d: Date) =>
+    intlFormat(d, { month: "short", day: "2-digit" });
+
+const formatMonth = (d: Date) => intlFormat(d, { month: "short" });
+
+const formatYear = (d: Date) => intlFormat(d, { year: "numeric" });
 
 /**
  * Formatter for dates
  */
-export const datetimeFormatter: Formatter<Date> = (date: Date): string =>
-    (timeMinute(date) < date
-        ? formatSecond
-        : timeDay(date) < date
-        ? formatMinute
-        : timeMonth(date) < date
-        ? formatWeek
-        : timeYear(date) < date
-        ? formatMonth
-        : formatYear)(date);
+export const datetimeFormatter: Formatter<Date> = (date: Date): string => {
+    if (timeMinute(date) < date) {
+        return formatSecond(date);
+    }
+    if (timeDay(date) < date) {
+        return formatMinute(date);
+    }
+    if (timeMonth(date) < date) {
+        return formatWeek(date);
+    }
+    if (timeYear(date) < date) {
+        return formatMonth(date);
+    }
+    return formatYear(date);
+};

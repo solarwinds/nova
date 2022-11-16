@@ -281,7 +281,7 @@ export class TimeframeService {
      * @param {ITimeframe} tf
      * @returns {Boolean}
      */
-    public areTimeFrameDatesValid(tf: ITimeframe) {
+    public areTimeFrameDatesValid(tf: ITimeframe): boolean {
         const { startDatetime, endDatetime } = tf;
         const startValid = startDatetime && startDatetime.isValid();
         const endValid = endDatetime && endDatetime.isValid();

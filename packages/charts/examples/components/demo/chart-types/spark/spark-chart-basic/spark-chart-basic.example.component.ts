@@ -43,7 +43,7 @@ import {
 export class SparkChartBasicExampleComponent implements OnInit {
     public chart: IChart;
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         // This grid configuration is what turns a regular chart into a spark chart
         const gridConfig = sparkChartGridConfig(
             new XYGridConfig(),

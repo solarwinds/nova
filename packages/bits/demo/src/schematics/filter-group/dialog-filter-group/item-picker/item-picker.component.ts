@@ -68,14 +68,14 @@ export class ItemPickerCompositeComponent implements OnInit {
         public dataSource: DataSourceService<IFilterGroupOption>
     ) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         (
             this.dataSource as LocalFilteringDataSource<IFilterGroupOption>
         ).setData(this.itemPickerOptions);
         this.selectedOptions = this.getSelectedOptions();
     }
 
-    public onSelection(selection: IFilterGroupOption[]) {
+    public onSelection(selection: IFilterGroupOption[]): void {
         this.selectedOptions = selection;
         this.selectionChanged.emit(selection);
     }

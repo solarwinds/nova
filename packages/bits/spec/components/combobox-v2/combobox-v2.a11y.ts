@@ -57,7 +57,7 @@ describe("a11y: combobox-v2", () => {
     });
 
     it("should verify a11y of combobox-v2", async () => {
-        await assertA11y(browser, ComboboxV2Atom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, ComboboxV2Atom, rulesToDisable);
 
         await (await comboboxError.getFirstOption()).click();
         await comboboxError.removeAll();
@@ -66,7 +66,7 @@ describe("a11y: combobox-v2", () => {
         await Helpers.pressKey(Key.TAB);
         await ComboboxV2Atom.type("Item 3");
         await (await comboboxBasic.getOption(33)).hover();
-        await assertA11y(browser, ComboboxV2Atom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, ComboboxV2Atom, rulesToDisable);
 
         Helpers.switchDarkTheme("on");
         await (await comboboxBasic.getOption(33)).click();
@@ -75,7 +75,7 @@ describe("a11y: combobox-v2", () => {
         await disableButton.click();
         await comboboxMulti.selectAll();
         await comboboxSingle.type("qwerty");
-        await assertA11y(browser, ComboboxV2Atom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, ComboboxV2Atom, rulesToDisable);
 
         Helpers.switchDarkTheme("off");
         await comboboxSingle.type("qwerty");
@@ -86,16 +86,16 @@ describe("a11y: combobox-v2", () => {
         await Helpers.pressKey(Key.ARROW_UP);
         await Helpers.pressKey(Key.DOWN);
         await (await comboboxSingle.getLastOption()).hover();
-        await assertA11y(browser, ComboboxV2Atom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, ComboboxV2Atom, rulesToDisable);
 
         await Helpers.pressKey(Key.TAB);
         await comboboxValueRemoval.hover();
-        await assertA11y(browser, ComboboxV2Atom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, ComboboxV2Atom, rulesToDisable);
 
         await focusdrop.click();
         await toggleButton.click();
         await comboboxCustomControl.selectFirst(24);
         await comboboxCustomControl.removeChips(1);
-        await assertA11y(browser, ComboboxV2Atom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, ComboboxV2Atom, rulesToDisable);
     }, 100000);
 });

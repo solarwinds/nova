@@ -113,7 +113,7 @@ export class KpiErrorTestComponent implements OnInit {
         this.initializeDashboard();
     }
 
-    public reInitializeDashboard() {
+    public reInitializeDashboard(): void {
         this.dashboard = undefined;
         this.changeDetectorRef.detectChanges();
 

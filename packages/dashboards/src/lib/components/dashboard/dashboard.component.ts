@@ -93,7 +93,7 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
     @Output() dashboardChange = new EventEmitter<IDashboard>();
 
     @HostBinding("class.nui-dashboard")
-    get hostClass() {
+    get hostClass(): boolean {
         return true;
     }
 
@@ -110,12 +110,12 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
         public readonly eventBus: EventBus<IWidgetEvent>
     ) {}
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         // need to wait till DOM is rendered because of "getBoundingClientRect" under the hood
         setTimeout(() => this.calculateWidgetsVisibility());
     }
 
-    public onGridsterScroll() {
+    public onGridsterScroll(): void {
         this.calculateWidgetsVisibility();
     }
 
@@ -185,10 +185,12 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
         return nextWidget.y - currentWidget.y || nextWidget.x - currentWidget.x;
     };
 
-    public trackByFn = (index: number, item: KeyValue<string, IWidget>) =>
-        item.key;
+    public trackByFn = (
+        index: number,
+        item: KeyValue<string, IWidget>
+    ): string => item.key;
 
-    public onWidgetChange(widget: IWidget) {
+    public onWidgetChange(widget: IWidget): void {
         // this could happen when changes are being made on a widget that is being removed
         if (!this.dashboard.widgets[widget.id]) {
             return;
@@ -196,7 +198,7 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
         this.updateWidget(widget);
     }
 
-    public updateWidget(widget: IWidget) {
+    public updateWidget(widget: IWidget): void {
         let dashboard: IDashboard = this.dashboard;
         if (!this.dashboard.positions[widget.id] && this.gridsterConfig?.api) {
             const gridsterItem =
@@ -218,7 +220,7 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
         this.dashboardChange.emit(dashboard);
     }
 
-    public removeWidget(widgetId: string, removePosition = true) {
+    public removeWidget(widgetId: string, removePosition = true): void {
         let dashboard: IDashboard = this.dashboard;
         if (!dashboard.widgets[widgetId]) {
             return;
@@ -237,7 +239,7 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
         this.dashboardChange.emit(dashboard);
     }
 
-    public shouldWidgetRender(key: string) {
+    public shouldWidgetRender(key: string): boolean {
         return this.belowFoldLazyLoadingConfig?.enabled
             ? this.gridsterItemsVisibilityMap[key]
             : true;
@@ -247,7 +249,7 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
         item: GridsterItem,
         itemComponent: GridsterItemComponentInterface
     ): void => {
-        const widgetId = (itemComponent as any).widgetId;
+        const widgetId = String((itemComponent as any).widgetId);
         const dashboard = immutableSet(
             this.dashboard,
             "positions." + widgetId,
@@ -257,7 +259,7 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
         this.dashboardChange.emit(dashboard);
 
         this.eventBus.getStream(WIDGET_POSITION_CHANGE).next({
-            widgetId: widgetId,
+            widgetId,
             payload: item,
         });
     };
@@ -269,9 +271,9 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
         const widgetId = (itemComponent as any).widgetId;
 
         this.eventBus.getStream(WIDGET_RESIZE).next({
-            widgetId: widgetId,
+            widgetId,
             payload: {
-                widgetId: widgetId,
+                widgetId,
                 height: itemComponent.height,
                 width: itemComponent.width,
             },

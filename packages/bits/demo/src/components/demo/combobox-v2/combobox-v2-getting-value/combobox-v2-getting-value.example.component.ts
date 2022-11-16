@@ -20,6 +20,7 @@
 
 import { AfterViewInit, Component, ViewChild } from "@angular/core";
 import { Subject } from "rxjs";
+// eslint-disable-next-line import/no-deprecated
 import { takeUntil, tap } from "rxjs/operators";
 
 import { ComboboxV2Component } from "@nova-ui/bits";
@@ -42,9 +43,10 @@ export class ComboboxV2GettingValueExampleComponent implements AfterViewInit {
     private comboboxValueChangedExample: ComboboxV2Component;
     private destroy$: Subject<any> = new Subject<any>();
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this.comboboxValueSelectedExample.valueSelected
             .pipe(
+                // eslint-disable-next-line import/no-deprecated
                 tap(
                     (value) =>
                         (this.comboboxValueSelectedValue = value as string)
@@ -55,6 +57,7 @@ export class ComboboxV2GettingValueExampleComponent implements AfterViewInit {
 
         this.comboboxValueChangedExample.valueChanged
             .pipe(
+                // eslint-disable-next-line import/no-deprecated
                 tap(
                     (value) =>
                         (this.comboboxValueChangedValue = value as string)

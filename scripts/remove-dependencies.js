@@ -1,8 +1,9 @@
+/** eslint-env es6 */
+
 const projects = require("./projects.json");
 const fs = require("fs");
 
-const argv = [...process.argv].slice(2);
-const projectPath = argv[0];
+const [projectPath] = [...process.argv].slice(2);
 
 const packageJson = require(`../${projectPath}/package.json`);
 const project = projects.find(p => p.path == projectPath);

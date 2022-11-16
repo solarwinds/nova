@@ -76,7 +76,7 @@ export class ToolbarVisualTestExampleComponent {
         total: 72,
     };
 
-    public search() {
+    public search(): void {
         this.busy = !this.busy;
     }
 }

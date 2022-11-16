@@ -75,21 +75,18 @@ export class WizardSimpleExampleComponent implements OnInit {
         @Inject(DialogService) private dialogService: DialogService
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
-            name: this.formBuilder.control("", Validators.required),
-            email: this.formBuilder.control("", [
-                Validators.required,
-                Validators.pattern("[^ @]*@[^ @]*"),
-            ]),
-            password: this.formBuilder.control("", [
-                Validators.required,
-                Validators.minLength(8),
-            ]),
+            name: ["", Validators.required],
+            email: [
+                "",
+                [Validators.required, Validators.pattern("[^ @]*@[^ @]*")],
+            ],
+            password: ["", [Validators.required, Validators.minLength(8)]],
         });
     }
 
-    public onOptionChange(value: string) {
+    public onOptionChange(value: string): void {
         this.hint = value;
     }
 
@@ -97,30 +94,30 @@ export class WizardSimpleExampleComponent implements OnInit {
         return this.selectedVegetables.indexOf(vegetable) > -1;
     }
 
-    public valuesChanged(values: any[]) {
+    public valuesChanged(values: any[]): void {
         this.selectedVegetables = [...values];
     }
 
-    public addStep() {
+    public addStep(): void {
         this.wizardComponent.addStepDynamic(
             this.dynamicStep,
             this.selectedIndex + 1
         );
     }
 
-    public disableSecondStep() {
+    public disableSecondStep(): void {
         this.wizardComponent.disableStep(this.wizardStep2Component);
     }
 
-    public hideThirdStep() {
+    public hideThirdStep(): void {
         this.wizardComponent.hideStep(this.wizardStep3Component);
     }
 
-    public visibleThirdStep() {
+    public visibleThirdStep(): void {
         this.wizardComponent.showStep(this.wizardStep3Component);
     }
 
-    public makeSecondStepBusy() {
+    public makeSecondStepBusy(): void {
         this.secondStepBusyConfig.busy = true;
         this.wizardComponent.navigationControl.next({
             busyState: this.secondStepBusyConfig,
@@ -135,54 +132,52 @@ export class WizardSimpleExampleComponent implements OnInit {
         }, 1000);
     }
 
-    public onNextClick() {
+    public onNextClick(): void {
         this.toastService.info({
             message: $localize`Next button clicked!`,
             title: $localize`Event`,
         });
     }
 
-    public onCancelClick(content: TemplateRef<string>) {
-        if (
-            this.wizardComponent.steps
-                .toArray()
-                .filter((step: WizardStepComponent) => step.complete).length !==
-            0
-        ) {
-            this.activeDialog = this.dialogService.open(content, {
-                size: "sm",
-            });
-        } else {
+    public onCancelClick(content: TemplateRef<string>): void {
+        const completeSteps = this.wizardComponent.steps
+            .toArray()
+            .filter((step: WizardStepComponent) => step.complete);
+        if (!completeSteps.length) {
             this.toastService.info({
                 message: $localize`Cancel button clicked!`,
                 title: $localize`Event`,
             });
+            return;
         }
+        this.activeDialog = this.dialogService.open(content, {
+            size: "sm",
+        });
     }
 
-    public onFinishClick() {
+    public onFinishClick(): void {
         this.toastService.info({
             message: $localize`Finish button clicked!`,
             title: $localize`Event`,
         });
     }
 
-    public handleClick() {
+    public handleClick(): void {
         this.toastService.info({
             message: $localize`Additional button clicked!`,
             title: $localize`Event`,
         });
     }
 
-    public select(event: IWizardSelectionEvent) {
+    public select(event: IWizardSelectionEvent): void {
         this.selectedIndex = event.selectedIndex;
     }
-    public onButtonClick(title: string) {
+    public onButtonClick(title: string): void {
         title === "Leave" ? this.actionDone() : this.actionCanceled();
         this.activeDialog.close();
     }
 
-    public preventGoingNext() {
+    public preventGoingNext(): void {
         this.busyConfig.busy = true;
         this.wizardComponent.navigationControl.next({
             busyState: this.busyConfig,

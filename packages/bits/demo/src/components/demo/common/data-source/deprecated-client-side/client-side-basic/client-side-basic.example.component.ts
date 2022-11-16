@@ -102,7 +102,7 @@ export class DepreacatedDataSourceClientSideBasicExampleComponent
         this.selectedFilters = [];
     }
 
-    async ngAfterViewInit() {
+    async ngAfterViewInit(): Promise<void> {
         this.dataSourceService.registerComponent({
             search: {
                 componentInstance: this.filteringSearch,
@@ -124,19 +124,19 @@ export class DepreacatedDataSourceClientSideBasicExampleComponent
         await this.dataSourceService.applyFilters();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 
-    public async onSearch(value: string) {
+    public async onSearch(value: string): Promise<void> {
         await this.dataSourceService.applyFilters();
     }
 
-    public async changePagination() {
+    public async changePagination(): Promise<void> {
         await this.dataSourceService.applyFilters();
     }
 
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         await this.dataSourceService.applyFilters();
     }
 }

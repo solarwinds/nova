@@ -32,9 +32,9 @@ export class ToastRef<T> implements IToastRef<T> {
     /** The instance of component opened into the toast. */
     public componentInstance: T;
     /** Subject for notifying user, that the toast has finished closing. */
-    private afterClosedSubject = new Subject<void>();
-    private activateSubject = new Subject<void>();
-    private manualCloseSubject = new Subject<void>();
+    private readonly afterClosedSubject = new Subject<void>();
+    private readonly activateSubject = new Subject<void>();
+    private readonly manualCloseSubject = new Subject<void>();
 
     constructor(private toastContainerService: ToastContainerService) {}
 

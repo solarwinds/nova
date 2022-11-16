@@ -32,7 +32,7 @@ export class ConfirmationDialogExampleComponent {
         @Inject(ToastService) private toastService: ToastService
     ) {}
 
-    public openInfo() {
+    public openInfo(): void {
         this.dialogService
             .confirm({
                 message: $localize`Are you sure you want to do it?`,
@@ -52,7 +52,7 @@ export class ConfirmationDialogExampleComponent {
                 }
             );
     }
-    public openWarning() {
+    public openWarning(): void {
         this.dialogService
             .confirm({
                 message: $localize`Are you sure you want to do it?`,
@@ -72,7 +72,7 @@ export class ConfirmationDialogExampleComponent {
                 }
             );
     }
-    public openCritical() {
+    public openCritical(): void {
         this.dialogService
             .confirm({
                 message: $localize`Are you sure you want to do it?`,

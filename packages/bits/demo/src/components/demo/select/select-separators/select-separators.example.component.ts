@@ -59,7 +59,7 @@ export class SelectSeparatorsExampleComponent {
 
     constructor() {}
 
-    public valueChange(changedEvent: ISelectChangedEvent<string>) {
+    public valueChange(changedEvent: ISelectChangedEvent<string>): void {
         this.dataset.selectedItem = changedEvent.newValue;
     }
 }

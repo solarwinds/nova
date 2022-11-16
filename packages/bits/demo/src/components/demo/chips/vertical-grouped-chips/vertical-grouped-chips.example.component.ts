@@ -56,14 +56,14 @@ export class VerticalGroupedChipsExampleComponent {
         groupedItems: _cloneDeep(groupedItems),
     };
 
-    public onClear(event: { item: IChipsItem; group?: IChipsGroup }) {
+    public onClear(event: { item: IChipsItem; group?: IChipsGroup }): void {
         console.log(
             `'onClear' event fired. $event.item.id=${event.item.id} $event.group.id=${event.group?.id}`
         );
         _pull(event.group?.items || [], event.item);
     }
 
-    public onClearAll() {
+    public onClearAll(): void {
         this.verticalGroupedItemsSource.groupedItems = [];
     }
 }

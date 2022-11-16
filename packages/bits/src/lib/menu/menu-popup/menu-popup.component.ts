@@ -60,18 +60,18 @@ export class MenuPopupComponent {
     menuItems: QueryList<MenuItemBaseComponent>;
 
     @HostBinding("class.nui-menu-popup--sm")
-    public get smCssClass() {
+    public get smCssClass(): boolean {
         return this.size === "small";
     }
 
     @HostBinding("class.nui-menu-popup--lg")
-    public get lgCssClass() {
+    public get lgCssClass(): boolean {
         return this.size === "large";
     }
 
     @Output() public menuItemClicked? = new EventEmitter<IMenuItem>();
 
-    public handleClick(item: IMenuItem) {
+    public handleClick(item: IMenuItem): void {
         if (!item.disabled) {
             this.menuItemClicked?.emit(item);
             if (_isFunction(item.action)) {
@@ -86,7 +86,7 @@ export class MenuPopupComponent {
             : item.title;
     }
 
-    public stopClickPropagation(event: MouseEvent) {
+    public stopClickPropagation(event: MouseEvent): void {
         event.stopImmediatePropagation();
     }
 }

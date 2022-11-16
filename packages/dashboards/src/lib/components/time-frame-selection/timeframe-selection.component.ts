@@ -42,12 +42,12 @@ import {
 } from "@nova-ui/bits";
 
 import { TimeframeSerializationService } from "../../configurator/services/timeframe-serialization.service";
-import { ISerializableTimeframe } from "../../configurator/services/types";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { REFRESH, SET_TIMEFRAME } from "../../services/types";
 import {
     DATA_SOURCE,
     IHasChangeDetector,
+    ISerializableTimeframe,
     PizzagnaLayer,
     PIZZAGNA_EVENT_BUS,
 } from "../../types";
@@ -88,7 +88,7 @@ export class TimeframeSelectionComponent
             this.timeframeService.getTimeframeByPresetId("last7Days");
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.timeframe) {
             let timeframe = this.tfSerialization.convertFromSerializable(
                 this.timeframe
@@ -102,7 +102,7 @@ export class TimeframeSelectionComponent
             }
             this.currentTimeframe = timeframe;
             if (!changes.timeframe.isFirstChange()) {
-                this.eventBus.getStream(REFRESH).next(undefined);
+                this.eventBus.getStream(REFRESH).next({});
             }
         }
 
@@ -115,24 +115,20 @@ export class TimeframeSelectionComponent
         }
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.history.restart(this.currentTimeframe);
-        this.eventBus
-            .getStream(SET_TIMEFRAME)
-            .subscribe((event: IEvent<ISerializableTimeframe>) => {
-                if (!event.payload) {
-                    throw new Error(
-                        "Unable to set timeframe. Event payload is undefined"
-                    );
-                }
-                this.onTimeframeChange(
-                    this.history.save(
-                        this.tfSerialization.convertFromSerializable(
-                            event.payload
-                        )
-                    )
+        this.eventBus.getStream(SET_TIMEFRAME).subscribe((event) => {
+            if (!event.payload) {
+                throw new Error(
+                    "Unable to set timeframe. Event payload is undefined"
                 );
-            });
+            }
+            this.onTimeframeChange(
+                this.history.save(
+                    this.tfSerialization.convertFromSerializable(event.payload)
+                )
+            );
+        });
 
         if (this.dataSource) {
             this.dataSource.registerComponent({

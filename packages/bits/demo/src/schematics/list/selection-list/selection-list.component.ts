@@ -92,7 +92,7 @@ export class SelectionListComponent implements AfterViewInit, OnDestroy {
     public pageSize: number = RESULTS_PER_PAGE;
 
     public itemConfig: IRepeatItemConfig<IServer> = {
-        trackBy: (index, item) => item?.name,
+        trackBy: (index, item): string | undefined => item?.name,
     };
 
     @ViewChild(RepeatComponent) repeat: RepeatComponent;
@@ -100,7 +100,7 @@ export class SelectionListComponent implements AfterViewInit, OnDestroy {
     @ViewChild(SearchComponent) search: SearchComponent;
     @ViewChild(SorterComponent) sorter: SorterComponent;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         @Inject(DataSourceService)
@@ -111,7 +111,7 @@ export class SelectionListComponent implements AfterViewInit, OnDestroy {
         this.dataSource.setData(LOCAL_DATA);
     }
 
-    public async ngAfterViewInit() {
+    public async ngAfterViewInit(): Promise<void> {
         this.dataSource.registerComponent({
             paginator: { componentInstance: this.paginator },
             search: { componentInstance: this.search },
@@ -157,36 +157,36 @@ export class SelectionListComponent implements AfterViewInit, OnDestroy {
         await this.applyFilters();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    public async onSearch() {
+    public async onSearch(): Promise<void> {
         await this.applyFilters();
     }
 
-    public async onCancelSearch() {
+    public async onCancelSearch(): Promise<void> {
         await this.applyFilters();
     }
 
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         await this.dataSource.applyFilters();
     }
 
-    public async onSorterAction(changes: ISorterChanges) {
+    public async onSorterAction(changes: ISorterChanges): Promise<void> {
         this.sortBy = changes.newValue.sortBy;
         await this.applyFilters();
     }
 
-    public onSelectorOutput(selectionType: SelectionType) {
+    public onSelectorOutput(selectionType: SelectionType): void {
         this.filteringState = this.listService.applySelector(
             selectionType,
             this.filteringState
         );
     }
 
-    public onRepeatOutput(selectedItems: IServer[]) {
+    public onRepeatOutput(selectedItems: IServer[]): void {
         this.filteringState = this.listService.selectItems(
             selectedItems,
             RepeatSelectionMode.multi,

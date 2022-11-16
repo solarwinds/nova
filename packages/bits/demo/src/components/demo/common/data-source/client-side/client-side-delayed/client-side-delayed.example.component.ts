@@ -101,7 +101,7 @@ export class DataSourceClientSideDelayedExampleComponent
         this.selectedFilters = [];
     }
 
-    ngAfterViewInit(): void {
+    async ngAfterViewInit(): Promise<void> {
         this.dataSourceService.componentTree = {
             search: {
                 componentInstance: this.filteringSearch,
@@ -124,7 +124,7 @@ export class DataSourceClientSideDelayedExampleComponent
         this.dataSourceService.applyFilters();
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 

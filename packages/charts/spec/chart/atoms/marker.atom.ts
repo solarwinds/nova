@@ -29,7 +29,7 @@ export class MarkerAtom extends Atom {
 
     public async getColor(): Promise<string> {
         return this.root
-            .all(by.css(`.${MarkerAtom.CSS_CLASS} > g`))
+            .all(by.css(`${Atom.getSelector(MarkerAtom)} > g`))
             .first()
             .getAttribute("fill");
     }

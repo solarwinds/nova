@@ -29,7 +29,7 @@ import { ToastService } from "@nova-ui/bits";
 export class WizardAdditionalButtonExampleComponent {
     constructor(@Inject(ToastService) private toastService: ToastService) {}
 
-    public onAdditionalButtonClick() {
+    public onAdditionalButtonClick(): void {
         this.toastService.info({
             message: $localize`Additional button clicked!`,
         });

@@ -65,7 +65,7 @@ export class TableRowClickableExampleComponent
         public selectorService: SelectorService
     ) {}
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.outputsSubscription =
             this.dataSourceService.outputsSubject.subscribe(
                 (data: INovaFilteringOutputs) => {
@@ -75,16 +75,16 @@ export class TableRowClickableExampleComponent
         this.applyFilters();
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.dataSourceService.setData(getData());
         this.dataSourceService.applyFilters();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 
-    public trackBy(index: number, item: IExampleTableModel) {
+    public trackBy(index: number, item: IExampleTableModel): number {
         return item.position;
     }
 }

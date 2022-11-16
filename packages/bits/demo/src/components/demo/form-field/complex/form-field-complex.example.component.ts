@@ -33,7 +33,7 @@ export class FormFieldComplexExampleComponent implements OnInit {
         private changeDetector: ChangeDetectorRef
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.fancyForm = this.formBuilder.group(
             {
                 password: this.formBuilder.control("", Validators.required),

@@ -79,7 +79,7 @@ export function calculateDomainValueCombinedTotals(
     chartSeries: IChartSeries<IAreaAccessors>,
     isVisible: any,
     domainValueCombinedTotals: Record<any, number>
-) {
+): void {
     const baseAccessor = chartSeries.accessors.data[baseAccessorKey];
     const accessor0 = chartSeries.accessors.data[valueAccessorKey + "0"];
     const accessor1 = chartSeries.accessors.data[valueAccessorKey + "1"];
@@ -109,7 +109,7 @@ export function applyStackMetadata(
     isVisible: any,
     domainValueStacks: Record<any, number>,
     domainValueCombinedTotals: Record<any, number>
-) {
+): void {
     const baseAccessor = chartSeries.accessors.data[baseAccessorKey];
     const accessor0 = chartSeries.accessors.data[valueAccessorKey + "0"];
     const accessor1 = chartSeries.accessors.data[valueAccessorKey + "1"];

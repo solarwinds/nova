@@ -45,7 +45,7 @@ export class DayPickerComponent implements OnInit {
         this.datePicker = datePicker;
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.datePicker.stepDay = { months: 1 };
 
         this.datePicker.setRefreshViewHandler((): void => {

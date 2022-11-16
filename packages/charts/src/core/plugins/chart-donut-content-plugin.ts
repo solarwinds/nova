@@ -40,7 +40,7 @@ export class ChartDonutContentPlugin extends ChartPlugin {
         height: 0,
     };
 
-    public updateDimensions() {
+    public updateDimensions(): void {
         const radius = this.chart
             .getDataManager()
             .chartSeriesSet.reduce((prev: number | undefined, current) => {

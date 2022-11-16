@@ -46,7 +46,7 @@ export class ConfiguratorHeadingComponent implements OnChanges {
         private heading: ConfiguratorHeadingService
     ) {}
 
-    public ngOnChanges() {
+    public ngOnChanges(): void {
         this.heading.height$.next(
             +getComputedStyle(this.el.nativeElement).height.slice(0, -2)
         );

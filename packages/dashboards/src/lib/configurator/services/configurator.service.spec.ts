@@ -86,13 +86,13 @@ class MockInjector implements Injector {
 }
 
 class MockRenderer implements Partial<Renderer2> {
-    public appendChild() {}
+    public appendChild(): void {}
 
-    public setStyle() {}
+    public setStyle(): void {}
 
-    public removeStyle() {}
+    public removeStyle(): void {}
 
-    public removeChild() {}
+    public removeChild(): void {}
 }
 
 class MockRendererFactory {
@@ -145,7 +145,7 @@ describe("ConfiguratorService > ", () => {
         const router = TestBed.inject(Router);
         appRef.attachView = (): void => {};
 
-        widgetTypesService = new WidgetTypesService();
+        widgetTypesService = TestBed.inject(WidgetTypesService);
         widgetTypesService.registerWidgetType("table", 2, table);
         widgetTypesService.registerWidgetType("proportional", 1, proportional);
 

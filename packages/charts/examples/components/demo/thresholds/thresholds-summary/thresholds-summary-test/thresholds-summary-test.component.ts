@@ -35,7 +35,7 @@ import {
     ChartAssist,
     ChartPalette,
     ChartTooltipsPlugin,
-    CHART_PALETTE_CS_S,
+    CHART_PALETTE_CS_S_EXTENDED,
     getAutomaticDomainWithIncludedInterval,
     IAccessors,
     IChartAssistSeries,
@@ -113,9 +113,9 @@ export class ThresholdsSummaryTestComponent implements OnChanges, OnInit {
         this.thresholdsPalette = new ChartPalette(
             new MappedValueProvider(
                 {
-                    error: CHART_PALETTE_CS_S[1],
-                    warning: CHART_PALETTE_CS_S[2],
-                    ok: CHART_PALETTE_CS_S[4],
+                    error: CHART_PALETTE_CS_S_EXTENDED[2],
+                    warning: CHART_PALETTE_CS_S_EXTENDED[4],
+                    ok: CHART_PALETTE_CS_S_EXTENDED[8],
                 },
                 "transparent"
             )
@@ -129,7 +129,7 @@ export class ThresholdsSummaryTestComponent implements OnChanges, OnInit {
         );
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.update(this.data);
     }
 

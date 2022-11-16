@@ -43,7 +43,7 @@ export class DndDragDisabledExampleComponent {
         },
     ];
 
-    public onItemDropped(event: CdkDragDrop<IListItem[]>) {
+    public onItemDropped(event: CdkDragDrop<IListItem[]>): void {
         moveItemInArray(
             this.listItems,
             event.previousIndex,
@@ -51,7 +51,7 @@ export class DndDragDisabledExampleComponent {
         );
     }
 
-    public translatedStatus(enabled: boolean) {
+    public translatedStatus(enabled: boolean): string {
         return enabled ? $localize`Enabled` : $localize`Disabled`;
     }
 }

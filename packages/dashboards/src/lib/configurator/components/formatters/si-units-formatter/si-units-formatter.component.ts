@@ -62,7 +62,7 @@ export class SiUnitsFormatterComponent implements OnChanges {
 
     constructor(public changeDetector: ChangeDetectorRef) {}
 
-    ngOnChanges(changes: SimpleChanges): void {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.data) {
             const { value } = changes.data.currentValue;
 

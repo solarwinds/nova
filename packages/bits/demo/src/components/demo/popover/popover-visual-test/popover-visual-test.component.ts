@@ -38,7 +38,7 @@ export class PopoverVisualTestComponent {
     public overlayConfig: OverlayConfig = {
         panelClass: [OVERLAY_WITH_POPUP_STYLES_CLASS, "combobox-v2-test-pane"],
     };
-    closePopover() {
+    closePopover(): void {
         this.closePopoverSubject.next();
     }
 }

@@ -73,11 +73,11 @@ export class SorterTestExampleComponent implements OnInit {
     public sortBy = this.columns[0].value;
     public items: IFilm[] = getData();
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.sortItems(this.sortBy, this.sortDirection);
     }
 
-    public updateSorterDirection() {
+    public updateSorterDirection(): void {
         const old = this.sortDirection;
         this.sortDirection =
             old === SorterDirection.ascending
@@ -85,7 +85,7 @@ export class SorterTestExampleComponent implements OnInit {
                 : SorterDirection.ascending;
     }
 
-    public onSorterAction(changeEvent: ISorterChanges) {
+    public onSorterAction(changeEvent: ISorterChanges): void {
         this.sortBy = changeEvent.newValue.sortBy;
         this.sortItems(
             changeEvent.newValue.sortBy,
@@ -99,7 +99,7 @@ export class SorterTestExampleComponent implements OnInit {
         });
     }
 
-    public async resetSorter() {
+    public async resetSorter(): Promise<void> {
         this.showSubject.next(false);
         await this.delayPromise();
         this.columns = this.emptyColumns;
@@ -107,12 +107,12 @@ export class SorterTestExampleComponent implements OnInit {
         this.showSubject.next(true);
     }
 
-    public updateSorterByProperty() {
+    public updateSorterByProperty(): void {
         this.columns = this.dataColumns;
         this.sortBy = this.dataColumns[1].value;
     }
 
-    public updateSorterByMethod() {
+    public updateSorterByMethod(): void {
         this.columns = this.dataColumns;
         this.sorter.select(this.dataColumns[2]);
     }

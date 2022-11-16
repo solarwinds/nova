@@ -51,7 +51,8 @@ export class UtilityService {
     ): number | undefined {
         if (haystack.length === 1) {
             return 0;
-        } else if (haystack.length === 0) {
+        }
+        if (haystack.length === 0) {
             return;
         }
 

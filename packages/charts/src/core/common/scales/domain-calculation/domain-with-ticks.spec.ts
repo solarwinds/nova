@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { axisLeft } from "d3-axis";
+import { axisLeft } from "d3";
 
 import { LineAccessors } from "../../../../renderers/line/line-accessors";
 import { LineRenderer } from "../../../../renderers/line/line-renderer";

@@ -82,7 +82,7 @@ export class WidgetBodyContentComponent
         super(changeDetector, pizzagnaService, logger);
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.classNames = `${this.defaultClasses} ${this.elementClass}`;
     }
 

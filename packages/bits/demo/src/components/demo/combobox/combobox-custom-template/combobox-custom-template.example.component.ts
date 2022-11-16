@@ -69,7 +69,7 @@ export class ComboboxCustomTemplateExampleComponent {
 
     constructor() {}
 
-    public textboxChanged(searchQuery: ISelectChangedEvent<string>) {
+    public textboxChanged(searchQuery: ISelectChangedEvent<string>): void {
         this.displayedItems = _cloneDeep(this.dataset.items);
         this.displayedItems = this.displayedItems.filter((item: any) =>
             item.value.includes(searchQuery.newValue)

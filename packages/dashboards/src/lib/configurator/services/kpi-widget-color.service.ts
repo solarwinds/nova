@@ -29,7 +29,7 @@ export class KpiWidgetColorService {
      * @param color Background color
      * @return Calculated text color based on background color
      */
-    public static getTextColor(color: string) {
+    public static getTextColor(color: string): string {
         const colorProvider = new TextColorProvider(
             new SequentialColorProvider([color]),
             {

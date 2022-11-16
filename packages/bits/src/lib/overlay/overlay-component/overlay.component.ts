@@ -54,6 +54,9 @@ import { IOverlayComponent, OverlayContainerType } from "../types";
 
 export const POPUP_V2_VIEWPORT_MARGINS_DEFAULT = 30;
 
+const isMouseEvent = (event: Event): event is MouseEvent =>
+    event instanceof MouseEvent;
+
 // <example-url>./../examples/index.html#/overlay</example-url>
 
 /* @dynamic */
@@ -103,20 +106,20 @@ export class OverlayComponent
     @Input() roleAttr: string;
 
     /** Emits MouseEvent when click occurs outside Select/Combobox */
-    @Output() public clickOutside = new EventEmitter<MouseEvent>();
+    @Output() public readonly clickOutside = new EventEmitter<MouseEvent>();
 
     /** The place where the Popup will be attached */
     @ViewChild(CdkPortal)
     public contentTemplate: CdkPortal;
 
     /** Emits on the Popup show */
-    public show$: Subject<void>;
+    public readonly show$: Subject<void>;
 
     /** Emits on the Popup hide */
-    public hide$: Subject<void>;
+    public readonly hide$: Subject<void>;
 
     /** Emits when content of the Popup is empty */
-    public empty$ = new Subject<boolean>();
+    public readonly empty$ = new Subject<boolean>();
 
     /** Indicates open/close state */
     public get showing(): boolean {
@@ -189,23 +192,22 @@ export class OverlayComponent
 
     /** Stream of clicks outside. */
     private overlayClickOutside(): Observable<MouseEvent> {
-        return this.eventBusService
-            .getStream({ id: DOCUMENT_CLICK_EVENT })
-            .pipe(
-                filter((event) => {
-                    const clickTarget = event.target as HTMLElement;
-                    const notOrigin = !some(
-                        event.composedPath(),
-                        (p) => p === this.toggleReference
-                    ); // the toggle elem
-                    const notOverlay =
-                        this.overlayService
-                            .getOverlayRef()
-                            ?.overlayElement?.contains(clickTarget) === false; // the popup
+        return this.eventBusService.getStream(DOCUMENT_CLICK_EVENT).pipe(
+            filter(isMouseEvent),
+            filter((event) => {
+                const clickTarget = event.target as HTMLElement;
+                const notOrigin = !some(
+                    event.composedPath(),
+                    (p) => p === this.toggleReference
+                ); // the toggle elem
+                const notOverlay =
+                    this.overlayService
+                        .getOverlayRef()
+                        ?.overlayElement?.contains(clickTarget) === false; // the popup
 
-                    return notOrigin && notOverlay;
-                })
-            );
+                return notOrigin && notOverlay;
+            })
+        );
     }
 
     private handleOutsideClicks() {

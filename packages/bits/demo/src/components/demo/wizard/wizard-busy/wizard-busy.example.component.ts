@@ -38,7 +38,7 @@ export class WizardBusyExampleComponent {
 
     constructor() {}
 
-    public toggleStepBusy() {
+    public toggleStepBusy(): void {
         /* Switch off spinner of all content. Just to avoid two spinners */
         this.isBusy = false;
         this.busyConfig.busy = !this.busyConfig.busy;

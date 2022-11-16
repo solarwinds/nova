@@ -41,7 +41,7 @@ export class DialogInsideOverlayExampleComponent {
     /**
      * Notice that the 'useOverlay' option is being passed in here
      */
-    public openInOverlay(content: TemplateRef<string>) {
+    public openInOverlay(content: TemplateRef<string>): void {
         this.activeDialog = this.dialogService.open(content, {
             size: "sm",
             useOverlay: true,

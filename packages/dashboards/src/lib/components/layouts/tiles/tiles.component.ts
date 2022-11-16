@@ -66,11 +66,11 @@ export class TilesComponent
         super(changeDetector, pizzagnaService, logger);
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.handleGridFlowOnResize();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.tilesResizeObserver?.disconnect();
         // Ensures that any base class observables are unsubscribed.
         super.ngOnDestroy();

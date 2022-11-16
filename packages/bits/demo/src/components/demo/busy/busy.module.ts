@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { NgModule } from "@angular/core";
-import { RouterModule } from "@angular/router";
+import { Route, RouterModule } from "@angular/router";
 
 import {
     DEMO_PATH_TOKEN,
@@ -43,9 +43,10 @@ import {
     BusyVisualTestComponent,
 } from "./index";
 
-const routes = [
+const routes: Route[] = [
     {
         path: "",
+        pathMatch: "full",
         component: BusyDocsExampleComponent,
         data: {
             srlc: {

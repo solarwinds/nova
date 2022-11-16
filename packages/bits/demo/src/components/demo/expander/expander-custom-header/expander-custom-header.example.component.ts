@@ -39,7 +39,7 @@ export class ExpanderCustomHeaderExampleComponent {
                 {
                     title: $localize`Item 2`,
                     itemType: "action",
-                    action: () => alert($localize`hello`),
+                    action: (): void => alert($localize`hello`),
                 },
             ],
         },

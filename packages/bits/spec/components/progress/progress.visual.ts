@@ -20,6 +20,7 @@
 
 import { $, browser, by, element, ExpectedConditions } from "protractor";
 
+import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
 import { ButtonAtom } from "../button/button.atom";
@@ -46,7 +47,7 @@ describe(`Visual tests: ${name}`, () => {
 
         await startProgressBasic.click();
         await browser.wait(
-            ExpectedConditions.visibilityOf($(`.${ProgressAtom.CSS_CLASS}`))
+            ExpectedConditions.visibilityOf($(Atom.getSelector(ProgressAtom)))
         );
         await camera.say.cheese(`Default`);
 

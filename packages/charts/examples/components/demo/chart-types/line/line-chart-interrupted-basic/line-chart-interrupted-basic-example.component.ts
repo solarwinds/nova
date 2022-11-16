@@ -45,7 +45,7 @@ export class LineChartInterruptedBasicExampleComponent implements OnInit {
     public chart = new Chart(new XYGrid());
     public chartAssist: ChartAssist = new ChartAssist(this.chart);
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         // In case of a line chart, the scale definitions are flexible.
         // This example demonstrates a scenario with time on the X scale and a numeric value on the Y scale.
         const scales: IXYScales = {

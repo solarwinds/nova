@@ -43,7 +43,7 @@ export class BarChartStackedHorizontalExampleComponent implements OnInit {
     public chartAssist: ChartAssist;
     public tooltipsPlugin = new BarTooltipsPlugin();
 
-    ngOnInit() {
+    public ngOnInit(): void {
         const gridConfig = new BarHorizontalGridConfig();
 
         const chart = new Chart(new XYGrid(gridConfig));

@@ -20,7 +20,7 @@
 
 import { DOCUMENT } from "@angular/common";
 import { Component, Inject, Input, OnInit } from "@angular/core";
-import hljs from "highlight.js/lib/core";
+import hljs from "highlight.js";
 import javascript from "highlight.js/lib/languages/javascript";
 import json from "highlight.js/lib/languages/json";
 import less from "highlight.js/lib/languages/less";
@@ -42,10 +42,10 @@ import { PlunkerProjectService } from "./plunker-project.service";
 })
 export class ExampleWrapperComponent implements OnInit {
     // Prefix of the example component's filenames
-    @Input() filenamePrefix: string;
+    @Input() filenamePrefix: string = "";
 
     // Title to be displayed at the top of the example
-    @Input() exampleTitle: string;
+    @Input() exampleTitle: string = "";
 
     // Indicates whether the source code is being displayed
     @Input() showSource = false;
@@ -53,12 +53,7 @@ export class ExampleWrapperComponent implements OnInit {
     public availableThemes = ["light theme", "dark theme"];
     public selectedTheme = this.availableThemes[0];
 
-    public componentSources: {
-        ts: string;
-        html: string;
-        less?: string;
-        [key: string]: any;
-    };
+    public componentSources: Record<string, Record<string, string>>;
 
     public getTooltip(): string {
         return this.showSource ? "Hide source code" : "Show source code";
@@ -84,9 +79,10 @@ export class ExampleWrapperComponent implements OnInit {
         hljs.registerLanguage("less", less);
     }
 
-    ngOnInit(): void {
-        this.componentSources = this.sourcesService.getSourcesByFilenamePrefix(
-            this.filenamePrefix
-        );
+    public ngOnInit(): void {
+        this.componentSources =
+            this.sourcesService.getSourcesByFilenamePrefix(
+                this.filenamePrefix
+            ) ?? {};
     }
 }

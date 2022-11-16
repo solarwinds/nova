@@ -76,11 +76,11 @@ export class ToolbarTestExampleComponent {
         total: 72,
     };
 
-    public onOptionChange(value: string) {
+    public onOptionChange(value: string): void {
         this.width = value;
     }
 
-    public onToggle() {
+    public onToggle(): void {
         this.showFirst = !this.showFirst;
     }
 }

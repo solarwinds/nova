@@ -29,7 +29,7 @@ import { CheckboxChangeEvent, ToastService } from "@nova-ui/bits";
 export class CheckboxOutputExampleComponent {
     constructor(private toastService: ToastService) {}
 
-    public onValueChanged($event: CheckboxChangeEvent) {
+    public onValueChanged($event: CheckboxChangeEvent): void {
         this.toastService.success({
             message: $localize`Checkbox is checked: ${$event.target.checked}`,
         });

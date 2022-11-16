@@ -34,7 +34,7 @@ export class DialogContentExampleComponent {
         @Inject(ToastService) private toastService: IToastService
     ) {}
 
-    public onButtonClick(title: string) {
+    public onButtonClick(title: string): void {
         title === "Action" ? this.actionDone() : this.actionCanceled();
         this.activeDialog.close();
     }

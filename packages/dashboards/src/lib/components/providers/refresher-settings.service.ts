@@ -37,7 +37,7 @@ export class RefresherSettingsService {
      * This is a system wide definition of refresh rate. Widgets have to be configured to use
      * the system settings to leverage this value.
      */
-    public get refreshRateSeconds() {
+    public get refreshRateSeconds(): number {
         return this._refreshRateSeconds;
     }
 

@@ -28,7 +28,7 @@ export class InteractiveBooster {
         chart: ChartAtom,
         location: ILocation
     ): Promise<void> {
-        return chart.getLayer("rendering-area").then(async (layer) => {
+        return chart.getLayer("rendering-area").then(async ([layer]) => {
             const element = layer
                 ? layer.element(by.className("mouse-interactive-area"))
                 : chart.getElement();

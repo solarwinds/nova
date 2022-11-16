@@ -67,12 +67,14 @@ export class KpiStatusContentFallbackAdapter
         this.eventBus
             .getStream(DATA_SOURCE_DESTROYED)
             .pipe(takeUntil(this.destroy$))
-            .subscribe((event: IEvent<IComponentIdPayload>) => {
+            .subscribe((event) => {
                 this.handleDataSourceDestroyed(event);
             });
     }
 
-    public updateConfiguration(properties: IKpiFallbackAdapterProperties) {
+    public updateConfiguration(
+        properties: IKpiFallbackAdapterProperties
+    ): void {
         if (properties.multipleErrorFallbackKey) {
             this.multipleErrorFallbackKey = properties.multipleErrorFallbackKey;
         }
@@ -80,13 +82,15 @@ export class KpiStatusContentFallbackAdapter
 
     protected handleDataSourceOutput(
         event: IEvent<any | IDataSourceOutputPayload<any>>
-    ) {
+    ): void {
         this.errorMap = this.updateErrorMap(event);
 
         this.setFallbackKeyProperty();
     }
 
-    protected handleDataSourceDestroyed(event: IEvent<IComponentIdPayload>) {
+    protected handleDataSourceDestroyed(
+        event: IEvent<IComponentIdPayload>
+    ): void {
         if (event.payload?.componentId) {
             delete this.errorMap[event.payload.componentId];
         }

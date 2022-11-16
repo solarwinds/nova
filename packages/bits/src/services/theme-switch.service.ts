@@ -106,7 +106,7 @@ export class ThemeSwitchService {
      * Use this method to configure the service to synchronize your app's theme with the user's
      * light/dark mode system preference
      */
-    public enableColorSchemePreferenceHandling() {
+    public enableColorSchemePreferenceHandling(): void {
         this.darkThemePreference = window.matchMedia(
             "(prefers-color-scheme: dark)"
         );
@@ -127,7 +127,7 @@ export class ThemeSwitchService {
      * Use this method to disable synchronization of your app's theme with the user's light/dark mode
      * system preference
      */
-    public disableColorSchemePreferenceHandling() {
+    public disableColorSchemePreferenceHandling(): void {
         if (
             this.darkThemePreference &&
             typeof this.darkThemePreference.removeEventListener === "function"

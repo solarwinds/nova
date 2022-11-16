@@ -41,12 +41,12 @@ export class TabHeadingGroupResponsiveExampleComponent {
         this.setTabs();
     }
 
-    public updateContent(tabId: string) {
+    public updateContent(tabId: string): void {
         this.currentTabId = tabId;
         this.changeDetector.detectChanges();
     }
 
-    public setTabs(tabsAmount: number = 20) {
+    public setTabs(tabsAmount: number = 20): void {
         for (let i = 1; i < tabsAmount; i++) {
             this.tabsetContent.push({
                 id: i.toString(),

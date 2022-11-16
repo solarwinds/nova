@@ -132,7 +132,7 @@ export class ProportionalChartOptionsEditorComponent
         );
     }
 
-    public getConfigurationComponentProperties() {
+    public getConfigurationComponentProperties(): void {
         this.configurationComponentProperties = {
             contentFormatterProperties: this.contentFormatterProperties,
             contentFormatterDefinition: this.getCurrentFormatterDefinition(),
@@ -212,7 +212,7 @@ export class ProportionalChartOptionsEditorComponent
         }
     }
 
-    public onFormReady(payload: FormGroup) {
+    public onFormReady(payload: FormGroup): void {
         (this.form.get("contentFormatter") as FormGroup).setControl(
             "properties",
             payload

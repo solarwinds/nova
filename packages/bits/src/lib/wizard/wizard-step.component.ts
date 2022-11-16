@@ -113,7 +113,7 @@ export class WizardStepComponent
 
     constructor() {}
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.nextText = this.nextText || $localize`Next`;
     }
 

@@ -33,6 +33,6 @@ describe("a11y: switch", () => {
     });
 
     it("should check a11y of switch", async () => {
-        await assertA11y(browser, SwitchAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, SwitchAtom, rulesToDisable);
     });
 });

@@ -20,7 +20,11 @@
 
 import { Injectable } from "@angular/core";
 
-import { UnitBase, unitConversionConstants, UnitOption } from "../constants";
+import {
+    UnitBase,
+    unitConversionConstants,
+    UnitOption,
+} from "../constants/unit-conversion.constants";
 import { LoggerService } from "./log-service";
 import { IUnitConversionResult } from "./public-api";
 

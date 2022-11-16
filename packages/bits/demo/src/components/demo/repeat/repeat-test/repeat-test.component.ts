@@ -34,7 +34,7 @@ export class RepeatTestComponent {
         { color: $localize`black` },
     ];
 
-    public tabs = [
+    public readonly tabs = [
         {
             id: "tab1",
             title: "No Content",
@@ -44,7 +44,8 @@ export class RepeatTestComponent {
             title: "Repeat VScroll",
         },
     ];
-    public currentTabId = this.tabs[0].id;
+
+    public currentTabId: string = this.tabs[0].id;
 
     private colorIndex: number = 1;
 

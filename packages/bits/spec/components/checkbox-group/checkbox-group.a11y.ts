@@ -38,6 +38,6 @@ describe("a11y: checkbox-group", () => {
     });
 
     it("should verify a11y of checkbox group", async () => {
-        await assertA11y(browser, CheckboxGroupAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, CheckboxGroupAtom, rulesToDisable);
     });
 });

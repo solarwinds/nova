@@ -146,7 +146,7 @@ export class <%= classify(name) %>Component implements <% if (dataSource === "se
     if (enableSort) { %>
     @ViewChild(SorterComponent) sorter: SorterComponent;<% } %>
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         @Inject(DataSourceService) private dataSource:
@@ -162,7 +162,7 @@ export class <%= classify(name) %>Component implements <% if (dataSource === "se
     }<%
     if (dataSource === "serverSide") {%>
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource.busy.pipe(
             tap(val => {
                 this.isBusy = val;
@@ -172,7 +172,7 @@ export class <%= classify(name) %>Component implements <% if (dataSource === "se
         ).subscribe();
     }<% } %>
 
-    public async ngAfterViewInit() {
+    public async ngAfterViewInit(): Promise<void> {
         this.dataSource.registerComponent({<% if (pagingMode === "pagination") { %>
             paginator: { componentInstance: this.paginator },<% } %><% if (pagingMode === "virtualScroll") { %>
             virtualScroll: { componentInstance: this.viewportManager },<% } %><% if (enableSearch) { %>
@@ -252,7 +252,7 @@ export class <%= classify(name) %>Component implements <% if (dataSource === "se
         await this.applyFilters();<% } %>
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }<% if (enableSearch) {%>

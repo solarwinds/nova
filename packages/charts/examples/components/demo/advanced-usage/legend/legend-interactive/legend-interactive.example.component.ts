@@ -39,7 +39,7 @@ export class LegendInteractiveExampleComponent implements OnInit {
     public firstSeriesId = "1";
     public secondSeriesId = "2";
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const accessors = new LineAccessors();
         const renderer = new LineRenderer();
         this.chartAssist.update([

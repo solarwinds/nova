@@ -52,7 +52,7 @@ export class LineChartWithTooltipsExampleComponent implements OnInit {
 
     constructor(private changeDetector: ChangeDetectorRef) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         // this is necessary to make the chart work in OnPush change detection mode
         this.chartAssist.onEvent = () => this.changeDetector.detectChanges();
 

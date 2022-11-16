@@ -38,7 +38,7 @@ import {
 export class RendererMarkersCustomAccessorExampleComponent implements OnInit {
     public chart = new Chart(new XYGrid());
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const scales = {
             x: new LinearScale(),
             y: new LinearScale(),

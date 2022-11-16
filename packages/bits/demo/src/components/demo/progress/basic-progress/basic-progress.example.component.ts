@@ -30,7 +30,7 @@ export class BasicProgressExampleComponent implements OnDestroy {
     public isCanceled = false;
     private stop: any = undefined;
 
-    public startProgress() {
+    public startProgress(): void {
         this.clearInterval();
 
         this.show = true;
@@ -51,7 +51,7 @@ export class BasicProgressExampleComponent implements OnDestroy {
         this.percent = 0;
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.clearInterval();
     }
 

@@ -127,7 +127,7 @@ export class PizzagnaComponent implements OnChanges {
         }
     }
 
-    public onOutput(event: IEvent) {
+    public onOutput(event: IEvent): void {
         this.output.emit(event);
     }
 

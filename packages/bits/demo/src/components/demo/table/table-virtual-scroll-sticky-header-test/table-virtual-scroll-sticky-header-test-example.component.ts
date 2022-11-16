@@ -26,8 +26,8 @@ import {
     TrackByFunction,
     ViewChild,
 } from "@angular/core";
-import sample from "lodash/sample";
 import { Observable } from "rxjs";
+// eslint-disable-next-line import/no-deprecated
 import { map, startWith, switchMap, tap } from "rxjs/operators";
 
 import {
@@ -105,10 +105,12 @@ export class TableVirtualScrollStickyHeaderTestExampleComponent
 
         // Note: Creating a stream of visible items to be bound to the table and increase the performance
         this.visibleItems$ = this.viewport.renderedRangeStream.pipe(
+            // eslint-disable-next-line import/no-deprecated
             startWith({ start: 0, end: 10 }),
             // Note: On range change applying filters
             tap(async () => this.dataSourceService.applyFilters()),
             // Subscribing to the filter results transforming and merging them into the stream
+            // eslint-disable-next-line import/no-deprecated
             switchMap(() =>
                 this.dataSourceService.outputsSubject.pipe(
                     map((result: IFilteringOutputs) => {

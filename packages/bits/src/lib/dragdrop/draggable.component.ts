@@ -38,7 +38,7 @@ import { DroppableComponent } from "./droppable.component";
     selector: "nui-draggable",
     templateUrl: "./draggable.component.html",
     styleUrls: ["./draggable.component.less"],
-    host: { "aria-grabbed": "supported" },
+    // host: { "aria-grabbed": "supported" },
 })
 export class DraggableComponent implements OnInit {
     @Input() payload: any;
@@ -53,7 +53,7 @@ export class DraggableComponent implements OnInit {
 
     constructor() {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.dragElement.dropContainer = this.dropTarget.dropList;
     }
 }

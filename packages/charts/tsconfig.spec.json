@@ -1,9 +1,11 @@
 {
     "compilerOptions": {
-        "outDir": "../../out-tsc/spec",
+        "paths": {
+            "@nova-ui/charts": ["./src/public-api.ts"]
+        },
         "types": ["d3", "d3-selection-multi", "jasmine", "node"]
     },
     "extends": "./tsconfig.json",
     "files": ["./src/test.ts", "./src/polyfills.ts"],
-    "include": ["**/*.spec.ts", "**/*.d.ts"]
+    "include": ["./src/**/*.spec.ts", "./src/**/*.d.ts"]
 }

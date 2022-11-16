@@ -69,7 +69,7 @@ export class FilteredViewTreeComponent implements OnDestroy, AfterViewInit {
     public items: IServer[] = [];
     public filteringState: INovaFilteringOutputs = {};
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         @Inject(DataSourceService)
@@ -77,7 +77,7 @@ export class FilteredViewTreeComponent implements OnDestroy, AfterViewInit {
         private cdRef: ChangeDetectorRef
     ) {}
 
-    async ngAfterViewInit() {
+    async ngAfterViewInit(): Promise<void> {
         this.dataSource.outputsSubject
             .pipe(
                 tap((data: any) => {
@@ -94,15 +94,14 @@ export class FilteredViewTreeComponent implements OnDestroy, AfterViewInit {
         await this.applyFilters();
     }
 
-    hasChild = (_: number, node: any) =>
-        !!node.children && node.children.length > 0;
+    hasChild = (_: number, node: any): boolean => !!node.children?.length;
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         await this.dataSource.applyFilters();
     }
 }

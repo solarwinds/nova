@@ -28,7 +28,7 @@ import { ComboboxAtom } from "./combobox.atom";
 /**
  * Consider using this as a reference to the test cases to add to the combobox-v2 test suite in scope of NUI-4902
  */
-xdescribe("USERCONTROL Combobox >", () => {
+describe("USERCONTROL Combobox >", () => {
     let comboboxBasic: ComboboxAtom;
     let comboboxDisabled: ComboboxAtom;
     let inlineCombobox: ComboboxAtom;
@@ -464,7 +464,7 @@ xdescribe("USERCONTROL Combobox >", () => {
             it("should be keyboard navigated and able to select an item", async () => {
                 await comboboxBasic.toggleMenu();
                 await Helpers.pressKey(Key.ARROW_DOWN, 3);
-                await Helpers.pressKey(Key.ENTER, 1);
+                await Helpers.pressKey(Key.ENTER);
                 expect(await comboboxBasic.getInputValue()).toMatch("Item 3");
             });
         });

@@ -70,7 +70,7 @@ export class RichLegendTileComponent
         private changeDetector: ChangeDetectorRef
     ) {}
 
-    public ngAfterContentInit() {
+    public ngAfterContentInit(): void {
         if (this.legend) {
             this.unitLabel = this.unitLabel || this.legend.seriesUnitLabel;
             this.backgroundColor =
@@ -78,7 +78,7 @@ export class RichLegendTileComponent
         }
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         if (this.legendSeries) {
             this.seriesHasAdditionalContent =
                 this.legendSeries.hasInputDescription() ||
@@ -87,11 +87,11 @@ export class RichLegendTileComponent
         }
     }
 
-    public hasInputValue() {
+    public hasInputValue(): boolean {
         return !_isNil(this.value);
     }
 
-    public hasInputUnitLabel() {
+    public hasInputUnitLabel(): boolean {
         return !_isNil(this.unitLabel);
     }
 }

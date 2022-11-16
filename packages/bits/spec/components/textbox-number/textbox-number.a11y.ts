@@ -31,6 +31,6 @@ describe("a11y: textbox-number", () => {
     });
 
     it("should check a11y of textbox-number", async () => {
-        await assertA11y(browser, TextboxNumberAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, TextboxNumberAtom, rulesToDisable);
     });
 });

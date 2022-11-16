@@ -21,6 +21,7 @@
 import { Directive, Host, Input, OnDestroy, OnInit, Self } from "@angular/core";
 import cloneDeep from "lodash/cloneDeep";
 import { Subject } from "rxjs";
+// eslint-disable-next-line import/no-deprecated
 import { switchMap, takeUntil } from "rxjs/operators";
 
 import { DashboardComponent } from "../../components/dashboard/dashboard.component";
@@ -32,6 +33,7 @@ import {
 import { WidgetEditorService } from "../../configurator/services/widget-editor.service";
 import { WIDGET_EDIT, WIDGET_REMOVE } from "../../services/types";
 import { WidgetRemovalService } from "../../services/widget-removal.service";
+import { IWidgetEvent } from "../../services/widget-to-dashboard-event-proxy.service";
 import { WidgetTypesService } from "../../services/widget-types.service";
 
 @Directive({
@@ -41,7 +43,7 @@ export class WidgetEditorDirective implements OnInit, OnDestroy {
     @Input("nuiWidgetEditor")
     dashboardPersistenceHandler: IDashboardPersistenceHandler;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         @Host() @Self() private dashboardComponent: DashboardComponent,
@@ -54,6 +56,7 @@ export class WidgetEditorDirective implements OnInit, OnDestroy {
         this.dashboardComponent.eventBus
             .getStream(WIDGET_EDIT)
             .pipe(
+                // eslint-disable-next-line import/no-deprecated
                 switchMap((event) => {
                     const widget =
                         this.dashboardComponent.dashboard.widgets[
@@ -85,7 +88,11 @@ export class WidgetEditorDirective implements OnInit, OnDestroy {
         this.dashboardComponent.eventBus
             .getStream(WIDGET_REMOVE)
             .pipe(
+                // eslint-disable-next-line import/no-deprecated
                 switchMap((event) => {
+                    if (!event.widgetId) {
+                        throw new Error(`event has to have widgetId`);
+                    }
                     const widgetId = event.widgetId;
                     const tryRemove =
                         this.dashboardPersistenceHandler &&

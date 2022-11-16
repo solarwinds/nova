@@ -31,6 +31,6 @@ describe("a11y: sorter", () => {
     });
 
     it("should check a11y of sorter", async () => {
-        await assertA11y(browser, SorterAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, SorterAtom, rulesToDisable);
     });
 });

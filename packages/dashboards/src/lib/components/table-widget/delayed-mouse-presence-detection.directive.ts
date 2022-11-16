@@ -25,14 +25,13 @@ import { Subject } from "rxjs";
     selector: "[nuiDelayedMousePresenceDetection]",
 })
 export class DelayedMousePresenceDetectionDirective {
-    // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input("nuiDelayedMousePresenceDetection") public enabled: boolean = true;
     @Input() mousePresentSubject: Subject<boolean>;
     @Input() delay: number = 500;
 
     private timeout: NodeJS.Timeout;
 
-    @HostListener("mouseenter") onHostMouseenter() {
+    @HostListener("mouseenter") onHostMouseenter(): void {
         if (!this.enabled) {
             return;
         }
@@ -41,14 +40,14 @@ export class DelayedMousePresenceDetectionDirective {
         }, this.delay);
     }
 
-    @HostListener("click") onHostClick() {
+    @HostListener("click") onHostClick(): void {
         if (!this.enabled) {
             return;
         }
         this.mousePresentSubject.next(true);
     }
 
-    @HostListener("mouseleave") onHostMouseleave() {
+    @HostListener("mouseleave") onHostMouseleave(): void {
         if (!this.enabled) {
             return;
         }

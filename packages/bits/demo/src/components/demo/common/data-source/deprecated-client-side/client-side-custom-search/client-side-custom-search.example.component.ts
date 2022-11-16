@@ -114,7 +114,7 @@ export class DepreacatedDataSourceClientSideCustomSearchExampleComponent
         this.selectedFilters = [];
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.dataSourceService.componentTree = {
             search: {
                 componentInstance: this.filteringSearch,
@@ -136,19 +136,19 @@ export class DepreacatedDataSourceClientSideCustomSearchExampleComponent
             );
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 
-    public onSearch(value: string) {
+    public onSearch(value: string): void {
         this.dataSourceService.applyFilters();
     }
 
-    public changePagination() {
+    public changePagination(): void {
         this.dataSourceService.applyFilters();
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.dataSourceService.applyFilters();
     }
 }

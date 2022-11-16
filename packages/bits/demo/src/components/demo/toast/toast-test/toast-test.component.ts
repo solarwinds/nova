@@ -58,11 +58,11 @@ export class ToastTestComponent implements OnInit {
     public count: number;
     public type: string;
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.reset();
     }
 
-    public fireToast() {
+    public fireToast(): void {
         const funcs: Record<
             string,
             (toast: IToastDeclaration) => IActiveToast
@@ -78,7 +78,7 @@ export class ToastTestComponent implements OnInit {
         }
     }
 
-    public reset() {
+    public reset(): void {
         this.count = 1;
         this.type = "info";
         this.toast = {

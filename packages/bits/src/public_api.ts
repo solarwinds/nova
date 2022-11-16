@@ -33,6 +33,8 @@ export { CheckboxGroupComponent } from "./lib/checkbox/checkbox-group.component"
 export { ChipComponent } from "./lib/chips/chip/chip.component";
 export { ChipsComponent } from "./lib/chips/chips.component";
 export { ChipsOverflowComponent } from "./lib/chips/chips-overflow/chips-overflow.component";
+export { DraggableComponent } from "./lib/dragdrop/draggable.component";
+export { DroppableComponent } from "./lib/dragdrop/droppable.component";
 export { IconComponent } from "./lib/icon/icon.component";
 export { SpinnerComponent } from "./lib/spinner/spinner.component";
 export { SwitchComponent } from "./lib/switch/switch.component";
@@ -195,7 +197,7 @@ export { OverlayPositionService } from "./lib/overlay/overlay-position.service";
 export { OverlayService } from "./lib/overlay/overlay.service";
 
 // External tokens also should be exposed here
-export { DEMO_PATH_TOKEN } from "./constants/path.constant";
+export { DEMO_PATH_TOKEN } from "./constants/path.constants";
 
 // Animations expose
 export { expand } from "./animations/expand";

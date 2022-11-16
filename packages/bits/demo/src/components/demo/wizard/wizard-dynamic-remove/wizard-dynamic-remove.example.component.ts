@@ -38,7 +38,7 @@ export class WizardDynamicRemoveExampleComponent implements OnDestroy {
 
     public selectedIndex: number;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     public select(event: IWizardSelectionEvent): void {
         this.selectedIndex = event.selectedIndex;
@@ -46,13 +46,13 @@ export class WizardDynamicRemoveExampleComponent implements OnDestroy {
 
     public addStep(): void {
         const index = this.selectedIndex + 1;
-        const step: WizardStepComponent = this.wizardComponent.addStepDynamic(
+        const step = this.wizardComponent.addStepDynamic(
             this.dynamicStep,
             index
         );
 
         step.enter
-            .pipe(takeUntil(this.destroy$))
+            ?.pipe(takeUntil(this.destroy$))
             .subscribe(() =>
                 console.log(
                     `Enter event has been emitted from WizardStepComponent`
@@ -60,7 +60,7 @@ export class WizardDynamicRemoveExampleComponent implements OnDestroy {
             );
 
         step.exit
-            .pipe(takeUntil(this.destroy$))
+            ?.pipe(takeUntil(this.destroy$))
             .subscribe(() =>
                 console.log(
                     `Exit event has been emitted from WizardStepComponent`

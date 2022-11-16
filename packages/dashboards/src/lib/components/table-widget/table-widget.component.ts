@@ -42,7 +42,9 @@ import {
 import get from "lodash/get";
 import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
+// eslint-disable-next-line import/no-deprecated
 import { BehaviorSubject, merge, Observable, of, Subject } from "rxjs";
+// eslint-disable-next-line import/no-deprecated
 import { filter, map, take, takeUntil, tap } from "rxjs/operators";
 
 import {
@@ -178,12 +180,13 @@ export class TableWidgetComponent
     @ViewChildren(TableRowComponent, { read: ElementRef })
     tableRows: QueryList<ElementRef>;
 
-    public get interactive() {
+    public get interactive(): boolean {
         return (
-            this.configuration?.interactive ||
+            this.configuration?.interactive ??
             this.dataSource?.features?.getFeatureConfig(
                 WellKnownDataSourceFeatures.Interactivity
-            )?.enabled
+            )?.enabled ??
+            false
         );
     }
 
@@ -268,6 +271,7 @@ export class TableWidgetComponent
 
         this.dataSource.busy
             ?.pipe(
+                // eslint-disable-next-line import/no-deprecated
                 tap((isBusy) => (this.isBusy = isBusy)),
                 takeUntil(this.onDestroy$)
             )
@@ -280,10 +284,11 @@ export class TableWidgetComponent
             .pipe(
                 filter(
                     (event) =>
-                        event.payload.widgetId ===
+                        event.payload?.widgetId?.toString() ===
                         this.widgetConfigurationService.getWidget().id
                 ),
-                map((event) => event.payload.height)
+                // eslint-disable-next-line import/no-deprecated
+                map((event) => event.payload?.height ?? 0)
             );
 
         // subscribing to widget resize event from dashboard and update virtual scroll viewport size
@@ -300,6 +305,7 @@ export class TableWidgetComponent
         // setTimeout is needed because this.el.nativeElement.getBoundingClientRect().height is 0  when it switches components from
         // fallback component to table widget and it needs to have height
         setTimeout(() => {
+            // eslint-disable-next-line import/no-deprecated
             merge(
                 of(this.range * this.rowHeight),
                 tableHeightChanged$,
@@ -308,10 +314,11 @@ export class TableWidgetComponent
                 .pipe(
                     filter((value) => !!value),
                     take(1),
+                    // eslint-disable-next-line import/no-deprecated
                     tap((value) => {
                         this.tableWidgetHeight = value;
                         this.virtualScrollAddon.subscribeToVirtualScroll();
-                        this.eventBus.getStream(WIDGET_READY).next(undefined);
+                        this.eventBus.getStream(WIDGET_READY).next({});
                     })
                 )
                 .subscribe();
@@ -490,7 +497,7 @@ export class TableWidgetComponent
         // So we're flushing the old data and waiting for new one to avoid confusion.
         this.flushTableData();
 
-        this.eventBus.getStream(REFRESH).next(undefined);
+        this.eventBus.getStream(REFRESH).next({});
     }
 
     public onInteraction(row: any, event: MouseEvent): void {

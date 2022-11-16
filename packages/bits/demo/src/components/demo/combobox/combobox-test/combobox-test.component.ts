@@ -155,7 +155,7 @@ export class ComboboxTestComponent implements OnInit {
         @Inject(ToastService) private toastService: ToastService
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
             item: this.formBuilder.control(
                 this.reactiveFormDataset.selectedItem,
@@ -176,7 +176,9 @@ export class ComboboxTestComponent implements OnInit {
         this.isInErrorState();
     }
 
-    public separatorsTextboxChanged(searchQuery: ISelectChangedEvent<string>) {
+    public separatorsTextboxChanged(
+        searchQuery: ISelectChangedEvent<string>
+    ): void {
         this.separatorsDisplayedItems = _cloneDeep(
             this.separatorsDataset.itemsInGroups
         );
@@ -198,17 +200,19 @@ export class ComboboxTestComponent implements OnInit {
                 ));
     }
 
-    public onSubmit() {
+    public onSubmit(): void {
         this.myForm.valid
             ? this.toastService.success({ message: `Your form is valid!` })
             : this.toastService.error({ message: `Your form is invalid!` });
     }
 
-    public onDisplayValueChange(changedEvent: ISelectChangedEvent<any>) {
+    public onDisplayValueChange(changedEvent: ISelectChangedEvent<any>): void {
         this.displayValueSelectedItem = changedEvent.newValue;
     }
 
-    public typeaheadTextboxChanged(searchQuery: ISelectChangedEvent<any>) {
+    public typeaheadTextboxChanged(
+        searchQuery: ISelectChangedEvent<any>
+    ): void {
         this.typeaheadDisplayedItems = _cloneDeep(this.typeaheadDataset);
         this.typeaheadDisplayedItems.forEach((group) => {
             group.items = group.items.filter(

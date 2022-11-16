@@ -113,7 +113,7 @@ export class ChartTooltipsPlugin extends ChartPlugin {
     protected overlaySetup: ConnectedPosition[];
 
     private isChartInView = false;
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     private seriesVisibilityMap: Record<string, boolean> = {};
 
     /**
@@ -177,7 +177,7 @@ export class ChartTooltipsPlugin extends ChartPlugin {
         this.destroy$.complete();
     }
 
-    public processHighlightedDataPoints(dataPoints: IDataPointsPayload) {
+    public processHighlightedDataPoints(dataPoints: IDataPointsPayload): void {
         const validDataPoints = pickBy(
             dataPoints,
             (d: IDataPoint) =>

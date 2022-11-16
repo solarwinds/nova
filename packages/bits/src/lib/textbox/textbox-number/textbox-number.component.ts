@@ -41,7 +41,7 @@ import isNumber from "lodash/isNumber";
 import isUndefined from "lodash/isUndefined";
 import round from "lodash/round";
 
-import { KEYBOARD_CODE } from "../../../constants";
+import { KEYBOARD_CODE } from "../../../constants/keycode.constants";
 import { regexpValidation } from "../../../constants/regex.constants";
 import { NuiFormFieldControl } from "../../form-field/public-api";
 
@@ -180,7 +180,7 @@ export class TextboxNumberComponent
 
     private validatorFn: (c: FormControl) => ValidationErrors | null;
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes["minValue"] || changes["maxValue"]) {
             this.validatorFn = TextboxNumberComponent.createRangeValidator(
                 this.minValue,
@@ -189,12 +189,12 @@ export class TextboxNumberComponent
         }
     }
 
-    public onBlurEventEmit() {
+    public onBlurEventEmit(): void {
         this.onTouched();
         this.blurred.emit(this.value);
     }
 
-    public addNumber(valueChange: number) {
+    public addNumber(valueChange: number): void {
         if (isUndefined(this.value) || isNaN(this.value)) {
             this.value = 0;
         }
@@ -204,7 +204,7 @@ export class TextboxNumberComponent
         this.onValueChange(round(newValue, this.stepPrecision));
     }
 
-    public onValueChange(value: any) {
+    public onValueChange(value: any): void {
         this.value = value;
 
         setTimeout(() => {
@@ -215,19 +215,19 @@ export class TextboxNumberComponent
         });
     }
 
-    public onChange(value: any) {}
+    public onChange(value: any): void {}
 
-    public onTouched() {}
+    public onTouched(): void {}
 
-    public writeValue(value: any) {
+    public writeValue(value: any): void {
         this.value = value;
     }
 
-    public registerOnChange(fn: (value: any) => {}) {
+    public registerOnChange(fn: (value: any) => {}): void {
         this.onChange = fn;
     }
 
-    public registerOnTouched(fn: () => {}) {
+    public registerOnTouched(fn: () => {}): void {
         this.onTouched = fn;
     }
 
@@ -251,7 +251,7 @@ export class TextboxNumberComponent
         );
     }
 
-    public hasError() {
+    public hasError(): boolean {
         return (
             (this.formControl?.touched || this.formControl?.dirty) &&
             !this.formControl?.valid

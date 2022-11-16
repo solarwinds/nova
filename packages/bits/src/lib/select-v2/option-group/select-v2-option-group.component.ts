@@ -69,7 +69,7 @@ export class SelectV2OptionGroupComponent
         this.select = parent;
     }
 
-    ngAfterContentInit(): void {
+    public ngAfterContentInit(): void {
         if (this.select.isTypeaheadEnabled) {
             merge([this.select.valueChanged, this.select.valueSelected])
                 .pipe(takeUntil(this.onDestroy$))
@@ -82,7 +82,7 @@ export class SelectV2OptionGroupComponent
         }
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }

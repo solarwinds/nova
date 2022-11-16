@@ -52,6 +52,7 @@
                     "defaultConfiguration": "",
                     "options": {
                         "aot": false,
+                        "allowedCommonJsDependencies": ["lodash"],
                         "buildOptimizer": false,
                         "extractLicenses": false,
                         "index": "./examples/index.html",
@@ -142,7 +143,7 @@
                     "options": {
                         "aot": false,
                         "buildOptimizer": false,
-                        "deleteOutputPath": false,
+                        "deleteOutputPath": true,
                         "extractLicenses": false,
                         "index": "index.html",
                         "main": "",

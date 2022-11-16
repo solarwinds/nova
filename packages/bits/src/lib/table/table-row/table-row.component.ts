@@ -75,11 +75,13 @@ export class TableHeaderRowDefDirective
     @Input() set nuiHeaderRowDef(value: any) {
         this.columns = value ?? [];
     }
+
     @Input() set nuiHeaderRowDefSticky(value: boolean) {
         this.sticky = value;
     }
 
     public tableColumnsSubscription: Subscription;
+
     constructor(
         template: TemplateRef<any>,
         _differs: IterableDiffers,
@@ -88,7 +90,7 @@ export class TableHeaderRowDefDirective
         super(template, _differs);
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.tableStateHandlerService.tableColumns = Array.from(this.columns);
 
         if (this.tableStateHandlerService.reorderable) {
@@ -102,7 +104,7 @@ export class TableHeaderRowDefDirective
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges) {
         super.ngOnChanges(changes);
         if (changes.nuiHeaderRowDef) {
             this.tableStateHandlerService.tableColumns =
@@ -110,7 +112,7 @@ export class TableHeaderRowDefDirective
         }
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this.tableColumnsSubscription) {
             this.tableColumnsSubscription.unsubscribe();
         }
@@ -132,10 +134,13 @@ export class TableRowDefDirective<T>
     @Input() set nuiRowDefColumns(value: any) {
         this.columns = value ?? [];
     }
+
     @Input() set nuiRowDefWhen(value: (index: number, rowData: T) => boolean) {
         this.when = value;
     }
+
     public tableColumnsSubscription: Subscription;
+
     constructor(
         template: TemplateRef<any>,
         _differs: IterableDiffers,
@@ -144,7 +149,7 @@ export class TableRowDefDirective<T>
         super(template, _differs);
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.tableStateHandlerService.tableColumns = Array.from(this.columns);
 
         if (this.tableStateHandlerService.reorderable) {
@@ -158,7 +163,7 @@ export class TableRowDefDirective<T>
         }
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this.tableColumnsSubscription) {
             this.tableColumnsSubscription.unsubscribe();
         }
@@ -182,10 +187,13 @@ export class TableFooterRowDefDirective
     @Input() set nuiFooterRowDef(value: any) {
         this.columns = value ?? [];
     }
+
     @Input() set nuiFooterRowDefSticky(value: boolean) {
         this.sticky = value;
     }
+
     public tableColumnsSubscription: Subscription;
+
     constructor(
         template: TemplateRef<any>,
         _differs: IterableDiffers,
@@ -194,7 +202,7 @@ export class TableFooterRowDefDirective
         super(template, _differs);
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.tableStateHandlerService.tableColumns = Array.from(this.columns);
 
         if (this.tableStateHandlerService.reorderable) {
@@ -208,7 +216,7 @@ export class TableFooterRowDefDirective
         }
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this.tableColumnsSubscription) {
             this.tableColumnsSubscription.unsubscribe();
         }
@@ -254,25 +262,31 @@ export class TableHeaderRowComponent
     implements OnInit, OnDestroy, AfterViewInit
 {
     @Input() density: RowHeightOptions = "default";
+
     public selectorState: ISelectorState = {
         checkboxStatus: CheckboxStatus.Unchecked,
         selectorItems: [],
     };
+
     public selectable = this.tableStateHandlerService.selectable;
     public selectionChangeSubscription: Subscription;
     public dataSourceChangeSubscription: Subscription;
+
     @HostBinding("class.nui-table__table-header-row_height_default")
     get isDensityDefault() {
         return this.density.toLowerCase() === "default";
     }
+
     @HostBinding("class.nui-table__table-header-row_height_compact")
     get isDensityCompact() {
         return this.density.toLowerCase() === "compact";
     }
+
     @HostBinding("class.nui-table__table-header-row_height_tiny")
     get isDensityTiny() {
         return this.density.toLowerCase() === "tiny";
     }
+
     public get hasOptions(): boolean {
         return this.selectorState.selectorItems.length > 0;
     }
@@ -286,7 +300,7 @@ export class TableHeaderRowComponent
         super();
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         if (this.tableStateHandlerService.selectable) {
             this.selectorState =
                 this.tableStateHandlerService.getSelectorState();
@@ -318,13 +332,13 @@ export class TableHeaderRowComponent
             });
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         if (this.tableStateHandlerService.selectable) {
             this.tableStateHandlerService.applyStickyStyles();
         }
     }
 
-    public onSelectorChange(selectorValue: SelectionType) {
+    public onSelectorChange(selectorValue: SelectionType): void {
         this.tableStateHandlerService.selection =
             this.tableStateHandlerService.applySelector(selectorValue);
         this.updateSelectorState();
@@ -333,12 +347,12 @@ export class TableHeaderRowComponent
         );
     }
 
-    public updateSelectorState() {
+    public updateSelectorState(): void {
         this.selectorState = this.tableStateHandlerService.getSelectorState();
         this.changeDetectorRef.detectChanges();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }
@@ -391,18 +405,22 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
     get isSelected() {
         return this.isRowSelected();
     }
+
     @HostBinding("class.nui-table__table-row_height_default")
     get isDensityDefault() {
         return this.density.toLowerCase() === "default";
     }
+
     @HostBinding("class.nui-table__table-row_height_compact")
     get isDensityCompact() {
         return this.density.toLowerCase() === "compact";
     }
+
     @HostBinding("class.nui-table__table-row_height_tiny")
     get isDensityTiny() {
         return this.density.toLowerCase() === "tiny";
     }
+
     @ViewChild("rowSelectionCheckbox", { read: ElementRef, static: false })
     private rowSelectionCheckbox: ElementRef;
 
@@ -416,7 +434,7 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
         super();
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         const rowHeightClass = `nui-table__table-row_height_${this.density.toLowerCase()}`;
         this.elementRef.nativeElement.classList.add(rowHeightClass);
 
@@ -463,14 +481,14 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
         }
     }
 
-    public checkboxClicked() {
+    public checkboxClicked(): void {
         this.tableStateHandlerService.handleRowCheckbox(this.rowObject);
     }
 
     /**
      * We need to stop propagation of the checkbox click to prevent the row click handler from invoking the checkbox toggle functionality again
      */
-    public stopPropagation(event: Event) {
+    public stopPropagation(event: Event): void {
         event.stopPropagation();
     }
 
@@ -494,7 +512,7 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
             : false;
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }

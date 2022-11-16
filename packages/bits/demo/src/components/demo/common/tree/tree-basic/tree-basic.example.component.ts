@@ -70,6 +70,5 @@ export class TreeBasicExampleComponent {
     treeControl = new NestedTreeControl<FoodNode>((node) => node.children);
     dataSource = new ArrayDataSource(TREE_DATA);
 
-    hasChild = (_: number, node: FoodNode) =>
-        !!node.children && node.children.length > 0;
+    hasChild = (_: number, node: FoodNode): boolean => !!node.children?.length;
 }

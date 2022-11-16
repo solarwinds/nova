@@ -47,8 +47,6 @@ import { PositionService } from "../../services/position.service";
     `,
     encapsulation: ViewEncapsulation.None,
 })
-
-/* eslint-disable @angular-eslint/no-host-metadata-property */
 export class PopupContainerComponent implements AfterViewInit {
     public hostElement: HTMLElement;
     public top: number;
@@ -61,7 +59,7 @@ export class PopupContainerComponent implements AfterViewInit {
         private edgeDetector: EdgeDetectionService
     ) {}
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         const position = this.setPosition(
             this.elRef.nativeElement,
             this.hostElement
@@ -78,7 +76,10 @@ export class PopupContainerComponent implements AfterViewInit {
             });
     }
 
-    public setPosition(popup: HTMLElement, popupTrigger: HTMLElement) {
+    public setPosition(
+        popup: HTMLElement,
+        popupTrigger: HTMLElement
+    ): { top: number; left: number } {
         // Element with dimensions
         const popupArea = <HTMLElement>popup.querySelector(".nui-popup__area");
         const placement = this.getValidPopupPlacement();

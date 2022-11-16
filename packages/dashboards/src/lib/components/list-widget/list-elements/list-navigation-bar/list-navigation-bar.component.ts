@@ -52,7 +52,7 @@ export class ListNavigationBarComponent {
         @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>
     ) {}
 
-    onBack() {
+    public onBack(): void {
         if (this.navBarConfig) {
             this.eventBus.getStream(DRILLDOWN).next({
                 payload: {
@@ -62,7 +62,7 @@ export class ListNavigationBarComponent {
         }
     }
 
-    onHome() {
+    public onHome(): void {
         this.eventBus.getStream(DRILLDOWN).next({ payload: { reset: true } });
     }
 }

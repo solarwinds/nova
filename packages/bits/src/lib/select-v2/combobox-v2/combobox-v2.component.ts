@@ -306,7 +306,7 @@ export class ComboboxV2Component
      * This can lead to memory leaks.
      * This is a safe guard for preventing memory leaks in derived classes.
      */
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         super.ngOnDestroy();
     }
 

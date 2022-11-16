@@ -45,7 +45,7 @@ export class LineChartTooltipsPrototypeComponent implements OnInit {
     public chartAssist: ChartAssist = new ChartAssist(this.chart);
     public tooltipsPlugin = new ChartTooltipsPlugin();
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const scales: IXYScales = {
             x: new TimeScale("x"),
             y: new LinearScale(),

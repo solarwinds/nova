@@ -35,13 +35,13 @@ export class CheckboxInFormExampleComponent implements OnInit {
         private toastService: ToastService
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
-            checkbox: this.formBuilder.control(false, Validators.requiredTrue),
+            checkbox: [false, Validators.requiredTrue],
         });
     }
 
-    public onSubmit() {
+    public onSubmit(): void {
         this.toastService.success({ message: $localize`Your form is valid!` });
     }
 }

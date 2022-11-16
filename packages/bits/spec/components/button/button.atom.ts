@@ -64,10 +64,7 @@ export class ButtonAtom extends Atom {
     public isIconShown = async (): Promise<boolean> =>
         this.root.element(by.className("nui-icon")).isPresent();
 
-    public getIcon = async (): Promise<IconAtom | undefined> =>
-        (await Atom.findCount(IconAtom, this.root))
-            ? Atom.findIn(IconAtom, this.root)
-            : undefined;
+    public getIcon = (): IconAtom => Atom.findIn(IconAtom, this.root);
 
     public async mouseDownAndHold(ms: number): Promise<void> {
         await this.mouseDown();

@@ -68,7 +68,7 @@ export class ConfiguratorComponent implements OnInit, OnDestroy {
     previewPizzagnaComponent: PizzagnaComponent;
 
     public submitError = new Subject<void>();
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         public widgetTypesService: WidgetTypesService,
@@ -98,28 +98,28 @@ export class ConfiguratorComponent implements OnInit, OnDestroy {
 
     // -----
 
-    public handleSubmitError() {
+    public handleSubmitError(): void {
         this.submitError.next();
     }
 
-    public onFormPortalAttached(componentRef: ComponentRef<any>) {
+    public onFormPortalAttached(componentRef: ComponentRef<any>): void {
         this.formPortalAttached.emit(componentRef);
     }
 
-    public updateWidget(previewWidget: IWidget | null) {
+    public updateWidget(previewWidget: IWidget | null): void {
         this.previewWidget = previewWidget;
         this.changeDetector.markForCheck();
     }
 
-    public formCancel() {
+    public formCancel(): void {
         this.result.next(null);
     }
 
-    public formSubmit() {
+    public formSubmit(): void {
         this.result.next(this.previewWidget);
     }
 
-    public onPizzagnaChange(pizzagna: IPizzagna) {
+    public onPizzagnaChange(pizzagna: IPizzagna): void {
         if (this.previewWidget) {
             this.previewWidget.pizzagna = pizzagna;
         }

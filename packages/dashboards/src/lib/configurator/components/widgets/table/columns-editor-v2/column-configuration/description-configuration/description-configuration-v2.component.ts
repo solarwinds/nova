@@ -24,6 +24,7 @@ import {
     Component,
     forwardRef,
     Input,
+    OnDestroy,
     OnInit,
 } from "@angular/core";
 import {
@@ -63,7 +64,7 @@ import { IHasChangeDetector } from "../../../../../../../types";
     ],
 })
 export class DescriptionConfigurationV2Component
-    implements IHasChangeDetector, ControlValueAccessor, OnInit
+    implements IHasChangeDetector, ControlValueAccessor, OnDestroy, OnInit
 {
     static lateLoadKey = "DescriptionConfigurationV2Component";
 
@@ -73,7 +74,7 @@ export class DescriptionConfigurationV2Component
     public form: FormGroup;
     public changeFn: Function;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         private formBuilder: FormBuilder,
@@ -134,11 +135,11 @@ export class DescriptionConfigurationV2Component
         this.destroy$.complete();
     }
 
-    public stub() {
+    public stub(): void {
         // empty function to hotfix textbox-number behavior (NUI-3442)
     }
 
-    public isWidthMessageDisplayedForThisColumn() {
+    public isWidthMessageDisplayedForThisColumn(): boolean {
         const width = this.form.controls["width"].value;
         return this.isWidthMessageDisplayed && typeof width !== "number";
     }

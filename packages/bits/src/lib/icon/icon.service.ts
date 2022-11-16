@@ -45,15 +45,19 @@ export class IconService {
         this.updateIconStatusesAndNames();
     }
 
-    getIconData(iconName: string): IconData {
+    public getIconData(iconName: string): IconData {
         return this.names[iconName];
     }
 
-    getStatusIcon(status: string) {
+    public getStatusIcon(status: string): string {
         return this.statuses[status];
     }
 
-    getIconResized(iconCode: string, iconNewSize: number, viewBox?: string) {
+    public getIconResized(
+        iconCode: string,
+        iconNewSize: number,
+        viewBox?: string
+    ): string {
         return `<g transform="translate(-${iconNewSize / 2}, -${
             iconNewSize / 2
         })">
@@ -70,7 +74,7 @@ export class IconService {
      *
      * @param iconsList
      */
-    public registerIcons(iconsList: IconData[]) {
+    public registerIcons(iconsList: IconData[]): void {
         this.icons.push(...iconsList);
 
         this.updateIconStatusesAndNames();

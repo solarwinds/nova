@@ -70,7 +70,7 @@ export class BackgroundColorRulesConfigurationComponent
     public palette: Partial<IPaletteColor[]>;
     public height: number;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         public changeDetector: ChangeDetectorRef,
@@ -103,7 +103,7 @@ export class BackgroundColorRulesConfigurationComponent
         this.formReady.emit(this.form);
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.rules) {
             (this.formLocal?.get("rules")?.value as FormArray).setValue([]);
 
@@ -138,13 +138,13 @@ export class BackgroundColorRulesConfigurationComponent
         return this.availableComparators[item]?.label || DEFAULT_LABEL;
     }
 
-    public removeRule(controlIndex: number) {
+    public removeRule(controlIndex: number): void {
         (this.formLocal?.get("rules")?.value as FormArray).removeAt(
             controlIndex
         );
     }
 
-    public addRule() {
+    public addRule(): void {
         (this.formLocal?.get("rules")?.value as FormArray).push(
             this.formBuilder.group({
                 comparisonType: [">", [Validators.required]],
@@ -154,7 +154,7 @@ export class BackgroundColorRulesConfigurationComponent
         );
     }
 
-    public drop(event: CdkDragDrop<string[]>) {
+    public drop(event: CdkDragDrop<string[]>): void {
         this.move(event.currentIndex, event.previousIndex);
     }
 
@@ -162,7 +162,7 @@ export class BackgroundColorRulesConfigurationComponent
         this.height = event.source.element.nativeElement.offsetHeight;
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }

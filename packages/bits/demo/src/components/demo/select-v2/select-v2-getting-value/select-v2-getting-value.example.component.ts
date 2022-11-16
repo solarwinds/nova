@@ -39,7 +39,7 @@ export class SelectV2GettingValueExampleComponent implements AfterViewInit {
     private selectValueSelectedExample: SelectV2Component;
     private destroy$: Subject<any> = new Subject<any>();
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this.selectValueSelectedExample.valueSelected
             .pipe(
                 tap(

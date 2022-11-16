@@ -22,6 +22,7 @@ import sum from "lodash/sum";
 
 import {
     IProportionalAggregatorFn,
+    IProportionalAggregatorOrigin,
     IProportionalDonutContentAggregatorProperties,
 } from "./types";
 
@@ -37,9 +38,9 @@ export interface IPercentageAggregatorProperties
  * Receives all the metrics from the donut and gets the active metric percentage.
  */
 export const percentageAggregator: IProportionalAggregatorFn = (
-    origin,
+    origin: IProportionalAggregatorOrigin,
     properties?: IPercentageAggregatorProperties
-) => {
+): string => {
     const data = origin.map((v) => v.data[0]);
     const { activeMetricId, base100 } = properties || {};
 

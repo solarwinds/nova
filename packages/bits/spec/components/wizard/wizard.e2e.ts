@@ -214,10 +214,8 @@ describe("USERCONTROL Wizard >", () => {
     describe("wizard busy state >", () => {
         const firstStep = Atom.findIn(
             WizardStepAtom,
-            wizardBusy
-                .getElement()
-                .all(by.className(WizardStepAtom.CSS_CLASS))
-                .first()
+            wizardBusy.getElement(),
+            0
         );
         const spinner = firstStep.busy.getSpinner();
 

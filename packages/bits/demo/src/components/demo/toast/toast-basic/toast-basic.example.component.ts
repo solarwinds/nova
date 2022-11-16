@@ -29,7 +29,7 @@ import { IToastConfig, IToastService, ToastService } from "@nova-ui/bits";
 export class ToastBasicExampleComponent implements OnInit {
     constructor(@Inject(ToastService) private toastService: IToastService) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.toastService.setConfig({}, "id");
     }
 

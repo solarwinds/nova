@@ -37,7 +37,10 @@ import {
     PIZZAGNA_EVENT_BUS,
 } from "../../types";
 import { DataSourceAdapter } from "./data-source-adapter";
-import { IDrilldownComponentsConfiguration } from "./types";
+import {
+    IDrilldownComponentConfiguration,
+    IDrilldownComponentsConfiguration,
+} from "./types";
 
 export class DrilldownDataSourceAdapter extends DataSourceAdapter {
     protected dataPath: string;
@@ -66,7 +69,7 @@ export class DrilldownDataSourceAdapter extends DataSourceAdapter {
         this.registerFilters();
     }
 
-    protected updateAdapterProperties(properties: IProperties) {
+    protected updateAdapterProperties(properties: IProperties): void {
         this.dataPath = properties.dataPath;
         this.drillstate = properties.drillstate || this.drillstate;
         this.groupBy = properties.groupBy;
@@ -74,7 +77,7 @@ export class DrilldownDataSourceAdapter extends DataSourceAdapter {
         this.navigationBarId = properties.navigationBarId;
     }
 
-    protected updateOutput(output: IFilteringOutputs | undefined) {
+    protected updateOutput(output: IFilteringOutputs | undefined): void {
         const widgetInput = this.getWidgetInput(
             output,
             this.drillstate.length !== this.groupBy.length
@@ -102,7 +105,12 @@ export class DrilldownDataSourceAdapter extends DataSourceAdapter {
         }
     }
 
-    protected getWidgetInput(data: any, group: boolean) {
+    protected getWidgetInput(
+        data: any,
+        group: boolean
+    ): Record<string, any> & {
+        configuration: IDrilldownComponentConfiguration;
+    } {
         const configuration = this.componentsConfig[group ? "group" : "leaf"];
 
         return {
@@ -111,23 +119,23 @@ export class DrilldownDataSourceAdapter extends DataSourceAdapter {
         };
     }
 
-    protected onDrilldown(event: IEvent) {
+    protected onDrilldown(event: IEvent): void {
         const { payload } = event;
 
         if (payload.reset) {
             this.drillstate = [];
-            this.eventBus.next(REFRESH);
+            this.eventBus.next(REFRESH, {});
             return;
         }
 
         if (payload.back) {
             this.drillstate.length = this.drillstate.length - 1;
-            this.eventBus.next(REFRESH);
+            this.eventBus.next(REFRESH, {});
             return;
         }
 
         this.drillstate.push(payload.id);
-        this.eventBus.next(REFRESH);
+        this.eventBus.next(REFRESH, {});
     }
 
     private registerFilters() {

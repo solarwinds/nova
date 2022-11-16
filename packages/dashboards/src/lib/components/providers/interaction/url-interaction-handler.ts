@@ -22,8 +22,8 @@ import { Inject, Injectable } from "@angular/core";
 
 import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
 
+import { UrlInteractionService } from "../../../services/url-interaction.service";
 import { PIZZAGNA_EVENT_BUS } from "../../../types";
-import { UrlInteractionService } from "./../../../services/url-interaction.service";
 import {
     IInteractionHandlerProperties,
     IInteractionPayload,
@@ -53,7 +53,7 @@ export class UrlInteractionHandler extends InteractionHandler<
         super(eventBus);
     }
 
-    protected handleInteraction(interaction: IInteractionPayload<any>) {
+    protected handleInteraction(interaction: IInteractionPayload<any>): void {
         if (!this.properties?.url) {
             this.logger.warn("The target url has not been defined.");
             return;

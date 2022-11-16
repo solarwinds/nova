@@ -31,11 +31,11 @@ export class WizardDisabledExampleComponent {
     @ViewChild("wizardStepDisable")
     wizardStepDisabledComponent: WizardStepComponent;
 
-    public disableStep() {
+    public disableStep(): void {
         this.wizardComponent.disableStep(this.wizardStepDisabledComponent);
     }
 
-    public enableStep() {
+    public enableStep(): void {
         this.wizardComponent.enableStep(this.wizardStepDisabledComponent);
     }
 }

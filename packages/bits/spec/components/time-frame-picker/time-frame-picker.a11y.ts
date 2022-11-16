@@ -46,19 +46,11 @@ describe("a11y: time-frame-picker", () => {
 
     it("should check a11y of time-frame-picker", async () => {
         await popoverWithTimeframePicker.open();
-        await assertA11y(
-            browser,
-            TimeFramePickerAtom.CSS_CLASS,
-            rulesToDisable
-        );
+        await assertA11y(browser, TimeFramePickerAtom, rulesToDisable);
     });
 
     it("should check a11y of time-frame-picker  with date picker", async () => {
         await popoverWithDatePicker.open();
-        await assertA11y(
-            browser,
-            TimeFramePickerAtom.CSS_CLASS,
-            rulesToDisable
-        );
+        await assertA11y(browser, TimeFramePickerAtom, rulesToDisable);
     });
 });

@@ -45,7 +45,7 @@ class DataSource1 {
 
     public outputsSubject = new Subject<Partial<IKpiData>>();
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.outputsSubject.next({
             value: "Fizz",
         });
@@ -61,13 +61,13 @@ class DataSource2 {
     public outputsSubject = new Subject<Partial<IKpiData>>();
     public properties: any;
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.outputsSubject.next({
             value: this.properties.fizz,
         });
     }
 
-    public updateConfiguration(properties: any) {
+    public updateConfiguration(properties: any): void {
         this.properties = properties;
     }
 }

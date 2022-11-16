@@ -31,7 +31,7 @@ export class EventBus<T> {
         return this.streams[streamId];
     }
 
-    public destroy() {
+    public destroy(): void {
         each(Object.keys(this.streams), (key: string) => {
             this.streams[key].complete();
         });

@@ -41,7 +41,7 @@ export class PizzagnaBroadcasterService implements IConfigurable, OnDestroy {
 
     constructor(private pizzagnaService: PizzagnaService) {}
 
-    public setComponent(component: any, componentId: string) {
+    public setComponent(component: any, componentId: string): void {
         this.component = component;
         this.componentId = componentId;
         this.parentComponentId = getParentComponentId(componentId);
@@ -49,7 +49,7 @@ export class PizzagnaBroadcasterService implements IConfigurable, OnDestroy {
         this.initChangeSubscriptions();
     }
 
-    public updateConfiguration(properties: IProperties) {
+    public updateConfiguration(properties: IProperties): void {
         this.configs = properties?.configs;
     }
 
@@ -97,7 +97,7 @@ export class PizzagnaBroadcasterService implements IConfigurable, OnDestroy {
         return obs?.pipe(distinctUntilChanged());
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         for (const subscription of this.subscriptions) {
             subscription.unsubscribe();
         }

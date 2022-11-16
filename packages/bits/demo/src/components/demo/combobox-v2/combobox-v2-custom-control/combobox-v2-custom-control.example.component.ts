@@ -46,9 +46,9 @@ export class ComboboxV2CustomControlExampleComponent
 
     @ViewChild("combobox") public combobox: ComboboxV2Component;
 
-    private destroy$: Subject<void> = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.combobox.clickOutsideDropdown.subscribe(() => {
             if (this.handleClicksOutside) {
                 this.combobox.hideDropdown();
@@ -56,16 +56,16 @@ export class ComboboxV2CustomControlExampleComponent
         });
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    public onChipRemoved(item: IExampleItem) {
+    public onChipRemoved(item: IExampleItem): void {
         this.combobox.deselectItem(item);
     }
 
-    public convertToChip(value: IExampleItem) {
+    public convertToChip(value: IExampleItem): { label: IExampleItem } {
         return { label: value };
     }
 

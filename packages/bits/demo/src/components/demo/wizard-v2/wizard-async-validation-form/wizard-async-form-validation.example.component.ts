@@ -51,7 +51,7 @@ export class WizardAsyncFormValidationExampleComponent implements OnInit {
         private toastService: ToastService
     ) {}
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.form = new FormGroup({
             personDetails: this.formBuilder.group({
                 name: [

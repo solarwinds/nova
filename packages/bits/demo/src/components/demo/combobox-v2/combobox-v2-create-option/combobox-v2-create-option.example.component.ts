@@ -44,7 +44,7 @@ export class ComboboxV2CreateOptionExampleComponent {
 
     constructor(private domSanitizer: DomSanitizer) {}
 
-    public createOption(option: string) {
+    public createOption(option: string): void {
         const sanitizedOption = this.domSanitizer
             .sanitize(SecurityContext.HTML, option)
             ?.trim();

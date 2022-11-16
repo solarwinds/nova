@@ -93,7 +93,7 @@ export class SelectV2Component
         super(optionKeyControlService, cdRef, elRef, liveAnnouncer);
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         super.ngOnChanges(changes);
     }
 
@@ -124,7 +124,7 @@ export class SelectV2Component
     }
 
     /** Selects specific Option and set its value to the model */
-    public selectOption(option: SelectV2OptionComponent) {
+    public selectOption(option: SelectV2OptionComponent): void {
         if (option.outfiltered || option.isDisabled) {
             return;
         }
@@ -153,7 +153,7 @@ export class SelectV2Component
      * This can lead to memory leaks.
      * This is a safe guard for preventing memory leaks in derived classes.
      */
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         super.ngOnDestroy();
     }
 

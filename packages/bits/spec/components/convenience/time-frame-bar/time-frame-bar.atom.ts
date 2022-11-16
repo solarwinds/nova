@@ -29,55 +29,52 @@ import { TimeFramePickerAtom } from "../../time-frame-picker/time-frame-picker.a
 import { TimepickerAtom } from "../../timepicker/timepicker.atom";
 
 export class TimeFrameBarAtom extends Atom {
-    public static CSS_CLASS = "nui-time-frame-bar";
-    public prevButton: ButtonAtom;
-    public nextButton: ButtonAtom;
-    public undoButton: ButtonAtom;
-    public clearButton: ButtonAtom;
-    public popover: PopoverAtom;
+    public static CSS_SELECTOR = ".nui-time-frame-bar";
+
+    public readonly prevButton: ButtonAtom;
+    public readonly nextButton: ButtonAtom;
+    public readonly undoButton: ButtonAtom;
+    public readonly clearButton: ButtonAtom;
+    public readonly popover: PopoverAtom;
     public quickPicker: QuickPickerAtom;
     public timeFramePicker: TimeFramePickerAtom;
     public timeFramePickerCancelButton: ButtonAtom;
     public timeFramePickerUseButton: ButtonAtom;
 
-    private popoverBody: ElementFinder;
-
-    constructor(private rootElement: ElementFinder) {
+    constructor(rootElement: ElementFinder) {
         super(rootElement);
 
         this.prevButton = Atom.findIn(
             ButtonAtom,
-            rootElement.element(by.className("prev"))
+            rootElement.element(by.css(".prev"))
         );
         this.nextButton = Atom.findIn(
             ButtonAtom,
-            rootElement.element(by.className("next"))
+            rootElement.element(by.css(".next"))
         );
         this.undoButton = Atom.findIn(
             ButtonAtom,
-            rootElement.element(by.className("undo"))
+            rootElement.element(by.css(".undo"))
         );
         this.clearButton = Atom.findIn(
             ButtonAtom,
-            rootElement.element(by.className("clear"))
+            rootElement.element(by.css(".clear"))
         );
         this.popover = Atom.findIn(
             PopoverAtom,
-            rootElement.element(by.className("picker-label"))
+            rootElement.element(by.css(".picker-label"))
         );
-        this.popoverBody = this.popover.getPopoverBody();
-        this.quickPicker = Atom.findIn(QuickPickerAtom, this.popoverBody);
-        this.timeFramePicker = Atom.findIn(
-            TimeFramePickerAtom,
-            this.popoverBody
-        );
+
+        const popoverBody = this.popover.getPopoverBody();
+        this.quickPicker = Atom.findIn(QuickPickerAtom, popoverBody);
+        this.timeFramePicker = Atom.findIn(TimeFramePickerAtom, popoverBody);
         this.timeFramePickerCancelButton = Atom.findIn(
             ButtonAtom,
-            this.popoverBody.element(by.className("cancel"))
+            popoverBody.element(by.css(".cancel"))
         );
         this.timeFramePickerUseButton = Atom.findIn(
             ButtonAtom,
-            this.popoverBody.element(by.className("use"))
+            popoverBody.element(by.css(".use"))
         );
     }
 

@@ -58,11 +58,11 @@ export class QuickPickerComponent {
 
     constructor(public changeDetector: ChangeDetectorRef) {}
 
-    public selectPreset(key: string) {
+    public selectPreset(key: string): void {
         this.presetSelected.emit(key);
     }
 
-    public isPresetSelected(key: string) {
+    public isPresetSelected(key: string): boolean {
         return this.selectedPreset === key;
     }
 }

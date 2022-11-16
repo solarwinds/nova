@@ -50,7 +50,7 @@ export class BasicFilterGroupsWrapperComponent implements AfterViewInit {
         public dataSourceService: DataSourceService<any>
     ) {}
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.dataSourceService.registerComponent(this.getFilterComponents());
         this.filterGroups.changes.subscribe(() => {
             this.dataSourceService.registerComponent(

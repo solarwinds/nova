@@ -35,12 +35,12 @@ export class DialogPositionExampleComponent {
         @Inject(ToastService) private toastService: ToastService
     ) {}
 
-    public open(content: TemplateRef<string>, options: any) {
+    public open(content: TemplateRef<string>, options: any): void {
         this.isResponsiveMode = options.isResponsiveMode;
         this.activeDialog = this.dialogService.open(content);
     }
 
-    public onButtonClick(title: string) {
+    public onButtonClick(title: string): void {
         title === "Action" ? this.actionDone() : this.actionCanceled();
         this.activeDialog.close();
     }

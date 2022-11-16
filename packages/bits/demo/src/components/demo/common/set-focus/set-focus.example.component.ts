@@ -25,14 +25,9 @@ import { Component } from "@angular/core";
     templateUrl: "./set-focus.example.component.html",
 })
 export class SetFocusExampleComponent {
-    public choiceState = "carrot";
     public carrotFocused = false;
     public onionFocused = false;
     private interval = 2000;
-
-    public updateChoiceState(event: any) {
-        this.choiceState = event;
-    }
 
     public setCarrotFocus(): void {
         this.carrotFocused = true;

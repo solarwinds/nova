@@ -38,7 +38,7 @@ export class ComboboxDisplayValueExampleComponent {
     };
     public selectedItem: any;
 
-    public onValueChange(changedEvent: ISelectChangedEvent<any>) {
+    public onValueChange(changedEvent: ISelectChangedEvent<any>): void {
         this.selectedItem = changedEvent.newValue;
     }
 }

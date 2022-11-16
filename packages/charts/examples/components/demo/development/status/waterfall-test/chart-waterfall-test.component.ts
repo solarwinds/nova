@@ -240,7 +240,7 @@ export class ChartWaterfallTestComponent implements AfterViewInit, OnInit {
         private scrollStrategyOptions: ScrollStrategyOptions
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.gridChart.addPlugin(new ZoomPlugin());
 
         this.gridChart
@@ -255,7 +255,7 @@ export class ChartWaterfallTestComponent implements AfterViewInit, OnInit {
             });
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.templatePortal = new TemplatePortal(
             this.templatePortalGrid,
             this._viewContainerRef
@@ -357,7 +357,7 @@ export class ChartWaterfallTestComponent implements AfterViewInit, OnInit {
         overlayRef.attach(this.templatePortal);
     }
 
-    drop(event: CdkDragDrop<string[]>) {
+    drop(event: CdkDragDrop<string[]>): void {
         moveItemInArray(
             this.listItems,
             event.previousIndex,

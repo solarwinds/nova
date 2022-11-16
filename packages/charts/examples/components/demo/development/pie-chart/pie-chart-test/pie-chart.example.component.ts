@@ -60,7 +60,7 @@ export class PieChartTestComponent implements OnInit {
 
     constructor(@Inject(ToastService) private toastr: IToastService) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         const gridConfig = new GridConfig();
         gridConfig.interactive = false;
         this.chart.getGrid().config(gridConfig);
@@ -122,22 +122,22 @@ export class PieChartTestComponent implements OnInit {
         }));
     }
 
-    public refreshPie() {
+    public refreshPie(): void {
         this.renderer = new PieRenderer();
         this.chartAssist.update(this.generateSeriesSet());
     }
 
-    public updateWidth(value: number) {
+    public updateWidth(value: number): void {
         this.renderer.config.annularGrowth = value / 100;
         this.updateDonut();
     }
 
-    public updatemaxWidth(value: number) {
+    public updatemaxWidth(value: number): void {
         this.renderer.config.maxThickness = value;
         this.updateDonut();
     }
 
-    public refreshPieInteraction() {
+    public refreshPieInteraction(): void {
         this.interactive = !this.interactive;
         if (this.interactive) {
             this.renderer.interaction = {
@@ -154,7 +154,7 @@ export class PieChartTestComponent implements OnInit {
         this.chartAssist.update(this.generateSeriesSet());
     }
 
-    public refreshDonut(layers: number) {
+    public refreshDonut(layers: number): void {
         this.renderer = new RadialRenderer();
         // Hack for demo page, since it loads pie first and we can switch between chart renderers
         this.chartAssist.update(this.generateSeriesSet(layers));
@@ -163,7 +163,7 @@ export class PieChartTestComponent implements OnInit {
         }, 0);
     }
 
-    public showContent() {
+    public showContent(): boolean {
         return !(this.renderer instanceof PieRenderer);
     }
 

@@ -33,6 +33,6 @@ describe("a11y: search", () => {
     });
 
     it("should check a11y of search", async () => {
-        await assertA11y(browser, SearchAtom.CSS_CLASS, rulesToDisable);
+        await assertA11y(browser, SearchAtom, rulesToDisable);
     });
 });

@@ -36,11 +36,11 @@ export class DateTimePickerDialogExampleComponent {
         this.selectedDate = new Date(this.dt.valueOf());
     }
 
-    public open(content: TemplateRef<string>) {
+    public open(content: TemplateRef<string>): void {
         this.dialogService.open(content, { size: "sm" });
     }
 
-    onModelChanged(event: any) {
+    public onModelChanged(event: any): void {
         this.selectedDate = new Date(event.valueOf());
     }
 }

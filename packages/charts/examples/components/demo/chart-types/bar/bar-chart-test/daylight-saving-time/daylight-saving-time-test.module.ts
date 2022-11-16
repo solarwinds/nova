@@ -25,8 +25,6 @@ import { NuiChartsModule } from "@nova-ui/charts";
 
 import { DemoCommonModule } from "../../../../common/demo-common.module";
 import { ChartDocsBarModule } from "../../chart-docs-bar.module";
-import { BarChartTimeIntervalDstTestComponent } from "./bar-chart-time-interval/bar-chart-time-interval-dst-test.component";
-import { DstTimeIntervalTestPageComponent } from "./dst-time-interval-test-page.component";
 
 @NgModule({
     imports: [

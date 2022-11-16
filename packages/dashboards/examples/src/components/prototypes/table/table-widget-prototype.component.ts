@@ -99,7 +99,7 @@ export class AcmeDashboardComponent
 
     public editMode = false;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         private providerRegistry: ProviderRegistryService,
@@ -189,7 +189,7 @@ export class AcmeDashboardComponent
         };
     }
 
-    public onDsErrorSwitch(value: boolean) {
+    public onDsErrorSwitch(value: boolean): void {
         AcmeProportionalDataSource.mockError = value;
         AcmeKpiDataSource.mockError = value;
         AcmeKpiDataSource2.mockError = value;
@@ -197,7 +197,7 @@ export class AcmeDashboardComponent
         AcmeTimeseriesDataSource.mockError = value;
     }
 
-    public onShowButtonSwitch(value: boolean, property: string) {
+    public onShowButtonSwitch(value: boolean, property: string): void {
         for (const widget of Object.keys(this.dashboard.widgets)) {
             this.dashboard = immutableSet(
                 this.dashboard,
@@ -227,7 +227,7 @@ export class AcmeDashboardComponent
         );
     }
 
-    public onCloneWidget() {
+    public onCloneWidget(): void {
         const cloner: IWidgetSelector = {
             dashboardComponent: this.dashboardComponent,
             trySubmit: this.submitHandler.trySubmit,
@@ -239,7 +239,7 @@ export class AcmeDashboardComponent
             .subscribe();
     }
 
-    public onEditWithCloner() {
+    public onEditWithCloner(): void {
         // this simulates invoking WIDGET_CREATE event from inside of the first widget
         this.dashboardComponent.eventBus.next(WIDGET_CREATE, {
             widgetId: widgets[0].id,

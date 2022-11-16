@@ -37,7 +37,7 @@ export class ChartsTestHarnessComponent implements OnDestroy {
         this.themeSwitcher.withRefreshRoute = false;
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.themeSwitcher.withRefreshRoute = this.originalWithRefreshRoute;
     }
 }

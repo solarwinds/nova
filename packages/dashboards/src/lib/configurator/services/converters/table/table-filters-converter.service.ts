@@ -42,7 +42,7 @@ export class TableFiltersConverterService
         super(eventBus, previewService, pizzagnaService);
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         super.ngAfterViewInit();
     }
 

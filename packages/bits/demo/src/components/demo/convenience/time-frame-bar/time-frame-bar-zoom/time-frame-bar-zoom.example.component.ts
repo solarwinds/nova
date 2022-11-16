@@ -45,7 +45,7 @@ export class TimeFrameBarZoomExampleComponent implements OnInit {
     // Inject an instance of HistoryStorage
     constructor(public history: HistoryStorage<ITimeframe>) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         // Set the minimum and maximum selectable dates
         this.minDate = this.baseDate.clone().subtract(1, "months");
         this.maxDate = moment();
@@ -55,21 +55,25 @@ export class TimeFrameBarZoomExampleComponent implements OnInit {
     }
 
     // Save the new timeframe to the history storage and set it as the current timeFrame
-    public onZoomIn = () =>
-        (this.timeFrame = this.history.save(
+    public onZoomIn = (): void => {
+        this.timeFrame = this.history.save(
             this.getTimeFrame(this.zoomLevels[this.history.index + 1])
-        ));
+        );
+    };
 
     // Use the history storage to go back one time frame
-    public onUndo = () => (this.timeFrame = this.history.undo());
+    public onUndo = (): void => {
+        this.timeFrame = this.history.undo();
+    };
 
     // Reset the history storage and save a new initial value if provided
     // Otherwise preserve the previous one
-    public onChange = (value?: ITimeframe) =>
-        (this.timeFrame = this.history.restart(value));
+    public onChange = (value?: ITimeframe): void => {
+        this.timeFrame = this.history.restart(value);
+    };
 
     // This method is for demo purposes only
-    public canZoom() {
+    public canZoom(): boolean {
         const expectedTF = this.getTimeFrame(
             this.zoomLevels[this.history.index]
         );

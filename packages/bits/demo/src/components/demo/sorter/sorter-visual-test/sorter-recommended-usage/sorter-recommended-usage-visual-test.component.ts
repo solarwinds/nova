@@ -77,11 +77,11 @@ export class SorterRecommendedUsageVisualTestComponent implements OnInit {
         { title: "The Terminator", year: "1984", director: "James Cameron" },
     ];
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.sortItems(this.sortBy, this.initialSortDirection);
     }
 
-    onSorterAction(changeEvent: ISorterChanges) {
+    onSorterAction(changeEvent: ISorterChanges): void {
         this.sortBy = changeEvent.newValue.sortBy;
         this.sortItems(
             changeEvent.newValue.sortBy,

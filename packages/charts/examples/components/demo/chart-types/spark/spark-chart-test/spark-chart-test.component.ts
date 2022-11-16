@@ -69,14 +69,14 @@ export class SparkChartTestComponent implements OnInit {
     public input: string;
     public chart: Chart;
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.input = JSON.stringify(this.initialInput);
         this.configureGrid(this.chartAssist.gridConfig);
         this.configureGrid(this.chartAssist.lastGridConfig);
         this.update(this.initialInput);
     }
 
-    public inputChanged(value: string) {
+    public inputChanged(value: string): void {
         this.update(JSON.parse(value));
     }
 

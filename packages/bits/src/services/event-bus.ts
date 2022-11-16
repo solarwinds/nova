@@ -35,7 +35,7 @@ export class EventBus<T> implements OnDestroy {
 
     // Workaround to avoid refactoring of EventBus that is using by default NuiEvent as generic type
     // But we're storing a generic set of data types in our registered subjects
-    public getStream(event: IEventDefinition<T>): Subject<T | any> {
+    public getStream<U = T>(event: IEventDefinition<U>): Subject<U> {
         if (!this.streams[event.id]) {
             const subject = event.subjectFactory
                 ? event.subjectFactory()
@@ -45,14 +45,14 @@ export class EventBus<T> implements OnDestroy {
             const originalNext = subject.next.bind(subject);
             subject.next = (value?: T) =>
                 originalNext(<any>Object.assign(value || {}, { id: event.id }));
-            this.streams[event.id] = subject;
+            this.streams[event.id] = subject as unknown as Subject<T>;
 
             this.streamAdded.next(event.id);
         }
-        return this.streams[event.id];
+        return this.streams[event.id] as unknown as Subject<U>;
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         each(Object.keys(this.streams), (key: string) => {
             this.streams[key].complete();
         });
@@ -79,7 +79,7 @@ export class EventBus<T> implements OnDestroy {
             .subscribe(next, error, complete);
     }
 
-    public next(event: IEventDefinition<T>, value?: T) {
+    public next(event: IEventDefinition<T>, value: T): void {
         return this.getStream(event).next(value);
     }
 }

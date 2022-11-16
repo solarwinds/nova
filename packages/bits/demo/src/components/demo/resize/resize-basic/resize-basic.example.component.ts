@@ -26,7 +26,8 @@ import { Component } from "@angular/core";
 })
 export class ResizeBasicExampleComponent {
     public newSizeText: string = "Size is not changed.";
-    public sizeChanged(size: string) {
+
+    public sizeChanged(size: string): void {
         this.newSizeText = `New size is ${size}`;
     }
 }

@@ -36,6 +36,7 @@ import isFunction from "lodash/isFunction";
 import isUndefined from "lodash/isUndefined";
 import { Subscription } from "rxjs";
 
+import { COMPLETE_RESIZE_EVENT } from "../../../constants/event.constants";
 import { RESIZE_DEBOUNCE_TIME } from "../../../constants/resize.constants";
 import { EventBusService } from "../../../services/event-bus.service";
 import { UtilService } from "../../../services/util.service";
@@ -129,7 +130,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
     private mouseMoveUnlisten: () => void;
     private sibling: any;
 
-    constructor(
+    public constructor(
         private elRef: ElementRef,
         private renderer: Renderer2,
         private utilService: UtilService,
@@ -138,13 +139,13 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
         private eventBusService: EventBusService
     ) {}
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes["resizerDirection"] && this.resizeGutter) {
             this.appendResizeElement();
         }
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         // as derived class doesn't inherits lifecycle hooks,
         // we can reassign targetElement there, in this case we just use directive's nativeElement
         this.targetElement = this.elRef;
@@ -175,7 +176,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
         this.refreshStyle();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this.resizeObserver) {
             this.resizeObserver.unobserve(
                 <Element>this.targetElement.nativeElement.parentElement
@@ -187,7 +188,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
         this.unlistenEvents();
     }
 
-    protected addResizeObserver() {
+    protected addResizeObserver(): void {
         const resizeHandler = debounce(
             (entry) => this.refreshStyle(),
             RESIZE_DEBOUNCE_TIME
@@ -208,13 +209,13 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
         });
     }
 
-    protected addSubscription() {
+    protected addSubscription(): void {
         this.resizeSubscription = this.eventBusService
-            .getStream({ id: "complete-resize" })
+            .getStream(COMPLETE_RESIZE_EVENT)
             .subscribe((resize) => this.refreshStyle());
     }
 
-    protected onSizeChanged(newSize: string) {
+    protected onSizeChanged(newSize: string): void {
         this.resizerSizeChanged.emit(newSize);
     }
 
@@ -241,7 +242,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
         }
     }
 
-    protected unlistenEvents() {
+    protected unlistenEvents(): void {
         this.eventSubscriptions.forEach((unlistenFn) => {
             if (isFunction(unlistenFn)) {
                 unlistenFn();
@@ -249,7 +250,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
         });
     }
 
-    protected appendEvents() {
+    protected appendEvents(): void {
         this.eventSubscriptions.push(
             this.renderer.listen(
                 this.resizeGutter,
@@ -387,7 +388,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
             "mouseup",
             ($event: MouseEvent) => this.onMouseUp($event)
         );
-        event.preventDefault(); // This disables accidental text selection while resizing
+        event.preventDefault(); // This disables accidental text selection while resizingw
     }
 
     private onMouseUp(event: MouseEvent): void {
@@ -397,9 +398,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
             `${this.resizeClass}--active`
         );
         this._isDragging = false;
-        this.eventBusService
-            .getStream({ id: "complete-resize" })
-            .next(undefined);
+        this.eventBusService.getStream(COMPLETE_RESIZE_EVENT).next(event);
     }
 
     private calculatePosition() {

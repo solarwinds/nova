@@ -42,7 +42,7 @@ export class BarChartGroupedExampleComponent implements OnInit {
     public tooltipsPlugin = new BarTooltipsPlugin();
     public config = { grouped: true, horizontal: false } as IBarChartConfig;
 
-    ngOnInit() {
+    public ngOnInit(): void {
         const chart = new Chart(barGrid(this.config));
         this.chartAssist = new ChartAssist(chart);
 

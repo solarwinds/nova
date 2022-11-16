@@ -54,7 +54,6 @@ import { TableColumnDefDirective } from "./table-column-def.directive";
  */
 
 @Component({
-    // eslint-disable-next-line
     selector: "nui-header-cell, th[nui-header-cell]",
     host: {
         role: "columnheader",
@@ -252,7 +251,7 @@ export class TableHeaderCellComponent
         };
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         const alignment = this.alignment
             ? `align-${this.alignment}`
             : this.tableStateHandlerService.getAlignment(this.columnDef.name);
@@ -325,9 +324,9 @@ export class TableHeaderCellComponent
                             draggedOverCell?.cellIndex === this.currentCellIndex
                         ) {
                             this.rightEdgeActive =
-                                draggedOverCell.dropAlignment === "right";
+                                draggedOverCell?.dropAlignment === "right";
                             this.leftEdgeActive =
-                                draggedOverCell.dropAlignment === "left";
+                                draggedOverCell?.dropAlignment === "left";
                         }
                     }
                 )
@@ -335,7 +334,7 @@ export class TableHeaderCellComponent
         }
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.alignment && !changes.alignment.firstChange) {
             const newAlignment = `align-${changes.alignment.currentValue}`;
             const oldAlignment = `align-${changes.alignment.previousValue}`;
@@ -344,7 +343,7 @@ export class TableHeaderCellComponent
         }
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         this.zone.runOutsideAngular(() => {
             this.subscriptions.push(
                 fromEvent<DragEvent>(
@@ -380,7 +379,7 @@ export class TableHeaderCellComponent
         }
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.subscriptions.forEach((subscription) =>
             subscription.unsubscribe()
         );

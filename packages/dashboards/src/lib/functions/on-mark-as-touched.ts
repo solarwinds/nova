@@ -29,7 +29,7 @@ import { AbstractControl } from "@angular/forms";
 export function onMarkAsTouched(
     formControl: AbstractControl,
     callback: Function
-) {
+): void {
     const origFunc = formControl.markAsTouched;
     formControl.markAsTouched = () => {
         // @ts-ignore

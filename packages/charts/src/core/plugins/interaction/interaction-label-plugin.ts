@@ -58,7 +58,7 @@ export class InteractionLabelPlugin extends ChartPlugin {
     private isChartInView = false;
     private lastInteractionValuesPayload: IInteractionValuesPayload;
     private interactionLabelLayer: D3Selection<SVGElement>;
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(private formatterName = "title") {
         super();

@@ -82,19 +82,19 @@ export class RefreshRateConfiguratorComponent
     valueChangeFix = noop; // TODO this can be removed after NUI-3442 is fixed
 
     private onChange: (value: number | null) => void;
-    private destroy$$ = new Subject<void>();
+    private destroy$ = new Subject<void>();
 
     constructor(private fb: FormBuilder, private cd: ChangeDetectorRef) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.generateUnitItems();
         this.filterUnitItems();
         this.createForm();
     }
 
-    ngOnDestroy(): void {
-        this.destroy$$.next();
-        this.destroy$$.complete();
+    public ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     getNumberMin(): number | undefined {
@@ -195,7 +195,7 @@ export class RefreshRateConfiguratorComponent
             this.currentUnit = this.unitControl.value.id;
         }
 
-        this.form.valueChanges.pipe(takeUntil(this.destroy$$)).subscribe(() => {
+        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
             this.updateError();
             this.emitValueChange();
         });
@@ -263,22 +263,20 @@ export class RefreshRateConfiguratorComponent
         params: NumberValidationParams
     ): string {
         const { min, max, whole } = params;
-        let numberTypeText: string;
-        if (whole) {
-            numberTypeText = $localize`a whole number`;
-        } else {
-            numberTypeText = $localize`a number`;
-        }
+        const numberTypeText = whole
+            ? $localize`a whole number`
+            : $localize`a number`;
 
         if (min != null && max != null) {
             if (min === max) {
                 return $localize`Must be ${numberTypeText} equal to ${min}`;
-            } else {
-                return $localize`Must be ${numberTypeText} between ${min} and ${max}`;
             }
-        } else if (min == null && max != null) {
+            return $localize`Must be ${numberTypeText} between ${min} and ${max}`;
+        }
+        if (min == null && max != null) {
             return $localize`Must be ${numberTypeText} not larger than ${max}`;
-        } else if (min != null && max == null) {
+        }
+        if (min != null && max == null) {
             return $localize`Must be ${numberTypeText} not smaller than ${min}`;
         }
         return $localize`Must be ${numberTypeText}`;

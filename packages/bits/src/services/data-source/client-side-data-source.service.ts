@@ -53,11 +53,11 @@ export class ClientSideDataSource<
         super();
     }
 
-    public setData(initialData: T[] = []) {
+    public setData(initialData: T[] = []): void {
         this._allData = initialData;
     }
 
-    public setSearchProperties(properties: string[]) {
+    public setSearchProperties(properties: string[]): void {
         this._searchProps = properties;
     }
 
@@ -92,11 +92,11 @@ export class ClientSideDataSource<
         };
     }
 
-    protected prepareData(filters: F) {
+    protected prepareData(filters: F): T[] {
         return this._allData;
     }
 
-    protected searchHandler(searchTerm: any) {
+    protected searchHandler(searchTerm: any): T[] {
         return this.searchService.search(
             this._allData,
             this._searchProps,
@@ -104,7 +104,7 @@ export class ClientSideDataSource<
         );
     }
 
-    protected sortingHandler(filters: any, nextChunk: any) {
+    protected sortingHandler(filters: any, nextChunk: T[]): T[] {
         if (
             _get(filters, "sorter.value.sortBy") &&
             _get(filters, "sorter.value.direction")
@@ -121,7 +121,7 @@ export class ClientSideDataSource<
         return nextChunk;
     }
 
-    protected paginationHandler(filters: any, nextChunk: any) {
+    protected paginationHandler(filters: any, nextChunk: T[]): T[] {
         if (filters?.paginator) {
             return nextChunk.slice(
                 filters.paginator.value.start,
@@ -131,7 +131,7 @@ export class ClientSideDataSource<
         return nextChunk;
     }
 
-    protected virtualScrollHandler(filters: any, nextChunk: any) {
+    protected virtualScrollHandler(filters: any, nextChunk: T[]): T[] {
         let data = nextChunk;
         if (filters?.virtualScroll) {
             data = nextChunk.slice(

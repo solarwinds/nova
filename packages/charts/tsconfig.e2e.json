@@ -1,8 +1,11 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
-        "target": "es6",
         "declaration": true,
+        "module": "commonjs",
+        "paths": {
+            "@nova-ui/charts": ["./src/public-api.ts"]
+        },
+        "target": "es6",
         "types": ["jasmine", "jasminewd2", "node", "selenium-webdriver"]
     },
     "exclude": ["**/*.e2e.ts", "**/*.visual.ts"],

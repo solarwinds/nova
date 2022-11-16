@@ -36,7 +36,7 @@ import { IInteractionValues } from "./types";
 
 /** @ignore */
 export class MouseInteractiveAreaPlugin extends ChartPlugin {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     private interactionValuesActive = true;
 
     constructor(private mouseInteractiveArea: MouseInteractiveArea) {
@@ -111,7 +111,7 @@ export class MouseInteractiveAreaPlugin extends ChartPlugin {
             });
     }
 
-    public update() {
+    public update(): void {
         this.highlightReset();
     }
 

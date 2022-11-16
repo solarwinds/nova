@@ -91,12 +91,12 @@ export class FormFieldComponent
 
     public controlIsOptional: boolean = false;
 
-    ngAfterContentChecked() {
+    public ngAfterContentChecked(): void {
         this.controlIsOptional =
             this.showOptionalText && !this.hasRequiredField(this.control);
     }
 
-    public ngAfterContentInit() {
+    public ngAfterContentInit(): void {
         if (this.control) {
             merge(
                 this.control.valueChanges,
@@ -124,7 +124,7 @@ export class FormFieldComponent
         }
     }
 
-    public getWidth() {
+    public getWidth(): string {
         return this.customBoxWidth || "100%";
     }
 

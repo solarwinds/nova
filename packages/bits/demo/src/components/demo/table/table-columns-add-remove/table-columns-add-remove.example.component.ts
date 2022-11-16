@@ -78,7 +78,7 @@ export class TableColumnsAddRemoveExampleComponent implements OnInit {
         private formBuilder: FormBuilder
     ) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
             checkboxGroup: this.formBuilder.control(this.displayedColumnsCopy, [
                 Validators.required,
@@ -115,21 +115,21 @@ export class TableColumnsAddRemoveExampleComponent implements OnInit {
         this.displayedColumns = this.displayedColumnsCopy.slice();
     }
 
-    public columnIsActions(column: string) {
+    public columnIsActions(column: string): boolean {
         return column === "actions";
     }
 
-    public deleteRow(row: IExampleTableModel) {
+    public deleteRow(row: IExampleTableModel): void {
         this.dataSource.splice(this.dataSource.indexOf(row, 0), 1);
         this.table.renderRows();
     }
 
-    public appendRow() {
+    public appendRow(): void {
         this.dataSource.splice(this.dataSource.length, 0, getRowDataToAppend());
         this.table.renderRows();
     }
 
-    public prependRow() {
+    public prependRow(): void {
         this.dataSource.splice(0, 0, getRowDataToPrepend());
         this.table.renderRows();
     }

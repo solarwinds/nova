@@ -41,7 +41,7 @@ export class LineChartBasicExampleComponent implements OnInit {
     // XYGrid is used for rendering axes and other grid elements
     public chart = new Chart(new XYGrid());
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         // Line accessors let the renderer know how to access x and y domain data respectively from a chart's input data set(s).
         const accessors = new LineAccessors();
 

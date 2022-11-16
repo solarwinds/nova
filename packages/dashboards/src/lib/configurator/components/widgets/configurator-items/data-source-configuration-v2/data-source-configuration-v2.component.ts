@@ -182,7 +182,7 @@ export class DataSourceConfigurationV2Component
 
     public onDataSourceSelected(
         selectedDataSource: IProviderConfigurationForDisplay
-    ) {
+    ): void {
         this.eventBus.next(DATA_SOURCE_CHANGE, {});
         this.invokeDataSource(selectedDataSource);
     }
@@ -195,7 +195,7 @@ export class DataSourceConfigurationV2Component
      *
      * @param data
      */
-    public invokeDataSource(data: IProviderConfiguration) {
+    public invokeDataSource(data: IProviderConfiguration): void {
         if (!data.providerId) {
             return;
         }
@@ -237,7 +237,7 @@ export class DataSourceConfigurationV2Component
         }
     }
 
-    public onErrorState(isError: boolean) {
+    public onErrorState(isError: boolean): void {
         this.hasDataSourceError = isError;
         this.form.markAsTouched({ onlySelf: true });
         this.form.updateValueAndValidity({ emitEvent: false });

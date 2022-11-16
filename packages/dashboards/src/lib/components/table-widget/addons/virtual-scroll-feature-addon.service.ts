@@ -20,6 +20,7 @@
 
 import { ListRange } from "@angular/cdk/collections";
 import { Injectable } from "@angular/core";
+// eslint-disable-next-line import/no-deprecated
 import { merge } from "rxjs";
 import { filter, map, takeUntil, tap } from "rxjs/operators";
 
@@ -34,11 +35,11 @@ export class VirtualScrollFeatureAddonService {
 
     public visibleItems: unknown[] = [];
 
-    public initWidget(widget: TableWidgetComponent) {
+    public initWidget(widget: TableWidgetComponent): void {
         this.widget = widget;
     }
 
-    public initVirtualScroll() {
+    public initVirtualScroll(): void {
         if (this.widget.hasVirtualScroll) {
             this.registerVirtualScroll();
         } else {
@@ -67,13 +68,14 @@ export class VirtualScrollFeatureAddonService {
     /**
      * Subscribe to virtual scroll rendered items and fetches next items
      */
-    public subscribeToVirtualScroll() {
+    public subscribeToVirtualScroll(): void {
         if (!this.widget.vscrollViewport) {
             return;
         }
 
         // Note: Using this additional stream to pass the visible range to
         // the table and trigger change detection on range change and table data update.
+        // eslint-disable-next-line import/no-deprecated
         merge(
             this.widget.vscrollViewport.renderedRangeStream,
             this.widget.tableUpdate$.pipe(
@@ -114,7 +116,7 @@ export class VirtualScrollFeatureAddonService {
                             range.end / (range.end - range.start);
                         this.widget.eventBus
                             .getStream(SCROLL_NEXT_PAGE)
-                            .next(undefined);
+                            .next({});
                         this.widget.changeDetector.detectChanges();
                     })
                 ),

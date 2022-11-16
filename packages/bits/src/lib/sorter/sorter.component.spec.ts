@@ -48,7 +48,6 @@ describe("components >", () => {
         let fixture: ComponentFixture<SorterComponent>;
         let component: SorterComponent;
         let itemsSource: IMenuItem[];
-        let spy: jasmine.Spy;
         let sorterKeyboardService: SorterKeyboardService;
 
         beforeEach(() => {
@@ -98,7 +97,7 @@ describe("components >", () => {
             sorterKeyboardService = fixture.debugElement.injector.get(
                 SorterKeyboardService
             );
-            spy = spyOn(sorterKeyboardService, "initKeyboardManager");
+            spyOn(sorterKeyboardService, "initKeyboardManager");
             component.ngOnChanges({
                 selectedItem: {} as SimpleChange,
                 itemsSource: {} as SimpleChange,

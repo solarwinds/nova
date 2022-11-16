@@ -35,7 +35,7 @@ export class NestedFormsAsComponentExampleComponent implements OnInit {
         @Inject(ToastService) private toastService: ToastService
     ) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.fancyForm = this.fb.group({
             nickname: this.fb.control("", [
                 Validators.required,
@@ -44,10 +44,10 @@ export class NestedFormsAsComponentExampleComponent implements OnInit {
         });
     }
 
-    formInitialized(name: string, form: FormGroup) {
+    public formInitialized(name: string, form: FormGroup): void {
         this.fancyForm.setControl(name, form);
     }
-    public onSubmit(value: FormGroup) {
+    public onSubmit(value: FormGroup): void {
         this.toastService.success({
             message: `Form is valid: ${value.valid}`,
             title: "Submit",
@@ -89,7 +89,7 @@ export class FirstCustomFormExampleComponent implements OnInit {
     @Output() formReady = new EventEmitter<FormGroup>();
     public firstForm: FormGroup;
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.firstForm = this.fb.group({
             firstName: this.fb.control("", Validators.required),
             lastName: this.fb.control("", Validators.required),
@@ -135,7 +135,7 @@ export class SecondCustomFormExampleComponent implements OnInit {
     @Output() formReady = new EventEmitter<FormGroup>();
     public secondForm: FormGroup;
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.secondForm = this.fb.group({
             city: null,
             address: null,

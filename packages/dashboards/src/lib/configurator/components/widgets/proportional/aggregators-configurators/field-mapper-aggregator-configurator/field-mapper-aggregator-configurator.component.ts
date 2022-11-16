@@ -77,7 +77,7 @@ export class FieldMapperAggregatorConfiguratorComponent
         chartSeriesDataFieldId: [],
     });
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         changeDetector: ChangeDetectorRef,
@@ -105,7 +105,7 @@ export class FieldMapperAggregatorConfiguratorComponent
             });
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         super.ngOnChanges(changes);
 
         if (changes.chartSeriesDataFieldId) {
@@ -115,7 +115,7 @@ export class FieldMapperAggregatorConfiguratorComponent
         }
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }

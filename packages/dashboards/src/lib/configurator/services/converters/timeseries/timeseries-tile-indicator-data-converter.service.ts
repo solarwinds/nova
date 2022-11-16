@@ -51,7 +51,7 @@ export class TimeseriesTileIndicatorDataConverterService extends BaseConverter {
         super(eventBus, previewService, pizzagnaService);
     }
 
-    public buildForm() {
+    public buildForm(): void {
         const series = get(
             this.getPreview(),
             this.previewSeriesPath,
@@ -71,7 +71,7 @@ export class TimeseriesTileIndicatorDataConverterService extends BaseConverter {
         this.updateFormPizzagna(updatedPizzagna);
     }
 
-    public toPreview(form: FormGroup) {
+    public toPreview(form: FormGroup): void {
         form.valueChanges
             .pipe(takeUntil(this.destroy$))
             .subscribe((formData) => {

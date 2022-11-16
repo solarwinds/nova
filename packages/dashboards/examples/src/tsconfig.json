@@ -1,16 +1,15 @@
 {
     "compilerOptions": {
-        "outDir": "../out-tsc/app",
-        "baseUrl": "./",
-        "skipLibCheck": true,
+        "baseUrl": ".",
         "declaration": false,
-        "types": ["node"],
+        "importHelpers": false,
         "paths": {
             "@nova-ui/dashboards": ["../../src/public-api.ts"]
-        }
+        },
+        "skipLibCheck": true,
+        "types": ["node"]
     },
     "exclude": ["**/*.spec.ts"],
     "extends": "../../tsconfig.json",
-    "lib": ["es6", "dom"],
-    "typeRoots": ["../../node_modules/@types"]
+    "lib": ["es6", "dom"]
 }
