@@ -81,7 +81,7 @@ describe("ng-update", () => {
         );
         const afterTree = await runner
             .runSchematicAsync(
-                "nova-migration-v8",
+                "nova-migration-v13",
                 { skipTsConfig: true, project: "bar", skipCss: false },
                 appTree
             )
@@ -89,9 +89,9 @@ describe("ng-update", () => {
         const file = JSON.parse(
             (afterTree.read("angular.json") ?? "").toString("utf-8")
         );
-        expect(file.projects.bar.architect.build.options.styles[0]).toEqual(
-            "./node_modules/@nova-ui/bits/bundles/css/styles-v7-compat.css"
-        );
+        expect(file.projects.bar.architect.build.options.styles).toEqual([
+            "./node_modules/@nova-ui/bits/bundles/css/styles.css",
+        ]);
     });
 
     it("does not re-add style to angular.json", async () => {
@@ -104,7 +104,7 @@ describe("ng-update", () => {
                             build: {
                                 options: {
                                     styles: [
-                                        "./node_modules/@nova-ui/bits/bundles/css/styles-v7-compat.css",
+                                        "./node_modules/@nova-ui/bits/bundles/css/styles.css",
                                     ],
                                 },
                             },
@@ -116,7 +116,7 @@ describe("ng-update", () => {
 
         const afterTree = await runner
             .runSchematicAsync(
-                "nova-migration-v8",
+                "nova-migration-v13",
                 { skipTsConfig: true, project: "bar", skipCss: false },
                 appTree
             )
@@ -124,15 +124,15 @@ describe("ng-update", () => {
         const file = JSON.parse(
             (afterTree.read("angular.json") ?? "")?.toString("utf-8")
         );
-        expect(file.projects.bar.architect.build.options.styles.length).toEqual(
-            1
-        );
+        expect(file.projects.bar.architect.build.options.styles).toEqual([
+            "./node_modules/@nova-ui/bits/bundles/css/styles.css",
+        ]);
     });
 
     it("updates style array in angular.json", async () => {
         const afterTree = await runner
             .runSchematicAsync(
-                "nova-migration-v8",
+                "nova-migration-v13",
                 { skipTsConfig: true, project: "bar" },
                 appTree
             )
@@ -140,8 +140,9 @@ describe("ng-update", () => {
         const file = JSON.parse(
             (afterTree.read("angular.json") ?? "").toString("utf-8")
         );
-        expect(file.projects.bar.architect.build.options.styles[1]).toContain(
-            "@nova-ui/bits"
-        );
+        expect(file.projects.bar.architect.build.options.styles).toEqual([
+            "projects/bar/src/styles.css",
+            "./node_modules/@nova-ui/bits/bundles/css/styles.css",
+        ]);
     });
 });
