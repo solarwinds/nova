@@ -18,7 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AfterViewInit, Directive, Inject, Input } from "@angular/core";
+import {
+    Directive,
+    Inject,
+    Input,
+    OnChanges,
+    SimpleChanges,
+} from "@angular/core";
 
 import { CHART_COMPONENT } from "../constants";
 import { IChartComponent } from "../core/common/types";
@@ -33,7 +39,7 @@ import { ChartCollectionService } from "./chart-collection.service";
 @Directive({
     selector: "[nuiChartCollectionId]",
 })
-export class ChartCollectionIdDirective implements AfterViewInit {
+export class ChartCollectionIdDirective implements OnChanges {
     @Input("nuiChartCollectionId")
     public collectionId: string;
 
@@ -42,9 +48,19 @@ export class ChartCollectionIdDirective implements AfterViewInit {
         private chartCollectionService: ChartCollectionService
     ) {}
 
-    public ngAfterViewInit(): void {
-        this.chartCollectionService
-            .getChartCollection(this.collectionId)
-            .addChart(this.chartComponent.chart);
+    public ngOnChanges(changes: SimpleChanges): void {
+        const collectionIdChange = changes.collectionId;
+        if (collectionIdChange) {
+            if (collectionIdChange.previousValue) {
+                this.chartCollectionService
+                    .getChartCollection(collectionIdChange.previousValue)
+                    .removeChart(this.chartComponent.chart);
+            }
+            if (collectionIdChange.currentValue) {
+                this.chartCollectionService
+                    .getChartCollection(collectionIdChange.currentValue)
+                    .addChart(this.chartComponent.chart);
+            }
+        }
     }
 }

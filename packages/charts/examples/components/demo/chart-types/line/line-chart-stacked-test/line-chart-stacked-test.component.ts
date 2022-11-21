@@ -25,7 +25,6 @@ import {
     Chart,
     IChartSeries,
     ILineAccessors,
-    IXYScales,
     LineAccessors,
     LinearScale,
     LineRenderer,
@@ -49,7 +48,7 @@ const createRandomData = () =>
     templateUrl: "./line-chart-stacked-test.component.html",
 })
 export class LineChartStackedTestComponent implements OnInit {
-    public readonly collectionId = "test-collection";
+    public collectionId = "";
 
     public input: string;
     public chart1: Chart;
@@ -131,11 +130,6 @@ export class LineChartStackedTestComponent implements OnInit {
         const yScale = new LinearScale();
         yScale.fixDomain([0, 100]);
 
-        // const scales: IXYScales[] = new Array(2).fill(null).map(() => ({
-        //     x: new TimeScale(),
-        //     y: yScale,
-        // }));
-
         return input.map((row, rowIndex) => ({
             id: `series-${rowIndex}`,
             name: "Series ${index + 1}",
@@ -153,5 +147,9 @@ export class LineChartStackedTestComponent implements OnInit {
             renderer,
             accessors,
         }));
+    }
+
+    public onSyncUpdate(value: boolean): void {
+        this.collectionId = value ? "test-collection" : "";
     }
 }
