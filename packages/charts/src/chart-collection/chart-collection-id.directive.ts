@@ -49,10 +49,8 @@ export class ChartCollectionIdDirective implements OnChanges {
     ) {}
 
     public ngOnChanges(changes: SimpleChanges): void {
-        console.log("ngOnChanges");
         const collectionIdChange = changes.collectionId;
         if (collectionIdChange) {
-            console.log("collectionIdChange", collectionIdChange);
             if (collectionIdChange.previousValue) {
                 this.chartCollectionService
                     .getChartCollection(collectionIdChange.previousValue)
