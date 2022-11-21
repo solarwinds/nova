@@ -372,7 +372,7 @@ describe("components >", () => {
                     },
                 });
 
-                console.log(getHighlightedPoints());
+                // console.log(getHighlightedPoints());
 
                 expect(getHighlightedPoint(1)).toBeDefined();
 
@@ -385,7 +385,7 @@ describe("components >", () => {
                     },
                 });
 
-                console.log(getHighlightedPoints());
+                // console.log(getHighlightedPoints());
 
                 expect(getHighlightedPoint(1)).toBeDefined();
             });
