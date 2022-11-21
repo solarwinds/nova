@@ -616,8 +616,7 @@ jobs:
         docker:
             - image: cimg/node:16.14
         environment:
-            SOURCE_BRANCH: main
-            # TODO: Change to false
+            SOURCE_BRANCH: hotfix/v12.0.x
             CREATE_RELEASE_BRANCH: true
             RELEASE_BRANCH: release/v12.0.x
             INCREMENT_TYPE: patch
