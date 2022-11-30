@@ -2327,22 +2327,29 @@
   resolved "https://registry.yarnpkg.com/@percy/env/-/env-1.13.0.tgz#9f42370cb18bd80ac11c7e6bc2984cf9a080b53f"
   integrity sha512-oc5B957QSumXnbFsMY1icja34PM6wK1CLJZgDjgsnGFos/1yn1QCG0oyPLbMj+7ZESvLhVHbPqhfCrFB0rTjRQ==
 
+"@percy/logger@1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@percy/logger/-/logger-1.0.8.tgz#c30606b39bdbf646fe896056b772a93314fcf409"
+  integrity sha512-uHIk6YW7iJGcl/y/QHRl1R8t4NavyTZwji6oe1WW0BUGpR4xE6WjzXqSWv6UezfLLvZGV0AI8vrFqD95d8LLXg==
+
 "@percy/logger@1.13.0":
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/@percy/logger/-/logger-1.13.0.tgz#3f5354d6ebbdeae82214098faee813fcbc306c96"
   integrity sha512-JwBl7ZYgu4TR50f7k81gRqah8kNCvlvcI7t9kyt7fjW2vSagYfgezh3XK7BToopiE4Qst6sFF2E11xxzIympsA==
 
-"@percy/protractor@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@percy/protractor/-/protractor-2.0.1.tgz#bfe1a6c0d2349a6862345f9764329d761aa1cd29"
-  integrity sha512-Zhxa39uv5IhLlHrY2Gk+mlwv7o276ai4wP0SvW3JTkaPtBTu+XB0xmNSA7EjGdDF1vwyEDFp7yG6n8UleUkjBA==
+"@percy/protractor@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@percy/protractor/-/protractor-2.0.0.tgz#6536301e232ab8b9ee1a1fa36a7a9e654c17fabe"
+  integrity sha512-zdxHcvmhGHGCy97nPys/v+ZR8iU8k1AvdJwcofgplmbPIvnJb7v6lQJfoz+Sivyd3+H4aQPCz4fXgCTXQFs5/g==
   dependencies:
-    "@percy/sdk-utils" "^1.0.0"
+    "@percy/sdk-utils" "~1.0.0-beta.32"
 
-"@percy/sdk-utils@^1.0.0":
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/@percy/sdk-utils/-/sdk-utils-1.13.0.tgz#187d82efb6119bd953dc2589c150a23eca8ad869"
-  integrity sha512-b+DPexL519+9tYBVWorEDqZ1fN6WlWKDUrbsDFex2cDjXruYOf+hIQt3jncW0jDu3V9cQcklMxB0u7joKcEFZg==
+"@percy/sdk-utils@~1.0.0-beta.32":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@percy/sdk-utils/-/sdk-utils-1.0.8.tgz#70eba8b0a6b684048f6e6b03fc050edc191af089"
+  integrity sha512-cA45Wk9c2MFutso9W5uwj2yMbX6RRbVwsmeqwqNZUpVk6V84Tvc2Ci0gPswbc9fCC0OOHIXOq5FZ3920McVeLA==
+  dependencies:
+    "@percy/logger" "1.0.8"
 
 "@pkgr/utils@^2.3.1":
   version "2.3.1"
