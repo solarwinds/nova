@@ -29,7 +29,7 @@
     "@apollo/client": "^3.7.1",
     "@compodoc/compodoc": "^1.1.19",
     "@percy/cli": "^1.13.0",
-    "@percy/protractor": "^2.0.1",
+    "@percy/protractor": "2.0.0",
     "@schematics/angular": "^13.3.9",
     "@types/d3": "^5.7.2",
     "@types/d3-selection-multi": "^1.0.7",

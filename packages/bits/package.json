@@ -34,7 +34,7 @@
     "@axe-core/webdriverjs": "^4.5.1",
     "@compodoc/compodoc": "^1.1.19",
     "@percy/cli": "^1.13.0",
-    "@percy/protractor": "^2.0.1",
+    "@percy/protractor": "2.0.0",
     "@schematics/angular": "^13.3.9",
     "@types/jasmine": "^4.3.0",
     "@types/jasminewd2": "^2.0.10",

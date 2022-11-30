@@ -27,7 +27,7 @@
     "@angular/router": "^13.3.11",
     "@compodoc/compodoc": "^1.1.19",
     "@percy/cli": "^1.13.0",
-    "@percy/protractor": "^2.0.1",
+    "@percy/protractor": "2.0.0",
     "@types/d3": "^5.7.2",
     "@types/d3-selection-multi": "^1.0.7",
     "@types/jasmine": "^4.3.0",
