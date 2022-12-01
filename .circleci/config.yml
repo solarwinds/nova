@@ -39,7 +39,7 @@ jobs:
                   paths:
                       - ./packages/bits/node_modules
             - restore_cache:
-                  key: bits-dist-{{ .Branch }}-{{ checksum "packages/bits/git-commit" }}
+                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
             - run:
                   working_directory: ~/nova/packages/bits
                   name: Assemble
@@ -54,7 +54,7 @@ jobs:
                           yarn run assemble
                       fi
             - save_cache:
-                  key: bits-dist-{{ .Branch }}-{{ checksum "packages/bits/git-commit" }}
+                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
                   paths:
                       - ./packages/bits/dist
                       - ./packages/bits/sdk
@@ -113,7 +113,7 @@ jobs:
                   command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/bits
             - run:
                   name: Cleanup
-                  command: docker-compose down -v --rmi="all"
+                  command: docker-compose down -v --rmi=local
     bits-a11y-test:
         working_directory: ~/nova
         machine:
@@ -133,7 +133,7 @@ jobs:
                   command: docker-compose run --user="$UID" build npm run a11y:ci --prefix ./packages/bits
             - run:
                   name: Cleanup
-                  command: docker-compose down -v --rmi="all"
+                  command: docker-compose down -v --rmi=local
     bits-visual-test:
         working_directory: ~/nova
         machine:
@@ -155,7 +155,7 @@ jobs:
                       docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/bits
             - run:
                   name: Cleanup
-                  command: docker-compose down -v --rmi="all"
+                  command: docker-compose down -v --rmi=local
     bits-pack:
         working_directory: ~/nova/packages/bits
         docker:
@@ -258,7 +258,7 @@ jobs:
                   name: Restore package.json
                   command: mv -f package.json~ package.json
             - restore_cache:
-                  key: charts-dist-{{ .Branch }}-{{ checksum "packages/charts/git-commit" }}
+                  key: charts-dist-{{ checksum "packages/charts/git-commit" }}
             - run:
                   working_directory: ~/nova/packages/charts
                   name: Assemble
@@ -271,7 +271,7 @@ jobs:
                           yarn run assemble
                       fi
             - save_cache:
-                  key: charts-dist-{{ .Branch }}-{{ checksum "packages/charts/git-commit" }}
+                  key: charts-dist-{{ checksum "packages/charts/git-commit" }}
                   paths:
                       - ./packages/charts/dist
                       - ./packages/charts/sdk
@@ -320,7 +320,7 @@ jobs:
                   command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/charts
             - run:
                   name: Cleanup
-                  command: docker-compose down -v --rmi="all"
+                  command: docker-compose down -v --rmi=local
     charts-visual-test:
         working_directory: ~/nova
         machine:
@@ -342,7 +342,7 @@ jobs:
                       docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/charts
             - run:
                   name: Cleanup
-                  command: docker-compose down -v --rmi="all"
+                  command: docker-compose down -v --rmi=local
     charts-pack:
         working_directory: ~/nova/packages/charts
         docker:
@@ -450,7 +450,7 @@ jobs:
                   name: Restore package.json
                   command: mv -f package.json~ package.json
             - restore_cache:
-                  key: dashboards-dist-{{ .Branch }}-{{ checksum "packages/dashboards/git-commit" }}
+                  key: dashboards-dist-{{ checksum "packages/dashboards/git-commit" }}
             - run:
                   working_directory: ~/nova/packages/dashboards
                   name: Assemble
@@ -463,7 +463,7 @@ jobs:
                           yarn run assemble
                       fi
             - save_cache:
-                  key: dashboards-dist-{{ .Branch }}-{{ checksum "packages/dashboards/git-commit" }}
+                  key: dashboards-dist-{{ checksum "packages/dashboards/git-commit" }}
                   paths:
                       - ./packages/dashboards/dist
                       - ./packages/dashboards/sdk
@@ -509,7 +509,7 @@ jobs:
                   command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/dashboards
             - run:
                   name: Cleanup
-                  command: docker-compose down -v --rmi="all"
+                  command: docker-compose down -v --rmi=local
     dashboards-visual-test:
         working_directory: ~/nova
         machine:
@@ -531,7 +531,7 @@ jobs:
                       docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/dashboards
             - run:
                   name: Cleanup
-                  command: docker-compose down -v --rmi="all"
+                  command: docker-compose down -v --rmi=local
     dashboards-pack:
         working_directory: ~/nova/packages/dashboards
         docker:
