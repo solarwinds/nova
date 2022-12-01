@@ -6,10 +6,10 @@ In Bits, the philosophy is all about flexibility – it provides the Legos, plum
 
 Before you begin, make sure your development environment includes the following:
 
-- Node.js®
-- A package manager such as [npm](https://www.npmjs.com/get-npm)
-- Angular CLI v13
-- Angular CDK v13 as a devDependency
+-   Node.js®
+-   A package manager such as [npm](https://www.npmjs.com/get-npm)
+-   Angular CLI v13
+-   Angular CDK v13 as a devDependency
 
 ### Installing NodeJS and `npm`
 

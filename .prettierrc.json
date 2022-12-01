@@ -21,6 +21,12 @@
                 "parser": "json",
                 "plugins": ["prettier-plugin-sort-json"]
             }
+        },
+        {
+            "files": "*.md",
+            "options": {
+                "tabWidth": 1
+            }
         }
     ]
 }
