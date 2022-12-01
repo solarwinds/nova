@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-    browser-tools: circleci/browser-tools@1.2.5
+    browser-tools: circleci/browser-tools@1.4.0
 jobs:
     bits-build:
         working_directory: ~/nova
@@ -663,7 +663,6 @@ jobs:
                   name: Trigger release branch
                   command: yarn run trigger-pipeline-build-ci ${RELEASE_BRANCH}
 workflows:
-    version: 2.1
     nova:
         jobs:
             - bits-build
@@ -696,7 +695,6 @@ workflows:
                               - main
                               - /^release\/.*/
                               - next
-                              - /^improvement/.*/
             - bits-verify:
                   requires:
                       - bits-publish
@@ -706,7 +704,6 @@ workflows:
                               - main
                               - /^release\/.*/
                               - next
-                              - /^improvement/.*/
             - charts-build:
                   requires:
                       - bits-pack
@@ -736,7 +733,6 @@ workflows:
                               - main
                               - /^release\/.*/
                               - next
-                              - /^improvement/.*/
             - charts-verify:
                   requires:
                       - charts-publish
@@ -746,7 +742,6 @@ workflows:
                               - main
                               - /^release\/.*/
                               - next
-                              - /^improvement/.*/
             - dashboards-build:
                   requires:
                       - charts-pack
@@ -758,9 +753,13 @@ workflows:
                       - common-build-creds
                   filters:
                       branches:
-                          ignore:
-                              - /^pull\/.*/
+                          only:
+                              - main
+                              - /^release\/.*/
+                              - next
                   requires:
+                      - bits-pack
+                      - charts-pack
                       - dashboards-pack
             - dashboards-unit-test:
                   requires:
@@ -785,7 +784,6 @@ workflows:
                               - main
                               - /^release\/.*/
                               - next
-                              - /^improvement/.*/
             - dashboards-verify:
                   requires:
                       - dashboards-publish
@@ -795,7 +793,6 @@ workflows:
                               - main
                               - /^release\/.*/
                               - next
-                              - /^improvement/.*/
 
     nova-release:
         jobs:

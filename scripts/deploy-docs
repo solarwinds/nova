@@ -67,7 +67,7 @@ yarn install
 yarn run build
 
 # creating artifact for the VM
-zip -r nova-docs.zip *
+yarn run package || zip -r nova-docs.zip *
 mv ./nova-docs.zip ../
 
 # push changes to the repo
