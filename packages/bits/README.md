@@ -6,11 +6,10 @@ In Bits, the philosophy is all about flexibility – it provides the Legos, plum
 
 Before you begin, make sure your development environment includes the following:
 
--   Node.js®
--   A package manager such as [npm](https://www.npmjs.com/get-npm)
--   Angular CLI v12
--   Angular CDK v12 as a devDependency
-    <br>
+- Node.js®
+- A package manager such as [npm](https://www.npmjs.com/get-npm)
+- Angular CLI v13
+- Angular CDK v13 as a devDependency
 
 ### Installing NodeJS and `npm`
 
@@ -23,13 +22,13 @@ The Angular CLI is a command-line interface tool that you can use to initialize,
 
 You may want to check first whether it's already installed by running the following command:
 
-```bash
+```sh
 ng --version
 ```
 
 If you want to install the latest Angular CLI globally, run the following command:
 
-```
+```sh
 npm install -g @angular/cli@^12
 ```
 
@@ -37,7 +36,7 @@ npm install -g @angular/cli@^12
 
 Nova uses Angular CDK as part of its schematics functionality. To install it, you can run the following command:
 
-```
+```sh
 npm install @angular/cdk@^12 --save-dev
 ```
 
@@ -47,7 +46,7 @@ npm install @angular/cdk@^12 --save-dev
 
 In order to install bits in your project root using the CLI, run the following command:
 
-```bash
+```sh
 ng add @nova-ui/bits
 ```
 
@@ -55,14 +54,14 @@ This will automatically perform most of the steps for you.
 
 If you do not want to override your dependency versions, you can use skipPackageJson flag.
 
-```
+```sh
 ng add @nova-ui/bits --skipPackageJson
 ```
 
 But, there's one additional step that needs to be done manually. Since bits uses `@angular/localize` for localization, this dependency
 needs to be imported in your app's polyfills.ts file. The easiest way to do this is to run the following command:
 
-```bash
+```sh
 ng add @angular/localize
 ```
 
@@ -70,7 +69,7 @@ ng add @angular/localize
 
 Installation is quite simple using npm. Nui includes all of its dependencies as part of the final build such as Angular, RxJs and more.
 
-```bash
+```sh
 npm install @nova-ui/bits
 ```
 
@@ -197,35 +196,35 @@ We recommend the [BEM](http://getbem.com/) naming convention for your css/less v
 ## Schematics
 
 A [schematic](https://angular.io/guide/schematics) is a template-based code generator that supports complex logic. It is a set of instructions for transforming a software project by generating or modifying code. Schematics are part of the Angular ecosystem.
-Nova Bits offers the following [schematics](https://nova-ui.solarwinds.io/bits/release_v12.x/additional-documentation/schematics.html):
+Nova Bits offers the following [schematics](https://nova-ui.solarwinds.io/#/bits/release_v13.0.x/additional-documentation/schematics.html):
 
-#### Filtered View
+### Filtered View
 
-[The Filtered View](https://nova-ui.solarwinds.io/bits/release_v12.x/additional-documentation/schematics/filtered-view.html)
+[The Filtered View](https://nova-ui.solarwinds.io/#/bits/release_v13.0.x/additional-documentation/schematics/filtered-view.html)
 schematic provides the ability to create a generic filtered view that can cover many use cases for filtering a set of data. Its main responsibility is to integrate a filter group panel with a list or table view that displays the filtered data. More details can be found [here](https://solarwinds.sharepoint.com/portals/hub/_layouts/15/PointPublishing.aspx?app=video&p=p&chid=8511af43-214a-435d-a605-dbe722ca04a0&vid=a5dbbef3-3582-49bf-b537-f789f946d09f)
 To add a filtered view to your project, run the following command:
 
-```bash
+```sh
 ng generate @nova-ui/bits:filtered-view --name=custom-name-for-filtered-view
 ```
 
-#### Filtered Group
+### Filtered Group
 
-[The Filtered Group](https://nova-ui.solarwinds.io/bits/release_v12.x/additional-documentation/schematics/filter-group.html)
-schematic provides the ability to create a filtered group view. It depends heavily on the [LocalFilteringDataSource](https://nova-ui.solarwinds.io/bits/release_v12.x/injectables/LocalFilteringDataSource.html) service, so first and foremost please check out the documentation for it.
+[The Filtered Group](https://nova-ui.solarwinds.io/#/bits/release_v13.0.x/additional-documentation/schematics/filter-group.html)
+schematic provides the ability to create a filtered group view. It depends heavily on the [LocalFilteringDataSource](https://nova-ui.solarwinds.io/#/bits/release_v13.0.x/injectables/LocalFilteringDataSource.html) service, so first and foremost please check out the documentation for it.
 This code can be generated using the following command:
 
-```
+```sh
 ng generate @nova-ui/bits:filter-group --name=basic-filter-group --p=app
 ```
 
-#### List
+### List
 
-[The List](https://nova-ui.solarwinds.io/bits/release_v12.x/additional-documentation/schematics/list.html) schematic provides the
-ability to create a generic list that can cover a majority of use cases for a list. Its main responsibility is to integrate the functionality of the [nui-repeat](https://nova-ui.solarwinds.io/bits/release_v12.x/components/RepeatComponent.html) component with other components commonly used with a list such as [nui-select-v2](https://nova-ui.solarwinds.io/bits/release_v12.x/components/SelectV2Component.html), [nui-search](https://nova-ui.solarwinds.io/bits/release_v12.x/components/SearchComponent.html), [nui-paginator](https://nova-ui.solarwinds.io/bits/release_v12.x/components/PaginatorComponent.html) and [nui-sorter](https://nova-ui.solarwinds.io/bits/release_v12.x/components/SorterComponent.html).
+[The List](https://nova-ui.solarwinds.io/#/bits/release_v13.0.x/additional-documentation/schematics/list.html) schematic provides the
+ability to create a generic list that can cover a majority of use cases for a list. Its main responsibility is to integrate the functionality of the [nui-repeat](https://nova-ui.solarwinds.io/#/bits/release_v13.0.x/components/RepeatComponent.html) component with other components commonly used with a list such as [nui-select-v2](https://nova-ui.solarwinds.io/#/bits/release_v13.0.x/components/SelectV2Component.html), [nui-search](https://nova-ui.solarwinds.io/#/bits/release_v13.0.x/components/SearchComponent.html), [nui-paginator](https://nova-ui.solarwinds.io/#/bits/release_v13.0.x/components/PaginatorComponent.html) and [nui-sorter](https://nova-ui.solarwinds.io/#/bits/release_v13.0.x/components/SorterComponent.html).
 This code can be generated using the following command:
 
-```
+```sh
 ng g @nova-ui/bits:list --name=basic-list --p=app
 ```
 
@@ -233,11 +232,6 @@ ng g @nova-ui/bits:list --name=basic-list --p=app
 
 Information about Atoms can be found [here](../../README.md#Atoms)
 Bits atoms can be imported from here: `@nova-ui/bits/sdk/atoms`.
-
-## AoT Support
-
-Nova Nui supports AoT. For a primer on AoT, you can go [here](https://angular-2-training-book.rangle.io/handout/aot/) or for
-a more detailed overview you can go [here](https://angular.io/guide/aot-compiler).
 
 ## Additional Information
 
