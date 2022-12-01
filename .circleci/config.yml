@@ -592,7 +592,7 @@ jobs:
             - attach_workspace:
                   at: ~/nova
             - run:
-                  name: Publish dashbords docs
+                  name: Publish nova docs & Prepare nova-docs artifact
                   command: yarn run deploy-docs-ci
             - store_artifacts:
                   path: ./nova-docs.zip
