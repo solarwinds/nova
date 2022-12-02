@@ -2,7 +2,7 @@
 
 Currently, Nova supports static internationalization via the built-in Angular mechanisms, but we need to provide a solution for dynamic localization. We also need to provide Nova translations and find a way to keep them updated while maintaining a fast release cadence. This guide is intended to walk you through the process of configuring i18n in your application and managing dependency translations.
 
-### Translating your app
+## Translating your app
 
 Nova uses the standard Angular attributes for i18n:
 
@@ -24,7 +24,7 @@ At this point, your app should have one file with a bunch of translations, and t
 
 ### Runtime i18n example
 
-The example can be found [here](https://nova-ui.solarwinds.io/bits/release_v12.x/examples/#/runtime-i18n)
+The example can be found [here](https://nova-ui.solarwinds.io/#/bits/release_v13.0.x/examples/#/runtime-i18n)
 
 This example shows how to achieve the runtime localization in Angular 9 using **$localize** and **localStorage**.
 
@@ -58,26 +58,25 @@ For now you can use [**@locl/cli**](https://www.npmjs.com/package/@locl/cli) for
 
 ```js
 const locales: Record<string, Record<string, string>> = {
-    fr: {
-        "8885234477142162752": "Salutations!",
-        "5181440621801685681":
-            "Il s'agit d'un texte aléatoire écrit pour montrer que les traductions d'exécution fonctionnent réellement. Chaque ligne de cet exemple sera traduite à l'aide de Google Translator.",
-        "6028371114637047813": "Prénom",
-        "3967269098753656610": "Adresse électronique",
-        "935187492052582731": "Soumettre",
-        "665199437400610045": "Entrez votre prénom s'il vous plait",
-        "7484692620446298558": "Nom de famille",
-        "1733240001129506538": "Veuillez entrer votre deuxième nom",
-        "8114342674308277164":
-            "S'il vous plaît, mettez une adresse email valide",
-        "5878305334612867800": "(optionnel)",
-    },
-    de: {
-        // german translations using same IDs
-    },
-    es: {
-        // spanish translations using same IDs
-    },
+ fr: {
+  "8885234477142162752": "Salutations!",
+  "5181440621801685681":
+   "Il s'agit d'un texte aléatoire écrit pour montrer que les traductions d'exécution fonctionnent réellement. Chaque ligne de cet exemple sera traduite à l'aide de Google Translator.",
+  "6028371114637047813": "Prénom",
+  "3967269098753656610": "Adresse électronique",
+  "935187492052582731": "Soumettre",
+  "665199437400610045": "Entrez votre prénom s'il vous plait",
+  "7484692620446298558": "Nom de famille",
+  "1733240001129506538": "Veuillez entrer votre deuxième nom",
+  "8114342674308277164": "S'il vous plaît, mettez une adresse email valide",
+  "5878305334612867800": "(optionnel)",
+ },
+ de: {
+  // german translations using same IDs
+ },
+ es: {
+  // spanish translations using same IDs
+ },
 };
 ```
 
@@ -90,6 +89,6 @@ In the same file add logic to handle runtime translations load. There is no offi
 
 ```js
 if (localStorage.length && localStorage.getItem("locale")) {
-    loadTranslations(locales[localStorage.getItem("locale")]);
+ loadTranslations(locales[localStorage.getItem("locale")]);
 }
 ```

@@ -2,7 +2,7 @@
 
 Nova Charts is a library created to provide potential consumers with solutions for various data visualizations that conform with the Nova Design Language. It's designed to solve common patterns identified by UX designers, but also be very flexible so that pieces of visualizations can be overridden or entirely new visualizations can be customized quickly. As with anything, the more customizations you wish to have, the more work and maintenance you will absorb within your own app's code.
 
-# Getting Started
+## Getting Started
 
 Getting started with charts is quite simple:
 
@@ -40,7 +40,7 @@ Getting started with charts is quite simple:
 
 4.  Copy/Paste any of our examples (see TOC below) to create your own component, add it to your view and then play around with the options.
 
-# TOC
+## TOC
 
 -   [Layout](./additional-documentation/layout.html)
 -   [Chart Types](./additional-documentation/chart-types.html)
