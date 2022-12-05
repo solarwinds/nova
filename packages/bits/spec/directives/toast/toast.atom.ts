@@ -50,6 +50,14 @@ export class ToastAtom extends Atom {
     public getBody = async (): Promise<string> =>
         this.getBodyElement().getText();
 
+    public getBodyHtml = async (): Promise<string> => {
+        const body = this.getBodyElement();
+        return body.browser_.executeScript(
+            "return arguments[0].innerHTML;",
+            body
+        );
+    };
+
     public isSuccessType = async (): Promise<boolean> =>
         this.isToastType("success");
 

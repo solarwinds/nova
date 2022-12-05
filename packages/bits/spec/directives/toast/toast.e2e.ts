@@ -33,7 +33,7 @@ import { ToastAtom } from "./toast.atom";
 
 describe("USERCONTROL Toast > ", () => {
     const page = new ToastTestPage();
-    const defaultToastConfig: IToastDeclaration = {
+    const defaultToastConfig: IToastDeclaration = Object.freeze({
         message: "Toast message",
         title: "Toast title",
         options: {
@@ -42,7 +42,7 @@ describe("USERCONTROL Toast > ", () => {
             clickToDismiss: true,
             positionClass: ToastPositionClass.TOP_RIGHT,
         },
-    };
+    });
     let toastConfig: IToastDeclaration;
 
     beforeAll(async () => {
@@ -64,7 +64,7 @@ describe("USERCONTROL Toast > ", () => {
 
     it("should close when dismiss button is clicked", async () => {
         await page.showToasts(toastConfig);
-        const toast = page.getToast();
+        const toast = await page.asertWaitForToastDisplayed();
         await toast.dismiss.click();
         expect(await toast.isPresent()).toEqual(false);
     });
@@ -75,7 +75,7 @@ describe("USERCONTROL Toast > ", () => {
         }
         toastConfig.options.timeOut = 500;
         await page.showToasts(toastConfig);
-        const toast = page.getToast();
+        const toast = await page.asertWaitForToastDisplayed();
         await toast.hover();
         await browser.sleep(toastConfig.options.timeOut * 2);
         expect(
@@ -89,7 +89,7 @@ describe("USERCONTROL Toast > ", () => {
         }
         toastConfig.options.timeOut = 3000;
         await page.showToasts(toastConfig);
-        const toast = page.getToast();
+        const toast = await page.asertWaitForToastDisplayed();
 
         const startPoint: number = performance.now();
         await toast.waitUntilNotDisplayed(toastConfig.options.timeOut * 1.5);
@@ -110,7 +110,7 @@ describe("USERCONTROL Toast > ", () => {
         toastConfig.options.timeOut = 1000;
         toastConfig.options.extendedTimeOut = 3000;
         await page.showToasts(toastConfig);
-        const toast = page.getToast();
+        const toast = await page.asertWaitForToastDisplayed();
 
         await toast.hover();
         await toast.unhover();
@@ -135,7 +135,7 @@ describe("USERCONTROL Toast > ", () => {
         }
         toastConfig.options.positionClass = "demoToastCustomClass";
         await page.showToasts(toastConfig);
-        const toast = page.getToast();
+        const toast = await page.asertWaitForToastDisplayed();
 
         expect(
             await toast.getToastsContainerPositioning(
@@ -145,30 +145,36 @@ describe("USERCONTROL Toast > ", () => {
     });
 
     describe("html fragment", async () => {
-        const message: string = `<a href="#">Link</a>`;
+        const messageText = "Link";
+        const messageWithHtml = `<a href="#">${messageText}</a>`;
+
         it(" should be rendered", async () => {
             await page.showToasts({
                 ...toastConfig,
-                message,
+                message: messageWithHtml,
                 options: { enableHtml: true },
             });
-            expect(await page.getToast().getBody()).not.toContain(
-                `<a href="#">`
-            );
+
+            const toast = await page.asertWaitForToastDisplayed();
+            const bodyText = await toast.getBody();
+            const bodyHtml = await toast.getBodyHtml();
+            expect(bodyHtml).toContain(messageWithHtml);
+            expect(bodyText).not.toContain(messageWithHtml);
+            expect(bodyText).toContain(messageText);
         });
 
         it(" should not be rendered", async () => {
             await page.showToasts({
                 ...toastConfig,
-                message,
+                message: messageWithHtml,
                 options: { enableHtml: false },
             });
 
-            const toast = page.getToast();
-            expect(
-                (await toast.isPresent()) && (await toast.isDisplayed())
-            ).toEqual(true);
-            expect(await toast.getBody()).toContain(`<a href="#">`);
+            const toast = await page.asertWaitForToastDisplayed();
+            const bodyText = await toast.getBody();
+            const bodyHtml = await toast.getBodyHtml();
+            expect(bodyHtml).not.toContain(messageWithHtml);
+            expect(bodyText).toContain(messageWithHtml);
         });
 
         it(" should not contain forbidden tags", async () => {
@@ -182,18 +188,24 @@ describe("USERCONTROL Toast > ", () => {
                 message: messageWithForbiddenTags,
                 options: { enableHtml: true },
             });
-            const toastBody = await page.getToast().getBody();
+            const toast = await page.asertWaitForToastDisplayed();
+            const toastBody = await toast.getBody();
+            const toastBodyHtml = await toast.getBodyHtml();
             expect(toastBody).not.toContain(`<script>`);
             expect(toastBody).not.toContain(`<object>`);
             expect(toastBody).not.toContain(`<iframe>`);
             expect(toastBody).not.toContain(`<embed>`);
+            expect(toastBodyHtml).not.toContain(`<script>`);
+            expect(toastBodyHtml).not.toContain(`<object>`);
+            expect(toastBodyHtml).not.toContain(`<iframe>`);
+            expect(toastBodyHtml).not.toContain(`<embed>`);
         });
     });
 
     describe("options.clickToDismiss", () => {
         it("should close toast by click when set to 'true'", async () => {
             await page.showToasts(toastConfig);
-            const toast = page.getToast();
+            const toast = await page.asertWaitForToastDisplayed();
 
             await toast.click();
             expect(await toast.isPresent()).toEqual(false);
@@ -207,7 +219,7 @@ describe("USERCONTROL Toast > ", () => {
             }
             toastConfig.options.clickToDismiss = false;
             await page.showToasts(toastConfig);
-            const toast = page.getToast();
+            const toast = await page.asertWaitForToastDisplayed();
 
             await toast.click();
             expect(

@@ -20,6 +20,7 @@
 
 import * as fs from "fs";
 import * as path from "path";
+import { performance } from "perf_hooks";
 
 import { browser, by, ProtractorBrowser } from "protractor";
 import { WebElementPromise } from "selenium-webdriver";
@@ -291,5 +292,18 @@ export class Helpers {
         return new Promise<void>((resolve) => {
             setTimeout(() => resolve(), timeout);
         });
+    }
+
+    static async timed<T>(
+        fn: (() => Promise<T>) | (() => T),
+        name: string = fn.name
+    ): Promise<T> {
+        const start = performance.now();
+        try {
+            return await fn();
+        } finally {
+            const stop = performance.now();
+            console.log(`timed [${name}] took ${stop - start} ms`);
+        }
     }
 }

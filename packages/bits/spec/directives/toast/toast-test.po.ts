@@ -138,23 +138,21 @@ export class ToastTestPage {
         if (declaration.options) {
             await this.updateTextBox(
                 this.txtTimeOut,
-                "" + declaration.options.timeOut
+                `${declaration.options.timeOut}`
             );
             await this.updateTextBox(
                 this.txtExtendedTimeOut,
-                "" + declaration.options.extendedTimeOut
+                `${declaration.options.extendedTimeOut}`
             );
             await this.updateCheckBox(
                 this.chbEnableHtml,
-                // @ts-ignore: Disabled for testing purposes
-                declaration.options.enableHtml
+                declaration.options.enableHtml ?? false
             );
 
             // TODO: update all the other options
             await this.updateCheckBox(
                 this.chbClickToDismiss,
-                // @ts-ignore: Disabled for testing purposes
-                declaration.options.clickToDismiss
+                declaration.options.clickToDismiss ?? false
             );
         }
 
@@ -174,6 +172,28 @@ export class ToastTestPage {
 
     public async reset(): Promise<void> {
         return this.btnReset.click();
+    }
+
+    public async waitForToastDisplayed(
+        index: number = 0
+    ): Promise<ToastAtom | null> {
+        const toast = this.getToast(index);
+        return await this.body.browser_.wait(async () =>
+            (await toast.isPresent()) && (await toast.isDisplayed())
+                ? toast
+                : null
+        );
+    }
+
+    public async asertWaitForToastDisplayed(
+        index: number = 0,
+        message: string = ""
+    ): Promise<ToastAtom> {
+        const toast = await this.waitForToastDisplayed(index);
+        if (!toast) {
+            throw new Error(`toast[${index}] not displayed`);
+        }
+        return toast;
     }
 
     public getToast(index: number = 0): ToastAtom {
