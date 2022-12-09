@@ -1,4 +1,6 @@
 @import (reference) "@nova-ui/bits/sdk/less/nui-framework-variables";
+@import (reference) "@nova-ui/charts/sdk/less/nui-charts-variables.less";
+@import (reference) "@nova-ui/charts/sdk/less/nui-charts.less";
 
 @legend-tile-width: 60px;
 @legend-tile-background-opacity: 0.4;
@@ -17,6 +19,19 @@
             &__icon {
                 position: absolute;
             }
+        }
+    }
+}
+
+.layout-fixed {
+    &-legend {
+        max-width: @nui-legend-series-max-width;
+        min-width: @nui-legend-series-max-width;
+        padding-left: @nui-legend-series-content-margin + @nui-space-xs !important;
+        nui-legend {
+            margin: 0 !important;
+            width: 100%;
+
         }
     }
 }

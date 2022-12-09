@@ -44,6 +44,7 @@ import {
     InteractionType,
     INTERACTION_DATA_POINTS_EVENT,
     INTERACTION_VALUES_EVENT,
+    IScale,
     ISetDomainEventPayload,
     IValueProvider,
     IXYScales,
@@ -51,6 +52,8 @@ import {
     SequentialColorProvider,
     SET_DOMAIN_EVENT,
     ZoomPlugin,
+    IXYGridConfig,
+    XYGrid
 } from "@nova-ui/charts";
 
 import { INTERACTION, SET_TIMEFRAME } from "../../../../services/types";
@@ -95,12 +98,27 @@ export abstract class XYChartComponent
         data: any[],
         scales: IXYScales
     ): IChartAssistSeries<IAccessors>[] {
-        return data.map((series: any) => ({
-            ...series,
-            scales: scales,
-            renderer: this.renderer,
-            accessors: this.accessors,
-        }));
+        const yScales: IScale<any>[] = [scales.y];
+        if (scales.yRight) {
+            yScales.push(scales.yRight);
+        }
+        return data.map((series: any, i: number) => {          
+            // matches scale units to the metric unit for either left y-axis scale or right y-axis scale
+            let yScale = yScales.find(yScale => yScale.scaleUnits === series.metricUnits);
+            if (!yScale) {
+                yScale = yScales.find(yScale => yScale.scaleUnits === "generic") ?? scales.y;
+            }
+           
+            return {
+                ...series,
+                scales: {
+                    x: scales.x,
+                    y: yScale,
+                },
+                renderer: this.renderer,
+                accessors: this.accessors,
+            }
+        });
     }
 
     /** Checks if legend should be shown. */
@@ -135,6 +153,18 @@ export abstract class XYChartComponent
 
     /** Updates chart data. */
     protected updateChartData(): void {
+        const grid = this.chartAssist.chart.getGrid() as XYGrid;
+
+        grid.leftScaleId = this.scales.y.id;
+
+        if (this.scales.yRight && this.widgetData.series.length === 1 || this.scales.y.scaleUnits === this.scales.yRight.scaleUnits) {
+            // if there is only one series to display, or if the left y-axis and right y-axis have the same units, both y-axises are same
+            this.scales.yRight = this.scales.y;
+            grid.rightScaleId = this.scales.y.id;
+        } else  {
+            grid.rightScaleId = this.scales.yRight.id;
+        }
+
         this.chartAssist.update(
             this.mapSeriesSet(this.widgetData.series, this.scales)
         );
@@ -157,6 +187,26 @@ export abstract class XYChartComponent
         this.chartAssist = this.createChartAssist(palette);
 
         const chart = this.chartAssist.chart;
+        const gridConfig = chart.getGrid().config() as IXYGridConfig;
+        
+        if (this.configuration.gridConfig?.xAxisTicksCount) {
+            gridConfig.axis.bottom.approximateTicks = this.configuration.gridConfig.xAxisTicksCount;
+        }
+       
+        if (gridConfig.dimension.marginLocked && this.configuration.gridConfig?.sideMarginLocked) {
+            gridConfig.dimension.marginLocked.left = true;
+            gridConfig.dimension.marginLocked.right = true;
+        }
+
+        if (this.configuration.gridConfig?.sideMargin) {
+            gridConfig.dimension.margin.left = this.configuration.gridConfig.sideMargin;
+            gridConfig.dimension.margin.right = this.configuration.gridConfig.sideMargin;
+        }
+
+        if (this.configuration.gridConfig?.hideXAxisBorder) {
+            gridConfig.borders.bottom.visible = false;
+        }
+       
         if (this.configuration.enableZoom) {
             chart.addPlugin(new ZoomPlugin());
         }

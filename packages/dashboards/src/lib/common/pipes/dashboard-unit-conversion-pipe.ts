@@ -50,7 +50,7 @@ export class DashboardUnitConversionPipe implements PipeTransform {
         if (
             valueAsNumber === undefined ||
             isNaN(valueAsNumber) ||
-            valueAsNumber < defaultThreshold
+            (valueAsNumber < defaultThreshold && units !== "percent")
         ) {
             return value?.toString() || "";
         }

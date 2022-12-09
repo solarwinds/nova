@@ -94,32 +94,42 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
             if (
                 configurationCurrent?.scales !== configurationPrevious?.scales
             ) {
-                for (const scaleKey of Object.keys(
+                const scaleKeys = Object.keys(
                     configurationCurrent?.scales
-                ) as Array<keyof ITimeseriesScalesConfig>) {
+                ) as Array<keyof ITimeseriesScalesConfig>;
+                
+                for (const scaleKey of scaleKeys) {
                     const scaleConfigCurrent =
                         configurationCurrent?.scales?.[scaleKey];
                     const scaleConfigPrevious =
                         configurationPrevious?.scales?.[scaleKey];
 
+                    if (!scaleConfigCurrent) { 
+                        continue;
+                    }
+
                     if (
                         scaleConfigCurrent?.type !==
-                            scaleConfigPrevious?.type ||
-                        !this.scales[scaleKey]
+                        scaleConfigPrevious?.type ||
+                        scaleConfigCurrent?.properties?.axisUnits !== scaleConfigPrevious?.properties?.axisUnits
+                        
                     ) {
                         this.scales[scaleKey] =
-                            this.timeseriesScalesService.getScale(
-                                scaleConfigCurrent,
-                                configurationCurrent.units
-                            );
+                        this.timeseriesScalesService.getScale(
+                            scaleConfigCurrent,
+                            configurationCurrent.units,
+                            this.configuration
+                        );
+
                         shouldUpdateChart = true;
                     } else if (
                         scaleConfigCurrent?.properties !==
-                        scaleConfigPrevious?.properties
+                        scaleConfigPrevious?.properties 
                     ) {
                         this.timeseriesScalesService.updateConfiguration(
                             this.scales[scaleKey],
-                            scaleConfigCurrent
+                            scaleConfigCurrent,
+                            this.configuration
                         );
                         shouldUpdateChart = true;
                     }

@@ -139,6 +139,25 @@ export class StatusBarChartComponent
             pointerEvents: false,
         });
 
+        const gridConfig = this.chartAssist.lastGridConfig;
+        if (this.configuration.gridConfig?.xAxisTicksCount) {
+            gridConfig.axis.bottom.approximateTicks = this.configuration.gridConfig.xAxisTicksCount;
+        }
+       
+        if (gridConfig.dimension.marginLocked && this.configuration.gridConfig?.sideMarginLocked) {
+            gridConfig.dimension.marginLocked.left = true;
+            gridConfig.dimension.marginLocked.right = true;
+        }
+
+        if (this.configuration.gridConfig?.sideMargin) {
+            gridConfig.dimension.margin.left = this.configuration.gridConfig.sideMargin;
+            gridConfig.dimension.margin.right = this.configuration.gridConfig.sideMargin;
+        }
+
+        if (this.configuration.gridConfig?.hideXAxisBorder) {
+            gridConfig.borders.bottom.visible = false;
+        }
+
         this.scales.y = new BandScale();
         this.scales.y.fixDomain(StatusAccessors.STATUS_DOMAIN);
     }
