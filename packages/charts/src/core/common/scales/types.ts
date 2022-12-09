@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 import { AxisScale } from "d3-axis";
+import { UnitOption } from "@nova-ui/bits";
 
 import { IAccessors, IChartSeries } from "../types";
 
@@ -84,6 +85,7 @@ export interface IScale<T> {
     /** The scale identifier */
     readonly id: string;
     readonly d3Scale: AxisScale<T>; // TODO: maybe AxisScale is to narrow?
+    fixDomainValues?: T[];
 
     /** If this flag is enabled, the domain of this scale is not recalculated */
     isDomainFixed?: boolean;
@@ -93,6 +95,12 @@ export interface IScale<T> {
     formatters: IFormatters<T>;
     /** If this flag is enabled, the domain has been recalculated with ticks in mind */
     __domainCalculatedWithTicks?: boolean;
+    scaleUnits?: UnitOption;
+
+    /**
+     * Sets fix domain to the first and last value and assigns values to fixDomainValues property
+     */
+    setFixDomainValues?(values: T[]): void;
 
     /**
      * Determines if the scale's domain is continuous
