@@ -35,6 +35,11 @@ export interface ITimeseriesWidgetConfig {
     scales: ITimeseriesScalesConfig;
     units: UnitOption;
     collectionId?: string;
+    leftYAxisUnits?: UnitOption;
+    rightYAxisUnits?: UnitOption;
+    gridConfig?: {
+        [key: string]: any;
+    }
 }
 
 export interface ITimeseriesWidgetSeries {
@@ -86,6 +91,7 @@ export interface IChartPreset {
 export interface ITimeseriesScalesConfig {
     x: ITimeseriesScaleConfig;
     y: ITimeseriesScaleConfig;
+    yRight?: ITimeseriesScaleConfig;
 }
 
 /**
