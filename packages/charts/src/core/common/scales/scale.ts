@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 import { AxisScale } from "d3-axis";
+import { UnitOption } from "@nova-ui/bits";
 
 import { UtilityService } from "../utility.service";
 import { getAutomaticDomain } from "./domain-calculation/automatic-domain";
@@ -29,8 +30,10 @@ export abstract class Scale<T> implements IScale<T> {
     public domainCalculator: DomainCalculator = getAutomaticDomain;
     public formatters: IFormatters<T> = {};
     public isDomainFixed: boolean;
+    public scaleUnits?: UnitOption;
     private isReversed = false;
 
+    protected _fixDomainValues: T[] = [];
     protected readonly _d3Scale: any;
 
     protected constructor(id?: string) {
@@ -55,6 +58,19 @@ export abstract class Scale<T> implements IScale<T> {
     /** See {@link IScale#d3Scale} */
     public get d3Scale(): AxisScale<T> {
         return this._d3Scale;
+    }
+
+    public get fixDomainValues(): T[] {
+        return this._fixDomainValues;
+    }
+
+    /** See {@link IScale#setFixDomainValues} */
+    public setFixDomainValues(values: T[]): void {
+        if (values.length > 1) {
+            this.domain([values[0], values[values.length - 1]]);
+            this.isDomainFixed = true;
+        }
+        this._fixDomainValues = values;
     }
 
     /** See {@link IScale#range} */
