@@ -30,6 +30,7 @@ export interface IUnitConversionConstants {
     bytesPerSecond: string[];
     bitsPerSecond: string[];
     hertz: string[];
+    percent: string[];
 }
 
 /** Standard base values used in unit conversion */
@@ -67,6 +68,7 @@ export const unitConversionConstants: IUnitConversionConstants = {
         "Ybps",
     ],
     hertz: ["Hz", "kHz", "MHz", "GHz", "THz", "PHz", "EHz", "ZHz", "YHz"],
+    percent: ["%"],
 };
 
 /** Available options for unit conversion */
@@ -75,4 +77,5 @@ export type UnitOption =
     | "bytes"
     | "bytesPerSecond"
     | "bitsPerSecond"
-    | "hertz";
+    | "hertz"
+    | "percent";
