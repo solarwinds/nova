@@ -25,10 +25,10 @@ Data Source Features are implemented using [IDataSourceFeaturesConfiguration](ht
 
 The example of the features configuration:
 
-```
+```ts
 const supportedFeatures: IDataSourceFeatures = {
-    search: { enabled: true },
-    pagination: { enabled: true },
+ search: { enabled: true },
+ pagination: { enabled: true },
 };
 ```
 
@@ -38,11 +38,11 @@ You can check the example of GoogleBooks API [DataSource](../widget-types/table/
 
 Currently supported Features by Nova:
 
--   Search ([Table Widget](../widget-types/table/table-with-search.html))
+- Search ([Table Widget](../widget-types/table/table-with-search.html))
 
 Planned support:
 
--   TBD
+- TBD
 
 ## DataFields Config
 
@@ -56,7 +56,7 @@ interface that data sources usually implement. You can add it this way:
 
 <!--- TODO: Remove Partial in the vNext - NUI-5838 -->
 
-```
+```ts
 @Injectable()
 export class MyDataSource<T = any> extends ServerSideDataSource<T> implements IDataSource {
     ...
@@ -79,18 +79,17 @@ An adapter is another specialized type of a provider, whose purpose is to invoke
 the result, and assign it to the right component. This provider type was introduced for the following
 reasons:
 
--   To maintain the pure nature of a widget that accepts all data via component inputs thereby respecting
-    one-way data binding.
--   To separate responsibilities between the data source, the component that displays the data, and the
-    bridge between them.
+- To maintain the pure nature of a widget that accepts all data via component inputs thereby respecting
+  one-way data binding.
+- To separate responsibilities between the data source, the component that displays the data, and the
+  bridge between them.
 
 The basic implementation is called
 [`NOVA_DATASOURCE_ADAPTER`](../../miscellaneous/variables.html#NOVA_DATASOURCE_ADAPTER), and it invokes a
 data source whenever the [`REFRESH`](../../miscellaneous/variables.html#REFRESH) event is received on the
 pizzagna event bus and passes the result to a component property path specified in the adapter's properties.
 
-```
-...
+```ts
 "providers": {
     "adapter": {
         "providerId": NOVA_DATASOURCE_ADAPTER,
@@ -100,7 +99,6 @@ pizzagna event bus and passes the result to a component property path specified 
         },
     },
 },
-...
 ```
 
 ## Below-fold lazy loading
@@ -108,22 +106,23 @@ pizzagna event bus and passes the result to a component property path specified 
 If You want for your widgets to load the data only after they are visible you have to configure the dashboard
 via `belowFoldLazyLoadingConfig` input. For example:
 
-```
+```ts
 public belowFoldLazyLoadingConfig: IDashboardBelowFoldLazyLoadingConfig = {
     enabled: true,
 };
-<!-- html -->
+```
+
+```html
 <nui-dashboard
-    [(dashboard)]="dashboard"
-    ...
-    [belowFoldLazyLoadingConfig]="belowFoldLazyLoadingConfig"
-></nui-dashboard>
+ [(dashboard)]="dashboard"
+ ...
+ [belowFoldLazyLoadingConfig]="belowFoldLazyLoadingConfig"></nui-dashboard>
 ```
 
 Also, if you want to load data only widgets that are in the viewport, and remove the widgets from the viewport
 if they were already loaded, put `reloadWidgetsOnScroll` of `configuration` part to `true`.
 
-```
+```ts
 public belowFoldLazyLoadingConfig: IDashboardBelowFoldLazyLoadingConfig = {
     enabled: true,
     configuration: {

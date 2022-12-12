@@ -3,8 +3,8 @@
 The Configurator refers to the form that pops up in the sidebar as you try to edit / create a widget.
 It's built around the very same concept as the widgets (i.e. Pizzagna) and is integrally linked to two things:
 
--   the widget **_type_** being edited/created
--   the [data source](./anatomy/data-sources.html) that feeds the widget
+- the widget **_type_** being edited/created
+- the [data source](./anatomy/data-sources.html) that feeds the widget
 
 A particular widget type will consist of the same data-configuration across different products/features. For example,
 a table widget will always require the end-user to identify a set of columns to display, as well as a data type per column.
@@ -34,7 +34,7 @@ collects information from the widget itself to populate the form.
 
 An example of converter configuration might look something like this:
 
-```
+```json
 // this demonstrates a theoretical form piece configuration
 "someNodeId": {
     "id": "someNodeId",

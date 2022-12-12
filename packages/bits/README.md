@@ -6,10 +6,10 @@ In Bits, the philosophy is all about flexibility – it provides the Legos, plum
 
 Before you begin, make sure your development environment includes the following:
 
--   Node.js®
--   A package manager such as [npm](https://www.npmjs.com/get-npm)
--   Angular CLI v13
--   Angular CDK v13 as a devDependency
+- Node.js®
+- A package manager such as [npm](https://www.npmjs.com/get-npm)
+- Angular CLI v13
+- Angular CDK v13 as a devDependency
 
 ### Installing NodeJS and `npm`
 
@@ -29,7 +29,7 @@ ng --version
 If you want to install the latest Angular CLI globally, run the following command:
 
 ```sh
-npm install -g @angular/cli@^12
+npm install -g @angular/cli@^13
 ```
 
 ### Installing Angular CDK
@@ -37,7 +37,7 @@ npm install -g @angular/cli@^12
 Nova uses Angular CDK as part of its schematics functionality. To install it, you can run the following command:
 
 ```sh
-npm install @angular/cdk@^12 --save-dev
+npm install @angular/cdk@^13 --save-dev
 ```
 
 ### Install Nova Bits
@@ -141,7 +141,7 @@ To get some of the styles to display, you have to add the `nui` css class to the
 
 ```html
 <html class="nui">
-    <!--rest of page-->
+ <!--rest of page-->
 </html>
 ```
 
@@ -153,37 +153,37 @@ To add styling for Bits, you need to modify angular.json corresponding to the ta
 
 1. Add the styles path to stylePreprocessorOptions.includePaths:
 
-    ```json
-    "architect": {
-        "build": {
-            "builder": "@angular-devkit/build-angular:browser",
-            "options": {
-                "stylePreprocessorOptions": {
-                "includePaths": [
-                    "./node_modules/@nova-ui/bits/sdk/less"
-                ]
-                },
-                ...
-            }
-        }
-    }
-    ```
+   ```json
+   "architect": {
+       "build": {
+           "builder": "@angular-devkit/build-angular:browser",
+           "options": {
+               "stylePreprocessorOptions": {
+               "includePaths": [
+                   "./node_modules/@nova-ui/bits/sdk/less"
+               ]
+               },
+               ...
+           }
+       }
+   }
+   ```
 
 2. Add the styles path to the source paths:
 
-    ```json
-    "architect": {
-        "build": {
-            "options": {
-                "styles": [
-                    "./node_modules/@nova-ui/bits/bundles/css/styles.css"
-                    ...
-                ],
-                ...
-            }
-        }
-    }
-    ```
+   ```json
+   "architect": {
+       "build": {
+           "options": {
+               "styles": [
+                   "./node_modules/@nova-ui/bits/bundles/css/styles.css"
+                   ...
+               ],
+               ...
+           }
+       }
+   }
+   ```
 
 **FYI - Bits does not use the Bootstrap component library nor does it include custom fonts.**
 

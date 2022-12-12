@@ -21,7 +21,7 @@ We encourage [contributions to Nova](./docs/CONTRIBUTION.md#contributing-to-nova
 
 ## Need help?
 
-### If You're Just Getting Started...
+### If You're Just Getting Started
 
 For package-specific
 information about getting started with development, please visit the corresponding README for each of the Nova UI packages:
@@ -29,7 +29,7 @@ information about getting started with development, please visit the correspondi
 
 For additional instructions about Nova development in general, take a look at our [How To](./docs/HOW_TO.md#how-to) page.
 
-### If You Have a Question...
+### If You Have a Question
 
 Please check out our [FAQ](./docs/FAQ.md#faq). If you don't find the answer to your question there, feel free
 to send us an email at <nova-ui@solarwinds.com>. We kindly ask that you try to avoid opening GitHub

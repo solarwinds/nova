@@ -81,15 +81,15 @@ configuration to a `tasks.json` file:
 
 ```js
 {
-  "version": "2.0.0",
-  "tasks": [
-      {
-          "label": "e2e-debug",
-          "command": "npm run e2e-debug",
-          "args": [],
-          "type": "shell"
-      }
-  ]
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "e2e-debug",
+            "command": "npm run e2e-debug",
+            "args": [],
+            "type": "shell"
+        }
+    ]
 }
 ```
 
@@ -111,7 +111,7 @@ Atoms also provide information about their available features, states, attribute
 <details>
   <summary>Click to view instructions on using Nova Atoms</summary>
 
-#### Two ways to instantiate an Atom:
+#### Two ways to instantiate an Atom
 
 1. Using its constructor. [Code Example](./packages/bits/spec/components/dialog/dialog.e2e.ts#L46)
 
@@ -143,8 +143,8 @@ Atoms also provide information about their available features, states, attribute
 
    ```js
    beforeAll(async () => {
-       await Helper.prepareBrowser("dialog");
-       defaultDialogBtn = Atom.find(ButtonAtom, "nui-demo-default-dialog-btn");
+    await Helper.prepareBrowser("dialog");
+    defaultDialogBtn = Atom.find(ButtonAtom, "nui-demo-default-dialog-btn");
    });
    ```
 
@@ -152,8 +152,8 @@ Atoms also provide information about their available features, states, attribute
 
    ```js
    it("should add custom class to dialog", async () => {
-       await customClassButton.click();
-       expect(await dialog.hasClass("demoDialogCustomClass")).toBe(true);
+    await customClassButton.click();
+    expect(await dialog.hasClass("demoDialogCustomClass")).toBe(true);
    });
    ```
 

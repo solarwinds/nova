@@ -1,4 +1,4 @@
-## The Story of Pizzagna
+# The Story of Pizzagna
 
 The generic concept we decided to call 'Pizzagna' was developed as part of the design process of
 dashboards, in which we found ourselves trying to solve several problems at once using a single approach.
@@ -6,7 +6,7 @@ dashboards, in which we found ourselves trying to solve several problems at once
 Imagine a simple widget implemented using a single component in an Angular way with a configuration
 defining its type and properties, like this:
 
-```
+```ts
 {
     componentType: "TableWidgetComponent",
     properties: {
@@ -26,20 +26,20 @@ defining its type and properties, like this:
 
 We can immediately identify a few design problems here, especially:
 
--   From the consumer point of view, the widget is a monolith, and some parts are likely duplicated in
-    other widgets.
--   The presence of a dataSource is hardwired into the widget.
--   Data visualized by the widget is not present here (It could be passed as a separate input, but let's
-    presume it's just stored inside the widget as internal state).
+- From the consumer point of view, the widget is a monolith, and some parts are likely duplicated in
+  other widgets.
+- The presence of a dataSource is hardwired into the widget.
+- Data visualized by the widget is not present here (It could be passed as a separate input, but let's
+  presume it's just stored inside the widget as internal state).
 
 We'll now try to address all of these issues and see where it takes us.
 
-### Configuration of Separate Components
+## Configuration of Separate Components
 
 First, let's try to break down the widget into separate components and expose the widget header and body
 to be configured separately:
 
-```
+```ts
 {
     "root": {
         // layout component that organizes child nodes into a column or a row
@@ -78,7 +78,7 @@ to be configured separately:
 This structure enables the replacement of individual components without affecting the rest, which is a
 step in the right direction.
 
-### Providers
+## Providers
 
 Now let's address the presence of the hard-coded data source. To generalize the concept of a data source,
 we figured that it would work best if we could have any number of instantiated injectables we call
@@ -87,7 +87,7 @@ since all it does is expose the ability to be invoked and provide data through a
 the sake of simplicity, let's ignore some currently irrelevant details and try to configure the table
 component to instantiate a data source like this:
 
-```
+```ts
 [
     ...
     "table": {
@@ -111,14 +111,14 @@ component to instantiate a data source like this:
 ]
 ```
 
-### Data
+## Data
 
 The configuration structure now describes how to build the whole widget, but we'll also need a way to
 specify the data we want to display. We could of course use a different means for this, but why not be
 consistent and use the same mechanism as before? Let's extend the component properties to pass the data
 in and voila - we're done!
 
-```
+```ts
 [
     ...
     "table": {
@@ -143,7 +143,7 @@ in and voila - we're done!
 ]
 ```
 
-### Layers
+## Layers
 
 We're getting closer to the final idea of building configuration-based UIs. But, there's one final
 important step we have to take. Looking at the state of configuration, so far we currently have all of it
@@ -152,14 +152,14 @@ purposes of properties.
 
 Pizzagna can contain any number of layers, but we currently just use 3 layers:
 
--   `structure`: defines the structure of a widget, i.e. what components the widget consists of and their
-    initial setup.
--   `configuration`: defines the storable configuration for a widget instance--things such as title, data
-    source, property values, etc.
--   `data`: defines the transient state of a widget as it's displayed in the browser--includes displayed
-    data as well as other transient properties that are not intended to be persisted anywhere.
+- `structure`: defines the structure of a widget, i.e. what components the widget consists of and their
+  initial setup.
+- `configuration`: defines the storable configuration for a widget instance--things such as title, data
+  source, property values, etc.
+- `data`: defines the transient state of a widget as it's displayed in the browser--includes displayed
+  data as well as other transient properties that are not intended to be persisted anywhere.
 
-### Pizzagna Service
+## Pizzagna Service
 
 There is an important design pattern that needs to be respected at all times--the rule of one-way data flow.
 If you want to display something dynamic in widgets, it has to come through the Pizzagna.
@@ -171,26 +171,27 @@ component-originating change in the Pizzagna.
 
 First, inject the service into your component:
 
-```
+```ts
 constructor(private pizzagnaService: PizzagnaService) { }
 ```
 
 Then, use it to modify the value:
 
-```
-this.pizzagnaService.setProperty({
-        pizzagnaKey: PizzagnaLayer.Data, // the layer we're working on
-        componentId: this.componentId, // the component that's changing the property
-        propertyPath: ["sorterConfiguration"], // the path to the property in the Pizzagna
-    },
-    value // value to be set
+```ts
+this.pizzagnaService.setProperty(
+ {
+  pizzagnaKey: PizzagnaLayer.Data, // the layer we're working on
+  componentId: this.componentId, // the component that's changing the property
+  propertyPath: ["sorterConfiguration"], // the path to the property in the Pizzagna
+ },
+ value // value to be set
 );
 ```
 
 The value will arrive at the target component as a regular input value with `ngOnChanges` being invoked
 as well.
 
-### The Name "Pizzagna"
+## The Name "Pizzagna"
 
 In concrete terms, Pizzagna is the JSON-based configuration described above as well as the
 service that orchestrates changes in configuration and data sources. The (cheeky) name,
