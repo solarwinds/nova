@@ -5,7 +5,7 @@
 >
     <gridster-item
         *ngFor="
-            let widget of dashboard.widgets | keyvalue: orderWidgets;
+            let widget of dashboard.widgets | keyvalue : orderWidgets;
             trackBy: trackByFn
         "
         [item]="dashboard.positions[widget.key]"

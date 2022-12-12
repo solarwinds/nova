@@ -28,6 +28,7 @@ import { FormControl } from "@angular/forms";
 })
 export class SelectV2OptionsChangedExampleComponent implements OnInit {
     public items: string[] = [];
+    public selectControl = new FormControl<string | null>(null);
     private itemSet = [
         [
             $localize`Item 1`,
@@ -42,7 +43,6 @@ export class SelectV2OptionsChangedExampleComponent implements OnInit {
             $localize`Item 6`,
         ],
     ];
-    public selectControl = new FormControl();
 
     public ngOnInit(): void {
         this.items = this.itemSet[0];

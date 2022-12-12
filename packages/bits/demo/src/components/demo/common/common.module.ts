@@ -20,12 +20,11 @@
 
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { DatePipe } from "@angular/common";
-import { NgModule } from "@angular/core";
+import { NgModule, Type } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { RouterModule } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 
 import {
-    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiCheckboxModule,
     NuiCommonModule,
@@ -76,7 +75,7 @@ import {
 import { RepeatWithViewportManagerExampleComponent } from "./viewport-manager/repeat-with-viewport-manager/repeat-with-viewport-manager.example.component";
 import { VirtualViewportManagerDocsComponent } from "./viewport-manager/virtual-viewport-manager-docs/virtual-viewport-manager-docs.component";
 
-const routes = [
+const routes: Routes = [
     {
         path: "",
         redirectTo: "welcome",
@@ -124,7 +123,7 @@ const routes = [
         loadChildren: async () =>
             import("./data-source/data-source.module").then(
                 (m) => m.DataSourceModule
-            ),
+            ) as Promise<any>,
         data: {
             srlc: {
                 stage: SrlcStage.ga,
@@ -155,7 +154,9 @@ const routes = [
     {
         path: "badge",
         loadChildren: async () =>
-            import("./badge/badge.module").then((m) => m.BadgeModule),
+            import("./badge/badge.module").then(
+                (m) => m.BadgeModule
+            ) as Promise<any>,
         data: {
             srlc: {
                 stage: SrlcStage.ga,
@@ -165,7 +166,7 @@ const routes = [
     {
         path: "tag",
         loadChildren: async () =>
-            import("./tag/tag.module").then((m) => m.TagModule),
+            import("./tag/tag.module").then((m) => m.TagModule) as Promise<any>,
         data: {
             srlc: {
                 stage: SrlcStage.ga,
@@ -175,7 +176,9 @@ const routes = [
     {
         path: "tree",
         loadChildren: async () =>
-            import("./tree/tree.module").then((m) => m.TreeModule),
+            import("./tree/tree.module").then((m) => m.TreeModule) as Promise<
+                Type<any>
+            >,
     },
     {
         path: "welcome",
@@ -186,7 +189,9 @@ const routes = [
         loadChildren: async () =>
             import(
                 "./unit-conversion-service/unit-conversion-service-example.module"
-            ).then((m) => m.UnitConversionServiceExampleModule),
+            ).then((m) => m.UnitConversionServiceExampleModule) as Promise<
+                Type<any>
+            >,
     },
 ];
 
@@ -241,18 +246,7 @@ const routes = [
         VirtualViewportManagerDocsComponent,
         RepeatWithViewportManagerExampleComponent,
     ],
-    providers: [
-        DatePipe,
-        {
-            provide: DEMO_PATH_TOKEN,
-            useFactory: () =>
-                (<any>require).context(
-                    `!!raw-loader!./`,
-                    true,
-                    /.*\.(ts|html|less)$/
-                ),
-        },
-    ],
+    providers: [DatePipe],
     exports: [RouterModule],
 })
-export class CommonModule {}
+export default class CommonModule {}

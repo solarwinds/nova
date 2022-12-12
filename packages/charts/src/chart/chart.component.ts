@@ -129,8 +129,7 @@ export class ChartComponent
     };
 
     private intersectionObserverCallback = (
-        entries: IntersectionObserverEntry[],
-        observer: IntersectionObserver
+        entries: IntersectionObserverEntry[]
     ): void => {
         // Since we're only listening for intersection changes for one target (the chart itself), the 'entries' argument always has just one element.
         const data: IChartViewStatusEventPayload = {

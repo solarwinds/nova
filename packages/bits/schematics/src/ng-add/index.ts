@@ -215,7 +215,8 @@ function addSyntheticImportsToTsConfig(options: any) {
             context,
             tsConfigPath,
             ["compilerOptions", "allowSyntheticDefaultImports"],
-            true
+            true,
+            false
         );
     };
 }

@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "declaration": false,
+        "paths": {
+            "@nova-ui/charts": ["../../src/public-api.ts"]
+        },
+        "skipLibCheck": true
+    },
+    "extends": "../../tsconfig.json",
+    "files": ["index.ts", "polyfills.ts"],
+    "typeRoots": ["node_modules/@types"]
+}

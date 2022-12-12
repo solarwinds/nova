@@ -24,7 +24,6 @@ import { RouterModule, Routes } from "@angular/router";
 
 // eslint-disable-next-line max-len
 import {
-    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiDocsModule,
     NuiFormFieldModule,
@@ -80,16 +79,5 @@ const routes: Routes = [
         CustomDataSourceConfiguratorExampleComponent,
         HarryPotterDataSourceConfiguratorComponent,
     ],
-    providers: [
-        {
-            provide: DEMO_PATH_TOKEN,
-            useFactory: () =>
-                (<any>require).context(
-                    `!!raw-loader!./`,
-                    true,
-                    /.*\.(ts|html|less)$/
-                ),
-        },
-    ],
 })
-export class CustomDataSourceConfiguratorModuleRoute {}
+export default class CustomDataSourceConfiguratorModuleRoute {}

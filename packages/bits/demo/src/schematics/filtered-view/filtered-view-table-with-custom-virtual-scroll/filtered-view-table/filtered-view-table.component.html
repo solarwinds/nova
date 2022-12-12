@@ -9,7 +9,7 @@
     >
         <table
             nui-table
-            [dataSource]="items | sliceRange: viewportRef.getRenderedRange()"
+            [dataSource]="items | sliceRange : viewportRef.getRenderedRange()"
         >
             <ng-container nuiColumnDef="name">
                 <th nui-header-cell [style.width.%]="30" *nuiHeaderCellDef i18n>

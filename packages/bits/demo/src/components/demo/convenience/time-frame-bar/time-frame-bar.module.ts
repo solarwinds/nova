@@ -22,7 +22,6 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
-    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiCommonModule,
     NuiDatePickerModule,
@@ -106,17 +105,6 @@ const routes = [
         TimeFrameBarTestComponent,
         TimeFrameBarVisualTestComponent,
     ],
-    providers: [
-        {
-            provide: DEMO_PATH_TOKEN,
-            useFactory: () =>
-                (<any>require).context(
-                    `!!raw-loader!./`,
-                    true,
-                    /.*\.(ts|html|less)$/
-                ),
-        },
-    ],
     exports: [RouterModule],
 })
-export class TimeFrameBarModule {}
+export default class TimeFrameBarModule {}

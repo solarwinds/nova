@@ -34,6 +34,7 @@ describe("a11y: form-field", () => {
         "region", // not applicable in the test context
         "page-has-heading-one", // not applicable for the tests
         "nested-interactive",
+        "aria-required-attr",
     ];
 
     beforeAll(async () => {

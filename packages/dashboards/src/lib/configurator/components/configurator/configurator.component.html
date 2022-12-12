@@ -19,7 +19,7 @@
                     *ngIf="previewWidget?.pizzagna"
                     #previewPizzagnaComponent
                     class="flex-grow-1 w-100"
-                    [rootNode]="previewWidget | nuiPizzagnaRoot: 'widget'"
+                    [rootNode]="previewWidget | nuiPizzagnaRoot : 'widget'"
                     [pizzagna]="previewWidget?.pizzagna"
                     (pizzagnaChange)="onPizzagnaChange($event)"
                 >

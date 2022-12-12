@@ -22,7 +22,7 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
-import { DEMO_PATH_TOKEN, SrlcStage } from "@nova-ui/bits";
+import { SrlcStage } from "@nova-ui/bits";
 
 import { SchematicsDocsComponent } from "./schematics-docs.component";
 
@@ -42,16 +42,5 @@ const staticRoutes: Routes = [
     declarations: [SchematicsDocsComponent],
     exports: [SchematicsDocsComponent],
     imports: [CommonModule, RouterModule.forChild(staticRoutes)],
-    providers: [
-        {
-            provide: DEMO_PATH_TOKEN,
-            useFactory: () =>
-                (<any>require).context(
-                    `!!raw-loader!./`,
-                    true,
-                    /.*\.(ts|html|less)$/
-                ),
-        },
-    ],
 })
-export class SchematicsDocsModule {}
+export default class SchematicsDocsModule {}

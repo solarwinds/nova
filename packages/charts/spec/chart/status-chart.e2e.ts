@@ -48,7 +48,7 @@ describe("Status chart", () => {
             );
     });
 
-    describe("basic", async () => {
+    describe("basic",  () => {
         it("should display status bar series", async () => {
             const series = await statusChartWithIcons.getDataSeriesById(
                 SeriesAtom,
@@ -74,7 +74,7 @@ describe("Status chart", () => {
         });
     });
 
-    describe("interactions", async () => {
+    describe("interactions",  () => {
         it("should hover a bar and keep default opacity + de-emphasize others", async () => {
             const bar = await statusChartWithIcons.getStatusBarDataPointByIndex(
                 statusSeriesID,
@@ -92,7 +92,7 @@ describe("Status chart", () => {
         });
     });
 
-    describe("content", async () => {
+    describe("content",  () => {
         it("should contain an icon", async () => {
             const bar = await statusChartWithIcons.getStatusBarDataPointByIndex(
                 statusSeriesID,
@@ -117,7 +117,7 @@ describe("Status chart", () => {
         });
     });
 
-    describe("resize", async () => {
+    describe("resize",  () => {
         it("should hide icons on page or container resize", async (done) => {
             const originalSize = await browser.manage().window().getSize();
             const bars = [

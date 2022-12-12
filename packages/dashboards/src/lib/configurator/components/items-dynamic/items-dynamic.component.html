@@ -25,13 +25,13 @@
             <span
                 [title]="
                     headerMap.get(node.id)
-                        | nuiWidgetConfiguratorSectionHeader: i:headerPrefix
+                        | nuiWidgetConfiguratorSectionHeader : i : headerPrefix
                 "
                 class="nui-items-dynamic__header-text"
             >
                 {{
                     headerMap.get(node.id)
-                        | nuiWidgetConfiguratorSectionHeader: i:headerPrefix
+                        | nuiWidgetConfiguratorSectionHeader : i : headerPrefix
                 }}
             </span>
         </ng-template>
@@ -58,8 +58,8 @@
             [providers]="node.providers"
             [properties]="
                 node.properties
-                    | nuiAddData: headerText:'headerTextTemplate'
-                    | nuiAddData: headerButtons:'headerButtonsTemplate'
+                    | nuiAddData : headerText : 'headerTextTemplate'
+                    | nuiAddData : headerButtons : 'headerButtonsTemplate'
             "
             [outputs]="['formReady', 'formDestroy']"
             (output)="onEvent(node.id, $event)"

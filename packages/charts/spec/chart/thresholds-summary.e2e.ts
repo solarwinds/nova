@@ -181,7 +181,7 @@ describe("Thresholds summary", () => {
                 }
             });
 
-            describe("when corresponding series on legend >", async () => {
+            describe("when corresponding series on legend >",  () => {
                 const seriesIndex = 0;
                 const seriesId = Object.keys(multiSeriesData)[seriesIndex];
                 const backgroundSeriesId =

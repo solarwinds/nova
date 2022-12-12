@@ -74,4 +74,4 @@ const routes = [
         PersistenceHandlerSetupComponent,
     ],
 })
-export class PersistenceHandlerSetupModule {}
+export default class PersistenceHandlerSetupModule {}

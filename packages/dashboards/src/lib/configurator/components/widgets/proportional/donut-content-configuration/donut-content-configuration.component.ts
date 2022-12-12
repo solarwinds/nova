@@ -73,11 +73,11 @@ export class DonutContentConfigurationComponent
     public shown: boolean = true;
     public form = this.formBuilder.group({
         formatter: this.formBuilder.group({
-            componentType: [undefined],
+            componentType: [""],
             properties: [],
         }),
         aggregator: this.formBuilder.group({
-            aggregatorType: [undefined],
+            aggregatorType: [""],
             properties: [],
         }),
     });
@@ -190,9 +190,9 @@ export class DonutContentConfigurationComponent
         this.form
             .get("aggregator.aggregatorType")
             ?.valueChanges.pipe(takeUntil(this.destroy$))
-            .subscribe((aggregatorType: string) => {
+            .subscribe((type: string | null) => {
                 this.currentAggregatorDefinition = this.aggregators.find(
-                    (f) => f.aggregatorType === aggregatorType
+                    ({ aggregatorType }) => aggregatorType === type
                 ) as IProportionalDonutContentAggregatorDefinition;
                 this.updateAggregatorConfiguratorProps();
             });
@@ -200,9 +200,9 @@ export class DonutContentConfigurationComponent
         this.form
             .get("formatter.componentType")
             ?.valueChanges.pipe(takeUntil(this.destroy$))
-            .subscribe((componentType: string) => {
+            .subscribe((type: string | null) => {
                 this.currentFormatterDefinition = this.formatters.find(
-                    (f) => f.componentType === componentType
+                    ({ componentType }) => componentType === type
                 ) as IFormatterDefinition;
                 this.updateAggregatorConfiguratorProps();
             });

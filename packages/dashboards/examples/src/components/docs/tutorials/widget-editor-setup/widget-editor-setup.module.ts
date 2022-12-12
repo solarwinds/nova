@@ -69,4 +69,4 @@ const routes = [
     ],
     declarations: [WidgetEditorDocsComponent, WidgetEditorSetupComponent],
 })
-export class WidgetEditorSetupModule {}
+export default class WidgetEditorSetupModule {}

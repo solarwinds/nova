@@ -11,7 +11,6 @@
         "declaration": true,
         "declarationMap": true,
         "inlineSources": true,
-        "target": "ES2015",
         "types": ["node"]
     },
     "exclude": ["./src/test.ts", "./**/*.spec.ts"],

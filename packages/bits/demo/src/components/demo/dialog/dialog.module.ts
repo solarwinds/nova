@@ -22,7 +22,6 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
-    DEMO_PATH_TOKEN,
     NuiBusyModule,
     NuiButtonModule,
     NuiDateTimePickerModule,
@@ -162,17 +161,6 @@ const routes = [
         DialogActionBeforeClosureExampleComponent,
         DialogAfterOpenedExampleComponent,
     ],
-    providers: [
-        {
-            provide: DEMO_PATH_TOKEN,
-            useFactory: () =>
-                (<any>require).context(
-                    `!!raw-loader!./`,
-                    true,
-                    /.*\.(ts|html|less)$/
-                ),
-        },
-    ],
     exports: [RouterModule],
 })
-export class DialogModule {}
+export default class DialogModule {}

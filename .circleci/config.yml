@@ -101,7 +101,7 @@ jobs:
                   name: Check git diff to see if builds should skip e2e
                   working_directory: ~/nova/packages/bits
                   command: |
-                      if [ -f package-cached ]; then
+                      if [ -f $PROJECT_DIR/package-cached ]; then
                           echo "This package was restored from cache so we're skipping e2e tests"
                           circleci step halt
                       fi
@@ -596,7 +596,7 @@ jobs:
         environment:
             SOURCE_BRANCH: main
             CREATE_RELEASE_BRANCH: "true"
-            RELEASE_BRANCH: release/v13.0.x
+            RELEASE_BRANCH: release/v15.0.x
             INCREMENT_TYPE: patch
         steps:
             - add_ssh_keys

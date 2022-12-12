@@ -23,7 +23,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import {
-    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiDividerModule,
     NuiDocsModule,
@@ -101,17 +100,6 @@ const routes = [
         ToastTypeExampleComponent,
         ToastVisualTestComponent,
     ],
-    providers: [
-        {
-            provide: DEMO_PATH_TOKEN,
-            useFactory: () =>
-                (<any>require).context(
-                    `!!raw-loader!./`,
-                    true,
-                    /.*\.(ts|html|less)$/
-                ),
-        },
-    ],
     exports: [RouterModule],
 })
-export class ToastModule {}
+export default class ToastModule {}

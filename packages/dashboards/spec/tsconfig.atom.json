@@ -7,7 +7,6 @@
         "paths": {
             "@nova-ui/dashboards": ["../src/public-api.ts"]
         },
-        "target": "es6",
         "types": ["jasmine", "jasminewd2", "node", "selenium-webdriver"]
     },
     "exclude": ["**/*.e2e.ts", "**/*.visual.ts"],

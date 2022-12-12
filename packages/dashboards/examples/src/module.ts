@@ -25,7 +25,6 @@ import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule } from "@angular/router";
 
 import {
-    DEMO_PATH_TOKEN,
     LocalFilteringDataSource,
     NuiDocsModule,
     NuiSwitchModule,
@@ -33,8 +32,8 @@ import {
 import { NuiChartsModule } from "@nova-ui/charts";
 
 import { SourceInspectorModule } from "../../src/source-inspector/source-inspector.module";
+import { AppComponent } from "./components";
 import { AppRoutingModule } from "./components/app/app-routing.module";
-import { AppComponent } from "./components/app/app.component";
 import { AnimationsModule } from "./environments/environment";
 
 @NgModule({
@@ -58,15 +57,6 @@ import { AnimationsModule } from "./environments/environment";
         // use pathToken to configure SourcesService of NuiDocsModule
         // pay attention that 'The arguments passed to require.context must be literals!'
         // https://webpack.js.org/guides/dependency-management/
-        {
-            provide: DEMO_PATH_TOKEN,
-            useFactory: () =>
-                (<any>require).context(
-                    `!!raw-loader!./components/`,
-                    true,
-                    /.*\.(ts|html|less)$/
-                ),
-        },
         DatePipe,
         LocalFilteringDataSource,
     ],

@@ -72,4 +72,4 @@ const routes: Routes = [
         TimeseriesWidgetStatusBarExampleComponent,
     ],
 })
-export class TimeseriesDocsModule {}
+export default class TimeseriesDocsModule {}

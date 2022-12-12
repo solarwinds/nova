@@ -29,14 +29,7 @@ class MockComponent {
 }
 
 class MockInjector implements Injector {
-    public get<T>(
-        token: Type<T> | InjectionToken<T>,
-        notFoundValue?: T,
-        flags?: InjectFlags
-    ): T {
-        // @ts-ignore: Suppressed for test purposes
-        return null;
-    }
+    get(token: any, notFoundValue?: any): any {}
 }
 
 describe("ComponentPortalService > ", () => {

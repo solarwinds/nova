@@ -46,7 +46,7 @@ export class SelectV2VirtualScrollExampleComponent
         (_, i) => $localize`Item ${i}`
     );
 
-    public selectControl = new FormControl();
+    public selectControl = new FormControl<string | null>(null);
     public containerHeight: number = 300;
 
     private readonly destroy$ = new Subject<void>();

@@ -20,14 +20,6 @@
 
 import { strings } from "@angular-devkit/core";
 import {
-    parseJsonAst,
-    JsonParseMode,
-} from "@angular-devkit/core/src/json/parser";
-import {
-    JsonAstArray,
-    JsonAstObject,
-} from "@angular-devkit/core/src/json/parser_ast";
-import {
     Rule,
     SchematicContext,
     SchematicsException,
@@ -48,106 +40,73 @@ import {
 import { BrowserBuilderTarget } from "@schematics/angular/utility/workspace-models";
 import ts from "typescript";
 
-import {
-    appendValueInAstArray,
-    findPropertyInAstObject,
-    insertPropertyInAstObjectInOrder,
-} from "./json-utils";
 import { getProject } from "./project";
 import { getProjectTargets } from "./project-targets";
 import { getWorkspace } from "./workspace";
+import { applyEdits, modify, parse } from "jsonc-parser";
+import { get, isEqual, merge, uniqWith } from "lodash";
 
 export function updateJsonFile(
     host: Tree,
     context: SchematicContext,
     filename: string,
     propertyChain: string[],
-    itemToAdd: any
+    itemToAdd: any,
+    overrideValue: boolean = true
 ): Tree {
-    const lastProperty = propertyChain[propertyChain.length - 1];
-    try {
-        const source = host.read(<string>filename)?.toString("utf-8") ?? "";
-        const sourceAstObj: JsonAstObject = parseJsonAst(
-            source,
-            JsonParseMode.CommentsAllowed
-        ) as JsonAstObject;
+    if (!context.interactive) {
+        console.info("not interactive");
+    }
+    const configPath = filename;
 
-        let targetObj: JsonAstObject, parentObj: JsonAstObject | undefined;
+    if (host.exists(configPath)) {
+        const jsonFileContent = host.read(configPath)!.toString("utf-8");
+        const parsedJson = parse(jsonFileContent);
 
-        targetObj = sourceAstObj;
-
-        for (let i = 0; i < propertyChain.length; i++) {
-            parentObj = targetObj;
-            targetObj = <JsonAstObject>(
-                findPropertyInAstObject(
-                    <JsonAstObject>parentObj,
-                    propertyChain[i]
-                )
+        const existingProps = get(parsedJson, propertyChain);
+        if (typeof existingProps === "undefined") {
+            const editedContent = getEdits(
+                jsonFileContent,
+                propertyChain,
+                itemToAdd
             );
-        }
-
-        const recorder = host.beginUpdate(filename);
-
-        const targetArray = <JsonAstArray>(<any>targetObj);
-
-        if (targetArray && Array.isArray(itemToAdd)) {
-            if (
-                targetArray.elements.every(
-                    //  we don't want a double not equal here
-                    // tslint:disable-next-line:triple-equals
-                    (element) => element.value != itemToAdd
-                )
-            ) {
-                const lastStyle =
-                    targetArray.elements[targetArray.elements.length - 1];
-                const lastStyleIndent = lastStyle
-                    ? lastStyle.start.character
-                    : 0;
-                appendValueInAstArray(
-                    recorder,
-                    targetArray,
-                    itemToAdd[0],
-                    lastStyleIndent
-                );
-            } else {
-                context.logger.info(
-                    `️ ${filename} already contains ${lastProperty}`
-                );
-            }
+            host.overwrite(configPath, editedContent);
         } else {
-            if (
-                parentObj?.properties.every(
-                    // we don't want a double not equal here
-                    // tslint:disable-next-line:triple-equals
-                    (property) => property.key.value != lastProperty
-                )
-            ) {
-                const lastItemIndent = parentObj.properties[0]
-                    ? parentObj.properties[0].start.character
-                    : 0;
-                insertPropertyInAstObjectInOrder(
-                    recorder,
-                    parentObj,
-                    lastProperty,
-                    itemToAdd,
-                    lastItemIndent
+            if (!overrideValue) {
+                return host;
+            }
+
+            if (Array.isArray(existingProps) && Array.isArray(itemToAdd)) {
+                // merge two arrays by uniq value
+                const editedContent = getEdits(
+                    jsonFileContent,
+                    propertyChain,
+                    uniqWith(
+                        merge([], [...existingProps, ...itemToAdd]),
+                        isEqual
+                    )
                 );
-            } else {
-                context.logger.info(
-                    `️ ${filename} already contains ${lastProperty}`
-                );
+                host.overwrite(configPath, editedContent);
             }
         }
-        host.commitUpdate(recorder);
-    } catch (ex) {
-        context.logger.error(
-            `🚫 Failed to update ${filename} with ${lastProperty}: ${ex.toString()}`
+    } else {
+        throw new SchematicsException(
+            "angular.json not found at " + configPath
         );
     }
-    context.logger.info(`✅️ Updated ${filename} with ${lastProperty}`);
-
     return host;
 }
+
+const getEdits = (
+    jsonFileContent: string,
+    propertyChain: string[],
+    modification: any
+) => {
+    const edits = modify(jsonFileContent, propertyChain, modification, {
+        isArrayInsertion: true,
+    });
+    return applyEdits(jsonFileContent, edits);
+};
 
 export function buildSelector(options: any, projectPrefix: string): string {
     let selector = strings.dasherize(options.name);

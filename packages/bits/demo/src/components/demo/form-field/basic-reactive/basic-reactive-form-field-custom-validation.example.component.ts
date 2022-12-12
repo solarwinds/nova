@@ -18,22 +18,18 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Component } from "@angular/core";
+import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
     selector: "nui-form-field-basic-reactive-custom-validation-example",
     templateUrl:
         "./basic-reactive-form-field-custom-validation.example.component.html",
 })
-export class FormFieldBasicReactiveCustomValidationExampleComponent
-    implements OnInit
-{
-    public reactiveForm: FormGroup;
+export class FormFieldBasicReactiveCustomValidationExampleComponent {
+    public reactiveForm;
 
-    constructor(private formBuilder: FormBuilder) {}
-
-    public ngOnInit(): void {
+    constructor(private formBuilder: FormBuilder) {
         this.reactiveForm = this.formBuilder.group({
             email: this.formBuilder.control("", [
                 Validators.required,

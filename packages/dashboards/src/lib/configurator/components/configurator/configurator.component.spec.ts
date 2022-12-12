@@ -30,7 +30,9 @@ import { ConfiguratorComponent } from "./configurator.component";
 describe("ConfiguratorComponent", () => {
     let component: ConfiguratorComponent;
     let fixture: ComponentFixture<ConfiguratorComponent>;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let testPizzagna: IPizzagna;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let detectChangesSpy: jasmine.Spy;
 
     beforeEach(waitForAsync(() => {

@@ -23,7 +23,7 @@ import { Animations, Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
 import { RadialSeriesAtom } from "./atoms/radial-series.atom";
 import { PieChartTestPage } from "./pie-chart-test.po";
 
-describe("Pie chart", async () => {
+describe("Pie chart",  () => {
     const page = new PieChartTestPage();
 
     beforeAll(async () => {

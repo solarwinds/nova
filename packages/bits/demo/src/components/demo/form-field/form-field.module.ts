@@ -23,7 +23,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import {
-    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiCheckboxModule,
     NuiDatePickerModule,
@@ -136,17 +135,6 @@ const routes = [
         SecondCustomFormExampleComponent,
         FormFieldValidationTriggeringxampleComponent,
     ],
-    providers: [
-        {
-            provide: DEMO_PATH_TOKEN,
-            useFactory: () =>
-                (<any>require).context(
-                    `!!raw-loader!./`,
-                    true,
-                    /.*\.(ts|html|less)$/
-                ),
-        },
-    ],
     exports: [RouterModule],
 })
-export class FormFieldModule {}
+export default class FormFieldModule {}

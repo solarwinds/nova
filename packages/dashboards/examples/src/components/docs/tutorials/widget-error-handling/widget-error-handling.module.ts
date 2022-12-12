@@ -86,4 +86,4 @@ const routes = [
         WidgetErrorHandlingComponent,
     ],
 })
-export class WidgetErrorHandlingModule {}
+export default class WidgetErrorHandlingModule {}

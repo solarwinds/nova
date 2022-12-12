@@ -127,7 +127,10 @@ export interface IRenderSeries<TA extends IAccessors> {
     parentContainer?: D3Selection<SVGElement>;
 }
 
-export interface IHighlightStrategy<TA, T = Renderer<TA>> {
+export interface IHighlightStrategy<
+    TA extends IAccessors<any>,
+    T = Renderer<TA>
+> {
     getDataPointIndex(
         renderer: T,
         series: IDataSeries<TA>,

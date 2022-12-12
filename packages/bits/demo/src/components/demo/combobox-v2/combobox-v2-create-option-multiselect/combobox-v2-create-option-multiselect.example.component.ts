@@ -37,7 +37,7 @@ export class ComboboxV2CreateOptionMultiselectExampleComponent {
         (_, i) => $localize`Item ${i}`
     );
 
-    public comboboxControl = new FormControl();
+    public comboboxControl = new FormControl<string[] | null>(null);
 
     constructor(private domSanitizer: DomSanitizer) {}
 

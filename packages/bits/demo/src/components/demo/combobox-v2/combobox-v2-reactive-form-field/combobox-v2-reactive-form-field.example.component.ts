@@ -18,24 +18,22 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Component } from "@angular/core";
+import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
     selector: "nui-combobox-v2-reactive-form-field-example",
     templateUrl: "combobox-v2-reactive-form-field.example.component.html",
     host: { class: "combobox-container" },
 })
-export class ComboboxV2ReactiveFormFieldExampleComponent implements OnInit {
+export class ComboboxV2ReactiveFormFieldExampleComponent {
     public icons: any[] = ["check", "email", "execute"];
     public items = Array.from({ length: 100 }).map(
         (_, i) => $localize`Item ${i}`
     );
-    public fancyForm: FormGroup;
+    public fancyForm;
 
-    constructor(private formBuilder: FormBuilder) {}
-
-    public ngOnInit(): void {
+    constructor(private formBuilder: FormBuilder) {
         this.fancyForm = this.formBuilder.group({
             combobox: this.formBuilder.control("", Validators.required),
         });

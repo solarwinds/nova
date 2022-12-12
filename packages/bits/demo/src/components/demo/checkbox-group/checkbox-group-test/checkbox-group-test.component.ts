@@ -18,15 +18,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { Component } from "@angular/core";
+import { FormBuilder } from "@angular/forms";
 
 @Component({
     selector: "nui-checkbox-group-test-example",
     templateUrl: "checkbox-group-test.component.html",
 })
-export class CheckboxGroupTestComponent implements OnInit {
-    public testForm: FormGroup;
+export class CheckboxGroupTestComponent {
     public cabbage = "Cabbage";
     public potato = "Potato";
     public tomato = "Tomato";
@@ -35,10 +34,9 @@ export class CheckboxGroupTestComponent implements OnInit {
     public vegetables = [this.cabbage, this.potato, this.tomato, this.carrot];
     public hints = [this.cabbage, this.tomato];
     public selectedVegetables = [this.potato, this.tomato, this.disabledOne];
+    public testForm;
 
-    constructor(private formBuilder: FormBuilder) {}
-
-    public ngOnInit(): void {
+    constructor(private formBuilder: FormBuilder) {
         this.testForm = this.formBuilder.group({
             checkboxGroup: this.formBuilder.control({
                 value: this.selectedVegetables,

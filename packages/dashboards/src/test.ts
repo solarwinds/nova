@@ -28,8 +28,6 @@ import {
 } from "@angular/platform-browser-dynamic/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 
-declare const require: any;
-
 // First, initialize the Angular testing environment.
 getTestBed().initTestEnvironment(
     [BrowserDynamicTestingModule, NoopAnimationsModule],
@@ -38,9 +36,3 @@ getTestBed().initTestEnvironment(
         teardown: { destroyAfterEach: false },
     }
 );
-// Then we find all the tests.
-const context = require.context("./", true, /\.spec\.ts$/);
-const specContext = require.context("../spec", true, /\.spec\.ts$/);
-// And load the modules.
-context.keys().map(context);
-specContext.keys().map(specContext);

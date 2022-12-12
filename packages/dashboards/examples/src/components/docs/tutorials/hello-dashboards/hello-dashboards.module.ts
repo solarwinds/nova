@@ -22,11 +22,7 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
-import {
-    DEMO_PATH_TOKEN,
-    NuiDocsModule,
-    NuiMessageModule,
-} from "@nova-ui/bits";
+import { NuiDocsModule, NuiMessageModule } from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { HelloDashboardsDocsComponent } from "./hello-dashboards-docs.component";
@@ -66,16 +62,5 @@ const routes = [
         HelloDashboardsDocsComponent,
         HelloDashboardsExampleComponent,
     ],
-    providers: [
-        {
-            provide: DEMO_PATH_TOKEN,
-            useFactory: () =>
-                (<any>require).context(
-                    `!!raw-loader!./`,
-                    true,
-                    /.*\.(ts|html|less)$/
-                ),
-        },
-    ],
 })
-export class HelloDashboardsModule {}
+export default class HelloDashboardsModule {}

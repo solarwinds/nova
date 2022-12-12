@@ -27,12 +27,7 @@ import {
     TemplateRef,
     ViewChild,
 } from "@angular/core";
-import {
-    FormBuilder,
-    FormControl,
-    FormGroup,
-    Validators,
-} from "@angular/forms";
+import { FormBuilder, FormControl, Validators } from "@angular/forms";
 import { Observable, of, Subject } from "rxjs";
 // eslint-disable-next-line import/no-deprecated
 import { delay, filter, takeUntil, tap } from "rxjs/operators";
@@ -66,13 +61,10 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
     );
     public filteredItems: Observable<any[]> = of([...this.virtualItems]);
     public containerHeight: number = defaultContainerHeight;
-
-    private activeDialog: NuiDialogRef;
     // Testing only
     public overlayConfig: OverlayConfig = {
         panelClass: [OVERLAY_WITH_POPUP_STYLES_CLASS, "combobox-v2-test-pane"],
     };
-
     // Data
     public options = Array.from({ length: 3 }).map(
         (_, i) => $localize`Item ${i}`
@@ -96,10 +88,9 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
             icon: this.getRandomIcon(),
         })
     );
-    public selectedItem: IExampleItem;
-    public selectedSingleItem: IExampleItem;
+    public selectedItem: IExampleItem | null;
+    public selectedSingleItem: string | null;
     public isComboboxDisabled = false;
-
     public dataset = {
         items: [
             "Item 1",
@@ -124,31 +115,34 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
             "Item 20",
         ],
     };
-
     // Form
     public error: boolean = true;
-    public comboboxControl = new FormControl();
-    public comboboxControlSingle = new FormControl();
-    public comboboxControlMulti = new FormControl();
-    public fancyForm: FormGroup;
-
+    public comboboxControl = new FormControl<IExampleItem | null>(null);
+    public comboboxControlSingle = new FormControl<string | null>(null);
+    public comboboxControlMulti = new FormControl<
+        { id: string; name: string }[] | null
+    >(null);
+    public fancyForm;
     public closePopoverSubject: Subject<void> = new Subject<void>();
-
-    private destroy$: Subject<any> = new Subject<any>();
-    private scrollOffset: number = 0;
-
-    @ViewChild(CdkVirtualScrollViewport)
-    private viewport: CdkVirtualScrollViewport;
-    @ViewChild("virtual") private virtualCombobox: ComboboxV2Component;
     @ViewChild("comboboxSingle") public comboboxSingle: ComboboxV2Component;
     @ViewChild("comboboxMultiDimensions")
     public comboboxMultiDimensions: ComboboxV2Component;
+    private activeDialog: NuiDialogRef;
+    private destroy$: Subject<any> = new Subject<any>();
+    private scrollOffset: number = 0;
+    @ViewChild(CdkVirtualScrollViewport)
+    private viewport: CdkVirtualScrollViewport;
+    @ViewChild("virtual") private virtualCombobox: ComboboxV2Component;
 
     constructor(
         private formBuilder: FormBuilder,
         private dialogService: DialogService,
         private toastService: ToastService
-    ) {}
+    ) {
+        this.fancyForm = this.formBuilder.group({
+            combobox: this.formBuilder.control("", Validators.required),
+        });
+    }
 
     public closePopover(): void {
         this.closePopoverSubject.next();
@@ -223,10 +217,6 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
     }
 
     public ngOnInit(): void {
-        this.fancyForm = this.formBuilder.group({
-            combobox: this.formBuilder.control("", Validators.required),
-        });
-
         this.comboboxControl.valueChanges
             .pipe(takeUntil(this.destroy$))
             .subscribe((value) => {

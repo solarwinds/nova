@@ -77,7 +77,9 @@ import {
             <div accordionHeader class="d-flex align-items-center px-4 py-2">
                 <nui-icon
                     class="align-self-start pt-2"
-                    [icon]="form | nuiFormHeaderIconPipe: 'widget_list' | async"
+                    [icon]="
+                        form | nuiFormHeaderIconPipe : 'widget_list' | async
+                    "
                 ></nui-icon>
                 <div class="d-flex flex-column ml-4 pt-1">
                     <span class="nui-text-label" i18n>Description</span>

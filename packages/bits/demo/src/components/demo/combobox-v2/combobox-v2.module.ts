@@ -24,7 +24,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import {
-    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiChipsModule,
     NuiDialogModule,
@@ -339,17 +338,6 @@ const routes = [
         ComboboxV2GettingValueExampleComponent,
         ComboboxV2SettingValueExampleComponent,
     ],
-    providers: [
-        {
-            provide: DEMO_PATH_TOKEN,
-            useFactory: () =>
-                (<any>require).context(
-                    `!!raw-loader!./`,
-                    true,
-                    /.*\.(ts|html|less)$/
-                ),
-        },
-    ],
     exports: [RouterModule],
 })
-export class ComboboxV2Module {}
+export default class ComboboxV2Module {}

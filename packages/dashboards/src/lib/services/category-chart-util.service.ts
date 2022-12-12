@@ -47,12 +47,12 @@ import {
 
 import { ProportionalWidgetChartTypes } from "../components/proportional-widget/types";
 
-type PreprocessorType<T> = (
+type PreprocessorType<T extends IAccessors> = (
     this: ChartAssist,
     series: IChartAssistSeries<T>[]
 ) => IChartAssistSeries<T>[];
 
-export interface IChartAttributes<T = IAccessors> {
+export interface IChartAttributes<T extends IAccessors = IAccessors> {
     grid: IGrid;
     accessors: IAccessors;
     renderer: Renderer<IAccessors>;
@@ -60,7 +60,7 @@ export interface IChartAttributes<T = IAccessors> {
     preprocessor?: PreprocessorType<T>;
 }
 
-interface IChartTools<T = IAccessors> {
+interface IChartTools<T extends IAccessors = IAccessors> {
     config?: IBarChartConfig;
     preprocessor?: PreprocessorType<T>;
     gridFunction: () => IGrid;
@@ -125,7 +125,7 @@ export class CategoryChartUtilService {
     ): IChartTools | IChartTools<IRadialAccessors> {
         const radialChartAccessors = (colors: IValueProvider<string>) => {
             const accessors = new RadialAccessors(colors);
-            accessors.series.color = (seriesId, series) =>
+            accessors.series.color = (seriesId: any, series: any) =>
                 series.color ?? colors.get(seriesId);
             return accessors;
         };
@@ -138,8 +138,10 @@ export class CategoryChartUtilService {
             // @ts-ignore: TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.;
             // An outer value of 'this' is shadowed by this container.
             const accessors = barAccessors(this.config, colors, markers);
-            accessors.series.color = (seriesId, series) =>
-                series.color ?? colors?.get(seriesId);
+            accessors.series.color = (
+                seriesId: string,
+                series: IDataSeries<IAccessors>
+            ) => series.color ?? colors?.get(seriesId);
             // TODO: Remove custom accessor after fixing NUI-3688 in charts
             accessors.data.value = (d: any) =>
                 Number.isFinite(d) ? d : d.value;

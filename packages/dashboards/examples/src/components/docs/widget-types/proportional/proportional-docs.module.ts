@@ -101,4 +101,4 @@ const routes: Routes = [
         ProportionalDonutContentDocsComponent,
     ],
 })
-export class ProportionalDocsModule {}
+export default class ProportionalDocsModule {}

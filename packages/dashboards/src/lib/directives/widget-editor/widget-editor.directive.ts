@@ -33,7 +33,6 @@ import {
 import { WidgetEditorService } from "../../configurator/services/widget-editor.service";
 import { WIDGET_EDIT, WIDGET_REMOVE } from "../../services/types";
 import { WidgetRemovalService } from "../../services/widget-removal.service";
-import { IWidgetEvent } from "../../services/widget-to-dashboard-event-proxy.service";
 import { WidgetTypesService } from "../../services/widget-types.service";
 
 @Directive({

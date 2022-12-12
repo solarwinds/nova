@@ -39,7 +39,7 @@ export class ComboboxV2GroupedOptionsExampleComponent {
             name: $localize`Item ${n + 1}`,
         })),
     }));
-    public comboboxControl = new FormControl();
+    public comboboxControl = new FormControl<string | null>(null);
 
     public displayFn(item: any): string {
         return item?.name || "";

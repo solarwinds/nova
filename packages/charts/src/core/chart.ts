@@ -106,7 +106,7 @@ export class Chart implements IChart {
         }
     }
 
-    public removePlugins(...classRefs: typeof ChartPlugin[]): void {
+    public removePlugins(...classRefs: (typeof ChartPlugin)[]): void {
         for (const classRef of classRefs) {
             this.removePlugin(classRef);
         }

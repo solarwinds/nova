@@ -40,4 +40,4 @@ const routes = [
     imports: [RouterModule.forChild(routes)],
     declarations: [DynamicHeaderLinksDocsComponent],
 })
-export class DynamicHeaderLinksDocsModule {}
+export default class DynamicHeaderLinksDocsModule {}

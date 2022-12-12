@@ -40,7 +40,7 @@ export class ComboboxV2CreateOptionExampleComponent {
     );
     @ViewChild("combobox") public combobox: ComboboxV2Component;
 
-    public comboboxControl = new FormControl();
+    public comboboxControl = new FormControl<string | null>(null);
 
     constructor(private domSanitizer: DomSanitizer) {}
 

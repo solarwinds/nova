@@ -43,5 +43,5 @@ export class ComboboxV2OverlayConfigExampleComponent {
         ],
     };
 
-    public comboboxControl = new FormControl();
+    public comboboxControl = new FormControl<string | null>(null);
 }

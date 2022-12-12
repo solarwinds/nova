@@ -1,6 +1,5 @@
 {
   "author": "SolarWinds <nova-ui@solarwinds.com>",
-  "dependencies": {},
   "description": "SolarWinds Nova Framework",
   "devDependencies": {
     "prettier": "^2.7.1",
@@ -45,5 +44,6 @@
     "trigger-pipeline-build-ci": "bash scripts/trigger-pipeline-build",
     "verify-ci": "bash scripts/verify-published"
   },
-  "version": "13.0.11-0"
+  "version": "15.0.0-0",
+  "packageManager": "yarn@1.22.18"
 }

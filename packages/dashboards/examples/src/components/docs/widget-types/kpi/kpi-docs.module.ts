@@ -102,7 +102,7 @@ const routes: Routes = [
     ],
     providers: [KpiColorComparatorsRegistryService],
 })
-export class KpiDocsModule {
+export default class KpiDocsModule {
     constructor(
         private comparatorsRegistry: KpiColorComparatorsRegistryService
     ) {

@@ -22,7 +22,7 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
-import { DEMO_PATH_TOKEN, NuiCommonModule, NuiDocsModule } from "@nova-ui/bits";
+import { NuiCommonModule, NuiDocsModule } from "@nova-ui/bits";
 import { NuiDividerModule } from "@nova-ui/bits";
 import { SrlcStage } from "@nova-ui/bits";
 import { NuiIconModule } from "@nova-ui/bits";
@@ -111,16 +111,5 @@ const staticRoutes: Routes = [
         NuiValidationMessageModule,
         RouterModule.forChild(staticRoutes),
     ],
-    providers: [
-        {
-            provide: DEMO_PATH_TOKEN,
-            useFactory: () =>
-                (<any>require).context(
-                    `!!raw-loader!./`,
-                    true,
-                    /.*\.(ts|html|less)$/
-                ),
-        },
-    ],
 })
-export class StaticExampleModule {}
+export default class StaticExampleModule {}

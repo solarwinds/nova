@@ -30,7 +30,7 @@ import {
     ViewChild,
     ViewContainerRef,
 } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { NonNullableFormBuilder, Validators } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 
@@ -57,8 +57,6 @@ import { ELEMENT_DATA, ITestTableModel } from "./table-test-data-source";
 })
 export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
     public dataSource?: ITestTableModel[] = ELEMENT_DATA;
-    public myForm: FormGroup;
-    public optionsForm: FormGroup;
     public newColumn: string;
     public availableColumns = [
         "position",
@@ -73,22 +71,22 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
     public displayedColumns = this.availableColumns.slice();
     // full copy of displayed columns added to update columns only when updateTable() is called
     public displayedColumnsCopy = this.displayedColumns.slice();
-
+    public myForm;
     public alignmentsArray: TableAlignmentOptions[] = [
         "right",
         "left",
         "center",
     ];
     public densitiesArray: RowHeightOptions[] = ["default", "tiny", "compact"];
-
-    public alignment: string = "center";
-    public density: string = "default";
+    public alignment: string | undefined = "center";
+    public density: string | undefined = "default";
     public paginationTotal?: number;
-    public positionWidth: number = 50;
-    public reorderable: boolean = true;
-    public resizable: boolean = true;
+    public positionWidth: number | undefined = 50;
+    public reorderable: boolean | undefined = true;
+    public resizable: boolean | undefined = true;
     public searchTerm: string;
-    public sortable: boolean = true;
+    public sortable: boolean | undefined = true;
+    public optionsForm;
     public sortDirection: string = "asc";
     public sortedColumn: string = "position";
     public isFeatureColumnDisabled: boolean = true;
@@ -109,23 +107,19 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
         @Inject(DialogService) private dialogService: DialogService,
         @Inject(TableStateHandlerService)
         private tableStateHandlerService: TableStateHandlerService,
-        private formBuilder: FormBuilder,
+        private formBuilder: NonNullableFormBuilder,
         public changeDetection: ChangeDetectorRef,
         public viewContainerRef: ViewContainerRef,
         public applicationRef: ApplicationRef,
         public dataSourceService: ClientSideDataSource<ITestTableModel>
     ) {
         dataSourceService.setData(ELEMENT_DATA);
-    }
-
-    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
             checkboxGroup: this.formBuilder.control(this.displayedColumnsCopy, [
                 Validators.required,
                 Validators.minLength(3),
             ]),
         });
-
         this.optionsForm = this.formBuilder.group({
             alignment: this.formBuilder.control(this.alignment),
             density: this.formBuilder.control(this.density),
@@ -134,7 +128,9 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
             resizable: this.formBuilder.control(this.resizable),
             sortable: this.formBuilder.control(this.sortable),
         });
+    }
 
+    public ngOnInit(): void {
         this.optionsForm.valueChanges
             .pipe(debounceTime(500))
             .subscribe((value) => {

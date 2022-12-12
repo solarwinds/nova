@@ -11,7 +11,8 @@
                 "semi": true,
                 "singleQuote": false,
                 "trailingComma": "es5",
-                "useTabs": false
+                "useTabs": false,
+                "embeddedLanguageFormatting": "off"
             }
         },
         {

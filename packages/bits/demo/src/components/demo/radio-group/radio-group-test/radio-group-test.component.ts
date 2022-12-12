@@ -18,8 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { Component } from "@angular/core";
+import { FormBuilder } from "@angular/forms";
 
 import { CheckboxChangeEvent } from "@nova-ui/bits";
 
@@ -27,8 +27,8 @@ import { CheckboxChangeEvent } from "@nova-ui/bits";
     selector: "nui-radio-group-test",
     templateUrl: "./radio-group-test.component.html",
 })
-export class RadioGroupTestComponent implements OnInit {
-    public disabledForm: FormGroup;
+export class RadioGroupTestComponent {
+    public disabledForm;
 
     public fruits = [
         $localize`Banana`,
@@ -46,17 +46,17 @@ export class RadioGroupTestComponent implements OnInit {
     public selectedFruit: string;
     public selectedFruitInline: string;
 
-    constructor(private formBuilder: FormBuilder) {}
-
-    public ngOnInit(): void {
+    constructor(private formBuilder: FormBuilder) {
         this.disabledForm = this.formBuilder.group({
             radioGroup: this.formBuilder.control({ value: "", disabled: true }),
         });
     }
 
     public toggleDisabled(event: CheckboxChangeEvent): void {
-        this.disabledForm
-            .get("radioGroup")
-            ?.[!event.target.checked ? "enable" : "disable"]();
+        if (!event.target.checked) {
+            this.disabledForm.enable();
+        } else {
+            this.disabledForm.disable();
+        }
     }
 }

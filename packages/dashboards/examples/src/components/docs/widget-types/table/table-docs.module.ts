@@ -22,7 +22,6 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
 import {
-    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiDocsModule,
     NuiMessageModule,
@@ -88,19 +87,8 @@ const routes: Routes = [
         TableWidgetExampleComponent,
         TableWidgetSearchExampleComponent,
     ],
-    providers: [
-        {
-            provide: DEMO_PATH_TOKEN,
-            useFactory: () =>
-                (<any>require).context(
-                    `!!raw-loader!./`,
-                    true,
-                    /.*\.(ts|html|less)$/
-                ),
-        },
-    ],
 })
-export class TableDocsModule {
+export default class TableDocsModule {
     constructor(tableFormattersRegistryService: TableFormatterRegistryService) {
         tableFormattersRegistryService.addItems(DEFAULT_TABLE_FORMATTERS);
     }

@@ -15,7 +15,7 @@
                 This is required
             </nui-validation-message>
         </nui-form-field>
-        <nui-form-field caption="City" [control]="fancyForm.controls['City']">
+        <nui-form-field caption="city" [control]="fancyForm.controls['city']">
             <nui-textbox
                 formControlName="city"
                 id="nui-form-field-visual-test-city"
@@ -210,7 +210,7 @@
                     nui-button
                     class="btn"
                     id="nui-demo-mark-as-touched-button"
-                    (click)="markAsTouched()"
+                    (click)="markAsDirty()"
                 >
                     Mark as Dirty
                 </button>
@@ -219,6 +219,7 @@
         <div class="d-flex flex-row justify-content-center">
             <div class="w-100 d-flex flex-column">
                 <pre>fancyForm.valid = {{ fancyForm.valid }}</pre>
+                <pre>fancyForm.dirty = {{ fancyForm.dirty }}</pre>
             </div>
         </div>
     </form>

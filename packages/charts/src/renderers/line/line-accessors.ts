@@ -61,7 +61,7 @@ export interface ILineAccessors extends IAccessors {
  * <p>See referenced <code>data</code> and <code>series</code> interfaces for required properties.</p>
  */
 export class LineAccessors extends XYAccessors implements ILineAccessors {
-    public data: ILineDataAccessors;
+    public declare data: ILineDataAccessors;
     public series: ILineSeriesAccessors;
 
     constructor(

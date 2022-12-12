@@ -8,8 +8,8 @@ Before you begin, make sure your development environment includes the following:
 
 -   Node.js®
 -   A package manager such as [npm](https://www.npmjs.com/get-npm)
--   Angular CLI v13
--   Angular CDK v13 as a devDependency
+-   Angular CLI v15
+-   Angular CDK v15 as a devDependency
 
 ### Installing NodeJS and `npm`
 
@@ -29,7 +29,7 @@ ng --version
 If you want to install the latest Angular CLI globally, run the following command:
 
 ```sh
-npm install -g @angular/cli@^12
+npm install -g @angular/cli@15
 ```
 
 ### Installing Angular CDK
@@ -37,7 +37,7 @@ npm install -g @angular/cli@^12
 Nova uses Angular CDK as part of its schematics functionality. To install it, you can run the following command:
 
 ```sh
-npm install @angular/cdk@^12 --save-dev
+npm install @angular/cdk --save-dev
 ```
 
 ### Install Nova Bits

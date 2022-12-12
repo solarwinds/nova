@@ -25,7 +25,10 @@ import { assertA11y, Helpers } from "../../helpers";
 import { ComboboxV2Atom } from "../public_api";
 
 describe("a11y: combobox-v2", () => {
-    const rulesToDisable: string[] = ["aria-required-children"];
+    const rulesToDisable: string[] = [
+        "aria-required-children",
+        "aria-required-attr",
+    ];
 
     let comboboxBasic: ComboboxV2Atom;
     let comboboxError: ComboboxV2Atom;

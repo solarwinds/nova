@@ -38,7 +38,7 @@ import { IFormatterData } from "../types";
         <div class="nui-text-page">
             <span
                 *ngIf="sum < conversionThreshold; else convertedValueDisplay"
-                >{{ sum | number: "1.0-3" }}</span
+                >{{ sum | number : "1.0-3" }}</span
             >
             <ng-template #convertedValueDisplay>{{
                 convertedValue

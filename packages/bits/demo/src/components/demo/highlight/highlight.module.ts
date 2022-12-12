@@ -23,7 +23,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import {
-    DEMO_PATH_TOKEN,
     NuiDividerModule,
     NuiDocsModule,
     NuiCommonModule,
@@ -48,17 +47,6 @@ const routes = [
         NuiCommonModule,
     ],
     declarations: [HighlightExampleComponent],
-    providers: [
-        {
-            provide: DEMO_PATH_TOKEN,
-            useFactory: () =>
-                (<any>require).context(
-                    `!!raw-loader!./`,
-                    true,
-                    /.*\.(ts|html|less)$/
-                ),
-        },
-    ],
     exports: [RouterModule],
 })
-export class HighlightModule {}
+export default class HighlightModule {}

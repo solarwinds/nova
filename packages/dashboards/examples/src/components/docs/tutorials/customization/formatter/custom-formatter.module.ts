@@ -98,4 +98,4 @@ const routes: Routes = [
         CustomFormatterComponent,
     ],
 })
-export class CustomFormatterModuleRoute {}
+export default class CustomFormatterModuleRoute {}

@@ -1,5 +1,4 @@
 // © 2022 SolarWinds Worldwide, LLC. All rights reserved.
-//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
 //  deal in the Software without restriction, including without limitation the
@@ -19,7 +18,12 @@
 //  THE SOFTWARE.
 
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators,
+} from "@angular/forms";
 
 import { ToastService } from "@nova-ui/bits";
 
@@ -28,7 +32,7 @@ import { ToastService } from "@nova-ui/bits";
     templateUrl: "./checkbox-in-form.example.component.html",
 })
 export class CheckboxInFormExampleComponent implements OnInit {
-    public myForm: FormGroup;
+    public myForm: FormGroup<{ checkbox: FormControl<boolean | null> }>;
 
     constructor(
         private formBuilder: FormBuilder,

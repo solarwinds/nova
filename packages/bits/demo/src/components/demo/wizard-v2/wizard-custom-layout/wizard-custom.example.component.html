@@ -1,4 +1,4 @@
-<form [formGroup]="formGroup">
+<form [formGroup]="form">
     <nui-wizard-custom #wizard>
         <!-- Overview content-->
         <ng-container summary>
@@ -6,7 +6,7 @@
             <nui-progress
                 [show]="true"
                 [stacked]="true"
-                [percent]="progress | number: '1.0-0'"
+                [percent]="progress | number : '1.0-0'"
                 [showNumber]="true"
             >
             </nui-progress>
@@ -14,22 +14,19 @@
             <p>
                 Name:
                 {{
-                    formGroup.get(["personDetails", "name"])?.value ||
-                        "Not provided"
+                    form.get(["personDetails", "name"])?.value || "Not provided"
                 }}
             </p>
             <p>
                 Symptoms:
                 <ng-container
-                    [ngSwitch]="
-                        formGroup.get(['personDetails', 'symptoms'])?.value
-                    "
+                    [ngSwitch]="form.get(['personDetails', 'symptoms'])?.value"
                 >
                     <ng-container *ngSwitchCase="true">
                         {{
-                            formGroup.get(["diseaseDetails", "date"]).valid
+                            form.get(["diseaseDetails", "date"]).valid
                                 ? "Since " +
-                                  formGroup
+                                  form
                                       .get(["diseaseDetails", "date"])
                                       ?.value.format("D MMM YYYY")
                                 : "Yes"
@@ -42,7 +39,7 @@
             <p>
                 Email:
                 {{
-                    formGroup.get(["contactDetails", "email"])?.value ||
+                    form.get(["contactDetails", "email"])?.value ||
                         "Not provided"
                 }}
             </p>
@@ -52,12 +49,12 @@
         <nui-wizard-step-v2
             i18n-label
             label="Person Details"
-            formGroupName="personDetails"
-            [stepControl]="formGroup.get(['personDetails'])"
+            formName="personDetails"
+            [stepControl]="form.get(['personDetails'])"
         >
             <!-- content of the current step -->
             <nui-form-field
-                [control]="formGroup.get(['personDetails', 'name'])"
+                [control]="form.get(['personDetails', 'name'])"
                 i18n-caption
                 caption="Name"
             >
@@ -65,8 +62,7 @@
                 <nui-validation-message
                     for="required"
                     *ngIf="
-                        formGroup.get(['personDetails', 'name'])?.errors
-                            ?.required
+                        form.get(['personDetails', 'name'])?.errors?.required
                     "
                     i18n
                 >
@@ -75,8 +71,8 @@
                 <nui-validation-message
                     for="minlength"
                     *ngIf="
-                        formGroup.get(['personDetails', 'name'])?.errors
-                            ?.minlength
+                        form.get(['personDetails', 'name'])?.errors
+                            ?.['minlength']
                     "
                     i18n
                 >
@@ -85,14 +81,14 @@
             </nui-form-field>
 
             <nui-form-field
-                [control]="formGroup.get(['personDetails', 'symptoms'])"
+                [control]="form.get(['personDetails', 'symptoms'])"
                 i18n-caption
                 caption="Do you have Covid ?"
             >
                 <nui-checkbox
                     formControlName="symptoms"
                     [indeterminate]="
-                        formGroup.get(['personDetails', 'symptoms'])?.pristine
+                        form.get(['personDetails', 'symptoms'])?.pristine
                     "
                     i18n
                 >
@@ -101,7 +97,7 @@
                 <nui-validation-message
                     for="required"
                     *ngIf="
-                        formGroup.get(['personDetails', 'symptoms'])?.errors
+                        form.get(['personDetails', 'symptoms'])?.errors
                             ?.required
                     "
                     i18n
@@ -118,17 +114,17 @@
 
         <!--  content of the optional step -->
         <nui-wizard-step-v2
-            *ngIf="formGroup.get(['personDetails', 'symptoms'])?.value"
+            *ngIf="form.get(['personDetails', 'symptoms'])?.value"
             i18n-label
             label="Disease Details"
-            formGroupName="diseaseDetails"
-            [stepControl]="formGroup.get(['diseaseDetails'])"
+            formName="diseaseDetails"
+            [stepControl]="form.get(['diseaseDetails'])"
         >
             <ng-template nuiWizardStepLabel i18n
                 >Disease Details for your Symptoms</ng-template
             >
             <nui-form-field
-                [control]="formGroup.get(['diseaseDetails', 'date'])"
+                [control]="form.get(['diseaseDetails', 'date'])"
                 i18n-caption
                 caption="When did you noticed your first symptoms ?"
             >
@@ -136,8 +132,7 @@
                 <nui-validation-message
                     for="required"
                     *ngIf="
-                        formGroup.get(['diseaseDetails', 'date'])?.errors
-                            ?.required
+                        form.get(['diseaseDetails', 'date'])?.errors?.required
                     "
                     i18n
                 >
@@ -154,12 +149,12 @@
         <nui-wizard-step-v2
             i18n-label
             label="Contact Details"
-            formGroupName="contactDetails"
-            [stepControl]="formGroup.get(['contactDetails'])"
+            formName="contactDetails"
+            [stepControl]="form.get(['contactDetails'])"
         >
             <!-- content of the current step -->
             <nui-form-field
-                [control]="formGroup.get(['contactDetails', 'email'])"
+                [control]="form.get(['contactDetails', 'email'])"
                 i18n-caption
                 caption="Email"
             >
@@ -167,8 +162,7 @@
                 <nui-validation-message
                     for="required"
                     *ngIf="
-                        formGroup.get(['contactDetails', 'email'])?.errors
-                            ?.required
+                        form.get(['contactDetails', 'email'])?.errors?.required
                     "
                     i18n
                 >
@@ -178,8 +172,8 @@
                 <nui-validation-message
                     for="email"
                     *ngIf="
-                        formGroup.get(['contactDetails', 'email'])?.errors
-                            ?.email
+                        form.get(['contactDetails', 'email'])?.errors
+                            ?.['email']
                     "
                     i18n
                 >
@@ -187,7 +181,7 @@
                 </nui-validation-message>
             </nui-form-field>
             <nui-form-field
-                [control]="formGroup.get(['contactDetails', 'phone'])"
+                [control]="form.get(['contactDetails', 'phone'])"
                 i18n-caption
                 caption="Phone"
             >

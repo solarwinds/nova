@@ -82,4 +82,4 @@ const routes = [
         WidgetTemplateSelectionComponent,
     ],
 })
-export class WidgetCreationModule {}
+export default class WidgetCreationModule {}

@@ -23,8 +23,8 @@ import { IRectangleSeriesAccessors } from "../../accessors/rectangle-accessors";
 import { BarAccessors, IBarDataAccessors } from "./bar-accessors";
 
 export class HorizontalBarAccessors extends BarAccessors {
-    data: IBarDataAccessors;
-    series: IRectangleSeriesAccessors;
+    declare data: IBarDataAccessors;
+    declare series: IRectangleSeriesAccessors;
 
     constructor(
         colorProvider?: IValueProvider<string>,

@@ -23,7 +23,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import {
-    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiDocsModule,
     NuiMessageModule,
@@ -102,17 +101,6 @@ const routes = [
         ButtonWithIconOnlyExampleComponent,
         ButtonWithLongTextExampleComponent,
     ],
-    providers: [
-        {
-            provide: DEMO_PATH_TOKEN,
-            useFactory: () =>
-                (<any>require).context(
-                    `!!raw-loader!./`,
-                    true,
-                    /.*\.(ts|html|less)$/
-                ),
-        },
-    ],
     exports: [RouterModule],
 })
-export class ButtonModule {}
+export default class ButtonModule {}

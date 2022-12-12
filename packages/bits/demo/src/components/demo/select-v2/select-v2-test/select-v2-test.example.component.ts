@@ -29,12 +29,7 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
-import {
-    FormBuilder,
-    FormControl,
-    FormGroup,
-    Validators,
-} from "@angular/forms";
+import { FormBuilder, FormControl, Validators } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -63,11 +58,7 @@ interface IExampleItem {
 export class SelectV2TestExampleComponent
     implements OnInit, AfterViewInit, OnDestroy
 {
-    constructor(
-        @Inject(DialogService) private dialogService: DialogService,
-        private formBuilder: FormBuilder
-    ) {}
-    public selectedItem: IExampleItem;
+    public selectedItem: IExampleItem | null;
     public handleClicksOutside: boolean = false;
     public iconItems = [
         "status_warning",
@@ -80,7 +71,6 @@ export class SelectV2TestExampleComponent
         "status_missing",
         "status_sleep",
     ];
-
     // Datasources
     public items = Array.from({ length: 50 }).map(
         (_, i) => $localize`Item ${i}`
@@ -93,14 +83,12 @@ export class SelectV2TestExampleComponent
             disabled: !!(i % 2),
         })
     );
-
     public itemsWithIconsOnly: IExampleItem[] = this.iconItems.map(
         (icon, i) => ({
             id: `value-${i}`,
             icon: icon,
         })
     );
-
     public groupedItems: ISelectGroup[] = Array.from({ length: 10 }).map(
         (_, i) => ({
             header: $localize`Header line ${i + 1}`,
@@ -110,20 +98,25 @@ export class SelectV2TestExampleComponent
             })),
         })
     );
-
     // Form
-    public selectControl = new FormControl();
-    public fancyForm: FormGroup;
-
+    public selectControl = new FormControl<IExampleItem | null>(null);
+    public fancyForm;
     // Test
     public customStylesOverlayConfig: OverlayConfig = {
         panelClass: [OVERLAY_WITH_POPUP_STYLES_CLASS, "custom-select-styles"],
     };
-
     private destroy$ = new Subject<void>();
     private activeDialog: NuiDialogRef;
-
     @ViewChild("custom_control") private select: SelectV2Component;
+
+    constructor(
+        @Inject(DialogService) private dialogService: DialogService,
+        private formBuilder: FormBuilder
+    ) {
+        this.fancyForm = this.formBuilder.group({
+            select: this.formBuilder.control("", Validators.required),
+        });
+    }
 
     // Dialog
     public open(content: TemplateRef<string>): void {
@@ -152,10 +145,6 @@ export class SelectV2TestExampleComponent
     }
 
     public ngOnInit(): void {
-        this.fancyForm = this.formBuilder.group({
-            select: this.formBuilder.control("", Validators.required),
-        });
-
         this.selectControl.valueChanges
             .pipe(takeUntil(this.destroy$))
             .subscribe((value) => {
