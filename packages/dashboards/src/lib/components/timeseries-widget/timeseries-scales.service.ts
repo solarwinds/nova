@@ -126,6 +126,10 @@ export class TimeseriesScalesService {
                 if (scaleConfig.properties?.axisUnits) {
                     scale.scaleUnits = scaleConfig.properties.axisUnits;
                 }
+
+                if (widgetConfig?.preset === TimeseriesChartPreset.StatusBar || widgetConfig?.preset === TimeseriesChartPreset.StackedArea) {
+                    return;
+                }
                 
                 if (scaleConfig.properties?.axisUnits === "percent" && scale.setFixDomainValues) {
                     scale.setFixDomainValues([0, 25, 50, 75, 100]);

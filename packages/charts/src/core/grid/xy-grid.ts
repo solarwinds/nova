@@ -382,7 +382,7 @@ export class XYGrid extends Grid implements IGrid {
 
             if (scale.fixDomainValues?.length) {
                 tickAxis.tickValues(scale.fixDomainValues);
-                }
+            }
             
             tickAxis.tickFormat(() => "");
             tickAxis.ticks(config.approximateTicks);
