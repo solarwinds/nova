@@ -65,8 +65,15 @@ export class StackedAreaChartComponent extends XYChartComponent {
 
     protected createChartAssist(palette: ChartPalette): ChartAssist {
         const grid = areaGrid();
-        grid.config().axis.left.fit = true;
+        const gridConfig = grid.config();
+        gridConfig.axis.left.fit = true;
         const chart = new Chart(grid);
+
+        if (this.configuration.gridConfig?.hideYAxisTicksLabels) {
+            gridConfig.axis.left.visible = false;
+            gridConfig.axis.right.visible = false;
+        }
+
         return new ChartAssist(chart, stackedArea, palette);
     }
 }

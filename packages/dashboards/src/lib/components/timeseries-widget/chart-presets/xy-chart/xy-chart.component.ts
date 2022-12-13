@@ -53,7 +53,7 @@ import {
     SET_DOMAIN_EVENT,
     ZoomPlugin,
     IXYGridConfig,
-    XYGrid
+    XYGrid,
 } from "@nova-ui/charts";
 
 import { INTERACTION, SET_TIMEFRAME } from "../../../../services/types";
@@ -203,9 +203,6 @@ export abstract class XYChartComponent
             gridConfig.dimension.margin.right = this.configuration.gridConfig.sideMargin;
         }
 
-        if (this.configuration.gridConfig?.hideXAxisBorder) {
-            gridConfig.borders.bottom.visible = false;
-        }
        
         if (this.configuration.enableZoom) {
             chart.addPlugin(new ZoomPlugin());

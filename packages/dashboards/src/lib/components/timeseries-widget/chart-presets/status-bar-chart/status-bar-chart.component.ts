@@ -154,12 +154,12 @@ export class StatusBarChartComponent
             gridConfig.dimension.margin.right = this.configuration.gridConfig.sideMargin;
         }
 
-        if (this.configuration.gridConfig?.hideXAxisBorder) {
-            gridConfig.borders.bottom.visible = false;
-        }
-
         this.scales.y = new BandScale();
         this.scales.y.fixDomain(StatusAccessors.STATUS_DOMAIN);
+
+        if (this.scales.yRight) {
+            this.scales.yRight = this.scales.y;
+        }
     }
 
     protected updateChartData(): void {
