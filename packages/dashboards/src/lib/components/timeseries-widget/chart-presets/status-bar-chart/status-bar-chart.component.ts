@@ -53,6 +53,7 @@ import {
     StatusAccessors,
     statusAccessors,
     TimeIntervalScale,
+    XYGridConfig,
     ZoomPlugin,
 } from "@nova-ui/charts";
 
@@ -139,20 +140,8 @@ export class StatusBarChartComponent
             pointerEvents: false,
         });
 
-        const gridConfig = this.chartAssist.lastGridConfig;
-        if (this.configuration.gridConfig?.xAxisTicksCount) {
-            gridConfig.axis.bottom.approximateTicks = this.configuration.gridConfig.xAxisTicksCount;
-        }
-       
-        if (gridConfig.dimension.marginLocked && this.configuration.gridConfig?.sideMarginLocked) {
-            gridConfig.dimension.marginLocked.left = true;
-            gridConfig.dimension.marginLocked.right = true;
-        }
-
-        if (this.configuration.gridConfig?.sideMargin) {
-            gridConfig.dimension.margin.left = this.configuration.gridConfig.sideMargin;
-            gridConfig.dimension.margin.right = this.configuration.gridConfig.sideMargin;
-        }
+        this.setGridConfigFromConfiguration(this.chartAssist.gridConfig);
+        this.setGridConfigFromConfiguration(this.chartAssist.lastGridConfig);
 
         this.scales.y = new BandScale();
         this.scales.y.fixDomain(StatusAccessors.STATUS_DOMAIN);
@@ -248,6 +237,24 @@ export class StatusBarChartComponent
             }
         });
         return statusDataArray;
+    }
+
+    private setGridConfigFromConfiguration(gridConfig: XYGridConfig): void {
+        const configuration = this.configuration;
+
+        if (configuration.gridConfig?.xAxisTicksCount) {
+            gridConfig.axis.bottom.approximateTicks = configuration.gridConfig.xAxisTicksCount;
+        }
+       
+        if (gridConfig.dimension.marginLocked && configuration.gridConfig?.sideMarginLocked) {
+            gridConfig.dimension.marginLocked.left = true;
+            gridConfig.dimension.marginLocked.right = true;
+        }
+
+        if (configuration.gridConfig?.sideMargin) {
+            gridConfig.dimension.margin.left = configuration.gridConfig.sideMargin;
+            gridConfig.dimension.margin.right = configuration.gridConfig.sideMargin;
+        }
     }
 }
 
