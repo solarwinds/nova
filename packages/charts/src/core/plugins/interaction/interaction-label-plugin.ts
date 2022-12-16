@@ -84,8 +84,11 @@ export class InteractionLabelPlugin extends ChartPlugin {
 
                     const eventYAxisIds = Object.keys(event.data.values.y);
                     const chartLeftYAxis = chartGrid.scales.y.list[0];
-                   
-                    if (chartLeftYAxis.isTimeseriesScale && !eventYAxisIds.includes(chartLeftYAxis.id)) {
+
+                    if (
+                        chartLeftYAxis.isTimeseriesScale &&
+                        !eventYAxisIds.includes(chartLeftYAxis.id)
+                    ) {
                         return;
                     }
                 }
