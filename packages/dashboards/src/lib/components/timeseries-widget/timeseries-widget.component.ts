@@ -39,6 +39,7 @@ import {
 /** @ignore */
 @Component({
     selector: "nui-timeseries-widget",
+    styleUrls: ["./timeseries-widget.component.less"],
     templateUrl: "./timeseries-widget.component.html",
 })
 export class TimeseriesWidgetComponent
