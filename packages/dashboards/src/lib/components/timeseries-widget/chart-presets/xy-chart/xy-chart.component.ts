@@ -102,13 +102,17 @@ export abstract class XYChartComponent
         if (scales.yRight) {
             yScales.push(scales.yRight);
         }
-        return data.map((series: any, i: number) => {          
+        return data.map((series: any, i: number) => {
             // matches scale units to the metric unit for either left y-axis scale or right y-axis scale
-            let yScale = yScales.find(yScale => yScale.scaleUnits === series.metricUnits);
+            let yScale = yScales.find(
+                (yScale) => yScale.scaleUnits === series.metricUnits
+            );
             if (!yScale) {
-                yScale = yScales.find(yScale => yScale.scaleUnits === "generic") ?? scales.y;
+                yScale =
+                    yScales.find((yScale) => yScale.scaleUnits === "generic") ??
+                    scales.y;
             }
-           
+
             return {
                 ...series,
                 scales: {
@@ -117,7 +121,7 @@ export abstract class XYChartComponent
                 },
                 renderer: this.renderer,
                 accessors: this.accessors,
-            }
+            };
         });
     }
 
@@ -157,18 +161,22 @@ export abstract class XYChartComponent
 
         grid.leftScaleId = this.scales.y.id;
 
-        if (this.scales.yRight && this.widgetData.series.length === 1 || this.scales.y.scaleUnits === this.scales.yRight.scaleUnits) {
+        if (
+            (this.scales.yRight && this.widgetData.series.length === 1) ||
+            this.scales.y.scaleUnits === this.scales.yRight.scaleUnits
+        ) {
             // if there is only one series to display, or if the left y-axis and right y-axis have the same units, both y-axises are same
             this.scales.yRight = this.scales.y;
             grid.rightScaleId = this.scales.y.id;
-        } else  {
+        } else {
             grid.rightScaleId = this.scales.yRight.id;
         }
 
         const gridConfig = grid.config();
         // hides botom axis if it's not last chart in the group
         gridConfig.axis.bottom.visible = !this.configuration?.hasAdjacentChart;
-        gridConfig.borders.bottom.visible = !this.configuration?.hasAdjacentChart;
+        gridConfig.borders.bottom.visible =
+            !this.configuration?.hasAdjacentChart;
 
         this.chartAssist.update(
             this.mapSeriesSet(this.widgetData.series, this.scales)
@@ -193,22 +201,27 @@ export abstract class XYChartComponent
 
         const chart = this.chartAssist.chart;
         const gridConfig = chart.getGrid().config() as IXYGridConfig;
-        
+
         if (this.configuration.gridConfig?.xAxisTicksCount) {
-            gridConfig.axis.bottom.approximateTicks = this.configuration.gridConfig.xAxisTicksCount;
+            gridConfig.axis.bottom.approximateTicks =
+                this.configuration.gridConfig.xAxisTicksCount;
         }
-       
-        if (gridConfig.dimension.marginLocked && this.configuration.gridConfig?.sideMarginLocked) {
+
+        if (
+            gridConfig.dimension.marginLocked &&
+            this.configuration.gridConfig?.sideMarginLocked
+        ) {
             gridConfig.dimension.marginLocked.left = true;
             gridConfig.dimension.marginLocked.right = true;
         }
 
         if (this.configuration.gridConfig?.sideMargin) {
-            gridConfig.dimension.margin.left = this.configuration.gridConfig.sideMargin;
-            gridConfig.dimension.margin.right = this.configuration.gridConfig.sideMargin;
+            gridConfig.dimension.margin.left =
+                this.configuration.gridConfig.sideMargin;
+            gridConfig.dimension.margin.right =
+                this.configuration.gridConfig.sideMargin;
         }
 
-       
         if (this.configuration.enableZoom) {
             chart.addPlugin(new ZoomPlugin());
         }

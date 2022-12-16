@@ -30,11 +30,11 @@ import {
 } from "@nova-ui/charts";
 
 import { DashboardUnitConversionPipe } from "../../common/pipes/public-api";
-import { 
+import {
     ITimeseriesScaleConfig,
     ITimeseriesWidgetConfig,
     TimeseriesScaleType,
-    TimeseriesChartPreset 
+    TimeseriesChartPreset,
 } from "./types";
 
 import { timeSeriesDatetimeFormatter } from "../../functions/timeseries-datetime-formatter";
@@ -60,7 +60,7 @@ export class TimeseriesScalesService {
     public getScale(
         scaleConfig: ITimeseriesScaleConfig,
         units: UnitOption,
-        widgetConfig?: ITimeseriesWidgetConfig,
+        widgetConfig?: ITimeseriesWidgetConfig
     ): IScale<any> {
         let scale: IScale<any>;
 
@@ -74,7 +74,10 @@ export class TimeseriesScalesService {
             case TimeseriesScaleType.Linear: {
                 scale = new LinearScale();
                 scale.isTimeseriesScale = true;
-                scale.formatters.tick = (value: string | number | undefined, isLabelFormatter?: boolean) =>
+                scale.formatters.tick = (
+                    value: string | number | undefined,
+                    isLabelFormatter?: boolean
+                ) =>
                     this.unitConversionPipe.transform(
                         value,
                         scaleConfig.properties?.axisUnits ?? units,
@@ -102,14 +105,16 @@ export class TimeseriesScalesService {
     public updateConfiguration(
         scale: IScale<any>,
         scaleConfig: ITimeseriesScaleConfig,
-        widgetConfig?: ITimeseriesWidgetConfig,
+        widgetConfig?: ITimeseriesWidgetConfig
     ): void {
-
         switch (scaleConfig.type) {
             case TimeseriesScaleType.Time: {
                 const interval = scaleConfig.properties?.timeInterval;
                 if (interval?.startDatetime && interval?.endDatetime) {
-                    scale.fixDomain([interval.startDatetime, interval.endDatetime]);
+                    scale.fixDomain([
+                        interval.startDatetime,
+                        interval.endDatetime,
+                    ]);
                 }
                 break;
             }
@@ -132,17 +137,33 @@ export class TimeseriesScalesService {
                     scale.scaleUnits = scaleConfig.properties.axisUnits;
                 }
 
-                if (widgetConfig?.preset === TimeseriesChartPreset.StatusBar || widgetConfig?.preset === TimeseriesChartPreset.StackedArea) {
+                if (
+                    widgetConfig?.preset === TimeseriesChartPreset.StatusBar ||
+                    widgetConfig?.preset === TimeseriesChartPreset.StackedArea
+                ) {
                     return;
                 }
-                
-                if (scaleConfig.properties?.axisUnits === "percent" && scale.setFixDomainValues) {
-                    scale.setFixDomainValues([0, 25, 50, 75, 100]);
 
+                if (
+                    scaleConfig.properties?.axisUnits === "percent" &&
+                    scale.setFixDomainValues
+                ) {
+                    scale.setFixDomainValues([0, 25, 50, 75, 100]);
                 }
-                if (scaleConfig.properties?.axisUnits !== "percent" && scaleConfig.properties?.domain && scale.setFixDomainValues) {
-                    const domainAdjusted = widgetConfig?.preset ===  TimeseriesChartPreset.StackedBar ? this.getStackedBarScaleDomain(scaleConfig.properties.domain) 
-                    : this.getLineScaleDomain(scaleConfig.properties.domain);
+                if (
+                    scaleConfig.properties?.axisUnits !== "percent" &&
+                    scaleConfig.properties?.domain &&
+                    scale.setFixDomainValues
+                ) {
+                    const domainAdjusted =
+                        widgetConfig?.preset ===
+                        TimeseriesChartPreset.StackedBar
+                            ? this.getStackedBarScaleDomain(
+                                  scaleConfig.properties.domain
+                              )
+                            : this.getLineScaleDomain(
+                                  scaleConfig.properties.domain
+                              );
                     scale.setFixDomainValues(domainAdjusted);
                 }
                 break;
@@ -150,15 +171,33 @@ export class TimeseriesScalesService {
         }
     }
 
-    private getStackedBarScaleDomain({min, max}: {min: number, max: number}): number[] {
+    private getStackedBarScaleDomain({
+        min,
+        max,
+    }: {
+        min: number;
+        max: number;
+    }): number[] {
         if (max === 0 || max % 4 > 0) {
-            max = (max + 4) - (max % 4);
+            max = max + 4 - (max % 4);
         }
         const increment = (max - min) / 4;
-        return [min, min + increment, min + 2 * increment, max - increment, max];
+        return [
+            min,
+            min + increment,
+            min + 2 * increment,
+            max - increment,
+            max,
+        ];
     }
 
-    private getLineScaleDomain({min, max}: {min: number, max: number}): number[] {
+    private getLineScaleDomain({
+        min,
+        max,
+    }: {
+        min: number;
+        max: number;
+    }): number[] {
         if (min > max) {
             const tmp = min;
             min = max;
@@ -169,10 +208,10 @@ export class TimeseriesScalesService {
 
         // for small domain ranges increase domain so that spikes are not exaggerated
         if (extentRange < 0.5) {
-            min = min - (Math.abs(min) * 0.5);
-            max = max + (Math.abs(max) * 0.5);
+            min = min - Math.abs(min) * 0.5;
+            max = max + Math.abs(max) * 0.5;
         }
-    
+
         // handles zero case
         if (min === 0 && max === 0) {
             min = -1;
@@ -185,6 +224,6 @@ export class TimeseriesScalesService {
         }
 
         const point = (max - min) / 4;
-        return [min, min + point, min + 2 * point, max - point, max];;
+        return [min, min + point, min + 2 * point, max - point, max];
     }
 }

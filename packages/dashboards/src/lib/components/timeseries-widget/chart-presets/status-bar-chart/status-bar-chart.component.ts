@@ -153,12 +153,19 @@ export class StatusBarChartComponent
     }
 
     protected updateChartData(): void {
-        const { gridConfig, lastGridConfig} = this.chartAssist;
+        const { gridConfig, lastGridConfig } = this.chartAssist;
         // hides botom axis if it's not last chart in the group
         gridConfig.axis.bottom.visible = !this.configuration?.hasAdjacentChart;
-        lastGridConfig.axis.bottom.visible = !this.configuration?.hasAdjacentChart;
-        gridConfig.borders.bottom.className = this.configuration?.hasAdjacentChart ? "nui-chart-border" : "nui-chart-border nui-chart-border--thick";
-        lastGridConfig.borders.bottom.className = this.configuration?.hasAdjacentChart ? "nui-chart-border" : "nui-chart-border nui-chart-border--thick";
+        lastGridConfig.axis.bottom.visible =
+            !this.configuration?.hasAdjacentChart;
+        gridConfig.borders.bottom.className = this.configuration
+            ?.hasAdjacentChart
+            ? "nui-chart-border"
+            : "nui-chart-border nui-chart-border--thick";
+        lastGridConfig.borders.bottom.className = this.configuration
+            ?.hasAdjacentChart
+            ? "nui-chart-border"
+            : "nui-chart-border nui-chart-border--thick";
 
         this.chartUpdate$.next();
 
@@ -251,17 +258,23 @@ export class StatusBarChartComponent
         const configuration = this.configuration;
 
         if (configuration.gridConfig?.xAxisTicksCount) {
-            gridConfig.axis.bottom.approximateTicks = configuration.gridConfig.xAxisTicksCount;
+            gridConfig.axis.bottom.approximateTicks =
+                configuration.gridConfig.xAxisTicksCount;
         }
-       
-        if (gridConfig.dimension.marginLocked && configuration.gridConfig?.sideMarginLocked) {
+
+        if (
+            gridConfig.dimension.marginLocked &&
+            configuration.gridConfig?.sideMarginLocked
+        ) {
             gridConfig.dimension.marginLocked.left = true;
             gridConfig.dimension.marginLocked.right = true;
         }
 
         if (configuration.gridConfig?.sideMargin) {
-            gridConfig.dimension.margin.left = configuration.gridConfig.sideMargin;
-            gridConfig.dimension.margin.right = configuration.gridConfig.sideMargin;
+            gridConfig.dimension.margin.left =
+                configuration.gridConfig.sideMargin;
+            gridConfig.dimension.margin.right =
+                configuration.gridConfig.sideMargin;
         }
     }
 }

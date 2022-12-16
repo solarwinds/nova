@@ -1,7 +1,7 @@
-<div 
-    *ngIf="chartAssist" 
-    class="status-bar-chart" 
-    [class.layout-fixed] ="configuration.gridConfig?.fixedLayout"
+<div
+    *ngIf="chartAssist"
+    class="status-bar-chart"
+    [class.layout-fixed]="configuration.gridConfig?.fixedLayout"
 >
     <div
         class="d-flex"
@@ -13,8 +13,8 @@
             [nuiChartCollectionId]="collectionId"
         ></nui-chart>
         <div
-            class="d-flex flex-column pl-2" 
-            [class.layout-fixed-legend] ="configuration.gridConfig?.fixedLayout"
+            class="d-flex flex-column pl-2"
+            [class.layout-fixed-legend]="configuration.gridConfig?.fixedLayout"
             *ngIf="
                 spark.chartSeriesSet?.length > 0 && spark.chartSeriesSet[0];
                 let series
