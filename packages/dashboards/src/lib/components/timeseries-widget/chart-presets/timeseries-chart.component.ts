@@ -97,34 +97,34 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
                 const scaleKeys = Object.keys(
                     configurationCurrent?.scales
                 ) as Array<keyof ITimeseriesScalesConfig>;
-                
+
                 for (const scaleKey of scaleKeys) {
                     const scaleConfigCurrent =
                         configurationCurrent?.scales?.[scaleKey];
                     const scaleConfigPrevious =
                         configurationPrevious?.scales?.[scaleKey];
 
-                    if (!scaleConfigCurrent) { 
+                    if (!scaleConfigCurrent) {
                         continue;
                     }
 
                     if (
                         scaleConfigCurrent?.type !==
-                        scaleConfigPrevious?.type ||
-                        scaleConfigCurrent?.properties?.axisUnits !== scaleConfigPrevious?.properties?.axisUnits
-                        
+                            scaleConfigPrevious?.type ||
+                        scaleConfigCurrent?.properties?.axisUnits !==
+                            scaleConfigPrevious?.properties?.axisUnits
                     ) {
                         this.scales[scaleKey] =
-                        this.timeseriesScalesService.getScale(
-                            scaleConfigCurrent,
-                            configurationCurrent.units,
-                            this.configuration
-                        );
+                            this.timeseriesScalesService.getScale(
+                                scaleConfigCurrent,
+                                configurationCurrent.units,
+                                this.configuration
+                            );
 
                         shouldUpdateChart = true;
                     } else if (
                         scaleConfigCurrent?.properties !==
-                        scaleConfigPrevious?.properties 
+                        scaleConfigPrevious?.properties
                     ) {
                         this.timeseriesScalesService.updateConfiguration(
                             this.scales[scaleKey],
