@@ -159,17 +159,19 @@ export abstract class XYChartComponent
     protected updateChartData(): void {
         const grid = this.chartAssist.chart.getGrid() as XYGrid;
 
-        grid.leftScaleId = this.scales.y.id;
-
         if (
             (this.scales.yRight && this.widgetData.series.length === 1) ||
-            this.scales.y.scaleUnits === this.scales.yRight.scaleUnits
+            (this.scales.y &&
+                this.scales.yRight &&
+                this.scales.y.scaleUnits === this.scales.yRight.scaleUnits)
         ) {
             // if there is only one series to display, or if the left y-axis and right y-axis have the same units, both y-axises are same
             this.scales.yRight = this.scales.y;
             grid.rightScaleId = this.scales.y.id;
         } else {
-            grid.rightScaleId = this.scales.yRight.id;
+            if (this.scales.yRight?.id) {
+                grid.rightScaleId = this.scales.yRight.id;
+            }
         }
 
         const gridConfig = grid.config();
