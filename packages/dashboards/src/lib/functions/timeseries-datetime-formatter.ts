@@ -18,7 +18,29 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./proportional-aggregators/public-api";
-export * from "./merge-changes";
-export * from "./map-data-to-formatter-properties";
-export * from "./timeseries-datetime-formatter";
+import moment from "moment/moment";
+
+const intlFormatOptions: Intl.DateTimeFormatOptions = {
+    year: "numeric", 
+    month: "2-digit", 
+    day: "2-digit", 
+    hour: "2-digit", 
+    minute: "2-digit"
+}
+
+const intlFormat = (date: Date, options: Intl.DateTimeFormatOptions) =>
+    new Intl.DateTimeFormat(moment.locale(), options).format(date);
+
+
+/**
+ * Formatter for timeserie label dates
+ */
+export const timeSeriesDatetimeFormatter = (date: Date): string => {
+    const dateFormatted = intlFormat(date, intlFormatOptions);
+    
+    const dateSplitted = dateFormatted.split(",");
+    if (dateSplitted.length !== 2) {
+        throw new Error("Invalid timeseries date time format.");
+    }
+    return `${dateSplitted[0]} ${dateSplitted[1]}`
+}

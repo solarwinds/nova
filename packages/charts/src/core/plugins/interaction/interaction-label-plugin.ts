@@ -79,6 +79,17 @@ export class InteractionLabelPlugin extends ChartPlugin {
             .getStream(INTERACTION_VALUES_EVENT)
             .pipe(takeUntil(this.destroy$))
             .subscribe((event: IChartEvent) => {
+                if (event.data.values?.y) {
+                    const chartGrid = this.chart.getGrid();
+
+                    const eventYAxisIds = Object.keys(event.data.values.y);
+                    const chartLeftYAxis = chartGrid.scales.y.list[0];
+                   
+                    if (chartLeftYAxis.isTimeseriesScale && !eventYAxisIds.includes(chartLeftYAxis.id)) {
+                        return;
+                    }
+                }
+
                 this.lastInteractionValuesPayload = event.data;
                 if (this.isChartInView) {
                     this.handleLabelUpdate();

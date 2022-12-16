@@ -145,6 +145,7 @@ export class StatusBarChartComponent
 
         this.scales.y = new BandScale();
         this.scales.y.fixDomain(StatusAccessors.STATUS_DOMAIN);
+        this.scales.y.isTmeseriesScale = true;
 
         if (this.scales.yRight) {
             this.scales.yRight = this.scales.y;
