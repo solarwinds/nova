@@ -145,7 +145,7 @@ export class StatusBarChartComponent
 
         this.scales.y = new BandScale();
         this.scales.y.fixDomain(StatusAccessors.STATUS_DOMAIN);
-        this.scales.y.isTmeseriesScale = true;
+        this.scales.y.isTimeseriesScale = true;
 
         if (this.scales.yRight) {
             this.scales.yRight = this.scales.y;
@@ -153,6 +153,13 @@ export class StatusBarChartComponent
     }
 
     protected updateChartData(): void {
+        const { gridConfig, lastGridConfig} = this.chartAssist;
+        // hides botom axis if it's not last chart in the group
+        gridConfig.axis.bottom.visible = !this.configuration?.hasAdjacentChart;
+        lastGridConfig.axis.bottom.visible = !this.configuration?.hasAdjacentChart;
+        gridConfig.borders.bottom.className = this.configuration?.hasAdjacentChart ? "nui-chart-border" : "nui-chart-border nui-chart-border--thick";
+        lastGridConfig.borders.bottom.className = this.configuration?.hasAdjacentChart ? "nui-chart-border" : "nui-chart-border nui-chart-border--thick";
+
         this.chartUpdate$.next();
 
         // Assemble the series set

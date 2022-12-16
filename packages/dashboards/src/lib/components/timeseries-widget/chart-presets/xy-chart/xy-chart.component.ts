@@ -165,6 +165,11 @@ export abstract class XYChartComponent
             grid.rightScaleId = this.scales.yRight.id;
         }
 
+        const gridConfig = grid.config();
+        // hides botom axis if it's not last chart in the group
+        gridConfig.axis.bottom.visible = !this.configuration?.hasAdjacentChart;
+        gridConfig.borders.bottom.visible = !this.configuration?.hasAdjacentChart;
+
         this.chartAssist.update(
             this.mapSeriesSet(this.widgetData.series, this.scales)
         );

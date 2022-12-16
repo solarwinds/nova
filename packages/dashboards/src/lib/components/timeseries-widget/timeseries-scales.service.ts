@@ -67,13 +67,13 @@ export class TimeseriesScalesService {
         switch (scaleConfig.type) {
             case TimeseriesScaleType.Time: {
                 scale = new TimeScale();
-                scale.isTmeseriesScale = true;
+                scale.isTimeseriesScale = true;
                 scale.formatters.title = timeSeriesDatetimeFormatter;
                 break;
             }
             case TimeseriesScaleType.Linear: {
                 scale = new LinearScale();
-                scale.isTmeseriesScale = true;
+                scale.isTimeseriesScale = true;
                 scale.formatters.tick = (value: string | number | undefined, isLabelFormatter?: boolean) =>
                     this.unitConversionPipe.transform(
                         value,

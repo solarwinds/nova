@@ -385,6 +385,7 @@ export abstract class Grid implements IGrid {
                     this.config().dimension.width() +
                     Grid.TICK_DIMENSION_CORRECTION, // to get nice alignment with ticks
                 y2: this.config().dimension.height() - borderMidpoint,
+                class: this._config.borders.bottom.className || Grid.DEFAULT_BORDER_CLASS_NAME
             })
             .classed("hidden", !this._config.borders.bottom?.visible);
     }

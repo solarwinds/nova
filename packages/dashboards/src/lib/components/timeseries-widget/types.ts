@@ -39,7 +39,8 @@ export interface ITimeseriesWidgetConfig {
     rightYAxisUnits?: UnitOption;
     gridConfig?: {
         [key: string]: any;
-    }
+    };
+    hasAdjacentChart?: boolean;
 }
 
 export interface ITimeseriesWidgetSeries {
