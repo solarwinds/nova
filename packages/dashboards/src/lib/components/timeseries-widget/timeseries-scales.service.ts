@@ -37,6 +37,8 @@ import {
     TimeseriesChartPreset 
 } from "./types";
 
+import { timeSeriesDatetimeFormatter } from "../../functions/timeseries-datetime-formatter";
+
 /**
  * This service handles scale creation and configuration for the timeseries widget
  */
@@ -65,10 +67,13 @@ export class TimeseriesScalesService {
         switch (scaleConfig.type) {
             case TimeseriesScaleType.Time: {
                 scale = new TimeScale();
+                scale.isTmeseriesScale = true;
+                scale.formatters.title = timeSeriesDatetimeFormatter;
                 break;
             }
             case TimeseriesScaleType.Linear: {
                 scale = new LinearScale();
+                scale.isTmeseriesScale = true;
                 scale.formatters.tick = (value: string | number | undefined, isLabelFormatter?: boolean) =>
                     this.unitConversionPipe.transform(
                         value,

@@ -31,6 +31,7 @@ export abstract class Scale<T> implements IScale<T> {
     public formatters: IFormatters<T> = {};
     public isDomainFixed: boolean;
     public scaleUnits?: UnitOption;
+    public isTimeseriesScale = false;
     private isReversed = false;
 
     protected _fixDomainValues: T[] = [];
