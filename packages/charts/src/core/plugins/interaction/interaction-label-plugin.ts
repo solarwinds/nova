@@ -84,7 +84,7 @@ export class InteractionLabelPlugin extends ChartPlugin {
 
                     const eventYAxisIds = Object.keys(event.data.values.y);
                     const chartLeftYAxis = chartGrid.scales.y.list[0];
-
+                    // shows label only for a chart that is currently being hovered
                     if (
                         chartLeftYAxis.isTimeseriesScale &&
                         !eventYAxisIds.includes(chartLeftYAxis.id)
