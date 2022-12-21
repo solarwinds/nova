@@ -158,6 +158,9 @@ export abstract class XYChartComponent
     /** Updates chart data. */
     protected updateChartData(): void {
         const grid = this.chartAssist.chart.getGrid() as XYGrid;
+        if (this.scales.y?.id) {
+            grid.leftScaleId = this.scales.y.id;
+        }
 
         if (
             (this.scales.yRight && this.widgetData.series.length === 1) ||
