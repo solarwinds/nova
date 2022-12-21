@@ -181,7 +181,7 @@ export class TimeseriesScalesService {
         if (max === 0 || max % 4 > 0) {
             max = max + 4 - (max % 4);
         }
-        const increment = (max - min) / 4;
+        const increment = Math.floor((max - min) / 4);
         return [
             min,
             min + increment,
