@@ -376,16 +376,24 @@ export class XYGrid extends Grid implements IGrid {
             labelAxis.tickFormat(scale.formatters["tick"]);
             axis.labelGroup.call(labelAxis);
 
-            const tickAxis = axisGenerator(scale.d3Scale).tickSize(
-                config.tickSize
-            );
+            let tickAxis;
+            if (scale instanceof BandScale) {
+                tickAxis = axisGenerator(scale.copyToLinear().d3Scale)
+                    .tickSize(config.tickSize)
+                    .tickValues(scale.bandTicks())
+                    .tickFormat(() => "");
+            } else {
+                tickAxis = axisGenerator(scale.d3Scale).tickSize(
+                    config.tickSize
+                );
 
-            if (scale.fixDomainValues?.length) {
-                tickAxis.tickValues(scale.fixDomainValues);
+                if (scale.fixDomainValues?.length) {
+                    tickAxis.tickValues(scale.fixDomainValues);
+                }
+
+                tickAxis.tickFormat(() => "");
+                tickAxis.ticks(config.approximateTicks);
             }
-
-            tickAxis.tickFormat(() => "");
-            tickAxis.ticks(config.approximateTicks);
             axis.tickGroup.call(tickAxis);
 
             this.adjustAxisTicks(axis.labelGroup, scale);
