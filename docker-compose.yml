@@ -41,7 +41,6 @@ services:
             - TEAMCITY_PROJECT_NAME
             - MAJOR_PROJECT_NAME
             - MACHINE_URL
-            - APPLITOOLS_BATCH_ID
             - E2E_BASE_URL=http://web/
             - SELENIUM_ADDRESS=http://selenium:4444/wd/hub
             - CI='true'
