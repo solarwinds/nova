@@ -26,6 +26,7 @@ export interface PercyLensSnapshotOptions {
 }
 
 export enum LensType {
+    /** @deprecated Eyes is not supported anymore */
     Eyes = "eyes",
     Percy = "percy",
 }
@@ -45,7 +46,7 @@ export const PERCY_DEFAULT_CONFIG: PercyLensSnapshotOptions = {
     widths: [1920],
     minHeight: 1080,
     percyCSS: `
-        input, textarea { 
+        input, textarea {
             caret-color: transparent;
         }
         * {

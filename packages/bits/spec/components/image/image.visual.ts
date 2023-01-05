@@ -21,28 +21,28 @@
 import { browser } from "protractor";
 
 import { Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
+
+const name = "Image";
 
 xdescribe("Visual tests: Image", () => {
     // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
+    let camera: Camera;
 
     beforeEach(async () => {
-        eyes = await Helpers.prepareEyes();
         await Helpers.prepareBrowser("image/image-visual-test");
+        camera = Helpers.prepareCamera(name);
     });
 
-    afterAll(async () => {
-        await eyes.abortIfNotClosed();
+    afterEach(async () => {
+        await camera.turn.off();
     });
 
     it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Image");
-        await eyes.checkWindow("Default");
+        await camera.say.cheese("Default");
 
         // Uncomment the code below after NUI-5674 is fixed
         // await Helpers.switchDarkTheme("on");
         // await eyes.checkWindow("Dark theme");
-
-        await eyes.close();
     }, 200000);
 });

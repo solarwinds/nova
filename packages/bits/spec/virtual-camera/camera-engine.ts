@@ -23,7 +23,6 @@ import * as fs from "fs";
 import { ProtractorBrowser } from "protractor";
 
 import { Helpers } from "../helpers";
-import { EyesLens } from "./eyes-lens";
 import { PercyLens } from "./percy-lens";
 import { ICameraSettings, ILens, LENSES, LensType } from "./types";
 
@@ -59,9 +58,8 @@ export class CameraEngine {
                     );
                     break;
                 case LensType.Eyes:
-                    this.currentLensInstance = new EyesLens(
-                        this.browser,
-                        this.settings
+                    throw new Error(
+                        `Eyes lens is not supported any more. Please use Percy lens instead.`
                     );
                     break;
             }

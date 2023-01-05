@@ -38,7 +38,6 @@ services:
             - BUILD_BRANCH
             - CREATE_RELEASE_BRANCH
             - SSH_AUTH_SOCK=/tmp/ssh_auth_sock
-            - EYES_API_KEY
             - TEAMCITY_PROJECT_NAME
             - MAJOR_PROJECT_NAME
             - MACHINE_URL
