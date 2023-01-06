@@ -26,6 +26,7 @@ import { browser, by, ProtractorBrowser } from "protractor";
 import { WebElementPromise } from "selenium-webdriver";
 
 import { Atom, IAtomClass } from "./atom";
+import { Camera } from "./virtual-camera/Camera";
 
 export enum Animations {
     ALL,
@@ -39,8 +40,6 @@ export enum Animations {
 
 // Node typings have conflicts with webpack-env
 declare let process: any;
-
-let eyes: any;
 
 export function getCurrentBranchName(
     potentialGitRoot: string = process.cwd()
@@ -94,6 +93,10 @@ export class Helpers {
         browser.clearMockModules();
     }
 
+    static prepareCamera(testName: string, suiteName?: string): Camera {
+        return new Camera().loadFilm(browser, testName, suiteName);
+    }
+
     public static getElementByXpath(elementXpath: string): WebElementPromise {
         return browser.driver.findElement(by.xpath(elementXpath));
     }
@@ -131,67 +134,6 @@ export class Helpers {
             x,
             y
         );
-    }
-
-    // for non-applitools run just rename this method to `prepareEyes`
-    static prepareFakeEyes(): unknown {
-        const { Eyes } = require("@applitools/eyes-protractor");
-
-        if (!eyes) {
-            eyes = new Eyes();
-            eyes.open = async () => true;
-            eyes.close = async () => true;
-            eyes.abortIfNotClosed = async () => true;
-            eyes.setStitchMode = () => true;
-            eyes.checkWindow = async (s: string) => {
-                console.log(s);
-                await browser.sleep(3000);
-            };
-            eyes.checkRegion = console.log;
-        }
-
-        return eyes;
-    }
-
-    static async prepareEyes(): Promise<unknown> {
-        const { Eyes } = require("@applitools/eyes-protractor");
-
-        if (!eyes) {
-            eyes = new Eyes();
-            eyes.setApiKey(<string>process.env.EYES_API_KEY);
-
-            let branchName =
-                <string>process.env.CIRCLE_BRANCH ||
-                getCurrentBranchName() ||
-                "Unknown";
-            const userName: string = <string>process.env.CIRCLE_USERNAME
-                ? ` - [${process.env.CIRCLE_USERNAME}]`
-                : "";
-            const batchName =
-                (<string>process.env.CIRCLE_PROJECT_REPONAME)?.toUpperCase() +
-                " - " +
-                <string>process.env.CIRCLE_JOB +
-                " - " +
-                branchName +
-                userName;
-            const batchID =
-                <string>process.env.CIRCLE_JOB +
-                "_" +
-                <string>process.env.CIRCLE_SHA1;
-
-            branchName = branchName.substring(branchName.lastIndexOf("/") + 1);
-            batchID
-                ? eyes.setBatch(batchName, batchID)
-                : eyes.setBatch(batchName);
-
-            eyes.setBranchName(branchName);
-            if (branchName !== "main") {
-                eyes.setParentBranchName("main");
-            }
-            eyes.setForceFullPageScreenshot(true);
-            eyes.setIgnoreCaret(true);
-        }
-        return eyes;
     }
 
     static async switchDarkTheme(mode: "on" | "off"): Promise<void> {
