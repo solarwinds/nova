@@ -23,7 +23,7 @@ import {
     INTERACTION_VALUES_EVENT,
 } from "../../../constants";
 import { Chart } from "../../chart";
-import { TimeScale } from "../../common/scales/time-scale";
+import { TimeScale, LinearScale } from "../../common/scales/public-api";
 import { InteractionType } from "../../common/types";
 import { XYGrid } from "../../grid/xy-grid";
 import { IInteractionValuesPayload } from "../types";
@@ -53,6 +53,21 @@ describe(`${InteractionLabelPlugin.name} >`, () => {
     const getIsChartInView = () => (<any>plugin).isChartInView;
 
     describe("INTERACTION_VALUES_EVENT", () => {
+        let linearScale: LinearScale;
+
+        beforeEach(() => {
+            linearScale = new LinearScale("yAxisId1");
+            linearScale.isTimeseriesScale = true;
+            grid.scales = {
+                y: {
+                    index: {
+                        yAxisId1: linearScale,
+                    },
+                    list: [linearScale],
+                },
+            };
+        });
+
         it("should not trigger a label update if the chart is not in the viewport", () => {
             const valuesPayload: IInteractionValuesPayload = {
                 interactionType: InteractionType.MouseMove,
@@ -68,6 +83,40 @@ describe(`${InteractionLabelPlugin.name} >`, () => {
                 .next({ data: valuesPayload });
 
             expect(spy).not.toHaveBeenCalled();
+        });
+
+        it("should not trigger a label update if it's timeseries widget and different chart is being hovered", () => {
+            const valuesPayload: IInteractionValuesPayload = {
+                interactionType: InteractionType.MouseMove,
+                values: { y: { yAxisId2: 5 } },
+            };
+
+            const spy = spyOn(<any>plugin, "handleLabelUpdate");
+            setIsChartInView(true);
+
+            chart
+                .getEventBus()
+                .getStream(INTERACTION_VALUES_EVENT)
+                .next({ data: valuesPayload });
+
+            expect(spy).not.toHaveBeenCalled();
+        });
+
+        it("should trigger a label update if it's timeseries widget and the chart is being hovered", () => {
+            const valuesPayload: IInteractionValuesPayload = {
+                interactionType: InteractionType.MouseMove,
+                values: { y: { yAxisId1: 10 } },
+            };
+
+            const spy = spyOn(<any>plugin, "handleLabelUpdate");
+            setIsChartInView(true);
+
+            chart
+                .getEventBus()
+                .getStream(INTERACTION_VALUES_EVENT)
+                .next({ data: valuesPayload });
+
+            expect(spy).toHaveBeenCalled();
         });
 
         it("should trigger a label update if the chart is in the viewport", () => {
