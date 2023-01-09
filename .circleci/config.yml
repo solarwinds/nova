@@ -662,7 +662,6 @@ jobs:
                   name: Trigger release branch
                   command: yarn run trigger-pipeline-build-ci ${RELEASE_BRANCH}
 workflows:
-    version: 2.1
     nova:
         jobs:
             - bits-build
