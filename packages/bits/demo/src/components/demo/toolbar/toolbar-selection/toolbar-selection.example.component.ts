@@ -44,6 +44,8 @@ export class ToolbarSelectionExampleComponent {
     public value: string;
     private timerHandler: number;
 
+    public noEmptyMessage = false;
+
     public constructor(@Inject(LoggerService) private logger: LoggerService) {}
 
     public onCancel(value: string): void {
@@ -80,7 +82,11 @@ export class ToolbarSelectionExampleComponent {
         }, 2000);
     }
 
-    public toggleSelectedChange(event: any): void {
+    public toggleSelectedChange(): void {
         this.selectionEnabled = !this.selectionEnabled;
+    }
+
+    public toggleEmptyMessage(): void {
+        this.noEmptyMessage = !this.noEmptyMessage;
     }
 }

@@ -285,11 +285,17 @@
                 id="nui-toolbar-test--empty--show-extra-message"
                 >show extra message</nui-switch
             >
+            <nui-switch
+                #noEmptyMessage
+                id="nui-toolbar-test--empty--no-empty-message"
+                >no empty message</nui-switch
+            >
         </p>
         <nui-toolbar
             id="nui-toolbar-test-empty"
             [selectionEnabled]="showSelection.value"
             [selectedItems]="select"
+            [noEmptyMessage]="noEmptyMessage.value"
         >
             <ng-container *ngIf="showItems.value">
                 <nui-toolbar-group>

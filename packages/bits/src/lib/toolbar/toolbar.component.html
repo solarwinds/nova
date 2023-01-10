@@ -69,7 +69,9 @@
             </ng-template>
         </nui-menu>
         <ng-container>
-            <nui-toolbar-message *ngIf="allItemsHidden && !showMenu">
+            <nui-toolbar-message
+                *ngIf="allItemsHidden && !showMenu && !noEmptyMessage"
+            >
                 <ng-container *ngIf="selectionEnabled" i18n
                     >No actions available for this selection</ng-container
                 >
