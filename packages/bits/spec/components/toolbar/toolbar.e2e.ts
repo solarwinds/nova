@@ -195,6 +195,7 @@ describe("USERCONTROL toolbar: ", () => {
         let switchSelection: SwitchAtom;
         let switchItems: SwitchAtom;
         let switchExtraMessage: SwitchAtom;
+        let switchNoEmptyMessage: SwitchAtom;
 
         beforeAll(() => {
             toolbarEmpty = Atom.find(ToolbarAtom, "nui-toolbar-test-empty");
@@ -209,6 +210,10 @@ describe("USERCONTROL toolbar: ", () => {
             switchExtraMessage = Atom.find(
                 SwitchAtom,
                 "nui-toolbar-test--empty--show-extra-message"
+            );
+            switchNoEmptyMessage = Atom.find(
+                SwitchAtom,
+                "nui-toolbar-test--empty--no-empty-message"
             );
         });
 
@@ -261,9 +266,29 @@ describe("USERCONTROL toolbar: ", () => {
                     extraMessage: true,
                     expected: [defaultMessageWithSelection, extraMessage],
                 },
+                {
+                    selection: false,
+                    items: true,
+                    extraMessage: false,
+                    noEmptyMessage: true,
+                    expected: [],
+                },
+                {
+                    selection: true,
+                    items: true,
+                    extraMessage: false,
+                    noEmptyMessage: true,
+                    expected: [],
+                },
             ];
 
-            for (const { selection, items, extraMessage, expected } of cases) {
+            for (const {
+                selection,
+                items,
+                extraMessage,
+                expected,
+                noEmptyMessage,
+            } of cases) {
                 it(`case: selection ${selection ? "enabled" : "disabled"}, ${
                     items ? "with" : "without"
                 } items, ${
@@ -272,6 +297,9 @@ describe("USERCONTROL toolbar: ", () => {
                     await switchSelection.setState(selection);
                     await switchItems.setState(items);
                     await switchExtraMessage.setState(extraMessage);
+                    await switchNoEmptyMessage.setState(
+                        noEmptyMessage ?? false
+                    );
                     const texts = await toolbarEmpty.getToolbarMessagesTexts();
                     expect(texts).toEqual(expected);
                 });

@@ -95,6 +95,9 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     @ViewChild("toolbarContainer")
     public toolbarContainer: ElementRef;
 
+    @Input()
+    public noEmptyMessage: boolean = false;
+
     @ViewChild("menuComponent") public menu: MenuComponent;
 
     @ViewChildren("toolbarButtons")
