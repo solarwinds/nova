@@ -18,14 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    ChangeDetectorRef,
-    Inject,
-    Injectable,
-    OnChanges,
-    OnDestroy,
-    Optional,
-} from "@angular/core";
+import { ChangeDetectorRef, Inject, Injectable, OnChanges, OnDestroy, Optional } from "@angular/core";
 import { merge } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -40,30 +33,26 @@ import {
     IDataPointsPayload,
     IInteractionDataPointsEvent,
     IInteractionValuesPayload,
-    InteractionType,
     INTERACTION_DATA_POINTS_EVENT,
     INTERACTION_VALUES_EVENT,
+    InteractionType,
     IScale,
     ISetDomainEventPayload,
     IValueProvider,
+    IXYGridConfig,
     IXYScales,
     Renderer,
     SequentialColorProvider,
     SET_DOMAIN_EVENT,
-    ZoomPlugin,
-    IXYGridConfig,
     XYGrid,
+    ZoomPlugin,
 } from "@nova-ui/charts";
 
 import { INTERACTION, SET_TIMEFRAME } from "../../../../services/types";
-import {
-    DATA_SOURCE,
-    IHasChangeDetector,
-    PIZZAGNA_EVENT_BUS,
-} from "../../../../types";
+import { DATA_SOURCE, IHasChangeDetector, PIZZAGNA_EVENT_BUS } from "../../../../types";
 import { LegendPlacement } from "../../../../widget-types/common/widget/legend";
 import { TimeseriesScalesService } from "../../timeseries-scales.service";
-import { TimeseriesInteractionType } from "../../types";
+import { TimeseriesChartPreset, TimeseriesInteractionType } from "../../types";
 import { TimeseriesChartComponent } from "../timeseries-chart.component";
 
 @Injectable()
@@ -287,5 +276,9 @@ export abstract class XYChartComponent
                     });
                 }
             });
+    }
+
+    public isLineChart(): boolean {
+        return this.configuration.preset === TimeseriesChartPreset.Line;
     }
 }

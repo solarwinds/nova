@@ -120,7 +120,7 @@
                           {{ legendSeries.legendDescriptionSecondary }}
                       </a>
                     </div>
-                    <nui-menu icon="menu" displayStyle="action" class="legend-menu">
+                    <nui-menu *ngIf="isLineChart()" icon="menu" displayStyle="action" class="legend-menu">
                         <nui-menu-group>
                             <nui-menu-item i18n>Remove</nui-menu-item>
                         </nui-menu-group>
