@@ -33,3 +33,43 @@
         }
     }
 }
+
+.description-container {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: space-between;
+    padding-right: @nui-space-xxs;
+}
+
+.description-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.legend-menu {
+    opacity: 0;
+    display: none;
+    transition: opacity 0.3s;
+}
+
+nui-legend-series:hover {
+    .legend-menu {
+        opacity: 1;
+        transition: opacity 0.3s;
+        display: unset;
+    }
+}
+
+nui-legend-series {
+    width: 100%;
+}
+
+:host::ng-deep {
+    nui-legend-series div div:nth-child(2).d-flex {
+        flex-grow: 1;
+        overflow: hidden;
+    }
+}
