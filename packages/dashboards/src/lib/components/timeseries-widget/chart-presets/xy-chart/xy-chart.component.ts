@@ -48,7 +48,7 @@ import {
     ZoomPlugin,
 } from "@nova-ui/charts";
 
-import { INTERACTION, SET_TIMEFRAME } from "../../../../services/types";
+import { CHART_METRIC_REMOVE, INTERACTION, SET_TIMEFRAME } from "../../../../services/types";
 import { DATA_SOURCE, IHasChangeDetector, PIZZAGNA_EVENT_BUS } from "../../../../types";
 import { LegendPlacement } from "../../../../widget-types/common/widget/legend";
 import { TimeseriesScalesService } from "../../timeseries-scales.service";
@@ -280,5 +280,14 @@ export abstract class XYChartComponent
 
     public isLineChart(): boolean {
         return this.configuration.preset === TimeseriesChartPreset.Line;
+    }
+
+    public removeMetric(metricId: string): void {
+        this.eventBus.next(CHART_METRIC_REMOVE, {
+            payload: {
+                metricId: metricId,
+                groupUniqueId: this.configuration.groupUniqueId,
+            },
+        });
     }
 }

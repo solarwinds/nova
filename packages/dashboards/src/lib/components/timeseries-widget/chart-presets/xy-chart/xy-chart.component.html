@@ -89,6 +89,7 @@
                               'nui-text-link-small link': seriesInteractive
                           }"
                           (click)="onPrimaryDescClick($event, legendSeries)"
+                          [title]="legendSeries.legendDescriptionPrimary"
                       >
                           {{ legendSeries.legendDescriptionPrimary }}
                       </div>
@@ -122,7 +123,7 @@
                     </div>
                     <nui-menu *ngIf="isLineChart()" icon="menu" displayStyle="action" class="legend-menu">
                         <nui-menu-group>
-                            <nui-menu-item i18n>Remove</nui-menu-item>
+                            <nui-menu-item i18n (actionDone)="removeMetric(legendSeries.id)">Remove</nui-menu-item>
                         </nui-menu-group>
                         <nui-menu-group header="Display Transforms" i18n-header>
                             <nui-menu-item i18n>Transform 1</nui-menu-item>

@@ -41,6 +41,7 @@ export interface ITimeseriesWidgetConfig {
         [key: string]: any;
     };
     hasAdjacentChart?: boolean;
+    groupUniqueId?: string;
 }
 
 export interface ITimeseriesWidgetSeries {
