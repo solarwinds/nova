@@ -126,8 +126,16 @@
                             <nui-menu-item i18n (actionDone)="removeMetric(legendSeries.id)">Remove</nui-menu-item>
                         </nui-menu-group>
                         <nui-menu-group header="Display Transforms" i18n-header>
-                            <nui-menu-item i18n>Transform 1</nui-menu-item>
-                            <nui-menu-item i18n>Transform 2</nui-menu-item>
+                            <nui-menu-item i18n (actionDone)="transformData(legendSeries.id, transformer.None)">None</nui-menu-item>
+                            <nui-menu-item i18n (actionDone)="transformData(legendSeries.id, transformer.ChangePoint)">Change Point</nui-menu-item>
+                            <nui-menu-item i18n (actionDone)="transformData(legendSeries.id, transformer.Difference)">Difference</nui-menu-item>
+                            <nui-menu-item i18n (actionDone)="transformData(legendSeries.id, transformer.FloatingAverage)">Floating Average</nui-menu-item>
+                            <nui-menu-item i18n (actionDone)="transformData(legendSeries.id, transformer.Linear)">Linear Regression</nui-menu-item>
+                            <nui-menu-item i18n (actionDone)="transformData(legendSeries.id, transformer.Normalize)">Normalize</nui-menu-item>
+                            <nui-menu-item i18n (actionDone)="transformData(legendSeries.id, transformer.PercentileStd)">Percentile Standardized</nui-menu-item>
+                            <nui-menu-item i18n (actionDone)="transformData(legendSeries.id, transformer.Smoothing)">Smoothing</nui-menu-item>
+                          <nui-menu-item i18n (actionDone)="transformData(legendSeries.id, transformer.LoessStandardize)">Smoothing Standardized</nui-menu-item>
+                          <nui-menu-item i18n (actionDone)="transformData(legendSeries.id, transformer.Standardize)">Standardize</nui-menu-item>
                         </nui-menu-group>
                     </nui-menu>
                 </div>

@@ -52,7 +52,23 @@ import { CHART_METRIC_REMOVE, INTERACTION, SET_TIMEFRAME } from "../../../../ser
 import { DATA_SOURCE, IHasChangeDetector, PIZZAGNA_EVENT_BUS } from "../../../../types";
 import { LegendPlacement } from "../../../../widget-types/common/widget/legend";
 import { TimeseriesScalesService } from "../../timeseries-scales.service";
-import { TimeseriesChartPreset, TimeseriesInteractionType } from "../../types";
+import {
+    transformStandardize,
+    transformChangePoint,
+    transformDifference,
+    transformFloatingAverage,
+    transformLinReg,
+    transformLoessSmoothing,
+    transformLoessStandardize,
+    transformNormalize,
+    transformPercentileStd,
+} from "../../transformer/public-api";
+import {
+    ITimeseriesWidgetData,
+    TimeseriesChartPreset,
+    TimeseriesInteractionType,
+    TimeseriesTransformer,
+} from "../../types";
 import { TimeseriesChartComponent } from "../timeseries-chart.component";
 
 @Injectable()
@@ -60,6 +76,7 @@ export abstract class XYChartComponent
     extends TimeseriesChartComponent
     implements OnChanges, OnDestroy, IHasChangeDetector
 {
+    public transformer = TimeseriesTransformer;
     public chartAssist: ChartAssist;
     public valueAccessorKey: string = "y";
     public collectionId: string = "";
@@ -289,5 +306,57 @@ export abstract class XYChartComponent
                 groupUniqueId: this.configuration.groupUniqueId,
             },
         });
+    }
+
+    public revertTransformer(serie: ITimeseriesWidgetData): void {
+        serie.data = serie.rawData;
+    }
+
+    public transformData(metricId: string, transformer: TimeseriesTransformer): void {
+        const serie = this.widgetData.series.find(s => s.id === metricId);
+        if (!serie) { return; }
+
+        switch (transformer) {
+            case TimeseriesTransformer.None:
+                serie.transformer = undefined;
+                break;
+            case TimeseriesTransformer.Normalize:
+                serie.transformer = transformNormalize;
+                break;
+            case TimeseriesTransformer.Standardize:
+                serie.transformer = transformStandardize;
+                break;
+            case TimeseriesTransformer.Smoothing:
+                serie.transformer = transformLoessSmoothing;
+                break;
+            case TimeseriesTransformer.LoessStandardize:
+                serie.transformer = transformLoessStandardize;
+                break;
+            case TimeseriesTransformer.PercentileStd:
+                serie.transformer = transformPercentileStd;
+                break;
+            case TimeseriesTransformer.Linear:
+                serie.transformer = transformLinReg;
+                break;
+            case TimeseriesTransformer.FloatingAverage:
+                serie.transformer = transformFloatingAverage;
+                break;
+            case TimeseriesTransformer.Difference:
+                serie.transformer = transformDifference;
+                break;
+            case TimeseriesTransformer.ChangePoint:
+                serie.transformer = transformChangePoint;
+                break;
+            default: serie.transformer = undefined;
+        }
+
+        if (serie.transformer === undefined) {
+            // revert transformed data
+            serie.data = serie.rawData;
+        } else {
+            // TODO percentile???
+            serie.data = serie.transformer(serie.rawData)
+        }
+        this.updateChartData();
     }
 }

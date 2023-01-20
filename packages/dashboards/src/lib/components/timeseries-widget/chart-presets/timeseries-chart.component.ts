@@ -23,6 +23,7 @@ import {
     Input,
     OnChanges,
     OnDestroy,
+    OnInit,
     SimpleChanges,
 } from "@angular/core";
 import { Subject } from "rxjs";
@@ -37,13 +38,14 @@ import {
     ITimeseriesOutput,
     ITimeseriesScalesConfig,
     ITimeseriesWidgetConfig,
+    ITimeseriesWidgetData,
     ITimeseriesWidgetSeriesData,
 } from "../types";
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
-    implements OnChanges, OnDestroy
+    implements OnChanges, OnDestroy, OnInit
 {
     @Input() public widgetData: ITimeseriesOutput<T> =
         {} as ITimeseriesOutput<T>;
@@ -73,6 +75,11 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
         this.buildChart$.pipe(takeUntil(this.destroy$)).subscribe(() => {
             this.chartBuilt = true;
         });
+    }
+
+    public ngOnInit(): void {
+        // save original data
+        this.widgetData.series.forEach(serie => serie.rawData = serie.data);
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -151,6 +158,16 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
                     this.resetChart = false;
                     this.buildChart();
                 }
+
+                // save original data and transform it
+                this.widgetData.series.forEach(serie => {
+                    serie.rawData = serie.data;
+                    serie.transformer = changes.widgetData.previousValue.series
+                      .find((prevSerie: ITimeseriesWidgetData) => prevSerie.id === serie.id)?.transformer;
+                    if (serie.transformer) {
+                        serie.data = serie.transformer(serie.rawData);
+                    }
+                })
 
                 shouldUpdateChart = true;
             }
