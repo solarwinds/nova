@@ -121,6 +121,7 @@
                           {{ legendSeries.legendDescriptionSecondary }}
                       </a>
                     </div>
+                    <nui-icon *ngIf="isTransformerActive(legendSeries.id)" icon="performance" iconColor="primary-blue"></nui-icon>
                     <nui-menu *ngIf="isLineChart()" icon="menu" displayStyle="action" class="legend-menu">
                         <nui-menu-group>
                             <nui-menu-item i18n (actionDone)="removeMetric(legendSeries.id)">Remove</nui-menu-item>

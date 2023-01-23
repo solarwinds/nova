@@ -359,4 +359,8 @@ export abstract class XYChartComponent
         }
         this.updateChartData();
     }
+
+    public isTransformerActive(metricId: string): boolean {
+        return !!this.widgetData.series.find(s => s.id === metricId)?.transformer;
+    }
 }

@@ -38,7 +38,6 @@
     display: flex;
     align-items: center;
     flex-grow: 1;
-    justify-content: space-between;
     padding-right: @nui-space-xxs;
 }
 
@@ -52,6 +51,7 @@
 .legend-menu {
     opacity: 0;
     display: none;
+    margin-left: auto;
 }
 
 nui-legend-series:hover {
@@ -65,6 +65,10 @@ nui-legend-series {
     width: 100%;
 }
 
+nui-icon {
+    padding: 0 @nui-space-xs 0 @nui-space-xs;
+}
+
 :host::ng-deep {
     nui-legend-series div div:nth-child(2).d-flex {
         flex-grow: 1;
@@ -72,5 +76,8 @@ nui-legend-series {
     }
     .popup-adapter-overlay .nui-menu-popup-host {
         max-height: unset;
+    }
+    .nui-legend-series .description {
+        min-width: unset;
     }
 }
