@@ -166,7 +166,7 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
                     serie.rawData = serie.data;
                     serie.transformer = changes.widgetData.previousValue?.series
                       .find((prevSerie: ITimeseriesWidgetData) => prevSerie.id === serie.id)?.transformer;
-                    if (serie.transformer) {
+                    if (serie.transformer && serie.rawData.length > 0) {
                         serie.data = serie.transformer(serie.rawData);
                     }
                 })

@@ -350,8 +350,9 @@ export abstract class XYChartComponent
             if (serie.transformer === undefined) {
                 // revert transformed data
                 serie.data = serie.rawData;
-            } else {
-                // TODO percentile???
+            }
+            // TODO percentile???
+            if (serie.transformer && serie.rawData.length > 0) {
                 serie.data = serie.transformer(serie.rawData)
             }
         }
