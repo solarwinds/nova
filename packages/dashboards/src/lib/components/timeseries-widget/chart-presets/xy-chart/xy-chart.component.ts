@@ -308,10 +308,6 @@ export abstract class XYChartComponent
         });
     }
 
-    public revertTransformer(serie: ITimeseriesWidgetData): void {
-        serie.data = serie.rawData;
-    }
-
     public transformData(metricId: string, transformer: TimeseriesTransformer): void {
         const serie = this.widgetData.series.find(s => s.id === metricId);
         if (!serie) { return; }
@@ -350,12 +346,14 @@ export abstract class XYChartComponent
             default: serie.transformer = undefined;
         }
 
-        if (serie.transformer === undefined) {
-            // revert transformed data
-            serie.data = serie.rawData;
-        } else {
-            // TODO percentile???
-            serie.data = serie.transformer(serie.rawData)
+        if (serie.rawData) {
+            if (serie.transformer === undefined) {
+                // revert transformed data
+                serie.data = serie.rawData;
+            } else {
+                // TODO percentile???
+                serie.data = serie.transformer(serie.rawData)
+            }
         }
         this.updateChartData();
     }

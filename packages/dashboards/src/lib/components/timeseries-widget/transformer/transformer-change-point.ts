@@ -28,10 +28,10 @@ export function transformChangePoint(data: ITimeseriesWidgetSeriesData[], hasPer
         yValuesOfFirstSection = [];
         yValuesOfSecondSection = [];
         for (let i = startIndex; i <= endIndex; i++) {
-            yValuesOfFirstSection.push(data[i].value);
+            yValuesOfFirstSection.push(data[i].y);
         }
         for (let j = startIndex2; j <= endIndex2; j++) {
-            yValuesOfSecondSection.push(data[j].value);
+            yValuesOfSecondSection.push(data[j].y);
         }
         meanOfFirstSection = d3.mean(yValuesOfFirstSection) ?? 0;
         meanOfSecondSection = d3.mean(yValuesOfSecondSection) ?? 0;
@@ -46,7 +46,7 @@ export function transformChangePoint(data: ITimeseriesWidgetSeriesData[], hasPer
         tScore = getT_Score(meanOfFirstSection, meanOfSecondSection, standardDeviationOfFirstSection, standardDeviationOfSecondSection, yValuesOfFirstSection.length, yValuesOfSecondSection.length, criticalValue);
         if (tScore > criticalValue) {
             for (let k = startIndex; k <= endIndex; k++) {
-                transformed[k].value = meanOfFirstSection;
+                transformed[k].y = meanOfFirstSection;
             }
             startIndex = startIndex2;
         }
@@ -60,7 +60,7 @@ export function transformChangePoint(data: ITimeseriesWidgetSeriesData[], hasPer
         }
     }
     for (let k = startIndex; k <= endIndex; k++) {
-        transformed[k].value = meanOfFirstSection;
+        transformed[k].y = meanOfFirstSection;
     }
     return transformed;
 }

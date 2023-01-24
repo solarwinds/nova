@@ -55,7 +55,7 @@ export interface ITimeseriesWidgetData<T = ITimeseriesWidgetSeriesData> {
     name: string;
     description: string;
     data: T[];
-    rawData: T[];
+    rawData?: T[];
     transformer?: (data: T[], hasPercentile?: boolean) => T[];
     link?: string;
     secondaryLink?: string;
