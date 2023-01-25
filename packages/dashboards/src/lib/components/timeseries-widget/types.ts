@@ -134,7 +134,7 @@ export enum TimeseriesTransformer {
     None = "none",
     Normalize = "normalize",
     ChangePoint = "changePoint",
-    Difference =  "difference",
+    Difference = "difference",
     Linear = "linear",
     PercentileStd = "percentileStd",
     Smoothing = "smoothing",

@@ -4,10 +4,13 @@ import cloneDeep from "lodash/cloneDeep";
 import { ITimeseriesWidgetSeriesData } from "../types";
 import { transformNormalize } from "./transformer-normalize";
 
-export function transformPercentileStd(data: ITimeseriesWidgetSeriesData[], hasPercentile?: boolean): ITimeseriesWidgetSeriesData[] {
+export function transformPercentileStd(
+    data: ITimeseriesWidgetSeriesData[],
+    hasPercentile?: boolean
+): ITimeseriesWidgetSeriesData[] {
     let transformed = cloneDeep(data);
 
-    const dataValues: {x: any[]; y: any[]} = {
+    const dataValues: { x: any[]; y: any[] } = {
         x: [],
         y: [],
     };
@@ -19,14 +22,22 @@ export function transformPercentileStd(data: ITimeseriesWidgetSeriesData[], hasP
 
     function percentileStandardizeData(data: number[]) {
         const median: number = d3.median(data) ?? 0;
-        const medianAbsoluteDeviation: number = getMedianAbsoluteDeviation(data, median);
+        const medianAbsoluteDeviation: number = getMedianAbsoluteDeviation(
+            data,
+            median
+        );
         // formula to transform data (percentile deviation)
-        return data.map((value: number) => (value - median) / medianAbsoluteDeviation);
+        return data.map(
+            (value: number) => (value - median) / medianAbsoluteDeviation
+        );
     }
 
     function getMedianAbsoluteDeviation(values: number[], median: number) {
-        const absoluteValueOfMinusMedian: number[] = values.map((value: number) => Math.abs(value - median));
-        let medianAbsoluteDeviation: number = d3.median(absoluteValueOfMinusMedian) ?? 0;
+        const absoluteValueOfMinusMedian: number[] = values.map(
+            (value: number) => Math.abs(value - median)
+        );
+        let medianAbsoluteDeviation: number =
+            d3.median(absoluteValueOfMinusMedian) ?? 0;
         // median absolute deviation
         // If the MAD is less than one then just set it to one in order to just show raw difference from the median
         if (medianAbsoluteDeviation < 1.0) {
@@ -35,12 +46,13 @@ export function transformPercentileStd(data: ITimeseriesWidgetSeriesData[], hasP
         return medianAbsoluteDeviation;
     }
 
-    const percentileStandardizedData: number[] = percentileStandardizeData(dataValues.y);
+    const percentileStandardizedData: number[] = percentileStandardizeData(
+        dataValues.y
+    );
     percentileStandardizedData.forEach((value: number, index: number) => {
         transformed[index].y = hasPercentile ? Math.abs(value) : value;
     });
-    if (hasPercentile)
-    {
+    if (hasPercentile) {
         transformed = transformNormalize(transformed, hasPercentile);
     }
 

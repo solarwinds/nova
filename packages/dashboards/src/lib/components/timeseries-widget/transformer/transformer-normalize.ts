@@ -2,10 +2,13 @@ import cloneDeep from "lodash/cloneDeep";
 
 import { ITimeseriesWidgetSeriesData } from "../types";
 
-export function transformNormalize(data: ITimeseriesWidgetSeriesData[], hasPercentile?: boolean): ITimeseriesWidgetSeriesData[] {
+export function transformNormalize(
+    data: ITimeseriesWidgetSeriesData[],
+    hasPercentile?: boolean
+): ITimeseriesWidgetSeriesData[] {
     const transformed = cloneDeep(data);
 
-    const dataValues: {x: any[]; y: any[]} = {
+    const dataValues: { x: any[]; y: any[] } = {
         x: [],
         y: [],
     };
@@ -27,7 +30,9 @@ export function transformNormalize(data: ITimeseriesWidgetSeriesData[], hasPerce
 
         // if max = min --> return every value = 0
         // else  --> return normalized data values
-        return max === min ? values.map((value: number) => 0) : values.map((value: number) => (value - min) / (max - min));
+        return max === min
+            ? values.map((value: number) => 0)
+            : values.map((value: number) => (value - min) / (max - min));
     }
 
     return transformed;

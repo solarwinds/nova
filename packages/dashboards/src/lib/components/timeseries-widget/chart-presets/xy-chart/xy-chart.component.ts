@@ -18,7 +18,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectorRef, Inject, Injectable, OnChanges, OnDestroy, Optional } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    Inject,
+    Injectable,
+    OnChanges,
+    OnDestroy,
+    Optional,
+} from "@angular/core";
 import { merge } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -48,8 +55,16 @@ import {
     ZoomPlugin,
 } from "@nova-ui/charts";
 
-import { CHART_METRIC_REMOVE, INTERACTION, SET_TIMEFRAME } from "../../../../services/types";
-import { DATA_SOURCE, IHasChangeDetector, PIZZAGNA_EVENT_BUS } from "../../../../types";
+import {
+    CHART_METRIC_REMOVE,
+    INTERACTION,
+    SET_TIMEFRAME,
+} from "../../../../services/types";
+import {
+    DATA_SOURCE,
+    IHasChangeDetector,
+    PIZZAGNA_EVENT_BUS,
+} from "../../../../types";
 import { LegendPlacement } from "../../../../widget-types/common/widget/legend";
 import { TimeseriesScalesService } from "../../timeseries-scales.service";
 import {
@@ -308,9 +323,14 @@ export abstract class XYChartComponent
         });
     }
 
-    public transformData(metricId: string, transformer: TimeseriesTransformer): void {
-        const serie = this.widgetData.series.find(s => s.id === metricId);
-        if (!serie) { return; }
+    public transformData(
+        metricId: string,
+        transformer: TimeseriesTransformer
+    ): void {
+        const serie = this.widgetData.series.find((s) => s.id === metricId);
+        if (!serie) {
+            return;
+        }
 
         switch (transformer) {
             case TimeseriesTransformer.None:
@@ -343,7 +363,8 @@ export abstract class XYChartComponent
             case TimeseriesTransformer.ChangePoint:
                 serie.transformer = transformChangePoint;
                 break;
-            default: serie.transformer = undefined;
+            default:
+                serie.transformer = undefined;
         }
 
         if (serie.rawData) {
@@ -353,13 +374,14 @@ export abstract class XYChartComponent
             }
             // TODO percentile???
             if (serie.transformer && serie.rawData.length > 0) {
-                serie.data = serie.transformer(serie.rawData)
+                serie.data = serie.transformer(serie.rawData);
             }
         }
         this.updateChartData();
     }
 
     public isTransformerActive(metricId: string): boolean {
-        return !!this.widgetData.series.find(s => s.id === metricId)?.transformer;
+        return !!this.widgetData.series.find((s) => s.id === metricId)
+            ?.transformer;
     }
 }

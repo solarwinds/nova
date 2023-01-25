@@ -77,66 +77,167 @@
                     >
                     </nui-chart-marker>
                 </nui-rich-legend-tile>
-                  <div
-                      description
-                      class="description-container"
-                  >
+                <div description class="description-container">
                     <div class="description-text nui-text-small">
-                      <div
-                          *ngIf="!legendSeries.link"
-                          class="description description-primary"
-                          [ngClass]="{
-                              'nui-text-link-small link': seriesInteractive
-                          }"
-                          (click)="onPrimaryDescClick($event, legendSeries)"
-                          [title]="legendSeries.legendDescriptionPrimary"
-                      >
-                          {{ legendSeries.legendDescriptionPrimary }}
-                      </div>
-                      <a
-                          class="description description-primary nui-text-link-small link"
-                          (click)="$event.stopPropagation()"
-                          *ngIf="legendSeries.link"
-                          [href]="legendSeries.link"
-                          rel="noopener noreferrer"
-                          [title]="legendSeries.legendDescriptionPrimary"
-                      >
-                          {{ legendSeries.legendDescriptionPrimary }}
-                      </a>
-                      <div
-                          class="description description-secondary"
-                          *ngIf="!legendSeries.secondaryLink"
-                          [title]="legendSeries.legendDescriptionSecondary"
-                      >
-                          {{ legendSeries.legendDescriptionSecondary }}
-                      </div>
-                      <a
-                          class="description description-secondary nui-text-link-small link"
-                          (click)="$event.stopPropagation()"
-                          *ngIf="legendSeries.secondaryLink"
-                          [href]="legendSeries.secondaryLink"
-                          rel="noopener noreferrer"
-                          [title]="legendSeries.legendDescriptionSecondary"
-                      >
-                          {{ legendSeries.legendDescriptionSecondary }}
-                      </a>
+                        <div
+                            *ngIf="!legendSeries.link"
+                            class="description description-primary"
+                            [ngClass]="{
+                                'nui-text-link-small link': seriesInteractive
+                            }"
+                            (click)="onPrimaryDescClick($event, legendSeries)"
+                            [title]="legendSeries.legendDescriptionPrimary"
+                        >
+                            {{ legendSeries.legendDescriptionPrimary }}
+                        </div>
+                        <a
+                            class="description description-primary nui-text-link-small link"
+                            (click)="$event.stopPropagation()"
+                            *ngIf="legendSeries.link"
+                            [href]="legendSeries.link"
+                            rel="noopener noreferrer"
+                            [title]="legendSeries.legendDescriptionPrimary"
+                        >
+                            {{ legendSeries.legendDescriptionPrimary }}
+                        </a>
+                        <div
+                            class="description description-secondary"
+                            *ngIf="!legendSeries.secondaryLink"
+                            [title]="legendSeries.legendDescriptionSecondary"
+                        >
+                            {{ legendSeries.legendDescriptionSecondary }}
+                        </div>
+                        <a
+                            class="description description-secondary nui-text-link-small link"
+                            (click)="$event.stopPropagation()"
+                            *ngIf="legendSeries.secondaryLink"
+                            [href]="legendSeries.secondaryLink"
+                            rel="noopener noreferrer"
+                            [title]="legendSeries.legendDescriptionSecondary"
+                        >
+                            {{ legendSeries.legendDescriptionSecondary }}
+                        </a>
                     </div>
-                    <nui-icon *ngIf="isTransformerActive(legendSeries.id)" icon="performance" iconColor="primary-blue"></nui-icon>
-                    <nui-menu *ngIf="isLineChart()" icon="menu" displayStyle="action" class="legend-menu" [appendToBody]="true">
+                    <nui-icon
+                        *ngIf="isTransformerActive(legendSeries.id)"
+                        icon="performance"
+                        iconColor="primary-blue"
+                    ></nui-icon>
+                    <nui-menu
+                        *ngIf="isLineChart()"
+                        icon="menu"
+                        displayStyle="action"
+                        class="legend-menu"
+                        [appendToBody]="true"
+                    >
                         <nui-menu-group>
-                            <nui-menu-action i18n (actionDone)="removeMetric(legendSeries.id)">Remove</nui-menu-action>
+                            <nui-menu-action
+                                i18n
+                                (actionDone)="removeMetric(legendSeries.id)"
+                                >Remove</nui-menu-action
+                            >
                         </nui-menu-group>
                         <nui-menu-group header="Display Transforms" i18n-header>
-                            <nui-menu-action i18n (actionDone)="transformData(legendSeries.id, transformer.None)">None</nui-menu-action>
-                            <nui-menu-action i18n (actionDone)="transformData(legendSeries.id, transformer.ChangePoint)">Change Point</nui-menu-action>
-                            <nui-menu-action i18n (actionDone)="transformData(legendSeries.id, transformer.Difference)">Difference</nui-menu-action>
-                            <nui-menu-action i18n (actionDone)="transformData(legendSeries.id, transformer.FloatingAverage)">Floating Average</nui-menu-action>
-                            <nui-menu-action i18n (actionDone)="transformData(legendSeries.id, transformer.Linear)">Linear Regression</nui-menu-action>
-                            <nui-menu-action i18n (actionDone)="transformData(legendSeries.id, transformer.Normalize)">Normalize</nui-menu-action>
-                            <nui-menu-action i18n (actionDone)="transformData(legendSeries.id, transformer.PercentileStd)">Percentile Standardized</nui-menu-action>
-                            <nui-menu-action i18n (actionDone)="transformData(legendSeries.id, transformer.Smoothing)">Smoothing</nui-menu-action>
-                            <nui-menu-action i18n (actionDone)="transformData(legendSeries.id, transformer.LoessStandardize)">Smoothing Standardized</nui-menu-action>
-                            <nui-menu-action i18n (actionDone)="transformData(legendSeries.id, transformer.Standardize)">Standardize</nui-menu-action>
+                            <nui-menu-action
+                                i18n
+                                (actionDone)="
+                                    transformData(
+                                        legendSeries.id,
+                                        transformer.None
+                                    )
+                                "
+                                >None</nui-menu-action
+                            >
+                            <nui-menu-action
+                                i18n
+                                (actionDone)="
+                                    transformData(
+                                        legendSeries.id,
+                                        transformer.ChangePoint
+                                    )
+                                "
+                                >Change Point</nui-menu-action
+                            >
+                            <nui-menu-action
+                                i18n
+                                (actionDone)="
+                                    transformData(
+                                        legendSeries.id,
+                                        transformer.Difference
+                                    )
+                                "
+                                >Difference</nui-menu-action
+                            >
+                            <nui-menu-action
+                                i18n
+                                (actionDone)="
+                                    transformData(
+                                        legendSeries.id,
+                                        transformer.FloatingAverage
+                                    )
+                                "
+                                >Floating Average</nui-menu-action
+                            >
+                            <nui-menu-action
+                                i18n
+                                (actionDone)="
+                                    transformData(
+                                        legendSeries.id,
+                                        transformer.Linear
+                                    )
+                                "
+                                >Linear Regression</nui-menu-action
+                            >
+                            <nui-menu-action
+                                i18n
+                                (actionDone)="
+                                    transformData(
+                                        legendSeries.id,
+                                        transformer.Normalize
+                                    )
+                                "
+                                >Normalize</nui-menu-action
+                            >
+                            <nui-menu-action
+                                i18n
+                                (actionDone)="
+                                    transformData(
+                                        legendSeries.id,
+                                        transformer.PercentileStd
+                                    )
+                                "
+                                >Percentile Standardized</nui-menu-action
+                            >
+                            <nui-menu-action
+                                i18n
+                                (actionDone)="
+                                    transformData(
+                                        legendSeries.id,
+                                        transformer.Smoothing
+                                    )
+                                "
+                                >Smoothing</nui-menu-action
+                            >
+                            <nui-menu-action
+                                i18n
+                                (actionDone)="
+                                    transformData(
+                                        legendSeries.id,
+                                        transformer.LoessStandardize
+                                    )
+                                "
+                                >Smoothing Standardized</nui-menu-action
+                            >
+                            <nui-menu-action
+                                i18n
+                                (actionDone)="
+                                    transformData(
+                                        legendSeries.id,
+                                        transformer.Standardize
+                                    )
+                                "
+                                >Standardize</nui-menu-action
+                            >
                         </nui-menu-group>
                     </nui-menu>
                 </div>

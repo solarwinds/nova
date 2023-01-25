@@ -80,7 +80,9 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
     public ngOnInit(): void {
         // save original data
         if (this.widgetData && this.widgetData.series) {
-            this.widgetData.series.forEach(serie => serie.rawData = serie.data);
+            this.widgetData.series.forEach(
+                (serie) => (serie.rawData = serie.data)
+            );
         }
     }
 
@@ -162,14 +164,17 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
                 }
 
                 // save original data and transform it
-                this.widgetData.series.forEach(serie => {
+                this.widgetData.series.forEach((serie) => {
                     serie.rawData = serie.data;
-                    serie.transformer = changes.widgetData.previousValue?.series
-                      .find((prevSerie: ITimeseriesWidgetData) => prevSerie.id === serie.id)?.transformer;
+                    serie.transformer =
+                        changes.widgetData.previousValue?.series.find(
+                            (prevSerie: ITimeseriesWidgetData) =>
+                                prevSerie.id === serie.id
+                        )?.transformer;
                     if (serie.transformer && serie.rawData.length > 0) {
                         serie.data = serie.transformer(serie.rawData);
                     }
-                })
+                });
 
                 shouldUpdateChart = true;
             }

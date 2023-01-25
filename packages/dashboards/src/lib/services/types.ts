@@ -125,6 +125,8 @@ export const NOVA_TEST_REGISTRY = "NOVA_TEST_REGISTRY";
 export const NOVA_CONFIGURATOR_DATA_SOURCE_MANAGER =
     "NOVA_CONFIGURATOR_DATA_SOURCE_MANAGER";
 
-export const CHART_METRIC_REMOVE: IEventDefinition<IEvent<IRemoveMetricPayload>> = {
+export const CHART_METRIC_REMOVE: IEventDefinition<
+    IEvent<IRemoveMetricPayload>
+> = {
     id: "CHART_METRIC_REMOVE",
 };
