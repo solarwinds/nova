@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Atom, TimepickerAtom } from "@nova-ui/bits/sdk/atoms";
+import { Atom } from "@nova-ui/bits/sdk/atoms";
 import { ChartAtom } from "@nova-ui/charts/sdk/atoms/chart/atoms/chart.atom";
 
 import { LegendSeriesAtom } from "./legend-series.atom";

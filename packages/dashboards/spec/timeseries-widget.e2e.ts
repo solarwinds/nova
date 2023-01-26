@@ -18,9 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser, by, element } from "protractor";
+import { by, element } from "protractor";
 
-import { Atom, IconAtom, MenuAtom, PopupAtom } from "@nova-ui/bits/sdk/atoms";
+import { Atom, IconAtom } from "@nova-ui/bits/sdk/atoms";
 import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
 
 import { TimeseriesAtom } from "./timeseries/timeseries.atom";

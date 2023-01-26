@@ -18,13 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ElementFinder, browser, by, element } from "protractor";
+import { ElementFinder, by, element } from "protractor";
 
 import {
     Atom,
     ButtonAtom,
     IconAtom,
-    MenuAtom,
     MenuItemAtom,
 } from "@nova-ui/bits/sdk/atoms";
 
