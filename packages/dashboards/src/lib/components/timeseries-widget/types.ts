@@ -42,6 +42,7 @@ export interface ITimeseriesWidgetConfig {
     };
     hasAdjacentChart?: boolean;
     groupUniqueId?: string;
+    allowLegendMenu?: boolean;
 }
 
 export interface ITimeseriesWidgetSeries {

@@ -124,7 +124,7 @@
                         iconColor="primary-blue"
                     ></nui-icon>
                     <nui-menu
-                        *ngIf="isLineChart()"
+                        *ngIf="displayLegendMenu()"
                         icon="menu"
                         displayStyle="action"
                         class="legend-menu"
@@ -139,105 +139,12 @@
                         </nui-menu-group>
                         <nui-menu-group header="Display Transforms" i18n-header>
                             <nui-menu-action
-                                i18n
-                                (actionDone)="
-                                    transformData(
-                                        legendSeries.id,
-                                        transformer.None
-                                    )
-                                "
-                                >None</nui-menu-action
+                              *ngFor="let tr of transformers"
+                              [class.selected]="selectedTransformer(legendSeries.id, tr.name)"
+                              (actionDone)="transformData(legendSeries.id, tr.value)"
                             >
-                            <nui-menu-action
-                                i18n
-                                (actionDone)="
-                                    transformData(
-                                        legendSeries.id,
-                                        transformer.ChangePoint
-                                    )
-                                "
-                                >Change Point</nui-menu-action
-                            >
-                            <nui-menu-action
-                                i18n
-                                (actionDone)="
-                                    transformData(
-                                        legendSeries.id,
-                                        transformer.Difference
-                                    )
-                                "
-                                >Difference</nui-menu-action
-                            >
-                            <nui-menu-action
-                                i18n
-                                (actionDone)="
-                                    transformData(
-                                        legendSeries.id,
-                                        transformer.FloatingAverage
-                                    )
-                                "
-                                >Floating Average</nui-menu-action
-                            >
-                            <nui-menu-action
-                                i18n
-                                (actionDone)="
-                                    transformData(
-                                        legendSeries.id,
-                                        transformer.Linear
-                                    )
-                                "
-                                >Linear Regression</nui-menu-action
-                            >
-                            <nui-menu-action
-                                i18n
-                                (actionDone)="
-                                    transformData(
-                                        legendSeries.id,
-                                        transformer.Normalize
-                                    )
-                                "
-                                >Normalize</nui-menu-action
-                            >
-                            <nui-menu-action
-                                i18n
-                                (actionDone)="
-                                    transformData(
-                                        legendSeries.id,
-                                        transformer.PercentileStd
-                                    )
-                                "
-                                >Percentile Standardized</nui-menu-action
-                            >
-                            <nui-menu-action
-                                i18n
-                                (actionDone)="
-                                    transformData(
-                                        legendSeries.id,
-                                        transformer.Smoothing
-                                    )
-                                "
-                                >Smoothing</nui-menu-action
-                            >
-                            <nui-menu-action
-                                i18n
-                                (actionDone)="
-                                    transformData(
-                                        legendSeries.id,
-                                        transformer.LoessStandardize
-                                    )
-                                "
-                                >Smoothing Standardized</nui-menu-action
-                            >
-                            <nui-menu-action
-                                i18n
-                                (actionDone)="
-                                    transformData(
-                                        legendSeries.id,
-                                        transformer.Standardize
-                                    )
-                                "
-                                >Standardize</nui-menu-action
-                            >
+                                {{ tr.displayName }}
+                            </nui-menu-action>
                         </nui-menu-group>
                     </nui-menu>
                 </div>

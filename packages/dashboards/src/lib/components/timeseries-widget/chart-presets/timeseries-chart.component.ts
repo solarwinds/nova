@@ -162,19 +162,7 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
                     this.resetChart = false;
                     this.buildChart();
                 }
-
-                // save original data and transform it
-                this.widgetData.series.forEach((serie) => {
-                    serie.rawData = serie.data;
-                    serie.transformer =
-                        changes.widgetData.previousValue?.series.find(
-                            (prevSerie: ITimeseriesWidgetData) =>
-                                prevSerie.id === serie.id
-                        )?.transformer;
-                    if (serie.transformer && serie.rawData.length > 0) {
-                        serie.data = serie.transformer(serie.rawData);
-                    }
-                });
+                this.applyPreviousTransformer(changes.widgetData.previousValue);
 
                 shouldUpdateChart = true;
             }
@@ -189,6 +177,32 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
         this.destroy$.next();
         this.destroy$.complete();
         this.buildChart$.complete();
+    }
+
+    protected applyPreviousTransformer(previousData: any): void {
+        // save original data and transform it
+        this.widgetData.series.forEach((serie) => {
+            serie.rawData = serie.data;
+            serie.transformer =
+              previousData?.series.find(
+                (prevSerie: ITimeseriesWidgetData) =>
+                  prevSerie.id === serie.id
+              )?.transformer;
+            this.transformSeriesData(serie);
+        });
+    }
+
+    protected transformSeriesData(serie: ITimeseriesWidgetData<T>): void {
+        if (serie.transformer && serie.rawData && serie.rawData.length > 0 ) {
+            // TODO percentile???
+            try {
+                serie.data = serie.transformer(serie.rawData);
+            } catch (e) {
+                serie.transformer = undefined;
+                serie.data = serie.rawData;
+                console.error(e.message);
+            }
+        }
     }
 
     /** Updates chart data. */

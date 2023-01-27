@@ -79,7 +79,6 @@ import {
     transformPercentileStd,
 } from "../../transformer/public-api";
 import {
-    ITimeseriesWidgetData,
     TimeseriesChartPreset,
     TimeseriesInteractionType,
     TimeseriesTransformer,
@@ -98,6 +97,59 @@ export abstract class XYChartComponent
 
     protected renderer: Renderer<IAccessors>;
     protected accessors: IAccessors;
+
+    public transformers = [
+        {
+            displayName: $localize`None`,
+            value: this.transformer.None,
+            name: undefined,
+        },
+        {
+            displayName: $localize`Change Point`,
+            value: this.transformer.ChangePoint,
+            name: "transformChangePoint",
+        },
+        {
+            displayName: $localize`Difference`,
+            value: this.transformer.Difference,
+            name: "transformDifference",
+        },
+        {
+            displayName: $localize`Floating Average`,
+            value: this.transformer.FloatingAverage,
+            name: "transformFloatingAverage",
+        },
+        {
+            displayName: $localize`Linear`,
+            value: this.transformer.Linear,
+            name: "transformLinReg",
+        },
+        {
+            displayName: $localize`Normalize`,
+            value: this.transformer.Normalize,
+            name: "transformNormalize",
+        },
+        {
+            displayName: $localize`Percentile Standardized`,
+            value: this.transformer.PercentileStd,
+            name: "transformPercentileStd",
+        },
+        {
+            displayName: $localize`Smoothing`,
+            value: this.transformer.Smoothing,
+            name: "transformLoessSmoothing",
+        },
+        {
+            displayName: $localize`Smoothing Standardized`,
+            value: this.transformer.LoessStandardize,
+            name: "transformLoessStandardize",
+        },
+        {
+            displayName: $localize`Standardize`,
+            value: this.transformer.Standardize,
+            name: "transformStandardize",
+        },
+    ]
 
     constructor(
         @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,
@@ -310,8 +362,8 @@ export abstract class XYChartComponent
             });
     }
 
-    public isLineChart(): boolean {
-        return this.configuration.preset === TimeseriesChartPreset.Line;
+    public displayLegendMenu(): boolean {
+        return this.configuration.preset === TimeseriesChartPreset.Line && !!this.configuration.allowLegendMenu;
     }
 
     public removeMetric(metricId: string): void {
@@ -371,10 +423,8 @@ export abstract class XYChartComponent
             if (serie.transformer === undefined) {
                 // revert transformed data
                 serie.data = serie.rawData;
-            }
-            // TODO percentile???
-            if (serie.transformer && serie.rawData.length > 0) {
-                serie.data = serie.transformer(serie.rawData);
+            } else {
+                this.transformSeriesData(serie);
             }
         }
         this.updateChartData();
@@ -383,5 +433,10 @@ export abstract class XYChartComponent
     public isTransformerActive(metricId: string): boolean {
         return !!this.widgetData.series.find((s) => s.id === metricId)
             ?.transformer;
+    }
+
+    public selectedTransformer(metricId: string, trName: string): boolean {
+        const serie = this.widgetData.series.find((s) => s.id === metricId);
+        return serie?.transformer?.name === trName;
     }
 }
