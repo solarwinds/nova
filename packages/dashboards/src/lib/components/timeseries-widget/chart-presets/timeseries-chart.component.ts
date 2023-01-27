@@ -183,17 +183,15 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
         // save original data and transform it
         this.widgetData.series.forEach((serie) => {
             serie.rawData = serie.data;
-            serie.transformer =
-              previousData?.series.find(
-                (prevSerie: ITimeseriesWidgetData) =>
-                  prevSerie.id === serie.id
-              )?.transformer;
+            serie.transformer = previousData?.series.find(
+                (prevSerie: ITimeseriesWidgetData) => prevSerie.id === serie.id
+            )?.transformer;
             this.transformSeriesData(serie);
         });
     }
 
     protected transformSeriesData(serie: ITimeseriesWidgetData<T>): void {
-        if (serie.transformer && serie.rawData && serie.rawData.length > 0 ) {
+        if (serie.transformer && serie.rawData && serie.rawData.length > 0) {
             // TODO percentile???
             try {
                 serie.data = serie.transformer(serie.rawData);

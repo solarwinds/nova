@@ -149,7 +149,7 @@ export abstract class XYChartComponent
             value: this.transformer.Standardize,
             name: "transformStandardize",
         },
-    ]
+    ];
 
     constructor(
         @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,
@@ -363,7 +363,10 @@ export abstract class XYChartComponent
     }
 
     public displayLegendMenu(): boolean {
-        return this.configuration.preset === TimeseriesChartPreset.Line && !!this.configuration.allowLegendMenu;
+        return (
+            this.configuration.preset === TimeseriesChartPreset.Line &&
+            !!this.configuration.allowLegendMenu
+        );
     }
 
     public removeMetric(metricId: string): void {

@@ -139,9 +139,16 @@
                         </nui-menu-group>
                         <nui-menu-group header="Display Transforms" i18n-header>
                             <nui-menu-action
-                              *ngFor="let tr of transformers"
-                              [class.selected]="selectedTransformer(legendSeries.id, tr.name)"
-                              (actionDone)="transformData(legendSeries.id, tr.value)"
+                                *ngFor="let tr of transformers"
+                                [class.selected]="
+                                    selectedTransformer(
+                                        legendSeries.id,
+                                        tr.name
+                                    )
+                                "
+                                (actionDone)="
+                                    transformData(legendSeries.id, tr.value)
+                                "
                             >
                                 {{ tr.displayName }}
                             </nui-menu-action>
