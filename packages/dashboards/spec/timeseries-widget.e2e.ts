@@ -66,7 +66,7 @@ describe("Dashboards - Timeseries Widget", () => {
     });
 
     it("should display the correct menu items", async () => {
-        let legend = await getLegend();
+        const legend = await getLegend();
         expect(legend).toBeDefined();
 
         const expectedTransforms = [
@@ -74,7 +74,6 @@ describe("Dashboards - Timeseries Widget", () => {
             "Change Point",
             "Difference",
             "Floating Average",
-            "Linear Regression",
             "Normalize",
             "Percentile Standardized",
             "Smoothing",
@@ -94,13 +93,16 @@ describe("Dashboards - Timeseries Widget", () => {
         const getIcon = async (): Promise<IconAtom> =>
             (await getLegend()).getTransformIcon();
 
-        await getTimeseriesWidget().transformSeries("Change Point", 0);
+        await getTimeseriesWidget().transformSeries("Difference", 0);
         expect((await getIcon()).isDisplayed()).toBe(true);
 
-        await getTimeseriesWidget().transformSeries("Smoothing", 0);
+        await getTimeseriesWidget().transformSeries("Linear", 0);
         expect((await getIcon()).isDisplayed()).toBe(true);
 
         await getTimeseriesWidget().transformSeries("None", 0);
         expect((await getIcon()).isDisplayed()).toBe(false);
+
+        await getTimeseriesWidget().transformSeries("Standardize", 0);
+        expect((await getIcon()).isDisplayed()).toBe(true);
     });
 });
