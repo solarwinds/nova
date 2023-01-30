@@ -75,7 +75,7 @@ export abstract class DataSourceService<
         delete this._components?.[componentKey];
     }
 
-    public abstract getFilteredData(filters: F): Promise<IFilteringOutputs>;
+    public abstract getFilteredData(data: D): Promise<IFilteringOutputs>;
 
     public connect(
         collectionViewer: CollectionViewer
@@ -182,8 +182,8 @@ export abstract class DataSourceService<
 
     protected beforeApplyFilters(filters: F): void {}
 
-    protected async afterApplyFilters(filters: F): Promise<void> {
-        this.outputsSubject.next(await this.getFilteredData(filters));
+    protected async afterApplyFilters(data: D): Promise<void> {
+        this.outputsSubject.next(await this.getFilteredData(data));
 
         this._previousFilters = this.getFilters();
     }
