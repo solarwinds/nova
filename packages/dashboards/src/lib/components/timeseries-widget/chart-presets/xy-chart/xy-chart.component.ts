@@ -348,18 +348,4 @@ export abstract class XYChartComponent
         }
         this.updateChartData();
     }
-
-    public isTransformerActive(metricId: string): boolean {
-        return !!this.widgetData.series.find((s) => s.id === metricId)
-            ?.transformer;
-    }
-
-    public selectedTransformer(metricId: string, trName: string): boolean {
-        const serie = this.widgetData.series.find((s) => s.id === metricId);
-        return serie?.transformer?.name === trName;
-    }
-
-    public asIsOrder(): number {
-        return 0;
-    }
 }

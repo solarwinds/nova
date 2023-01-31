@@ -119,7 +119,7 @@
                         </a>
                     </div>
                     <nui-icon
-                        *ngIf="isTransformerActive(legendSeries.id)"
+                        *ngIf="legendSeries.transformer"
                         icon="performance"
                         iconColor="primary-blue"
                     ></nui-icon>
@@ -139,13 +139,8 @@
                         </nui-menu-group>
                         <nui-menu-group header="Display Transforms" i18n-header>
                             <nui-menu-action
-                                *ngFor="let tr of transformers | keyvalue: asIsOrder"
-                                [class.selected]="
-                                    selectedTransformer(
-                                        legendSeries.id,
-                                        tr.value.transformer?.name ?? undefined
-                                    )
-                                "
+                                *ngFor="let tr of transformers | nuiMapKeyValue"
+                                [class.selected]="legendSeries.transformer?.name === tr.value.transformer?.name"
                                 (actionDone)="
                                     transformData(legendSeries.id, tr.key)
                                 "

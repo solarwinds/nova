@@ -37,6 +37,7 @@ import { NUI_ENV_PROVIDER } from "../environment";
 import { SelectorService } from "../lib/selector/selector.service";
 import { HighlightPipe } from "../pipes/highlight.pipe";
 import { LimitToPipe } from "../pipes/limit-to.pipe";
+import { MapKeyValuePipe } from "../pipes/map-key-value.pipe";
 import { UnitConversionPipe } from "../pipes/unit-conversion.pipe";
 import { DomUtilService } from "../services/dom-util.service";
 import { EdgeDetectionService } from "../services/edge-detection.service";
@@ -102,6 +103,7 @@ import { ZoomContentDirective } from "./directives/zoom-content/zoom-content.dir
         LimitToPipe,
         HighlightPipe,
         UnitConversionPipe,
+        MapKeyValuePipe,
         ZoomContentDirective,
     ],
     exports: [
@@ -116,6 +118,7 @@ import { ZoomContentDirective } from "./directives/zoom-content/zoom-content.dir
         SetFocusDirective,
         UnitConversionPipe,
         HighlightPipe,
+        MapKeyValuePipe,
         ZoomContentDirective,
     ],
     entryComponents: [],

@@ -18,42 +18,26 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import cloneDeep from "lodash/cloneDeep";
+import { MapKeyValuePipe } from "./map-key-value.pipe";
 
-import { ITimeseriesWidgetSeriesData } from "../types";
+describe("pipes >", () => {
+    describe("Map Key Value pipe >", () => {
+        let pipe: MapKeyValuePipe;
 
-export function transformNormalize(
-    data: ITimeseriesWidgetSeriesData[],
-    hasPercentile?: boolean
-): ITimeseriesWidgetSeriesData[] {
-    const transformed = cloneDeep(data);
+        beforeAll(() => {
+            pipe = new MapKeyValuePipe();
+        });
 
-    const dataValues: { x: any[]; y: any[] } = {
-        x: [],
-        y: [],
-    };
-
-    transformed.forEach((d: ITimeseriesWidgetSeriesData) => {
-        dataValues.x.push(d.x.valueOf());
-        dataValues.y.push(d.y);
+        it(`should transform Map to KeyValue array`, () => {
+            const map = new Map<string, number>([
+                ["a", 1],
+                ["b", 2],
+            ]);
+            const arr = [
+                { key: "a", value: 1 },
+                { key: "b", value: 2 },
+            ];
+            expect(pipe.transform(map)).toEqual(arr);
+        });
     });
-
-    const normalizedData: number[] = normalize(dataValues.y);
-    normalizedData.forEach((value: number, index: number) => {
-        transformed[index].y = value * 100.0;
-    });
-
-    function normalize(values: number[]) {
-        // find max and min
-        const max = Math.max(...values);
-        const min = Math.min(...values);
-
-        // if max = min --> return every value = 0
-        // else  --> return normalized data values
-        return max === min
-            ? values.map((value: number) => 0)
-            : values.map((value: number) => (value - min) / (max - min));
-    }
-
-    return transformed;
-}
+});
