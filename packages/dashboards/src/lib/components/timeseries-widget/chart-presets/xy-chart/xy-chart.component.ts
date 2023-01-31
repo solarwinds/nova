@@ -18,14 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    ChangeDetectorRef,
-    Inject,
-    Injectable,
-    OnChanges,
-    OnDestroy,
-    Optional,
-} from "@angular/core";
+import { ChangeDetectorRef, Inject, Injectable, OnChanges, OnDestroy, Optional } from "@angular/core";
 import { merge } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -55,20 +48,11 @@ import {
     ZoomPlugin,
 } from "@nova-ui/charts";
 
-import {
-    CHART_METRIC_REMOVE,
-    INTERACTION,
-    SET_TIMEFRAME,
-} from "../../../../services/types";
-import {
-    DATA_SOURCE,
-    IHasChangeDetector,
-    PIZZAGNA_EVENT_BUS,
-} from "../../../../types";
+import { CHART_METRIC_REMOVE, INTERACTION, SET_TIMEFRAME } from "../../../../services/types";
+import { DATA_SOURCE, IHasChangeDetector, PIZZAGNA_EVENT_BUS } from "../../../../types";
 import { LegendPlacement } from "../../../../widget-types/common/widget/legend";
 import { TimeseriesScalesService } from "../../timeseries-scales.service";
 import {
-    transformStandardize,
     transformChangePoint,
     transformDifference,
     transformFloatingAverage,
@@ -77,20 +61,26 @@ import {
     transformLoessStandardize,
     transformNormalize,
     transformPercentileStd,
+    transformStandardize,
 } from "../../transformer/public-api";
 import {
+    ITimeseriesWidgetSeriesData,
     TimeseriesChartPreset,
     TimeseriesInteractionType,
     TimeseriesTransformer,
 } from "../../types";
 import { TimeseriesChartComponent } from "../timeseries-chart.component";
 
+interface ITransformerDescription {
+    displayName: string;
+    transformer?: (data: ITimeseriesWidgetSeriesData[], hasPercentile?: boolean) => ITimeseriesWidgetSeriesData[];
+}
+
 @Injectable()
 export abstract class XYChartComponent
     extends TimeseriesChartComponent
     implements OnChanges, OnDestroy, IHasChangeDetector
 {
-    public transformer = TimeseriesTransformer;
     public chartAssist: ChartAssist;
     public valueAccessorKey: string = "y";
     public collectionId: string = "";
@@ -98,59 +88,19 @@ export abstract class XYChartComponent
     protected renderer: Renderer<IAccessors>;
     protected accessors: IAccessors;
 
-    public transformers = [
-        {
-            displayName: $localize`None`,
-            value: this.transformer.None,
-            name: undefined,
-        },
-        {
-            displayName: $localize`Change Point`,
-            value: this.transformer.ChangePoint,
-            name: "transformChangePoint",
-        },
-        {
-            displayName: $localize`Difference`,
-            value: this.transformer.Difference,
-            name: "transformDifference",
-        },
-        {
-            displayName: $localize`Floating Average`,
-            value: this.transformer.FloatingAverage,
-            name: "transformFloatingAverage",
-        },
-        {
-            displayName: $localize`Linear`,
-            value: this.transformer.Linear,
-            name: "transformLinReg",
-        },
-        {
-            displayName: $localize`Normalize`,
-            value: this.transformer.Normalize,
-            name: "transformNormalize",
-        },
-        {
-            displayName: $localize`Percentile Standardized`,
-            value: this.transformer.PercentileStd,
-            name: "transformPercentileStd",
-        },
-        {
-            displayName: $localize`Smoothing`,
-            value: this.transformer.Smoothing,
-            name: "transformLoessSmoothing",
-        },
-        {
-            displayName: $localize`Smoothing Standardized`,
-            value: this.transformer.LoessStandardize,
-            name: "transformLoessStandardize",
-        },
-        {
-            displayName: $localize`Standardize`,
-            value: this.transformer.Standardize,
-            name: "transformStandardize",
-        },
-    ];
-
+    public transformers = new Map<TimeseriesTransformer, ITransformerDescription>([
+        [TimeseriesTransformer.None, {displayName: $localize`None`, transformer: undefined}],
+        [TimeseriesTransformer.ChangePoint, {displayName: $localize`Change Point`, transformer: transformChangePoint}],
+        [TimeseriesTransformer.Difference, {displayName: $localize`Difference`, transformer: transformDifference}],
+        [TimeseriesTransformer.FloatingAverage, {displayName: $localize`Floating Average`, transformer: transformFloatingAverage}],
+        [TimeseriesTransformer.Linear, {displayName: $localize`Linear`, transformer: transformLinReg}],
+        [TimeseriesTransformer.Normalize, {displayName: $localize`Normalize`, transformer: transformNormalize}],
+        [TimeseriesTransformer.PercentileStd, {displayName: $localize`Percentile Standardized`, transformer: transformPercentileStd}],
+        [TimeseriesTransformer.Smoothing, {displayName: $localize`Smoothing`, transformer: transformLoessSmoothing}],
+        [TimeseriesTransformer.LoessStandardize, {displayName: $localize`Smoothing Standardized`, transformer: transformLoessStandardize}],
+        [TimeseriesTransformer.Standardize, {displayName: $localize`Standardize`, transformer: transformStandardize}],
+    ]);
+    
     constructor(
         @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,
         @Optional() @Inject(DATA_SOURCE) dataSource: IDataSource,
@@ -380,47 +330,13 @@ export abstract class XYChartComponent
 
     public transformData(
         metricId: string,
-        transformer: TimeseriesTransformer
+        trId: TimeseriesTransformer
     ): void {
         const serie = this.widgetData.series.find((s) => s.id === metricId);
         if (!serie) {
             return;
         }
-
-        switch (transformer) {
-            case TimeseriesTransformer.None:
-                serie.transformer = undefined;
-                break;
-            case TimeseriesTransformer.Normalize:
-                serie.transformer = transformNormalize;
-                break;
-            case TimeseriesTransformer.Standardize:
-                serie.transformer = transformStandardize;
-                break;
-            case TimeseriesTransformer.Smoothing:
-                serie.transformer = transformLoessSmoothing;
-                break;
-            case TimeseriesTransformer.LoessStandardize:
-                serie.transformer = transformLoessStandardize;
-                break;
-            case TimeseriesTransformer.PercentileStd:
-                serie.transformer = transformPercentileStd;
-                break;
-            case TimeseriesTransformer.Linear:
-                serie.transformer = transformLinReg;
-                break;
-            case TimeseriesTransformer.FloatingAverage:
-                serie.transformer = transformFloatingAverage;
-                break;
-            case TimeseriesTransformer.Difference:
-                serie.transformer = transformDifference;
-                break;
-            case TimeseriesTransformer.ChangePoint:
-                serie.transformer = transformChangePoint;
-                break;
-            default:
-                serie.transformer = undefined;
-        }
+        serie.transformer = this.transformers.get(trId)?.transformer;
 
         if (serie.rawData) {
             if (serie.transformer === undefined) {
@@ -441,5 +357,9 @@ export abstract class XYChartComponent
     public selectedTransformer(metricId: string, trName: string): boolean {
         const serie = this.widgetData.series.find((s) => s.id === metricId);
         return serie?.transformer?.name === trName;
+    }
+
+    public asIsOrder(): number {
+        return 0;
     }
 }

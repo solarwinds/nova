@@ -139,18 +139,18 @@
                         </nui-menu-group>
                         <nui-menu-group header="Display Transforms" i18n-header>
                             <nui-menu-action
-                                *ngFor="let tr of transformers"
+                                *ngFor="let tr of transformers | keyvalue: asIsOrder"
                                 [class.selected]="
                                     selectedTransformer(
                                         legendSeries.id,
-                                        tr.name
+                                        tr.value.transformer?.name ?? undefined
                                     )
                                 "
                                 (actionDone)="
-                                    transformData(legendSeries.id, tr.value)
+                                    transformData(legendSeries.id, tr.key)
                                 "
                             >
-                                {{ tr.displayName }}
+                                {{ tr.value.displayName }}
                             </nui-menu-action>
                         </nui-menu-group>
                     </nui-menu>
