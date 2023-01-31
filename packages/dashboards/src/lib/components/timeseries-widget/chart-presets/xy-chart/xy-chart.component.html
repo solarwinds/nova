@@ -140,7 +140,10 @@
                         <nui-menu-group header="Display Transforms" i18n-header>
                             <nui-menu-action
                                 *ngFor="let tr of transformers | nuiMapKeyValue"
-                                [class.selected]="legendSeries.transformer?.name === tr.value.transformer?.name"
+                                [class.selected]="
+                                    legendSeries.transformer?.name ===
+                                    tr.value.transformer?.name
+                                "
                                 (actionDone)="
                                     transformData(legendSeries.id, tr.key)
                                 "
