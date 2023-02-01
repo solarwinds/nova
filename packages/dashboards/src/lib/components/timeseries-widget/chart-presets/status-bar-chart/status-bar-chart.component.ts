@@ -91,7 +91,7 @@ export class StatusBarChartComponent
         public timeseriesScalesService: TimeseriesScalesService,
         public changeDetector: ChangeDetectorRef,
         @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,
-        public zoomPluginsSyncService: TimeseriesZoomPluginsSyncService,
+        public zoomPluginsSyncService: TimeseriesZoomPluginsSyncService
     ) {
         super(timeseriesScalesService, dataSource);
     }
@@ -192,10 +192,13 @@ export class StatusBarChartComponent
 
         if (this.configuration.enableZoom) {
             this.chartAssist.sparks.forEach((spark) => {
-                if (!(spark?.chart as Chart)?.hasPlugin(TimeseriesZoomPlugin as any) && this.configuration.enableZoom) {
-                    spark?.chart?.addPlugin(
-                        this.zoomPlugin
-                    );
+                if (
+                    !(spark?.chart as Chart)?.hasPlugin(
+                        TimeseriesZoomPlugin as any
+                    ) &&
+                    this.configuration.enableZoom
+                ) {
+                    spark?.chart?.addPlugin(this.zoomPlugin);
                 }
             });
 

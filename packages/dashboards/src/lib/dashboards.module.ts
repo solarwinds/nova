@@ -146,7 +146,7 @@ const dashboardComponents = [
     ListNavigationBarComponent,
     WidgetSearchComponent,
     ProportionalDonutContentComponent,
-    TimeseriesInspectionMenuComponent
+    TimeseriesInspectionMenuComponent,
 ];
 
 const entryComponents: IComponentWithLateLoadKey[] = [

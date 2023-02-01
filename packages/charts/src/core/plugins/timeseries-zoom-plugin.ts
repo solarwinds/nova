@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { BrushBehavior, BrushSelection, brushX } from "d3-brush";
-import { event, } from "d3-selection";
+import { event } from "d3-selection";
 import _, { debounce } from "lodash";
 import defaultsDeep from "lodash/defaultsDeep";
 import find from "lodash/find";
@@ -37,11 +37,7 @@ import {
 import { RenderLayerName } from "../../renderers/types";
 import { ChartPlugin } from "../common/chart-plugin";
 import { IScale } from "../common/scales/types";
-import {
-    D3Selection,
-    IChartEvent,
-    InteractionType,
-} from "../common/types";
+import { D3Selection, IChartEvent, InteractionType } from "../common/types";
 
 import { XYGrid } from "../grid/xy-grid";
 import { UtilityService } from "../public-api";
@@ -53,8 +49,8 @@ export interface ITimeseriesZoomPluginConfig {
     enableExternalEvents?: boolean;
 }
 export interface ITimeseriesZoomPluginInspectionFrame {
-    startDate: Moment | undefined,
-    endDate: Moment | undefined,
+    startDate: Moment | undefined;
+    endDate: Moment | undefined;
 }
 
 export class TimeseriesZoomPlugin extends ChartPlugin {
@@ -75,7 +71,7 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
     private brushEndXCoord?: number;
     private brushStartXDate?: Moment;
     private brushEndXDate?: Moment;
-    
+
     private isChartHoverd = false;
     private isPopoverDisplayed = false;
 
@@ -83,27 +79,28 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
 
     private readonly openPopoverSubject = new Subject<number>();
     public readonly openPopover$ = this.openPopoverSubject
-      .asObservable()
-      .pipe(takeUntil(this.destroy$));
+        .asObservable()
+        .pipe(takeUntil(this.destroy$));
 
     private readonly closePopoverSubject = new Subject<void>();
     public readonly closePopover$ = this.closePopoverSubject
-    .asObservable()
-    .pipe(takeUntil(this.destroy$));
-
+        .asObservable()
+        .pipe(takeUntil(this.destroy$));
 
     private readonly zoomCreatedSubject = new Subject<void>();
     public readonly zoomCreated$ = this.zoomCreatedSubject
-    .asObservable()
-    .pipe(takeUntil(this.destroy$));
-
+        .asObservable()
+        .pipe(takeUntil(this.destroy$));
 
     constructor(
-      private config: ITimeseriesZoomPluginConfig = {}, 
-      private syncService: TimeseriesZoomPluginsSyncService,
-      ) {
+        private config: ITimeseriesZoomPluginConfig = {},
+        private syncService: TimeseriesZoomPluginsSyncService
+    ) {
         super();
-        this.config = defaultsDeep(this.config, TimeseriesZoomPlugin.DEFAULT_CONFIG);
+        this.config = defaultsDeep(
+            this.config,
+            TimeseriesZoomPlugin.DEFAULT_CONFIG
+        );
         // registers handlers
         this.interactionHandlerMap = {
             [InteractionType.MouseDown]: this.onBrushStart,
@@ -114,7 +111,6 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
         if (this.config.collectionId) {
             this.syncService.registerPlugin(this.config.collectionId, this);
         }
-
     }
 
     public initialize(): void {
@@ -125,7 +121,7 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
             order: STANDARD_RENDER_LAYERS[RenderLayerName.foreground].order + 1,
             clipped: true,
         });
-        
+
         this.zoomLineLayer = this.chart.getGrid().getLasagna().addLayer({
             name: "zoom-interaction-line",
             order: 900,
@@ -149,17 +145,17 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
                 if (this.interactionHandlerMap[data.interactionType]) {
                     const xCoord = data.coordinates && data.coordinates.x;
                     const yCoord = data.coordinates && data.coordinates.y;
-                    this.interactionHandlerMap[data.interactionType](xCoord, yCoord);
+                    this.interactionHandlerMap[data.interactionType](
+                        xCoord,
+                        yCoord
+                    );
                 }
             });
-
 
         this.chart
             .getEventBus()
             .getStream(INTERACTION_VALUES_EVENT)
-            .pipe(
-                takeUntil(this.destroy$),
-                )
+            .pipe(takeUntil(this.destroy$))
             .subscribe((event: IChartEvent) => {
                 // detects hovering on different charts and closes popover
                 if (event.data.values?.x) {
@@ -179,11 +175,10 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
                 }
             });
 
-
         this.brush = brushX();
         this.brushElement = this.zoomBrushLayer
             .append("g")
-            .attr("class", "brush")
+            .attr("class", "brush");
 
         // engage pointer capture to confine mouse events to the interactive area
         // (in other words, if the 'mouseup' is physically triggered outside the interactive area,
@@ -196,15 +191,17 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
             )
             .on("pointerup", () =>
                 event.target.releasePointerCapture(event.pointerId)
-            )
+            );
     }
 
     public updateDimensions(): void {
         const dimension = this.grid?.config()?.dimension;
         if (this.grid) {
-            this.xScale = find(this.grid.scales["x"].index, { id: this.grid.bottomScaleId }) as IScale<any>;
+            this.xScale = find(this.grid.scales["x"].index, {
+                id: this.grid.bottomScaleId,
+            }) as IScale<any>;
         }
-       
+
         if (!dimension) {
             return;
         }
@@ -225,7 +222,7 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
         this.brushElement.select(".selection").attr("stroke", null);
 
         // makes sure that zoom brush gets correctly resized when chart's dimension changes
-        this.resizeHandler()
+        this.resizeHandler();
     }
 
     public destroy(): void {
@@ -234,14 +231,19 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
         }
 
         this.clearBrush();
-        
+
         this.grid.getLasagna().removeLayer(TimeseriesZoomPlugin.LAYER_NAME);
         this.destroy$.next();
         this.destroy$.complete();
     }
 
     public showPopover(): void {
-        if (!this.isChartHoverd || this.isPopoverDisplayed || (isUndefined(this.brushStartXCoord) && isUndefined(this.brushEndXCoord))) {
+        if (
+            !this.isChartHoverd ||
+            this.isPopoverDisplayed ||
+            (isUndefined(this.brushStartXCoord) &&
+                isUndefined(this.brushEndXCoord))
+        ) {
             return;
         }
         this.isPopoverDisplayed = true;
@@ -256,67 +258,84 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
         this.closePopoverSubject.next();
     }
 
-    public moveBrushByDate(startDate: Moment, endDate: Moment): void {        
-        const startXCoord =  this.xScale.convert(startDate);
-        const endXCoord =  this.xScale.convert(endDate);
-  
+    public moveBrushByDate(startDate: Moment, endDate: Moment): void {
+        const startXCoord = this.xScale.convert(startDate);
+        const endXCoord = this.xScale.convert(endDate);
+
         // brush is already in the correct position
-        if (this.brushStartXCoord === startXCoord && this.brushEndXCoord === endXCoord) {
-          return;
+        if (
+            this.brushStartXCoord === startXCoord &&
+            this.brushEndXCoord === endXCoord
+        ) {
+            return;
         }
-  
-      // in case brush doesn't exist yet
-      if (isUndefined(this.brushStartXCoord) && isUndefined(this.brushStartXCoord)) {
-          this.createBrushWithoutDrag(startXCoord, endXCoord);
-          return;
-      }
-  
+
+        // in case brush doesn't exist yet
+        if (
+            isUndefined(this.brushStartXCoord) &&
+            isUndefined(this.brushStartXCoord)
+        ) {
+            this.createBrushWithoutDrag(startXCoord, endXCoord);
+            return;
+        }
+
         this.moveBrush(startDate, endDate, startXCoord, endXCoord);
-      }
-  
-      public moveBrushByCoord(startX: number | undefined, endX: number| undefined): void {
+    }
+
+    public moveBrushByCoord(
+        startX: number | undefined,
+        endX: number | undefined
+    ): void {
         if (isUndefined(startX) || isUndefined(endX)) {
-          return;
+            return;
         }
-  
+
         // brush is already in the correct position
         if (startX === this.brushStartXCoord && endX === this.brushEndXCoord) {
-          return;
+            return;
         }
-  
+
         // in case brush doesn't exist yet
-        if (isUndefined(this.brushStartXCoord) && isUndefined(this.brushStartXCoord)) {
-          this.createBrushWithoutDrag(startX, endX);
-          return;
+        if (
+            isUndefined(this.brushStartXCoord) &&
+            isUndefined(this.brushStartXCoord)
+        ) {
+            this.createBrushWithoutDrag(startX, endX);
+            return;
         }
-  
-        const startDate =  this.getDateFromCoord(startX);
-        const endDate =  this.getDateFromCoord(endX);
-  
+
+        const startDate = this.getDateFromCoord(startX);
+        const endDate = this.getDateFromCoord(endX);
+
         this.moveBrush(startDate, endDate, startX, endX);
-      }
-  
-      public clearBrush(): void {
-          this.brush.move(this.brushElement, null);
-          this.zoomLineLayer.selectAll("." + TimeseriesZoomPlugin.LAYER_NAME).remove();
-  
-          this.brushEndXCoord = undefined;
-          this.brushStartXCoord = undefined;
-          this.brushStartXDate = undefined;
-          this.brushEndXDate = undefined
-  
-          this.closePopover();
-      }
-  
-      public getInspectionFrame(): ITimeseriesZoomPluginInspectionFrame {
-          return {
-              startDate: this.brushStartXDate,
-              endDate: this.brushEndXDate
-          }
-      }
+    }
+
+    public clearBrush(): void {
+        this.brush.move(this.brushElement, null);
+        this.zoomLineLayer
+            .selectAll("." + TimeseriesZoomPlugin.LAYER_NAME)
+            .remove();
+
+        this.brushEndXCoord = undefined;
+        this.brushStartXCoord = undefined;
+        this.brushStartXDate = undefined;
+        this.brushEndXDate = undefined;
+
+        this.closePopover();
+    }
+
+    public getInspectionFrame(): ITimeseriesZoomPluginInspectionFrame {
+        return {
+            startDate: this.brushStartXDate,
+            endDate: this.brushEndXDate,
+        };
+    }
 
     private resizeHandler = debounce(() => {
-        if (isUndefined(this.brushStartXDate) || isUndefined(this.brushEndXDate)) {
+        if (
+            isUndefined(this.brushStartXDate) ||
+            isUndefined(this.brushEndXDate)
+        ) {
             return;
         }
         // makes sure that popover is closed while resizing
@@ -325,11 +344,13 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
     }, 10);
 
     private getDateFromCoord(xCoord: number): Moment {
-        const xScaleValue = UtilityService.getScaleValues([this.xScale] , xCoord);
-        return moment(UtilityService.getInteractionValues(
-            xScaleValue,
-            this.xScale.id
-        ));
+        const xScaleValue = UtilityService.getScaleValues(
+            [this.xScale],
+            xCoord
+        );
+        return moment(
+            UtilityService.getInteractionValues(xScaleValue, this.xScale.id)
+        );
     }
 
     private addZoomBoundaryLine(xDate: Moment, xCoord: number): void {
@@ -371,16 +392,23 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
         }
 
         if (isUndefined(this.brushEndXCoord)) {
-            const selection = [this.brushStartXCoord, xCoord].sort((a, b) => a - b);
+            const selection = [this.brushStartXCoord, xCoord].sort(
+                (a, b) => a - b
+            );
             this.brush.move(this.brushElement, selection as BrushSelection);
         }
 
         // if the zoom brush is displayed, shows and hides the popover when hovering over zoom area
-        if (!isUndefined(this.brushStartXCoord) && !isUndefined(this.brushEndXCoord)) {
-            if (xCoord >= this.brushStartXCoord && xCoord <= this.brushEndXCoord) {
+        if (
+            !isUndefined(this.brushStartXCoord) &&
+            !isUndefined(this.brushEndXCoord)
+        ) {
+            if (
+                xCoord >= this.brushStartXCoord &&
+                xCoord <= this.brushEndXCoord
+            ) {
                 this.showPopover();
-            }
-            else {
+            } else {
                 this.closePopover();
             }
         }
@@ -418,21 +446,28 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
     };
 
     // simulates creating brash with mouse dragging
-    private createBrushWithoutDrag(startX: number , endX: number): void {
+    private createBrushWithoutDrag(startX: number, endX: number): void {
         this.brushStartXCoord = startX;
         this.brushEndXCoord = endX;
         this.brushStartXDate = this.getDateFromCoord(startX);
         this.brushEndXDate = this.getDateFromCoord(endX);
 
         this.brush.move(this.brushElement, [startX, endX]);
-        this.addZoomBoundaryLine(this.brushStartXDate, this.brushStartXCoord)
-        this.addZoomBoundaryLine(this.brushEndXDate, this.brushEndXCoord)
+        this.addZoomBoundaryLine(this.brushStartXDate, this.brushStartXCoord);
+        this.addZoomBoundaryLine(this.brushEndXDate, this.brushEndXCoord);
     }
 
-    private moveBrush(startDate: Moment, endDate: Moment, startXCoord: number, endXCoord: number): void {
-        const nodes = this.zoomLineLayer.selectAll("." + TimeseriesZoomPlugin.LAYER_NAME).nodes() as Element[];
+    private moveBrush(
+        startDate: Moment,
+        endDate: Moment,
+        startXCoord: number,
+        endXCoord: number
+    ): void {
+        const nodes = this.zoomLineLayer
+            .selectAll("." + TimeseriesZoomPlugin.LAYER_NAME)
+            .nodes() as Element[];
         if (nodes.length != 2) {
-          return;
+            return;
         }
 
         // moves boundary lines
@@ -440,10 +475,13 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
         nodes[0].setAttribute("x2", startXCoord.toString());
         nodes[1].setAttribute("x1", endXCoord.toString());
         nodes[1].setAttribute("x2", endXCoord.toString());
-  
+
         // moves brush
-        this.brush.move(this.brushElement, [startXCoord, endXCoord] as BrushSelection);
-  
+        this.brush.move(this.brushElement, [
+            startXCoord,
+            endXCoord,
+        ] as BrushSelection);
+
         this.brushStartXCoord = startXCoord;
         this.brushStartXDate = startDate;
         this.brushEndXCoord = endXCoord;

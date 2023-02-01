@@ -27,7 +27,10 @@ import {
     OnChanges,
     SimpleChanges,
 } from "@angular/core";
-import { TimeseriesZoomPlugin, TimeseriesZoomPluginsSyncService } from "@nova-ui/charts";
+import {
+    TimeseriesZoomPlugin,
+    TimeseriesZoomPluginsSyncService,
+} from "@nova-ui/charts";
 
 import { IHasChangeDetector } from "../../types";
 import { TimeseriesChartPresetService } from "./timeseries-chart-preset.service";
@@ -63,11 +66,14 @@ export class TimeseriesWidgetComponent
     constructor(
         public timeseriesChartPresetService: TimeseriesChartPresetService,
         public changeDetector: ChangeDetectorRef,
-        public zoomPluginsSyncService: TimeseriesZoomPluginsSyncService,
+        public zoomPluginsSyncService: TimeseriesZoomPluginsSyncService
     ) {}
 
     public ngOnInit(): void {
-        this.zoomPlugin = new TimeseriesZoomPlugin({ collectionId: this.collectionId }, this.zoomPluginsSyncService);
+        this.zoomPlugin = new TimeseriesZoomPlugin(
+            { collectionId: this.collectionId },
+            this.zoomPluginsSyncService
+        );
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -107,5 +113,4 @@ export class TimeseriesWidgetComponent
             this.configuration?.preset !== TimeseriesChartPreset.Line
         );
     }
-
 }

@@ -32,43 +32,58 @@ import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { EventBus, IEvent, IEventDefinition } from "@nova-ui/bits";
-import { TimeseriesZoomPlugin, TimeseriesZoomPluginsSyncService, ITimeseriesZoomPluginInspectionFrame } from "@nova-ui/charts";
+import {
+    TimeseriesZoomPlugin,
+    TimeseriesZoomPluginsSyncService,
+    ITimeseriesZoomPluginInspectionFrame,
+} from "@nova-ui/charts";
 import { PIZZAGNA_EVENT_BUS } from "../../../types";
 
-export const TIMESERIES_INSPECTION_MENU_ZOOM_IN: IEventDefinition<IEvent<ITimeseriesZoomPluginInspectionFrame>> = {
+export const TIMESERIES_INSPECTION_MENU_ZOOM_IN: IEventDefinition<
+    IEvent<ITimeseriesZoomPluginInspectionFrame>
+> = {
     id: "TIMESERIES_INSPECTION_MENU_ZOOM_IN",
-  };
-  
-export const TIMESERIES_INSPECTION_MENU_ZOOM_OUT: IEventDefinition<IEvent<ITimeseriesZoomPluginInspectionFrame>> = {
+};
+
+export const TIMESERIES_INSPECTION_MENU_ZOOM_OUT: IEventDefinition<
+    IEvent<ITimeseriesZoomPluginInspectionFrame>
+> = {
     id: "TIMESERIES_INSPECTION_MENU_ZOOM_OUT",
-  };
-  
-  export const TIMESERIES_INSPECTION_MENU_EXPLORE: IEventDefinition<IEvent<ITimeseriesZoomPluginExplore>> = {
+};
+
+export const TIMESERIES_INSPECTION_MENU_EXPLORE: IEventDefinition<
+    IEvent<ITimeseriesZoomPluginExplore>
+> = {
     id: "TIMESERIES_INSPECTION_MENU_EXPLORE",
-  };
+};
 
-  export const TIMESERIES_INSPECTION_MENU_CLOSE: IEventDefinition<IEvent<void>> = {
-    id: "TIMESERIES_INSPECTION_MENU_CLOSE",
-  };
+export const TIMESERIES_INSPECTION_MENU_CLOSE: IEventDefinition<IEvent<void>> =
+    {
+        id: "TIMESERIES_INSPECTION_MENU_CLOSE",
+    };
 
-  export const TIMESERIES_INSPECTION_MENU_SYNCHRONIZE: IEventDefinition<IEvent<void>> = {
+export const TIMESERIES_INSPECTION_MENU_SYNCHRONIZE: IEventDefinition<
+    IEvent<void>
+> = {
     id: "TIMESERIES_INSPECTION_MENU_SYNCHRONIZE",
-  };
+};
 
- export interface ITimeseriesZoomPluginExplore {
+export interface ITimeseriesZoomPluginExplore {
     ids: string;
     startDate: Date;
     endDate: Date;
     openSidePanel: boolean;
- }
+}
 
 @Component({
     selector: "nui-timeseries-inspection-menu",
     templateUrl: "./timeseries-inspection-menu.component.html",
     styleUrls: ["./timeseries-inspection-menu.component.less"],
 })
-export class TimeseriesInspectionMenuComponent implements OnInit, OnChanges, OnDestroy {
-    @Input() plugin: TimeseriesZoomPlugin; 
+export class TimeseriesInspectionMenuComponent
+    implements OnInit, OnChanges, OnDestroy
+{
+    @Input() plugin: TimeseriesZoomPlugin;
     @Input() exploringEnabled = false;
     @Input() metricIds?: string;
     @Input() collectionId?: string;
@@ -81,36 +96,35 @@ export class TimeseriesInspectionMenuComponent implements OnInit, OnChanges, OnD
         public element: ElementRef,
         @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
         private syncService: TimeseriesZoomPluginsSyncService
-    ) {
-        
-    }
+    ) {}
     public ngOnInit() {
-        this.plugin.zoomCreated$.subscribe(() => 
-            this.explore(false)
-        );
+        this.plugin.zoomCreated$.subscribe(() => this.explore(false));
 
         this.eventBus
-        .getStream(TIMESERIES_INSPECTION_MENU_SYNCHRONIZE)
-        .subscribe(() => {
-            const {startDate, endDate} = this.plugin.getInspectionFrame();
-            if (startDate && endDate) {
-                this.syncService.syncPositionInsideCollection(this.collectionId ?? "", startDate, endDate)
-            }
-        });
+            .getStream(TIMESERIES_INSPECTION_MENU_SYNCHRONIZE)
+            .subscribe(() => {
+                const { startDate, endDate } = this.plugin.getInspectionFrame();
+                if (startDate && endDate) {
+                    this.syncService.syncPositionInsideCollection(
+                        this.collectionId ?? "",
+                        startDate,
+                        endDate
+                    );
+                }
+            });
 
         this.plugin?.openPopover$
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((x: number) => {
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((x: number) => {
                 // moves element to the correct position
-                this.element.nativeElement.style.left = (this.offset + x) + "px";
-        });
+                this.element.nativeElement.style.left = this.offset + x + "px";
+            });
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.allowed?.currentValue) {
             this.plugin.showPopover();
-        }
-        else {
+        } else {
             this.plugin.closePopover();
         }
     }
@@ -118,7 +132,6 @@ export class TimeseriesInspectionMenuComponent implements OnInit, OnChanges, OnD
     public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
-
     }
 
     public clearZoom(): void {
@@ -127,32 +140,32 @@ export class TimeseriesInspectionMenuComponent implements OnInit, OnChanges, OnD
     }
 
     public isZoomInAllowed(): boolean {
-        const {startDate, endDate} = this.plugin.getInspectionFrame();
+        const { startDate, endDate } = this.plugin.getInspectionFrame();
 
         if (!startDate || !endDate) {
             return true;
         }
 
-        // doesn't allow zoom for timeframe smaller than 10 minutes 
+        // doesn't allow zoom for timeframe smaller than 10 minutes
         return endDate.diff(startDate, "minutes") > 10;
     }
 
     public zoomIn(): void {
-        const inspectionTimeframe = this.plugin.getInspectionFrame(); 
+        const inspectionTimeframe = this.plugin.getInspectionFrame();
         this.eventBus.next(TIMESERIES_INSPECTION_MENU_ZOOM_IN, {
             payload: inspectionTimeframe,
-          });
-          this.syncService.clearZoomInsideCollection(this.collectionId ?? "");
+        });
+        this.syncService.clearZoomInsideCollection(this.collectionId ?? "");
     }
 
     public zoomOut(): void {
         const inspectionTimeframe = this.plugin.getInspectionFrame();
         this.eventBus.next(TIMESERIES_INSPECTION_MENU_ZOOM_OUT, {
             payload: inspectionTimeframe,
-          });
-        setTimeout(()=> {
+        });
+        setTimeout(() => {
             this.plugin.closePopover();
-        })
+        });
     }
 
     public explore(openSidePanel = false): void {
@@ -162,8 +175,8 @@ export class TimeseriesInspectionMenuComponent implements OnInit, OnChanges, OnD
                 ids: this.metricIds,
                 startDate: inspectionTimeframe.startDate,
                 endDate: inspectionTimeframe.endDate,
-                openSidePanel
+                openSidePanel,
             },
-          });
+        });
     }
 }

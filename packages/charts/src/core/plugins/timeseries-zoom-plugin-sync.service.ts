@@ -26,19 +26,19 @@ import { TimeseriesZoomPlugin } from "./timeseries-zoom-plugin";
 /**
  * This service registers collections of charts identified by given id. It is used primarily by the ChartCollectionId directive.
  */
-@Injectable(
-    { providedIn: 'root',}
-)
+@Injectable({ providedIn: "root" })
 export class TimeseriesZoomPluginsSyncService {
-    private collections: { [key: string] : TimeseriesZoomPlugin[] } = {};
+    private collections: { [key: string]: TimeseriesZoomPlugin[] } = {};
 
-    public registerPlugin(collectionId: string, plugin: TimeseriesZoomPlugin): void {
+    public registerPlugin(
+        collectionId: string,
+        plugin: TimeseriesZoomPlugin
+    ): void {
         const collection = this.collections[collectionId];
 
         if (!collection) {
             this.collections[collectionId] = [plugin];
-        }
-        else {
+        } else {
             this.collections[collectionId].push(plugin);
         }
     }
@@ -47,13 +47,16 @@ export class TimeseriesZoomPluginsSyncService {
         return this.collections[collectionId] ?? [];
     }
 
-    public removePlugin(collectionId: string, plugin: TimeseriesZoomPlugin): void {
+    public removePlugin(
+        collectionId: string,
+        plugin: TimeseriesZoomPlugin
+    ): void {
         if (!this.collections[collectionId]) {
             return;
         }
 
         const collection = [...this.collections[collectionId]];
-        const idx = collection.findIndex(p => p === plugin);
+        const idx = collection.findIndex((p) => p === plugin);
         if (idx === -1) {
             return;
         }
@@ -62,21 +65,25 @@ export class TimeseriesZoomPluginsSyncService {
         this.collections[collectionId] = collection;
     }
 
-    public syncPositionInsideCollection(collectionId: string, startDate: Moment, endDate: Moment) {
+    public syncPositionInsideCollection(
+        collectionId: string,
+        startDate: Moment,
+        endDate: Moment
+    ) {
         const collection = this.getPlugins(collectionId);
 
         setTimeout(() => {
-            collection.forEach(plugin => {
-                plugin.moveBrushByDate(startDate, endDate)
-            })
-        })
+            collection.forEach((plugin) => {
+                plugin.moveBrushByDate(startDate, endDate);
+            });
+        });
     }
 
     public clearZoomInsideCollection(collectionId: string) {
         const collection = this.getPlugins(collectionId);
 
-        collection.forEach(plugin => {
-            plugin.clearBrush()
-        })
+        collection.forEach((plugin) => {
+            plugin.clearBrush();
+        });
     }
 }

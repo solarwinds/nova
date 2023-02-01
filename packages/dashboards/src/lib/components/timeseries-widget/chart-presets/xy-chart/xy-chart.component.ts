@@ -56,7 +56,7 @@ import {
     TimeseriesZoomPlugin,
     IXYGridConfig,
     XYGrid,
-    TimeseriesZoomPluginsSyncService
+    TimeseriesZoomPluginsSyncService,
 } from "@nova-ui/charts";
 
 import {
@@ -187,9 +187,9 @@ export abstract class XYChartComponent
         @Optional() @Inject(DATA_SOURCE) dataSource: IDataSource,
         public timeseriesScalesService: TimeseriesScalesService,
         public changeDetector: ChangeDetectorRef,
-        public zoomPluginsSyncService: TimeseriesZoomPluginsSyncService,
+        public zoomPluginsSyncService: TimeseriesZoomPluginsSyncService
     ) {
-        super(timeseriesScalesService, dataSource); 
+        super(timeseriesScalesService, dataSource);
     }
 
     protected abstract createAccessors(

@@ -37,7 +37,7 @@ import {
     IXYScales,
     stack,
     TimeIntervalScale,
-    TimeseriesZoomPluginsSyncService
+    TimeseriesZoomPluginsSyncService,
 } from "@nova-ui/charts";
 
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../../types";
@@ -57,9 +57,15 @@ export class StackedBarChartComponent extends XYChartComponent {
         @Optional() @Inject(DATA_SOURCE) dataSource: IDataSource,
         timeseriesScalesService: TimeseriesScalesService,
         changeDetector: ChangeDetectorRef,
-        zoomPluginsSyncService: TimeseriesZoomPluginsSyncService,
+        zoomPluginsSyncService: TimeseriesZoomPluginsSyncService
     ) {
-        super(eventBus, dataSource, timeseriesScalesService, changeDetector, zoomPluginsSyncService);
+        super(
+            eventBus,
+            dataSource,
+            timeseriesScalesService,
+            changeDetector,
+            zoomPluginsSyncService
+        );
 
         this.valueAccessorKey = "value";
         // disable pointer events on bars to ensure the zoom drag target is the mouse interactive area rather than the bars
