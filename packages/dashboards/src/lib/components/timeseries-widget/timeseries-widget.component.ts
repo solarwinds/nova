@@ -23,9 +23,11 @@ import {
     Component,
     HostBinding,
     Input,
+    OnInit,
     OnChanges,
     SimpleChanges,
 } from "@angular/core";
+import { TimeseriesZoomPlugin, TimeseriesZoomPluginsSyncService } from "@nova-ui/charts";
 
 import { IHasChangeDetector } from "../../types";
 import { TimeseriesChartPresetService } from "./timeseries-chart-preset.service";
@@ -43,7 +45,7 @@ import {
     templateUrl: "./timeseries-widget.component.html",
 })
 export class TimeseriesWidgetComponent
-    implements OnChanges, IHasChangeDetector
+    implements OnInit, OnChanges, IHasChangeDetector
 {
     public static lateLoadKey = "TimeseriesWidgetComponent";
 
@@ -55,10 +57,18 @@ export class TimeseriesWidgetComponent
 
     public chartPreset: IChartPreset;
 
+    public zoomPlugin: TimeseriesZoomPlugin;
+    public allowPopover = false;
+
     constructor(
         public timeseriesChartPresetService: TimeseriesChartPresetService,
-        public changeDetector: ChangeDetectorRef
+        public changeDetector: ChangeDetectorRef,
+        public zoomPluginsSyncService: TimeseriesZoomPluginsSyncService,
     ) {}
+
+    public ngOnInit(): void {
+        this.zoomPlugin = new TimeseriesZoomPlugin({ collectionId: this.collectionId }, this.zoomPluginsSyncService);
+    }
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.configuration) {
@@ -82,4 +92,20 @@ export class TimeseriesWidgetComponent
     public shouldShowChart(): boolean {
         return (this.widgetData?.series?.length ?? 0) > 0;
     }
+
+    public toggleLeave() {
+        this.allowPopover = false;
+    }
+    public toggleEnter() {
+        this.allowPopover = true;
+    }
+
+    public isExploringEnabled(): boolean {
+        return (
+            this.configuration?.preset !== TimeseriesChartPreset.StackedArea &&
+            this.configuration?.preset !== TimeseriesChartPreset.StatusBar &&
+            this.configuration?.preset !== TimeseriesChartPreset.Line
+        );
+    }
+
 }

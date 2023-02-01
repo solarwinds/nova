@@ -1,0 +1,23 @@
+
+<nui-popover
+    class="popover"
+    trigger="openPopoverSubject"
+    placement="right"
+    [unlimited]="true"
+    [template]="popoverTemplate"
+    [container]="element.nativeElement"
+    [openPopover]="plugin.openPopover$"
+    [closePopover]="plugin.closePopover$"
+    [hasPadding]="false"
+    [withGrowAfterOpen]="true"
+>
+</nui-popover>
+
+<ng-template #popoverTemplate>
+    <div class="inspection-menu">
+        <button *ngIf="exploringEnabled" nui-button type="button" icon="details"  title="Inspect selection in the data explorer" i18n-title (click)="explore(true)"></button>
+        <button *ngIf=isZoomInAllowed() nui-button type="button" icon="zoom-in" title="Zoom In" i18n-title (click)="zoomIn()"></button>
+        <button nui-button type="button" icon="zoom-out" title="Zoom Out" i18n-title (click)="zoomOut()"></button>
+        <button nui-button type="button" icon="remove"title="Clear selection" i18n-title (click)="clearZoom()"></button>
+      </div>
+</ng-template>

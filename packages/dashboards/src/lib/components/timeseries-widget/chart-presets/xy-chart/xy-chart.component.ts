@@ -53,6 +53,10 @@ import {
     SET_DOMAIN_EVENT,
     XYGrid,
     ZoomPlugin,
+    TimeseriesZoomPlugin,
+    IXYGridConfig,
+    XYGrid,
+    TimeseriesZoomPluginsSyncService
 } from "@nova-ui/charts";
 
 import {
@@ -175,14 +179,17 @@ export abstract class XYChartComponent
             },
         ],
     ]);
+    
+    public zoomPlugin: TimeseriesZoomPlugin;
 
     constructor(
         @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,
         @Optional() @Inject(DATA_SOURCE) dataSource: IDataSource,
         public timeseriesScalesService: TimeseriesScalesService,
-        public changeDetector: ChangeDetectorRef
+        public changeDetector: ChangeDetectorRef,
+        public zoomPluginsSyncService: TimeseriesZoomPluginsSyncService,
     ) {
-        super(timeseriesScalesService, dataSource);
+        super(timeseriesScalesService, dataSource); 
     }
 
     protected abstract createAccessors(
@@ -325,7 +332,7 @@ export abstract class XYChartComponent
         }
 
         if (this.configuration.enableZoom) {
-            chart.addPlugin(new ZoomPlugin());
+            chart.addPlugin(this.zoomPlugin);
         }
 
         chart

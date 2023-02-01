@@ -23,3 +23,4 @@ export * from "./timeseries-widget.component";
 export * from "./timeseries-chart-preset.service";
 export * from "./chart-presets/public-api";
 export * from "./transformer/public-api";
+export * from "./timeseries-inspection-menu/timeseries-inspection-menu.component";
