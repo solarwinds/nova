@@ -308,12 +308,6 @@
         shape-rendering: crispEdges;
     }
 
-    .zoom-interaction-line {
-        .setCssVariable(stroke, nui-color-bg-inverse);
-        stroke-width: 1px;
-        shape-rendering: crispEdges;
-    }
-
     .interaction-label {
         .setCssVariable(fill, nui-color-bg-inverse);
         &__text {
@@ -336,6 +330,22 @@
     &-tooltip-pane {
         /* this overrides an inline style (it's dynamic) set by .cdk-overlay-pane, so !important is necessary here */
         pointer-events: none !important;
+    }
+
+
+    .timeseries-zoom-brush {
+        .setCssVariable(stroke, nui-shadow-color-stronger);
+        stroke-width: 1px;
+        shape-rendering: crispEdges;
+    }
+
+    .lasagna-layer-timeseries-zoom-brush {
+        .brush .handle {
+            display: none;
+        }
+        .brush .selection {
+            cursor: crosshair ;
+        }
     }
 }
 

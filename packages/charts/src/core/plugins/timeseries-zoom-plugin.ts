@@ -412,7 +412,9 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
             this.brushEndXDate = date;
         }
 
-        this.zoomCreatedSubject.next();
+        if (this.isChartHoverd) {
+            this.zoomCreatedSubject.next();
+        }
     };
 
     // simulates creating brash with mouse dragging
