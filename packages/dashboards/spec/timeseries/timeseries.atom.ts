@@ -18,8 +18,34 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./types";
-export * from "./timeseries-widget.component";
-export * from "./timeseries-chart-preset.service";
-export * from "./chart-presets/public-api";
-export * from "./transformer/public-api";
+import { Atom } from "@nova-ui/bits/sdk/atoms";
+import { ChartAtom } from "@nova-ui/charts/sdk/atoms/chart/atoms/chart.atom";
+
+import { LegendSeriesAtom } from "./legend-series.atom";
+
+export class TimeseriesAtom extends Atom {
+    public static CSS_CLASS = "timeseries-widget-content";
+
+    private root = this.getElement();
+
+    public get chart(): ChartAtom {
+        return Atom.findIn(ChartAtom, this.root);
+    }
+
+    public async getLegendSeries(): Promise<LegendSeriesAtom[]> {
+        const legendCount = await Atom.findCount(LegendSeriesAtom, this.root);
+        return new Array(legendCount)
+            .fill(0)
+            .map((_, index) => Atom.findIn(LegendSeriesAtom, this.root, index));
+    }
+
+    public async transformSeries(
+        transformName: string,
+        index: number
+    ): Promise<void> {
+        const legend = (await this.getLegendSeries())[index];
+        const transform = await legend.getTransform(transformName);
+
+        await transform?.clickItem();
+    }
+}

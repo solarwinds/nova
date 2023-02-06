@@ -40,22 +40,26 @@ import {
     IDataPointsPayload,
     IInteractionDataPointsEvent,
     IInteractionValuesPayload,
-    InteractionType,
     INTERACTION_DATA_POINTS_EVENT,
     INTERACTION_VALUES_EVENT,
+    InteractionType,
     IScale,
     ISetDomainEventPayload,
     IValueProvider,
+    IXYGridConfig,
     IXYScales,
     Renderer,
     SequentialColorProvider,
     SET_DOMAIN_EVENT,
-    ZoomPlugin,
-    IXYGridConfig,
     XYGrid,
+    ZoomPlugin,
 } from "@nova-ui/charts";
 
-import { INTERACTION, SET_TIMEFRAME } from "../../../../services/types";
+import {
+    CHART_METRIC_REMOVE,
+    INTERACTION,
+    SET_TIMEFRAME,
+} from "../../../../services/types";
 import {
     DATA_SOURCE,
     IHasChangeDetector,
@@ -63,8 +67,32 @@ import {
 } from "../../../../types";
 import { LegendPlacement } from "../../../../widget-types/common/widget/legend";
 import { TimeseriesScalesService } from "../../timeseries-scales.service";
-import { TimeseriesInteractionType } from "../../types";
+import {
+    transformChangePoint,
+    transformDifference,
+    transformFloatingAverage,
+    transformLinReg,
+    transformLoessSmoothing,
+    transformLoessStandardize,
+    transformNormalize,
+    transformPercentileStd,
+    transformStandardize,
+} from "../../transformer/public-api";
+import {
+    ITimeseriesWidgetSeriesData,
+    TimeseriesChartPreset,
+    TimeseriesInteractionType,
+    TimeseriesTransformer,
+} from "../../types";
 import { TimeseriesChartComponent } from "../timeseries-chart.component";
+
+interface ITransformerDescription {
+    displayName: string;
+    transformer?: (
+        data: ITimeseriesWidgetSeriesData[],
+        hasPercentile?: boolean
+    ) => ITimeseriesWidgetSeriesData[];
+}
 
 @Injectable()
 export abstract class XYChartComponent
@@ -77,6 +105,76 @@ export abstract class XYChartComponent
 
     protected renderer: Renderer<IAccessors>;
     protected accessors: IAccessors;
+
+    public transformers = new Map<
+        TimeseriesTransformer,
+        ITransformerDescription
+    >([
+        [
+            TimeseriesTransformer.None,
+            { displayName: $localize`None`, transformer: undefined },
+        ],
+        [
+            TimeseriesTransformer.ChangePoint,
+            {
+                displayName: $localize`Change Point`,
+                transformer: transformChangePoint,
+            },
+        ],
+        [
+            TimeseriesTransformer.Difference,
+            {
+                displayName: $localize`Difference`,
+                transformer: transformDifference,
+            },
+        ],
+        [
+            TimeseriesTransformer.FloatingAverage,
+            {
+                displayName: $localize`Floating Average`,
+                transformer: transformFloatingAverage,
+            },
+        ],
+        [
+            TimeseriesTransformer.Linear,
+            { displayName: $localize`Linear`, transformer: transformLinReg },
+        ],
+        [
+            TimeseriesTransformer.Normalize,
+            {
+                displayName: $localize`Normalize`,
+                transformer: transformNormalize,
+            },
+        ],
+        [
+            TimeseriesTransformer.PercentileStd,
+            {
+                displayName: $localize`Percentile Standardized`,
+                transformer: transformPercentileStd,
+            },
+        ],
+        [
+            TimeseriesTransformer.Smoothing,
+            {
+                displayName: $localize`Smoothing`,
+                transformer: transformLoessSmoothing,
+            },
+        ],
+        [
+            TimeseriesTransformer.LoessStandardize,
+            {
+                displayName: $localize`Smoothing Standardized`,
+                transformer: transformLoessStandardize,
+            },
+        ],
+        [
+            TimeseriesTransformer.Standardize,
+            {
+                displayName: $localize`Standardize`,
+                transformer: transformStandardize,
+            },
+        ],
+    ]);
 
     constructor(
         @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,
@@ -287,5 +385,39 @@ export abstract class XYChartComponent
                     });
                 }
             });
+    }
+
+    public displayLegendMenu(): boolean {
+        return (
+            this.configuration.preset === TimeseriesChartPreset.Line &&
+            !!this.configuration.allowLegendMenu
+        );
+    }
+
+    public removeMetric(metricId: string): void {
+        this.eventBus.next(CHART_METRIC_REMOVE, {
+            payload: {
+                metricId: metricId,
+                groupUniqueId: this.configuration.groupUniqueId,
+            },
+        });
+    }
+
+    public transformData(metricId: string, trId: TimeseriesTransformer): void {
+        const serie = this.widgetData.series.find((s) => s.id === metricId);
+        if (!serie) {
+            return;
+        }
+        serie.transformer = this.transformers.get(trId)?.transformer;
+
+        if (serie.rawData) {
+            if (serie.transformer === undefined) {
+                // revert transformed data
+                serie.data = serie.rawData;
+            } else {
+                this.transformSeriesData(serie);
+            }
+        }
+        this.updateChartData();
     }
 }

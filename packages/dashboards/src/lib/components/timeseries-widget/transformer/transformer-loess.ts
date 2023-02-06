@@ -18,8 +18,34 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./types";
-export * from "./timeseries-widget.component";
-export * from "./timeseries-chart-preset.service";
-export * from "./chart-presets/public-api";
-export * from "./transformer/public-api";
+import cloneDeep from "lodash/cloneDeep";
+
+import { ITimeseriesWidgetSeriesData } from "../types";
+import { loess } from "./loess";
+
+export function transformLoessSmoothing(
+    data: ITimeseriesWidgetSeriesData[],
+    hasPercentile?: boolean
+): ITimeseriesWidgetSeriesData[] {
+    const transformed = cloneDeep(data);
+
+    const dataValues: { x: any[]; y: any[] } = {
+        x: [],
+        y: [],
+    };
+
+    transformed.forEach((d: ITimeseriesWidgetSeriesData) => {
+        dataValues.x.push(d.x.valueOf());
+        dataValues.y.push(d.y);
+    });
+
+    const smoothedData: number[] = loess().bandwidth(0.1)(
+        dataValues.x,
+        dataValues.y
+    );
+    smoothedData.forEach((value: number, index: number) => {
+        transformed[index].y = value;
+    });
+
+    return transformed;
+}

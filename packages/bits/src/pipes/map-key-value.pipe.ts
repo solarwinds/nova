@@ -18,8 +18,26 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./types";
-export * from "./timeseries-widget.component";
-export * from "./timeseries-chart-preset.service";
-export * from "./chart-presets/public-api";
-export * from "./transformer/public-api";
+import { KeyValue } from "@angular/common";
+import { Pipe, PipeTransform } from "@angular/core";
+
+/**
+ * Pipe for transforming Map to KeyValue array without ordering
+ *
+ * __Parameters :__
+ *
+ *   input - source Map
+ *
+ * __Usage :__
+ *   Map | nuiMapKeyValue
+ *
+ * __Example :__
+ *   "let items of itemsMap | nuiMapKeyValue"
+ *
+ */
+@Pipe({ name: "nuiMapKeyValue" })
+export class MapKeyValuePipe implements PipeTransform {
+    public transform<K, V>(input: ReadonlyMap<K, V>): Array<KeyValue<K, V>> {
+        return Array.from(input.entries(), ([key, value]) => ({ key, value }));
+    }
+}

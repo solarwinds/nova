@@ -18,8 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./types";
-export * from "./timeseries-widget.component";
-export * from "./timeseries-chart-preset.service";
-export * from "./chart-presets/public-api";
-export * from "./transformer/public-api";
+export * from "./transformer-difference";
+export * from "./transformer-change-point";
+export * from "./transformer-floating-average";
+export * from "./transformer-loess";
+export * from "./transformer-normalize";
+export * from "./transformer-lin-reg";
+export * from "./transformer-loess-standardize";
+export * from "./transformer-percentile-std";
+export * from "./transformer-standardize";

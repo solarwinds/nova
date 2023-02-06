@@ -18,8 +18,26 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./types";
-export * from "./timeseries-widget.component";
-export * from "./timeseries-chart-preset.service";
-export * from "./chart-presets/public-api";
-export * from "./transformer/public-api";
+import { MapKeyValuePipe } from "./map-key-value.pipe";
+
+describe("pipes >", () => {
+    describe("Map Key Value pipe >", () => {
+        let pipe: MapKeyValuePipe;
+
+        beforeAll(() => {
+            pipe = new MapKeyValuePipe();
+        });
+
+        it(`should transform Map to KeyValue array`, () => {
+            const map = new Map<string, number>([
+                ["a", 1],
+                ["b", 2],
+            ]);
+            const arr = [
+                { key: "a", value: 1 },
+                { key: "b", value: 2 },
+            ];
+            expect(pipe.transform(map)).toEqual(arr);
+        });
+    });
+});

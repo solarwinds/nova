@@ -41,6 +41,8 @@ export interface ITimeseriesWidgetConfig {
         [key: string]: any;
     };
     hasAdjacentChart?: boolean;
+    groupUniqueId?: string;
+    allowLegendMenu?: boolean;
 }
 
 export interface ITimeseriesWidgetSeries {
@@ -54,6 +56,8 @@ export interface ITimeseriesWidgetData<T = ITimeseriesWidgetSeriesData> {
     name: string;
     description: string;
     data: T[];
+    rawData?: T[];
+    transformer?: (data: T[], hasPercentile?: boolean) => T[];
     link?: string;
     secondaryLink?: string;
 }
@@ -125,4 +129,17 @@ export enum TimeseriesChartPreset {
 
     StackedBar = "stackedBar",
     StatusBar = "statusBar",
+}
+
+export enum TimeseriesTransformer {
+    None = "none",
+    Normalize = "normalize",
+    ChangePoint = "changePoint",
+    Difference = "difference",
+    Linear = "linear",
+    PercentileStd = "percentileStd",
+    Smoothing = "smoothing",
+    LoessStandardize = "loessStandardize",
+    Standardize = "standardize",
+    FloatingAverage = "floatingAverage",
 }
