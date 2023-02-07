@@ -179,7 +179,7 @@ export abstract class XYChartComponent
             },
         ],
     ]);
-    
+
     public zoomPlugin: TimeseriesZoomPlugin;
 
     constructor(

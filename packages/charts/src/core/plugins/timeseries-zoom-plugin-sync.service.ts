@@ -23,9 +23,6 @@ import { Moment } from "moment";
 
 import { TimeseriesZoomPlugin } from "./timeseries-zoom-plugin";
 
-/**
- * This service registers collections of charts identified by given id. It is used primarily by the ChartCollectionId directive.
- */
 @Injectable({ providedIn: "root" })
 export class TimeseriesZoomPluginsSyncService {
     private collections: { [key: string]: TimeseriesZoomPlugin[] } = {};
