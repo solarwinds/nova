@@ -44,6 +44,7 @@ export interface ITimeseriesWidgetConfig {
     groupUniqueId?: string;
     allowLegendMenu?: boolean;
     metricIds?: string;
+    realTimeIds?: string[];
 }
 
 export interface ITimeseriesWidgetSeries {

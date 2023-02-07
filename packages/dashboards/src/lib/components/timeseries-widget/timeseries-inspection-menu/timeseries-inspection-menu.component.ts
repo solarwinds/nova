@@ -38,6 +38,7 @@ import {
     ITimeseriesZoomPluginInspectionFrame,
 } from "@nova-ui/charts";
 import { PIZZAGNA_EVENT_BUS } from "../../../types";
+import { Moment } from "moment";
 
 export const TIMESERIES_INSPECTION_MENU_ZOOM_IN: IEventDefinition<
     IEvent<ITimeseriesZoomPluginInspectionFrame>
@@ -52,7 +53,7 @@ export const TIMESERIES_INSPECTION_MENU_ZOOM_OUT: IEventDefinition<
 };
 
 export const TIMESERIES_INSPECTION_MENU_EXPLORE: IEventDefinition<
-    IEvent<ITimeseriesZoomPluginExplore>
+    IEvent<ITimeseriesZoomPluginExploreData>
 > = {
     id: "TIMESERIES_INSPECTION_MENU_EXPLORE",
 };
@@ -68,11 +69,12 @@ export const TIMESERIES_INSPECTION_MENU_SYNCHRONIZE: IEventDefinition<
     id: "TIMESERIES_INSPECTION_MENU_SYNCHRONIZE",
 };
 
-export interface ITimeseriesZoomPluginExplore {
+export interface ITimeseriesZoomPluginExploreData {
     ids: string;
-    startDate: Date;
-    endDate: Date;
+    startDate: Moment;
+    endDate: Moment;
     openSidePanel: boolean;
+    exploringEnabled: boolean;
 }
 
 @Component({
@@ -176,6 +178,7 @@ export class TimeseriesInspectionMenuComponent
                 startDate: inspectionTimeframe.startDate,
                 endDate: inspectionTimeframe.endDate,
                 openSidePanel,
+                exploringEnabled: this.exploringEnabled,
             },
         });
     }
