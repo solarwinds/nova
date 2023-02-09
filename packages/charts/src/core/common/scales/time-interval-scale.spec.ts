@@ -126,7 +126,7 @@ describe("TimeIntervalScale >", () => {
                             (scale.formatters.title as Formatter<Date>)(
                                 new Date(2021, 2, 14, 3)
                             )
-                        ).toEqual("3:00 AM - 4:00 AM");
+                        ).toEqual("3:00 AM - 4:00 AM");
                     });
                 });
 
@@ -154,7 +154,7 @@ describe("TimeIntervalScale >", () => {
                             (scale.formatters.title as Formatter<Date>)(
                                 new Date(2020, 10, 1, 5)
                             )
-                        ).toEqual("5:00 AM - 6:00 AM");
+                        ).toEqual("5:00 AM - 6:00 AM");
                     });
                 });
             });
