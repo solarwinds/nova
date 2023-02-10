@@ -182,12 +182,12 @@ jobs:
             - run:
                   name: Publish bits
                   command: |
-                      if [ -f $PROJECT_DIR/package-cached ]; then
-                          echo "This package was restored from cache so we're skipping the publish step"
-                          circleci step halt
-                      else
-                          yarn run publish-ci
-                      fi
+                      #   if [ -f $PROJECT_DIR/package-cached ]; then
+                      #       echo "This package was restored from cache so we're skipping the publish step"
+                      #       circleci step halt
+                      #   else
+                      yarn run publish-ci
+                      #   fi
     bits-verify:
         working_directory: ~/nova
         docker:
@@ -200,12 +200,12 @@ jobs:
             - run:
                   name: Verify published package
                   command: |
-                      if [ -f $PROJECT_DIR/package-cached ]; then
-                          echo "This package was restored from cache so we're skipping the verify step"
-                          circleci step halt
-                      else
-                          yarn run verify-ci
-                      fi
+                      #   if [ -f $PROJECT_DIR/package-cached ]; then
+                      #       echo "This package was restored from cache so we're skipping the verify step"
+                      #       circleci step halt
+                      #   else
+                      yarn run verify-ci
+                      #   fi
     charts-build:
         working_directory: ~/nova
         docker:
@@ -369,12 +369,12 @@ jobs:
             - run:
                   name: Publish charts
                   command: |
-                      if [ -f $PROJECT_DIR/package-cached ]; then
-                          echo "This package was restored from cache so we're skipping the publish step"
-                          circleci step halt
-                      else
-                          yarn run publish-ci
-                      fi
+                      #   if [ -f $PROJECT_DIR/package-cached ]; then
+                      #       echo "This package was restored from cache so we're skipping the publish step"
+                      #       circleci step halt
+                      #   else
+                      yarn run publish-ci
+                      #   fi
     charts-verify:
         working_directory: ~/nova
         docker:
@@ -615,7 +615,7 @@ jobs:
         environment:
             SOURCE_BRANCH: main
             # TODO: Change to false
-            CREATE_RELEASE_BRANCH: true
+            CREATE_RELEASE_BRANCH: "true"
             RELEASE_BRANCH: release/v13.0.x
             INCREMENT_TYPE: patch
         steps:

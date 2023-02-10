@@ -33,13 +33,18 @@ PACKAGE_LICENSE=$(node -p "require('./package.json').license")
 yarn config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
 yarn config set init-license $PACKAGE_LICENSE
 
+npm info $PACKAGE_NAME@$PACKAGE_VERSION version 2>/dev/null && {
+    echo "Package $PACKAGE_NAME@$PACKAGE_VERSION does already exist on npmjs.org"
+    exit 1
+}
+
 case $CIRCLE_BRANCH in
       "release/"*)
           echo Publishing release package
             yarn publish ./dist --access public
             ;;
 
-      "main" | "next" | "hotfix/"* | "improvement/"*)
+      "main" | "next" | "hotfix/"* | "cci/"*)
           echo Publishing $CIRCLE_BRANCH package
             yarn publish ./dist --tag $CIRCLE_BRANCH --access public
             ;;
