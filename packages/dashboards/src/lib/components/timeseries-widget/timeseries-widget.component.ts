@@ -39,6 +39,7 @@ import {
     ITimeseriesOutput,
     ITimeseriesWidgetConfig,
     TimeseriesChartPreset,
+    TimeseriesChartTypes,
 } from "./types";
 
 /** @ignore */
@@ -108,9 +109,9 @@ export class TimeseriesWidgetComponent
 
     public isExploringEnabled(): boolean {
         return (
-            this.configuration?.preset !== TimeseriesChartPreset.StackedArea &&
-            this.configuration?.preset !== TimeseriesChartPreset.StatusBar &&
-            this.configuration?.preset !== TimeseriesChartPreset.Line
+            this.configuration?.type !== TimeseriesChartTypes.gauge &&
+            this.configuration?.type !== TimeseriesChartTypes.multi &&
+            this.configuration?.type !== TimeseriesChartTypes.state
         );
     }
 }
