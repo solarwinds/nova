@@ -30,7 +30,7 @@ PACKAGE_NAME=$(node -p "require('./package.json').name")
 PACKAGE_VERSION=$(node -p "require('./package.json').version")
 PACKAGE_LICENSE=$(node -p "require('./package.json').license")
 
-yarn config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
+echo "_auth=$NPM_TOKEN\nalways-auth=true" > .npmrc
 yarn config set init-license $PACKAGE_LICENSE
 
 npm info $PACKAGE_NAME@$PACKAGE_VERSION version 2>/dev/null && {
