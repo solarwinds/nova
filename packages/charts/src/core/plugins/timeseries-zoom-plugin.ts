@@ -93,7 +93,7 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
         .pipe(takeUntil(this.destroy$));
 
     constructor(
-        private config: ITimeseriesZoomPluginConfig = {},
+        public config: ITimeseriesZoomPluginConfig = {},
         private syncService: TimeseriesZoomPluginsSyncService
     ) {
         super();
@@ -298,7 +298,7 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
         // in case brush doesn't exist yet
         if (
             isUndefined(this.brushStartXCoord) &&
-            isUndefined(this.brushStartXCoord)
+            isUndefined(this.brushEndXCoord)
         ) {
             this.createBrushWithoutDrag(startX, endX);
             return;
@@ -415,12 +415,6 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
     };
 
     private onBrushEnd = (xCoord: number) => {
-        if (this.brushStartXCoord === xCoord) {
-            // clicking without dragging removes the existing zoom
-            this.clearBrush();
-            return;
-        }
-
         if (isUndefined(this.brushStartXCoord)) {
             return;
         }
