@@ -35,7 +35,8 @@ import {
     SET_DOMAIN_EVENT,
     TimeScale,
     XYGrid,
-    ZoomPlugin,
+    TimeseriesZoomPlugin,
+    TimeseriesZoomPluginsSyncService,
 } from "@nova-ui/charts";
 
 import { ISerializableTimeframe } from "../../../../configurator/services/types";
@@ -72,6 +73,11 @@ class TestComponent extends XYChartComponent {
         // @ts-ignore: Avoiding strict mode errors, keeping old flow
         return new ChartAssist(new Chart(new XYGrid()), null, palette);
     }
+
+    public zoomPlugin: TimeseriesZoomPlugin = new TimeseriesZoomPlugin(
+        {},
+        new TimeseriesZoomPluginsSyncService()
+    );
 }
 
 describe("XYChartComponent", () => {
@@ -186,7 +192,9 @@ describe("XYChartComponent", () => {
                 enableZoom: false,
             } as ITimeseriesWidgetConfig;
             component.ngOnChanges(initializationChanges);
-            expect(getChart().hasPlugin(ZoomPlugin)).toEqual(false);
+            expect(getChart().hasPlugin(TimeseriesZoomPlugin as any)).toEqual(
+                false
+            );
         });
 
         it("should add the zoom plugin if zoom is enabled", () => {
@@ -194,7 +202,9 @@ describe("XYChartComponent", () => {
                 enableZoom: true,
             } as ITimeseriesWidgetConfig;
             component.ngOnChanges(initializationChanges);
-            expect(getChart().hasPlugin(ZoomPlugin)).toEqual(true);
+            expect(getChart().hasPlugin(TimeseriesZoomPlugin as any)).toEqual(
+                true
+            );
         });
 
         it("should subscribe to the SET_DOMAIN event", () => {

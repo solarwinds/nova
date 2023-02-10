@@ -46,13 +46,10 @@ import {
     IScale,
     ISetDomainEventPayload,
     IValueProvider,
-    IXYGridConfig,
     IXYScales,
     Renderer,
     SequentialColorProvider,
     SET_DOMAIN_EVENT,
-    XYGrid,
-    ZoomPlugin,
     TimeseriesZoomPlugin,
     IXYGridConfig,
     XYGrid,
@@ -106,6 +103,7 @@ export abstract class XYChartComponent
     public chartAssist: ChartAssist;
     public valueAccessorKey: string = "y";
     public collectionId: string = "";
+    public zoomPlugin: TimeseriesZoomPlugin;
 
     protected renderer: Renderer<IAccessors>;
     protected accessors: IAccessors;
@@ -179,8 +177,6 @@ export abstract class XYChartComponent
             },
         ],
     ]);
-
-    public zoomPlugin: TimeseriesZoomPlugin;
 
     constructor(
         @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,

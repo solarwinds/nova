@@ -22,7 +22,12 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import moment from "moment/moment";
 
 import { EventBus, IconService, IEvent } from "@nova-ui/bits";
-import { Chart, SET_DOMAIN_EVENT, ZoomPlugin } from "@nova-ui/charts";
+import {
+    Chart,
+    SET_DOMAIN_EVENT,
+    TimeseriesZoomPlugin,
+    TimeseriesZoomPluginsSyncService,
+} from "@nova-ui/charts";
 
 import { SET_TIMEFRAME } from "../../../../services/types";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../types";
@@ -57,6 +62,10 @@ describe("StatusChartComponent", () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(StatusBarChartComponent);
         component = fixture.componentInstance;
+        component.zoomPlugin = new TimeseriesZoomPlugin(
+            {},
+            new TimeseriesZoomPluginsSyncService()
+        );
         component.widgetData = {
             series: [
                 {
@@ -114,9 +123,11 @@ describe("StatusChartComponent", () => {
             component.configuration.enableZoom = true;
             (<any>component).updateChartData();
             component.chartAssist.sparks.forEach((spark) => {
-                expect((spark?.chart as Chart)?.hasPlugin(ZoomPlugin)).toEqual(
-                    true
-                );
+                expect(
+                    (spark?.chart as Chart)?.hasPlugin(
+                        TimeseriesZoomPlugin as any
+                    )
+                ).toEqual(true);
             });
         });
 
@@ -127,15 +138,21 @@ describe("StatusChartComponent", () => {
             (<any>component).updateChartData();
             (<any>component).updateChartData();
 
-            spyOn(ZoomPlugin.prototype, "destroy");
+            spyOn(TimeseriesZoomPlugin.prototype, "destroy");
             component.chartAssist.sparks.forEach((spark) => {
-                expect((spark?.chart as Chart)?.hasPlugin(ZoomPlugin)).toEqual(
-                    true
+                expect(
+                    (spark?.chart as Chart)?.hasPlugin(
+                        TimeseriesZoomPlugin as any
+                    )
+                ).toEqual(true);
+                (spark?.chart as Chart)?.removePlugin(
+                    TimeseriesZoomPlugin as any
                 );
-                (spark?.chart as Chart)?.removePlugin(ZoomPlugin);
-                expect((spark?.chart as Chart)?.hasPlugin(ZoomPlugin)).toEqual(
-                    false
-                );
+                expect(
+                    (spark?.chart as Chart)?.hasPlugin(
+                        TimeseriesZoomPlugin as any
+                    )
+                ).toEqual(false);
             });
         });
 
@@ -143,9 +160,11 @@ describe("StatusChartComponent", () => {
             component.configuration.enableZoom = false;
             (<any>component).updateChartData();
             component.chartAssist.sparks.forEach((spark) => {
-                expect((spark?.chart as Chart)?.hasPlugin(ZoomPlugin)).toEqual(
-                    false
-                );
+                expect(
+                    (spark?.chart as Chart)?.hasPlugin(
+                        TimeseriesZoomPlugin as any
+                    )
+                ).toEqual(false);
             });
         });
 
