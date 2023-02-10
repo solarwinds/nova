@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ev
 
 usage()
 {
@@ -30,7 +30,7 @@ PACKAGE_NAME=$(node -p "require('./package.json').name")
 PACKAGE_VERSION=$(node -p "require('./package.json').version")
 PACKAGE_LICENSE=$(node -p "require('./package.json').license")
 
-echo "_auth=$NPM_TOKEN\nalways-auth=true" > .npmrc
+echo -e "_auth=$NPM_TOKEN\nalways-auth=true" > .npmrc
 yarn config set init-license $PACKAGE_LICENSE
 
 npm info $PACKAGE_NAME@$PACKAGE_VERSION version 2>/dev/null && {
@@ -40,12 +40,12 @@ npm info $PACKAGE_NAME@$PACKAGE_VERSION version 2>/dev/null && {
 
 case $CIRCLE_BRANCH in
       "release/"*)
-          echo Publishing release package
+          echo "Publishing release package | $PACKAGE_NAME @ $PACKAGE_VERSION"
             yarn publish ./dist --access public
             ;;
 
       "main" | "next" | "hotfix/"* | "cci/"*)
-          echo Publishing $CIRCLE_BRANCH package
+          echo "Publishing $CIRCLE_BRANCH package | $PACKAGE_NAME @ $PACKAGE_VERSION"
             yarn publish ./dist --tag $CIRCLE_BRANCH --access public
             ;;
       *)
