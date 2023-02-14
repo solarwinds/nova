@@ -124,9 +124,7 @@ describe("StatusChartComponent", () => {
             (<any>component).updateChartData();
             component.chartAssist.sparks.forEach((spark) => {
                 expect(
-                    (spark?.chart as Chart)?.hasPlugin(
-                        TimeseriesZoomPlugin
-                    )
+                    (spark?.chart as Chart)?.hasPlugin(TimeseriesZoomPlugin)
                 ).toEqual(true);
             });
         });
@@ -141,17 +139,11 @@ describe("StatusChartComponent", () => {
             spyOn(TimeseriesZoomPlugin.prototype, "destroy");
             component.chartAssist.sparks.forEach((spark) => {
                 expect(
-                    (spark?.chart as Chart)?.hasPlugin(
-                        TimeseriesZoomPlugin
-                    )
+                    (spark?.chart as Chart)?.hasPlugin(TimeseriesZoomPlugin)
                 ).toEqual(true);
-                (spark?.chart as Chart)?.removePlugin(
-                    TimeseriesZoomPlugin
-                );
+                (spark?.chart as Chart)?.removePlugin(TimeseriesZoomPlugin);
                 expect(
-                    (spark?.chart as Chart)?.hasPlugin(
-                        TimeseriesZoomPlugin
-                    )
+                    (spark?.chart as Chart)?.hasPlugin(TimeseriesZoomPlugin)
                 ).toEqual(false);
             });
         });
@@ -161,9 +153,7 @@ describe("StatusChartComponent", () => {
             (<any>component).updateChartData();
             component.chartAssist.sparks.forEach((spark) => {
                 expect(
-                    (spark?.chart as Chart)?.hasPlugin(
-                        TimeseriesZoomPlugin
-                    )
+                    (spark?.chart as Chart)?.hasPlugin(TimeseriesZoomPlugin)
                 ).toEqual(false);
             });
         });

@@ -38,7 +38,7 @@ import {
     ITimeseriesZoomPluginInspectionFrame,
 } from "@nova-ui/charts";
 import { PIZZAGNA_EVENT_BUS } from "../../../types";
-import { Moment } from "moment";
+import moment from "moment/moment";
 
 export const TIMESERIES_INSPECTION_MENU_ZOOM_IN: IEventDefinition<
     IEvent<ITimeseriesZoomPluginInspectionFrame>
@@ -71,8 +71,8 @@ export const TIMESERIES_INSPECTION_MENU_SYNCHRONIZE: IEventDefinition<
 
 export interface ITimeseriesZoomPluginExploreData {
     ids: string;
-    startDate: Moment;
-    endDate: Moment;
+    startDate: moment.Moment;
+    endDate: moment.Moment;
     openSidePanel: boolean;
     exploringEnabled: boolean;
 }

@@ -20,12 +20,12 @@
 
 import { BrushBehavior, BrushSelection, brushX } from "d3-brush";
 import { event } from "d3-selection";
-import _, { debounce } from "lodash";
+import debounce from "lodash/debounce";
 import defaultsDeep from "lodash/defaultsDeep";
 import find from "lodash/find";
 import isEmpty from "lodash/isEmpty";
 import isUndefined from "lodash/isUndefined";
-import moment, { Moment } from "moment";
+import moment from "moment/moment";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -38,7 +38,6 @@ import { RenderLayerName } from "../../renderers/types";
 import { ChartPlugin } from "../common/chart-plugin";
 import { IScale } from "../common/scales/types";
 import { D3Selection, IChartEvent, InteractionType } from "../common/types";
-
 import { XYGrid } from "../grid/xy-grid";
 import { UtilityService } from "../public-api";
 import { TimeseriesZoomPluginsSyncService } from "./timeseries-zoom-plugin-sync.service";
@@ -49,8 +48,8 @@ export interface ITimeseriesZoomPluginConfig {
     enableExternalEvents?: boolean;
 }
 export interface ITimeseriesZoomPluginInspectionFrame {
-    startDate: Moment | undefined;
-    endDate: Moment | undefined;
+    startDate: moment.Moment | undefined;
+    endDate: moment.Moment | undefined;
 }
 
 export class TimeseriesZoomPlugin extends ChartPlugin {
@@ -69,8 +68,8 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
 
     private brushStartXCoord?: number;
     private brushEndXCoord?: number;
-    private brushStartXDate?: Moment;
-    private brushEndXDate?: Moment;
+    private brushStartXDate?: moment.Moment;
+    private brushEndXDate?: moment.Moment;
 
     private isChartHoverd = false;
     private isPopoverDisplayed = false;
@@ -91,6 +90,18 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
     public readonly zoomCreated$ = this.zoomCreatedSubject
         .asObservable()
         .pipe(takeUntil(this.destroy$));
+
+    private resizeHandler = debounce(() => {
+        if (
+            isUndefined(this.brushStartXDate) ||
+            isUndefined(this.brushEndXDate)
+        ) {
+            return;
+        }
+        // makes sure that popover is closed while resizing
+        this.moveBrushByDate(this.brushStartXDate, this.brushEndXDate);
+        this.closePopover();
+    }, 10);
 
     constructor(
         public config: ITimeseriesZoomPluginConfig = {},
@@ -258,7 +269,10 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
         this.closePopoverSubject.next();
     }
 
-    public moveBrushByDate(startDate: Moment, endDate: Moment): void {
+    public moveBrushByDate(
+        startDate: moment.Moment,
+        endDate: moment.Moment
+    ): void {
         const startXCoord = this.xScale.convert(startDate);
         const endXCoord = this.xScale.convert(endDate);
 
@@ -331,19 +345,7 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
         };
     }
 
-    private resizeHandler = debounce(() => {
-        if (
-            isUndefined(this.brushStartXDate) ||
-            isUndefined(this.brushEndXDate)
-        ) {
-            return;
-        }
-        // makes sure that popover is closed while resizing
-        this.moveBrushByDate(this.brushStartXDate, this.brushEndXDate);
-        this.closePopover();
-    }, 10);
-
-    private getDateFromCoord(xCoord: number): Moment {
+    private getDateFromCoord(xCoord: number): moment.Moment {
         const xScaleValue = UtilityService.getScaleValues(
             [this.xScale],
             xCoord
@@ -353,7 +355,7 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
         );
     }
 
-    private addZoomBoundaryLine(xDate: Moment, xCoord: number): void {
+    private addZoomBoundaryLine(xDate: moment.Moment, xCoord: number): void {
         const line = this.zoomLineLayer
             .selectAll(TimeseriesZoomPlugin.LAYER_NAME)
             .data([xDate]);
@@ -452,15 +454,15 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
     }
 
     private moveBrush(
-        startDate: Moment,
-        endDate: Moment,
+        startDate: moment.Moment,
+        endDate: moment.Moment,
         startXCoord: number,
         endXCoord: number
     ): void {
         const nodes = this.zoomLineLayer
             .selectAll("." + TimeseriesZoomPlugin.LAYER_NAME)
             .nodes() as Element[];
-        if (nodes.length != 2) {
+        if (nodes.length !== 2) {
             return;
         }
 

@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { Injectable } from "@angular/core";
-import { Moment } from "moment";
+import moment from "moment/moment";
 
 import { TimeseriesZoomPlugin } from "./timeseries-zoom-plugin";
 
@@ -64,8 +64,8 @@ export class TimeseriesZoomPluginsSyncService {
 
     public syncPositionInsideCollection(
         collectionId: string,
-        startDate: Moment,
-        endDate: Moment
+        startDate: moment.Moment,
+        endDate: moment.Moment
     ) {
         const collection = this.getPlugins(collectionId);
 

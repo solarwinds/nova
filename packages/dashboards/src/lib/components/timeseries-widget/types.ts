@@ -135,14 +135,13 @@ export enum TimeseriesChartPreset {
 
 /** Enumeration of timeseries chart types recieved from the backend */
 export enum TimeseriesChartTypes {
-    undefined,
-    gauge, // Line
-    counter, // StackedBar
-    event, // StackedBar
-    alert, // StackedArea
-    state, // StackedArea
-    multi, // StatusBar
-    dpaWaitTime, // StatusBar
+    gauge = 1, // Line
+    counter = 2, // StackedBar
+    event = 3, // StackedBar
+    alert = 4, // StackedArea
+    state = 5, // StackedArea
+    multi = 6, // StatusBar
+    dpaWaitTime = 7, // StatusBar
 }
 
 export enum TimeseriesTransformer {

@@ -63,6 +63,11 @@ import { XYChartComponent } from "./xy-chart.component";
 class TestComponent extends XYChartComponent {
     public static lateLoadKey = "TestComponent";
 
+    public zoomPlugin: TimeseriesZoomPlugin = new TimeseriesZoomPlugin(
+        {},
+        new TimeseriesZoomPluginsSyncService()
+    );
+
     protected createAccessors(
         colorProvider: IValueProvider<string>
     ): IAccessors {
@@ -73,11 +78,6 @@ class TestComponent extends XYChartComponent {
         // @ts-ignore: Avoiding strict mode errors, keeping old flow
         return new ChartAssist(new Chart(new XYGrid()), null, palette);
     }
-
-    public zoomPlugin: TimeseriesZoomPlugin = new TimeseriesZoomPlugin(
-        {},
-        new TimeseriesZoomPluginsSyncService()
-    );
 }
 
 describe("XYChartComponent", () => {
@@ -192,9 +192,7 @@ describe("XYChartComponent", () => {
                 enableZoom: false,
             } as ITimeseriesWidgetConfig;
             component.ngOnChanges(initializationChanges);
-            expect(getChart().hasPlugin(TimeseriesZoomPlugin)).toEqual(
-                false
-            );
+            expect(getChart().hasPlugin(TimeseriesZoomPlugin)).toEqual(false);
         });
 
         it("should add the zoom plugin if zoom is enabled", () => {
@@ -202,9 +200,7 @@ describe("XYChartComponent", () => {
                 enableZoom: true,
             } as ITimeseriesWidgetConfig;
             component.ngOnChanges(initializationChanges);
-            expect(getChart().hasPlugin(TimeseriesZoomPlugin)).toEqual(
-                true
-            );
+            expect(getChart().hasPlugin(TimeseriesZoomPlugin)).toEqual(true);
         });
 
         it("should subscribe to the SET_DOMAIN event", () => {

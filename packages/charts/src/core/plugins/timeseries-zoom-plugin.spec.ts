@@ -19,6 +19,8 @@
 //  THE SOFTWARE.
 
 import { TestBed } from "@angular/core/testing";
+import moment from "moment/moment";
+
 import {
     INTERACTION_COORDINATES_EVENT,
     INTERACTION_VALUES_EVENT,
@@ -35,10 +37,9 @@ import {
 } from "../common/types";
 import { XYGridConfig } from "../grid/config/xy-grid-config";
 import { XYGrid } from "../grid/xy-grid";
+import { TimeScale } from "../public-api";
 import { TimeseriesZoomPlugin } from "./timeseries-zoom-plugin";
 import { TimeseriesZoomPluginsSyncService } from "./timeseries-zoom-plugin-sync.service";
-import moment from "moment";
-import { TimeScale } from "../public-api";
 
 describe("TimeseriesZoomPlugin >", () => {
     let plugin: TimeseriesZoomPlugin;
