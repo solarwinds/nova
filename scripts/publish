@@ -28,9 +28,9 @@ if [ "$PROJECT_DIR" != "" ]; then
 fi
 
 # retrieve data from package.json
-PACKAGE_NAME=$(node -p "require('./package.json').name")
-PACKAGE_VERSION=$(node -p "require('./package.json').version")
-PACKAGE_LICENSE=$(node -p "require('./package.json').license")
+PACKAGE_NAME=$(node -p "require('./dist/package.json').name")
+PACKAGE_VERSION=$(node -p "require('./dist/package.json').version")
+PACKAGE_LICENSE=$(node -p "require('./dist/package.json').license")
 
 echo -e "//registry.npmjs.org/:_authToken=$NPM_TOKEN\nalways-auth=true" > .npmrc
 yarn config set init-license $PACKAGE_LICENSE
