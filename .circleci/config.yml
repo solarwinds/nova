@@ -775,6 +775,7 @@ workflows:
                       branches:
                           only:
                               - main
+                              - /^hotfix\/v[\d.]+x/
             - release-prep:
                   requires:
                       - release-approval
