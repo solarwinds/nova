@@ -596,38 +596,8 @@ jobs:
                       git config --global user.email circleci@circleci
                       git config --global user.name $CIRCLE_PROJECT_USERNAME
             - run:
-                  name: Merge Changes
-                  command: yarn run merge-ci
-            - run:
-                  name: Check out release branch
-                  command: git checkout $RELEASE_BRANCH
-            - run:
-                  name: Set Release Version
-                  command: yarn run set-release-versions-ci
-            - run:
-                  name: Set Release Dependency Versions
-                  command: yarn run set-dependency-versions-ci
-            - run:
-                  name: Commit and Push Release Branch Changes
-                  command: |
-                      git commit -am "update files for version $RELEASE_VERSION"
-                      git push --verbose
-            - run:
-                  name: Increment source branch version
-                  command: |
-                      git checkout $SOURCE_BRANCH
-                      yarn run set-source-versions-ci
-            - run:
-                  name: Set source dependency versions
-                  command: yarn run set-dependency-versions-ci
-            - run:
-                  name: Push source branch changes
-                  command: |
-                      git commit -am 'increment develop versions' && \
-                      git push origin $SOURCE_BRANCH
-            - run:
-                  name: Trigger release branch
-                  command: yarn run trigger-pipeline-build-ci ${RELEASE_BRANCH}
+                  name: Run release prep
+                  command: yarn run release-prep-ci
 workflows:
     nova:
         jobs:
