@@ -1,11 +1,11 @@
 version: 2.1
 orbs:
-    browser-tools: circleci/browser-tools@1.2.5
+    browser-tools: circleci/browser-tools@1.4.0
 jobs:
     bits-build:
         working_directory: ~/nova
         docker:
-            - image: cimg/node:16.14-browsers
+            - image: cimg/node:16.18
         environment:
             PROJECT_DIR: ./packages/bits
             BUILD_COUNTER: << pipeline.number >>
@@ -22,7 +22,7 @@ jobs:
                       export gitCommit=`git log --pretty=format:'%H' -n 1 $PROJECT_DIR`
                       echo $gitCommit > $PROJECT_DIR/git-commit
             - restore_cache:
-                  key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
+                  key: bits-deps-{{ checksum "packages/bits/yarn.lock" }}
             - run:
                   working_directory: ~/nova/packages/bits
                   name: Installing node dependencies (if necessary)
@@ -35,7 +35,7 @@ jobs:
                           yarn install --frozen-lockfile
                       fi
             - save_cache:
-                  key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
+                  key: bits-deps-{{ checksum "packages/bits/yarn.lock" }}
                   paths:
                       - ./packages/bits/node_modules
             - restore_cache:
@@ -78,10 +78,9 @@ jobs:
     bits-unit-test:
         working_directory: ~/nova/packages/bits
         docker:
-            - image: cimg/node:16.14-browsers
+            - image: cimg/node:16.18-browsers
         steps:
             - browser-tools/install-chrome
-            - browser-tools/install-chromedriver
             - attach_workspace:
                   at: ~/nova
             - run:
@@ -90,7 +89,7 @@ jobs:
     bits-e2e-test:
         working_directory: ~/nova
         machine:
-            image: ubuntu-2004:202010-01
+            image: ubuntu-2204:2022.10.2
         environment:
             PROJECT_DIR: ~/nova/packages/bits
         steps:
@@ -114,11 +113,11 @@ jobs:
                   command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/bits
             - run:
                   name: Cleanup
-                  command: docker-compose down -v --rmi="all"
+                  command: docker-compose down -v --rmi=local
     bits-a11y-test:
         working_directory: ~/nova
         machine:
-            image: ubuntu-2004:202010-01
+            image: ubuntu-2204:2022.10.2
         environment:
             PROJECT_DIR: ~/nova/packages/bits
         steps:
@@ -134,11 +133,11 @@ jobs:
                   command: docker-compose run --user="$UID" build npm run a11y:ci --prefix ./packages/bits
             - run:
                   name: Cleanup
-                  command: docker-compose down -v --rmi="all"
+                  command: docker-compose down -v --rmi=local
     bits-visual-test:
         working_directory: ~/nova
         machine:
-            image: ubuntu-2004:202010-01
+            image: ubuntu-2204:2022.10.2
         environment:
             PROJECT_DIR: ~/nova/packages/bits
         steps:
@@ -156,11 +155,11 @@ jobs:
                       docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/bits
             - run:
                   name: Cleanup
-                  command: docker-compose down -v --rmi="all"
+                  command: docker-compose down -v --rmi=local
     bits-pack:
         working_directory: ~/nova/packages/bits
         docker:
-            - image: cimg/node:16.14-browsers
+            - image: cimg/node:16.18
         steps:
             - attach_workspace:
                   at: ~/nova
@@ -174,7 +173,7 @@ jobs:
     bits-publish:
         working_directory: ~/nova
         docker:
-            - image: cimg/node:16.14-browsers
+            - image: cimg/node:16.18
         environment:
             PROJECT_DIR: ./packages/bits
         steps:
@@ -183,16 +182,11 @@ jobs:
             - run:
                   name: Publish bits
                   command: |
-                      if [ -f $PROJECT_DIR/package-cached ]; then
-                          echo "This package was restored from cache so we're skipping the publish step"
-                          circleci step halt
-                      else
-                          yarn run publish-ci
-                      fi
+                      yarn run publish-ci
     bits-verify:
         working_directory: ~/nova
         docker:
-            - image: cimg/node:16.14-browsers
+            - image: cimg/node:16.18
         environment:
             PROJECT_DIR: ./packages/bits
         steps:
@@ -201,16 +195,11 @@ jobs:
             - run:
                   name: Verify published package
                   command: |
-                      if [ -f $PROJECT_DIR/package-cached ]; then
-                          echo "This package was restored from cache so we're skipping the verify step"
-                          circleci step halt
-                      else
-                          yarn run verify-ci
-                      fi
+                      yarn run verify-ci
     charts-build:
         working_directory: ~/nova
         docker:
-            - image: cimg/node:16.14-browsers
+            - image: cimg/node:16.18
         environment:
             PROJECT_DIR: ./packages/charts
             BUILD_COUNTER: << pipeline.number >>
@@ -234,7 +223,7 @@ jobs:
                       cp package.json package.json~
                       yarn run --cwd=../.. remove-dependencies packages/charts
             - restore_cache:
-                  key: yarn-node-mod-deps-{{ checksum "packages/charts/yarn.lock" }}
+                  key: charts-deps-{{ checksum "packages/charts/yarn.lock" }}
             - run:
                   working_directory: ~/nova/packages/charts
                   name: Installing node dependencies (if necessary)
@@ -247,7 +236,7 @@ jobs:
                           yarn install --frozen-lockfile
                       fi
             - save_cache:
-                  key: yarn-node-mod-deps-{{ checksum "packages/charts/yarn.lock" }}
+                  key: charts-deps-{{ checksum "packages/charts/yarn.lock" }}
                   paths:
                       - ./packages/charts/node_modules
             - run:
@@ -283,13 +272,12 @@ jobs:
     charts-unit-test:
         working_directory: ~/nova/packages/charts
         docker:
-            - image: cimg/node:16.14-browsers
+            - image: cimg/node:16.18-browsers
         environment:
             # Needed for daylight saving time tests
             TZ: "America/Chicago"
         steps:
             - browser-tools/install-chrome
-            - browser-tools/install-chromedriver
             - attach_workspace:
                   at: ~/nova
             - run:
@@ -298,7 +286,7 @@ jobs:
     charts-e2e-test:
         working_directory: ~/nova
         machine:
-            image: ubuntu-2004:202010-01
+            image: ubuntu-2204:2022.10.2
         environment:
             PROJECT_DIR: ~/nova/packages/charts
         steps:
@@ -322,11 +310,11 @@ jobs:
                   command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/charts
             - run:
                   name: Cleanup
-                  command: docker-compose down -v --rmi="all"
+                  command: docker-compose down -v --rmi=local
     charts-visual-test:
         working_directory: ~/nova
         machine:
-            image: ubuntu-2004:202010-01
+            image: ubuntu-2204:2022.10.2
         environment:
             PROJECT_DIR: ~/nova/packages/charts
         steps:
@@ -344,11 +332,11 @@ jobs:
                       docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/charts
             - run:
                   name: Cleanup
-                  command: docker-compose down -v --rmi="all"
+                  command: docker-compose down -v --rmi=local
     charts-pack:
         working_directory: ~/nova/packages/charts
         docker:
-            - image: cimg/node:16.14-browsers
+            - image: cimg/node:16.18
         steps:
             - attach_workspace:
                   at: ~/nova
@@ -362,7 +350,7 @@ jobs:
     charts-publish:
         working_directory: ~/nova
         docker:
-            - image: cimg/node:16.14-browsers
+            - image: cimg/node:16.18
         environment:
             PROJECT_DIR: ./packages/charts
         steps:
@@ -371,16 +359,11 @@ jobs:
             - run:
                   name: Publish charts
                   command: |
-                      if [ -f $PROJECT_DIR/package-cached ]; then
-                          echo "This package was restored from cache so we're skipping the publish step"
-                          circleci step halt
-                      else
-                          yarn run publish-ci
-                      fi
+                      yarn run publish-ci
     charts-verify:
         working_directory: ~/nova
         docker:
-            - image: cimg/node:16.14-browsers
+            - image: cimg/node:16.18
         environment:
             PROJECT_DIR: ./packages/charts
         steps:
@@ -389,16 +372,11 @@ jobs:
             - run:
                   name: Verify published package
                   command: |
-                      if [ -f $PROJECT_DIR/package-cached ]; then
-                          echo "This package was restored from cache so we're skipping the verify step"
-                          circleci step halt
-                      else
-                          yarn run verify-ci
-                      fi
+                      yarn run verify-ci
     dashboards-build:
         working_directory: ~/nova
         docker:
-            - image: cimg/node:16.14-browsers
+            - image: cimg/node:16.18
         environment:
             PROJECT_DIR: ./packages/dashboards
             BUILD_COUNTER: << pipeline.number >>
@@ -423,7 +401,7 @@ jobs:
                       cp package.json package.json~
                       yarn run --cwd=../.. remove-dependencies packages/dashboards
             - restore_cache:
-                  key: yarn-node-mod-deps-{{ checksum "packages/dashboards/yarn.lock" }}
+                  key: dashboards-deps-{{ checksum "packages/dashboards/yarn.lock" }}
             - run:
                   working_directory: ~/nova/packages/dashboards
                   name: Installing node dependencies (if necessary)
@@ -436,7 +414,7 @@ jobs:
                           yarn install --frozen-lockfile
                       fi
             - save_cache:
-                  key: yarn-node-mod-deps-{{ checksum "packages/dashboards/yarn.lock" }}
+                  key: dashboards-deps-{{ checksum "packages/dashboards/yarn.lock" }}
                   paths:
                       - ./packages/dashboards/node_modules
             - run:
@@ -476,10 +454,9 @@ jobs:
     dashboards-unit-test:
         working_directory: ~/nova/packages/dashboards
         docker:
-            - image: cimg/node:16.14-browsers
+            - image: cimg/node:16.18-browsers
         steps:
             - browser-tools/install-chrome
-            - browser-tools/install-chromedriver
             - attach_workspace:
                   at: ~/nova
             - run:
@@ -488,7 +465,7 @@ jobs:
     dashboards-e2e-test:
         working_directory: ~/nova
         machine:
-            image: ubuntu-2004:202010-01
+            image: ubuntu-2204:2022.10.2
         environment:
             PROJECT_DIR: ~/nova/packages/dashboards
         steps:
@@ -512,11 +489,11 @@ jobs:
                   command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/dashboards
             - run:
                   name: Cleanup
-                  command: docker-compose down -v --rmi="all"
+                  command: docker-compose down -v --rmi=local
     dashboards-visual-test:
         working_directory: ~/nova
         machine:
-            image: ubuntu-2004:202010-01
+            image: ubuntu-2204:2022.10.2
         environment:
             PROJECT_DIR: ~/nova/packages/dashboards
         steps:
@@ -534,11 +511,11 @@ jobs:
                       docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/dashboards
             - run:
                   name: Cleanup
-                  command: docker-compose down -v --rmi="all"
+                  command: docker-compose down -v --rmi=local
     dashboards-pack:
         working_directory: ~/nova/packages/dashboards
         docker:
-            - image: cimg/node:16.14-browsers
+            - image: cimg/node:16.18
         steps:
             - attach_workspace:
                   at: ~/nova
@@ -552,7 +529,7 @@ jobs:
     dashboards-publish:
         working_directory: ~/nova
         docker:
-            - image: cimg/node:16.14-browsers
+            - image: cimg/node:16.18
         environment:
             PROJECT_DIR: ./packages/dashboards
         steps:
@@ -561,16 +538,11 @@ jobs:
             - run:
                   name: Publish dashboards
                   command: |
-                      if [ -f $PROJECT_DIR/package-cached ]; then
-                          echo "This package was restored from cache so we're skipping the publish step"
-                          circleci step halt
-                      else
-                          yarn run publish-ci
-                      fi
+                      yarn run publish-ci
     dashboards-verify:
         working_directory: ~/nova
         docker:
-            - image: cimg/node:16.14-browsers
+            - image: cimg/node:16.18
         environment:
             PROJECT_DIR: ./packages/dashboards
         steps:
@@ -579,30 +551,25 @@ jobs:
             - run:
                   name: Verify published package
                   command: |
-                      if [ -f $PROJECT_DIR/package-cached ]; then
-                          echo "This package was restored from cache so we're skipping the verify step"
-                          circleci step halt
-                      else
-                          yarn run verify-ci
-                      fi
+                      yarn run verify-ci
     nova-docs:
         working_directory: ~/nova
         docker:
-            - image: cimg/node:16.14
+            - image: cimg/node:16.18
         environment:
             NOVA_DIR: ~/nova
         steps:
             - attach_workspace:
                   at: ~/nova
             - run:
-                  name: Publish dashbords docs
+                  name: Publish nova docs & Prepare nova-docs artifact
                   command: yarn run deploy-docs-ci
             - store_artifacts:
                   path: ./nova-docs.zip
     nova-docs-cleanup:
         working_directory: ~/nova
         docker:
-            - image: cimg/node:16.14
+            - image: cimg/node:16.18
         environment:
             NOVA_DIR: ~/nova
         steps:
@@ -614,10 +581,10 @@ jobs:
     release-prep:
         working_directory: ~/nova
         docker:
-            - image: cimg/node:16.14
+            - image: cimg/node:16.18
         environment:
             SOURCE_BRANCH: hotfix/v12.0.x
-            CREATE_RELEASE_BRANCH: true
+            CREATE_RELEASE_BRANCH: "true"
             RELEASE_BRANCH: release/v12.0.x
             INCREMENT_TYPE: patch
         steps:
@@ -694,7 +661,7 @@ workflows:
                               - main
                               - /^release\/.*/
                               - next
-                              - /^improvement/.*/
+                              - /^cci\/.*/
             - bits-verify:
                   requires:
                       - bits-publish
@@ -704,7 +671,7 @@ workflows:
                               - main
                               - /^release\/.*/
                               - next
-                              - /^improvement/.*/
+                              - /^cci\/.*/
             - charts-build:
                   requires:
                       - bits-pack
@@ -734,7 +701,7 @@ workflows:
                               - main
                               - /^release\/.*/
                               - next
-                              - /^improvement/.*/
+                              - /^cci\/.*/
             - charts-verify:
                   requires:
                       - charts-publish
@@ -744,7 +711,7 @@ workflows:
                               - main
                               - /^release\/.*/
                               - next
-                              - /^improvement/.*/
+                              - /^cci\/.*/
             - dashboards-build:
                   requires:
                       - charts-pack
@@ -756,9 +723,14 @@ workflows:
                       - common-build-creds
                   filters:
                       branches:
-                          ignore:
-                              - /^pull\/.*/
+                          only:
+                              - main
+                              - /^release\/.*/
+                              - next
+                              - /^cci\/.*/
                   requires:
+                      - bits-pack
+                      - charts-pack
                       - dashboards-pack
             - dashboards-unit-test:
                   requires:
@@ -783,7 +755,7 @@ workflows:
                               - main
                               - /^release\/.*/
                               - next
-                              - /^improvement/.*/
+                              - /^cci\/.*/
             - dashboards-verify:
                   requires:
                       - dashboards-publish
@@ -793,7 +765,7 @@ workflows:
                               - main
                               - /^release\/.*/
                               - next
-                              - /^improvement/.*/
+                              - /^cci\/.*/
 
     nova-release:
         jobs:
@@ -802,7 +774,7 @@ workflows:
                   filters:
                       branches:
                           only:
-                              - /^hotfix\/.*/
+                              - main
             - release-prep:
                   requires:
                       - release-approval
