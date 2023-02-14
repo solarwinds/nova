@@ -192,7 +192,7 @@ describe("XYChartComponent", () => {
                 enableZoom: false,
             } as ITimeseriesWidgetConfig;
             component.ngOnChanges(initializationChanges);
-            expect(getChart().hasPlugin(TimeseriesZoomPlugin as any)).toEqual(
+            expect(getChart().hasPlugin(TimeseriesZoomPlugin)).toEqual(
                 false
             );
         });
@@ -202,7 +202,7 @@ describe("XYChartComponent", () => {
                 enableZoom: true,
             } as ITimeseriesWidgetConfig;
             component.ngOnChanges(initializationChanges);
-            expect(getChart().hasPlugin(TimeseriesZoomPlugin as any)).toEqual(
+            expect(getChart().hasPlugin(TimeseriesZoomPlugin)).toEqual(
                 true
             );
         });

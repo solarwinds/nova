@@ -192,9 +192,10 @@ export class StatusBarChartComponent
 
         if (this.configuration.enableZoom) {
             this.chartAssist.sparks.forEach((spark) => {
+               
                 if (
                     !(spark?.chart as Chart)?.hasPlugin(
-                        TimeseriesZoomPlugin as any
+                        TimeseriesZoomPlugin
                     ) &&
                     this.configuration.enableZoom
                 ) {

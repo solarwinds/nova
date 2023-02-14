@@ -94,7 +94,7 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
 
     constructor(
         public config: ITimeseriesZoomPluginConfig = {},
-        private syncService: TimeseriesZoomPluginsSyncService
+        private syncService?: TimeseriesZoomPluginsSyncService
     ) {
         super();
         this.config = defaultsDeep(
@@ -109,7 +109,7 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
         };
 
         if (this.config.collectionId) {
-            this.syncService.registerPlugin(this.config.collectionId, this);
+            this.syncService?.registerPlugin(this.config.collectionId, this);
         }
     }
 
@@ -227,7 +227,7 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
 
     public destroy(): void {
         if (this.config.collectionId) {
-            this.syncService.removePlugin(this.config.collectionId, this);
+            this.syncService?.removePlugin(this.config.collectionId, this);
         }
 
         this.clearBrush();

@@ -125,7 +125,7 @@ describe("StatusChartComponent", () => {
             component.chartAssist.sparks.forEach((spark) => {
                 expect(
                     (spark?.chart as Chart)?.hasPlugin(
-                        TimeseriesZoomPlugin as any
+                        TimeseriesZoomPlugin
                     )
                 ).toEqual(true);
             });
@@ -142,15 +142,15 @@ describe("StatusChartComponent", () => {
             component.chartAssist.sparks.forEach((spark) => {
                 expect(
                     (spark?.chart as Chart)?.hasPlugin(
-                        TimeseriesZoomPlugin as any
+                        TimeseriesZoomPlugin
                     )
                 ).toEqual(true);
                 (spark?.chart as Chart)?.removePlugin(
-                    TimeseriesZoomPlugin as any
+                    TimeseriesZoomPlugin
                 );
                 expect(
                     (spark?.chart as Chart)?.hasPlugin(
-                        TimeseriesZoomPlugin as any
+                        TimeseriesZoomPlugin
                     )
                 ).toEqual(false);
             });
@@ -162,7 +162,7 @@ describe("StatusChartComponent", () => {
             component.chartAssist.sparks.forEach((spark) => {
                 expect(
                     (spark?.chart as Chart)?.hasPlugin(
-                        TimeseriesZoomPlugin as any
+                        TimeseriesZoomPlugin
                     )
                 ).toEqual(false);
             });
