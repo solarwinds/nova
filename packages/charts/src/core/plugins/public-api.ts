@@ -28,3 +28,5 @@ export * from "./render-engine-plugin";
 export * from "./tooltips";
 export * from "./types";
 export * from "./zoom-plugin";
+export * from "./timeseries-zoom-plugin";
+export * from "./timeseries-zoom-plugin-sync.service";

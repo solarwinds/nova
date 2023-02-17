@@ -43,6 +43,9 @@ export interface ITimeseriesWidgetConfig {
     hasAdjacentChart?: boolean;
     groupUniqueId?: string;
     allowLegendMenu?: boolean;
+    metricIds?: string;
+    realTimeIds?: string[];
+    type?: number;
 }
 
 export interface ITimeseriesWidgetSeries {
@@ -126,9 +129,19 @@ export enum TimeseriesChartPreset {
     Line = "line",
     StackedArea = "stackedArea",
     StackedPercentageArea = "stackedPercentageArea",
-
     StackedBar = "stackedBar",
     StatusBar = "statusBar",
+}
+
+/** Enumeration of timeseries chart types recieved from the backend */
+export enum TimeseriesChartTypes {
+    gauge = 1, // Line
+    counter = 2, // StackedBar
+    event = 3, // StackedBar
+    alert = 4, // StackedArea
+    state = 5, // StackedArea
+    multi = 6, // StatusBar
+    dpaWaitTime = 7, // StatusBar
 }
 
 export enum TimeseriesTransformer {
