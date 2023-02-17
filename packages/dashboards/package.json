@@ -106,7 +106,8 @@
     "@compodoc/compodoc/i18next": "^19.8.5",
     "@compodoc/compodoc/live-server/http-auth": "^3.2.4",
     "@compodoc/compodoc/marked": "^2.0.0",
-    "postcss-preset-env": "^7.3.2"
+    "postcss-preset-env": "^7.3.2",
+    "d3-color": "3.1.0"
   },
   "schematics": "./sdk/schematics/collection.json",
   "scripts": {

@@ -98,7 +98,8 @@
     "@compodoc/compodoc/**/pdfkit/crypto-js": "^4.0.0",
     "@compodoc/compodoc/i18next": "^19.8.5",
     "@compodoc/compodoc/live-server/http-auth": "^3.2.4",
-    "@compodoc/compodoc/marked": "^2.0.0"
+    "@compodoc/compodoc/marked": "^2.0.0",
+    "d3-color": "3.1.0"
   },
   "scripts": {
     "assemble": "run-s prettier-check lint build-lib:locl build-lib:prod dist-copy compodoc-custom-theme build-examples:prod",
