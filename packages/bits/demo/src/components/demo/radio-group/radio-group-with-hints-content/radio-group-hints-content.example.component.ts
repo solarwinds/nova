@@ -18,19 +18,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { NgModule } from "@angular/core";
+import { Component } from "@angular/core";
 
-import { NuiCommonModule } from "../../common/common.module";
-import { RadioComponent, RadioGroupComponent } from "./radio-group.component";
-import { RadioHintComponent } from "./radio-hint.component";
-
-/**
- * @ignore
- */
-@NgModule({
-    imports: [NuiCommonModule],
-    declarations: [RadioComponent, RadioGroupComponent, RadioHintComponent],
-    exports: [RadioComponent, RadioGroupComponent, RadioHintComponent],
-    providers: [],
+@Component({
+    selector: "nui-with-hints-content-radio-group-example",
+    templateUrl: "./radio-group-hints-content.example.component.html",
 })
-export class NuiRadioModule {}
+export class RadioGroupHintsContentExampleComponent {
+    public colors = [$localize`Red`, $localize`Green`, $localize`Blue`];
+    public selectedColor: string;
+
+    constructor() {}
+}
