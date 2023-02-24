@@ -28,6 +28,7 @@ export { MessageComponent } from "./lib/message/message.component";
 export { DividerComponent } from "./lib/divider/divider.component";
 export { RadioComponent } from "./lib/radio/radio-group.component";
 export { RadioGroupComponent } from "./lib/radio/radio-group.component";
+export { RadioHintComponent } from "./lib/radio/radio-hint.component";
 export { CheckboxComponent } from "./lib/checkbox/checkbox.component";
 export { CheckboxGroupComponent } from "./lib/checkbox/checkbox-group.component";
 export { ChipComponent } from "./lib/chips/chip/chip.component";
