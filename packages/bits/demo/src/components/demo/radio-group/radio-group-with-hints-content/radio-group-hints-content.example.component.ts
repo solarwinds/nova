@@ -27,6 +27,4 @@ import { Component } from "@angular/core";
 export class RadioGroupHintsContentExampleComponent {
     public colors = [$localize`Red`, $localize`Green`, $localize`Blue`];
     public selectedColor: string;
-
-    constructor() {}
 }

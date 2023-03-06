@@ -2,39 +2,39 @@
 <nui-radio-group id="color-radio-group" name="color" [(value)]="selectedColor">
     <nui-radio value="Red" [checked]="selectedColor === 'Red'">
         Red
-        <nui-radio-hint>
-            This is some more <a href="#elaborate">elaborate</a> hint.
-        </nui-radio-hint>
+        <ng-container hint nuiCancelBubble>
+            This is some more
+            <a
+                href="https://en.wiktionary.org/wiki/elaborate"
+                target="_blank"
+                rel="noopener noreferrer"
+                >elaborate</a
+            >
+            hint.
+        </ng-container>
     </nui-radio>
     <nui-radio value="Green" [checked]="selectedColor === 'Green'">
         Green
-        <nui-radio-hint>
-            Well, depends on your definition of
-            <a href="#elaborate">elaborate</a>.
-        </nui-radio-hint>
+        <ng-container hint nuiCancelBubble>
+            Well, depends on <strong>your</strong> definition of
+            <a
+                href="https://en.wiktionary.org/wiki/elaborate"
+                target="_blank"
+                rel="noopener noreferrer"
+                >elaborate</a
+            >.
+        </ng-container>
     </nui-radio>
     <nui-radio value="Blue" [checked]="selectedColor === 'Blue'">
         Blue
-        <nui-radio-hint
-            >At least it does <a href="#elaborate">links</a>.</nui-radio-hint
-        >
+        <ng-container hint nuiCancelBubble>
+            At least it does
+            <a
+                href="https://en.wiktionary.org/wiki/hyperlink"
+                target="_blank"
+                rel="noopener noreferrer"
+                >links</a
+            >.
+        </ng-container>
     </nui-radio>
 </nui-radio-group>
-<dl>
-    <dt><a name="elaborate">elaborate</a></dt>
-    <dd>
-        /ɪˈlab(ə)rət/ - adjective - involving many carefully arranged parts or
-        details; detailed and complicated in design and planning. "elaborate
-        security precautions"
-        <p>
-            Similar: complicated detailed intricate complex involved tortuous
-            convoluted serpentine tangled knotty confusing bewildering baffling
-            painstaking careful inextricable entangled impenetrable Byzantine
-            Daedalian Gordian involute involuted ornate decorated embellished
-            adorned ornamented fancy over-elaborate fussy busy ostentatious
-            extravagant showy baroque rococo florid wedding-cake gingerbread
-            flash flashy
-        </p>
-        <p>Opposite: simple plain</p>
-    </dd>
-</dl>

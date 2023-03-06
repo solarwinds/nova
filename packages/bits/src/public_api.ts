@@ -28,7 +28,6 @@ export { MessageComponent } from "./lib/message/message.component";
 export { DividerComponent } from "./lib/divider/divider.component";
 export { RadioComponent } from "./lib/radio/radio-group.component";
 export { RadioGroupComponent } from "./lib/radio/radio-group.component";
-export { RadioHintComponent } from "./lib/radio/radio-hint.component";
 export { CheckboxComponent } from "./lib/checkbox/checkbox.component";
 export { CheckboxGroupComponent } from "./lib/checkbox/checkbox-group.component";
 export { ChipComponent } from "./lib/chips/chip/chip.component";
@@ -122,6 +121,7 @@ export { TabGroupComponent } from "./lib/tabgroup/tab-group/tab-group.component"
 export { TabHeadingCustomTemplateRefDirective } from "./lib/tabgroup/tab/tab-heading-custom-template-ref.directive";
 export { TabHeadingDirective } from "./lib/tabgroup/tab/tab-heading.directive";
 export { TabComponent } from "./lib/tabgroup/tab/tab.component";
+export { CancelBubbleDirective } from "./common/directives/cancel-bubble/cancel-bubble.directive";
 export { ClipboardDirective } from "./common/directives/clipboard/clipboard.directive";
 export { DraggableDirective } from "./common/directives/dragdrop/draggable.directive";
 export { DroppableDirective } from "./common/directives/dragdrop/droppable.directive";

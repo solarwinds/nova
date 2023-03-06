@@ -22,15 +22,14 @@ import { NgModule } from "@angular/core";
 
 import { NuiCommonModule } from "../../common/common.module";
 import { RadioComponent, RadioGroupComponent } from "./radio-group.component";
-import { RadioHintComponent } from "./radio-hint.component";
 
 /**
  * @ignore
  */
 @NgModule({
     imports: [NuiCommonModule],
-    declarations: [RadioComponent, RadioGroupComponent, RadioHintComponent],
-    exports: [RadioComponent, RadioGroupComponent, RadioHintComponent],
+    declarations: [RadioComponent, RadioGroupComponent],
+    exports: [RadioComponent, RadioGroupComponent],
     providers: [],
 })
 export class NuiRadioModule {}

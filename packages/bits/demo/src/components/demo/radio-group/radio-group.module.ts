@@ -25,6 +25,7 @@ import { RouterModule } from "@angular/router";
 import {
     DEMO_PATH_TOKEN,
     NuiCheckboxModule,
+    NuiCommonModule,
     NuiDocsModule,
     NuiFormFieldModule,
     NuiRadioModule,
@@ -73,13 +74,14 @@ const routes = [
 
 @NgModule({
     imports: [
-        NuiRadioModule,
-        NuiCheckboxModule,
-        NuiFormFieldModule,
-        ReactiveFormsModule,
         FormsModule,
-        NuiValidationMessageModule,
+        NuiCommonModule,
+        NuiCheckboxModule,
         NuiDocsModule,
+        NuiFormFieldModule,
+        NuiRadioModule,
+        NuiValidationMessageModule,
+        ReactiveFormsModule,
         RouterModule.forChild(routes),
     ],
     declarations: [
