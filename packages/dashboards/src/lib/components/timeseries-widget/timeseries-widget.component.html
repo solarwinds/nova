@@ -23,6 +23,11 @@
         </ng-template>
     </ng-container>
     <nui-timeseries-inspection-menu
+        *ngIf="
+            configuration?.enableZoom &&
+            configuration?.projectType ===
+                timeseriesWidgetProjectType.PerfstackApp
+        "
         [allowed]="allowPopover"
         [plugin]="zoomPlugin"
         [collectionId]="collectionId"

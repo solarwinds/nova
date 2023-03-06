@@ -46,6 +46,7 @@ export interface ITimeseriesWidgetConfig {
     metricIds?: string;
     realTimeIds?: string[];
     type?: number;
+    projectType?: TimeseriesWidgetProjectType;
 }
 
 export interface ITimeseriesWidgetSeries {
@@ -155,4 +156,9 @@ export enum TimeseriesTransformer {
     LoessStandardize = "loessStandardize",
     Standardize = "standardize",
     FloatingAverage = "floatingAverage",
+}
+
+export enum TimeseriesWidgetProjectType {
+    ModernDashboard,
+    PerfstackApp,
 }

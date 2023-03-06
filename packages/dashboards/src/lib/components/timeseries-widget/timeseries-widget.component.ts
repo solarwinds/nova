@@ -30,6 +30,7 @@ import {
 import {
     TimeseriesZoomPlugin,
     TimeseriesZoomPluginsSyncService,
+    ZoomPlugin,
 } from "@nova-ui/charts";
 
 import { IHasChangeDetector } from "../../types";
@@ -40,6 +41,7 @@ import {
     ITimeseriesWidgetConfig,
     TimeseriesChartPreset,
     TimeseriesChartTypes,
+    TimeseriesWidgetProjectType,
 } from "./types";
 
 /** @ignore */
@@ -61,8 +63,9 @@ export class TimeseriesWidgetComponent
 
     public chartPreset: IChartPreset;
 
-    public zoomPlugin: TimeseriesZoomPlugin;
+    public zoomPlugin: ZoomPlugin | TimeseriesZoomPlugin;
     public allowPopover = false;
+    public timeseriesWidgetProjectType = TimeseriesWidgetProjectType;
 
     constructor(
         public timeseriesChartPresetService: TimeseriesChartPresetService,
@@ -71,10 +74,14 @@ export class TimeseriesWidgetComponent
     ) {}
 
     public ngOnInit(): void {
-        this.zoomPlugin = new TimeseriesZoomPlugin(
-            { collectionId: this.collectionId },
-            this.zoomPluginsSyncService
-        );
+        this.zoomPlugin =
+            this.configuration?.projectType ===
+            TimeseriesWidgetProjectType.ModernDashboard
+                ? new ZoomPlugin()
+                : new TimeseriesZoomPlugin(
+                      { collectionId: this.collectionId },
+                      this.zoomPluginsSyncService
+                  );
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
