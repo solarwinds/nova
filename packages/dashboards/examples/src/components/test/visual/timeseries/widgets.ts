@@ -169,7 +169,8 @@ export const widgetConfigs: IWidget[] = [
                             preset: TimeseriesChartPreset.Line,
                             collectionId: collectionId1,
                             allowLegendMenu: true,
-                            projectType: TimeseriesWidgetProjectType.PerfstackApp,
+                            projectType:
+                                TimeseriesWidgetProjectType.PerfstackApp,
                         } as ITimeseriesWidgetConfig,
                     },
                 },
@@ -245,7 +246,8 @@ export const widgetConfigs: IWidget[] = [
                             },
                             collectionId: collectionId1,
                             allowLegendMenu: true,
-                            projectType: TimeseriesWidgetProjectType.PerfstackApp,
+                            projectType:
+                                TimeseriesWidgetProjectType.PerfstackApp,
                         } as ITimeseriesWidgetConfig,
                     },
                 },
