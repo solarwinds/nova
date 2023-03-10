@@ -46,14 +46,14 @@ import {
     IScale,
     ISetDomainEventPayload,
     IValueProvider,
+    IXYGridConfig,
     IXYScales,
     Renderer,
     SequentialColorProvider,
     SET_DOMAIN_EVENT,
     TimeseriesZoomPlugin,
-    IXYGridConfig,
-    XYGrid,
     TimeseriesZoomPluginsSyncService,
+    XYGrid,
 } from "@nova-ui/charts";
 
 import {
@@ -84,6 +84,7 @@ import {
     TimeseriesChartPreset,
     TimeseriesInteractionType,
     TimeseriesTransformer,
+    TimeseriesWidgetProjectType,
 } from "../../types";
 import { TimeseriesChartComponent } from "../timeseries-chart.component";
 
@@ -393,7 +394,9 @@ export abstract class XYChartComponent
     public displayLegendMenu(): boolean {
         return (
             this.configuration.preset === TimeseriesChartPreset.Line &&
-            !!this.configuration.allowLegendMenu
+            !!this.configuration.allowLegendMenu &&
+            this.configuration.projectType ===
+                TimeseriesWidgetProjectType.PerfstackApp
         );
     }
 
@@ -417,6 +420,7 @@ export abstract class XYChartComponent
             if (serie.transformer === undefined) {
                 // revert transformed data
                 serie.data = serie.rawData;
+                this.updateYAxisDomain();
             } else {
                 this.transformSeriesData(serie);
             }
