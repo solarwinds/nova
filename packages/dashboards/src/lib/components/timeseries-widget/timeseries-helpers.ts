@@ -18,10 +18,36 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./types";
-export * from "./timeseries-widget.component";
-export * from "./timeseries-chart-preset.service";
-export * from "./chart-presets/public-api";
-export * from "./transformer/public-api";
-export * from "./timeseries-inspection-menu/timeseries-inspection-menu.component";
-export * from "./timeseries-helpers";
+import { UnitOption } from "@nova-ui/bits";
+
+import { ITimeseriesWidgetData } from "./types";
+
+export function metricsSeriesMeasurementsMinMax(
+    series: ITimeseriesWidgetData[],
+    axisUnits: UnitOption
+): { min: number; max: number } {
+    if (axisUnits === "percent") {
+        return { min: 0, max: 100 };
+    }
+    // skips percent measurements as they are displayed on the left y-axis and would affect right y-axis domain
+    const nonPercentMetrics = series.filter(
+        (metric) => metric.metricUnits !== "percent" && metric.data?.length
+    );
+
+    // case where there are no measurements for non-percent metrics,  e.g when a license expires
+    if (nonPercentMetrics.length === 0) {
+        return { min: -1, max: 1 };
+    }
+
+    const measurements = nonPercentMetrics
+        .map((m) => m.data)
+        .reduce((x, y) => x.concat(y), []);
+
+    return measurements.reduce(
+        (acc: { min: number; max: number }, measurement) => ({
+            min: Math.min(acc.min, measurement.y),
+            max: Math.max(acc.max, measurement.y),
+        }),
+        { min: measurements[0].y, max: measurements[0].y }
+    );
+}
