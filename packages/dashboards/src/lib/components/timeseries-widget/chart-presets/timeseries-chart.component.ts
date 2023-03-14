@@ -219,7 +219,7 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
             if (scaleConfig?.properties) {
                 scaleConfig.properties.domain = {
                     ...metricsSeriesMeasurementsMinMax(
-                        this.widgetData.series as any,
+                        this.widgetData.series,
                         scaleConfig?.properties?.axisUnits
                     ),
                 };

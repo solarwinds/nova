@@ -23,7 +23,7 @@ import { UnitOption } from "@nova-ui/bits";
 import { ITimeseriesWidgetData } from "./types";
 
 export function metricsSeriesMeasurementsMinMax(
-    series: ITimeseriesWidgetData[],
+    series: ITimeseriesWidgetData<any>[],
     axisUnits: UnitOption
 ): { min: number; max: number } {
     if (axisUnits === "percent") {
@@ -39,9 +39,7 @@ export function metricsSeriesMeasurementsMinMax(
         return { min: -1, max: 1 };
     }
 
-    const measurements = nonPercentMetrics
-        .map((m) => m.data)
-        .reduce((x, y) => x.concat(y), []);
+    const measurements = nonPercentMetrics.flatMap(m => m.data ?? []);
 
     return measurements.reduce(
         (acc: { min: number; max: number }, measurement) => ({
