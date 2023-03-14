@@ -39,7 +39,7 @@ export function metricsSeriesMeasurementsMinMax(
         return { min: -1, max: 1 };
     }
 
-    const measurements = nonPercentMetrics.flatMap(m => m.data ?? []);
+    const measurements = nonPercentMetrics.flatMap((m) => m.data ?? []);
 
     return measurements.reduce(
         (acc: { min: number; max: number }, measurement) => ({
