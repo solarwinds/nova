@@ -55,6 +55,7 @@ import {
     TimeseriesZoomPlugin,
     TimeseriesZoomPluginsSyncService,
     XYGridConfig,
+    ZoomPlugin,
 } from "@nova-ui/charts";
 
 import { SET_TIMEFRAME } from "../../../../services/types";
@@ -63,6 +64,7 @@ import { TimeseriesScalesService } from "../../timeseries-scales.service";
 import {
     ITimeseriesWidgetData,
     ITimeseriesWidgetStatusData,
+    TimeseriesWidgetProjectType,
 } from "../../types";
 import { TimeseriesChartComponent } from "../timeseries-chart.component";
 
@@ -82,8 +84,6 @@ export class StatusBarChartComponent
     protected accessors: StatusAccessors;
     protected renderer: Renderer<IAccessors>;
     private chartUpdate$ = new Subject<void>();
-
-    public zoomPlugin: TimeseriesZoomPlugin;
 
     constructor(
         private iconService: IconService,
@@ -193,10 +193,27 @@ export class StatusBarChartComponent
         if (this.configuration.enableZoom) {
             this.chartAssist.sparks.forEach((spark) => {
                 if (
-                    !(spark?.chart as Chart)?.hasPlugin(TimeseriesZoomPlugin) &&
-                    this.configuration.enableZoom
+                    this.configuration?.projectType ===
+                    TimeseriesWidgetProjectType.PerfstackApp
                 ) {
-                    spark?.chart?.addPlugin(this.zoomPlugin);
+                    if (
+                        !(spark?.chart as Chart)?.hasPlugin(
+                            TimeseriesZoomPlugin
+                        )
+                    ) {
+                        spark?.chart?.addPlugin(
+                            new TimeseriesZoomPlugin(
+                                { collectionId: this.collectionId },
+                                this.zoomPluginsSyncService
+                            )
+                        );
+                    }
+                } else {
+                    if (!(spark?.chart as Chart)?.hasPlugin(ZoomPlugin)) {
+                        spark?.chart?.addPlugin(
+                            new ZoomPlugin({ enableExternalEvents: true })
+                        );
+                    }
                 }
             });
 

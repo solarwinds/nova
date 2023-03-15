@@ -74,14 +74,17 @@ export class TimeseriesWidgetComponent
     ) {}
 
     public ngOnInit(): void {
-        this.zoomPlugin =
+        if (
             this.configuration?.projectType ===
-            TimeseriesWidgetProjectType.ModernDashboard
-                ? new ZoomPlugin()
-                : new TimeseriesZoomPlugin(
-                      { collectionId: this.collectionId },
-                      this.zoomPluginsSyncService
-                  );
+            TimeseriesWidgetProjectType.PerfstackApp
+        ) {
+            this.zoomPlugin = new TimeseriesZoomPlugin(
+                { collectionId: this.collectionId },
+                this.zoomPluginsSyncService
+            );
+        } else {
+            this.zoomPlugin = new ZoomPlugin();
+        }
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
