@@ -85,8 +85,6 @@ export class StatusBarChartComponent
     protected renderer: Renderer<IAccessors>;
     private chartUpdate$ = new Subject<void>();
 
-    public zoomPlugin: TimeseriesZoomPlugin;
-
     constructor(
         private iconService: IconService,
         @Optional() @Inject(DATA_SOURCE) dataSource: IDataSource,

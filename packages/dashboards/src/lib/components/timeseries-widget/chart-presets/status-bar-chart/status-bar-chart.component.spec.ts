@@ -27,12 +27,14 @@ import {
     SET_DOMAIN_EVENT,
     TimeseriesZoomPlugin,
     TimeseriesZoomPluginsSyncService,
+    ZoomPlugin,
 } from "@nova-ui/charts";
 
 import { SET_TIMEFRAME } from "../../../../services/types";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../types";
 import { TimeseriesScalesService } from "../../timeseries-scales.service";
 import { StatusBarChartComponent } from "./status-bar-chart.component";
+import { TimeseriesWidgetProjectType } from "../../types";
 
 describe("StatusChartComponent", () => {
     const frozenTime = moment("2020-11-06T00:00:00-06:00")
@@ -62,10 +64,7 @@ describe("StatusChartComponent", () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(StatusBarChartComponent);
         component = fixture.componentInstance;
-        component.zoomPlugin = new TimeseriesZoomPlugin(
-            {},
-            new TimeseriesZoomPluginsSyncService()
-        );
+
         component.widgetData = {
             series: [
                 {
@@ -119,8 +118,49 @@ describe("StatusChartComponent", () => {
     });
 
     describe("updateChartData", () => {
-        it("should add the zoom plugin to each spark if zoom is enabled", () => {
+        it("should add the default zoom plugin to each spark if zoom is enabled", () => {
             component.configuration.enableZoom = true;
+            (<any>component).updateChartData();
+            component.chartAssist.sparks.forEach((spark) => {
+                expect((spark?.chart as Chart)?.hasPlugin(ZoomPlugin)).toEqual(
+                    true
+                );
+            });
+        });
+
+        it("should not add multiple default zoom plugins on multiple calls", () => {
+            component.configuration.enableZoom = true;
+
+            // multiple calls
+            (<any>component).updateChartData();
+            (<any>component).updateChartData();
+
+            spyOn(ZoomPlugin.prototype, "destroy");
+            component.chartAssist.sparks.forEach((spark) => {
+                expect((spark?.chart as Chart)?.hasPlugin(ZoomPlugin)).toEqual(
+                    true
+                );
+                (spark?.chart as Chart)?.removePlugin(ZoomPlugin);
+                expect((spark?.chart as Chart)?.hasPlugin(ZoomPlugin)).toEqual(
+                    false
+                );
+            });
+        });
+
+        it("should not add the default zoom plugin to each spark if zoom is disabled", () => {
+            component.configuration.enableZoom = false;
+            (<any>component).updateChartData();
+            component.chartAssist.sparks.forEach((spark) => {
+                expect((spark?.chart as Chart)?.hasPlugin(ZoomPlugin)).toEqual(
+                    false
+                );
+            });
+        });
+
+        it("should add the timeseries zoom plugin to each spark for the pefstack widget type", () => {
+            component.configuration.enableZoom = true;
+            component.configuration.projectType =
+                TimeseriesWidgetProjectType.PerfstackApp;
             (<any>component).updateChartData();
             component.chartAssist.sparks.forEach((spark) => {
                 expect(
@@ -129,8 +169,10 @@ describe("StatusChartComponent", () => {
             });
         });
 
-        it("should not add multiple zoom plugins on multiple calls", () => {
+        it("should not add multiple timeseries zoom plugins on multiple calls for the pefstack widget type", () => {
             component.configuration.enableZoom = true;
+            component.configuration.projectType =
+                TimeseriesWidgetProjectType.PerfstackApp;
 
             // multiple calls
             (<any>component).updateChartData();
@@ -142,16 +184,6 @@ describe("StatusChartComponent", () => {
                     (spark?.chart as Chart)?.hasPlugin(TimeseriesZoomPlugin)
                 ).toEqual(true);
                 (spark?.chart as Chart)?.removePlugin(TimeseriesZoomPlugin);
-                expect(
-                    (spark?.chart as Chart)?.hasPlugin(TimeseriesZoomPlugin)
-                ).toEqual(false);
-            });
-        });
-
-        it("should not add the zoom plugin to each spark if zoom is disabled", () => {
-            component.configuration.enableZoom = false;
-            (<any>component).updateChartData();
-            component.chartAssist.sparks.forEach((spark) => {
                 expect(
                     (spark?.chart as Chart)?.hasPlugin(TimeseriesZoomPlugin)
                 ).toEqual(false);
