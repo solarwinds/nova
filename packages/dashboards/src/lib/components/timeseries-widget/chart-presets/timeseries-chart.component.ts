@@ -33,6 +33,7 @@ import { IDataSource } from "@nova-ui/bits";
 import { IXYScales } from "@nova-ui/charts";
 
 import { WellKnownDataSourceFeatures } from "../../../types";
+import { metricsSeriesMeasurementsMinMax } from "../timeseries-helpers";
 import { TimeseriesScalesService } from "../timeseries-scales.service";
 import {
     ITimeseriesOutput,
@@ -40,6 +41,7 @@ import {
     ITimeseriesWidgetConfig,
     ITimeseriesWidgetData,
     ITimeseriesWidgetSeriesData,
+    TimeseriesChartPreset,
 } from "../types";
 
 @Directive()
@@ -79,7 +81,11 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
 
     public ngOnInit(): void {
         // save original data
-        if (this.widgetData && this.widgetData.series) {
+        if (
+            this.configuration.preset === TimeseriesChartPreset.Line &&
+            this.widgetData &&
+            this.widgetData.series
+        ) {
             this.widgetData.series.forEach(
                 (serie) => (serie.rawData = serie.data)
             );
@@ -192,13 +198,36 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
 
     protected transformSeriesData(serie: ITimeseriesWidgetData<T>): void {
         if (serie.transformer && serie.rawData && serie.rawData.length > 0) {
-            // TODO percentile???
             try {
-                serie.data = serie.transformer(serie.rawData);
+                const hasPercentile = serie.metricUnits === "percent";
+                serie.data = serie.transformer(serie.rawData, hasPercentile);
+                this.updateYAxisDomain();
             } catch (e) {
                 serie.transformer = undefined;
                 serie.data = serie.rawData;
                 console.error(e.message);
+            }
+        }
+    }
+
+    public updateYAxisDomain(): void {
+        const scaleKeys = ["y", "yRight"] as Array<
+            keyof ITimeseriesScalesConfig
+        >;
+        for (const scaleKey of scaleKeys) {
+            const scaleConfig = this.configuration.scales?.[scaleKey];
+            if (scaleConfig?.properties) {
+                scaleConfig.properties.domain = {
+                    ...metricsSeriesMeasurementsMinMax(
+                        this.widgetData.series,
+                        scaleConfig?.properties?.axisUnits
+                    ),
+                };
+                this.timeseriesScalesService.updateConfiguration(
+                    this.scales[scaleKey],
+                    scaleConfig,
+                    this.configuration
+                );
             }
         }
     }
