@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
     build:
-        image: circleci/node:12-browsers
+        image: circleci/node:16.18-browsers
         working_dir: /nova
         environment:
             - CI
@@ -59,7 +59,7 @@ services:
         volumes:
             - "${PROJECT_DIR}/sdk/api-docs-ng2/examples:/usr/share/nginx/html:ro"
     selenium:
-        image: "selenium/standalone-chrome-debug:3.141.59-20210422"
+        image: "selenium/standalone-chrome-debug:3.141.59"
         ports:
             - "4444:4444"
             - "5900:5900"
