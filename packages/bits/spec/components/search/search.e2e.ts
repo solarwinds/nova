@@ -93,4 +93,9 @@ describe("USERCONTROL search", () => {
         expect(await searchField.isFocused()).toEqual(false);
         await browser.driver.switchTo().defaultContent();
     });
+
+    it("should reflect error when isInErrorState is true", async () => {
+        expect(await searchField.hasError()).toBe(true);
+    });
+
 });

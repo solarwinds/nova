@@ -1,4 +1,5 @@
-<div class="nui-search__group input-group">
+<div class="nui-search__group input-group"
+     [class.has-error]="isInErrorState">
     <div class="nui-search__input">
         <div class="nui-search__button input-group-btn">
             <button
@@ -31,6 +32,7 @@
             [(ngModel)]="value"
             [placeholder]="getPlaceholder()"
             (keyup)="onKeyup($event)"
+            [attr.aria-invalid]="isInErrorState"
         />
     </div>
 </div>

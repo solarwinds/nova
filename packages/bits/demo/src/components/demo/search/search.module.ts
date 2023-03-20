@@ -42,6 +42,7 @@ import {
     SearchPlaceholderExampleComponent,
     SearchTestExampleComponent,
     SearchVisualTestComponent,
+    SearchErrorStateExampleComponent,
 } from "./index";
 
 const routes = [
@@ -95,6 +96,7 @@ const routes = [
         SearchInputChangeExampleComponent,
         SearchOnSearchCancelExampleComponent,
         SearchPlaceholderExampleComponent,
+        SearchErrorStateExampleComponent,
         SearchVisualTestComponent,
     ],
     providers: [

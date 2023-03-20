@@ -72,6 +72,10 @@ export class SearchComponent implements IFilterPub, OnDestroy {
      */
     @Input() name: string;
     /**
+     * Input to apply error state styles
+     */
+    @Input() public isInErrorState: boolean = false;
+    /**
      * A string that will be placed as a watermark inside of the search when it's empty.
      */
     @Input() placeholder: string;
