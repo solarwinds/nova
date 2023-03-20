@@ -224,13 +224,17 @@ export class TimeseriesScalesService {
         }
 
         const point = (max - min) / 4;
-        return this.roundToOptimalDecimals(
-            [min, min + point, min + 2 * point, max - point, max]
-        );
+        return this.roundToOptimalDecimals([
+            min,
+            min + point,
+            min + 2 * point,
+            max - point,
+            max,
+        ]);
     }
 
     private roundToOptimalDecimals(arr: number[]): number[] {
-        return arr.map(v => {
+        return arr.map((v) => {
             let decimals;
             switch (Math.floor(v).toString().length) {
                 case 1:
@@ -239,7 +243,7 @@ export class TimeseriesScalesService {
                     decimals = 2;
                     break;
                 case 4:
-                    decimals = 1
+                    decimals = 1;
                     break;
                 default:
                     decimals = 0;
