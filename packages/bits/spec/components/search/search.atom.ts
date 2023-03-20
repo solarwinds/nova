@@ -68,9 +68,9 @@ export class SearchAtom extends Atom {
     }
 
     public async hasError(): Promise<boolean> {
-        const searchGroup = this.getElement()
-            .element(by.css(".nui-search__group"))
+        const searchGroup = this.getElement().element(
+            by.css(".nui-search__group")
+        );
         return await Atom.hasClass(searchGroup, "has-error");
-        
     }
 }

@@ -35,7 +35,12 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [NuiCommonModule, NuiSpinnerModule, FormsModule, NuiButtonModule],
+                imports: [
+                    NuiCommonModule,
+                    NuiSpinnerModule,
+                    FormsModule,
+                    NuiButtonModule,
+                ],
                 declarations: [SearchComponent],
             }).compileComponents();
 
@@ -106,7 +111,9 @@ describe("components >", () => {
         it("should add 'has-error' class if 'isInErrorState' is 'true'", () => {
             subject.isInErrorState = true;
             fixture.detectChanges();
-            const searchGroup = debugElement.query(By.css(".nui-search__group.has-error"));
+            const searchGroup = debugElement.query(
+                By.css(".nui-search__group.has-error")
+            );
             expect(searchGroup).toBeDefined();
         });
     });

@@ -97,5 +97,4 @@ describe("USERCONTROL search", () => {
     it("should reflect error when isInErrorState is true", async () => {
         expect(await searchField.hasError()).toBe(true);
     });
-
 });
