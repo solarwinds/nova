@@ -366,12 +366,16 @@ export class XYGrid extends Grid implements IGrid {
         axisGenerator: any
     ): void {
         if (config.visible) {
-            const bottomLabelAxis = axisGenerator(scale.d3Scale)
+            const labelAxis = axisGenerator(scale.d3Scale)
                 .ticks(config.approximateTicks)
-                .tickSize(0)
-                .tickFormat(scale.formatters["tick"]);
+                .tickSize(0);
 
-            axis.labelGroup.call(bottomLabelAxis);
+            if (scale.fixDomainValues?.length) {
+                labelAxis.tickValues(scale.fixDomainValues);
+            }
+            labelAxis.tickFormat(scale.formatters["tick"]);
+            axis.labelGroup.call(labelAxis);
+
             let tickAxis;
             if (scale instanceof BandScale) {
                 tickAxis = axisGenerator(scale.copyToLinear().d3Scale)
@@ -379,9 +383,15 @@ export class XYGrid extends Grid implements IGrid {
                     .tickValues(scale.bandTicks())
                     .tickFormat(() => "");
             } else {
-                tickAxis = axisGenerator(scale.d3Scale)
-                    .tickSize(config.tickSize)
-                    .tickFormat(() => "");
+                tickAxis = axisGenerator(scale.d3Scale).tickSize(
+                    config.tickSize
+                );
+
+                if (scale.fixDomainValues?.length) {
+                    tickAxis.tickValues(scale.fixDomainValues);
+                }
+
+                tickAxis.tickFormat(() => "");
                 tickAxis.ticks(config.approximateTicks);
             }
             axis.tickGroup.call(tickAxis);
@@ -406,10 +416,13 @@ export class XYGrid extends Grid implements IGrid {
                 .selectAll(".tick line")
                 .classed("nui-zero-line", (d: any) => d === 0);
 
-        const leftGridLines = axisGenerator(scale.d3Scale)
-            .tickSize(size)
-            .tickFormat(() => "")
-            .ticks(config.approximateTicks);
+        const leftGridLines = axisGenerator(scale.d3Scale).tickSize(size);
+
+        if (scale.fixDomainValues?.length) {
+            leftGridLines.tickValues(scale.fixDomainValues);
+        }
+
+        leftGridLines.tickFormat(() => "").ticks(config.approximateTicks);
 
         if (config.gridTicks) {
             const gridSelection = axis.tickGroup.call(leftGridLines);

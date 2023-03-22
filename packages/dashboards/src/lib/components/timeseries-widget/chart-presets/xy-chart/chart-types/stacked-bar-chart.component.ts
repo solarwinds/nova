@@ -32,6 +32,7 @@ import {
     IAccessors,
     IChartAssistSeries,
     InteractionLabelPlugin,
+    InteractionLinePlugin,
     IValueProvider,
     IXYScales,
     stack,
@@ -93,6 +94,7 @@ export class StackedBarChartComponent extends XYChartComponent {
 
     protected createChartAssist(palette: ChartPalette): ChartAssist {
         const chart = new Chart(barGrid());
+        chart.addPlugin(new InteractionLinePlugin());
         chart.addPlugin(new InteractionLabelPlugin());
         return new ChartAssist(chart, stack, palette);
     }

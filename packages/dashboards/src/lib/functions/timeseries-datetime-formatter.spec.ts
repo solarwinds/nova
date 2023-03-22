@@ -18,7 +18,33 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./proportional-aggregators/public-api";
-export * from "./merge-changes";
-export * from "./map-data-to-formatter-properties";
-export * from "./timeseries-datetime-formatter";
+import moment from "moment/moment";
+
+import { timeSeriesDatetimeFormatter } from "./timeseries-datetime-formatter";
+
+describe("timeSeriesDatetimeFormatter", () => {
+    it("uses minutes format", () => {
+        const date = moment("2022-12-01 09:15:10");
+        expect(timeSeriesDatetimeFormatter(date.toDate())).toContain("15");
+    });
+
+    it("uses hours format", () => {
+        const date = moment("2022-12-01 09:15:10");
+        expect(timeSeriesDatetimeFormatter(date.toDate())).toContain("09");
+    });
+
+    it("uses day format", () => {
+        const date = moment("2022-12-01 09:15:10");
+        expect(timeSeriesDatetimeFormatter(date.toDate())).toContain("01");
+    });
+
+    it("uses month format", () => {
+        const date = moment("2022-12-01 09:15:10");
+        expect(timeSeriesDatetimeFormatter(date.toDate())).toContain("12");
+    });
+
+    it("uses year format", () => {
+        const date = moment("2022-12-01 09:15:10");
+        expect(timeSeriesDatetimeFormatter(date.toDate())).toContain("2022");
+    });
+});

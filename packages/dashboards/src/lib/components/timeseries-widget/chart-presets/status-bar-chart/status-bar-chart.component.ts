@@ -53,6 +53,7 @@ import {
     StatusAccessors,
     statusAccessors,
     TimeIntervalScale,
+    XYGridConfig,
     ZoomPlugin,
 } from "@nova-ui/charts";
 
@@ -139,11 +140,33 @@ export class StatusBarChartComponent
             pointerEvents: false,
         });
 
+        this.setGridConfigFromConfiguration(this.chartAssist.gridConfig);
+        this.setGridConfigFromConfiguration(this.chartAssist.lastGridConfig);
+
         this.scales.y = new BandScale();
         this.scales.y.fixDomain(StatusAccessors.STATUS_DOMAIN);
+        this.scales.y.isTimeseriesScale = true;
+
+        if (this.scales.yRight) {
+            this.scales.yRight = this.scales.y;
+        }
     }
 
     protected updateChartData(): void {
+        const { gridConfig, lastGridConfig } = this.chartAssist;
+        // hides botom axis if it's not last chart in the group
+        gridConfig.axis.bottom.visible = !this.configuration?.hasAdjacentChart;
+        lastGridConfig.axis.bottom.visible =
+            !this.configuration?.hasAdjacentChart;
+        gridConfig.borders.bottom.className = this.configuration
+            ?.hasAdjacentChart
+            ? "nui-chart-border"
+            : "nui-chart-border nui-chart-border--thick";
+        lastGridConfig.borders.bottom.className = this.configuration
+            ?.hasAdjacentChart
+            ? "nui-chart-border"
+            : "nui-chart-border nui-chart-border--thick";
+
         this.chartUpdate$.next();
 
         // Assemble the series set
@@ -229,6 +252,30 @@ export class StatusBarChartComponent
             }
         });
         return statusDataArray;
+    }
+
+    private setGridConfigFromConfiguration(gridConfig: XYGridConfig): void {
+        const configuration = this.configuration;
+
+        if (configuration.gridConfig?.xAxisTicksCount) {
+            gridConfig.axis.bottom.approximateTicks =
+                configuration.gridConfig.xAxisTicksCount;
+        }
+
+        if (
+            gridConfig.dimension.marginLocked &&
+            configuration.gridConfig?.sideMarginLocked
+        ) {
+            gridConfig.dimension.marginLocked.left = true;
+            gridConfig.dimension.marginLocked.right = true;
+        }
+
+        if (configuration.gridConfig?.sideMargin) {
+            gridConfig.dimension.margin.left =
+                configuration.gridConfig.sideMargin;
+            gridConfig.dimension.margin.right =
+                configuration.gridConfig.sideMargin;
+        }
     }
 }
 

@@ -33,6 +33,9 @@ import {
     SET_DOMAIN_EVENT,
     XYGrid,
     ZoomPlugin,
+    LinearScale,
+    IXYScales,
+    TimeScale,
 } from "@nova-ui/charts";
 import {
     DATA_SOURCE,
@@ -243,6 +246,71 @@ describe("XYChartComponent", () => {
                 id: "INTERACTION",
             };
             expect(spy).toHaveBeenCalledWith(interactionData);
+        });
+    });
+
+    describe("mapSeriesSet", () => {
+        let data: any[];
+        let scales: IXYScales;
+        beforeEach(() => {
+            data = [
+                {
+                    data: [],
+                    description: "XXXXX",
+                    id: "id1",
+                    metricUnits: "bytes",
+                    name: "Total Memory",
+                },
+            ];
+            scales = {
+                x: new TimeScale(),
+                y: new LinearScale(),
+            };
+        });
+
+        it("should use yscale if yRight scale is not provided", () => {
+            const res = component.mapSeriesSet(data, scales);
+
+            expect(res[0].scales.y).toEqual(scales.y);
+        });
+
+        it("should map y-scale acording to scale units and data metric units", () => {
+            scales.yRight = new LinearScale();
+            scales.y.scaleUnits = "percent";
+            scales.yRight.scaleUnits = "bytes";
+            const res = component.mapSeriesSet(data, scales);
+
+            expect(res[0].scales.y).toEqual(scales.yRight);
+        });
+
+        it("should map to generic y-scale if its provided and data metric units are different than other y-scale", () => {
+            scales.yRight = new LinearScale();
+            scales.y.scaleUnits = "percent";
+            scales.yRight.scaleUnits = "generic";
+            const res = component.mapSeriesSet(data, scales);
+
+            expect(res[0].scales.y).toEqual(scales.yRight);
+        });
+
+        it("should map each metric unit to different y-scale if multiple data are provided", () => {
+            data = [
+                ...data,
+                {
+                    data: [],
+                    description: "XXXXX",
+                    id: "id2",
+                    metricUnits: "percent",
+                    name: "Average CPU Load",
+                },
+            ];
+
+            scales.yRight = new LinearScale();
+            scales.y.scaleUnits = "percent";
+            scales.yRight.scaleUnits = "bytes";
+            const res = component.mapSeriesSet(data, scales);
+
+            expect(res[0].scales.y).toEqual(scales.yRight);
+            expect(res[1].scales.y).toEqual(scales.y);
         });
     });
 });
