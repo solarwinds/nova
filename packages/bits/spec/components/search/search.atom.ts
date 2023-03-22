@@ -66,4 +66,11 @@ export class SearchAtom extends Atom {
         await browser.driver.switchTo().defaultContent();
         return isFocused;
     }
+
+    public async hasError(): Promise<boolean> {
+        const searchGroup = this.getElement().element(
+            by.css(".nui-search__group")
+        );
+        return await Atom.hasClass(searchGroup, "has-error");
+    }
 }

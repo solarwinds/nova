@@ -45,6 +45,8 @@ export class SearchTestExampleComponent {
 
     public interval = 2000;
 
+    public isInErrorState = true;
+
     public onCancel(value: string): void {
         this.value = "";
         this.searchKey = "";

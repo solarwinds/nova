@@ -18,14 +18,35 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { DebugElement } from "@angular/core";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { FormsModule } from "@angular/forms";
+import { By } from "@angular/platform-browser";
+import { NuiCommonModule } from "../../common/common.module";
+import { NuiButtonModule } from "../button/button.module";
+import { NuiSpinnerModule } from "../spinner/spinner.module";
 import { SearchComponent } from "./search.component";
 
 describe("components >", () => {
     describe("search >", () => {
         let subject: SearchComponent;
+        let fixture: ComponentFixture<SearchComponent>;
+        let debugElement: DebugElement;
 
         beforeEach(() => {
-            subject = new SearchComponent();
+            TestBed.configureTestingModule({
+                imports: [
+                    NuiCommonModule,
+                    NuiSpinnerModule,
+                    FormsModule,
+                    NuiButtonModule,
+                ],
+                declarations: [SearchComponent],
+            }).compileComponents();
+
+            fixture = TestBed.createComponent(SearchComponent);
+            subject = fixture.componentInstance;
+            debugElement = fixture.debugElement;
         });
 
         it("should provide custom placeholder if specified", () => {
@@ -85,6 +106,15 @@ describe("components >", () => {
             const keyboardEvent = <KeyboardEvent>{ key: "Enter" };
             subject.onKeyup(keyboardEvent);
             expect(subject.search.emit).toHaveBeenCalledWith(currentInput);
+        });
+
+        it("should add 'has-error' class if 'isInErrorState' is 'true'", () => {
+            subject.isInErrorState = true;
+            fixture.detectChanges();
+            const searchGroup = debugElement.query(
+                By.css(".nui-search__group.has-error")
+            );
+            expect(searchGroup).toBeDefined();
         });
     });
 });

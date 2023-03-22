@@ -26,3 +26,4 @@ export * from "./search-focus-change/search-focus-change.example.component";
 export * from "./search-test/search-test.example.component";
 export * from "./search-input-change/search-input-change.example.component";
 export * from "./search-on-search-cancel/search-on-search-cancel.example.component";
+export * from "./search-error-state/search-error-state.example.component";
