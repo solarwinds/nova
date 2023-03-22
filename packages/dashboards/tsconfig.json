@@ -2,7 +2,7 @@
     "compilerOptions": {
         "baseUrl": ".",
         "declaration": false,
-        "lib": ["ES2018", "DOM"],
+        "lib": ["ES2019", "DOM"],
         "paths": {
             "@nova-ui/dashboards": ["./src/public-api.ts"]
         }

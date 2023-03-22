@@ -50,22 +50,30 @@ export interface IRegistryAddOptions {
 export interface IAddFormattersOptions
     extends Pick<IRegistryAddOptions, "overrideExisting"> {}
 
-export interface IWidgetResizePayload {
-    widgetId: number;
-    height: number;
-    width: number;
+export interface IRemoveMetricPayload {
+    metricId: string;
+    groupUniqueId: string;
 }
 
-export const REFRESH = new EventDefinition<void>("REFRESH");
-export const SCROLL_NEXT_PAGE = new EventDefinition<void>("SCROLL_NEXT_PAGE");
-export const WIDGET_REMOVE = new EventDefinition<void>("WIDGET_REMOVE");
-export const WIDGET_EDIT = new EventDefinition<void>("WIDGET_EDIT");
-export const WIDGET_CREATE = new EventDefinition<void>("WIDGET_CREATE");
-export const WIDGET_READY = new EventDefinition<void>("WIDGET_READY");
+export interface IWidgetPayload {
+    widgetId: string;
+}
+
+export interface IWidgetResizePayload extends IWidgetPayload {
+    height?: number;
+    width?: number;
+}
+
+export const REFRESH = new EventDefinition("REFRESH");
+export const SCROLL_NEXT_PAGE = new EventDefinition("SCROLL_NEXT_PAGE");
+export const WIDGET_REMOVE = new EventDefinition("WIDGET_REMOVE");
+export const WIDGET_EDIT = new EventDefinition("WIDGET_EDIT");
+export const WIDGET_CREATE = new EventDefinition("WIDGET_CREATE");
+export const WIDGET_READY = new EventDefinition("WIDGET_READY");
 export const WIDGET_RESIZE = new EventDefinition<IWidgetResizePayload>(
     "WIDGET_RESIZE"
 );
-export const WIDGET_POSITION_CHANGE = new EventDefinition<GridsterItem>(
+export const WIDGET_POSITION_CHANGE = new EventDefinition(
     "WIDGET_POSITION_CHANGE"
 );
 export const WIDGET_SEARCH = new EventDefinition<string>(
@@ -140,3 +148,9 @@ export const NOVA_PROPORTIONAL_CONTENT_FORMATTERS_REGISTRY =
 export const NOVA_TEST_REGISTRY = "NOVA_TEST_REGISTRY";
 export const NOVA_CONFIGURATOR_DATA_SOURCE_MANAGER =
     "NOVA_CONFIGURATOR_DATA_SOURCE_MANAGER";
+
+export const CHART_METRIC_REMOVE: IEventDefinition<
+    IEvent<IRemoveMetricPayload>
+> = {
+    id: "CHART_METRIC_REMOVE",
+};

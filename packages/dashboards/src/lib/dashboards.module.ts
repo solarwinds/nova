@@ -35,6 +35,7 @@ import {
     NuiIconModule,
     NuiImageModule,
     NuiMenuModule,
+    NuiPopoverModule,
     NuiPopupModule,
     NuiProgressModule,
     NuiRepeatModule,
@@ -113,6 +114,7 @@ import { previewPlaceholder } from "./widget-types/preview-placeholder";
 import { proportional } from "./widget-types/proportional/proportional";
 import { table } from "./widget-types/table/table";
 import { timeseries } from "./widget-types/timeseries/timeseries";
+import { TimeseriesInspectionMenuComponent } from "./components/timeseries-widget/timeseries-inspection-menu/timeseries-inspection-menu.component";
 
 const dashboardComponents = [
     DashboardComponent,
@@ -144,6 +146,7 @@ const dashboardComponents = [
     ListNavigationBarComponent,
     WidgetSearchComponent,
     ProportionalDonutContentComponent,
+    TimeseriesInspectionMenuComponent,
 ];
 
 const entryComponents: IComponentWithLateLoadKey[] = [
@@ -199,6 +202,7 @@ const entryComponents: IComponentWithLateLoadKey[] = [
         NuiCommonModule,
         NuiRepeatModule,
         NuiSelectModule,
+        NuiPopoverModule,
     ],
     declarations: dashboardComponents,
     providers: [

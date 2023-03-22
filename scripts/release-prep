@@ -1,0 +1,56 @@
+#!/bin/bash
+set -e
+
+if [ "$SOURCE_BRANCH" == "" ]; then
+      echo "Missing required environment variable SOURCE_BRANCH"
+      exit 1
+fi
+
+if [ "$RELEASE_BRANCH" == "" ]; then
+      echo "Missing required environment variable RELEASE_BRANCH"
+      exit 1
+fi
+
+if [ "$CIRCLE_BRANCH" == "" ]; then
+      echo "Missing required environment variable CIRCLE_BRANCH"
+      exit 1
+fi
+
+if [ "$INCREMENT_TYPE" == "" ]; then
+      echo "Missing required environment variable INCREMENT_TYPE"
+      exit 1
+fi
+
+if [ "$CIRCLE_API_TOKEN" == "" ]; then
+      echo "Missing required environment variable CIRCLE_API_TOKEN"
+      exit 1
+fi
+
+# Merge Changes
+yarn run merge-ci
+
+# Check out release branch
+git checkout $RELEASE_BRANCH
+
+# Set Release Version
+yarn run set-release-versions-ci
+
+# Set Release Dependency Versions
+yarn run set-dependency-versions-ci
+
+# Commit and Push Release Branch Changes
+git commit -am "update files for version $RELEASE_VERSION"
+git push --verbose
+
+# Increment source branch version
+git checkout $SOURCE_BRANCH
+yarn run set-source-versions-ci
+
+# Set source dependency versions
+yarn run set-dependency-versions-ci
+
+# Push source branch changes
+git commit -am 'increment develop versions' && git push origin $SOURCE_BRANCH
+
+# Trigger release branch
+yarn run trigger-pipeline-build-ci $RELEASE_BRANCH

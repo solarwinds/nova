@@ -33,3 +33,55 @@
         }
     }
 }
+
+.description-container {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    padding-right: @nui-space-xxs;
+}
+
+.description-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.legend-menu {
+    opacity: 0;
+    display: none;
+    margin-left: auto;
+}
+
+nui-legend-series:hover {
+    .legend-menu {
+        opacity: 1;
+        display: unset;
+    }
+}
+
+nui-legend-series {
+    width: 100%;
+}
+
+nui-icon {
+    padding: 0 @nui-space-xs 0 @nui-space-xs;
+}
+
+:host::ng-deep {
+    nui-legend-series div div:nth-child(2).d-flex {
+        flex-grow: 1;
+        overflow: hidden;
+    }
+    .nui-legend-series .description {
+        min-width: unset;
+    }
+}
+
+.selected {
+    background-color: @nui-color-selected;
+}
+.selected:hover {
+    background-color: @nui-color-selected-hover;
+}

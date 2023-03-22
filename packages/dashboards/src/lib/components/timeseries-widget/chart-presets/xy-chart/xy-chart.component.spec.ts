@@ -29,27 +29,37 @@ import {
     defaultPalette,
     IAccessors,
     IValueProvider,
-    LineAccessors,
-    SET_DOMAIN_EVENT,
-    XYGrid,
-    ZoomPlugin,
-    LinearScale,
     IXYScales,
+    LineAccessors,
+    LinearScale,
+    SET_DOMAIN_EVENT,
     TimeScale,
+    TimeseriesZoomPlugin,
+    TimeseriesZoomPluginsSyncService,
+    XYGrid,
 } from "@nova-ui/charts";
+
+import { ISerializableTimeframe } from "../../../../configurator/services/types";
+import { NuiDashboardsModule } from "../../../../dashboards.module";
+import { ProviderRegistryService } from "../../../../services/provider-registry.service";
 import {
-    DATA_SOURCE,
-    NuiDashboardsModule,
+    CHART_METRIC_REMOVE,
     INTERACTION,
-    ISerializableTimeframe,
+    SET_TIMEFRAME,
+} from "../../../../services/types";
+import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../types";
+import {
+    ITimeseriesScalesConfig,
     ITimeseriesWidgetConfig,
     ITimeseriesWidgetData,
     PIZZAGNA_EVENT_BUS,
     ProviderRegistryService,
     SET_TIMEFRAME,
     TimeseriesInteractionType,
-    XYChartComponent,
-} from "@nova-ui/dashboards";
+    TimeseriesScaleType,
+    TimeseriesTransformer,
+} from "../../types";
+import { XYChartComponent } from "./xy-chart.component";
 
 @Component({
     selector: "test-component",
@@ -57,6 +67,11 @@ import {
 })
 class TestComponent extends XYChartComponent {
     public static lateLoadKey = "TestComponent";
+
+    public zoomPlugin: TimeseriesZoomPlugin = new TimeseriesZoomPlugin(
+        {},
+        new TimeseriesZoomPluginsSyncService()
+    );
 
     protected createAccessors(
         colorProvider: IValueProvider<string>
@@ -182,7 +197,7 @@ describe("XYChartComponent", () => {
                 enableZoom: false,
             } as ITimeseriesWidgetConfig;
             component.ngOnChanges(initializationChanges);
-            expect(getChart().hasPlugin(ZoomPlugin)).toEqual(false);
+            expect(getChart().hasPlugin(TimeseriesZoomPlugin)).toEqual(false);
         });
 
         it("should add the zoom plugin if zoom is enabled", () => {
@@ -190,7 +205,7 @@ describe("XYChartComponent", () => {
                 enableZoom: true,
             } as ITimeseriesWidgetConfig;
             component.ngOnChanges(initializationChanges);
-            expect(getChart().hasPlugin(ZoomPlugin)).toEqual(true);
+            expect(getChart().hasPlugin(TimeseriesZoomPlugin)).toEqual(true);
         });
 
         it("should subscribe to the SET_DOMAIN event", () => {
@@ -311,6 +326,90 @@ describe("XYChartComponent", () => {
 
             expect(res[0].scales.y).toEqual(scales.yRight);
             expect(res[1].scales.y).toEqual(scales.y);
+        });
+    });
+
+    describe("legend menu", () => {
+        beforeEach(() => {
+            component.widgetData.series = [
+                {
+                    id: "42",
+                    transformer: undefined,
+                    data: [
+                        { x: "1", y: 1 },
+                        { x: "2", y: 10 },
+                        { x: "3", y: 3 },
+                        { x: "4", y: 16 },
+                        { x: "5", y: 17 },
+                        { x: "6", y: 5 },
+                        { x: "7", y: 1 },
+                    ],
+                    metricUnits: "bytes",
+                } as ITimeseriesWidgetData,
+            ];
+            spyOn(<any>component, "updateChartData");
+        });
+
+        it("should trigger CHART_METRIC_REMOVE event", () => {
+            component.configuration.groupUniqueId = "groupid";
+            const spy = spyOn(eventBus.getStream(CHART_METRIC_REMOVE), "next");
+            component.removeMetric("42");
+
+            expect(spy).toHaveBeenCalledWith({
+                payload: {
+                    metricId: "42",
+                    groupUniqueId: "groupid",
+                },
+            });
+        });
+
+        it("should transform chart data", () => {
+            const transformedY = [
+                0.00021788429890611262, 0.0002608133382479896,
+                0.00030374237758986657, 0.0003466714169317436,
+                0.0003896004562736206, 0.00043252949561549755,
+                0.0004754585349573745,
+            ];
+            component.widgetData.series[0].rawData =
+                component.widgetData.series[0].data;
+            component.transformData("42", TimeseriesTransformer.Linear);
+
+            expect(component.widgetData.series[0].data.map((d) => d.y)).toEqual(
+                transformedY
+            );
+            expect(component.widgetData.series[0].transformer?.name).toEqual(
+                "transformLinReg"
+            );
+        });
+
+        it("should update Y axis domain", () => {
+            component.configuration = {
+                scales: {
+                    y: {
+                        properties: {
+                            axisUnits: "bytes",
+                        },
+                    },
+                },
+            } as any;
+            component.updateYAxisDomain();
+
+            expect(component.configuration.scales.y.properties?.domain).toEqual(
+                { min: 1, max: 17 }
+            );
+        });
+
+        it("should revert transformation", () => {
+            component.widgetData.series[0].rawData = [
+                { x: 1, y: 1 },
+                { x: 2, y: 2 },
+            ];
+            component.transformData("42", TimeseriesTransformer.None);
+
+            expect(component.widgetData.series[0].data.map((d) => d.y)).toEqual(
+                [1, 2]
+            );
+            expect(component.widgetData.series[0].transformer).toBeUndefined();
         });
     });
 });

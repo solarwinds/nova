@@ -31,6 +31,7 @@ import {
     LineRenderer,
     XYGrid,
     XYGridConfig,
+    TimeseriesZoomPluginsSyncService,
 } from "@nova-ui/charts";
 
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../../types";
@@ -49,9 +50,16 @@ export class LineChartComponent extends XYChartComponent {
         @Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
         @Optional() @Inject(DATA_SOURCE) dataSource: IDataSource,
         timeseriesScalesService: TimeseriesScalesService,
-        changeDetector: ChangeDetectorRef
+        changeDetector: ChangeDetectorRef,
+        zoomPluginsSyncService: TimeseriesZoomPluginsSyncService
     ) {
-        super(eventBus, dataSource, timeseriesScalesService, changeDetector);
+        super(
+            eventBus,
+            dataSource,
+            timeseriesScalesService,
+            changeDetector,
+            zoomPluginsSyncService
+        );
 
         this.renderer = new LineRenderer();
     }

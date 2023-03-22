@@ -11,5 +11,5 @@
     },
     "exclude": ["**/*.spec.ts"],
     "extends": "../../tsconfig.json",
-    "lib": ["es6", "dom"]
+    "lib": ["ES2019", "DOM"]
 }
