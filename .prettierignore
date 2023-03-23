@@ -2,7 +2,6 @@
 .vscode
 .tmp*
 node_modules
-package.json
 packages/*/coverage
 packages/*/dist
 packages/*/schematics
