@@ -3,13 +3,12 @@
   "license": "Apache-2.0",
   "version": "12.0.26-0",
   "scripts": {
-    "assemble": "npm run build && npm run test && npm run copy",
+    "assemble": "run-s build copy:json copy:data test copy:dist",
     "build": "tsc -p tsconfig.json",
-    "test": "npm run build && jasmine src/**/*.spec.js",
-    "copy": "npm run copy-collection && npm run copy-schematics",
-    "copy-ng-add": "npx copyfiles -f \"src/ng-add/{*.json,index.js}\" ../dist/sdk/schematics/ng-add/",
-    "copy-collection": "npx copyfiles -f \"src/collection.json\" ../dist/sdk/schematics/",
-    "copy-schematics": "npx copyfiles -u 1 \"src/**/{*.json,index.js}\" ../dist/sdk/schematics/ && npx copyfiles -u 1 \"src/**/files/**\" ../dist/sdk/schematics/"
+    "test": "jasmine ./dist/**/*.spec.js",
+    "copy:json": "npx copyfiles -u 1 \"src/**/*.json\" ./dist",
+    "copy:data": "npx copyfiles -u 1 \"src/**/files/**\" ./dist",
+    "copy:dist": "npx copyfiles -u 1 \"dist/**/*\" -e \"*.spec.*\" ../dist/sdk/schematics/"
   },
   "keywords": [
     "schematics"
