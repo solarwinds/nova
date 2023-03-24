@@ -18,3 +18,5 @@ max_line_length = 80
 
 [package.json]
 indent_size = 2
+# ensure newlines in the same manner as when yarn/npm modifies package.json
+max_line_length = 30
