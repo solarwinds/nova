@@ -609,9 +609,6 @@ jobs:
             - run:
                   name: Run release prep
                   command: yarn run release-prep-ci
-            - run:
-                  name: Trigger release branch
-                  command: yarn run trigger-pipeline-build-ci ${RELEASE_BRANCH}
 
 workflows:
     nova:
