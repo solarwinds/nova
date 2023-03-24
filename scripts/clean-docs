@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 BITS_DOCS_PATH="./projects/bits"
 CHARTS_DOCS_PATH="./projects/charts"
