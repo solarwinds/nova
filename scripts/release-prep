@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 if [ "$SOURCE_BRANCH" == "" ]; then
       echo "Missing required environment variable SOURCE_BRANCH"
