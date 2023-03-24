@@ -660,9 +660,9 @@ workflows:
                       branches:
                           only:
                               - main
-                              - /^release\/.*/
+                              - /^release\/.+/
                               - next
-                              - /^cci\/.*/
+                              - /^cci\/.+/
             - bits-verify:
                   requires:
                       - bits-publish
@@ -670,9 +670,9 @@ workflows:
                       branches:
                           only:
                               - main
-                              - /^release\/.*/
+                              - /^release\/.+/
                               - next
-                              - /^cci\/.*/
+                              - /^cci\/.+/
             - charts-build:
                   requires:
                       - bits-pack
@@ -700,9 +700,9 @@ workflows:
                       branches:
                           only:
                               - main
-                              - /^release\/.*/
+                              - /^release\/.+/
                               - next
-                              - /^cci\/.*/
+                              - /^cci\/.+/
             - charts-verify:
                   requires:
                       - charts-publish
@@ -710,9 +710,9 @@ workflows:
                       branches:
                           only:
                               - main
-                              - /^release\/.*/
+                              - /^release\/.+/
                               - next
-                              - /^cci\/.*/
+                              - /^cci\/.+/
             - dashboards-build:
                   requires:
                       - charts-pack
@@ -726,9 +726,9 @@ workflows:
                       branches:
                           only:
                               - main
-                              - /^release\/.*/
+                              - /^release\/.+/
                               - next
-                              - /^cci\/.*/
+                              - /^cci\/.+/
                   requires:
                       - bits-pack
                       - charts-pack
@@ -754,9 +754,9 @@ workflows:
                       branches:
                           only:
                               - main
-                              - /^release\/.*/
+                              - /^release\/.+/
                               - next
-                              - /^cci\/.*/
+                              - /^cci\/.+/
             - dashboards-verify:
                   requires:
                       - dashboards-publish
@@ -764,9 +764,17 @@ workflows:
                       branches:
                           only:
                               - main
-                              - /^release\/.*/
+                              - /^release\/.+/
                               - next
-                              - /^cci\/.*/
+                              - /^cci\/.+/
+            - nova-docs-cleanup:
+                  requires:
+                      - nova-docs
+                  filters:
+                      branches:
+                        only:
+                         - /^cci\/.+/
+
 
     nova-release:
         jobs:
