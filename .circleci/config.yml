@@ -562,6 +562,11 @@ jobs:
             - attach_workspace:
                   at: ~/nova
             - run:
+                  name: Configure Git
+                  command: |
+                      git config --global user.email circleci@circleci
+                      git config --global user.name $CIRCLE_PROJECT_USERNAME
+            - run:
                   name: Publish nova docs & Prepare nova-docs artifact
                   command: yarn run deploy-docs-ci
             - store_artifacts:
@@ -575,6 +580,11 @@ jobs:
         steps:
             - checkout:
                   path: ~/nova
+            - run:
+                  name: Configure Git
+                  command: |
+                      git config --global user.email circleci@circleci
+                      git config --global user.name $CIRCLE_PROJECT_USERNAME
             - run:
                   name: Docs Cleanup
                   command: yarn run clean-docs-ci
@@ -597,38 +607,12 @@ jobs:
                       git config --global user.email circleci@circleci
                       git config --global user.name $CIRCLE_PROJECT_USERNAME
             - run:
-                  name: Merge Changes
-                  command: yarn run merge-ci
-            - run:
-                  name: Check out release branch
-                  command: git checkout $RELEASE_BRANCH
-            - run:
-                  name: Set Release Version
-                  command: yarn run set-release-versions-ci
-            - run:
-                  name: Set Release Dependency Versions
-                  command: yarn run set-dependency-versions-ci
-            - run:
-                  name: Commit and Push Release Branch Changes
-                  command: |
-                      git commit -am "update files for version $RELEASE_VERSION"
-                      git push --verbose
-            - run:
-                  name: Increment source branch version
-                  command: |
-                      git checkout $SOURCE_BRANCH
-                      yarn run set-source-versions-ci
-            - run:
-                  name: Set source dependency versions
-                  command: yarn run set-dependency-versions-ci
-            - run:
-                  name: Push source branch changes
-                  command: |
-                      git commit -am 'increment develop versions' && \
-                      git push origin $SOURCE_BRANCH
+                  name: Run release prep
+                  command: yarn run release-prep-ci
             - run:
                   name: Trigger release branch
                   command: yarn run trigger-pipeline-build-ci ${RELEASE_BRANCH}
+
 workflows:
     nova:
         jobs:
@@ -660,9 +644,9 @@ workflows:
                       branches:
                           only:
                               - main
-                              - /^release\/.*/
+                              - /^release\/.+/
                               - next
-                              - /^cci\/.*/
+                              - /^cci\/.+/
             - bits-verify:
                   requires:
                       - bits-publish
@@ -670,9 +654,9 @@ workflows:
                       branches:
                           only:
                               - main
-                              - /^release\/.*/
+                              - /^release\/.+/
                               - next
-                              - /^cci\/.*/
+                              - /^cci\/.+/
             - charts-build:
                   requires:
                       - bits-pack
@@ -700,9 +684,9 @@ workflows:
                       branches:
                           only:
                               - main
-                              - /^release\/.*/
+                              - /^release\/.+/
                               - next
-                              - /^cci\/.*/
+                              - /^cci\/.+/
             - charts-verify:
                   requires:
                       - charts-publish
@@ -710,9 +694,9 @@ workflows:
                       branches:
                           only:
                               - main
-                              - /^release\/.*/
+                              - /^release\/.+/
                               - next
-                              - /^cci\/.*/
+                              - /^cci\/.+/
             - dashboards-build:
                   requires:
                       - charts-pack
@@ -726,13 +710,22 @@ workflows:
                       branches:
                           only:
                               - main
-                              - /^release\/.*/
+                              - /^release\/.+/
                               - next
-                              - /^cci\/.*/
+                              - /^cci\/.+/
                   requires:
                       - bits-pack
                       - charts-pack
                       - dashboards-pack
+            - nova-docs-cleanup:
+                  context:
+                    common-build-creds
+                  requires:
+                      - nova-docs
+                  filters:
+                      branches:
+                        only:
+                         - /^cci\/.+/
             - dashboards-unit-test:
                   requires:
                       - dashboards-build
@@ -754,9 +747,9 @@ workflows:
                       branches:
                           only:
                               - main
-                              - /^release\/.*/
+                              - /^release\/.+/
                               - next
-                              - /^cci\/.*/
+                              - /^cci\/.+/
             - dashboards-verify:
                   requires:
                       - dashboards-publish
@@ -764,9 +757,10 @@ workflows:
                       branches:
                           only:
                               - main
-                              - /^release\/.*/
+                              - /^release\/.+/
                               - next
-                              - /^cci\/.*/
+                              - /^cci\/.+/
+
 
     nova-release:
         jobs:
@@ -777,6 +771,8 @@ workflows:
                           only:
                               - main
             - release-prep:
+                  context:
+                      - common-build-creds
                   requires:
                       - release-approval
 
