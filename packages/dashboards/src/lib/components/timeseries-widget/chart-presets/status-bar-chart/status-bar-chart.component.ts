@@ -58,7 +58,7 @@ import {
     ZoomPlugin,
 } from "@nova-ui/charts";
 
-import { SET_TIMEFRAME } from "../../../../services/types";
+import { CHART_METRIC_REMOVE, SET_TIMEFRAME } from "../../../../services/types";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../types";
 import { TimeseriesScalesService } from "../../timeseries-scales.service";
 import {
@@ -300,6 +300,15 @@ export class StatusBarChartComponent
 
     public displayDeleteButton(): boolean {
         return !!this.configuration.allowDelete;
+    }
+
+    public removeMetric(metricId: string): void {
+        this.eventBus.next(CHART_METRIC_REMOVE, {
+            payload: {
+                metricId: metricId,
+                groupUniqueId: this.configuration.groupUniqueId,
+            },
+        });
     }
 }
 
