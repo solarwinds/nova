@@ -20,6 +20,18 @@
                 position: absolute;
             }
         }
+        &__button-remove {
+            display: none;
+            position: absolute;
+            right: @nui-space-xs;
+            border: none;
+        }
+        nui-legend-series:hover {
+            background-color: @nui-color-bg-content-hover;
+        }
+        nui-legend-series:hover &__button-remove {
+            display: block;
+        }
     }
 }
 

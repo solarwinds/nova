@@ -297,6 +297,10 @@ export class StatusBarChartComponent
                 configuration.gridConfig.sideMargin;
         }
     }
+
+    public displayDeleteButton(): boolean {
+        return !!this.configuration.allowDelete;
+    }
 }
 
 interface IStatusData {
