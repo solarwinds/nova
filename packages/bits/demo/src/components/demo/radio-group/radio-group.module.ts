@@ -25,6 +25,7 @@ import { RouterModule } from "@angular/router";
 import {
     DEMO_PATH_TOKEN,
     NuiCheckboxModule,
+    NuiCommonModule,
     NuiDocsModule,
     NuiFormFieldModule,
     NuiRadioModule,
@@ -36,6 +37,7 @@ import {
     BasicRadioGroupExampleComponent,
     DisabledRadioGroupExampleComponent,
     RadioGroupDocsExampleComponent,
+    RadioGroupHintsContentExampleComponent,
     RadioGroupHintsExampleComponent,
     RadioGroupInFormExampleComponent,
     RadioGroupInlineExampleComponent,
@@ -72,13 +74,14 @@ const routes = [
 
 @NgModule({
     imports: [
-        NuiRadioModule,
-        NuiCheckboxModule,
-        NuiFormFieldModule,
-        ReactiveFormsModule,
         FormsModule,
-        NuiValidationMessageModule,
+        NuiCommonModule,
+        NuiCheckboxModule,
         NuiDocsModule,
+        NuiFormFieldModule,
+        NuiRadioModule,
+        NuiValidationMessageModule,
+        ReactiveFormsModule,
         RouterModule.forChild(routes),
     ],
     declarations: [
@@ -86,6 +89,7 @@ const routes = [
         DisabledRadioGroupExampleComponent,
         RadioGroupDocsExampleComponent,
         RadioGroupHintsExampleComponent,
+        RadioGroupHintsContentExampleComponent,
         RadioGroupInFormExampleComponent,
         RadioGroupInlineExampleComponent,
         RadioGroupTestComponent,

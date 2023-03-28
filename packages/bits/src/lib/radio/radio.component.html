@@ -33,8 +33,11 @@
             </div>
         </div>
 
-        <span class="nui-radio__hint nui-help-hint" *ngIf="hint">
-            {{ hint }}
-        </span>
+        <div #hintDiv class="nui-radio__hint nui-help-hint">
+            <ng-content select="[hint]"></ng-content>
+            <ng-container *ngIf="!!hint">
+                {{ hint }}
+            </ng-container>
+        </div>
     </label>
 </div>
