@@ -31,6 +31,7 @@ import {
     PizzagnaLayer,
     TimeseriesChartPreset,
     TimeseriesScaleType,
+    TimeseriesWidgetProjectType,
     WellKnownProviders,
 } from "@nova-ui/dashboards";
 
@@ -168,6 +169,8 @@ export const widgetConfigs: IWidget[] = [
                             preset: TimeseriesChartPreset.Line,
                             collectionId: collectionId1,
                             allowLegendMenu: true,
+                            projectType:
+                                TimeseriesWidgetProjectType.PerfstackApp,
                         } as ITimeseriesWidgetConfig,
                     },
                 },
@@ -243,6 +246,8 @@ export const widgetConfigs: IWidget[] = [
                             },
                             collectionId: collectionId1,
                             allowLegendMenu: true,
+                            projectType:
+                                TimeseriesWidgetProjectType.PerfstackApp,
                         } as ITimeseriesWidgetConfig,
                     },
                 },

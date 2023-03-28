@@ -65,6 +65,7 @@ export interface ITimeseriesWidgetData<T = ITimeseriesWidgetSeriesData> {
     transformer?: (data: T[], hasPercentile?: boolean) => T[];
     link?: string;
     secondaryLink?: string;
+    metricUnits?: UnitOption;
 }
 
 export interface ITimeseriesWidgetSeriesData {

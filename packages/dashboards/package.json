@@ -29,8 +29,8 @@
     "@angular/router": "^12.2.16",
     "@apollo/client": "^3.0.0",
     "@compodoc/compodoc": "1.1.11",
-    "@percy/cli": "^1.0.0-beta.74",
-    "@percy/protractor": "^2.0.0",
+    "@percy/cli": "^1.21.0",
+    "@percy/protractor": "^2.0.1",
     "@schematics/angular": "^12.2.14",
     "@types/d3": "^5.7.2",
     "@types/d3-selection-multi": "^1.0.7",
@@ -89,8 +89,8 @@
   "license": "Apache-2.0",
   "name": "@nova-ui/dashboards",
   "peerDependencies": {
-    "@nova-ui/bits": "~12.0.25-0",
-    "@nova-ui/charts": "~12.0.25-0",
+    "@nova-ui/bits": "~12.0.27-0",
+    "@nova-ui/charts": "~12.0.27-0",
     "@schematics/angular": "^12.2.14 || ^13.0.0",
     "angular-gridster2": "^12.1.0 || ^13.0.0",
     "d3": "^5.9.2",
@@ -162,5 +162,5 @@
     "visual:gui": "npm run visual:base -- -c gui",
     "visual:serve": "npm run visual:base -- -c serve"
   },
-  "version": "12.0.25-0"
+  "version": "12.0.27-0"
 }

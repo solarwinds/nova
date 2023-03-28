@@ -26,8 +26,8 @@
     "@angular/platform-browser-dynamic": "^12.2.16",
     "@angular/router": "^12.2.16",
     "@compodoc/compodoc": "1.1.11",
-    "@percy/cli": "^1.0.0-beta.74",
-    "@percy/protractor": "^2.0.0",
+    "@percy/cli": "^1.21.0",
+    "@percy/protractor": "^2.0.1",
     "@types/d3": "^5.7.2",
     "@types/d3-selection-multi": "^1.0.7",
     "@types/jasmine": "~3.5.0",
@@ -81,7 +81,7 @@
   "license": "Apache-2.0",
   "name": "@nova-ui/charts",
   "peerDependencies": {
-    "@nova-ui/bits": "~12.0.25-0",
+    "@nova-ui/bits": "~12.0.27-0",
     "@types/d3": "^5.0.0",
     "@types/d3-selection-multi": "^1.0.0",
     "d3": "^5.0.0",
@@ -152,5 +152,5 @@
     "visual:gui": "npm run visual:base -- -c gui",
     "visual:serve": "npm run visual:base -- -c serve"
   },
-  "version": "12.0.25-0"
+  "version": "12.0.27-0"
 }

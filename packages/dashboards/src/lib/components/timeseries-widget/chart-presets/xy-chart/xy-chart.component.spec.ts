@@ -34,8 +34,8 @@ import {
     LinearScale,
     SET_DOMAIN_EVENT,
     TimeScale,
-    XYGrid,
     TimeseriesZoomPlugin,
+    XYGrid,
 } from "@nova-ui/charts";
 
 import { ISerializableTimeframe } from "../../../../configurator/services/types";
@@ -48,9 +48,11 @@ import {
 } from "../../../../services/types";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../types";
 import {
+    ITimeseriesScalesConfig,
     ITimeseriesWidgetConfig,
     ITimeseriesWidgetData,
     TimeseriesInteractionType,
+    TimeseriesScaleType,
     TimeseriesTransformer,
 } from "../../types";
 import { XYChartComponent } from "./xy-chart.component";
@@ -336,6 +338,7 @@ describe("XYChartComponent", () => {
                         { x: "6", y: 5 },
                         { x: "7", y: 1 },
                     ],
+                    metricUnits: "bytes",
                 } as ITimeseriesWidgetData,
             ];
             spyOn(<any>component, "updateChartData");
@@ -370,6 +373,23 @@ describe("XYChartComponent", () => {
             );
             expect(component.widgetData.series[0].transformer?.name).toEqual(
                 "transformLinReg"
+            );
+        });
+
+        it("should update Y axis domain", () => {
+            component.configuration = {
+                scales: {
+                    y: {
+                        properties: {
+                            axisUnits: "bytes",
+                        },
+                    },
+                },
+            } as any;
+            component.updateYAxisDomain();
+
+            expect(component.configuration.scales.y.properties?.domain).toEqual(
+                { min: 1, max: 17 }
             );
         });
 
