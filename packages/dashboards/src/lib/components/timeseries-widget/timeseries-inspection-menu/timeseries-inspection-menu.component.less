@@ -1,0 +1,30 @@
+:host {
+    position: absolute;
+    top: 5px;
+}
+
+.popover {
+    position: absolute;
+    pointer-events: none;
+}
+
+:host ::ng-deep nui-overlay-arrow {
+    display: none !important;
+}
+
+.inspection-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    ::ng-deep {
+        button {
+            border: 0;
+        }
+        .nui-button.is-empty {
+            min-width: 25px !important;
+            min-height: 25px !important;
+        }
+    }
+}

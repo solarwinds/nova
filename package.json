@@ -19,7 +19,7 @@
   },
   "scripts": {
     "bash": "bash scripts/runner",
-    "build-all": "cd packages/bits && yarn && yarn assemble && cd ../charts && yarn && yarn symlink && yarn assemble && cd ../dashboards && yarn && yarn symlink && yarn assemble",
+    "build-all": "cd packages/bits && yarn && yarn assemble-dev && cd ../charts && yarn && yarn symlink && yarn assemble-dev && cd ../dashboards && yarn && yarn symlink && yarn assemble-dev",
     "build-watch:bits": "yarn run in-bits build-lib:watch",
     "build-watch:charts": "yarn run in-charts build-lib:watch",
     "clean-docs-ci": "bash scripts/clean-docs",

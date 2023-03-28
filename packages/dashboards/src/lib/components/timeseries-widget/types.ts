@@ -41,6 +41,12 @@ export interface ITimeseriesWidgetConfig {
         [key: string]: any;
     };
     hasAdjacentChart?: boolean;
+    groupUniqueId?: string;
+    allowLegendMenu?: boolean;
+    metricIds?: string;
+    realTimeIds?: string[];
+    type?: number;
+    projectType?: TimeseriesWidgetProjectType;
 }
 
 export interface ITimeseriesWidgetSeries {
@@ -54,8 +60,11 @@ export interface ITimeseriesWidgetData<T = ITimeseriesWidgetSeriesData> {
     name: string;
     description: string;
     data: T[];
+    rawData?: T[];
+    transformer?: (data: T[], hasPercentile?: boolean) => T[];
     link?: string;
     secondaryLink?: string;
+    metricUnits?: UnitOption;
 }
 
 export interface ITimeseriesWidgetSeriesData {
@@ -122,7 +131,35 @@ export enum TimeseriesChartPreset {
     Line = "line",
     StackedArea = "stackedArea",
     StackedPercentageArea = "stackedPercentageArea",
-
     StackedBar = "stackedBar",
     StatusBar = "statusBar",
+}
+
+/** Enumeration of timeseries chart types recieved from the backend */
+export enum TimeseriesChartTypes {
+    gauge = 1, // Line
+    counter = 2, // StackedBar
+    event = 3, // StackedBar
+    alert = 4, // StackedArea
+    state = 5, // StackedArea
+    multi = 6, // StatusBar
+    dpaWaitTime = 7, // StatusBar
+}
+
+export enum TimeseriesTransformer {
+    None = "none",
+    Normalize = "normalize",
+    ChangePoint = "changePoint",
+    Difference = "difference",
+    Linear = "linear",
+    PercentileStd = "percentileStd",
+    Smoothing = "smoothing",
+    LoessStandardize = "loessStandardize",
+    Standardize = "standardize",
+    FloatingAverage = "floatingAverage",
+}
+
+export enum TimeseriesWidgetProjectType {
+    ModernDashboard,
+    PerfstackApp,
 }

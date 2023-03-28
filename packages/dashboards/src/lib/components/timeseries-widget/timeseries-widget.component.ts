@@ -23,9 +23,15 @@ import {
     Component,
     HostBinding,
     Input,
+    OnInit,
     OnChanges,
     SimpleChanges,
 } from "@angular/core";
+import {
+    TimeseriesZoomPlugin,
+    TimeseriesZoomPluginsSyncService,
+    ZoomPlugin,
+} from "@nova-ui/charts";
 
 import { IHasChangeDetector } from "../../types";
 import { TimeseriesChartPresetService } from "./timeseries-chart-preset.service";
@@ -34,6 +40,8 @@ import {
     ITimeseriesOutput,
     ITimeseriesWidgetConfig,
     TimeseriesChartPreset,
+    TimeseriesChartTypes,
+    TimeseriesWidgetProjectType,
 } from "./types";
 
 /** @ignore */
@@ -43,7 +51,7 @@ import {
     templateUrl: "./timeseries-widget.component.html",
 })
 export class TimeseriesWidgetComponent
-    implements OnChanges, IHasChangeDetector
+    implements OnInit, OnChanges, IHasChangeDetector
 {
     public static lateLoadKey = "TimeseriesWidgetComponent";
 
@@ -55,10 +63,29 @@ export class TimeseriesWidgetComponent
 
     public chartPreset: IChartPreset;
 
+    public zoomPlugin: ZoomPlugin | TimeseriesZoomPlugin;
+    public allowPopover = false;
+    public timeseriesWidgetProjectType = TimeseriesWidgetProjectType;
+
     constructor(
         public timeseriesChartPresetService: TimeseriesChartPresetService,
-        public changeDetector: ChangeDetectorRef
+        public changeDetector: ChangeDetectorRef,
+        public zoomPluginsSyncService: TimeseriesZoomPluginsSyncService
     ) {}
+
+    public ngOnInit(): void {
+        if (
+            this.configuration?.projectType ===
+            TimeseriesWidgetProjectType.PerfstackApp
+        ) {
+            this.zoomPlugin = new TimeseriesZoomPlugin(
+                { collectionId: this.collectionId },
+                this.zoomPluginsSyncService
+            );
+        } else {
+            this.zoomPlugin = new ZoomPlugin();
+        }
+    }
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.configuration) {
@@ -81,5 +108,20 @@ export class TimeseriesWidgetComponent
     /** Checks if chart should be shown. */
     public shouldShowChart(): boolean {
         return (this.widgetData?.series?.length ?? 0) > 0;
+    }
+
+    public toggleLeave() {
+        this.allowPopover = false;
+    }
+    public toggleEnter() {
+        this.allowPopover = true;
+    }
+
+    public isExploringEnabled(): boolean {
+        return (
+            this.configuration?.type !== TimeseriesChartTypes.gauge &&
+            this.configuration?.type !== TimeseriesChartTypes.multi &&
+            this.configuration?.type !== TimeseriesChartTypes.state
+        );
     }
 }

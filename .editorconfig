@@ -16,7 +16,7 @@ trim_trailing_whitespace = true
 insert_final_newline = true
 max_line_length = 80
 
+# ensure formatting in the same manner as when yarn/npm modifies package.json
 [package.json]
 indent_size = 2
-# ensure newlines in the same manner as when yarn/npm modifies package.json
 max_line_length = 30

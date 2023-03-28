@@ -77,47 +77,81 @@
                     >
                     </nui-chart-marker>
                 </nui-rich-legend-tile>
-                <div
-                    description
-                    class="description-container d-flex flex-column nui-text-small justify-content-center"
-                >
-                    <div
-                        *ngIf="!legendSeries.link"
-                        class="description description-primary"
-                        [ngClass]="{
-                            'nui-text-link-small link': seriesInteractive
-                        }"
-                        (click)="onPrimaryDescClick($event, legendSeries)"
-                    >
-                        {{ legendSeries.legendDescriptionPrimary }}
+                <div description class="description-container">
+                    <div class="description-text nui-text-small">
+                        <div
+                            *ngIf="!legendSeries.link"
+                            class="description description-primary"
+                            [ngClass]="{
+                                'nui-text-link-small link': seriesInteractive
+                            }"
+                            (click)="onPrimaryDescClick($event, legendSeries)"
+                            [title]="legendSeries.legendDescriptionPrimary"
+                        >
+                            {{ legendSeries.legendDescriptionPrimary }}
+                        </div>
+                        <a
+                            class="description description-primary nui-text-link-small link"
+                            (click)="$event.stopPropagation()"
+                            *ngIf="legendSeries.link"
+                            [href]="legendSeries.link"
+                            rel="noopener noreferrer"
+                            [title]="legendSeries.legendDescriptionPrimary"
+                        >
+                            {{ legendSeries.legendDescriptionPrimary }}
+                        </a>
+                        <div
+                            class="description description-secondary"
+                            *ngIf="!legendSeries.secondaryLink"
+                            [title]="legendSeries.legendDescriptionSecondary"
+                        >
+                            {{ legendSeries.legendDescriptionSecondary }}
+                        </div>
+                        <a
+                            class="description description-secondary nui-text-link-small link"
+                            (click)="$event.stopPropagation()"
+                            *ngIf="legendSeries.secondaryLink"
+                            [href]="legendSeries.secondaryLink"
+                            rel="noopener noreferrer"
+                            [title]="legendSeries.legendDescriptionSecondary"
+                        >
+                            {{ legendSeries.legendDescriptionSecondary }}
+                        </a>
                     </div>
-                    <a
-                        class="description description-primary nui-text-link-small link"
-                        (click)="$event.stopPropagation()"
-                        *ngIf="legendSeries.link"
-                        [href]="legendSeries.link"
-                        rel="noopener noreferrer"
-                        [title]="legendSeries.legendDescriptionPrimary"
+                    <nui-icon
+                        *ngIf="legendSeries.transformer"
+                        icon="performance"
+                        iconColor="primary-blue"
+                    ></nui-icon>
+                    <nui-menu
+                        *ngIf="displayLegendMenu()"
+                        icon="menu"
+                        displayStyle="action"
+                        class="legend-menu"
+                        [appendToBody]="true"
                     >
-                        {{ legendSeries.legendDescriptionPrimary }}
-                    </a>
-                    <div
-                        class="description description-secondary"
-                        *ngIf="!legendSeries.secondaryLink"
-                        [title]="legendSeries.legendDescriptionSecondary"
-                    >
-                        {{ legendSeries.legendDescriptionSecondary }}
-                    </div>
-                    <a
-                        class="description description-secondary nui-text-link-small link"
-                        (click)="$event.stopPropagation()"
-                        *ngIf="legendSeries.secondaryLink"
-                        [href]="legendSeries.secondaryLink"
-                        rel="noopener noreferrer"
-                        [title]="legendSeries.legendDescriptionSecondary"
-                    >
-                        {{ legendSeries.legendDescriptionSecondary }}
-                    </a>
+                        <nui-menu-group>
+                            <nui-menu-action
+                                i18n
+                                (actionDone)="removeMetric(legendSeries.id)"
+                                >Remove</nui-menu-action
+                            >
+                        </nui-menu-group>
+                        <nui-menu-group header="Display Transforms" i18n-header>
+                            <nui-menu-action
+                                *ngFor="let tr of transformers | nuiMapKeyValue"
+                                [class.selected]="
+                                    legendSeries.transformer?.name ===
+                                    tr.value.transformer?.name
+                                "
+                                (actionDone)="
+                                    transformData(legendSeries.id, tr.key)
+                                "
+                            >
+                                {{ tr.value.displayName }}
+                            </nui-menu-action>
+                        </nui-menu-group>
+                    </nui-menu>
                 </div>
             </nui-legend-series>
         </nui-legend>

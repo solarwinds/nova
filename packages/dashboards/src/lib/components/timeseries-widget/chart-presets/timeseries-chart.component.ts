@@ -23,6 +23,7 @@ import {
     Input,
     OnChanges,
     OnDestroy,
+    OnInit,
     SimpleChanges,
 } from "@angular/core";
 import { Subject } from "rxjs";
@@ -32,18 +33,21 @@ import { IDataSource } from "@nova-ui/bits";
 import { IXYScales } from "@nova-ui/charts";
 
 import { WellKnownDataSourceFeatures } from "../../../types";
+import { metricsSeriesMeasurementsMinMax } from "../timeseries-helpers";
 import { TimeseriesScalesService } from "../timeseries-scales.service";
 import {
     ITimeseriesOutput,
     ITimeseriesScalesConfig,
     ITimeseriesWidgetConfig,
+    ITimeseriesWidgetData,
     ITimeseriesWidgetSeriesData,
+    TimeseriesChartPreset,
 } from "../types";
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
-    implements OnChanges, OnDestroy
+    implements OnChanges, OnDestroy, OnInit
 {
     @Input() public widgetData: ITimeseriesOutput<T> =
         {} as ITimeseriesOutput<T>;
@@ -73,6 +77,19 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
         this.buildChart$.pipe(takeUntil(this.destroy$)).subscribe(() => {
             this.chartBuilt = true;
         });
+    }
+
+    public ngOnInit(): void {
+        // save original data
+        if (
+            this.configuration.preset === TimeseriesChartPreset.Line &&
+            this.widgetData &&
+            this.widgetData.series
+        ) {
+            this.widgetData.series.forEach(
+                (serie) => (serie.rawData = serie.data)
+            );
+        }
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -151,6 +168,7 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
                     this.resetChart = false;
                     this.buildChart();
                 }
+                this.applyPreviousTransformer(changes.widgetData.previousValue);
 
                 shouldUpdateChart = true;
             }
@@ -165,6 +183,53 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
         this.destroy$.next();
         this.destroy$.complete();
         this.buildChart$.complete();
+    }
+
+    protected applyPreviousTransformer(previousData: any): void {
+        // save original data and transform it
+        this.widgetData.series.forEach((serie) => {
+            serie.rawData = serie.data;
+            serie.transformer = previousData?.series.find(
+                (prevSerie: ITimeseriesWidgetData) => prevSerie.id === serie.id
+            )?.transformer;
+            this.transformSeriesData(serie);
+        });
+    }
+
+    protected transformSeriesData(serie: ITimeseriesWidgetData<T>): void {
+        if (serie.transformer && serie.rawData && serie.rawData.length > 0) {
+            try {
+                const hasPercentile = serie.metricUnits === "percent";
+                serie.data = serie.transformer(serie.rawData, hasPercentile);
+                this.updateYAxisDomain();
+            } catch (e) {
+                serie.transformer = undefined;
+                serie.data = serie.rawData;
+                console.error(e.message);
+            }
+        }
+    }
+
+    public updateYAxisDomain(): void {
+        const scaleKeys = ["y", "yRight"] as Array<
+            keyof ITimeseriesScalesConfig
+        >;
+        for (const scaleKey of scaleKeys) {
+            const scaleConfig = this.configuration.scales?.[scaleKey];
+            if (scaleConfig?.properties) {
+                scaleConfig.properties.domain = {
+                    ...metricsSeriesMeasurementsMinMax(
+                        this.widgetData.series,
+                        scaleConfig?.properties?.axisUnits
+                    ),
+                };
+                this.timeseriesScalesService.updateConfiguration(
+                    this.scales[scaleKey],
+                    scaleConfig,
+                    this.configuration
+                );
+            }
+        }
     }
 
     /** Updates chart data. */

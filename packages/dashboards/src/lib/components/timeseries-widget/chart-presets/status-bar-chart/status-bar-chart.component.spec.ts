@@ -22,12 +22,19 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import moment from "moment/moment";
 
 import { EventBus, IconService, IEvent } from "@nova-ui/bits";
-import { Chart, SET_DOMAIN_EVENT, ZoomPlugin } from "@nova-ui/charts";
+import {
+    Chart,
+    SET_DOMAIN_EVENT,
+    TimeseriesZoomPlugin,
+    TimeseriesZoomPluginsSyncService,
+    ZoomPlugin,
+} from "@nova-ui/charts";
 
 import { SET_TIMEFRAME } from "../../../../services/types";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../types";
 import { TimeseriesScalesService } from "../../timeseries-scales.service";
 import { StatusBarChartComponent } from "./status-bar-chart.component";
+import { TimeseriesWidgetProjectType } from "../../types";
 
 describe(StatusBarChartComponent.name, () => {
     const frozenTime = moment("2020-11-06T00:00:00-06:00")
@@ -57,6 +64,7 @@ describe(StatusBarChartComponent.name, () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(StatusBarChartComponent);
         component = fixture.componentInstance;
+
         component.widgetData = {
             series: [
                 {
@@ -110,7 +118,7 @@ describe(StatusBarChartComponent.name, () => {
     });
 
     describe("updateChartData", () => {
-        it("should add the zoom plugin to each spark if zoom is enabled", () => {
+        it("should add the default zoom plugin to each spark if zoom is enabled", () => {
             component.configuration.enableZoom = true;
             (<any>component).updateChartData();
             component.chartAssist.sparks.forEach((spark) => {
@@ -120,7 +128,7 @@ describe(StatusBarChartComponent.name, () => {
             });
         });
 
-        it("should not add multiple zoom plugins on multiple calls", () => {
+        it("should not add multiple default zoom plugins on multiple calls", () => {
             component.configuration.enableZoom = true;
 
             // multiple calls
@@ -139,13 +147,46 @@ describe(StatusBarChartComponent.name, () => {
             });
         });
 
-        it("should not add the zoom plugin to each spark if zoom is disabled", () => {
+        it("should not add the default zoom plugin to each spark if zoom is disabled", () => {
             component.configuration.enableZoom = false;
             (<any>component).updateChartData();
             component.chartAssist.sparks.forEach((spark) => {
                 expect((spark?.chart as Chart)?.hasPlugin(ZoomPlugin)).toEqual(
                     false
                 );
+            });
+        });
+
+        it("should add the timeseries zoom plugin to each spark for the pefstack widget type", () => {
+            component.configuration.enableZoom = true;
+            component.configuration.projectType =
+                TimeseriesWidgetProjectType.PerfstackApp;
+            (<any>component).updateChartData();
+            component.chartAssist.sparks.forEach((spark) => {
+                expect(
+                    (spark?.chart as Chart)?.hasPlugin(TimeseriesZoomPlugin)
+                ).toEqual(true);
+            });
+        });
+
+        it("should not add multiple timeseries zoom plugins on multiple calls for the pefstack widget type", () => {
+            component.configuration.enableZoom = true;
+            component.configuration.projectType =
+                TimeseriesWidgetProjectType.PerfstackApp;
+
+            // multiple calls
+            (<any>component).updateChartData();
+            (<any>component).updateChartData();
+
+            spyOn(TimeseriesZoomPlugin.prototype, "destroy");
+            component.chartAssist.sparks.forEach((spark) => {
+                expect(
+                    (spark?.chart as Chart)?.hasPlugin(TimeseriesZoomPlugin)
+                ).toEqual(true);
+                (spark?.chart as Chart)?.removePlugin(TimeseriesZoomPlugin);
+                expect(
+                    (spark?.chart as Chart)?.hasPlugin(TimeseriesZoomPlugin)
+                ).toEqual(false);
             });
         });
 

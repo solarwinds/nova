@@ -31,6 +31,7 @@ import {
     PizzagnaLayer,
     TimeseriesChartPreset,
     TimeseriesScaleType,
+    TimeseriesWidgetProjectType,
     WellKnownProviders,
 } from "@nova-ui/dashboards";
 
@@ -167,6 +168,9 @@ export const widgetConfigs: IWidget[] = [
                             enableZoom: true,
                             preset: TimeseriesChartPreset.Line,
                             collectionId: collectionId1,
+                            allowLegendMenu: true,
+                            projectType:
+                                TimeseriesWidgetProjectType.PerfstackApp,
                         } as ITimeseriesWidgetConfig,
                     },
                 },
@@ -241,6 +245,9 @@ export const widgetConfigs: IWidget[] = [
                                 } as ITimeseriesScaleConfig,
                             },
                             collectionId: collectionId1,
+                            allowLegendMenu: true,
+                            projectType:
+                                TimeseriesWidgetProjectType.PerfstackApp,
                         } as ITimeseriesWidgetConfig,
                     },
                 },
@@ -311,6 +318,7 @@ export const widgetConfigs: IWidget[] = [
                             enableZoom: true,
                             leftAxisLabel: "Utilization (%)",
                             preset: TimeseriesChartPreset.StackedArea,
+                            allowLegendMenu: true,
                         } as ITimeseriesWidgetConfig,
                     },
                 },
@@ -602,6 +610,7 @@ export const widgetConfigs: IWidget[] = [
                             enableZoom: true,
                             leftAxisLabel: "Utilization (%)",
                             preset: TimeseriesChartPreset.StackedBar,
+                            allowLegendMenu: true,
                         } as Partial<ITimeseriesWidgetConfig>,
                     },
                 },
