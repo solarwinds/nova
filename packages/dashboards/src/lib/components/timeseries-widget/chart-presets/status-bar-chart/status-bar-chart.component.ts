@@ -68,6 +68,7 @@ import {
     TimeseriesWidgetZoomPlugin,
 } from "../../types";
 import { TimeseriesChartComponent } from "../timeseries-chart.component";
+import { SUMMARY_LEGEND_BCG_COLOR, SUMMARY_LEGEND_COLOR } from "../../timeseries-widget-utils";
 
 @Component({
     selector: "nui-status-bar-chart",
@@ -88,6 +89,8 @@ export class StatusBarChartComponent
 
     public zoomPlugins: TimeseriesWidgetZoomPlugin[];
     public timeseriesChartTypes = TimeseriesChartTypes;
+    public summaryLegendBcgColor = SUMMARY_LEGEND_BCG_COLOR;
+    public summaryLegendColor = SUMMARY_LEGEND_COLOR;
 
     constructor(
         private iconService: IconService,
