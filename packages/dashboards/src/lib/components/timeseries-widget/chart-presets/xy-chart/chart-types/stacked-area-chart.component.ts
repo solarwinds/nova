@@ -69,7 +69,10 @@ export class StackedAreaChartComponent extends XYChartComponent {
         gridConfig.axis.left.fit = true;
         const chart = new Chart(grid);
 
-        if (this.configuration.gridConfig?.hideYAxisTicksLabels && this.configuration.units === "percent") {
+        if (
+            this.configuration.gridConfig?.hideYAxisTicksLabels &&
+            this.configuration.units === "percent"
+        ) {
             gridConfig.axis.left.visible = false;
             gridConfig.axis.right.visible = false;
         }

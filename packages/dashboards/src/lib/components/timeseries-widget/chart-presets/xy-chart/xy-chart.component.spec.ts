@@ -62,7 +62,7 @@ import { XYChartComponent } from "./xy-chart.component";
 class TestComponent extends XYChartComponent {
     public static lateLoadKey = "TestComponent";
 
-    public zoomPlugins = [ new TimeseriesZoomPlugin()];
+    public zoomPlugins = [new TimeseriesZoomPlugin()];
 
     protected createAccessors(
         colorProvider: IValueProvider<string>

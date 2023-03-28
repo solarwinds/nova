@@ -68,7 +68,10 @@ import {
     TimeseriesWidgetZoomPlugin,
 } from "../../types";
 import { TimeseriesChartComponent } from "../timeseries-chart.component";
-import { SUMMARY_LEGEND_BCG_COLOR, SUMMARY_LEGEND_COLOR } from "../../timeseries-widget-utils";
+import {
+    SUMMARY_LEGEND_BCG_COLOR,
+    SUMMARY_LEGEND_COLOR,
+} from "../../timeseries-widget-utils";
 
 @Component({
     selector: "nui-status-bar-chart",
