@@ -18,6 +18,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./click-filter/public-api";
-export * from "./dragdrop/public-api";
-export * from "./resizer/public-api";
+import { Predicate } from "@angular/core";
+
+export const isTargetAnAnchor = (event: Event): boolean =>
+    event.target instanceof HTMLAnchorElement;
+
+export const isTargetNotAnAnchor = (event: Event): boolean =>
+    !isTargetAnAnchor(event);
+
+export type IEventFilter = Predicate<Event>;
+
+export const makePredicate = (value: IEventFilter | boolean): IEventFilter =>
+    typeof value === "boolean" ? () => value : value;
