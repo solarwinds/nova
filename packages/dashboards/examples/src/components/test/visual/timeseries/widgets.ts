@@ -746,6 +746,9 @@ export const widgetConfigs: IWidget[] = [
                             leftAxisLabel: "Utilization (%)",
                             preset: TimeseriesChartPreset.StatusBar,
                             collectionId: collectionId2,
+                            allowLegendMenu: true,
+                            projectType:
+                                TimeseriesWidgetProjectType.PerfstackApp,
                         } as ITimeseriesWidgetConfig,
                     },
                 },

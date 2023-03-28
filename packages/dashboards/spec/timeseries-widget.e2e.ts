@@ -105,4 +105,18 @@ describe("Dashboards - Timeseries Widget", () => {
         await getTimeseriesWidget().transformSeries("Standardize", 0);
         expect((await getIcon()).isDisplayed()).toBe(true);
     });
+
+    it("should display remove icon for status charts", async () => {
+        let legends = await getTimeseriesWidget(8).getLegendSeries();
+        expect(legends.length).toBe(2);
+
+        await legends[0].hover();
+        expect(await legends[0].getMenuButton()?.isDisplayed()).toBe(true);
+
+        legends = await getTimeseriesWidget(9).getLegendSeries();
+        expect(legends.length).toBe(2);
+
+        await legends[0].hover();
+        expect(legends[0].getMenuButton).toThrow();
+    });
 });

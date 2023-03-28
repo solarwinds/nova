@@ -7,6 +7,7 @@
 
 .status-bar-chart {
     &__legend {
+        position: relative;
         &__tile {
             width: @legend-tile-width;
             position: relative;
@@ -20,17 +21,23 @@
                 position: absolute;
             }
         }
-        &__button-remove {
-            display: none;
+        &__action {
             position: absolute;
-            right: @nui-space-xs;
-            border: none;
+            display: none;
+            inset: 0 0 0 auto;
+            padding: @nui-space-xs;
+            align-items: center;
+            justify-content: center;
+            background-color: @nui-color-bg-content-hover;
+            button {
+                border: none;
+            }
         }
         nui-legend-series:hover {
             background-color: @nui-color-bg-content-hover;
         }
-        nui-legend-series:hover &__button-remove {
-            display: block;
+        nui-legend-series:hover &__action {
+            display: flex;
         }
     }
 }
