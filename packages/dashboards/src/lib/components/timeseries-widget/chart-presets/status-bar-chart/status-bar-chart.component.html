@@ -5,7 +5,11 @@
 >
     <div
         class="d-flex"
-        *ngFor="let spark of chartAssist.sparks; trackBy: chartAssist.trackByFn"
+        *ngFor="
+            let spark of chartAssist.sparks;
+            let i = index;
+            trackBy: chartAssist.trackByFn
+        "
     >
         <nui-chart
             class="d-flex flex-grow-1"
@@ -14,6 +18,12 @@
         ></nui-chart>
         <div
             class="d-flex flex-column pl-2"
+            [class.justify-content-center]="chartAssist.sparks.length > 1"
+            [class.last-legend-margin]="
+                configuration.type === timeseriesChartTypes.alert &&
+                i > 0 &&
+                i === chartAssist.sparks.length - 1
+            "
             [class.layout-fixed-legend]="configuration.gridConfig?.fixedLayout"
             *ngIf="
                 spark.chartSeriesSet?.length > 0 && spark.chartSeriesSet[0];
@@ -26,9 +36,39 @@
             >
                 <nui-legend-series
                     [descriptionPrimary]="series.legendDescriptionPrimary"
-                    [descriptionSecondary]="series.legendDescriptionSecondary"
+                    [descriptionSecondary]="
+                        i === 0 ? series.legendDescriptionSecondary : ''
+                    "
                 >
+                    <nui-rich-legend-tile
+                        *ngIf="
+                            configuration.type === timeseriesChartTypes.alert
+                        "
+                        [value]="
+                            chartAssist.getHighlightedValue(
+                                series,
+                                'y',
+                                'value'
+                            )
+                        "
+                        [backgroundColor]="
+                            i === 0
+                                ? 'var(--nui-color-brand-six)'
+                                : chartAssist.palette.standardColors.get(
+                                      series.id
+                                  )
+                        "
+                        [color]="
+                            i === 0
+                                ? 'var(--nui-color-text-light)'
+                                : chartAssist.palette.textColors.get(series.id)
+                        "
+                    >
+                    </nui-rich-legend-tile>
                     <div
+                        *ngIf="
+                            configuration.type === timeseriesChartTypes.status
+                        "
                         class="status-bar-chart__legend__tile d-flex justify-content-center align-items-center"
                     >
                         <div

@@ -42,6 +42,7 @@ import {
     TimeseriesChartPreset,
     TimeseriesChartTypes,
     TimeseriesWidgetProjectType,
+    TimeseriesWidgetZoomPlugin,
 } from "./types";
 
 /** @ignore */
@@ -63,7 +64,7 @@ export class TimeseriesWidgetComponent
 
     public chartPreset: IChartPreset;
 
-    public zoomPlugin: ZoomPlugin | TimeseriesZoomPlugin;
+    public zoomPlugins: TimeseriesWidgetZoomPlugin[] = [];
     public allowPopover = false;
     public timeseriesWidgetProjectType = TimeseriesWidgetProjectType;
 
@@ -78,13 +79,35 @@ export class TimeseriesWidgetComponent
             this.configuration?.projectType ===
             TimeseriesWidgetProjectType.PerfstackApp
         ) {
-            this.zoomPlugin = new TimeseriesZoomPlugin(
-                { collectionId: this.collectionId },
-                this.zoomPluginsSyncService
-            );
+            if (this.configuration.type === TimeseriesChartTypes.alert) {
+                // adds timeseries zoom plugin for each subcharts to make the synchronization working for the alert chart
+                this.widgetData?.series.forEach(() =>
+                    this.zoomPlugins.push(this.getTimeseriesZoomPlugin())
+                );
+
+                // doesn't add zoom plugin for a summary serie when there are no sub charts and only sumary serie will be displayed
+                if (
+                    !(
+                        this.widgetData?.series.length === 1 &&
+                        this.widgetData.series[0].id ===
+                            this.widgetData.summarySerie?.id
+                    )
+                ) {
+                    this.zoomPlugins.push(this.getTimeseriesZoomPlugin());
+                }
+            } else {
+                this.zoomPlugins.push(this.getTimeseriesZoomPlugin());
+            }
         } else {
-            this.zoomPlugin = new ZoomPlugin();
+            this.zoomPlugins.push(new ZoomPlugin());
         }
+    }
+
+    private getTimeseriesZoomPlugin(): TimeseriesZoomPlugin {
+        return new TimeseriesZoomPlugin(
+            { collectionId: this.collectionId },
+            this.zoomPluginsSyncService
+        );
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -119,9 +142,9 @@ export class TimeseriesWidgetComponent
 
     public isExploringEnabled(): boolean {
         return (
-            this.configuration?.type !== TimeseriesChartTypes.gauge &&
+            this.configuration?.type !== TimeseriesChartTypes.line &&
             this.configuration?.type !== TimeseriesChartTypes.multi &&
-            this.configuration?.type !== TimeseriesChartTypes.state
+            this.configuration?.type !== TimeseriesChartTypes.status
         );
     }
 }

@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 import { ITimeFramePresetDictionary, UnitOption } from "@nova-ui/bits";
+import { TimeseriesZoomPlugin, ZoomPlugin } from "@nova-ui/charts";
 
 import { IProperties } from "../../types";
 import { LegendPlacement } from "../../widget-types/common/widget/legend";
@@ -81,6 +82,7 @@ export interface ITimeseriesWidgetStatusData
 
 export interface ITimeseriesOutput<T = ITimeseriesWidgetSeriesData> {
     series: ITimeseriesWidgetData<T>[];
+    summarySerie?: ITimeseriesWidgetData<T>;
 }
 
 export enum TimeseriesInteractionType {
@@ -136,11 +138,11 @@ export enum TimeseriesChartPreset {
 
 /** Enumeration of timeseries chart types recieved from the backend */
 export enum TimeseriesChartTypes {
-    gauge = 1, // Line
+    line = 1, // Line
     counter = 2, // StackedBar
     event = 3, // StackedBar
     alert = 4, // StackedArea
-    state = 5, // StackedArea
+    status = 5, // StackedArea
     multi = 6, // StatusBar
     dpaWaitTime = 7, // StatusBar
 }
@@ -162,3 +164,5 @@ export enum TimeseriesWidgetProjectType {
     ModernDashboard,
     PerfstackApp,
 }
+
+export type TimeseriesWidgetZoomPlugin = TimeseriesZoomPlugin | ZoomPlugin;

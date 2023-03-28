@@ -34,7 +34,9 @@ export function stackedPreprocessor(
         return chartSeriesSet;
     }
 
-    const categories = gatherCategories(chartSeriesSet);
+    const categories = gatherCategories(
+        chartSeriesSet.filter((chartSeries) => chartSeries.preprocess)
+    );
 
     // This is adding metadata to the dataset and filling missing
     const forExtents = chartSeriesSet.reduce((acc: number[], chartSeries) => {
