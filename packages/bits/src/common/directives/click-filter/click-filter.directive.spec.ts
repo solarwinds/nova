@@ -2,34 +2,31 @@ import { Component, DebugElement, ViewChild } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
-import {
-    CancelBubbleDirective,
-    isTargetAnAnchor,
-    makePredicate,
-} from "./cancel-bubble.directive";
+import { ClickFilterDirective } from "./click-filter.directive";
+import { isTargetAnAnchor, makePredicate } from "./public-api";
 
 @Component({
     template: `<div id="parent">
-        <div id="target" nuiCancelBubble>
+        <div id="target" nuiClickFilter>
             <a id="link" href="javascript:0">Link</a>
             <span id="span">Span</span>
         </div>
     </div>`,
 })
 class TestComponent {
-    @ViewChild(CancelBubbleDirective, { static: true })
-    public cancelBubbleDirective!: CancelBubbleDirective;
+    @ViewChild(ClickFilterDirective, { static: true })
+    public cancelBubbleDirective!: ClickFilterDirective;
 }
 
-describe(CancelBubbleDirective.name, () => {
+describe(ClickFilterDirective.name, () => {
     let fixture: ComponentFixture<TestComponent>;
-    let cancelBubble: CancelBubbleDirective;
+    let cancelBubble: ClickFilterDirective;
     let spyPassed: jasmine.Spy;
     let spyCancelled: jasmine.Spy;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [CancelBubbleDirective, TestComponent],
+            declarations: [ClickFilterDirective, TestComponent],
         });
     });
 
@@ -76,7 +73,8 @@ describe(CancelBubbleDirective.name, () => {
 
     describe("when set to filter events targetted on anchors", () => {
         beforeEach(() => {
-            cancelBubble.eventFilter = isTargetAnAnchor;
+            cancelBubble.cancelBubble = isTargetAnAnchor;
+            cancelBubble.preventDefault = isTargetAnAnchor;
         });
         testTarget(true);
         testChildLink(false);
@@ -85,7 +83,8 @@ describe(CancelBubbleDirective.name, () => {
 
     describe("when set to filter all events", () => {
         beforeEach(() => {
-            cancelBubble.eventFilter = makePredicate(true);
+            cancelBubble.cancelBubble = makePredicate(true);
+            cancelBubble.preventDefault = makePredicate(true);
         });
         testTarget(false);
         testChildLink(false);

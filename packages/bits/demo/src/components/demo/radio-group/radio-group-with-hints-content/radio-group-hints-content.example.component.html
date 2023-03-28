@@ -1,8 +1,8 @@
 <h1 i18n>Selected color: {{ selectedColor }}</h1>
 <nui-radio-group id="color-radio-group" name="color" [(value)]="selectedColor">
-    <nui-radio value="Red" [checked]="selectedColor === 'Red'">
+    <nui-radio value="Red">
         Red
-        <ng-container hint nuiCancelBubble>
+        <ng-container hint>
             This is some more
             <a
                 href="https://en.wiktionary.org/wiki/elaborate"
@@ -13,9 +13,9 @@
             hint.
         </ng-container>
     </nui-radio>
-    <nui-radio value="Green" [checked]="selectedColor === 'Green'">
+    <nui-radio value="Green">
         Green
-        <ng-container hint nuiCancelBubble>
+        <ng-container hint>
             Well, depends on <strong>your</strong> definition of
             <a
                 href="https://en.wiktionary.org/wiki/elaborate"
@@ -25,9 +25,9 @@
             >.
         </ng-container>
     </nui-radio>
-    <nui-radio value="Blue" [checked]="selectedColor === 'Blue'">
+    <nui-radio value="Blue">
         Blue
-        <ng-container hint nuiCancelBubble>
+        <ng-container hint>
             At least it does
             <a
                 href="https://en.wiktionary.org/wiki/hyperlink"
@@ -36,5 +36,14 @@
                 >links</a
             >.
         </ng-container>
+    </nui-radio>
+    <nui-radio value="Teal">
+        Teal
+        <!-- links actually don't require click event filtering, unline other elements -->
+        <div hint nuiClickFilter (click)="showToast()">
+            Can also
+            <span>cancel bubble anywhere in hint</span>
+            when customized.
+        </div>
     </nui-radio>
 </nui-radio-group>

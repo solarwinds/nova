@@ -50,7 +50,7 @@ import { SearchService } from "../services/search.service";
 import { TransientCacheService } from "../services/transient-cache.service";
 import { UnitConversionService } from "../services/unit-conversion.service";
 import { UtilService } from "../services/util.service";
-import { CancelBubbleDirective } from "./directives/cancel-bubble/cancel-bubble.directive";
+import { ClickFilterDirective } from "./directives/click-filter/click-filter.directive";
 import { ClickInterceptorDirective } from "./directives/click-interceptor/click-interceptor.directive";
 import { ClipboardDirective } from "./directives/clipboard/clipboard.directive";
 import { DragAndDropService } from "./directives/dragdrop/drag-and-drop.service";
@@ -92,7 +92,7 @@ import { ZoomContentDirective } from "./directives/zoom-content/zoom-content.dir
         { provide: imagesPresetToken, useValue: IMAGES_PRESET } as Provider,
     ],
     declarations: [
-        CancelBubbleDirective,
+        ClickFilterDirective,
         ClickInterceptorDirective,
         ClipboardDirective,
         DraggableDirective,
@@ -108,7 +108,7 @@ import { ZoomContentDirective } from "./directives/zoom-content/zoom-content.dir
     ],
     exports: [
         CommonModule,
-        CancelBubbleDirective,
+        ClickFilterDirective,
         ClickInterceptorDirective,
         ClipboardDirective,
         DraggableDirective,

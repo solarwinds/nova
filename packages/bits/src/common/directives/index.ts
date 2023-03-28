@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+export * from "./click-filter/click-filter.directive";
 export * from "./click-interceptor/click-interceptor.directive";
 export * from "./clipboard/clipboard.directive";
 export * from "./set-focus/set-focus.directive";

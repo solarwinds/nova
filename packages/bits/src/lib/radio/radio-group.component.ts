@@ -223,7 +223,7 @@ export class RadioGroupComponent
         role: "radio",
     },
 })
-export class RadioComponent implements OnInit, OnDestroy, AfterContentInit {
+export class RadioComponent implements OnInit, OnDestroy {
     /**
      * Sets the radio instance value
      */
@@ -282,8 +282,6 @@ export class RadioComponent implements OnInit, OnDestroy, AfterContentInit {
     @ContentChildren("[nui-radio-hint]")
     protected contentHints: QueryList<TemplateRef<any>>;
 
-    public hasContentHints = false;
-
     constructor(
         @Optional() radioGroup: RadioGroupComponent,
         private changeDetector: ChangeDetectorRef,
@@ -311,10 +309,6 @@ export class RadioComponent implements OnInit, OnDestroy, AfterContentInit {
         this.radioTranscludeIsEmpty = _isNil(
             this.radioTransclude.nativeElement.firstChild
         );
-    }
-
-    public ngAfterContentInit(): void {
-        this.hasContentHints = this.contentHints.length > 0;
     }
 
     public ngOnDestroy(): void {

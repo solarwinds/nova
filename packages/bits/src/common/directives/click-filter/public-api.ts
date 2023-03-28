@@ -18,34 +18,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Predicate } from "@angular/core";
 
-import { ToastService } from "@nova-ui/bits";
+export const isTargetAnAnchor = (event: Event): boolean =>
+    event.target instanceof HTMLAnchorElement;
 
-@Component({
-    selector: "nui-with-hints-content-radio-group-example",
-    templateUrl: "./radio-group-hints-content.example.component.html",
-    styles: [
-        `
-            div[hint] {
-                cursor: initial;
-            }
-            div[hint] > span {
-                font-weight: bold;
-            }
-        `,
-    ],
-})
-export class RadioGroupHintsContentExampleComponent {
-    public colors = [$localize`Red`, $localize`Green`, $localize`Blue`];
-    public selectedColor: string;
+export const isTargetNotAnAnchor = (event: Event): boolean =>
+    !isTargetAnAnchor(event);
 
-    public constructor(private readonly toastService: ToastService) {}
+export type IEventFilter = Predicate<Event>;
 
-    public showToast(): void {
-        this.toastService.info({
-            title: $localize`Radio button`,
-            message: $localize`This event should not propagate to the radio button`,
-        });
-    }
-}
+export const makePredicate = (value: IEventFilter | boolean): IEventFilter =>
+    typeof value === "boolean" ? () => value : value;
