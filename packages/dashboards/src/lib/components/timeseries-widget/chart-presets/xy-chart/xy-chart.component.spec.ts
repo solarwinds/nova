@@ -36,7 +36,6 @@ import {
     TimeScale,
     XYGrid,
     TimeseriesZoomPlugin,
-    TimeseriesZoomPluginsSyncService,
 } from "@nova-ui/charts";
 
 import { ISerializableTimeframe } from "../../../../configurator/services/types";
@@ -63,10 +62,7 @@ import { XYChartComponent } from "./xy-chart.component";
 class TestComponent extends XYChartComponent {
     public static lateLoadKey = "TestComponent";
 
-    public zoomPlugin: TimeseriesZoomPlugin = new TimeseriesZoomPlugin(
-        {},
-        new TimeseriesZoomPluginsSyncService()
-    );
+    public zoomPlugins = [ new TimeseriesZoomPlugin()];
 
     protected createAccessors(
         colorProvider: IValueProvider<string>
