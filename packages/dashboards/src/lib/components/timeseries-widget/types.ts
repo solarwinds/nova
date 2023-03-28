@@ -43,7 +43,6 @@ export interface ITimeseriesWidgetConfig {
     hasAdjacentChart?: boolean;
     groupUniqueId?: string;
     allowLegendMenu?: boolean;
-    allowDelete?: boolean;
     metricIds?: string;
     realTimeIds?: string[];
     type?: number;

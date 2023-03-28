@@ -299,7 +299,11 @@ export class StatusBarChartComponent
     }
 
     public displayDeleteButton(): boolean {
-        return !!this.configuration.allowDelete;
+        return (
+            !!this.configuration.allowLegendMenu &&
+            this.configuration.projectType ===
+                TimeseriesWidgetProjectType.PerfstackApp
+        );
     }
 
     public removeMetric(metricId: string): void {
