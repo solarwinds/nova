@@ -18,6 +18,7 @@
             (widgetChange)="onWidgetChange($event)"
             [attr.widget-id]="widget.key"
             [attr.widget-type]="widget.value.type"
+            [attr.widget-guid]="widget.value.uniqueKey"
             class="w-100 h-100 d-block"
         >
         </nui-widget>
