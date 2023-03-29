@@ -30,7 +30,7 @@ import {
 } from "@nova-ui/charts";
 
 import { DashboardUnitConversionPipe } from "../../common/pipes/public-api";
-import { roundToOptimalDecimals } from '../../functions/round-array-values';
+import { roundToOptimalDecimals } from "../../functions/round-array-values";
 import {
     ITimeseriesScaleConfig,
     ITimeseriesWidgetConfig,

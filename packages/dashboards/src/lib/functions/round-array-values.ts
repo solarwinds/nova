@@ -18,12 +18,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export function roundToOptimalDecimals(arr: number[], optimalDecimals = new Map<number, number>([
-    [1, 2],
-    [2, 2],
-    [3, 2],
-    [4, 1],
-])): number[] {
+export function roundToOptimalDecimals(
+    arr: number[],
+    optimalDecimals = new Map<number, number>([
+        [1, 2],
+        [2, 2],
+        [3, 2],
+        [4, 1],
+    ])
+): number[] {
     return arr.map((v) => {
         const digits = Math.floor(Math.abs(v)).toString().length;
         const optimalDecimalsForDigits = optimalDecimals.get(digits) ?? 0;
