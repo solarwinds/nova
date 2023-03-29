@@ -34,7 +34,7 @@ import {
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { Router } from "@angular/router";
 import _noop from "lodash/noop";
-import { Subject } from "rxjs/internal/Subject";
+import { Subject } from "rxjs";
 
 import { NuiActiveDialog, NuiDialogRef } from "./dialog-ref";
 import { DialogStackService } from "./dialog-stack.service";
