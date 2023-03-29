@@ -32,7 +32,7 @@ describe("roundArrayValues", () => {
         ]);
     });
 
-    it("test numbers between 0 and -1", () => {
+    it('test numbers between 0 and -1', () => {
         const testNumbers = [
             -0.14497, -0.8971, -0.74749
         ];
@@ -42,7 +42,7 @@ describe("roundArrayValues", () => {
         ]);
     });
 
-    it("test numbers between 1 and 10", () => {
+    it('test numbers between 1 and 10', () => {
         const testNumbers = [
             2.21537, 5.33757, 9.98326
         ];
@@ -52,7 +52,7 @@ describe("roundArrayValues", () => {
         ]);
     });
 
-    it("test numbers between -1 and -10", () => {
+    it('test numbers between -1 and -10', () => {
         const testNumbers = [
             -2.21537, -5.33757, -9.98326
         ];
@@ -62,7 +62,7 @@ describe("roundArrayValues", () => {
         ]);
     });
 
-    it("test numbers between 10 and 100", () => {
+    it('test numbers between 10 and 100', () => {
         const testNumbers = [
             16.40645, 70.64193, 15.42832
         ];
@@ -72,7 +72,7 @@ describe("roundArrayValues", () => {
         ]);
     });
 
-    it("test numbers between -10 and -100", () => {
+    it('test numbers between -10 and -100', () => {
         const testNumbers = [
             -16.40645, -70.64193, -15.42832
         ];
@@ -82,7 +82,7 @@ describe("roundArrayValues", () => {
         ]);
     });
 
-    it("test numbers between 100 and 1000", () => {
+    it('test numbers between 100 and 1000', () => {
         const testNumbers = [
             160.57963, 652.24853, 235.48694
         ];
@@ -92,7 +92,7 @@ describe("roundArrayValues", () => {
         ]);
     });
 
-    it("test numbers between -100 and -1000", () => {
+    it('test numbers between -100 and -1000', () => {
         const testNumbers = [
             -160.57963, -652.24853, -235.48694
         ];
@@ -102,7 +102,7 @@ describe("roundArrayValues", () => {
         ]);
     });
 
-    it("test numbers between 1000 and 10000", () => {
+    it('test numbers between 1000 and 10000', () => {
         const testNumbers = [
             2511.14202, 6673.20142, 3612.76246
         ];
@@ -112,7 +112,7 @@ describe("roundArrayValues", () => {
         ]);
     });
 
-    it("test numbers between -1000 and -10000", () => {
+    it('test numbers between -1000 and -10000', () => {
         const testNumbers = [
             -2511.14202, -6673.20142, -3612.76246
         ];
@@ -122,7 +122,7 @@ describe("roundArrayValues", () => {
         ]);
     });
 
-    it("test numbers above 10000", () => {
+    it('test numbers above 10000', () => {
         const testNumbers = [
             28428.58199, 92541.72781, 55212.26139
         ];
@@ -132,13 +132,63 @@ describe("roundArrayValues", () => {
         ]);
     });
 
-    it("test numbers below -10000", () => {
+    it('test numbers below -10000', () => {
         const testNumbers = [
             -28428.58199, -92541.72781, -55212.26139
         ];
 
         expect(roundToOptimalDecimals(testNumbers)).toEqual([
             -28429, -92542, -55212
+        ]);
+    });
+
+    it('test rounding digits configuration', () => {
+        const testNumbers = [
+            0.5126695983,
+            0.3279515752,
+            0.3910781956,
+            5.0031364763,
+            2.9788712457,
+            2.6299896921,
+            96.8196725761,
+            52.7710950051,
+            19.6265574235,
+            478.4960529137,
+            659.9029651284,
+            119.6746140463,
+            1051.7319372952,
+            1647.0260399179,
+            6088.3018747495,
+            22103.2222813954,
+            42322.4077520685,
+            87788.8459968153,
+        ];
+
+        expect(roundToOptimalDecimals(testNumbers, new Map([
+            [1, 8],
+            [2, 7],
+            [3, 6],
+            [4, 5],
+            [5, 4]
+        ]))).toEqual([
+            0.5126696,
+            0.32795158,
+            0.3910782,
+            5.00313648,
+            2.97887125,
+            2.62998969,
+            96.8196726,
+            52.771095,
+            19.6265574,
+            478.496053,
+            659.902965,
+            119.674614,
+            1051.73194,
+            1647.02604,
+            6088.30187,
+            22103.2223,
+            42322.4078,
+            87788.846,
         ]);
     });
 });
