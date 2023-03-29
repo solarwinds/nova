@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 export SOURCE_BRANCH=`git branch --show-current`
 export INCREMENT_TYPE=`cat .circleci/config.yml | grep -oP '^ *INCREMENT_TYPE: \K.+'`
