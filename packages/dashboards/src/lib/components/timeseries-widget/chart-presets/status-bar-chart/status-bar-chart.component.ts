@@ -63,6 +63,7 @@ import { TimeseriesScalesService } from "../../timeseries-scales.service";
 import {
     ITimeseriesWidgetData,
     ITimeseriesWidgetStatusData,
+    TimeseriesChartPreset,
     TimeseriesChartTypes,
     TimeseriesWidgetProjectType,
     TimeseriesWidgetZoomPlugin,
@@ -315,6 +316,21 @@ export class StatusBarChartComponent
             gridConfig.dimension.margin.right =
                 configuration.gridConfig.sideMargin;
         }
+    }
+
+    public isStatusChart(): boolean {
+        return this.configuration?.type !== TimeseriesChartTypes.alert;
+    }
+
+    public getDescriptionSecondary(
+        series: IChartAssistSeries<IAccessors>,
+        index: number
+    ): string {
+        if (this.isStatusChart()) {
+            return series.legendDescriptionSecondary;
+        }
+
+        return index === 0 ? series.legendDescriptionSecondary : "";
     }
 }
 

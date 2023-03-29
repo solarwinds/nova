@@ -18,7 +18,10 @@
         ></nui-chart>
         <div
             class="d-flex flex-column pl-2"
-            [class.justify-content-center]="chartAssist.sparks.length > 1"
+            [class.justify-content-center]="
+                configuration.type === timeseriesChartTypes.alert &&
+                chartAssist.sparks.length > 1
+            "
             [class.last-legend-margin]="
                 configuration.type === timeseriesChartTypes.alert &&
                 i > 0 &&
@@ -36,9 +39,7 @@
             >
                 <nui-legend-series
                     [descriptionPrimary]="series.legendDescriptionPrimary"
-                    [descriptionSecondary]="
-                        i === 0 ? series.legendDescriptionSecondary : ''
-                    "
+                    [descriptionSecondary]="getDescriptionSecondary(series, i)"
                 >
                     <nui-rich-legend-tile
                         *ngIf="
@@ -66,9 +67,7 @@
                     >
                     </nui-rich-legend-tile>
                     <div
-                        *ngIf="
-                            configuration.type === timeseriesChartTypes.status
-                        "
+                        *ngIf="isStatusChart()"
                         class="status-bar-chart__legend__tile d-flex justify-content-center align-items-center"
                     >
                         <div
