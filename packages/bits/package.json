@@ -105,6 +105,10 @@
       "default": "./sdk/schematics/*.js",
       "types": "./sdk/schematics/*.d.ts"
     },
+    ".": {
+      "default": "./fesm2015/nova-ui-bits.js",
+      "types": "./public_api.d.ts"
+    },
     "./sdk/*": "./sdk/*"
   },
   "keywords": [
