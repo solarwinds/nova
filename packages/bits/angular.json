@@ -271,15 +271,20 @@
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
                     "configurations": {
+                        "coverage": {
+                            "codeCoverage": true
+                        },
                         "dev": {
-                            "reporters": ["spec"]
+                            "reporters": ["progress"],
+                            "watch": true
                         }
                     },
                     "options": {
                         "assets": [],
                         "karmaConfig": "./karma.conf.js",
-                        "main": "src/test.ts",
-                        "polyfills": "src/polyfills.ts",
+                        "main": "./src/test.ts",
+                        "polyfills": "./src/polyfills.ts",
+                        "reporters": ["spec"],
                         "scripts": [],
                         "styles": [],
                         "tsConfig": "src/tsconfig.spec.json"
@@ -292,10 +297,6 @@
         }
     },
     "schematics": {
-        "@schematics/angular:component": {
-            "lintFix": true,
-            "prefix": "nui"
-        },
         "@schematics/angular:directive": {
             "lintFix": true,
             "prefix": "nui"
