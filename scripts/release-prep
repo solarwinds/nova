@@ -21,16 +21,29 @@ if [ "$INCREMENT_TYPE" == "" ]; then
       exit 1
 fi
 
-if [ "$CIRCLE_API_TOKEN" == "" ]; then
-      echo "Missing required environment variable CIRCLE_API_TOKEN"
-      exit 1
+if [ "$SOURCE_BRANCH" != "$CIRCLE_BRANCH" ]; then
+    echo "ERROR: configuration should be run on the branch that contains the changes (usually main)"
+    exit 1
 fi
 
 # Merge Changes
-yarn run merge-ci
+if ! git show-ref --quiet $RELEASE_BRANCH; then
+    echo "Creating release branch:" $CREATE_RELEASE_BRANCH
+    if [ "$CREATE_RELEASE_BRANCH" == "true" ]; then
+        echo "Creating $RELEASE_BRANCH"
+        git checkout -b $RELEASE_BRANCH
+        git push --set-upstream origin $RELEASE_BRANCH
+    else
+        echo "ERROR: release branch does not exist"
+        exit 1
+    fi
+fi
 
-# Check out release branch
+# initial merge with "ours" strategy to auto-resolve conflicts
+git checkout $SOURCE_BRANCH
+git pull origin $RELEASE_BRANCH --no-rebase -s ours
 git checkout $RELEASE_BRANCH
+git merge --no-edit $SOURCE_BRANCH
 
 # Set Release Version
 yarn run set-release-versions-ci
@@ -51,6 +64,3 @@ yarn run set-dependency-versions-ci
 
 # Push source branch changes
 git commit -am 'increment develop versions' && git push origin $SOURCE_BRANCH
-
-# Trigger release branch
-yarn run trigger-pipeline-build-ci $RELEASE_BRANCH
