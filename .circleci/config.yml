@@ -578,6 +578,7 @@ jobs:
         environment:
             NOVA_DIR: ~/nova
         steps:
+            - add_ssh_keys
             - checkout:
                   path: ~/nova
             - run:
@@ -599,6 +600,7 @@ jobs:
             RELEASE_BRANCH: release/v13.0.x
             INCREMENT_TYPE: patch
         steps:
+            - add_ssh_keys
             - checkout:
                   path: ~/nova
             - run:
@@ -715,14 +717,13 @@ workflows:
                       - charts-pack
                       - dashboards-pack
             - nova-docs-cleanup:
-                  context:
-                    common-build-creds
+                  context: common-build-creds
                   requires:
                       - nova-docs
                   filters:
                       branches:
-                        only:
-                         - /^cci\/.+/
+                          only:
+                              - /^cci\/.+/
             - dashboards-unit-test:
                   requires:
                       - dashboards-build
@@ -758,7 +759,6 @@ workflows:
                               - next
                               - /^cci\/.+/
 
-
     nova-release:
         jobs:
             - release-approval:
@@ -767,6 +767,8 @@ workflows:
                       branches:
                           only:
                               - main
+                              - /^hotfix\/v[\d.]+x/
+                              - /^cci-release\/.*/
             - release-prep:
                   context:
                       - common-build-creds
