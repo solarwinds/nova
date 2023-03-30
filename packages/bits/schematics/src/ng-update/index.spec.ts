@@ -63,7 +63,7 @@ describe("ng-update", () => {
         );
         const afterTree = await runner.runSchematicAsync("nova-migration-v8", {skipTsConfig: true, project: "bar", skipCss: false}, appTree).toPromise();
         const file = JSON.parse((afterTree.read("angular.json") ?? "").toString("utf-8"));
-        expect(file.projects.bar.architect.build.options.styles[0]).toEqual("./node_modules/@nova-ui/bits/bundles/css/styles-v7-compat.css");
+        expect(file.projects.bar.architect.build.options.styles[0]).toEqual("./node_modules/@nova-ui/bits/bundles/css/styles.css");
     });
 
     it("does not re-add style to angular.json", async () => {

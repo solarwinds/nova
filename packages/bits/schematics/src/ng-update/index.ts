@@ -45,7 +45,7 @@ function addCssToAngularJson(options: any) {
                 "options",
                 "styles",
             ],
-            ["./node_modules/@nova-ui/bits/bundles/css/styles-v7-compat.css"]
+            ["./node_modules/@nova-ui/bits/bundles/css/styles.css"]
         );
     };
 }
