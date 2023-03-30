@@ -108,8 +108,8 @@
   "license": "Apache-2.0",
   "name": "@nova-ui/dashboards",
   "peerDependencies": {
-    "@nova-ui/bits": "~13.0.7-0",
-    "@nova-ui/charts": "~13.0.7-0",
+    "@nova-ui/bits": "~13.0.8-0",
+    "@nova-ui/charts": "~13.0.8-0",
     "angular-gridster2": "^13.3.0 || ^14.0.0",
     "d3": "^5.9.2",
     "d3-selection-multi": "^1.0.1"
@@ -176,5 +176,5 @@
     "visual:gui": "yarn run visual:base -c gui",
     "visual:serve": "yarn run visual:base -c serve"
   },
-  "version": "13.0.7-0"
+  "version": "13.0.8-0"
 }
