@@ -20,11 +20,6 @@ if [ "$INCREMENT_TYPE" == "" ]; then
       exit 1
 fi
 
-if [ "$CIRCLE_API_TOKEN" == "" ]; then
-      echo "Missing required environment variable CIRCLE_API_TOKEN"
-      exit 1
-fi
-
 # Merge Changes
 yarn run merge-ci
 
@@ -50,6 +45,3 @@ yarn run set-dependency-versions-ci
 
 # Push source branch changes
 git commit -am 'increment develop versions' && git push origin $SOURCE_BRANCH
-
-# Trigger release branch
-yarn run trigger-pipeline-build-ci $RELEASE_BRANCH
