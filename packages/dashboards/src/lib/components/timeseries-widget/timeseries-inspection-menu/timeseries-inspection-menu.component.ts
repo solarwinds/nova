@@ -69,6 +69,11 @@ export const TIMESERIES_INSPECTION_MENU_SYNCHRONIZE: IEventDefinition<
     id: "TIMESERIES_INSPECTION_MENU_SYNCHRONIZE",
 };
 
+export const TIMESERIES_INSPECTION_MENU_CLEAR: IEventDefinition<IEvent<void>> =
+    {
+        id: "TIMESERIES_INSPECTION_MENU_CLEAR",
+    };
+
 export interface ITimeseriesZoomPluginExploreData {
     ids: string;
     startDate: moment.Moment;
@@ -114,6 +119,10 @@ export class TimeseriesInspectionMenuComponent
                     );
                 }
             });
+
+        this.eventBus
+            .getStream(TIMESERIES_INSPECTION_MENU_CLEAR)
+            .subscribe(() => this.clearZoom());
 
         this.plugin?.openPopover$
             .pipe(takeUntil(this.destroy$))
