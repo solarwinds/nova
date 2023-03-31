@@ -33,6 +33,7 @@ import {
     Output,
     QueryList,
     Renderer2,
+    TemplateRef,
     ViewChild,
     ViewContainerRef,
     ViewEncapsulation,
@@ -116,38 +117,27 @@ export class RadioGroupComponent
     private subscriptions = new Array<Subscription>();
     constructor(private renderer: Renderer2) {}
 
-    public ngAfterContentInit(): void {
-        this.children.toArray().forEach((child) => {
-            this.renderer.setAttribute(
-                child.inputViewContainer.element.nativeElement,
-                "name",
-                this.name
-            );
-            this.subscriptions.push(this.subscribeToRadioEvent(child));
-            // timeout to prevent "expression changed after it has been checked" error
-            setTimeout(() => {
-                this.setChildDisabled(child);
-            });
+    private registerChild(child: RadioComponent): void {
+        this.renderer.setAttribute(
+            child.inputViewContainer.element.nativeElement,
+            "name",
+            this.name
+        );
+        this.subscriptions.push(this.subscribeToRadioEvent(child));
+        // timeout to prevent "expression changed after it has been checked" error
+        setTimeout(() => {
+            this.setChildDisabled(child);
         });
+    }
+
+    public ngAfterContentInit(): void {
+        this.children.toArray().forEach((child) => this.registerChild(child));
         this.children.changes.subscribe(
             (radioComponentQueryList: QueryList<RadioComponent>) => {
                 this.subscriptions.forEach((sub) => sub.unsubscribe());
                 radioComponentQueryList
                     .toArray()
-                    .forEach((radio: RadioComponent) => {
-                        this.renderer.setAttribute(
-                            radio.inputViewContainer.element.nativeElement,
-                            "name",
-                            this.name
-                        );
-                        this.subscriptions.push(
-                            this.subscribeToRadioEvent(radio)
-                        );
-                        // timeout to prevent "expression changed after it has been checked" error
-                        setTimeout(() => {
-                            this.setChildDisabled(radio);
-                        });
-                    });
+                    .forEach((child) => this.registerChild(child));
             }
         );
     }
@@ -288,7 +278,11 @@ export class RadioComponent implements OnInit, OnDestroy {
     private timeoutId: number;
     private _disabled: boolean = false;
 
-    readonly radioGroup: RadioGroupComponent;
+    readonly radioGroup: RadioGroupComponent | null;
+
+    @ContentChildren("[nui-radio-hint]")
+    protected contentHints: QueryList<TemplateRef<any>>;
+
     constructor(
         @Optional() radioGroup: RadioGroupComponent,
         private changeDetector: ChangeDetectorRef,
@@ -303,6 +297,7 @@ export class RadioComponent implements OnInit, OnDestroy {
                 this.checked = true;
             }
         }
+
         if (this.checked) {
             // TODO: remove timeout in v10 NUI-4843
             // nui-radio-group should subscribe before event is emitted
@@ -310,6 +305,7 @@ export class RadioComponent implements OnInit, OnDestroy {
                 this.valueChange.emit(this.value);
             }, 0)) as number;
         }
+
         // Checks if user supplied any content as a label for radio button to adjust styles for radio buttons without labels
         this.radioTranscludeIsEmpty = _isNil(
             this.radioTransclude.nativeElement.firstChild

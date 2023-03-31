@@ -22,6 +22,7 @@ export * from "./radio-group-docs/radio-group-docs.example.component";
 export * from "./basic-radio-group/basic-radio-group.example.component";
 export * from "./disabled-radio-group/disabled-radio-group.example.component";
 export * from "./radio-group-with-hints/radio-group-hints.example.component";
+export * from "./radio-group-with-hints-content/radio-group-hints-content.example.component";
 export * from "./value-change-radio-group/value-change-radio-group.example.component";
 export * from "./radio-group-inline/radio-group-inline.example.component";
 export * from "./radio-group-visual-test/radio-group-visual-test.component";

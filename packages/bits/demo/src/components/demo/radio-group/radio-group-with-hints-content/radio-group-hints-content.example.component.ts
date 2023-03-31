@@ -18,6 +18,34 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./click-filter/public-api";
-export * from "./dragdrop/public-api";
-export * from "./resizer/public-api";
+import { Component } from "@angular/core";
+
+import { ToastService } from "@nova-ui/bits";
+
+@Component({
+    selector: "nui-with-hints-content-radio-group-example",
+    templateUrl: "./radio-group-hints-content.example.component.html",
+    styles: [
+        `
+            div[hint] {
+                cursor: initial;
+            }
+            div[hint] > span {
+                font-weight: bold;
+            }
+        `,
+    ],
+})
+export class RadioGroupHintsContentExampleComponent {
+    public colors = [$localize`Red`, $localize`Green`, $localize`Blue`];
+    public selectedColor: string;
+
+    public constructor(private readonly toastService: ToastService) {}
+
+    public showToast(): void {
+        this.toastService.info({
+            title: $localize`Radio button`,
+            message: $localize`This event should not propagate to the radio button`,
+        });
+    }
+}
