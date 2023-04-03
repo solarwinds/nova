@@ -21,25 +21,15 @@
                 position: absolute;
             }
         }
-        &__action {
-            position: absolute;
-            display: none;
-            inset: 0 0 0 auto;
-            padding: @nui-space-xs;
-            align-items: center;
-            justify-content: center;
-            background-color: @nui-color-bg-content-hover;
-            button {
-                border: none;
-            }
-        }
-        nui-legend-series:hover {
-            background-color: @nui-color-bg-content-hover;
-        }
-        nui-legend-series:hover &__action {
-            display: flex;
-        }
     }
+}
+
+:host ::ng-deep .description-container {
+    flex-grow: 1;
+}
+
+nui-legend-series:hover {
+    background-color: @nui-color-bg-content-hover;
 }
 
 .layout-fixed {

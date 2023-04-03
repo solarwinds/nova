@@ -43,15 +43,15 @@
                             [icon]="icon"
                         ></nui-icon>
                     </div>
-                    <div class="status-bar-chart__legend__action">
-                        <button
-                            nui-button
-                            *ngIf="displayDeleteButton()"
-                            (click)="removeMetric(series.id)"
-                            icon="remove"
-                            type="button"
-                        ></button>
-                    </div>
+                    <button
+                        nui-button
+                        legendMenu
+                        *ngIf="displayDeleteButton()"
+                        (click)="removeMetric(series.id)"
+                        icon="remove"
+                        type="button"
+                        displayStyle="action"
+                    ></button>
                 </nui-legend-series>
             </nui-legend>
         </div>
