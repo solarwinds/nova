@@ -318,7 +318,6 @@ export class StatusBarChartComponent
         }
     }
 
-
     public displayDeleteButton(): boolean {
         return (
             !!this.configuration.allowLegendMenu &&
@@ -334,7 +333,8 @@ export class StatusBarChartComponent
                 groupUniqueId: this.configuration.groupUniqueId,
             },
         });
-        
+    }
+
     public isStatusChart(): boolean {
         return this.configuration?.type !== TimeseriesChartTypes.alert;
     }

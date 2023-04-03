@@ -749,7 +749,10 @@ export const widgetConfigs: IWidget[] = [
                             allowLegendMenu: true,
                             projectType:
                                 TimeseriesWidgetProjectType.PerfstackApp,
-                        } as ITimeseriesWidgetConfig,
+                            gridConfig: {
+                                fixedLayout: true,
+                            },
+                        },
                     },
                 },
                 timeframeSelection: {
