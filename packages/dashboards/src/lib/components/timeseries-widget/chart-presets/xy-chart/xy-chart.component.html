@@ -129,6 +129,7 @@
                                 'nui-text-link-small link': seriesInteractive
                             }"
                             (click)="onPrimaryDescClick($event, legendSeries)"
+                            [title]="legendSeries.legendDescriptionPrimary"
                         >
                             {{ legendSeries.legendDescriptionPrimary }}
                         </div>

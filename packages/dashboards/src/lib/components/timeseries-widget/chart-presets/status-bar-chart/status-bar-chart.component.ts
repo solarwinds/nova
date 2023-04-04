@@ -103,7 +103,7 @@ export class StatusBarChartComponent
         public changeDetector: ChangeDetectorRef,
         @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>
     ) {
-        super(timeseriesScalesService, dataSource);
+        super(eventBus, timeseriesScalesService, dataSource);
     }
 
     public ngOnInit() {}
@@ -324,15 +324,6 @@ export class StatusBarChartComponent
             this.configuration.projectType ===
                 TimeseriesWidgetProjectType.PerfstackApp
         );
-    }
-
-    public removeMetric(metricId: string): void {
-        this.eventBus.next(CHART_METRIC_REMOVE, {
-            payload: {
-                metricId: metricId,
-                groupUniqueId: this.configuration.groupUniqueId,
-            },
-        });
     }
 
     public isStatusChart(): boolean {
