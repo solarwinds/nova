@@ -44,7 +44,6 @@ describe("Dashboards - Timeseries Widget", () => {
         // line chart
         let legends = await getTimeseriesWidget(10).getLegendSeries();
         expect(legends.length).toBe(3);
-        console.log(await legends[0].getDescriptionPrimary());
 
         await legends[0].hover();
 
@@ -67,8 +66,7 @@ describe("Dashboards - Timeseries Widget", () => {
     });
 
     it("should display the correct menu items", async () => {
-        const legends = await getLegends(10);
-        const legend = legends[0];
+        const legend = (await getLegends(10))[0];
         expect(legend).toBeDefined();
 
         const expectedTransforms = [
