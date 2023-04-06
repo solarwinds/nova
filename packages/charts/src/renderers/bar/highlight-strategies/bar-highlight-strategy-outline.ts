@@ -27,6 +27,7 @@ import { IXYScales } from "../../../core/common/scales/types";
 import { IRectangleAccessors } from "../../accessors/rectangle-accessors";
 import { IRenderSeries, RenderLayerName } from "../../types";
 import { BarRenderer } from "../bar-renderer";
+import { D3Selection } from "../../../core/common/types";
 import {
     BarHighlightStrategy,
     SelectedDatPointIdxFn,
@@ -35,6 +36,7 @@ import {
 // creates an outline element that is used to highlight hovered parts of the chart
 export class BarHighlightStrategyOutline extends BarHighlightStrategy {
     private outlineAdd = 6;
+    private outlineElsMap = new Map<string, D3Selection<SVGRectElement>>();
 
     /**
      * @param scaleKey scale that will be used for searching for the data point that will be highlighted
@@ -73,17 +75,21 @@ export class BarHighlightStrategyOutline extends BarHighlightStrategy {
             `${renderer.barContainerClass}-outline-${renderSeries.dataSeries.id}`
                 .split(".")
                 .join("-");
-        let outlineRect = renderSeries.parentContainer.select(
-            `rect.${outlineRectClass}`
-        );
 
-        if (outlineRect.empty()) {
+        if (!this.outlineElsMap.has(outlineRectClass)) {
             // creates a rect element that will be used as a outline
             const rect = renderSeries.parentContainer.append("rect");
             rect.classed(outlineRectClass, true);
+            this.outlineElsMap.set(outlineRectClass, rect);
         }
 
-        if (emphasizedNode) {
+        const outlineRect = this.outlineElsMap.get(outlineRectClass);
+
+        const emphasizedDataValue =
+            renderSeries.dataSeries.data[dataPointIndex]?.y ||
+            renderSeries.dataSeries.data[dataPointIndex]?.value;
+
+        if (emphasizedDataValue && emphasizedNode && outlineRect) {
             // position the outline element on the position of the emphasized element and updates its attributes
             const emphasizedRect = select(emphasizedNode).select("rect");
 
@@ -104,7 +110,10 @@ export class BarHighlightStrategyOutline extends BarHighlightStrategy {
             outlineRect.style("display", "inline");
         }
 
-        if (!emphasizedNode && !outlineRect.empty()) {
+        if (
+            (outlineRect && !emphasizedDataValue) ||
+            (outlineRect && !emphasizedNode)
+        ) {
             // hides outline element when there is no emphasized element
             outlineRect.style("display", "none");
         }
