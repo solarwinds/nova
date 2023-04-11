@@ -41,6 +41,7 @@
         "prettier-fix": "yarn --check && prettier --no-error-on-unmatched-pattern --write",
         "publish-ci": "bash scripts/publish",
         "release-prep-ci": "bash scripts/release-prep",
+        "release-prep-manual": "bash scripts/release-prep-manual",
         "remove-dependencies": "node scripts/remove-dependencies.js",
         "self-link:all": "npm run self-link:bits && npm run self-link:charts && npm run self-link:dashboards",
         "self-link:bits": "symlink-dir packages/bits/dist/ packages/bits/node_modules/@nova-ui/bits",

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+export LANG=C.UTF-8
 export SOURCE_BRANCH=`git branch --show-current`
 export INCREMENT_TYPE=`cat .circleci/config.yml | grep -oP '^ *INCREMENT_TYPE: \K.+'`
 export RELEASE_BRANCH=`cat .circleci/config.yml | grep -oP '^ *RELEASE_BRANCH: \K.+'`
