@@ -45,7 +45,7 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
 @Component({
     selector: "nui-menu-option",
     template: `
-        <div class="nui-menu-item__option" #menuOption tabindex="-1">
+        <div class="nui-menu-item__option" #menuOption tabindex="-1" title>
             <nui-checkbox
                 class="nui-menu-item__checkbox"
                 [name]="name"
