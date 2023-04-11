@@ -30,6 +30,7 @@ export interface IWidget {
     version?: number;
     pizzagna: IPizzagna;
     metadata?: IWidgetMetadata;
+    uniqueKey?: string;
 }
 
 export interface IWidgetMetadata extends Record<string, any> {

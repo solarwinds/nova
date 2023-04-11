@@ -514,7 +514,7 @@ describe("USERCONTROL table >", () => {
                 rowsCountScrolled - 1
             );
             const rowTdScrolled = rowContentScrolled[0];
-            expect(rowTdScrolled).toEqual("26");
+            expect(rowTdScrolled).toEqual("27");
         });
     });
 

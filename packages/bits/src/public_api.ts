@@ -119,6 +119,7 @@ export { TabGroupComponent } from "./lib/tabgroup/tab-group/tab-group.component"
 export { TabHeadingCustomTemplateRefDirective } from "./lib/tabgroup/tab/tab-heading-custom-template-ref.directive";
 export { TabHeadingDirective } from "./lib/tabgroup/tab/tab-heading.directive";
 export { TabComponent } from "./lib/tabgroup/tab/tab.component";
+export { ClickFilterDirective } from "./common/directives/click-filter/click-filter.directive";
 export { ClipboardDirective } from "./common/directives/clipboard/clipboard.directive";
 export { DraggableDirective } from "./common/directives/dragdrop/draggable.directive";
 export { DroppableDirective } from "./common/directives/dragdrop/droppable.directive";
