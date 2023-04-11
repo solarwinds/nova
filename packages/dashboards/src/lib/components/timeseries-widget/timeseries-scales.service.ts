@@ -30,6 +30,7 @@ import {
 } from "@nova-ui/charts";
 
 import { DashboardUnitConversionPipe } from "../../common/pipes/public-api";
+import { roundToOptimalDecimals } from "../../functions/round-array-values";
 import {
     ITimeseriesScaleConfig,
     ITimeseriesWidgetConfig,
@@ -226,6 +227,12 @@ export class TimeseriesScalesService {
         }
 
         const point = (max - min) / 4;
-        return [min, min + point, min + 2 * point, max - point, max];
+        return roundToOptimalDecimals([
+            min,
+            min + point,
+            min + 2 * point,
+            max - point,
+            max,
+        ]);
     }
 }
