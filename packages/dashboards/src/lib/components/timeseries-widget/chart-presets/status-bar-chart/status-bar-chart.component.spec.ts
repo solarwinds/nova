@@ -26,6 +26,7 @@ import {
     Chart,
     SET_DOMAIN_EVENT,
     TimeseriesZoomPlugin,
+    TimeseriesZoomPluginsSyncService,
     ZoomPlugin,
 } from "@nova-ui/charts";
 
@@ -108,12 +109,6 @@ describe("StatusChartComponent", () => {
                 },
             ],
         };
-
-        component.zoomPlugins = [
-            new TimeseriesZoomPlugin(),
-            new TimeseriesZoomPlugin(),
-        ];
-
         (<any>component).buildChart();
         fixture.detectChanges();
     });

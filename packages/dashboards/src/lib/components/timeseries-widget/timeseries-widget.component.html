@@ -12,7 +12,7 @@
             widgetData: widgetData,
             configuration: configuration,
             collectionId: collectionId || configuration?.collectionId,
-            zoomPlugins: zoomPlugins
+            zoomPlugin: zoomPlugin
         }"
         #componentPortal="nuiComponentPortal"
     >
@@ -26,11 +26,10 @@
         *ngIf="
             configuration?.enableZoom &&
             configuration?.projectType ===
-                timeseriesWidgetProjectType.PerfstackApp &&
-            zoomPlugins.length
+                timeseriesWidgetProjectType.PerfstackApp
         "
         [allowed]="allowPopover"
-        [plugin]="zoomPlugins[0]"
+        [plugin]="zoomPlugin"
         [collectionId]="collectionId"
         [exploringEnabled]="isExploringEnabled()"
         [metricIds]="configuration?.metricIds"

@@ -35,6 +35,7 @@ import {
     SET_DOMAIN_EVENT,
     TimeScale,
     TimeseriesZoomPlugin,
+    TimeseriesZoomPluginsSyncService,
     XYGrid,
 } from "@nova-ui/charts";
 
@@ -64,7 +65,10 @@ import { XYChartComponent } from "./xy-chart.component";
 class TestComponent extends XYChartComponent {
     public static lateLoadKey = "TestComponent";
 
-    public zoomPlugins = [new TimeseriesZoomPlugin()];
+    public zoomPlugin: TimeseriesZoomPlugin = new TimeseriesZoomPlugin(
+        {},
+        new TimeseriesZoomPluginsSyncService()
+    );
 
     protected createAccessors(
         colorProvider: IValueProvider<string>

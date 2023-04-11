@@ -31,6 +31,7 @@ import {
     IValueProvider,
     stackedArea,
     stackedAreaAccessors,
+    TimeseriesZoomPluginsSyncService,
 } from "@nova-ui/charts";
 
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../../types";
@@ -49,9 +50,16 @@ export class StackedAreaChartComponent extends XYChartComponent {
         @Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
         @Optional() @Inject(DATA_SOURCE) dataSource: IDataSource,
         timeseriesScalesService: TimeseriesScalesService,
-        changeDetector: ChangeDetectorRef
+        changeDetector: ChangeDetectorRef,
+        zoomPluginsSyncService: TimeseriesZoomPluginsSyncService
     ) {
-        super(eventBus, dataSource, timeseriesScalesService, changeDetector);
+        super(
+            eventBus,
+            dataSource,
+            timeseriesScalesService,
+            changeDetector,
+            zoomPluginsSyncService
+        );
 
         this.renderer = new AreaRenderer();
         this.valueAccessorKey = "y1";
@@ -69,10 +77,7 @@ export class StackedAreaChartComponent extends XYChartComponent {
         gridConfig.axis.left.fit = true;
         const chart = new Chart(grid);
 
-        if (
-            this.configuration.gridConfig?.hideYAxisTicksLabels &&
-            this.configuration.units === "percent"
-        ) {
+        if (this.configuration.gridConfig?.hideYAxisTicksLabels) {
             gridConfig.axis.left.visible = false;
             gridConfig.axis.right.visible = false;
         }

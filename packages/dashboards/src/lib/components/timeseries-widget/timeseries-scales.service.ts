@@ -140,9 +140,7 @@ export class TimeseriesScalesService {
 
                 if (
                     widgetConfig?.preset === TimeseriesChartPreset.StatusBar ||
-                    (widgetConfig?.preset ===
-                        TimeseriesChartPreset.StackedArea &&
-                        scaleConfig.properties?.axisUnits === "percent")
+                    widgetConfig?.preset === TimeseriesChartPreset.StackedArea
                 ) {
                     return;
                 }
