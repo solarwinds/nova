@@ -31,46 +31,6 @@
             "
         >
             <nui-legend-series
-                *ngIf="widgetData.summarySerie && summarySerie"
-                [interactive]="false"
-                (mouseenter)="chartAssist.resetVisibleSeries()"
-            >
-                <nui-rich-legend-tile
-                    [value]="
-                        chartAssist.getHighlightedValue(
-                            summarySerie,
-                            'y',
-                            'tick'
-                        )
-                    "
-                    [backgroundColor]="summaryLegendBcgColor"
-                    [color]="summaryLegendColor"
-                >
-                </nui-rich-legend-tile>
-
-                <div description class="description-container">
-                    <div class="description-text nui-text-small">
-                        <div
-                            class="description description-primary"
-                            [ngClass]="{
-                                'nui-text-link-small link': seriesInteractive
-                            }"
-                            [title]="summarySerie.legendDescriptionPrimary"
-                        >
-                            {{ summarySerie.legendDescriptionPrimary }}
-                        </div>
-
-                        <div
-                            class="description description-secondary"
-                            [title]="summarySerie.legendDescriptionSecondary"
-                        >
-                            {{ summarySerie.legendDescriptionSecondary }}
-                        </div>
-                    </div>
-                </div>
-            </nui-legend-series>
-
-            <nui-legend-series
                 class="xy-chart__legend-series"
                 [ngClass]="
                     'xy-chart__legend-series--state-' +
