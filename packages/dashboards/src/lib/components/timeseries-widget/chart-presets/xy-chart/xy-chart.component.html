@@ -105,10 +105,7 @@
                         </a>
                         <div
                             class="description description-secondary"
-                            *ngIf="
-                                !legendSeries.secondaryLink &&
-                                !widgetData.summarySerie
-                            "
+                            *ngIf="!legendSeries.secondaryLink"
                             [title]="legendSeries.legendDescriptionSecondary"
                         >
                             {{ legendSeries.legendDescriptionSecondary }}
@@ -116,10 +113,7 @@
                         <a
                             class="description description-secondary nui-text-link-small link"
                             (click)="$event.stopPropagation()"
-                            *ngIf="
-                                legendSeries.secondaryLink &&
-                                !widgetData.summarySerie
-                            "
+                            *ngIf="legendSeries.secondaryLink"
                             [href]="legendSeries.secondaryLink"
                             rel="noopener noreferrer"
                             [title]="legendSeries.legendDescriptionSecondary"
