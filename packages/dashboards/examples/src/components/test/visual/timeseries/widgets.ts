@@ -112,6 +112,18 @@ export const positions: Record<string, GridsterItem> = {
         y: 28,
         x: 6,
     },
+    "widget1-perfstack": {
+        cols: 6,
+        rows: 7,
+        y: 35,
+        x: 0,
+    },
+    "widget5-perfstack": {
+        cols: 6,
+        rows: 7,
+        y: 35,
+        x: 6,
+    },
 };
 
 const collectionId1 = "test-collection-left";
@@ -168,9 +180,6 @@ export const widgetConfigs: IWidget[] = [
                             enableZoom: true,
                             preset: TimeseriesChartPreset.Line,
                             collectionId: collectionId1,
-                            allowLegendMenu: true,
-                            projectType:
-                                TimeseriesWidgetProjectType.PerfstackApp,
                         } as ITimeseriesWidgetConfig,
                     },
                 },
@@ -246,8 +255,6 @@ export const widgetConfigs: IWidget[] = [
                             },
                             collectionId: collectionId1,
                             allowLegendMenu: true,
-                            projectType:
-                                TimeseriesWidgetProjectType.PerfstackApp,
                         } as ITimeseriesWidgetConfig,
                     },
                 },
@@ -318,7 +325,6 @@ export const widgetConfigs: IWidget[] = [
                             enableZoom: true,
                             leftAxisLabel: "Utilization (%)",
                             preset: TimeseriesChartPreset.StackedArea,
-                            allowLegendMenu: true,
                         } as ITimeseriesWidgetConfig,
                     },
                 },
@@ -610,7 +616,6 @@ export const widgetConfigs: IWidget[] = [
                             enableZoom: true,
                             leftAxisLabel: "Utilization (%)",
                             preset: TimeseriesChartPreset.StackedBar,
-                            allowLegendMenu: true,
                         } as Partial<ITimeseriesWidgetConfig>,
                     },
                 },
@@ -746,7 +751,7 @@ export const widgetConfigs: IWidget[] = [
                             leftAxisLabel: "Utilization (%)",
                             preset: TimeseriesChartPreset.StatusBar,
                             collectionId: collectionId2,
-                        } as ITimeseriesWidgetConfig,
+                        },
                     },
                 },
                 timeframeSelection: {
@@ -817,6 +822,147 @@ export const widgetConfigs: IWidget[] = [
                             },
                             collectionId: collectionId2,
                         } as ITimeseriesWidgetConfig,
+                    },
+                },
+                timeframeSelection: {
+                    properties: {
+                        timeframe: {
+                            startDatetime: frozenTime()
+                                .subtract(14, "day")
+                                .format(),
+                            endDatetime: frozenTime().format(),
+                            selectedPresetId: null,
+                        } as unknown as ISerializableTimeframe,
+                    },
+                },
+            },
+        },
+    },
+    {
+        id: "widget1-perfstack",
+        type: "timeseries",
+        pizzagna: {
+            [PizzagnaLayer.Configuration]: {
+                [DEFAULT_PIZZAGNA_ROOT]: {
+                    providers: {
+                        [WellKnownProviders.DataSource]: {
+                            providerId:
+                                TestTimeseriesEventsDataSource.providerId,
+                        } as IProviderConfiguration,
+                    },
+                },
+                header: {
+                    properties: {
+                        title: "Line Chart in PerfStack",
+                        subtitle: "Basic timeseries widget with legend actions",
+                    },
+                },
+                chart: {
+                    providers: {
+                        [WellKnownProviders.Adapter]: {
+                            properties: {
+                                series: [
+                                    {
+                                        id: "series-a",
+                                        label: "Events",
+                                        selectedSeriesId: "series-a",
+                                    },
+                                    {
+                                        id: "series-b",
+                                        label: "Events",
+                                        selectedSeriesId: "series-b",
+                                    },
+                                    {
+                                        id: "series-c",
+                                        label: "Events",
+                                        selectedSeriesId: "series-c",
+                                    },
+                                ],
+                            },
+                        } as Partial<IProviderConfiguration> as any,
+                    },
+                    properties: {
+                        configuration: {
+                            legendPlacement: LegendPlacement.Right,
+                            enableZoom: true,
+                            interaction: "series",
+                            preset: TimeseriesChartPreset.Line,
+                            collectionId: collectionId2,
+                            allowLegendMenu: true,
+                            projectType:
+                                TimeseriesWidgetProjectType.PerfstackApp,
+                            gridConfig: {
+                                fixedLayout: true,
+                            },
+                        },
+                    },
+                },
+                timeframeSelection: {
+                    properties: {
+                        timeframe: {
+                            startDatetime: frozenTime()
+                                .subtract(7, "day")
+                                .format(),
+                            endDatetime: frozenTime().format(),
+                            selectedPresetId: null,
+                        } as unknown as ISerializableTimeframe,
+                    },
+                },
+            },
+        },
+    },
+    {
+        id: "widget5-perfstack",
+        type: "timeseries",
+        pizzagna: {
+            [PizzagnaLayer.Configuration]: {
+                [DEFAULT_PIZZAGNA_ROOT]: {
+                    providers: {
+                        [WellKnownProviders.DataSource]: {
+                            providerId:
+                                TestTimeseriesStatusDataSource.providerId,
+                        } as IProviderConfiguration,
+                    },
+                },
+                header: {
+                    properties: {
+                        title: "Status Chart in PerfStack",
+                        subtitle: "Basic timeseries widget with legend actions",
+                    },
+                },
+                chart: {
+                    providers: {
+                        [WellKnownProviders.Adapter]: {
+                            properties: {
+                                series: [
+                                    {
+                                        id: "series-1",
+                                        label: "Average GPU Load",
+                                        selectedSeriesId: "series-1",
+                                    },
+                                    {
+                                        id: "series-2",
+                                        label: "Average CPU Load",
+                                        selectedSeriesId: "series-2",
+                                    },
+                                ],
+                            },
+                        } as Partial<IProviderConfiguration> as any,
+                    },
+                    properties: {
+                        configuration: {
+                            legendPlacement: LegendPlacement.Right,
+                            enableZoom: true,
+                            leftAxisLabel: "Utilization (%)",
+                            preset: TimeseriesChartPreset.StatusBar,
+                            collectionId: collectionId2,
+                            allowLegendMenu: true,
+                            projectType:
+                                TimeseriesWidgetProjectType.PerfstackApp,
+                            gridConfig: {
+                                fixedLayout: true,
+                            },
+                        },
                     },
                 },
                 timeframeSelection: {

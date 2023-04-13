@@ -35,6 +35,9 @@
             {{ descriptionSecondary }}
         </div>
     </div>
+    <div class="legend-menu">
+        <ng-content select="[legendMenu]"></ng-content>
+    </div>
 </div>
 <ng-template #descriptionTemplate>
     <div class="d-flex" #projectedDescription>
