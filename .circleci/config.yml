@@ -562,6 +562,11 @@ jobs:
             - attach_workspace:
                   at: ~/nova
             - run:
+                  name: Configure Git
+                  command: |
+                      git config --global user.email circleci@circleci
+                      git config --global user.name $CIRCLE_PROJECT_USERNAME
+            - run:
                   name: Publish nova docs & Prepare nova-docs artifact
                   command: yarn run deploy-docs-ci
             - store_artifacts:
