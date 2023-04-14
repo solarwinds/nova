@@ -19,7 +19,6 @@
 //  THE SOFTWARE.
 
 import { AxisScale } from "d3-axis";
-import { UnitOption } from "@nova-ui/bits";
 
 import { UnitOption } from "@nova-ui/bits";
 

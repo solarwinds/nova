@@ -19,7 +19,6 @@
 //  THE SOFTWARE.
 
 import { StaticProvider } from "@angular/core";
-import { GridsterItem } from "angular-gridster2";
 import { BehaviorSubject, ReplaySubject } from "rxjs";
 
 import { EventDefinition, IEvent, IEventDefinition } from "@nova-ui/bits";
@@ -148,12 +147,6 @@ export const NOVA_PROPORTIONAL_CONTENT_FORMATTERS_REGISTRY =
 export const NOVA_TEST_REGISTRY = "NOVA_TEST_REGISTRY";
 export const NOVA_CONFIGURATOR_DATA_SOURCE_MANAGER =
     "NOVA_CONFIGURATOR_DATA_SOURCE_MANAGER";
-
-export const CHART_METRIC_REMOVE: IEventDefinition<
-    IEvent<IRemoveMetricPayload>
-> = {
-    id: "CHART_METRIC_REMOVE",
-};
 
 export const CHART_METRIC_REMOVE: IEventDefinition<
     IEvent<IRemoveMetricPayload>
