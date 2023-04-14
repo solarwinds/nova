@@ -43,7 +43,7 @@ fi
 git checkout $SOURCE_BRANCH
 git pull origin $RELEASE_BRANCH --no-rebase -s ours
 git checkout $RELEASE_BRANCH
-git merge --no-edit $SOURCE_BRANCH
+git merge $SOURCE_BRANCH --no-edit -X theirs
 
 # Set Release Version
 yarn run set-release-versions-ci
