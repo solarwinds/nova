@@ -19,7 +19,6 @@
 //  THE SOFTWARE.
 
 import { StaticProvider } from "@angular/core";
-import { GridsterItem } from "angular-gridster2";
 import { BehaviorSubject, ReplaySubject } from "rxjs";
 
 import { EventDefinition, IEvent, IEventDefinition } from "@nova-ui/bits";

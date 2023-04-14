@@ -51,6 +51,7 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
             [ngClass]="'nui-menu-item__action-' + type"
             #menuAction
             tabindex="-1"
+            title
         >
             <nui-icon
                 *ngIf="icon"

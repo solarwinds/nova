@@ -40,18 +40,18 @@ import {
 } from "@nova-ui/charts";
 import {
     CHART_METRIC_REMOVE,
-    DATA_SOURCE,
     INTERACTION,
-    ISerializableTimeframe,
+    SET_TIMEFRAME,
     ITimeseriesWidgetConfig,
     ITimeseriesWidgetData,
-    NuiDashboardsModule,
-    PIZZAGNA_EVENT_BUS,
-    ProviderRegistryService,
-    SET_TIMEFRAME,
     TimeseriesInteractionType,
     TimeseriesTransformer,
+    NuiDashboardsModule,
+    ProviderRegistryService,
     XYChartComponent,
+    DATA_SOURCE,
+    ISerializableTimeframe,
+    PIZZAGNA_EVENT_BUS,
 } from "@nova-ui/dashboards";
 
 @Component({

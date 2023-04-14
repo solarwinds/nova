@@ -94,7 +94,7 @@ export class StatusBarChartComponent
         @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,
         public zoomPluginsSyncService: TimeseriesZoomPluginsSyncService
     ) {
-        super(timeseriesScalesService, dataSource);
+        super(eventBus, timeseriesScalesService, dataSource);
     }
 
     public ngOnInit(): void {}
@@ -298,6 +298,14 @@ export class StatusBarChartComponent
             gridConfig.dimension.margin.right =
                 configuration.gridConfig.sideMargin;
         }
+    }
+
+    public displayDeleteButton(): boolean {
+        return (
+            !!this.configuration.allowLegendMenu &&
+            this.configuration.projectType ===
+                TimeseriesWidgetProjectType.PerfstackApp
+        );
     }
 }
 

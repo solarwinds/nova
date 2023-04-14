@@ -252,8 +252,8 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
         if (
             !this.isChartHoverd ||
             this.isPopoverDisplayed ||
-            this.brushStartXCoord === undefined ||
-            this.brushEndXCoord === undefined
+            isUndefined(this.brushStartXCoord) ||
+            isUndefined(this.brushEndXCoord)
         ) {
             return;
         }
