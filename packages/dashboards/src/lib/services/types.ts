@@ -154,3 +154,9 @@ export const CHART_METRIC_REMOVE: IEventDefinition<
 > = {
     id: "CHART_METRIC_REMOVE",
 };
+
+export const CHART_METRIC_REMOVE: IEventDefinition<
+    IEvent<IRemoveMetricPayload>
+> = {
+    id: "CHART_METRIC_REMOVE",
+};

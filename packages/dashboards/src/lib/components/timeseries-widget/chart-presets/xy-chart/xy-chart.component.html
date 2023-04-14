@@ -77,8 +77,11 @@
                     >
                     </nui-chart-marker>
                 </nui-rich-legend-tile>
-                <div description class="description-container">
-                    <div class="description-text nui-text-small">
+                <div
+                    description
+                    class="description-container d-flex nui-text-small justify-content-center"
+                >
+                    <div class="descriptions">
                         <div
                             *ngIf="!legendSeries.link"
                             class="description description-primary"
@@ -123,36 +126,36 @@
                         icon="performance"
                         iconColor="primary-blue"
                     ></nui-icon>
-                    <nui-menu
-                        *ngIf="displayLegendMenu()"
-                        icon="menu"
-                        displayStyle="action"
-                        class="legend-menu"
-                        [appendToBody]="true"
-                    >
-                        <nui-menu-group>
-                            <nui-menu-action
-                                i18n
-                                (actionDone)="removeMetric(legendSeries.id)"
-                                >Remove</nui-menu-action
-                            >
-                        </nui-menu-group>
-                        <nui-menu-group header="Display Transforms" i18n-header>
-                            <nui-menu-action
-                                *ngFor="let tr of transformers | nuiMapKeyValue"
-                                [class.selected]="
-                                    legendSeries.transformer?.name ===
-                                    tr.value.transformer?.name
-                                "
-                                (actionDone)="
-                                    transformData(legendSeries.id, tr.key)
-                                "
-                            >
-                                {{ tr.value.displayName }}
-                            </nui-menu-action>
-                        </nui-menu-group>
-                    </nui-menu>
                 </div>
+                <nui-menu
+                    legendMenu
+                    *ngIf="displayLegendMenu()"
+                    icon="menu"
+                    displayStyle="action"
+                    [appendToBody]="true"
+                >
+                    <nui-menu-group>
+                        <nui-menu-action
+                            i18n
+                            (actionDone)="removeMetric(legendSeries.id)"
+                            >Remove</nui-menu-action
+                        >
+                    </nui-menu-group>
+                    <nui-menu-group header="Display Transforms" i18n-header>
+                        <nui-menu-action
+                            *ngFor="let tr of transformers | nuiMapKeyValue"
+                            [class.selected]="
+                                legendSeries.transformer?.name ===
+                                tr.value.transformer?.name
+                            "
+                            (actionDone)="
+                                transformData(legendSeries.id, tr.key)
+                            "
+                        >
+                            {{ tr.value.displayName }}
+                        </nui-menu-action>
+                    </nui-menu-group>
+                </nui-menu>
             </nui-legend-series>
         </nui-legend>
     </div>

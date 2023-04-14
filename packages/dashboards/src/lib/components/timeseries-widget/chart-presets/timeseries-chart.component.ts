@@ -20,6 +20,7 @@
 
 import {
     Directive,
+    Inject,
     Input,
     OnChanges,
     OnDestroy,
@@ -29,10 +30,13 @@ import {
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { IDataSource } from "@nova-ui/bits";
+import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
 import { IXYScales } from "@nova-ui/charts";
 
-import { WellKnownDataSourceFeatures } from "../../../types";
+import {
+    PIZZAGNA_EVENT_BUS,
+    WellKnownDataSourceFeatures,
+} from "../../../types";
 import { metricsSeriesMeasurementsMinMax } from "../timeseries-helpers";
 import { TimeseriesScalesService } from "../timeseries-scales.service";
 import {
@@ -43,6 +47,7 @@ import {
     ITimeseriesWidgetSeriesData,
     TimeseriesChartPreset,
 } from "../types";
+import { CHART_METRIC_REMOVE } from "../../../services/types";
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
@@ -71,6 +76,7 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
     }
 
     protected constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,
         public timeseriesScalesService: TimeseriesScalesService,
         public dataSource: IDataSource
     ) {
@@ -230,6 +236,15 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
                 );
             }
         }
+    }
+
+    public removeMetric(metricId: string): void {
+        this.eventBus.next(CHART_METRIC_REMOVE, {
+            payload: {
+                metricId: metricId,
+                groupUniqueId: this.configuration.groupUniqueId,
+            },
+        });
     }
 
     /** Updates chart data. */

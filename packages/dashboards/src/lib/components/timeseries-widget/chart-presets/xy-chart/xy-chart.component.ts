@@ -187,7 +187,7 @@ export abstract class XYChartComponent
         public changeDetector: ChangeDetectorRef,
         public zoomPluginsSyncService: TimeseriesZoomPluginsSyncService
     ) {
-        super(timeseriesScalesService, dataSource);
+        super(eventBus, timeseriesScalesService, dataSource);
     }
 
     protected abstract createAccessors(
@@ -402,15 +402,6 @@ export abstract class XYChartComponent
             this.configuration.projectType ===
                 TimeseriesWidgetProjectType.PerfstackApp
         );
-    }
-
-    public removeMetric(metricId: string): void {
-        this.eventBus.next(CHART_METRIC_REMOVE, {
-            payload: {
-                metricId: metricId,
-                groupUniqueId: this.configuration.groupUniqueId,
-            },
-        });
     }
 
     public transformData(metricId: string, trId: TimeseriesTransformer): void {

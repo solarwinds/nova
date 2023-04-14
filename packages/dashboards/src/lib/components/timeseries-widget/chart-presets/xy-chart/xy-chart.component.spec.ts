@@ -38,11 +38,18 @@ import {
     TimeseriesZoomPluginsSyncService,
     XYGrid,
 } from "@nova-ui/charts";
+
+import { ISerializableTimeframe } from "../../../../configurator/services/types";
+import { NuiDashboardsModule } from "../../../../dashboards.module";
+import { ProviderRegistryService } from "../../../../services/provider-registry.service";
 import {
     CHART_METRIC_REMOVE,
-    DATA_SOURCE,
     INTERACTION,
-    ISerializableTimeframe,
+    SET_TIMEFRAME,
+} from "../../../../services/types";
+import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../types";
+import {
+    ITimeseriesScalesConfig,
     ITimeseriesWidgetConfig,
     ITimeseriesWidgetData,
     NuiDashboardsModule,
@@ -50,9 +57,10 @@ import {
     ProviderRegistryService,
     SET_TIMEFRAME,
     TimeseriesInteractionType,
+    TimeseriesScaleType,
     TimeseriesTransformer,
-    XYChartComponent,
-} from "@nova-ui/dashboards";
+} from "../../types";
+import { XYChartComponent } from "./xy-chart.component";
 
 @Component({
     selector: "test-component",

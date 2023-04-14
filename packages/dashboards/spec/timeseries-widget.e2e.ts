@@ -27,22 +27,22 @@ import { TimeseriesAtom } from "./timeseries/timeseries.atom";
 import { DashboardAtom } from "./dashboard.atom";
 import { LegendSeriesAtom } from "./timeseries/legend-series.atom";
 
-const getTimeseriesWidget = (index: number = 0): TimeseriesAtom =>
+const getTimeseriesWidget = (index: number): TimeseriesAtom =>
     Atom.findIn(
         TimeseriesAtom,
         element(by.className(DashboardAtom.CSS_CLASS)),
         index
     );
 
-const getLegend = async (index: number = 0): Promise<LegendSeriesAtom> =>
-    (await getTimeseriesWidget().getLegendSeries())[index];
+const getLegends = async (widgetIndex: number): Promise<LegendSeriesAtom[]> =>
+    await getTimeseriesWidget(widgetIndex).getLegendSeries();
 
 describe("Dashboards - Timeseries Widget", () => {
     beforeAll(async () => await Helpers.prepareBrowser("test/timeseries"));
 
     it("should display Legend menu button for line charts", async () => {
         // line chart
-        let legends = await getTimeseriesWidget().getLegendSeries();
+        let legends = await getTimeseriesWidget(10).getLegendSeries();
         expect(legends.length).toBe(3);
 
         await legends[0].hover();
@@ -66,7 +66,7 @@ describe("Dashboards - Timeseries Widget", () => {
     });
 
     it("should display the correct menu items", async () => {
-        const legend = await getLegend();
+        const legend = (await getLegends(10))[0];
         expect(legend).toBeDefined();
 
         const expectedTransforms = [
@@ -91,18 +91,32 @@ describe("Dashboards - Timeseries Widget", () => {
 
     it("should display icon after using transform", async () => {
         const getIcon = async (): Promise<IconAtom> =>
-            (await getLegend()).getTransformIcon();
+            (await getLegends(10))[0].getTransformIcon();
 
-        await getTimeseriesWidget().transformSeries("Difference", 0);
+        await getTimeseriesWidget(10).transformSeries("Difference", 0);
         expect((await getIcon()).isDisplayed()).toBe(true);
 
-        await getTimeseriesWidget().transformSeries("Linear", 0);
+        await getTimeseriesWidget(10).transformSeries("Linear", 0);
         expect((await getIcon()).isDisplayed()).toBe(true);
 
-        await getTimeseriesWidget().transformSeries("None", 0);
+        await getTimeseriesWidget(10).transformSeries("None", 0);
         expect((await getIcon()).isDisplayed()).toBe(false);
 
-        await getTimeseriesWidget().transformSeries("Standardize", 0);
+        await getTimeseriesWidget(10).transformSeries("Standardize", 0);
         expect((await getIcon()).isDisplayed()).toBe(true);
+    });
+
+    it("should display remove icon for status charts", async () => {
+        let legends = await getTimeseriesWidget(11).getLegendSeries();
+        expect(legends.length).toBe(2);
+
+        await legends[0].hover();
+        expect(await legends[0].getMenuButton()?.isDisplayed()).toBe(true);
+
+        legends = await getTimeseriesWidget(8).getLegendSeries();
+        expect(legends.length).toBe(2);
+
+        await legends[0].hover();
+        expect(legends[0].getMenuButton).toThrow();
     });
 });

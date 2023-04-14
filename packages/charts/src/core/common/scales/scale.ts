@@ -21,6 +21,8 @@
 import { AxisScale } from "d3-axis";
 import { UnitOption } from "@nova-ui/bits";
 
+import { UnitOption } from "@nova-ui/bits";
+
 import { UtilityService } from "../utility.service";
 import { getAutomaticDomain } from "./domain-calculation/automatic-domain";
 import { DomainCalculator, IFormatters, IScale } from "./types";

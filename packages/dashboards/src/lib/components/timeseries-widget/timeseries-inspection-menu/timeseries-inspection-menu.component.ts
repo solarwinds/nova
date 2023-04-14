@@ -138,7 +138,7 @@ export class TimeseriesInspectionMenuComponent
 
     public clearZoom(): void {
         this.syncService.clearZoomInsideCollection(this.collectionId ?? "");
-        this.eventBus.next(TIMESERIES_INSPECTION_MENU_CLOSE, {});
+        this.eventBus.next(TIMESERIES_INSPECTION_MENU_CLOSE);
     }
 
     public isZoomInAllowed(): boolean {

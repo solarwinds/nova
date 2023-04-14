@@ -18,46 +18,18 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { IPizzagna } from "../../types";
-
-export interface IWidgets {
-    [key: string]: IWidget;
-}
-
-export interface IWidget {
-    id: string;
-    type: string;
-    version?: number;
-    pizzagna: IPizzagna;
-    metadata?: IWidgetMetadata;
-    uniqueKey?: string;
-}
-
-export interface IWidgetMetadata extends Record<string, any> {
-    /**
-     * Set this to true to communicate to the widget cloner that the widget requires
-     * further configuration before it can be placed on the dashboard.
-     */
-    needsConfiguration?: boolean;
-}
-
-export interface IWidgetTypeDefinition {
-    configurator?: IPizzagna;
-    widget: IPizzagna;
-    /**
-     * Paths to various important values in pizzagnas - this should be coupled with respective pizzagnas in v10 - NUI-5829
-     */
-    paths?: {
-        widget?: Record<string, string>;
-        configurator?: Record<string, string>;
-    };
-}
-
-/**
- * The properties for widget error display
- */
-export interface IWidgetErrorDisplayProperties {
-    image: string;
-    title: string;
-    description: string;
+export function roundToOptimalDecimals(
+    arr: number[],
+    optimalDecimals = new Map<number, number>([
+        [1, 2],
+        [2, 2],
+        [3, 2],
+        [4, 1],
+    ])
+): number[] {
+    return arr.map((v) => {
+        const digits = Math.floor(Math.abs(v)).toString().length;
+        const optimalDecimalsForDigits = optimalDecimals.get(digits) ?? 0;
+        return +v.toFixed(optimalDecimalsForDigits);
+    });
 }
