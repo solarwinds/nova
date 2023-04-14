@@ -96,7 +96,7 @@
   "license": "Apache-2.0",
   "name": "@nova-ui/charts",
   "peerDependencies": {
-    "@nova-ui/bits": "~13.0.9-0",
+    "@nova-ui/bits": "~13.0.10-0",
     "@types/d3": "^5.0.0",
     "@types/d3-selection-multi": "^1.0.0",
     "d3": "^5.0.0",
@@ -163,5 +163,5 @@
     "visual:gui": "yarn run visual:base -c gui",
     "visual:serve": "yarn run visual:base -c serve"
   },
-  "version": "13.0.9-0"
+  "version": "13.0.10-0"
 }
