@@ -20,7 +20,7 @@
 
 import { UnitOption } from "@nova-ui/bits";
 
-import { ITimeseriesWidgetData } from "./types";
+import { ITimeseriesWidgetData, TimeseriesChartTypes } from "./types";
 
 export function metricsSeriesMeasurementsMinMax(
     series: ITimeseriesWidgetData<any>[],
@@ -49,3 +49,16 @@ export function metricsSeriesMeasurementsMinMax(
         { min: measurements[0].y, max: measurements[0].y }
     );
 }
+
+export function hasTimeseriesWidgetSummaryLegend(
+    type: TimeseriesChartTypes
+): boolean {
+    return (
+        type === TimeseriesChartTypes.alert ||
+        type === TimeseriesChartTypes.event ||
+        type === TimeseriesChartTypes.multi
+    );
+}
+
+export const SUMMARY_LEGEND_BCG_COLOR = "var(--nui-color-brand-six)";
+export const SUMMARY_LEGEND_COLOR = "var(--nui-color-text-light)";

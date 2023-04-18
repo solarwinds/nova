@@ -35,24 +35,27 @@ import {
     SET_DOMAIN_EVENT,
     TimeScale,
     TimeseriesZoomPlugin,
-    TimeseriesZoomPluginsSyncService,
     XYGrid,
 } from "@nova-ui/charts";
+
+import { ISerializableTimeframe } from "../../../../configurator/services/types";
+import { NuiDashboardsModule } from "../../../../dashboards.module";
+import { ProviderRegistryService } from "../../../../services/provider-registry.service";
 import {
     CHART_METRIC_REMOVE,
     INTERACTION,
     SET_TIMEFRAME,
+} from "../../../../services/types";
+import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../types";
+import {
+    ITimeseriesScalesConfig,
     ITimeseriesWidgetConfig,
     ITimeseriesWidgetData,
     TimeseriesInteractionType,
+    TimeseriesScaleType,
     TimeseriesTransformer,
-    NuiDashboardsModule,
-    ProviderRegistryService,
-    XYChartComponent,
-    DATA_SOURCE,
-    ISerializableTimeframe,
-    PIZZAGNA_EVENT_BUS,
-} from "@nova-ui/dashboards";
+} from "../../types";
+import { XYChartComponent } from "./xy-chart.component";
 
 @Component({
     selector: "test-component",
@@ -61,10 +64,7 @@ import {
 class TestComponent extends XYChartComponent {
     public static lateLoadKey = "TestComponent";
 
-    public zoomPlugin: TimeseriesZoomPlugin = new TimeseriesZoomPlugin(
-        {},
-        new TimeseriesZoomPluginsSyncService()
-    );
+    public zoomPlugins = [new TimeseriesZoomPlugin()];
 
     protected createAccessors(
         colorProvider: IValueProvider<string>

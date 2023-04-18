@@ -59,6 +59,7 @@ export class InteractionLabelPlugin extends ChartPlugin {
     private lastInteractionValuesPayload: IInteractionValuesPayload;
     private interactionLabelLayer: D3Selection<SVGElement>;
     private readonly destroy$ = new Subject<void>();
+    private elBBox: DOMRect;
 
     constructor(private formatterName = "title") {
         super();
@@ -170,21 +171,24 @@ export class InteractionLabelPlugin extends ChartPlugin {
         const textSelection = interactionLabel
             .select("text")
             .text(labelContent);
-        const bbox = (textSelection.node() as any).getBBox();
+
+        if (!this.elBBox) {
+            this.elBBox = (textSelection.node() as SVGSVGElement).getBBox();
+        }
         const gridDimension = this.chart.getGrid().config().dimension;
 
         // subtract the relative vertical text offset inside the bbox from
         // the grid height to determine the label's vertical placement
-        const heightOffset = gridDimension.height() - bbox.y;
+        const heightOffset = gridDimension.height() - this.elBBox.y;
 
         textSelection
             .attr("transform", `translate(0, ${heightOffset})`)
             .style("text-anchor", "middle");
 
         // match the horizontal padding to the built-in bbox vertical padding
-        const horizontalPadding = (bbox.height + bbox.y) * 2;
+        const horizontalPadding = (this.elBBox.height + this.elBBox.y) * 2;
 
-        const labelWidth = bbox.width + horizontalPadding;
+        const labelWidth = this.elBBox.width + horizontalPadding;
         const allowedRange: [number, number] = [
             labelWidth / 2,
             gridDimension.width() - labelWidth / 2,
@@ -198,9 +202,9 @@ export class InteractionLabelPlugin extends ChartPlugin {
             .attrs({
                 transform: `translate(0,${heightOffset})`,
                 x: -(labelWidth / 2),
-                y: bbox.y,
+                y: this.elBBox.y,
                 width: labelWidth,
-                height: bbox.height,
+                height: this.elBBox.height,
             });
     }
 

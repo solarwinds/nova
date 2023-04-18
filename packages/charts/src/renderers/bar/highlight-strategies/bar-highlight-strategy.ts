@@ -54,9 +54,9 @@ export class BarHighlightStrategy
      * @param levels for band scales, how many levels deep do we go to compare values
      */
     constructor(
-        private scaleKey: keyof IXYScales,
-        private levels = 1,
-        private selectedDataPointIdxFn?: SelectedDatPointIdxFn
+        protected scaleKey: keyof IXYScales,
+        protected levels = 1,
+        protected selectedDataPointIdxFn?: SelectedDatPointIdxFn
     ) {}
 
     public getDataPointIndex(
