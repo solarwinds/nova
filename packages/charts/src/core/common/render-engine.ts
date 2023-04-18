@@ -235,6 +235,7 @@ export class RenderEngine {
             dataSeries: chartSeries,
             containers: childContainers,
             scales: chartSeries.scales,
+            parentContainer: this.renderLayers.data,
         };
         chartSeries.renderer.highlightDataPoint(
             renderSeries,
