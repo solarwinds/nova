@@ -25,6 +25,7 @@ import {
     barAccessors,
     barGrid,
     BarHighlightStrategy,
+    BarHighlightStrategyOutline,
     BarRenderer,
     Chart,
     ChartAssist,
@@ -41,6 +42,7 @@ import {
 
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../../types";
 import { TimeseriesScalesService } from "../../../timeseries-scales.service";
+import { TimeseriesWidgetProjectType } from "../../../types";
 import { XYChartComponent } from "../xy-chart.component";
 
 @Component({
@@ -60,11 +62,6 @@ export class StackedBarChartComponent extends XYChartComponent {
         super(eventBus, dataSource, timeseriesScalesService, changeDetector);
 
         this.valueAccessorKey = "value";
-        // disable pointer events on bars to ensure the zoom drag target is the mouse interactive area rather than the bars
-        this.renderer = new BarRenderer({
-            highlightStrategy: new BarHighlightStrategy("x"),
-            pointerEvents: false,
-        });
     }
 
     public mapSeriesSet(
@@ -93,6 +90,16 @@ export class StackedBarChartComponent extends XYChartComponent {
     }
 
     protected createChartAssist(palette: ChartPalette): ChartAssist {
+        // disable pointer events on bars to ensure the zoom drag target is the mouse interactive area rather than the bars
+        this.renderer = new BarRenderer({
+            highlightStrategy:
+                this.configuration?.projectType ===
+                TimeseriesWidgetProjectType.PerfstackApp
+                    ? new BarHighlightStrategyOutline("x")
+                    : new BarHighlightStrategy("x"),
+            pointerEvents: false,
+        });
+
         const chart = new Chart(barGrid());
         chart.addPlugin(new InteractionLinePlugin());
         chart.addPlugin(new InteractionLabelPlugin());

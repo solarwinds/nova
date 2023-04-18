@@ -38,6 +38,7 @@ import {
 import {
     BandScale,
     BarHighlightStrategy,
+    BarHighlightStrategyOutline,
     BarRenderer,
     Chart,
     DESTROY_EVENT,
@@ -151,7 +152,11 @@ export class StatusBarChartComponent
 
         // disable pointer events on bars to ensure the zoom drag target is the mouse interactive area rather than the bars
         this.renderer = new BarRenderer({
-            highlightStrategy: new BarHighlightStrategy("x"),
+            highlightStrategy:
+                this.configuration?.projectType ===
+                TimeseriesWidgetProjectType.PerfstackApp
+                    ? new BarHighlightStrategyOutline("x")
+                    : new BarHighlightStrategy("x"),
             pointerEvents: false,
         });
 

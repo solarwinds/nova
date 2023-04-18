@@ -24,6 +24,7 @@ import { Subject } from "rxjs";
 import { Renderer } from "../core/common/renderer";
 import { Scales } from "../core/common/scales/types";
 import {
+    D3Selection,
     IAccessors,
     IDataSeries,
     IRenderContainers,
@@ -123,6 +124,7 @@ export interface IRenderSeries<TA extends IAccessors> {
     dataSeries: IDataSeries<TA>;
     containers: IRenderContainers;
     scales: Scales;
+    parentContainer?: D3Selection<SVGElement>;
 }
 
 export interface IHighlightStrategy<TA, T = Renderer<TA>> {
