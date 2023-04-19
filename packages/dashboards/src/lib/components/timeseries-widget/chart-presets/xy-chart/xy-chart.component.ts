@@ -57,17 +57,17 @@ import {
     XYAccessors,
 } from "@nova-ui/charts";
 
-import {
-    CHART_METRIC_REMOVE,
-    INTERACTION,
-    SET_TIMEFRAME,
-} from "../../../../services/types";
+import { INTERACTION, SET_TIMEFRAME } from "../../../../services/types";
 import {
     DATA_SOURCE,
     IHasChangeDetector,
     PIZZAGNA_EVENT_BUS,
 } from "../../../../types";
 import { LegendPlacement } from "../../../../widget-types/common/widget/legend";
+import {
+    SUMMARY_LEGEND_BCG_COLOR,
+    SUMMARY_LEGEND_COLOR,
+} from "../../timeseries-helpers";
 import { TimeseriesScalesService } from "../../timeseries-scales.service";
 import {
     transformChangePoint,
@@ -90,18 +90,6 @@ import {
     TimeseriesWidgetProjectType,
 } from "../../types";
 import { TimeseriesChartComponent } from "../timeseries-chart.component";
-import {
-    SUMMARY_LEGEND_BCG_COLOR,
-    SUMMARY_LEGEND_COLOR,
-} from "../../timeseries-helpers";
-
-interface ITransformerDescription {
-    displayName: string;
-    transformer?: (
-        data: ITimeseriesWidgetSeriesData[],
-        hasPercentile?: boolean
-    ) => ITimeseriesWidgetSeriesData[];
-}
 
 interface ITransformerDescription {
     displayName: string;
@@ -203,8 +191,7 @@ export abstract class XYChartComponent
         @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,
         @Optional() @Inject(DATA_SOURCE) dataSource: IDataSource,
         public timeseriesScalesService: TimeseriesScalesService,
-        public changeDetector: ChangeDetectorRef,
-        public zoomPluginsSyncService: TimeseriesZoomPluginsSyncService
+        public changeDetector: ChangeDetectorRef
     ) {
         super(eventBus, timeseriesScalesService, dataSource);
     }

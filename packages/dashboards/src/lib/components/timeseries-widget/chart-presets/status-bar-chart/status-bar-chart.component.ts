@@ -61,20 +61,19 @@ import {
 
 import { SET_TIMEFRAME } from "../../../../services/types";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../types";
+import {
+    SUMMARY_LEGEND_BCG_COLOR,
+    SUMMARY_LEGEND_COLOR,
+} from "../../timeseries-helpers";
 import { TimeseriesScalesService } from "../../timeseries-scales.service";
 import {
     ITimeseriesWidgetData,
     ITimeseriesWidgetStatusData,
-    TimeseriesChartPreset,
     TimeseriesChartTypes,
     TimeseriesWidgetProjectType,
     TimeseriesWidgetZoomPlugin,
 } from "../../types";
 import { TimeseriesChartComponent } from "../timeseries-chart.component";
-import {
-    SUMMARY_LEGEND_BCG_COLOR,
-    SUMMARY_LEGEND_COLOR,
-} from "../../timeseries-helpers";
 
 @Component({
     selector: "nui-status-bar-chart",
@@ -103,8 +102,7 @@ export class StatusBarChartComponent
         @Optional() @Inject(DATA_SOURCE) dataSource: IDataSource,
         public timeseriesScalesService: TimeseriesScalesService,
         public changeDetector: ChangeDetectorRef,
-        @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,
-        public zoomPluginsSyncService: TimeseriesZoomPluginsSyncService
+        @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>
     ) {
         super(eventBus, timeseriesScalesService, dataSource);
     }
