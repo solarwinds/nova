@@ -123,6 +123,7 @@ export class SchematicDocsExampleComponent implements OnInit {
         let fileContent = "";
         const regExResultArray = this.fileExtensionsRegex.exec(fileName);
         if (regExResultArray) {
+            // todo rewrite to context
             fileContent = this.context(fileName).default;
 
             const extension = <string>fileName.split(".").pop();

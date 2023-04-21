@@ -71,7 +71,7 @@ export function mergeChanges<T>(result: T, ...changes: IValueChange[]): T {
 
     const accTemplate = valueType === "object[]" ? [] : {};
 
-    return keys.reduce((acc: Record<string, any>, key) => {
+    const ret = keys.reduce((acc: Record<string, any>, key) => {
         const checkedResult =
             typeof result === "undefined" ||
             result === null ||
@@ -91,9 +91,14 @@ export function mergeChanges<T>(result: T, ...changes: IValueChange[]): T {
         }));
 
         // recursively execute this method for given property
-        acc[key] = mergeChanges(checkedResult, ...nestedChanges);
+        acc[key] = mergeChanges(
+            checkedResult as Record<string, any>,
+            ...nestedChanges
+        );
         return acc;
-    }, accTemplate as T) as T;
+    }, accTemplate);
+
+    return ret as T;
 }
 
 /**

@@ -26,21 +26,24 @@ import { RichLegendTileAtom } from "./rich-legend-tile.atom";
 
 export class LegendSeriesAtom extends Atom {
     public static CSS_CLASS = "nui-legend-series";
-    public richTile = Atom.findIn(
-        RichLegendTileAtom,
-        this.root.element(by.className(RichLegendTileAtom.CSS_CLASS))
-    );
+    public richTile;
 
     private readonly deemphasizedOpacity = 0.3;
-    private tile = this.root.element(
-        by.className(`${LegendSeriesAtom.CSS_CLASS}__tile`)
-    );
-    private checkbox = this.root.element(
-        by.className(`${LegendSeriesAtom.CSS_CLASS}__checkbox-wrapper`)
-    );
+    private tile;
+    private checkbox;
 
     constructor(private root: ElementFinder) {
         super(root);
+        this.richTile = Atom.findIn(
+            RichLegendTileAtom,
+            this.root.element(by.className(RichLegendTileAtom.CSS_CLASS))
+        );
+        this.tile = this.root.element(
+            by.className(`${LegendSeriesAtom.CSS_CLASS}__tile`)
+        );
+        this.checkbox = this.root.element(
+            by.className(`${LegendSeriesAtom.CSS_CLASS}__checkbox-wrapper`)
+        );
     }
 
     public async getPrimaryDescriptionText(): Promise<string> {

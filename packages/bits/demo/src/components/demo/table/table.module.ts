@@ -24,7 +24,6 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
-    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiCheckboxModule,
     NuiDividerModule,
@@ -317,18 +316,7 @@ const routes = [
         TableVirtualScrollSelectStickyHeaderExampleComponent,
         TableRowSelectInstructionsComponent,
     ],
-    providers: [
-        DatePipe,
-        {
-            provide: DEMO_PATH_TOKEN,
-            useFactory: () =>
-                (<any>require).context(
-                    `!!raw-loader!./`,
-                    true,
-                    /.*\.(ts|html|less)$/
-                ),
-        },
-    ],
+    providers: [DatePipe],
     exports: [RouterModule],
 })
-export class TableModule {}
+export default class TableModule {}

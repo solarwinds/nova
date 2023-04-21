@@ -62,4 +62,4 @@ const routes = [
     ],
     declarations: [DataSourceDocsComponent, DataSourceSetupComponent],
 })
-export class DataSourceSetupModule {}
+export default class DataSourceSetupModule {}

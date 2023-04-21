@@ -268,7 +268,7 @@ export class TableHeaderRowComponent
         selectorItems: [],
     };
 
-    public selectable = this.tableStateHandlerService.selectable;
+    public selectable;
     public selectionChangeSubscription: Subscription;
     public dataSourceChangeSubscription: Subscription;
 
@@ -298,6 +298,7 @@ export class TableHeaderRowComponent
         private changeDetectorRef: ChangeDetectorRef
     ) {
         super();
+        this.selectable = this.tableStateHandlerService.selectable;
     }
 
     public ngOnInit(): void {
@@ -398,7 +399,7 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
         clickableSelectors: ["nui-row", "tr[nui-row]"],
         ignoredSelectors: DEFAULT_INTERACTIVE_ELEMENTS,
     };
-    public selectable = this.tableStateHandlerService.selectable;
+    public selectable;
     public selectionChangeSubscription: Subscription;
 
     @HostBinding("class.nui-table__table-row--selected")
@@ -432,6 +433,7 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
         private changeDetectorRef: ChangeDetectorRef
     ) {
         super();
+        this.selectable = this.tableStateHandlerService.selectable;
     }
 
     public ngOnInit(): void {

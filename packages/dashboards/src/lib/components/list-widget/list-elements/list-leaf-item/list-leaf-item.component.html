@@ -14,11 +14,11 @@
                 [ngClass]="url ? '' : 'not-active'"
                 [attr.target]="url ? '_blank' : null"
                 [attr.href]="url || null"
-                [innerHTML]="label | nuiHighlight: searchTerm"
+                [innerHTML]="label | nuiHighlight : searchTerm"
             ></a>
             <div
                 class="nui-text-secondary nui-text-ellipsis"
-                [innerHTML]="detailedUrl | nuiHighlight: searchTerm"
+                [innerHTML]="detailedUrl | nuiHighlight : searchTerm"
             ></div>
         </div>
 

@@ -1,8 +1,4 @@
 {
-    "compilerOptions": {
-        "baseUrl": "./",
-        "module": "es2015"
-    },
     "exclude": [
         "test.ts",
         "polyfills.ts",
@@ -10,5 +6,5 @@
         "**/*spec-helper*/*",
         "**/*spec-helper*"
     ],
-    "extends": "../tsconfig.json"
+    "extends": "../tsconfig.lib.json"
 }

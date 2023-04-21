@@ -55,12 +55,12 @@
                         "allowedCommonJsDependencies": ["lodash"],
                         "buildOptimizer": false,
                         "extractLicenses": false,
-                        "index": "./examples/index.html",
-                        "main": "./examples/index.ts",
+                        "index": "./examples/src/index.html",
+                        "main": "./examples/src/index.ts",
                         "namedChunks": true,
                         "optimization": false,
                         "outputPath": "./sdk/api-docs-ng2/examples",
-                        "polyfills": "./examples/polyfills.ts",
+                        "polyfills": "./examples/src/polyfills.ts",
                         "preserveSymlinks": true,
                         "scripts": [],
                         "sourceMap": true,
@@ -68,10 +68,10 @@
                             "includePaths": ["node_modules"]
                         },
                         "styles": [
-                            "./examples/styles.less",
+                            "./examples/src/styles.less",
                             "./src/styles.less"
                         ],
-                        "tsConfig": "./examples/tsconfig.app.json",
+                        "tsConfig": "./examples/src/tsconfig.json",
                         "vendorChunk": true
                     }
                 },
@@ -79,8 +79,8 @@
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
                         "lintFilePatterns": [
-                            "examples/**/*.ts",
-                            "examples/**/*.html"
+                            "./examples/**/*.ts",
+                            "./examples/**/*.html"
                         ]
                     }
                 },
@@ -98,8 +98,8 @@
                 }
             },
             "projectType": "application",
-            "root": "examples",
-            "sourceRoot": "examples"
+            "root": "./examples",
+            "sourceRoot": "./src"
         },
         "examples-e2e": {
             "architect": {
@@ -218,7 +218,7 @@
                 "lint": {
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
-                        "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+                        "lintFilePatterns": ["./src/**/*.ts", "./src/**/*.html"]
                     }
                 },
                 "test": {
@@ -248,8 +248,16 @@
                 }
             },
             "projectType": "library",
-            "root": "src",
-            "sourceRoot": "src"
+            "root": "./src",
+            "sourceRoot": "./src"
+        }
+    },
+    "schematics": {
+        "@angular-eslint/schematics:application": {
+            "setParserOptionsProject": true
+        },
+        "@angular-eslint/schematics:library": {
+            "setParserOptionsProject": true
         }
     },
     "version": 1

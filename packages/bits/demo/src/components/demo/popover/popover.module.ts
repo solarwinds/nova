@@ -22,7 +22,6 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
-    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiCheckboxModule,
     NuiDocsModule,
@@ -111,17 +110,6 @@ const routes = [
         PopoverStatusExampleComponent,
         PopoverDebounceExampleComponent,
     ],
-    providers: [
-        {
-            provide: DEMO_PATH_TOKEN,
-            useFactory: () =>
-                (<any>require).context(
-                    `!!raw-loader!./`,
-                    true,
-                    /.*\.(ts|html|less)$/
-                ),
-        },
-    ],
     exports: [RouterModule],
 })
-export class PopoverModule {}
+export default class PopoverModule {}

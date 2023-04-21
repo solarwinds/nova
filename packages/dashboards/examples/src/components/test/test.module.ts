@@ -78,4 +78,4 @@ const routes = [
 @NgModule({
     imports: [TestCommonModule, RouterModule.forChild(routes)],
 })
-export class DashboardTestModule {}
+export default class DashboardTestModule {}

@@ -13,7 +13,7 @@
     >
         <table
             nui-table
-            [dataSource]="items | sliceRange: viewportRef.getRenderedRange()"
+            [dataSource]="items | sliceRange : viewportRef.getRenderedRange()"
             [(selection)]="selection"
             (selectionChange)="onSelectionChanged($event)"
             [selectable]="true"

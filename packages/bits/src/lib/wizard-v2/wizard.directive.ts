@@ -87,14 +87,14 @@ export class WizardDirective
 
     /** The list of step headers of the steps in the stepper. */
     @ViewChildren(WizardStepHeaderComponent)
-    _stepHeader: QueryList<WizardStepHeaderComponent>;
+    declare _stepHeader: QueryList<WizardStepHeaderComponent>;
 
     /** Stream of animation `done` events when the body expands/collapses. */
     _animationDone = new Subject<AnimationEvent>();
 
     /** Steps that the stepper holds. */
     @ContentChildren(WizardStepV2Component, { descendants: true })
-    _steps: QueryList<WizardStepV2Component>;
+    declare _steps: QueryList<WizardStepV2Component>;
 
     /** The step that is selected. */
     @Input()

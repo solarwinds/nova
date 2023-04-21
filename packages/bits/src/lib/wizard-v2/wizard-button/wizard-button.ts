@@ -29,7 +29,7 @@ import { Directive, Input } from "@angular/core";
     host: { "[type]": "type" },
 })
 export class WizardStepperNextDirective extends CdkStepperNext {
-    @Input() type: string;
+    @Input() declare type: string;
 }
 
 /** Button that moves to the previous step in a stepper workflow.
@@ -40,5 +40,5 @@ export class WizardStepperNextDirective extends CdkStepperNext {
     host: { "[type]": "type" },
 })
 export class WizardStepperPreviousDirective extends CdkStepperPrevious {
-    @Input() type: string;
+    @Input() declare type: string;
 }

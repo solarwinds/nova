@@ -78,7 +78,7 @@ import {
             <div accordionHeader class="d-flex align-items-center pl-4 py-2">
                 <nui-icon
                     class="align-self-start pt-2"
-                    [icon]="form | nuiFormHeaderIconPipe: 'database' | async"
+                    [icon]="form | nuiFormHeaderIconPipe : 'database' | async"
                 ></nui-icon>
                 <div class="d-flex flex-column ml-4 pt1">
                     <span class="nui-text-label" i18n>Data Source</span>

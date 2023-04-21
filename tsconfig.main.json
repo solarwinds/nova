@@ -17,6 +17,6 @@
         "strictBindCallApply": true,
         "strictFunctionTypes": true,
         "strictNullChecks": true,
-        "target": "ES6"
+        "target": "ES6" // todo get rid of this 2022 warn
     }
 }

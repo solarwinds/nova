@@ -6,10 +6,12 @@
             <nui-icon
                 class="align-self-start pt-2"
                 [icon]="
-                    form.get('label') | nuiFormHeaderIconPipe: 'edit' | async
+                    form.get('label') | nuiFormHeaderIconPipe : 'edit' | async
                 "
                 [iconColor]="
-                    form.get('label') | nuiFormHeaderIconPipe: 'gray':'' | async
+                    form.get('label')
+                        | nuiFormHeaderIconPipe : 'gray' : ''
+                        | async
                 "
             ></nui-icon>
             <div class="d-flex flex-column ml-4 pt-1">

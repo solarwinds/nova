@@ -21,14 +21,12 @@
 import { Directionality } from "@angular/cdk/bidi";
 import { BooleanInput } from "@angular/cdk/coercion";
 import { CdkStepper, StepperSelectionEvent } from "@angular/cdk/stepper";
-import { DOCUMENT } from "@angular/common";
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ElementRef,
-    Inject,
     Input,
     NgZone,
     OnDestroy,
@@ -116,10 +114,9 @@ export class WizardHorizontalComponent
         private dir: Directionality,
         private cdRef: ChangeDetectorRef,
         private el: ElementRef,
-        private zone: NgZone,
-        @Inject(DOCUMENT) _document: any
+        private zone: NgZone
     ) {
-        super(dir, cdRef, el, _document);
+        super(dir, cdRef, el);
     }
 
     public ngOnInit(): void {

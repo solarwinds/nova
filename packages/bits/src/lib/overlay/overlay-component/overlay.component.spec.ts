@@ -28,7 +28,6 @@ import {
     ViewChild,
 } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import set from "lodash/set";
 import { first } from "rxjs/operators";
 
 import { EventBusService } from "../../../services/event-bus.service";
@@ -179,7 +178,7 @@ describe("components >", () => {
 
         describe("toggle()", () => {
             it("should show dropdown", () => {
-                set(wrapperComponent.dropdown, "showing", false);
+                wrapperComponent.dropdown.hide();
                 wrapperComponent.dropdown.toggle();
 
                 expect(wrapperComponent.dropdown.showing).toBe(true);

@@ -109,7 +109,7 @@ export class CustomWidgetBodyContentComponent implements IHasChangeDetector {
                 <!-- nuiFormHeaderIconPipe detects errors on the form and replaces the regular icon with an error icon if necessary -->
                 <nui-icon
                     class="align-self-start pt-2"
-                    [icon]="form | nuiFormHeaderIconPipe: 'image' | async"
+                    [icon]="form | nuiFormHeaderIconPipe : 'image' | async"
                 ></nui-icon>
                 <div class="d-flex flex-column ml-4 pt1">
                     <span class="nui-text-label" i18n>Image Selection</span>

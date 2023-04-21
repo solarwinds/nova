@@ -30,6 +30,7 @@ export class ComboboxV2ErrorExampleComponent {
     public items = Array.from({ length: 100 }).map(
         (_, i) => $localize`Item ${i}`
     );
-    public comboboxControl = new FormControl();
+    public comboboxControl = new FormControl<string | null>(null);
+
     public error: boolean = true;
 }

@@ -18,24 +18,22 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Component } from "@angular/core";
+import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
     selector: "nui-content-settings-example",
     templateUrl: "./tab-content-settings.example.component.html",
 })
-export class TabContentSettingsExampleComponent implements OnInit {
+export class TabContentSettingsExampleComponent {
     public content: string =
         "You can change your password using the form below:";
     public tabTitle: string = "Account Settings";
 
-    public dynamicForm: FormGroup;
+    public dynamicForm;
     public visibleRadio: boolean;
 
-    constructor(private formBuilder: FormBuilder) {}
-
-    public ngOnInit(): void {
+    constructor(private formBuilder: FormBuilder) {
         this.dynamicForm = this.formBuilder.group({
             password: this.formBuilder.control("", Validators.required),
             confirmPassword: this.formBuilder.control(

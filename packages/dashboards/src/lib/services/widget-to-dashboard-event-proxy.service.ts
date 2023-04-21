@@ -21,7 +21,7 @@
 import { Inject, Injectable, OnDestroy, Optional } from "@angular/core";
 import keyBy from "lodash/keyBy";
 import uniq from "lodash/uniq";
-import { Subject, Subscription } from "rxjs";
+import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { EventBus, IEvent, IEventDefinition } from "@nova-ui/bits";
@@ -63,8 +63,8 @@ export interface IWidgetToDashboardEventProxyConfiguration extends IProperties {
 export class WidgetToDashboardEventProxyService
     implements IConfigurable, OnDestroy
 {
-    private upstreamSubscriptions: Record<string, Subscription> = {};
-    private downstreamSubscriptions: Record<string, Subscription> = {};
+    private upstreamSubscriptions: Record<string, any> = {};
+    private downstreamSubscriptions: Record<string, any> = {};
     private readonly destroy$ = new Subject<void>();
     private component: { componentId: string };
 
@@ -183,7 +183,7 @@ export class WidgetToDashboardEventProxyService
 
     private registerSubscriptions(
         streams: string[] = [],
-        subscriptions: Record<string, Subscription>,
+        subscriptions: Record<string, any>,
         sourceBus: EventBus<IEvent>,
         handleEvent: (stream: IEventDefinition, event: IEvent) => void
     ) {
@@ -204,8 +204,11 @@ export class WidgetToDashboardEventProxyService
             (s) => !subscriptions[s]
         )) {
             const eventDefinition = this.eventRegistry.getEvent(streamId);
-            subscriptions[streamId] = sourceBus
-                .getStream(eventDefinition)
+            subscriptions[streamId] = (
+                sourceBus.getStream(
+                    eventDefinition
+                ) as object as Subject<IEvent>
+            )
                 .pipe(takeUntil(this.destroy$))
                 .subscribe((event: IEvent) => {
                     handleEvent(eventDefinition, event);

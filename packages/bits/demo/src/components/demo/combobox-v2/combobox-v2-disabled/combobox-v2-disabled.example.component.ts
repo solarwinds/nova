@@ -26,6 +26,7 @@ interface IExampleItem {
     name: string;
     disabled: boolean;
 }
+
 @Component({
     selector: "nui-combobox-v2-disabled-example",
     templateUrl: "combobox-v2-disabled.example.component.html",
@@ -37,7 +38,7 @@ export class ComboboxV2DisabledExampleComponent {
         name: $localize`Item ${i}`,
         disabled: Boolean(Math.round(Math.random())),
     }));
-    public comboboxControl = new FormControl();
+    public comboboxControl = new FormControl<string | null>(null);
     public isComboboxDisabled = false;
 
     public displayFn(item: IExampleItem): string {

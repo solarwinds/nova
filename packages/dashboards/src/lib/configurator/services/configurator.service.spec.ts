@@ -24,12 +24,9 @@ import {
     ComponentFactory,
     ComponentFactoryResolver,
     ComponentRef,
-    InjectFlags,
-    InjectionToken,
     Injector,
     Renderer2,
     RendererFactory2,
-    Type,
 } from "@angular/core";
 import {
     ComponentFixture,
@@ -75,14 +72,7 @@ class MockComponentFactoryResolver {
 }
 
 class MockInjector implements Injector {
-    public get<T>(
-        token: Type<T> | InjectionToken<T>,
-        notFoundValue?: T,
-        flags?: InjectFlags
-    ): T {
-        // @ts-ignore: Suppressed for test purposes
-        return null;
-    }
+    get(token: any, notFoundValue?: any): any {}
 }
 
 class MockRenderer implements Partial<Renderer2> {

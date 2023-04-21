@@ -22,7 +22,6 @@ import { NgModule } from "@angular/core";
 import { Route, RouterModule } from "@angular/router";
 
 import {
-    DEMO_PATH_TOKEN,
     NuiBusyModule,
     NuiButtonModule,
     NuiCheckboxModule,
@@ -95,17 +94,6 @@ const routes: Route[] = [
         BusyTestComponent,
         BusyVisualTestComponent,
     ],
-    providers: [
-        {
-            provide: DEMO_PATH_TOKEN,
-            useFactory: () =>
-                (<any>require).context(
-                    `!!raw-loader!./`,
-                    true,
-                    /.*\.(ts|html|less)$/
-                ),
-        },
-    ],
     exports: [RouterModule],
 })
-export class BusyModule {}
+export default class BusyModule {}

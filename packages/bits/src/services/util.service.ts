@@ -239,7 +239,7 @@ export class UtilService {
             }
 
             let tem;
-            let M: RegExpMatchArray =
+            let M: RegExpMatchArray | [] =
                 ua.match(
                     /(edge|opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i
                 ) || [];

@@ -30,5 +30,5 @@ export class SelectV2BasicExampleComponent {
     public items = Array.from({ length: 50 }).map(
         (_, i) => $localize`Item ${i}`
     );
-    public selectControl = new FormControl();
+    public selectControl = new FormControl<string | null>(null);
 }

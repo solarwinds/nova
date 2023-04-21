@@ -93,7 +93,7 @@ const routes = [
     declarations: [OverviewDocsComponent, HeroDashboardComponent],
     providers: [ConfiguratorHeadingService],
 })
-export class OverviewModule {
+export default class OverviewModule {
     constructor(private widgetTypesService: WidgetTypesService) {
         this.setupDataSourceProviders();
         this.setupProportionalLegendFormatters();

@@ -65,7 +65,7 @@ import {
     WidgetTypesService,
 } from "@nova-ui/dashboards";
 
-import { GBOOKS_API_URL } from "components/prototypes/data/table/constants";
+import { GBOOKS_API_URL } from "../../../../../prototypes/data/table/constants";
 
 interface IGBooksApiResponse {
     kind: string;

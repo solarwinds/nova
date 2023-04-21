@@ -4,7 +4,6 @@
         "declaration": true,
         "module": "commonjs",
         "outDir": "../dist/sdk/atoms",
-        "target": "es6",
         "types": ["jasmine", "jasminewd2", "node", "selenium-webdriver"]
     },
     "exclude": ["**/*.e2e.ts", "**/*.visual.ts"],

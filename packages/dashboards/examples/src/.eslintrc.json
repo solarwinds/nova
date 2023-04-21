@@ -1,0 +1,24 @@
+{
+    "extends": "../../.eslintrc.json",
+    "overrides": [
+        {
+            "files": ["*.ts"],
+            "parserOptions": {
+                "project": ["./tsconfig.json"]
+            },
+            "rules": {
+                "max-len": "off"
+            },
+            "settings": {
+                "import/parsers": {
+                    "@typescript-eslint/parser": [".ts", ".html"]
+                },
+                "import/resolver": {
+                    "typescript": {
+                        "project": ["./tsconfig.json"]
+                    }
+                }
+            }
+        }
+    ]
+}

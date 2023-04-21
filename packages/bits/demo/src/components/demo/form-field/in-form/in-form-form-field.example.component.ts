@@ -18,29 +18,27 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ChangeDetectorRef, Component } from "@angular/core";
+import { FormBuilder, Validators } from "@angular/forms";
 import moment from "moment/moment";
 
 @Component({
     selector: "nui-form-field-in-form-example",
     templateUrl: "./in-form-form-field.example.component.html",
 })
-export class FormFieldInFormExampleComponent implements OnInit {
-    public fancyForm: FormGroup;
-
+export class FormFieldInFormExampleComponent {
     public vegetables = [
         $localize`Cabbage`,
         $localize`Potato`,
         $localize`Tomato`,
         $localize`Carrot`,
     ];
+    public fancyForm;
 
     constructor(
         private formBuilder: FormBuilder,
         private changeDetector: ChangeDetectorRef
-    ) {}
-    public ngOnInit(): void {
+    ) {
         this.fancyForm = this.formBuilder.group({
             textbox: this.formBuilder.control("", [Validators.required]),
             textNumber: this.formBuilder.control(0, [Validators.required]),

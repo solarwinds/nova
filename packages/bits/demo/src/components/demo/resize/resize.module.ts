@@ -22,7 +22,6 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
-    DEMO_PATH_TOKEN,
     NuiCommonModule,
     NuiDocsModule,
     NuiMessageModule,
@@ -74,17 +73,6 @@ const routes = [
         ResizeDocsExampleComponent,
         ResizeVisualTestComponent,
     ],
-    providers: [
-        {
-            provide: DEMO_PATH_TOKEN,
-            useFactory: () =>
-                (<any>require).context(
-                    `!!raw-loader!./`,
-                    true,
-                    /.*\.(ts|html|less)$/
-                ),
-        },
-    ],
     exports: [RouterModule],
 })
-export class ResizeModule {}
+export default class ResizeModule {}

@@ -92,4 +92,4 @@ const routes = [
         CustomWidgetComponent,
     ],
 })
-export class CustomWidgetModule {}
+export default class CustomWidgetModule {}

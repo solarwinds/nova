@@ -26,7 +26,7 @@ import { RadialSeriesAtom } from "./atoms/radial-series.atom";
 import { DonutChartContentBooster } from "./boosters/donut-chart-content.booster";
 import { DonutChartTestPage } from "./donut-chart-test.po";
 
-describe("Donut chart", async () => {
+describe("Donut chart",  () => {
     const page = new DonutChartTestPage();
     const arcCoords = {
         blue: { x: 950, y: 150 },

@@ -30,7 +30,7 @@ export class ComboboxV2SettingValueExampleComponent implements OnInit {
     public items = Array.from({ length: 50 }).map(
         (_, i) => $localize`Item ${i}`
     );
-    public comboboxControl: FormControl = new FormControl();
+    public comboboxControl = new FormControl<string | null>(null);
 
     public ngOnInit(): void {
         this.comboboxControl.setValue(this.items[1]);

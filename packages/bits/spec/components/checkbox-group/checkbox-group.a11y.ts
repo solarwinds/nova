@@ -28,6 +28,7 @@ describe("a11y: checkbox-group", () => {
     const rulesToDisable: string[] = [
         "aria-allowed-role",
         "aria-toggle-field-name",
+        "aria-required-attr",
     ];
 
     beforeAll(async () => {

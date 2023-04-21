@@ -68,4 +68,4 @@ const routes: Routes = [
         EmbeddedContentWidgetExampleComponent,
     ],
 })
-export class EmbeddedContentDocsModule {}
+export default class EmbeddedContentDocsModule {}

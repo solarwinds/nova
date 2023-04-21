@@ -32,7 +32,10 @@ moment.tz.add(zonesData.zones);
     templateUrl: "./date-time-picker-timezones.example.component.html",
 })
 export class DateTimePickerTimezonesExampleComponent {
-    public control = new FormControl(moment(), Validators.required);
+    public control = new FormControl(moment(), {
+        validators: Validators.required,
+        nonNullable: true,
+    });
     public zones: string[] = zonesData.zones.map(
         (z: string) => z.split("|")[0]
     );

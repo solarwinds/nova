@@ -6,7 +6,7 @@
             <nui-icon
                 class="align-self-start pt-2"
                 [icon]="
-                    form.get('id') | nuiFormHeaderIconPipe: 'database' | async
+                    form.get('id') | nuiFormHeaderIconPipe : 'database' | async
                 "
             ></nui-icon>
             <div class="d-flex flex-column ml-4 pt-1">
@@ -35,7 +35,7 @@
                     <nui-select-v2-option
                         *ngFor="
                             let series of availableSeries
-                                | nuiAddData: selectedSeries
+                                | nuiAddData : selectedSeries
                         "
                         [value]="series"
                     >

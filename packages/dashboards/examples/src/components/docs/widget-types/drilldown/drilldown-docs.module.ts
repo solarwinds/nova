@@ -79,4 +79,4 @@ const routes: Routes = [
         DrilldownMultiRequestWidgetExampleComponent,
     ],
 })
-export class DrilldownDocsModule {}
+export default class DrilldownDocsModule {}

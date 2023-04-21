@@ -42,6 +42,7 @@ import {
     INovaFilters,
     LoggerService,
     ServerSideDataSource,
+    IFilters,
 } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
@@ -110,7 +111,7 @@ export class DrilldownDataSourceRealApi<T = any>
 
     // In this example, getFilteredData is invoked every 10 minutes (Take a look at the refresher
     // provider definition in the widget configuration below to see how the interval is set)
-    public async getFilteredData(data: T): Promise<any> {
+    public async getFilteredData(data: IFilters): Promise<any> {
         return of(data)
             .pipe(
                 filter(() => !!this.drillState),

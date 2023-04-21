@@ -199,7 +199,7 @@
                                 "input": "./src/styles/nui-framework-theme.less"
                             }
                         ],
-                        "tsConfig": "./tsconfig.lib.json",
+                        "tsConfig": "./src/tsconfig.css.json",
                         "vendorChunk": true
                     }
                 }

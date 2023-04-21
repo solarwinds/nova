@@ -56,8 +56,8 @@
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
                         "lintFilePatterns": [
-                            "examples/**/*.ts",
-                            "examples/**/*.html"
+                            "./examples/**/*.ts",
+                            "./examples/**/*.html"
                         ]
                     }
                 },
@@ -167,7 +167,7 @@
                 "lint": {
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
-                        "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+                        "lintFilePatterns": ["./src/**/*.ts", "./src/**/*.html"]
                     }
                 },
                 "test": {
@@ -208,6 +208,12 @@
         },
         "@schematics/angular:directive": {
             "prefix": "nui"
+        },
+        "@angular-eslint/schematics:application": {
+            "setParserOptionsProject": true
+        },
+        "@angular-eslint/schematics:library": {
+            "setParserOptionsProject": true
         }
     },
     "version": 1

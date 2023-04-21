@@ -270,6 +270,8 @@ describe("USERCONTROL Combobox v2 >", () => {
         describe("selected items keyboard navigation", () => {
             beforeAll(async () => {
                 await browser.refresh();
+                // on small screen combobox input has small space to click
+                browser.driver.manage().window().setSize(1900, 890);
             });
 
             beforeEach(async () => {

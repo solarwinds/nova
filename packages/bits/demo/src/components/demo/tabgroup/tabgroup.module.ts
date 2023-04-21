@@ -20,10 +20,9 @@
 
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { RouterModule } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 
 import {
-    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiContentModule,
     NuiDocsModule,
@@ -56,7 +55,7 @@ import {
     TabHeadingGroupWithRouterExampleComponent,
 } from "./index";
 
-const routes = [
+const routes: Routes = [
     {
         path: "",
         component: TabgroupDocsExampleComponent,
@@ -153,17 +152,6 @@ const routes = [
         TabHeadingGroupHorizontalWithIconsOnlyExampleComponent,
         TabHeadingGroupResponsiveExampleComponent,
     ],
-    providers: [
-        {
-            provide: DEMO_PATH_TOKEN,
-            useFactory: () =>
-                (<any>require).context(
-                    `!!raw-loader!./`,
-                    true,
-                    /.*\.(ts|html|less)$/
-                ),
-        },
-    ],
     exports: [RouterModule],
 })
-export class TabgroupModule {}
+export default class TabgroupModule {}

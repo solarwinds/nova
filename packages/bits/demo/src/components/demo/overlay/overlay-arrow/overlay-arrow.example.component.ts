@@ -61,7 +61,9 @@ export class OverlayArrowExampleComponent implements AfterViewInit, OnDestroy {
         panelClass: [CUSTOM_OVERLAY_PANEL_CLASS],
     };
 
-    public positionSelectControl = new FormControl(this.possiblePositions[0]);
+    public positionSelectControl = new FormControl(this.possiblePositions[0], {
+        nonNullable: true,
+    });
     public arrowSelectControl = new FormControl(true);
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
 

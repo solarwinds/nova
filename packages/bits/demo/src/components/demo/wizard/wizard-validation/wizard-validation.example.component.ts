@@ -18,8 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Component, ViewChild } from "@angular/core";
+import { FormBuilder, Validators } from "@angular/forms";
 
 import { WizardComponent } from "@nova-ui/bits";
 
@@ -27,13 +27,12 @@ import { WizardComponent } from "@nova-ui/bits";
     selector: "nui-wizard-validation-example",
     templateUrl: "./wizard-validation.example.component.html",
 })
-export class WizardValidationExampleComponent implements OnInit {
+export class WizardValidationExampleComponent {
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;
-    public myForm: FormGroup;
-    public secondStepForm: FormGroup;
+    public myForm;
+    public secondStepForm;
 
-    constructor(private formBuilder: FormBuilder) {}
-    public ngOnInit(): void {
+    constructor(private formBuilder: FormBuilder) {
         this.myForm = this.formBuilder.group({
             name: this.formBuilder.control("", Validators.required),
             email: this.formBuilder.control("", [
@@ -52,6 +51,6 @@ export class WizardValidationExampleComponent implements OnInit {
     }
 
     public updateValidity(): void {
-        this.secondStepForm.get("formCheckbox")?.updateValueAndValidity();
+        this.secondStepForm.controls.formCheckbox?.updateValueAndValidity();
     }
 }

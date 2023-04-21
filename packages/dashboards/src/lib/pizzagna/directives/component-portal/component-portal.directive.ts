@@ -239,10 +239,9 @@ export class ComponentPortalDirective
             const providerConfig = this.providers[next];
             if (registeredProvider) {
                 // TODO: Why do we pass null to the injectFlags parameter?
+                // TODO: How to retrieve info about the provider options to inject?InjectOptions
                 const injections = portalInjector.get(
                     registeredProvider.provide,
-                    null,
-                    // @ts-ignore
                     null
                 );
                 const providerInstance = isArray(injections)

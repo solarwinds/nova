@@ -5,14 +5,20 @@
         {
             "files": ["*.ts"],
             "parserOptions": {
-                "project": ["tsconfig.json"],
+                "project": ["./tsconfig.lib.json"],
                 "createDefaultProgram": true
             },
             "settings": {
+                "import/parsers": {
+                    "@typescript-eslint/parser": [".ts", ".html"]
+                },
                 "import/resolver": {
                     "node": {
                         "extensions": [".js", ".ts"],
                         "paths": ["./src"]
+                    },
+                    "typescript": {
+                        "project": ["./tsconfig.lib.json"]
                     }
                 }
             }
@@ -20,7 +26,7 @@
         {
             "files": ["*.spec.ts"],
             "parserOptions": {
-                "project": ["tsconfig.spec.json"],
+                "project": ["./tsconfig.spec.json"],
                 "createDefaultProgram": true
             },
             "settings": {

@@ -18,8 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Component, ViewChild } from "@angular/core";
+import { FormBuilder, Validators } from "@angular/forms";
 
 import { IWizardSelectionEvent, WizardComponent } from "@nova-ui/bits";
 
@@ -27,14 +27,12 @@ import { IWizardSelectionEvent, WizardComponent } from "@nova-ui/bits";
     selector: "nui-wizard-reset-step-example",
     templateUrl: "./wizard-reset-step.example.component.html",
 })
-export class WizardResetStepExampleComponent implements OnInit {
+export class WizardResetStepExampleComponent {
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;
-    public myForm: FormGroup;
-    public secondStepForm: FormGroup;
+    public myForm;
+    public secondStepForm;
 
-    constructor(private formBuilder: FormBuilder) {}
-
-    public ngOnInit(): void {
+    constructor(private formBuilder: FormBuilder) {
         this.myForm = this.formBuilder.group({
             name: ["", Validators.required],
             email: [

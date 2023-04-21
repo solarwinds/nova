@@ -45,9 +45,6 @@ export class ComboboxV2Atom extends BaseSelectV2Atom {
     public toggleButton = this.getElement().element(
         by.className("nui-combobox-v2__toggle")
     );
-    public input = this.getElement().element(
-        by.className("nui-combobox-v2__input")
-    );
     public chips = this.getElement().all(by.css("nui-chip"));
     public activeChip = this.getElement().element(by.css("nui-chip.active"));
     public activeOption = this.getPopupElement().element(

@@ -21,13 +21,11 @@
 import { Directionality } from "@angular/cdk/bidi";
 import { BooleanInput } from "@angular/cdk/coercion";
 import { CdkStepper } from "@angular/cdk/stepper";
-import { DOCUMENT } from "@angular/common";
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ElementRef,
-    Inject,
     Input,
     Optional,
     ViewEncapsulation,
@@ -71,10 +69,9 @@ export class WizardVerticalComponent extends WizardDirective {
     constructor(
         @Optional() dir: Directionality,
         changeDetectorRef: ChangeDetectorRef,
-        elementRef: ElementRef<HTMLElement>,
-        @Inject(DOCUMENT) _document: any
+        elementRef: ElementRef<HTMLElement>
     ) {
-        super(dir, changeDetectorRef, elementRef, _document);
-        this._orientation = "vertical";
+        super(dir, changeDetectorRef, elementRef);
+        this["_orientation"] = "vertical";
     }
 }

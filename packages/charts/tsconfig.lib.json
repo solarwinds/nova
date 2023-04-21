@@ -7,13 +7,13 @@
         "strictMetadataEmit": true
     },
     "compilerOptions": {
+        "baseUrl": ".",
         "declaration": true,
         "declarationMap": true,
         "inlineSources": true,
-        "target": "ES2015",
         "types": []
     },
-    "exclude": ["src/**/*.d.ts", "src/**/*.spec.ts"],
     "extends": "./tsconfig.json",
-    "include": ["src/**/*.ts"]
+    "files": ["./src/public-api.ts"],
+    "typeRoots": ["node_modules/@types"]
 }

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { NgModule } from "@angular/core";
+import { NgModule, Type } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
 import { ConfiguratorHeadingService } from "@nova-ui/dashboards";
@@ -39,57 +39,57 @@ const routes: Routes = [
         path: TutorialsModuleRoute.HelloDashboards,
         loadChildren: async () =>
             import(
-                "components/docs/tutorials/hello-dashboards/hello-dashboards.module"
-            ).then((m) => m.HelloDashboardsModule),
+                "./hello-dashboards/hello-dashboards.module"
+            ) as object as Promise<Type<any>>,
     },
     {
         path: TutorialsModuleRoute.DataSource,
         loadChildren: async () =>
             import(
-                "components/docs/tutorials/data-source-setup/data-source-setup.module"
-            ).then((m) => m.DataSourceSetupModule),
+                "./data-source-setup/data-source-setup.module"
+            ) as object as Promise<Type<any>>,
     },
     {
         path: TutorialsModuleRoute.WidgetEditor,
         loadChildren: async () =>
             import(
-                "components/docs/tutorials/widget-editor-setup/widget-editor-setup.module"
-            ).then((m) => m.WidgetEditorSetupModule),
+                "./widget-editor-setup/widget-editor-setup.module"
+            ) as object as Promise<Type<any>>,
     },
     {
         path: TutorialsModuleRoute.SubmitHandler,
         loadChildren: async () =>
             import(
-                "components/docs/tutorials/persistence-handler-setup/persistence-handler-setup.module"
-            ).then((m) => m.PersistenceHandlerSetupModule),
+                "./persistence-handler-setup/persistence-handler-setup.module"
+            ) as object as Promise<Type<any>>,
     },
     {
         path: TutorialsModuleRoute.WidgetCreation,
         loadChildren: async () =>
             import(
-                "components/docs/tutorials/widget-creation/widget-creation.module"
-            ).then((m) => m.WidgetCreationModule),
+                "./widget-creation/widget-creation.module"
+            ) as object as Promise<Type<any>>,
     },
     {
         path: TutorialsModuleRoute.Customization,
         loadChildren: async () =>
-            import(
-                "components/docs/tutorials/customization/customization.module"
-            ).then((m) => m.CustomizationModule),
+            import("./customization/customization.module") as object as Promise<
+                Type<any>
+            >,
     },
     {
         path: TutorialsModuleRoute.WidgetErrorHandling,
         loadChildren: async () =>
             import(
-                "components/docs/tutorials/widget-error-handling/widget-error-handling.module"
-            ).then((m) => m.WidgetErrorHandlingModule),
+                "./widget-error-handling/widget-error-handling.module"
+            ) as object as Promise<Type<any>>,
     },
     {
         path: TutorialsModuleRoute.DynamicHeaderLinks,
         loadChildren: async () =>
             import(
-                "components/docs/tutorials/dynamic-header-links/dynamic-header-links-docs.module"
-            ).then((m) => m.DynamicHeaderLinksDocsModule),
+                "./dynamic-header-links/dynamic-header-links-docs.module"
+            ) as object as Promise<Type<any>>,
     },
 ];
 
@@ -97,4 +97,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     providers: [ConfiguratorHeadingService],
 })
-export class TutorialsModule {}
+export default class TutorialsModule {}

@@ -18,39 +18,21 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ChangeDetectorRef, Component } from "@angular/core";
+import { AbstractControl, FormBuilder, Validators } from "@angular/forms";
 
 @Component({
     selector: "nui-form-field-complex-example",
     templateUrl: "./form-field-complex.example.component.html",
 })
-export class FormFieldComplexExampleComponent implements OnInit {
-    public fancyForm: FormGroup;
+export class FormFieldComplexExampleComponent {
+    static matchPassword(group: AbstractControl): { isValid: boolean } | null {
+        const password = group.get("password");
+        const confirm = group.get("confirmPassword");
+        if (!password || !confirm) {
+            return null;
+        }
 
-    constructor(
-        private formBuilder: FormBuilder,
-        private changeDetector: ChangeDetectorRef
-    ) {}
-
-    public ngOnInit(): void {
-        this.fancyForm = this.formBuilder.group(
-            {
-                password: this.formBuilder.control("", Validators.required),
-                confirmPassword: this.formBuilder.control(
-                    "",
-                    Validators.required
-                ),
-            },
-            {
-                validator: this.matchPassword.bind(this.formBuilder.group),
-            }
-        );
-    }
-
-    private matchPassword(group: FormGroup) {
-        const password = group.controls.password;
-        const confirm = group.controls.confirmPassword;
         if (password.pristine || confirm.pristine) {
             return null;
         }
@@ -64,5 +46,25 @@ export class FormFieldComplexExampleComponent implements OnInit {
         return {
             isValid: false,
         };
+    }
+
+    public fancyForm;
+
+    constructor(
+        private formBuilder: FormBuilder,
+        private changeDetector: ChangeDetectorRef
+    ) {
+        this.fancyForm = this.formBuilder.group(
+            {
+                password: this.formBuilder.control("", Validators.required),
+                confirmPassword: this.formBuilder.control(
+                    "",
+                    Validators.required
+                ),
+            },
+            {
+                validators: [FormFieldComplexExampleComponent.matchPassword],
+            }
+        );
     }
 }

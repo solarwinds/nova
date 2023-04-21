@@ -23,7 +23,7 @@
             <nui-checkbox
                 *ngFor="
                     let filterOption of filterGroupItem.allFilterOptions
-                        | slice: 0:getDisplayedFiltersCount()
+                        | slice : 0 : getDisplayedFiltersCount()
                 "
                 class="nui-checkbox--justified"
                 [value]="filterOption.value"

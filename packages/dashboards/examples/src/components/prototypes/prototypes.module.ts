@@ -65,4 +65,4 @@ const routes = [
     ],
     providers: [ConfiguratorHeadingService],
 })
-export class DashboardPrototypesModule {}
+export default class DashboardPrototypesModule {}

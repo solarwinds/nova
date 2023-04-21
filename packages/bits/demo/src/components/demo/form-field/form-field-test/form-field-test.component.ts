@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, Validators } from "@angular/forms";
 import moment from "moment/moment";
 
 @Component({
@@ -27,12 +27,9 @@ import moment from "moment/moment";
     templateUrl: "./form-field-test.component.html",
 })
 export class FormFieldTestComponent implements OnInit {
-    public dynamicForm: FormGroup;
+    public dynamicForm;
 
     public dateTimePickerModel: string;
-
-    constructor(private formBuilder: FormBuilder) {}
-
     public vegetables = [
         $localize`Cabbage`,
         $localize`Potato`,
@@ -40,7 +37,7 @@ export class FormFieldTestComponent implements OnInit {
         $localize`Carrot`,
     ];
 
-    public ngOnInit(): void {
+    constructor(private formBuilder: FormBuilder) {
         this.dynamicForm = this.formBuilder.group({
             textbox: this.formBuilder.control("", Validators.required),
             textboxNumber: this.formBuilder.control("", Validators.required),
@@ -60,12 +57,15 @@ export class FormFieldTestComponent implements OnInit {
                 ]
             ),
         });
+    }
+
+    public ngOnInit(): void {
         this.dynamicForm.disable();
         this.dynamicForm.valueChanges.subscribe(
             (value) =>
-                (this.dateTimePickerModel = moment(
-                    value["dateTimePicker"]
-                ).format("LLLL"))
+                (this.dateTimePickerModel = moment(value.dateTimePicker).format(
+                    "LLLL"
+                ))
         );
     }
 

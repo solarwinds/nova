@@ -35,7 +35,9 @@ export class BaseSelectV2Atom extends Atom {
         OverlayAtom,
         element(by.tagName("body"))
     );
-
+    public input = this.getElement().element(
+        by.className("nui-combobox-v2__input")
+    );
     public getPopupElement(): ElementFinder {
         return this.popup.getElement();
     }

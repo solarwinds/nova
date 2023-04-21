@@ -22,7 +22,6 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
-    DEMO_PATH_TOKEN,
     NuiCommonModule,
     NuiDocsModule,
     NuiSearchModule,
@@ -65,17 +64,6 @@ const routes = [
         NuiDocsModule,
         NuiSearchModule,
         RouterModule.forChild(routes),
-    ],
-    providers: [
-        {
-            provide: DEMO_PATH_TOKEN,
-            useFactory: () =>
-                (<any>require).context(
-                    `!!raw-loader!./`,
-                    true,
-                    /.*\.(ts|html|less)$/
-                ),
-        },
     ],
     exports: [RouterModule],
 })

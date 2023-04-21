@@ -9,13 +9,13 @@
                 <div
                     *ngFor="
                         let colorItem of section.value
-                            | keyvalue: keyValueCompare
+                            | keyvalue : keyValueCompare
                     "
                     class="color-example-container d-flex flex-column mb-4"
                 >
                     <div
                         class="color-example mb-1"
-                        [ngClass]="colorItem.value.color | slice: 1"
+                        [ngClass]="colorItem.value.color | slice : 1"
                         nuiClipboard
                         [nuiClipboard]="colorItem.value.color"
                         (clipboardSuccess)="onClipboardSuccess()"

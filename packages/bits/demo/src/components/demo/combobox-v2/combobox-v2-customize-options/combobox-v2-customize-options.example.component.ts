@@ -26,6 +26,7 @@ interface IExampleItem {
     name: string;
     icon: string;
 }
+
 @Component({
     selector: "nui-combobox-v2-customize-options-example",
     templateUrl: "combobox-v2-customize-options.example.component.html",
@@ -38,7 +39,8 @@ export class ComboboxV2CustomizeOptionsExampleComponent {
         name: $localize`Item ${i}`,
         icon: this.getRandomIcon(),
     }));
-    public comboboxControl = new FormControl();
+
+    public comboboxControl = new FormControl<string | null>(null);
 
     public displayFn(item: IExampleItem): string {
         return item?.name || "";

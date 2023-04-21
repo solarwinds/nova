@@ -5,3 +5,5 @@
 node_modules
 *.log
 response.txt
+.yarn
+.yarnrc.yml

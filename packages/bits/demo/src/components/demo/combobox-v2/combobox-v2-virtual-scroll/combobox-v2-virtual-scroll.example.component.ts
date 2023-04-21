@@ -46,7 +46,7 @@ export class ComboboxV2VirtualScrollExampleComponent
     public items = Array.from({ length: 100000 }).map(
         (_, i) => $localize`Item ${i}`
     );
-    public comboboxControl = new FormControl();
+    public comboboxControl = new FormControl("");
     public filteredItems: Observable<any[]> = of([...this.items]);
     public containerHeight: number = defaultContainerHeight;
 
@@ -87,6 +87,11 @@ export class ComboboxV2VirtualScrollExampleComponent
             .subscribe();
     }
 
+    public ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
+
     private filterItems(value: string): string[] {
         if (!value) {
             return this.items;
@@ -108,9 +113,4 @@ export class ComboboxV2VirtualScrollExampleComponent
         }
         this.containerHeight = defaultContainerHeight;
     };
-
-    public ngOnDestroy(): void {
-        this.destroy$.next();
-        this.destroy$.complete();
-    }
 }

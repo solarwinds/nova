@@ -217,7 +217,7 @@ export class DataFilterBasicExampleComponent implements AfterViewInit {
                 <ng-container nuiColumnDef="date">
                     <th nui-header-cell *nuiHeaderCellDef i18n>Date</th>
                     <td nui-cell *nuiCellDef="let element">
-                        {{ element.date | date: "EEEE, MMMM dd, yyyy" }}
+                        {{ element.date | date : "EEEE, MMMM dd, yyyy" }}
                     </td>
                 </ng-container>
 
@@ -312,7 +312,7 @@ export class NuiDataFilterTableComponent implements AfterViewInit, OnDestroy {
             <ng-template #repeatItemTemplate let-item="item">
                 <div>
                     {{ item.issue }} -
-                    {{ item.date | date: "EEEE, MMMM dd, yyyy" }}
+                    {{ item.date | date : "EEEE, MMMM dd, yyyy" }}
                 </div>
             </ng-template>
         </div>

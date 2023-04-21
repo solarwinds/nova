@@ -22,7 +22,6 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
-    DEMO_PATH_TOKEN,
     NuiCommonModule,
     NuiDndModule,
     NuiDocsModule,
@@ -53,17 +52,6 @@ const routes = [
         NuiDragDropModule,
     ],
     declarations: [DragdropExampleComponent],
-    providers: [
-        {
-            provide: DEMO_PATH_TOKEN,
-            useFactory: () =>
-                (<any>require).context(
-                    `!!raw-loader!./`,
-                    true,
-                    /.*\.(ts|html|less)$/
-                ),
-        },
-    ],
     exports: [RouterModule],
 })
-export class DragDropCdkDemoModule {}
+export default class DragDropCdkDemoModule {}

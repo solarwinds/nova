@@ -31,7 +31,7 @@ import { IToastService, ToastService } from "@nova-ui/bits";
 export class DatePickerInsignificantExampleComponent {
     public dt: Moment = moment().endOf("day");
     public selectedDate: Date;
-    public control = new FormControl(this.dt);
+    public control = new FormControl(this.dt, { nonNullable: true });
 
     constructor(@Inject(ToastService) private toastService: IToastService) {}
 

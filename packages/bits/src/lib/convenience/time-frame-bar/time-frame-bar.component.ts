@@ -90,7 +90,7 @@ export class TimeFrameBarComponent
     timeFramePicker: TimeFramePickerComponent;
     @ContentChild(QuickPickerComponent) quickPicker: QuickPickerComponent;
 
-    public presets = this.timeframeService.getDefaultPresets();
+    public presets;
     public pickerTimeframe: ITimeframe;
     public closePopoverSubject = new Subject<void>();
     public changed: boolean = false;
@@ -105,7 +105,9 @@ export class TimeFrameBarComponent
         public timeframeService: TimeframeService,
         private logger: LoggerService,
         private changeDetectorRef: ChangeDetectorRef
-    ) {}
+    ) {
+        this.presets = this.timeframeService.getDefaultPresets();
+    }
 
     public ngAfterContentInit(): void {
         if (!this.timeFramePicker) {

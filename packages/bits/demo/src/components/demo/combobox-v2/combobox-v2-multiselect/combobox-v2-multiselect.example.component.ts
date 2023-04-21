@@ -32,7 +32,7 @@ export class ComboboxV2MultiselectExampleComponent implements OnDestroy {
     public items = Array.from({ length: 100 }).map(
         (_, i) => $localize`Item ${i}`
     );
-    public comboboxControl = new FormControl();
+    public comboboxControl = new FormControl<string[] | null>(null);
     public placeholder: string = $localize`Select Item`;
 
     private readonly destroy$ = new Subject<void>();

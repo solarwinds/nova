@@ -78,7 +78,8 @@ export class WizardStepV2Component
     @Input() stepIndex: number;
 
     /** Content for step label given by `<ng-template wizardStepLabel>`. */
-    @ContentChild(WizardStepLabelDirective) stepLabel: WizardStepLabelDirective;
+    @ContentChild(WizardStepLabelDirective)
+    declare stepLabel: WizardStepLabelDirective;
 
     /** Content for footer given by `<ng-template wizardStepFooter>`. */
     @ContentChild(WizardStepFooterDirective)

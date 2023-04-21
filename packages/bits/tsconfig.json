@@ -8,7 +8,8 @@
         "paths": {
             "@nova-ui/bits": ["./src/public_api.ts"]
         },
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "target": "ES2022"
     },
     "exclude": ["node_modules", "atoms.d.ts"],
     "extends": "../../tsconfig.main.json"

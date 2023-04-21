@@ -32,7 +32,7 @@ import { IFilteringOutputs, IFilters } from "./public-api";
 export abstract class ServerSideDataSource<
         T,
         F extends IFilters = IFilters,
-        D = any
+        D extends IFilters = IFilters
     >
     extends DataSourceService<T>
     implements OnDestroy

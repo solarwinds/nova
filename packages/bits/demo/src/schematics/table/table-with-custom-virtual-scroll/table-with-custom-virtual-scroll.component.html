@@ -16,7 +16,7 @@
     >
         <table
             nui-table
-            [dataSource]="items | sliceRange: viewportRef.getRenderedRange()"
+            [dataSource]="items | sliceRange : viewportRef.getRenderedRange()"
             [sortable]="true"
             [sortedColumn]="sortedColumn"
             (sortOrderChanged)="sortData($event)"
