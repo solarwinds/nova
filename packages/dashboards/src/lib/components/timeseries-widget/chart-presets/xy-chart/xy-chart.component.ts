@@ -52,22 +52,22 @@ import {
     Renderer,
     SequentialColorProvider,
     SET_DOMAIN_EVENT,
-    TimeseriesZoomPlugin,
-    TimeseriesZoomPluginsSyncService,
     XYGrid,
+    XYRenderer,
+    XYAccessors,
 } from "@nova-ui/charts";
 
-import {
-    CHART_METRIC_REMOVE,
-    INTERACTION,
-    SET_TIMEFRAME,
-} from "../../../../services/types";
+import { INTERACTION, SET_TIMEFRAME } from "../../../../services/types";
 import {
     DATA_SOURCE,
     IHasChangeDetector,
     PIZZAGNA_EVENT_BUS,
 } from "../../../../types";
 import { LegendPlacement } from "../../../../widget-types/common/widget/legend";
+import {
+    SUMMARY_LEGEND_BCG_COLOR,
+    SUMMARY_LEGEND_COLOR,
+} from "../../timeseries-helpers";
 import { TimeseriesScalesService } from "../../timeseries-scales.service";
 import {
     transformChangePoint,
@@ -83,8 +83,10 @@ import {
 import {
     ITimeseriesWidgetSeriesData,
     TimeseriesChartPreset,
+    TimeseriesChartTypes,
     TimeseriesInteractionType,
     TimeseriesTransformer,
+    TimeseriesWidgetZoomPlugin,
     TimeseriesWidgetProjectType,
 } from "../../types";
 import { TimeseriesChartComponent } from "../timeseries-chart.component";
@@ -105,10 +107,15 @@ export abstract class XYChartComponent
     public chartAssist: ChartAssist;
     public valueAccessorKey: string = "y";
     public collectionId: string = "";
-    public zoomPlugin: TimeseriesZoomPlugin;
+    public zoomPlugins: TimeseriesWidgetZoomPlugin[];
 
     protected renderer: Renderer<IAccessors>;
     protected accessors: IAccessors;
+
+    public timeseriesChartTypes = TimeseriesChartTypes;
+    public summarySerie: IChartAssistSeries<IAccessors>;
+    public summaryLegendBcgColor = SUMMARY_LEGEND_BCG_COLOR;
+    public summaryLegendColor = SUMMARY_LEGEND_COLOR;
 
     public transformers = new Map<
         TimeseriesTransformer,
@@ -184,8 +191,7 @@ export abstract class XYChartComponent
         @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,
         @Optional() @Inject(DATA_SOURCE) dataSource: IDataSource,
         public timeseriesScalesService: TimeseriesScalesService,
-        public changeDetector: ChangeDetectorRef,
-        public zoomPluginsSyncService: TimeseriesZoomPluginsSyncService
+        public changeDetector: ChangeDetectorRef
     ) {
         super(eventBus, timeseriesScalesService, dataSource);
     }
@@ -204,27 +210,49 @@ export abstract class XYChartComponent
         if (scales.yRight) {
             yScales.push(scales.yRight);
         }
-        return data.map((series: any, i: number) => {
-            // matches scale units to the metric unit for either left y-axis scale or right y-axis scale
-            let yScale = yScales.find(
-                (yScale) => yScale.scaleUnits === series.metricUnits
-            );
-            if (!yScale) {
-                yScale =
-                    yScales.find((yScale) => yScale.scaleUnits === "generic") ??
-                    scales.y;
-            }
+        const dataMapped: IChartAssistSeries<IAccessors>[] = data.map(
+            (series: any) => {
+                // matches scale units to the metric unit for either left y-axis scale or right y-axis scale
+                let yScale = yScales.find(
+                    (yScale) => yScale.scaleUnits === series.metricUnits
+                );
+                if (!yScale) {
+                    yScale =
+                        yScales.find(
+                            (yScale) => yScale.scaleUnits === "generic"
+                        ) ?? scales.y;
+                }
 
-            return {
-                ...series,
+                return {
+                    ...series,
+                    scales: {
+                        x: scales.x,
+                        y: yScale,
+                    },
+                    renderer: this.renderer,
+                    accessors: this.accessors,
+                };
+            }
+        );
+
+        if (this.widgetData.summarySerie) {
+            this.summarySerie = {
+                ...this.widgetData.summarySerie,
+                accessors: new XYAccessors(),
+                renderer: new XYRenderer({
+                    ignoreForDomainCalculation: true,
+                }),
                 scales: {
                     x: scales.x,
-                    y: yScale,
+                    y: scales.y,
                 },
-                renderer: this.renderer,
-                accessors: this.accessors,
+                showInLegend: false,
+                preprocess: false,
             };
-        });
+            dataMapped.push(this.summarySerie);
+        }
+
+        return dataMapped;
     }
 
     /** Checks if legend should be shown. */
@@ -329,8 +357,8 @@ export abstract class XYChartComponent
                 this.configuration.gridConfig.sideMargin;
         }
 
-        if (this.configuration.enableZoom) {
-            chart.addPlugin(this.zoomPlugin);
+        if (this.configuration.enableZoom && this.zoomPlugins.length) {
+            chart.addPlugin(this.zoomPlugins[0]);
         }
 
         chart

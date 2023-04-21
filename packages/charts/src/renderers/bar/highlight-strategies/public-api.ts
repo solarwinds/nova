@@ -19,4 +19,5 @@
 //  THE SOFTWARE.
 
 export * from "./bar-highlight-strategy";
+export * from "./bar-highlight-strategy-outline";
 export * from "./bar-series-highlight-strategy";

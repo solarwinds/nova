@@ -70,6 +70,11 @@ export const TIMESERIES_INSPECTION_MENU_SYNCHRONIZE: IEventDefinition<
     id: "TIMESERIES_INSPECTION_MENU_SYNCHRONIZE",
 };
 
+export const TIMESERIES_INSPECTION_MENU_CLEAR: IEventDefinition<IEvent<void>> =
+    {
+        id: "TIMESERIES_INSPECTION_MENU_CLEAR",
+    };
+
 export interface ITimeseriesZoomPluginExploreData {
     ids: string;
     startDate: moment.Moment;
@@ -100,7 +105,7 @@ export class TimeseriesInspectionMenuComponent
         @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
         private syncService: TimeseriesZoomPluginsSyncService
     ) {}
-    public ngOnInit(): void {
+    public ngOnInit() {
         this.plugin.zoomCreated$.subscribe(() => this.explore(false));
 
         this.eventBus
@@ -115,6 +120,10 @@ export class TimeseriesInspectionMenuComponent
                     );
                 }
             });
+
+        this.eventBus
+            .getStream(TIMESERIES_INSPECTION_MENU_CLEAR)
+            .subscribe(() => this.clearZoom());
 
         this.plugin?.openPopover$
             .pipe(takeUntil(this.destroy$))

@@ -39,6 +39,7 @@ import {
 import {
     BandScale,
     BarHighlightStrategy,
+    BarHighlightStrategyOutline,
     BarRenderer,
     Chart,
     DESTROY_EVENT,
@@ -54,18 +55,23 @@ import {
     statusAccessors,
     TimeIntervalScale,
     TimeseriesZoomPlugin,
-    TimeseriesZoomPluginsSyncService,
     XYGridConfig,
     ZoomPlugin,
 } from "@nova-ui/charts";
 
 import { SET_TIMEFRAME } from "../../../../services/types";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../types";
+import {
+    SUMMARY_LEGEND_BCG_COLOR,
+    SUMMARY_LEGEND_COLOR,
+} from "../../timeseries-helpers";
 import { TimeseriesScalesService } from "../../timeseries-scales.service";
 import {
     ITimeseriesWidgetData,
     ITimeseriesWidgetStatusData,
+    TimeseriesChartTypes,
     TimeseriesWidgetProjectType,
+    TimeseriesWidgetZoomPlugin,
 } from "../../types";
 import { TimeseriesChartComponent } from "../timeseries-chart.component";
 
@@ -86,13 +92,17 @@ export class StatusBarChartComponent
     protected renderer: Renderer<IAccessors>;
     private chartUpdate$ = new Subject<void>();
 
+    public zoomPlugins: TimeseriesWidgetZoomPlugin[];
+    public timeseriesChartTypes = TimeseriesChartTypes;
+    public summaryLegendBcgColor = SUMMARY_LEGEND_BCG_COLOR;
+    public summaryLegendColor = SUMMARY_LEGEND_COLOR;
+
     constructor(
         private iconService: IconService,
         @Optional() @Inject(DATA_SOURCE) dataSource: IDataSource,
         public timeseriesScalesService: TimeseriesScalesService,
         public changeDetector: ChangeDetectorRef,
-        @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,
-        public zoomPluginsSyncService: TimeseriesZoomPluginsSyncService
+        @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>
     ) {
         super(eventBus, timeseriesScalesService, dataSource);
     }
@@ -138,9 +148,15 @@ export class StatusBarChartComponent
                   )
                 : undefined;
 
+        this.accessors.data.y = (d) => d.value;
+
         // disable pointer events on bars to ensure the zoom drag target is the mouse interactive area rather than the bars
         this.renderer = new BarRenderer({
-            highlightStrategy: new BarHighlightStrategy("x"),
+            highlightStrategy:
+                this.configuration?.projectType ===
+                TimeseriesWidgetProjectType.PerfstackApp
+                    ? new BarHighlightStrategyOutline("x")
+                    : new BarHighlightStrategy("x"),
             pointerEvents: false,
         });
 
@@ -174,25 +190,37 @@ export class StatusBarChartComponent
         this.chartUpdate$.next();
 
         // Assemble the series set
-        const seriesSet: IChartAssistSeries<IStatusAccessors>[] =
-            this.widgetData.series.map(
-                (d: ITimeseriesWidgetData<ITimeseriesWidgetStatusData>) => ({
-                    ...d,
-                    data: this.transformData(
-                        d.data,
-                        this.scales.x instanceof TimeIntervalScale
-                    ),
-                    accessors: this.accessors,
-                    renderer: this.renderer,
-                    scales: this.scales,
-                })
-            );
+        let series = this.widgetData.series;
+        const summarySerie = this.widgetData.summarySerie
+            ? [this.widgetData.summarySerie]
+            : [];
+        if (
+            series.length === 1 &&
+            series[0].id === this.widgetData.summarySerie?.id
+        ) {
+            // if the series contains only one item and its the same as the summary serie,
+            // there is no submetric and only the summary serie should be displayed
+            series = [];
+        }
+        const seriesSet: IChartAssistSeries<IStatusAccessors>[] = [
+            ...summarySerie,
+            ...series,
+        ].map((d: ITimeseriesWidgetData<ITimeseriesWidgetStatusData>) => ({
+            ...d,
+            data: this.transformData(
+                d.data,
+                this.scales.x instanceof TimeIntervalScale
+            ),
+            accessors: this.accessors,
+            renderer: this.renderer,
+            scales: this.scales,
+        }));
 
         // Update the chart
         this.chartAssist.update(seriesSet);
 
         if (this.configuration.enableZoom) {
-            this.chartAssist.sparks.forEach((spark) => {
+            this.chartAssist.sparks.forEach((spark, i) => {
                 if (
                     this.configuration?.projectType ===
                     TimeseriesWidgetProjectType.PerfstackApp
@@ -202,12 +230,7 @@ export class StatusBarChartComponent
                             TimeseriesZoomPlugin
                         )
                     ) {
-                        spark?.chart?.addPlugin(
-                            new TimeseriesZoomPlugin(
-                                { collectionId: this.collectionId },
-                                this.zoomPluginsSyncService
-                            )
-                        );
+                        spark?.chart?.addPlugin(this.zoomPlugins[i]);
                     }
                 } else {
                     if (!(spark?.chart as Chart)?.hasPlugin(ZoomPlugin)) {
@@ -270,6 +293,7 @@ export class StatusBarChartComponent
                     color: d.color,
                     thick: d.thick,
                     icon: d.icon,
+                    value: d.y,
                 });
             }
         });
@@ -306,6 +330,21 @@ export class StatusBarChartComponent
             this.configuration.projectType ===
                 TimeseriesWidgetProjectType.PerfstackApp
         );
+    }
+
+    public isStatusChart(): boolean {
+        return this.configuration?.type !== TimeseriesChartTypes.alert;
+    }
+
+    public getDescriptionSecondary(
+        series: IChartAssistSeries<IAccessors>,
+        index: number
+    ): string {
+        if (this.isStatusChart()) {
+            return series.legendDescriptionSecondary;
+        }
+
+        return index === 0 ? series.legendDescriptionSecondary : "";
     }
 }
 
