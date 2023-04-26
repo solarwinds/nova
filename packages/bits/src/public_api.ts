@@ -131,6 +131,8 @@ export { ResizeDirective } from "./common/directives/resize/resize.directive";
 export { SetFocusDirective } from "./common/directives/set-focus/set-focus.directive";
 export { TooltipDirective } from "./lib/tooltip/tooltip.directive";
 export { ZoomContentDirective } from "./common/directives/zoom-content/zoom-content.directive";
+export { FreetypeQueryComponent } from "./lib/freetype-query-builder/freetype-query-builder.component";
+export { TextHighlightOverlayComponent } from "./lib/freetype-query-builder/text-highlight-overlay/text-highlight-overlay-component";
 
 // these are not public, but v9 ng-packgr complains without them
 export { ThemeSwitcherComponent } from "./lib/docs/theme-switcher/theme-switcher.component";

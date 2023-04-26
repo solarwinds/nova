@@ -53,3 +53,4 @@ export * from "./validation-message/public-api";
 export * from "./wizard/public-api";
 export * from "./wizard-v2/public-api";
 export * from "./overlay/public-api";
+export * from "./freetype-query-builder/public-api";

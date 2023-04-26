@@ -290,7 +290,7 @@
                         "polyfills": "./src/polyfills.ts",
                         "reporters": ["spec"],
                         "scripts": [],
-                        "sourceMap": false,
+                        "sourceMap": true,
                         "styles": [],
                         "tsConfig": "./tsconfig.spec.json",
                         "watch": false

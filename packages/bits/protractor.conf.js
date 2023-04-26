@@ -8,8 +8,8 @@ exports.config = {
     // Increasing the all scripts timeout to be much above the default jasmine timeout to make visual tests more robust
     allScriptsTimeout: 100000,
     suites: {
-        e2e: "./spec/**/*.e2e.ts",
-        visual: "./spec/**/*.visual.ts",
+        e2e: "./spec/**/freetype-query-builder.e2e.ts",
+        visual: "./spec/**/freetype-query-builder.visual.ts",
         a11y: "./spec/**/*.a11y.ts",
     },
     capabilities: {

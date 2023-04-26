@@ -1,0 +1,119 @@
+<h2>Required Modules</h2>
+<ul>
+    <li>
+        <code>NuiFreeTypeQueryBuilderModule</code>
+    </li>
+</ul>
+
+<h2>Basic Usage</h2>
+
+<p>
+    Freetype Query Input is a generic component designed as a base for creating
+    query input to allow user to type query in defined query language.
+</p>
+
+<p><code>nui-freetype-query-builder</code> provides:</p>
+<ul>
+    <li>the input</li>
+    <li>highlighting functionality</li>
+    <li>options mechanics</li>
+    <li>auto multiline resizing</li>
+</ul>
+
+<nui-message type="warning" [allowDismiss]="false">
+    <code>nui-freetype-query-builder</code> doesn't provide the grammar. It
+    should be provided by the consumer.
+</nui-message>
+
+<p>To use <code>nui-freetype-query-builder</code> do the following:</p>
+
+<ol>
+    <li>
+        Add <code>&lt;nui-freetype-query-builder&gt;</code> to your template.
+    </li>
+    <li>
+        Pass a class implementing
+        <code>
+            <a href="../interfaces/Tokenizer.html" target="_blank"
+                >Tokenizer</a
+            ></code
+        >
+        interface, which is responsible for parsing user input to array of
+        tokens.
+        <!--        <nui-example-code language="typescript">{{-->
+        <!--            tokenizerExample-->
+        <!--            }}</nui-example-code>-->
+    </li>
+    <li>
+        Pass a class implementing <code>RenderConfigurator</code> which is
+        responsible for marking which tokens should be colored and deciding type
+        of coloring (background, border).
+        <!--        <nui-example-code language="typescript">{{-->
+        <!--            rendererExample-->
+        <!--            }}</nui-example-code>-->
+    </li>
+    <li>
+        Pass a class implementing <code>HelpEntry</code> which represents an
+        array of options for user to select. Depends purely on implementation
+        how they are build, but as component notifies about cursor position can
+        be generated based on focused token.
+        <!--        <nui-example-code language="typescript">{{-->
+        <!--            helpExample-->
+        <!--            }}</nui-example-code>-->
+    </li>
+</ol>
+
+<nui-example-wrapper
+    filenamePrefix="freetype-query-builder-basic"
+    exampleTitle="Freetype Query Builder Basic Usage"
+>
+    <nui-freetype-query-builder-basic-example></nui-freetype-query-builder-basic-example>
+</nui-example-wrapper>
+
+<h2>Inputs</h2>
+<ul>
+    <li><code>value</code> - Input value of type string.</li>
+    <li>
+        <code>maxLength</code>- Set the maximum allowed value for the input
+        field. Defaults to <code>10 000</code>.
+    </li>
+    <li>
+        <code>placeholder</code> - Set the string to use as a placeholder for
+        the input field. Default is <code>""</code>.
+    </li>
+    <li>
+        <code>readonly</code> - Set the freetype query input to readonly state.
+        Defaults to <code>false</code>.
+    </li>
+    <li>
+        <code>renderer</code> - The renderer is responsible for marking which
+        tokens should be colored and deciding type of coloring (background,
+        border).
+    </li>
+    <li>
+        <code>tokenizer</code> - The tokenizer is responsible for parsing user
+        input to array of tokens.
+    </li>
+    <li>
+        <code>currentHelp</code> - Array of options for user to select. Depends
+        purely on implementation how they are build, but as component notifies
+        about cursor position can be generated based on focused token.
+    </li>
+    <li>
+        <code>cursorSetter$</code> - Way to set cursor to specific position.
+    </li>
+</ul>
+
+<h2>Outputs</h2>
+<ul>
+    <li>
+        <code>helpItemSelected</code> - Emits when user selects option from
+        displayed help list.
+    </li>
+    <li><code>currentValue</code> - Emits when value changed in the input.</li>
+    <li><code>cursorPos</code> - Emits on any cursor position change.</li>
+    <li>
+        <code>submitQuery</code> - Emits when "Enter" is hit with closed
+        options.
+    </li>
+</ul>
