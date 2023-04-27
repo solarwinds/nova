@@ -126,6 +126,13 @@ const appRoutes: Routes = [
             import("../demo/form-field/form-field.module"),
     },
     {
+        path: "freetype-query",
+        loadChildren: async () =>
+            import(
+                "../demo/freetype-query-builder/freetype-query-builder.module"
+            ),
+    },
+    {
         path: "highlight",
         loadChildren: async () => import("../demo/highlight/highlight.module"),
     },
