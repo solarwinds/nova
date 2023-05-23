@@ -29,7 +29,7 @@ import {
     IWidget,
     LegendPlacement,
     PizzagnaLayer,
-    TimeseriesChartPreset,
+    TimeseriesChartPreset, TimeseriesChartTypes,
     TimeseriesScaleType,
     TimeseriesWidgetProjectType,
     WellKnownProviders,
@@ -43,14 +43,6 @@ import {
     TestTimeseriesStatusIntervalDataSource,
 } from "../../data/timeseries-data-sources";
 import { frozenTime } from "../../data/widget-data";
-
-export interface IImageDef {
-    svgFile: string;
-    name: string;
-    brushType: string;
-    code: string;
-}
-
 export const positions: Record<string, GridsterItem> = {
     widget1: {
         cols: 6,
@@ -112,17 +104,23 @@ export const positions: Record<string, GridsterItem> = {
         y: 28,
         x: 6,
     },
-    "widget1-perfstack": {
+    widget6: {
         cols: 6,
         rows: 7,
         y: 35,
         x: 0,
     },
-    "widget5-perfstack": {
+    "widget6-perfstack": {
         cols: 6,
         rows: 7,
         y: 35,
         x: 6,
+    },
+    widget7: {
+        cols: 6,
+        rows: 7,
+        y: 42,
+        x: 0,
     },
 };
 
@@ -839,7 +837,7 @@ export const widgetConfigs: IWidget[] = [
         },
     },
     {
-        id: "widget1-perfstack",
+        id: "widget6",
         type: "timeseries",
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
@@ -912,7 +910,7 @@ export const widgetConfigs: IWidget[] = [
         },
     },
     {
-        id: "widget5-perfstack",
+        id: "widget6-perfstack",
         type: "timeseries",
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
@@ -970,6 +968,119 @@ export const widgetConfigs: IWidget[] = [
                         timeframe: {
                             startDatetime: frozenTime()
                                 .subtract(14, "day")
+                                .format(),
+                            endDatetime: frozenTime().format(),
+                            selectedPresetId: null,
+                        } as unknown as ISerializableTimeframe,
+                    },
+                },
+            },
+        },
+    },
+    {
+        id: "widget7",
+        type: "timeseries",
+        pizzagna: {
+            [PizzagnaLayer.Configuration]: {
+                [DEFAULT_PIZZAGNA_ROOT]: {
+                    providers: {
+                        [WellKnownProviders.DataSource]: {
+                            providerId:
+                            TestTimeseriesEventsDataSource.providerId,
+                        } as IProviderConfiguration,
+                    },
+                },
+                header: {
+                    properties: {
+                        title: "Bits per second Chart",
+                        subtitle: "Bits per second Chart in PerfStack",
+                    },
+                },
+                chart: {
+                    providers: {
+                        [WellKnownProviders.Adapter]: {
+                            properties: {
+                                series: [
+                                    {
+                                        id: "series-a",
+                                        label: "Events",
+                                        selectedSeriesId: "series-a",
+                                    },
+                                    {
+                                        id: "series-b",
+                                        label: "Events",
+                                        selectedSeriesId: "series-b",
+                                    },
+                                    {
+                                        id: "series-c",
+                                        label: "Events",
+                                        selectedSeriesId: "series-c",
+                                    },
+                                ],
+                            },
+                        } as Partial<IProviderConfiguration> as any,
+                    },
+                    properties: {
+                        configuration: {
+                            displayedSeries: [],
+                            enableZoom: true,
+                            interaction: null,
+                            legendPlacement: LegendPlacement.Right,
+                            preset: TimeseriesChartPreset.Line,
+                            scales: {
+                                x: {
+                                    type: TimeseriesScaleType.Time,
+                                    properties: {
+                                        timeInterval: {
+                                            startDatetime: frozenTime()
+                                                .subtract(7, "day")
+                                                .format(),
+                                            endDatetime: frozenTime().format(),
+                                        },
+                                    },
+                                },
+                                y: {
+                                    type: TimeseriesScaleType.Linear,
+                                    properties: {
+                                        axisUnits: "bitsPerSecond",
+                                        domain: {
+                                            min: 0,
+                                            max: 200000
+                                        },
+                                    },
+                                },
+                                yRight: {
+                                    type: TimeseriesScaleType.Linear,
+                                    properties: {
+                                        axisUnits: "bitsPerSecond",
+                                        domain: {
+                                            min: 0,
+                                            max: 200000
+                                        },
+                                    },
+                                },
+                            },
+                            allowLegendMenu: true,
+                            gridConfig: {
+                                hideYAxisLabel: true,
+                                xAxisTicksCount: 10,
+                                sideMarginLocked: true,
+                                sideMargin: 50,
+                                fixedLayout: true,
+                            },
+                            projectType: TimeseriesWidgetProjectType.ModernDashboard, // maybe change this to PerfstackApp?
+                            leftAxisLabel: "Average Receive (bps)",
+                            type: TimeseriesChartTypes.line,
+                            units: "bitsPerSecond",
+
+                        },
+                    },
+                },
+                timeframeSelection: {
+                    properties: {
+                        timeframe: {
+                            startDatetime: frozenTime()
+                                .subtract(7, "day")
                                 .format(),
                             endDatetime: frozenTime().format(),
                             selectedPresetId: null,

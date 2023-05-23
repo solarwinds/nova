@@ -1,8 +1,8 @@
 {
     "author": "SolarWinds <nova-ui@solarwinds.com>",
-    "dependencies": {},
     "description": "SolarWinds Nova Framework",
     "devDependencies": {
+        "@angular/cdk": "^12.2.13",
         "prettier": "^2.7.1",
         "prettier-plugin-sort-json": "^0.0.3",
         "rimraf": "^3.0.0",
