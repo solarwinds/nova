@@ -68,6 +68,17 @@
                         </div>
                     </div>
                 </div>
+
+                <button
+                    nui-button
+                    legendMenu
+                    icon="remove"
+                    type="button"
+                    displayStyle="action"
+                    *ngIf="displayDeleteButton()"
+                    (click)="removeMetric(summarySerie.id)"
+                    displayStyle="action"
+                ></button>
             </nui-legend-series>
 
             <nui-legend-series
@@ -202,6 +213,15 @@
                         </nui-menu-action>
                     </nui-menu-group>
                 </nui-menu>
+                <button
+                    nui-button
+                    legendMenu
+                    icon="remove"
+                    type="button"
+                    *ngIf="displayDeleteButton()"
+                    (click)="removeMetric(legendSeries.id)"
+                    displayStyle="action"
+                ></button>
             </nui-legend-series>
         </nui-legend>
     </div>
