@@ -56,11 +56,7 @@ import {
     XYAccessors,
 } from "@nova-ui/charts";
 
-import {
-    CHART_METRIC_REMOVE,
-    INTERACTION,
-    SET_TIMEFRAME,
-} from "../../../../services/types";
+import { INTERACTION, SET_TIMEFRAME } from "../../../../services/types";
 import {
     DATA_SOURCE,
     IHasChangeDetector,
@@ -426,6 +422,15 @@ export abstract class XYChartComponent
     public displayLegendMenu(): boolean {
         return (
             this.configuration.preset === TimeseriesChartPreset.Line &&
+            !!this.configuration.allowLegendMenu &&
+            this.configuration.projectType ===
+                TimeseriesWidgetProjectType.PerfstackApp
+        );
+    }
+
+    public displayDeleteButton(): boolean {
+        return (
+            this.configuration.preset === TimeseriesChartPreset.StackedBar &&
             !!this.configuration.allowLegendMenu &&
             this.configuration.projectType ===
                 TimeseriesWidgetProjectType.PerfstackApp
