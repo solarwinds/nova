@@ -72,3 +72,4 @@ export * from "./layout";
 export * from "./convenience/time-frame-bar/time-frame-bar.atom";
 export * from "./drag-and-drop/cdk-drop-list.atom";
 export * from "./drag-and-drop/cdk-drop-item.atom";
+export * from "./freetype-query-builder/freetype-query-builder.atom";

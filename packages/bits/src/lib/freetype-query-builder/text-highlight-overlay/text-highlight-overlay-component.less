@@ -1,0 +1,33 @@
+@import (reference) "../../../styles/nui-framework-variables.less";
+@import (reference) "../../../styles/mixins.less";
+
+.child {
+    word-break: break-word;
+    background-color: transparent;
+    line-height: 1.66666667;
+    font-size: @nui-font-size-default;
+    font-family: monospace;
+    width: 100%;
+    border: @nui-line-default solid transparent;
+    min-height: 34px;
+    padding: @nui-space-xs @nui-space-sm;
+}
+
+.parent {
+    position: relative;
+
+    .text {
+        white-space: break-spaces;
+    }
+
+    .canvas {
+        padding: @nui-space-xs @nui-space-sm;
+        border: @nui-line-default solid transparent;
+        position: absolute;
+        pointer-events: none;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: calc(100% + 1px);
+    }
+}
