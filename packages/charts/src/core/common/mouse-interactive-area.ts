@@ -20,6 +20,7 @@
 
 import { mouse } from "d3-selection";
 import { BehaviorSubject } from "rxjs";
+
 import { IGNORE_INTERACTION_CLASS } from "../../constants";
 import { IAllAround } from "../grid/types";
 import { D3Selection, IInteractionEvent, InteractionType } from "./types";
@@ -167,12 +168,12 @@ export class MouseInteractiveArea<
     // Remove in v12 - NUI-5827
     /** @deprecated - Please use 'onMouseOver' instead */
     public onMouseEnter = (): void => {
-        //this.onMouseOver();
+        console.log("remove it bro");
     };
 
     // Remove in v12 - NUI-5827
     /** @deprecated - Please use 'onMouseOut' instead */
     public onMouseLeave = (): void => {
-        //this.onMouseOut();
+        console.log("remove it bro");
     };
 }
