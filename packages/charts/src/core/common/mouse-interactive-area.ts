@@ -18,9 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { event, mouse } from "d3-selection";
+import { mouse } from "d3-selection";
 import { BehaviorSubject } from "rxjs";
-
 import { IGNORE_INTERACTION_CLASS } from "../../constants";
 import { IAllAround } from "../grid/types";
 import { D3Selection, IInteractionEvent, InteractionType } from "./types";
@@ -51,23 +50,23 @@ export class MouseInteractiveArea<
             .style("cursor", cursor)
             .classed(MouseInteractiveArea.CONTAINER_CLASS, true);
         this.target
-            .on("mouseover", this.onMouseOver)
-            .on("mouseout", this.onMouseOut)
-            .on(InteractionType.MouseDown, () =>
-                this.onMouseInteraction(InteractionType.MouseDown)
+            .on("mouseover", (event) => this.onMouseOver(event))
+            .on("mouseout",(event) => this.onMouseOut(event))
+            .on(InteractionType.MouseDown, (event) =>
+                this.onMouseInteraction(event, InteractionType.MouseDown)
             )
-            .on(InteractionType.MouseUp, () =>
-                this.onMouseInteraction(InteractionType.MouseUp)
+            .on(InteractionType.MouseUp, (event) =>
+                this.onMouseInteraction(event, InteractionType.MouseUp)
             )
-            .on(InteractionType.MouseMove, () =>
-                this.onMouseInteraction(InteractionType.MouseMove)
+            .on(InteractionType.MouseMove, (event) =>
+                this.onMouseInteraction(event, InteractionType.MouseMove)
             )
-            .on(InteractionType.Click, () =>
-                this.onMouseInteraction(InteractionType.Click)
+            .on(InteractionType.Click, (event) =>
+                this.onMouseInteraction(event, InteractionType.Click)
             );
     }
 
-    public onMouseInteraction = (interactionType: InteractionType): void => {
+    public onMouseInteraction = (event: any, interactionType: InteractionType): void => {
         if (event.target.classList.contains(IGNORE_INTERACTION_CLASS)) {
             return;
         }
@@ -130,7 +129,7 @@ export class MouseInteractiveArea<
         });
     };
 
-    public onMouseOver = (): void => {
+    public onMouseOver = (event: any): void => {
         if (
             this.isActive ||
             event.target.classList.contains(IGNORE_INTERACTION_CLASS)
@@ -142,7 +141,7 @@ export class MouseInteractiveArea<
         this.active.next(true);
     };
 
-    public onMouseOut = (): void => {
+    public onMouseOut = (event: any): void => {
         if (!this.isActive) {
             return;
         }
@@ -165,12 +164,12 @@ export class MouseInteractiveArea<
     // Remove in v12 - NUI-5827
     /** @deprecated - Please use 'onMouseOver' instead */
     public onMouseEnter = (): void => {
-        this.onMouseOver();
+        //this.onMouseOver();
     };
 
     // Remove in v12 - NUI-5827
     /** @deprecated - Please use 'onMouseOut' instead */
     public onMouseLeave = (): void => {
-        this.onMouseOut();
+        //this.onMouseOut();
     };
 }

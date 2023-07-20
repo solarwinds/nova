@@ -19,7 +19,6 @@
 //  THE SOFTWARE.
 
 import { BrushBehavior, BrushSelection, brushX } from "d3-brush";
-import { event } from "d3-selection";
 import debounce from "lodash/debounce";
 import defaultsDeep from "lodash/defaultsDeep";
 import find from "lodash/find";
@@ -197,10 +196,10 @@ export class TimeseriesZoomPlugin extends ChartPlugin {
         this.chart
             .getGrid()
             .getInteractiveArea()
-            .on("pointerdown", () =>
+            .on("pointerdown", (event) =>
                 event.target.setPointerCapture(event.pointerId)
             )
-            .on("pointerup", () =>
+            .on("pointerup", (event) =>
                 event.target.releasePointerCapture(event.pointerId)
             );
     }
