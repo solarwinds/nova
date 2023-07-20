@@ -51,7 +51,7 @@ export class MouseInteractiveArea<
             .classed(MouseInteractiveArea.CONTAINER_CLASS, true);
         this.target
             .on("mouseover", (event) => this.onMouseOver(event))
-            .on("mouseout",(event) => this.onMouseOut(event))
+            .on("mouseout", (event) => this.onMouseOut(event))
             .on(InteractionType.MouseDown, (event) =>
                 this.onMouseInteraction(event, InteractionType.MouseDown)
             )
@@ -66,7 +66,10 @@ export class MouseInteractiveArea<
             );
     }
 
-    public onMouseInteraction = (event: any, interactionType: InteractionType): void => {
+    public onMouseInteraction = (
+        event: any,
+        interactionType: InteractionType
+    ): void => {
         if (event.target.classList.contains(IGNORE_INTERACTION_CLASS)) {
             return;
         }
