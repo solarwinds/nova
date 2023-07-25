@@ -1993,7 +1993,7 @@
   dependencies:
     "@types/d3-time" "*"
 
-"@types/d3-selection-multi@^1.0.10":
+"@types/d3-selection-multi@^1.0.7":
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/@types/d3-selection-multi/-/d3-selection-multi-1.0.10.tgz#d5299f021c31b416b70a16a5aaa8a660a79036f0"
   integrity sha512-gOmq5eRUYdV2zdZ22OXDtb3ZuhDBfZxsjBt3MCY0jZ7rb+TVQXqWAueIz3aeLE/keW8kw5uXgAcCegtTPgAkbQ==
@@ -2006,7 +2006,7 @@
   resolved "https://registry.yarnpkg.com/@types/d3-selection/-/d3-selection-3.0.5.tgz#27cd53b7672d405025e2414d98532d7934c16ebd"
   integrity sha512-xCB0z3Hi8eFIqyja3vW8iV01+OHGYR2di/+e+AiOcXIOrY82lcvWW8Ke1DYE/EUVMsBl4Db9RppSBS3X1U6J0w==
 
-"@types/d3-selection@^1":
+"@types/d3-selection@1.4.3", "@types/d3-selection@^1":
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/@types/d3-selection/-/d3-selection-1.4.3.tgz#36928bbe64eb8e0bbcbaa01fb05c21ff6c71fa93"
   integrity sha512-GjKQWVZO6Sa96HiKO6R93VBE8DUW+DDkFpIMf9vpY5S78qZTlRRSNUsHr/afDpF7TvLDV7VxrUFOWW7vdIlYkA==
