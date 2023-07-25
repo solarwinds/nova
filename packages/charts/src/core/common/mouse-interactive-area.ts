@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { clientPoint } from "d3-selection";
+import { clientPoint } from "d3";
 import { BehaviorSubject } from "rxjs";
 
 import { IGNORE_INTERACTION_CLASS } from "../../constants";
