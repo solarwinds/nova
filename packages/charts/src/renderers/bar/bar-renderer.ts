@@ -288,9 +288,10 @@ export class BarRenderer extends XYRenderer<IRectangleAccessors> {
                     dataSeries
                 );
         if (scale.isContinuous()) {
-            return !data || data.length === 0
-                ? EMPTY_CONTINUOUS_DOMAIN
-                : [min(data, accessor("start")), max(data, accessor("end"))];
+            // return !data || data.length === 0
+            //     ? EMPTY_CONTINUOUS_DOMAIN
+            //     : [min(data, accessor("start")), max(data, accessor("end"))];
+            return EMPTY_CONTINUOUS_DOMAIN;
         } else {
             const values =
                 data && data.length > 0 ? data.map(accessor("start")) : [];
