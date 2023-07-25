@@ -22,6 +22,7 @@ import { BehaviorSubject } from "rxjs";
 import { IGNORE_INTERACTION_CLASS } from "../../constants";
 import { IAllAround } from "../grid/types";
 import { D3Selection, IInteractionEvent, InteractionType } from "./types";
+import { pointer } from "d3";
 
 /**
  * @ignore
@@ -107,23 +108,23 @@ export class MouseInteractiveArea<
                     : calculatedY;
             y = calculatedY < 0 ? 0 : calculatedY;
         } else {
-            // // this works in Chrome
-            //
-            // const mouseOutput = mouse(event.currentTarget);
-            //
-            // // clamp output to right or left side of interactive area if necessary
-            // const calculatedX =
-            //     mouseOutput[0] > interactiveAreaWidth
-            //         ? interactiveAreaWidth
-            //         : mouseOutput[0];
-            // x = calculatedX < 0 ? 0 : calculatedX;
-            //
-            // // clamp output to top or bottom side of interactive area if necessary
-            // const calculatedY =
-            //     mouseOutput[1] > interactiveAreaHeight
-            //         ? interactiveAreaHeight
-            //         : mouseOutput[1];
-            // y = calculatedY < 0 ? 0 : calculatedY;
+            // this works in Chrome
+
+            const mouseOutput = pointer(event, event.currentTarget);
+
+            // clamp output to right or left side of interactive area if necessary
+            const calculatedX =
+                mouseOutput[0] > interactiveAreaWidth
+                    ? interactiveAreaWidth
+                    : mouseOutput[0];
+            x = calculatedX < 0 ? 0 : calculatedX;
+
+            // clamp output to top or bottom side of interactive area if necessary
+            const calculatedY =
+                mouseOutput[1] > interactiveAreaHeight
+                    ? interactiveAreaHeight
+                    : mouseOutput[1];
+            y = calculatedY < 0 ? 0 : calculatedY;
         }
         this.interaction.next({
             type: interactionType,
@@ -166,12 +167,13 @@ export class MouseInteractiveArea<
     // Remove in v12 - NUI-5827
     /** @deprecated - Please use 'onMouseOver' instead */
     public onMouseEnter = (): void => {
-        console.log("remove it bro");
+        //
+        console.log("to be removed");
     };
 
     // Remove in v12 - NUI-5827
     /** @deprecated - Please use 'onMouseOut' instead */
     public onMouseLeave = (): void => {
-        console.log("remove it bro");
+        console.log("to be removed");
     };
 }
