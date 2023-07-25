@@ -28,7 +28,7 @@
     "@compodoc/compodoc": "1.1.11",
     "@percy/cli": "^1.21.0",
     "@percy/protractor": "^2.0.1",
-    "@types/d3": "^7.4.0",
+    "@types/d3": "7.1.0",
     "@types/d3-selection-multi": "^1.0.10",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "2.0.8",
@@ -80,7 +80,7 @@
   "name": "@nova-ui/charts",
   "peerDependencies": {
     "@nova-ui/bits": "~12.0.37-0",
-    "@types/d3": "7.8.5",
+    "@types/d3": "7.1.0",
     "@types/d3-selection-multi": "^1.0.10",
     "d3": "7.8.5",
     "d3-selection-multi": "^1.0.1"

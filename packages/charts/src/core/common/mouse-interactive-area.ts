@@ -167,7 +167,6 @@ export class MouseInteractiveArea<
     // Remove in v12 - NUI-5827
     /** @deprecated - Please use 'onMouseOver' instead */
     public onMouseEnter = (): void => {
-        //
         console.log("to be removed");
     };
 
