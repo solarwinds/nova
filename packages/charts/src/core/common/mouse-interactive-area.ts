@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { pointer } from "d3-selection";
+import { mouse } from "d3-selection";
 import { BehaviorSubject } from "rxjs";
 
 import { IGNORE_INTERACTION_CLASS } from "../../constants";
@@ -111,7 +111,7 @@ export class MouseInteractiveArea<
         } else {
             // this works in Chrome
 
-            const mouseOutput = pointer(event, event.currentTarget);
+            const mouseOutput = mouse(event.currentTarget);
 
             // clamp output to right or left side of interactive area if necessary
             const calculatedX =
