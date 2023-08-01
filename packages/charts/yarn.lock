@@ -1993,10 +1993,10 @@
   dependencies:
     "@types/d3-time" "*"
 
-"@types/d3-selection-multi@1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@types/d3-selection-multi/-/d3-selection-multi-1.0.8.tgz#0f7816a969a8abed025881cd355ef392fe31ebc9"
-  integrity sha512-O/Wjuxtc++tVIZ6Fkeya36rjg2Yzop9RFJsmzjNzeEKu6aYnYjOW0aSsIjuwA0Fmsfq2rNqjjnlanduxFOk9qQ==
+"@types/d3-selection-multi@1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@types/d3-selection-multi/-/d3-selection-multi-1.0.7.tgz#e29de16d199f72641615cddb836b08a586a37fff"
+  integrity sha512-LfOq7ICu0mRCuwKkXxVtwpdlN/sFWsjlTYAgyVSGkhtLLmeeY+xW3nC+V2WlVqWWpqGbin2vzkY88cmwrqZ1Yw==
   dependencies:
     "@types/d3-selection" "*"
     "@types/d3-transition" "*"
