@@ -22,7 +22,7 @@ import { BehaviorSubject } from "rxjs";
 import { IGNORE_INTERACTION_CLASS } from "../../constants";
 import { IAllAround } from "../grid/types";
 import { D3Selection, IInteractionEvent, InteractionType } from "./types";
-import { pointer } from "d3";
+import { mouse } from "d3-selection";
 
 /**
  * @ignore
@@ -110,7 +110,7 @@ export class MouseInteractiveArea<
         } else {
             // this works in Chrome
 
-            const mouseOutput = pointer(event, event.currentTarget);
+            const mouseOutput = mouse(event.currentTarget);
 
             // clamp output to right or left side of interactive area if necessary
             const calculatedX =
