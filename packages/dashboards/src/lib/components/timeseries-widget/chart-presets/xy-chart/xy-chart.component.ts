@@ -430,7 +430,7 @@ export abstract class XYChartComponent
 
     public displayDeleteButton(): boolean {
         return (
-            this.configuration.preset === TimeseriesChartPreset.StackedBar &&
+            this.configuration.preset !== TimeseriesChartPreset.Line &&
             !!this.configuration.allowLegendMenu &&
             this.configuration.projectType ===
                 TimeseriesWidgetProjectType.PerfstackApp
