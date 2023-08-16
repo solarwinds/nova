@@ -271,24 +271,6 @@ export class BarRenderer extends XYRenderer<IRectangleAccessors> {
         return data;
     }
 
-    private getAccessor(
-        name: string,
-        dataSeries: IDataSeries<IRectangleAccessors>,
-        accessors: IRectangleDataAccessors,
-        accessorSuffix: string
-    ): any {
-        const accessor =
-            (name: string) => (d: any, i: number, arr: ArrayLike<unknown>) =>
-                accessors[name + accessorSuffix]?.(
-                    d,
-                    i,
-                    Array.from(arr),
-                    dataSeries
-                );
-
-        return accessor(name);
-    }
-
     public getDomain(
         data: any[],
         dataSeries: IDataSeries<IRectangleAccessors>,
@@ -308,26 +290,7 @@ export class BarRenderer extends XYRenderer<IRectangleAccessors> {
         if (scale.isContinuous()) {
             return !data || data.length === 0
                 ? EMPTY_CONTINUOUS_DOMAIN
-                : [
-                      min(
-                          data,
-                          this.getAccessor(
-                              "start",
-                              dataSeries,
-                              accessors,
-                              accessorSuffix
-                          )
-                      ),
-                      max(
-                          data,
-                          this.getAccessor(
-                              "start",
-                              dataSeries,
-                              accessors,
-                              accessorSuffix
-                          )
-                      ),
-                  ];
+                : [min(data, accessor("start")), max(data, accessor("end"))];
         } else {
             const values =
                 data && data.length > 0 ? data.map(accessor("start")) : [];

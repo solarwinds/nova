@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 import { BrushBehavior, BrushSelection, brushX } from "d3-brush";
+import { event } from "d3-selection";
 import defaultsDeep from "lodash/defaultsDeep";
 import isEmpty from "lodash/isEmpty";
 import isUndefined from "lodash/isUndefined";
@@ -116,10 +117,10 @@ export class ZoomPlugin extends ChartPlugin {
         this.chart
             .getGrid()
             .getInteractiveArea()
-            .on("pointerdown", (event) =>
+            .on("pointerdown", () =>
                 event.target.setPointerCapture(event.pointerId)
             )
-            .on("pointerup", (event) =>
+            .on("pointerup", () =>
                 event.target.releasePointerCapture(event.pointerId)
             );
     }
