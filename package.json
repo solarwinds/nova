@@ -61,5 +61,5 @@
         "unlink:all": "npm run charts-unlink && npm run dashboards-unlink",
         "verify-ci": "bash scripts/verify-published"
     },
-    "version": "12.0.37-0"
+    "version": "12.0.38-0"
 }
