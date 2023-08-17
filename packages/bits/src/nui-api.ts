@@ -49,6 +49,7 @@ export { NuiDateTimePickerModule } from "./lib/date-time-picker/date-time-picker
 export { NuiDialogModule } from "./lib/dialog/dialog.module";
 export { NuiExpanderModule } from "./lib/expander/expander.module";
 export { NuiFormFieldModule } from "./lib/form-field/form-field.module";
+export { NuiFreetypeQueryModule } from "./lib/freetype-query-builder/freetype-query-builder.module";
 export { NuiPaginatorModule } from "./lib/paginator/paginator.module";
 export { NuiPanelModule } from "./lib/panel/panel.module";
 export { NuiPopoverModule } from "./lib/popover/popover.module";

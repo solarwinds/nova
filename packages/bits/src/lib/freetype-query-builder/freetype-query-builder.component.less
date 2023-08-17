@@ -1,0 +1,81 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+
+.freetype-query__content {
+    position: relative;
+    width: 100%;
+    border: solid 1px lightgray;
+    border-radius: @nui-radius-default;
+
+    .freetype-query__form {
+        position: relative;
+
+        .message-textarea__holder {
+            max-height: 117px;
+            overflow: auto;
+            font-family: monospace !important;
+        }
+    }
+
+    .overlay-holder {
+        position: absolute;
+        overflow: auto;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: -1;
+        color: transparent;
+        width: 100%;
+        font-size: @nui-font-size-default;
+        line-height: 1.66666667;
+    }
+
+    .message-overlay {
+        box-sizing: border-box;
+        font-family: monospace !important;
+        word-break: break-word;
+        max-height: calc(100% + 3px);
+        overflow: auto;
+        width: 100%;
+        color: transparent;
+        font-size: @nui-font-size-default;
+        line-height: 1.66666667;
+        min-height: 34px;
+
+        border: @nui-line-default solid transparent;
+        padding: @nui-space-xs @nui-space-sm;
+        white-space: break-spaces;
+    }
+
+    .message-textarea {
+        white-space: break-spaces;
+        overflow: hidden !important;
+        resize: none;
+        width: 100%;
+        z-index: 1;
+        background-color: transparent !important;
+        padding: @nui-space-xs @nui-space-sm;
+        font-size: @nui-font-size-default;
+        box-sizing: border-box;
+        font-family: monospace;
+        max-width: 100%;
+        min-width: 100%;
+        line-height: @nui-line-height-big;
+        border: 0 solid transparent;
+
+        &__container {
+            z-index: 1;
+            font-family: monospace !important;
+            background-color: transparent;
+        }
+    }
+}
+
+.options-group {
+    padding: @nui-space-xs @nui-space-sm 0 @nui-space-sm;
+
+    &__item {
+        margin-left: @nui-space-xs;
+    }
+}
