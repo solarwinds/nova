@@ -59,17 +59,23 @@ yarn run set-dependency-versions-ci
 
 # Commit and Push Release Branch Changes
 git commit -am "update files for version $RELEASE_VERSION"
-git push --verbose
+git push --set-upstream origin "release-prep-$RELEASE_VERSION"
 
 # create PR release-prep -> release
-
+hub pull-request -m "Release changes for version $RELEASE_VERSION"
 
 # Increment source branch version
 git checkout $SOURCE_BRANCH
+git checkout -b "inc-develop-version-$RELEASE_VERSION" $SOURCE_BRANCH
+
 yarn run set-source-versions-ci
 
 # Set source dependency versions
 yarn run set-dependency-versions-ci
 
 # Push source branch changes
-git commit -am 'increment develop versions' && git push origin $SOURCE_BRANCH
+git commit -am 'increment develop versions'
+git push --set-upstream origin "inc-develop-version-$RELEASE_VERSION"
+
+# create PR inc-develop-version -> source
+hub pull-request -m "Increment develop version $RELEASE_VERSION"
