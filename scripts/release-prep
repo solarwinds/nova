@@ -42,7 +42,13 @@ fi
 # initial merge with "ours" strategy to auto-resolve conflicts
 git checkout $SOURCE_BRANCH
 git pull origin $RELEASE_BRANCH --no-rebase -s ours
-git checkout $RELEASE_BRANCH
+
+#### ef
+# create new branch "release-prep-xxx" from release_branch
+git checkout -b "release-prep-$RELEASE_VERSION" $RELEASE_BRANCH
+### ef
+
+#git checkout $RELEASE_BRANCH
 git merge $SOURCE_BRANCH --no-edit -X theirs
 
 # Set Release Version
@@ -54,6 +60,9 @@ yarn run set-dependency-versions-ci
 # Commit and Push Release Branch Changes
 git commit -am "update files for version $RELEASE_VERSION"
 git push --verbose
+
+# create PR release-prep -> release
+
 
 # Increment source branch version
 git checkout $SOURCE_BRANCH
