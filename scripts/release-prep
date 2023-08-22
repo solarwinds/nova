@@ -3,6 +3,7 @@ set -xe
 
 export SOURCE_BRANCH=test-release-prep
 export CIRCLE_BRANCH=$SOURCE_BRANCH
+export RELEASE_VERSION=$(node -p "require('./package.json').version")
 
 
 if [ "$SOURCE_BRANCH" == "" ]; then
@@ -47,6 +48,7 @@ fi
 git checkout $SOURCE_BRANCH
 git pull origin $RELEASE_BRANCH --no-rebase -s ours
 
+git checkout $RELEASE_BRANCH
 git checkout -b "update-release-files-$RELEASE_VERSION" $RELEASE_BRANCH
 git merge $SOURCE_BRANCH --no-edit -X theirs
 
