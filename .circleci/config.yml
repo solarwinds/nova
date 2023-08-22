@@ -752,6 +752,7 @@ workflows:
                               - main
                               - /^hotfix\/v[\d.]+x/
                               - /^cci-release\/.*/
+                              - test-release-prep
             - release-prep:
                   requires:
                       - release-approval
