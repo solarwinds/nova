@@ -4,6 +4,7 @@ set -xe
 export SOURCE_BRANCH=test-release-prep
 export CIRCLE_BRANCH=$SOURCE_BRANCH
 export RELEASE_VERSION=$(node -p "require('./package.json').version")
+echo ${GITHUB_TOKEN}
 
 
 if [ "$SOURCE_BRANCH" == "" ]; then
