@@ -102,14 +102,7 @@
                 "
             >
                 <nui-rich-legend-tile
-                    [value]="
-                        chartAssist.getHighlightedValue(
-                            legendSeries,
-                            'y',
-                            'tick',
-                            valueAccessorKey
-                        )
-                    "
+                    [value]="getLegendValue(legendSeries, valueAccessorKey)"
                     [backgroundColor]="
                         chartAssist.palette.standardColors.get(legendSeries.id)
                     "
