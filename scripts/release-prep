@@ -62,6 +62,8 @@ yarn run set-dependency-versions-ci
 # Commit and Push Release Branch Changes
 git commit -am "update files for version $RELEASE_VERSION"
 git push --set-upstream origin "update-release-files-$RELEASE_VERSION"
+
+echo $GITHUB_WRITE_TOKEN | gh auth login --with-token
 gh pr create --title "Release changes for version $RELEASE_VERSION" --body ""
 
 # Increment source branch version
