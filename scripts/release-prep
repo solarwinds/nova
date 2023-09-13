@@ -4,7 +4,6 @@ set -xe
 export SOURCE_BRANCH=test-release-prep
 export CIRCLE_BRANCH=$SOURCE_BRANCH
 export RELEASE_VERSION=$(node -p "require('./package.json').version")
-echo ${GITHUB_WRITE_TOKEN}
 
 
 if [ "$SOURCE_BRANCH" == "" ]; then
@@ -46,8 +45,8 @@ if ! git show-ref --quiet $RELEASE_BRANCH; then
 fi
 
 # initial merge with "ours" strategy to auto-resolve conflicts
-git checkout $SOURCE_BRANCH
-git pull origin $RELEASE_BRANCH --no-rebase -s ours
+#git checkout $SOURCE_BRANCH
+#git pull origin $RELEASE_BRANCH --no-rebase -s ours
 
 git checkout $RELEASE_BRANCH
 git checkout -b "update-release-files-$RELEASE_VERSION" $RELEASE_BRANCH
@@ -63,8 +62,8 @@ yarn run set-dependency-versions-ci
 git commit -am "update files for version $RELEASE_VERSION"
 git push --set-upstream origin "update-release-files-$RELEASE_VERSION"
 
-echo $GITHUB_WRITE_TOKEN | gh auth login --with-token
-gh pr create --title "Release changes for version $RELEASE_VERSION" --body ""
+#echo $GITHUB_WRITE_TOKEN | gh auth login --with-token
+#gh pr create --title "Release changes for version $RELEASE_VERSION" --body ""
 
 # Increment source branch version
 git checkout $SOURCE_BRANCH
@@ -80,4 +79,4 @@ git commit -am 'increment develop versions'
 git push --set-upstream origin "inc-develop-version-$RELEASE_VERSION"
 
 # create PR inc-develop-version -> source
-gh pr create --title "Increment develop version $RELEASE_VERSION" --body ""
+#gh pr create --title "Increment develop version $RELEASE_VERSION" --body ""
