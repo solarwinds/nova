@@ -455,4 +455,30 @@ export abstract class XYChartComponent
         }
         this.updateChartData();
     }
+
+    public getLegendValue(
+        legendSeries: IChartAssistSeries<IAccessors<any>>,
+        valueAccessorKey: string
+    ): string | number | undefined {
+        const val = this.chartAssist.getHighlightedValue(
+            legendSeries,
+            "y",
+            "tick",
+            valueAccessorKey
+        );
+
+        if (
+            this.configuration.projectType ===
+                TimeseriesWidgetProjectType.PerfstackApp &&
+            this.configuration.preset === TimeseriesChartPreset.StackedArea &&
+            this.configuration.units === "percent"
+        ) {
+            const submetricsCount = this.chartAssist.legendSeriesSet.length;
+            const strVal = `${val ?? 0}`;
+
+            return `${parseFloat(strVal ?? "0") * submetricsCount} %`;
+        }
+
+        return val;
+    }
 }
