@@ -203,6 +203,10 @@ const appRoutes: Routes = [
             import("../demo/runtime-i18n/runtime-i18n.module"),
     },
     {
+        path: "risk-score",
+        loadChildren: async () => import("../demo/risk-score/risk-score.module"),
+    },
+    {
         path: "search",
         loadChildren: async () => import("../demo/search/search.module"),
     },

@@ -44,6 +44,7 @@ export { PanelComponent } from "./lib/panel/panel.component";
 export { ButtonComponent } from "./lib/button/button.component";
 export { BusyComponent } from "./lib/busy/busy.component";
 export { ImageComponent } from "./lib/image/image.component";
+export { RiskScoreComponent } from "./lib/risk-score/risk-score.component";
 export { SearchComponent } from "./lib/search/search.component";
 export { TextboxComponent } from "./lib/textbox/textbox.component";
 export { RepeatItemComponent } from "./lib/repeat/repeat-item/repeat-item.component";

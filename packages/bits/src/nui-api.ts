@@ -56,6 +56,7 @@ export { NuiPopoverModule } from "./lib/popover/popover.module";
 export { NuiProgressModule } from "./lib/progress/progress.module";
 export { NuiRadioModule } from "./lib/radio/radio.module";
 export { NuiRepeatModule } from "./lib/repeat/repeat.module";
+export { NuiRiskScoreModule } from "./lib/risk-score/risk-score.module";
 export { NuiSearchModule } from "./lib/search/search.module";
 export { NuiSelectorModule } from "./lib/selector/selector.module";
 export { NuiSorterModule } from "./lib/sorter/sorter.module";
