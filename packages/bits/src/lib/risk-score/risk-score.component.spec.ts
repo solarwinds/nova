@@ -23,20 +23,64 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { RiskScoreComponent } from "./risk-score.component";
 
 describe("components >", () => {
-    describe("search >", () => {
+    describe("risk-score >", () => {
         let subject: RiskScoreComponent;
         let fixture: ComponentFixture<RiskScoreComponent>;
         let debugElement: DebugElement;
 
+        const minValue = 0;
+        const maxValue = 10;
+        let width = 0;
+
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [],
+                providers: [],
                 declarations: [RiskScoreComponent],
             }).compileComponents();
 
             fixture = TestBed.createComponent(RiskScoreComponent);
-            subject = fixture.componentInstance;
             debugElement = fixture.debugElement;
+
+            subject = fixture.componentInstance;
+            subject.level = 1;
+            subject.minLevel = minValue;
+            subject.maxLevel = maxValue;
+            subject.ngAfterViewInit();
+            width = subject["colorLine"].nativeElement.offsetWidth;
+        });
+
+        it("should create", () => {
+            expect(subject).toBeTruthy();
+        });
+
+        it("level = 1(between min and max). should provide floatOffset greater than 0 and less than 100", () => {
+            expect(subject.floatOffset).toBeGreaterThan(0);
+            expect(subject.floatOffset).toBeLessThan(width);
+        });
+
+        it("level = min. should provide floatOffset equal to 0", () => {
+            subject.level = minValue;
+            subject.ngOnChanges({});
+            expect(subject.floatOffset).toEqual(0);
+        });
+
+        it("level = max. should provide floatOffset equal to 100", () => {
+            subject.level = maxValue;
+            subject.ngOnChanges({});
+            expect(subject.floatOffset).toEqual(width);
+        });
+
+        it("level < min. should provide floatOffset equal to 0", () => {
+            subject.level = minValue - 1;
+            subject.ngOnChanges({});
+            expect(subject.floatOffset).toEqual(0);
+        });
+
+        it("level > max. should provide floatOffset equal to 100", () => {
+            subject.level = maxValue + 1;
+            subject.ngOnChanges({});
+            expect(subject.floatOffset).toEqual(width);
         });
     });
 });

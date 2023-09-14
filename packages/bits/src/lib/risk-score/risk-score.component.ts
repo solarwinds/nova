@@ -47,7 +47,7 @@ import { BehaviorSubject } from "rxjs";
 })
 
 // <example-url>./../examples/index.html#/risk-score</example-url>
-export class RiskScoreComponent implements OnChanges, AfterViewInit, OnDestroy {
+export class RiskScoreComponent implements AfterViewInit, OnChanges, OnDestroy {
     @ViewChild("colorLine") private colorLine!: ElementRef;
 
     @Input()
