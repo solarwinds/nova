@@ -71,7 +71,7 @@ response=$(curl -L --silent \
   \"head\":\"$TEMP_RELEASE_NAME\",
   \"base\":\"$RELEASE_BRANCH\"}" )
 
-pr1url=$(echo $response | grep -o '"html_url": "[^"]*' | awk -F': "' '{print $2}')
+pr1url=$(echo $response | awk -F'"' '/"html_url"/ {print $4; exit}')
 
 
 # Create new branch for PR
@@ -100,7 +100,7 @@ response=$(curl -L --silent \
   \"head\":\"$TEMP_DEVELOP_NAME\",
   \"base\":\"$SOURCE_BRANCH\"}" )
 
-pr2url=$(echo $response | grep -o '"html_url": "[^"]*' | awk -F': "' '{print $2}')
+pr2url=$(echo $response | awk -F'"' '/"html_url"/ {print $4; exit}')
 
 echo ""
 echo "RELEASE PR: ${pr1url}"
