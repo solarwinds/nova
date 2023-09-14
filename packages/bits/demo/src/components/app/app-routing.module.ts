@@ -204,7 +204,8 @@ const appRoutes: Routes = [
     },
     {
         path: "risk-score",
-        loadChildren: async () => import("../demo/risk-score/risk-score.module"),
+        loadChildren: async () =>
+            import("../demo/risk-score/risk-score.module"),
     },
     {
         path: "search",
