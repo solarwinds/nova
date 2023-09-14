@@ -1,5 +1,5 @@
 #!/bin/bash
-set -xe
+set -e
 
 export SOURCE_BRANCH=test-release-prep
 export CIRCLE_BRANCH=$SOURCE_BRANCH
@@ -71,7 +71,7 @@ response=$(curl -L --silent \
   \"head\":\"$TEMP_RELEASE_NAME\",
   \"base\":\"$RELEASE_BRANCH\"}" )
 
-pr1url=$(echo $response | awk -F'"' '/"html_url"/ {print $4; exit}')
+pr1url=$(echo $response | grep -o '"html_url": "[^"]*' | awk -F': "' '{print $2}' | head -n 1)
 
 
 # Create new branch for PR
@@ -100,7 +100,7 @@ response=$(curl -L --silent \
   \"head\":\"$TEMP_DEVELOP_NAME\",
   \"base\":\"$SOURCE_BRANCH\"}" )
 
-pr2url=$(echo $response | awk -F'"' '/"html_url"/ {print $4; exit}')
+pr2url=$(echo $response | grep -o '"html_url": "[^"]*' | awk -F': "' '{print $2}' | head -n 1)
 
 echo ""
 echo "RELEASE PR: ${pr1url}"

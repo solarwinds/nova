@@ -598,9 +598,6 @@ jobs:
                       git config --global user.email circleci@circleci
                       git config --global user.name $CIRCLE_PROJECT_USERNAME
             - run:
-                  name: Install gh CLI
-                  command: sudo apt update && sudo apt install -y gh
-            - run:
                   name: Run release prep
                   command: yarn run release-prep-ci
 workflows:
