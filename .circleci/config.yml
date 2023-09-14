@@ -749,7 +749,6 @@ workflows:
                               - main
                               - /^hotfix\/v[\d.]+x/
                               - /^cci-release\/.*/
-                              - test-release-prep
             - release-prep:
                   context: github-write-access
                   requires:
