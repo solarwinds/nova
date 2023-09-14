@@ -104,8 +104,7 @@ export class RiskScoreComponent implements OnChanges, AfterViewInit, OnDestroy {
     }
 
     private updateOffset(width: number): void {
-
-        if (this.minLevel >= this.maxLevel){
+        if (this.minLevel >= this.maxLevel) {
             console.error("RiskScoreComponent - minLevel >= maxLevel");
             return;
         }
@@ -119,7 +118,7 @@ export class RiskScoreComponent implements OnChanges, AfterViewInit, OnDestroy {
         this.changeDetectorRef.detectChanges();
     }
 
-    private clamp(a: number, min: number = 0, max: number = 1):number{
+    private clamp(a: number, min: number = 0, max: number = 1): number {
         return Math.min(max, Math.max(min, a));
     }
 }

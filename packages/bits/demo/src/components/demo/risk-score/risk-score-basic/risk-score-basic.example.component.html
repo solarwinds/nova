@@ -1,4 +1,4 @@
-<nui-textbox-number 
+<nui-textbox-number
     [minValue]="-1"
     [maxValue]="11"
     [value]="value"
@@ -6,15 +6,11 @@
     (valueChange)="valueChanged($event)"
 ></nui-textbox-number>
 
-<br>
+<br />
 
 <div class="">
     Default font size without title:
-    <nui-risk-score
-        [level]="value"
-        minLevel="0"
-        maxLevel="10"
-    ></nui-risk-score>
+    <nui-risk-score [level]="value" minLevel="0" maxLevel="10"></nui-risk-score>
 </div>
 
 <div>
@@ -24,7 +20,7 @@
         minLevel="0"
         maxLevel="10"
         title="Risk Score"
-        style="font-size: 24px;"
+        style="font-size: 24px"
     ></nui-risk-score>
 </div>
 
@@ -35,7 +31,6 @@
         minLevel="0"
         maxLevel="10"
         [title]="value"
-        style="font-size: 40px;"
+        style="font-size: 40px"
     ></nui-risk-score>
 </div>
-

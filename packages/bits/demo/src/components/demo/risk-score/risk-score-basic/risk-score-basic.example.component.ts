@@ -25,11 +25,9 @@ import { Component } from "@angular/core";
     templateUrl: "risk-score-basic.example.component.html",
 })
 export class RiskScoreBasicExampleComponent {
-
     public value: number = 3.7;
 
-
-    public valueChanged(value: number): void{
+    public valueChanged(value: number): void {
         this.value = value;
     }
 }

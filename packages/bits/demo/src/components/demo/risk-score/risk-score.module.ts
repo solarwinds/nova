@@ -28,10 +28,10 @@ import {
     SrlcStage,
 } from "@nova-ui/bits";
 
-import { 
+import {
     RiskScoreBasicExampleComponent,
-    RiskScoreDocsExampleComponent
- } from "./index";
+    RiskScoreDocsExampleComponent,
+} from "./index";
 
 const routes = [
     {
@@ -51,7 +51,7 @@ const routes = [
         NuiDocsModule,
         NuiTextboxModule,
         NuiRiskScoreModule,
-        RouterModule.forChild(routes)
+        RouterModule.forChild(routes),
     ],
     declarations: [
         RiskScoreBasicExampleComponent,
