@@ -172,6 +172,11 @@
                         </a>
                     </div>
                     <nui-icon
+                        *ngIf="legendSeries.realtime"
+                        icon="fast-poll"
+                        iconColor="primary-blue"
+                    ></nui-icon>
+                    <nui-icon
                         *ngIf="legendSeries.transformer"
                         icon="performance"
                         iconColor="primary-blue"
