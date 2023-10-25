@@ -47,18 +47,25 @@ nui-icon {
     align-items: center;
 }
 
-:host ::ng-deep div:has(> .description-container) {
-    flex-grow: 1;
-    overflow: hidden;
-
-    .descriptions {
-        overflow: hidden;
-    }
-}
-
 .selected {
     background-color: @nui-color-selected;
 }
 .selected:hover {
     background-color: @nui-color-selected-hover;
+}
+
+:host ::ng-deep {
+    div:has(> .description-container) {
+        flex-grow: 1;
+        overflow: hidden;
+
+        .descriptions {
+            overflow: hidden;
+        }
+    }
+    
+    // fixes summary serie value text on hover
+    nui-legend[ng-reflect-active=true] .summary-serie .nui-rich-legend-tile__tilebox {
+        color: @nui-color-text-default !important;
+    }
 }
