@@ -160,15 +160,21 @@ export class TimeseriesScalesService {
                     let domainAdjusted;
                     switch (widgetConfig?.preset) {
                         case TimeseriesChartPreset.StackedBar:
-                            domainAdjusted = this.getStackedBarScaleDomain(scaleConfig.properties.domain);
+                            domainAdjusted = this.getStackedBarScaleDomain(
+                                scaleConfig.properties.domain
+                            );
                             break;
                         case TimeseriesChartPreset.StackedArea:
-                            domainAdjusted = this.getStackedAreaScaleDomain(scaleConfig.properties.domain.max);
+                            domainAdjusted = this.getStackedAreaScaleDomain(
+                                scaleConfig.properties.domain.max
+                            );
                             break;
                         default:
-                            domainAdjusted = this.getLineScaleDomain(scaleConfig.properties.domain);
-                        }
-                    
+                            domainAdjusted = this.getLineScaleDomain(
+                                scaleConfig.properties.domain
+                            );
+                    }
+
                     scale.setFixDomainValues(domainAdjusted);
                 }
                 break;
@@ -240,12 +246,6 @@ export class TimeseriesScalesService {
 
     private getStackedAreaScaleDomain(max: number): number[] {
         const point = max / 4;
-        return [
-            0,
-            point,
-            point * 2,
-            max - point,
-            max,
-        ]
+        return [0, point, point * 2, max - point, max];
     }
 }
