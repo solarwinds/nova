@@ -60,5 +60,5 @@ export function hasTimeseriesWidgetSummaryLegend(
     );
 }
 
-export const SUMMARY_LEGEND_BCG_COLOR = "var(--nui-color-brand-six)";
+export const SUMMARY_LEGEND_BCG_COLOR = "var(--nui-color-chart-sum)";
 export const SUMMARY_LEGEND_COLOR = "var(--nui-color-text-light)";
