@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+// © 2023 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -18,20 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./dashboard/public-api";
-export * from "./widget/public-api";
-export * from "./layouts/public-api";
-export * from "./template-load-error/template-load-error.component";
-export * from "./proportional-widget/public-api";
-export * from "./kpi-widget/public-api";
-export * from "./risk-score-tile/public-api";
-export * from "./timeseries-widget/public-api";
-export * from "./table-widget/public-api";
-export * from "./providers/public-api";
-export * from "./types";
-export * from "./time-frame-selection/public-api";
-export * from "./loading/public-api";
-export * from "./embedded-content/embedded-content.component";
-export * from "./list-widget/public-api";
-export * from "./widget-search/widget-search.component";
-export * from "./widget-search/types";
+import { Component } from "@angular/core";
+
+@Component({
+    selector: "nui-risk-score-docs",
+    templateUrl: "./risk-score-docs.component.html",
+})
+export class RiskScoreDocsComponent {}

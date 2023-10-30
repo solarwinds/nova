@@ -39,6 +39,7 @@ import {
     NuiPopupModule,
     NuiProgressModule,
     NuiRepeatModule,
+    NuiRiskScoreModule,
     NuiSearchModule,
     NuiSelectModule,
     NuiSpinnerModule,
@@ -54,6 +55,7 @@ import { WidgetErrorComponent } from "./common/components/widget-error/widget-er
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { EmbeddedContentComponent } from "./components/embedded-content/embedded-content.component";
 import { KpiComponent } from "./components/kpi-widget/kpi.component";
+import { RiskScoreTileComponent } from "./components/risk-score-tile/risk-score-tile.component";
 import { StackComponent } from "./components/layouts/stack/stack.component";
 import { TilesComponent } from "./components/layouts/tiles/tiles.component";
 import { ListGroupItemComponent } from "./components/list-widget/list-elements/list-group-item/list-group-item.component";
@@ -109,6 +111,7 @@ import { WidgetTypesService } from "./services/widget-types.service";
 import { drilldown } from "./widget-types/drilldown/drilldown";
 import { embeddedContent } from "./widget-types/embedded-content/embedded-content";
 import { kpi } from "./widget-types/kpi/kpi";
+import { riskScore} from "./widget-types/risk-score/risk-score";
 import { DEFAULT_KPI_FORMATTERS } from "./widget-types/kpi/kpi-configurator";
 import { previewPlaceholder } from "./widget-types/preview-placeholder";
 import { proportional } from "./widget-types/proportional/proportional";
@@ -121,6 +124,7 @@ const dashboardComponents = [
     EmbeddedContentComponent,
     GridsterItemWidgetIdDirective,
     KpiComponent,
+    RiskScoreTileComponent,
     LineChartComponent,
     LoadingComponent,
     ProportionalWidgetComponent,
@@ -152,6 +156,7 @@ const dashboardComponents = [
 const entryComponents: IComponentWithLateLoadKey[] = [
     EmbeddedContentComponent,
     KpiComponent,
+    RiskScoreTileComponent,
     LineChartComponent,
     LoadingComponent,
     ProportionalWidgetComponent,
@@ -201,6 +206,7 @@ const entryComponents: IComponentWithLateLoadKey[] = [
         NuiSearchModule,
         NuiCommonModule,
         NuiRepeatModule,
+        NuiRiskScoreModule,
         NuiSelectModule,
         NuiPopoverModule,
     ],
@@ -219,9 +225,10 @@ export class NuiDashboardsModule {
         widgetTypesService: WidgetTypesService,
         componentRegistry: ComponentRegistryService,
         eventRegistry: EventRegistryService,
-        kpiFormattersRegistry: KpiFormattersRegistryService
+        kpiFormattersRegistry: KpiFormattersRegistryService,
     ) {
         widgetTypesService.registerWidgetType("kpi", 1, kpi);
+        widgetTypesService.registerWidgetType("risk-score", 1, riskScore);
         widgetTypesService.registerWidgetType("table", 1, table);
         widgetTypesService.registerWidgetType("proportional", 1, proportional);
         widgetTypesService.registerWidgetType("timeseries", 1, timeseries);

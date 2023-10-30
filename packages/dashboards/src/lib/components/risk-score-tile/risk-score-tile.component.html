@@ -1,0 +1,86 @@
+<div class="w-100 h-100" nui-busy [busy]="busy">
+    <ng-container *ngIf="widgetData?.link">
+        <a class="nui-risk-score-tile-indicator" [href]="widgetData.link">
+            <ng-container [ngTemplateOutlet]="riskScoreContent"></ng-container>
+        </a>
+    </ng-container>
+
+    <ng-container *ngIf="!widgetData?.link">
+        <div class="nui-risk-score-tile-indicator" (click)="onInteraction()">
+            <ng-container [ngTemplateOutlet]="riskScoreContent"></ng-container>
+        </div>
+    </ng-container>
+</div>
+
+<ng-template #riskScoreContent>
+    <div
+        class="nui-risk-score-tile-indicator__background"
+        [class.nui-risk-score-tile-indicator--interactive]="interactive"
+        [ngStyle]="{
+            'background-color': backgroundColor || widgetData?.backgroundColor
+        }"
+    ></div>
+    <div
+        class="nui-risk-score-tile-indicator__text"
+        [ngStyle]="{
+            color:
+                widgetData?.textColor ||
+                backgroundColor ||
+                widgetData?.backgroundColor ||
+                defaultColor
+        }"
+    >
+        <div class="nui-risk-score-tile-indicator__zoom-container">
+            <div
+                class="nui-risk-score-tile-indicator__label"
+                [title]="widgetData?.label"
+            >
+                <span
+                    nuiZoomContent
+                    [useZoom]="false"
+                    [minScale]="0.5"
+                    [scaleIN$]="getScaleBroker('label')?.out$"
+                    [scaleOUT$]="getScaleBroker('label')?.in$"
+                    >{{ widgetData?.label }}</span
+                >
+            </div>
+
+            <div
+                class="nui-risk-score-tile-indicator__value"
+                [style.font-size]="widgetData?.fontSize"
+                [title]="widgetData?.value"
+            >
+                <nui-risk-score 
+                    nuiZoomContent
+                    [useZoom]="false"
+                    [scaleIN$]="getScaleBroker('value')?.out$"
+                    [scaleOUT$]="getScaleBroker('value')?.in$"
+                    class="nui-risk-score-tile-indicator__score"
+                    [level]="widgetData?.value"
+                    [minLevel]="widgetData?.minValue ?? 0"
+                    [maxLevel]="widgetData?.maxValue ?? 10"
+                    [title]="widgetData?.value"
+                ></nui-risk-score>
+                
+            </div>
+
+            <div
+                class="nui-risk-score-tile-indicator__description"
+                [title]="widgetData?.description"
+            >
+
+                <div
+                    class="nui-risk-score-tile-indicator__description__text"
+                    nuiZoomContent
+                    [useZoom]="false"
+                    [minScale]="0.5"
+                    [scaleIN$]="getScaleBroker('description')?.out$"
+                    [scaleOUT$]="getScaleBroker('description')?.in$"
+                >
+                    {{ widgetData?.description }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</ng-template>

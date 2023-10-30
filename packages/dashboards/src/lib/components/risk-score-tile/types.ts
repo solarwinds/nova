@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+// © 2023 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -18,20 +18,41 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./dashboard/public-api";
-export * from "./widget/public-api";
-export * from "./layouts/public-api";
-export * from "./template-load-error/template-load-error.component";
-export * from "./proportional-widget/public-api";
-export * from "./kpi-widget/public-api";
-export * from "./risk-score-tile/public-api";
-export * from "./timeseries-widget/public-api";
-export * from "./table-widget/public-api";
-export * from "./providers/public-api";
-export * from "./types";
-export * from "./time-frame-selection/public-api";
-export * from "./loading/public-api";
-export * from "./embedded-content/embedded-content.component";
-export * from "./list-widget/public-api";
-export * from "./widget-search/widget-search.component";
-export * from "./widget-search/types";
+import { IFormatter } from "../types";
+
+export enum RiskScoreFormatterTypes {
+    // ROOT ?
+    Value = "Value",
+}
+
+export interface IRiskScoreData {
+    id?: string;
+    value?: number;
+    minValue?: number;
+    maxValue?: number;
+    label?: string;
+    description?: string;
+    backgroundColor?: string;
+    textColor?: string;
+    fontSize?: string;
+    numberFormat?: string;
+    link?: string;
+    [key: string]: any;
+}
+
+export interface IRiskScoreConfiguration {
+    interactive?: boolean;
+    formatters?: IRiskScoreFormattersConfiguration;
+}
+
+export interface IRiskScoreFormattersConfiguration
+    extends Partial<
+        Record<
+        RiskScoreFormatterTypes | string,
+            {
+                formatter: IFormatter;
+            }
+        >
+    > {}
+export interface IRiskScoreFormatterProperties
+    extends Partial<Record<RiskScoreFormatterTypes | string, any>> {}

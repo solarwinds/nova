@@ -18,20 +18,5 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./dashboard/public-api";
-export * from "./widget/public-api";
-export * from "./layouts/public-api";
-export * from "./template-load-error/template-load-error.component";
-export * from "./proportional-widget/public-api";
-export * from "./kpi-widget/public-api";
-export * from "./risk-score-tile/public-api";
-export * from "./timeseries-widget/public-api";
-export * from "./table-widget/public-api";
-export * from "./providers/public-api";
+export * from "./risk-score-tile.component";
 export * from "./types";
-export * from "./time-frame-selection/public-api";
-export * from "./loading/public-api";
-export * from "./embedded-content/embedded-content.component";
-export * from "./list-widget/public-api";
-export * from "./widget-search/widget-search.component";
-export * from "./widget-search/types";
