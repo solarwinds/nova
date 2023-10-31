@@ -70,6 +70,13 @@ export class KpiFormattersRegistryService extends FormatterRegistryService<IForm
 }
 
 @Injectable({ providedIn: "root" })
+export class RiskScoreFormattersRegistryService extends FormatterRegistryService<IFormatterDefinition> {
+    constructor(logger: LoggerService) {
+        super(logger, "RiskScoreFormattersRegistryService");
+    }
+}
+
+@Injectable({ providedIn: "root" })
 export class ProportionalDonutContentFormattersRegistryService extends FormatterRegistryService<IFormatterDefinition> {
     constructor(logger: LoggerService) {
         super(logger, "ProportionalDonutContentFormattersRegistryService");

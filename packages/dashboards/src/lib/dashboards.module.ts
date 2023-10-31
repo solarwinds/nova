@@ -92,7 +92,7 @@ import {
     IComponentWithLateLoadKey,
 } from "./pizzagna/services/component-registry.service";
 import { EventRegistryService } from "./services/event-registry.service";
-import { KpiFormattersRegistryService } from "./services/table-formatter-registry.service";
+import { KpiFormattersRegistryService, RiskScoreFormattersRegistryService } from "./services/table-formatter-registry.service";
 import {
     DASHBOARD_EDIT_MODE,
     DATA_SOURCE_BUSY,
@@ -113,6 +113,7 @@ import { embeddedContent } from "./widget-types/embedded-content/embedded-conten
 import { kpi } from "./widget-types/kpi/kpi";
 import { riskScore} from "./widget-types/risk-score/risk-score";
 import { DEFAULT_KPI_FORMATTERS } from "./widget-types/kpi/kpi-configurator";
+import { DEFAULT_RISK_SCORE_FORMATTERS } from "./widget-types/risk-score/risk-score-configurator";
 import { previewPlaceholder } from "./widget-types/preview-placeholder";
 import { proportional } from "./widget-types/proportional/proportional";
 import { table } from "./widget-types/table/table";
@@ -226,6 +227,7 @@ export class NuiDashboardsModule {
         componentRegistry: ComponentRegistryService,
         eventRegistry: EventRegistryService,
         kpiFormattersRegistry: KpiFormattersRegistryService,
+        riskScoreFormattersRegistry: RiskScoreFormattersRegistryService
     ) {
         widgetTypesService.registerWidgetType("kpi", 1, kpi);
         widgetTypesService.registerWidgetType("risk-score", 1, riskScore);
@@ -265,5 +267,6 @@ export class NuiDashboardsModule {
         eventRegistry.registerEvent(DATA_SOURCE_BUSY);
 
         kpiFormattersRegistry.addItems(DEFAULT_KPI_FORMATTERS);
+        riskScoreFormattersRegistry.addItems(DEFAULT_RISK_SCORE_FORMATTERS);
     }
 }

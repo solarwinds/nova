@@ -91,6 +91,7 @@ import { TableDataSourceErrorComponent } from "./components/widgets/configurator
 import { EmbeddedContentConfigurationComponent } from "./components/widgets/configurator-items/embedded-content-configuration/embedded-content-configuration.component";
 import { InfoMessageConfigurationComponent } from "./components/widgets/configurator-items/info-message-configuration/info-message-configuration.component";
 import { KpiDescriptionConfigurationComponent } from "./components/widgets/configurator-items/kpi-description-configuration/kpi-description-configuration.component";
+import { RiskScoreTileDescriptionConfigurationComponent } from "./components/widgets/configurator-items/risk-score-tile-description-configuration/risk-score-tile-description-configuration.component";
 import { RefreshRateConfiguratorComponent } from "./components/widgets/configurator-items/refresher-configuration/refresh-rate-configurator/refresh-rate-configurator.component";
 import { RefresherConfigurationComponent } from "./components/widgets/configurator-items/refresher-configuration/refresher-configuration.component";
 import { ThresholdsConfigurationComponent } from "./components/widgets/configurator-items/thresholds-configuration/thresholds-configuration.component";
@@ -99,6 +100,7 @@ import { TitleAndDescriptionConfigurationComponent } from "./components/widgets/
 import { EntityFormattingConfigurationComponent } from "./components/widgets/drilldown/entity-formatting-configuration/entity-formatting-configuration.component";
 import { GroupingConfigurationComponent } from "./components/widgets/drilldown/grouping-configuration/grouping-configuration.component";
 import { KpiTilesConfigurationComponent } from "./components/widgets/kpi/kpi-tiles-configuration/kpi-tiles-configuration.component";
+import { RiskScoreTilesConfigurationComponent } from "./components/widgets/risk-score/risk-score-tiles-configuration/risk-score-tiles-configuration.component";
 import { AggregatorMetricSelectorConfigurationComponent } from "./components/widgets/proportional/aggregators-configurators/aggregator-configurator/aggregator-configurator.component";
 import { FieldMapperAggregatorConfiguratorComponent } from "./components/widgets/proportional/aggregators-configurators/field-mapper-aggregator-configurator/field-mapper-aggregator-configurator.component";
 import { ProportionalChartOptionsEditorV2Component } from "./components/widgets/proportional/chart-options-editor-v2/proportional-chart-options-editor-v2.component";
@@ -140,6 +142,7 @@ const entryComponents: IComponentWithLateLoadKey[] = [
     DataSourceConfigurationV2Component,
     DataSourceErrorComponent,
     KpiTilesConfigurationComponent,
+    RiskScoreTilesConfigurationComponent,
     EmbeddedContentConfigurationComponent,
     InfoMessageConfigurationComponent,
     ProportionalChartOptionsEditorComponent,
@@ -165,6 +168,7 @@ const entryComponents: IComponentWithLateLoadKey[] = [
     RawFormatterComponent,
     PercentageFormatterComponent,
     KpiDescriptionConfigurationComponent,
+    RiskScoreTileDescriptionConfigurationComponent,
     ThresholdsConfigurationComponent,
     TitleAndDescriptionConfigurationComponent,
     WidgetConfiguratorSectionComponent,

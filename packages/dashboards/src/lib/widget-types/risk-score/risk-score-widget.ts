@@ -23,7 +23,7 @@ import { StackComponent } from "../../components/layouts/stack/stack.component";
 import { TilesComponent } from "../../components/layouts/tiles/tiles.component";
 import {
     DEFAULT_PIZZAGNA_ROOT,
-    NOVA_RISK_SCORE_DATASOURCE_ADAPTER,
+    NOVA_KPI_DATASOURCE_ADAPTER,
     NOVA_KPI_STATUS_CONTENT_FALLBACK_ADAPTER,
 } from "../../services/types";
 import {
@@ -89,7 +89,7 @@ export const riskScoreWidget = {
                     componentType: RiskScoreTileComponent.lateLoadKey,
                     providers: {
                         [WellKnownProviders.Adapter]: {
-                            providerId: NOVA_RISK_SCORE_DATASOURCE_ADAPTER,
+                            providerId: NOVA_KPI_DATASOURCE_ADAPTER,
                             properties: {
                                 propertyPath: "widgetData",
                             },

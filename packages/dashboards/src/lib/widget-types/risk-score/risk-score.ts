@@ -22,6 +22,7 @@ import { IWidgetTypeDefinition } from "../../components/widget/types";
 import { DEFAULT_PIZZAGNA_ROOT } from "../../services/types";
 import { WellKnownPathKey } from "../../types";
 import { riskScoreWidget } from "./risk-score-widget";
+import { riskScoreConfigurator } from "./risk-score-configurator";
 
 const tileDescriptionConfiguratorTemplatePath = `tiles.properties.template[0]`;
 const dataSourceConfiguratorTemplatePath = `tiles.properties.template[1]`;
@@ -59,5 +60,5 @@ export const riskScore: IWidgetTypeDefinition = {
     /***************************************************************************************************
      *  Configurator section describes the form that is used to configure the widget
      ***************************************************************************************************/
-    //configurator: riskScoreConfigurator,
+    configurator: riskScoreConfigurator,
 };
