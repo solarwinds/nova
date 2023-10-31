@@ -16,17 +16,12 @@
     <div
         class="nui-risk-score-tile-indicator__background"
         [class.nui-risk-score-tile-indicator--interactive]="interactive"
-        [ngStyle]="{
-            'background-color': backgroundColor || widgetData?.backgroundColor
-        }"
     ></div>
     <div
         class="nui-risk-score-tile-indicator__text"
         [ngStyle]="{
             color:
                 widgetData?.textColor ||
-                backgroundColor ||
-                widgetData?.backgroundColor ||
                 defaultColor
         }"
     >

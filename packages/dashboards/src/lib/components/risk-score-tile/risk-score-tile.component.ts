@@ -64,9 +64,6 @@ export class RiskScoreTileComponent implements IHasChangeDetector, OnChanges {
     public widgetData: IRiskScoreData;
 
     @Input()
-    public backgroundColor: string;
-
-    @Input()
     public syncValuesBroker: IBroker[];
 
     @Input()

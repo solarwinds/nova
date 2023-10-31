@@ -42,15 +42,15 @@
     &__value {
         font-size: @nui-font-size-hero * 2; // 54
         font-weight: @nui-font-weight-semibold;
-        margin: auto 0;
-        min-width: 100%;
+        margin: auto @line-height-computed;
+        min-width: calc(100% - @line-height-computed * 2);
         white-space: nowrap;
         .flex-center();
         .restrict-content-height(100%, 200px, 5px);
+    }
 
-        & > span.without-filter {
-            filter: unset;
-        }
+    &__score {
+        min-width: 100%
     }
 
     &__label {
