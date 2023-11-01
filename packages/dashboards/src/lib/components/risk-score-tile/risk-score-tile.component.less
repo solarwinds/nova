@@ -18,6 +18,7 @@
     display: block;
     height: 100%;
     width: 100%;
+    overflow: hidden;
 
     &__background {
         height: 100%;
@@ -67,7 +68,7 @@
     }
     
     &__description {
-        font-size: @nui-font-size-default;
+        font-size: @nui-font-size-hero * 0.75;
         font-weight: @nui-font-weight-regular;
         min-width: 0; // we need this to make ellipsis work with the flex child (when we quit using zoom)
         margin-bottom: auto;
@@ -80,8 +81,11 @@
             white-space: wrap;
             word-wrap: break-word;
             word-break: keep-all;
-
-            
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 4;
+            white-space: pre-wrap;
         }
     }
 
