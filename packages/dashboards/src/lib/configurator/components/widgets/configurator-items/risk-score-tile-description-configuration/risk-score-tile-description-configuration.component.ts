@@ -46,6 +46,8 @@ import {
 export class RiskScoreTileDescriptionConfigurationComponent
     implements OnInit, OnChanges, IHasChangeDetector, IHasForm
 {
+    public readonly MAX_DESCRIPTION_LENGTH = 150;
+
     public static lateLoadKey = "RiskScoreTileDescriptionConfigurationComponent";
 
     @Input() componentId: string;
@@ -71,7 +73,7 @@ export class RiskScoreTileDescriptionConfigurationComponent
             label: [this.label, [Validators.required]],
             minValue: [this.minValue, [Validators.required]],
             maxValue: [this.maxValue, [Validators.required]],
-            description:[this.description, [Validators.maxLength(150)]],
+            description:[this.description, [Validators.maxLength(this.MAX_DESCRIPTION_LENGTH)]],
         });
 
         this.formReady.emit(this.form);
