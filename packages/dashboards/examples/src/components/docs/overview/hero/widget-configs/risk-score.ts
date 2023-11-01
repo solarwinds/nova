@@ -29,9 +29,7 @@ import {
     WellKnownProviders,
 } from "@nova-ui/dashboards";
 
-import {
-    HarryPotterAverageRatingDataSource,
-} from "../data/kpi-datasources";
+import { HarryPotterAverageRatingDataSource } from "../data/kpi-datasources";
 
 export const riskScoreConfig: IWidget = {
     id: "riskScoreWidgetId",
@@ -74,7 +72,8 @@ export const riskScoreConfig: IWidget = {
                 providers: {
                     [WellKnownProviders.DataSource]: {
                         // Setting the data source providerId for the tile with id "riskScore1"
-                        providerId: HarryPotterAverageRatingDataSource.providerId,
+                        providerId:
+                            HarryPotterAverageRatingDataSource.providerId,
                     } as IProviderConfiguration,
                     [WellKnownProviders.Adapter]: {
                         providerId: NOVA_KPI_DATASOURCE_ADAPTER,

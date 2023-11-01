@@ -20,9 +20,7 @@
     <div
         class="nui-risk-score-tile-indicator__text"
         [ngStyle]="{
-            color:
-                widgetData?.textColor ||
-                defaultColor
+            color: widgetData?.textColor || defaultColor
         }"
     >
         <div class="nui-risk-score-tile-indicator__zoom-container">
@@ -45,7 +43,7 @@
                 [style.font-size]="widgetData?.fontSize"
                 [title]="widgetData?.value"
             >
-                <nui-risk-score 
+                <nui-risk-score
                     nuiZoomContent
                     [useZoom]="false"
                     [scaleIN$]="getScaleBroker('value')?.out$"
@@ -56,14 +54,12 @@
                     [maxLevel]="widgetData?.maxValue ?? 10"
                     [title]="widgetData?.value"
                 ></nui-risk-score>
-                
             </div>
 
             <div
                 class="nui-risk-score-tile-indicator__description"
                 [title]="widgetData?.description"
             >
-
                 <div
                     class="nui-risk-score-tile-indicator__description__text"
                     nuiZoomContent
@@ -75,7 +71,6 @@
                     {{ widgetData?.description }}
                 </div>
             </div>
-
         </div>
     </div>
 </ng-template>

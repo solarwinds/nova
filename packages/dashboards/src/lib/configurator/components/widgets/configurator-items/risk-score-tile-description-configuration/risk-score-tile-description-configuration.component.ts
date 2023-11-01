@@ -32,10 +32,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
 
-import {
-    IHasChangeDetector,
-    IHasForm,
-} from "../../../../../types";
+import { IHasChangeDetector, IHasForm } from "../../../../../types";
 
 @Component({
     selector: "nui-risk-score-tile-description-configuration",
@@ -48,7 +45,8 @@ export class RiskScoreTileDescriptionConfigurationComponent
 {
     public readonly MAX_DESCRIPTION_LENGTH = 150;
 
-    public static lateLoadKey = "RiskScoreTileDescriptionConfigurationComponent";
+    public static lateLoadKey =
+        "RiskScoreTileDescriptionConfigurationComponent";
 
     @Input() componentId: string;
 
@@ -68,12 +66,14 @@ export class RiskScoreTileDescriptionConfigurationComponent
     ) {}
 
     public ngOnInit(): void {
-
         this.form = this.formBuilder.group({
             label: [this.label, [Validators.required]],
             minValue: [this.minValue, [Validators.required]],
             maxValue: [this.maxValue, [Validators.required]],
-            description:[this.description, [Validators.maxLength(this.MAX_DESCRIPTION_LENGTH)]],
+            description: [
+                this.description,
+                [Validators.maxLength(this.MAX_DESCRIPTION_LENGTH)],
+            ],
         });
 
         this.formReady.emit(this.form);
@@ -93,7 +93,9 @@ export class RiskScoreTileDescriptionConfigurationComponent
         }
 
         if (changes.description) {
-            this.form?.patchValue({ description: changes.description.currentValue });
+            this.form?.patchValue({
+                description: changes.description.currentValue,
+            });
         }
     }
 }

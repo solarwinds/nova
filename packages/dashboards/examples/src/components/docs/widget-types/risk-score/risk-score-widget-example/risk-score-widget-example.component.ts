@@ -125,7 +125,10 @@ export class RiskScoreWidgetExampleComponent implements OnInit {
 
     public ngOnInit(): void {
         // Grabbing the widget's default template which will be needed as a parameter for setNode
-        const widgetTemplate = this.widgetTypesService.getWidgetType("risk-score", 1);
+        const widgetTemplate = this.widgetTypesService.getWidgetType(
+            "risk-score",
+            1
+        );
         // Registering our data sources as dropdown options in the widget editor/configurator
         // Note: This could also be done in the parent module's constructor so that
         // multiple dashboards could have access to the same widget template modification.

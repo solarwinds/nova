@@ -36,7 +36,9 @@ describe("RiskScoreTileDescriptionConfigurationComponent", () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(RiskScoreTileDescriptionConfigurationComponent);
+        fixture = TestBed.createComponent(
+            RiskScoreTileDescriptionConfigurationComponent
+        );
         component = fixture.componentInstance;
     });
 

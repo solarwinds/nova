@@ -27,9 +27,7 @@ import {
     NuiMessageModule,
     NuiSwitchModule,
 } from "@nova-ui/bits";
-import {
-    NuiDashboardsModule,
-} from "@nova-ui/dashboards";
+import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { RiskScoreDocsComponent } from "./risk-score-docs.component";
 import { RiskScoreWidgetExampleComponent } from "./risk-score-widget-example/risk-score-widget-example.component";
@@ -65,9 +63,6 @@ const routes: Routes = [
         NuiDashboardsModule,
         NuiSwitchModule,
     ],
-    declarations: [
-        RiskScoreDocsComponent,
-        RiskScoreWidgetExampleComponent,
-    ],
+    declarations: [RiskScoreDocsComponent, RiskScoreWidgetExampleComponent],
 })
 export class RiskScoreDocsModule {}

@@ -26,8 +26,8 @@ import { Component } from "@angular/core";
 })
 export class RiskScoreDocsComponent {
     public riskScoreWidgetFileText =
-    require("!!raw-loader!../../../../../../src/lib/widget-types/risk-score/risk-score-widget.ts")
-        .default;
+        require("!!raw-loader!../../../../../../src/lib/widget-types/risk-score/risk-score-widget.ts")
+            .default;
     public riskScoreConfiguratorFileText =
         require("!!raw-loader!../../../../../../src/lib/widget-types/risk-score/risk-score-configurator.ts")
             .default;
