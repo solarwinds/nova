@@ -43,9 +43,9 @@ const routes: Routes = [
     {
         path: "risk-score",
         loadChildren: async () =>
-            import("components/docs/widget-types/risk-score/risk-score-docs.module").then(
-                (m) => m.RiskScoreDocsModule
-            ),
+            import(
+                "components/docs/widget-types/risk-score/risk-score-docs.module"
+            ).then((m) => m.RiskScoreDocsModule),
         data: {
             srlc: {
                 hideIndicator: true,
