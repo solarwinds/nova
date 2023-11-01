@@ -95,7 +95,7 @@ export class RiskScoreTileComponent implements IHasChangeDetector, OnChanges {
         @Inject(PIZZAGNA_EVENT_BUS) public eventBus: EventBus<IEvent>
     ) {}
 
-    public onInteraction() {
+    public onInteraction(): void {
         if (!this.interactive) {
             return;
         }
@@ -110,7 +110,7 @@ export class RiskScoreTileComponent implements IHasChangeDetector, OnChanges {
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes: SimpleChanges): void {
         if (changes.configuration) {
             const formattersConfiguration: IRiskScoreFormattersConfiguration =
                 changes.configuration.currentValue.formatters;

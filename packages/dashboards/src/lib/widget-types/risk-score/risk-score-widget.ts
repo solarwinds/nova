@@ -17,10 +17,9 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-
-import { RiskScoreTileComponent } from "../../components/risk-score-tile/risk-score-tile.component";
 import { StackComponent } from "../../components/layouts/stack/stack.component";
 import { TilesComponent } from "../../components/layouts/tiles/tiles.component";
+import { RiskScoreTileComponent } from "../../components/risk-score-tile/risk-score-tile.component";
 import {
     DEFAULT_PIZZAGNA_ROOT,
     NOVA_KPI_DATASOURCE_ADAPTER,

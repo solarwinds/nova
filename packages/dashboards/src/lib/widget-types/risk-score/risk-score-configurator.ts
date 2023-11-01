@@ -55,7 +55,7 @@ export const DEFAULT_RISK_SCORE_FORMATTERS: IFormatterDefinition[] = [
             // @ts-ignore
             value: null,
         },
-    }
+    },
 ];
 
 export const riskScoreConfigurator = {

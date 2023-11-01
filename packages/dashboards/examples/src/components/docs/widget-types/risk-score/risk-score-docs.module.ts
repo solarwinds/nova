@@ -30,6 +30,7 @@ import {
 import {
     NuiDashboardsModule,
 } from "@nova-ui/dashboards";
+
 import { RiskScoreDocsComponent } from "./risk-score-docs.component";
 import { RiskScoreWidgetExampleComponent } from "./risk-score-widget-example/risk-score-widget-example.component";
 
@@ -52,7 +53,7 @@ const routes: Routes = [
                 hideIndicator: true,
             },
         },
-    }
+    },
 ];
 
 @NgModule({
@@ -67,6 +68,6 @@ const routes: Routes = [
     declarations: [
         RiskScoreDocsComponent,
         RiskScoreWidgetExampleComponent,
-    ]
+    ],
 })
 export class RiskScoreDocsModule {}

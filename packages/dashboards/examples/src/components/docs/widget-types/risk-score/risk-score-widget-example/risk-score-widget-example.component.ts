@@ -218,7 +218,7 @@ const widgetConfig: IWidget = {
                         minValue: 0,
                         maxValue: 5,
                         label: `Average Rating`,
-                        description: `Harry Potter and the Sorcerer's Stone By J. K. Rowling Average Rating Risk Score`
+                        description: `Harry Potter and the Sorcerer's Stone By J. K. Rowling Average Rating Risk Score`,
                     },
                 },
                 providers: {

@@ -55,7 +55,6 @@ import { WidgetErrorComponent } from "./common/components/widget-error/widget-er
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { EmbeddedContentComponent } from "./components/embedded-content/embedded-content.component";
 import { KpiComponent } from "./components/kpi-widget/kpi.component";
-import { RiskScoreTileComponent } from "./components/risk-score-tile/risk-score-tile.component";
 import { StackComponent } from "./components/layouts/stack/stack.component";
 import { TilesComponent } from "./components/layouts/tiles/tiles.component";
 import { ListGroupItemComponent } from "./components/list-widget/list-elements/list-group-item/list-group-item.component";
@@ -66,6 +65,7 @@ import { LoadingComponent } from "./components/loading/loading.component";
 import { ProportionalDonutContentComponent } from "./components/proportional-widget/proportional-donut-content/proportional-donut-content.component";
 import { ProportionalWidgetComponent } from "./components/proportional-widget/proportional-widget.component";
 import { RefresherSettingsService } from "./components/providers/refresher-settings.service";
+import { RiskScoreTileComponent } from "./components/risk-score-tile/risk-score-tile.component";
 import { DelayedMousePresenceDetectionDirective } from "./components/table-widget/delayed-mouse-presence-detection.directive";
 import { TableWidgetComponent } from "./components/table-widget/table-widget.component";
 import { TemplateLoadErrorComponent } from "./components/template-load-error/template-load-error.component";
@@ -75,6 +75,7 @@ import { LineChartComponent } from "./components/timeseries-widget/chart-presets
 import { StackedAreaChartComponent } from "./components/timeseries-widget/chart-presets/xy-chart/chart-types/stacked-area-chart.component";
 import { StackedBarChartComponent } from "./components/timeseries-widget/chart-presets/xy-chart/chart-types/stacked-bar-chart.component";
 import { StackedPercentageAreaChartComponent } from "./components/timeseries-widget/chart-presets/xy-chart/chart-types/stacked-percentage-area-chart.component";
+import { TimeseriesInspectionMenuComponent } from "./components/timeseries-widget/timeseries-inspection-menu/timeseries-inspection-menu.component";
 import { TimeseriesWidgetComponent } from "./components/timeseries-widget/timeseries-widget.component";
 import { WidgetSearchComponent } from "./components/widget-search/widget-search.component";
 import { WidgetBodyContentComponent } from "./components/widget/widget-body-content/widget-body-content.component";
@@ -111,14 +112,13 @@ import { WidgetTypesService } from "./services/widget-types.service";
 import { drilldown } from "./widget-types/drilldown/drilldown";
 import { embeddedContent } from "./widget-types/embedded-content/embedded-content";
 import { kpi } from "./widget-types/kpi/kpi";
-import { riskScore} from "./widget-types/risk-score/risk-score";
 import { DEFAULT_KPI_FORMATTERS } from "./widget-types/kpi/kpi-configurator";
-import { DEFAULT_RISK_SCORE_FORMATTERS } from "./widget-types/risk-score/risk-score-configurator";
 import { previewPlaceholder } from "./widget-types/preview-placeholder";
 import { proportional } from "./widget-types/proportional/proportional";
+import { riskScore} from "./widget-types/risk-score/risk-score";
+import { DEFAULT_RISK_SCORE_FORMATTERS } from "./widget-types/risk-score/risk-score-configurator";
 import { table } from "./widget-types/table/table";
 import { timeseries } from "./widget-types/timeseries/timeseries";
-import { TimeseriesInspectionMenuComponent } from "./components/timeseries-widget/timeseries-inspection-menu/timeseries-inspection-menu.component";
 
 const dashboardComponents = [
     DashboardComponent,

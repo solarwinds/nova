@@ -21,8 +21,8 @@
 import { IWidgetTypeDefinition } from "../../components/widget/types";
 import { DEFAULT_PIZZAGNA_ROOT } from "../../services/types";
 import { WellKnownPathKey } from "../../types";
-import { riskScoreWidget } from "./risk-score-widget";
 import { riskScoreConfigurator } from "./risk-score-configurator";
+import { riskScoreWidget } from "./risk-score-widget";
 
 const tileDescriptionConfiguratorTemplatePath = `tiles.properties.template[0]`;
 const dataSourceConfiguratorTemplatePath = `tiles.properties.template[1]`;

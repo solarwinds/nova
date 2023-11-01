@@ -30,7 +30,7 @@ import {
 } from "@nova-ui/dashboards";
 
 import {
-    HarryPotterAverageRatingDataSource
+    HarryPotterAverageRatingDataSource,
 } from "../data/kpi-datasources";
 
 export const riskScoreConfig: IWidget = {
@@ -68,7 +68,7 @@ export const riskScoreConfig: IWidget = {
                         minValue: 0,
                         maxValue: 5,
                         label: `Average Rating`,
-                        description: `Harry Potter and the Sorcerer's Stone By J. K. Rowling Average Rating Risk Score`
+                        description: `Harry Potter and the Sorcerer's Stone By J. K. Rowling Average Rating Risk Score`,
                     },
                 },
                 providers: {

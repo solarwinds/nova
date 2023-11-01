@@ -72,7 +72,7 @@ export class RiskScoreTileDescriptionConfigurationComponent
             minValue: [this.minValue, [Validators.required]],
             maxValue: [this.maxValue, [Validators.required]],
             description:[this.description, [Validators.maxLength(150)]],
-        });       
+        });
 
         this.formReady.emit(this.form);
     }

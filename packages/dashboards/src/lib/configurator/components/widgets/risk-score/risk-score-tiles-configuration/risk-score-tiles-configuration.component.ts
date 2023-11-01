@@ -83,7 +83,7 @@ export class RiskScoreTilesConfigurationComponent
 
     ngOnChanges(changes: SimpleChanges): void {}
 
-    public onFormReady(form: AbstractControl) {
+    public onFormReady(form: AbstractControl): void {
         this.form = this.formBuilder.group({
             tiles: form as FormArray,
         });
@@ -94,7 +94,7 @@ export class RiskScoreTilesConfigurationComponent
         this.formReady.emit(this.form);
     }
 
-    public onItemsChange(tiles: IItemConfiguration[]) {
+    public onItemsChange(tiles: IItemConfiguration[]): void {
         const parentPath = "tiles";
         const componentIds = tiles.map((tile) => tile.id);
         this.pizzagnaService.createComponentsFromTemplate(
@@ -110,7 +110,7 @@ export class RiskScoreTilesConfigurationComponent
         this.pizzagnaService.setProperty(property, tiles);
     }
 
-    public addTile() {
+    public addTile(): void {
         this.onItemsChange([
             ...this.tiles,
             {
