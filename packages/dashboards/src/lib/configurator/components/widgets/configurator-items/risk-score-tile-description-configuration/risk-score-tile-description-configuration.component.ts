@@ -43,11 +43,11 @@ import { IHasChangeDetector, IHasForm } from "../../../../../types";
 export class RiskScoreTileDescriptionConfigurationComponent
     implements OnInit, OnChanges, IHasChangeDetector, IHasForm
 {
-    public readonly MAX_DESCRIPTION_LENGTH = 150;
-
     public static lateLoadKey =
-        "RiskScoreTileDescriptionConfigurationComponent";
+    "RiskScoreTileDescriptionConfigurationComponent";
 
+    public readonly MAX_DESCRIPTION_LENGTH = 150;
+    
     @Input() componentId: string;
 
     @Input() label: string = "";
