@@ -44,10 +44,10 @@ export class RiskScoreTileDescriptionConfigurationComponent
     implements OnInit, OnChanges, IHasChangeDetector, IHasForm
 {
     public static lateLoadKey =
-    "RiskScoreTileDescriptionConfigurationComponent";
+        "RiskScoreTileDescriptionConfigurationComponent";
 
     public readonly MAX_DESCRIPTION_LENGTH = 150;
-    
+
     @Input() componentId: string;
 
     @Input() label: string = "";
