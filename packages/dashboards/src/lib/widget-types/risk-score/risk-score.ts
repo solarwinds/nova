@@ -26,7 +26,6 @@ import { riskScoreWidget } from "./risk-score-widget";
 
 const tileDescriptionConfiguratorTemplatePath = `tiles.properties.template[0]`;
 const dataSourceConfiguratorTemplatePath = `tiles.properties.template[1]`;
-const backgroundColorRulesConfiguratorTemplatePath = `tiles.properties.template[3]`;
 
 /***********************************************************************************************************
  * KPI widget definition starts here
@@ -47,10 +46,6 @@ export const riskScore: IWidgetTypeDefinition = {
             [WellKnownPathKey.TileDescriptionConfigComponentType]: `${tileDescriptionConfiguratorTemplatePath}.componentType`,
             // for the default data source configuration component, this changes the list of data sources to pick from
             [WellKnownPathKey.DataSourceProviders]: `${dataSourceConfiguratorTemplatePath}.properties.dataSourceProviders`,
-            // this points to the Tile's description background color picker
-            [WellKnownPathKey.TileDescriptionBackgroundColors]: `${tileDescriptionConfiguratorTemplatePath}.properties.backgroundColors`,
-            // this points to the Background Color Rules background color picker
-            [WellKnownPathKey.TileBackgroundColorRulesBackgroundColors]: `${backgroundColorRulesConfiguratorTemplatePath}.properties.backgroundColors`,
         },
     },
     /***************************************************************************************************

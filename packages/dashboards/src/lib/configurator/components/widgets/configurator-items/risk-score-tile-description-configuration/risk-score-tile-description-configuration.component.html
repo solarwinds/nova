@@ -62,6 +62,32 @@
 
         <div class="mt-4">
             <nui-form-field
+                [control]="form.get('useStaticLabel')"
+                class="form-group"
+            >
+                <nui-switch formControlName="useStaticLabel" i18n
+                    >Use Float Label</nui-switch
+                >
+            </nui-form-field>
+        </div>
+
+        <div class="mt-4" [class.hidden]="!form.get('useStaticLabel')?.value">
+            <nui-form-field
+                caption="Float Label"
+                i18n-caption
+                [control]="form.get('staticLabel')"
+                class="form-group"
+            >
+                <nui-textbox
+                    formControlName="staticLabel"
+                    placeholder="Set float label"
+                    i18n-placeholder
+                ></nui-textbox>
+            </nui-form-field>
+        </div>
+
+        <div class="mt-4">
+            <nui-form-field
                 caption="Description"
                 i18n-caption
                 [control]="form.get('description')"
@@ -69,7 +95,7 @@
             >
                 <nui-textbox
                     formControlName="description"
-                    placeholder="Description"
+                    placeholder="Set description"
                     i18n-placeholder
                 ></nui-textbox>
                 <nui-validation-message for="maxlength" i18n>

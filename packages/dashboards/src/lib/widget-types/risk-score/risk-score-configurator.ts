@@ -123,6 +123,8 @@ export const riskScoreConfigurator = {
                                                 "minValue",
                                                 "maxValue",
                                                 "description",
+                                                "useStaticLabel",
+                                                "staticLabel",
                                             ],
                                         },
                                     ],

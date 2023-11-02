@@ -220,6 +220,8 @@ const widgetConfig: IWidget = {
                     widgetData: {
                         minValue: 0,
                         maxValue: 5,
+                        useStaticLabel: false,
+                        staticLabel: undefined,
                         label: `Average Rating`,
                         description: `Harry Potter and the Sorcerer's Stone By J. K. Rowling Average Rating Risk Score`,
                     },

@@ -54,6 +54,8 @@ export class RiskScoreTileDescriptionConfigurationComponent
     @Input() minValue: number = 0;
     @Input() maxValue: number = 100;
     @Input() description: string = "";
+    @Input() useStaticLabel: boolean = false;
+    @Input() staticLabel: string = "";
 
     @Output() formReady = new EventEmitter<FormGroup>();
 
@@ -74,6 +76,8 @@ export class RiskScoreTileDescriptionConfigurationComponent
                 this.description,
                 [Validators.maxLength(this.MAX_DESCRIPTION_LENGTH)],
             ],
+            useStaticLabel: [this.useStaticLabel, [Validators.required]],
+            staticLabel: [this.staticLabel],
         });
 
         this.formReady.emit(this.form);
@@ -95,6 +99,18 @@ export class RiskScoreTileDescriptionConfigurationComponent
         if (changes.description) {
             this.form?.patchValue({
                 description: changes.description.currentValue,
+            });
+        }
+
+        if (changes.useStaticLabel) {
+            this.form?.patchValue({
+                useStaticLabel: changes.useStaticLabel.currentValue,
+            });
+        }
+
+        if (changes.staticLabel) {
+            this.form?.patchValue({
+                staticLabel: changes.staticLabel.currentValue,
             });
         }
     }

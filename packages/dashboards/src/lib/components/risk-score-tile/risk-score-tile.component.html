@@ -52,7 +52,11 @@
                     [level]="widgetData?.value"
                     [minLevel]="widgetData?.minValue ?? 0"
                     [maxLevel]="widgetData?.maxValue ?? 10"
-                    [title]="widgetData?.value"
+                    [title]="
+                        widgetData?.useStaticLabel ?? false
+                            ? widgetData?.staticLabel
+                            : widgetData?.value
+                    "
                 ></nui-risk-score>
             </div>
 
