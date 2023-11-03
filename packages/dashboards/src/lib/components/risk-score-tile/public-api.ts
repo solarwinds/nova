@@ -18,10 +18,5 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./kpi/public-api";
-export * from "./risk-score/public-api";
-export * from "./table/public-api";
-export * from "./timeseries/public-api";
-export * from "./proportional/public-api";
-export * from "./configurator-items/public-api";
-export * from "./drilldown/public-api";
+export * from "./risk-score-tile.component";
+export * from "./types";

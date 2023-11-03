@@ -39,6 +39,7 @@ import {
     NuiPopupModule,
     NuiProgressModule,
     NuiRepeatModule,
+    NuiRiskScoreModule,
     NuiSearchModule,
     NuiSelectModule,
     NuiSpinnerModule,
@@ -64,6 +65,7 @@ import { LoadingComponent } from "./components/loading/loading.component";
 import { ProportionalDonutContentComponent } from "./components/proportional-widget/proportional-donut-content/proportional-donut-content.component";
 import { ProportionalWidgetComponent } from "./components/proportional-widget/proportional-widget.component";
 import { RefresherSettingsService } from "./components/providers/refresher-settings.service";
+import { RiskScoreTileComponent } from "./components/risk-score-tile/risk-score-tile.component";
 import { DelayedMousePresenceDetectionDirective } from "./components/table-widget/delayed-mouse-presence-detection.directive";
 import { TableWidgetComponent } from "./components/table-widget/table-widget.component";
 import { TemplateLoadErrorComponent } from "./components/template-load-error/template-load-error.component";
@@ -73,6 +75,7 @@ import { LineChartComponent } from "./components/timeseries-widget/chart-presets
 import { StackedAreaChartComponent } from "./components/timeseries-widget/chart-presets/xy-chart/chart-types/stacked-area-chart.component";
 import { StackedBarChartComponent } from "./components/timeseries-widget/chart-presets/xy-chart/chart-types/stacked-bar-chart.component";
 import { StackedPercentageAreaChartComponent } from "./components/timeseries-widget/chart-presets/xy-chart/chart-types/stacked-percentage-area-chart.component";
+import { TimeseriesInspectionMenuComponent } from "./components/timeseries-widget/timeseries-inspection-menu/timeseries-inspection-menu.component";
 import { TimeseriesWidgetComponent } from "./components/timeseries-widget/timeseries-widget.component";
 import { WidgetSearchComponent } from "./components/widget-search/widget-search.component";
 import { WidgetBodyContentComponent } from "./components/widget/widget-body-content/widget-body-content.component";
@@ -90,7 +93,10 @@ import {
     IComponentWithLateLoadKey,
 } from "./pizzagna/services/component-registry.service";
 import { EventRegistryService } from "./services/event-registry.service";
-import { KpiFormattersRegistryService } from "./services/table-formatter-registry.service";
+import {
+    KpiFormattersRegistryService,
+    RiskScoreFormattersRegistryService,
+} from "./services/table-formatter-registry.service";
 import {
     DASHBOARD_EDIT_MODE,
     DATA_SOURCE_BUSY,
@@ -112,15 +118,17 @@ import { kpi } from "./widget-types/kpi/kpi";
 import { DEFAULT_KPI_FORMATTERS } from "./widget-types/kpi/kpi-configurator";
 import { previewPlaceholder } from "./widget-types/preview-placeholder";
 import { proportional } from "./widget-types/proportional/proportional";
+import { riskScore } from "./widget-types/risk-score/risk-score";
+import { DEFAULT_RISK_SCORE_FORMATTERS } from "./widget-types/risk-score/risk-score-configurator";
 import { table } from "./widget-types/table/table";
 import { timeseries } from "./widget-types/timeseries/timeseries";
-import { TimeseriesInspectionMenuComponent } from "./components/timeseries-widget/timeseries-inspection-menu/timeseries-inspection-menu.component";
 
 const dashboardComponents = [
     DashboardComponent,
     EmbeddedContentComponent,
     GridsterItemWidgetIdDirective,
     KpiComponent,
+    RiskScoreTileComponent,
     LineChartComponent,
     LoadingComponent,
     ProportionalWidgetComponent,
@@ -152,6 +160,7 @@ const dashboardComponents = [
 const entryComponents: IComponentWithLateLoadKey[] = [
     EmbeddedContentComponent,
     KpiComponent,
+    RiskScoreTileComponent,
     LineChartComponent,
     LoadingComponent,
     ProportionalWidgetComponent,
@@ -201,6 +210,7 @@ const entryComponents: IComponentWithLateLoadKey[] = [
         NuiSearchModule,
         NuiCommonModule,
         NuiRepeatModule,
+        NuiRiskScoreModule,
         NuiSelectModule,
         NuiPopoverModule,
     ],
@@ -219,9 +229,11 @@ export class NuiDashboardsModule {
         widgetTypesService: WidgetTypesService,
         componentRegistry: ComponentRegistryService,
         eventRegistry: EventRegistryService,
-        kpiFormattersRegistry: KpiFormattersRegistryService
+        kpiFormattersRegistry: KpiFormattersRegistryService,
+        riskScoreFormattersRegistry: RiskScoreFormattersRegistryService
     ) {
         widgetTypesService.registerWidgetType("kpi", 1, kpi);
+        widgetTypesService.registerWidgetType("risk-score", 1, riskScore);
         widgetTypesService.registerWidgetType("table", 1, table);
         widgetTypesService.registerWidgetType("proportional", 1, proportional);
         widgetTypesService.registerWidgetType("timeseries", 1, timeseries);
@@ -258,5 +270,6 @@ export class NuiDashboardsModule {
         eventRegistry.registerEvent(DATA_SOURCE_BUSY);
 
         kpiFormattersRegistry.addItems(DEFAULT_KPI_FORMATTERS);
+        riskScoreFormattersRegistry.addItems(DEFAULT_RISK_SCORE_FORMATTERS);
     }
 }

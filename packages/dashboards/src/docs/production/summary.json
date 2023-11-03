@@ -114,6 +114,10 @@
                 ]
             },
             {
+                "title": "Risk Score",
+                "file": "../pages/widget-types/risk-score/risk-score.md"
+            },
+            {
                 "title": "Proportional",
                 "file": "../pages/widget-types/proportional/proportional.md",
                 "children": [

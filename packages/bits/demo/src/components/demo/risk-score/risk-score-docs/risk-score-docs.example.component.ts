@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+// © 2023 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -18,10 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./kpi/public-api";
-export * from "./risk-score/public-api";
-export * from "./table/public-api";
-export * from "./timeseries/public-api";
-export * from "./proportional/public-api";
-export * from "./configurator-items/public-api";
-export * from "./drilldown/public-api";
+import { Component } from "@angular/core";
+
+@Component({
+    selector: "nui-risk-score-docs-example",
+    templateUrl: "./risk-score-docs.example.component.html",
+})
+export class RiskScoreDocsExampleComponent {}

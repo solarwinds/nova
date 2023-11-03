@@ -1,6 +1,7 @@
 # Available Widget Types
 
 -   [KPI](./widget-types/kpi.html)
+-   [Risk Score](./widget-types/risk-score.html)
 -   [Proportional](./widget-types/proportional.html)
 -   [Table](./widget-types/table.html)
 -   [Timeseries](./widget-types/timeseries.html)
