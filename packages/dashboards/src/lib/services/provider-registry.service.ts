@@ -77,6 +77,7 @@ import { KpiColorComparatorsRegistryService } from "./kpi-color-comparators-regi
 import {
     KpiFormattersRegistryService,
     ProportionalDonutContentFormattersRegistryService,
+    RiskScoreFormattersRegistryService,
     TableFormatterRegistryService,
 } from "./table-formatter-registry.service";
 import {
@@ -112,6 +113,7 @@ import {
     NOVA_TITLE_AND_DESCRIPTION_CONVERTER,
     NOVA_URL_INTERACTION_HANDLER,
     NOVA_VIRTUAL_VIEWPORT_MANAGER,
+    NOVA_RISK_SCORE_FORMATTERS_REGISTRY,
 } from "./types";
 import { UrlInteractionService } from "./url-interaction.service";
 import { WidgetConfigurationService } from "./widget-configuration.service";
@@ -297,6 +299,11 @@ export class ProviderRegistryService {
             [NOVA_KPI_FORMATTERS_REGISTRY]: {
                 provide: FORMATTERS_REGISTRY,
                 useExisting: KpiFormattersRegistryService,
+                deps: [PizzagnaService],
+            },
+            [NOVA_RISK_SCORE_FORMATTERS_REGISTRY]: {
+                provide: FORMATTERS_REGISTRY,
+                useExisting: RiskScoreFormattersRegistryService,
                 deps: [PizzagnaService],
             },
             [NOVA_PROPORTIONAL_CONTENT_FORMATTERS_REGISTRY]: {
