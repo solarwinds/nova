@@ -32,6 +32,7 @@
         >
             <nui-legend-series
                 *ngIf="widgetData.summarySerie && summarySerie"
+                class="summary-serie"
                 [interactive]="false"
                 (mouseenter)="chartAssist.resetVisibleSeries()"
             >
@@ -68,6 +69,17 @@
                         </div>
                     </div>
                 </div>
+
+                <button
+                    nui-button
+                    legendMenu
+                    icon="remove"
+                    type="button"
+                    displayStyle="action"
+                    *ngIf="displayDeleteButton()"
+                    (click)="removeMetric(summarySerie.id)"
+                    displayStyle="action"
+                ></button>
             </nui-legend-series>
 
             <nui-legend-series
@@ -91,14 +103,7 @@
                 "
             >
                 <nui-rich-legend-tile
-                    [value]="
-                        chartAssist.getHighlightedValue(
-                            legendSeries,
-                            'y',
-                            'tick',
-                            valueAccessorKey
-                        )
-                    "
+                    [value]="getLegendValue(legendSeries, valueAccessorKey)"
                     [backgroundColor]="
                         chartAssist.palette.standardColors.get(legendSeries.id)
                     "
@@ -167,6 +172,11 @@
                             {{ legendSeries.legendDescriptionSecondary }}
                         </a>
                     </div>
+                    <nui-icon
+                        *ngIf="legendSeries.realtime"
+                        icon="fast-poll"
+                        iconColor="primary-blue"
+                    ></nui-icon>
                     <nui-icon
                         *ngIf="legendSeries.transformer"
                         icon="performance"

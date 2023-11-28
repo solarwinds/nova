@@ -101,7 +101,7 @@ jobs:
                   name: Check git diff to see if builds should skip e2e
                   working_directory: ~/nova/packages/bits
                   command: |
-                      if [ -f $PROJECT_DIR/package-cached ]; then
+                      if [ -f package-cached ]; then
                           echo "This package was restored from cache so we're skipping e2e tests"
                           circleci step halt
                       fi
@@ -562,11 +562,6 @@ jobs:
             - attach_workspace:
                   at: ~/nova
             - run:
-                  name: Configure Git
-                  command: |
-                      git config --global user.email circleci@circleci
-                      git config --global user.name $CIRCLE_PROJECT_USERNAME
-            - run:
                   name: Publish nova docs & Prepare nova-docs artifact
                   command: yarn run deploy-docs-ci
             - store_artifacts:
@@ -582,11 +577,6 @@ jobs:
             - checkout:
                   path: ~/nova
             - run:
-                  name: Configure Git
-                  command: |
-                      git config --global user.email circleci@circleci
-                      git config --global user.name $CIRCLE_PROJECT_USERNAME
-            - run:
                   name: Docs Cleanup
                   command: yarn run clean-docs-ci
     release-prep:
@@ -594,7 +584,7 @@ jobs:
         docker:
             - image: cimg/node:16.18
         environment:
-            SOURCE_BRANCH: main
+            SOURCE_BRANCH: cci-release/merge-v12-to-main
             CREATE_RELEASE_BRANCH: "true"
             RELEASE_BRANCH: release/v15.0.x
             INCREMENT_TYPE: patch
@@ -641,9 +631,9 @@ workflows:
                       branches:
                           only:
                               - main
-                              - /^release\/.+/
+                              - /^release\/.*/
                               - next
-                              - /^cci\/.+/
+                              - /^cci\/.*/
             - bits-verify:
                   requires:
                       - bits-publish
@@ -651,9 +641,9 @@ workflows:
                       branches:
                           only:
                               - main
-                              - /^release\/.+/
+                              - /^release\/.*/
                               - next
-                              - /^cci\/.+/
+                              - /^cci\/.*/
             - charts-build:
                   requires:
                       - bits-pack
@@ -681,9 +671,9 @@ workflows:
                       branches:
                           only:
                               - main
-                              - /^release\/.+/
+                              - /^release\/.*/
                               - next
-                              - /^cci\/.+/
+                              - /^cci\/.*/
             - charts-verify:
                   requires:
                       - charts-publish
@@ -691,9 +681,9 @@ workflows:
                       branches:
                           only:
                               - main
-                              - /^release\/.+/
+                              - /^release\/.*/
                               - next
-                              - /^cci\/.+/
+                              - /^cci\/.*/
             - dashboards-build:
                   requires:
                       - charts-pack
@@ -707,9 +697,9 @@ workflows:
                       branches:
                           only:
                               - main
-                              - /^release\/.+/
+                              - /^release\/.*/
                               - next
-                              - /^cci\/.+/
+                              - /^cci\/.*/
                   requires:
                       - bits-pack
                       - charts-pack
@@ -721,7 +711,7 @@ workflows:
                   filters:
                       branches:
                           only:
-                              - /^cci\/.+/
+                              - /^cci\/.*/
             - dashboards-unit-test:
                   requires:
                       - dashboards-build
@@ -743,9 +733,9 @@ workflows:
                       branches:
                           only:
                               - main
-                              - /^release\/.+/
+                              - /^release\/.*/
                               - next
-                              - /^cci\/.+/
+                              - /^cci\/.*/
             - dashboards-verify:
                   requires:
                       - dashboards-publish
@@ -753,9 +743,9 @@ workflows:
                       branches:
                           only:
                               - main
-                              - /^release\/.+/
+                              - /^release\/.*/
                               - next
-                              - /^cci\/.+/
+                              - /^cci\/.*/
 
     nova-release:
         jobs:
@@ -768,8 +758,7 @@ workflows:
                               - /^hotfix\/v[\d.]+x/
                               - /^cci-release\/.*/
             - release-prep:
-                  context:
-                      - common-build-creds
+                  context: github-write-access
                   requires:
                       - release-approval
 

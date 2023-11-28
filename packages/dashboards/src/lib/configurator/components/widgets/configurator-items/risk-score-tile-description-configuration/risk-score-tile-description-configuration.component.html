@@ -1,0 +1,108 @@
+<nui-widget-editor-accordion
+    [formGroup]="form"
+    [state]="form | nuiWidgetEditorAccordionFormState | async"
+>
+    <div accordionHeader class="d-flex align-items-center px-4 py-2">
+        <nui-icon
+            class="align-self-start pt-2"
+            [icon]="form | nuiFormHeaderIconPipe: 'widget_list' | async"
+        ></nui-icon>
+        <div class="d-flex flex-column ml-4 pt-1">
+            <span class="nui-text-label" i18n>Description</span>
+            <div class="nui-text-secondary" [title]="subtitle$ | async">
+                {{ subtitle$ | async }}
+            </div>
+        </div>
+    </div>
+    <div class="risk-score-tile-description-configuration__accordion-content">
+        <div class="mb-4">
+            <nui-form-field
+                caption="Label"
+                i18n-caption
+                [control]="form.get('label')"
+                class="form-group"
+            >
+                <nui-textbox
+                    formControlName="label"
+                    placeholder="Set label"
+                    i18n-placeholder
+                ></nui-textbox>
+            </nui-form-field>
+        </div>
+
+        <div class="mt-4">
+            <nui-form-field
+                caption="Min Value"
+                i18n-caption
+                [control]="form.get('minValue')"
+                class="form-group"
+            >
+                <nui-textbox-number
+                    formControlName="minValue"
+                    placeholder="Min Value"
+                    i18n-placeholder
+                ></nui-textbox-number>
+            </nui-form-field>
+        </div>
+
+        <div class="mt-4">
+            <nui-form-field
+                caption="Max Value"
+                i18n-caption
+                [control]="form.get('maxValue')"
+                class="form-group"
+            >
+                <nui-textbox-number
+                    formControlName="maxValue"
+                    placeholder="Max Value"
+                    i18n-placeholder
+                ></nui-textbox-number>
+            </nui-form-field>
+        </div>
+
+        <div class="mt-4">
+            <nui-form-field
+                [control]="form.get('useStaticLabel')"
+                class="form-group"
+            >
+                <nui-switch formControlName="useStaticLabel" i18n
+                    >Use Float Label</nui-switch
+                >
+            </nui-form-field>
+        </div>
+
+        <div class="mt-4" [class.hidden]="!form.get('useStaticLabel')?.value">
+            <nui-form-field
+                caption="Float Label"
+                i18n-caption
+                [control]="form.get('staticLabel')"
+                class="form-group"
+            >
+                <nui-textbox
+                    formControlName="staticLabel"
+                    placeholder="Set float label"
+                    i18n-placeholder
+                ></nui-textbox>
+            </nui-form-field>
+        </div>
+
+        <div class="mt-4">
+            <nui-form-field
+                caption="Description"
+                i18n-caption
+                [control]="form.get('description')"
+                class="form-group"
+            >
+                <nui-textbox
+                    formControlName="description"
+                    placeholder="Set description"
+                    i18n-placeholder
+                ></nui-textbox>
+                <nui-validation-message for="maxlength" i18n>
+                    Description cannot be longer than
+                    {{ MAX_DESCRIPTION_LENGTH }} characters.
+                </nui-validation-message>
+            </nui-form-field>
+        </div>
+    </div>
+</nui-widget-editor-accordion>

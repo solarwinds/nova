@@ -108,6 +108,10 @@ export default class OverviewModule {
             HarryPotterAverageRatingDataSource.providerId,
             HarryPotterRatingsCountDataSource.providerId,
         ]);
+        this.setDataSourceProviders("risk-score", [
+            HarryPotterAverageRatingDataSource.providerId,
+            HarryPotterRatingsCountDataSource.providerId,
+        ]);
         this.setDataSourceProviders("proportional", [
             BeerReviewCountsByCityMockDataSource.providerId,
             BeerReviewCountsByCityMockDataSource2.providerId,

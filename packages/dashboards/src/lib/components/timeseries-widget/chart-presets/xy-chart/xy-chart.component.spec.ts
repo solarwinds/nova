@@ -38,6 +38,7 @@ import {
     XYGrid,
 } from "@nova-ui/charts";
 
+import { ISerializableTimeframe } from "../../../../configurator/services/types";
 import { NuiDashboardsModule } from "../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../services/provider-registry.service";
 import {
@@ -45,11 +46,7 @@ import {
     INTERACTION,
     SET_TIMEFRAME,
 } from "../../../../services/types";
-import {
-    DATA_SOURCE,
-    ISerializableTimeframe,
-    PIZZAGNA_EVENT_BUS,
-} from "../../../../types";
+import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../types";
 import {
     ITimeseriesScalesConfig,
     ITimeseriesWidgetConfig,
