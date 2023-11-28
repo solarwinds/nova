@@ -584,7 +584,7 @@ jobs:
         docker:
             - image: cimg/node:16.18
         environment:
-            SOURCE_BRANCH: main
+            SOURCE_BRANCH: cci-release/merge-v12-to-main
             CREATE_RELEASE_BRANCH: "true"
             RELEASE_BRANCH: release/v15.0.x
             INCREMENT_TYPE: patch
