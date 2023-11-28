@@ -28,7 +28,6 @@ import {
     OnInit,
     SimpleChanges,
 } from "@angular/core";
-import moment from "moment/moment";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -38,8 +37,8 @@ import {
     TimeseriesZoomPluginsSyncService,
     ITimeseriesZoomPluginInspectionFrame,
 } from "@nova-ui/charts";
-
 import { PIZZAGNA_EVENT_BUS } from "../../../types";
+import moment from "moment/moment";
 
 export const TIMESERIES_INSPECTION_MENU_ZOOM_IN: IEventDefinition<
     IEvent<ITimeseriesZoomPluginInspectionFrame>
@@ -148,7 +147,7 @@ export class TimeseriesInspectionMenuComponent
 
     public clearZoom(): void {
         this.syncService.clearZoomInsideCollection(this.collectionId ?? "");
-        this.eventBus.next(TIMESERIES_INSPECTION_MENU_CLOSE, {});
+        this.eventBus.next(TIMESERIES_INSPECTION_MENU_CLOSE);
     }
 
     public isZoomInAllowed(): boolean {

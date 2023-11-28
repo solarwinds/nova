@@ -33,7 +33,7 @@
     "@apollo/client": "^3.7.2",
     "@axe-core/webdriverjs": "^4.5.1",
     "@compodoc/compodoc": "^1.1.19",
-    "@percy/cli": "^1.13.0",
+    "@percy/cli": "^1.21.0",
     "@percy/protractor": "^2.0.1",
     "@schematics/angular": "^15.1.3",
     "@types/jasmine": "^4.3.0",

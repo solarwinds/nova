@@ -1,0 +1,22 @@
+@import (reference) "@nova-ui/bits/sdk/less/nui-framework-variables";
+@import (reference) "@nova-ui/bits/sdk/less/mixins";
+
+.risk-score-tile-description-configuration {
+    @arrow-container-width: 30px;
+
+    &__accordion-content {
+        padding: @nui-space-md @nui-space-md @nui-space-md
+            (@nui-space-md * 2 + @icon-size-default);
+    }
+
+    &__selector-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: @arrow-container-width;
+        height: 30px;
+        border-left: 1px solid;
+        .setCssVariable(border-left-color, nui-color-line-default);
+        margin-left: @nui-space-sm;
+    }
+}

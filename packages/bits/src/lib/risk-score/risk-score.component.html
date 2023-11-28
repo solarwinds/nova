@@ -1,0 +1,10 @@
+<div class="nui-risk-score" [title]="level">
+    <div class="nui-risk-score__float" [style.margin-left.px]="floatOffset">
+        <div class="nui-risk-score__float-title" *ngIf="title !== undefined">
+            {{ title }}
+        </div>
+        <div class="nui-risk-score__float-path"></div>
+    </div>
+
+    <div class="nui-risk-score__color-line" #colorLine></div>
+</div>

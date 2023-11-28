@@ -198,6 +198,13 @@ const appRoutes: Routes = [
         loadChildren: async () => import("../demo/resize/resize.module"),
     },
     {
+        path: "risk-score",
+        loadChildren: async () =>
+            import("../demo/risk-score/risk-score.module").then(
+                (m) => m.RiskScoreModule
+            ),
+    },
+    {
         path: "runtime-i18n",
         loadChildren: async () =>
             import("../demo/runtime-i18n/runtime-i18n.module"),
