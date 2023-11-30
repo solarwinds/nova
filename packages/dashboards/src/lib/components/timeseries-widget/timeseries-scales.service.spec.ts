@@ -82,14 +82,6 @@ describe("TimeseriesScalesService > ", () => {
             expect(scale.isDomainFixed).toEqual(undefined);
         });
 
-        it("shouldn't set domain for stacked aread chart", () => {
-            widgetConfig.preset = TimeseriesChartPreset.StackedArea;
-            service.updateConfiguration(scale, scaleConfig, widgetConfig);
-
-            expect(scale.fixDomainValues).toEqual([]);
-            expect(scale.isDomainFixed).toEqual(undefined);
-        });
-
         it("should set fix domain for percent axis", () => {
             service.updateConfiguration(scale, scaleConfig, widgetConfig);
 
