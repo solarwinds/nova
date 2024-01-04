@@ -1,0 +1,26 @@
+{
+    "$schema": "./node_modules/@compodoc/compodoc/src/config/schema.json",
+    "assetsFolder": "src/docs/assets",
+    "disableLifeCycleHooks": true,
+    "disablePrivate": true,
+    "disableProtected": true,
+    "hideGenerator": true,
+    "includes": "src/docs/production",
+    "includesName": "Additional Documentation",
+    "navTabConfig": [
+        {
+            "id": "example",
+            "label": "Overview"
+        },
+        {
+            "id": "info",
+            "label": "API"
+        },
+        {
+            "id": "source",
+            "label": "Source"
+        }
+    ],
+    "output": "sdk/api-docs-ng2",
+    "tsconfig": "src/tsconfig.compodoc.json"
+}
