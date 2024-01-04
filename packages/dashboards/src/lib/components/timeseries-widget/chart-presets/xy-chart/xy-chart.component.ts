@@ -64,10 +64,6 @@ import {
     PIZZAGNA_EVENT_BUS,
 } from "../../../../types";
 import { LegendPlacement } from "../../../../widget-types/common/widget/legend";
-import {
-    SUMMARY_LEGEND_BCG_COLOR,
-    SUMMARY_LEGEND_COLOR,
-} from "../../timeseries-helpers";
 import { TimeseriesScalesService } from "../../timeseries-scales.service";
 import {
     transformChangePoint,
@@ -90,6 +86,10 @@ import {
     TimeseriesWidgetProjectType,
 } from "../../types";
 import { TimeseriesChartComponent } from "../timeseries-chart.component";
+import {
+    SUMMARY_LEGEND_BCG_COLOR,
+    SUMMARY_LEGEND_COLOR,
+} from "../../timeseries-helpers";
 
 interface ITransformerDescription {
     displayName: string;
@@ -432,6 +432,15 @@ export abstract class XYChartComponent
         );
     }
 
+    public displayDeleteButton(): boolean {
+        return (
+            this.configuration.preset !== TimeseriesChartPreset.Line &&
+            !!this.configuration.allowLegendMenu &&
+            this.configuration.projectType ===
+                TimeseriesWidgetProjectType.PerfstackApp
+        );
+    }
+
     public transformData(metricId: string, trId: TimeseriesTransformer): void {
         const serie = this.widgetData.series.find((s) => s.id === metricId);
         if (!serie) {
@@ -449,5 +458,31 @@ export abstract class XYChartComponent
             }
         }
         this.updateChartData();
+    }
+
+    public getLegendValue(
+        legendSeries: IChartAssistSeries<IAccessors<any>>,
+        valueAccessorKey: string
+    ): string | number | undefined {
+        const val = this.chartAssist.getHighlightedValue(
+            legendSeries,
+            "y",
+            "tick",
+            valueAccessorKey
+        );
+
+        if (
+            this.configuration.projectType ===
+                TimeseriesWidgetProjectType.PerfstackApp &&
+            this.configuration.preset === TimeseriesChartPreset.StackedArea &&
+            this.configuration.units === "percent"
+        ) {
+            const submetricsCount = this.chartAssist.legendSeriesSet.length;
+            const strVal = `${val ?? 0}`;
+
+            return `${parseFloat(strVal ?? "0") * submetricsCount} %`;
+        }
+
+        return val;
     }
 }

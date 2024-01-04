@@ -1,0 +1,39 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+
+@gradient: linear-gradient(
+    90deg,
+    @nui-color-semantic-ok 0%,
+    @nui-color-semantic-warning 35%,
+    @nui-color-semantic-critical 70%,
+    @nui-color-semantic-down 100%
+);
+
+.nui-risk-score {
+    &__color-line {
+        height: 0.65em;
+        .setCssVariable(background, gradient);
+    }
+
+    &__float {
+        font-size: 0.35em;
+        display: grid;
+
+        &-title {
+            font-size: 1.4em;
+            .setCssVariable(color, nui-color-text-secondary);
+            text-align: center;
+            white-space: nowrap;
+            display: inline-block;
+            transform: translateX(-50%);
+        }
+
+        &-path {
+            transform: translateX(-50%);
+            width: 2em;
+            height: 1em;
+            .setCssVariable(background-color, nui-color-text-default);
+            clip-path: polygon(0 0%, 50% 100%, 100% 0);
+        }
+    }
+}
