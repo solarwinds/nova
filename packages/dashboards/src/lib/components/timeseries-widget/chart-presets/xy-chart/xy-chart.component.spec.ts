@@ -208,6 +208,7 @@ describe("XYChartComponent", () => {
             const timeframe: ISerializableTimeframe = {
                 startDatetime: "2019-11-11T18:09:03-06:00",
                 endDatetime: "2019-11-18T18:09:03-06:00",
+                // @ts-ignore: Suppressed for test purposes
                 selectedPresetId: undefined,
             };
             component.ngOnChanges(initializationChanges);

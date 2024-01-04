@@ -71,6 +71,8 @@ export const CHART_PALETTE_CS_S_EXTENDED_ALTERNATIVE_NAMES = [
     $localize`Ok Light`,
     $localize`Info`,
     $localize`Info Light`,
+    $localize`Disabled`,
+    $localize`Not Applicable`,
 ];
 
 export const chartPaletteColorMap: Record<string, string> = zipObject(
