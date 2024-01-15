@@ -23,7 +23,7 @@ import { RouterModule, Routes } from "@angular/router";
 
 import { ConfiguratorHeadingService } from "@nova-ui/dashboards";
 
-enum TutorialsModuleRoute {
+export enum TutorialsModuleRoute {
     HelloDashboards = "hello-dashboards",
     DataSource = "data-source-setup",
     WidgetEditor = "widget-editor-setup",

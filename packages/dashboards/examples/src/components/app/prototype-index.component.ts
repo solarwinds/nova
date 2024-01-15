@@ -19,6 +19,8 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { TutorialsModuleRoute } from "components/docs/tutorials/tutorials.module";
+import { WidgetTypesRoute } from "../docs/widget-types/widget-types.module";
 
 /**
  * Navigation helper
@@ -26,6 +28,12 @@ import { Component } from "@angular/core";
 @Component({
     template: `
         <h1>Dashboard Developer Links</h1>
+        <h2>Docs</h2>
+        <ul>
+            <li *ngFor="let link of docs">
+                <a [routerLink]="link.path">{{ link.title }}</a>
+            </li>
+        </ul>
         <h2>Prototypes</h2>
         <ul>
             <li *ngFor="let link of prototypes">
@@ -38,9 +46,31 @@ import { Component } from "@angular/core";
                 <a [routerLink]="link.path">{{ link.title }}</a>
             </li>
         </ul>
+        <h2>Schematics</h2>
+        <ul>
+            <li><a routerLink="schematics">overview</a></li>
+        </ul>
     `,
 })
 export class DeveloperQuickLinksComponent {
+    public docs = [
+        {
+            title: "Overview",
+            path: "/docs/overview",
+        },
+        ...Object.entries(TutorialsModuleRoute).map(([key, val])=>{
+            return {
+                title: `Tutorials - ${val}`,
+                path: `/docs/tutorials/${val}`
+            }
+        }),
+        ...Object.entries(WidgetTypesRoute).map(([key, val])=>{
+            return {
+                title: `Widget types - ${val}`,
+                path: `/docs/widget-types/${val}`
+            }
+        }),
+    ];
     public prototypes = [
         {
             title: "Prototype 1",
