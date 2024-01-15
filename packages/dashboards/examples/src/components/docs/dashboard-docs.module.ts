@@ -63,15 +63,15 @@ const exampleRoutes: Routes = [
     ],
     providers: [
         {
-        provide: APOLLO_OPTIONS,
-        useFactory: (httpLink: HttpLink) => ({
-            cache: new InMemoryCache(),
-            link: httpLink.create({
-                uri: COUNTRIES_API,
+            provide: APOLLO_OPTIONS,
+            useFactory: (httpLink: HttpLink) => ({
+                cache: new InMemoryCache(),
+                link: httpLink.create({
+                    uri: COUNTRIES_API,
+                }),
             }),
-        }),
-        deps: [HttpLink],
-    }]
+            deps: [HttpLink],
+        },
+    ],
 })
-export default class DashboardDocsModule {
-}
+export default class DashboardDocsModule {}

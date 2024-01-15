@@ -58,17 +58,17 @@ export class DeveloperQuickLinksComponent {
             title: "Overview",
             path: "/docs/overview",
         },
-        ...Object.entries(TutorialsModuleRoute).map(([key, val])=>{
+        ...Object.entries(TutorialsModuleRoute).map(([key, val]) => {
             return {
                 title: `Tutorials - ${val}`,
-                path: `/docs/tutorials/${val}`
-            }
+                path: `/docs/tutorials/${val}`,
+            };
         }),
-        ...Object.entries(WidgetTypesRoute).map(([key, val])=>{
+        ...Object.entries(WidgetTypesRoute).map(([key, val]) => {
             return {
                 title: `Widget types - ${val}`,
-                path: `/docs/widget-types/${val}`
-            }
+                path: `/docs/widget-types/${val}`,
+            };
         }),
     ];
     public prototypes = [
