@@ -19,7 +19,8 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
-import { TutorialsModuleRoute } from "components/docs/tutorials/tutorials.module";
+
+import { TutorialsModuleRoute } from "../docs/tutorials/tutorials.module";
 import { WidgetTypesRoute } from "../docs/widget-types/widget-types.module";
 
 /**
@@ -58,18 +59,14 @@ export class DeveloperQuickLinksComponent {
             title: "Overview",
             path: "/docs/overview",
         },
-        ...Object.entries(TutorialsModuleRoute).map(([key, val]) => {
-            return {
-                title: `Tutorials - ${val}`,
-                path: `/docs/tutorials/${val}`,
-            };
-        }),
-        ...Object.entries(WidgetTypesRoute).map(([key, val]) => {
-            return {
-                title: `Widget types - ${val}`,
-                path: `/docs/widget-types/${val}`,
-            };
-        }),
+        ...Object.entries(TutorialsModuleRoute).map(([_, val]) => ({
+            title: `Tutorials - ${val}`,
+            path: `/docs/tutorials/${val}`,
+        })),
+        ...Object.entries(WidgetTypesRoute).map(([_, val]) => ({
+            title: `Widget types - ${val}`,
+            path: `/docs/widget-types/${val}`,
+        })),
     ];
     public prototypes = [
         {
