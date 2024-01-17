@@ -39,6 +39,18 @@ const routes: Routes = [
         },
     },
     {
+        path: "risk-score",
+        loadChildren: async () =>
+            import("./risk-score/risk-score-docs.module") as object as Promise<
+                Type<any>
+            >,
+        data: {
+            srlc: {
+                hideIndicator: true,
+            },
+        },
+    },
+    {
         path: "timeseries",
         loadChildren: async () =>
             import("./timeseries/timeseries-docs.module") as object as Promise<

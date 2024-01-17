@@ -138,12 +138,7 @@ export class TimeseriesScalesService {
                     scale.scaleUnits = scaleConfig.properties.axisUnits;
                 }
 
-                if (
-                    widgetConfig?.preset === TimeseriesChartPreset.StatusBar ||
-                    (widgetConfig?.preset ===
-                        TimeseriesChartPreset.StackedArea &&
-                        scaleConfig.properties?.axisUnits === "percent")
-                ) {
+                if (widgetConfig?.preset === TimeseriesChartPreset.StatusBar) {
                     return;
                 }
 
@@ -158,15 +153,24 @@ export class TimeseriesScalesService {
                     scaleConfig.properties?.domain &&
                     scale.setFixDomainValues
                 ) {
-                    const domainAdjusted =
-                        widgetConfig?.preset ===
-                        TimeseriesChartPreset.StackedBar
-                            ? this.getStackedBarScaleDomain(
-                                  scaleConfig.properties.domain
-                              )
-                            : this.getLineScaleDomain(
-                                  scaleConfig.properties.domain
-                              );
+                    let domainAdjusted;
+                    switch (widgetConfig?.preset) {
+                        case TimeseriesChartPreset.StackedBar:
+                            domainAdjusted = this.getStackedBarScaleDomain(
+                                scaleConfig.properties.domain
+                            );
+                            break;
+                        case TimeseriesChartPreset.StackedArea:
+                            domainAdjusted = this.getStackedAreaScaleDomain(
+                                scaleConfig.properties.domain.max
+                            );
+                            break;
+                        default:
+                            domainAdjusted = this.getLineScaleDomain(
+                                scaleConfig.properties.domain
+                            );
+                    }
+
                     scale.setFixDomainValues(domainAdjusted);
                 }
                 break;
@@ -234,5 +238,10 @@ export class TimeseriesScalesService {
             max - point,
             max,
         ]);
+    }
+
+    private getStackedAreaScaleDomain(max: number): number[] {
+        const point = max / 4;
+        return [0, point, point * 2, max - point, max];
     }
 }
