@@ -28,11 +28,13 @@ import {
     NuiDocsModule,
     NuiMessageModule,
     NuiSwitchModule,
+    DEMO_PATH_TOKEN,
 } from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { WidgetEditorDocsComponent } from "./widget-editor-setup-docs.component";
 import { WidgetEditorSetupComponent } from "./widget-editor-setup.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
 
 const routes = [
     {
@@ -68,5 +70,11 @@ const routes = [
         RouterModule.forChild(routes),
     ],
     declarations: [WidgetEditorDocsComponent, WidgetEditorSetupComponent],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("widget-editor-setup"),
+        },
+    ],
 })
 export default class WidgetEditorSetupModule {}

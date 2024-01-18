@@ -31,6 +31,7 @@ import {
     NuiRepeatModule,
     NuiSwitchModule,
     NuiToastModule,
+    DEMO_PATH_TOKEN,
 } from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
@@ -39,6 +40,7 @@ import {
     WidgetCreationComponent,
     WidgetTemplateSelectionComponent,
 } from "./widget-creation.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
 
 const routes = [
     {
@@ -80,6 +82,12 @@ const routes = [
         WidgetCreationDocsComponent,
         WidgetCreationComponent,
         WidgetTemplateSelectionComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("widget-creation"),
+        },
     ],
 })
 export default class WidgetCreationModule {}

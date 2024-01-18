@@ -32,6 +32,7 @@ import {
     NuiMessageModule,
     NuiSwitchModule,
     NuiTextboxModule,
+    DEMO_PATH_TOKEN,
 } from "@nova-ui/bits";
 import {
     NuiDashboardConfiguratorModule,
@@ -40,6 +41,7 @@ import {
 
 import { WidgetErrorHandlingDocsComponent } from "./widget-error-handling-docs.component";
 import { WidgetErrorHandlingComponent } from "./widget-error-handling.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
 
 const routes = [
     {
@@ -84,6 +86,12 @@ const routes = [
     declarations: [
         WidgetErrorHandlingDocsComponent,
         WidgetErrorHandlingComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("widget-error-handling"),
+        },
     ],
 })
 export default class WidgetErrorHandlingModule {}
