@@ -39,7 +39,6 @@ import {
     TimeseriesChartPreset,
 } from "./types";
 
-
 /**
  * This service handles scale creation and configuration for the timeseries widget
  */

@@ -27,6 +27,7 @@ describe("components >", () => {
     describe("risk-score >", () => {
         let subject: RiskScoreComponent;
         let fixture: ComponentFixture<RiskScoreComponent>;
+        let el: DebugElement;
 
         const minValue = 0;
         const maxValue = 10;
@@ -40,7 +41,7 @@ describe("components >", () => {
             }).compileComponents();
 
             fixture = TestBed.createComponent(RiskScoreComponent);
-            debugElement = fixture.debugElement;
+            el = fixture.debugElement;
 
             subject = fixture.componentInstance;
             subject.level = 1;
