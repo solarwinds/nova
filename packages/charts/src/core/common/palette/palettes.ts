@@ -123,6 +123,8 @@ export const CHART_PALETTE_CS_S_EXTENDED: string[] = [
     "var(--nui-color-semantic-ok-bg)",
     "var(--nui-color-semantic-info)",
     "var(--nui-color-semantic-info-bg)",
+    "var(--nui-color-chart-ten-light)",
+    "var(--nui-color-chart-ten)",
 ];
 
 /* eslint-disable max-len */

@@ -21,6 +21,7 @@
 export * from "./data-source-configuration/data-source-configuration.component";
 export * from "./data-source-configuration-v2/data-source-configuration-v2.component";
 export * from "./kpi-description-configuration/kpi-description-configuration.component";
+export * from "./risk-score-tile-description-configuration/risk-score-tile-description-configuration.component";
 export * from "./thresholds-configuration/thresholds-configuration.component";
 export * from "./title-and-description-configuration/title-and-description-configuration.component";
 export * from "./refresher-configuration/public-api";

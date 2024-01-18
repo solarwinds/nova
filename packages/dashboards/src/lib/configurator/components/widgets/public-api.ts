@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 export * from "./kpi/public-api";
+export * from "./risk-score/public-api";
 export * from "./table/public-api";
 export * from "./timeseries/public-api";
 export * from "./proportional/public-api";

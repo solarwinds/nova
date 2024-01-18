@@ -48,6 +48,7 @@ export { SearchComponent } from "./lib/search/search.component";
 export { TextboxComponent } from "./lib/textbox/textbox.component";
 export { RepeatItemComponent } from "./lib/repeat/repeat-item/repeat-item.component";
 export { RepeatComponent } from "./lib/repeat/repeat.component";
+export { RiskScoreComponent } from "./lib/risk-score/risk-score.component";
 export { MenuActionComponent } from "./lib/menu/menu-item/menu-action/menu-action.component";
 export { MenuComponent } from "./lib/menu/menu/menu.component";
 export { MenuGroupComponent } from "./lib/menu/menu-item/menu-group/menu-group.component";

@@ -24,6 +24,7 @@ export * from "./layouts/public-api";
 export * from "./template-load-error/template-load-error.component";
 export * from "./proportional-widget/public-api";
 export * from "./kpi-widget/public-api";
+export * from "./risk-score-tile/public-api";
 export * from "./timeseries-widget/public-api";
 export * from "./table-widget/public-api";
 export * from "./providers/public-api";
