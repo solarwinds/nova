@@ -62,25 +62,25 @@ describe("components >", () => {
 
         it("level = min. should provide floatOffset equal to 0", () => {
             subject.level = minValue;
-            subject.ngOnChanges({});
+            subject.ngOnChanges();
             expect(subject.floatOffset).toEqual(0);
         });
 
         it("level = max. should provide floatOffset equal to 100", () => {
             subject.level = maxValue;
-            subject.ngOnChanges({});
+            subject.ngOnChanges();
             expect(subject.floatOffset).toEqual(width);
         });
 
         it("level < min. should provide floatOffset equal to 0", () => {
             subject.level = minValue - 1;
-            subject.ngOnChanges({});
+            subject.ngOnChanges();
             expect(subject.floatOffset).toEqual(0);
         });
 
         it("level > max. should provide floatOffset equal to 100", () => {
             subject.level = maxValue + 1;
-            subject.ngOnChanges({});
+            subject.ngOnChanges();
             expect(subject.floatOffset).toEqual(width);
         });
     });
