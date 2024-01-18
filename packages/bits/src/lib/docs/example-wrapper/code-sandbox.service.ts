@@ -90,7 +90,7 @@ export class CodeSandboxService {
         form.appendChild(input);
     }
 
-    compress(object: Record<string, object>): void {
+    compress(object: Record<string, object>): string {
         return compressToBase64(JSON.stringify(object))
             .replace(/\+/g, "-") // Convert '+' to '-'
             .replace(/\//g, "_") // Convert '/' to '_'

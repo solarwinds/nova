@@ -1,18 +1,14 @@
-export const INDEX =
-    "<!DOCTYPE html>\n" +
-    "<html class=\"nui nui-demo\">\n" +
-    "<head>\n" +
-    "    <meta charset=\"utf-8\" />\n" +
-    "    <meta\n" +
-    "        name=\"viewport\"\n" +
-    "        content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no\"\n" +
-    "    />\n" +
-    "    <meta name=\"description\" />\n" +
-    "    <meta name=\"keywords\" />\n" +
-    "    <title>Nova Nui</title>\n" +
-    "</head>\n" +
-    "\n" +
-    "<body>\n" +
-    "<nui-example-app></nui-example-app>\n" +
-    "</body>\n" +
-    "</html>\n";
+export const INDEX = `
+<!DOCTYPE html>
+<html class="nui nui-demo" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="description" />
+    <meta name="keywords" />
+    <title>Nova Nui</title>
+</head>
+<body>
+    <nui-example-app></nui-example-app>
+</body>
+</html>`;

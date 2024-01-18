@@ -13,7 +13,7 @@ export const createAngularApp = (
     context: string,
     sources: FileMetadata[],
     latestNovaVersion: string
-): {files: Record<string, object> } => {
+): { files: Record<string, object> } => {
     let files: Record<string, object> = {
         "src/index.html": {
             content: getIndex(filenamePrefix),

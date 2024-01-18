@@ -27,7 +27,6 @@ import { NgModule, Provider } from "@angular/core";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { LocalizeFn } from "@angular/localize/init";
 
-import { ZoomContentDirective } from "./directives/zoom-content/zoom-content.directive";
 import { ClickFilterDirective } from "./directives/click-filter/click-filter.directive";
 import { ClickInterceptorDirective } from "./directives/click-interceptor/click-interceptor.directive";
 import { ClipboardDirective } from "./directives/clipboard/clipboard.directive";
@@ -38,6 +37,7 @@ import { ResizeDirective } from "./directives/resize/resize.directive";
 import { ResizeObserverDirective } from "./directives/resize-observer/resize-observer.directive";
 import { ResizerDirective } from "./directives/resizer/resizer.directive";
 import { SetFocusDirective } from "./directives/set-focus/set-focus.directive";
+import { ZoomContentDirective } from "./directives/zoom-content/zoom-content.directive";
 import { imagesData as IMAGES_PRESET } from "../constants/images";
 import { imagesPresetToken } from "../constants/images.constants";
 import {
