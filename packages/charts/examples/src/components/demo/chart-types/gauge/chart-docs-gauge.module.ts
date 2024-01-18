@@ -24,7 +24,6 @@ import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
 import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 
-
 import {
     NuiCheckboxModule,
     NuiCommonModule,

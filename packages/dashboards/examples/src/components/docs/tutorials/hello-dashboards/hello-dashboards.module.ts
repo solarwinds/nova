@@ -22,7 +22,11 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
-import { NuiDocsModule, NuiMessageModule, DEMO_PATH_TOKEN } from "@nova-ui/bits";
+import {
+    NuiDocsModule,
+    NuiMessageModule,
+    DEMO_PATH_TOKEN,
+} from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { HelloDashboardsDocsComponent } from "./hello-dashboards-docs.component";

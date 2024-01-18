@@ -8,15 +8,15 @@ nova-ui@solarwinds.com with any questions.
 
 ## Component development
 
-- Library components have to work in OnPush change detection mode
-  Why? We have no control over user environment and change detection strategy is subject to consumer's freedom of choice. Therefore we need to make sure that components we provide work under both, where ChangeDetectionStrategy.OnPush is stricter than Default, so we need to support OnPush.
-- Add an explanatory inline comment to every usage of setTimeout() (and other situations when code is not self-explanatory)
-  Why? setTimeout is tied to a wider context of executed code, which might not be apparent from reading the code. Documenting the setTimeout usage helps to understand that context.
-- Be aware that the following ResizeObserver polyfill usage does not work in Firefox:
-  `js this.resizeObserver.observe(this.el.nativeElement);`
-  But the following works in all major browsers:
-  `js this.ngZone.runOutsideAngular(() => { this.resizeObserver.observe(this.el.nativeElement); });`
-  The reason for this is that, since in Firefox ResizeObserver is not native (as of July 2019), it isn't "hacked" by ZoneJS, so it needs to be explicitly executed outside of Angular.
+-   Library components have to work in OnPush change detection mode
+    Why? We have no control over user environment and change detection strategy is subject to consumer's freedom of choice. Therefore we need to make sure that components we provide work under both, where ChangeDetectionStrategy.OnPush is stricter than Default, so we need to support OnPush.
+-   Add an explanatory inline comment to every usage of setTimeout() (and other situations when code is not self-explanatory)
+    Why? setTimeout is tied to a wider context of executed code, which might not be apparent from reading the code. Documenting the setTimeout usage helps to understand that context.
+-   Be aware that the following ResizeObserver polyfill usage does not work in Firefox:
+    `js this.resizeObserver.observe(this.el.nativeElement);`
+    But the following works in all major browsers:
+    `js this.ngZone.runOutsideAngular(() => { this.resizeObserver.observe(this.el.nativeElement); });`
+    The reason for this is that, since in Firefox ResizeObserver is not native (as of July 2019), it isn't "hacked" by ZoneJS, so it needs to be explicitly executed outside of Angular.
 
 ## Typescript Conventions
 
@@ -32,7 +32,7 @@ Enum names and enum members both use `PascalCase`. And, the enum name should be 
 
 ```ts
 enum TardisMode {
- PoliceBox,
+    PoliceBox,
 }
 ```
 

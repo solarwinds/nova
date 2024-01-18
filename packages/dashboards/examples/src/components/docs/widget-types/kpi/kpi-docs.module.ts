@@ -26,7 +26,7 @@ import {
     NuiDocsModule,
     NuiMessageModule,
     NuiSwitchModule,
-    DEMO_PATH_TOKEN
+    DEMO_PATH_TOKEN,
 } from "@nova-ui/bits";
 
 import {
@@ -108,7 +108,8 @@ const routes: Routes = [
         {
             provide: DEMO_PATH_TOKEN,
             useValue: getDemoFiles("kpi"),
-        }],
+        },
+    ],
 })
 export default class KpiDocsModule {
     constructor(

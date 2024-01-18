@@ -30,12 +30,12 @@ Each package serves up the docs on a different port. To see the app running in a
 All Nova projects (`bits`, `charts` and `dashboards`) have the following npm commands to run and/or debug
 e2e tests:
 
-- `npm run e2e` - to compile the project and run e2e-tests
-- `npm run e2e-dev` - to run ONLY the tests without compiling the project under test. Note: For this
-  task to work, the project itself should be served up separately by running `npm run start` in a
-  separate console window.
-- `npm run e2e-debug` - similar to `e2e-dev`, but used for e2e debugging purposes. It allows `debugger`
-  statements to be run.
+-   `npm run e2e` - to compile the project and run e2e-tests
+-   `npm run e2e-dev` - to run ONLY the tests without compiling the project under test. Note: For this
+    task to work, the project itself should be served up separately by running `npm run start` in a
+    separate console window.
+-   `npm run e2e-debug` - similar to `e2e-dev`, but used for e2e debugging purposes. It allows `debugger`
+    statements to be run.
 
 #### Debugging e2e
 
@@ -71,10 +71,10 @@ for the debugger that can be added to the `launch.json` file under the `.vscode`
 }
 ```
 
-- `e2e attach` just attaches to the hosted process after running `npm run e2e-debug`.
-- `e2e debug and attach` first runs `npm run e2e-debug` and then attaches to the process (you should
-  restart the debugger after you see `Debugger listening on...` in the console, because VS Code runs the
-  task and debugger simultaneously)
+-   `e2e attach` just attaches to the hosted process after running `npm run e2e-debug`.
+-   `e2e debug and attach` first runs `npm run e2e-debug` and then attaches to the process (you should
+    restart the debugger after you see `Debugger listening on...` in the console, because VS Code runs the
+    task and debugger simultaneously)
 
 To use the `preLaunchTask` mentioned in the `e2e debug and attach` configuration, add the following task
 configuration to a `tasks.json` file:
@@ -99,10 +99,10 @@ configuration to a `tasks.json` file:
 
 Atoms are user friendly interfaces used to test components and directives. The main idea behind atoms is that the test environment should not need to know about:
 
-- The internal structure of a component under test
-- Class names that are applied in different component states
-- The details of a component's implementation
-- etc.
+-   The internal structure of a component under test
+-   Class names that are applied in different component states
+-   The details of a component's implementation
+-   etc.
 
 Atoms also provide information about their available features, states, attributes and nested components with intellisense right in the IDE. And, perhaps above all, they make tests more readable!
 
@@ -115,49 +115,49 @@ Atoms also provide information about their available features, states, attribute
 
 1. Using its constructor. [Code Example](./packages/bits/spec/components/dialog/dialog.e2e.ts#L46)
 
-   ```js
-   dialog = new DialogAtom(element(by.className("nui-dialog")));
-   ```
+    ```js
+    dialog = new DialogAtom(element(by.className("nui-dialog")));
+    ```
 
 2. Finding an Atom in some context in the DOM. [Code Example](./packages/bits/spec/components/convenience/time-frame-bar/time-frame-bar.atom.ts#L28)
 
-   ```js
-   busy = Atom.findIn(BusyAtom, element(by.id("nui-busy-test-basic")));
-   ```
+    ```js
+    busy = Atom.findIn(BusyAtom, element(by.id("nui-busy-test-basic")));
+    ```
 
 #### Usage
 
 1. Declare a variable with the proper type.
 
-   ```js
-   let defaultDialogBtn: ButtonAtom;
-   ```
+    ```js
+    let defaultDialogBtn: ButtonAtom;
+    ```
 
 2. _browser.get()_ the test page make sure the page is loaded before trying to use an atom. If the page is not rendered, protractor obviously will throw the familiar "element not found" sorts of exceptions.
 
-   ```js
-   await browser.get(url);
-   ```
+    ```js
+    await browser.get(url);
+    ```
 
 3. Find atoms of the components before the tests run (use `beforeEach()` or `beforeAll()`).
 
-   ```js
-   beforeAll(async () => {
-       await Helper.prepareBrowser("dialog");
-       defaultDialogBtn = Atom.find(ButtonAtom, "nui-demo-default-dialog-btn");
-   });
-   ```
+    ```js
+    beforeAll(async () => {
+        await Helper.prepareBrowser("dialog");
+        defaultDialogBtn = Atom.find(ButtonAtom, "nui-demo-default-dialog-btn");
+    });
+    ```
 
 4. Use the variable containing an atom to call it's methods or for viewing\asserting it in the context of your tests.
 
-   ```js
-   it("should add custom class to dialog", async () => {
-       await customClassButton.click();
-       expect(await dialog.hasClass("demoDialogCustomClass")).toBe(true);
-   });
-   ```
+    ```js
+    it("should add custom class to dialog", async () => {
+        await customClassButton.click();
+        expect(await dialog.hasClass("demoDialogCustomClass")).toBe(true);
+    });
+    ```
 
-   Note: If needed, atoms can be instantiated during test as well, for instance, if a component appears on the page conditionally.
+    Note: If needed, atoms can be instantiated during test as well, for instance, if a component appears on the page conditionally.
 
 #### API
 
@@ -189,8 +189,8 @@ Atoms for different components or directives will expectedly have different API.
 To get your locally built library to be used as a dependency of another library or app you will need to do
 two things:
 
-- Build the child library
-- Link build output so it will be consumed instead of the package installed from artifactory
+-   Build the child library
+-   Link build output so it will be consumed instead of the package installed from artifactory
 
 ### Building
 
@@ -204,9 +204,9 @@ it's running in watch mode too. Make sure to have separate terminal windows for 
 
 #### Caveats
 
-- The dev build of the library does not include schematics. Do the full `assemble` for this.
-- For updating global less and atoms or for regenerating css/fonts, you will need to restart the build
-  task. These types of changes will not be picked up automatically.
+-   The dev build of the library does not include schematics. Do the full `assemble` for this.
+-   For updating global less and atoms or for regenerating css/fonts, you will need to restart the build
+    task. These types of changes will not be picked up automatically.
 
 ### Linking
 
@@ -215,12 +215,12 @@ symbolic linked folders (junction for Windows file system).
 
 To link things with each other we have some scripts in the `package.json` file.
 
-- **`charts-link:bits`** - removes the _`@nova-ui/bits`_ folder from charts' _`node_modules`_ and
-  replaces it with a symlink to the _`dist`_ folder from bits.
-- **`dashboards-link:bits`** - does the same replacement for dashboards
-- **`dashboards-link:charts`** - links charts' _`dist`_ folder into dashboards' _`node_modules`_ in
-  the same way as above
-- **`link:all`** - runs all the previous scripts that will link the internal dependencies
+-   **`charts-link:bits`** - removes the _`@nova-ui/bits`_ folder from charts' _`node_modules`_ and
+    replaces it with a symlink to the _`dist`_ folder from bits.
+-   **`dashboards-link:bits`** - does the same replacement for dashboards
+-   **`dashboards-link:charts`** - links charts' _`dist`_ folder into dashboards' _`node_modules`_ in
+    the same way as above
+-   **`link:all`** - runs all the previous scripts that will link the internal dependencies
 
 ### Unlinking
 

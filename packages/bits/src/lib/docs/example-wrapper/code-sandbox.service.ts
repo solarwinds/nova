@@ -25,23 +25,27 @@ import { compressToBase64 } from "lz-string";
 import { createAngularApp } from "./code-sandbox-files";
 import { DEMO_PATH_TOKEN } from "../../../constants/path.constants";
 
-
 /** @dynamic */
 @Injectable({
     providedIn: "root",
 })
 export class CodeSandboxService {
-    constructor(@Inject(DOCUMENT) private document: Document,
-                @Optional() @Inject(DEMO_PATH_TOKEN) private config: any
-    ) {
-    }
+    constructor(
+        @Inject(DOCUMENT) private document: Document,
+        @Optional() @Inject(DEMO_PATH_TOKEN) private config: any
+    ) {}
 
     async open(prefix: string, sources: any): Promise<void> {
         async function mainVersion(packageName: string) {
             // only fetch tiny-tarball
-            const res =  await fetch("https://registry.npmjs.org/" + packageName, {headers: new Headers({
-                    "Accept": "application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*",
-                }) });
+            const res = await fetch(
+                "https://registry.npmjs.org/" + packageName,
+                {
+                    headers: new Headers({
+                        Accept: "application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*",
+                    }),
+                }
+            );
             const json = await res.json();
             return json["dist-tags"].main;
         }
@@ -49,7 +53,12 @@ export class CodeSandboxService {
         const form: HTMLFormElement = this.document.createElement("form");
 
         const latestNovaVersion = await mainVersion("@nova-ui/bits");
-        const files = createAngularApp(prefix, this.config.context, sources, latestNovaVersion);
+        const files = createAngularApp(
+            prefix,
+            this.config.context,
+            sources,
+            latestNovaVersion
+        );
         // TODO fix modification of less files
         // const modifySources = (source: string) => // Handle non-existent less references that are just killing plunker
         //     source.replace(/^.*@import \(reference\).*$/gm, "/* NUI LESS VARIABLES ARE NOT SUPPORTED YET */");
@@ -59,7 +68,10 @@ export class CodeSandboxService {
 
         form.style.display = "none";
         form.setAttribute("method", "POST");
-        form.setAttribute("action", "https://codesandbox.io/api/v1/sandboxes/define");
+        form.setAttribute(
+            "action",
+            "https://codesandbox.io/api/v1/sandboxes/define"
+        );
         form.setAttribute("target", "_blank");
 
         const parameters = this.compress(files);
@@ -84,5 +96,4 @@ export class CodeSandboxService {
             .replace(/\//g, "_") // Convert '/' to '_'
             .replace(/=+$/, ""); // Remove ending '='
     }
-
 }

@@ -8,7 +8,12 @@ import { POLYFILLS } from "../live-example-files/polyfills";
 import { TSCONFIG_JSON } from "../live-example-files/tsconfig.json";
 import { FileMetadata } from "../services/sources.service";
 
-export const createAngularApp = (filenamePrefix: string, context: string, sources: FileMetadata[], latestNovaVersion: string) => {
+export const createAngularApp = (
+    filenamePrefix: string,
+    context: string,
+    sources: FileMetadata[],
+    latestNovaVersion: string
+) => {
     let files: Record<string, object> = {
         "src/index.html": {
             content: getIndex(filenamePrefix),
@@ -26,10 +31,22 @@ export const createAngularApp = (filenamePrefix: string, context: string, source
             content: getAngular(),
         },
         "package.json": {
-            content: getPackage(sources.find((source: FileMetadata) => source.fileName === "package.json")?.fileContent ?? "", latestNovaVersion),
+            content: getPackage(
+                sources.find(
+                    (source: FileMetadata) => source.fileName === "package.json"
+                )?.fileContent ?? "",
+                latestNovaVersion
+            ),
         },
         "src/app/app.module.ts": {
-            content: getAppModule(sources, filenamePrefix, context, sources.find((source: FileMetadata) => source.fileName === "package.json")?.fileContent ?? ""),
+            content: getAppModule(
+                sources,
+                filenamePrefix,
+                context,
+                sources.find(
+                    (source: FileMetadata) => source.fileName === "package.json"
+                )?.fileContent ?? ""
+            ),
         },
         "src/app/app.component.ts": {
             content: getAppComponent(),
@@ -40,21 +57,26 @@ export const createAngularApp = (filenamePrefix: string, context: string, source
     };
 
     sources
-        .filter((source: FileMetadata) =>
-            source.fileName !== `package.json`
-        )
+        .filter((source: FileMetadata) => source.fileName !== `package.json`)
         .forEach((source: FileMetadata) => {
-            files = Object.assign(files, {[`src/app/${source.filePath}`]: {content: source.fileContent}});
-        })
+            files = Object.assign(files, {
+                [`src/app/${source.filePath}`]: { content: source.fileContent },
+            });
+        });
 
-    return {files: files};
+    return { files: files };
 };
 
 export const getMainFile = (): string => MAIN;
 export const getIndex = (componentSelector: string): string =>
-    INDEX.replace("${componentSelector}", componentSelector)
+    INDEX.replace("${componentSelector}", componentSelector);
 
-export const getAppModule = (sources: FileMetadata[], filenamePrefix: string, context: string, packageJson: string): string => {
+export const getAppModule = (
+    sources: FileMetadata[],
+    filenamePrefix: string,
+    context: string,
+    packageJson: string
+): string => {
     const mainComponentName = getMainComponentName(sources, filenamePrefix);
     const componentNames = sources
         .filter((source: FileMetadata) => source.fileType === "ts")
@@ -63,15 +85,34 @@ export const getAppModule = (sources: FileMetadata[], filenamePrefix: string, co
     const imports = sources
         .filter((source: FileMetadata) => source.fileType === "ts")
         .filter((source: FileMetadata) => source.fileName !== `routes.ts`)
-        .map((source) => `import { ${getComponentName(source)} } from "./${source.filePath.slice(0, -source.fileType.length-1)}"`)
+        .map(
+            (source) =>
+                `import { ${getComponentName(
+                    source
+                )} } from "./${source.filePath.slice(
+                    0,
+                    -source.fileType.length - 1
+                )}"`
+        )
         .join("\n");
     let libPackage = JSON.parse(packageJson).name;
     const chartsImport = libPackage === "@nova-ui/charts";
     const dashboardsImport = libPackage === "@nova-ui/dashboards";
-    const customRoutes = !!sources.find((source: FileMetadata) => source.fileName === "routes.ts")
+    const customRoutes = !!sources.find(
+        (source: FileMetadata) => source.fileName === "routes.ts"
+    );
 
-    return APP_MODULE(filenamePrefix, context, imports, mainComponentName, componentNames, customRoutes, chartsImport, dashboardsImport)
-}
+    return APP_MODULE(
+        filenamePrefix,
+        context,
+        imports,
+        mainComponentName,
+        componentNames,
+        customRoutes,
+        chartsImport,
+        dashboardsImport
+    );
+};
 
 export const getStyles = (): string => ``;
 
@@ -81,11 +122,15 @@ export const getTSConfig = (): string => TSCONFIG_JSON;
 
 export const getPolyfills = (): string => POLYFILLS;
 
-export const getPackage = (packageJson: string, latestNovaVersion: string): string => {
+export const getPackage = (
+    packageJson: string,
+    latestNovaVersion: string
+): string => {
     const libPackage = JSON.parse(packageJson);
-    const newPackage= PACKAGE_JSON;
+    const newPackage = PACKAGE_JSON;
 
-    const getVersion = (name: string): string => libPackage.devDependencies[name];
+    const getVersion = (name: string): string =>
+        libPackage.devDependencies[name];
 
     const dependencies = [
         "@angular/animations",
@@ -120,30 +165,42 @@ export const getPackage = (packageJson: string, latestNovaVersion: string): stri
     ];
 
     dependencies.forEach((dependency: string) =>
-        getVersion(dependency) ? (newPackage.dependencies as Record<string, string>)[dependency] = getVersion(dependency) : null);
+        getVersion(dependency)
+            ? ((newPackage.dependencies as Record<string, string>)[dependency] =
+                  getVersion(dependency))
+            : null
+    );
 
-    devDependencies.forEach((devDependency: string) =>
-        (newPackage.dependencies as Record<string, string>)[devDependency] = getVersion(devDependency))
+    devDependencies.forEach(
+        (devDependency: string) =>
+            ((newPackage.dependencies as Record<string, string>)[
+                devDependency
+            ] = getVersion(devDependency))
+    );
 
     // last released nova
-    newPackage.dependencies["@nova-ui/bits"] = latestNovaVersion
-    newPackage.dependencies["@nova-ui/charts"] = latestNovaVersion
-    newPackage.dependencies["@nova-ui/dashboards"] = latestNovaVersion
+    newPackage.dependencies["@nova-ui/bits"] = latestNovaVersion;
+    newPackage.dependencies["@nova-ui/charts"] = latestNovaVersion;
+    newPackage.dependencies["@nova-ui/dashboards"] = latestNovaVersion;
 
-    return JSON.stringify(newPackage, null, " ")
-}
+    return JSON.stringify(newPackage, null, " ");
+};
 
-export const getMainComponentName = (sources: FileMetadata[], filenamePrefix: string): string => {
+export const getMainComponentName = (
+    sources: FileMetadata[],
+    filenamePrefix: string
+): string => {
     const mainComponent = sources
         .filter((source: FileMetadata) => source.fileType === "ts")
-        .find((source: FileMetadata) => source.fileName.includes(filenamePrefix));
+        .find((source: FileMetadata) =>
+            source.fileName.includes(filenamePrefix)
+        );
     return getComponentName(mainComponent as any);
 };
 
 export const getComponentName = (source: FileMetadata): string => {
-    const matches: RegExpMatchArray | null | undefined = source?.fileContent.match(
-        /export class (\w+Component)/
-    );
+    const matches: RegExpMatchArray | null | undefined =
+        source?.fileContent.match(/export class (\w+Component)/);
     return (matches || [])[1]; // capture exported component name
 };
 

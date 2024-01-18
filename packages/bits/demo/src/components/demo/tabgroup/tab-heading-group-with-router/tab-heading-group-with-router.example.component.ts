@@ -20,15 +20,9 @@
 
 import { Component, Input, OnDestroy } from "@angular/core";
 import { NavigationEnd, Router, RouterModule } from "@angular/router";
-import {
-    TabContentSettingsExampleComponent
-} from "./tab-content/settings/tab-content-settings.example.component";
-import {
-    TabContentStatisticsExampleComponent
-} from "./tab-content/statistics/tab-content-statistics.example.component";
-import {
-    TabContentAboutExampleComponent
-} from "./tab-content/about/tab-content-about.example.component";
+import { TabContentSettingsExampleComponent } from "./tab-content/settings/tab-content-settings.example.component";
+import { TabContentStatisticsExampleComponent } from "./tab-content/statistics/tab-content-statistics.example.component";
+import { TabContentAboutExampleComponent } from "./tab-content/about/tab-content-about.example.component";
 
 @Component({
     selector: "nui-tab-heading-group-with-router-example",

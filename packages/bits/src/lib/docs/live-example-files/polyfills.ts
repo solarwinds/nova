@@ -1,4 +1,5 @@
-export const POLYFILLS = "/**\n" +
+export const POLYFILLS =
+    "/**\n" +
     " * This file includes polyfills needed by Angular and is loaded before the app.\n" +
     " * You can add your own extra polyfills to this file.\n" +
     " *\n" +
@@ -7,7 +8,7 @@ export const POLYFILLS = "/**\n" +
     " *   2. Application imports. Files imported after ZoneJS that should be loaded before your main\n" +
     " *      file.\n" +
     " *\n" +
-    " * The current setup is for so-called \"evergreen\" browsers; the last versions of browsers that\n" +
+    ' * The current setup is for so-called "evergreen" browsers; the last versions of browsers that\n' +
     " * automatically update themselves. This includes Safari >= 10, Chrome >= 55 (including Opera),\n" +
     " * Edge >= 13 on the desktop, and iOS 10 and Chrome on mobile.\n" +
     " *\n" +
@@ -42,7 +43,7 @@ export const POLYFILLS = "/**\n" +
     "\n" +
     "/** Evergreen browsers require these. **/\n" +
     "// Used for reflect-metadata in JIT. If you use AOT (and only Angular decorators), you can remove.\n" +
-    "import \"core-js/proposals/reflect-metadata\";\n" +
+    'import "core-js/proposals/reflect-metadata";\n' +
     "\n" +
     "/**\n" +
     " * Required to support Web Animations `@angular/platform-browser/animations`.\n" +
@@ -53,7 +54,7 @@ export const POLYFILLS = "/**\n" +
     "/***************************************************************************************************\n" +
     " * Zone JS is required by default for Angular itself.\n" +
     " */\n" +
-    "import \"zone.js/dist/zone\"; // Included with Angular CLI.\n" +
+    'import "zone.js/dist/zone"; // Included with Angular CLI.\n' +
     "\n" +
     "/***************************************************************************************************\n" +
     " * APPLICATION IMPORTS\n" +
@@ -63,4 +64,4 @@ export const POLYFILLS = "/**\n" +
     "/***************************************************************************************************\n" +
     " * APPLICATION IMPORTS\n" +
     " */\n" +
-    "import \"@angular/localize/init\";\n";
+    'import "@angular/localize/init";\n';

@@ -85,6 +85,6 @@ const routes: Routes = [
             provide: DEMO_PATH_TOKEN,
             useValue: getDemoFiles("drilldown"),
         },
-    ]
+    ],
 })
 export default class DrilldownDocsModule {}
