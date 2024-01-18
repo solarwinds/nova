@@ -20,8 +20,8 @@
 
 import { Inject, Injectable, Optional } from "@angular/core";
 
-import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
-import { LoggerService } from "@nova-ui/bits";
+import { DEMO_PATH_TOKEN } from "../../../constants/path.constants";
+import { LoggerService } from "../../../services/log-service";
 
 /** @ignore */
 @Injectable()

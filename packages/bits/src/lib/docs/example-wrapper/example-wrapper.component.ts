@@ -18,8 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { DOCUMENT } from "@angular/common";
-import { Component, Inject, Input, OnInit, Optional } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import hljs from "highlight.js";
 import javascript from "highlight.js/lib/languages/javascript";
 import json from "highlight.js/lib/languages/json";
@@ -51,17 +50,6 @@ export class ExampleWrapperComponent implements OnInit {
 
     public componentSources: FileMetadata[];
 
-    public getTooltip(): string {
-        return this.showSource ? "Hide source code" : "Show source code";
-    }
-
-    public async openCodeSandboxExample(): Promise<void> {
-        await this.codeSandboxService.open(
-            this.filenamePrefix,
-            this.componentSources
-        );
-    }
-
     constructor(
         private sourcesService: SourcesService,
         private codeSandboxService: CodeSandboxService
@@ -71,6 +59,17 @@ export class ExampleWrapperComponent implements OnInit {
         hljs.registerLanguage("xml", xml);
         hljs.registerLanguage("json", json);
         hljs.registerLanguage("less", less);
+    }
+
+    public getTooltip(): string {
+        return this.showSource ? "Hide source code" : "Show source code";
+    }
+
+    public async openCodeSandboxExample(): Promise<void> {
+        await this.codeSandboxService.open(
+            this.filenamePrefix,
+            this.componentSources
+        );
     }
 
     public ngOnInit(): void {
