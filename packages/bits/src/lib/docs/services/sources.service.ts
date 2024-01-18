@@ -18,86 +18,75 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Inject, Injectable, Optional, SkipSelf } from "@angular/core";
-import _filter from "lodash/filter";
+import { Inject, Injectable, Optional } from "@angular/core";
 
-import { DEMO_PATH_TOKEN } from "../../../constants/path.constants";
-import { LoggerService } from "../../../services/log-service";
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
+import { LoggerService } from "@nova-ui/bits";
 
 /** @ignore */
 @Injectable()
 export class SourcesService {
-    private fileExtensionsRegex = /.*\.(ts|html|less)$/;
-
     constructor(
         private logger: LoggerService,
-        @SkipSelf() @Optional() @Inject(DEMO_PATH_TOKEN) private context: any
+        @Optional()
+        @Inject(DEMO_PATH_TOKEN)
+        private config: {
+            context: string;
+            files: { content: string; path: string }[];
+        }
     ) {}
 
-    public getSourcesByFilenamePrefix(
-        prefix: string
-    ): Record<string, Record<string, string>> {
-        if (!this.context) {
+    public getSourcesByFilenamePrefix(filenamePrefix: string): FileMetadata[] {
+        if (!this.config.context) {
             this.logger.error(
                 `You need to configure SourceService in the module where you import NuiDocsModule e.g. {` +
-                    ` provide: DEMO_PATH_TOKEN, useFactory: () => (<any> require).context("!!raw-loader!./components/demo/", true, /.*[.](ts|html|less)$/) }`
+                    ` provide: DEMO_PATH_TOKEN, useValue: getDemoFiles(<example>) }`
             );
-            return {};
-        }
-        const matchingFilePaths = _filter(this.context.keys(), (filePath) => {
-            const prefixIndex = filePath.indexOf(prefix);
-            const nextChar =
-                prefixIndex !== -1
-                    ? filePath[prefixIndex + prefix.length]
-                    : undefined;
-            return prefixIndex !== -1 && (nextChar === "." || nextChar === "/");
-        });
-        return matchingFilePaths.reduce((acc: any, curr: any) => {
-            const fileObj = this.getFileData(curr);
-            const key = Object.keys(fileObj)[0];
-
-            if (!acc[key]) {
-                Object.assign(acc, fileObj);
-            }
-
-            return acc;
-        }, {});
-    }
-
-    /**
-     * Since this goes directly to Plunker we do not need 10K LOC of translations on each Plukner page.
-     * That's why it's empty
-     */
-    public getTranslations(): string {
-        return `export const translations = \`<?xml version="1.0" encoding="UTF-8"?>
-                <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-                  <file source-language="en-us" datatype="plaintext" original="ng2.template" target-language="en-us">
-                    <body>
-                    </body>
-                  </file>
-                </xliff>\`
-                `;
-    }
-
-    private getFileData(fileName: string): Record<string, string> {
-        const regExResultArray = this.fileExtensionsRegex.exec(fileName);
-        if (!regExResultArray) {
-            return {};
+            return [];
         }
 
-        const content = this.context(fileName);
-        const fileContent: string = content?.default ?? content ?? "";
-        const extension = <string>fileName.split(".").pop();
-
-        if (extension === "less") {
-            return {
-                [extension]: fileContent.replace(
-                    /@import \(reference\) "([\w-]+\/){0,}([\w-]+)(\.less)?"/g,
-                    `@import (reference) "@nova-ui/bits/sdk/less/$1$2"`
-                ),
-            };
-        }
-
-        return { [extension]: fileContent };
+        const files: FileMetadata[] = [];
+        this.config.files
+            .filter(
+                (file: { content: string; path: string }) =>
+                    file.path.includes(`${filenamePrefix}/`) ||
+                    file.path.includes("package.json")
+            )
+            .map((file: { content: string; path: string }) => {
+                files.push({
+                    filePath: this.getTrimmedFilePath(
+                        file.path,
+                        filenamePrefix
+                    ),
+                    fileContent: file.content,
+                    fileType: this.getFileType(file.path),
+                    fileName: this.getFilename(file.path),
+                });
+            });
+        return files;
     }
+
+    private getFilename(filePath: string): string {
+        return filePath.split("/").pop() ?? "";
+    }
+
+    private getFileType(filePath: string): string {
+        return filePath.split(".").pop() ?? "";
+    }
+
+    private getTrimmedFilePath(
+        filePath: string,
+        filenamePrefix: string
+    ): string {
+        return filePath.slice(
+            filePath.indexOf(filenamePrefix) + filenamePrefix.length + 1
+        );
+    }
+}
+
+export interface FileMetadata {
+    filePath: string;
+    fileContent: string;
+    fileType: string;
+    fileName: string;
 }

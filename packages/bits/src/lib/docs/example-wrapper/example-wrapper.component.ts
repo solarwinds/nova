@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { DOCUMENT } from "@angular/common";
-import { Component, Inject, Input, OnInit } from "@angular/core";
+import { Component, Inject, Input, OnInit, Optional } from "@angular/core";
 import hljs from "highlight.js";
 import javascript from "highlight.js/lib/languages/javascript";
 import json from "highlight.js/lib/languages/json";
@@ -27,8 +27,8 @@ import less from "highlight.js/lib/languages/less";
 import typescript from "highlight.js/lib/languages/typescript";
 import xml from "highlight.js/lib/languages/xml";
 
-import { SourcesService } from "../services/sources.service";
-import { PlunkerProjectService } from "./plunker-project.service";
+import { CodeSandboxService } from "./code-sandbox.service";
+import { FileMetadata, SourcesService } from "../services/sources.service";
 
 /**
  * @dynamic
@@ -38,7 +38,6 @@ import { PlunkerProjectService } from "./plunker-project.service";
     templateUrl: "./example-wrapper.component.html",
     selector: "nui-example-wrapper",
     styleUrls: ["./example-wrapper.component.less"],
-    providers: [SourcesService],
 })
 export class ExampleWrapperComponent implements OnInit {
     // Prefix of the example component's filenames
@@ -50,27 +49,22 @@ export class ExampleWrapperComponent implements OnInit {
     // Indicates whether the source code is being displayed
     @Input() showSource = false;
 
-    public availableThemes = ["light theme", "dark theme"];
-    public selectedTheme = this.availableThemes[0];
-
-    public componentSources: Record<string, Record<string, string>>;
+    public componentSources: FileMetadata[];
 
     public getTooltip(): string {
         return this.showSource ? "Hide source code" : "Show source code";
     }
 
-    public openPlunker(): void {
-        this.plunkerProjectService.open(
+    public async openCodeSandboxExample(): Promise<void> {
+        await this.codeSandboxService.open(
             this.filenamePrefix,
-            this.componentSources,
-            this.sourcesService.getTranslations()
+            this.componentSources
         );
     }
 
     constructor(
         private sourcesService: SourcesService,
-        @Inject(DOCUMENT) private document: Document,
-        private plunkerProjectService: PlunkerProjectService
+        private codeSandboxService: CodeSandboxService
     ) {
         hljs.registerLanguage("typescript", typescript);
         hljs.registerLanguage("javascript", javascript);
@@ -83,6 +77,16 @@ export class ExampleWrapperComponent implements OnInit {
         this.componentSources =
             this.sourcesService.getSourcesByFilenamePrefix(
                 this.filenamePrefix
-            ) ?? {};
+            ) ?? [];
+    }
+
+    public getExampleComponents(fileType: string): string {
+        return (
+            this.componentSources?.find(
+                (component) =>
+                    component.fileName.includes(this.filenamePrefix) &&
+                    component.fileType === fileType
+            )?.fileContent ?? ""
+        );
     }
 }
