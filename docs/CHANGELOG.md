@@ -1,5 +1,9 @@
 # Changelog
 
+## [15.0.2] 📅 2023-08-24
+
+-   `@nova-ui/bits` `@nova-ui/charts` `@nova-ui/dashboards` | Upgraded to Angular v15 (compatible with v16 apps)
+
 ## [13.0.1] 📅 2022-11-16
 
 -   `@nova-ui/bits` `@nova-ui/charts` `@nova-ui/dashboards` | Upgraded to Angular v13 (compatible with v14 apps)
