@@ -22,6 +22,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiDocsModule,
     NuiMessageModule,
     NuiSwitchModule,
@@ -31,6 +32,7 @@ import {
 import { CustomThemeExampleComponent } from "./custom-theme/custom-theme.example.component";
 import { ThemeSwitchServiceExampleComponent } from "./theme-switch-service/theme-switch-service.example.component";
 import { ThemingDocsExampleComponent } from "./theming-docs/theming-docs.example.component";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -73,6 +75,12 @@ const routes = [
         CustomThemeExampleComponent,
         ThemingDocsExampleComponent,
         ThemeSwitchServiceExampleComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("theming"),
+        },
     ],
     exports: [RouterModule],
 })

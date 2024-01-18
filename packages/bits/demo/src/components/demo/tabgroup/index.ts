@@ -24,9 +24,9 @@ export * from "./tab-heading-group-with-router/tab-content/about/tab-content-abo
 export * from "./tab-heading-group-with-router/tab-content/settings/tab-content-settings.example.component";
 export * from "./tab-heading-group-with-router/tab-content/statistics/tab-content-statistics.example.component";
 export * from "./tab-heading-group-with-icons/tab-heading-group-with-icons.example.component";
-export * from "./tab-heading-group-horizontal/tab-heading-group-hotizontal.example.component";
-export * from "./tab-heading-group-horizontal-with-icons/tab-heading-group-hotizontal-with-icons.example.component";
-export * from "./tab-heading-group-horizontal-with-icons-only/tab-heading-group-hotizontal-with-icons-only.example.component";
+export * from "./tab-heading-group-horizontal/tab-heading-group-horizontal.example.component";
+export * from "./tab-heading-group-horizontal-with-icons/tab-heading-group-horizontal-with-icons.example.component";
+export * from "./tab-heading-group-horizontal-with-icons-only/tab-heading-group-horizontal-with-icons-only.example.component";
 export * from "./tab-heading-group-with-content/tab-heading-group-with-content.example.component";
 export * from "./tab-heading-group-dynamic/tab-heading-group-dynamic.example.component";
 export * from "./tab-heading-group-with-router/tab-heading-group-with-router.example.component";

@@ -22,6 +22,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiDocsModule,
     NuiMessageModule,
@@ -40,6 +41,7 @@ import {
     MessageVisualTestComponent,
     MessageWarningExampleComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -90,6 +92,12 @@ const routes = [
         MessageTestComponent,
         MessageVisualTestComponent,
         MessageWarningExampleComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("message"),
+        },
     ],
     exports: [RouterModule],
 })

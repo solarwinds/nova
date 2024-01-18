@@ -42,6 +42,7 @@ import {
     NuiSelectV2Module,
     NuiOverlayModule,
     NuiTooltipModule,
+    DEMO_PATH_TOKEN,
 } from "@nova-ui/bits";
 
 import {
@@ -64,6 +65,7 @@ import {
     WizardTooltipExampleComponent,
     WizardV2TestComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -141,6 +143,12 @@ const routes = [
         WizardWithConfirmationDialogOnCancelExampleComponent,
         WizardTooltipExampleComponent,
         WizardV2TestComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("wizard-v2"),
+        },
     ],
     exports: [RouterModule],
 })

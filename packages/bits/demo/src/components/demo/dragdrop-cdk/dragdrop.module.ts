@@ -22,14 +22,16 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiCommonModule,
     NuiDndModule,
     NuiDocsModule,
     SrlcStage,
+    NuiDragDropModule,
 } from "@nova-ui/bits";
 
-import { NuiDragDropModule } from "../../../../../src/lib/dragdrop/dragdrop.module";
 import { DragdropExampleComponent } from "./dragdrop.example.component";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -52,6 +54,12 @@ const routes = [
         NuiDragDropModule,
     ],
     declarations: [DragdropExampleComponent],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("dragdrop-cdk"),
+        },
+    ],
     exports: [RouterModule],
 })
 export default class DragDropCdkDemoModule {}

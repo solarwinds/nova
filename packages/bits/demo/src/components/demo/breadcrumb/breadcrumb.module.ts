@@ -22,6 +22,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiBreadcrumbModule,
     NuiButtonModule,
     NuiDocsModule,
@@ -38,6 +39,7 @@ import {
     BreadcrumbSingleCountryComponent,
     BreadcrumbVisualTestComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -140,6 +142,12 @@ const routes = [
         BreadcrumbVisualTestComponent,
         BreadcrumbFirstSubviewLevelComponent,
         BreadcrumbSecondSubviewLevelComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("breadcrumb"),
+        },
     ],
     exports: [RouterModule],
 })

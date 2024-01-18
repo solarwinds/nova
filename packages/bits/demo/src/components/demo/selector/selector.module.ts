@@ -21,9 +21,14 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
-import { NuiDocsModule, NuiSelectorModule } from "@nova-ui/bits";
+import {
+    DEMO_PATH_TOKEN,
+    NuiDocsModule,
+    NuiSelectorModule,
+} from "@nova-ui/bits";
 
 import { SelectorExampleComponent } from "./selector.example.component";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -35,6 +40,12 @@ const routes = [
 @NgModule({
     imports: [NuiSelectorModule, NuiDocsModule, RouterModule.forChild(routes)],
     declarations: [SelectorExampleComponent],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("selector"),
+        },
+    ],
     exports: [RouterModule],
 })
 export default class SelectorModule {}

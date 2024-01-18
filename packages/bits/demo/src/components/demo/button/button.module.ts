@@ -23,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiDocsModule,
     NuiMessageModule,
@@ -47,6 +48,7 @@ import {
     ButtonWithIconRightExampleComponent,
     ButtonWithLongTextExampleComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -100,6 +102,12 @@ const routes = [
         ButtonWithIconCustomColorExampleComponent,
         ButtonWithIconOnlyExampleComponent,
         ButtonWithLongTextExampleComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("button"),
+        },
     ],
     exports: [RouterModule],
 })

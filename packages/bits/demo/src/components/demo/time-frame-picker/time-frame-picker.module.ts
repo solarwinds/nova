@@ -23,6 +23,7 @@ import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiDatePickerModule,
     NuiDialogModule,
@@ -47,6 +48,7 @@ import {
     TimeFramePickerVisualTestComponent,
     TimeframeServiceScoperExampleComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -113,6 +115,12 @@ const routes = [
         TimeFramePickerVisualTestComponent,
         TimeFramePickerMultipleCustomPickersExampleComponent,
         TimeframeServiceScoperExampleComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("time-frame-picker"),
+        },
     ],
     exports: [RouterModule],
 })

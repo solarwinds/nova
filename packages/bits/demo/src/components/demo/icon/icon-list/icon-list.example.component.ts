@@ -19,8 +19,8 @@
 //  THE SOFTWARE.
 
 import { Component, OnInit } from "@angular/core";
+import { IconService } from "./../../../../../../src/lib/icon/icon.service";
 
-import { icons as iconsData } from "../../../../../../src/lib/icon/icons";
 
 @Component({
     selector: "nui-icon-list-example",
@@ -30,9 +30,11 @@ export class IconListExampleComponent implements OnInit {
     public icons: any[];
     public categories: any[];
 
+    constructor(private iconService: IconService) {}
+
     public ngOnInit(): void {
-        this.icons = iconsData;
-        this.categories = this.getCategories(iconsData);
+        this.icons = this.iconService.icons;
+        this.categories = this.getCategories(this.icons);
     }
 
     private getCategories(icons: any[]) {

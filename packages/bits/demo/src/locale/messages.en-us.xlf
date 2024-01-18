@@ -8911,15 +8911,15 @@
         <source>Tab with really long content</source>
         <target state="final">Tab with really long content</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal-with-icons-only/tab-heading-group-hotizontal-with-icons-only.example.component.ts</context>
+          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal-with-icons-only/tab-heading-group-horizontal-with-icons-only.example.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal-with-icons/tab-heading-group-hotizontal-with-icons.example.component.ts</context>
+          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal-with-icons/tab-heading-group-horizontal-with-icons.example.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal/tab-heading-group-hotizontal.example.component.ts</context>
+          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal/tab-heading-group-horizontal.example.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
@@ -8931,15 +8931,15 @@
         <source>Tab 2</source>
         <target state="final">Tab 2</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal-with-icons-only/tab-heading-group-hotizontal-with-icons-only.example.component.ts</context>
+          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal-with-icons-only/tab-heading-group-horizontal-with-icons-only.example.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal-with-icons/tab-heading-group-hotizontal-with-icons.example.component.ts</context>
+          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal-with-icons/tab-heading-group-horizontal-with-icons.example.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal/tab-heading-group-hotizontal.example.component.ts</context>
+          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal/tab-heading-group-horizontal.example.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
@@ -8963,15 +8963,15 @@
         <source>Tab 3</source>
         <target state="final">Tab 3</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal-with-icons-only/tab-heading-group-hotizontal-with-icons-only.example.component.ts</context>
+          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal-with-icons-only/tab-heading-group-horizontal-with-icons-only.example.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal-with-icons/tab-heading-group-hotizontal-with-icons.example.component.ts</context>
+          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal-with-icons/tab-heading-group-horizontal-with-icons.example.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal/tab-heading-group-hotizontal.example.component.ts</context>
+          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal/tab-heading-group-horizontal.example.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
@@ -8995,15 +8995,15 @@
         <source>Tab 4</source>
         <target state="final">Tab 4</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal-with-icons-only/tab-heading-group-hotizontal-with-icons-only.example.component.ts</context>
+          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal-with-icons-only/tab-heading-group-horizontal-with-icons-only.example.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal-with-icons/tab-heading-group-hotizontal-with-icons.example.component.ts</context>
+          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal-with-icons/tab-heading-group-horizontal-with-icons.example.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal/tab-heading-group-hotizontal.example.component.ts</context>
+          <context context-type="sourcefile">demo/src/components/demo/tabgroup/tab-heading-group-horizontal/tab-heading-group-horizontal.example.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
         <context-group purpose="location">

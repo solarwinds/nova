@@ -19,7 +19,16 @@
 //  THE SOFTWARE.
 
 import { Component, Input, OnDestroy } from "@angular/core";
-import { NavigationEnd, Router } from "@angular/router";
+import { NavigationEnd, Router, RouterModule } from "@angular/router";
+import {
+    TabContentSettingsExampleComponent
+} from "./tab-content/settings/tab-content-settings.example.component";
+import {
+    TabContentStatisticsExampleComponent
+} from "./tab-content/statistics/tab-content-statistics.example.component";
+import {
+    TabContentAboutExampleComponent
+} from "./tab-content/about/tab-content-about.example.component";
 
 @Component({
     selector: "nui-tab-heading-group-with-router-example",
@@ -33,7 +42,7 @@ export class TabHeadingGroupWithRouterExampleComponent implements OnDestroy {
 
     constructor(private _router: Router) {}
 
-    private routeSubscription = this._router.events.subscribe((event) => {
+    private routeSubscription = this._router?.events.subscribe((event) => {
         if (event instanceof NavigationEnd) {
             const path: string[] = event.urlAfterRedirects.split("/");
             this.currentTabRoute = path[path.length - 1];
@@ -71,6 +80,6 @@ export class TabHeadingGroupWithRouterExampleComponent implements OnDestroy {
     ];
 
     public ngOnDestroy(): void {
-        this.routeSubscription.unsubscribe();
+        this.routeSubscription?.unsubscribe();
     }
 }

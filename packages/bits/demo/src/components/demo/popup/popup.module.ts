@@ -23,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiCheckboxModule,
     NuiDocsModule,
@@ -44,6 +45,7 @@ import {
     PopupWithCustomStylingComponent,
     PopupWithCustomWidthComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -100,6 +102,12 @@ const routes = [
         PopupTestComponent,
         PopupAppendToBodyExampleComponent,
         PopupExampleComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("popup"),
+        },
     ],
     exports: [RouterModule],
 })

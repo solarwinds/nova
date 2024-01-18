@@ -25,6 +25,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiCheckboxModule,
     NuiCommonModule,
@@ -74,6 +75,7 @@ import {
 } from "./index";
 import { RepeatWithViewportManagerExampleComponent } from "./viewport-manager/repeat-with-viewport-manager/repeat-with-viewport-manager.example.component";
 import { VirtualViewportManagerDocsComponent } from "./viewport-manager/virtual-viewport-manager-docs/virtual-viewport-manager-docs.component";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes: Routes = [
     {
@@ -246,7 +248,13 @@ const routes: Routes = [
         VirtualViewportManagerDocsComponent,
         RepeatWithViewportManagerExampleComponent,
     ],
-    providers: [DatePipe],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("common"),
+        },
+        DatePipe,
+    ],
     exports: [RouterModule],
 })
 export default class CommonModule {}
