@@ -41,6 +41,7 @@ import _min from "lodash/min";
 import _range from "lodash/range";
 import { Subject } from "rxjs";
 
+import { IPaginatorItem } from "./public-api";
 import {
     IFilter,
     IFilterPub,
@@ -49,9 +50,8 @@ import {
 import { LoggerService } from "../../services/log-service";
 import { PopupContainerService } from "../popup/popup-container.service";
 import { SelectComponent } from "../select";
-import { InputValueTypes } from "../select-v2/types";
 import { ISelectChangedEvent } from "../select/public-api";
-import { IPaginatorItem } from "./public-api";
+import { InputValueTypes } from "../select-v2/types";
 
 export const defaultPageSizeSet = [10, 25, 50, 100];
 const singleSymbolWidth = 8;

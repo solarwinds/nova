@@ -21,8 +21,8 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 
-import { SwitchComponent } from "../../switch/switch.component";
 import { ThemeSwitcherComponent } from "./theme-switcher.component";
+import { SwitchComponent } from "../../switch/switch.component";
 
 describe("ThemeSwitcherComponent", () => {
     let component: ThemeSwitcherComponent;

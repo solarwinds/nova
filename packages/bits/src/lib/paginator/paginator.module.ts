@@ -21,11 +21,11 @@
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { NgModule } from "@angular/core";
 
+import { PaginatorComponent } from "./paginator.component";
 import { NuiCommonModule } from "../../common/common.module";
 import { NuiButtonModule } from "../button/button.module";
 import { NuiPopupModule } from "../popup/popup.module";
 import { NuiSelectV2Module } from "../select-v2/select-v2.module";
-import { PaginatorComponent } from "./paginator.component";
 
 /**
  * @ignore

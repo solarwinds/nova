@@ -22,13 +22,13 @@ import { ListKeyManager, LiveAnnouncer } from "@angular/cdk/a11y";
 import { Injectable, QueryList } from "@angular/core";
 import isNull from "lodash/isNull";
 
-import { KEYBOARD_CODE } from "../../constants/keycode.constants";
-import { MenuItemBaseComponent } from "../menu";
-import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
 import {
     ANNOUNCER_CLOSE_SORTER_LIST_MESSAGE,
     ANNOUNCER_OPEN_SORTER_LIST_MESSAGE_SUFFIX,
 } from "./constants";
+import { KEYBOARD_CODE } from "../../constants/keycode.constants";
+import { MenuItemBaseComponent } from "../menu";
+import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
 
 @Injectable()
 export class SorterKeyboardService {

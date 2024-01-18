@@ -22,8 +22,8 @@
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
-import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import {
     NuiCheckboxModule,
     NuiCommonModule,
@@ -36,6 +36,7 @@ import {
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
+import { getDemoFiles } from "../../../../demo-files-factory";
 import { DemoCommonModule } from "../../common/demo-common.module";
 import { ChartDocsGaugeComponent } from "./chart-docs-gauge.component";
 import { DonutGaugeBasicExampleComponent } from "./donut/donut-gauge-basic/donut-gauge-basic.example.component";
@@ -53,7 +54,6 @@ import { DonutGaugeTesterComponent } from "./visual-test/donut/donut-gauge-teste
 import { GaugeVisualTestComponent } from "./visual-test/gauge-visual-test.component";
 import { HorizontalGaugeTesterComponent } from "./visual-test/horizontal/horizontal-gauge-tester.component";
 import { VerticalGaugeTesterComponent } from "./visual-test/vertical/vertical-gauge-tester.component";
-import { getDemoFiles } from "../../../../demo-files-factory";
 
 const exampleRoutes: Routes = [
     {

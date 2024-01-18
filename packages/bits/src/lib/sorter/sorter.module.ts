@@ -20,11 +20,11 @@
 
 import { NgModule } from "@angular/core";
 
+import { SorterComponent } from "./sorter.component";
 import { NuiCommonModule } from "../../common/common.module";
 import { NuiButtonModule } from "../button/button.module";
 import { NuiMenuModule } from "../menu/menu.module";
 import { NuiOverlayModule } from "../overlay/overlay.module";
-import { SorterComponent } from "./sorter.component";
 
 /**
  * @ignore

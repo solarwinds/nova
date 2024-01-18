@@ -39,13 +39,13 @@ import {
     VirtualViewportManager,
 } from "@nova-ui/bits";
 
+import { VirtualScrollCustomStrategyService } from "./virtual-scroll-custom-strategy.service";
 import {
     CUSTOM_SCROLL_ITEMS_PER_PAGE,
     RESULTS_PER_PAGE,
 } from "../filtered-view-table-with-custom-virtual-scroll-data";
 import { FilteredViewTableWithCustomVirtualScrollDataSource } from "../filtered-view-table-with-custom-virtual-scroll-data-source.service";
 import { IServer } from "../types";
-import { VirtualScrollCustomStrategyService } from "./virtual-scroll-custom-strategy.service";
 
 @Component({
     selector: "app-filtered-view-table-with-custom-virtual-scroll-table",

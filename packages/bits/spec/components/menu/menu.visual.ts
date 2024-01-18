@@ -20,9 +20,9 @@
 
 import { browser, by, element } from "protractor";
 
+import { MenuAtom } from "./menu.atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-import { MenuAtom } from "./menu.atom";
 
 const name: string = "Menu";
 

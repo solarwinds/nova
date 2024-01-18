@@ -20,10 +20,10 @@
 
 import { NgModule } from "@angular/core";
 
+import { ProgressComponent } from "./progress.component";
 import { NuiCommonModule } from "../../common/common.module";
 import { NuiButtonModule } from "../button/button.module";
 import { NuiTooltipModule } from "../tooltip/tooltip.module";
-import { ProgressComponent } from "./progress.component";
 
 /**
  * @ignore

@@ -13,7 +13,7 @@ export const createAngularApp = (
     context: string,
     sources: FileMetadata[],
     latestNovaVersion: string
-) => {
+): {files: Record<string, object> } => {
     let files: Record<string, object> = {
         "src/index.html": {
             content: getIndex(filenamePrefix),
@@ -95,7 +95,7 @@ export const getAppModule = (
                 )}"`
         )
         .join("\n");
-    let libPackage = JSON.parse(packageJson).name;
+    const libPackage = JSON.parse(packageJson).name;
     const chartsImport = libPackage === "@nova-ui/charts";
     const dashboardsImport = libPackage === "@nova-ui/dashboards";
     const customRoutes = !!sources.find(

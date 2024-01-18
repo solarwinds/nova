@@ -23,13 +23,13 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
 
+import { IWizardSelectionEvent } from "./public-api";
+import { WizardStepComponent } from "./wizard-step.component";
+import { WizardComponent } from "./wizard.component";
 import { ButtonComponent } from "../../lib/button/button.component";
 import { IconComponent } from "../../lib/icon/icon.component";
 import { IconService } from "../../lib/icon/icon.service";
 import { LoggerService } from "../../services/log-service";
-import { IWizardSelectionEvent } from "./public-api";
-import { WizardStepComponent } from "./wizard-step.component";
-import { WizardComponent } from "./wizard.component";
 
 @Component({
     selector: "nui-test-cmp",

@@ -19,10 +19,7 @@
 //  THE SOFTWARE.
 
 import { Component, Input, OnDestroy } from "@angular/core";
-import { NavigationEnd, Router, RouterModule } from "@angular/router";
-import { TabContentSettingsExampleComponent } from "./tab-content/settings/tab-content-settings.example.component";
-import { TabContentStatisticsExampleComponent } from "./tab-content/statistics/tab-content-statistics.example.component";
-import { TabContentAboutExampleComponent } from "./tab-content/about/tab-content-about.example.component";
+import { NavigationEnd, Router } from "@angular/router";
 
 @Component({
     selector: "nui-tab-heading-group-with-router-example",
@@ -33,16 +30,6 @@ export class TabHeadingGroupWithRouterExampleComponent implements OnDestroy {
     public currentTabRoute: string;
 
     @Input() public icon: boolean = false;
-
-    constructor(private _router: Router) {}
-
-    private routeSubscription = this._router?.events.subscribe((event) => {
-        if (event instanceof NavigationEnd) {
-            const path: string[] = event.urlAfterRedirects.split("/");
-            this.currentTabRoute = path[path.length - 1];
-        }
-    });
-
     public tabsetContent = [
         {
             id: "tab-settings",
@@ -72,6 +59,14 @@ export class TabHeadingGroupWithRouterExampleComponent implements OnDestroy {
             },
         },
     ];
+    private routeSubscription = this._router?.events.subscribe((event) => {
+        if (event instanceof NavigationEnd) {
+            const path: string[] = event.urlAfterRedirects.split("/");
+            this.currentTabRoute = path[path.length - 1];
+        }
+    });
+
+    constructor(private _router: Router) {}
 
     public ngOnDestroy(): void {
         this.routeSubscription?.unsubscribe();

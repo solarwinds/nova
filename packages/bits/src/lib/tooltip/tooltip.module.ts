@@ -23,9 +23,9 @@ import { OverlayModule } from "@angular/cdk/overlay";
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 
-import { NuiOverlayModule } from "../overlay/overlay.module";
 import { TooltipComponent } from "./tooltip.component";
 import { TooltipDirective } from "./tooltip.directive";
+import { NuiOverlayModule } from "../overlay/overlay.module";
 
 /** @ignore */
 @NgModule({

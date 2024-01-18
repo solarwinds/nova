@@ -20,7 +20,7 @@
 
 import { Component, Inject, OnInit } from "@angular/core";
 
-import { IToastService, ToastService } from "@nova-ui/bits";
+import { ToastService } from "@nova-ui/bits";
 import {
     Chart,
     ChartAssist,

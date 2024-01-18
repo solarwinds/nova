@@ -31,6 +31,7 @@ import {
 
 import { DashboardUnitConversionPipe } from "../../common/pipes/public-api";
 import { roundToOptimalDecimals } from "../../functions/round-array-values";
+import { timeSeriesDatetimeFormatter } from "../../functions/timeseries-datetime-formatter";
 import {
     ITimeseriesScaleConfig,
     ITimeseriesWidgetConfig,
@@ -38,7 +39,6 @@ import {
     TimeseriesChartPreset,
 } from "./types";
 
-import { timeSeriesDatetimeFormatter } from "../../functions/timeseries-datetime-formatter";
 
 /**
  * This service handles scale creation and configuration for the timeseries widget

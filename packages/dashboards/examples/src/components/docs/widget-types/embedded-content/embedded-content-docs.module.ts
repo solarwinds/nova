@@ -31,9 +31,9 @@ import {
 } from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
+import { getDemoFiles } from "../../../../demo-files-factory";
 import { EmbeddedContentDocsComponent } from "./embedded-content-docs.component";
 import { EmbeddedContentWidgetExampleComponent } from "./embedded-content-widget-example/embedded-content-widget-example.component";
-import { getDemoFiles } from "../../../../demo-files-factory";
 
 const routes: Routes = [
     {

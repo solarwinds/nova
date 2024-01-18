@@ -66,7 +66,7 @@ export class TimeseriesZoomPluginsSyncService {
         collectionId: string,
         startDate: moment.Moment,
         endDate: moment.Moment
-    ) {
+    ): void {
         const collection = this.getPlugins(collectionId);
 
         setTimeout(() => {
@@ -76,7 +76,7 @@ export class TimeseriesZoomPluginsSyncService {
         });
     }
 
-    public clearZoomInsideCollection(collectionId: string) {
+    public clearZoomInsideCollection(collectionId: string): void {
         const collection = this.getPlugins(collectionId);
 
         collection.forEach((plugin) => {

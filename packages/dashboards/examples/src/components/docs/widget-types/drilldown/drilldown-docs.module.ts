@@ -31,10 +31,10 @@ import {
 } from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
+import { getDemoFiles } from "../../../../demo-files-factory";
 import { DrilldownDocsComponent } from "./drilldown-docs.component";
 import { DrilldownMultiRequestWidgetExampleComponent } from "./drilldown-multi-request-widget-example/drilldown-multi-request-widget-example.component";
 import { DrilldownWidgetExampleComponent } from "./drilldown-widget/drilldown-widget-example.component";
-import { getDemoFiles } from "../../../../demo-files-factory";
 
 const routes: Routes = [
     {

@@ -22,9 +22,9 @@ import * as fs from "fs";
 
 import { ProtractorBrowser } from "protractor";
 
-import { Helpers } from "../helpers";
 import { PercyLens } from "./percy-lens";
 import { ICameraSettings, ILens, LENSES, LensType } from "./types";
+import { Helpers } from "../helpers";
 
 export class CameraEngine {
     public currentLensInstance: ILens;

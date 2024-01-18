@@ -20,8 +20,8 @@
 
 import { Injectable, Renderer2, RendererFactory2 } from "@angular/core";
 
-import { DOCUMENT_CLICK_EVENT } from "../constants/event.constants";
 import { EventBus } from "./event-bus";
+import { DOCUMENT_CLICK_EVENT } from "../constants/event.constants";
 
 /**
  * Service to share events among components in nova

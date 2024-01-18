@@ -51,11 +51,9 @@ import {
     PIZZAGNA_EVENT_BUS,
 } from "../../../../types";
 import {
-    ITimeseriesScalesConfig,
     ITimeseriesWidgetConfig,
     ITimeseriesWidgetData,
     TimeseriesInteractionType,
-    TimeseriesScaleType,
     TimeseriesTransformer,
 } from "../../types";
 import { XYChartComponent } from "./xy-chart.component";
@@ -333,13 +331,34 @@ describe("XYChartComponent", () => {
                     id: "42",
                     transformer: undefined,
                     data: [
-                        { x: "1", y: 1 },
-                        { x: "2", y: 10 },
-                        { x: "3", y: 3 },
-                        { x: "4", y: 16 },
-                        { x: "5", y: 17 },
-                        { x: "6", y: 5 },
-                        { x: "7", y: 1 },
+                        {
+                            x: "1",
+                            y: 1,
+                        },
+                        {
+                            x: "2",
+                            y: 10,
+                        },
+                        {
+                            x: "3",
+                            y: 3,
+                        },
+                        {
+                            x: "4",
+                            y: 16,
+                        },
+                        {
+                            x: "5",
+                            y: 17,
+                        },
+                        {
+                            x: "6",
+                            y: 5,
+                        },
+                        {
+                            x: "7",
+                            y: 1,
+                        },
                     ],
                     metricUnits: "bytes",
                 } as ITimeseriesWidgetData,
@@ -392,14 +411,23 @@ describe("XYChartComponent", () => {
             component.updateYAxisDomain();
 
             expect(component.configuration.scales.y.properties?.domain).toEqual(
-                { min: 1, max: 17 }
+                {
+                    min: 1,
+                    max: 17,
+                }
             );
         });
 
         it("should revert transformation", () => {
             component.widgetData.series[0].rawData = [
-                { x: 1, y: 1 },
-                { x: 2, y: 2 },
+                {
+                    x: 1,
+                    y: 1,
+                },
+                {
+                    x: 2,
+                    y: 2,
+                },
             ];
             component.transformData("42", TimeseriesTransformer.None);
 

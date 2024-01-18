@@ -22,8 +22,6 @@ import { DatePipe } from "@angular/common";
 import { TestBed } from "@angular/core/testing";
 import noop from "lodash/noop";
 
-import { LoggerService } from "../log-service";
-import { SearchService } from "../search.service";
 import { LocalFilteringDataSource } from "./local-filtering-data-source.service";
 import {
     IFilterGroup,
@@ -52,6 +50,8 @@ import {
     searchThruResult,
     unchangedArrForComparison,
 } from "./spec-helpers/local-filtering-data-source.testdata";
+import { LoggerService } from "../log-service";
+import { SearchService } from "../search.service";
 
 describe("LocalFilteringDataSource >", () => {
     let loggerService: LoggerService;

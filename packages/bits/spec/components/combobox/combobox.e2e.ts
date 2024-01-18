@@ -20,10 +20,10 @@
 
 import { browser, by, ElementArrayFinder, Key, WebElement } from "protractor";
 
+import { ComboboxAtom } from "./combobox.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { TextboxNumberAtom } from "../textbox-number/textbox-number.atom";
-import { ComboboxAtom } from "./combobox.atom";
 
 /**
  * Consider using this as a reference to the test cases to add to the combobox-v2 test suite in scope of NUI-4902

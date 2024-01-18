@@ -33,9 +33,9 @@ import {
 } from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
+import { getDemoFiles } from "../../../../demo-files-factory";
 import { PersistenceHandlerSetupDocsComponent } from "./persistence-handler-setup-docs.component";
 import { PersistenceHandlerSetupComponent } from "./persistence-handler-setup.component";
-import { getDemoFiles } from "../../../../demo-files-factory";
 
 const routes = [
     {

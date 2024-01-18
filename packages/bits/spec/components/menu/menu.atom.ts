@@ -26,10 +26,10 @@ import {
     ElementFinder,
 } from "protractor";
 
+import { MenuItemAtom } from "./menu-item.atom";
 import { Atom } from "../../atom";
 import { ButtonAtom } from "../button/button.atom";
 import { PopupAtom } from "../popup/popup.atom";
-import { MenuItemAtom } from "./menu-item.atom";
 
 export class MenuAtom extends Atom {
     public static CSS_CLASS = "nui-menu";

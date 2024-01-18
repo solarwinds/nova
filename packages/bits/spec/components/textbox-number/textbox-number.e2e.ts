@@ -21,9 +21,9 @@
 import each from "lodash/each";
 import { browser, Key } from "protractor";
 
+import { TextboxNumberAtom } from "./textbox-number.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
-import { TextboxNumberAtom } from "./textbox-number.atom";
 
 describe("USERCONTROL textbox-number >", () => {
     let component: TextboxNumberAtom;

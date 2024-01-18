@@ -28,7 +28,6 @@ import {
     NuiSwitchModule,
     DEMO_PATH_TOKEN,
 } from "@nova-ui/bits";
-
 import {
     KpiColorComparatorsRegistryService,
     NuiDashboardsModule,

@@ -37,6 +37,7 @@ import {
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 
+import { ComboboxV2Component } from "./combobox-v2.component";
 import { NuiOverlayModule } from "../../overlay/overlay.module";
 import { IOptionValueObject, OptionValueType } from "../../overlay/types";
 import { ComboboxV2OptionHighlightDirective } from "../combobox-v2-option-highlight/combobox-v2-option-highlight.directive";
@@ -44,9 +45,8 @@ import {
     ANNOUNCER_CLOSE_MESSAGE,
     ANNOUNCER_OPEN_MESSAGE_SUFFIX,
 } from "../constants";
-import { OptionKeyControlService } from "../option-key-control.service";
 import { SelectV2OptionComponent } from "../option/select-v2-option.component";
-import { ComboboxV2Component } from "./combobox-v2.component";
+import { OptionKeyControlService } from "../option-key-control.service";
 
 const selectedValuesMock: OptionValueType[] = [
     { id: "item-0", name: "Item 0" },

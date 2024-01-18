@@ -21,10 +21,10 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { TestBed, waitForAsync } from "@angular/core/testing";
 
-import { EventBusService } from "../../services/event-bus.service";
 import { OverlayComponent } from "./overlay-component/overlay.component";
 import { NuiOverlayModule } from "./overlay.module";
 import { OverlayService } from "./overlay.service";
+import { EventBusService } from "../../services/event-bus.service";
 
 describe("OverlayService >", () => {
     let service: OverlayService;

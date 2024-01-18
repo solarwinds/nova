@@ -27,8 +27,10 @@ import {
     NuiMessageModule,
     SrlcStage,
 } from "@nova-ui/bits";
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
+import { getDemoFiles } from "../../../../demo-files-factory";
 import { DemoCommonModule } from "../../common/demo-common.module";
 import { BarChartHorizontalExampleComponent } from "./bar-chart-horizontal/bar-chart-horizontal.example.component";
 import { BarChartTestComponent } from "./bar-chart-test/bar-chart-test.component";
@@ -48,8 +50,6 @@ import { BarChartTimeScaleExampleComponent } from "./bar-chart-time-scale/bar-ch
 import { BarChartWithLegendExampleComponent } from "./bar-chart-with-legend/bar-chart-with-legend.example.component";
 import { BarChartExampleComponent } from "./bar-chart/bar-chart.example.component";
 import { ChartDocsBarComponent } from "./chart-docs-bar.component";
-import { getDemoFiles } from "../../../../demo-files-factory";
-import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 
 const exampleRoutes: Routes = [
     {

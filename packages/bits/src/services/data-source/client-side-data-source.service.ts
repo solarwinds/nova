@@ -23,8 +23,6 @@ import _forEach from "lodash/forEach";
 import _get from "lodash/get";
 import _orderBy from "lodash/orderBy";
 
-import { SorterDirection } from "../../lib/sorter/public-api";
-import { SearchService } from "../search.service";
 import { DataSourceService } from "./data-source.service";
 import {
     IFilter,
@@ -33,6 +31,8 @@ import {
     INovaFilteringOutputs,
     INovaFilters,
 } from "./public-api";
+import { SorterDirection } from "../../lib/sorter/public-api";
+import { SearchService } from "../search.service";
 
 /**
  * <example-url>./../examples/index.html#/common/data-source-service/client-side</example-url>

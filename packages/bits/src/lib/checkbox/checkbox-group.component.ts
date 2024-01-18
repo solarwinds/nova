@@ -35,9 +35,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import _remove from "lodash/remove";
 import { Subscription } from "rxjs";
 
-import { NuiFormFieldControl } from "../form-field/public-api";
 import { CheckboxComponent } from "./checkbox.component";
 import { CheckboxChangeEvent, ICheckboxComponent } from "./public-api";
+import { NuiFormFieldControl } from "../form-field/public-api";
 
 @Component({
     selector: "nui-checkbox-group",

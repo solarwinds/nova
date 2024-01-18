@@ -20,8 +20,8 @@
 
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import {
     NuiDocsModule,
     NuiIconModule,
@@ -30,6 +30,7 @@ import {
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
+import { getDemoFiles } from "../../../../demo-files-factory";
 import { ChartDocsPieAndDonutComponent } from "./chart-docs-pie-and-donut.component";
 import { DonutChartInteractiveExampleComponent } from "./donut-chart-interactive/donut-chart-interactive.example.component";
 import { DonutChartTestComponent } from "./donut-chart-test/donut-chart-test.component";
@@ -37,7 +38,6 @@ import { DonutChartWithContentExampleComponent } from "./donut-chart-with-conten
 import { DonutChartExampleComponent } from "./donut-chart/donut-chart.example.component";
 import { PieChartTestComponent } from "./pie-chart-test/pie-chart-test.component";
 import { PieChartExampleComponent } from "./pie-chart/pie-chart.example.component";
-import { getDemoFiles } from "../../../../demo-files-factory";
 
 const exampleRoutes: Routes = [
     {

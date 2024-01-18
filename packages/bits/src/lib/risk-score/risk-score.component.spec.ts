@@ -20,13 +20,13 @@
 
 import { DebugElement } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+
 import { RiskScoreComponent } from "./risk-score.component";
 
 describe("components >", () => {
     describe("risk-score >", () => {
         let subject: RiskScoreComponent;
         let fixture: ComponentFixture<RiskScoreComponent>;
-        let debugElement: DebugElement;
 
         const minValue = 0;
         const maxValue = 10;

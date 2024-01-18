@@ -34,8 +34,8 @@ import {
 } from "@nova-ui/bits";
 
 import { FilterGroupModule } from "./filter-group/filter-group.module";
-import { FilteredViewListWithVirtualScrollComponent } from "./filtered-view-list-with-virtual-scroll.component";
 import { FilteredViewListComponent } from "./filtered-view-list/filtered-view-list.component";
+import { FilteredViewListWithVirtualScrollComponent } from "./filtered-view-list-with-virtual-scroll.component";
 
 @NgModule({
     imports: [

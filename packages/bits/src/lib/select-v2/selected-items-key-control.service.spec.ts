@@ -20,8 +20,8 @@
 
 import { EventEmitter } from "@angular/core";
 
-import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import { SelectedItemsKeyControlService } from "./selected-items-key-control.service";
+import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 
 const getItemMock = (title: string) => ({
     cdRef: {

@@ -26,11 +26,11 @@ import {
     ElementFinder,
 } from "protractor";
 
+import { PopoverAtom } from "./popover.atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
 import { CheckboxAtom } from "../checkbox/checkbox.atom";
 import { ComboboxV2Atom } from "../combobox-v2/combobox-v2.atom";
-import { PopoverAtom } from "./popover.atom";
 
 const name: string = "Popover";
 

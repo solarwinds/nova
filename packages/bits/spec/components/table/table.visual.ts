@@ -20,11 +20,11 @@
 
 import { browser, by, element, ElementFinder } from "protractor";
 
+import { TableAtom } from "./table.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
 import { SelectorAtom } from "../selector/selector.atom";
-import { TableAtom } from "./table.atom";
 
 const name: string = "Table";
 

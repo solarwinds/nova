@@ -35,12 +35,12 @@ import {
 } from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
+import { getDemoFiles } from "../../../../demo-files-factory";
 import { WidgetCreationDocsComponent } from "./widget-creation-docs.component";
 import {
     WidgetCreationComponent,
     WidgetTemplateSelectionComponent,
 } from "./widget-creation.component";
-import { getDemoFiles } from "../../../../demo-files-factory";
 
 const routes = [
     {

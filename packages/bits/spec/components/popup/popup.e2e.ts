@@ -18,9 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { PopupAtom } from "./popup.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
-import { PopupAtom } from "./popup.atom";
 
 describe("USERCONTROL Popup", () => {
     let popupSimple: PopupAtom;

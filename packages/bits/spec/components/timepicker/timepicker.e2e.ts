@@ -18,9 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { TimepickerAtom } from "./timepicker.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
-import { TimepickerAtom } from "./timepicker.atom";
 
 describe("USERCONTROL timepicker", () => {
     let basicTimePicker: TimepickerAtom;

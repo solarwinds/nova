@@ -26,9 +26,9 @@ import {
     ExpectedConditions,
 } from "protractor";
 
+import { SelectV2OptionAtom } from "./select-v2-option.atom";
 import { Atom } from "../../atom";
 import { OverlayAtom } from "../overlay/overlay.atom";
-import { SelectV2OptionAtom } from "./select-v2-option.atom";
 
 export class BaseSelectV2Atom extends Atom {
     public popup: OverlayAtom = Atom.findIn(

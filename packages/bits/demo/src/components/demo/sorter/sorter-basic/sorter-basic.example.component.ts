@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 import { Component, OnInit } from "@angular/core";
+// eslint-disable-next-line no-restricted-imports
 import { orderBy } from "lodash";
 
 import { IMenuItem, ISorterChanges, SorterDirection } from "@nova-ui/bits";

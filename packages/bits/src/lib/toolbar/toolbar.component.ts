@@ -38,9 +38,6 @@ import _isEmpty from "lodash/isEmpty";
 import { merge, Subject, Subscription } from "rxjs";
 import { debounceTime, take, takeUntil } from "rxjs/operators";
 
-import { LoggerService } from "../../services/log-service";
-import { ButtonComponent } from "../button/button.component";
-import { MenuComponent } from "../menu";
 import {
     IToolbarGroupContent,
     IToolbarSelectionState,
@@ -50,6 +47,9 @@ import {
 import { ToolbarGroupComponent } from "./toolbar-group.component";
 import { ToolbarItemComponent } from "./toolbar-item.component";
 import { ToolbarKeyboardService } from "./toolbar-keyboard.service";
+import { LoggerService } from "../../services/log-service";
+import { ButtonComponent } from "../button/button.component";
+import { MenuComponent } from "../menu";
 
 /**
  * NUI wrapper for toolbar control. It groups toolbar items (nui-toolbar-item),

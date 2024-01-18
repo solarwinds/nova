@@ -20,10 +20,10 @@
 
 import { NgModule } from "@angular/core";
 
+import { SpinnerComponent } from "./spinner.component";
 import { NuiCommonModule } from "../../common/common.module";
 import { NuiButtonModule } from "../button/button.module";
 import { NuiTooltipModule } from "../tooltip/tooltip.module";
-import { SpinnerComponent } from "./spinner.component";
 
 /**
  * @ignore

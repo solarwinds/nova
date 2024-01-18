@@ -20,13 +20,13 @@
 
 import { by, element } from "protractor";
 
+import { WizardStepAtom } from "./wizard-step.atom";
+import { WizardAtom } from "./wizard.atom";
 import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
 import { ButtonAtom } from "../button/button.atom";
 import { DialogAtom } from "../dialog/dialog.atom";
 import { TextboxAtom } from "../textbox/textbox.atom";
-import { WizardStepAtom } from "./wizard-step.atom";
-import { WizardAtom } from "./wizard.atom";
 
 describe("USERCONTROL Wizard >", () => {
     const wizard: WizardAtom = Atom.find(WizardAtom, "nui-demo-wizard");

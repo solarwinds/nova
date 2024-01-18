@@ -22,10 +22,10 @@ import { STEP_STATE } from "@angular/cdk/stepper";
 import { TemplateRef } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { IconComponent } from "../../icon/icon.component";
-import { WizardStepLabelDirective } from "../wizard-step-label.directive";
-import { WizardStepV2Component } from "../wizard-step/wizard-step.component";
 import { WizardStepHeaderComponent } from "./wizard-step-header.component";
+import { IconComponent } from "../../icon/icon.component";
+import { WizardStepV2Component } from "../wizard-step/wizard-step.component";
+import { WizardStepLabelDirective } from "../wizard-step-label.directive";
 
 const fakeStep = {} as WizardStepV2Component;
 

@@ -24,12 +24,12 @@ import {
 } from "@angular/cdk/scrolling";
 import { Directive, forwardRef, Input, OnChanges } from "@angular/core";
 
-import { ComponentChanges } from "../../../types";
 import {
     TableVirtualScrollLinearStrategy,
     // eslint-disable-next-line import/no-deprecated
     TableVirtualScrollStrategy,
 } from "./table-virtual-scroll-strategy";
+import { ComponentChanges } from "../../../types";
 
 export const DEFAULT_TABLE_HEADER_OFFSET = 40;
 export const TABLE_ROW_HEIGHT = 24;

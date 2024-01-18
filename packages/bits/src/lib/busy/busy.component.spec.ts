@@ -30,12 +30,12 @@ import {
 import { ComponentFixture, inject, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
+import { BusyComponent } from "./busy.component";
 import { LoggerService } from "../../services/log-service";
 import { TabNavigationService } from "../../services/tab-navigation.service";
 import { CheckboxComponent } from "../checkbox/checkbox.component";
 import { SpinnerComponent } from "../spinner/spinner.component";
 import { TooltipDirective } from "../tooltip/tooltip.directive";
-import { BusyComponent } from "./busy.component";
 
 @Component({
     selector: "nui-button-on-div-no-type",

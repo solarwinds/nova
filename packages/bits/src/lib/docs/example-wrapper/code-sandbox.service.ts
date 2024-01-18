@@ -82,7 +82,7 @@ export class CodeSandboxService {
         document.body.removeChild(form);
     }
 
-    addHiddenInput(form: HTMLFormElement, name: string, value: any) {
+    addHiddenInput(form: HTMLFormElement, name: string, value: any): void {
         const input = document.createElement("input");
         input.type = "hidden";
         input.name = name;
@@ -90,7 +90,7 @@ export class CodeSandboxService {
         form.appendChild(input);
     }
 
-    compress(object: any) {
+    compress(object: Record<string, object>): void {
         return compressToBase64(JSON.stringify(object))
             .replace(/\+/g, "-") // Convert '+' to '-'
             .replace(/\//g, "_") // Convert '/' to '_'

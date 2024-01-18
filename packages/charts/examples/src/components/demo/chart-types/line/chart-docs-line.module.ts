@@ -29,8 +29,10 @@ import {
     NuiSwitchModule,
     SrlcStage,
 } from "@nova-ui/bits";
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
+import { getDemoFiles } from "../../../../demo-files-factory";
 import { DemoCommonModule } from "../../common/demo-common.module";
 import { ChartDocsLineComponent } from "./chart-docs-line.component";
 import { LineChartBasicExampleComponent } from "./line-chart-basic/line-chart-basic.example.component";
@@ -45,8 +47,6 @@ import { LineChartWithAxisLabelsExampleComponent } from "./line-chart-with-axis-
 import { LineChartWithLargeValuesExampleComponent } from "./line-chart-with-large-values/line-chart-with-large-values.example.component";
 import { LineChartWithLegendExampleComponent } from "./line-chart-with-legend/line-chart-with-legend.example.component";
 import { LineChartWithRichTileLegendExampleComponent } from "./line-chart-with-rich-tile-legend/line-chart-with-rich-tile-legend.example.component";
-import { getDemoFiles } from "../../../../demo-files-factory";
-import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 
 const exampleRoutes: Routes = [
     {

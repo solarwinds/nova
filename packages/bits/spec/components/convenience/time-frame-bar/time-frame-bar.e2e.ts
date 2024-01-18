@@ -20,8 +20,8 @@
 
 import moment from "moment/moment";
 
-import { Animations, Helpers } from "../../../helpers";
 import { TimeFrameBarTestPage } from "./time-frame-bar-test.po";
+import { Animations, Helpers } from "../../../helpers";
 
 describe("CONVENIENCE COMPONENTS", () => {
     describe("TimeFrameBar", () => {

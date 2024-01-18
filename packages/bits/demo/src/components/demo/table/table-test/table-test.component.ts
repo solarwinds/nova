@@ -47,8 +47,8 @@ import {
     ToastService,
 } from "@nova-ui/bits";
 
-import { TableStateHandlerService } from "../../../../../../src/lib/table/table-state-handler.service";
 import { ELEMENT_DATA, ITestTableModel } from "./table-test-data-source";
+import { TableStateHandlerService } from "../../../../../../src/lib/table/table-state-handler.service";
 
 @Component({
     selector: "nui-table-test",

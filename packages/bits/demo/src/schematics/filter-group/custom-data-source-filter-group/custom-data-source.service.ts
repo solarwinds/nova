@@ -22,8 +22,8 @@ import { Inject, Injectable } from "@angular/core";
 
 import { DataSourceService, IFilters } from "@nova-ui/bits";
 
-import { FakeHTTPService } from "../fake-http.service";
 import { ExampleItem, ICustomDSFilteredData } from "./public-api";
+import { FakeHTTPService } from "../fake-http.service";
 
 @Injectable()
 export class FilterGroupCustomDataSourceService extends DataSourceService<ExampleItem> {

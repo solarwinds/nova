@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 import { Component, OnInit } from "@angular/core";
+
 import { IconService } from "./../../../../../../src/lib/icon/icon.service";
 
 @Component({

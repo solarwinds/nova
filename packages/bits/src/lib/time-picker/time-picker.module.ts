@@ -20,12 +20,12 @@
 
 import { NgModule } from "@angular/core";
 
+import { TimePickerComponent } from "./time-picker.component";
 import { NuiCommonModule } from "../../common/common.module";
 import { NuiIconModule } from "../icon/icon.module";
 import { NuiMenuModule } from "../menu/menu.module";
 import { NuiOverlayModule } from "../overlay/overlay.module";
 import { NuiTextboxModule } from "../textbox/textbox.module";
-import { TimePickerComponent } from "./time-picker.component";
 
 /**
  * @ignore

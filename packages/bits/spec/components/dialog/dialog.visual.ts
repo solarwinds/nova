@@ -20,11 +20,11 @@
 
 import { browser, by, element, ElementFinder } from "protractor";
 
+import { DialogAtom } from "./dialog.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
 import { SelectAtom } from "../select/select.atom";
-import { DialogAtom } from "./dialog.atom";
 
 const name: string = "Dialog";
 

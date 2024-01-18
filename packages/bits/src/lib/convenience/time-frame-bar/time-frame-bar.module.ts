@@ -20,6 +20,7 @@
 
 import { NgModule } from "@angular/core";
 
+import { TimeFrameBarComponent } from "./time-frame-bar.component";
 import { NuiCommonModule } from "../../../common/common.module";
 import { NuiButtonModule } from "../../button/button.module";
 import { NuiDatePickerModule } from "../../date-picker/date-picker.module";
@@ -29,7 +30,6 @@ import { NuiPopoverModule } from "../../popover/popover.module";
 import { NuiTimeFramePickerModule } from "../../time-frame-picker/time-frame-picker.module";
 import { NuiTimePickerModule } from "../../time-picker/time-picker.module";
 import { NuiTooltipModule } from "../../tooltip/tooltip.module";
-import { TimeFrameBarComponent } from "./time-frame-bar.component";
 
 /**
  * @ignore

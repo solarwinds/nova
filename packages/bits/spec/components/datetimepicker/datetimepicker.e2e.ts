@@ -20,9 +20,9 @@
 
 import { browser, by } from "protractor";
 
+import { DateTimepickerAtom } from "./datetimepicker.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
-import { DateTimepickerAtom } from "./datetimepicker.atom";
 
 describe("USERCONTROL date-time-picker", () => {
     let dateTimePicker: DateTimepickerAtom;

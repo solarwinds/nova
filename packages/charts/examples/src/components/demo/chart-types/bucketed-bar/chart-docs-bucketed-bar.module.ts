@@ -20,8 +20,8 @@
 
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import {
     NuiButtonModule,
     NuiCheckboxModule,
@@ -33,6 +33,7 @@ import {
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
+import { getDemoFiles } from "../../../../demo-files-factory";
 import { DemoCommonModule } from "../../common/demo-common.module";
 import { BarChartGroupedHorizontalExampleComponent } from "./bar-chart-grouped-horizontal/bar-chart-grouped-horizontal.example.component";
 import { BarChartGroupedExampleComponent } from "./bar-chart-grouped/bar-chart-grouped.example.component";
@@ -46,7 +47,6 @@ import { GroupedHorizontalBarChartTestComponent } from "./bar-chart-test/grouped
 import { GroupedVerticalBarChartTestComponent } from "./bar-chart-test/grouped-vertical/grouped-vertical-bar-chart-test.component";
 import { ProportionalVerticalBarChartTestComponent } from "./bar-chart-test/proportional-vertical/proportional-vertical-bar-chart-test.component";
 import { ChartDocsBucketedBarComponent } from "./chart-docs-bucketed-bar.component";
-import { getDemoFiles } from "../../../../demo-files-factory";
 
 const routes: Routes = [
     {

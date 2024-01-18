@@ -21,13 +21,13 @@
 import { fakeAsync, TestBed, tick } from "@angular/core/testing";
 import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
 
-import { NotificationService } from "../../services/notification-service";
-import { IconComponent } from "../icon/icon.component";
 import { IToastService } from "./public-api";
 import { ToastContainerService } from "./toast-container.service";
 import { ToastComponent } from "./toast.component";
 import { ToastService } from "./toast.service";
 import { ToastServiceBase } from "./toast.servicebase";
+import { NotificationService } from "../../services/notification-service";
+import { IconComponent } from "../icon/icon.component";
 
 describe("services >", () => {
     describe("toast >", () => {

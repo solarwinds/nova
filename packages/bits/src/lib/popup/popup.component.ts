@@ -41,13 +41,13 @@ import {
 import _isUndefined from "lodash/isUndefined";
 import { filter, Subject, Subscription } from "rxjs";
 
+import { PopupContainerComponent } from "./popup-container.component";
+import { PopupContainerService } from "./popup-container.service";
+import { PopupToggleDirective } from "./popup-toggle.directive";
 import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
 import { EdgeDetectionService } from "../../services/edge-detection.service";
 import { EventBusService } from "../../services/event-bus.service";
 import { LoggerService } from "../../services/log-service";
-import { PopupContainerComponent } from "./popup-container.component";
-import { PopupContainerService } from "./popup-container.service";
-import { PopupToggleDirective } from "./popup-toggle.directive";
 
 const isMouseEvent = (event: Event): event is MouseEvent =>
     event instanceof MouseEvent;

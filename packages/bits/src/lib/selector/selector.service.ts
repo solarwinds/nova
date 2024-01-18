@@ -26,6 +26,7 @@ import _isUndefined from "lodash/isUndefined";
 import _reject from "lodash/reject";
 import _unionWith from "lodash/unionWith";
 
+import { CheckboxStatus, SelectionType } from "./public-api";
 import { LoggerService } from "../../services/log-service";
 import {
     ISelection,
@@ -34,7 +35,6 @@ import {
 } from "../../services/public-api";
 import { IMenuGroup } from "../menu/public-api";
 import { RepeatSelectionMode } from "../repeat/types";
-import { CheckboxStatus, SelectionType } from "./public-api";
 
 /**
  * @ignore

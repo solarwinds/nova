@@ -37,6 +37,7 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { Subscription } from "rxjs";
 
+import { CheckboxChangeEvent, ICheckboxComponent } from "./public-api";
 import {
     CHECKBOX_KEYDOWN_EVENT,
     DOCUMENT_CLICK_EVENT,
@@ -44,7 +45,6 @@ import {
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import { EventBusService } from "../../services/event-bus.service";
 import { NuiFormFieldControl } from "../form-field/public-api";
-import { CheckboxChangeEvent, ICheckboxComponent } from "./public-api";
 
 @Component({
     selector: "nui-checkbox",

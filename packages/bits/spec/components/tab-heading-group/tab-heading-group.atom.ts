@@ -20,8 +20,8 @@
 
 import { by, ElementFinder } from "protractor";
 
-import { Atom } from "../../atom";
 import { TabHeadingAtom } from "./tab-heading.atom";
+import { Atom } from "../../atom";
 
 export class TabHeadingGroupAtom extends Atom {
     public static CSS_CLASS = "nui-tab-headings__holder";

@@ -43,8 +43,8 @@ import { Subject } from "rxjs";
 import { distinctUntilChanged, startWith, takeUntil } from "rxjs/operators";
 
 import { IWizardState } from "./types";
-import { WizardStepHeaderComponent } from "./wizard-step-header/wizard-step-header.component";
 import { WizardStepV2Component } from "./wizard-step/wizard-step.component";
+import { WizardStepHeaderComponent } from "./wizard-step-header/wizard-step-header.component";
 
 @Directive({
     selector: "[nuiWizard]",

@@ -22,9 +22,9 @@ import { Moment } from "moment/moment";
 import moment from "moment/moment";
 import { browser, by } from "protractor";
 
+import { DatepickerAtom } from "./datepicker.atom";
 import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
-import { DatepickerAtom } from "./datepicker.atom";
 
 describe("USERCONTROL datepicker", () => {
     const activeDateValueId = "nui-demo-datepicker-active-date-value";

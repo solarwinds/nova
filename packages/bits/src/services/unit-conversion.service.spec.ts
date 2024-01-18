@@ -20,9 +20,9 @@
 
 import noop from "lodash/noop";
 
-import { UnitBase, UnitOption } from "../constants/unit-conversion.constants";
 import { LoggerService } from "./log-service";
 import { UnitConversionService } from "./unit-conversion.service";
+import { UnitBase, UnitOption } from "../constants/unit-conversion.constants";
 
 describe("services >", () => {
     describe("unit conversion >", () => {

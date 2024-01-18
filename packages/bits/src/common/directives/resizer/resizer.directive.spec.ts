@@ -22,9 +22,9 @@ import { Component, DebugElement } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
-import { UtilService } from "../../../services/util.service";
 import { ResizeDirection, ResizeUnit } from "./public-api";
 import { ResizerDirective } from "./resizer.directive";
+import { UtilService } from "../../../services/util.service";
 
 @Component({
     template: `<div style="position: relative; height: 50px">

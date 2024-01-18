@@ -20,8 +20,8 @@
 
 import { by, element, ElementFinder } from "protractor";
 
-import { Atom } from "../../../atom";
 import { TimeFrameBarAtom } from "./time-frame-bar.atom";
+import { Atom } from "../../../atom";
 
 export class TimeFrameBarTestPage {
     private root: ElementFinder;

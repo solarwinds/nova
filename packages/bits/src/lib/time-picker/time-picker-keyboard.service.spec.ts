@@ -18,10 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { TimePickerKeyboardService } from "./time-picker-keyboard.service";
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import { MenuItemBaseComponent, MenuPopupComponent } from "../menu";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
-import { TimePickerKeyboardService } from "./time-picker-keyboard.service";
 
 const popupMock = {
     menuItems: {

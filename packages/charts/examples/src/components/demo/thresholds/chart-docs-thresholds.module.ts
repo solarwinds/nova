@@ -31,6 +31,7 @@ import {
 import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
+import { getDemoFiles } from "../../../demo-files-factory";
 import { DemoCommonModule } from "../common/demo-common.module";
 import { ChartDocsThresholdsComponent } from "./chart-docs-thresholds.component";
 import { ThresholdsBasicExampleComponent } from "./thresholds-basic/thresholds-basic.example.component";
@@ -41,8 +42,6 @@ import { ThresholdsSummaryTestComponent } from "./thresholds-summary/thresholds-
 import { ThresholdsSummaryVisualTestComponent } from "./thresholds-summary/thresholds-summary-visual-test/thresholds-summary-visual-test.component";
 // eslint-disable-next-line max-len
 import { ThresholdsSummaryWithIntervalScaleTestComponent } from "./thresholds-summary/thresholds-summary-with-interval-scale-test/thresholds-summary-with-interval-scale-test.component";
-import { DEMO_PATHS } from "../demo.files";
-import { getDemoFiles } from "../../../demo-files-factory";
 
 const exampleRoutes: Routes = [
     {
