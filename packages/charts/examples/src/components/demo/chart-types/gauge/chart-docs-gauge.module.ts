@@ -22,6 +22,8 @@
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
+
 
 import {
     NuiCheckboxModule,
@@ -37,21 +39,22 @@ import { NuiChartsModule } from "@nova-ui/charts";
 
 import { DemoCommonModule } from "../../common/demo-common.module";
 import { ChartDocsGaugeComponent } from "./chart-docs-gauge.component";
-import { DonutGaugeBasicExampleComponent } from "./donut/donut-basic/donut-gauge-basic.example.component";
-import { DonutGaugeWithContentExampleComponent } from "./donut/donut-with-content/donut-gauge-with-content.example.component";
-import { DonutGaugeWithCustomThresholdLabelsExampleComponent } from "./donut/donut-with-custom-threshold-labels/donut-gauge-with-custom-threshold-labels.example.component";
-import { DonutGaugeWithThresholdMarkerTogglingExampleComponent } from "./donut/donut-with-threshold-marker-toggling/donut-gauge-with-threshold-marker-toggling.example.component";
-import { DonutGaugeWithThresholdTogglingExampleComponent } from "./donut/donut-with-threshold-toggling/donut-gauge-with-threshold-toggling.example.component";
-import { DonutGaugeWithThresholdsExampleComponent } from "./donut/donut-with-thresholds/donut-gauge-with-thresholds.example.component";
-import { DonutGaugeWithoutThresholdMarkersExampleComponent } from "./donut/donut-without-threshold-markers/donut-gauge-without-threshold-markers.example.component";
-import { HorizontalGaugeBasicExampleComponent } from "./linear/horizontal-basic/horizontal-gauge-basic.example.component";
-import { LinearGaugeThicknessAdjustmentExampleComponent } from "./linear/linear-thickness-adjustment/linear-gauge-thickness-adjustment.example.component";
-import { LinearGaugeWithThresholdsExampleComponent } from "./linear/linear-with-thresholds/linear-gauge-with-thresholds.example.component";
-import { VerticalGaugeBasicExampleComponent } from "./linear/vertical-basic/vertical-gauge-basic.example.component";
+import { DonutGaugeBasicExampleComponent } from "./donut/donut-gauge-basic/donut-gauge-basic.example.component";
+import { DonutGaugeWithContentExampleComponent } from "./donut/donut-gauge-with-content/donut-gauge-with-content.example.component";
+import { DonutGaugeWithCustomThresholdLabelsExampleComponent } from "./donut/donut-gauge-with-custom-threshold-labels/donut-gauge-with-custom-threshold-labels.example.component";
+import { DonutGaugeWithThresholdMarkerTogglingExampleComponent } from "./donut/donut-gauge-with-threshold-marker-toggling/donut-gauge-with-threshold-marker-toggling.example.component";
+import { DonutGaugeWithThresholdTogglingExampleComponent } from "./donut/donut-gauge-with-threshold-toggling/donut-gauge-with-threshold-toggling.example.component";
+import { DonutGaugeWithThresholdsExampleComponent } from "./donut/donut-gauge-with-thresholds/donut-gauge-with-thresholds.example.component";
+import { DonutGaugeWithoutThresholdMarkersExampleComponent } from "./donut/donut-gauge-without-threshold-markers/donut-gauge-without-threshold-markers.example.component";
+import { HorizontalGaugeBasicExampleComponent } from "./linear/horizontal-gauge-basic/horizontal-gauge-basic.example.component";
+import { LinearGaugeThicknessAdjustmentExampleComponent } from "./linear/linear-gauge-thickness-adjustment/linear-gauge-thickness-adjustment.example.component";
+import { LinearGaugeWithThresholdsExampleComponent } from "./linear/linear-gauge-with-thresholds/linear-gauge-with-thresholds.example.component";
+import { VerticalGaugeBasicExampleComponent } from "./linear/vertical-gauge-basic/vertical-gauge-basic.example.component";
 import { DonutGaugeTesterComponent } from "./visual-test/donut/donut-gauge-tester.component";
 import { GaugeVisualTestComponent } from "./visual-test/gauge-visual-test.component";
 import { HorizontalGaugeTesterComponent } from "./visual-test/horizontal/horizontal-gauge-tester.component";
 import { VerticalGaugeTesterComponent } from "./visual-test/vertical/vertical-gauge-tester.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
 
 const exampleRoutes: Routes = [
     {
@@ -206,6 +209,11 @@ const exampleRoutes: Routes = [
         NuiTextboxModule,
         RouterModule.forChild(exampleRoutes),
     ],
-    providers: [],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("gauge"),
+        },
+    ],
 })
 export default class ChartDocsGaugeModule {}

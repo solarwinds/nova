@@ -35,12 +35,14 @@ import {
     NuiTooltipModule,
     SrlcStage,
 } from "@nova-ui/bits";
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
 import { DemoCommonModule } from "../common/demo-common.module";
 import { ChartDocsTimeFrameBarComponent } from "./chart-docs-time-frame-bar.component";
 import { TimeFrameBarBasicExampleComponent } from "./time-frame-bar-basic/time-frame-bar-basic.example.component";
 import { TimeFrameBarTestComponent } from "./time-frame-bar-test/time-frame-bar-test.component";
+import { getDemoFiles } from "../../../demo-files-factory";
 
 const exampleRoutes: Routes = [
     {
@@ -95,6 +97,11 @@ const exampleRoutes: Routes = [
         NuiTooltipModule,
         RouterModule.forChild(exampleRoutes),
     ],
-    providers: [],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("time-frame-bar"),
+        },
+    ],
 })
 export default class ChartDocsTimeFrameBarModule {}

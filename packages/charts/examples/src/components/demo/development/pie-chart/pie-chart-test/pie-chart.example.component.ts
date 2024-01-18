@@ -58,7 +58,7 @@ export class PieChartTestComponent implements OnInit {
     private scales: Scales;
     private interactive: boolean = false;
 
-    constructor(@Inject(ToastService) private toastr: IToastService) {}
+    constructor(@Inject(ToastService) private toastr: ToastService) {}
 
     public ngOnInit(): void {
         const gridConfig = new GridConfig();

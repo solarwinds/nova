@@ -45,6 +45,8 @@ import { LineChartWithAxisLabelsExampleComponent } from "./line-chart-with-axis-
 import { LineChartWithLargeValuesExampleComponent } from "./line-chart-with-large-values/line-chart-with-large-values.example.component";
 import { LineChartWithLegendExampleComponent } from "./line-chart-with-legend/line-chart-with-legend.example.component";
 import { LineChartWithRichTileLegendExampleComponent } from "./line-chart-with-rich-tile-legend/line-chart-with-rich-tile-legend.example.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 
 const exampleRoutes: Routes = [
     {
@@ -170,6 +172,11 @@ const exampleRoutes: Routes = [
         NuiChartsModule,
         RouterModule.forChild(exampleRoutes),
     ],
-    providers: [],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("line"),
+        },
+    ],
 })
 export default class ChartDocsLineModule {}

@@ -20,6 +20,8 @@
 
 import { NgModule, Type } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { getDemoFiles } from "../../../demo-files-factory";
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 
 const exampleRoutes: Routes = [
     {
@@ -41,6 +43,11 @@ const exampleRoutes: Routes = [
 @NgModule({
     declarations: [],
     imports: [RouterModule.forChild(exampleRoutes)],
-    providers: [],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("plugins"),
+        },
+    ],
 })
 export default class ChartDocsPluginsModule {}

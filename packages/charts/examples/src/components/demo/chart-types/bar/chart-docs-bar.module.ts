@@ -48,6 +48,8 @@ import { BarChartTimeScaleExampleComponent } from "./bar-chart-time-scale/bar-ch
 import { BarChartWithLegendExampleComponent } from "./bar-chart-with-legend/bar-chart-with-legend.example.component";
 import { BarChartExampleComponent } from "./bar-chart/bar-chart.example.component";
 import { ChartDocsBarComponent } from "./chart-docs-bar.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 
 const exampleRoutes: Routes = [
     {
@@ -175,6 +177,11 @@ const exampleRoutes: Routes = [
         NuiMessageModule,
         RouterModule.forChild(exampleRoutes),
     ],
-    providers: [],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("bar"),
+        },
+    ],
 })
 export default class ChartDocsBarModule {}

@@ -21,6 +21,7 @@
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 
 import {
     NuiDocsModule,
@@ -35,6 +36,7 @@ import { ChartDocsWaterfallComponent } from "./chart-docs-waterfall.component";
 import { WaterfallChartAdvancedComponent } from "./waterfall-advanced-charts/waterfall-chart-advanced.example.component";
 import { WaterfallChartSimpleComponent } from "./waterfall-chart-simple/waterfall-chart-simple.example.component";
 import { WaterfallChartTestComponent } from "./waterfall-test/waterfall-chart-test.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
 
 const collectionRoutes: Routes = [
     {
@@ -92,6 +94,11 @@ const collectionRoutes: Routes = [
         NuiMessageModule,
         RouterModule.forChild(collectionRoutes),
     ],
-    providers: [],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("waterfall"),
+        },
+    ],
 })
 export default class ChartDocsWaterfallModule {}

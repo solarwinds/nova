@@ -20,6 +20,7 @@
 
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 
 import {
     NuiButtonModule,
@@ -45,6 +46,7 @@ import { GroupedHorizontalBarChartTestComponent } from "./bar-chart-test/grouped
 import { GroupedVerticalBarChartTestComponent } from "./bar-chart-test/grouped-vertical/grouped-vertical-bar-chart-test.component";
 import { ProportionalVerticalBarChartTestComponent } from "./bar-chart-test/proportional-vertical/proportional-vertical-bar-chart-test.component";
 import { ChartDocsBucketedBarComponent } from "./chart-docs-bucketed-bar.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
 
 const routes: Routes = [
     {
@@ -139,6 +141,11 @@ const routes: Routes = [
         NuiMessageModule,
         RouterModule.forChild(routes),
     ],
-    providers: [],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("bucketed-bar"),
+        },
+    ],
 })
 export default class ChartDocsBucketedBarModule {}

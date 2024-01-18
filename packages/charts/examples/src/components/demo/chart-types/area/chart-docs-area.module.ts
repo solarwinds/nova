@@ -22,6 +22,7 @@
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 
 import {
     NuiDocsModule,
@@ -44,6 +45,7 @@ import { AreaChartVariableBaselineExampleComponent } from "./area-chart-variable
 import { AreaChartVerticalExampleComponent } from "./area-chart-vertical/area-chart-vertical-example.component";
 import { ChartDocsAreaComponent } from "./chart-docs-area.component";
 import { AreaChartTestComponent } from "./test/area-chart-test.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
 /* eslint-enable max-len */
 
 const exampleRoutes: Routes = [
@@ -164,6 +166,11 @@ const exampleRoutes: Routes = [
         NuiMessageModule,
         RouterModule.forChild(exampleRoutes),
     ],
-    providers: [],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("area"),
+        },
+    ],
 })
 export default class ChartDocsAreaModule {}

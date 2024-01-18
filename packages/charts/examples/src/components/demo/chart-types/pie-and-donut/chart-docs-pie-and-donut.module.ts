@@ -20,6 +20,7 @@
 
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 
 import {
     NuiDocsModule,
@@ -36,6 +37,7 @@ import { DonutChartWithContentExampleComponent } from "./donut-chart-with-conten
 import { DonutChartExampleComponent } from "./donut-chart/donut-chart.example.component";
 import { PieChartTestComponent } from "./pie-chart-test/pie-chart-test.component";
 import { PieChartExampleComponent } from "./pie-chart/pie-chart.example.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
 
 const exampleRoutes: Routes = [
     {
@@ -101,6 +103,11 @@ const exampleRoutes: Routes = [
         NuiMessageModule,
         RouterModule.forChild(exampleRoutes),
     ],
-    providers: [],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("pie-and-donut"),
+        },
+    ],
 })
 export default class ChartDocsPieAndDonutModule {}

@@ -22,6 +22,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
 
+
 import {
     NuiDocsModule,
     NuiMessageModule,
@@ -39,6 +40,8 @@ import { SparkChartMultipleExampleComponent } from "./spark-chart-multiple/spark
 import { AreaSparkMinimalTestComponent } from "./spark-chart-stroke-test/area-spark-minimal-test.component";
 import { SparkChartTableExampleComponent } from "./spark-chart-table/spark-chart-table.example.component";
 import { SparkChartTestComponent } from "./spark-chart-test/spark-chart-test.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 
 const exampleRoutes: Routes = [
     {
@@ -127,6 +130,11 @@ const exampleRoutes: Routes = [
         DemoCommonModule,
         RouterModule.forChild(exampleRoutes),
     ],
-    providers: [],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("spark"),
+        },
+    ],
 })
 export default class ChartDocsSparkModule {}
