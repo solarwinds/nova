@@ -34,12 +34,13 @@ import {
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ReplaySubject, Subject } from "rxjs";
-import { take, takeUntil } from "rxjs/operators";
+import { take } from "rxjs/operators";
 
-import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
+import { EventBus, IDataSource, IEvent, LoggerService } from "@nova-ui/bits";
 import {
     ConfiguratorHeadingService,
     DATA_SOURCE_CHANGE,
+    DATA_SOURCE_CREATED,
     DATA_SOURCE_OUTPUT,
     IDataSourceOutput,
     IHasChangeDetector,
@@ -70,6 +71,9 @@ export class AcmeProportionalDSConfigComponent
 
     // used by the Broadcaster
     public dsOutput = new ReplaySubject<any>(1);
+    public dataFieldIds = new Subject<any>();
+
+    public dataSource: IDataSource;
 
     private readonly destroy$ = new Subject<void>();
 
@@ -131,36 +135,27 @@ export class AcmeProportionalDSConfigComponent
         }
         const provider = this.providerRegistryService.getProvider(providerId);
         if (provider) {
-            const dataSource = this.providerRegistryService.getProviderInstance(
+            this.dataSource = this.providerRegistryService.getProviderInstance(
                 provider,
                 this.injector
             );
-            // This subscriptions is only meant to emit actual datasource value to event bus
-            dataSource.outputsSubject
+            this.eventBus.next(DATA_SOURCE_CREATED, {
+                payload: this.dataSource,
+            });
+            this.dataSource.outputsSubject
                 .pipe(take(1))
                 .subscribe((result: any | IDataSourceOutput<any>) => {
                     this.eventBus.next(DATA_SOURCE_OUTPUT, { payload: result });
-                });
-
-            // This subscription emits filtered set of datasource values defined by the from properties changes
-            dataSource.outputsSubject
-                .pipe(takeUntil(this.destroy$))
-                .subscribe((result: any | IDataSourceOutput<any>) => {
                     this.dsOutput.next(result);
+                    const dataFieldIdsResult = result?.result || result;
+                    if (dataFieldIdsResult) {
+                        this.dataFieldIds.next(Object.keys(dataFieldIdsResult));
+                    }
                 });
-
-            this.form
-                .get("properties")
-                ?.valueChanges.pipe(takeUntil(this.destroy$))
-                .subscribe(async (value) => {
-                    // Updating changed properties to let datasource properly update the datasource if there are any filters
-                    // in the configuration (isEuropeOnly property in our case).
-                    await dataSource.updateConfiguration({
-                        ...this.properties,
-                        ...value,
-                    });
-                    await dataSource.applyFilters();
-                });
+            // This setTimeout is because the output of the data source might come faster than the data-source-error-component is initiated
+            setTimeout(() => {
+                this.dataSource.applyFilters();
+            });
         } else {
             this.logger.warn("No provider found for id:", providerId);
         }
