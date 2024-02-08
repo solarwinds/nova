@@ -21,13 +21,13 @@
 import { NgModule, Type } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { InMemoryCache } from "@apollo/client/core";
-import { Apollo } from "apollo-angular";
+import { APOLLO_OPTIONS, ApolloModule } from "apollo-angular";
 import { HttpLink } from "apollo-angular/http";
 
 import { NuiDocsModule, NuiMessageModule } from "@nova-ui/bits";
 
-import { APOLLO_API_NAMESPACE } from "./types";
-
+// https://swicloud.atlassian.net/browse/NUI-6196
+// TODO fix api, now it send 500
 const COUNTRIES_API = "https://countries-274616.ew.r.appspot.com/";
 
 const exampleRoutes: Routes = [
@@ -58,14 +58,20 @@ const exampleRoutes: Routes = [
     imports: [
         NuiDocsModule,
         NuiMessageModule,
+        ApolloModule,
         RouterModule.forChild(exampleRoutes),
     ],
+    providers: [
+        {
+            provide: APOLLO_OPTIONS,
+            useFactory: (httpLink: HttpLink) => ({
+                cache: new InMemoryCache(),
+                link: httpLink.create({
+                    uri: COUNTRIES_API,
+                }),
+            }),
+            deps: [HttpLink],
+        },
+    ],
 })
-export default class DashboardDocsModule {
-    constructor(httpLink: HttpLink, apollo: Apollo) {
-        apollo.createNamed(APOLLO_API_NAMESPACE.COUNTRIES, {
-            link: httpLink.create({ uri: COUNTRIES_API }),
-            cache: new InMemoryCache(),
-        });
-    }
-}
+export default class DashboardDocsModule {}

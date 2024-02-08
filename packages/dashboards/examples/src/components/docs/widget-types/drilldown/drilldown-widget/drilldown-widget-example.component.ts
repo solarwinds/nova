@@ -176,15 +176,15 @@ export class DrilldownDataSourceRealApi<T = any>
     // This method is expected to return all data needed for repeat/paginator/filterGroups in order to work.
     // In case of custom filtering participants feel free to extend INovaFilteringOutputs.
     protected getBackendData(filters: INovaFilters): Observable<any> {
-        const mainRequest = this.apollo
-            .use(APOLLO_API_NAMESPACE.COUNTRIES)
-            .query<any>({ query: this.generateQuery(filters) });
+        const mainRequest = this.apollo.watchQuery<{ countries: any }>({
+            query: this.generateQuery(filters),
+        });
 
-        return mainRequest.pipe(
+        return mainRequest.valueChanges.pipe(
             // mock delay
             delay(300),
             // data mapping, !DS specific!
-            map((res) => res.data.Country),
+            map((res: any) => res.data.Country),
             // adds mock icons to be displayed on leaf nodes !DS specific!
             map((res: any[]) =>
                 res.map((v) => ({
