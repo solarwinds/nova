@@ -44,6 +44,6 @@
     "trigger-pipeline-build-ci": "bash scripts/trigger-pipeline-build",
     "verify-ci": "bash scripts/verify-published"
   },
-  "version": "15.0.3-0",
+  "version": "15.0.4-0",
   "packageManager": "yarn@1.22.18"
 }
