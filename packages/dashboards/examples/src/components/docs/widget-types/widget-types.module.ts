@@ -27,9 +27,19 @@ import {
     NuiDashboardsModule,
 } from "@nova-ui/dashboards";
 
+export enum WidgetTypesRoute {
+    kpi = "kpi",
+    riskScore = "risk-score",
+    timeseries = "timeseries",
+    table = "table",
+    proportional = "proportional",
+    embedded = "embedded",
+    drilldown = "drilldown",
+}
+
 const routes: Routes = [
     {
-        path: "kpi",
+        path: WidgetTypesRoute.kpi,
         loadChildren: async () =>
             import("./kpi/kpi-docs.module") as object as Promise<Type<any>>,
         data: {
@@ -39,7 +49,7 @@ const routes: Routes = [
         },
     },
     {
-        path: "risk-score",
+        path: WidgetTypesRoute.riskScore,
         loadChildren: async () =>
             import("./risk-score/risk-score-docs.module") as object as Promise<
                 Type<any>
@@ -51,7 +61,7 @@ const routes: Routes = [
         },
     },
     {
-        path: "timeseries",
+        path: WidgetTypesRoute.timeseries,
         loadChildren: async () =>
             import("./timeseries/timeseries-docs.module") as object as Promise<
                 Type<any>
@@ -63,7 +73,7 @@ const routes: Routes = [
         },
     },
     {
-        path: "table",
+        path: WidgetTypesRoute.table,
         loadChildren: async () =>
             import("./table/table-docs.module") as object as Promise<Type<any>>,
         data: {
@@ -73,7 +83,7 @@ const routes: Routes = [
         },
     },
     {
-        path: "proportional",
+        path: WidgetTypesRoute.proportional,
         loadChildren: async () =>
             import(
                 "./proportional/proportional-docs.module"
@@ -85,7 +95,7 @@ const routes: Routes = [
         },
     },
     {
-        path: "embedded",
+        path: WidgetTypesRoute.embedded,
         loadChildren: async () =>
             import(
                 "./embedded-content/embedded-content-docs.module"
@@ -97,7 +107,7 @@ const routes: Routes = [
         },
     },
     {
-        path: "drilldown",
+        path: WidgetTypesRoute.drilldown,
         loadChildren: async () =>
             import("./drilldown/drilldown-docs.module") as object as Promise<
                 Type<any>
