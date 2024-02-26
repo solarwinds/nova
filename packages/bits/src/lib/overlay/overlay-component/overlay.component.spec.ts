@@ -30,11 +30,11 @@ import {
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { first } from "rxjs/operators";
 
+import { OverlayComponent } from "./overlay.component";
 import { EventBusService } from "../../../services/event-bus.service";
 import { NUI_SELECT_V2_OPTION_PARENT_COMPONENT } from "../../select-v2/constants";
 import { SelectV2OptionComponent } from "../../select-v2/option/select-v2-option.component";
 import { NuiOverlayModule } from "../overlay.module";
-import { OverlayComponent } from "./overlay.component";
 
 @Component({
     template: `

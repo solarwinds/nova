@@ -21,13 +21,19 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
-import { NuiDividerModule, NuiDocsModule, SrlcStage } from "@nova-ui/bits";
+import {
+    DEMO_PATH_TOKEN,
+    NuiDividerModule,
+    NuiDocsModule,
+    SrlcStage,
+} from "@nova-ui/bits";
 
 import {
     DividerExampleComponent,
     HorizontalDividersExampleComponent,
     VerticalDividersExampleComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -47,6 +53,12 @@ const routes = [
         DividerExampleComponent,
         HorizontalDividersExampleComponent,
         VerticalDividersExampleComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("divider"),
+        },
     ],
     exports: [RouterModule],
 })

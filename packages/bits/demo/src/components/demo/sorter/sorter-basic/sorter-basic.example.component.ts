@@ -19,7 +19,8 @@
 //  THE SOFTWARE.
 
 import { Component, OnInit } from "@angular/core";
-import _orderBy from "lodash/orderBy";
+// eslint-disable-next-line no-restricted-imports
+import { orderBy } from "lodash";
 
 import { IMenuItem, ISorterChanges, SorterDirection } from "@nova-ui/bits";
 
@@ -67,7 +68,7 @@ export class SorterBasicExampleComponent implements OnInit {
     }
 
     private sortItems(sortBy: string, direction: SorterDirection) {
-        this.items = _orderBy(
+        this.items = orderBy(
             this.items,
             [sortBy],
             [

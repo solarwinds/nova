@@ -20,10 +20,10 @@
 
 import { browser, by, ElementFinder } from "protractor";
 
+import { RepeatAtom } from "./repeat.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-import { RepeatAtom } from "./repeat.atom";
 
 const name: string = "Repeat";
 

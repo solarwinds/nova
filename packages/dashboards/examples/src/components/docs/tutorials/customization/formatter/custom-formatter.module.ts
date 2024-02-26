@@ -33,9 +33,11 @@ import {
     NuiSwitchModule,
     NuiTextboxModule,
     NuiValidationMessageModule,
+    DEMO_PATH_TOKEN,
 } from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
+import { getDemoFiles } from "../../../../../demo-files-factory";
 import { CustomDonutContentFormatterDocComponent } from "./donut-content-formatter-example/custom-donut-content-formatter-docs.component";
 import {
     CustomDonutContentFormatterComponent,
@@ -96,6 +98,12 @@ const routes: Routes = [
         CustomFormatterExampleComponent,
         CustomFormatterConfiguratorComponent,
         CustomFormatterComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("formatter"),
+        },
     ],
 })
 export default class CustomFormatterModuleRoute {}

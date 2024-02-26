@@ -23,9 +23,9 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import noop from "lodash/noop";
 
+import { ClipboardDirective } from "./clipboard.directive";
 import { ClipboardExampleComponent } from "../../../../demo/src/components/demo/common/clipboard/clipboard.example.component";
 import { LoggerService } from "../../../services/log-service";
-import { ClipboardDirective } from "./clipboard.directive";
 
 describe("directives >", () => {
     describe("clipboard >", () => {

@@ -33,8 +33,8 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 
-import { LoggerService } from "../../services/log-service";
 import { ButtonIcon, SpinnerSize } from "./public-api";
+import { LoggerService } from "../../services/log-service";
 
 /**
  * <example-url>./../examples/index.html#/spinner</example-url>

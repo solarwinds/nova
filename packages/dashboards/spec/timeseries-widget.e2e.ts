@@ -23,9 +23,9 @@ import { by, element } from "protractor";
 import { Atom, IconAtom } from "@nova-ui/bits/sdk/atoms";
 import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
 
-import { TimeseriesAtom } from "./timeseries/timeseries.atom";
 import { DashboardAtom } from "./dashboard.atom";
 import { LegendSeriesAtom } from "./timeseries/legend-series.atom";
+import { TimeseriesAtom } from "./timeseries/timeseries.atom";
 
 const getTimeseriesWidget = (index: number): TimeseriesAtom =>
     Atom.findIn(

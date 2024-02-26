@@ -22,11 +22,11 @@ import { DOCUMENT } from "@angular/common";
 import { Inject, Injectable } from "@angular/core";
 import _isNil from "lodash/isNil";
 
+import { PopoverPlacement } from "./public-api";
 import { popoverConstants } from "../../constants/popover.constants";
 import { EdgeDetectionService } from "../../services/edge-detection.service";
 import { PositionService } from "../../services/position.service";
 import { IEdgeDetectionResult } from "../../services/public-api";
-import { PopoverPlacement } from "./public-api";
 /**
  * @ignore
  */

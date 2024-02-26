@@ -21,6 +21,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import {
     NuiButtonModule,
     NuiDocsModule,
@@ -33,6 +34,7 @@ import {
 } from "@nova-ui/dashboards";
 
 import { DEFAULT_TABLE_FORMATTERS } from "../../../../../../src/lib/widget-types/table/default-table-formatters";
+import { getDemoFiles } from "../../../../demo-files-factory";
 import { TableDocsComponent } from "./table-docs.component";
 import { TableWidgetInteractiveExampleComponent } from "./table-widget-interactive/table-widget-interactive-example.component";
 import { TableSearchDocsComponent } from "./table-widget-search-example/docs/table-search-docs.component";
@@ -86,6 +88,12 @@ const routes: Routes = [
         TableWidgetInteractiveExampleComponent,
         TableWidgetExampleComponent,
         TableWidgetSearchExampleComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("table"),
+        },
     ],
 })
 export default class TableDocsModule {

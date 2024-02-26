@@ -20,10 +20,10 @@
 
 import { browser } from "protractor";
 
+import { ButtonAtom } from "./button.atom";
 import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-import { ButtonAtom } from "./button.atom";
 
 const name: string = "Button";
 

@@ -38,7 +38,6 @@ import {
     IXYScales,
     stack,
     TimeIntervalScale,
-    TimeseriesZoomPluginsSyncService,
 } from "@nova-ui/charts";
 
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../../types";

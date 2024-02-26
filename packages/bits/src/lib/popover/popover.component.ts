@@ -58,15 +58,6 @@ import {
 } from "rxjs";
 
 import {
-    CLOSE_POPOVER_EVENT,
-    DOCUMENT_CLICK_EVENT,
-} from "../../constants/event.constants";
-import { popoverConstants } from "../../constants/popover.constants";
-import { EventBusService } from "../../services/event-bus.service";
-import { UtilService } from "../../services/util.service";
-import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
-import { OverlayUtilitiesService } from "../overlay/overlay-utilities.service";
-import {
     PopoverModalComponent,
     PopoverModalEvents,
 } from "./popover-modal.component";
@@ -77,6 +68,15 @@ import {
     PopoverPlacement,
     PopoverTrigger,
 } from "./public-api";
+import {
+    CLOSE_POPOVER_EVENT,
+    DOCUMENT_CLICK_EVENT,
+} from "../../constants/event.constants";
+import { popoverConstants } from "../../constants/popover.constants";
+import { EventBusService } from "../../services/event-bus.service";
+import { UtilService } from "../../services/util.service";
+import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
+import { OverlayUtilitiesService } from "../overlay/overlay-utilities.service";
 
 // <example-url>./../examples/index.html#/popover</example-url>
 

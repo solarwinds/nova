@@ -23,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiCheckboxModule,
     NuiDocsModule,
@@ -42,6 +43,7 @@ import {
     CheckboxTestComponent,
     CheckboxVisualTestComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -95,6 +97,12 @@ const routes = [
         CheckboxExampleComponent,
         CheckboxVisualTestComponent,
         CheckboxTestComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("checkbox"),
+        },
     ],
     exports: [RouterModule],
 })

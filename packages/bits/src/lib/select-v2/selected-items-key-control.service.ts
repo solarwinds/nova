@@ -22,9 +22,9 @@ import { ActiveDescendantKeyManager, LiveAnnouncer } from "@angular/cdk/a11y";
 import { Injectable, QueryList } from "@angular/core";
 import isNil from "lodash/isNil";
 
-import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import { ComboboxV2Component } from "./combobox-v2/combobox-v2.component";
 import { MarkAsSelectedItemDirective } from "./mark-as-selected-item.directive";
+import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 
 @Injectable()
 export class SelectedItemsKeyControlService {

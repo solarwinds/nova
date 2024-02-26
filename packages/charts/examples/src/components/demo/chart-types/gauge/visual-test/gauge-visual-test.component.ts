@@ -50,22 +50,20 @@ export class GaugeVisualTestComponent {
 
     public onWarningEnabledChange(enabled: boolean): void {
         this.warningEnabled = enabled;
-        this.gaugeConfigs = this.gaugeConfigs.map((c: IGaugeConfig) => {
-            return {
-                ...cloneDeep(c),
-                thresholds: {
-                    ...c.thresholds,
-                    definitions: {
-                        ...c.thresholds?.definitions,
-                        [StandardGaugeThresholdId.Warning]: {
-                            ...c.thresholds?.definitions[
-                                StandardGaugeThresholdId.Warning
-                            ],
-                            enabled: this.warningEnabled,
-                        },
-                    } as GaugeThresholdDefs,
-                },
-            };
-        });
+        this.gaugeConfigs = this.gaugeConfigs.map((c: IGaugeConfig) => ({
+            ...cloneDeep(c),
+            thresholds: {
+                ...c.thresholds,
+                definitions: {
+                    ...c.thresholds?.definitions,
+                    [StandardGaugeThresholdId.Warning]: {
+                        ...c.thresholds?.definitions[
+                            StandardGaugeThresholdId.Warning
+                        ],
+                        enabled: this.warningEnabled,
+                    },
+                } as GaugeThresholdDefs,
+            },
+        }));
     }
 }

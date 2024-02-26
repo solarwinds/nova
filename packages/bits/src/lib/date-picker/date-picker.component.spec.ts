@@ -27,9 +27,15 @@ import {
 } from "@angular/core/testing";
 import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
-import momentTz from "moment-timezone";
 import moment from "moment/moment";
+import momentTz from "moment-timezone";
 
+import { DayPickerComponent } from "./date-picker-day-picker.component";
+import { DatePickerInnerComponent } from "./date-picker-inner.component";
+import { MonthPickerComponent } from "./date-picker-month-picker.component";
+import { DatePickerSpecHelpers } from "./date-picker-spec-helpers/date-picker-spec-helpers";
+import { YearPickerComponent } from "./date-picker-year-picker.component";
+import { DatePickerComponent } from "./date-picker.component";
 import { IconService } from "../../lib/icon/icon.service";
 import {
     ButtonComponent,
@@ -49,12 +55,6 @@ import { OverlayComponent } from "../overlay/overlay-component/overlay.component
 import { NuiOverlayModule } from "../overlay/overlay.module";
 import { PopoverComponent } from "../popover/popover.component";
 import { ValidationMessageComponent } from "../validation-message/validation-message.component";
-import { DayPickerComponent } from "./date-picker-day-picker.component";
-import { DatePickerInnerComponent } from "./date-picker-inner.component";
-import { MonthPickerComponent } from "./date-picker-month-picker.component";
-import { DatePickerSpecHelpers } from "./date-picker-spec-helpers/date-picker-spec-helpers";
-import { YearPickerComponent } from "./date-picker-year-picker.component";
-import { DatePickerComponent } from "./date-picker.component";
 
 const eventMock = {};
 

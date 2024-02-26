@@ -25,8 +25,6 @@ import _intersection from "lodash/intersection";
 import _isEqual from "lodash/isEqual";
 import _orderBy from "lodash/orderBy";
 
-import { SorterDirection } from "../../lib/sorter/public-api";
-import { SearchService } from "../search.service";
 import { DataSourceService } from "./data-source.service";
 import {
     IFilter,
@@ -37,6 +35,8 @@ import {
     INovaFilteringOutputs,
     INovaFilters,
 } from "./public-api";
+import { SorterDirection } from "../../lib/sorter/public-api";
+import { SearchService } from "../search.service";
 
 /** @ignore */
 interface ComparisonItems {

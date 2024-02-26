@@ -40,6 +40,8 @@ import _values from "lodash/values";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
+import { ISortedItem, ISorterChanges, SorterDirection } from "./public-api";
+import { SorterKeyboardService } from "./sorter-keyboard.service";
 import {
     IFilter,
     IFilterPub,
@@ -50,8 +52,6 @@ import { MenuPopupComponent } from "../menu";
 import { IMenuGroup, IMenuItem } from "../menu/public-api";
 import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
-import { ISortedItem, ISorterChanges, SorterDirection } from "./public-api";
-import { SorterKeyboardService } from "./sorter-keyboard.service";
 
 // <example-url>./../examples/index.html#/sorter</example-url>
 

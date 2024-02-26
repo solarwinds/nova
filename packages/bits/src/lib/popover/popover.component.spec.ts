@@ -31,11 +31,11 @@ import { By } from "@angular/platform-browser";
 import _noop from "lodash/noop";
 import { Subject } from "rxjs";
 
+import { PopoverModalComponent } from "./popover-modal.component";
+import { PopoverComponent } from "./popover.component";
 import { PositionService } from "../../services/position.service";
 import { UtilService } from "../../services/util.service";
 import { NuiOverlayModule } from "../overlay/overlay.module";
-import { PopoverModalComponent } from "./popover-modal.component";
-import { PopoverComponent } from "./popover.component";
 
 @Component({
     template: ` <nui-popover

@@ -24,16 +24,16 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 
+import { ComboboxV2Component } from "./combobox-v2/combobox-v2.component";
+import { ComboboxV2OptionHighlightDirective } from "./combobox-v2-option-highlight/combobox-v2-option-highlight.directive";
+import { MarkAsSelectedItemDirective } from "./mark-as-selected-item.directive";
+import { SelectV2OptionComponent } from "./option/select-v2-option.component";
+import { SelectV2OptionGroupComponent } from "./option-group/select-v2-option-group.component";
+import { SelectV2Component } from "./select/select-v2.component";
 import { NuiButtonModule } from "../button/button.module";
 import { NuiIconModule } from "../icon/icon.module";
 import { NuiOverlayModule } from "../overlay/overlay.module";
 import { NuiTooltipModule } from "../tooltip/tooltip.module";
-import { ComboboxV2OptionHighlightDirective } from "./combobox-v2-option-highlight/combobox-v2-option-highlight.directive";
-import { ComboboxV2Component } from "./combobox-v2/combobox-v2.component";
-import { MarkAsSelectedItemDirective } from "./mark-as-selected-item.directive";
-import { SelectV2OptionGroupComponent } from "./option-group/select-v2-option-group.component";
-import { SelectV2OptionComponent } from "./option/select-v2-option.component";
-import { SelectV2Component } from "./select/select-v2.component";
 
 /**
  * @ignore

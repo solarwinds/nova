@@ -21,9 +21,9 @@
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { NgModule } from "@angular/core";
 
-import { NuiCommonModule } from "../../common/common.module";
 import { DraggableComponent } from "./draggable.component";
 import { DroppableComponent } from "./droppable.component";
+import { NuiCommonModule } from "../../common/common.module";
 
 /**
  * @ignore

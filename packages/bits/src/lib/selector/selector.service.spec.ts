@@ -18,10 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ISelection, SelectionModel } from "../../services/public-api";
-import { RepeatSelectionMode } from "../repeat/types";
 import { CheckboxStatus, SelectionType } from "./public-api";
 import { SelectorService } from "./selector.service";
+import { ISelection, SelectionModel } from "../../services/public-api";
+import { RepeatSelectionMode } from "../repeat/types";
 
 describe("services >", () => {
     describe("SelectorService >", () => {

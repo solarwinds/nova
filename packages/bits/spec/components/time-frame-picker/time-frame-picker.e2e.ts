@@ -18,13 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { QuickPickerAtom } from "./quick-picker.atom";
+import { TimeFramePickerAtom } from "./time-frame-picker.atom";
 import { Atom } from "../../atom";
 import { ButtonAtom } from "../../components/button/button.atom";
 import { PopoverAtom } from "../../components/popover/popover.atom";
 import { TimepickerAtom } from "../../components/timepicker/timepicker.atom";
 import { Animations, Helpers } from "../../helpers";
-import { QuickPickerAtom } from "./quick-picker.atom";
-import { TimeFramePickerAtom } from "./time-frame-picker.atom";
 
 describe("USERCONTROL time-frame-picker", () => {
     const basicTimeFramePickerPopover: PopoverAtom = Atom.find(

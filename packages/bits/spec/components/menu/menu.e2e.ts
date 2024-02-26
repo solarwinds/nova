@@ -20,10 +20,10 @@
 
 import { browser, by, Key, protractor } from "protractor";
 
-import { Atom } from "../../atom";
-import { Helpers } from "../../helpers";
 import { MenuItemAtom } from "./menu-item.atom";
 import { MenuAtom } from "./menu.atom";
+import { Atom } from "../../atom";
+import { Helpers } from "../../helpers";
 
 describe("USERCONTROL Menu", () => {
     let menu: MenuAtom;

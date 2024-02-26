@@ -184,7 +184,7 @@
                         "main": "",
                         "namedChunks": true,
                         "outputPath": "./.tmp-css",
-                        "sourceMap": true,
+                        "sourceMap": false,
                         "styles": [
                             "./src/styles.less",
                             "./src/component-styles.less",

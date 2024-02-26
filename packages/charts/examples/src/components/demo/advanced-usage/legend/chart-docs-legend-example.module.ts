@@ -28,8 +28,10 @@ import {
     NuiMessageModule,
     SrlcStage,
 } from "@nova-ui/bits";
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
+import { getDemoFiles } from "../../../../demo-files-factory";
 import { DemoCommonModule } from "../../common/demo-common.module";
 import { LegendActiveExampleComponent } from "./legend-active/legend-active.example.component";
 import { LegendBasicExampleComponent } from "./legend-basic/legend-basic.example.component";
@@ -118,6 +120,11 @@ const legendRoutes: Routes = [
         NuiButtonModule,
         NuiMessageModule,
     ],
-    providers: [],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("legend"),
+        },
+    ],
 })
 export default class ChartDocsLegendExampleModule {}

@@ -22,6 +22,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiDocsModule,
     NuiExpanderModule,
@@ -42,6 +43,7 @@ import {
     ExpanderWithoutBorderExampleComponent,
     ExpanderTestComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -94,6 +96,12 @@ const routes = [
         ExpanderWithoutBorderExampleComponent,
         ExpanderVisualTestComponent,
         ExpanderTestComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("expander"),
+        },
     ],
     exports: [RouterModule],
 })

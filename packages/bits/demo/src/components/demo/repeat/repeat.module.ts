@@ -34,6 +34,7 @@ import {
     NuiSwitchModule,
     NuiTabsModule,
     SrlcStage,
+    DEMO_PATH_TOKEN,
 } from "@nova-ui/bits";
 
 import {
@@ -55,6 +56,7 @@ import {
     RepeatVisualTestComponent,
     RepeatVirtualScrollComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -124,6 +126,12 @@ const routes = [
         RepeatReorderItemConfigExampleComponent,
         RepeatDragHandleExampleComponent,
         RepeatVirtualScrollComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("repeat"),
+        },
     ],
     exports: [RouterModule],
 })

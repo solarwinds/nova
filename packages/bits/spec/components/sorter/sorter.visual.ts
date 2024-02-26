@@ -20,9 +20,9 @@
 
 import { browser } from "protractor";
 
+import { SorterAtom } from "./sorter.atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-import { SorterAtom } from "./sorter.atom";
 
 const name: string = "Sorter";
 

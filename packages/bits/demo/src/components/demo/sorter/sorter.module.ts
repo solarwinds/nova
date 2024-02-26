@@ -22,6 +22,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiDocsModule,
     NuiMessageModule,
     NuiRepeatModule,
@@ -35,6 +36,7 @@ import { SorterTestExampleComponent } from "./sorter-test/sorter-test.example.co
 import { SorterLegacyStringInputUsageVisualTestComponent } from "./sorter-visual-test/sorter-legacy-string-input-usage/sorter-legacy-string-input-usage-visual-test.component";
 import { SorterRecommendedUsageVisualTestComponent } from "./sorter-visual-test/sorter-recommended-usage/sorter-recommended-usage-visual-test.component";
 import { SorterVisualTestHarnessComponent } from "./sorter-visual-test/sorter-visual-test-harness.component";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -77,6 +79,12 @@ const routes = [
         SorterRecommendedUsageVisualTestComponent,
         SorterVisualTestHarnessComponent,
         SorterTestExampleComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("sorter"),
+        },
     ],
     exports: [RouterModule],
 })

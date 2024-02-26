@@ -23,9 +23,9 @@ import { Component, NO_ERRORS_SCHEMA, ViewChild } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 
+import { TextboxComponent } from "./textbox.component";
 import { NuiFormFieldModule } from "../../nui-api";
 import { SpinnerComponent } from "../spinner/spinner.component";
-import { TextboxComponent } from "./textbox.component";
 
 @Component({
     template: `

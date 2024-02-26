@@ -27,9 +27,9 @@ import {
 } from "@angular/core";
 import isNil from "lodash/isNil";
 
+import { ToastInjector } from "./toast-injector";
 import { OverlayContainerService } from "../overlay/overlay-container.service";
 import { OVERLAY_DEFAULT_PRIORITY } from "../overlay/types";
-import { ToastInjector } from "./toast-injector";
 /** @ignore */
 interface IToastContainers {
     [positionClass: string]: HTMLElement;

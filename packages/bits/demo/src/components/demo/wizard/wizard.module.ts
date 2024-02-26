@@ -36,6 +36,7 @@ import {
     SrlcStage,
     NuiBusyModule,
     NuiSpinnerModule,
+    DEMO_PATH_TOKEN,
 } from "@nova-ui/bits";
 
 import {
@@ -57,6 +58,7 @@ import {
     WizardResetStepExampleComponent,
     WizardWithSeparateStepHeadingsExampleComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -124,6 +126,12 @@ const routes = [
         WizardStepsExampleComponent,
         WizardResetStepExampleComponent,
         WizardWithSeparateStepHeadingsExampleComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("wizard"),
+        },
     ],
     exports: [RouterModule],
 })

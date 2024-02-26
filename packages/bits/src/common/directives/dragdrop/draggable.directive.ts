@@ -33,10 +33,10 @@ import {
 } from "@angular/core";
 import throttle from "lodash/throttle";
 
-import { UtilService } from "../../../services/util.service";
 import { DragAndDropService } from "./drag-and-drop.service";
 import { scrollConstants } from "./dragdrop.constants";
 import { IDragEvent } from "./public-api";
+import { UtilService } from "../../../services/util.service";
 
 /**
  * Directive that provides draggable behavior for an element

@@ -20,9 +20,9 @@
 
 import { TestBed } from "@angular/core/testing";
 
+import { UnitConversionPipe } from "./unit-conversion.pipe";
 import { LoggerService } from "../services/log-service";
 import { UnitConversionService } from "../services/unit-conversion.service";
-import { UnitConversionPipe } from "./unit-conversion.pipe";
 
 describe("pipes >", () => {
     describe("unit conversion pipe >", () => {

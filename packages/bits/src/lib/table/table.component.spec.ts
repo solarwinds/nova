@@ -22,19 +22,6 @@ import { CdkTableModule } from "@angular/cdk/table";
 import { NO_ERRORS_SCHEMA, SimpleChanges, Type } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import {
-    ClickableRowOptions,
-    SelectorService,
-    TableCellDefDirective,
-    TableCellDirective,
-    TableColumnDefDirective,
-    TableFooterCellDefDirective,
-    TableFooterCellDirective,
-    TableHeaderCellDefDirective,
-    UtilService,
-} from "../../public_api";
-import { ISelection } from "../../services/public-api";
-import { SorterDirection } from "../sorter/public-api";
 import { TableHeaderCellComponent } from "./table-cell/table-header-cell.component";
 import {
     TableFooterRowComponent,
@@ -55,6 +42,19 @@ import {
 import { TableSpecHelpers } from "./table-spec-helpers/table-spec-helpers";
 import { TableStateHandlerService } from "./table-state-handler.service";
 import { TableComponent } from "./table.component";
+import {
+    ClickableRowOptions,
+    SelectorService,
+    TableCellDefDirective,
+    TableCellDirective,
+    TableColumnDefDirective,
+    TableFooterCellDefDirective,
+    TableFooterCellDirective,
+    TableHeaderCellDefDirective,
+    UtilService,
+} from "../../public_api";
+import { ISelection } from "../../services/public-api";
+import { SorterDirection } from "../sorter/public-api";
 
 describe("components >", () => {
     let fixture: ComponentFixture<any>;

@@ -40,8 +40,8 @@ import {
     WIZARD_CONFIG_DEFAULT,
 } from "../../../constants/wizard.constants";
 import { IWizardConfig, WizardStepStateConfig } from "../types";
-import { WizardStepLabelDirective } from "../wizard-step-label.directive";
 import { WizardStepV2Component } from "../wizard-step/wizard-step.component";
+import { WizardStepLabelDirective } from "../wizard-step-label.directive";
 
 /** @ignore */
 @Component({

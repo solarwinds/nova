@@ -32,8 +32,8 @@ import { DndDocsExampleComponent } from "./dnd-docs/dnd-docs.example.component";
 import { DndDragDisabledExampleComponent } from "./dnd-drag-disabled/dnd-drag-disabled-example.component";
 import { DndDragPlaceholderExampleComponent } from "./dnd-drag-placeholder/dnd-drag-placeholder-example.component";
 import { DndDragPreviewExampleComponent } from "./dnd-drag-preview/dnd-drag-preview.example.component";
-import { DndDropzoneVisualExampleComponent } from "./dnd-dropzone-visual/dnd-dropzone-visual-example.component";
 import { DndDropzoneExampleComponent } from "./dnd-dropzone/dnd-dropzone.example.component";
+import { DndDropzoneVisualExampleComponent } from "./dnd-dropzone-visual/dnd-dropzone-visual-example.component";
 
 const routes: Routes = [
     {

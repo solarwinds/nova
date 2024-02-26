@@ -20,14 +20,14 @@
 
 import { NgModule } from "@angular/core";
 
-import { NuiCommonModule } from "../../common/common.module";
-import { NuiButtonModule } from "../button/button.module";
-import { NuiIconModule } from "../icon/icon.module";
 import { ToastContainerService } from "./toast-container.service";
 import { ToastComponent } from "./toast.component";
 import { ToastDirective } from "./toast.directive";
 import { ToastService } from "./toast.service";
 import { ToastServiceBase } from "./toast.servicebase";
+import { NuiCommonModule } from "../../common/common.module";
+import { NuiButtonModule } from "../button/button.module";
+import { NuiIconModule } from "../icon/icon.module";
 
 /**
  * @ignore

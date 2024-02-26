@@ -20,10 +20,10 @@
 
 import { browser } from "protractor";
 
+import { LayoutSheetGroupAtom } from "./layout-sheet-group.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-import { LayoutSheetGroupAtom } from "./layout-sheet-group.atom";
 
 const name: string = "Layout";
 

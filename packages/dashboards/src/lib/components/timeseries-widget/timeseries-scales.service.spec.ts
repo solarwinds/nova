@@ -19,10 +19,9 @@
 //  THE SOFTWARE.
 
 import { TestBed } from "@angular/core/testing";
+
 import { UnitConversionService } from "@nova-ui/bits";
-
 import { IScale, LinearScale } from "@nova-ui/charts";
-
 import {
     ITimeseriesScaleConfig,
     ITimeseriesWidgetConfig,

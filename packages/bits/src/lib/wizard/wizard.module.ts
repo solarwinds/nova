@@ -20,13 +20,13 @@
 
 import { NgModule } from "@angular/core";
 
+import { WizardStepComponent } from "./wizard-step.component";
+import { WizardComponent } from "./wizard.component";
 import { NuiCommonModule } from "../../common/common.module";
 import { NuiBusyModule } from "../busy/busy.module";
 import { NuiButtonModule } from "../button/button.module";
 import { NuiIconModule } from "../icon/icon.module";
 import { NuiSpinnerModule } from "../spinner/spinner.module";
-import { WizardStepComponent } from "./wizard-step.component";
-import { WizardComponent } from "./wizard.component";
 
 /**
  * @ignore

@@ -22,6 +22,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiCommonModule,
     NuiDocsModule,
     NuiMessageModule,
@@ -36,6 +37,7 @@ import {
     ResizePercentsExampleComponent,
     ResizeVisualTestComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -72,6 +74,12 @@ const routes = [
         ResizeNestedExampleComponent,
         ResizeDocsExampleComponent,
         ResizeVisualTestComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("resize"),
+        },
     ],
     exports: [RouterModule],
 })

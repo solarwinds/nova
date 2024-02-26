@@ -22,9 +22,9 @@ import { CdkStep, CdkStepper } from "@angular/cdk/stepper";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormControl, NgForm } from "@angular/forms";
 
+import { WizardStepV2Component } from "./wizard-step.component";
 import { WizardStepHeaderComponent } from "../wizard-step-header/wizard-step-header.component";
 import { WizardDirective } from "../wizard.directive";
-import { WizardStepV2Component } from "./wizard-step.component";
 
 describe("components >", () => {
     describe("WizardStepComponent", () => {

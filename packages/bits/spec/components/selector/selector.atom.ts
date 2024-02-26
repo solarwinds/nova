@@ -20,12 +20,12 @@
 
 import { browser, by, ElementFinder, ExpectedConditions } from "protractor";
 
+import { SelectionType } from "./selector.e2e";
 import { Atom } from "../../atom";
 import { ButtonAtom } from "../button/button.atom";
 import { CheckboxAtom } from "../checkbox/checkbox.atom";
 import { MenuPopupAtom } from "../menu-popup/menu-popup.atom";
 import { PopupAtom } from "../popup/popup.atom";
-import { SelectionType } from "./selector.e2e";
 
 export class SelectorAtom extends Atom {
     public static CSS_CLASS = "nui-selector";

@@ -34,9 +34,9 @@ import {
 import { Subscription } from "rxjs";
 import { filter } from "rxjs/operators";
 
+import { TableColumnDefDirective } from "./table-column-def.directive";
 import { TableStateHandlerService } from "../table-state-handler.service";
 import { TableAlignmentOptions } from "../types";
-import { TableColumnDefDirective } from "./table-column-def.directive";
 
 /**
  * @ignore

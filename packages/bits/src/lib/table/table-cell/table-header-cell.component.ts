@@ -37,6 +37,7 @@ import _isUndefined from "lodash/isUndefined";
 import { fromEvent, Subscription } from "rxjs";
 import { filter, pluck } from "rxjs/operators";
 
+import { TableColumnDefDirective } from "./table-column-def.directive";
 import { IDragEvent } from "../../../common/directives/public-api";
 import { UtilService } from "../../../services/util.service";
 import { FIXED_WIDTH_CLASS } from "../constants";
@@ -47,7 +48,6 @@ import {
     TableStateHandlerService,
 } from "../table-state-handler.service";
 import { NonResizableColumnTypes, TableAlignmentOptions } from "../types";
-import { TableColumnDefDirective } from "./table-column-def.directive";
 
 /**
  * @ignore

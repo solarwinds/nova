@@ -23,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiDocsModule,
     NuiFormFieldModule,
     NuiMessageModule,
@@ -49,6 +50,7 @@ import {
     TextboxRequiredExampleComponent,
     TextboxVisualTestComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -123,6 +125,12 @@ const routes = [
         TextboxVisualTestComponent,
         TextboxNumberVisualTestComponent,
         TextboxGettingValueExampleComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("textbox"),
+        },
     ],
     exports: [RouterModule],
 })

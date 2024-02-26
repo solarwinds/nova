@@ -31,11 +31,11 @@ import {
 } from "@angular/core";
 import isNil from "lodash/isNil";
 
-import { ContentRef } from "../../services/content-ref";
-import { OverlayContainerService } from "../overlay/public-api";
 import { DialogBackdropComponent } from "./dialog-backdrop.component";
 import { NuiActiveDialog, NuiDialogRef } from "./dialog-ref";
 import { DialogComponent } from "./dialog.component";
+import { ContentRef } from "../../services/content-ref";
+import { OverlayContainerService } from "../overlay/public-api";
 
 /**
  * @dynamic

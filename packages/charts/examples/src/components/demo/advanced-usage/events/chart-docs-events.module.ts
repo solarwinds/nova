@@ -21,6 +21,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import {
     NuiButtonModule,
     NuiCheckboxModule,
@@ -31,6 +32,7 @@ import {
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
+import { getDemoFiles } from "../../../../demo-files-factory";
 import { ChartDocsEventsComponent } from "./chart-docs-events.component";
 import { EventSamplerComponent } from "./event-sampler/event-sampler.component";
 import { EventsBasicExampleComponent } from "./events-basic/events-basic-example.component";
@@ -81,6 +83,11 @@ const exampleRoutes: Routes = [
         NuiSelectModule,
         RouterModule.forChild(exampleRoutes),
     ],
-    providers: [],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("events"),
+        },
+    ],
 })
 export default class ChartDocsEventsModule {}

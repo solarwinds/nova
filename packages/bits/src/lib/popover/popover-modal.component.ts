@@ -35,9 +35,9 @@ import _isBoolean from "lodash/isBoolean";
 import { Subject, Subscription } from "rxjs";
 import { take } from "rxjs/operators";
 
-import { fadeIn } from "../../animations/fadeIn";
 import { IPopoverModalContext } from "./popover-modal.service";
 import { PopoverPlacement } from "./public-api";
+import { fadeIn } from "../../animations/fadeIn";
 
 /**
  * @ignore

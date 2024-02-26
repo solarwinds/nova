@@ -23,14 +23,14 @@ import { ElementRef, Injectable, OnDestroy, QueryList } from "@angular/core";
 import isNull from "lodash/isNull";
 import { Subject, Subscription } from "rxjs";
 
+import { MenuGroupComponent } from "./menu-item/menu-group/menu-group.component";
+import { MenuItemComponent } from "./menu-item/menu-item/menu-item.component";
+import { MenuPopupComponent } from "./menu-popup/menu-popup.component";
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import { MenuActionComponent } from "../menu/menu-item/menu-action/menu-action.component";
 import { MenuItemBaseComponent } from "../menu/menu-item/menu-item/menu-item-base";
 import { PopupComponent } from "../popup-adapter/popup-adapter.component";
 import { IPopupActiveOptions } from "../public-api";
-import { MenuGroupComponent } from "./menu-item/menu-group/menu-group.component";
-import { MenuItemComponent } from "./menu-item/menu-item/menu-item.component";
-import { MenuPopupComponent } from "./menu-popup/menu-popup.component";
 
 @Injectable()
 export class MenuKeyControlService implements OnDestroy {

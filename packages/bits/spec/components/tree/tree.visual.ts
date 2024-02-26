@@ -20,11 +20,11 @@
 
 import { browser, ElementFinder, ExpectedConditions as EC } from "protractor";
 
+import { TreeAtom } from "./tree.atom";
 import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
 import { PaginatorAtom } from "../paginator/paginator.atom";
-import { TreeAtom } from "./tree.atom";
 
 const name: string = "Tree";
 

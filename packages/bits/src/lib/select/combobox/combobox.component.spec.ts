@@ -23,6 +23,7 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 
+import { ComboboxComponent } from "./combobox.component";
 import { ButtonComponent } from "../../../lib/button/button.component";
 import { CheckboxComponent } from "../../../lib/checkbox/checkbox.component";
 import { IconComponent } from "../../../lib/icon/icon.component";
@@ -36,6 +37,7 @@ import { LoggerService } from "../../../services/log-service";
 import { NotificationService } from "../../../services/notification-service";
 import { UtilService } from "../../../services/util.service";
 import { DividerComponent } from "../../divider/divider.component";
+import { MenuComponent } from "../../menu/menu/menu.component";
 import { MenuActionComponent } from "../../menu/menu-item/menu-action/menu-action.component";
 import { MenuGroupComponent } from "../../menu/menu-item/menu-group/menu-group.component";
 import { MenuItemComponent } from "../../menu/menu-item/menu-item/menu-item.component";
@@ -43,7 +45,6 @@ import { MenuLinkComponent } from "../../menu/menu-item/menu-link/menu-link.comp
 import { MenuOptionComponent } from "../../menu/menu-item/menu-option/menu-option.component";
 import { MenuSwitchComponent } from "../../menu/menu-item/menu-switch/menu-switch.component";
 import { MenuPopupComponent } from "../../menu/menu-popup/menu-popup.component";
-import { MenuComponent } from "../../menu/menu/menu.component";
 import { PopoverComponent } from "../../popover/popover.component";
 import { PopupComponent } from "../../popup-adapter/popup-adapter.component";
 import { PopupAdapterModule } from "../../popup-adapter/popup-adapter.module";
@@ -56,7 +57,6 @@ import { ToastService } from "../../toast/toast.service";
 import { TooltipDirective } from "../../tooltip/tooltip.directive";
 import { ISelectGroup } from "../public-api";
 import { ComboboxReactiveFormTestComponent } from "../spec-helpers/spec-components";
-import { ComboboxComponent } from "./combobox.component";
 
 describe("components >", () => {
     describe("combobox >", () => {

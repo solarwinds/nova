@@ -20,13 +20,13 @@
 
 import { Injectable } from "@angular/core";
 
+import { LoggerService } from "./log-service";
+import { IUnitConversionResult } from "./public-api";
 import {
     UnitBase,
     unitConversionConstants,
     UnitOption,
 } from "../constants/unit-conversion.constants";
-import { LoggerService } from "./log-service";
-import { IUnitConversionResult } from "./public-api";
 
 /**
  * <example-url>./../examples/index.html#/common/unit-conversion-service</example-url>

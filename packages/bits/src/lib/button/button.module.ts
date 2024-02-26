@@ -20,9 +20,9 @@
 
 import { NgModule } from "@angular/core";
 
+import { ButtonComponent } from "./button.component";
 import { NuiCommonModule } from "../../common/common.module";
 import { NuiIconModule } from "../icon/icon.module";
-import { ButtonComponent } from "./button.component";
 
 /**
  * @ignore

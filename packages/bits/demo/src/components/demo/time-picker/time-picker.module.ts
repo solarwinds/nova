@@ -23,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiDateTimePickerModule,
     NuiDocsModule,
@@ -46,6 +47,7 @@ import {
     TimePickerReactiveFormExampleComponent,
     TimePickerVisualTestComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -103,6 +105,12 @@ const routes = [
         TimePickerPreserveInsignificantExampleComponent,
         TimePickerReactiveFormExampleComponent,
         TimePickerVisualTestComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("time-picker"),
+        },
     ],
     exports: [RouterModule],
 })

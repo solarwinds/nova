@@ -22,6 +22,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiBusyModule,
     NuiButtonModule,
     NuiDateTimePickerModule,
@@ -62,6 +63,7 @@ import {
     HeaderButtonsExampleComponent,
     SimpleDialogExampleComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -160,6 +162,12 @@ const routes = [
         DialogInsideOverlayWithDateTimePickerExampleComponent,
         DialogActionBeforeClosureExampleComponent,
         DialogAfterOpenedExampleComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("dialog"),
+        },
     ],
     exports: [RouterModule],
 })

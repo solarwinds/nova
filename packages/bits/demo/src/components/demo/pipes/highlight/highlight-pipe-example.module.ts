@@ -28,8 +28,8 @@ import {
     SrlcStage,
 } from "@nova-ui/bits";
 
-import { HighlightPipeDocsExampleComponent } from "./highlight-pipe-docs/highlight-pipe-docs.example.component";
 import { HighlightPipeExampleComponent } from "./highlight-pipe/highlight-pipe.example.component";
+import { HighlightPipeDocsExampleComponent } from "./highlight-pipe-docs/highlight-pipe-docs.example.component";
 
 const routes = [
     {

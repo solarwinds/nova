@@ -33,6 +33,7 @@ import { takeUntil } from "rxjs/operators";
 import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
 import { IXYScales } from "@nova-ui/charts";
 
+import { CHART_METRIC_REMOVE } from "../../../services/types";
 import {
     PIZZAGNA_EVENT_BUS,
     WellKnownDataSourceFeatures,
@@ -47,7 +48,6 @@ import {
     ITimeseriesWidgetSeriesData,
     TimeseriesChartPreset,
 } from "../types";
-import { CHART_METRIC_REMOVE } from "../../../services/types";
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix

@@ -37,8 +37,8 @@ import {
 } from "@nova-ui/bits";
 
 import { FilterGroupModule } from "./filter-group/filter-group.module";
-import { FilteredViewTableWithPaginationComponent } from "./filtered-view-table-with-pagination.component";
 import { FilteredViewTableComponent } from "./filtered-view-table/filtered-view-table.component";
+import { FilteredViewTableWithPaginationComponent } from "./filtered-view-table-with-pagination.component";
 
 @NgModule({
     imports: [

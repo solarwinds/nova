@@ -20,9 +20,9 @@
 
 import { browser, by, element, ElementFinder, Key } from "protractor";
 
+import { ComboboxV2Atom } from "./combobox-v2.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
-import { ComboboxV2Atom } from "./combobox-v2.atom";
 
 describe("USERCONTROL Combobox v2 >", () => {
     let comboboxBasic: ComboboxV2Atom;

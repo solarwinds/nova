@@ -23,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiDividerModule,
     NuiDocsModule,
@@ -44,6 +45,7 @@ import {
     ToastVisualTestComponent,
 } from "./index";
 import { ToastBasicHtmlExampleComponent } from "./toast-basic-html/toast-basic-html.example.component";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -99,6 +101,12 @@ const routes = [
         ToastTestComponent,
         ToastTypeExampleComponent,
         ToastVisualTestComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("toast"),
+        },
     ],
     exports: [RouterModule],
 })

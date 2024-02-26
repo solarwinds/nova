@@ -40,10 +40,10 @@ import _isNumber from "lodash/isNumber";
 import _isString from "lodash/isString";
 import _isUndefined from "lodash/isUndefined";
 
+import { IImagesPresetItem } from "./public-api";
 import { imagesPresetToken } from "../../constants/images.constants";
 import { LoggerService } from "../../services/log-service";
 import { UtilService } from "../../services/util.service";
-import { IImagesPresetItem } from "./public-api";
 
 /**
  * <example-url>./../examples/index.html#/image</example-url>

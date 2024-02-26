@@ -21,11 +21,6 @@
 import { CdkTableModule } from "@angular/cdk/table";
 import { NgModule, Type } from "@angular/core";
 
-import { NuiCommonModule } from "../../common/common.module";
-import { NuiCheckboxModule } from "../checkbox/checkbox.module";
-import { NuiIconModule } from "../icon/icon.module";
-import { NuiSelectModule } from "../select/select.module";
-import { NuiSelectorModule } from "../selector/selector.module";
 import { TableCellDefDirective } from "./table-cell/table-cell-def.directive";
 import { TableCellDirective } from "./table-cell/table-cell.directive";
 import { TableColumnDefDirective } from "./table-cell/table-column-def.directive";
@@ -49,6 +44,11 @@ import {
     TableVirtualScrollLinearDirective,
 } from "./table-virtual-scroll/table-virtual-scroll.directive";
 import { TableComponent } from "./table.component";
+import { NuiCommonModule } from "../../common/common.module";
+import { NuiCheckboxModule } from "../checkbox/checkbox.module";
+import { NuiIconModule } from "../icon/icon.module";
+import { NuiSelectModule } from "../select/select.module";
+import { NuiSelectorModule } from "../selector/selector.module";
 
 const DECLARATIONS_EXPORTS: Array<Type<any> | any[]> = [
     TableComponent,

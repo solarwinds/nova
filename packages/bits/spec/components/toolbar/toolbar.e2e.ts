@@ -20,12 +20,12 @@
 
 import { browser, by } from "protractor";
 
+import { ToolbarAtom } from "./toolbar.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { ButtonAtom } from "../button/button.atom";
 import { SwitchAtom } from "../public_api";
 import { TextboxAtom } from "../textbox/textbox.atom";
-import { ToolbarAtom } from "./toolbar.atom";
 
 describe("USERCONTROL toolbar: ", () => {
     let toolbar: ToolbarAtom;

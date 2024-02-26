@@ -35,8 +35,8 @@ import {
  */
 @Component({
     selector: "hello-dashboards-example",
-    templateUrl: "./hello-dashboards.example.component.html",
-    styleUrls: ["./hello-dashboards.example.component.less"],
+    templateUrl: "./hello-dashboards-example.component.html",
+    styleUrls: ["./hello-dashboards-example.component.less"],
 })
 export class HelloDashboardsExampleComponent implements OnInit {
     // This variable will have all the data needed to render the widgets widgets.

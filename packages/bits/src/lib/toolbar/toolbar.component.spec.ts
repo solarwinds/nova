@@ -27,18 +27,18 @@ import {
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import noop from "lodash/noop";
 
-import { KEYBOARD_CODE } from "../../constants/keycode.constants";
-import { ButtonComponent } from "../../lib/button/button.component";
-import { IconComponent } from "../../lib/icon/icon.component";
-import { IconService } from "../../lib/icon/icon.service";
-import { LoggerService } from "../../services/log-service";
-import { MenuComponent } from "../menu";
 import { IToolbarSelectionState, ToolbarItemType } from "./public-api";
 import { ToolbarGroupComponent } from "./toolbar-group.component";
 import { ToolbarItemComponent } from "./toolbar-item.component";
 import { ToolbarKeyboardService } from "./toolbar-keyboard.service";
 import { ToolbarSplitterComponent } from "./toolbar-splitter.component";
 import { ToolbarComponent } from "./toolbar.component";
+import { KEYBOARD_CODE } from "../../constants/keycode.constants";
+import { ButtonComponent } from "../../lib/button/button.component";
+import { IconComponent } from "../../lib/icon/icon.component";
+import { IconService } from "../../lib/icon/icon.service";
+import { LoggerService } from "../../services/log-service";
+import { MenuComponent } from "../menu";
 
 @Component({
     selector: "nui-test-cmp",

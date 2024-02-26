@@ -22,6 +22,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiDocsModule,
     NuiMenuModule,
@@ -39,6 +40,7 @@ import {
     MenuTestComponent,
     MenuVisualTestComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -98,6 +100,12 @@ const routes = [
         MenuCustomItemExampleComponent,
         MenuTestComponent,
         MenuVisualTestComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("menu"),
+        },
     ],
     exports: [RouterModule],
 })

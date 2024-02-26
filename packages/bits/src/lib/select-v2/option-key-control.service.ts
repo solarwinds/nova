@@ -22,12 +22,12 @@ import { ActiveDescendantKeyManager, LiveAnnouncer } from "@angular/cdk/a11y";
 import { Injectable, QueryList } from "@angular/core";
 import isNil from "lodash/isNil";
 
-import { KEYBOARD_CODE } from "../../constants/keycode.constants";
-import { IOption, IOverlayComponent } from "../overlay/types";
 import {
     ANNOUNCER_CLOSE_MESSAGE,
     ANNOUNCER_OPEN_MESSAGE_SUFFIX,
 } from "./constants";
+import { KEYBOARD_CODE } from "../../constants/keycode.constants";
+import { IOption, IOverlayComponent } from "../overlay/types";
 
 @Injectable()
 export class OptionKeyControlService<T extends IOption> {
