@@ -22,6 +22,7 @@ import { NgModule } from "@angular/core";
 import { Route, RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiBusyModule,
     NuiButtonModule,
     NuiCheckboxModule,
@@ -41,6 +42,7 @@ import {
     BusyTestComponent,
     BusyVisualTestComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes: Route[] = [
     {
@@ -93,6 +95,12 @@ const routes: Route[] = [
         BusyProgressExampleComponent,
         BusyTestComponent,
         BusyVisualTestComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("busy"),
+        },
     ],
     exports: [RouterModule],
 })

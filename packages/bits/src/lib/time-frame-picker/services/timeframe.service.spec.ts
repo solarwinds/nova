@@ -22,12 +22,12 @@ import keyBy from "lodash/keyBy";
 import mapValues from "lodash/mapValues";
 import moment, { Moment } from "moment/moment";
 
+import { TimeframeService } from "./timeframe.service";
 import {
     ITimeframe,
     ITimeFramePreset,
     ITimeFramePresetDictionary,
 } from "../public-api";
-import { TimeframeService } from "./timeframe.service";
 
 describe("services >", () => {
     describe("timeframe >", () => {

@@ -20,10 +20,10 @@
 
 import { browser } from "protractor";
 
+import { DatepickerAtom } from "./datepicker.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-import { DatepickerAtom } from "./datepicker.atom";
 
 const name: string = "DatePicker";
 

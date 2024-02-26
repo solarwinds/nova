@@ -23,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiCheckboxModule,
     NuiCommonModule,
     NuiDocsModule,
@@ -44,6 +45,7 @@ import {
     RadioGroupVisualTestComponent,
     ValueChangeRadioGroupExampleComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -94,6 +96,12 @@ const routes = [
         RadioGroupTestComponent,
         RadioGroupVisualTestComponent,
         ValueChangeRadioGroupExampleComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("radio-group"),
+        },
     ],
     exports: [RouterModule],
 })

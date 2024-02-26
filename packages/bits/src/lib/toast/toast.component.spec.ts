@@ -20,14 +20,14 @@
 
 import { fakeAsync, TestBed, tick } from "@angular/core/testing";
 
-import { IconComponent } from "../../lib/icon/icon.component";
-import { NotificationService } from "../../services/notification-service";
 import { IToastConfig, IToastService, ToastPositionClass } from "./public-api";
 import { ToastContainerService } from "./toast-container.service";
 import { ToastPackage } from "./toast-package";
 import { ToastRef } from "./toast-ref";
 import { ToastComponent } from "./toast.component";
 import { ToastService } from "./toast.service";
+import { IconComponent } from "../../lib/icon/icon.component";
+import { NotificationService } from "../../services/notification-service";
 
 describe("components >", () => {
     describe("toast >", () => {

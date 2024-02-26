@@ -18,10 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { BreadcrumbAtom } from "./breadcrumb.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { ButtonAtom } from "../button/button.atom";
-import { BreadcrumbAtom } from "./breadcrumb.atom";
 
 describe("USERCONTROL Breadcrumb", () => {
     let breadcrumb: BreadcrumbAtom;

@@ -23,11 +23,10 @@ import isUndefined from "lodash/isUndefined";
 
 import { DATA_POINT_NOT_FOUND } from "../../../constants";
 import { IXYScales } from "../../../core/common/scales/types";
-
+import { D3Selection } from "../../../core/common/types";
 import { IRectangleAccessors } from "../../accessors/rectangle-accessors";
 import { IRenderSeries, RenderLayerName } from "../../types";
 import { BarRenderer } from "../bar-renderer";
-import { D3Selection } from "../../../core/common/types";
 import {
     BarHighlightStrategy,
     SelectedDatPointIdxFn,

@@ -20,9 +20,9 @@
 
 import { browser, by, protractor } from "protractor";
 
+import { SelectAtom } from "./select.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
-import { SelectAtom } from "./select.atom";
 
 /**
  * Consider using this as a reference to the test cases to add to the select-v2 test suite in scope of NUI-4921

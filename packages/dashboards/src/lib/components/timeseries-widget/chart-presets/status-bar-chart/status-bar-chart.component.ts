@@ -69,7 +69,6 @@ import { TimeseriesScalesService } from "../../timeseries-scales.service";
 import {
     ITimeseriesWidgetData,
     ITimeseriesWidgetStatusData,
-    TimeseriesChartPreset,
     TimeseriesChartTypes,
     TimeseriesWidgetProjectType,
     TimeseriesWidgetZoomPlugin,

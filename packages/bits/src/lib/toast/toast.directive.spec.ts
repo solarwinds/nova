@@ -22,11 +22,11 @@ import { Component } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import _find from "lodash/find";
 
+import { ToastDirective } from "./toast.directive";
+import { ToastService } from "./toast.service";
 import { SwitchState } from "../../services/notification-args";
 import NotificationService from "../../services/notification-service";
 import { INotificationService } from "../../services/public-api";
-import { ToastDirective } from "./toast.directive";
-import { ToastService } from "./toast.service";
 
 @Component({
     template: `<div [nuiToast]="model"></div>`,

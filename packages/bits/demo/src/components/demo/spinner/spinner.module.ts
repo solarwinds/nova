@@ -22,6 +22,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiDocsModule,
     NuiSpinnerModule,
@@ -39,6 +40,7 @@ import {
     SpinnerWithDelayToggleExampleComponent,
     SpinnerWithTextExampleComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -83,6 +85,12 @@ const routes = [
         SpinnerWithCancelExampleComponent,
         SpinnerWithDelayToggleExampleComponent,
         SpinnerWithTextExampleComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("spinner"),
+        },
     ],
     exports: [RouterModule],
 })

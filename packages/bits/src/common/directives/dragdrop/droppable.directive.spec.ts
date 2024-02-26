@@ -24,11 +24,11 @@ import { By } from "@angular/platform-browser";
 import _noop from "lodash/noop";
 import { Subject } from "rxjs";
 
-import { UtilService } from "../../../services/util.service";
 import { DragAndDropService } from "./drag-and-drop.service";
 import { DraggableDirective } from "./draggable.directive";
 import { DroppableDirective } from "./droppable.directive";
 import { IDragState, IDropEvent } from "./public-api";
+import { UtilService } from "../../../services/util.service";
 
 const DEFAULT_DRAGOVER_CLASS = "nui-drag--over";
 

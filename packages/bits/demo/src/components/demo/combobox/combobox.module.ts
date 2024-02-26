@@ -23,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiDocsModule,
     NuiSelectModule,
@@ -49,6 +50,7 @@ import {
     ComboboxVisualTestComponent,
     ComboboxWithRemoveValueExampleComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -114,6 +116,12 @@ const routes = [
         ComboboxVisualTestComponent,
         ComboboxAppendToBodyExampleComponent,
         ComboboxWithRemoveValueExampleComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("combobox"),
+        },
     ],
     exports: [RouterModule],
 })

@@ -21,8 +21,8 @@
 import { ConnectedPosition } from "@angular/cdk/overlay";
 import { Injectable } from "@angular/core";
 
-import { OVERLAY_ARROW_SIZE } from "../overlay/constants";
 import { PopoverOverlayPosition, PopoverPlacement } from "./public-api";
+import { OVERLAY_ARROW_SIZE } from "../overlay/constants";
 
 enum PopoverOverlayPlacement {
     Left = "left",

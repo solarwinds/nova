@@ -20,10 +20,10 @@
 
 import { browser, protractor } from "protractor";
 
+import { SearchAtom } from "./search.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-import { SearchAtom } from "./search.atom";
 
 const name: string = "Search";
 

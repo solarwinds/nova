@@ -27,6 +27,7 @@ import {
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
+import { MenuComponent } from "./menu.component";
 import {
     DomUtilService,
     EdgeDetectionService,
@@ -49,7 +50,6 @@ import { MenuOptionComponent } from "../menu-item/menu-option/menu-option.compon
 import { MenuSwitchComponent } from "../menu-item/menu-switch/menu-switch.component";
 import { MenuPopupComponent } from "../menu-popup/menu-popup.component";
 import { IMenuGroup } from "../public-api";
-import { MenuComponent } from "./menu.component";
 
 @Component({
     selector: "nui-test-app",

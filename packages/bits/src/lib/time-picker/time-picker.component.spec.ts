@@ -28,6 +28,9 @@ import _findIndex from "lodash/findIndex";
 import moment from "moment/moment";
 import { Moment } from "moment/moment";
 
+import { TimePickerReactiveFormTestComponent } from "./spec-helpers/spec-components";
+import { TimePickerKeyboardService } from "./time-picker-keyboard.service";
+import { TimePickerComponent } from "./time-picker.component";
 import { ButtonComponent } from "../../lib/button/button.component";
 import { CheckboxComponent } from "../../lib/checkbox/checkbox.component";
 import { DividerComponent } from "../../lib/divider/divider.component";
@@ -56,9 +59,6 @@ import { ToastContainerService } from "../toast/toast-container.service";
 import { ToastService } from "../toast/toast.service";
 import { TooltipDirective } from "../tooltip/tooltip.directive";
 import { ValidationMessageComponent } from "../validation-message/validation-message.component";
-import { TimePickerReactiveFormTestComponent } from "./spec-helpers/spec-components";
-import { TimePickerKeyboardService } from "./time-picker-keyboard.service";
-import { TimePickerComponent } from "./time-picker.component";
 
 describe("components >", () => {
     describe("timepicker >", () => {

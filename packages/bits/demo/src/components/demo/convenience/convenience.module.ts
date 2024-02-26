@@ -21,9 +21,10 @@
 import { NgModule, Type } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
-import { SrlcStage } from "@nova-ui/bits";
+import { DEMO_PATH_TOKEN, SrlcStage } from "@nova-ui/bits";
 
 import { SummaryComponent } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes: Routes = [
     {
@@ -52,6 +53,12 @@ const routes: Routes = [
 @NgModule({
     imports: [RouterModule.forChild(routes)],
     declarations: [SummaryComponent],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("convenience"),
+        },
+    ],
     exports: [RouterModule],
 })
 export default class ConvenienceModule {}

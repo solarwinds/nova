@@ -20,9 +20,9 @@
 
 import { NgModule } from "@angular/core";
 
+import { BusyComponent } from "./busy.component";
 import { NuiCommonModule } from "../../common/common.module";
 import { NuiSpinnerModule } from "../spinner/spinner.module";
-import { BusyComponent } from "./busy.component";
 
 /**
  * @ignore

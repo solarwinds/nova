@@ -26,9 +26,11 @@ import {
     NuiDividerModule,
     NuiDocsModule,
     NuiCommonModule,
+    DEMO_PATH_TOKEN,
 } from "@nova-ui/bits";
 
 import { HighlightExampleComponent } from "./highlight.example.component";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -47,6 +49,12 @@ const routes = [
         NuiCommonModule,
     ],
     declarations: [HighlightExampleComponent],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("highlight"),
+        },
+    ],
     exports: [RouterModule],
 })
 export default class HighlightModule {}

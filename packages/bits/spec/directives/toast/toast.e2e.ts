@@ -23,13 +23,13 @@ import { performance } from "perf_hooks";
 import _round from "lodash/round";
 import { browser } from "protractor";
 
-import { Helpers } from "../../helpers";
 import {
     IToastDeclaration,
     ToastPositionClass,
     ToastTestPage,
 } from "./toast-test.po";
 import { ToastAtom } from "./toast.atom";
+import { Helpers } from "../../helpers";
 
 describe("USERCONTROL Toast > ", () => {
     const page = new ToastTestPage();

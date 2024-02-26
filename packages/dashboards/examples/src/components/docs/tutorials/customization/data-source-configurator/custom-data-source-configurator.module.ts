@@ -33,12 +33,14 @@ import {
     NuiSwitchModule,
     NuiTextboxModule,
     NuiValidationMessageModule,
+    DEMO_PATH_TOKEN,
 } from "@nova-ui/bits";
 import {
     NuiDashboardConfiguratorModule,
     NuiDashboardsModule,
 } from "@nova-ui/dashboards";
 
+import { getDemoFiles } from "../../../../../demo-files-factory";
 import { CustomDataSourceConfiguratorDocComponent } from "./custom-data-source-configurator-docs.component";
 import {
     CustomDataSourceConfiguratorExampleComponent,
@@ -78,6 +80,12 @@ const routes: Routes = [
         CustomDataSourceConfiguratorDocComponent,
         CustomDataSourceConfiguratorExampleComponent,
         HarryPotterDataSourceConfiguratorComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("data-source-configurator"),
+        },
     ],
 })
 export default class CustomDataSourceConfiguratorModuleRoute {}

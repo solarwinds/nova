@@ -20,11 +20,11 @@
 
 import { browser, by, Key } from "protractor";
 
+import { WizardV2Atom } from "./wizard-v2.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
 import { ButtonAtom } from "../button/button.atom";
-import { WizardV2Atom } from "./wizard-v2.atom";
 
 const name: string = "Wizard V2";
 

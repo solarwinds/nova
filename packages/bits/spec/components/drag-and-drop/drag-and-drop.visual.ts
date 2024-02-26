@@ -20,11 +20,11 @@
 
 import { browser, by, element } from "protractor";
 
+import { CdkDraggableItemAtom } from "./cdk-drop-item.atom";
+import { CdkDropListAtom } from "./cdk-drop-list.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-import { CdkDraggableItemAtom } from "./cdk-drop-item.atom";
-import { CdkDropListAtom } from "./cdk-drop-list.atom";
 
 const name = "Drag and Drop";
 

@@ -20,11 +20,11 @@
 
 import { $, browser } from "protractor";
 
+import { TimeFrameBarAtom } from "./time-frame-bar.atom";
 import { Atom } from "../../../atom";
 import { TooltipAtom } from "../../../directives/tooltip/tooltip.atom";
 import { Helpers } from "../../../helpers";
 import { Camera } from "../../../virtual-camera/Camera";
-import { TimeFrameBarAtom } from "./time-frame-bar.atom";
 
 const name: string = "TimeFrameBar";
 

@@ -35,9 +35,9 @@ import {
 import { fromEvent, merge, Subject, timer } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
 
+import { ButtonSizeType } from "./public-api";
 import { buttonConstants } from "../../constants/button.constants";
 import { LoggerService } from "../../services/log-service";
-import { ButtonSizeType } from "./public-api";
 
 // <example-url>./../examples/index.html#/button</example-url>
 

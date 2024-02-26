@@ -124,7 +124,7 @@ export function loess() {
                     denom = Math.abs(1 / (xval[edge] - x));
 
                 for (let k = ileft; k <= iright; ++k) {
-                    let xk = xval[k],
+                    const xk = xval[k],
                         yk = yval[k],
                         dist = k < i ? x - xk : xk - x,
                         w =
@@ -223,6 +223,7 @@ function science_stats_loessFiniteReal(values: number[]) {
 }
 
 function science_stats_loessStrictlyIncreasing(xval: number[]) {
+    // eslint-disable-next-line prefer-const
     let n = xval.length,
         i = 0;
 
@@ -281,7 +282,7 @@ function median(x: number[]) {
 // Uses R's quantile algorithm type=7.
 function quantiles(d: number[], quantiles: number[]) {
     d = d.slice().sort(ascending);
-    let n1 = d.length - 1;
+    const n1 = d.length - 1;
     return quantiles.map(function (q) {
         if (q === 0) {
             return d[0];
@@ -289,7 +290,7 @@ function quantiles(d: number[], quantiles: number[]) {
             return d[n1];
         }
 
-        let index = 1 + q * n1,
+        const index = 1 + q * n1,
             lo = Math.floor(index),
             h = index - lo,
             a = d[lo - 1];

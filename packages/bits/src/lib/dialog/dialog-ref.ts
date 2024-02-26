@@ -21,8 +21,8 @@
 import { ComponentRef, EventEmitter } from "@angular/core";
 import noop from "lodash/noop";
 
-import { ContentRef } from "../../services/content-ref";
 import { DialogBackdropComponent } from "./dialog-backdrop.component";
+import { ContentRef } from "../../services/content-ref";
 
 /**
  * @ignore

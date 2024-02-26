@@ -20,9 +20,9 @@
 
 import { browser, by, element, ElementFinder } from "protractor";
 
+import { SelectorAtom } from "./selector.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
-import { SelectorAtom } from "./selector.atom";
 
 export enum SelectionType {
     All = "Select all items on this page",

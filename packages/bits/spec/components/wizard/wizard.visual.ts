@@ -20,12 +20,12 @@
 
 import { browser } from "protractor";
 
+import { WizardStepAtom } from "./wizard-step.atom";
+import { WizardAtom } from "./wizard.atom";
 import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
 import { ButtonAtom } from "../button/button.atom";
-import { WizardStepAtom } from "./wizard-step.atom";
-import { WizardAtom } from "./wizard.atom";
 
 const name: string = "Wizard";
 

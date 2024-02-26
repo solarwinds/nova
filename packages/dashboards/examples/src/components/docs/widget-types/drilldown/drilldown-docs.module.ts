@@ -27,9 +27,11 @@ import {
     NuiDocsModule,
     NuiMessageModule,
     NuiSwitchModule,
+    DEMO_PATH_TOKEN,
 } from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
+import { getDemoFiles } from "../../../../demo-files-factory";
 import { DrilldownDocsComponent } from "./drilldown-docs.component";
 import { DrilldownMultiRequestWidgetExampleComponent } from "./drilldown-multi-request-widget-example/drilldown-multi-request-widget-example.component";
 import { DrilldownWidgetExampleComponent } from "./drilldown-widget/drilldown-widget-example.component";
@@ -77,6 +79,12 @@ const routes: Routes = [
         DrilldownDocsComponent,
         DrilldownWidgetExampleComponent,
         DrilldownMultiRequestWidgetExampleComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("drilldown"),
+        },
     ],
 })
 export default class DrilldownDocsModule {}

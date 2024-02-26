@@ -34,4 +34,4 @@ export * from "./wizard-custom-step-line-width/wizard-custom-step-line-width.exa
 export * from "./wizard-steps/wizard-steps.example.component";
 export * from "./wizard-dynamic-remove/wizard-dynamic-remove.example.component";
 export * from "./wizard-reset-step/wizard-reset-step-example.component";
-export * from "./wizard-with-separate-step-headings/wizard-with-separate-step-headings-example.component";
+export * from "./wizard-with-separate-step-headings/wizard-with-separate-step-headings.example.component";

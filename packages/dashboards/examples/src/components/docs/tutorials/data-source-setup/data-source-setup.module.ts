@@ -23,9 +23,14 @@ import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
-import { NuiDocsModule, NuiMessageModule } from "@nova-ui/bits";
+import {
+    NuiDocsModule,
+    NuiMessageModule,
+    DEMO_PATH_TOKEN,
+} from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
+import { getDemoFiles } from "../../../../demo-files-factory";
 import { DataSourceDocsComponent } from "./data-source-setup-docs.component";
 import { DataSourceSetupComponent } from "./data-source-setup.component";
 
@@ -61,5 +66,11 @@ const routes = [
         RouterModule.forChild(routes),
     ],
     declarations: [DataSourceDocsComponent, DataSourceSetupComponent],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("data-source-setup"),
+        },
+    ],
 })
 export default class DataSourceSetupModule {}

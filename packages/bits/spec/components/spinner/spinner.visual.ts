@@ -20,9 +20,9 @@
 
 import { browser, by, element } from "protractor";
 
+import { SpinnerAtom } from "./spinner.atom";
 import { Animations, Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-import { SpinnerAtom } from "./spinner.atom";
 
 const name: string = "Spinner";
 

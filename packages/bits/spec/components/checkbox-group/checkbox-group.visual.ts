@@ -20,10 +20,10 @@
 
 import { browser } from "protractor";
 
+import { CheckboxGroupAtom } from "./checkbox-group.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-import { CheckboxGroupAtom } from "./checkbox-group.atom";
 
 const name: string = "Checkbox Group";
 

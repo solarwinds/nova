@@ -26,8 +26,8 @@ import {
     ExpectedConditions,
 } from "protractor";
 
-import { Atom } from "../../atom";
 import { OverlayContentAtom } from "./overlay-content.atom";
+import { Atom } from "../../atom";
 
 export class PopupAtom extends Atom {
     public static CSS_CLASS = "nui-popup";

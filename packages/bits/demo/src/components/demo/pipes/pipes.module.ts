@@ -21,7 +21,9 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
-import { NuiDocsModule } from "@nova-ui/bits";
+import { DEMO_PATH_TOKEN, NuiDocsModule } from "@nova-ui/bits";
+
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -42,6 +44,12 @@ const routes = [
 
 @NgModule({
     imports: [NuiDocsModule, RouterModule.forChild(routes)],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("pipes"),
+        },
+    ],
     exports: [RouterModule],
 })
 export default class PipesModule {}

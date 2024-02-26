@@ -26,9 +26,11 @@ import {
     NuiDocsModule,
     NuiMessageModule,
     NuiSwitchModule,
+    DEMO_PATH_TOKEN,
 } from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
+import { getDemoFiles } from "../../../../demo-files-factory";
 import { ProportionalDocsComponent } from "./proportional-docs.component";
 import { ProportionalDonutContentDocsComponent } from "./proportional-donut-content-formatters/docs/proportional-donut-content-docs.component";
 import { ProportionalWidgetDonutContentFormattersExampleComponent } from "./proportional-donut-content-formatters/example/proportional-donut-content-formatters-example.component";
@@ -99,6 +101,12 @@ const routes: Routes = [
         ProportionalWidgetInteractiveExampleComponent,
         ProportionalWidgetDonutContentFormattersExampleComponent,
         ProportionalDonutContentDocsComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("proportional"),
+        },
     ],
 })
 export default class ProportionalDocsModule {}

@@ -20,17 +20,17 @@
 
 import { browser, by, element, ElementFinder } from "protractor";
 
+import { TableAtom } from "./table.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { ButtonAtom } from "../button/button.atom";
-import { CheckboxGroupAtom } from "../checkbox-group/checkbox-group.atom";
 import { CheckboxAtom } from "../checkbox/checkbox.atom";
+import { CheckboxGroupAtom } from "../checkbox-group/checkbox-group.atom";
 import { PaginatorAtom } from "../paginator/paginator.atom";
 import { SearchAtom } from "../search/search.atom";
 import { SelectorAtom } from "../selector/selector.atom";
 import { SelectionType } from "../selector/selector.e2e";
 import { TextboxAtom } from "../textbox/textbox.atom";
-import { TableAtom } from "./table.atom";
 
 describe("USERCONTROL table >", () => {
     const table: TableAtom = Atom.find(TableAtom, "nui-demo-basic-table");

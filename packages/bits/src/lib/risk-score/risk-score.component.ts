@@ -99,7 +99,7 @@ export class RiskScoreComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.colorLineWidth$.unsubscribe();
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(): void {
         this.updateOffset(this.colorLineWidth$.getValue());
     }
 

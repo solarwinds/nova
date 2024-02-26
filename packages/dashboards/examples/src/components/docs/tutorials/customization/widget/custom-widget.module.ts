@@ -33,12 +33,14 @@ import {
     NuiMessageModule,
     NuiSelectV2Module,
     NuiSwitchModule,
+    DEMO_PATH_TOKEN,
 } from "@nova-ui/bits";
 import {
     NuiDashboardConfiguratorModule,
     NuiDashboardsModule,
 } from "@nova-ui/dashboards";
 
+import { getDemoFiles } from "../../../../../demo-files-factory";
 import { CustomWidgetDocsComponent } from "./custom-widget-docs.component";
 import {
     CustomConfiguratorSectionComponent,
@@ -90,6 +92,12 @@ const routes = [
         CustomConfiguratorSectionComponent,
         CustomWidgetBodyContentComponent,
         CustomWidgetComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("widget"),
+        },
     ],
 })
 export default class CustomWidgetModule {}

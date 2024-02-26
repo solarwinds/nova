@@ -21,10 +21,10 @@
 import { ChangeDetectorRef, ElementRef } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
 
+import { PopupDeprecatedComponent } from "./popup.component";
 import { DomUtilService } from "../../services/dom-util.service";
 import { EdgeDetectionService } from "../../services/edge-detection.service";
 import { LoggerService } from "../../services/log-service";
-import { PopupDeprecatedComponent } from "./popup.component";
 
 describe("components >", () => {
     describe("popup >", () => {

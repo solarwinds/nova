@@ -35,6 +35,7 @@ import {
 import { Subject } from "rxjs";
 import { debounceTime, takeUntil } from "rxjs/operators";
 
+import { CheckboxStatus, SelectionType } from "./public-api";
 import {
     IFilter,
     IFilterPub,
@@ -45,7 +46,6 @@ import { CheckboxChangeEvent } from "../checkbox/public-api";
 import { IMenuGroup, IMenuItem } from "../menu/public-api";
 import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
-import { CheckboxStatus, SelectionType } from "./public-api";
 
 /**
  * @ignore

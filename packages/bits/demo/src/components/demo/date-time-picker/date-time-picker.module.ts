@@ -23,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiDateTimePickerModule,
     NuiDialogModule,
@@ -47,6 +48,7 @@ import {
     DateTimePickerTimezonesExampleComponent,
     DateTimePickerVisualTestComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -110,6 +112,12 @@ const routes = [
         DateTimePickerEmptyStateComponent,
         DateTimePickerTimezonesExampleComponent,
         DateTimePickerDialogExampleComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("date-time-picker"),
+        },
     ],
     exports: [RouterModule],
 })

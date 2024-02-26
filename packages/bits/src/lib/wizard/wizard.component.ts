@@ -42,13 +42,13 @@ import _findIndex from "lodash/findIndex";
 import _isUndefined from "lodash/isUndefined";
 import { BehaviorSubject } from "rxjs";
 
-import { LoggerService } from "../../services/log-service";
 import {
     IWizardSelectionEvent,
     IWizardStepComponent,
     IWizardWaitEvent,
 } from "./public-api";
 import { WizardStepComponent } from "./wizard-step.component";
+import { LoggerService } from "../../services/log-service";
 
 // <example-url>./../examples/index.html#/wizard</example-url>
 

@@ -29,9 +29,11 @@ import {
     NuiMessageModule,
     NuiSwitchModule,
     NuiToastModule,
+    DEMO_PATH_TOKEN,
 } from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
+import { getDemoFiles } from "../../../../demo-files-factory";
 import { PersistenceHandlerSetupDocsComponent } from "./persistence-handler-setup-docs.component";
 import { PersistenceHandlerSetupComponent } from "./persistence-handler-setup.component";
 
@@ -72,6 +74,12 @@ const routes = [
     declarations: [
         PersistenceHandlerSetupDocsComponent,
         PersistenceHandlerSetupComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("persistence-handler-setup"),
+        },
     ],
 })
 export default class PersistenceHandlerSetupModule {}

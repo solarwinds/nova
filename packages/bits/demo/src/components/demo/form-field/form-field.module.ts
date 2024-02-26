@@ -23,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiCheckboxModule,
     NuiDatePickerModule,
@@ -57,6 +58,7 @@ import {
     NestedFormsAsComponentExampleComponent,
     SecondCustomFormExampleComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -134,6 +136,12 @@ const routes = [
         FirstCustomFormExampleComponent,
         SecondCustomFormExampleComponent,
         FormFieldValidationTriggeringxampleComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("form-field"),
+        },
     ],
     exports: [RouterModule],
 })

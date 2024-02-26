@@ -40,8 +40,8 @@ import { takeUntil } from "rxjs/operators";
 import { NuiFormFieldControl, OptionValueType } from "../../public-api";
 import { BaseSelectV2 } from "../base-select-v2";
 import { NUI_SELECT_V2_OPTION_PARENT_COMPONENT } from "../constants";
-import { OptionKeyControlService } from "../option-key-control.service";
 import { SelectV2OptionComponent } from "../option/select-v2-option.component";
+import { OptionKeyControlService } from "../option-key-control.service";
 
 // <example-url>./../examples/index.html#/select-v2</example-url>
 @Component({

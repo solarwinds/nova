@@ -25,6 +25,9 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import _assign from "lodash/assign";
 import cloneDeep from "lodash/cloneDeep";
 
+import { ISortedItem, SorterDirection } from "./public-api";
+import { SorterKeyboardService } from "./sorter-keyboard.service";
+import { SorterComponent } from "./sorter.component";
 import { ButtonComponent } from "../../lib/button/button.component";
 import { CheckboxComponent } from "../../lib/checkbox/checkbox.component";
 import { IconComponent } from "../../lib/icon/icon.component";
@@ -39,9 +42,6 @@ import { OverlayComponent } from "../overlay/overlay-component/overlay.component
 import { RadioComponent } from "../radio/radio-group.component";
 import { RepeatItemComponent } from "../repeat/repeat-item/repeat-item.component";
 import { RepeatComponent } from "../repeat/repeat.component";
-import { ISortedItem, SorterDirection } from "./public-api";
-import { SorterKeyboardService } from "./sorter-keyboard.service";
-import { SorterComponent } from "./sorter.component";
 
 describe("components >", () => {
     describe("sorter >", () => {

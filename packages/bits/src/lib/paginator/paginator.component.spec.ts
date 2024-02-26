@@ -23,8 +23,8 @@ import { ChangeDetectorRef, SimpleChange, SimpleChanges } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import noop from "lodash/noop";
 
-import { LoggerService } from "../../services/log-service";
 import { PaginatorComponent } from "./paginator.component";
+import { LoggerService } from "../../services/log-service";
 
 describe("components >", () => {
     describe("paginator >", () => {

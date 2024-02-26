@@ -50,6 +50,13 @@ import pull from "lodash/pull";
 import { Observable, Subject } from "rxjs";
 import { delay, takeUntil, tap } from "rxjs/operators";
 
+import {
+    ANNOUNCER_CLOSE_MESSAGE,
+    ANNOUNCER_OPEN_MESSAGE_SUFFIX,
+} from "./constants";
+import { SelectV2OptionComponent } from "./option/select-v2-option.component";
+import { OptionKeyControlService } from "./option-key-control.service";
+import { InputValueTypes, IOptionedComponent } from "./types";
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import {
     OVERLAY_ITEM,
@@ -62,13 +69,6 @@ import {
     OptionValueType,
     OverlayContainerType,
 } from "../overlay/types";
-import {
-    ANNOUNCER_CLOSE_MESSAGE,
-    ANNOUNCER_OPEN_MESSAGE_SUFFIX,
-} from "./constants";
-import { OptionKeyControlService } from "./option-key-control.service";
-import { SelectV2OptionComponent } from "./option/select-v2-option.component";
-import { InputValueTypes, IOptionedComponent } from "./types";
 
 const DEFAULT_SELECT_OVERLAY_CONFIG: OverlayConfig = {
     panelClass: OVERLAY_WITH_POPUP_STYLES_CLASS,

@@ -74,10 +74,10 @@ import { FilteredViewTableWithPaginationComponent } from "./filtered-view/filter
 import { FilteredViewTableWithPaginationModule } from "./filtered-view/filtered-view-table-with-pagination/filtered-view-table-with-pagination.module";
 import { FilteredViewTableWithSelectionComponent } from "./filtered-view/filtered-view-table-with-selection/filtered-view-table-with-selection.component";
 import { FilteredViewTableWithSelectionModule } from "./filtered-view/filtered-view-table-with-selection/filtered-view-table-with-selection.module";
-import { FilteredViewTableWithVirtualScrollSelectionComponent } from "./filtered-view/filtered-view-table-with-virtual-scroll-selection/filtered-view-table-with-virtual-scroll-selection.component";
-import { FilteredViewTableWithVirtualScrollSelectionModule } from "./filtered-view/filtered-view-table-with-virtual-scroll-selection/filtered-view-table-with-virtual-scroll-selection.module";
 import { FilteredViewTableWithVirtualScrollComponent } from "./filtered-view/filtered-view-table-with-virtual-scroll/filtered-view-table-with-virtual-scroll.component";
 import { FilteredViewTableWithVirtualScrollModule } from "./filtered-view/filtered-view-table-with-virtual-scroll/filtered-view-table-with-virtual-scroll.module";
+import { FilteredViewTableWithVirtualScrollSelectionComponent } from "./filtered-view/filtered-view-table-with-virtual-scroll-selection/filtered-view-table-with-virtual-scroll-selection.component";
+import { FilteredViewTableWithVirtualScrollSelectionModule } from "./filtered-view/filtered-view-table-with-virtual-scroll-selection/filtered-view-table-with-virtual-scroll-selection.module";
 import { FilteredViewWithListComponent } from "./filtered-view/filtered-view-with-list/filtered-view-with-list.component";
 import { FilteredViewWithListModule } from "./filtered-view/filtered-view-with-list/filtered-view-with-list.module";
 import { FilteredViewWithTableComponent } from "./filtered-view/filtered-view-with-table/filtered-view-with-table.component";

@@ -34,8 +34,8 @@ import { NuiTextboxModule } from "@nova-ui/bits";
 import { NuiValidationMessageModule } from "@nova-ui/bits";
 import { NuiButtonModule } from "@nova-ui/bits";
 
-import { FrameworkColorsDarkExampleComponent } from "./framework-colors-dark/framework-colors-dark.example.component";
 import { FrameworkColorsExampleComponent } from "./framework-colors/framework-colors-example.component";
+import { FrameworkColorsDarkExampleComponent } from "./framework-colors-dark/framework-colors-dark.example.component";
 import { LinksExampleComponent } from "./links/links.example.component";
 import { SemanticVariablesExampleComponent } from "./semantic-variables/semantic-variables.example.component";
 import { TypographyExampleComponent } from "./typography/typography-example.component";

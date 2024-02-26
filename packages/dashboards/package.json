@@ -78,7 +78,8 @@
     "tslib": "^2.4.1",
     "typescript": "~4.9.5",
     "webpack": "^5.75.0",
-    "zone.js": "~0.11.8"
+    "zone.js": "~0.11.8",
+    "lz-string": "^1.5.0"
   },
   "exports": {
     "./sdk/atoms": {
@@ -133,6 +134,7 @@
     "build-lib:prod": "run-s \"build-lib -c production\" dist-copy",
     "build-lib:watch": "run-s dist-copy \"build-lib -c dev\"",
     "build-schematics": "yarn run --cwd=schematics assemble",
+    "compile-demo-paths": "node scripts/compile-demo-paths.js",
     "compodoc": "compodoc --extTheme src/docs/styles/",
     "compodoc:serve": "yarn run compodoc -s -w --port 8090 --includes ./src/docs/development",
     "dist-copy": "run-s dist-copy:*",
@@ -154,6 +156,7 @@
     "percy:ci": "npm run visual:ci && percy upload -v _snapshots",
     "percy:gui": "percy exec -- npm run visual:gui",
     "postinstall": "node scripts/remove-deps-constraints.js && npm run symlink",
+    "prebuild-examples": "yarn run compile-demo-paths",
     "pree2e:base": "webdriver-manager update --gecko=false --standalone=false",
     "prettier": "prettier --config ./.prettierrc.js",
     "prettier-check": "yarn run prettier --check .",

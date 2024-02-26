@@ -24,6 +24,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiDialogModule,
     NuiDividerModule,
@@ -58,6 +59,7 @@ import {
     SelectV2TestExampleComponent,
     SelectV2VirtualScrollExampleComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -278,6 +280,12 @@ const routes = [
         SelectV2GettingValueExampleComponent,
         SelectV2SettingValueExampleComponent,
         SelectV2ColorPickerComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("select-v2"),
+        },
     ],
     exports: [RouterModule],
 })

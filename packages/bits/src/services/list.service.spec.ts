@@ -18,15 +18,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { INovaFilteringOutputs } from "./data-source/public-api";
+import { ListService } from "./list.service";
+import { ISelection, SelectionModel } from "./public-api";
 import {
     CheckboxStatus,
     RepeatSelectionMode,
     SelectionType,
 } from "../lib/public-api";
 import { SelectorService } from "../lib/selector/selector.service";
-import { INovaFilteringOutputs } from "./data-source/public-api";
-import { ListService } from "./list.service";
-import { ISelection, SelectionModel } from "./public-api";
 
 describe("services >", () => {
     describe("ListService >", () => {

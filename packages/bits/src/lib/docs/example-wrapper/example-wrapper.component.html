@@ -19,43 +19,43 @@
                 type="button"
                 displayStyle="action"
                 icon="external-link"
-                title="Open in Plunker"
-                nuiTooltip="Open in Plunker (only self-contained examples are opened properly)"
+                title="Open in CodeSandbox"
+                nuiTooltip="Open in Code Sandbox (only self-contained examples are opened properly)"
                 tooltipPlacement="bottom"
-                (click)="openPlunker()"
+                (click)="openCodeSandboxExample()"
             ></button>
         </div>
     </div>
     <div *ngIf="showSource" class="nui-example-wrapper__source">
         <nui-tab-group>
-            <nui-tab *ngIf="!!componentSources.html" heading="HTML">
+            <nui-tab *ngIf="!!getExampleComponents('html')" heading="HTML">
                 <div class="media-body">
                     <nui-copy-text
-                        fileContent="{{ componentSources.html }}"
+                        fileContent="{{ getExampleComponents('html') }}"
                     ></nui-copy-text>
                     <nui-example-code language="html">{{
-                        componentSources.html
+                        getExampleComponents("html")
                     }}</nui-example-code>
                 </div>
             </nui-tab>
-            <nui-tab *ngIf="!!componentSources.ts" heading="Typescript">
+            <nui-tab *ngIf="!!getExampleComponents('ts')" heading="Typescript">
                 <nui-copy-text
-                    fileContent="{{ componentSources.ts }}"
+                    fileContent="{{ getExampleComponents('ts') }}"
                 ></nui-copy-text>
                 <div class="media-body">
                     <nui-example-code language="typescript">{{
-                        componentSources.ts
+                        getExampleComponents("ts")
                     }}</nui-example-code>
                 </div>
             </nui-tab>
-            <nui-tab *ngIf="!!componentSources.less" heading="Less">
+            <nui-tab *ngIf="!!getExampleComponents('less')" heading="Less">
                 <nui-copy-text
-                    fileContent="{{ componentSources.less }}"
+                    fileContent="{{ getExampleComponents('less') }}"
                 ></nui-copy-text>
                 <div class="media-body">
                     <nui-example-code
-                        *ngIf="!!componentSources.less; else noLess"
-                        >{{ componentSources.less }}</nui-example-code
+                        *ngIf="!!getExampleComponents('less'); else noLess"
+                        >{{ getExampleComponents("less") }}</nui-example-code
                     >
                     <ng-template #noLess>
                         <nui-image image="no-data-to-show"></nui-image>

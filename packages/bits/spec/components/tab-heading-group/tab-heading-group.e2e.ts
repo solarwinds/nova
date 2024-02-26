@@ -20,10 +20,10 @@
 
 import { by, element } from "protractor";
 
-import { Atom } from "../../atom";
-import { Animations, Helpers } from "../../helpers";
 import { TabHeadingGroupAtom } from "./tab-heading-group.atom";
 import { TabHeadingAtom } from "./tab-heading.atom";
+import { Atom } from "../../atom";
+import { Animations, Helpers } from "../../helpers";
 
 describe("USERCONTROL tab heading group", () => {
     let tabGroupHorizontal: TabHeadingGroupAtom;

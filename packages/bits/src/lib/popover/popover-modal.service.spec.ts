@@ -18,18 +18,18 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { popoverConstants } from "../../constants/popover.constants";
-import { DomUtilService } from "../../services/dom-util.service";
-import { EdgeDetectionService } from "../../services/edge-detection.service";
-import { LoggerService } from "../../services/log-service";
-import { PositionService } from "../../services/position.service";
-import { IEdgeDetectionResult } from "../../services/public-api";
 import {
     IPopoverPosition,
     PopoverAlignment,
     PopoverModalService,
 } from "./popover-modal.service";
 import { PopoverPlacement } from "./public-api";
+import { popoverConstants } from "../../constants/popover.constants";
+import { DomUtilService } from "../../services/dom-util.service";
+import { EdgeDetectionService } from "../../services/edge-detection.service";
+import { LoggerService } from "../../services/log-service";
+import { PositionService } from "../../services/position.service";
+import { IEdgeDetectionResult } from "../../services/public-api";
 
 interface IPopoverModalTestCase {
     name: string;

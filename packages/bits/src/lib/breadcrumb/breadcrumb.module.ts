@@ -20,10 +20,10 @@
 
 import { NgModule } from "@angular/core";
 
-import { NuiCommonModule } from "../../common/common.module";
-import { NuiIconModule } from "../icon/icon.module";
 import { BreadcrumbStateService } from "./breadcrumb-state.service";
 import { BreadcrumbComponent } from "./breadcrumb.component";
+import { NuiCommonModule } from "../../common/common.module";
+import { NuiIconModule } from "../icon/icon.module";
 
 /**
  * @ignore

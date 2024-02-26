@@ -20,10 +20,10 @@
 
 import { browser, by } from "protractor";
 
+import { ExpanderAtom } from "./expander.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { MenuAtom } from "../menu/menu.atom";
-import { ExpanderAtom } from "./expander.atom";
 
 describe("USERCONTROL expander", () => {
     const basicExpander: ExpanderAtom = Atom.find(

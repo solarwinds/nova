@@ -20,10 +20,10 @@
 
 import { $$, browser, by, element, ElementFinder, Key } from "protractor";
 
+import { PopoverAtom } from "./popover.atom";
 import { ButtonAtom, CheckboxAtom } from "../..";
 import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
-import { PopoverAtom } from "./popover.atom";
 
 describe("USERCONTROL popover", () => {
     const onHoverParentId = "nui-demo-popover-mouseenter";

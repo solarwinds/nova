@@ -20,8 +20,8 @@
 
 import { NgModule } from "@angular/core";
 
-import { NuiCommonModule } from "../../common/common.module";
 import { RiskScoreComponent } from "./risk-score.component";
+import { NuiCommonModule } from "../../common/common.module";
 
 /**
  * @ignore

@@ -53,6 +53,13 @@ import _isEqual from "lodash/isEqual";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 
+import {
+    IItemsReorderedEvent,
+    IRepeatItem,
+    IRepeatItemConfig,
+    PaddingOptions,
+    RepeatSelectionMode,
+} from "./types";
 import { nameof } from "../../functions/nameof";
 import {
     IFilter,
@@ -61,13 +68,6 @@ import {
     IRepeatFilter,
 } from "../../services/data-source/public-api";
 import { LoggerService } from "../../services/log-service";
-import {
-    IItemsReorderedEvent,
-    IRepeatItem,
-    IRepeatItemConfig,
-    PaddingOptions,
-    RepeatSelectionMode,
-} from "./types";
 
 interface IDndItemDropped<T = unknown> {
     item: DragRef<CdkDrag<T>>;

@@ -22,6 +22,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiDocsModule,
     NuiFormFieldModule,
@@ -52,6 +53,12 @@ const routes = [
         RouterModule.forChild(routes),
     ],
     declarations: [RuntimeI18NExampleComponent],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: "runtime-i18n",
+        },
+    ],
     exports: [RouterModule],
 })
 export default class RuntimeI18NModule {}

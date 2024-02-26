@@ -20,12 +20,12 @@
 
 import { browser } from "protractor";
 
+import { QuickPickerAtom } from "./quick-picker.atom";
+import { TimeFramePickerAtom } from "./time-frame-picker.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
 import { PopoverAtom } from "../popover/popover.atom";
-import { QuickPickerAtom } from "./quick-picker.atom";
-import { TimeFramePickerAtom } from "./time-frame-picker.atom";
 
 const name: string = "Timeframe Picker";
 

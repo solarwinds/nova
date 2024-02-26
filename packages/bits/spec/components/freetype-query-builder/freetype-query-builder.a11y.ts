@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 import { browser } from "protractor";
+
 import { Animations, assertA11y, Helpers } from "../../helpers";
 import { FreetypeQueryBuilderAtom } from "../public_api";
 

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { InjectFlags, InjectionToken, Injector, Type } from "@angular/core";
+import { Injector } from "@angular/core";
 
 import { mockLoggerService } from "../../mocks";
 import { ComponentPortalService } from "./component-portal.service";

@@ -20,11 +20,11 @@
 
 import { Injectable } from "@angular/core";
 
+import { INovaFilteringOutputs } from "./data-source/public-api";
+import { SelectionModel } from "./public-api";
 import { RepeatSelectionMode } from "../lib/repeat/types";
 import { SelectionType } from "../lib/selector/public-api";
 import { SelectorService } from "../lib/selector/selector.service";
-import { INovaFilteringOutputs } from "./data-source/public-api";
-import { SelectionModel } from "./public-api";
 
 @Injectable({ providedIn: "root" })
 export class ListService {

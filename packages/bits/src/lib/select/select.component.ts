@@ -40,11 +40,11 @@ import _isEmpty from "lodash/isEmpty";
 import _isNil from "lodash/isNil";
 import _toString from "lodash/toString";
 
+import { BaseSelect } from "./base-select";
 import { LoggerService } from "../../services/log-service";
 import { UtilService } from "../../services/util.service";
 import { NuiFormFieldControl } from "../form-field/public-api";
 import { MenuComponent } from "../menu";
-import { BaseSelect } from "./base-select";
 
 // <example-url>./../examples/index.html#/select</example-url>
 /**

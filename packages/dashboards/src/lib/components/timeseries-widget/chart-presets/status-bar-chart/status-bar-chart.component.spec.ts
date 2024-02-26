@@ -32,8 +32,8 @@ import {
 import { SET_TIMEFRAME } from "../../../../services/types";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../types";
 import { TimeseriesScalesService } from "../../timeseries-scales.service";
-import { StatusBarChartComponent } from "./status-bar-chart.component";
 import { TimeseriesWidgetProjectType } from "../../types";
+import { StatusBarChartComponent } from "./status-bar-chart.component";
 
 describe(StatusBarChartComponent.name, () => {
     const frozenTime = moment("2020-11-06T00:00:00-06:00")

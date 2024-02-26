@@ -20,12 +20,12 @@
 
 import { NgModule } from "@angular/core";
 
-import { NuiCommonModule } from "../../common/common.module";
-import { NuiIconModule } from "../icon/icon.module";
-import { NuiTooltipModule } from "../tooltip/tooltip.module";
 import { ChipComponent } from "./chip/chip.component";
 import { ChipsOverflowComponent } from "./chips-overflow/chips-overflow.component";
 import { ChipsComponent } from "./chips.component";
+import { NuiCommonModule } from "../../common/common.module";
+import { NuiIconModule } from "../icon/icon.module";
+import { NuiTooltipModule } from "../tooltip/tooltip.module";
 
 /**
  * @ignore

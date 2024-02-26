@@ -46,8 +46,8 @@ import { IOptionValueObject, OptionValueType } from "../../overlay/types";
 import { BaseSelectV2 } from "../base-select-v2";
 import { NUI_SELECT_V2_OPTION_PARENT_COMPONENT } from "../constants";
 import { MarkAsSelectedItemDirective } from "../mark-as-selected-item.directive";
-import { OptionKeyControlService } from "../option-key-control.service";
 import { SelectV2OptionComponent } from "../option/select-v2-option.component";
+import { OptionKeyControlService } from "../option-key-control.service";
 import { SelectedItemsKeyControlService } from "../selected-items-key-control.service";
 import { InputValueTypes } from "../types";
 

@@ -26,8 +26,6 @@ import _isArray from "lodash/isArray";
 import _toInteger from "lodash/toInteger";
 import { take } from "rxjs/operators";
 
-import { SwitchState } from "../../services/notification-args";
-import { NotificationService } from "../../services/notification-service";
 import {
     IActiveToast,
     IToastConfig,
@@ -40,6 +38,8 @@ import { ToastInjector } from "./toast-injector";
 import { ToastPackage } from "./toast-package";
 import { ToastRef } from "./toast-ref";
 import { ToastComponent } from "./toast.component";
+import { SwitchState } from "../../services/notification-args";
+import { NotificationService } from "../../services/notification-service";
 
 /**
  * __Name : __
