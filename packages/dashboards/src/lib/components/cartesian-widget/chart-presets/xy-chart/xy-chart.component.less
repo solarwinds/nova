@@ -1,0 +1,66 @@
+@import (reference) "@nova-ui/bits/sdk/less/nui-framework-variables.less";
+@import (reference) "@nova-ui/bits/sdk/less/mixins.less";
+@import (reference) "@nova-ui/charts/sdk/less/nui-charts-variables.less";
+@import (reference) "@nova-ui/charts/sdk/less/nui-charts.less";
+
+.xy-chart {
+    &__legend-series {
+        .link {
+            &.description-primary,
+            &.description-secondary {
+                .setCssVariable(color, nui-color-text-link);
+            }
+        }
+        &:not(:hover)&--state-hidden {
+            .link {
+                &.description-primary,
+                &.description-secondary {
+                    .setCssVariable(color, nui-color-text-default);
+                }
+            }
+        }
+    }
+}
+
+.layout-fixed {
+    .legend {
+        max-width: @nui-legend-series-max-width;
+        min-width: @nui-legend-series-max-width;
+        padding-left: @nui-legend-series-content-margin + @nui-space-xs !important;
+        nui-legend {
+            margin: 0 !important;
+            width: 100%;
+        }
+    }
+}
+
+nui-legend-series {
+    width: 100%;
+    &:hover {
+        .setCssVariable(background-color, nui-color-bg-content-hover);
+        cursor: pointer;
+    }
+}
+
+nui-icon {
+    padding: 0 @nui-space-xs 0 @nui-space-xs;
+    align-items: center;
+}
+
+.selected {
+    .setCssVariable(background-color, nui-color-selected);
+}
+.selected:hover {
+    .setCssVariable(background-color, nui-color-selected-hover);
+}
+
+:host ::ng-deep {
+    div:has(> .description-container) {
+        flex-grow: 1;
+        overflow: hidden;
+
+        .descriptions {
+            overflow: hidden;
+        }
+    }
+}

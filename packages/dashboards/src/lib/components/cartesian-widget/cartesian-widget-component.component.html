@@ -1,0 +1,27 @@
+<div
+    class="h-100 p-3 w-100 d-flex"
+    *ngIf="shouldShowChart()"
+    (mouseleave)="toggleLeave()"
+    (mouseenter)="toggleEnter()"
+>
+    <ng-container
+        nuiComponentPortal
+        componentId="cartesianWidgetChart"
+        [componentType]="chartPreset.componentType"
+        [properties]="{
+            widgetData: widgetData,
+            configuration: configuration,
+            elementClass: 'w-100'
+        }"
+        #componentPortal="nuiComponentPortal"
+    >
+        <ng-template
+            [cdkPortalOutlet]="componentPortal.portal"
+            (attached)="componentPortal.attached($event)"
+        >
+        </ng-template>
+    </ng-container>
+</div>
+<div *ngIf="!shouldShowChart()">
+    <nui-image image="no-data-to-show"></nui-image>
+</div>

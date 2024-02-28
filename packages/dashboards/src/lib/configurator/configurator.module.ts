@@ -54,6 +54,8 @@ import {
 } from "@nova-ui/bits";
 
 import { NuiDashboardsCommonModule } from "../common/common.module";
+import { CartesianChartPresetService } from "../components/cartesian-widget/services/cartesian-chart-preset.service";
+import { CartesianScalesService } from "../components/cartesian-widget/services/cartesian-scales.service";
 import { TimeseriesChartPresetService } from "../components/timeseries-widget/timeseries-chart-preset.service";
 import { TimeseriesScalesService } from "../components/timeseries-widget/timeseries-scales.service";
 import { NuiPizzagnaModule } from "../pizzagna/pizzagna.module";
@@ -250,6 +252,8 @@ const exportedDeclarations = [
         KpiWidgetColorService,
         TimeseriesChartPresetService,
         TimeseriesScalesService,
+        CartesianScalesService,
+        CartesianChartPresetService,
     ],
     exports: exportedDeclarations,
 })

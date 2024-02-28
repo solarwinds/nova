@@ -52,6 +52,13 @@ import { NuiChartsModule } from "@nova-ui/charts";
 
 import { NuiDashboardsCommonModule } from "./common/common.module";
 import { WidgetErrorComponent } from "./common/components/widget-error/widget-error.component";
+import { CartesianWidgetComponent } from "./components/cartesian-widget/cartesian-widget.component";
+import { StatusBarChartComponent as CartesianStatusBarChartComponent } from "./components/cartesian-widget/chart-presets/status-bar-chart/status-bar-chart.component";
+import { BarChartComponent as CartesianBarChartComponent } from "./components/cartesian-widget/chart-presets/xy-chart/chart-types/bar-chart.component";
+import { LineChartComponent as CartesianLineChartComponent } from "./components/cartesian-widget/chart-presets/xy-chart/chart-types/line-chart.component";
+import { StackedAreaChartComponent as CartesianStackedAreaChartComponent } from "./components/cartesian-widget/chart-presets/xy-chart/chart-types/stacked-area-chart.component";
+import { StackedBarChartComponent as CartesianStackedBarChartComponent } from "./components/cartesian-widget/chart-presets/xy-chart/chart-types/stacked-bar-chart.component";
+import { StackedPercentageAreaChartComponent as CartesianStackedPercentageAreaChartComponent } from "./components/cartesian-widget/chart-presets/xy-chart/chart-types/stacked-percentage-area-chart.component";
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { EmbeddedContentComponent } from "./components/embedded-content/embedded-content.component";
 import { KpiComponent } from "./components/kpi-widget/kpi.component";
@@ -112,6 +119,7 @@ import {
     WIDGET_RESIZE,
 } from "./services/types";
 import { WidgetTypesService } from "./services/widget-types.service";
+import { cartesian } from "./widget-types/cartesian/cartesian";
 import { drilldown } from "./widget-types/drilldown/drilldown";
 import { embeddedContent } from "./widget-types/embedded-content/embedded-content";
 import { kpi } from "./widget-types/kpi/kpi";
@@ -124,6 +132,13 @@ import { table } from "./widget-types/table/table";
 import { timeseries } from "./widget-types/timeseries/timeseries";
 
 const dashboardComponents = [
+    CartesianWidgetComponent,
+    CartesianLineChartComponent,
+    CartesianBarChartComponent,
+    CartesianStatusBarChartComponent,
+    CartesianStackedBarChartComponent,
+    CartesianStackedAreaChartComponent,
+    CartesianStackedPercentageAreaChartComponent,
     DashboardComponent,
     EmbeddedContentComponent,
     GridsterItemWidgetIdDirective,
@@ -158,6 +173,13 @@ const dashboardComponents = [
 ];
 
 const entryComponents: IComponentWithLateLoadKey[] = [
+    CartesianWidgetComponent,
+    CartesianLineChartComponent,
+    CartesianStatusBarChartComponent,
+    CartesianBarChartComponent,
+    CartesianStackedBarChartComponent,
+    CartesianStackedAreaChartComponent,
+    CartesianStackedPercentageAreaChartComponent,
     EmbeddedContentComponent,
     KpiComponent,
     RiskScoreTileComponent,
@@ -235,6 +257,7 @@ export class NuiDashboardsModule {
         widgetTypesService.registerWidgetType("risk-score", 1, riskScore);
         widgetTypesService.registerWidgetType("table", 1, table);
         widgetTypesService.registerWidgetType("proportional", 1, proportional);
+        widgetTypesService.registerWidgetType("cartesian", 1, cartesian);
         widgetTypesService.registerWidgetType("timeseries", 1, timeseries);
         widgetTypesService.registerWidgetType(
             "previewPlaceholder",

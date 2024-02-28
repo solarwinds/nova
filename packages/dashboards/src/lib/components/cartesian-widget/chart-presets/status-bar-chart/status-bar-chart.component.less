@@ -1,0 +1,50 @@
+@import (reference) "@nova-ui/bits/sdk/less/nui-framework-variables";
+@import (reference) "@nova-ui/charts/sdk/less/nui-charts-variables.less";
+@import (reference) "@nova-ui/charts/sdk/less/nui-charts.less";
+
+@legend-tile-width: 60px;
+@legend-tile-background-opacity: 0.4;
+
+.status-bar-chart {
+    &__legend {
+        &__tile {
+            width: @legend-tile-width;
+            position: relative;
+
+            &__background {
+                position: absolute;
+                opacity: @legend-tile-background-opacity;
+            }
+
+            &__icon {
+                position: absolute;
+            }
+        }
+    }
+}
+
+:host ::ng-deep .description-container {
+    flex-grow: 1;
+}
+
+nui-legend-series:hover {
+    background-color: @nui-color-bg-content-hover;
+    max-width: 100%;
+}
+
+.layout-fixed {
+    &-legend {
+        max-width: @nui-legend-series-max-width;
+        min-width: @nui-legend-series-max-width;
+        padding-left: @nui-legend-series-content-margin + @nui-space-xs !important;
+        nui-legend {
+            margin: 0 !important;
+            width: 100%;
+        }
+    }
+}
+
+.last-legend-margin {
+    justify-content: start !important;
+    margin-top: @nui-space-xs + @nui-space-xxs;
+}

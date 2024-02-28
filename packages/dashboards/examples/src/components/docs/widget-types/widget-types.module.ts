@@ -32,6 +32,7 @@ export enum WidgetTypesRoute {
     riskScore = "risk-score",
     timeseries = "timeseries",
     table = "table",
+    cartesian = "cartesian",
     proportional = "proportional",
     embedded = "embedded",
     drilldown = "drilldown",
@@ -76,6 +77,18 @@ const routes: Routes = [
         path: WidgetTypesRoute.table,
         loadChildren: async () =>
             import("./table/table-docs.module") as object as Promise<Type<any>>,
+        data: {
+            srlc: {
+                hideIndicator: true,
+            },
+        },
+    },
+    {
+        path: WidgetTypesRoute.cartesian,
+        loadChildren: async () =>
+            import(
+                "./cartesian/cartesian-docs/cartesian-docs.module"
+            ) as object as Promise<Type<any>>,
         data: {
             srlc: {
                 hideIndicator: true,
