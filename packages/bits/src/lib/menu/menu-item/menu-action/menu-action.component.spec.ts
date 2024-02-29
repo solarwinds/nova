@@ -18,9 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { MenuActionComponent } from "./menu-action.component";
 import { MockedChangeDetectorRef } from "../../../../spec-helpers/angular";
 import { MenuGroupComponent } from "../menu-group/menu-group.component";
-import { MenuActionComponent } from "./menu-action.component";
 
 describe("components >", () => {
     describe("menu-action >", () => {

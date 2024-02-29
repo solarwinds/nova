@@ -20,10 +20,10 @@
 
 import { browser, Key } from "protractor";
 
+import { SelectV2Atom } from "./select-v2.atom";
 import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-import { SelectV2Atom } from "./select-v2.atom";
 
 const name: string = "Select-V2";
 

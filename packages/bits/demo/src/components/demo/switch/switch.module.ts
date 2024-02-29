@@ -22,6 +22,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiDocsModule,
     NuiSwitchModule,
@@ -36,6 +37,7 @@ import {
     SwitchValueChangeExampleComponent,
     SwitchVisualTestComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -77,6 +79,12 @@ const routes = [
         SwitchTestComponent,
         SwitchValueChangeExampleComponent,
         SwitchVisualTestComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("switch"),
+        },
     ],
     exports: [RouterModule],
 })

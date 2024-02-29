@@ -23,12 +23,12 @@ import { ScrollingModule } from "@angular/cdk/scrolling";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import noop from "lodash/noop";
 
-import { LoggerService } from "../../services/log-service";
-import { CheckboxComponent } from "../checkbox/checkbox.component";
-import { RadioComponent } from "../radio/radio-group.component";
 import { RepeatItemComponent } from "./repeat-item/repeat-item.component";
 import { RepeatComponent } from "./repeat.component";
 import { IRepeatItem, IRepeatItemConfig, RepeatSelectionMode } from "./types";
+import { LoggerService } from "../../services/log-service";
+import { CheckboxComponent } from "../checkbox/checkbox.component";
+import { RadioComponent } from "../radio/radio-group.component";
 
 interface IColorRepeatItem extends IRepeatItem {
     name: string;

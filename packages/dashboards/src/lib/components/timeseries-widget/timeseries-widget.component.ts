@@ -27,6 +27,7 @@ import {
     OnChanges,
     SimpleChanges,
 } from "@angular/core";
+
 import {
     TimeseriesZoomPlugin,
     TimeseriesZoomPluginsSyncService,
@@ -133,10 +134,10 @@ export class TimeseriesWidgetComponent
         return (this.widgetData?.series?.length ?? 0) > 0;
     }
 
-    public toggleLeave() {
+    public toggleLeave(): void {
         this.allowPopover = false;
     }
-    public toggleEnter() {
+    public toggleEnter(): void {
         this.allowPopover = true;
     }
 

@@ -20,10 +20,10 @@
 
 import { browser } from "protractor";
 
+import { RadioGroupAtom } from "./radio-group.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-import { RadioGroupAtom } from "./radio-group.atom";
 
 const name = "Radio Group";
 

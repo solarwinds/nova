@@ -23,9 +23,9 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import _noop from "lodash/noop";
 
-import { UtilService } from "../../../services/util.service";
 import { DragAndDropService } from "./drag-and-drop.service";
 import { DraggableDirective } from "./draggable.directive";
+import { UtilService } from "../../../services/util.service";
 
 @Component({
     template: `<div

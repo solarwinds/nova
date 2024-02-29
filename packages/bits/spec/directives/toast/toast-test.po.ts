@@ -20,8 +20,8 @@
 
 import { $, by, ElementFinder } from "protractor";
 
-import { Atom } from "../../atom";
 import { ToastAtom } from "./toast.atom";
+import { Atom } from "../../atom";
 
 // interfaces duplicated here because if we import them from lib, dist-copy for atoms will work improperly
 export interface IToastDeclaration {

@@ -18,7 +18,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { SorterDirection } from "../lib/public-api";
 import { DataFilterService } from "./data-filter.service";
 import {
     IFilter,
@@ -27,6 +26,7 @@ import {
     IRange,
     ISorterFilter,
 } from "./data-source/public-api";
+import { SorterDirection } from "../lib/public-api";
 
 interface IStubFilters extends IFilters {
     search?: IFilter<string>;

@@ -28,8 +28,8 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 
-import { MenuGroupComponent } from "../menu-group/menu-group.component";
 import { MenuItemBaseComponent } from "./menu-item-base";
+import { MenuGroupComponent } from "../menu-group/menu-group.component";
 
 /**
  * @ignore

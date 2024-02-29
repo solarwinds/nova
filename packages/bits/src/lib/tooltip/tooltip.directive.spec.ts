@@ -28,10 +28,10 @@ import {
 } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
-import { NuiButtonModule } from "../button/button.module";
 import { TooltipPosition } from "./public-api";
 import { TooltipDirective } from "./tooltip.directive";
 import { NuiTooltipModule } from "./tooltip.module";
+import { NuiButtonModule } from "../button/button.module";
 
 @Component({
     selector: "nui-tooltip-unit",

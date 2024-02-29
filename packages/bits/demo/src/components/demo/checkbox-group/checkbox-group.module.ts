@@ -23,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiCheckboxModule,
     NuiDocsModule,
@@ -87,6 +88,12 @@ const routes = [
         CheckboxGroupVisualTestComponent,
         CheckboxGroupJustifiedExampleComponent,
         CheckboxGroupTestComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: "checkbox-group",
+        },
     ],
     exports: [RouterModule],
 })

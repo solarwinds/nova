@@ -37,8 +37,8 @@ import {
 } from "@nova-ui/bits";
 
 import { FilterGroupModule } from "./filter-group/filter-group.module";
-import { FilteredViewTableWithSelectionComponent } from "./filtered-view-table-with-selection.component";
 import { FilteredViewTableComponent } from "./filtered-view-table/filtered-view-table.component";
+import { FilteredViewTableWithSelectionComponent } from "./filtered-view-table-with-selection.component";
 
 @NgModule({
     imports: [

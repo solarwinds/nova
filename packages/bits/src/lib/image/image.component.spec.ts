@@ -23,10 +23,10 @@ import { TestBed } from "@angular/core/testing";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import _sample from "lodash/sample";
 
-import { LoggerService } from "../../services/log-service";
-import { UtilService } from "../../services/util.service";
 import { ImageComponent } from "./image.component";
 import { IImagesPresetItem } from "./public-api";
+import { LoggerService } from "../../services/log-service";
+import { UtilService } from "../../services/util.service";
 
 describe("components >", () => {
     describe("image >", () => {

@@ -24,6 +24,7 @@ import cloneDeep from "lodash/cloneDeep";
 import noop from "lodash/noop";
 import moment, { Moment } from "moment/moment";
 
+import { TimeFrameBarComponent } from "./time-frame-bar.component";
 import { NuiCommonModule } from "../../../common/common.module";
 import { NuiButtonModule } from "../../button/button.module";
 import { NuiDatePickerModule } from "../../date-picker/date-picker.module";
@@ -37,7 +38,6 @@ import {
 import { NuiTimeFramePickerModule } from "../../time-frame-picker/time-frame-picker.module";
 import { NuiTimePickerModule } from "../../time-picker/time-picker.module";
 import { NuiTooltipModule } from "../../tooltip/tooltip.module";
-import { TimeFrameBarComponent } from "./time-frame-bar.component";
 
 @Component({
     selector: "test-wrapper-component",

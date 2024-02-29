@@ -28,10 +28,10 @@ import {
 } from "@angular/core/testing";
 import noop from "lodash/noop";
 
-import { LoggerService } from "../../services/log-service";
-import { NuiTooltipModule } from "../tooltip/tooltip.module";
 import { SpinnerSize } from "./public-api";
 import { SpinnerComponent } from "./spinner.component";
+import { LoggerService } from "../../services/log-service";
+import { NuiTooltipModule } from "../tooltip/tooltip.module";
 describe("components", () => {
     describe("spinner", () => {
         let componentFixture: ComponentFixture<SpinnerComponent>;

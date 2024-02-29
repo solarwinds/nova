@@ -23,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiCommonModule,
     NuiDocsModule,
@@ -43,6 +44,7 @@ import {
     SearchVisualTestComponent,
     SearchErrorStateExampleComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -97,6 +99,12 @@ const routes = [
         SearchPlaceholderExampleComponent,
         SearchErrorStateExampleComponent,
         SearchVisualTestComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("search"),
+        },
     ],
     exports: [RouterModule],
 })

@@ -40,9 +40,9 @@ import {
     tap,
 } from "rxjs/operators";
 
+import { VirtualViewportManager } from "./virtual-viewport-manager.service";
 import { RepeatComponent } from "../lib/repeat/repeat.component";
 import { NuiRepeatModule } from "../lib/repeat/repeat.module";
-import { VirtualViewportManager } from "./virtual-viewport-manager.service";
 
 @Component({
     template: `

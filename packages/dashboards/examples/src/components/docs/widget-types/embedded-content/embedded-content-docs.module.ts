@@ -27,9 +27,11 @@ import {
     NuiDocsModule,
     NuiMessageModule,
     NuiSwitchModule,
+    DEMO_PATH_TOKEN,
 } from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
+import { getDemoFiles } from "../../../../demo-files-factory";
 import { EmbeddedContentDocsComponent } from "./embedded-content-docs.component";
 import { EmbeddedContentWidgetExampleComponent } from "./embedded-content-widget-example/embedded-content-widget-example.component";
 
@@ -66,6 +68,12 @@ const routes: Routes = [
     declarations: [
         EmbeddedContentDocsComponent,
         EmbeddedContentWidgetExampleComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("embedded-content"),
+        },
     ],
 })
 export default class EmbeddedContentDocsModule {}

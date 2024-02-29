@@ -22,6 +22,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiDocsModule,
     NuiMessageModule,
@@ -39,6 +40,7 @@ import {
     ProgressWithHelpTemplateExampleComponent,
     StackedHeaderProgressExampleComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -88,6 +90,12 @@ const routes = [
         ProgressTestComponent,
         ProgressWithHelpTemplateExampleComponent,
         StackedHeaderProgressExampleComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("progress"),
+        },
     ],
     exports: [RouterModule],
 })

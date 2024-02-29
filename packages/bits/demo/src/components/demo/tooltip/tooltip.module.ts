@@ -22,6 +22,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiDocsModule,
     NuiMessageModule,
@@ -39,6 +40,7 @@ import {
     TooltipTriggerExampleComponent,
     TooltipVisualTestComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -115,6 +117,12 @@ const routes = [
         TooltipPositionExampleComponent,
         TooltipTriggerExampleComponent,
         TooltipVisualTestComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("tooltip"),
+        },
     ],
     exports: [RouterModule],
 })

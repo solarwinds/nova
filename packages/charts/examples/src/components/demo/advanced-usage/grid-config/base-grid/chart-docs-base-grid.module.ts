@@ -27,8 +27,10 @@ import {
     NuiMessageModule,
     SrlcStage,
 } from "@nova-ui/bits";
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
+import { getDemoFiles } from "../../../../../demo-files-factory";
 import { ChartDocsBaseGridComponent } from "./chart-docs-base-grid.component";
 import { BaseGridDisablingInteractionExampleComponent } from "./disabling-interaction/base-grid-disabling-interaction.example.component";
 import { BaseGridHeightAndWidthExampleComponent } from "./height-and-width/base-grid-height-and-width.example.component";
@@ -81,6 +83,11 @@ const exampleRoutes: Routes = [
         NuiMessageModule,
         RouterModule.forChild(exampleRoutes),
     ],
-    providers: [],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("base-grid"),
+        },
+    ],
 })
 export class ChartDocsBaseGridModule {}

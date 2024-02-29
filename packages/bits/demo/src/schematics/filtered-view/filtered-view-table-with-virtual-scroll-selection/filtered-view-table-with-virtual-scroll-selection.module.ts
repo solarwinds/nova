@@ -38,8 +38,8 @@ import {
 } from "@nova-ui/bits";
 
 import { FilterGroupModule } from "./filter-group/filter-group.module";
-import { FilteredViewTableWithVirtualScrollSelectionComponent } from "./filtered-view-table-with-virtual-scroll-selection.component";
 import { FilteredViewTableComponent } from "./filtered-view-table/filtered-view-table.component";
+import { FilteredViewTableWithVirtualScrollSelectionComponent } from "./filtered-view-table-with-virtual-scroll-selection.component";
 
 @NgModule({
     imports: [

@@ -22,16 +22,16 @@ import { DebugElement } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { BehaviorSubject, Subject } from "rxjs";
 
+import {
+    PopoverModalComponent,
+    PopoverModalEvents,
+} from "./popover-modal.component";
 import { IconService } from "../../lib/icon/icon.service";
 import { IconComponent } from "../../public_api";
 import { EdgeDetectionService } from "../../services/edge-detection.service";
 import { LoggerService } from "../../services/log-service";
 import { PositionService } from "../../services/position.service";
 import { OverlayArrowComponent } from "../overlay/arrow-component/overlay-arrow.component";
-import {
-    PopoverModalComponent,
-    PopoverModalEvents,
-} from "./popover-modal.component";
 
 describe("components >", () => {
     describe("popover-modal >", () => {

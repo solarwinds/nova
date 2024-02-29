@@ -22,12 +22,12 @@ import { AfterViewInit, Component, ElementRef } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
 
+import { LayoutResizerComponent } from "./layout-resizer.component";
 import { ResizerDirective } from "../../../common/directives";
 import {
     ResizeDirection,
     ResizeUnit,
 } from "../../../common/directives/resizer/public-api";
-import { LayoutResizerComponent } from "./layout-resizer.component";
 
 @Component({
     template: `<div>Loren Ipsum</div>`,

@@ -51,17 +51,17 @@ import moment, { Moment } from "moment/moment";
 import { Subject, Subscription } from "rxjs";
 import { debounceTime, takeUntil } from "rxjs/operators";
 
-import { NuiValidators } from "../../validators";
-import { NuiFormFieldControl } from "../form-field/public-api";
-import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
-import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
-import { TextboxComponent } from "../textbox/textbox.component";
 import { DatePickerInnerComponent } from "./date-picker-inner.component";
 import {
     datePickerDateFormats,
     datePickerDefaults,
     IDatePickerDisabledDate,
 } from "./public-api";
+import { NuiValidators } from "../../validators";
+import { NuiFormFieldControl } from "../form-field/public-api";
+import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
+import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
+import { TextboxComponent } from "../textbox/textbox.component";
 
 // <example-url>./../examples/index.html#/date-picker</example-url><br />
 @Component({

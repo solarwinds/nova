@@ -44,6 +44,7 @@ import { Moment } from "moment/moment";
 import { Subject } from "rxjs";
 import { debounceTime, takeUntil } from "rxjs/operators";
 
+import { TimePickerKeyboardService } from "./time-picker-keyboard.service";
 import { NuiFormFieldControl } from "../form-field/public-api";
 import { MenuPopupComponent } from "../menu";
 import { IMenuGroup, IMenuItem } from "../menu/public-api";
@@ -51,7 +52,6 @@ import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
 import { OverlayUtilitiesService } from "../overlay/overlay-utilities.service";
 import { TextboxComponent } from "../textbox/textbox.component";
-import { TimePickerKeyboardService } from "./time-picker-keyboard.service";
 
 // <example-url>./../examples/index.html#/time-picker</example-url><br />
 

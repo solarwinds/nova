@@ -22,6 +22,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiDocsModule,
     NuiMenuModule,
@@ -42,6 +43,7 @@ import {
     ToolbarTestExampleComponent,
     ToolbarVisualTestExampleComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -89,6 +91,12 @@ const routes = [
         ToolbarItemTypesExampleComponent,
         ToolbarTestExampleComponent,
         ToolbarVisualTestExampleComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("toolbar"),
+        },
     ],
     exports: [RouterModule],
 })

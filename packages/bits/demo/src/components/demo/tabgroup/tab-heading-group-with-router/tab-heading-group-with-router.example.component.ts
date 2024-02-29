@@ -30,16 +30,6 @@ export class TabHeadingGroupWithRouterExampleComponent implements OnDestroy {
     public currentTabRoute: string;
 
     @Input() public icon: boolean = false;
-
-    constructor(private _router: Router) {}
-
-    private routeSubscription = this._router.events.subscribe((event) => {
-        if (event instanceof NavigationEnd) {
-            const path: string[] = event.urlAfterRedirects.split("/");
-            this.currentTabRoute = path[path.length - 1];
-        }
-    });
-
     public tabsetContent = [
         {
             id: "tab-settings",
@@ -69,8 +59,16 @@ export class TabHeadingGroupWithRouterExampleComponent implements OnDestroy {
             },
         },
     ];
+    private routeSubscription = this._router?.events.subscribe((event) => {
+        if (event instanceof NavigationEnd) {
+            const path: string[] = event.urlAfterRedirects.split("/");
+            this.currentTabRoute = path[path.length - 1];
+        }
+    });
+
+    constructor(private _router: Router) {}
 
     public ngOnDestroy(): void {
-        this.routeSubscription.unsubscribe();
+        this.routeSubscription?.unsubscribe();
     }
 }

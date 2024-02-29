@@ -35,9 +35,9 @@ import _forOwn from "lodash/forOwn";
 import _isNull from "lodash/isNull";
 import { merge } from "rxjs";
 
-import { ValidationMessageComponent } from "../validation-message/validation-message.component";
 import { NuiFormFieldControl } from "./public-api";
 import { extractTouchedChanges } from "./touched-changes-helper";
+import { ValidationMessageComponent } from "../validation-message/validation-message.component";
 
 // <example-url>./../examples/index.html#/form-field</example-url>
 @Component({

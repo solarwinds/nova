@@ -42,8 +42,8 @@ import without from "lodash/without";
 import { takeUntil } from "rxjs/operators";
 
 import { WizardOverflowComponent } from "../wizard-overflow/wizard-overflow.component";
-import { WizardStepHeaderComponent } from "../wizard-step-header/wizard-step-header.component";
 import { WizardStepV2Component } from "../wizard-step/wizard-step.component";
+import { WizardStepHeaderComponent } from "../wizard-step-header/wizard-step-header.component";
 import { WizardDirective } from "../wizard.directive";
 
 // <example-url>./../examples/index.html#/wizard-v2</example-url>

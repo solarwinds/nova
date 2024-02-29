@@ -28,13 +28,13 @@ import {
 import { By } from "@angular/platform-browser";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 
+import { PanelComponent } from "./panel.component";
+import { PanelBackgroundColor, PanelModes } from "./public-api";
 import { ResizerDirective } from "../../common/directives/resizer/resizer.directive";
 import { ButtonComponent } from "../../lib/button/button.component";
 import { IconComponent } from "../../lib/icon/icon.component";
 import { IconService } from "../../lib/icon/icon.service";
 import { UtilService } from "../../services/util.service";
-import { PanelComponent } from "./panel.component";
-import { PanelBackgroundColor, PanelModes } from "./public-api";
 
 const PANE_WIDTH_PERCENTS = "20px";
 const PANE_WIDTH = "500px";

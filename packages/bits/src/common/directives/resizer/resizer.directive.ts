@@ -36,16 +36,16 @@ import isFunction from "lodash/isFunction";
 import isUndefined from "lodash/isUndefined";
 import { Subscription } from "rxjs";
 
-import { COMPLETE_RESIZE_EVENT } from "../../../constants/event.constants";
-import { RESIZE_DEBOUNCE_TIME } from "../../../constants/resize.constants";
-import { EventBusService } from "../../../services/event-bus.service";
-import { UtilService } from "../../../services/util.service";
 import {
     IResizeProperties,
     ResizeDirection,
     resizeDirectionHelpers,
     ResizeUnit,
 } from "./public-api";
+import { COMPLETE_RESIZE_EVENT } from "../../../constants/event.constants";
+import { RESIZE_DEBOUNCE_TIME } from "../../../constants/resize.constants";
+import { EventBusService } from "../../../services/event-bus.service";
+import { UtilService } from "../../../services/util.service";
 
 /** @ignore */
 const resizeClass = "nui-resize-gutter";

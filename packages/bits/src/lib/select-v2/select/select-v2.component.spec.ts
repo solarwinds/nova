@@ -38,13 +38,13 @@ import {
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 
+import { SelectV2Component } from "./select-v2.component";
 import { KEYBOARD_CODE } from "../../../constants/keycode.constants";
 import { NuiOverlayModule } from "../../overlay/overlay.module";
 import { IOptionValueObject, OptionValueType } from "../../overlay/types";
-import { OptionKeyControlService } from "../option-key-control.service";
 import { SelectV2OptionComponent } from "../option/select-v2-option.component";
+import { OptionKeyControlService } from "../option-key-control.service";
 import { InputValueTypes } from "../types";
-import { SelectV2Component } from "./select-v2.component";
 
 @Component({
     template: `

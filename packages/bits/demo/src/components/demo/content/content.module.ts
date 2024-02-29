@@ -22,6 +22,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiContentModule,
     NuiDocsModule,
@@ -29,6 +30,7 @@ import {
 } from "@nova-ui/bits";
 
 import { ContentExampleComponent } from "./content.example.component";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -50,6 +52,12 @@ const routes = [
         RouterModule.forChild(routes),
     ],
     declarations: [ContentExampleComponent],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("content"),
+        },
+    ],
     exports: [RouterModule],
 })
 export default class ContentModule {}

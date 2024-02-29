@@ -27,10 +27,10 @@ import {
     WizardStepperPreviousDirective,
 } from "./wizard-button/wizard-button";
 import { WizardFooterComponent } from "./wizard-footer/wizard-footer.component";
+import { WizardStepV2Component } from "./wizard-step/wizard-step.component";
 import { WizardStepFooterDirective } from "./wizard-step-footer.directive";
 import { WizardStepHeaderComponent } from "./wizard-step-header/wizard-step-header.component";
 import { WizardStepLabelDirective } from "./wizard-step-label.directive";
-import { WizardStepV2Component } from "./wizard-step/wizard-step.component";
 import { WizardDirective } from "./wizard.directive";
 
 @Component({

@@ -21,6 +21,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import {
     NuiButtonModule,
     NuiCheckboxModule,
@@ -32,6 +33,7 @@ import {
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
+import { getDemoFiles } from "../../../../demo-files-factory";
 import { DemoCommonModule } from "../../common/demo-common.module";
 import { BarChartGroupedHorizontalExampleComponent } from "./bar-chart-grouped-horizontal/bar-chart-grouped-horizontal.example.component";
 import { BarChartGroupedExampleComponent } from "./bar-chart-grouped/bar-chart-grouped.example.component";
@@ -139,6 +141,11 @@ const routes: Routes = [
         NuiMessageModule,
         RouterModule.forChild(routes),
     ],
-    providers: [],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("bucketed-bar"),
+        },
+    ],
 })
 export default class ChartDocsBucketedBarModule {}

@@ -30,11 +30,11 @@ import _isNil from "lodash/isNil";
 import _isNumber from "lodash/isNumber";
 import { Subject } from "rxjs";
 
+import { TableResizePhase } from "./table-resizer/table-resizer.directive";
 import { ISelection, ISelectorState } from "../../services/public-api";
 import { SelectionType } from "../selector/public-api";
 import { SelectorService } from "../selector/selector.service";
 import { ISortedItem, SorterDirection } from "../sorter/public-api";
-import { TableResizePhase } from "./table-resizer/table-resizer.directive";
 
 export const enum AlignmentClasses {
     RIGHT = "align-right",

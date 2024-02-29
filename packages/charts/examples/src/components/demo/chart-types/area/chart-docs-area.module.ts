@@ -23,6 +23,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
 
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import {
     NuiDocsModule,
     NuiIconModule,
@@ -31,6 +32,7 @@ import {
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
+import { getDemoFiles } from "../../../../demo-files-factory";
 import { DemoCommonModule } from "../../common/demo-common.module";
 import { AreaChartBasicExampleComponent } from "./area-chart-basic/area-chart-basic-example.component";
 import { AreaChartBiDirectionalStackedInvertedExampleComponent } from "./area-chart-bi-directional-stacked-inverted/area-chart-bi-directional-stacked-inverted-example.component";
@@ -164,6 +166,11 @@ const exampleRoutes: Routes = [
         NuiMessageModule,
         RouterModule.forChild(exampleRoutes),
     ],
-    providers: [],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("area"),
+        },
+    ],
 })
 export default class ChartDocsAreaModule {}

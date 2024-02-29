@@ -29,8 +29,8 @@ import {
     TemplateRef,
 } from "@angular/core";
 
-import { IBusyConfig } from "../busy/public-api";
 import { IWizardSelectionEvent, IWizardStepComponent } from "./public-api";
+import { IBusyConfig } from "../busy/public-api";
 
 /**
  * Component that provides wizard step functionality.

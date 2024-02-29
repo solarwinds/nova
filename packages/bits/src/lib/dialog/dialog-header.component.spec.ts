@@ -20,9 +20,9 @@
 
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { DialogHeaderComponent } from "./dialog-header.component";
 import { ButtonComponent, IconComponent } from "../../public_api";
 import { LoggerService } from "../../services/log-service";
-import { DialogHeaderComponent } from "./dialog-header.component";
 
 describe("components >", () => {
     describe("Dialog header >", () => {

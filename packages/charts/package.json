@@ -72,7 +72,8 @@
     "tslib": "^2.4.1",
     "typescript": "~4.9.5",
     "webpack": "^5.75.0",
-    "zone.js": "~0.11.8"
+    "zone.js": "~0.11.8",
+    "lz-string": "^1.5.0"
   },
   "exports": {
     "./sdk/atoms": {
@@ -97,7 +98,7 @@
   "license": "Apache-2.0",
   "name": "@nova-ui/charts",
   "peerDependencies": {
-    "@nova-ui/bits": "~15.0.3",
+    "@nova-ui/bits": "~15.0.4",
     "@types/d3": "^5.0.0",
     "@types/d3-selection-multi": "^1.0.0",
     "d3": "^5.0.0",
@@ -113,7 +114,7 @@
     "moment": "2.29.4"
   },
   "scripts": {
-    "assemble": "run-s build-lib:locl build-lib:prod compodoc-custom-theme build-examples:prod",
+    "assemble": "run-s prettier-check lint build-lib:locl build-lib:prod compodoc-custom-theme build-examples:prod",
     "assemble-dev": "run-s build-lib:prod",
     "build-examples": "ng build examples",
     "build-examples:prod": "run-s \"build-examples -c production\"",
@@ -122,6 +123,7 @@
     "build-lib:locl": "run-s \"build-lib -c locl\" i18n-locl-extract",
     "build-lib:prod": "run-s \"build-lib -c production\" dist-copy",
     "build-lib:watch": "run-s dist-copy \"build-lib -c dev\"",
+    "compile-demo-paths": "node ./scripts/compile-demo-paths.js",
     "compodoc": "compodoc",
     "compodoc-custom-theme": "compodoc --extTheme docs/styles/",
     "compodoc:serve": "yarn run compodoc-custom-theme -s -w --port 8070 --includes ./docs/development",
@@ -144,6 +146,7 @@
     "percy": "percy exec -- yarn run visual",
     "percy:ci": "yarn run visual:ci && percy upload -v _snapshots",
     "postinstall": "node scripts/remove-deps-constraints.js",
+    "prebuild-examples": "yarn run compile-demo-paths",
     "pree2e:base": "webdriver-manager update --gecko=false --standalone=false",
     "prettier": "prettier --config ./.prettierrc.js",
     "prettier-check": "yarn run prettier --check .",
@@ -164,5 +167,5 @@
     "visual:gui": "yarn run visual:base -c gui",
     "visual:serve": "yarn run visual:base -c serve"
   },
-  "version": "15.0.3"
+  "version": "15.0.4"
 }

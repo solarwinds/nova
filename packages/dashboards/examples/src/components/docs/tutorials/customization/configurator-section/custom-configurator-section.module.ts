@@ -32,17 +32,19 @@ import {
     NuiMessageModule,
     NuiSwitchModule,
     NuiTextboxModule,
+    DEMO_PATH_TOKEN,
 } from "@nova-ui/bits";
 import {
     NuiDashboardConfiguratorModule,
     NuiDashboardsModule,
 } from "@nova-ui/dashboards";
 
+import { getDemoFiles } from "../../../../../demo-files-factory";
 import { CustomConfiguratorSectionDocsComponent } from "./custom-configurator-section-docs.component";
 import {
     CustomConfiguratorSectionExampleComponent,
     CustomKpiDescriptionConfigurationComponent,
-} from "./custom-configurator-section.example.component";
+} from "./custom-configurator-section/custom-configurator-section.example.component";
 
 const routes = [
     {
@@ -86,6 +88,12 @@ const routes = [
         CustomConfiguratorSectionDocsComponent,
         CustomKpiDescriptionConfigurationComponent,
         CustomConfiguratorSectionExampleComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("configurator-section"),
+        },
     ],
 })
 export default class CustomConfiguratorSectionModule {}

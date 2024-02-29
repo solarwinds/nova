@@ -28,8 +28,10 @@ import {
     NuiTableModule,
     SrlcStage,
 } from "@nova-ui/bits";
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
+import { getDemoFiles } from "../../../../demo-files-factory";
 import { DemoCommonModule } from "../../common/demo-common.module";
 import { ChartDocsSparkComponent } from "./chart-docs-spark.component";
 import { SparkChartAreaMultipleExampleComponent } from "./spark-chart-area-multiple/spark-chart-area-multiple.example.component";
@@ -127,6 +129,11 @@ const exampleRoutes: Routes = [
         DemoCommonModule,
         RouterModule.forChild(exampleRoutes),
     ],
-    providers: [],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("spark"),
+        },
+    ],
 })
 export default class ChartDocsSparkModule {}

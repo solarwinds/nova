@@ -26,12 +26,14 @@ import {
     NuiDocsModule,
     NuiMessageModule,
     NuiSwitchModule,
+    DEMO_PATH_TOKEN,
 } from "@nova-ui/bits";
 import {
     KpiColorComparatorsRegistryService,
     NuiDashboardsModule,
 } from "@nova-ui/dashboards";
 
+import { getDemoFiles } from "../../../../demo-files-factory";
 import { KpiBackgroundColorDocsComponent } from "./kpi-background-color/docs/kpi-background-color-docs.component";
 import { KpiWidgetBackgroundColorExampleComponent } from "./kpi-background-color/example/kpi-widget-background-color-example.component";
 import { KpiDocsComponent } from "./kpi-docs.component";
@@ -100,7 +102,13 @@ const routes: Routes = [
         KpiSyncBrokerExampleComponent,
         KpiSyncBrokerForAllTilesExampleComponent,
     ],
-    providers: [KpiColorComparatorsRegistryService],
+    providers: [
+        KpiColorComparatorsRegistryService,
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("kpi"),
+        },
+    ],
 })
 export default class KpiDocsModule {
     constructor(

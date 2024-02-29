@@ -18,8 +18,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { nameof } from "../../functions/nameof";
-import { SorterDirection } from "../../lib/public-api";
 import { DataSourceService } from "./data-source.service";
 import {
     IFilter,
@@ -31,6 +29,8 @@ import {
     Paginator,
     Repeat,
 } from "./public-api";
+import { nameof } from "../../functions/nameof";
+import { SorterDirection } from "../../lib/public-api";
 
 const expectedFilteringOutputs: IStubFilteringOutputs = {
     repeat: {

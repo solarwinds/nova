@@ -20,11 +20,11 @@
 
 import { browser, by, element, ExpectedConditions } from "protractor";
 
+import { TabHeadingGroupAtom } from "./tab-heading-group.atom";
+import { TabHeadingAtom } from "./tab-heading.atom";
 import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-import { TabHeadingGroupAtom } from "./tab-heading-group.atom";
-import { TabHeadingAtom } from "./tab-heading.atom";
 
 const name: string = "Tab Heading Group";
 

@@ -20,8 +20,8 @@
 
 import { ElementFinder } from "protractor";
 
-import { Atom } from "../../atom";
 import { CdkDraggableItemAtom } from "./cdk-drop-item.atom";
+import { Atom } from "../../atom";
 
 export class CdkDropListAtom extends Atom {
     public static CSS_CLASS = "cdk-drop-list";

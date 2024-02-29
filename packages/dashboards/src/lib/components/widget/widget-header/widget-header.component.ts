@@ -182,7 +182,7 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         this.onDestroy$.complete();
     }
 
-    public removeWidget() {
+    public removeWidget(): void {
         this.eventBus.getStream(WIDGET_REMOVE).next({});
     }
 

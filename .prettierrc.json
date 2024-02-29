@@ -12,7 +12,8 @@
                 "singleQuote": false,
                 "trailingComma": "es5",
                 "useTabs": false,
-                "embeddedLanguageFormatting": "off"
+                "embeddedLanguageFormatting": "off",
+                "endOfLine": "auto"
             }
         },
         {

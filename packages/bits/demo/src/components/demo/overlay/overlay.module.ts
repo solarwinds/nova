@@ -24,6 +24,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiCheckboxModule,
     NuiCommonModule,
@@ -53,6 +54,7 @@ import {
     OverlayTestComponent,
     OverlayViewportMarginExampleComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -189,6 +191,12 @@ const routes = [
         OverlayPopupStylesExampleComponent,
         OverlayCustomDialogComponent,
         CustomConfirmationInsideDialogComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("overlay"),
+        },
     ],
     exports: [RouterModule],
 })

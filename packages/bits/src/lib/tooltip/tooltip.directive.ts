@@ -33,11 +33,11 @@ import {
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
+import { TooltipPosition } from "./public-api";
+import { TooltipComponent } from "./tooltip.component";
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import { OverlayPositionService } from "../overlay/overlay-position.service";
 import { OverlayPlacement } from "../overlay/types";
-import { TooltipPosition } from "./public-api";
-import { TooltipComponent } from "./tooltip.component";
 
 /**
  * <example-url>./../examples/index.html#/tooltip</example-url>

@@ -22,6 +22,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiDocsModule,
     NuiExpanderModule,
     NuiIconModule,
@@ -41,6 +42,7 @@ import {
     IconVisualTestComponent,
     IconWithTextExampleComponent,
 } from "./index";
+import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
     {
@@ -83,6 +85,12 @@ const routes = [
         IconHoverExampleComponent,
         IconWithTextExampleComponent,
         IconVisualTestComponent,
+    ],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("icon"),
+        },
     ],
     exports: [RouterModule],
 })

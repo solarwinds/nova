@@ -18,10 +18,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { nameof } from "../../../functions/nameof";
-import { SorterDirection } from "../../../lib/public-api";
-import { LocalFilteringDataSource } from "../local-filtering-data-source.service";
-import { INovaFilteringOutputs, INovaFilters } from "../public-api";
 import {
     ExpectedFilters,
     resultForBlue,
@@ -29,6 +25,10 @@ import {
     resultForLightSecondPage,
     resultsForLightFirstPageDesc,
 } from "./local-filtering-data-source.testdata";
+import { nameof } from "../../../functions/nameof";
+import { SorterDirection } from "../../../lib/public-api";
+import { LocalFilteringDataSource } from "../local-filtering-data-source.service";
+import { INovaFilteringOutputs, INovaFilters } from "../public-api";
 
 export class CommonTestSuite {
     public static expected: INovaFilters;

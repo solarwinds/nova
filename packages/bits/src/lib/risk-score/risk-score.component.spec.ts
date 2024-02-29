@@ -20,13 +20,14 @@
 
 import { DebugElement } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+
 import { RiskScoreComponent } from "./risk-score.component";
 
 describe("components >", () => {
     describe("risk-score >", () => {
         let subject: RiskScoreComponent;
         let fixture: ComponentFixture<RiskScoreComponent>;
-        let debugElement: DebugElement;
+        let el: DebugElement;
 
         const minValue = 0;
         const maxValue = 10;
@@ -40,7 +41,7 @@ describe("components >", () => {
             }).compileComponents();
 
             fixture = TestBed.createComponent(RiskScoreComponent);
-            debugElement = fixture.debugElement;
+            el = fixture.debugElement;
 
             subject = fixture.componentInstance;
             subject.level = 1;
@@ -61,25 +62,25 @@ describe("components >", () => {
 
         it("level = min. should provide floatOffset equal to 0", () => {
             subject.level = minValue;
-            subject.ngOnChanges({});
+            subject.ngOnChanges();
             expect(subject.floatOffset).toEqual(0);
         });
 
         it("level = max. should provide floatOffset equal to 100", () => {
             subject.level = maxValue;
-            subject.ngOnChanges({});
+            subject.ngOnChanges();
             expect(subject.floatOffset).toEqual(width);
         });
 
         it("level < min. should provide floatOffset equal to 0", () => {
             subject.level = minValue - 1;
-            subject.ngOnChanges({});
+            subject.ngOnChanges();
             expect(subject.floatOffset).toEqual(0);
         });
 
         it("level > max. should provide floatOffset equal to 100", () => {
             subject.level = maxValue + 1;
-            subject.ngOnChanges({});
+            subject.ngOnChanges();
             expect(subject.floatOffset).toEqual(width);
         });
     });

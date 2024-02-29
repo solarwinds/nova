@@ -20,12 +20,12 @@
 
 import { NgZone } from "@angular/core";
 
-import { SelectorService } from "../selector/selector.service";
 import { TableSpecHelpers } from "./table-spec-helpers/table-spec-helpers";
 import {
     AlignmentClasses,
     TableStateHandlerService,
 } from "./table-state-handler.service";
+import { SelectorService } from "../selector/selector.service";
 
 describe("services >", () => {
     describe("table-state-handler >", () => {

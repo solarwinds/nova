@@ -20,8 +20,8 @@
 
 import { Component, ViewChild } from "@angular/core";
 
-import { TableComponent } from "../table.component";
 import { TableSpecHelpers } from "./table-spec-helpers";
+import { TableComponent } from "../table.component";
 
 @Component({
     template: `

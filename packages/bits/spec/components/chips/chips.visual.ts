@@ -20,10 +20,10 @@
 
 import { browser } from "protractor";
 
+import { ChipsAtom } from "./chips.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-import { ChipsAtom } from "./chips.atom";
 
 const name: string = "Chips";
 

@@ -38,9 +38,9 @@ import _isString from "lodash/isString";
 import _some from "lodash/some";
 import { map } from "rxjs/operators";
 
+import { ISelectChangedEvent, ISelectGroup } from "./public-api";
 import { UtilService } from "../../services/util.service";
 import { NuiFormFieldControl } from "../form-field/public-api";
-import { ISelectChangedEvent, ISelectGroup } from "./public-api";
 
 /**
  * @deprecated in v11 - Use BaseSelectV2 instead - Removal: NUI-5796

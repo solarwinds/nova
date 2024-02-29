@@ -20,10 +20,10 @@
 
 import { by, ElementFinder, ElementArrayFinder } from "protractor";
 
-import { Atom } from "../../atom";
 import { WizardV2FooterAtom } from "./wizard-v2-footer.atom";
 import { WizardV2StepHeaderAtom } from "./wizard-v2-step-header.atom";
 import { WizardV2StepAtom } from "./wizard-v2-step.atom";
+import { Atom } from "../../atom";
 
 export class WizardV2Atom extends Atom {
     public static CSS_CLASS = "nui-wizard-horizontal-layout";

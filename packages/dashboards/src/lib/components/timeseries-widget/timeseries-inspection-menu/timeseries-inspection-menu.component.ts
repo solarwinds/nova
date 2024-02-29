@@ -105,7 +105,7 @@ export class TimeseriesInspectionMenuComponent
         @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
         private syncService: TimeseriesZoomPluginsSyncService
     ) {}
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.plugin.zoomCreated$.subscribe(() => this.explore(false));
 
         this.eventBus

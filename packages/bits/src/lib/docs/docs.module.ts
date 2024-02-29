@@ -22,6 +22,13 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
+import { CopyTextComponent } from "./copy-text/copy-text.component";
+import { ExampleCodeComponent } from "./example-code/example-code.component";
+import { CodeSandboxService } from "./example-wrapper/code-sandbox.service";
+import { ExampleWrapperComponent } from "./example-wrapper/example-wrapper.component";
+import { SourcesService } from "./services/sources.service";
+import { SrlcIndicatorComponent } from "./srlc-indicator/srlc-indicator.component";
+import { ThemeSwitcherComponent } from "./theme-switcher/theme-switcher.component";
 import { NuiCommonModule } from "../../common/common.module";
 import { NuiButtonModule } from "../button/button.module";
 import { NuiIconModule } from "../icon/icon.module";
@@ -32,11 +39,6 @@ import { NuiSwitchModule } from "../switch/switch.module";
 import { NuiTabsModule } from "../tabgroup/tabs.module";
 import { NuiToastModule } from "../toast/toast.module";
 import { NuiTooltipModule } from "../tooltip/tooltip.module";
-import { CopyTextComponent } from "./copy-text/copy-text.component";
-import { ExampleCodeComponent } from "./example-code/example-code.component";
-import { ExampleWrapperComponent } from "./example-wrapper/example-wrapper.component";
-import { SrlcIndicatorComponent } from "./srlc-indicator/srlc-indicator.component";
-import { ThemeSwitcherComponent } from "./theme-switcher/theme-switcher.component";
 
 /**
  * @ignore
@@ -72,5 +74,6 @@ import { ThemeSwitcherComponent } from "./theme-switcher/theme-switcher.componen
         ThemeSwitcherComponent,
         ExampleCodeComponent,
     ],
+    providers: [SourcesService, CodeSandboxService],
 })
 export class NuiDocsModule {}

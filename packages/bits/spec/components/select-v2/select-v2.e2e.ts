@@ -20,12 +20,12 @@
 
 import { browser, by, element, ElementFinder, Key } from "protractor";
 
+import { SelectV2Atom } from "./select-v2.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { DialogAtom } from "../dialog/dialog.atom";
 import { OverlayAtom } from "../overlay/overlay.atom";
 import { SwitchAtom } from "../switch/switch.atom";
-import { SelectV2Atom } from "./select-v2.atom";
 
 describe("USERCONTROL Select V2 >", () => {
     let selectBasic: SelectV2Atom;

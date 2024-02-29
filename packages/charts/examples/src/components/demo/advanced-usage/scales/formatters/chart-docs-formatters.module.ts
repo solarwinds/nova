@@ -22,8 +22,10 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
 import { NuiDocsModule, NuiMessageModule, SrlcStage } from "@nova-ui/bits";
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
+import { getDemoFiles } from "../../../../../demo-files-factory";
 import { ChartDocsFormattersComponent } from "./chart-docs-formatters.component";
 import { TickFormatterExampleComponent } from "./tick-formatter/tick-formatter.example.component";
 
@@ -52,6 +54,11 @@ const exampleRoutes: Routes = [
         NuiMessageModule,
         RouterModule.forChild(exampleRoutes),
     ],
-    providers: [],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("formatters"),
+        },
+    ],
 })
 export class ChartDocsFormattersModule {}

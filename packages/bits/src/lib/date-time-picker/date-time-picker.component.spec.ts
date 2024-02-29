@@ -22,6 +22,7 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import moment from "moment/moment";
 
+import { DateTimePickerComponent } from "./date-time-picker.component";
 import {
     ButtonComponent,
     FormFieldComponent,
@@ -58,7 +59,6 @@ import {
 import { PopoverComponent } from "../popover/popover.component";
 import { SwitchComponent } from "../switch/switch.component";
 import { ValidationMessageComponent } from "../validation-message/validation-message.component";
-import { DateTimePickerComponent } from "./date-time-picker.component";
 
 describe("components >", () => {
     describe("date-time-picker >", () => {

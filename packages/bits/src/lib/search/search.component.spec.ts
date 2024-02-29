@@ -22,10 +22,11 @@ import { DebugElement } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
+
+import { SearchComponent } from "./search.component";
 import { NuiCommonModule } from "../../common/common.module";
 import { NuiButtonModule } from "../button/button.module";
 import { NuiSpinnerModule } from "../spinner/spinner.module";
-import { SearchComponent } from "./search.component";
 
 describe("components >", () => {
     describe("search >", () => {

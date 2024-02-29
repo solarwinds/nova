@@ -27,9 +27,9 @@ import {
 } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
+import { TabHeadingGroupComponent } from "./tab-heading-group.component";
 import { IconComponent } from "../../icon/icon.component";
 import { TabHeadingComponent } from "../tab-heading/tab-heading.component";
-import { TabHeadingGroupComponent } from "./tab-heading-group.component";
 
 /**
  * @ignore

@@ -20,10 +20,10 @@
 
 import { NgModule } from "@angular/core";
 
+import { MessageComponent } from "./message.component";
 import { NuiCommonModule } from "../../common/common.module";
 import { NuiButtonModule } from "../../lib/button/button.module";
 import { NuiIconModule } from "../../lib/icon/icon.module";
-import { MessageComponent } from "./message.component";
 
 /**
  * @ignore

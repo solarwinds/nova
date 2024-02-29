@@ -20,10 +20,10 @@
 
 import { NgModule } from "@angular/core";
 
+import { FormFieldComponent } from "./form-field.component";
 import { NuiCommonModule } from "../../common/common.module";
 import { NuiIconModule } from "../icon/icon.module";
 import { NuiPopoverModule } from "../popover/popover.module";
-import { FormFieldComponent } from "./form-field.component";
 
 /**
  * @ignore

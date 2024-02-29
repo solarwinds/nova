@@ -28,13 +28,13 @@ import {
 import { FormBuilder, FormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 
+import { TextboxNumberComponent } from "./textbox-number.component";
 import { LoggerService } from "../../../services/log-service";
 import { ButtonComponent } from "../../button/button.component";
 import { IconComponent } from "../../icon/icon.component";
 import { IconService } from "../../icon/icon.service";
 import { SpinnerComponent } from "../../spinner/spinner.component";
 import { TooltipDirective } from "../../tooltip/tooltip.directive";
-import { TextboxNumberComponent } from "./textbox-number.component";
 
 describe("components >", () => {
     describe("textbox-number >", () => {
