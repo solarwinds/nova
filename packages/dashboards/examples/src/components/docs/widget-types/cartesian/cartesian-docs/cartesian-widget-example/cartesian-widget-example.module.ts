@@ -6,7 +6,6 @@ import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { CartesianWidgetExampleComponent } from "./cartesian-widget-example.component";
 
-
 @NgModule({
     declarations: [CartesianWidgetExampleComponent],
     exports: [CartesianWidgetExampleComponent],

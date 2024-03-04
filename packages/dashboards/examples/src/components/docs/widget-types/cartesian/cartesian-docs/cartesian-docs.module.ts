@@ -1,7 +1,11 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
-import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
+import {
+    DEMO_PATH_TOKEN,
+    NuiDocsModule,
+    NuiMessageModule,
+} from "@nova-ui/bits";
 
 import { getDemoFiles } from "../../../../../demo-files-factory";
 import { CartesianDocsComponent } from "./cartesian-docs.component";
@@ -21,10 +25,15 @@ const routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes), CartesianWidgetExampleModule],
+    imports: [
+        RouterModule.forChild(routes),
+        CartesianWidgetExampleModule,
+        NuiMessageModule,
+        NuiDocsModule,
+    ],
     declarations: [CartesianDocsComponent],
     providers: [
-         {
+        {
             provide: DEMO_PATH_TOKEN,
             useValue: getDemoFiles("cartesian"),
         },

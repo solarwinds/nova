@@ -5,4 +5,10 @@ import { Component } from "@angular/core";
     templateUrl: "./cartesian-docs.component.html",
     styleUrls: ["./cartesian-docs.component.css"],
 })
-export class CartesianDocsComponent {}
+export class CartesianDocsComponent {
+    public cartesianWidgetFileText =
+        require("!!raw-loader!../../../../../../../src/lib/widget-types/cartesian/cartesian-widget.ts")
+            .default;
+    public cartesianConfiguratorFileText =
+        require("!!raw-loader!../../../../../../../src/lib/widget-types/cartesian/cartesian-configurator.ts").default
+}
