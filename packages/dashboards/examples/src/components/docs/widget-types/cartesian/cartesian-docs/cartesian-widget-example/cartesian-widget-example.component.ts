@@ -380,3 +380,82 @@ export function getMockBeerReviewCountsByCity(): CartesianWidgetData[] {
         },
     ];
 }
+//
+// lineChartData = [
+//     { month: 'January', revenue: 10000 },
+//     { month: 'February', revenue: 12000 },
+//     { month: 'March', revenue: 15000 },
+//     { month: 'April', revenue: 18000 },
+//     { month: 'May', revenue: 20000 },
+//     { month: 'June', revenue: 22000 },
+//     { month: 'July', revenue: 24000 },
+//     { month: 'August', revenue: 23000 },
+//     { month: 'September', revenue: 21000 },
+//     { month: 'October', revenue: 19000 },
+//     { month: 'November', revenue: 16000 },
+//     { month: 'December', revenue: 14000 }
+// ];
+//
+// lineChartData = [
+//     { quarter: 'Q1 2020', revenue: 37000 },
+//     { quarter: 'Q2 2020', revenue: 60000 },
+//     { quarter: 'Q3 2020', revenue: 69000 },
+//     { quarter: 'Q4 2020', revenue: 53000 },
+//     { quarter: 'Q1 2021', revenue: 42000 },
+//     { quarter: 'Q2 2021', revenue: 62000 },
+//     { quarter: 'Q3 2021', revenue: 71000 },
+//     { quarter: 'Q4 2021', revenue: 55000 },
+//     { quarter: 'Q1 2022', revenue: 45000 },
+//     { quarter: 'Q2 2022', revenue: 65000 },
+//     { quarter: 'Q3 2022', revenue: 74000 },
+//     { quarter: 'Q4 2022', revenue: 58000 }
+// ];
+//
+//
+// lineChartData = [
+//     { quarter: 'Q1 2020', visitors: 25000 },
+//     { quarter: 'Q2 2020', visitors: 32000 },
+//     { quarter: 'Q3 2020', visitors: 42000 },
+//     { quarter: 'Q4 2020', visitors: 38000 },
+//     { quarter: 'Q1 2021', visitors: 28000 },
+//     { quarter: 'Q2 2021', visitors: 35000 },
+//     { quarter: 'Q3 2021', visitors: 45000 },
+//     { quarter: 'Q4 2021', visitors: 41000 },
+//     { quarter: 'Q1 2022', visitors: 30000 },
+//     { quarter: 'Q2 2022', visitors: 37000 },
+//     { quarter: 'Q3 2022', visitors: 48000 },
+//     { quarter: 'Q4 2022', visitors: 44000 }
+// ];
+//
+// lineChartData = [
+//     { category: 'Electronics', revenue: 150000 },
+//     { category: 'Clothing', revenue: 120000 },
+//     { category: 'Home Appliances', revenue: 90000 },
+//     { category: 'Books', revenue: 80000 },
+//     { category: 'Toys', revenue: 110000 }
+// ];
+//
+// lineChartData = [
+//     { segment: 'Retail', revenue: 200000 },
+//     { segment: 'Wholesale', revenue: 180000 },
+//     { segment: 'Online', revenue: 250000 },
+//     { segment: 'Corporate', revenue: 150000 }
+// ];
+// lineChartData = [
+//     { region: 'North America', revenue: 350000 },
+//     { region: 'Europe', revenue: 300000 },
+//     { region: 'Asia-Pacific', revenue: 280000 },
+//     { region: 'Latin America', revenue: 200000 }
+// ];
+// lineChartData = [
+//     { productLine: 'Electronics', unitsSold: 15000 },
+//     { productLine: 'Clothing', unitsSold: 20000 },
+//     { productLine: 'Accessories', unitsSold: 18000 },
+//     { productLine: 'Home Goods', unitsSold: 12000 }
+// ];
+// lineChartData = [
+//     { department: 'Sales', revenue: 280000 },
+//     { department: 'Marketing', revenue: 220000 },
+//     { department: 'Finance', revenue: 180000 },
+//     { department: 'Operations', revenue: 240000 }
+// ];
