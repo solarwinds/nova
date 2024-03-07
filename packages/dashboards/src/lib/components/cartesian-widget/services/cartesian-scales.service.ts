@@ -69,8 +69,10 @@ export class CartesianScalesService {
 
         switch (scaleConfig.type) {
             case CartesianScaleType.Band: {
-                scale = new BandScale();
-
+                const bandScale = new BandScale();
+                bandScale.padding(0.25);
+                bandScale.innerScale = new BandScale();
+                scale = bandScale;
                 break;
             }
             case CartesianScaleType.Time: {

@@ -18,13 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    Input,
-    Optional
-} from "@angular/core";
+import { ChangeDetectorRef, Component, Inject, Optional } from "@angular/core";
 
 import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
 import {
@@ -33,13 +27,11 @@ import {
     barGrid,
     BarHighlightStrategy,
     BarRenderer,
-    barScales,
     BarTooltipsPlugin,
     Chart,
     ChartAssist,
     ChartPalette,
     IAccessors,
-    IBarChartConfig,
     IChartAssistSeries,
     InteractionLabelPlugin,
     IValueProvider,
@@ -52,102 +44,65 @@ import { CartesianScalesService } from "../../../services/cartesian-scales.servi
 import { XYChartComponent } from "../xy-chart.component";
 
 @Component({
-    selector: "nui-bar-chart",
-    template: `   <div class="nui-chart-layout">
-        <div class="chart">
-            <nui-chart class="w-100" [chart]="chartAssist.chart"></nui-chart>
-        </div>
-    </div>
-    `,
+    selector: "nui-stacked-bar-chart",
+    templateUrl: "../xy-chart.component.html",
     styleUrls: ["../xy-chart.component.less"],
 })
-export class BarChartComponent {
+export class BarChartComponent extends XYChartComponent {
     public static lateLoadKey = "CartesianBarChartComponent";
-    @Input()widgetData: any
-    public chartAssist: ChartAssist;
-    public scales: any;
-    public renderer: any;
-    public accessors: any;
-    public tooltipsPlugin = new BarTooltipsPlugin();
-    public config = { grouped: true, horizontal: false } as IBarChartConfig;
+    private tooltipsPlugin = new BarTooltipsPlugin();
+    private labelPlugin = new InteractionLabelPlugin();
 
-    ngOnInit() {
-        const chart = new Chart(barGrid(this.config));
-        this.chartAssist = new ChartAssist(chart);
+    constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
+        @Optional() @Inject(DATA_SOURCE) dataSource: IDataSource,
+        cartesianScalesService: CartesianScalesService,
+        changeDetector: ChangeDetectorRef
+    ) {
+        super(eventBus, dataSource, cartesianScalesService, changeDetector);
 
-        // We're manually adding Interaction Label plugin (without Interaction Line plugin) to have only label
-        chart.addPlugin(new InteractionLabelPlugin());
-        chart.addPlugin(this.tooltipsPlugin);
+        this.valueAccessorKey = "value";
+    }
 
-        // 1. Call the convenience function to create bar chart scales. Like this:
-        this.scales = barScales(this.config);
+    public mapSeriesSet(
+        data: any[],
+        scales: IXYScales
+    ): IChartAssistSeries<IAccessors>[] {
+        if (
+            scales.x instanceof TimeIntervalScale ||
+            scales.x instanceof BandScale
+        ) {
+            // @ts-ignore
+            this.accessors.data.thickness = undefined; // allow the renderer to calculate thickness
+        } else {
+            // @ts-ignore
+            this.accessors.data.thickness = () => BarRenderer.THICK; // arbitrary constant value
+        }
 
+        return super.mapSeriesSet(data, scales);
+    }
+
+    protected createAccessors(
+        colorProvider: IValueProvider<string>
+    ): IAccessors {
+        const accessors = barAccessors({ horizontal: false, grouped: true }, colorProvider);
+        accessors.data.category = (d) => d.x;
+        accessors.data.value = (d) => d.y;
+
+        return accessors;
+    }
+
+    protected createChartAssist(palette: ChartPalette): ChartAssist {
+        // disable pointer events on bars to ensure the zoom drag target is the mouse interactive area rather than the bars
         this.renderer = new BarRenderer({
             highlightStrategy: new BarHighlightStrategy("x"),
+            pointerEvents: false,
         });
 
-        // 2. Make your category accessor to return the value like [ category, subCategory ]
-        this.accessors = barAccessors(this.config);
-        this.accessors.data.category = (
-            data: any,
-            i: any,
-            series: any,
-            dataSeries: any
-        ) => [data.name, dataSeries.name];
-
-        this.chartAssist.update(
-            this.widgetData.series.map((e: any)=>{
-                console.log(e)
-                return { id: e.id,
-                    name: e.id,
-                    data: e.data
-                };
-            }).map((s: any) => {
-console.log(s)
-                return {
-                    ...s,
-                    accessors: this.accessors,
-                    renderer: this.renderer,
-                    scales: this.scales,
-                };
-            })
-        );
+        const chart = new Chart(barGrid({ horizontal: false, grouped: true }));
+        // We're manually adding Interaction Label plugin (without Interaction Line plugin) to have only label
+        chart.addPlugin(this.labelPlugin);
+        chart.addPlugin(this.tooltipsPlugin);
+        return new ChartAssist(chart, undefined, palette);
     }
-    ngOnChanges(c: any){
-        console.log(c)
-        // this.chartAssist.update(
-        //     this.widgetData.map((s: any) => ({
-        //         ...s,
-        //         accessors: this.accessors,
-        //         renderer: this.renderer,
-        //         scales: this.scales,
-        //     }))
-        // );
-    }
-}
-
-/* Chart data */
-function getData() {
-    return [
-        {
-            id: "Brno",
-            name: "Brno",
-            data: [
-                { name: "Q1 2018", value: 167 },
-                { name: "Q2 2018", value: 122 },
-                { name: "Q3 2018", value: 141 },
-                { name: "Q4 2018", value: 66 },
-            ],
-        },
-        {
-            id: "Austin",
-            name: "Austin",
-            data: [
-                { name: "Q1 2018", value: 167 },
-                { name: "Q2 2018", value: 198 },
-                { name: "Q3 2018", value: 208 },
-                { name: "Q4 2018", value: 233 },
-            ],
-        },
-    ];
 }

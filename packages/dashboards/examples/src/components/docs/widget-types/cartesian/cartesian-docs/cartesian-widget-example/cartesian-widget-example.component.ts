@@ -2,6 +2,7 @@ import {
     ChangeDetectorRef,
     Component,
     Injectable,
+    Input,
     OnDestroy,
     OnInit,
 } from "@angular/core";
@@ -17,11 +18,13 @@ import {
 } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
+    DataSourceConfigurationV2Component,
     DEFAULT_PIZZAGNA_ROOT,
+    IConfigurable,
     IDashboard,
+    IProperties,
     IProviderConfiguration,
     IWidget,
-    IWidgets,
     LegendPlacement,
     PizzagnaLayer,
     ProviderRegistryService,
@@ -36,54 +39,8 @@ import {
     CartesianWidgetConfig,
     CartesianWidgetData,
 } from "../../../../../../../../src/lib/components/cartesian-widget/types";
-
-/**
- * A simple proportional data source to retrieve beer review counts by city
- */
-@Injectable()
-export class BeerReviewCountsByCityMockDataSource
-    extends DataSourceService<any>
-    implements IDataSource<any>, OnDestroy
-{
-    // This is the ID we'll use to identify the provider
-    public static providerId = "BeerReviewCountsByCityMockDataSource";
-    public busy = new BehaviorSubject(false);
-    private dataType: IDataField[] = [
-        {
-            id: "likes",
-            label: "Likes",
-            dataType: "number",
-            sortable: false,
-        },
-        {
-            id: "dislikes",
-            label: "Dislikes",
-            dataType: "number",
-            sortable: false,
-        },
-    ];
-    dataFieldsConfig: IDataFieldsConfig = {
-        dataFields$: new BehaviorSubject(this.dataType),
-    };
-
-    public async getFilteredData(): Promise<IFilteringOutputs> {
-        this.busy.next(true);
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                this.outputsSubject.next({
-                    result: {
-                        series: getMockBeerReviewCountsByCity(),
-                    },
-                });
-                this.busy.next(false);
-            }, 300);
-        });
-    }
-
-    public ngOnDestroy(): void {
-        this.outputsSubject.complete();
-    }
-}
+import keyBy from "lodash/keyBy";
+import cloneDeep from "lodash/cloneDeep";
 
 @Component({
     selector: "nui-cartesian-widget-example",
@@ -131,7 +88,12 @@ export class CartesianWidgetExampleComponent implements OnInit {
             // We are setting the data sources available for selection in the editor
             [BeerReviewCountsByCityMockDataSource.providerId]
         );
-
+        this.widgetTypesService.setNode(
+            widgetTemplate,
+            "configurator",
+            WellKnownPathKey.DataSourceConfigComponentType,
+            DataSourceConfigurationV2Component.lateLoadKey
+        );
         // Registering the data source for injection into the Proportional widget.
         this.providerRegistry.setProviders({
             [BeerReviewCountsByCityMockDataSource.providerId]: {
@@ -156,32 +118,25 @@ export class CartesianWidgetExampleComponent implements OnInit {
     public initializeDashboard(): void {
         // We're using a static configuration object for this example, but this is where
         // the widget's configuration could potentially be populated from a database
-        const widgetIndex: IWidgets = {
-            // Complete the proportional widget with information coming from its type definition
-            [widgetConfig.id]:
-                this.widgetTypesService.mergeWithWidgetType(widgetConfig),
-        };
-
-        // Setting the widget dimensions and position (this is for gridster)
-        const positions: Record<string, GridsterItem> = {
-            [widgetConfig.id]: {
-                cols: 5,
-                rows: 6,
-                y: 0,
-                x: 0,
-            },
-        };
+        const widgetsWithStructure = widgetConfigs.map((w) =>
+            this.widgetTypesService.mergeWithWidgetType(w)
+        );
+        const widgetsIndex = keyBy(widgetsWithStructure, (w: IWidget) => w.id);
 
         // Finally, assigning the variables we created above to the dashboard
         this.dashboard = {
-            positions,
-            widgets: widgetIndex,
+            positions: cloneDeep(positions),
+            widgets: widgetsIndex,
         };
     }
 }
 
-const widgetConfig: IWidget = {
-    id: "cartesianWidgetId",
+const createCartesianWidget = (
+    id: string,
+    dataSample: DataSample,
+    configuration: CartesianWidgetConfig
+): IWidget => ({
+    id,
     type: "cartesian",
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
@@ -189,243 +144,221 @@ const widgetConfig: IWidget = {
                 providers: {
                     [WellKnownProviders.DataSource]: {
                         // Setting the data source providerId for the chart
-                        providerId:
-                            BeerReviewCountsByCityMockDataSource.providerId,
+                        providerId: "BeerReviewCountsByCityMockDataSource",
                     } as IProviderConfiguration,
                 },
             },
             header: {
                 properties: {
-                    title: "Data x, y",
-                    subtitle: "Widget data",
+                    title: "CartesianChart",
+                    subtitle: "",
                 },
             },
             chart: {
                 providers: {
                     [WellKnownProviders.Adapter]: {
                         properties: {
+                            [WellKnownProviders.DataSource]: {
+                                properties: {
+                                    dataSample: dataSample,
+                                },
+                            },
                             // Setting the series and corresponding labels to initially display on the chart
                             series: [
                                 {
-                                    id: "critical",
-                                    label: "Critical",
-                                    selectedSeriesId: "critical",
-                                },
-                                {
-                                    id: "warning",
-                                    label: "Warning",
-                                    selectedSeriesId: "warning",
+                                    id: "serie-1",
+                                    label: "Data sample",
+                                    selectedSeriesId: "serie-1",
                                 },
                             ] as any[],
                         },
                     } as Partial<IProviderConfiguration>,
                 },
                 properties: {
-                    configuration: {
-                        legendPlacement: LegendPlacement.None,
-                        enableZoom: false,
-                        leftAxisLabel: "Count",
-                        preset: CartesianChartPreset.Bar,
-                        scales: {
-                            x: { type: CartesianScaleType.Band },
-                            y: { type: CartesianScaleType.Linear },
-                        },
-                        allowLegendMenu: true,
-                        chartColors: {
-                            critical: "var(--nui-color-chart-one)",
-                            warning: "var(--nui-color-chart-five)",
-                        } as any,
-                    } as CartesianWidgetConfig,
+                    configuration,
                 },
             },
         },
     },
+});
+const enum DataSample {
+    productByLine = "productByLine",
+    revenuePerYear = "revenuePerYear",
+}
+
+const widgetConfigs: IWidget[] = [
+    createCartesianWidget("cartesianWidgetId_1", DataSample.productByLine, {
+        legendPlacement: LegendPlacement.None,
+        enableZoom: false,
+        preset: CartesianChartPreset.Bar,
+        leftAxisLabel: "Products sold",
+        scales: {
+            x: { type: CartesianScaleType.Band },
+            y: { type: CartesianScaleType.Linear },
+        },
+        chartColors: {
+            ["serie-1"]: "var(--nui-color-chart-one)",
+        } as any,
+    } as CartesianWidgetConfig),
+    createCartesianWidget("cartesianWidgetId_2", DataSample.revenuePerYear, {
+        legendPlacement: LegendPlacement.None,
+        enableZoom: false,
+        leftAxisLabel: "Revenue $",
+        preset: CartesianChartPreset.Line,
+        scales: {
+            x: { type: CartesianScaleType.Linear },
+            y: { type: CartesianScaleType.Linear },
+        },
+        chartColors: {
+            ["serie-1"]: "var(--nui-color-chart-one)",
+        } as any,
+    } as CartesianWidgetConfig),
+
+];
+const positions: Record<string, GridsterItem> = {
+    [widgetConfigs[0].id]: {
+        cols: 6,
+        rows: 6,
+        y: 0,
+        x: 0,
+    },
+    [widgetConfigs[1].id]: {
+        cols: 6,
+        rows: 6,
+        y: 0,
+        x: 6,
+    },
 };
 
-export function getMockBeerReviewCountsByCity(): CartesianWidgetData[] {
-    return [
-        {
-            id: "critical",
-            name: "Beet",
-            description: "",
-            data: [
-                {
-                    id: "Windows 7",
-                    x: "Windows 7",
-                    y: 2,
-                    icon: "status_down",
-                    link: "https://en.wikipedia.org/wiki/Windows 7",
-                    name: "Windows 7",
-                    value: 2,
-                    color: "var(--nui-color-chart-one)",
-                },
-                {
-                    id: "linux",
-                    x: "Linux",
-                    y: 2,
-                    icon: "status_critical",
-                    link: "https://en.wikipedia.org/wiki/Linux",
-                    name: "Linux",
-                    value: 2,
-                    color: "var(--nui-color-chart-two)",
-                },
-                {
-                    id: "vmWare",
-                    x: "VmWare",
-                    y: 1,
-                    icon: "status_warning",
-                    link: "https://en.wikipedia.org/wiki/VmWare",
-                    name: "VmWare",
-                    value: 2,
-                    color: "var(--nui-color-chart-three)",
-                },
-                {
-                    id: "lInus",
-                    x: "LInus",
-                    y: 3,
-                    icon: "status_unknown",
-                    link: "https://en.wikipedia.org/wiki/LInus",
-                    name: "LInus",
-                    value: 2,
-                    color: "var(--nui-color-chart-four)",
-                },
-                {
-                    id: "oracle",
-                    x: "Oracle",
-                    y: 5,
-                    icon: "status_up",
-                    link: "https://en.wikipedia.org/wiki/Oracle",
-                    name: "Oracle",
-                    value: 2,
-                    color: "var(--nui-color-chart-five)",
-                },
-                {
-                    id: "macOS",
-                    x: "MacOS",
-                    y: 4,
-                    icon: "status_unmanaged",
-                    link: "https://en.wikipedia.org/wiki/MacOS",
-                    name: "MacOS",
-                    value: 2,
-                    color: "var(--nui-color-chart-six)",
-                },
-            ],
-        },
-        {
-            id: "warning",
-            name: "Beet",
-            description: "",
-            data: [
-                {
-                    id: "Windows 7",
-                    x: "Windows 7",
-                    y: 1,
-                    icon: "status_down",
-                    link: "https://en.wikipedia.org/wiki/Windows 7",
-                    name: "Windows 7",
-                    value: 2,
-                    color: "var(--nui-color-chart-one)",
-                },
-                {
-                    id: "linux",
-                    x: "Linux",
-                    y: 2,
-                    icon: "status_critical",
-                    link: "https://en.wikipedia.org/wiki/Linux",
-                    name: "Linux",
-                    value: 2,
-                    color: "var(--nui-color-chart-two)",
-                },
-                {
-                    id: "vmWare",
-                    x: "VmWare",
-                    y: 2,
-                    icon: "status_warning",
-                    link: "https://en.wikipedia.org/wiki/VmWare",
-                    name: "VmWare",
-                    value: 2,
-                    color: "var(--nui-color-chart-three)",
-                },
-                {
-                    id: "lInus",
-                    x: "LInus",
-                    y: 5,
-                    icon: "status_unknown",
-                    link: "https://en.wikipedia.org/wiki/LInus",
-                    name: "LInus",
-                    value: 2,
-                    color: "var(--nui-color-chart-four)",
-                },
-                {
-                    id: "oracle",
-                    x: "Oracle",
-                    y: 5,
-                    icon: "status_up",
-                    link: "https://en.wikipedia.org/wiki/Oracle",
-                    name: "Oracle",
-                    value: 2,
-                    color: "var(--nui-color-chart-five)",
-                },
-                {
-                    id: "macOS",
-                    x: "MacOS",
-                    y: 2,
-                    icon: "status_unmanaged",
-                    link: "https://en.wikipedia.org/wiki/MacOS",
-                    name: "MacOS",
-                    value: 2,
-                    color: "var(--nui-color-chart-six)",
-                },
-            ],
-        },
-    ];
+/**
+ * A simple proportional data source to retrieve beer review counts by city
+ */
+@Injectable()
+export class BeerReviewCountsByCityMockDataSource
+    extends DataSourceService<any>
+    implements IDataSource<any>, IConfigurable, OnDestroy
+{
+    // This is the ID we'll use to identify the provider
+    public static providerId = "BeerReviewCountsByCityMockDataSource";
+    @Input() properties: IProperties;
+    public busy = new BehaviorSubject(false);
+    private dataType: IDataField[] = [];
+    dataFieldsConfig: IDataFieldsConfig = {
+        dataFields$: new BehaviorSubject(this.dataType),
+    };
+    constructor() {
+        super();
+    }
+
+    public updateConfiguration(properties: IProperties): void {
+        this.properties = properties;
+    }
+
+    public async getFilteredData(filters: any): Promise<IFilteringOutputs> {
+        this.busy.next(true);
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                const series = getCartesianDataBySample(
+                    this.properties?.dataSample
+                );
+                this.outputsSubject.next({
+                    result: {
+                        series,
+                    },
+                });
+                this.busy.next(false);
+            }, 300);
+        });
+    }
+
+    public ngOnDestroy(): void {
+        this.outputsSubject.complete();
+    }
 }
+export function getCartesianDataBySample(
+    dataSample: DataSample
+): CartesianWidgetData[] {
+    switch (dataSample) {
+        case DataSample.productByLine:
+            return [
+                {
+                    id: "serie-1",
+                    name: "data sample 1",
+                    description: "",
+                    data: productByLine.map((e) => ({
+                        ...e,
+                        id: e.productLine,
+                        name: e.productLine,
+                        value: e.unitsSold,
+                        x: e.productLine,
+                        y: e.unitsSold,
+                    })),
+                },
+            ];
+        case DataSample.revenuePerYear:
+            return [
+                {
+                    id: "serie-1",
+                    name: "data sample 1",
+                    description: "",
+                    data: revenuePerYear.map((e) => ({
+                        ...e,
+                        x: e.year,
+                        y: e.revenue,
+                    })),
+                },
+            ];
+
+            return [
+                {
+                    id: "serie-1",
+                    name: "data sample 1",
+                    description: "",
+                    data: [],
+                },
+            ];
+    }
+}
+const productByLine = [
+    { productLine: "Electronics", unitsSold: 15000 },
+    { productLine: "Clothing", unitsSold: 20000 },
+    { productLine: "Accessories", unitsSold: 18000 },
+    { productLine: "Home Goods", unitsSold: 12000 },
+];
+
+const revenuePerYear = [
+    { year: 20, revenue: 37000 },
+    { year: 21, revenue: 60000 },
+    { year: 22, revenue: 69000 },
+    { year: 23, revenue: 53000 },
+    { year: 24, revenue: 58000 },
+];
 //
-// lineChartData = [
-//     { month: 'January', revenue: 10000 },
-//     { month: 'February', revenue: 12000 },
-//     { month: 'March', revenue: 15000 },
-//     { month: 'April', revenue: 18000 },
-//     { month: 'May', revenue: 20000 },
-//     { month: 'June', revenue: 22000 },
-//     { month: 'July', revenue: 24000 },
-//     { month: 'August', revenue: 23000 },
-//     { month: 'September', revenue: 21000 },
-//     { month: 'October', revenue: 19000 },
-//     { month: 'November', revenue: 16000 },
-//     { month: 'December', revenue: 14000 }
+// const now = moment().startOf("day");
+//
+// const visitorsPerYear = [
+//     { date: now.clone().subtract(20, "day").toDate(), visitors: 30 },
+//     { date: now.clone().subtract(19, "day").toDate(), visitors: 35 },
+//     { date: now.clone().subtract(18, "day").toDate(), visitors: 33 },
+//     { date: now.clone().subtract(17, "day").toDate(), visitors: 40 },
+//     { date: now.clone().subtract(16, "day").toDate(), visitors: 35 },
+//     { date: now.clone().subtract(15, "day").toDate(), visitors: 30 },
+//     { date: now.clone().subtract(14, "day").toDate(), visitors: 35 },
+//     { date: now.clone().subtract(13, "day").toDate(), visitors: 15 },
+//     { date: now.clone().subtract(12, "day").toDate(), visitors: 30 },
+//     { date: now.clone().subtract(11, "day").toDate(), visitors: 45 },
+//     { date: now.clone().subtract(10, "day").toDate(), visitors: 60 },
+//     { date: now.clone().subtract(9, "day").toDate(), visitors: 54 },
+//     { date: now.clone().subtract(8, "day").toDate(), visitors: 42 },
+//     { date: now.clone().subtract(7, "day").toDate(), visitors: 44 },
+//     { date: now.clone().subtract(6, "day").toDate(), visitors: 54 },
+//     { date: now.clone().subtract(5, "day").toDate(), visitors: 43 },
+//     { date: now.clone().subtract(4, "day").toDate(), visitors: 76 },
+//     { date: now.clone().subtract(3, "day").toDate(), visitors: 54 },
+//     { date: now.clone().subtract(2, "day").toDate(), visitors: 42 },
+//     { date: now.clone().subtract(1, "day").toDate(), visitors: 34 },
 // ];
-//
-// lineChartData = [
-//     { quarter: 'Q1 2020', revenue: 37000 },
-//     { quarter: 'Q2 2020', revenue: 60000 },
-//     { quarter: 'Q3 2020', revenue: 69000 },
-//     { quarter: 'Q4 2020', revenue: 53000 },
-//     { quarter: 'Q1 2021', revenue: 42000 },
-//     { quarter: 'Q2 2021', revenue: 62000 },
-//     { quarter: 'Q3 2021', revenue: 71000 },
-//     { quarter: 'Q4 2021', revenue: 55000 },
-//     { quarter: 'Q1 2022', revenue: 45000 },
-//     { quarter: 'Q2 2022', revenue: 65000 },
-//     { quarter: 'Q3 2022', revenue: 74000 },
-//     { quarter: 'Q4 2022', revenue: 58000 }
-// ];
-//
-//
-// lineChartData = [
-//     { quarter: 'Q1 2020', visitors: 25000 },
-//     { quarter: 'Q2 2020', visitors: 32000 },
-//     { quarter: 'Q3 2020', visitors: 42000 },
-//     { quarter: 'Q4 2020', visitors: 38000 },
-//     { quarter: 'Q1 2021', visitors: 28000 },
-//     { quarter: 'Q2 2021', visitors: 35000 },
-//     { quarter: 'Q3 2021', visitors: 45000 },
-//     { quarter: 'Q4 2021', visitors: 41000 },
-//     { quarter: 'Q1 2022', visitors: 30000 },
-//     { quarter: 'Q2 2022', visitors: 37000 },
-//     { quarter: 'Q3 2022', visitors: 48000 },
-//     { quarter: 'Q4 2022', visitors: 44000 }
-// ];
+
 //
 // lineChartData = [
 //     { category: 'Electronics', revenue: 150000 },
