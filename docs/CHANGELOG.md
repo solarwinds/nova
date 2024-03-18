@@ -1,5 +1,11 @@
 # Changelog
 
+## [12.0.43] 📅 20023-03-11
+
+### Added
+
+-   `@nova-ui/bits` | _nuiTooltipEllipsis_ added input for tooltip. Used on overflowing text.
+
 ## [12.0.8] 📅 2022-07-27
 
 ### Bugfix
