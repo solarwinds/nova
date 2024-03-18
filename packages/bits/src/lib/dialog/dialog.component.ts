@@ -153,9 +153,10 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
         this.scrollDispatcher.register(this.scrollableElement);
         this.router.events.pipe(
             filter((e): e is NavigationEnd => e instanceof NavigationEnd),
-            map(e => {
+            map((e) => {
                 this.dismiss("ROUTE_CHANGED");
-            }));
+            })
+        );
     }
 
     public ngAfterViewInit(): void {
