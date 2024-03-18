@@ -134,6 +134,9 @@ import { KpiWidgetColorService } from "./services/kpi-widget-color.service";
 import { ConfiguratorHeadingService } from "./services/public-api";
 import { WidgetClonerService } from "./services/widget-cloner.service";
 import { WidgetEditorService } from "./services/widget-editor.service";
+import {
+    CartesianMetadataConfigurationComponent
+} from "./components/widgets/configurator-items/cartesian-metadata-configuration/cartesian-metadata-configuration.component";
 /* eslint-enable max-len */
 
 const entryComponents: IComponentWithLateLoadKey[] = [
@@ -151,6 +154,7 @@ const entryComponents: IComponentWithLateLoadKey[] = [
     ProportionalChartOptionsEditorV2Component,
     TableFiltersEditorComponent,
     TimeseriesMetadataConfigurationComponent,
+    CartesianMetadataConfigurationComponent,
     TimeseriesSeriesCollectionConfigurationComponent,
     TableColumnsConfigurationComponent,
     TableColumnsConfigurationV2Component,

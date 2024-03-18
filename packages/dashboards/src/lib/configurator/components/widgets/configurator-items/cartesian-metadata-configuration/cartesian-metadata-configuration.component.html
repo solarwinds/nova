@@ -1,0 +1,84 @@
+<nui-widget-editor-accordion
+    [formGroup]="form"
+    [state]="form | nuiWidgetEditorAccordionFormState | async"
+>
+    <div accordionHeader class="d-flex align-items-center px-4 py-2">
+        <nui-icon
+            [icon]="form | nuiFormHeaderIconPipe : 'edit' | async"
+            [iconColor]="form | nuiFormHeaderIconPipe : 'gray' : '' | async"
+        ></nui-icon>
+        <div class="d-flex flex-column ml-4">
+            <span class="nui-text-label" i18n>Cartesian metadata</span>
+            <div class="nui-text-secondary" [title]="getSecondaryText()">
+                {{ getSecondaryText() }}
+            </div>
+        </div>
+    </div>
+    <div class="cartesian-metadata-configuration__accordion-content">
+        <div class="mb-4">
+            <nui-form-field
+                caption="Chart legend"
+                i18n-caption
+                [control]="form.controls['legendPlacement']"
+            >
+                <nui-select-v2
+                    placeholder="Select Legend Orientation"
+                    i18n-placeholder
+                    [popupViewportMargin]="configuratorHeading.height$ | async"
+                    formControlName="legendPlacement"
+                >
+                    <nui-select-v2-option
+                        *ngFor="let legendPlacement of legendPlacements"
+                        [value]="legendPlacement.id"
+                    >
+                        {{ legendPlacement.label }}
+                    </nui-select-v2-option>
+                </nui-select-v2>
+                <nui-validation-message for="required" i18n>
+                    This field is required
+                </nui-validation-message>
+            </nui-form-field>
+        </div>
+
+        <div class="mb-4">
+            <nui-form-field
+                caption="Chart type"
+                i18n-caption
+                [control]="form.controls['preset']"
+            >
+                <nui-select-v2
+                    placeholder="Chart type"
+                    i18n-placeholder
+                    [popupViewportMargin]="configuratorHeading.height$ | async"
+                    formControlName="preset"
+                >
+                    <nui-select-v2-option
+                        *ngFor="let option of availableChartTypes"
+                        [value]="option.value"
+                    >{{ option.label }}</nui-select-v2-option
+                    >
+                </nui-select-v2>
+
+                <nui-validation-message for="required" i18n>
+                    This field is required
+                </nui-validation-message>
+            </nui-form-field>
+
+        </div>
+        <nui-form-field
+            caption="Chart y-axis label"
+            i18n-caption
+            [control]="form.controls['leftAxisLabel']"
+        >
+            <nui-textbox
+                formControlName="leftAxisLabel"
+                placeholder="Set chart y-axis label"
+                i18n-placeholder
+            ></nui-textbox>
+
+            <nui-validation-message for="required" i18n>
+                This field is required
+            </nui-validation-message>
+        </nui-form-field>
+    </div>
+</nui-widget-editor-accordion>

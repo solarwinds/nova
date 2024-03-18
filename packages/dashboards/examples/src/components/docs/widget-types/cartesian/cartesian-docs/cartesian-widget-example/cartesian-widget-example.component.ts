@@ -24,6 +24,7 @@ import {
     IDashboard,
     IProperties,
     IProviderConfiguration,
+    IProviderConfigurationForDisplay,
     IWidget,
     LegendPlacement,
     PizzagnaLayer,
@@ -57,7 +58,7 @@ export class CartesianWidgetExampleComponent implements OnInit {
     public gridsterConfig: GridsterConfig = {};
 
     // Boolean passed as an input to the dashboard. When true, widgets can be moved, resized, removed, or edited
-    public editMode: boolean = false;
+    public editMode: boolean = true;
 
     constructor(
         // WidgetTypesService provides the widget's necessary structure information
@@ -70,7 +71,7 @@ export class CartesianWidgetExampleComponent implements OnInit {
     public ngOnInit(): void {
         // Grabbing the widget's default template which will be needed as a parameter for setNode
         const widgetTemplate = this.widgetTypesService.getWidgetType(
-            "proportional",
+            "cartesian",
             1
         );
 
@@ -86,8 +87,18 @@ export class CartesianWidgetExampleComponent implements OnInit {
             // the data source providers available for selection in the editor.
             WellKnownPathKey.DataSourceProviders,
             // We are setting the data sources available for selection in the editor
-            [BeerReviewCountsByCityMockDataSource.providerId]
+            [
+                {
+                    providerId: ProductByLineDataSource.providerId,
+                    label: ProductByLineDataSource.providerId,
+                } as IProviderConfigurationForDisplay,
+                {
+                    providerId: RevenuePerYearDataSource.providerId,
+                    label: RevenuePerYearDataSource.providerId,
+                } as IProviderConfigurationForDisplay,
+            ]
         );
+
         this.widgetTypesService.setNode(
             widgetTemplate,
             "configurator",
@@ -96,9 +107,14 @@ export class CartesianWidgetExampleComponent implements OnInit {
         );
         // Registering the data source for injection into the Proportional widget.
         this.providerRegistry.setProviders({
-            [BeerReviewCountsByCityMockDataSource.providerId]: {
+            [RevenuePerYearDataSource.providerId]: {
                 provide: DATA_SOURCE,
-                useClass: BeerReviewCountsByCityMockDataSource,
+                useClass: RevenuePerYearDataSource,
+                deps: [],
+            },
+            [ProductByLineDataSource.providerId]: {
+                provide: DATA_SOURCE,
+                useClass: ProductByLineDataSource,
                 deps: [],
             },
         });
@@ -133,7 +149,7 @@ export class CartesianWidgetExampleComponent implements OnInit {
 
 const createCartesianWidget = (
     id: string,
-    dataSample: DataSample,
+    providerId: string,
     configuration: CartesianWidgetConfig
 ): IWidget => ({
     id,
@@ -144,7 +160,7 @@ const createCartesianWidget = (
                 providers: {
                     [WellKnownProviders.DataSource]: {
                         // Setting the data source providerId for the chart
-                        providerId: "BeerReviewCountsByCityMockDataSource",
+                        providerId: providerId,
                     } as IProviderConfiguration,
                 },
             },
@@ -158,11 +174,6 @@ const createCartesianWidget = (
                 providers: {
                     [WellKnownProviders.Adapter]: {
                         properties: {
-                            [WellKnownProviders.DataSource]: {
-                                properties: {
-                                    dataSample: dataSample,
-                                },
-                            },
                             // Setting the series and corresponding labels to initially display on the chart
                             series: [
                                 {
@@ -181,40 +192,122 @@ const createCartesianWidget = (
         },
     },
 });
+
 const enum DataSample {
     productByLine = "productByLine",
     revenuePerYear = "revenuePerYear",
 }
 
-const widgetConfigs: IWidget[] = [
-    createCartesianWidget("cartesianWidgetId_1", DataSample.productByLine, {
-        legendPlacement: LegendPlacement.None,
-        enableZoom: false,
-        preset: CartesianChartPreset.Bar,
-        leftAxisLabel: "Products sold",
-        scales: {
-            x: { type: CartesianScaleType.Band },
-            y: { type: CartesianScaleType.Linear },
-        },
-        chartColors: {
-            ["serie-1"]: "var(--nui-color-chart-one)",
-        } as any,
-    } as CartesianWidgetConfig),
-    createCartesianWidget("cartesianWidgetId_2", DataSample.revenuePerYear, {
-        legendPlacement: LegendPlacement.None,
-        enableZoom: false,
-        leftAxisLabel: "Revenue $",
-        preset: CartesianChartPreset.Line,
-        scales: {
-            x: { type: CartesianScaleType.Linear },
-            y: { type: CartesianScaleType.Linear },
-        },
-        chartColors: {
-            ["serie-1"]: "var(--nui-color-chart-one)",
-        } as any,
-    } as CartesianWidgetConfig),
+/**
+ * A simple proportional data source to retrieve beer review counts by city
+ */
+@Injectable()
+export abstract class BaseMockDataSource<T extends IFilteringOutputs>
+    extends DataSourceService<T>
+    implements IDataSource<T>, IConfigurable, OnDestroy
+{
+    // This is the ID we'll use to identify the provider
+    public static providerId = "BaseMockDataSource";
+    @Input() properties: IProperties;
+    public busy = new BehaviorSubject(false);
+    private dataType: IDataField[] = [];
+    dataFieldsConfig: IDataFieldsConfig = {
+        dataFields$: new BehaviorSubject(this.dataType),
+    };
 
+    constructor() {
+        super();
+    }
+
+    abstract getFilteredData(filters: T): Promise<IFilteringOutputs>;
+
+    public updateConfiguration(properties: IProperties): void {
+        this.properties = properties;
+    }
+
+    public async getMockData(dataSample: any): Promise<IFilteringOutputs> {
+        this.busy.next(true);
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                const series = getCartesianDataBySample(dataSample);
+                this.outputsSubject.next({
+                    result: {
+                        series,
+                    },
+                });
+                this.busy.next(false);
+            }, 300);
+        });
+    }
+
+    public ngOnDestroy(): void {
+        this.outputsSubject.complete();
+    }
+}
+
+@Injectable()
+export class ProductByLineDataSource
+    extends BaseMockDataSource<any>
+    implements IDataSource<any>, IConfigurable, OnDestroy
+{
+    // This is the ID we'll use to identify the provider
+    public static providerId = "ProductByLineDataSource";
+
+    public async getFilteredData(filters: any): Promise<IFilteringOutputs> {
+        return this.getMockData(DataSample.productByLine);
+    }
+}
+
+@Injectable()
+export class RevenuePerYearDataSource
+    extends BaseMockDataSource<any>
+    implements IDataSource<any>, IConfigurable, OnDestroy
+{
+    // This is the ID we'll use to identify the provider
+    public static providerId = "RevenuePerYearDataSource";
+
+    public async getFilteredData(filters: any): Promise<IFilteringOutputs> {
+        return this.getMockData(DataSample.revenuePerYear);
+    }
+}
+
+const widgetConfigs: IWidget[] = [
+    createCartesianWidget(
+        "cartesianWidgetId_1",
+        ProductByLineDataSource.providerId,
+        {
+            legendPlacement: LegendPlacement.None,
+            enableZoom: false,
+            preset: CartesianChartPreset.Bar,
+            leftAxisLabel: "Products sold",
+            scales: {
+                x: { type: CartesianScaleType.Band },
+                y: { type: CartesianScaleType.Linear },
+            },
+            chartColors: {
+                ["serie-1"]: "var(--nui-color-chart-one)",
+            } as any,
+        } as CartesianWidgetConfig
+    ),
+    createCartesianWidget(
+        "cartesianWidgetId_2",
+        RevenuePerYearDataSource.providerId,
+        {
+            legendPlacement: LegendPlacement.None,
+            enableZoom: false,
+            leftAxisLabel: "Revenue $",
+            preset: CartesianChartPreset.Line,
+            scales: {
+                x: { type: CartesianScaleType.Linear },
+                y: { type: CartesianScaleType.Linear },
+            },
+            chartColors: {
+                ["serie-1"]: "var(--nui-color-chart-one)",
+            } as any,
+        } as CartesianWidgetConfig
+    ),
 ];
+
 const positions: Record<string, GridsterItem> = {
     [widgetConfigs[0].id]: {
         cols: 6,
@@ -230,51 +323,6 @@ const positions: Record<string, GridsterItem> = {
     },
 };
 
-/**
- * A simple proportional data source to retrieve beer review counts by city
- */
-@Injectable()
-export class BeerReviewCountsByCityMockDataSource
-    extends DataSourceService<any>
-    implements IDataSource<any>, IConfigurable, OnDestroy
-{
-    // This is the ID we'll use to identify the provider
-    public static providerId = "BeerReviewCountsByCityMockDataSource";
-    @Input() properties: IProperties;
-    public busy = new BehaviorSubject(false);
-    private dataType: IDataField[] = [];
-    dataFieldsConfig: IDataFieldsConfig = {
-        dataFields$: new BehaviorSubject(this.dataType),
-    };
-    constructor() {
-        super();
-    }
-
-    public updateConfiguration(properties: IProperties): void {
-        this.properties = properties;
-    }
-
-    public async getFilteredData(filters: any): Promise<IFilteringOutputs> {
-        this.busy.next(true);
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                const series = getCartesianDataBySample(
-                    this.properties?.dataSample
-                );
-                this.outputsSubject.next({
-                    result: {
-                        series,
-                    },
-                });
-                this.busy.next(false);
-            }, 300);
-        });
-    }
-
-    public ngOnDestroy(): void {
-        this.outputsSubject.complete();
-    }
-}
 export function getCartesianDataBySample(
     dataSample: DataSample
 ): CartesianWidgetData[] {
@@ -308,17 +356,9 @@ export function getCartesianDataBySample(
                     })),
                 },
             ];
-
-            return [
-                {
-                    id: "serie-1",
-                    name: "data sample 1",
-                    description: "",
-                    data: [],
-                },
-            ];
     }
 }
+
 const productByLine = [
     { productLine: "Electronics", unitsSold: 15000 },
     { productLine: "Clothing", unitsSold: 20000 },

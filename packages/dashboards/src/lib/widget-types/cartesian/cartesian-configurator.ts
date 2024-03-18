@@ -26,12 +26,27 @@ import { DataSourceErrorComponent } from "../../configurator/components/widgets/
 import { TitleAndDescriptionConfigurationComponent } from "../../configurator/components/widgets/configurator-items/title-and-description-configuration/title-and-description-configuration.component";
 import {
     DEFAULT_PIZZAGNA_ROOT,
+    NOVA_CARTESIAN_METADATA_CONVERTER,
+    NOVA_GENERIC_ARRAY_CONVERTER,
     NOVA_GENERIC_CONVERTER,
-    NOVA_PROPORTIONAL_CONTENT_FORMATTERS_REGISTRY,
+    NOVA_TIMESERIES_SERIES_CONVERTER,
+    NOVA_TIMESERIES_TILE_INDICATOR_DATA_CONVERTER,
     NOVA_TITLE_AND_DESCRIPTION_CONVERTER,
 } from "../../services/types";
-import { PizzagnaLayer, WellKnownProviders } from "../../types";
+import {
+    IProviderConfiguration,
+    PizzagnaLayer,
+    WellKnownProviders,
+} from "../../types";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
+import { LegendPlacement } from "../../widget-types/common/widget/legend";
+import { CartesianMetadataConfigurationComponent } from "../../configurator/components/widgets/configurator-items/cartesian-metadata-configuration/cartesian-metadata-configuration.component";
+import { TimeseriesSeriesCollectionConfigurationComponent } from "../../configurator/components/widgets/timeseries/timeseries-series-collection-configuration/timeseries-series-collection-configuration.component";
+import { TimeseriesTileDescriptionConfigurationComponent } from "../../configurator/components/widgets/timeseries/timeseries-tile-description-configuration/timeseries-tile-description-configuration.component";
+import { TimeseriesTileIndicatorDataConfigurationComponent } from "../../configurator/components/widgets/timeseries/timeseries-tile-indicator-data-configuration/timeseries-tile-indicator-data-configuration.component";
+import { IConverterFormPartsProperties } from "../../configurator/services/converters/types";
+
+
 /* eslint-enable max-len */
 
 export const cartesianWidgetConfigurator = {
@@ -41,12 +56,7 @@ export const cartesianWidgetConfigurator = {
             componentType: FormStackComponent.lateLoadKey,
             properties: {
                 elementClass: "flex-grow-1 overflow-auto nui-scroll-shadows", // references to other components laid out in this form
-                nodes: ["presentation", "dataAndCalculations"],
-            },
-            providers: {
-                [WellKnownProviders.FormattersRegistry]: {
-                    providerId: NOVA_PROPORTIONAL_CONTENT_FORMATTERS_REGISTRY,
-                },
+                nodes: ["presentation", "dataAndCalculations", "series"],
             },
         }, // /presentation
         presentation: {
@@ -54,7 +64,7 @@ export const cartesianWidgetConfigurator = {
             componentType: WidgetConfiguratorSectionComponent.lateLoadKey,
             properties: {
                 headerText: "Presentation",
-                nodes: ["titleAndDescription"],
+                nodes: ["titleAndDescription", "timeseriesMetadata"],
             },
         }, // /presentation/titleAndDescription
         titleAndDescription: {
@@ -66,72 +76,34 @@ export const cartesianWidgetConfigurator = {
                     providerId: NOVA_TITLE_AND_DESCRIPTION_CONVERTER,
                 },
             },
-        }, // will be replaced with new chart options
-        // /presentation/chartOptionsEditor
-        // chartOptionsEditor: {
-        //     id: "chartOptionsEditor",
-        //     componentType: ProportionalChartOptionsEditorComponent.lateLoadKey,
-        //     properties: {
-        //         chartOptions: {
-        //             chartTypes: [
-        //                 "VerticalBarChart",
-        //                 "HorizontalBarChart",
-        //             ],
-        //             legendPlacementOptions: [
-        //                 {
-        //                     id: LegendPlacement.None,
-        //                     label: $localize`None`,
-        //                 },
-        //                 {
-        //                     id: LegendPlacement.Right,
-        //                     label: $localize`Right`,
-        //                 },
-        //                 {
-        //                     id: LegendPlacement.Bottom,
-        //                     label: $localize`Bottom`,
-        //                 },
-        //             ],
-        //             contentFormatters: [
-        //                 {
-        //                     componentType:
-        //                     DonutContentRawFormatterComponent.lateLoadKey,
-        //                     label: $localize`Raw`,
-        //                 },
-        //                 {
-        //                     componentType:
-        //                     DonutContentSumFormatterComponent.lateLoadKey,
-        //                     label: $localize`Sum`,
-        //                 },
-        //                 {
-        //                     componentType:
-        //                     DonutContentPercentageFormatterComponent.lateLoadKey,
-        //                     label: $localize`Percentage`,
-        //                     configurationComponent:
-        //                         "DonutContentPercentageConfigurationComponent",
-        //                 },
-        //             ] as IFormatterDefinition[],
-        //             legendFormatters: [
-        //                 {
-        //                     componentType:
-        //                     StatusWithIconFormatterComponent.lateLoadKey,
-        //                     label: $localize`Status With Icon`,
-        //                 },
-        //                 {
-        //                     componentType: LinkFormatterComponent.lateLoadKey,
-        //                     label: $localize`Link`,
-        //                 },
-        //             ] as IFormatterDefinition[],
-        //         },
-        //     },
-        //     providers: {
-        //         // converter transforms the chart options data between the widget and the form
-        //         [WellKnownProviders.Converter]: {
-        //             providerId:
-        //             NOVA_PROPORTIONAL_WIDGET_CHART_OPTIONS_CONVERTER,
-        //         },
-        //     },
-        // },
-        refresher: REFRESHER_CONFIGURATOR, // /dataAndCalculations
+        },
+        refresher: REFRESHER_CONFIGURATOR,
+        timeseriesMetadata: {
+            id: "timeseriesMetadata",
+            componentType: CartesianMetadataConfigurationComponent.lateLoadKey,
+            properties: {
+                legendPlacements: [
+                    {
+                        id: LegendPlacement.None,
+                        label: $localize`None`,
+                    },
+                    {
+                        id: LegendPlacement.Right,
+                        label: $localize`Right`,
+                    },
+                    {
+                        id: LegendPlacement.Bottom,
+                        label: $localize`Bottom`,
+                    },
+                ],
+            },
+            providers: {
+                // converter transforms the cartesian metadata configuration between the widget and the form
+                [WellKnownProviders.Converter]: {
+                    providerId: NOVA_CARTESIAN_METADATA_CONVERTER,
+                } as IProviderConfiguration,
+            },
+        },
         dataAndCalculations: {
             id: "dataAndCalculations",
             componentType: WidgetConfiguratorSectionComponent.lateLoadKey,
@@ -139,13 +111,13 @@ export const cartesianWidgetConfigurator = {
                 headerText: $localize`Data and Calculations`,
                 nodes: ["dataSource"],
             },
-        }, // /dataAndCalculations/dataSource
+        },
+        // /dataAndCalculations/dataSource
         dataSource: {
             id: "dataSource",
             componentType: DataSourceConfigurationComponent.lateLoadKey,
             properties: {
                 // for the DataSourceConfigurationComponent, this defines the list of data sources to pick from
-                dataSourceProviders: [] as string[],
                 errorComponent: DataSourceErrorComponent.lateLoadKey,
             },
             providers: {
@@ -155,19 +127,72 @@ export const cartesianWidgetConfigurator = {
                     properties: {
                         formParts: [
                             {
-                                // this component updates the 'providerId' of the 'dataSource'
-                                previewPath: "chart.providers.dataSource", // TODO: Remove 'properties' key in v10 - NUI-5831
+                                // this component updates 'providerId' of 'dataSource'
+                                previewPath: "/.providers.dataSource",
+                                // TODO: Remove 'properties' key in v10 - NUI-5831
                                 keys: ["providerId", "properties"],
                             },
                             {
-                                // this component updates the 'properties' of the 'dataSource' via an adapter
+                                // this component updates 'properties' of 'dataSource' via an adapter
                                 previewPath:
                                     "chart.providers.adapter.properties.dataSource",
                                 keys: ["properties"],
                             },
-                        ],
+                        ] as IConverterFormPartsProperties[],
                     },
-                },
+                } as IProviderConfiguration,
+            },
+        },
+        // /series
+        series: {
+            id: "series",
+            componentType:
+            TimeseriesSeriesCollectionConfigurationComponent.lateLoadKey,
+            providers: {
+                // converter transforms the data between the widget and the form
+                [WellKnownProviders.Converter]: {
+                    providerId: NOVA_TIMESERIES_SERIES_CONVERTER,
+                } as IProviderConfiguration,
+            },
+            properties: {
+                // these components serve as a template for every configured timeseries
+                template: [
+                    {
+                        // series description (label) configuration section
+                        id: "description",
+                        componentType:
+                        TimeseriesTileDescriptionConfigurationComponent.lateLoadKey,
+                        providers: {
+                            // converter transforms the data between the widget and the form
+                            [WellKnownProviders.Converter]: {
+                                providerId: NOVA_GENERIC_ARRAY_CONVERTER,
+                                properties: {
+                                    formParts: [
+                                        {
+                                            // this component updates 'label' of 'series' via an adapter
+                                            previewPath:
+                                                "chart.providers.adapter.properties.series",
+                                            keys: ["label"],
+                                        },
+                                    ] as IConverterFormPartsProperties[],
+                                },
+                            } as IProviderConfiguration,
+                        },
+                    },
+                    {
+                        // indicator data configuration section
+                        id: "indicatorData",
+                        componentType:
+                        TimeseriesTileIndicatorDataConfigurationComponent.lateLoadKey,
+                        providers: {
+                            // converter transforms the data such as the selected series between the widget and the form
+                            [WellKnownProviders.Converter]: {
+                                providerId:
+                                NOVA_TIMESERIES_TILE_INDICATOR_DATA_CONVERTER,
+                            } as IProviderConfiguration,
+                        },
+                    },
+                ],
             },
         },
     },

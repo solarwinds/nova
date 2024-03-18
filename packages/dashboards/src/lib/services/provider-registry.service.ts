@@ -61,6 +61,7 @@ import { TitleAndDescriptionConverterService } from "../configurator/services/co
 import { TableColumnsConverterService } from "../configurator/services/converters/table/table-columns-converter.service";
 import { TableFiltersConverterService } from "../configurator/services/converters/table/table-filters-converter.service";
 import { TimeseriesMetadataConverterService } from "../configurator/services/converters/timeseries/timeseries-metadata-converter.service";
+import { CartesianMetadataConverterService } from "../configurator/services/converters/cartesian/cartesian-metadata-converter.service";
 import { TimeseriesSeriesConverterService } from "../configurator/services/converters/timeseries/timeseries-series-converter.service";
 import { TimeseriesTileIndicatorDataConverterService } from "../configurator/services/converters/timeseries/timeseries-tile-indicator-data-converter.service";
 import { CONFIGURATOR_CONVERTER } from "../configurator/services/converters/types";
@@ -113,7 +114,7 @@ import {
     NOVA_TITLE_AND_DESCRIPTION_CONVERTER,
     NOVA_URL_INTERACTION_HANDLER,
     NOVA_VIRTUAL_VIEWPORT_MANAGER,
-    NOVA_RISK_SCORE_FORMATTERS_REGISTRY,
+    NOVA_RISK_SCORE_FORMATTERS_REGISTRY, NOVA_CARTESIAN_METADATA_CONVERTER,
 } from "./types";
 import { UrlInteractionService } from "./url-interaction.service";
 import { WidgetConfigurationService } from "./widget-configuration.service";
@@ -230,6 +231,16 @@ export class ProviderRegistryService {
                 ],
             },
             [NOVA_TIMESERIES_METADATA_CONVERTER]: {
+                provide: CONFIGURATOR_CONVERTER,
+                useClass: TimeseriesMetadataConverterService,
+                deps: [
+                    PIZZAGNA_EVENT_BUS,
+                    PreviewService,
+                    PizzagnaService,
+                    TimeframeService,
+                ],
+            },
+            [NOVA_CARTESIAN_METADATA_CONVERTER]: {
                 provide: CONFIGURATOR_CONVERTER,
                 useClass: TimeseriesMetadataConverterService,
                 deps: [

@@ -129,6 +129,7 @@ export class DataSourceConfigurationV2Component
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
+        console.log(changes)
         if (
             (changes.providerId && !changes.providerId.isFirstChange()) ||
             (changes.properties && !changes.properties.isFirstChange())

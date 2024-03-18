@@ -110,6 +110,7 @@ export class DataSourceConfigurationComponent
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
+        console.log('get here',changes)
         if (changes.providerId && !changes.providerId.isFirstChange()) {
             const previousValue: string = changes.providerId.previousValue;
             if (previousValue !== this.providerId) {

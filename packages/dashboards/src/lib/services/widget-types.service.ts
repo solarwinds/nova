@@ -51,6 +51,7 @@ export class WidgetTypesService {
         type: string,
         version?: number
     ): IWidgetTypeDefinition {
+        console.log("widget type", type)
         const widgetTypeVersions = this.widgetTypes[type];
         if (!widgetTypeVersions || widgetTypeVersions.length === 0) {
             throw new Error(
@@ -109,6 +110,7 @@ export class WidgetTypesService {
         }`;
 
         const path = `${widgetSection}.${itemPath}`;
+        console.log(path, 'setnode?',value)
         set(widgetTemplate, path, value);
     }
 }

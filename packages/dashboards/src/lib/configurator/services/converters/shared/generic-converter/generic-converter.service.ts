@@ -53,6 +53,7 @@ export class GenericConverterService extends BaseConverter {
     }
 
     public buildForm(): void {
+        console.log('build generic')
         const preview = this.getPreview();
 
         const updatedPizzagna = this.formParts.reduce((res, v) => {
