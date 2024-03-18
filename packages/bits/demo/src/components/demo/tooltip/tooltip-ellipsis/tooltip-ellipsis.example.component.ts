@@ -18,10 +18,25 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./tooltip-basic/tooltip-basic.example.component";
-export * from "./tooltip-docs/tooltip-docs.example.component";
-export * from "./tooltip-disabled/tooltip-disabled.example.component";
-export * from "./tooltip-ellipsis/tooltip-ellipsis.example.component";
-export * from "./tooltip-position/tooltip-position.example.component";
-export * from "./tooltip-trigger/tooltip-trigger.example.component";
-export * from "./tooltip-visual-test/tooltip-visual-test.component";
+import { Component } from "@angular/core";
+
+@Component({
+    selector: "nui-tooltip-ellipsis-example",
+    templateUrl: "tooltip-ellipsis.example.component.html",
+})
+export class TooltipEllipsisExampleComponent {
+    public isEllipsisActive = true;
+
+    public shortContent = $localize`I am a short message!`;
+    public longContent = $localize`I am a super long a message which does not fit inside its container!`;
+    public message = $localize`Toggle to switch state`;
+
+    constructor() {}
+
+    public onValueChanged(value: boolean): void {
+        this.isEllipsisActive = value;
+        this.message = value
+            ? $localize`Tooltip overflow detection is active!`
+            : $localize`Tooltip overflow detection is disabled`;
+    }
+}
