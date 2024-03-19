@@ -22,3 +22,11 @@ Follow these steps:
 
 -   <https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/>
 -   <https://www.typescriptlang.org/docs/handbook/compiler-options.html>
+
+## Problem:
+
+Not sure which version of node should I use. 
+
+## Possible Fix:
+
+It is recommended to use version which is on CircleCI builds which is currently 16.18.0
