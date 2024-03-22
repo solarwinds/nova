@@ -27,6 +27,7 @@ import {
     barGrid,
     BarHighlightStrategy,
     BarRenderer,
+    BarSeriesHighlightStrategy,
     BarTooltipsPlugin,
     Chart,
     ChartAssist,
@@ -50,7 +51,7 @@ import { XYChartComponent } from "../xy-chart.component";
 })
 export class BarChartComponent extends XYChartComponent {
     public static lateLoadKey = "CartesianBarChartComponent";
-    private tooltipsPlugin = new BarTooltipsPlugin();
+    private tooltipsPlugin = new BarTooltipsPlugin({ horizontal: true, grouped: true });
     private labelPlugin = new InteractionLabelPlugin();
 
     constructor(
@@ -65,7 +66,7 @@ export class BarChartComponent extends XYChartComponent {
     }
 
     public mapSeriesSet(
-        data: any[],
+        series: any[],
         scales: IXYScales
     ): IChartAssistSeries<IAccessors>[] {
         if (
@@ -79,14 +80,28 @@ export class BarChartComponent extends XYChartComponent {
             this.accessors.data.thickness = () => BarRenderer.THICK; // arbitrary constant value
         }
 
-        return super.mapSeriesSet(data, scales);
+        return super.mapSeriesSet(series, scales);
     }
 
     protected createAccessors(
         colorProvider: IValueProvider<string>
     ): IAccessors {
-        const accessors = barAccessors({ horizontal: false, grouped: true }, colorProvider);
-        accessors.data.category = (d) => d.x;
+        const accessors = barAccessors(
+            { horizontal: false, grouped: true },
+            colorProvider
+        );
+        if (this.widgetData.series.length > 1) {
+            accessors.data.category = (data, i, series, dataSeries) => [
+                data.x,
+                dataSeries.id,
+            ];
+        } else {
+            // accessors.data.category = (d) => d.x;
+            accessors.data.category = (data, i, series, dataSeries) => [
+                data.x,
+                dataSeries.id,
+            ];
+        }
         accessors.data.value = (d) => d.y;
 
         return accessors;
@@ -95,7 +110,13 @@ export class BarChartComponent extends XYChartComponent {
     protected createChartAssist(palette: ChartPalette): ChartAssist {
         // disable pointer events on bars to ensure the zoom drag target is the mouse interactive area rather than the bars
         this.renderer = new BarRenderer({
-            highlightStrategy: new BarHighlightStrategy("x"),
+            highlightStrategy:
+                this.widgetData.series.length > 1
+                    ? new BarSeriesHighlightStrategy(
+                          "x",
+                          this.widgetData.series.length
+                      )
+                    : new BarHighlightStrategy("x"),
             pointerEvents: false,
         });
 
@@ -103,6 +124,7 @@ export class BarChartComponent extends XYChartComponent {
         // We're manually adding Interaction Label plugin (without Interaction Line plugin) to have only label
         chart.addPlugin(this.labelPlugin);
         chart.addPlugin(this.tooltipsPlugin);
+        console.log(palette)
         return new ChartAssist(chart, undefined, palette);
     }
 }

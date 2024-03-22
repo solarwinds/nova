@@ -291,12 +291,11 @@ export class TimeseriesSeriesConverterService
             (res, id) =>
                 immutableSet(
                     res,
-                    `${PizzagnaLayer.Data}.${id}/${this.indicatorDataKey}.properties.availableSeries`,
+                    `${PizzagnaLayer.Structure}.${id}/${this.indicatorDataKey}.properties.availableSeries`,
                     availableSeries
                 ),
             updatedPizzagna
         );
-
         this.updateFormPizzagna(updatedPizzagna);
     }
 

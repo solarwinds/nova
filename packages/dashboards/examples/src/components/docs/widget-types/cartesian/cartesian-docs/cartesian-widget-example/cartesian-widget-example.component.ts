@@ -96,6 +96,14 @@ export class CartesianWidgetExampleComponent implements OnInit {
                     providerId: RevenuePerYearDataSource.providerId,
                     label: RevenuePerYearDataSource.providerId,
                 } as IProviderConfigurationForDisplay,
+                {
+                    providerId: RevenueSeveralPerYearDataSource.providerId,
+                    label: RevenueSeveralPerYearDataSource.providerId,
+                } as IProviderConfigurationForDisplay,
+                {
+                    providerId: SeveralProductByLineDataSource.providerId,
+                    label: SeveralProductByLineDataSource.providerId,
+                } as IProviderConfigurationForDisplay,
             ]
         );
 
@@ -115,6 +123,16 @@ export class CartesianWidgetExampleComponent implements OnInit {
             [ProductByLineDataSource.providerId]: {
                 provide: DATA_SOURCE,
                 useClass: ProductByLineDataSource,
+                deps: [],
+            },
+            [RevenueSeveralPerYearDataSource.providerId]: {
+                provide: DATA_SOURCE,
+                useClass: RevenueSeveralPerYearDataSource,
+                deps: [],
+            },
+            [SeveralProductByLineDataSource.providerId]: {
+                provide: DATA_SOURCE,
+                useClass: SeveralProductByLineDataSource,
                 deps: [],
             },
         });
@@ -150,7 +168,17 @@ export class CartesianWidgetExampleComponent implements OnInit {
 const createCartesianWidget = (
     id: string,
     providerId: string,
-    configuration: CartesianWidgetConfig
+    chartConfiguration: CartesianWidgetConfig,
+    adapterProperties = {
+        // Setting the series and corresponding labels to initially display on the chart
+        series: [
+            {
+                id: "serie-1",
+                label: "Data sample",
+                selectedSeriesId: "serie-1",
+            },
+        ] as any[],
+    }
 ): IWidget => ({
     id,
     type: "cartesian",
@@ -173,20 +201,11 @@ const createCartesianWidget = (
             chart: {
                 providers: {
                     [WellKnownProviders.Adapter]: {
-                        properties: {
-                            // Setting the series and corresponding labels to initially display on the chart
-                            series: [
-                                {
-                                    id: "serie-1",
-                                    label: "Data sample",
-                                    selectedSeriesId: "serie-1",
-                                },
-                            ] as any[],
-                        },
+                        properties: adapterProperties,
                     } as Partial<IProviderConfiguration>,
                 },
                 properties: {
-                    configuration,
+                    configuration: chartConfiguration,
                 },
             },
         },
@@ -196,6 +215,8 @@ const createCartesianWidget = (
 const enum DataSample {
     productByLine = "productByLine",
     revenuePerYear = "revenuePerYear",
+    companiesRevenuePerYear = "companiesRevenuePerYear",
+    companiesProductByLine="companiesProductByLine",
 }
 
 /**
@@ -271,6 +292,31 @@ export class RevenuePerYearDataSource
     }
 }
 
+@Injectable()
+export class RevenueSeveralPerYearDataSource
+    extends BaseMockDataSource<any>
+    implements IDataSource<any>, IConfigurable, OnDestroy
+{
+    // This is the ID we'll use to identify the provider
+    public static providerId = "RevenueSeveralPerYearDataSource";
+
+    public async getFilteredData(filters: any): Promise<IFilteringOutputs> {
+        return this.getMockData(DataSample.companiesRevenuePerYear);
+    }
+}
+@Injectable()
+export class SeveralProductByLineDataSource
+    extends BaseMockDataSource<any>
+    implements IDataSource<any>, IConfigurable, OnDestroy
+{
+    // This is the ID we'll use to identify the provider
+    public static providerId = "SeveralProductByLineDataSource";
+
+    public async getFilteredData(filters: any): Promise<IFilteringOutputs> {
+        return this.getMockData(DataSample.companiesProductByLine);
+    }
+}
+
 const widgetConfigs: IWidget[] = [
     createCartesianWidget(
         "cartesianWidgetId_1",
@@ -301,10 +347,65 @@ const widgetConfigs: IWidget[] = [
                 x: { type: CartesianScaleType.Linear },
                 y: { type: CartesianScaleType.Linear },
             },
-            chartColors: {
-                ["serie-1"]: "var(--nui-color-chart-one)",
-            } as any,
         } as CartesianWidgetConfig
+    ),
+    createCartesianWidget(
+        "cartesianWidgetId_3",
+        SeveralProductByLineDataSource.providerId,
+        {
+            legendPlacement: LegendPlacement.None,
+            enableZoom: false,
+            leftAxisLabel: "Products companies sold",
+            preset: CartesianChartPreset.Bar,
+            scales: {
+                x: { type: CartesianScaleType.Band },
+                y: { type: CartesianScaleType.Linear },
+            },
+        } as CartesianWidgetConfig,
+        {
+            // Setting the series and corresponding labels to initially display on the chart
+            series: [
+                {
+                    id: "apple-ltd",
+                    label: "Apple",
+                    selectedSeriesId: "apple-ltd",
+                },
+                {
+                    id: "microsoft",
+                    label: "Microsoft",
+                    selectedSeriesId: "microsoft",
+                },
+            ],
+        }
+    ),
+    createCartesianWidget(
+        "cartesianWidgetId_4",
+        RevenueSeveralPerYearDataSource.providerId,
+        {
+            legendPlacement: LegendPlacement.None,
+            enableZoom: false,
+            leftAxisLabel: "Revenue companies $",
+            preset: CartesianChartPreset.Line,
+            scales: {
+                x: { type: CartesianScaleType.Linear },
+                y: { type: CartesianScaleType.Linear },
+            },
+        } as CartesianWidgetConfig,
+        {
+            // Setting the series and corresponding labels to initially display on the chart
+            series: [
+                {
+                    id: "apple-ltd",
+                    label: "Apple",
+                    selectedSeriesId: "apple-ltd",
+                },
+                {
+                    id: "microsoft",
+                    label: "Microsoft",
+                    selectedSeriesId: "microsoft",
+                },
+            ],
+        }
     ),
 ];
 
@@ -321,6 +422,18 @@ const positions: Record<string, GridsterItem> = {
         y: 0,
         x: 6,
     },
+    [widgetConfigs[2].id]: {
+        cols: 6,
+        rows: 6,
+        y: 6,
+        x: 0,
+    },
+    [widgetConfigs[3].id]: {
+        cols: 6,
+        rows: 6,
+        y: 6,
+        x: 6,
+    },
 };
 
 export function getCartesianDataBySample(
@@ -332,7 +445,7 @@ export function getCartesianDataBySample(
                 {
                     id: "serie-1",
                     name: "data sample 1",
-                    description: "",
+                    description: "data - product line",
                     data: productByLine.map((e) => ({
                         ...e,
                         id: e.productLine,
@@ -343,12 +456,64 @@ export function getCartesianDataBySample(
                     })),
                 },
             ];
+        case DataSample.companiesProductByLine:
+            return [
+                {
+                    id: "apple-ltd",
+                    name: "Apple products sold",
+                    description: "Apple products sold",
+                    data: productByLine.map((e) => ({
+                        ...e,
+                        id: e.productLine,
+                        name: e.productLine,
+                        value: e.unitsSold,
+                        x: e.productLine,
+                        y: e.unitsSold,
+                    })),
+                },
+                {
+                    id: "microsoft",
+                    name: "Microsoft products sold",
+                    description: "Microsoft products sold",
+                    data: productByLine.map((e) => ({
+                        ...e,
+                        id: e.productLine,
+                        name: e.productLine,
+                        value: e.unitsSold*1.5,
+                        x: e.productLine,
+                        y: e.unitsSold*1.5,
+                    })),
+                },
+            ];
         case DataSample.revenuePerYear:
             return [
                 {
                     id: "serie-1",
                     name: "data sample 1",
-                    description: "",
+                    description: "data - revenue per year",
+                    data: revenuePerYear.map((e) => ({
+                        ...e,
+                        x: e.year,
+                        y: e.revenue,
+                    })),
+                },
+            ];
+        case DataSample.companiesRevenuePerYear:
+            return [
+                {
+                    id: "apple-ltd",
+                    name: "Apple revenue",
+                    description: "apple - revenue per year",
+                    data: revenuePerYear.map((e) => ({
+                        ...e,
+                        x: e.year,
+                        y: e.revenue * 2,
+                    })),
+                },
+                {
+                    id: "microsoft",
+                    name: "Microsoft revenue",
+                    description: "microsoft - revenue per year",
                     data: revenuePerYear.map((e) => ({
                         ...e,
                         x: e.year,
