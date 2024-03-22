@@ -22,13 +22,17 @@ import { ChangeDetectorRef, Component, Inject, Optional } from "@angular/core";
 
 import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
 import {
+    BandScale,
     Chart,
     ChartAssist,
     ChartPalette,
     IAccessors,
+    IChartAssistSeries,
     IValueProvider,
+    IXYScales,
     LineAccessors,
     LineRenderer,
+    LineSelectSeriesInteractionStrategy,
     XYGrid,
     XYGridConfig,
 } from "@nova-ui/charts";
@@ -52,8 +56,19 @@ export class LineChartComponent extends XYChartComponent {
         changeDetector: ChangeDetectorRef
     ) {
         super(eventBus, dataSource, cartesianScalesService, changeDetector);
+    }
 
-        this.renderer = new LineRenderer();
+    public mapSeriesSet(
+        data: any[],
+        scales: IXYScales
+    ): IChartAssistSeries<IAccessors>[] {
+        if (scales.x instanceof BandScale) {
+            // what if x will be different from other series?
+            const categories = data[0].data.map((e: any) => e.x);
+            scales.x.fixDomain(categories);
+        }
+
+        return super.mapSeriesSet(data, scales);
     }
 
     protected createAccessors(
@@ -63,6 +78,15 @@ export class LineChartComponent extends XYChartComponent {
     }
 
     protected createChartAssist(palette: ChartPalette): ChartAssist {
+        const rendererOpts =
+            this.widgetData.series.length > 1
+                ? {
+                      interactionStrategy:
+                          new LineSelectSeriesInteractionStrategy(),
+                      markerInteraction: { enabled: true, clickable: true },
+                  }
+                : undefined;
+        this.renderer = new LineRenderer(rendererOpts);
         const gridConfig = new XYGridConfig();
         gridConfig.axis.left.fit = true;
         const chart = new Chart(new XYGrid(gridConfig));

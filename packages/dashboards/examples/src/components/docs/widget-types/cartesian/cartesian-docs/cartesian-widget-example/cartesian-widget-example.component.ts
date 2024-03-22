@@ -344,7 +344,7 @@ const widgetConfigs: IWidget[] = [
             leftAxisLabel: "Revenue $",
             preset: CartesianChartPreset.Line,
             scales: {
-                x: { type: CartesianScaleType.Linear },
+                x: { type: CartesianScaleType.Band },
                 y: { type: CartesianScaleType.Linear },
             },
         } as CartesianWidgetConfig
