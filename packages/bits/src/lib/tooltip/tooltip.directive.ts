@@ -59,6 +59,7 @@ export class TooltipDirective implements OnDestroy {
 
     private _position: TooltipPosition = "top";
     private _disabled: boolean = false;
+    private _ellipsis: boolean = false;
 
     /** Allows the user to define the position of the tooltip relative to the parent element */
     @Input("tooltipPlacement")
@@ -84,6 +85,15 @@ export class TooltipDirective implements OnDestroy {
         if (this._disabled) {
             this.hide();
         }
+    }
+
+    /** Determines whether the tooltip should be displayed when the content is overflowing. By default is `false`. */
+    @Input("nuiTooltipEllipsis")
+    get ellipsis(): boolean {
+        return this._ellipsis;
+    }
+    set ellipsis(value: boolean) {
+        this._ellipsis = coerceBooleanProperty(value);
     }
 
     private _message = "";
@@ -206,6 +216,17 @@ export class TooltipDirective implements OnDestroy {
         }
     }
 
+    /**
+     * Checks if the content is overflowing.
+     * The content is considered overflowing if its scroll width is greater than its client width plus 1.
+     */
+    isOverflowing() {
+        return (
+            this._elementRef.nativeElement.scrollWidth >
+            this._elementRef.nativeElement.clientWidth + 1
+        );
+    }
+
     /** Hides the tooltip */
     hide(): void {
         // without setTimeout, sometimes 'hide' is called before 'show', because show has setTimeout for it's own reasons.
@@ -273,6 +294,16 @@ export class TooltipDirective implements OnDestroy {
     }
 
     private canShowTooltip() {
-        return !(this.disabled || !this.message || this._isTooltipVisible());
+        const canShow = !(
+            this.disabled ||
+            !this.message ||
+            this._isTooltipVisible()
+        );
+
+        if (this.ellipsis) {
+            return canShow && this.isOverflowing();
+        }
+
+        return canShow;
     }
 }

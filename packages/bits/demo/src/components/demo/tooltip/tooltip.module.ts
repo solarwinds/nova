@@ -36,6 +36,7 @@ import {
     TooltipBasicExampleComponent,
     TooltipDisabledExampleComponent,
     TooltipDocsExampleComponent,
+    TooltipEllipsisExampleComponent,
     TooltipPositionExampleComponent,
     TooltipTriggerExampleComponent,
     TooltipVisualTestComponent,
@@ -64,6 +65,15 @@ const routes = [
     {
         path: "tooltip-disabled",
         component: TooltipDisabledExampleComponent,
+        data: {
+            srlc: {
+                stage: SrlcStage.ga,
+            },
+        },
+    },
+    {
+        path: "tooltip-ellipsis",
+        component: TooltipEllipsisExampleComponent,
         data: {
             srlc: {
                 stage: SrlcStage.ga,
@@ -113,6 +123,7 @@ const routes = [
         TooltipBasicExampleComponent,
         TooltipDocsExampleComponent,
         TooltipDisabledExampleComponent,
+        TooltipEllipsisExampleComponent,
         TooltipPositionExampleComponent,
         TooltipTriggerExampleComponent,
         TooltipVisualTestComponent,
