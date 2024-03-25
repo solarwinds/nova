@@ -36,7 +36,7 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
-import { filter, map } from "rxjs/operators";
+import { filter, skipWhile, take } from "rxjs/operators";
 
 const FOCUSABLE_SELECTOR =
     "a, button, input, textarea, select, details, [tabindex]:not([tabindex='-1'])";
@@ -151,12 +151,13 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
             this.ngZone
         );
         this.scrollDispatcher.register(this.scrollableElement);
-        this.router.events.pipe(
-            filter((e): e is NavigationEnd => e instanceof NavigationEnd),
-            map((e) => {
-                this.dismiss("ROUTE_CHANGED");
-            })
-        );
+
+        this.router.events
+            .pipe(
+                filter((e) => e instanceof NavigationEnd),
+                take(1)
+            )
+            .subscribe(() => this.dismiss("ROUTE_CHANGED"));
     }
 
     public ngAfterViewInit(): void {
