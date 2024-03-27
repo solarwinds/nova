@@ -1,5 +1,9 @@
 # Changelog
 
+## [15.0.5] 📅 2024-03-18
+
+-   `@nova-ui/bits` | _NUI-6198_ | Fix unwanted dialog dismiss when opened from `ngOnInit`
+
 ## [15.0.2] 📅 2023-08-24
 
 -   `@nova-ui/bits` `@nova-ui/charts` `@nova-ui/dashboards` | Upgraded to Angular v15 (compatible with v16 apps)
