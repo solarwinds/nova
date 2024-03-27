@@ -36,7 +36,7 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
-import { filter, skipWhile, take } from "rxjs/operators";
+import { filter, take } from "rxjs/operators";
 
 const FOCUSABLE_SELECTOR =
     "a, button, input, textarea, select, details, [tabindex]:not([tabindex='-1'])";
