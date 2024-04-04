@@ -24,11 +24,14 @@ import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
 import {
     areaGrid,
     AreaRenderer,
+    BandScale,
     Chart,
     ChartAssist,
     ChartPalette,
     IAccessors,
+    IChartAssistSeries,
     IValueProvider,
+    IXYScales,
     stackedArea,
     stackedAreaAccessors,
 } from "@nova-ui/charts";
@@ -55,6 +58,18 @@ export class StackedAreaChartComponent extends XYChartComponent {
 
         this.renderer = new AreaRenderer();
         this.valueAccessorKey = "y1";
+    }
+
+    public mapSeriesSet(
+        data: any[],
+        scales: IXYScales
+    ): IChartAssistSeries<IAccessors>[] {
+        if (scales.x instanceof BandScale) {
+            const categories = data[0].data.map((e: any) => e.x);
+            scales.x.fixDomain(categories);
+        }
+
+        return super.mapSeriesSet(data, scales);
     }
 
     protected createAccessors(
