@@ -1403,6 +1403,8 @@ export const DEMO_PATHS = [
     "tooltip/tooltip-disabled/tooltip-disabled.example.component.ts",
     "tooltip/tooltip-docs/tooltip-docs.example.component.html",
     "tooltip/tooltip-docs/tooltip-docs.example.component.ts",
+    "tooltip/tooltip-ellipsis/tooltip-ellipsis.example.component.html",
+    "tooltip/tooltip-ellipsis/tooltip-ellipsis.example.component.ts",
     "tooltip/tooltip-position/tooltip-position.example.component.html",
     "tooltip/tooltip-position/tooltip-position.example.component.less",
     "tooltip/tooltip-position/tooltip-position.example.component.ts",
