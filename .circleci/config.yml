@@ -559,8 +559,9 @@ jobs:
         environment:
             NOVA_DIR: ~/nova
         steps:
-            - attach_workspace:
-                  at: ~/nova
+            - add_ssh_keys
+            - checkout:
+                path: ~/nova
             - run:
                   name: Configure Git
                   command: |
