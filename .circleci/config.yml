@@ -679,9 +679,7 @@ workflows:
                   filters:
                       branches:
                           only:
-                              - main
                               - /^release\/.+/
-                              - next
                               - /^cci\/.+/
             - charts-verify:
                   requires:
