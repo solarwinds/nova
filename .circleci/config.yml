@@ -643,9 +643,7 @@ workflows:
                   filters:
                       branches:
                           only:
-                              - main
                               - /^release\/.+/
-                              - next
                               - /^cci\/.+/
             - bits-verify:
                   requires:
@@ -653,9 +651,7 @@ workflows:
                   filters:
                       branches:
                           only:
-                              - main
                               - /^release\/.+/
-                              - next
                               - /^cci\/.+/
             - charts-build:
                   requires:
@@ -693,9 +689,7 @@ workflows:
                   filters:
                       branches:
                           only:
-                              - main
                               - /^release\/.+/
-                              - next
                               - /^cci\/.+/
             - dashboards-build:
                   requires:
@@ -709,9 +703,7 @@ workflows:
                   filters:
                       branches:
                           only:
-                              - main
                               - /^release\/.+/
-                              - next
                               - /^cci\/.+/
                   requires:
                       - bits-pack
@@ -745,9 +737,7 @@ workflows:
                   filters:
                       branches:
                           only:
-                              - main
                               - /^release\/.+/
-                              - next
                               - /^cci\/.+/
             - dashboards-verify:
                   requires:
@@ -755,9 +745,7 @@ workflows:
                   filters:
                       branches:
                           only:
-                              - main
                               - /^release\/.+/
-                              - next
                               - /^cci\/.+/
 
     nova-release:
