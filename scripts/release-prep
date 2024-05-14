@@ -23,8 +23,10 @@ if [ "$INCREMENT_TYPE" == "" ]; then
 fi
 
 if [ "$SOURCE_BRANCH" != "$CIRCLE_BRANCH" ]; then
-    echo "ERROR: configuration should be run on the branch that contains the changes (usually main)"
-    exit 1
+    if [[ $string != *"cci-release"* ]]; then
+        echo "ERROR: configuration should be run on the branch that contains the changes (usually main)"
+        exit 1
+    fi
 fi
 
 # Merge Changes
