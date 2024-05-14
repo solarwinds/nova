@@ -272,9 +272,8 @@ export class PopupComponent
         const bottomRight: ConnectedPosition = {
             originX: "end",
             originY: "bottom",
-            overlayX: "center",
+            overlayX: "end",
             overlayY: "top",
-            panelClass: "translate-right",
         };
         const bottomLeft: ConnectedPosition = {
             originX: "end",
@@ -285,9 +284,8 @@ export class PopupComponent
         const rightTop: ConnectedPosition = {
             originX: "end",
             originY: "top",
-            overlayX: "center",
+            overlayX: "end",
             overlayY: "bottom",
-            panelClass: "translate-right",
         };
 
         if (this.directionTop && this.directionRight) {
