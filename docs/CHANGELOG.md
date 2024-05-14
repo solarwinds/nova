@@ -1,5 +1,11 @@
 # Changelog
 
+## [15.0.6] 2024-05-13
+
+### Bugfix
+
+-   `@nova-ui/bits` | Properly show _niuMenuComponent_ popup when menu button is located at the bottom right corner of the viewport.
+
 ## [12.0.43] 📅 20023-04-09
 
 ### Added
