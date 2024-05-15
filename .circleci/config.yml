@@ -613,6 +613,19 @@ jobs:
             - run:
                   name: Run release prep
                   command: yarn run release-prep-ci
+    bits-unpublish:
+        working_directory: ~/nova
+        docker:
+            -   image: cimg/node:16.18
+        environment:
+            PROJECT_DIR: ./packages/bits
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Publish bits
+                    command: |
+                        yarn run unpublish-ci
 workflows:
     nova:
         jobs:
@@ -774,7 +787,14 @@ workflows:
                   context: github-write-access
                   requires:
                       - release-approval
-
+    nova-remove:
+        jobs:
+            - hold-remove:
+                    type: approval
+            - bits-unpublish:
+                    context: github-write-access
+                    requires:
+                        - hold-remove
     nightly:
         triggers:
             - schedule:

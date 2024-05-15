@@ -32,6 +32,7 @@
     "prettier-check": "yarn run prettier --check .",
     "prettier-fix": "yarn run prettier --write .",
     "publish-ci": "bash scripts/publish",
+    "unpublish-ci": "bash scripts/unpublish",
     "release-prep-ci": "bash scripts/release-prep",
     "release-prep-manual": "bash scripts/release-prep-manual",
     "remove-dependencies": "node scripts/remove-dependencies.js",

@@ -1,0 +1,42 @@
+#!/bin/bash
+set -ev
+
+usage()
+{
+    echo "Un publish package to npmjs"
+    echo
+    echo "Options:"
+    echo "  -h, --help       [Optional] Show this help message"
+}
+
+while [ -n "$1" ]; do
+    case "$1" in
+    -h|--help)
+        usage
+        exit
+        ;;
+    -*)
+        echo "Unexpected argument '$1'."
+        exit 1
+        ;;
+    esac
+done
+# retrieve data from package.json
+PACKAGE_NAME_BITS="@nova-ui/bits"
+PACKAGE_NAME_CHARTS="@nova-ui/charts"
+PACKAGE_NAME_DASH="@nova-ui/dashboards"
+
+packages=($PACKAGE_NAME_BITS $PACKAGE_NAME_CHARTS $PACKAGE_NAME_DASH)
+allThreads=("15.0.5-5262" "15.0.5-5245")
+echo -e "//registry.npmjs.org/:_authToken=$NPM_TOKEN\nalways-auth=true" > .npmrc
+
+
+for PACKAGE_VERSION in ${allThreads[@]}; do
+    for package in ${packages[@]}; do
+        PACKAGE_NAME=$package@$PACKAGE_VERSION
+        npm info $PACKAGE_NAME version 2>/dev/null && {
+            echo "Package $PACKAGE_NAME does already exist on npmjs.org"
+            npm unpublish $PACKAGE_NAME
+        }
+    done
+done
