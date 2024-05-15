@@ -618,10 +618,10 @@ jobs:
         docker:
             -   image: cimg/node:16.18
         environment:
-            PROJECT_DIR: ./packages/bits
+            PROJECT_DIR: ~/nova/
         steps:
-            -   attach_workspace:
-                    at: ~/nova
+            -   checkout:
+                    path: ~/nova
             -   run:
                     name: Publish bits
                     command: |
