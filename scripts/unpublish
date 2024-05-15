@@ -36,7 +36,7 @@ for PACKAGE_VERSION in ${allThreads[@]}; do
         PACKAGE_NAME=$package@$PACKAGE_VERSION
         npm info $PACKAGE_NAME version 2>/dev/null && {
             echo "Package $PACKAGE_NAME does already exist on npmjs.org"
-            npm unpublish $PACKAGE_NAME
+            npm unpublish $PACKAGE_NAME -f
         }
     done
 done
