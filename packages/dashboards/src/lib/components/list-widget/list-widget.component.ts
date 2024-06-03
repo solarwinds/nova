@@ -47,7 +47,6 @@ const RESIZE_DEBOUNCE_TIME = 10;
     selector: "nui-list-widget",
     templateUrl: "./list-widget.component.html",
     styleUrls: ["./list-widget.component.less"],
-    host: { style: "overflow: scroll" },
 })
 export class ListWidgetComponent
     implements OnDestroy, OnInit, IHasChangeDetector, OnChanges
