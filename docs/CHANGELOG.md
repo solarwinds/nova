@@ -1,12 +1,18 @@
 # Changelog
 
+## [15.0.8] 2024-06-03
+
+### Bugfix
+
+- `@nova-ui/dashboards` | Added missing empty image for _nuiListWidgetComponent_ with no data.
+
 ## [15.0.6] 2024-05-13
 
 ### Bugfix
 
 -   `@nova-ui/bits` | Properly show _niuMenuComponent_ popup when menu button is located at the bottom right corner of the viewport.
 
-## [12.0.43] 📅 20023-04-09
+## [12.0.43] 📅 2023-04-09
 
 ### Added
 
