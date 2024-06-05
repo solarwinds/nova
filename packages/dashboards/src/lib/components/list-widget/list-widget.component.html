@@ -1,7 +1,8 @@
 <nui-repeat
     *ngIf="shouldDisplayRepeat(); else empty"
     [itemsSource]="data"
-    [repeatItemTemplateRef]="repeatItemTemplate">
+    [repeatItemTemplateRef]="repeatItemTemplate"
+>
 </nui-repeat>
 
 <ng-template #empty>
