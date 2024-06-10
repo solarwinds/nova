@@ -23,6 +23,7 @@ import { Inject, Injectable } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
 
 import {
+    ClientSideDataSource,
     IDataField,
     INovaFilters,
     LocalFilteringDataSource,
@@ -31,9 +32,10 @@ import {
 
 import { TABLE_DATA } from "../widget-data";
 import { BasicTableModel, ITableDataSourceOutput } from "./types";
+import { filter } from "lodash";
 
 @Injectable()
-export class AcmeTableMockDataSource extends LocalFilteringDataSource<BasicTableModel> {
+export class AcmeTableMockDataSource extends ClientSideDataSource<BasicTableModel> {
     public static providerId = "AcmeTableMockDataSource";
 
     private cache: any[] = [];
@@ -73,27 +75,37 @@ export class AcmeTableMockDataSource extends LocalFilteringDataSource<BasicTable
 
         return new Promise((resolve) => {
             setTimeout(async () => {
-                const virtualScrollFilter =
-                    filters.virtualScroll && filters.virtualScroll.value;
+                // const virtualScrollFilter =
+                //     filters.virtualScroll && filters.virtualScroll.value;
 
-                if (virtualScrollFilter) {
-                    // The multiplier used here is a way to fetch more items per scroll
-                    const start = filters.virtualScroll?.value.start;
-                    const end = filters.virtualScroll?.value.end;
-                    // Note: We should start with a clean cache every time first page is requested
-                    if (start === 0) {
-                        this.cache = [];
-                    }
-                    const nextChunk = TABLE_DATA.slice(start, end);
-                    // We identify here whether the cached array does already contain some of the fetched data.
-                    // Then we update the cached array with the only values it doesn't contain
-                    this.cache = this.cache.concat(
-                        nextChunk.filter((item) => !this.cache.includes(item))
-                    );
-                    super.setData(this.cache);
-                }
+                // console.log("filters", filters);
 
+                // if (virtualScrollFilter) {
+                //     // The multiplier used here is a way to fetch more items per scroll
+                //     const start = filters.virtualScroll?.value.start;
+                //     const end = filters.virtualScroll?.value.end;
+                //     // Note: We should start with a clean cache every time first page is requested
+                //     if (start === 0) {
+                //         this.cache = [];
+                //     }
+                //     const nextChunk = TABLE_DATA.slice(start, 10);
+                //     // We identify here whether the cached array does already contain some of the fetched data.
+                //     // Then we update the cached array with the only values it doesn't contain
+                //     this.cache = this.cache.concat(
+                //         nextChunk.filter((item) => !this.cache.includes(item))
+                //     );
+                //     super.setData(this.cache);
+                // }
+
+                const paginatorFilter =
+                    filters.paginator && filters.paginator.value;
+
+                // console.log("paginatorFilter", paginatorFilter);
+                // console.log("filters",filters);
+                super.setData(TABLE_DATA);
                 const filteredData = await super.getFilteredData(filters);
+
+                // console.log("filteredData", filteredData);
 
                 if (filteredData.paginator) {
                     filteredData.paginator.total = TABLE_DATA.length;

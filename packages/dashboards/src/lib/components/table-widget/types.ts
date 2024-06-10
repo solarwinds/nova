@@ -46,7 +46,8 @@ export interface ITableWidgetConfig {
     columns: Array<ITableWidgetColumnConfig>;
     sortable?: boolean;
     sorterConfiguration: ITableWidgetSorterConfig;
-    hasVirtualScroll: boolean;
+    scrollType: ScrollType;
+    // usePaging?: boolean;
     interactive?: boolean;
     headerTooltipsEnabled?: boolean;
     scrollActivationDelayMs?: number;
@@ -62,9 +63,26 @@ export interface ITableWidgetConfig {
         searchTerm?: string;
         searchDebounce?: number;
     };
+
+    paginatorConfiguration?: {
+        pageSizeSet?: number[];
+        pageSize?: number;
+    };
 }
 
 export interface ITableWidgetSorterConfig {
     descendantSorting: boolean;
     sortBy: string;
+}
+
+export enum ScrollType {
+    paginator = "paginator",
+    virtualScroll = "virtualScroll",
+}
+
+export interface IPaginatorState {
+    page: number;
+    pageSize: number;
+    pageSizeSet: number[];
+    total: number;
 }

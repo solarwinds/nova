@@ -1,0 +1,64 @@
+<table
+    class="nui-table-widget__main"
+    nui-table
+    [reorderable]="reorderable"
+    [sortable]="sortable"
+    [totalItems]="totalItems"
+    [dataSource]="dataSource"
+    [sortedColumn]="sortedColumn"
+    (sortOrderChanged)="onSortOrderChanged($event)"
+    [trackBy]="trackBy"
+    #widgetTable
+>
+    <ng-container
+        nuiColumnDef="{{ column.id }}"
+        *ngFor="let column of columns; trackBy: columnTrackBy"
+    >
+        <th
+            nui-header-cell
+            [isColumnSortingDisabled]="!column.sortable"
+            *nuiHeaderCellDef
+            [style.width.px]="columnsWidthMap.get(column.id)"
+            [style.max-width.px]="columnsWidthMap.get(column.id)"
+            [style.min-width.px]="columnsWidthMap.get(column.id)"
+            [title]="column.label"
+            [tooltipText]="headerTooltipsEnabled ? column.label : undefined"
+            [alignment]="getColumnAlignment(column)"
+        >
+            {{ column.label }}
+        </th>
+        <ng-container>
+            <td
+                nui-cell
+                *nuiCellDef="let element"
+                [style.width.px]="columnsWidthMap.get(column.id)"
+                [style.max-width.px]="columnsWidthMap.get(column.id)"
+                [style.min-width.px]="columnsWidthMap.get(column.id)"
+                [alignment]="getColumnAlignment(column)"
+            >
+                <ng-container
+                    nuiComponentPortal
+                    componentId="formatter"
+                    *ngIf="element[column.id] && column.formatter"
+                    [componentType]="column.formatter?.componentType"
+                    [properties]="element[column.id]"
+                    #componentPortal="nuiComponentPortal"
+                >
+                    <ng-template
+                        [cdkPortalOutlet]="componentPortal.portal"
+                        (attached)="componentPortal.attached($event)"
+                    ></ng-template>
+                </ng-container>
+            </td>
+        </ng-container>
+    </ng-container>
+
+    <tr nui-header-row *nuiHeaderRowDef="headers"></tr>
+    <tr
+        nui-row
+        *nuiRowDef="let row; columns: headers"
+        density="tiny"
+        (click)="onInteraction(row, $event)"
+        [attr.role]="interactive ? 'button' : ''"
+    ></tr>
+</table>

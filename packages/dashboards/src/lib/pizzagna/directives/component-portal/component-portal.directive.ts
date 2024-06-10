@@ -183,7 +183,14 @@ export class ComponentPortalDirective
 
         this.changesSubscription = this.propertiesChanges
             .pipe(takeUntil(this.destroy$))
-            .subscribe((change) => this.applyPropertiesChange(change));
+            .subscribe((change) => {
+                // console.log("--------------------");
+                // console.log("change", change.currentValue);
+                // console.log("change", change.previousValue);
+                // console.log("--------------------");
+
+                this.applyPropertiesChange(change);
+            });
     }
 
     private recreatePortal() {

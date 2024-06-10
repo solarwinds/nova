@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { ScrollType } from "@nova-ui/dashboards";
 import { DEFAULT_PIZZAGNA_ROOT } from "../../../../services/types";
 import { PizzagnaLayer } from "../../../../types";
 
@@ -60,7 +61,7 @@ export const TABLE_WIDGET_PREVIEW_PIZZAGNA = {
                             descendantSorting: true,
                             sortBy: "column1",
                         },
-                        hasVirtualScroll: true,
+                        scrollType: ScrollType.virtualScroll,
                     },
                 },
             },

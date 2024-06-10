@@ -47,6 +47,7 @@ import {
     NuiTimeFrameBarModule,
     NuiTimeFramePickerModule,
     NuiTooltipModule,
+    NuiPaginatorModule,
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
@@ -122,6 +123,7 @@ import { riskScore } from "./widget-types/risk-score/risk-score";
 import { DEFAULT_RISK_SCORE_FORMATTERS } from "./widget-types/risk-score/risk-score-configurator";
 import { table } from "./widget-types/table/table";
 import { timeseries } from "./widget-types/timeseries/timeseries";
+import { TableWidgetContainerComponent } from "./components/table-widget/table-container/table-container.component";
 
 const dashboardComponents = [
     DashboardComponent,
@@ -138,6 +140,7 @@ const dashboardComponents = [
     StackedPercentageAreaChartComponent,
     StatusBarChartComponent,
     TableWidgetComponent,
+    TableWidgetContainerComponent,
     DelayedMousePresenceDetectionDirective,
     TemplateLoadErrorComponent,
     TilesComponent,
@@ -213,6 +216,7 @@ const entryComponents: IComponentWithLateLoadKey[] = [
         NuiRiskScoreModule,
         NuiSelectModule,
         NuiPopoverModule,
+        NuiPaginatorModule,
     ],
     declarations: dashboardComponents,
     providers: [

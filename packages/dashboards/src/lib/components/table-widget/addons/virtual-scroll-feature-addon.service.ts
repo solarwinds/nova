@@ -40,7 +40,8 @@ export class VirtualScrollFeatureAddonService {
     }
 
     public initVirtualScroll(): void {
-        if (this.widget.hasVirtualScroll) {
+        console.log("initVirtualScroll", this.widget.isVirtualScroll);
+        if (this.widget.isVirtualScroll) {
             this.registerVirtualScroll();
         } else {
             this.deregisterVirtualScroll();

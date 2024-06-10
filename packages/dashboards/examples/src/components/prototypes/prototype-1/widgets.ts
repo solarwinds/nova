@@ -42,6 +42,7 @@ import {
     PizzagnaLayer,
     ProportionalWidgetChartTypes,
     RawFormatterComponent,
+    ScrollType,
     SiUnitsFormatterComponent,
     WellKnownProviders,
 } from "@nova-ui/dashboards";
@@ -492,7 +493,7 @@ export const widgets: IWidget[] = [
                                 descendantSorting: true,
                                 sortBy: "column4",
                             },
-                            hasVirtualScroll: true,
+                            scrollType: ScrollType.virtualScroll,
                             searchConfiguration: {
                                 enabled: true,
                             },

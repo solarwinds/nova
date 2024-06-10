@@ -32,28 +32,3 @@
         }
     }
 }
-
-:host-context(.mobile) {
-    .calc-height {
-        min-height: 200px;
-    }
-}
-
-:host.table-widget-fullwidth {
-    width: calc(100% - @nui-space-sm);
-}
-
-.invisible {
-    height: 0;
-}
-
-// This is being set to firefox only because when firefox makes a scroll bar it doesn't put it over the content but creates room for it
-@-moz-document url-prefix() {
-    .nui-table-widget-container {
-        margin-right: @nui-space-sm;
-    }
-}
-
-// .test{
-//     border: 1px solid red;
-// }

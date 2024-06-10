@@ -54,8 +54,11 @@ import {
     IDataSource,
     IEvent,
     IFilter,
+    INovaFilteringOutputs,
+    IPaginatorItem,
     ISortedItem,
     LoggerService,
+    PaginatorComponent,
     SorterDirection,
     TableAlignmentOptions,
     TableComponent,
@@ -81,7 +84,12 @@ import {
 import { ITableFormatterDefinition } from "../types";
 import { SearchFeatureAddonService } from "./addons/search-feature-addon.service";
 import { VirtualScrollFeatureAddonService } from "./addons/virtual-scroll-feature-addon.service";
-import { ITableWidgetColumnConfig, ITableWidgetConfig } from "./types";
+import {
+    IPaginatorState,
+    ITableWidgetColumnConfig,
+    ITableWidgetConfig,
+    ScrollType,
+} from "./types";
 
 /**
  * @ignore
@@ -91,7 +99,10 @@ import { ITableWidgetColumnConfig, ITableWidgetConfig } from "./types";
     templateUrl: "./table-widget.component.html",
     styleUrls: ["./table-widget.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [SearchFeatureAddonService, VirtualScrollFeatureAddonService],
+    providers: [
+        SearchFeatureAddonService,
+        VirtualScrollFeatureAddonService,
+    ],
     host: {
         // Note: Moved here from configuration to ensure that consumers will not override it.
         // Used to prevent table overflowing preview container in the edit/configuration mode.
@@ -137,11 +148,23 @@ export class TableWidgetComponent
         string,
         number | undefined
     >();
-    public hasVirtualScroll: boolean = true;
+    // public hasVirtualScroll: boolean = true;
+
+    public scrollType: ScrollType = ScrollType.virtualScroll;
+
     public tableContainerHeight: number;
     public isSearchEnabled: boolean = false;
     public searchTerm$ = new Subject<string>();
     public searchValue: string;
+    public defaultPaginatorState: IPaginatorState = {
+        page: 1,
+        pageSize: 10,
+        pageSizeSet: [10, 20, 50],
+        total: 0,
+    };
+
+    public paginatorState: IPaginatorState = this.defaultPaginatorState;
+
     public onDestroy$: Subject<void> = new Subject<void>();
     public tableUpdate$: Subject<void> = new Subject<void>();
     public mousePresent$: BehaviorSubject<boolean> =
@@ -175,6 +198,8 @@ export class TableWidgetComponent
     public isBusy: boolean = this.lastPageFetched !== this.totalPages;
 
     @ViewChild("widgetTable") table: TableComponent<any>;
+    @ViewChild("paginator") paginator: PaginatorComponent;
+
     @ViewChild(CdkVirtualScrollViewport)
     vscrollViewport?: CdkVirtualScrollViewport;
     @ViewChildren(TableRowComponent, { read: ElementRef })
@@ -239,14 +264,23 @@ export class TableWidgetComponent
                 this.onSortOrderChanged(sortedColumn);
             }
 
-            const newHasVirtualScroll = get(
+            const newScrollType = get(
                 changes,
-                "configuration.currentValue.hasVirtualScroll",
+                "configuration.currentValue.scrollType",
                 true
-            ) as boolean;
-            if (this.hasVirtualScroll !== newHasVirtualScroll) {
-                this.hasVirtualScroll = newHasVirtualScroll;
+            ).valueOf() as ScrollType;
+
+            this.scrollType = newScrollType;
+
+            if (newScrollType === ScrollType.virtualScroll) {
+                // this.hasVirtualScroll = true;
+                console.log("initVirtualScroll");
                 this.virtualScrollAddon.initVirtualScroll();
+                // this.paginatorAddon.deregisterPaginator();
+            }
+
+            if (newScrollType === ScrollType.paginator) {
+                // this.paginatorAddon.initPaginator();
             }
         }
 
@@ -256,11 +290,27 @@ export class TableWidgetComponent
     }
 
     public ngOnInit(): void {
+        console.log("this.configuration", this.configuration);
+
+        this.paginatorState.pageSize =
+            this.configuration.paginatorConfiguration?.pageSize ??
+            this.defaultPaginatorState.pageSize;
+        this.paginatorState.pageSizeSet =
+            this.configuration.paginatorConfiguration?.pageSizeSet ??
+            this.defaultPaginatorState.pageSizeSet;
+        this.dataSource.outputsSubject.subscribe(
+            (data: INovaFilteringOutputs) => {
+                console.log("data", data);
+                this.paginatorState.total = data.paginator?.total ?? 0;
+            }
+        );
+
         if (this.dataSource) {
             // Since the sortFilter is not initialized, we have to retrieve and set the correct filter value from the configuration before registering it
             this.setSortFilter();
             this.registerSorter();
             this.virtualScrollAddon.initWidget(this);
+            // this.paginatorAddon.initWidget(this);
         }
     }
 
@@ -279,6 +329,13 @@ export class TableWidgetComponent
 
         this.virtualScrollAddon.initVirtualScroll();
         this.searchAddon.initWidget(this);
+
+        this.dataSource.registerComponent({
+            paginator: {
+                componentInstance: this.paginator,
+            },
+        });
+
         const tableHeightChanged$: Observable<number> = this.eventBus
             .getStream(WIDGET_RESIZE)
             .pipe(
@@ -325,6 +382,10 @@ export class TableWidgetComponent
         });
     }
 
+    public applyFilters(): void {
+        this.dataSource.applyFilters();
+    }
+
     public ngOnDestroy(): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();
@@ -346,9 +407,10 @@ export class TableWidgetComponent
     public shouldDisplayTable(): boolean {
         const columnsCondition = this.columns.length > 0;
         const dataCondition = this.tableData?.length > 0;
-
+        // return true;
         return this.isSearchEnabled ||
-            (this.hasVirtualScroll && (this.isBusy || this.idle))
+            ((this.isVirtualScroll || this.isPaginator) &&
+                (this.isBusy || this.idle))
             ? columnsCondition
             : columnsCondition && dataCondition;
     }
@@ -382,6 +444,7 @@ export class TableWidgetComponent
                 const lastColumn = array[array.length - 1];
                 this.columnsWidthMap.set(lastColumn.id, undefined);
             }
+            // console.log("column", column);
             return {
                 ...column,
                 sortable:
@@ -429,6 +492,8 @@ export class TableWidgetComponent
             );
             return [];
         }
+
+        // console.log("tableData", tableData);
 
         return tableData.map((record) => {
             const row = columns.reduce(
@@ -607,12 +672,14 @@ export class TableWidgetComponent
     private updateTable() {
         if (this.widgetData && this.dataFields && this.configuration.columns) {
             this.updateColumns(this.configuration);
+            // console.log("configuraiton",this.configuration)
             this.idle = false;
             this.tableData = this.mapTableData(
                 this.widgetData,
                 this.configuration.columns,
                 this.dataFields
             );
+            console.log("this.tableData", this.tableData);
             this.tableUpdate$.next();
             this.changeDetector.detectChanges();
         }
@@ -667,5 +734,13 @@ export class TableWidgetComponent
                 internalBuffer *
                 scrollBuffer
         );
+    }
+
+    public get isVirtualScroll(): boolean {
+        return this.scrollType === ScrollType.virtualScroll;
+    }
+
+    public get isPaginator(): boolean {
+        return this.scrollType === ScrollType.paginator;
     }
 }
