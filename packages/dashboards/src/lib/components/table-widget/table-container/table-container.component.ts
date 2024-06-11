@@ -8,6 +8,11 @@ import { ITableFormatterDefinition } from "../../types";
     selector: "nui-table-widget-container",
     styleUrls: ["./table-container.component.less"],
     templateUrl: "./table-container.component.html",
+    host: {
+        // Note: Moved here from configuration to ensure that consumers will not override it.
+        // Used to prevent table overflowing preview container in the edit/configuration mode.
+        "[class.table-widget-fullwidth]": "true",
+    },
 })
 export class TableWidgetContainerComponent {
     @Input() public columns: ITableWidgetColumnConfig[] = [];
@@ -24,6 +29,8 @@ export class TableWidgetContainerComponent {
     @Input() public sortedColumn: any;
     @Input() public trackBy: any;
     @Input() public headers: any;
+
+    @Input() public hasVirtualScroll: boolean = false;
 
     private readonly defaultColumnAlignment: TableAlignmentOptions = "left";
     private formatters: {

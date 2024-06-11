@@ -54,11 +54,32 @@
     </ng-container>
 
     <tr nui-header-row *nuiHeaderRowDef="headers"></tr>
-    <tr
-        nui-row
-        *nuiRowDef="let row; columns: headers"
-        density="tiny"
-        (click)="onInteraction(row, $event)"
-        [attr.role]="interactive ? 'button' : ''"
-    ></tr>
+    <ng-container *ngIf="!hasVirtualScroll">
+        <tr
+            nui-row
+            *nuiRowDef="let row; columns: headers"
+            (click)="onInteraction(row, $event)"
+            [attr.role]="interactive ? 'button' : ''"
+            density="tiny"
+        ></tr
+    ></ng-container>
+    <!-- *ngIf="!hasVirtualScroll" -->
+    <!-- *ngIf="hasVirtualScroll" -->
+
+    <ng-template
+        *ngIf="hasVirtualScroll"
+        nuiRowDef
+        cdkVirtualFor
+        let-row
+        [nuiRowDefColumns]="headers"
+        [cdkVirtualForOf]="tableData"
+        [cdkVirtualForTrackBy]="dataTrackBy"
+    >
+        <tr
+            nui-row
+            (click)="onInteraction(row, $event)"
+            [attr.role]="interactive ? 'button' : ''"
+            density="tiny"
+        ></tr>
+    </ng-template>
 </table>

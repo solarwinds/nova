@@ -175,7 +175,7 @@ export const widgets: IWidget[] = [
                                 descendantSorting: false,
                                 sortBy: "column1",
                             },
-                            scrollType: ScrollType.paginator,
+                            scrollType: ScrollType.virtualScroll,
                             paginatorConfiguration: {
                                 pageSizeSet: [5, 10, 15],
                                 pageSize: 5,

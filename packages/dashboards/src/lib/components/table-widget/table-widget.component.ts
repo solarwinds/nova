@@ -99,10 +99,7 @@ import {
     templateUrl: "./table-widget.component.html",
     styleUrls: ["./table-widget.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        SearchFeatureAddonService,
-        VirtualScrollFeatureAddonService,
-    ],
+    providers: [SearchFeatureAddonService, VirtualScrollFeatureAddonService],
     host: {
         // Note: Moved here from configuration to ensure that consumers will not override it.
         // Used to prevent table overflowing preview container in the edit/configuration mode.
@@ -244,6 +241,8 @@ export class TableWidgetComponent
             // we have to do it manually. Using optional chaining because vscrollViewport can be unavailable at initialization.
             // Related issue: https://github.com/angular/components/issues/10117
             this.vscrollViewport?.checkViewportSize();
+
+            console.log("this.vscrollViewport?.checkViewportSize", this.vscrollViewport?.checkViewportSize);
         }
 
         if (changes.configuration) {

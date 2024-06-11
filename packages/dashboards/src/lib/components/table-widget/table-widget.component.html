@@ -38,9 +38,22 @@
                     (mousePresent$ | async) === false &&
                     delayedMousePresenceDetectionEnabled
             }"
-            *ngIf="isVirtualScroll"
-        >
-            <table
+            >
+            <!-- *ngIf="isVirtualScroll" -->
+            <nui-table-widget-container
+                [columns]="columns"
+                [columnsWidthMap]="columnsWidthMap"
+                [headerTooltipsEnabled]="headerTooltipsEnabled"
+                [reorderable]="configuration?.reorderable"
+                [sortable]="sortable"
+                [totalItems]="totalItems"
+                [dataSource]="tableData"
+                [sortedColumn]="sortedColumn"
+                [trackBy]="dataTrackBy"
+                [headers]="headers"
+                [hasVirtualScroll]="isVirtualScroll"
+            ></nui-table-widget-container>
+            <!-- <table
                 class="nui-table-widget__main"
                 nui-table
                 [reorderable]="configuration?.reorderable"
@@ -106,7 +119,6 @@
                 </ng-container>
                 <tr nui-header-row *nuiHeaderRowDef="headers"></tr>
                 <ng-template
-                    *ngIf="isVirtualScroll"
                     nuiRowDef
                     cdkVirtualFor
                     let-row
@@ -121,47 +133,34 @@
                         density="tiny"
                     ></tr>
                 </ng-template>
-
-                <ng-template
-                    nuiRowDef
-                    cdkVirtualFor
-                    let-row
-                    [nuiRowDefColumns]="headers"
-                    [cdkVirtualForOf]="tableData"
-                    [cdkVirtualForTrackBy]="dataTrackBy"
-                >
-                    <tr
-                        nui-row
-                        (click)="onInteraction(row, $event)"
-                        [attr.role]="interactive ? 'button' : ''"
-                        density="tiny"
-                    ></tr>
-                </ng-template>
-            </table>
+            </table> -->
         </cdk-virtual-scroll-viewport>
 
-        <nui-table-widget-container
-            [columns]="columns"
-            [columnsWidthMap]="columnsWidthMap"
-            [headerTooltipsEnabled]="headerTooltipsEnabled"
-            [reorderable]="configuration?.reorderable"
-            [sortable]="sortable"
-            [totalItems]="totalItems"
-            [dataSource]="tableData"
-            [sortedColumn]="sortedColumn"
-            [trackBy]="dataTrackBy"
-            [headers]="headers"
-        ></nui-table-widget-container>
+        <ng-container *ngIf="!isVirtualScroll">
+            <nui-table-widget-container
+                [columns]="columns"
+                [columnsWidthMap]="columnsWidthMap"
+                [headerTooltipsEnabled]="headerTooltipsEnabled"
+                [reorderable]="configuration?.reorderable"
+                [sortable]="sortable"
+                [totalItems]="totalItems"
+                [dataSource]="tableData"
+                [sortedColumn]="sortedColumn"
+                [trackBy]="dataTrackBy"
+                [headers]="headers"
+                [hasVirtualScroll]="isVirtualScroll"
+            ></nui-table-widget-container>
 
-        <nui-paginator
-            #paginator
-            id="nui-table-widget-paginator"
-            [page]="paginatorState.page"
-            [pageSize]="paginatorState.pageSize"
-            [pageSizeSet]="paginatorState.pageSizeSet"
-            [total]="paginatorState.total"
-            (pagerAction)="applyFilters()"
-        >
-        </nui-paginator>
+            <nui-paginator
+                #paginator
+                id="nui-table-widget-paginator"
+                [page]="paginatorState.page"
+                [pageSize]="paginatorState.pageSize"
+                [pageSizeSet]="paginatorState.pageSizeSet"
+                [total]="paginatorState.total"
+                (pagerAction)="applyFilters()"
+            >
+            </nui-paginator>
+        </ng-container>
     </div>
 </div>
