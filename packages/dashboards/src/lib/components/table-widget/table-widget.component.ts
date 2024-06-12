@@ -159,6 +159,7 @@ export class TableWidgetComponent
         pageSizeSet: [10, 20, 50],
         total: 0,
     };
+    public makeSticky: boolean = true;
 
     public paginatorState: IPaginatorState = this.defaultPaginatorState;
 
@@ -669,6 +670,7 @@ export class TableWidgetComponent
      * Updates table columns and maps table data.
      */
     private updateTable() {
+        console.log("updateTable")
         if (this.widgetData && this.dataFields && this.configuration.columns) {
             this.updateColumns(this.configuration);
             // console.log("configuraiton",this.configuration)

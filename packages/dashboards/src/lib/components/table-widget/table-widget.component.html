@@ -40,7 +40,7 @@
             }"
             >
             <!-- *ngIf="isVirtualScroll" -->
-            <nui-table-widget-container
+            <!-- <nui-table-widget-container
                 [columns]="columns"
                 [columnsWidthMap]="columnsWidthMap"
                 [headerTooltipsEnabled]="headerTooltipsEnabled"
@@ -52,8 +52,8 @@
                 [trackBy]="dataTrackBy"
                 [headers]="headers"
                 [hasVirtualScroll]="isVirtualScroll"
-            ></nui-table-widget-container>
-            <!-- <table
+            ></nui-table-widget-container> -->
+            <table
                 class="nui-table-widget__main"
                 nui-table
                 [reorderable]="configuration?.reorderable"
@@ -133,10 +133,13 @@
                         density="tiny"
                     ></tr>
                 </ng-template>
-            </table> -->
+            </table>
+            <div *ngIf="!makeSticky">
+                <ng-container *ngTemplateOutlet="footer"></ng-container>
+            </div>
         </cdk-virtual-scroll-viewport>
 
-        <ng-container *ngIf="!isVirtualScroll">
+        <!-- <ng-container *ngIf="!isVirtualScroll">
             <nui-table-widget-container
                 [columns]="columns"
                 [columnsWidthMap]="columnsWidthMap"
@@ -161,6 +164,25 @@
                 (pagerAction)="applyFilters()"
             >
             </nui-paginator>
-        </ng-container>
+        </ng-container> -->
+    </div>
+    <div *ngIf="makeSticky">
+        <ng-container *ngTemplateOutlet="footer"></ng-container>
     </div>
 </div>
+
+
+<ng-template #footer>
+    <footer>
+        <nui-paginator
+                #paginator
+                id="nui-table-widget-paginator"
+                [page]="paginatorState.page"
+                [pageSize]="paginatorState.pageSize"
+                [pageSizeSet]="paginatorState.pageSizeSet"
+                [total]="paginatorState.total"
+                (pagerAction)="applyFilters()"
+            >
+            </nui-paginator>
+    </footer>
+</ng-template>
