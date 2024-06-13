@@ -54,8 +54,10 @@ import {
     IDataSource,
     IEvent,
     IFilter,
+    INovaFilteringOutputs,
     ISortedItem,
     LoggerService,
+    PaginatorComponent,
     SorterDirection,
     TableAlignmentOptions,
     TableComponent,
@@ -81,7 +83,12 @@ import {
 import { ITableFormatterDefinition } from "../types";
 import { SearchFeatureAddonService } from "./addons/search-feature-addon.service";
 import { VirtualScrollFeatureAddonService } from "./addons/virtual-scroll-feature-addon.service";
-import { ITableWidgetColumnConfig, ITableWidgetConfig } from "./types";
+import {
+    IPaginatorState,
+    ITableWidgetColumnConfig,
+    ITableWidgetConfig,
+} from "./types";
+import { PaginatorFeatureAddonService } from "./addons/paginator-feature-addon.service";
 
 /**
  * @ignore
@@ -91,7 +98,11 @@ import { ITableWidgetColumnConfig, ITableWidgetConfig } from "./types";
     templateUrl: "./table-widget.component.html",
     styleUrls: ["./table-widget.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [SearchFeatureAddonService, VirtualScrollFeatureAddonService],
+    providers: [
+        SearchFeatureAddonService,
+        VirtualScrollFeatureAddonService,
+        PaginatorFeatureAddonService,
+    ],
     host: {
         // Note: Moved here from configuration to ensure that consumers will not override it.
         // Used to prevent table overflowing preview container in the edit/configuration mode.
@@ -140,6 +151,7 @@ export class TableWidgetComponent
     public hasVirtualScroll: boolean = true;
     public tableContainerHeight: number;
     public isSearchEnabled: boolean = false;
+    public isPaginatorEnabled: boolean = true;
     public searchTerm$ = new Subject<string>();
     public searchValue: string;
     public onDestroy$: Subject<void> = new Subject<void>();
@@ -147,6 +159,8 @@ export class TableWidgetComponent
     public mousePresent$: BehaviorSubject<boolean> =
         new BehaviorSubject<boolean>(false);
     public rowHeight: number = 24;
+
+    public cacheSize: number = 0;
 
     public set scrollBuffer(value: number) {
         if (value > 100 || value < 0) {
@@ -175,6 +189,7 @@ export class TableWidgetComponent
     public isBusy: boolean = this.lastPageFetched !== this.totalPages;
 
     @ViewChild("widgetTable") table: TableComponent<any>;
+    @ViewChild("paginator") paginator: PaginatorComponent;
     @ViewChild(CdkVirtualScrollViewport)
     vscrollViewport?: CdkVirtualScrollViewport;
     @ViewChildren(TableRowComponent, { read: ElementRef })
@@ -202,6 +217,7 @@ export class TableWidgetComponent
         private el: ElementRef,
         private logger: LoggerService,
         private searchAddon: SearchFeatureAddonService,
+        public paginatorAddon: PaginatorFeatureAddonService,
         public virtualScrollAddon: VirtualScrollFeatureAddonService,
         private formattersRegistryService: TableFormatterRegistryService
     ) {}
@@ -246,7 +262,9 @@ export class TableWidgetComponent
             ) as boolean;
             if (this.hasVirtualScroll !== newHasVirtualScroll) {
                 this.hasVirtualScroll = newHasVirtualScroll;
-                this.virtualScrollAddon.initVirtualScroll();
+                if (this.hasVirtualScroll) {
+                    this.virtualScrollAddon.initVirtualScroll();
+                }
             }
         }
 
@@ -279,6 +297,9 @@ export class TableWidgetComponent
 
         this.virtualScrollAddon.initVirtualScroll();
         this.searchAddon.initWidget(this);
+        this.paginatorAddon.initWidget(this);
+        // this.initPaginator();
+
         const tableHeightChanged$: Observable<number> = this.eventBus
             .getStream(WIDGET_RESIZE)
             .pipe(
@@ -341,6 +362,19 @@ export class TableWidgetComponent
             undefined
         );
     }
+
+    // public initPaginator() {
+    //     // this.vscrollViewport?.
+    //     this.hasVirtualScroll = false;
+    //     // if(this.hasVirtualScroll) {
+    //     this.virtualScrollAddon.initVirtualScroll();
+    //     // }
+    //     this.dataSource.registerComponent({
+    //         paginator: {
+    //             componentInstance: this.paginator,
+    //         },
+    //     });
+    // }
 
     /** Checks if table should be displayed */
     public shouldDisplayTable(): boolean {

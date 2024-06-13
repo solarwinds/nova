@@ -35,6 +35,7 @@ import {
     NuiIconModule,
     NuiImageModule,
     NuiMenuModule,
+    NuiPaginatorModule,
     NuiPopoverModule,
     NuiPopupModule,
     NuiProgressModule,
@@ -213,6 +214,7 @@ const entryComponents: IComponentWithLateLoadKey[] = [
         NuiRiskScoreModule,
         NuiSelectModule,
         NuiPopoverModule,
+        NuiPaginatorModule,
     ],
     declarations: dashboardComponents,
     providers: [

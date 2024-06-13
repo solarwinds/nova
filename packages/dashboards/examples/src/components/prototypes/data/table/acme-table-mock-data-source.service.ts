@@ -23,6 +23,7 @@ import { Inject, Injectable } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
 
 import {
+    ClientSideDataSource,
     IDataField,
     INovaFilters,
     LocalFilteringDataSource,
@@ -33,7 +34,7 @@ import { TABLE_DATA } from "../widget-data";
 import { BasicTableModel, ITableDataSourceOutput } from "./types";
 
 @Injectable()
-export class AcmeTableMockDataSource extends LocalFilteringDataSource<BasicTableModel> {
+export class AcmeTableMockDataSource extends ClientSideDataSource<BasicTableModel> {
     public static providerId = "AcmeTableMockDataSource";
 
     private cache: any[] = [];
@@ -75,7 +76,7 @@ export class AcmeTableMockDataSource extends LocalFilteringDataSource<BasicTable
             setTimeout(async () => {
                 const virtualScrollFilter =
                     filters.virtualScroll && filters.virtualScroll.value;
-
+                console.log("Filters: ", filters);
                 if (virtualScrollFilter) {
                     // The multiplier used here is a way to fetch more items per scroll
                     const start = filters.virtualScroll?.value.start;
@@ -90,8 +91,8 @@ export class AcmeTableMockDataSource extends LocalFilteringDataSource<BasicTable
                     this.cache = this.cache.concat(
                         nextChunk.filter((item) => !this.cache.includes(item))
                     );
-                    super.setData(this.cache);
                 }
+                super.setData(TABLE_DATA);
 
                 const filteredData = await super.getFilteredData(filters);
 

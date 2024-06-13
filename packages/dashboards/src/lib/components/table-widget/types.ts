@@ -62,9 +62,22 @@ export interface ITableWidgetConfig {
         searchTerm?: string;
         searchDebounce?: number;
     };
+
+    paginatorConfiguration?: {
+        enabled: boolean;
+        pageSizeSet?: number[];
+        pageSize?: number;
+    };
 }
 
 export interface ITableWidgetSorterConfig {
     descendantSorting: boolean;
     sortBy: string;
+}
+
+export interface IPaginatorState {
+    page: number;
+    pageSize: number;
+    pageSizeSet: number[];
+    total: number;
 }
