@@ -28,6 +28,7 @@ import { BehaviorSubject } from "rxjs";
 import { skip, take, tap } from "rxjs/operators";
 
 import {
+    ClientSideDataSource,
     EventBus,
     IDataField,
     LocalFilteringDataSource,
@@ -50,7 +51,7 @@ import { ProviderRegistryService } from "../../services/provider-registry.servic
 import { REFRESH, SCROLL_NEXT_PAGE } from "../../services/types";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../types";
 import { TableWidgetComponent } from "./table-widget.component";
-import { ITableWidgetColumnConfig, ITableWidgetConfig } from "./types";
+import { IPaginatorState, ITableWidgetColumnConfig, ITableWidgetConfig } from "./types";
 
 interface BasicTableModel {
     position: number;
@@ -65,7 +66,7 @@ interface BasicTableModel {
     secondUrlLabel: string;
 }
 
-class MockDatasource extends LocalFilteringDataSource<any> {
+class MockDatasource extends ClientSideDataSource<any> {
     public busy = new BehaviorSubject(true);
 }
 
@@ -597,6 +598,27 @@ describe("TableWidgetComponent", () => {
                     })
                 )
                 .subscribe();
+        });
+    });
+
+    describe("paginator >", () => {
+        const paginatorConfig = {
+            enabled: true,
+            pageSizeSet: [10,20,30],
+            pageSize: 10
+        }
+
+        beforeAll(() => {
+            component.configuration.paginatorConfiguration = paginatorConfig
+            fixture.detectChanges();
+        });
+
+        it("should display if is enabled", () => {
+            expect(component.isPaginatorEnabled).toBe(true);
+        });
+
+        it("should have correct configuration", () => {
+            expect(component.configuration.paginatorConfiguration).toBe(paginatorConfig);
         });
     });
 
