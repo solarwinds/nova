@@ -104,7 +104,6 @@
                     </ng-container>
                 </ng-container>
                 <tr nui-header-row *nuiHeaderRowDef="headers"></tr>
-                <!-- [templateCacheSize]="cacheSize" -->
                 <ng-template
                     nuiRowDef
                     cdkVirtualFor
@@ -121,9 +120,6 @@
                     ></tr>
                 </ng-template>
             </table>
-            <!-- <div class="mt-3" *ngIf="!paginatorAddon.isSticky && isPaginatorEnabled">
-                <ng-container *ngTemplateOutlet="footer"></ng-container>
-            </div> -->
         </cdk-virtual-scroll-viewport>
     </div>
     <div *ngIf="isPaginatorEnabled">

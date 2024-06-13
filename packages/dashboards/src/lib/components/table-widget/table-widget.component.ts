@@ -160,8 +160,6 @@ export class TableWidgetComponent
         new BehaviorSubject<boolean>(false);
     public rowHeight: number = 24;
 
-    public cacheSize: number = 0;
-
     public set scrollBuffer(value: number) {
         if (value > 100 || value < 0) {
             throw new Error(
@@ -298,7 +296,6 @@ export class TableWidgetComponent
         this.virtualScrollAddon.initVirtualScroll();
         this.searchAddon.initWidget(this);
         this.paginatorAddon.initWidget(this);
-        // this.initPaginator();
 
         const tableHeightChanged$: Observable<number> = this.eventBus
             .getStream(WIDGET_RESIZE)
@@ -362,19 +359,6 @@ export class TableWidgetComponent
             undefined
         );
     }
-
-    // public initPaginator() {
-    //     // this.vscrollViewport?.
-    //     this.hasVirtualScroll = false;
-    //     // if(this.hasVirtualScroll) {
-    //     this.virtualScrollAddon.initVirtualScroll();
-    //     // }
-    //     this.dataSource.registerComponent({
-    //         paginator: {
-    //             componentInstance: this.paginator,
-    //         },
-    //     });
-    // }
 
     /** Checks if table should be displayed */
     public shouldDisplayTable(): boolean {
