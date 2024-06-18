@@ -36,6 +36,7 @@ import {
     PizzagnaLayer,
     ProportionalWidgetChartTypes,
     RawFormatterComponent,
+    ScrollType,
     WellKnownProviders,
 } from "@nova-ui/dashboards";
 
@@ -174,8 +175,10 @@ export const widgets: IWidget[] = [
                                 descendantSorting: false,
                                 sortBy: "column1",
                             },
+                            scrollType: ScrollType.paginator,
                             paginatorConfiguration: {
-                                enabled: true,
+                                pageSize:20,
+                                pageSizeSet: [10,20,30]
                             },
                             hasVirtualScroll: false,
                             searchConfiguration: {

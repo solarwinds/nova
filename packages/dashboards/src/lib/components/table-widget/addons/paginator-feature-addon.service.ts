@@ -20,7 +20,10 @@
 
 import { Injectable } from "@angular/core";
 import { INovaFilteringOutputs } from "@nova-ui/bits";
-import { IPaginatorState, TableWidgetComponent } from "../public-api";
+import {
+    IPaginatorState,
+    TableWidgetComponent,
+} from "../public-api";
 
 @Injectable()
 export class PaginatorFeatureAddonService {
@@ -66,8 +69,6 @@ export class PaginatorFeatureAddonService {
     private setPaginatorState() {
         const paginatorConfiguration =
             this.widget.configuration?.paginatorConfiguration;
-
-        this.widget.isPaginatorEnabled = !!paginatorConfiguration?.enabled;
 
         if (this.widget.isPaginatorEnabled) {
             this.paginatorState.pageSize =

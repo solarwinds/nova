@@ -87,6 +87,7 @@ import {
     IPaginatorState,
     ITableWidgetColumnConfig,
     ITableWidgetConfig,
+    ScrollType,
 } from "./types";
 import { PaginatorFeatureAddonService } from "./addons/paginator-feature-addon.service";
 
@@ -148,10 +149,9 @@ export class TableWidgetComponent
         string,
         number | undefined
     >();
-    public hasVirtualScroll: boolean = true;
+    public scrollType: ScrollType = ScrollType.virtual;
     public tableContainerHeight: number;
     public isSearchEnabled: boolean = false;
-    public isPaginatorEnabled: boolean = true;
     public searchTerm$ = new Subject<string>();
     public searchValue: string;
     public onDestroy$: Subject<void> = new Subject<void>();
@@ -253,17 +253,7 @@ export class TableWidgetComponent
                 this.onSortOrderChanged(sortedColumn);
             }
 
-            const newHasVirtualScroll = get(
-                changes,
-                "configuration.currentValue.hasVirtualScroll",
-                true
-            ) as boolean;
-            if (this.hasVirtualScroll !== newHasVirtualScroll) {
-                this.hasVirtualScroll = newHasVirtualScroll;
-                if (this.hasVirtualScroll) {
-                    this.virtualScrollAddon.initVirtualScroll();
-                }
-            }
+            this.resolveScrollType(changes);
         }
 
         if (changes.totalItems) {
@@ -271,12 +261,31 @@ export class TableWidgetComponent
         }
     }
 
+    public resolveScrollType(changes: SimpleChanges) {
+        // Since removing "hasVirtualScroll" from configuration would cause breaking changes, it is used as primary source of truth
+        const newHasVirtualScroll = get(
+            changes,
+            "configuration.currentValue.hasVirtualScroll",
+            true
+        ) as boolean;
+
+        const scrollType = get(
+            changes,
+            "configuration.currentValue.scrollType",
+            ScrollType.virtual
+        ) as ScrollType;
+
+        this.scrollType = newHasVirtualScroll ? ScrollType.virtual : scrollType;
+
+        this.virtualScrollAddon.initVirtualScroll(this);
+        this.paginatorAddon.initWidget(this);
+    }
+
     public ngOnInit(): void {
         if (this.dataSource) {
             // Since the sortFilter is not initialized, we have to retrieve and set the correct filter value from the configuration before registering it
             this.setSortFilter();
             this.registerSorter();
-            this.virtualScrollAddon.initWidget(this);
         }
     }
 
@@ -293,7 +302,7 @@ export class TableWidgetComponent
             )
             .subscribe();
 
-        this.virtualScrollAddon.initVirtualScroll();
+        this.virtualScrollAddon.initVirtualScroll(this);
         this.searchAddon.initWidget(this);
         this.paginatorAddon.initWidget(this);
 
@@ -577,6 +586,14 @@ export class TableWidgetComponent
             this.formatters.items[column.formatter.componentType]?.alignment ||
             this.defaultColumnAlignment
         );
+    }
+
+    public get hasVirtualScroll(): boolean {
+        return this.scrollType === ScrollType.virtual;
+    }
+
+    public get isPaginatorEnabled(): boolean {
+        return this.scrollType === ScrollType.paginator;
     }
 
     private setSortFilter() {

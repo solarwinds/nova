@@ -39,7 +39,11 @@ export class VirtualScrollFeatureAddonService {
         this.widget = widget;
     }
 
-    public initVirtualScroll(): void {
+    public initVirtualScroll(widget: TableWidgetComponent): void {
+        if (!this.widget) {
+            this.initWidget(widget);
+        }
+
         if (this.widget.hasVirtualScroll) {
             this.registerVirtualScroll();
         } else {

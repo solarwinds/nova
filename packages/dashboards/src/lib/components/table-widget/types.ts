@@ -46,7 +46,11 @@ export interface ITableWidgetConfig {
     columns: Array<ITableWidgetColumnConfig>;
     sortable?: boolean;
     sorterConfiguration: ITableWidgetSorterConfig;
-    hasVirtualScroll: boolean;
+    /**
+     * @deprecated Use scrollType and set it to "infinite" instead
+     */
+    hasVirtualScroll?: boolean;
+    scrollType?: ScrollType;
     interactive?: boolean;
     headerTooltipsEnabled?: boolean;
     scrollActivationDelayMs?: number;
@@ -64,7 +68,6 @@ export interface ITableWidgetConfig {
     };
 
     paginatorConfiguration?: {
-        enabled: boolean;
         pageSizeSet?: number[];
         pageSize?: number;
     };
@@ -80,4 +83,10 @@ export interface IPaginatorState {
     pageSize: number;
     pageSizeSet: number[];
     total: number;
+}
+
+export enum ScrollType {
+    virtual = "virtual",
+    paginator = "paginator",
+    default = "default",
 }
