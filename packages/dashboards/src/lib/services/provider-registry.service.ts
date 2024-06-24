@@ -60,6 +60,8 @@ import { GenericConverterService } from "../configurator/services/converters/sha
 import { TitleAndDescriptionConverterService } from "../configurator/services/converters/shared/title-and-description-converter/title-and-description-converter.service";
 import { TableColumnsConverterService } from "../configurator/services/converters/table/table-columns-converter.service";
 import { TableFiltersConverterService } from "../configurator/services/converters/table/table-filters-converter.service";
+import { TableScrollTypeConverterService } from "../configurator/services/converters/table/table-scroll-type-converter.service";
+
 import { TimeseriesMetadataConverterService } from "../configurator/services/converters/timeseries/timeseries-metadata-converter.service";
 import { TimeseriesSeriesConverterService } from "../configurator/services/converters/timeseries/timeseries-series-converter.service";
 import { TimeseriesTileIndicatorDataConverterService } from "../configurator/services/converters/timeseries/timeseries-tile-indicator-data-converter.service";
@@ -114,6 +116,7 @@ import {
     NOVA_URL_INTERACTION_HANDLER,
     NOVA_VIRTUAL_VIEWPORT_MANAGER,
     NOVA_RISK_SCORE_FORMATTERS_REGISTRY,
+    NOVA_TABLE_SCROLL_TYPE_CONVERTER,
 } from "./types";
 import { UrlInteractionService } from "./url-interaction.service";
 import { WidgetConfigurationService } from "./widget-configuration.service";
@@ -252,6 +255,11 @@ export class ProviderRegistryService {
             [NOVA_TABLE_FILTERS_CONVERTER]: {
                 provide: CONFIGURATOR_CONVERTER,
                 useClass: TableFiltersConverterService,
+                deps: [PIZZAGNA_EVENT_BUS, PreviewService, PizzagnaService],
+            },
+            [NOVA_TABLE_SCROLL_TYPE_CONVERTER]: {
+                provide: CONFIGURATOR_CONVERTER,
+                useClass: TableScrollTypeConverterService,
                 deps: [PIZZAGNA_EVENT_BUS, PreviewService, PizzagnaService],
             },
             [NOVA_LOADING_ADAPTER]: {

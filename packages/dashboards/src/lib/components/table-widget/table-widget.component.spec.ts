@@ -609,12 +609,11 @@ describe("TableWidgetComponent", () => {
     describe("scroll type >", () => {
         describe("virtual scroll >", () => {
             it("should be enabled if is hasVirtualScroll is set to true", () => {
-            
                 const configWithVirtualScroll: ITableWidgetConfig = {
                     ...configuration,
                     hasVirtualScroll: true,
                 };
-                
+
                 component.ngOnChanges(
                     createSimpleChanges(
                         configWithVirtualScroll,
@@ -622,21 +621,21 @@ describe("TableWidgetComponent", () => {
                         dataFields
                     )
                 );
-    
+
                 fixture.detectChanges();
-    
+
                 expect(component.isPaginatorEnabled).toBe(false);
                 expect(component.hasVirtualScroll).toBe(true);
             });
-    
+
             it("should be enabled if is hasVirtualScroll is set to true even if scrollType is set to paginator", () => {
-                
-                const configWithVirtualScrollAndScrollType: ITableWidgetConfig = {
-                    ...configuration,
-                    hasVirtualScroll: true,
-                    scrollType: ScrollType.paginator
-                };
-                
+                const configWithVirtualScrollAndScrollType: ITableWidgetConfig =
+                    {
+                        ...configuration,
+                        hasVirtualScroll: true,
+                        scrollType: ScrollType.paginator,
+                    };
+
                 component.ngOnChanges(
                     createSimpleChanges(
                         configWithVirtualScrollAndScrollType,
@@ -644,23 +643,23 @@ describe("TableWidgetComponent", () => {
                         dataFields
                     )
                 );
-    
+
                 fixture.detectChanges();
-    
+
                 expect(component.isPaginatorEnabled).toBe(false);
                 expect(component.hasVirtualScroll).toBe(true);
             });
 
             it("should be enabled if not defined otherwise in config", () => {
-            
-                const configurationWithoutScrollTypeOrHasVirtualScroll: ITableWidgetConfig = {
-                    columns: [],
-                    sorterConfiguration: {
-                        descendantSorting: true,
-                        sortBy: "column1",
-                    },
-                };
-                
+                const configurationWithoutScrollTypeOrHasVirtualScroll: ITableWidgetConfig =
+                    {
+                        columns: [],
+                        sorterConfiguration: {
+                            descendantSorting: true,
+                            sortBy: "column1",
+                        },
+                    };
+
                 component.ngOnChanges(
                     createSimpleChanges(
                         configurationWithoutScrollTypeOrHasVirtualScroll,
@@ -668,23 +667,23 @@ describe("TableWidgetComponent", () => {
                         dataFields
                     )
                 );
-    
+
                 fixture.detectChanges();
-    
+
                 expect(component.isPaginatorEnabled).toBe(false);
                 expect(component.hasVirtualScroll).toBe(true);
             });
-        })
+        });
 
         describe("paginator >", () => {
             it("should be enabled if hasVirtualScroll is set to false and scrollType is set to paginator", () => {
-            
-                const configWithoutVirtualScrollAndScrollType: ITableWidgetConfig = {
-                    ...configuration,
-                    hasVirtualScroll: false,
-                    scrollType: ScrollType.paginator
-                };
-                
+                const configWithoutVirtualScrollAndScrollType: ITableWidgetConfig =
+                    {
+                        ...configuration,
+                        hasVirtualScroll: false,
+                        scrollType: ScrollType.paginator,
+                    };
+
                 component.ngOnChanges(
                     createSimpleChanges(
                         configWithoutVirtualScrollAndScrollType,
@@ -692,9 +691,9 @@ describe("TableWidgetComponent", () => {
                         dataFields
                     )
                 );
-    
+
                 fixture.detectChanges();
-    
+
                 expect(component.isPaginatorEnabled).toBe(true);
                 expect(component.hasVirtualScroll).toBe(false);
             });

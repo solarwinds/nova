@@ -67,15 +67,18 @@ export interface ITableWidgetConfig {
         searchDebounce?: number;
     };
 
-    paginatorConfiguration?: {
-        pageSizeSet?: number[];
-        pageSize?: number;
-    };
+    paginatorConfiguration?: ITableWidgetPaginatorConfig;
 }
 
 export interface ITableWidgetSorterConfig {
     descendantSorting: boolean;
     sortBy: string;
+    test?: string;
+}
+
+export interface ITableWidgetPaginatorConfig {
+    pageSizeSet?: number[];
+    pageSize?: number;
 }
 
 export interface IPaginatorState {
@@ -84,6 +87,8 @@ export interface IPaginatorState {
     pageSizeSet: number[];
     total: number;
 }
+
+// export interface IFilterConfiguration extends ITableWidgetSorterConfig, ITableWidgetPaginatorConfig {}
 
 export enum ScrollType {
     virtual = "virtual",

@@ -1,0 +1,39 @@
+<nui-widget-editor-accordion [formGroup]="form">
+    <div accordionHeader class="d-flex align-items-center px-4 py-2">
+        <nui-icon class="align-self-start pt-2" icon="application"></nui-icon>
+        <div class="d-flex flex-column ml-4 pt-1">
+            <span class="nui-text-label" i18n>Scroll type</span>
+            <div class="nui-text-secondary">
+                {{ scrollType }}
+            </div>
+        </div>
+    </div>
+    <div class="table-filters-configuration__accordion-content">
+        <div
+            formGroupName="paginatorConfiguration"
+            class="d-flex align-items-end"
+        >
+            <nui-form-field
+                caption="Scroll Type"
+                i18n-caption
+                [control]="form.controls['scrollType']"
+                class="w-50"
+            >
+                <nui-select-v2
+                    placeholder="Select scroll type"
+                    i18n-placeholder
+                    [popupViewportMargin]="configuratorHeading.height$ | async"
+                    formControlName="scrollType"
+                    class="table-filters-configuration__accordion-content__sort-by-input"
+                >
+                    <nui-select-v2-option
+                        *ngFor="let column of loadStrategies"
+                        [value]="column.id"
+                    >
+                        {{ column.title }}
+                    </nui-select-v2-option>
+                </nui-select-v2>
+            </nui-form-field>
+        </div>
+    </div>
+</nui-widget-editor-accordion>

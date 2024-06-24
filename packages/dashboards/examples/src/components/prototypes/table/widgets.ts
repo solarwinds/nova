@@ -177,8 +177,8 @@ export const widgets: IWidget[] = [
                             },
                             scrollType: ScrollType.paginator,
                             paginatorConfiguration: {
-                                pageSize:20,
-                                pageSizeSet: [10,20,30]
+                                pageSize: 20,
+                                pageSizeSet: [10, 20, 30],
                             },
                             hasVirtualScroll: false,
                             searchConfiguration: {

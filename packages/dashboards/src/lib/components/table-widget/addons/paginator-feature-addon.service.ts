@@ -20,10 +20,7 @@
 
 import { Injectable } from "@angular/core";
 import { INovaFilteringOutputs } from "@nova-ui/bits";
-import {
-    IPaginatorState,
-    TableWidgetComponent,
-} from "../public-api";
+import { IPaginatorState, TableWidgetComponent } from "../public-api";
 
 @Injectable()
 export class PaginatorFeatureAddonService {

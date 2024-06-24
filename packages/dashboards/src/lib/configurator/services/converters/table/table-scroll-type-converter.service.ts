@@ -30,7 +30,7 @@ import { PreviewService } from "../../preview.service";
 import { BaseConverter } from "../base-converter";
 
 @Injectable()
-export class TableFiltersConverterService
+export class TableScrollTypeConverterService
     extends BaseConverter
     implements AfterViewInit
 {
@@ -50,19 +50,29 @@ export class TableFiltersConverterService
         let formPizzagna = this.pizzagnaService.pizzagna;
 
         const table = this.getPreview()?.table;
-        const columns = table?.properties?.configuration?.columns;
-        const sorterConfiguration =
-            table?.properties?.configuration?.sorterConfiguration;
+
+        const paginatorConfiguration =
+            table?.properties?.configuration?.paginatorConfiguration;
+        const hasVirtualScroll =
+            table?.properties?.configuration?.hasVirtualScroll;
+        const scrollType = table?.properties?.configuration?.scrollType;
 
         formPizzagna = immutableSet(
             formPizzagna,
-            `${PizzagnaLayer.Data}.filters.properties.columns`,
-            columns
+            `${PizzagnaLayer.Data}.scrollType.properties.paginatorConfiguration`,
+            paginatorConfiguration
         );
+
         formPizzagna = immutableSet(
             formPizzagna,
-            `${PizzagnaLayer.Data}.filters.properties.sorterConfiguration`,
-            sorterConfiguration
+            `${PizzagnaLayer.Data}.scrollType.properties.hasVirtualScroll`,
+            hasVirtualScroll
+        );
+
+        formPizzagna = immutableSet(
+            formPizzagna,
+            `${PizzagnaLayer.Data}.scrollType.properties.scrollType`,
+            scrollType
         );
 
         this.updateFormPizzagna(formPizzagna);
@@ -71,14 +81,20 @@ export class TableFiltersConverterService
     public toPreview(form: FormGroup): void {
         form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((form) => {
             let preview = this.getPreview();
+
             preview = immutableSet(
                 preview,
-                "table.properties.configuration.sorterConfiguration",
-                form.sorterConfiguration
+                "table.properties.configuration.hasVirtualScroll",
+                false
+            );
+
+            preview = immutableSet(
+                preview,
+                "table.properties.configuration.scrollType",
+                form.paginatorConfiguration.scrollType
             );
 
             this.updatePreview(preview);
-            // we need to update form with columns that are available
             this.buildForm();
         });
     }
