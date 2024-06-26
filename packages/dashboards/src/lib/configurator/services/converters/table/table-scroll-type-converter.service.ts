@@ -94,6 +94,18 @@ export class TableScrollTypeConverterService
                 form.paginatorConfiguration.scrollType
             );
 
+            preview = immutableSet(
+                preview,
+                "table.properties.configuration.paginatorConfiguration.pageSize",
+                form.paginatorConfiguration.pageSize
+            );
+
+            preview = immutableSet(
+                preview,
+                "table.properties.configuration.paginatorConfiguration.pageSizeSet",
+                form.paginatorConfiguration.pageSizeSet
+            );
+
             this.updatePreview(preview);
             this.buildForm();
         });

@@ -30,21 +30,22 @@ import {
     Output,
     SimpleChanges,
 } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import get from "lodash/get";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import {
-    ITableWidgetColumnConfig,
-    ITableWidgetConfig,
     ITableWidgetPaginatorConfig,
-    ITableWidgetSorterConfig,
     ScrollType,
 } from "../../../../../components/table-widget/types";
 import { IHasChangeDetector, IHasForm } from "../../../../../types";
 import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
 
+export interface IPageSizeSetMenuOption {
+    value: number;
+    checked: boolean;
+}
 @Component({
     selector: "nui-scroll-type-editor-component",
     templateUrl: "scroll-type-editor.component.html",
@@ -79,23 +80,20 @@ export class TableScrollTypeEditorComponent
             title: "Default scroll",
         },
     ];
+    private pageSizeSetAll = [
+        5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 90, 100,
+    ];
+    public pageSizeSetOptions: IPageSizeSetMenuOption[] = [];
+    public pageSizeOptions: number[] = [];
+    public subtitle = "";
+    public isExpanderOpen = false;
 
     constructor(
         private formBuilder: FormBuilder,
         public configuratorHeading: ConfiguratorHeadingService,
         public changeDetector: ChangeDetectorRef
-    ) {}
-
-    public ngOnInit(): void {
-        this.form = this.formBuilder.group({
-            paginatorConfiguration: this.formBuilder.group({
-                scrollType: get(this.scrollType, "", ScrollType.virtual),
-                pageSize: get(this.paginatorConfiguration, "pageSize", 10),
-                // pageSizeSet: get(this.paginatorConfiguration, "pageSizeSet", [10, 20, 50]),
-            }),
-        });
-
-        this.formReady.emit(this.form);
+    ) {
+        this.updatePaginatorSelectOptions(this.pageSizeSetAll, false);
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -103,17 +101,140 @@ export class TableScrollTypeEditorComponent
             .get("paginatorConfiguration")
             ?.get("scrollType");
 
+        const pageSizeSetFormControl = this.form
+            .get("paginatorConfiguration")
+            ?.get("pageSizeSet");
+
+        const pageSizeFormControl = this.form
+            .get("paginatorConfiguration")
+            ?.get("pageSize");
+
         if (changes.scrollType) {
             scrollTypeFormControl?.setValue(this.scrollType, {
                 emitEvent: false,
             });
+
+            this.changeExpanderState(false);
+            this.setAccordionSubtitleValues();
+        }
+
+        if (changes.paginatorConfiguration) {
+            const pageSizeSet = this.paginatorConfiguration.pageSizeSet;
+
+            if (pageSizeSet) {
+                this.updatePaginatorSelectOptions(pageSizeSet, true);
+                this.updateDefaultPageSizeOptions(pageSizeSet);
+
+                pageSizeSetFormControl?.setValue(pageSizeSet, {
+                    emitEvent: false,
+                });
+            }
+
+            pageSizeFormControl?.setValue(
+                this.paginatorConfiguration.pageSize,
+                {
+                    emitEvent: false,
+                }
+            );
         }
 
         this.changeDetector.detectChanges();
     }
 
+    public ngOnInit(): void {
+        this.form = this.formBuilder.group({
+            paginatorConfiguration: this.formBuilder.group({
+                scrollType: get(this.scrollType, "", ScrollType.virtual),
+                pageSize: get(this.paginatorConfiguration, "pageSize", 10),
+                pageSizeSet: new FormControl(
+                    get(
+                        this.paginatorConfiguration,
+                        "pageSizeSet",
+                        [10, 20, 50]
+                    )
+                ),
+            }),
+        });
+
+        this.form.valueChanges
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((val) => {
+                this.setAccordionSubtitleValues();
+            });
+
+        this.formReady.emit(this.form);
+    }
+
     public ngOnDestroy(): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();
+    }
+
+    private setAccordionSubtitleValues() {
+        const scrollTYpe = this.form
+            .get("paginatorConfiguration")
+            ?.get("scrollType")?.value;
+
+        this.subtitle =
+            "Scroll Type: " +
+            this.loadStrategies.find((ls) => ls.id === scrollTYpe)?.title;
+    }
+
+    public onMenuActionDone(item: IPageSizeSetMenuOption): void {
+        const option = this.pageSizeSetOptions.find(
+            (n) => n.value === item.value
+        );
+        if (option) {
+            option.checked = !item.checked;
+        }
+
+        this.emitUpdatedSelectedOptions();
+    }
+
+    public get hasPaginator() {
+        return this.scrollType === ScrollType.paginator;
+    }
+
+    public accordionToggle(isOpened: boolean) {
+        this.changeExpanderState(false);
+    }
+
+    public changeExpanderState(isOpen: boolean) {
+        this.isExpanderOpen = isOpen;
+    }
+
+    private emitUpdatedSelectedOptions() {
+        const pageSizeSetFormControl = this.form
+            .get("paginatorConfiguration")
+            ?.get("pageSizeSet");
+
+        const filteredPageSizeSet = this.pageSizeSetOptions
+            .filter((o) => o.checked)
+            .map((o) => o.value);
+        this.updateDefaultPageSizeOptions(filteredPageSizeSet);
+        pageSizeSetFormControl?.setValue(filteredPageSizeSet, {
+            emitEvent: false,
+        });
+    }
+
+    private updateDefaultPageSizeOptions(options: number[]) {
+        this.pageSizeOptions = options;
+    }
+
+    private updatePaginatorSelectOptions(
+        options: number[],
+        isChecked: boolean
+    ) {
+        options.forEach((o) => {
+            const option = this.pageSizeSetOptions.find((po) => po.value === o);
+            if (option) {
+                option.checked = isChecked;
+            } else {
+                this.pageSizeSetOptions.push({
+                    value: o,
+                    checked: isChecked,
+                });
+            }
+        });
     }
 }

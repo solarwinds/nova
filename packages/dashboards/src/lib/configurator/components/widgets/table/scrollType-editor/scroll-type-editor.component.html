@@ -1,23 +1,25 @@
-<nui-widget-editor-accordion [formGroup]="form">
+<nui-widget-editor-accordion
+    [formGroup]="form"
+    (onOpenChange)="accordionToggle($event)"
+>
     <div accordionHeader class="d-flex align-items-center px-4 py-2">
         <nui-icon class="align-self-start pt-2" icon="application"></nui-icon>
         <div class="d-flex flex-column ml-4 pt-1">
             <span class="nui-text-label" i18n>Scroll type</span>
             <div class="nui-text-secondary">
-                {{ scrollType }}
+                {{ subtitle }}
             </div>
         </div>
     </div>
-    <div class="table-filters-configuration__accordion-content">
-        <div
-            formGroupName="paginatorConfiguration"
-            class="d-flex align-items-end"
-        >
+    <div
+        class="table-filters-configuration__accordion-content"
+        formGroupName="paginatorConfiguration"
+    >
+        <div class="scrollTypeField d-flex align-items-end">
             <nui-form-field
                 caption="Scroll Type"
                 i18n-caption
                 [control]="form.controls['scrollType']"
-                class="w-50"
             >
                 <nui-select-v2
                     placeholder="Select scroll type"
@@ -34,6 +36,57 @@
                     </nui-select-v2-option>
                 </nui-select-v2>
             </nui-form-field>
+        </div>
+        <div *ngIf="hasPaginator">
+            <nui-expander
+                i18n-header
+                header="Advanced Options"
+                (openChange)="changeExpanderState($event)"
+                [open]="isExpanderOpen"
+            >
+                <div class="expander-content">
+                    <nui-menu
+                        title="Page size options set"
+                        [appendToBody]="true"
+                        i18n-title
+                    >
+                        <nui-menu-group header="Item Types" i18n-header>
+                            <nui-menu-option
+                                *ngFor="let option of pageSizeSetOptions"
+                                (actionDone)="onMenuActionDone(option)"
+                                [checked]="option.checked"
+                                i18n
+                                >{{ option.value }}</nui-menu-option
+                            >
+                        </nui-menu-group>
+                    </nui-menu>
+
+                    <div class="d-flex align-items-end">
+                        <nui-form-field
+                            caption="Default page size"
+                            i18n-caption
+                            [control]="form.controls['pageSize']"
+                        >
+                            <nui-select-v2
+                                placeholder="Select page size"
+                                i18n-placeholder
+                                [popupViewportMargin]="
+                                    configuratorHeading.height$ | async
+                                "
+                                formControlName="pageSize"
+                                class="table-filters-configuration__accordion-content__sort-by-input"
+                            >
+                                <nui-select-v2-option
+                                    *ngFor="let option of pageSizeOptions"
+                                    [value]="option"
+                                >
+                                    {{ option }}
+                                </nui-select-v2-option>
+                            </nui-select-v2>
+                        </nui-form-field>
+                    </div>
+                </div>
+            </nui-expander>
         </div>
     </div>
 </nui-widget-editor-accordion>
