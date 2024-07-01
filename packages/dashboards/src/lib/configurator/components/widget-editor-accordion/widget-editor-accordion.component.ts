@@ -47,7 +47,7 @@ export class WidgetEditorAccordionComponent implements OnInit, OnDestroy {
 
     @Input() public state: AccordionState = AccordionState.DEFAULT;
 
-    @Output() public onOpenChange = new EventEmitter<boolean>();
+    @Output() public openToggle = new EventEmitter<boolean>();
 
     public open = false;
     public openSubject = new Subject<void>();
@@ -63,7 +63,7 @@ export class WidgetEditorAccordionComponent implements OnInit, OnDestroy {
     }
 
     public openChange(isOpened: boolean): void {
-        this.onOpenChange.emit(isOpened);
+        this.openToggle.emit(isOpened);
         if (isOpened) {
             this.openSubject.next();
         } else {

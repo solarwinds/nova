@@ -82,6 +82,8 @@ export class TableScrollTypeConverterService
         form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((form) => {
             let preview = this.getPreview();
 
+            console.log("aosijijsad");
+
             preview = immutableSet(
                 preview,
                 "table.properties.configuration.hasVirtualScroll",

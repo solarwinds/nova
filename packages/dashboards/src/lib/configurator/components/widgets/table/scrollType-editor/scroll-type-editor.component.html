@@ -1,6 +1,6 @@
 <nui-widget-editor-accordion
     [formGroup]="form"
-    (onOpenChange)="accordionToggle($event)"
+    (openToggle)="accordionToggle($event)"
 >
     <div accordionHeader class="d-flex align-items-center px-4 py-2">
         <nui-icon class="align-self-start pt-2" icon="application"></nui-icon>
@@ -15,7 +15,7 @@
         class="table-filters-configuration__accordion-content"
         formGroupName="paginatorConfiguration"
     >
-        <div class="scrollTypeField d-flex align-items-end">
+        <div class="scroll-type-field d-flex align-items-end">
             <nui-form-field
                 caption="Scroll Type"
                 i18n-caption
@@ -53,7 +53,7 @@
                         <nui-menu-group header="Item Types" i18n-header>
                             <nui-menu-option
                                 *ngFor="let option of pageSizeSetOptions"
-                                (actionDone)="onMenuActionDone(option)"
+                                (actionDone)="onPageSizeSetChange(option)"
                                 [checked]="option.checked"
                                 i18n
                                 >{{ option.value }}</nui-menu-option

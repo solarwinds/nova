@@ -165,22 +165,7 @@ export class TableScrollTypeEditorComponent
         this.formReady.emit(this.form);
     }
 
-    public ngOnDestroy(): void {
-        this.onDestroy$.next();
-        this.onDestroy$.complete();
-    }
-
-    private setAccordionSubtitleValues() {
-        const scrollTYpe = this.form
-            .get("paginatorConfiguration")
-            ?.get("scrollType")?.value;
-
-        this.subtitle =
-            "Scroll Type: " +
-            this.loadStrategies.find((ls) => ls.id === scrollTYpe)?.title;
-    }
-
-    public onMenuActionDone(item: IPageSizeSetMenuOption): void {
+    public onPageSizeSetChange(item: IPageSizeSetMenuOption): void {
         const option = this.pageSizeSetOptions.find(
             (n) => n.value === item.value
         );
@@ -236,5 +221,20 @@ export class TableScrollTypeEditorComponent
                 });
             }
         });
+    }
+
+    private setAccordionSubtitleValues() {
+        const scrollTYpe = this.form
+            .get("paginatorConfiguration")
+            ?.get("scrollType")?.value;
+
+        this.subtitle =
+            "Scroll Type: " +
+            this.loadStrategies.find((ls) => ls.id === scrollTYpe)?.title;
+    }
+
+    public ngOnDestroy(): void {
+        this.onDestroy$.next();
+        this.onDestroy$.complete();
     }
 }

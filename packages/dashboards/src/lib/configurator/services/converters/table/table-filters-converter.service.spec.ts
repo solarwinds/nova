@@ -101,9 +101,11 @@ describe("TableFiltersConverterService >", () => {
         };
         expectedPreviewPizzagna.table.properties.configuration.sorterConfiguration =
             mockedSortingState;
+
         component.form
             .get("sorterConfiguration")
             ?.patchValue(mockedSortingState);
+
         tick(0);
         expect(service.updatePreview).toHaveBeenCalledWith(
             expectedPreviewPizzagna

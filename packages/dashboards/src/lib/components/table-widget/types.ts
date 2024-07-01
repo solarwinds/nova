@@ -73,7 +73,6 @@ export interface ITableWidgetConfig {
 export interface ITableWidgetSorterConfig {
     descendantSorting: boolean;
     sortBy: string;
-    test?: string;
 }
 
 export interface ITableWidgetPaginatorConfig {
@@ -87,8 +86,6 @@ export interface IPaginatorState {
     pageSizeSet: number[];
     total: number;
 }
-
-// export interface IFilterConfiguration extends ITableWidgetSorterConfig, ITableWidgetPaginatorConfig {}
 
 export enum ScrollType {
     virtual = "virtual",

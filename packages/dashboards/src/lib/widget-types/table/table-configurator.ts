@@ -84,7 +84,7 @@ export const tableConfigurator: IPizzagna = {
                 },
             },
         },
-        // /presentation/filters - configuration of built-in filters like search, sorting and pagination
+        // /presentation/filters - configuration of built-in sorting
         filters: {
             id: "filters",
             componentType: TableFiltersEditorComponent.lateLoadKey,
@@ -94,7 +94,7 @@ export const tableConfigurator: IPizzagna = {
                 },
             },
         },
-        // /presentation/filters - configuration of built-in filters like search, sorting and pagination
+        // /presentation/scrollType - configuration of built-in pagination
         scrollType: {
             id: "scrollType",
             componentType: TableScrollTypeEditorComponent.lateLoadKey,
