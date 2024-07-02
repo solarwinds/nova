@@ -27,7 +27,8 @@ import { DynamicComponentCreator } from "../../../../pizzagna/services/dynamic-c
 import { PizzagnaService } from "../../../../pizzagna/services/pizzagna.service";
 import { PreviewService } from "../../preview.service";
 import { EDITOR_PIZZAGNA, TABLE_WIDGET_PREVIEW_PIZZAGNA } from "./mocks";
-import { TableFiltersConverterService } from "./table-filters-converter.service";
+import { TableScrollTypeConverterService } from "./table-scroll-type-converter.service";
+import { ScrollType } from "@nova-ui/dashboards";
 
 class MockComponent {
     public static lateLoadKey = "MockComponent";
@@ -35,20 +36,22 @@ class MockComponent {
 
     constructor(private formBuilder: FormBuilder) {
         this.form = formBuilder.group({
-            sorterConfiguration: formBuilder.group({
-                sortBy: "",
-                descendantSorting: "",
+            paginatorConfiguration: formBuilder.group({
+                scrollType: ScrollType.virtual,
+                pageSize: 0,
+                pageSizeSet: [],
             }),
         });
     }
 }
 
-const mockedSortingState = {
-    sortBy: "testColumn",
-    descendantSorting: true,
+const mockedPaginatorState = {
+    pageSize: 20,
+    pageSizeSet: [10, 20, 30, 40],
+    scrollType: ScrollType.paginator,
 };
 
-describe("TableFiltersConverterService >", () => {
+describe("TableScrollTypeConverterService >", () => {
     const eventBus = new EventBus<IEvent>();
     const formBuilder = new FormBuilder();
     const component = new MockComponent(formBuilder);
@@ -59,13 +62,13 @@ describe("TableFiltersConverterService >", () => {
         dynamicComponentCreator
     );
 
-    let service: TableFiltersConverterService;
+    let service: TableScrollTypeConverterService;
 
     beforeEach(() => {
         previewService.preview =
             TABLE_WIDGET_PREVIEW_PIZZAGNA.pizzagna.configuration;
         pizzagnaService.pizzagna = EDITOR_PIZZAGNA;
-        service = new TableFiltersConverterService(
+        service = new TableScrollTypeConverterService(
             eventBus,
             previewService,
             pizzagnaService
@@ -79,19 +82,33 @@ describe("TableFiltersConverterService >", () => {
     });
 
     it("should properly pass data from preview to form pizzagna", () => {
-        const columnsInFormPizzagna =
-            pizzagnaService.pizzagna.data.filters.properties?.columns;
-        const columnsInPreviewPizzagna =
+        const paginatorConfigurationInFormPizzagna =
+            pizzagnaService.pizzagna.data.scrollType.properties
+                ?.paginatorConfiguration;
+        const paginatorConfigurationInPreviewPizzagna =
             TABLE_WIDGET_PREVIEW_PIZZAGNA.pizzagna.configuration.table
-                .properties.configuration.columns;
-        const filtersInFormPizzagna =
-            pizzagnaService.pizzagna.data.filters.properties
-                ?.sorterConfiguration;
-        const filtersInPreviewPizzagna =
+                .properties.configuration.paginatorConfiguration;
+
+        const scrollTypeInFormPizzagna =
+            pizzagnaService.pizzagna.data.scrollType.properties?.scrollType;
+        const scrollTypeInPreviewPizzagna =
             TABLE_WIDGET_PREVIEW_PIZZAGNA.pizzagna.configuration.table
-                .properties.configuration.sorterConfiguration;
-        expect(columnsInPreviewPizzagna).toEqual(columnsInFormPizzagna);
-        expect(filtersInPreviewPizzagna).toEqual(filtersInFormPizzagna);
+                .properties.configuration.scrollType;
+
+        const hasVirtualScrollInFormPizzagna =
+            pizzagnaService.pizzagna.data.scrollType.properties
+                ?.hasVirtualScroll;
+        const shasVirtualScrollInPreviewPizzagna =
+            TABLE_WIDGET_PREVIEW_PIZZAGNA.pizzagna.configuration.table
+                .properties.configuration.hasVirtualScroll;
+
+        expect(paginatorConfigurationInPreviewPizzagna).toEqual(
+            paginatorConfigurationInFormPizzagna
+        );
+        expect(scrollTypeInPreviewPizzagna).toEqual(scrollTypeInFormPizzagna);
+        expect(shasVirtualScrollInPreviewPizzagna).toEqual(
+            hasVirtualScrollInFormPizzagna
+        );
     });
 
     it("should properly update preview from form in editor", fakeAsync(() => {
@@ -99,12 +116,12 @@ describe("TableFiltersConverterService >", () => {
         const expectedPreviewPizzagna = {
             ...TABLE_WIDGET_PREVIEW_PIZZAGNA.pizzagna.configuration,
         };
-        expectedPreviewPizzagna.table.properties.configuration.sorterConfiguration =
-            mockedSortingState;
+        expectedPreviewPizzagna.table.properties.configuration.paginatorConfiguration =
+            mockedPaginatorState;
 
         component.form
-            .get("sorterConfiguration")
-            ?.patchValue(mockedSortingState);
+            .get("paginatorConfiguration")
+            ?.patchValue(mockedPaginatorState);
 
         tick(0);
         expect(service.updatePreview).toHaveBeenCalledWith(

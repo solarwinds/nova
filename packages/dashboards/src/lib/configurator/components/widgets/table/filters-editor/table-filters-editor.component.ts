@@ -38,7 +38,9 @@ import { takeUntil } from "rxjs/operators";
 import {
     ITableWidgetColumnConfig,
     ITableWidgetConfig,
+    ITableWidgetPaginatorConfig,
     ITableWidgetSorterConfig,
+    ScrollType,
 } from "../../../../../components/table-widget/types";
 import { IHasChangeDetector, IHasForm } from "../../../../../types";
 import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
@@ -99,6 +101,7 @@ export class TableFiltersEditorComponent
         const descendantSortingFormControl = this.form
             .get("sorterConfiguration")
             ?.get("descendantSorting");
+
         if (changes.sorterConfiguration) {
             const sortedColumn = this.sortableColumns.find(
                 (column) => column.id === this.sorterConfiguration?.sortBy
@@ -132,6 +135,7 @@ export class TableFiltersEditorComponent
                 descendantSortingFormControl?.enable();
             }
         }
+
         this.changeDetector.detectChanges();
     }
 

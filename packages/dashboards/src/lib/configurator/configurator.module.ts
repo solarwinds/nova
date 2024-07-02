@@ -132,6 +132,7 @@ import { KpiWidgetColorService } from "./services/kpi-widget-color.service";
 import { ConfiguratorHeadingService } from "./services/public-api";
 import { WidgetClonerService } from "./services/widget-cloner.service";
 import { WidgetEditorService } from "./services/widget-editor.service";
+import { TableScrollTypeEditorComponent } from "./components/widgets/table/scrollType-editor/scroll-type-editor.component";
 /* eslint-enable max-len */
 
 const entryComponents: IComponentWithLateLoadKey[] = [
@@ -148,6 +149,7 @@ const entryComponents: IComponentWithLateLoadKey[] = [
     ProportionalChartOptionsEditorComponent,
     ProportionalChartOptionsEditorV2Component,
     TableFiltersEditorComponent,
+    TableScrollTypeEditorComponent,
     TimeseriesMetadataConfigurationComponent,
     TimeseriesSeriesCollectionConfigurationComponent,
     TableColumnsConfigurationComponent,
