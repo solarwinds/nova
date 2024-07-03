@@ -278,7 +278,8 @@ export class TableWidgetComponent
         this.scrollType = newHasVirtualScroll ? ScrollType.virtual : scrollType;
 
         this.virtualScrollAddon.initVirtualScroll(this);
-        this.paginatorAddon.initWidget(this);
+        this.paginatorAddon.initPaginator(this);
+        this.dataSource.applyFilters();
     }
 
     public ngOnInit(): void {
@@ -304,7 +305,7 @@ export class TableWidgetComponent
 
         this.virtualScrollAddon.initVirtualScroll(this);
         this.searchAddon.initWidget(this);
-        this.paginatorAddon.initWidget(this);
+        this.paginatorAddon.initPaginator(this);
 
         const tableHeightChanged$: Observable<number> = this.eventBus
             .getStream(WIDGET_RESIZE)

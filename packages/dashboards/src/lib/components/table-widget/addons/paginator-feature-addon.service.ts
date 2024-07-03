@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { Injectable } from "@angular/core";
-import { INovaFilteringOutputs } from "@nova-ui/bits";
+import { INovaFilteringOutputs, ISelectChangedEvent } from "@nova-ui/bits";
 import { IPaginatorState, TableWidgetComponent } from "../public-api";
 
 @Injectable()
@@ -34,17 +34,13 @@ export class PaginatorFeatureAddonService {
     };
     public paginatorState: IPaginatorState = this.defaultPaginatorState;
 
-    public initWidget(widget: TableWidgetComponent): void {
+    public initPaginator(widget: TableWidgetComponent): void {
         this.widget = widget;
-        this.initPaginator();
+        this.setPaginatorState();
     }
 
     public applyFilters(): void {
         this.widget.dataSource.applyFilters();
-    }
-
-    private initPaginator() {
-        this.setPaginatorState();
     }
 
     private registerPaginator() {
@@ -81,6 +77,15 @@ export class PaginatorFeatureAddonService {
                     this.paginatorState.total = data.paginator?.total ?? 0;
                 }
             );
+
+            // When changing page size from configurator, this will force preview update
+            if (this.widget.paginator) {
+                const pageSize: ISelectChangedEvent<number> = {
+                    oldValue: 0,
+                    newValue: this.paginatorState.pageSize,
+                };
+                this.widget.paginator.setItemsPerPage(pageSize);
+            }
 
             this.registerPaginator();
         } else {

@@ -122,7 +122,7 @@
             </table>
         </cdk-virtual-scroll-viewport>
     </div>
-    <div *ngIf="isPaginatorEnabled">
+    <div [hidden]="!isPaginatorEnabled" class="mt-2">
         <ng-container *ngTemplateOutlet="footer"></ng-container>
     </div>
 </div>

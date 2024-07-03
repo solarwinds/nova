@@ -69,15 +69,15 @@ export class TableScrollTypeEditorComponent
     public loadStrategies = [
         {
             id: ScrollType.virtual,
-            title: "Virtual scroll",
+            title: $localize`Virtual scroll`,
         },
         {
             id: ScrollType.paginator,
-            title: "Paginator",
+            title: $localize`Paginator`,
         },
         {
             id: ScrollType.default,
-            title: "Default scroll",
+            title: $localize`Default scroll`,
         },
     ];
     private pageSizeSetAll = [
@@ -142,6 +142,7 @@ export class TableScrollTypeEditorComponent
     }
 
     public ngOnInit(): void {
+        console.log("this.scrollType", this.scrollType);
         this.form = this.formBuilder.group({
             paginatorConfiguration: this.formBuilder.group({
                 scrollType: get(this.scrollType, "", ScrollType.virtual),
@@ -224,13 +225,17 @@ export class TableScrollTypeEditorComponent
     }
 
     private setAccordionSubtitleValues() {
-        const scrollTYpe = this.form
-            .get("paginatorConfiguration")
-            ?.get("scrollType")?.value;
+        const prefix = $localize`Scroll Type: `;
+        this.subtitle = this.hasVirtualScroll
+            ? `${prefix} ${this.getScrollTypeTitle(ScrollType.virtual)}`
+            : `${prefix} ${this.getScrollTypeTitle(this.scrollType)}`;
+    }
 
-        this.subtitle =
-            "Scroll Type: " +
-            this.loadStrategies.find((ls) => ls.id === scrollTYpe)?.title;
+    private getScrollTypeTitle(scrollType: ScrollType): string {
+        return (
+            this.loadStrategies.find((ls) => ls.id === scrollType)?.title ||
+            $localize`Unknown`
+        );
     }
 
     public ngOnDestroy(): void {
