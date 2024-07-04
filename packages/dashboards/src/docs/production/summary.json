@@ -134,6 +134,10 @@
                     {
                         "title": "Table with Search",
                         "file": "../pages/widget-types/table-search.md"
+                    },
+                    {
+                        "title": "Table with Paginator",
+                        "file": "../pages/widget-types/table-paginator.md"
                     }
                 ]
             },

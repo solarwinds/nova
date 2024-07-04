@@ -84,7 +84,7 @@ export const tableConfigurator: IPizzagna = {
                 },
             },
         },
-        // /presentation/filters - configuration of built-in sorting
+        // /presentation/filters - !WARNING! configuration of built-in sorting, naming is obsolete
         filters: {
             id: "filters",
             componentType: TableFiltersEditorComponent.lateLoadKey,
