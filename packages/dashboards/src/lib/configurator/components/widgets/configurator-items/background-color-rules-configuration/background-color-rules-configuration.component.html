@@ -2,18 +2,12 @@
     [formGroup]="formLocal"
     [state]="formLocal | nuiWidgetEditorAccordionFormState | async"
 >
-    <div accordionHeader class="d-flex align-items-center px-4 py-2">
-        <nui-icon
-            class="align-self-start pt-2"
-            [icon]="formLocal | nuiFormHeaderIconPipe : 'color' | async"
-        ></nui-icon>
-        <div class="d-flex flex-column ml-4 pt-1">
-            <span class="nui-text-label" i18n>Background color rules</span>
-            <div class="nui-text-secondary" [title]="getColorRulesSubtitle()">
-                {{ getColorRulesSubtitle() }}
-            </div>
-        </div>
-    </div>
+    <nui-widget-editor-accordion-header
+        [headerIcon]="formLocal | nuiFormHeaderIconPipe : 'color' | async"
+        [subtitle]="getColorRulesSubtitle()"
+    >
+        Background color rules
+    </nui-widget-editor-accordion-header>
     <div class="kpi-color-rules-configuration__accordion-content">
         <div class="mb-4">
             <p class="mb-3">
