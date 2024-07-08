@@ -105,6 +105,7 @@ export class CustomWidgetBodyContentComponent implements IHasChangeDetector {
             [state]="form | nuiWidgetEditorAccordionFormState | async"
         >
             <!-- The accordionHeader attribute lets the accordion component know which element to use as its header -->
+            <!-- There is also a pre-defined custom component <nui-widget-editor-accordion-header> that can be used instead -->
             <div accordionHeader class="d-flex align-items-center pl-4 py-2">
                 <!-- nuiFormHeaderIconPipe detects errors on the form and replaces the regular icon with an error icon if necessary -->
                 <nui-icon

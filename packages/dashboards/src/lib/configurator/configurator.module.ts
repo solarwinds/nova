@@ -81,6 +81,7 @@ import { PreviewPlaceholderComponent } from "./components/preview-placeholder/pr
 import { WidgetClonerComponent } from "./components/widget-cloner/widget-cloner.component";
 import { WidgetConfiguratorSectionCoordinatorService } from "./components/widget-configurator-section/widget-configurator-section-coordinator.service";
 import { WidgetConfiguratorSectionComponent } from "./components/widget-configurator-section/widget-configurator-section.component";
+import { WidgetEditorAccordionHeaderComponent } from "./components/widget-editor-accordion/widget-editor-accordion-header/widget-editor-accordion-header.component";
 import { WidgetEditorAccordionComponent } from "./components/widget-editor-accordion/widget-editor-accordion.component";
 import { WidgetEditorComponent } from "./components/widget-editor/widget-editor.component";
 import { BackgroundColorRulesConfigurationComponent } from "./components/widgets/configurator-items/background-color-rules-configuration/background-color-rules-configuration.component";
@@ -194,6 +195,7 @@ const exportedDeclarations = [
     DashwizComponent,
     DashwizStepComponent,
     WidgetEditorAccordionComponent,
+    WidgetEditorAccordionHeaderComponent,
     ItemsDynamicComponent,
     ColorPickerComponent,
     ConfiguratorHeadingComponent,

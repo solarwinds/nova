@@ -2,21 +2,12 @@
     <nui-widget-editor-accordion
         [state]="form | nuiWidgetEditorAccordionFormState | async"
     >
-        <div accordionHeader class="d-flex align-items-center px-4 py-2">
-            <nui-icon
-                class="align-self-start pt-2"
-                [icon]="form | nuiFormHeaderIconPipe : 'widget_list' | async"
-            ></nui-icon>
-            <div class="d-flex flex-column ml-4 w-100 overflow-hidden pt-1">
-                <span class="nui-text-label" i18n>Description</span>
-                <div
-                    class="nui-text-secondary nui-text-ellipsis"
-                    [title]="form.controls['label'].value"
-                >
-                    {{ form.controls["label"].value }}
-                </div>
-            </div>
-        </div>
+        <nui-widget-editor-accordion-header
+            [headerIcon]="form | nuiFormHeaderIconPipe : 'widget_list' | async"
+            [subtitle]="form.controls['label'].value"
+        >
+            Description
+        </nui-widget-editor-accordion-header>
         <div class="description-configuration__accordion-content">
             <div class="mb-4">
                 <nui-form-field

@@ -74,20 +74,12 @@ import {
             [formGroup]="form"
             [state]="form | nuiWidgetEditorAccordionFormState | async"
         >
-            <div accordionHeader class="d-flex align-items-center px-4 py-2">
-                <nui-icon
-                    class="align-self-start pt-2"
-                    [icon]="
-                        form | nuiFormHeaderIconPipe : 'widget_list' | async
-                    "
-                ></nui-icon>
-                <div class="d-flex flex-column ml-4 pt-1">
-                    <span class="nui-text-label" i18n>Description</span>
-                    <div class="nui-text-secondary" [title]="subtitle$ | async">
-                        {{ subtitle$ | async }}
-                    </div>
-                </div>
-            </div>
+            <nui-widget-editor-accordion-header
+                [subtitle]="subtitle$ | async"
+                [headerIcon]="form | nuiFormHeaderIconPipe : 'widget_list' | async"
+            >
+                Description
+            </nui-widget-editor-accordion-header>
             <div class="kpi-description-configuration__accordion-content">
                 <div class="mb-4">
                     <nui-form-field

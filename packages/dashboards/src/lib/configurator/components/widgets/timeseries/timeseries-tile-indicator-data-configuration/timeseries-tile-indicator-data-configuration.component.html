@@ -2,23 +2,12 @@
     <nui-widget-editor-accordion
         [state]="form.get('id') | nuiWidgetEditorAccordionFormState | async"
     >
-        <div accordionHeader class="d-flex align-items-center px-4 py-2">
-            <nui-icon
-                class="align-self-start pt-2"
-                [icon]="
-                    form.get('id') | nuiFormHeaderIconPipe : 'database' | async
-                "
-            ></nui-icon>
-            <div class="d-flex flex-column ml-4 pt-1">
-                <span class="nui-text-label" i18n>Indicator data</span>
-                <div
-                    class="nui-text-secondary"
-                    [title]="selectedSeries?.description"
-                >
-                    {{ selectedSeries?.description }}
-                </div>
-            </div>
-        </div>
+        <nui-widget-editor-accordion-header
+            [headerIcon]="form.get('id') | nuiFormHeaderIconPipe : 'database' | async"
+            [subtitle]="selectedSeries?.description"
+        >
+            Indicator data
+        </nui-widget-editor-accordion-header>
         <div class="timeseries-tile-data-configuration__accordion-content">
             <nui-form-field
                 caption="Series data"
