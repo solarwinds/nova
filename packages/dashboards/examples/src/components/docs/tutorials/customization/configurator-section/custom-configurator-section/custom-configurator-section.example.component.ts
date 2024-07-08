@@ -76,7 +76,9 @@ import {
         >
             <nui-widget-editor-accordion-header
                 [subtitle]="subtitle$ | async"
-                [headerIcon]="form | nuiFormHeaderIconPipe : 'widget_list' | async"
+                [headerIcon]="
+                    form | nuiFormHeaderIconPipe : 'widget_list' | async
+                "
             >
                 Description
             </nui-widget-editor-accordion-header>
