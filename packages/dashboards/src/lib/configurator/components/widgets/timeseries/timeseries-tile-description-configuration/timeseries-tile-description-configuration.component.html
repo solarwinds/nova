@@ -3,11 +3,11 @@
         [state]="form.get('label') | nuiWidgetEditorAccordionFormState | async"
     >
         <nui-widget-editor-accordion-header
-            [headerIcon]="form.get('label') | nuiFormHeaderIconPipe : 'edit' | async"
+            [headerIcon]="
+                form.get('label') | nuiFormHeaderIconPipe : 'edit' | async
+            "
             [iconColor]="
-                    form.get('label')
-                        | nuiFormHeaderIconPipe : 'gray' : ''
-                        | async
+                form.get('label') | nuiFormHeaderIconPipe : 'gray' : '' | async
             "
             [subtitle]="form.get('label')?.value"
         >

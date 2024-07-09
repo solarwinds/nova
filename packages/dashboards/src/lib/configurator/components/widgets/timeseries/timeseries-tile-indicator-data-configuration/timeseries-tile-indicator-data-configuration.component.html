@@ -3,7 +3,9 @@
         [state]="form.get('id') | nuiWidgetEditorAccordionFormState | async"
     >
         <nui-widget-editor-accordion-header
-            [headerIcon]="form.get('id') | nuiFormHeaderIconPipe : 'database' | async"
+            [headerIcon]="
+                form.get('id') | nuiFormHeaderIconPipe : 'database' | async
+            "
             [subtitle]="selectedSeries?.description"
         >
             Indicator data
