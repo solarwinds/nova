@@ -99,12 +99,11 @@
                     [control]="form.get('reversedThresholds')"
                     [showOptionalText]="false"
                 >
-                    <nui-checkbox
-                        formControlName="reversedThresholds"
-                        required
-                        i18n
-                    >
-                        Warning and critical when below threshold values
+                    <nui-checkbox formControlName="reversedThresholds" required>
+                        <span class="nui-text-label" i18n
+                            >Warning and critical when below threshold
+                            values</span
+                        >
                     </nui-checkbox>
                     <nui-validation-message for="required" i18n>
                         This field is required
