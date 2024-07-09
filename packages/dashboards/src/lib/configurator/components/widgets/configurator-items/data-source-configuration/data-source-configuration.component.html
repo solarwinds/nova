@@ -5,9 +5,8 @@
     <nui-widget-editor-accordion-header
         [headerIcon]="form | nuiFormHeaderIconPipe : 'database' | async"
         [subtitle]="form.get('providerId')?.value"
-    >
-        Data Source
-    </nui-widget-editor-accordion-header>
+        title="Data Source"
+    />
     <div class="datasource-configuration__accordion-content">
         <nui-form-field
             caption="Select Data Source"

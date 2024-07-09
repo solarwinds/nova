@@ -6,9 +6,8 @@
         [headerIcon]="form | nuiFormHeaderIconPipe : 'edit' | async"
         [iconColor]="form | nuiFormHeaderIconPipe : 'gray' : '' | async"
         [subtitle]="getSecondaryText()"
-    >
-        Timeseries metadata
-    </nui-widget-editor-accordion-header>
+        title="Timeseries metadata"
+    />
     <div class="timeseries-metadata-configuration__accordion-content">
         <div class="mb-4">
             <nui-form-field

@@ -79,9 +79,8 @@ import {
                 [headerIcon]="
                     form | nuiFormHeaderIconPipe : 'widget_list' | async
                 "
-            >
-                Description
-            </nui-widget-editor-accordion-header>
+                title="Description"
+            />
             <div class="kpi-description-configuration__accordion-content">
                 <div class="mb-4">
                     <nui-form-field

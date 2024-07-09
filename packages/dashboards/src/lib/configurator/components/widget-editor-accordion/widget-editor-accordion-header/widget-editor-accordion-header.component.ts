@@ -9,4 +9,5 @@ export class WidgetEditorAccordionHeaderComponent {
     @Input() public headerIcon?: string;
     @Input() public iconColor: string = "gray";
     @Input() public subtitle: string = "";
+    @Input() public title: string = "";
 }

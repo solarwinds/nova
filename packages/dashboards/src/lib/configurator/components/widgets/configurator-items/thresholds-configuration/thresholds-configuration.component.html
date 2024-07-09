@@ -5,9 +5,8 @@
     <nui-widget-editor-accordion-header
         [headerIcon]="form | nuiFormHeaderIconPipe : 'thresholds' | async"
         [subtitle]="getThresholdsSubtitle(form.get('showThresholds')?.value)"
-    >
-        Thresholds
-    </nui-widget-editor-accordion-header>
+        title="Thresholds"
+    />
     <div class="kpi-thresholds-configuration__accordion-content">
         <nui-form-field
             [control]="form.get('showThresholds')"

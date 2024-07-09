@@ -5,9 +5,8 @@
     <nui-widget-editor-accordion-header
         [headerIcon]="form | nuiFormHeaderIconPipe : 'database' | async"
         [subtitle]="form.get('dataSource')?.value?.label"
-    >
-        Timeseries metadata
-    </nui-widget-editor-accordion-header>
+        title="Data Source"
+    />
     <div class="datasource-configuration__accordion-content">
         <nui-form-field [control]="form.get('dataSource')">
             <nui-select-v2
