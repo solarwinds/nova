@@ -82,20 +82,22 @@
                 </nui-form-field>
             </div>
 
-            <nui-form-field
-                caption="Warning and critical when below threshold values"
-                i18n-caption
-                [control]="form.get('reversedThresholds')"
-                [showOptionalText]="false"
-            >
-                <nui-checkbox
-                    formControlName="reversedThresholds"
-                    required
-                ></nui-checkbox>
-                <nui-validation-message for="required" i18n>
-                    This field is required
-                </nui-validation-message>
-            </nui-form-field>
+            <div class="mb-4">
+                <nui-form-field
+                    [control]="form.get('reversedThresholds')"
+                    [showOptionalText]="false"
+                >
+                    <nui-checkbox formControlName="reversedThresholds" required>
+                        <span class="nui-text-label" i18n
+                            >Warning and critical when below threshold
+                            values</span
+                        >
+                    </nui-checkbox>
+                    <nui-validation-message for="required" i18n>
+                        This field is required
+                    </nui-validation-message>
+                </nui-form-field>
+            </div>
         </div>
     </div>
 </nui-widget-editor-accordion>
