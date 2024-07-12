@@ -2,15 +2,11 @@
     [formGroup]="form"
     (openToggle)="accordionToggle($event)"
 >
-    <div accordionHeader class="d-flex align-items-center px-4 py-2">
-        <nui-icon class="align-self-start pt-2" icon="application"></nui-icon>
-        <div class="d-flex flex-column ml-4 pt-1">
-            <span class="nui-text-label" i18n>Scroll type</span>
-            <div class="nui-text-secondary">
-                {{ subtitle }}
-            </div>
-        </div>
-    </div>
+    <nui-widget-editor-accordion-header
+        [subtitle]="subtitle"
+        [headerIcon]="'application'"
+        title="Scroll type"
+    />
     <div
         class="table-filters-configuration__accordion-content"
         formGroupName="paginatorConfiguration"

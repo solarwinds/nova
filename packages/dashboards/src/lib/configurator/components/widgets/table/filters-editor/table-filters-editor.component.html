@@ -1,19 +1,9 @@
 <nui-widget-editor-accordion [formGroup]="form">
-    <div accordionHeader class="d-flex align-items-center px-4 py-2">
-        <nui-icon
-            class="align-self-start pt-2"
-            icon="widget_pie-chart"
-        ></nui-icon>
-        <div class="d-flex flex-column ml-4 pt-1">
-            <span class="nui-text-label" i18n>Sorting</span>
-            <div
-                class="nui-text-secondary"
-                [title]="selectedSortByValue + selectedSortOrderValue"
-            >
-                Sort by {{ selectedSortByValue }}{{ selectedSortOrderValue }}
-            </div>
-        </div>
-    </div>
+    <nui-widget-editor-accordion-header
+        headerIcon="widget_pie-chart"
+        [subtitle]="selectedSortByValue + selectedSortOrderValue"
+        title="Sorting"
+    />
     <div class="table-filters-configuration__accordion-content">
         <div formGroupName="sorterConfiguration" class="d-flex align-items-end">
             <nui-form-field
