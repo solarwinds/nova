@@ -6,7 +6,9 @@
             [class.error-state]="state === 'critical'"
             [class.warning-state]="state === 'warning'"
         >
-            <ng-content select="[accordionHeader]"></ng-content>
+            <ng-content
+                select="[accordionHeader], nui-widget-editor-accordion-header"
+            ></ng-content>
             <nui-icon
                 *ngIf="showOpenStateIcon"
                 class="nui-widget-editor-accordion__edit-icon"
