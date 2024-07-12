@@ -31,26 +31,18 @@ import {
     ClientSideDataSource,
     EventBus,
     IDataField,
-    INovaFilteringOutputs,
-    ISelectChangedEvent,
-    LocalFilteringDataSource,
     LoggerService,
     NuiBusyModule,
     NuiImageModule,
     NuiSpinnerModule,
     NuiTableModule,
-    PaginatorComponent,
     SearchService,
     SorterDirection,
     VirtualViewportManager,
 } from "@nova-ui/bits";
 
 import { NuiDashboardsModule } from "../../dashboards.module";
-import {
-    mockChangeDetector,
-    mockLoggerService,
-    mockPopupContainer,
-} from "../../mocks";
+import { mockLoggerService } from "../../mocks";
 import { NuiPizzagnaModule } from "../../pizzagna/pizzagna.module";
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
@@ -59,7 +51,6 @@ import { REFRESH, SCROLL_NEXT_PAGE } from "../../services/types";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../types";
 import { TableWidgetComponent } from "./table-widget.component";
 import {
-    IPaginatorState,
     ITableWidgetColumnConfig,
     ITableWidgetConfig,
     ScrollType,
@@ -80,7 +71,6 @@ interface BasicTableModel {
 
 class MockDatasource extends ClientSideDataSource<any> {
     public busy = new BehaviorSubject(true);
-    // public getFilteredData(): Promise<INovaFilteringOutputs>
 }
 
 const oneDataFieldColumns: ITableWidgetColumnConfig[] = [
@@ -694,11 +684,11 @@ describe("TableWidgetComponent", () => {
                         scrollType: ScrollType.paginator,
                     };
 
-                component.paginator = new PaginatorComponent(
-                    mockLoggerService,
-                    mockPopupContainer,
-                    mockChangeDetector
-                );
+                // component.paginator = new PaginatorComponent(
+                //     mockLoggerService,
+                //     mockPopupContainer,
+                //     mockChangeDetector
+                // );
                 component.ngOnChanges(
                     createSimpleChanges(
                         configWithoutVirtualScrollAndScrollType,
