@@ -21,6 +21,7 @@
 import { ChangeDetectorRef } from "@angular/core";
 
 import { LoggerService } from "@nova-ui/bits";
+import { PopupContainerService } from "@nova-ui/bits/lib/popup/popup-container.service";
 
 export const mockLoggerService = {
     info: () => {},
@@ -33,3 +34,7 @@ export const mockChangeDetector = {
     markForCheck: () => {},
     detectChanges: () => {},
 } as ChangeDetectorRef;
+
+export const mockPopupContainer = {
+    parent: () => {},
+} as PopupContainerService;

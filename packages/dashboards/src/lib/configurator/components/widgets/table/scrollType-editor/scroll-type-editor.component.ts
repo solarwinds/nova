@@ -142,7 +142,6 @@ export class TableScrollTypeEditorComponent
     }
 
     public ngOnInit(): void {
-        console.log("this.scrollType", this.scrollType);
         this.form = this.formBuilder.group({
             paginatorConfiguration: this.formBuilder.group({
                 scrollType: get(this.scrollType, "", ScrollType.virtual),

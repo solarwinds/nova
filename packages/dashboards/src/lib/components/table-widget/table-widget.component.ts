@@ -279,7 +279,10 @@ export class TableWidgetComponent
 
         this.virtualScrollAddon.initVirtualScroll(this);
         this.paginatorAddon.initPaginator(this);
-        this.dataSource.applyFilters();
+
+        if (this.scrollTypeChanged(changes.configuration)) {
+            this.dataSource.applyFilters();
+        }
     }
 
     public ngOnInit(): void {
@@ -681,6 +684,13 @@ export class TableWidgetComponent
     private flushTableData(): void {
         this.idle = true;
         this.tableData = [];
+    }
+
+    private scrollTypeChanged(configurationChange: SimpleChange): boolean {
+        return !configurationChange.previousValue
+            ? false
+            : configurationChange.previousValue.scrollType !==
+                  configurationChange.currentValue.scrollType;
     }
 
     private getTableScrollRange(): number {

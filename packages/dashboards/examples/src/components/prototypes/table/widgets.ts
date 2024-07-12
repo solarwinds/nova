@@ -539,7 +539,8 @@ export const widgets: IWidget[] = [
                                 descendantSorting: false,
                                 sortBy: "column1",
                             },
-                            hasVirtualScroll: true,
+                            scrollType: ScrollType.virtual,
+                            hasVirtualScroll: false,
                             searchConfiguration: {
                                 enabled: true,
                             },
@@ -691,7 +692,8 @@ export const widgets: IWidget[] = [
                                 descendantSorting: false,
                                 sortBy: "column1",
                             },
-                            hasVirtualScroll: true,
+                            scrollType: ScrollType.paginator,
+                            hasVirtualScroll: false,
                             searchConfiguration: {
                                 enabled: true,
                             },

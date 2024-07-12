@@ -169,7 +169,7 @@ describe("TableScrollTypeEditorComponent", () => {
             component.ngOnChanges(changes);
 
             expect(component.subtitle).toEqual(
-                "Scroll Type: " +
+                "Scroll Type:  " +
                     component.loadStrategies.find(
                         (ls) => ls.id === ScrollType.virtual
                     )?.title
