@@ -4,7 +4,7 @@
             <ng-container [ngTemplateOutlet]="kpiContent">
                 <div
                     *ngIf="!widgetData?.value && !widgetData?.label && !widgetData?.units"
-                    class="d-flex justify-content-center align-items-center"
+                    class="is-empty"
                 >
                     <nui-image image="no-data-to-show"></nui-image>
                 </div>
@@ -17,7 +17,7 @@
             <ng-container [ngTemplateOutlet]="kpiContent">
                 <div
                     *ngIf="!widgetData?.value && !widgetData?.label && !widgetData?.units"
-                    class="d-flex justify-content-center align-items-center"
+                    class="is-empty"
                 >
                     <nui-image image="no-data-to-show"></nui-image>
                 </div>
