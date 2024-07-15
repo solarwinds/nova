@@ -173,8 +173,8 @@
     </div>
     <div
         *ngIf="!widgetData || widgetData.length === 0 || !chartAssist"
-        class="d-flex flex-column align-items-center"
+        class="is-empty"
     >
-        <nui-image [isWatermark]="true" image="no-data-to-show"></nui-image>
+        <nui-image image="no-data-to-show"></nui-image>
     </div>
 </div>
