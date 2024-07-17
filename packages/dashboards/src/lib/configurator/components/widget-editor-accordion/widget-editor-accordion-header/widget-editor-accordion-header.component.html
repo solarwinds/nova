@@ -1,0 +1,18 @@
+<!-- This component can be used instead of specifying a custom template with accordionHeader attribute -->
+<!-- You can use it the same way (without accordionHeader attribute), it will get automatically assigned to the header of the accordion -->
+<div class="d-flex align-items-center px-4 py-2">
+    <nui-icon
+        class="align-self-start pt-2"
+        *ngIf="headerIcon"
+        [icon]="headerIcon"
+        [iconColor]="iconColor"
+    ></nui-icon>
+    <div class="d-flex flex-column ml-4 pt-1">
+        <span class="nui-text-label" i18n>
+            {{ title }}
+        </span>
+        <div class="nui-text-secondary" [title]="subtitle">
+            {{ subtitle }}
+        </div>
+    </div>
+</div>
