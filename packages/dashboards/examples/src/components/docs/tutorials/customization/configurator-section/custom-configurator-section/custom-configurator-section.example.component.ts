@@ -79,7 +79,7 @@ import {
                 [headerIcon]="
                     form | nuiFormHeaderIconPipe : 'widget_list' | async
                 "
-                title="Description"
+                headerTitle="Description"
             />
             <div class="kpi-description-configuration__accordion-content">
                 <div class="mb-4">
