@@ -1,12 +1,13 @@
 # Changelog
 
-## [15.0.8] 2024-06-03
+## [15.0.8] 📅 2024-06-03
 
 ### Bugfix
 
 - `@nova-ui/dashboards` | Added missing empty image for _nuiListWidgetComponent_ with no data.
+- `@nova-ui/dashboards` | Added missing empty image for all Empty widgets.
 
-## [15.0.6] 2024-05-13
+## [15.0.6] 📅 2024-05-13
 
 ### Bugfix
 

@@ -1,19 +1,42 @@
 <div class="w-100 h-100" nui-busy [busy]="busy">
     <ng-container *ngIf="widgetData?.link">
         <a class="nui-kpi-indicator" [href]="widgetData.link">
-            <ng-container [ngTemplateOutlet]="kpiContent"></ng-container>
+            <ng-container [ngTemplateOutlet]="kpiContent">
+                <div
+                    *ngIf="
+                        !widgetData?.value &&
+                        !widgetData?.label &&
+                        !widgetData?.units
+                    "
+                    class="is-empty"
+                >
+                    <nui-image image="no-data-to-show"></nui-image>
+                </div>
+            </ng-container>
         </a>
     </ng-container>
 
     <ng-container *ngIf="!widgetData?.link">
         <div class="nui-kpi-indicator" (click)="onInteraction()">
-            <ng-container [ngTemplateOutlet]="kpiContent"></ng-container>
+            <ng-container [ngTemplateOutlet]="kpiContent">
+                <div
+                    *ngIf="
+                        !widgetData?.value &&
+                        !widgetData?.label &&
+                        !widgetData?.units
+                    "
+                    class="is-empty"
+                >
+                    <nui-image image="no-data-to-show"></nui-image>
+                </div>
+            </ng-container>
         </div>
     </ng-container>
 </div>
 
 <ng-template #kpiContent>
     <div
+        *ngIf="widgetData?.value || widgetData?.label || widgetData?.units"
         class="nui-kpi-indicator__background"
         [class.nui-kpi-indicator--interactive]="interactive"
         [ngStyle]="{
