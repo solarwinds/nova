@@ -3,11 +3,7 @@
         <a class="nui-kpi-indicator" [href]="widgetData.link">
             <ng-container [ngTemplateOutlet]="kpiContent">
                 <div
-                    *ngIf="
-                        !widgetData?.value &&
-                        !widgetData?.label &&
-                        !widgetData?.units
-                    "
+                    *ngIf="isEmpty()"
                     class="is-empty"
                 >
                     <nui-image image="no-data-to-show"></nui-image>
@@ -20,11 +16,7 @@
         <div class="nui-kpi-indicator" (click)="onInteraction()">
             <ng-container [ngTemplateOutlet]="kpiContent">
                 <div
-                    *ngIf="
-                        !widgetData?.value &&
-                        !widgetData?.label &&
-                        !widgetData?.units
-                    "
+                    *ngIf="isEmpty()"
                     class="is-empty"
                 >
                     <nui-image image="no-data-to-show"></nui-image>
@@ -36,7 +28,7 @@
 
 <ng-template #kpiContent>
     <div
-        *ngIf="widgetData?.value || widgetData?.label || widgetData?.units"
+        *ngIf="!isEmpty()"
         class="nui-kpi-indicator__background"
         [class.nui-kpi-indicator--interactive]="interactive"
         [ngStyle]="{
