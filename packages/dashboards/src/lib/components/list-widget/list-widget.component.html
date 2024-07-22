@@ -1,17 +1,18 @@
 <nui-repeat
-    *ngIf="shouldDisplayRepeat(); else empty"
+    *ngIf="shouldDisplayRepeat()"
     [itemsSource]="data"
     [repeatItemTemplateRef]="repeatItemTemplate"
 >
 </nui-repeat>
 
-<ng-template #empty>
-    <div class="empty">
-        <nui-image image="no-data-to-show"></nui-image>
-    </div>
-</ng-template>
+<div class="empty" *ngIf="!shouldDisplayRepeat()">
+    <nui-image image="no-data-to-show"></nui-image>
+</div>
 
 <ng-template #repeatItemTemplate let-item="item">
+    <div class="empty" *ngIf="!item">
+        <nui-image image="no-data-to-show"></nui-image>
+    </div>
     <ng-container
         nuiComponentPortal
         #componentPortal="nuiComponentPortal"

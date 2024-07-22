@@ -100,7 +100,7 @@ export class ListWidgetComponent
     }
 
     public shouldDisplayRepeat(): boolean {
-        return (this.data?.length ?? 0) > 0;
+        return this.data?.length > 0;
     }
 
     private calcItemProps(item: any) {
