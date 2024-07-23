@@ -76,8 +76,7 @@ export const kpiWidget = {
          * The second argument is the id of the adapter responsible for activating fallback content in case of an error.
          */
         ...widgetBodyContentNodes(
-            "tiles",
-            NOVA_KPI_STATUS_CONTENT_FALLBACK_ADAPTER
+            "tiles"
         ),
 
         // the main content node specifying a component that manages layout of the KPI tiles in a CSS grid

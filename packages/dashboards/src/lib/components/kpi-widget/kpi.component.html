@@ -14,13 +14,13 @@
 
 <ng-template #kpiContent>
     <div
-        *ngIf="isEmpty()"
+        *ngIf="isEmpty"
         class="is-empty"
     >
         <nui-image image="no-data-to-show"></nui-image>
     </div>
     <div
-        *ngIf="!isEmpty()"
+        *ngIf="!isEmpty"
         class="nui-kpi-indicator__background"
         [class.nui-kpi-indicator--interactive]="interactive"
         [ngStyle]="{
