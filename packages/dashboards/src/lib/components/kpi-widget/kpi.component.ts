@@ -135,9 +135,8 @@ export class KpiComponent implements IHasChangeDetector, OnChanges {
     }
 
     public isEmpty(): boolean {
-        return (!this.widgetData?.value) || (
-                (Array.isArray(this.widgetData?.value) && this.widgetData?.value.length === 0)
-        );
+        console.log(this.widgetData);
+        return !this.widgetData?.value;
     }
 
     /**
