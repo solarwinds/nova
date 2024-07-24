@@ -262,6 +262,10 @@ export class ProviderRegistryService {
                 provide: StatusContentFallbackAdapter,
                 deps: [PIZZAGNA_EVENT_BUS, PizzagnaService],
             },
+            [NOVA_KPI_STATUS_CONTENT_FALLBACK_ADAPTER]: {
+                provide: KpiStatusContentFallbackAdapter,
+                deps: [PIZZAGNA_EVENT_BUS, PizzagnaService],
+            },
             [NOVA_KPI_SCALE_SYNC_BROKER]: {
                 provide: KpiScaleSyncBroker,
                 deps: [PIZZAGNA_EVENT_BUS, PizzagnaService],
