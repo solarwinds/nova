@@ -18,4 +18,7 @@
             ></ng-template>
         </ng-container>
     </ng-container>
+    <div *ngIf="nodeConfigs.length === 0" class="is-empty">
+        <nui-image image="no-data-to-show"></nui-image>
+    </div>
 </div>

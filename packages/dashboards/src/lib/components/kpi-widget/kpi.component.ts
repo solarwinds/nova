@@ -134,6 +134,10 @@ export class KpiComponent implements IHasChangeDetector, OnChanges {
         }
     }
 
+    public get isEmpty(): boolean {
+        return !this.widgetData?.value;
+    }
+
     /**
      * Iterates over formatters and maps their properties from the data
      *
