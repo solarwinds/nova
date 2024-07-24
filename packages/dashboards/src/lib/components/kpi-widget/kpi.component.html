@@ -14,19 +14,19 @@
 
 <ng-template #kpiContent>
     <div
-        *ngIf="isEmpty"
-        class="is-empty"
-    >
-        <nui-image image="no-data-to-show"></nui-image>
-    </div>
-    <div
-        *ngIf="!isEmpty"
         class="nui-kpi-indicator__background"
         [class.nui-kpi-indicator--interactive]="interactive"
         [ngStyle]="{
             'background-color': backgroundColor || widgetData?.backgroundColor
         }"
-    ></div>
+    >
+        <div
+            *ngIf="isEmpty"
+            class="is-empty"
+        >
+            <nui-image image="no-data-to-show"></nui-image>
+        </div>
+    </div>
     <div
         class="nui-kpi-indicator__text"
         [ngStyle]="{
