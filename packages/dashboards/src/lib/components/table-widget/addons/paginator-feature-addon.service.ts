@@ -63,7 +63,7 @@ export class PaginatorFeatureAddonService {
         const paginatorConfiguration =
             this.widget.configuration?.paginatorConfiguration;
 
-        if (this.widget.isPaginatorEnabled) {
+        if (this.widget.hasPaginator) {
             this.paginatorState.pageSize =
                 paginatorConfiguration?.pageSize ??
                 this.defaultPaginatorState.pageSize;

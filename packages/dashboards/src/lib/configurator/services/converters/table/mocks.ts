@@ -67,7 +67,6 @@ export const TABLE_WIDGET_PREVIEW_PIZZAGNA = {
                             pageSizeSet: [10, 20, 30],
                         },
                         hasVirtualScroll: false,
-                        // hasVirtualScroll: true,
                     },
                 },
             },

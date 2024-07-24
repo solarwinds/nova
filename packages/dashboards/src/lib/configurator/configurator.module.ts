@@ -134,6 +134,7 @@ import { ConfiguratorHeadingService } from "./services/public-api";
 import { WidgetClonerService } from "./services/widget-cloner.service";
 import { WidgetEditorService } from "./services/widget-editor.service";
 import { TableScrollTypeEditorComponent } from "./components/widgets/table/scrollType-editor/scroll-type-editor.component";
+import { ScrollTypeEditorService } from "./components/widgets/table/scrollType-editor/scroll-type-editor.service";
 /* eslint-enable max-len */
 
 const entryComponents: IComponentWithLateLoadKey[] = [
@@ -254,6 +255,7 @@ const exportedDeclarations = [
         KpiWidgetColorService,
         TimeseriesChartPresetService,
         TimeseriesScalesService,
+        ScrollTypeEditorService,
     ],
     exports: exportedDeclarations,
 })

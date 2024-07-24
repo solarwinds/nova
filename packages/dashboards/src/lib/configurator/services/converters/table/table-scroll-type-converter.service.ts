@@ -96,18 +96,17 @@ export class TableScrollTypeConverterService
 
             preview = immutableSet(
                 preview,
-                "table.properties.configuration.paginatorConfiguration.pageSize",
-                form.paginatorConfiguration.pageSize
-            );
-
-            preview = immutableSet(
-                preview,
                 "table.properties.configuration.paginatorConfiguration.pageSizeSet",
                 form.paginatorConfiguration.pageSizeSet
             );
 
+            preview = immutableSet(
+                preview,
+                "table.properties.configuration.paginatorConfiguration.pageSize",
+                form.paginatorConfiguration.pageSize
+            );
+
             this.updatePreview(preview);
-            this.buildForm();
         });
     }
 }

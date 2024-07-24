@@ -38,9 +38,7 @@ import { takeUntil } from "rxjs/operators";
 import {
     ITableWidgetColumnConfig,
     ITableWidgetConfig,
-    ITableWidgetPaginatorConfig,
     ITableWidgetSorterConfig,
-    ScrollType,
 } from "../../../../../components/table-widget/types";
 import { IHasChangeDetector, IHasForm } from "../../../../../types";
 import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";

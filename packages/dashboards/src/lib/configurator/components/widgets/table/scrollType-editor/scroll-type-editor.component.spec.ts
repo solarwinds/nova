@@ -30,6 +30,7 @@ import { PIZZAGNA_EVENT_BUS } from "../../../../../types";
 import { TableScrollTypeEditorComponent } from "./scroll-type-editor.component";
 import { SimpleChange, SimpleChanges } from "@angular/core";
 import { ScrollType } from "@nova-ui/dashboards";
+import { ScrollTypeEditorService } from "./scroll-type-editor.service";
 
 describe("TableScrollTypeEditorComponent", () => {
     let component: TableScrollTypeEditorComponent;
@@ -48,6 +49,9 @@ describe("TableScrollTypeEditorComponent", () => {
                 {
                     provide: FormBuilder,
                     useValue: new FormBuilder(),
+                },
+                {
+                    provide: ScrollTypeEditorService,
                 },
             ],
         }).compileComponents();
@@ -78,6 +82,7 @@ describe("TableScrollTypeEditorComponent", () => {
             const paginatorConfigurationFormGroup = component.form.get(
                 "paginatorConfiguration"
             );
+
             expect(
                 paginatorConfigurationFormGroup?.get("pageSize")?.value
             ).toEqual(component.paginatorConfiguration.pageSize);
@@ -170,7 +175,7 @@ describe("TableScrollTypeEditorComponent", () => {
 
             expect(component.subtitle).toEqual(
                 "Scroll Type:  " +
-                    component.loadStrategies.find(
+                    component.scrollTypeEditorService.loadStrategies.find(
                         (ls) => ls.id === ScrollType.virtual
                     )?.title
             );

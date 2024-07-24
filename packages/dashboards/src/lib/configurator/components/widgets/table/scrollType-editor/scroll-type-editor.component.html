@@ -1,6 +1,7 @@
 <nui-widget-editor-accordion
     [formGroup]="form"
     (openToggle)="accordionToggle($event)"
+    [state]="form | nuiWidgetEditorAccordionFormState | async"
 >
     <nui-widget-editor-accordion-header
         [subtitle]="subtitle"
@@ -25,7 +26,9 @@
                     class="table-filters-configuration__accordion-content__sort-by-input"
                 >
                     <nui-select-v2-option
-                        *ngFor="let column of loadStrategies"
+                        *ngFor="
+                            let column of scrollTypeEditorService.loadStrategies
+                        "
                         [value]="column.id"
                     >
                         {{ column.title }}
@@ -41,26 +44,38 @@
                 [open]="isExpanderOpen"
             >
                 <div class="expander-content">
-                    <nui-menu
-                        title="Page size options set"
-                        [appendToBody]="true"
-                        i18n-title
-                    >
-                        <nui-menu-group header="Item Types" i18n-header>
-                            <nui-menu-option
-                                *ngFor="let option of pageSizeSetOptions"
-                                (actionDone)="onPageSizeSetChange(option)"
-                                [checked]="option.checked"
-                                i18n
-                                >{{ option.value }}</nui-menu-option
-                            >
-                        </nui-menu-group>
-                    </nui-menu>
+                    <div class="page-size-set-menu">
+                        <nui-menu
+                            title="Page size options set"
+                            [appendToBody]="true"
+                            i18n-title
+                        >
+                            <nui-menu-group header="Item Types" i18n-header>
+                                <nui-menu-option
+                                    *ngFor="let option of pageSizeSetOptions"
+                                    (actionDone)="onPageSizeSetChange(option)"
+                                    [checked]="option.checked"
+                                    i18n
+                                    >{{ option.value }}</nui-menu-option
+                                >
+                            </nui-menu-group>
+                        </nui-menu>
+                        <nui-validation-message
+                            [show]="displayPageSizeSetErrorMessage"
+                            i18n
+                        >
+                            Page size set is required
+                        </nui-validation-message>
+                    </div>
 
-                    <div class="d-flex align-items-end">
+                    <div
+                        *ngIf="pageSizeOptions.length > 0"
+                        class="d-flex align-items-end"
+                    >
                         <nui-form-field
                             caption="Default page size"
                             i18n-caption
+                            [showOptionalText]="false"
                             [control]="form.controls['pageSize']"
                         >
                             <nui-select-v2
@@ -79,6 +94,12 @@
                                     {{ option }}
                                 </nui-select-v2-option>
                             </nui-select-v2>
+                            <nui-validation-message
+                                [show]="displayPageSizeErrorMessage"
+                                i18n
+                            >
+                                Page size is required
+                            </nui-validation-message>
                         </nui-form-field>
                     </div>
                 </div>

@@ -596,7 +596,7 @@ export class TableWidgetComponent
         return this.scrollType === ScrollType.virtual;
     }
 
-    public get isPaginatorEnabled(): boolean {
+    public get hasPaginator(): boolean {
         return this.scrollType === ScrollType.paginator;
     }
 
@@ -687,10 +687,11 @@ export class TableWidgetComponent
     }
 
     private scrollTypeChanged(configurationChange: SimpleChange): boolean {
-        return !configurationChange.previousValue
-            ? false
-            : configurationChange.previousValue.scrollType !==
-                  configurationChange.currentValue.scrollType;
+        return (
+            !!configurationChange.previousValue &&
+            configurationChange.previousValue.scrollType !==
+                configurationChange.currentValue.scrollType
+        );
     }
 
     private getTableScrollRange(): number {

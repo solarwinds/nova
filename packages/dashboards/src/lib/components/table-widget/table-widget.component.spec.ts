@@ -623,7 +623,7 @@ describe("TableWidgetComponent", () => {
 
                 fixture.detectChanges();
 
-                expect(component.isPaginatorEnabled).toBe(false);
+                expect(component.hasPaginator).toBe(false);
                 expect(component.hasVirtualScroll).toBe(true);
             });
 
@@ -645,7 +645,7 @@ describe("TableWidgetComponent", () => {
 
                 fixture.detectChanges();
 
-                expect(component.isPaginatorEnabled).toBe(false);
+                expect(component.hasPaginator).toBe(false);
                 expect(component.hasVirtualScroll).toBe(true);
             });
 
@@ -669,7 +669,7 @@ describe("TableWidgetComponent", () => {
 
                 fixture.detectChanges();
 
-                expect(component.isPaginatorEnabled).toBe(false);
+                expect(component.hasPaginator).toBe(false);
                 expect(component.hasVirtualScroll).toBe(true);
             });
         });
@@ -699,7 +699,7 @@ describe("TableWidgetComponent", () => {
 
                 fixture.detectChanges();
 
-                expect(component.isPaginatorEnabled).toBe(true);
+                expect(component.hasPaginator).toBe(true);
                 expect(component.hasVirtualScroll).toBe(false);
             });
         });
