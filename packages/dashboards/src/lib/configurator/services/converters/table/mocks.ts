@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { IWidget, ScrollType } from "@nova-ui/dashboards";
+import { ScrollType } from "./../../../../components/table-widget/types";
 import { DEFAULT_PIZZAGNA_ROOT } from "../../../../services/types";
 import { PizzagnaLayer } from "../../../../types";
 

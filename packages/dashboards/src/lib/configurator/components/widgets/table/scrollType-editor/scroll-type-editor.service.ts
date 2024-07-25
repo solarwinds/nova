@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ScrollType } from "@nova-ui/dashboards";
+import { ScrollType } from "./../../../../../components/table-widget/types";
 
 @Injectable()
 export class ScrollTypeEditorService {
