@@ -34,7 +34,7 @@ import { TABLE_DATA } from "../widget-data";
 import { BasicTableModel, ITableDataSourceOutput } from "./types";
 
 @Injectable()
-export class AcmeTableMockDataSource extends ClientSideDataSource<BasicTableModel> {
+export class AcmeTableMockDataSource extends LocalFilteringDataSource<BasicTableModel> {
     public static providerId = "AcmeTableMockDataSource";
 
     private cache: any[] = [];
@@ -78,11 +78,9 @@ export class AcmeTableMockDataSource extends ClientSideDataSource<BasicTableMode
                 super.setData(TABLE_DATA);
 
                 const filteredData = await super.getFilteredData(filters);
-
                 if (filteredData.paginator) {
                     filteredData.paginator.total = TABLE_DATA.length;
                 }
-
                 resolve({
                     ...filteredData,
                     dataFields: this.dataFields,

@@ -165,7 +165,7 @@ export class TableScrollTypeEditorComponent
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((val) => {
                 this.displayPageSizeErrorMessage =
-                    !!!val.paginatorConfiguration.pageSize;
+                    !val.paginatorConfiguration.pageSize;
             });
 
         this.updateSubtitle();
