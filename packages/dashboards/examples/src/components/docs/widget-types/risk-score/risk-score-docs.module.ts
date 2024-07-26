@@ -22,6 +22,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiButtonModule,
     NuiDocsModule,
     NuiMessageModule,
@@ -31,6 +32,7 @@ import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { RiskScoreDocsComponent } from "./risk-score-docs.component";
 import { RiskScoreWidgetExampleComponent } from "./risk-score-widget-example/risk-score-widget-example.component";
+import { getDemoFiles } from "demo-files-factory";
 
 const routes: Routes = [
     {
@@ -64,5 +66,11 @@ const routes: Routes = [
         NuiSwitchModule,
     ],
     declarations: [RiskScoreDocsComponent, RiskScoreWidgetExampleComponent],
+    providers: [
+        {
+            provide: DEMO_PATH_TOKEN,
+            useValue: getDemoFiles("risk-score"),
+        },
+    ],
 })
 export default class RiskScoreDocsModule {}

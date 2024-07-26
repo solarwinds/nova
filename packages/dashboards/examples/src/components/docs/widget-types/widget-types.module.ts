@@ -109,9 +109,9 @@ const routes: Routes = [
     {
         path: WidgetTypesRoute.drilldown,
         loadChildren: async () =>
-            import("./drilldown/drilldown-docs.module") as object as Promise<
-                Type<any>
-            >,
+            import(
+                "./drilldown/drilldown-widget-docs.module"
+            ) as object as Promise<Type<any>>,
         data: {
             srlc: {
                 hideIndicator: true,
