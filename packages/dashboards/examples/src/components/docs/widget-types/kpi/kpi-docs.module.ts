@@ -34,14 +34,14 @@ import {
 } from "@nova-ui/dashboards";
 
 import { getDemoFiles } from "../../../../demo-files-factory";
-import { KpiBackgroundColorDocsComponent } from "./kpi-background-color/docs/kpi-background-color-docs.component";
-import { KpiWidgetBackgroundColorExampleComponent } from "./kpi-background-color/example/kpi-widget-background-color-example.component";
+import { KpiWidgetBackgroundColorDocsComponent } from "./kpi-widget-background-color-docs.component";
+import { KpiWidgetBackgroundColorExampleComponent } from "./kpi-widget-background-color/kpi-widget-background-color-example.component";
 import { KpiDocsComponent } from "./kpi-docs.component";
-import { KpiSyncBrokerDocsComponent } from "./kpi-sync-broker/docs/kpi-sync-broker-docs.component";
-import { KpiSyncBrokerExampleComponent } from "./kpi-sync-broker/example/kpi-sync-broker-example.component";
-import { KpiSyncBrokerForAllTilesExampleComponent } from "./kpi-sync-broker/example/kpi-sync-broker-for-all-tiles-example.component";
-import { KpiWidgetExampleComponent } from "./kpi-widget-example/kpi-widget-example.component";
-import { KpiWidgetInteractiveExampleComponent } from "./kpi-widget-interactive-example/kpi-widget-interactive-example.component";
+import { KpiSyncBrokerDocsComponent } from "./kpi-sync-broker-docs.component";
+import { KpiSyncBrokerExampleComponent } from "./kpi-sync-broker/kpi-sync-broker-example.component";
+import { KpiSyncBrokerForAllTilesExampleComponent } from "./kpi-sync-broker-for-all-tiles/kpi-sync-broker-for-all-tiles-example.component";
+import { KpiWidgetExampleComponent } from "./kpi-widget/kpi-widget-example.component";
+import { KpiWidgetInteractiveExampleComponent } from "./kpi-widget-interactive/kpi-widget-interactive-example.component";
 
 const routes: Routes = [
     {
@@ -65,7 +65,7 @@ const routes: Routes = [
     },
     {
         path: "background-color",
-        component: KpiBackgroundColorDocsComponent,
+        component: KpiWidgetBackgroundColorDocsComponent,
         data: {
             srlc: {
                 hideIndicator: true,
@@ -96,7 +96,7 @@ const routes: Routes = [
         KpiDocsComponent,
         KpiWidgetExampleComponent,
         KpiWidgetInteractiveExampleComponent,
-        KpiBackgroundColorDocsComponent,
+        KpiWidgetBackgroundColorDocsComponent,
         KpiWidgetBackgroundColorExampleComponent,
         KpiSyncBrokerDocsComponent,
         KpiSyncBrokerExampleComponent,

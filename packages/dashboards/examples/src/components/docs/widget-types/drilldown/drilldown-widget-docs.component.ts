@@ -22,7 +22,7 @@ import { Component } from "@angular/core";
 
 @Component({
     selector: "nui-drilldown-docs",
-    templateUrl: "./drilldown-docs.component.html",
+    templateUrl: "./drilldown-widget-docs.component.html",
 })
 export class DrilldownDocsComponent {
     public widgetFileText =

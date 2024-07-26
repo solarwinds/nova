@@ -32,8 +32,8 @@ import {
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { getDemoFiles } from "../../../../demo-files-factory";
-import { DrilldownDocsComponent } from "./drilldown-docs.component";
-import { DrilldownMultiRequestWidgetExampleComponent } from "./drilldown-multi-request-widget-example/drilldown-multi-request-widget-example.component";
+import { DrilldownDocsComponent } from "./drilldown-widget-docs.component";
+import { DrilldownMultiRequestWidgetExampleComponent } from "./drilldown-multi-request-widget/drilldown-multi-request-widget-example.component";
 import { DrilldownWidgetExampleComponent } from "./drilldown-widget/drilldown-widget-example.component";
 
 const routes: Routes = [
