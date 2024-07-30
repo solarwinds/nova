@@ -40,6 +40,8 @@ import { TableWidgetInteractiveExampleComponent } from "./table-widget-interacti
 import { TableSearchDocsComponent } from "./table-widget-search-example/docs/table-search-docs.component";
 import { TableWidgetSearchExampleComponent } from "./table-widget-search-example/example/table-widget-search.example.component";
 import { TableWidgetExampleComponent } from "./table-widget/table-widget-example.component";
+import { TablePaginatorDocsComponent } from "./table-widget-paginator/docs/table-paginator-docs.component";
+import { TableWidgetPaginatorExampleComponent } from "./table-widget-paginator/example/table-widget-paginator-example.component";
 
 const routes: Routes = [
     {
@@ -71,6 +73,16 @@ const routes: Routes = [
             showThemeSwitcher: true,
         },
     },
+    {
+        path: "table-paginator",
+        component: TablePaginatorDocsComponent,
+        data: {
+            srlc: {
+                hideIndicator: true,
+            },
+            showThemeSwitcher: true,
+        },
+    },
 ];
 
 @NgModule({
@@ -85,9 +97,11 @@ const routes: Routes = [
     declarations: [
         TableDocsComponent,
         TableSearchDocsComponent,
+        TablePaginatorDocsComponent,
         TableWidgetInteractiveExampleComponent,
         TableWidgetExampleComponent,
         TableWidgetSearchExampleComponent,
+        TableWidgetPaginatorExampleComponent,
     ],
     providers: [
         {

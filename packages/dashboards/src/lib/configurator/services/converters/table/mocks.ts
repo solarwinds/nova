@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { ScrollType } from "./../../../../components/table-widget/types";
 import { DEFAULT_PIZZAGNA_ROOT } from "../../../../services/types";
 import { PizzagnaLayer } from "../../../../types";
 
@@ -60,7 +61,12 @@ export const TABLE_WIDGET_PREVIEW_PIZZAGNA = {
                             descendantSorting: true,
                             sortBy: "column1",
                         },
-                        hasVirtualScroll: true,
+                        scrollType: ScrollType.paginator,
+                        paginatorConfiguration: {
+                            pageSize: 10,
+                            pageSizeSet: [10, 20, 30],
+                        },
+                        hasVirtualScroll: false,
                     },
                 },
             },
@@ -83,7 +89,12 @@ export const EDITOR_PIZZAGNA = {
             componentType: "WidgetConfiguratorSectionComponent",
             properties: {
                 headerText: "Presentation",
-                nodes: ["titleAndDescription", "dataSource", "filters"],
+                nodes: [
+                    "titleAndDescription",
+                    "dataSource",
+                    "filters",
+                    "scrollType",
+                ],
             },
         },
         titleAndDescription: {
@@ -116,6 +127,15 @@ export const EDITOR_PIZZAGNA = {
             providers: {
                 TABLE_FILTERS_TRANSFORMER: {
                     providerId: "TABLE_FILTERS_TRANSFORMER",
+                },
+            },
+        },
+        scrollType: {
+            id: "scrollType",
+            componentType: "TableScrollTypeEditorComponent",
+            providers: {
+                NOVA_TABLE_SCROLL_TYPE_CONVERTER: {
+                    providerId: "NOVA_TABLE_SCROLL_TYPE_CONVERTER",
                 },
             },
         },

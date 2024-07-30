@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 /* eslint-disable max-len */
+import { TableScrollTypeEditorComponent } from "../../configurator/components/widgets/table/scrollType-editor/scroll-type-editor.component";
 import { FormStackComponent } from "../../configurator/components/form-stack/form-stack.component";
 import { WidgetConfiguratorSectionComponent } from "../../configurator/components/widget-configurator-section/widget-configurator-section.component";
 import { DataSourceConfigurationComponent } from "../../configurator/components/widgets/configurator-items/data-source-configuration/data-source-configuration.component";
@@ -33,6 +34,7 @@ import {
     NOVA_TABLE_COLUMNS_CONVERTER,
     NOVA_TABLE_FILTERS_CONVERTER,
     NOVA_TABLE_FORMATTERS_REGISTRY,
+    NOVA_TABLE_SCROLL_TYPE_CONVERTER,
     NOVA_TITLE_AND_DESCRIPTION_CONVERTER,
 } from "../../services/types";
 import { IPizzagna, PizzagnaLayer, WellKnownProviders } from "../../types";
@@ -68,7 +70,7 @@ export const tableConfigurator: IPizzagna = {
             properties: {
                 headerText: $localize`Presentation`,
                 // references to other components laid out in this form
-                nodes: ["titleAndDescription", "filters"],
+                nodes: ["titleAndDescription", "filters", "scrollType"],
             },
         },
         // /presentation/titleAndDescription
@@ -82,13 +84,23 @@ export const tableConfigurator: IPizzagna = {
                 },
             },
         },
-        // /presentation/filters - configuration of built-in filters like search, sorting and pagination
+        // /presentation/filters - !WARNING! configuration of built-in sorting, naming is obsolete
         filters: {
             id: "filters",
             componentType: TableFiltersEditorComponent.lateLoadKey,
             providers: {
                 [WellKnownProviders.Converter]: {
                     providerId: NOVA_TABLE_FILTERS_CONVERTER,
+                },
+            },
+        },
+        // /presentation/scrollType - configuration of built-in pagination
+        scrollType: {
+            id: "scrollType",
+            componentType: TableScrollTypeEditorComponent.lateLoadKey,
+            providers: {
+                [WellKnownProviders.Converter]: {
+                    providerId: NOVA_TABLE_SCROLL_TYPE_CONVERTER,
                 },
             },
         },

@@ -54,8 +54,10 @@ import {
     IDataSource,
     IEvent,
     IFilter,
+    INovaFilteringOutputs,
     ISortedItem,
     LoggerService,
+    PaginatorComponent,
     SorterDirection,
     TableAlignmentOptions,
     TableComponent,
@@ -81,7 +83,13 @@ import {
 import { ITableFormatterDefinition } from "../types";
 import { SearchFeatureAddonService } from "./addons/search-feature-addon.service";
 import { VirtualScrollFeatureAddonService } from "./addons/virtual-scroll-feature-addon.service";
-import { ITableWidgetColumnConfig, ITableWidgetConfig } from "./types";
+import {
+    IPaginatorState,
+    ITableWidgetColumnConfig,
+    ITableWidgetConfig,
+    ScrollType,
+} from "./types";
+import { PaginatorFeatureAddonService } from "./addons/paginator-feature-addon.service";
 
 /**
  * @ignore
@@ -91,7 +99,11 @@ import { ITableWidgetColumnConfig, ITableWidgetConfig } from "./types";
     templateUrl: "./table-widget.component.html",
     styleUrls: ["./table-widget.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [SearchFeatureAddonService, VirtualScrollFeatureAddonService],
+    providers: [
+        SearchFeatureAddonService,
+        VirtualScrollFeatureAddonService,
+        PaginatorFeatureAddonService,
+    ],
     host: {
         // Note: Moved here from configuration to ensure that consumers will not override it.
         // Used to prevent table overflowing preview container in the edit/configuration mode.
@@ -137,7 +149,7 @@ export class TableWidgetComponent
         string,
         number | undefined
     >();
-    public hasVirtualScroll: boolean = true;
+    public scrollType: ScrollType = ScrollType.virtual;
     public tableContainerHeight: number;
     public isSearchEnabled: boolean = false;
     public searchTerm$ = new Subject<string>();
@@ -175,6 +187,7 @@ export class TableWidgetComponent
     public isBusy: boolean = this.lastPageFetched !== this.totalPages;
 
     @ViewChild("widgetTable") table: TableComponent<any>;
+    @ViewChild("paginator") paginator: PaginatorComponent;
     @ViewChild(CdkVirtualScrollViewport)
     vscrollViewport?: CdkVirtualScrollViewport;
     @ViewChildren(TableRowComponent, { read: ElementRef })
@@ -202,6 +215,7 @@ export class TableWidgetComponent
         private el: ElementRef,
         private logger: LoggerService,
         private searchAddon: SearchFeatureAddonService,
+        public paginatorAddon: PaginatorFeatureAddonService,
         public virtualScrollAddon: VirtualScrollFeatureAddonService,
         private formattersRegistryService: TableFormatterRegistryService
     ) {}
@@ -239,19 +253,35 @@ export class TableWidgetComponent
                 this.onSortOrderChanged(sortedColumn);
             }
 
-            const newHasVirtualScroll = get(
-                changes,
-                "configuration.currentValue.hasVirtualScroll",
-                true
-            ) as boolean;
-            if (this.hasVirtualScroll !== newHasVirtualScroll) {
-                this.hasVirtualScroll = newHasVirtualScroll;
-                this.virtualScrollAddon.initVirtualScroll();
-            }
+            this.resolveScrollType(changes);
         }
 
         if (changes.totalItems) {
             this.totalPages = Math.floor((this.totalItems ?? 0) / this.range);
+        }
+    }
+
+    public resolveScrollType(changes: SimpleChanges) {
+        // Since removing "hasVirtualScroll" from configuration would cause breaking changes, it is used as primary source of truth
+        const newHasVirtualScroll = get(
+            changes,
+            "configuration.currentValue.hasVirtualScroll",
+            true
+        ) as boolean;
+
+        const scrollType = get(
+            changes,
+            "configuration.currentValue.scrollType",
+            ScrollType.virtual
+        ) as ScrollType;
+
+        this.scrollType = newHasVirtualScroll ? ScrollType.virtual : scrollType;
+
+        this.virtualScrollAddon.initVirtualScroll(this);
+        this.paginatorAddon.initPaginator(this);
+
+        if (this.scrollTypeChanged(changes.configuration)) {
+            this.dataSource.applyFilters();
         }
     }
 
@@ -260,7 +290,6 @@ export class TableWidgetComponent
             // Since the sortFilter is not initialized, we have to retrieve and set the correct filter value from the configuration before registering it
             this.setSortFilter();
             this.registerSorter();
-            this.virtualScrollAddon.initWidget(this);
         }
     }
 
@@ -277,8 +306,10 @@ export class TableWidgetComponent
             )
             .subscribe();
 
-        this.virtualScrollAddon.initVirtualScroll();
+        this.virtualScrollAddon.initVirtualScroll(this);
         this.searchAddon.initWidget(this);
+        this.paginatorAddon.initPaginator(this);
+
         const tableHeightChanged$: Observable<number> = this.eventBus
             .getStream(WIDGET_RESIZE)
             .pipe(
@@ -561,6 +592,14 @@ export class TableWidgetComponent
         );
     }
 
+    public get hasVirtualScroll(): boolean {
+        return this.scrollType === ScrollType.virtual;
+    }
+
+    public get hasPaginator(): boolean {
+        return this.scrollType === ScrollType.paginator;
+    }
+
     private setSortFilter() {
         if (this.configuration) {
             const sortBy = this.configuration.sorterConfiguration?.sortBy;
@@ -645,6 +684,14 @@ export class TableWidgetComponent
     private flushTableData(): void {
         this.idle = true;
         this.tableData = [];
+    }
+
+    private scrollTypeChanged(configurationChange: SimpleChange): boolean {
+        return (
+            !!configurationChange.previousValue &&
+            configurationChange.previousValue.scrollType !==
+                configurationChange.currentValue.scrollType
+        );
     }
 
     private getTableScrollRange(): number {

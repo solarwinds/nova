@@ -122,4 +122,22 @@
             </table>
         </cdk-virtual-scroll-viewport>
     </div>
+    <div [hidden]="!hasPaginator" class="mt-2">
+        <ng-container *ngTemplateOutlet="footer"></ng-container>
+    </div>
 </div>
+
+<ng-template #footer>
+    <footer>
+        <nui-paginator
+            #paginator
+            id="nui-table-widget-paginator"
+            [page]="paginatorAddon.paginatorState.page"
+            [pageSize]="paginatorAddon.paginatorState.pageSize"
+            [pageSizeSet]="paginatorAddon.paginatorState.pageSizeSet"
+            [total]="paginatorAddon.paginatorState.total"
+            (pagerAction)="paginatorAddon.applyFilters()"
+        >
+        </nui-paginator>
+    </footer>
+</ng-template>

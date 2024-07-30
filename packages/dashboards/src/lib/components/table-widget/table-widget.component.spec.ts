@@ -28,9 +28,9 @@ import { BehaviorSubject } from "rxjs";
 import { skip, take, tap } from "rxjs/operators";
 
 import {
+    ClientSideDataSource,
     EventBus,
     IDataField,
-    LocalFilteringDataSource,
     LoggerService,
     NuiBusyModule,
     NuiImageModule,
@@ -50,7 +50,11 @@ import { ProviderRegistryService } from "../../services/provider-registry.servic
 import { REFRESH, SCROLL_NEXT_PAGE } from "../../services/types";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../types";
 import { TableWidgetComponent } from "./table-widget.component";
-import { ITableWidgetColumnConfig, ITableWidgetConfig } from "./types";
+import {
+    ITableWidgetColumnConfig,
+    ITableWidgetConfig,
+    ScrollType,
+} from "./types";
 
 interface BasicTableModel {
     position: number;
@@ -65,7 +69,7 @@ interface BasicTableModel {
     secondUrlLabel: string;
 }
 
-class MockDatasource extends LocalFilteringDataSource<any> {
+class MockDatasource extends ClientSideDataSource<any> {
     public busy = new BehaviorSubject(true);
 }
 
@@ -355,6 +359,7 @@ describe("TableWidgetComponent", () => {
         component.dataFields = dataFields;
         component.configuration = configuration;
         component.range = tableData.length;
+
         fixture.detectChanges();
     });
 
@@ -597,6 +602,106 @@ describe("TableWidgetComponent", () => {
                     })
                 )
                 .subscribe();
+        });
+    });
+
+    describe("scroll type >", () => {
+        describe("virtual scroll >", () => {
+            it("should be enabled if is hasVirtualScroll is set to true", () => {
+                const configWithVirtualScroll: ITableWidgetConfig = {
+                    ...configuration,
+                    hasVirtualScroll: true,
+                };
+
+                component.ngOnChanges(
+                    createSimpleChanges(
+                        configWithVirtualScroll,
+                        tableData,
+                        dataFields
+                    )
+                );
+
+                fixture.detectChanges();
+
+                expect(component.hasPaginator).toBe(false);
+                expect(component.hasVirtualScroll).toBe(true);
+            });
+
+            it("should be enabled if is hasVirtualScroll is set to true even if scrollType is set to paginator", () => {
+                const configWithVirtualScrollAndScrollType: ITableWidgetConfig =
+                    {
+                        ...configuration,
+                        hasVirtualScroll: true,
+                        scrollType: ScrollType.paginator,
+                    };
+
+                component.ngOnChanges(
+                    createSimpleChanges(
+                        configWithVirtualScrollAndScrollType,
+                        tableData,
+                        dataFields
+                    )
+                );
+
+                fixture.detectChanges();
+
+                expect(component.hasPaginator).toBe(false);
+                expect(component.hasVirtualScroll).toBe(true);
+            });
+
+            it("should be enabled if not defined otherwise in config", () => {
+                const configurationWithoutScrollTypeOrHasVirtualScroll: ITableWidgetConfig =
+                    {
+                        columns: [],
+                        sorterConfiguration: {
+                            descendantSorting: true,
+                            sortBy: "column1",
+                        },
+                    };
+
+                component.ngOnChanges(
+                    createSimpleChanges(
+                        configurationWithoutScrollTypeOrHasVirtualScroll,
+                        tableData,
+                        dataFields
+                    )
+                );
+
+                fixture.detectChanges();
+
+                expect(component.hasPaginator).toBe(false);
+                expect(component.hasVirtualScroll).toBe(true);
+            });
+        });
+
+        // TODO: Not working properly, fix in NUI-5893
+        describe("paginator >", () => {
+            xit("should be enabled if hasVirtualScroll is set to false and scrollType is set to paginator", () => {
+                const configWithoutVirtualScrollAndScrollType: ITableWidgetConfig =
+                    {
+                        ...configuration,
+                        hasVirtualScroll: false,
+                        scrollType: ScrollType.paginator,
+                    };
+
+                // component.paginator = new PaginatorComponent(
+                //     mockLoggerService,
+                //     mockPopupContainer,
+                //     mockChangeDetector
+                // );
+                component.ngOnChanges(
+                    createSimpleChanges(
+                        configWithoutVirtualScrollAndScrollType,
+                        tableData,
+                        dataFields
+                    )
+                );
+
+                fixture.detectChanges();
+
+                expect(component.hasPaginator).toBe(true);
+                expect(component.hasVirtualScroll).toBe(false);
+            });
         });
     });
 

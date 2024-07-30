@@ -1,0 +1,21 @@
+@import (reference) "@nova-ui/bits/sdk/less/nui-framework-variables";
+
+.table-filters-configuration {
+    &__accordion-content {
+        padding: @nui-space-md @nui-space-md @nui-space-md
+            (@nui-space-md * 2 + @icon-size-default);
+
+        .scroll-type-field {
+            margin-bottom: @nui-space-sm;
+        }
+
+        .expander-content {
+            display: flex;
+
+            .page-size-set-menu {
+                margin-top: 26px;
+                margin-right: @nui-space-sm;
+            }
+        }
+    }
+}

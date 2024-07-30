@@ -36,6 +36,7 @@ import {
     PizzagnaLayer,
     ProportionalWidgetChartTypes,
     RawFormatterComponent,
+    ScrollType,
     WellKnownProviders,
 } from "@nova-ui/dashboards";
 
@@ -112,7 +113,7 @@ export const widgets: IWidget[] = [
                 },
                 header: {
                     properties: {
-                        title: "Table Widget!",
+                        title: "Table Widget with paginator!",
                         subtitle: "Basic table widget",
                         collapsible: true,
                     },
@@ -174,7 +175,12 @@ export const widgets: IWidget[] = [
                                 descendantSorting: false,
                                 sortBy: "column1",
                             },
-                            hasVirtualScroll: true,
+                            scrollType: ScrollType.paginator,
+                            paginatorConfiguration: {
+                                pageSize: 5,
+                                pageSizeSet: [5, 10, 20, 30],
+                            },
+                            hasVirtualScroll: false,
                             searchConfiguration: {
                                 enabled: true,
                             },
@@ -323,7 +329,7 @@ export const widgets: IWidget[] = [
                 },
                 header: {
                     properties: {
-                        title: "Table Widget!",
+                        title: "Table Widget with virtual scroll!",
                         subtitle: "Basic table widget",
                         collapsible: true,
                     },
@@ -533,7 +539,8 @@ export const widgets: IWidget[] = [
                                 descendantSorting: false,
                                 sortBy: "column1",
                             },
-                            hasVirtualScroll: true,
+                            scrollType: ScrollType.virtual,
+                            hasVirtualScroll: false,
                             searchConfiguration: {
                                 enabled: true,
                             },
@@ -685,7 +692,8 @@ export const widgets: IWidget[] = [
                                 descendantSorting: false,
                                 sortBy: "column1",
                             },
-                            hasVirtualScroll: true,
+                            scrollType: ScrollType.paginator,
+                            hasVirtualScroll: false,
                             searchConfiguration: {
                                 enabled: true,
                             },

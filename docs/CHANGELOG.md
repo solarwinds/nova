@@ -2,6 +2,10 @@
 
 ## [15.0.8] 📅 2024-06-03
 
+### Added
+
+-   `@nova-ui/dashboards` | Paginator added for table widget.
+
 ### Bugfix
 
 - `@nova-ui/dashboards` | Added missing empty image for _nuiListWidgetComponent_ with no data.
