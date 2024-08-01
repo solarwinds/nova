@@ -41,7 +41,7 @@ import {
     WidgetTypesService,
 } from "@nova-ui/dashboards";
 
-import { AcmeTableMockDataSource } from "../../../../../prototypes/data/table/acme-table-mock-data-source.service";
+import { AcmeTableMockDataSource } from "../../../../prototypes/data/table/acme-table-mock-data-source.service";
 
 /**
  * A component that instantiates the dashboard
