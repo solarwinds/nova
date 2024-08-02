@@ -32,7 +32,7 @@ import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { RiskScoreDocsComponent } from "./risk-score-docs.component";
 import { RiskScoreWidgetExampleComponent } from "./risk-score-widget-example/risk-score-widget-example.component";
-import { getDemoFiles } from "demo-files-factory";
+import { getDemoFiles } from "../../../../demo-files-factory";
 
 const routes: Routes = [
     {
