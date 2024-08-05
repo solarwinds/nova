@@ -1,5 +1,5 @@
-import {TimeseriesWidgetComponent} from "@nova-ui/dashboards";
-import {ComponentFixture, TestBed} from "@angular/core/testing";
+import { TimeseriesWidgetComponent } from "@nova-ui/dashboards";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 describe("TimeseriesWidgetComponent", () => {
     let component: TimeseriesWidgetComponent;
