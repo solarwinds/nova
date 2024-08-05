@@ -65,7 +65,7 @@ import {
     WidgetTypesService,
 } from "@nova-ui/dashboards";
 
-import { GBOOKS_API_URL } from "../../../../../prototypes/data/table/constants";
+import { GBOOKS_API_URL } from "../../../../prototypes/data/table/constants";
 
 interface IGBooksApiResponse {
     kind: string;
@@ -247,8 +247,8 @@ export class AcmeTableGBooksDataSource
  */
 @Component({
     selector: "table-widget-search-example",
-    templateUrl: "./table-widget-search.example.component.html",
-    styleUrls: ["./table-widget-search.example.component.less"],
+    templateUrl: "./table-widget-search-example.component.html",
+    styleUrls: ["./table-widget-search-example.component.less"],
 })
 export class TableWidgetSearchExampleComponent implements OnInit {
     public dashboard: IDashboard | undefined;

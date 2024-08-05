@@ -37,11 +37,11 @@ import { DEFAULT_TABLE_FORMATTERS } from "../../../../../../src/lib/widget-types
 import { getDemoFiles } from "../../../../demo-files-factory";
 import { TableDocsComponent } from "./table-docs.component";
 import { TableWidgetInteractiveExampleComponent } from "./table-widget-interactive/table-widget-interactive-example.component";
-import { TableSearchDocsComponent } from "./table-widget-search-example/docs/table-search-docs.component";
-import { TableWidgetSearchExampleComponent } from "./table-widget-search-example/example/table-widget-search.example.component";
+import { TableSearchDocsComponent } from "./table-widget-search-docs.component";
+import { TableWidgetSearchExampleComponent } from "./table-widget-search/table-widget-search-example.component";
 import { TableWidgetExampleComponent } from "./table-widget/table-widget-example.component";
-import { TablePaginatorDocsComponent } from "./table-widget-paginator/docs/table-paginator-docs.component";
-import { TableWidgetPaginatorExampleComponent } from "./table-widget-paginator/example/table-widget-paginator-example.component";
+import { TablePaginatorDocsComponent } from "./table-paginator-docs.component";
+import { TableWidgetPaginatorExampleComponent } from "./table-widget-paginator/table-widget-paginator-example.component";
 
 const routes: Routes = [
     {
@@ -98,10 +98,10 @@ const routes: Routes = [
         TableDocsComponent,
         TableSearchDocsComponent,
         TablePaginatorDocsComponent,
-        TableWidgetInteractiveExampleComponent,
+        TableWidgetPaginatorExampleComponent,
         TableWidgetExampleComponent,
         TableWidgetSearchExampleComponent,
-        TableWidgetPaginatorExampleComponent,
+        TableWidgetInteractiveExampleComponent,
     ],
     providers: [
         {

@@ -64,7 +64,7 @@ import {
     WidgetTypesService,
 } from "@nova-ui/dashboards";
 
-import { IMockBeerReview } from "../../models";
+import { IMockBeerReview } from "../models";
 
 /**
  * A simple proportional data source to retrieve beer review counts by city

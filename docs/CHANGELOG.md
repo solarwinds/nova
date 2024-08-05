@@ -1,5 +1,13 @@
 # Changelog
 
+## [15.0.9] 📅 2024-08-04
+
+### Bugfix
+
+-   `@nova-ui/dashboards` | Fix KPI widget empty state icon
+-   `@nova-ui/bits` `@nova-ui/charts` `@nova-ui/dashboards` | Update vulnerable crypto-js
+-   `@nova-ui/bits` `@nova-ui/charts` `@nova-ui/dashboards` | Fix nova-docs source code paths
+
 ## [15.0.8] 📅 2024-06-03
 
 ### Added
@@ -8,8 +16,8 @@
 
 ### Bugfix
 
-- `@nova-ui/dashboards` | Added missing empty image for _nuiListWidgetComponent_ with no data.
-- `@nova-ui/dashboards` | Added missing empty image for all Empty widgets.
+-   `@nova-ui/dashboards` | Added missing empty image for _nuiListWidgetComponent_ with no data.
+-   `@nova-ui/dashboards` | Added missing empty image for all Empty widgets.
 
 ## [15.0.6] 📅 2024-05-13
 

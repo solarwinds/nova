@@ -106,6 +106,75 @@ describe("KpiComponent", () => {
         expect(component).toBeTruthy();
     });
 
+    describe("isEmpty", () => {
+        it("should return true when widgetData is null", () => {
+            // @ts-ignore: TypeScript error ignored for testing purposes
+            component.widgetData = null;
+            expect(component.showEmpty).toBeTrue();
+        });
+
+        it("should return true when widgetData is undefined", () => {
+            // @ts-ignore: TypeScript error ignored for testing purposes
+            component.widgetData = undefined;
+            expect(component.showEmpty).toBeTrue();
+        });
+
+        it("should return true when widgetData.value is null", () => {
+            component.widgetData = { value: null };
+            expect(component.showEmpty).toBeTrue();
+        });
+
+        it("should return true when widgetData.value is undefined", () => {
+            component.widgetData = { value: undefined };
+            expect(component.showEmpty).toBeTrue();
+        });
+
+        it("should return false when widgetData.value is false", () => {
+            component.widgetData = { value: false };
+            expect(component.showEmpty).toBeFalse();
+        });
+
+        it("should return false when widgetData.value is true", () => {
+            component.widgetData = { value: true };
+            expect(component.showEmpty).toBeFalse();
+        });
+
+        it("should return true when widgetData.value is []", () => {
+            component.widgetData = { value: [] };
+            expect(component.showEmpty).toBeTrue();
+        });
+
+        it("should return false when widgetData.value is non empty array", () => {
+            component.widgetData = { value: [21, 25] };
+            expect(component.showEmpty).toBeFalse();
+        });
+
+        it("should return true when widgetData.value is empty string", () => {
+            component.widgetData = { value: "" };
+            expect(component.showEmpty).toBeTrue();
+        });
+
+        it("should return false when widgetData.value is some string", () => {
+            component.widgetData = { value: "some string" };
+            expect(component.showEmpty).toBeFalse();
+        });
+
+        it("should return false when widgetData.value is 0", () => {
+            component.widgetData = { value: 0 };
+            expect(component.showEmpty).toBeFalse();
+        });
+
+        it("should return false when widgetData.value is a positive value", () => {
+            component.widgetData = { value: 10.1 };
+            expect(component.showEmpty).toBeFalse();
+        });
+
+        it("should return false when widgetData.value is a negative value", () => {
+            component.widgetData = { value: -10.1 };
+            expect(component.showEmpty).toBeFalse();
+        });
+    });
+
     describe("interactive", () => {
         it("is interactive when datasource is interactive with data", () => {
             expect(component.interactive).toBeFalsy();

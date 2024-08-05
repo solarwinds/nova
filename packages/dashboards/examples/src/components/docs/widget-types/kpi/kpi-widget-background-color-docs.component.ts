@@ -22,9 +22,9 @@ import { Component } from "@angular/core";
 
 @Component({
     selector: "nui-kpi-background-color-docs",
-    templateUrl: "./kpi-background-color-docs.component.html",
+    templateUrl: "./kpi-widget-background-color-docs.component.html",
 })
-export class KpiBackgroundColorDocsComponent {
+export class KpiWidgetBackgroundColorDocsComponent {
     public comparatorsRegistryCode = `
         this.comparatorsRegistry.registerComparators({
             "!=": {

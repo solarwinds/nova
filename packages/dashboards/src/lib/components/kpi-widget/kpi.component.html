@@ -19,11 +19,7 @@
         [ngStyle]="{
             'background-color': backgroundColor || widgetData?.backgroundColor
         }"
-    >
-        <div *ngIf="isEmpty" class="is-empty">
-            <nui-image image="no-data-to-show"></nui-image>
-        </div>
-    </div>
+    ></div>
     <div
         class="nui-kpi-indicator__text"
         [ngStyle]="{
@@ -100,13 +96,16 @@
         [style.font-size]="widgetData?.fontSize"
         [title]="widgetData?.value"
     >
+        <div *ngIf="showEmpty" class="is-empty">
+            <nui-image image="no-data-to-show"></nui-image>
+        </div>
         <span
             nuiZoomContent
             [useZoom]="false"
             [scaleIN$]="getScaleBroker('value')?.out$"
             [scaleOUT$]="getScaleBroker('value')?.in$"
         >
-            {{ widgetData?.value }}</span
+            {{ showEmpty ? "" : widgetData?.value }}</span
         >
     </div>
 </ng-template>
