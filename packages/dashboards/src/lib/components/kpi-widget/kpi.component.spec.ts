@@ -164,8 +164,13 @@ describe("KpiComponent", () => {
             expect(component.showEmpty).toBeFalse();
         });
 
-        it("should return false when widgetData.value is a non-zero value", () => {
-            component.widgetData = { value: 10 };
+        it("should return false when widgetData.value is a positive value", () => {
+            component.widgetData = { value: 10.1 };
+            expect(component.showEmpty).toBeFalse();
+        });
+
+        it("should return false when widgetData.value is a negative value", () => {
+            component.widgetData = { value: -10.1 };
             expect(component.showEmpty).toBeFalse();
         });
     });
