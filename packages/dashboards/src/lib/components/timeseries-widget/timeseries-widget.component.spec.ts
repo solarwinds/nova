@@ -1,7 +1,7 @@
 import { TimeseriesWidgetComponent } from "@nova-ui/dashboards";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-describe("TimeseriesWidgetComponent", () => {
+describe(TimeseriesWidgetComponent.name, () => {
     let component: TimeseriesWidgetComponent;
     let fixture: ComponentFixture<TimeseriesWidgetComponent>;
 

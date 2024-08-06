@@ -789,4 +789,42 @@ describe("TableWidgetComponent", () => {
             );
         });
     });
+
+    describe("shouldDisplayTable >", () => {
+        it("should return false if widgetData is empty", () => {
+            component.widgetData = [];
+            expect(component.shouldDisplayTable()).toBeFalse();
+        });
+
+        it("should return false if columns are empty", () => {
+            component.columns = [];
+            expect(component.shouldDisplayTable()).toBeFalse();
+        });
+
+        it("should return true if widgetData and columns are not empty", () => {
+            component.widgetData = tableData;
+            component.columns = oneDataFieldColumns;
+            expect(component.shouldDisplayTable()).toBeTrue();
+        });
+
+        it("should return false if widgetData and columns are empty", () => {
+            component.widgetData = [];
+            component.columns = [];
+            expect(component.shouldDisplayTable()).toBeFalse();
+        });
+
+        it("should return false if widgetData is empty and columns are not empty", () => {
+            component.columns = oneDataFieldColumns;
+            component.tableData = [];
+            component.isSearchEnabled = false;
+            component.scrollType = ScrollType.default;
+            expect(component.shouldDisplayTable()).toBeFalse();
+        });
+
+        it("should return false if widgetData is not empty and columns are empty", () => {
+            component.widgetData = tableData;
+            component.columns = [];
+            expect(component.shouldDisplayTable()).toBeFalse();
+        });
+    });
 });

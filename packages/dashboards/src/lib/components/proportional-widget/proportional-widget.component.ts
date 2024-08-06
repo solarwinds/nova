@@ -496,4 +496,12 @@ export class ProportionalWidgetComponent
 
         return colorProvider;
     }
+
+    public get isEmpty(): boolean {
+        return (
+            !this.widgetData ||
+            this.widgetData.length === 0 ||
+            !this.chartAssist
+        );
+    }
 }
