@@ -60,7 +60,7 @@ class MockDataSource implements IDataSource {
     }
 }
 
-describe("ProportionalWidgetComponent", () => {
+describe(ProportionalWidgetComponent.name, () => {
     let component: ProportionalWidgetComponent;
     let fixture: ComponentFixture<ProportionalWidgetComponent>;
     const eventBus = new EventBus<IEvent>();
@@ -153,6 +153,52 @@ describe("ProportionalWidgetComponent", () => {
             changes.configuration.currentValue.chartColors = ["blue"];
             component.ngOnChanges(changes);
             expect(buildChartSpy).not.toHaveBeenCalled();
+        });
+    });
+
+    describe("isEmpty", () => {
+        it("should return true when widgetData is null", () => {
+            // @ts-ignore: TypeScript error ignored for testing purposes
+            component.widgetData = null;
+            expect(component.isEmpty).toBeTrue();
+        });
+
+        it("should return true when widgetData is undefined", () => {
+            // @ts-ignore: TypeScript error ignored for testing purposes
+            component.widgetData = undefined;
+            expect(component.isEmpty).toBeTrue();
+        });
+
+        it("should return true when widgetData length is 0", () => {
+            component.widgetData = [];
+            expect(component.isEmpty).toBeTrue();
+        });
+
+        it("should return false when widgetData length is positive", () => {
+            component.widgetData = [{
+                id: "testId",
+                name: "testName",
+                value: 1,
+                link: undefined,
+                data: [],
+                accessors: {},
+                // @ts-ignore: TypeScript error ignored for testing purposes
+                renderer: undefined,
+                scales: {},
+                preprocess: undefined,
+                renderState: undefined,
+                showInLegend: undefined,
+            }];
+            // @ts-ignore: TypeScript error ignored for testing purposes
+            component.chartAssist = true;
+
+            expect(component.isEmpty).toBeFalse();
+        });
+
+        it("should return true when widgetData is empty object", () => {
+            // @ts-ignore: TypeScript error ignored for testing purposes
+            component.widgetData = {};
+            expect(component.isEmpty).toBeTrue();
         });
     });
 });

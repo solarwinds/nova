@@ -9,7 +9,7 @@
 >
     <div
         class="d-flex chart has-overlay"
-        *ngIf="widgetData && widgetData.length > 0 && chartAssist"
+        *ngIf="!isEmpty"
     >
         <nui-chart class="w-100" [chart]="chartAssist.chart"></nui-chart>
         <nui-chart-donut-content
@@ -172,7 +172,7 @@
         </nui-legend>
     </div>
     <div
-        *ngIf="!widgetData || widgetData.length === 0 || !chartAssist"
+        *ngIf="isEmpty"
         class="is-empty"
     >
         <nui-image image="no-data-to-show"></nui-image>
