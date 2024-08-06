@@ -498,6 +498,10 @@ export class ProportionalWidgetComponent
     }
 
     public get isEmpty(): boolean {
-        return !this.widgetData || this.widgetData.length === 0 || !this.chartAssist;
+        return (
+            !this.widgetData ||
+            this.widgetData.length === 0 ||
+            !this.chartAssist
+        );
     }
 }

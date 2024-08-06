@@ -175,20 +175,22 @@ describe(ProportionalWidgetComponent.name, () => {
         });
 
         it("should return false when widgetData length is positive", () => {
-            component.widgetData = [{
-                id: "testId",
-                name: "testName",
-                value: 1,
-                link: undefined,
-                data: [],
-                accessors: {},
-                // @ts-ignore: TypeScript error ignored for testing purposes
-                renderer: undefined,
-                scales: {},
-                preprocess: undefined,
-                renderState: undefined,
-                showInLegend: undefined,
-            }];
+            component.widgetData = [
+                {
+                    id: "testId",
+                    name: "testName",
+                    value: 1,
+                    link: undefined,
+                    data: [],
+                    accessors: {},
+                    // @ts-ignore: TypeScript error ignored for testing purposes
+                    renderer: undefined,
+                    scales: {},
+                    preprocess: undefined,
+                    renderState: undefined,
+                    showInLegend: undefined,
+                },
+            ];
             // @ts-ignore: TypeScript error ignored for testing purposes
             component.chartAssist = true;
 

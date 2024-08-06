@@ -1,9 +1,6 @@
-import {ComponentFixture, TestBed, waitForAsync} from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
-import {
-    EventBus,
-    IEvent,
-} from "@nova-ui/bits";
+import { EventBus, IEvent } from "@nova-ui/bits";
 import {
     ListWidgetComponent,
     PIZZAGNA_EVENT_BUS,

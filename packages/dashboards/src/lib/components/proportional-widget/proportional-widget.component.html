@@ -7,10 +7,7 @@
         'empty-grid': !(widgetData && widgetData.length > 0 && chartAssist)
     }"
 >
-    <div
-        class="d-flex chart has-overlay"
-        *ngIf="!isEmpty"
-    >
+    <div class="d-flex chart has-overlay" *ngIf="!isEmpty">
         <nui-chart class="w-100" [chart]="chartAssist.chart"></nui-chart>
         <nui-chart-donut-content
             *ngIf="donutContentPlugin"
@@ -171,10 +168,7 @@
             </nui-legend-series>
         </nui-legend>
     </div>
-    <div
-        *ngIf="isEmpty"
-        class="is-empty"
-    >
+    <div *ngIf="isEmpty" class="is-empty">
         <nui-image image="no-data-to-show"></nui-image>
     </div>
 </div>
