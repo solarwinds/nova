@@ -33,13 +33,30 @@ describe(ListWidgetComponent.name, () => {
         expect(component).toBeTruthy();
     });
 
-    it("should display repeat if data is provided (data length > 0)", () => {
-        component.data = [{ id: "1", name: "Test" }];
-        expect(component.shouldDisplayRepeat()).toBeTrue();
-    });
+    describe("shouldDisplayRepeat", () => {
+        it("should display repeat if data is provided (data length > 0)", () => {
+            component.data = [{ id: "1", name: "Test" }];
+            expect(component.shouldDisplayRepeat()).toBeTrue();
+        });
 
-    it("should not display repeat if data is not provided (data length = 0)", () => {
-        component.data = [];
-        expect(component.shouldDisplayRepeat()).toBeFalse();
+        it("should not display repeat if data is not provided (data length = 0)", () => {
+            component.data = [];
+            expect(component.shouldDisplayRepeat()).toBeFalse();
+        });
+
+        it("should display repeat if data is provided (array of booleans)", () => {
+            component.data = [true, false, true];
+            expect(component.shouldDisplayRepeat()).toBeTrue();
+        });
+
+        it("should display repeat if data is provided (array of falsy values)", () => {
+            component.data = [0, false, null, undefined, NaN, ""];
+            expect(component.shouldDisplayRepeat()).toBeTrue();
+        });
+
+        it("should display repeat if data is provided (array of truthy values)", () => {
+            component.data = [1, true, "hello", [true], { test: "value" }];
+            expect(component.shouldDisplayRepeat()).toBeTrue();
+        });
     });
 });
