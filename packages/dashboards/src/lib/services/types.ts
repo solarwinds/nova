@@ -21,10 +21,17 @@
 import { StaticProvider } from "@angular/core";
 import { BehaviorSubject, ReplaySubject } from "rxjs";
 
-import { EventDefinition, IEvent, IEventDefinition } from "@nova-ui/bits";
+import {
+    EventDefinition,
+    IEvent,
+    IEventDefinition,
+    ISelection,
+} from "@nova-ui/bits";
 
 import { IInteractionPayload } from "../components/providers/interaction/interaction-handler";
-import { IDataSourceBusyPayload } from "../components/providers/types";
+import {
+    IDataSourceBusyPayload,
+} from "../components/providers/types";
 import { ISerializableTimeframe } from "../types";
 
 export const DEFAULT_PIZZAGNA_ROOT = "/";
@@ -98,6 +105,7 @@ export const DASHBOARD_EDIT_MODE = new EventDefinition<boolean>(
 export const INTERACTION = new EventDefinition<IInteractionPayload<any>>(
     "INTERACTION"
 );
+export const SELECTION = new EventDefinition<ISelection>("SELECTION");
 export const DATA_SOURCE_INVOKED = new EventDefinition<void>(
     "DATA_SOURCE_INVOKED"
 );

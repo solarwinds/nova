@@ -54,7 +54,7 @@ import {
     IDataSource,
     IEvent,
     IFilter,
-    INovaFilteringOutputs,
+    ISelection,
     ISortedItem,
     LoggerService,
     PaginatorComponent,
@@ -70,6 +70,7 @@ import { TableFormatterRegistryService } from "../../services/table-formatter-re
 import {
     INTERACTION,
     REFRESH,
+    SELECTION,
     WIDGET_READY,
     WIDGET_RESIZE,
 } from "../../services/types";
@@ -84,7 +85,6 @@ import { ITableFormatterDefinition } from "../types";
 import { SearchFeatureAddonService } from "./addons/search-feature-addon.service";
 import { VirtualScrollFeatureAddonService } from "./addons/virtual-scroll-feature-addon.service";
 import {
-    IPaginatorState,
     ITableWidgetColumnConfig,
     ITableWidgetConfig,
     ScrollType,
@@ -385,7 +385,7 @@ export class TableWidgetComponent
     }
 
     public dataTrackBy(index: number, item: any): any {
-        return item ? item.id : index;
+        return item ? item.trackById : index;
     }
 
     public columnTrackBy(
@@ -461,7 +461,7 @@ export class TableWidgetComponent
             return [];
         }
 
-        return tableData.map((record) => {
+        return tableData.map((record, index) => {
             const row = columns.reduce(
                 (result: Record<string, any>, column) => {
                     const dataFieldIds =
@@ -489,7 +489,9 @@ export class TableWidgetComponent
             );
 
             // we want to include original record for row interaction
+            // adding index (or anything unique) as trackById is required for row selection to work
             row.__record = record;
+            row.__record.trackById = index;
 
             return row;
         });
@@ -531,8 +533,16 @@ export class TableWidgetComponent
         this.eventBus.getStream(REFRESH).next({});
     }
 
+    public onSelectionChange(event: ISelection): void {
+        this.eventBus
+            .getStream(SELECTION)
+            .next({ payload: event });
+    }
+
     public onInteraction(row: any, event: MouseEvent): void {
-        if (!this.interactive) {
+        if (!this.interactive || this.configuration.selectable) {
+            // allowing interactive and selectable at the same time would trigger both
+            // events when clicking on a row (not checkbox)
             return;
         }
 

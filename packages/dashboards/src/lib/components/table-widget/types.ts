@@ -47,10 +47,19 @@ export interface ITableWidgetConfig {
     sortable?: boolean;
     sorterConfiguration: ITableWidgetSorterConfig;
     /**
+     * Allows to select rows in the table.
+     * Defaults to false and disables the 'interactive' property if set to true.
+     */
+    selectable?: boolean;
+    /**
      * @deprecated Use scrollType and set it to "infinite" instead
      */
     hasVirtualScroll?: boolean;
     scrollType?: ScrollType;
+    /**
+     * Makes table rows interactive.
+     * Disabled if 'selectable' is set to true.
+     */
     interactive?: boolean;
     headerTooltipsEnabled?: boolean;
     scrollActivationDelayMs?: number;

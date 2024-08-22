@@ -127,6 +127,7 @@ export const widgets: IWidget[] = [
                     properties: {
                         configuration: {
                             interactive: true,
+                            selectable: true,
                             columns: [
                                 {
                                     id: "column1",
