@@ -1,5 +1,11 @@
 # Changelog
 
+## [15.0.10] 📅 2024-08-023
+
+### Added
+
+- `@nova-ui/dashboards` | Added `selectable` option to the table widget.
+
 ## [15.0.9] 📅 2024-08-04
 
 ### Bugfix
