@@ -40,16 +40,10 @@ import { TableWidgetInteractiveExampleComponent } from "./table-widget-interacti
 import { TableSearchDocsComponent } from "./table-widget-search-docs.component";
 import { TableWidgetSearchExampleComponent } from "./table-widget-search/table-widget-search-example.component";
 import { TableWidgetExampleComponent } from "./table-widget/table-widget-example.component";
-import {
-    TableSelectableDocsComponent,
-} from "./table-selectable-docs.component";
-import {
-    TableWidgetSelectableExampleComponent,
-} from "./table-widget-selectable/table-widget-selectable.example.component";
+import { TableSelectableDocsComponent } from "./table-selectable-docs.component";
+import { TableWidgetSelectableExampleComponent } from "./table-widget-selectable/table-widget-selectable.example.component";
 import { TablePaginatorDocsComponent } from "./table-paginator-docs.component";
-import {
-    TableWidgetPaginatorExampleComponent,
-} from "./table-widget-paginator/table-widget-paginator-example.component";
+import { TableWidgetPaginatorExampleComponent } from "./table-widget-paginator/table-widget-paginator-example.component";
 
 const routes: Routes = [
     {

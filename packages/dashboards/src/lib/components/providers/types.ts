@@ -21,7 +21,6 @@
 import { BehaviorSubject } from "rxjs";
 
 import { ComparatorTypes, IProperties } from "../../types";
-import { ISelection } from "@nova-ui/bits";
 import { ITimeseriesWidgetSeries } from "../timeseries-widget/types";
 import { IFormatter } from "../types";
 

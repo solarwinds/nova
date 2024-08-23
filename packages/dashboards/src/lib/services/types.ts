@@ -29,9 +29,7 @@ import {
 } from "@nova-ui/bits";
 
 import { IInteractionPayload } from "../components/providers/interaction/interaction-handler";
-import {
-    IDataSourceBusyPayload,
-} from "../components/providers/types";
+import { IDataSourceBusyPayload } from "../components/providers/types";
 import { ISerializableTimeframe } from "../types";
 
 export const DEFAULT_PIZZAGNA_ROOT = "/";

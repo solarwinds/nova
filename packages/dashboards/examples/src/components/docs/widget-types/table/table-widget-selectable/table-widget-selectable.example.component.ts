@@ -19,11 +19,7 @@
 //  THE SOFTWARE.
 
 import { HttpClient } from "@angular/common/http";
-import {
-    ChangeDetectorRef,
-    Component,
-    OnInit,
-} from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import { LoggerService } from "@nova-ui/bits";
 import {
@@ -155,7 +151,7 @@ export const widgetConfig: IWidget = {
                                 isActive: true,
                                 formatter: {
                                     componentType:
-                                    RawFormatterComponent.lateLoadKey,
+                                        RawFormatterComponent.lateLoadKey,
                                     properties: {
                                         dataFieldIds: {
                                             value: "position",
@@ -169,7 +165,7 @@ export const widgetConfig: IWidget = {
                                 isActive: true,
                                 formatter: {
                                     componentType:
-                                    RawFormatterComponent.lateLoadKey,
+                                        RawFormatterComponent.lateLoadKey,
                                     properties: {
                                         dataFieldIds: {
                                             value: "name",
@@ -183,7 +179,7 @@ export const widgetConfig: IWidget = {
                                 isActive: true,
                                 formatter: {
                                     componentType:
-                                    RawFormatterComponent.lateLoadKey,
+                                        RawFormatterComponent.lateLoadKey,
                                     properties: {
                                         dataFieldIds: {
                                             value: "status",

@@ -534,9 +534,7 @@ export class TableWidgetComponent
     }
 
     public onSelectionChange(event: ISelection): void {
-        this.eventBus
-            .getStream(SELECTION)
-            .next({ payload: event });
+        this.eventBus.getStream(SELECTION).next({ payload: event });
     }
 
     public onInteraction(row: any, event: MouseEvent): void {
