@@ -138,6 +138,10 @@
                     {
                         "title": "Table with Paginator",
                         "file": "../pages/widget-types/table-paginator.md"
+                    },
+                    {
+                        "title": "Table with Select",
+                        "file": "../pages/widget-types/table-selectable.md"
                     }
                 ]
             },

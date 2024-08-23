@@ -1,0 +1,46 @@
+<h1>Table Widget with Select Functionality</h1>
+<p>
+    Table Widget can have select functionality. This page contains information
+    only about setting up the select, so before proceeding get familiar with the
+    following:
+</p>
+<ul>
+    <li>
+        <a
+            href="../additional-documentation/anatomy/data-sources.html"
+            target="_blank"
+        ><code>Data Sources</code></a
+        >
+        - for information about Data Sources and their Features.
+    </li>
+    <li>
+        <a
+            href="../additional-documentation/widget-types/table.html"
+            target="_blank"
+            ><code>Table Widget</code></a
+        >
+        - for configuring a table widget itself.
+    </li>
+</ul>
+
+<nui-example-wrapper
+    filenamePrefix="table-widget-selectable"
+    exampleTitle="Table widget with Select"
+>
+    <table-widget-selectable-example></table-widget-selectable-example>
+</nui-example-wrapper>
+
+<h2>Configuring the Widget</h2>
+<p>
+    To configure the widget you have to enable selection in the widget
+    configuration:
+</p>
+<nui-example-code language="typescript">
+    {{ tableConfigurationText }}
+</nui-example-code>
+
+<h2>Accessing the Selection</h2>
+<p>On selection a <code>SELECTION</code> pizzagna event is being triggered. You can access it in the following way: </p>
+<nui-example-code language="typescript">
+    {{ eventSubscriptionText }}
+</nui-example-code>
