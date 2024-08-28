@@ -35,6 +35,7 @@ import { ISelection, ISelectorState } from "../../services/public-api";
 import { SelectionType } from "../selector/public-api";
 import { SelectorService } from "../selector/selector.service";
 import { ISortedItem, SorterDirection } from "../sorter/public-api";
+import { TableSelectionMode } from "./types";
 
 export const enum AlignmentClasses {
     RIGHT = "align-right",
@@ -104,6 +105,7 @@ export class TableStateHandlerService {
     public dataSourceChanged = new Subject<Array<any>>();
     public selectionChanged = new Subject<ISelection>();
     public selectableChanged = new Subject<boolean>();
+    public selectionModeChanged = new Subject<TableSelectionMode>();
     public columnWidthSubject = new Subject<void>();
     public stickyHeaderChangedSubject = new Subject<void>();
 
@@ -117,6 +119,7 @@ export class TableStateHandlerService {
     private _dropCellWidth: number;
     private _dragOverDirection: string;
     private _selectable: boolean;
+    private _selectionMode: TableSelectionMode;
     // Note: Used to tell to the SelectorService to skip pagination logic
     private _hasVirtualScroll: boolean;
     private _totalItems: number;
@@ -252,6 +255,18 @@ export class TableStateHandlerService {
 
     get selectable(): boolean {
         return this._selectable;
+    }
+
+    set selectionMode(mode: TableSelectionMode) {
+        if (mode !== this._selectionMode) {
+            this.selectionModeChanged.next(mode);
+        }
+        this._selectionMode = mode;
+        this._selectable = mode !== TableSelectionMode.None;
+    }
+
+    get selectionMode(): TableSelectionMode {
+        return this._selectionMode;
     }
 
     get hasVirtualScroll(): boolean {
@@ -645,11 +660,39 @@ export class TableStateHandlerService {
     /**
      * Updates the selection object to either include or exclude the row based on the current selection
      *  type and the row's current selection state
-     * Then the selection object is broadcasted to all listeners of selectionChanged
+     * Then the selection object is broadcast to all listeners of selectionChanged
      *
      * @param rowObject
      */
-    public handleRowCheckbox(rowObject: Object): void {
+    public handleRowSelect(rowObject: Object): void {
+        switch (this._selectionMode) {
+            case TableSelectionMode.Single:
+            case TableSelectionMode.Radio:
+                this.handleRowSelectSingle(rowObject);
+                break;
+            case TableSelectionMode.Multi:
+                this.handleRowSelectMulti(rowObject);
+                break;
+            default:
+                console.error("Unknown table selection mode.");
+        }
+    }
+
+    private handleRowSelectSingle(rowObject: Object): void {
+        const rowObjectTrackBy = this.trackBy(
+            (<{ id: number }>rowObject)?.id,
+            rowObject
+        );
+        this.selection = {
+            isAllPages: false,
+            exclude: [],
+            include: [rowObjectTrackBy],
+        };
+
+        this.selectionChanged.next(this.selection);
+    }
+
+    private handleRowSelectMulti(rowObject: Object): void {
         const excludedRows = this.selection.exclude;
         const includedRows = this.selection.include;
 

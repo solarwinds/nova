@@ -26,3 +26,25 @@ export interface ClickableRowOptions {
     clickableSelectors: string[];
     ignoredSelectors: string[];
 }
+export enum TableSelectionMode {
+    None = "none",
+    Single = "single",
+    Radio = "radio",
+    Multi = "multi",
+}
+
+export interface ITableSelectionConfigEnabled {
+    enabled: true;
+    selectionMode: Exclude<TableSelectionMode, TableSelectionMode.None>;
+}
+
+export interface ITableSelectionConfigDisabled {
+    enabled: false;
+    selectionMode: TableSelectionMode.None;
+}
+
+// we want to prevent the following combination:
+// enabled: true and selectionMode: "none"
+export type TableSelectionConfig =
+    | ITableSelectionConfigEnabled
+    | ITableSelectionConfigDisabled;

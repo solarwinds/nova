@@ -19,6 +19,12 @@
 //  THE SOFTWARE.
 
 import { IFormatter } from "../types";
+import {
+    ITableSelectionConfigDisabled,
+    ITableSelectionConfigEnabled,
+    TableSelectionConfig,
+    TableSelectionMode,
+} from "@nova-ui/bits";
 
 export interface ITableWidgetColumnConfig {
     id: string;
@@ -47,10 +53,10 @@ export interface ITableWidgetConfig {
     sortable?: boolean;
     sorterConfiguration: ITableWidgetSorterConfig;
     /**
-     * Allows to select rows in the table.
-     * Defaults to false and disables the 'interactive' property if set to true.
+     * Allows to choose row selection behavior of a table.
+     * Can be None | Multi | Single | Radio.
      */
-    selectable?: boolean;
+    selectionConfiguration?: TableWidgetSelectionConfig;
     /**
      * @deprecated Use scrollType and set it to "infinite" instead
      */
@@ -101,3 +107,24 @@ export enum ScrollType {
     paginator = "paginator",
     default = "default",
 }
+
+interface ITableWidgetSelectionConfigEnabled
+    extends ITableSelectionConfigEnabled {
+    /**
+     * Property name that is unique.
+     * Needs to be set in order for selection to work in combination with filtering.
+     *
+     * Using property that is not unique across table data will result in a selection
+     * of all rows with the same column value at once.
+     
+     @default "id"
+     */
+    trackByProperty?: string;
+}
+
+interface ITableWidgetSelectionConfigDisabled
+    extends ITableSelectionConfigDisabled {}
+
+export type TableWidgetSelectionConfig =
+    | ITableWidgetSelectionConfigEnabled
+    | ITableSelectionConfigDisabled;

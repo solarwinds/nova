@@ -22,7 +22,7 @@ import { HttpClient } from "@angular/common/http";
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
-    Component,
+    Component, Inject,
     OnDestroy,
     OnInit,
     ViewChild,
@@ -32,7 +32,13 @@ import keyBy from "lodash/keyBy";
 import { Subject } from "rxjs";
 import { take, takeUntil } from "rxjs/operators";
 
-import { immutableSet, LoggerService, SearchService } from "@nova-ui/bits";
+import {
+    EventBus,
+    IEvent,
+    immutableSet,
+    LoggerService,
+    SearchService,
+} from "@nova-ui/bits";
 import {
     DashboardComponent,
     DATA_SOURCE,
@@ -44,6 +50,7 @@ import {
     WidgetClonerService,
     WidgetTypesService,
     WIDGET_CREATE,
+    PIZZAGNA_EVENT_BUS, SELECTION, REFRESH,
 } from "@nova-ui/dashboards";
 
 import {
@@ -102,6 +109,7 @@ export class AcmeDashboardComponent
     private readonly destroy$ = new Subject<void>();
 
     constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) public eventBus: EventBus<IEvent>,
         private providerRegistry: ProviderRegistryService,
         public submitHandler: AcmeFormSubmitHandler,
         private widgetTypesService: WidgetTypesService,
@@ -172,6 +180,8 @@ export class AcmeDashboardComponent
     }
 
     public ngOnInit(): void {
+        this.eventBus.getStream(SELECTION).subscribe(value => console.log("SELECTION:", value));
+        this.eventBus.getStream(REFRESH).subscribe(value => console.log("REFRESH:", value));
         this.widgetTypesService
             .getWidgetType("table")
             .configurator?.[

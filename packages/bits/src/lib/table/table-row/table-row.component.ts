@@ -53,7 +53,11 @@ import { DEFAULT_INTERACTIVE_ELEMENTS } from "../../../constants/interaction.con
 import { ISelectorState } from "../../../services/public-api";
 import { CheckboxStatus, SelectionType } from "../../selector/public-api";
 import { TableStateHandlerService } from "../table-state-handler.service";
-import { ClickableRowOptions, RowHeightOptions } from "../types";
+import {
+    ClickableRowOptions,
+    RowHeightOptions,
+    TableSelectionMode,
+} from "../types";
 
 /* eslint-disable */
 
@@ -229,7 +233,7 @@ export class TableFooterRowDefDirective
 
 @Component({
     template: ` <th
-            *ngIf="selectable"
+            *ngIf="selectable && selectionMode === 'multi'"
             nuiClickInterceptor
             class="nui-table__table-header-cell nui-table__table-header-cell--selectable"
             [ngClass]="{ 'no-options': !hasOptions }"
@@ -269,6 +273,7 @@ export class TableHeaderRowComponent
     };
 
     public selectable;
+    public selectionMode: TableSelectionMode;
     public selectionChangeSubscription: Subscription;
     public dataSourceChangeSubscription: Subscription;
 
@@ -299,10 +304,15 @@ export class TableHeaderRowComponent
     ) {
         super();
         this.selectable = this.tableStateHandlerService.selectable;
+        this.selectionMode = this.tableStateHandlerService.selectionMode;
     }
 
     public ngOnInit(): void {
-        if (this.tableStateHandlerService.selectable) {
+        if (
+            this.tableStateHandlerService.selectable &&
+            this.tableStateHandlerService.selectionMode ===
+                TableSelectionMode.Multi
+        ) {
             this.selectorState =
                 this.tableStateHandlerService.getSelectorState();
             this.updateSelectorState();
@@ -329,6 +339,13 @@ export class TableHeaderRowComponent
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((selectable: boolean) => {
                 this.selectable = selectable;
+                this.changeDetectorRef.markForCheck();
+            });
+
+        this.tableStateHandlerService.selectionModeChanged
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((mode: TableSelectionMode) => {
+                this.selectionMode = mode;
                 this.changeDetectorRef.markForCheck();
             });
     }
@@ -367,13 +384,23 @@ export class TableHeaderRowComponent
 @Component({
     selector: "nui-row, tr[nui-row]",
     template: ` <td
-            *ngIf="selectable"
+            *ngIf="selectionMode !== 'none'"
             class="nui-table__table-cell nui-table__table-cell--selectable"
         >
-            <nui-checkbox
+            <nui-radio
+                *ngIf="selectionMode === 'radio'"
                 class="nui-table__table-cell__checkbox d-inline-block"
                 [checked]="isRowSelected()"
-                (valueChange)="checkboxClicked()"
+                (valueChange)="rowSelected()"
+                (click)="stopPropagation($event)"
+                #rowSelectionRadio
+            >
+            </nui-radio>
+            <nui-checkbox
+                *ngIf="selectionMode === 'multi'"
+                class="nui-table__table-cell__checkbox d-inline-block"
+                [checked]="isRowSelected()"
+                (valueChange)="rowSelected()"
                 (click)="stopPropagation($event)"
                 #rowSelectionCheckbox
             >
@@ -400,6 +427,7 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
         ignoredSelectors: DEFAULT_INTERACTIVE_ELEMENTS,
     };
     public selectable;
+    public selectionMode: TableSelectionMode;
     public selectionChangeSubscription: Subscription;
 
     @HostBinding("class.nui-table__table-row--selected")
@@ -425,6 +453,9 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
     @ViewChild("rowSelectionCheckbox", { read: ElementRef, static: false })
     private rowSelectionCheckbox: ElementRef;
 
+    @ViewChild("rowSelectionRadio", { read: ElementRef, static: false })
+    private rowSelectionRadio: ElementRef;
+
     private onDestroy$ = new Subject<void>();
 
     constructor(
@@ -434,6 +465,7 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
     ) {
         super();
         this.selectable = this.tableStateHandlerService.selectable;
+        this.selectionMode = this.tableStateHandlerService.selectionMode;
     }
 
     public ngOnInit(): void {
@@ -460,8 +492,10 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
     public rowClickHandler(target: HTMLElement): void {
         if (
             !this.tableStateHandlerService.selectable ||
-            !this.clickableRow ||
-            !this.clickableRowConfig.clickableSelectors.length
+            ((!this.clickableRow ||
+                !this.clickableRowConfig.clickableSelectors.length) &&
+                this.tableStateHandlerService.selectionMode !==
+                    TableSelectionMode.Single)
         ) {
             return;
         }
@@ -477,14 +511,33 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
         ) {
             return;
         }
-        const rowSelectCheckbox = closestTableRow.querySelector("nui-checkbox");
-        if (rowSelectCheckbox === this.rowSelectionCheckbox.nativeElement) {
-            this.checkboxClicked();
+
+        if (this.selectionMode === TableSelectionMode.Single) {
+            this.rowSelected();
+            return;
+        }
+
+        // TODO refactor a bit
+        let rowSelector: Element | null = null;
+        if (this.selectionMode === TableSelectionMode.Multi) {
+            rowSelector = closestTableRow.querySelector("nui-checkbox");
+
+            if (rowSelector === this.rowSelectionCheckbox.nativeElement) {
+                this.rowSelected();
+                return;
+            }
+        }
+        if (this.selectionMode === TableSelectionMode.Radio) {
+            rowSelector = closestTableRow.querySelector("nui-radio");
+
+            if (rowSelector === this.rowSelectionRadio.nativeElement) {
+                this.rowSelected();
+            }
         }
     }
 
-    public checkboxClicked(): void {
-        this.tableStateHandlerService.handleRowCheckbox(this.rowObject);
+    public rowSelected(): void {
+        this.tableStateHandlerService.handleRowSelect(this.rowObject);
     }
 
     /**
@@ -509,6 +562,7 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
             }
             return true;
         }
+
         return includedRows.length > 0
             ? _includes(includedRows, rowObjectTrackBy)
             : false;

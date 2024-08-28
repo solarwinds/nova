@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { GridsterItem } from "angular-gridster2";
+import {GridsterItem} from "angular-gridster2";
 import moment from "moment/moment";
 
 import {
@@ -40,9 +40,12 @@ import {
     WellKnownProviders,
 } from "@nova-ui/dashboards";
 
-import { AcmeProportionalDataSource } from "../data/proportional-datasources";
-import { AcmeTableMockDataSource } from "../data/table/acme-table-mock-data-source.service";
-import { AcmeTimeseriesDataSource } from "../data/timeseries-data-sources";
+import {AcmeProportionalDataSource} from "../data/proportional-datasources";
+import {
+    AcmeTableMockDataSource
+} from "../data/table/acme-table-mock-data-source.service";
+import {AcmeTimeseriesDataSource} from "../data/timeseries-data-sources";
+import {TableSelectionMode} from "../../../../../../bits/dist";
 
 export const positions: Record<string, GridsterItem> = {
     widget1: {
@@ -127,7 +130,6 @@ export const widgets: IWidget[] = [
                     properties: {
                         configuration: {
                             interactive: true,
-                            selectable: true,
                             columns: [
                                 {
                                     id: "column1",
@@ -343,6 +345,10 @@ export const widgets: IWidget[] = [
                     },
                     properties: {
                         configuration: {
+                            selectionConfiguration: {
+                                enabled: true,
+                                selectionMode: TableSelectionMode.Single,
+                            },
                             interactive: true,
                             columns: [
                                 {
@@ -492,6 +498,11 @@ export const widgets: IWidget[] = [
                     properties: {
                         configuration: {
                             interactive: true,
+                            selectionConfiguration: {
+                                enabled: true,
+                                selectionMode: TableSelectionMode.Radio,
+                            },
+                            clickableRow: true,
                             columns: [
                                 {
                                     id: "column1",
@@ -645,6 +656,11 @@ export const widgets: IWidget[] = [
                     properties: {
                         configuration: {
                             interactive: true,
+                            selectionConfiguration: {
+                                enabled: true,
+                                selectionMode: TableSelectionMode.Multi,
+                            },
+                            clickableRow: true,
                             columns: [
                                 {
                                     id: "column1",

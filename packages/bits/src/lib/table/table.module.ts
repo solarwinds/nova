@@ -47,6 +47,7 @@ import { TableComponent } from "./table.component";
 import { NuiCommonModule } from "../../common/common.module";
 import { NuiCheckboxModule } from "../checkbox/checkbox.module";
 import { NuiIconModule } from "../icon/icon.module";
+import { NuiRadioModule } from "../radio/radio.module";
 import { NuiSelectModule } from "../select/select.module";
 import { NuiSelectorModule } from "../selector/selector.module";
 
@@ -78,6 +79,7 @@ const DECLARATIONS_EXPORTS: Array<Type<any> | any[]> = [
 @NgModule({
     imports: [
         NuiCommonModule,
+        NuiRadioModule,
         NuiSelectModule,
         NuiSelectorModule,
         NuiCheckboxModule,

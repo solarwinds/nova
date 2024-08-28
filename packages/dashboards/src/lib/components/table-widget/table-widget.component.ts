@@ -384,8 +384,15 @@ export class TableWidgetComponent
             : columnsCondition && dataCondition;
     }
 
-    public dataTrackBy(index: number, item: any): any {
-        return item ? item.trackById : index;
+    public dataTrackBy(): (index: any, item: any) => any {
+        const configuration = this?.configuration?.selectionConfiguration;
+        const trackByProperty =
+            (configuration?.enabled && configuration.trackByProperty) || "id";
+
+        // we are returning a function here because the scope of "this" changes once it's passed
+        // to the table component and are therefore unable to access the configuration in its body
+        return (index: number, item: any): any =>
+            item ? item[trackByProperty] : index;
     }
 
     public columnTrackBy(
@@ -461,7 +468,7 @@ export class TableWidgetComponent
             return [];
         }
 
-        return tableData.map((record, index) => {
+        return tableData.map((record) => {
             const row = columns.reduce(
                 (result: Record<string, any>, column) => {
                     const dataFieldIds =
@@ -489,9 +496,7 @@ export class TableWidgetComponent
             );
 
             // we want to include original record for row interaction
-            // adding index (or anything unique) as trackById is required for row selection to work
             row.__record = record;
-            row.__record.trackById = index;
 
             return row;
         });
@@ -538,9 +543,12 @@ export class TableWidgetComponent
     }
 
     public onInteraction(row: any, event: MouseEvent): void {
-        if (!this.interactive || this.configuration.selectable) {
-            // allowing interactive and selectable at the same time would trigger both
-            // events when clicking on a row (not checkbox)
+        if (
+            !this.interactive ||
+            this.configuration.selectionConfiguration?.enabled
+        ) {
+            // allowing interactive and selection at the same time would trigger both
+            // events when clicking on a row (not checkbox/radio)
             return;
         }
 

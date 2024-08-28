@@ -67,6 +67,7 @@ import { TableStateHandlerService } from "./table-state-handler.service";
 import { IFilteringParticipants, ISelection } from "../../services/public-api";
 import { ComponentChanges } from "../../types";
 import { ISortedItem, SorterDirection } from "../sorter/public-api";
+import { TableSelectionConfig, TableSelectionMode } from "./types";
 
 // <example-url>./../examples/index.html#/table</example-url>
 
@@ -102,7 +103,14 @@ export class TableComponent<T>
     @Input() reorderable = false;
     @Input() sortable = false;
     @Input() resizable = false;
+    /**
+     * @deprecated Use selectionMode instead.
+     */
     @Input() selectable = false;
+    @Input() selectionConfig: TableSelectionConfig = {
+        enabled: false,
+        selectionMode: TableSelectionMode.None,
+    };
     @Input() totalItems: number;
 
     @Input()
@@ -207,8 +215,11 @@ export class TableComponent<T>
             this.onDataSourceChange(changes.dataSource.currentValue);
         }
         if (changes.selectable) {
-            this.tableStateHandlerService.selectable =
-                changes.selectable.currentValue;
+            this.changeSelectionMode(changes.selectable.currentValue);
+        }
+        if (changes.selectionConfig) {
+            this.tableStateHandlerService.selectionMode =
+                changes.selectionConfig.currentValue?.selectionMode;
         }
         if (changes.selection && !changes.selection.isFirstChange()) {
             this.changeSelection(changes.selection.currentValue);
@@ -272,7 +283,7 @@ export class TableComponent<T>
                 );
         }
 
-        if (this.selectable) {
+        if (this.selectable || this.selectionConfig?.enabled) {
             this.stickyChangedSubscription =
                 this.tableStateHandlerService.stickyHeaderChangedSubject.subscribe(
                     () => {
@@ -287,7 +298,7 @@ export class TableComponent<T>
         // moved this from ngOnInit since we might emit the selectionChange event
         // before our component is actually ready and it might cause problems
         // if we try to manually trigger change detection in a parent component
-        if (this.selectable) {
+        if (this.selectable || this.selectionConfig?.enabled) {
             this.selectionChangedSubscription =
                 this.tableStateHandlerService.selectionChanged.subscribe(
                     (selection: ISelection) => {
@@ -306,6 +317,21 @@ export class TableComponent<T>
         this.tableStateHandlerService.selectionChanged.next(
             this.tableStateHandlerService.selection
         );
+    }
+
+    // used for backwards compatibility
+    // default behavior was multi selection
+    private changeSelectionMode(selectable: boolean): void {
+        this.tableStateHandlerService.selectable = selectable;
+        if (selectable) {
+            this.tableStateHandlerService.selectionMode =
+                TableSelectionMode.Multi;
+            this.selectionConfig = {
+                ...this.selectionConfig,
+                enabled: true,
+                selectionMode: TableSelectionMode.Multi,
+            };
+        }
     }
 
     private handleSortedColumn(sortedColumn: ISortedItem) {

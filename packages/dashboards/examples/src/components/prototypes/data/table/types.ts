@@ -20,6 +20,7 @@
 
 import { IDataField, INovaFilteringOutputs } from "@nova-ui/bits";
 export interface BasicTableModel {
+    id?: number;
     position: number;
     name: string;
     features: any;
