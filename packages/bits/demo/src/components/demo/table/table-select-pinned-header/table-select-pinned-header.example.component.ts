@@ -20,7 +20,11 @@
 
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 
-import { ISelection } from "@nova-ui/bits";
+import {
+    ISelection,
+    TableSelectionConfig,
+    TableSelectionMode,
+} from "@nova-ui/bits";
 
 interface IExampleTableModel {
     position: number;
@@ -55,6 +59,10 @@ export class TableSelectPinnedHeaderComponent {
         isAllPages: false,
         include: [2, 3],
         exclude: [],
+    };
+    public selectionConfig: TableSelectionConfig = {
+        enabled: true,
+        selectionMode: TableSelectionMode.Multi,
     };
 
     public trackBy(index: number, item: IExampleTableModel): number {

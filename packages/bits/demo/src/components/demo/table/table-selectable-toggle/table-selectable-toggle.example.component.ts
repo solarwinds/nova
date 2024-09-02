@@ -35,6 +35,8 @@ import {
     PaginatorComponent,
     SelectionModel,
     SelectorService,
+    TableSelectionConfig,
+    TableSelectionMode,
 } from "@nova-ui/bits";
 
 interface IExampleTableModel {
@@ -64,11 +66,14 @@ export class TableSelectableToggleExampleComponent
     public dataSource?: IExampleTableModel[] = [];
     public paginationTotal?: number;
     public selectedItems: IExampleTableModel[] = [];
-    public selectable = true;
     public selection: ISelection = {
         isAllPages: false,
         include: [2, 3],
         exclude: [],
+    };
+    public selectionConfig: TableSelectionConfig = {
+        enabled: true,
+        selectionMode: TableSelectionMode.Multi,
     };
 
     @ViewChild("filteringPaginator") filteringPaginator: PaginatorComponent;
@@ -116,7 +121,17 @@ export class TableSelectableToggleExampleComponent
     }
 
     public toggleSelectable(): void {
-        this.selectable = !this.selectable;
+        if (this.selectionConfig.enabled) {
+            this.selectionConfig = {
+                enabled: false,
+                selectionMode: TableSelectionMode.None,
+            };
+        } else {
+            this.selectionConfig = {
+                enabled: true,
+                selectionMode: TableSelectionMode.Multi,
+            };
+        }
         this.selection = new SelectionModel();
     }
 }

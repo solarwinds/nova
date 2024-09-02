@@ -12,7 +12,7 @@
         [dataSource]="dataSource"
         [totalItems]="paginationTotal"
         [(selection)]="selection"
-        [selectable]="selectable"
+        [selectionConfig]="selectionConfig"
         [trackBy]="trackBy"
     >
         <ng-container nuiColumnDef="position">
@@ -59,7 +59,7 @@
             nui-row
             *nuiRowDef="let row; columns: displayedColumns"
             [rowObject]="row"
-            [clickableRow]="selectable"
+            [clickableRow]="selectionConfig.enabled"
         ></tr>
     </table>
 </div>

@@ -40,6 +40,8 @@ import {
     SearchComponent,
     SorterDirection,
     TableComponent,
+    TableSelectionConfig,
+    TableSelectionMode,
 } from "@nova-ui/bits";
 
 import { RESULTS_PER_PAGE } from "./table-with-selection-data";
@@ -89,6 +91,10 @@ export class TableWithSelectionComponent
         isAllPages: false,
         include: ["ABERN-SVR-ATQU9404"],
         exclude: [],
+    };
+    public selectionConfig: TableSelectionConfig = {
+        enabled: true,
+        selectionMode: TableSelectionMode.Multi,
     };
 
     @ViewChild(TableComponent) table: TableComponent<IServer>;
