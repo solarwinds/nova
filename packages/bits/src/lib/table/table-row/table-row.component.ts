@@ -233,7 +233,11 @@ export class TableFooterRowDefDirective
 
 @Component({
     template: ` <th
-            *ngIf="selectable && selectionMode === 'multi'"
+            *ngIf="
+                selectable ||
+                selectionMode === 'multi' ||
+                selectionMode === 'radio'
+            "
             nuiClickInterceptor
             class="nui-table__table-header-cell nui-table__table-header-cell--selectable"
             [ngClass]="{ 'no-options': !hasOptions }"
@@ -241,6 +245,7 @@ export class TableFooterRowDefDirective
             <nui-selector
                 class="nui-table__table-header-cell__selector"
                 [ngClass]="{ 'no-options': !hasOptions }"
+                [class.invisible]="selectionMode !== 'multi'"
                 [appendToBody]="true"
                 (selectionChange)="onSelectorChange($event)"
                 [checkboxStatus]="selectorState.checkboxStatus"
@@ -308,11 +313,7 @@ export class TableHeaderRowComponent
     }
 
     public ngOnInit(): void {
-        if (
-            this.tableStateHandlerService.selectable &&
-            this.tableStateHandlerService.selectionMode ===
-                TableSelectionMode.Multi
-        ) {
+        if (this.tableStateHandlerService.selectionEnabled) {
             this.selectorState =
                 this.tableStateHandlerService.getSelectorState();
             this.updateSelectorState();
@@ -351,7 +352,11 @@ export class TableHeaderRowComponent
     }
 
     public ngAfterViewInit(): void {
-        if (this.tableStateHandlerService.selectable) {
+        if (
+            this.tableStateHandlerService.selectable &&
+            this.tableStateHandlerService.selectionMode ===
+                TableSelectionMode.Multi
+        ) {
             this.tableStateHandlerService.applyStickyStyles();
         }
     }
@@ -384,7 +389,11 @@ export class TableHeaderRowComponent
 @Component({
     selector: "nui-row, tr[nui-row]",
     template: ` <td
-            *ngIf="selectionMode !== 'none'"
+            *ngIf="
+                selectable ||
+                (selectionMode &&
+                    (selectionMode === 'multi' || selectionMode === 'radio'))
+            "
             class="nui-table__table-cell nui-table__table-cell--selectable"
         >
             <nui-radio
@@ -486,16 +495,20 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
                 this.selectable = selectable;
                 this.changeDetectorRef.markForCheck();
             });
+        this.tableStateHandlerService.selectionModeChanged
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((mode: TableSelectionMode) => {
+                this.selectionMode = mode;
+                this.changeDetectorRef.markForCheck();
+            });
     }
 
     @HostListener("click", ["$event.target"])
     public rowClickHandler(target: HTMLElement): void {
         if (
-            !this.tableStateHandlerService.selectable ||
-            ((!this.clickableRow ||
-                !this.clickableRowConfig.clickableSelectors.length) &&
-                this.tableStateHandlerService.selectionMode !==
-                    TableSelectionMode.Single)
+            !this.tableStateHandlerService.selectionEnabled ||
+            !this.clickableRow ||
+            !this.clickableRowConfig.clickableSelectors.length
         ) {
             return;
         }

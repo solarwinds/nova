@@ -262,7 +262,6 @@ export class TableStateHandlerService {
             this.selectionModeChanged.next(mode);
         }
         this._selectionMode = mode;
-        this._selectable = mode !== TableSelectionMode.None;
     }
 
     get selectionMode(): TableSelectionMode {
@@ -307,6 +306,14 @@ export class TableStateHandlerService {
 
     set trackBy(value: TrackByFunction<any>) {
         this._trackBy = value;
+    }
+
+    get selectionEnabled(): boolean {
+        return (
+            this.selectable ||
+            (this.selectionMode &&
+                this.selectionMode !== TableSelectionMode.None)
+        );
     }
 
     /**

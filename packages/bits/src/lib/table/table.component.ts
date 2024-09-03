@@ -331,6 +331,13 @@ export class TableComponent<T>
                 enabled: true,
                 selectionMode: TableSelectionMode.Multi,
             };
+        } else {
+            this.tableStateHandlerService.selectionMode =
+                TableSelectionMode.None;
+            this.selectionConfig = {
+                enabled: false,
+                selectionMode: TableSelectionMode.None,
+            };
         }
     }
 
