@@ -501,6 +501,7 @@ export const widgets: IWidget[] = [
                             selectionConfiguration: {
                                 enabled: true,
                                 selectionMode: TableSelectionMode.Radio,
+                                clickableRow: true,
                             },
                             clickableRow: true,
                             columns: [

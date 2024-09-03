@@ -19,39 +19,22 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { TableSelectionMode } from "@nova-ui/bits";
+import { TableWidgetSelectionConfig } from "@nova-ui/dashboards";
 
+/**
+ * A component that instantiates the dashboard
+ */
 @Component({
-    selector: "nui-table-selectable-docs",
-    templateUrl: "./table-selectable-docs.component.html",
+    selector: "table-widget-selectable-multi-example",
+    templateUrl: "./table-widget-selectable-multi.example.component.html",
+    styleUrls: ["./table-widget-selectable-multi.example.component.less"],
 })
-export class TableSelectableDocsComponent {
-    public tableConfigurationText = `
-        "table": {
-            ...
-            properties: {
-                // enabling selection here
-                selectionConfiguration: {
-                    // whether the selection is enabled or disabled
-                    enabled: true,
-                    // can be Multi | Radio | Single
-                    selectionMode: TableSelectionMode.Multi,
-                    // property that uniquely identifies row in a table
-                    trackByProperty: "id",
-                    // whether clicking on row should select it
-                    clickableRow: true,
-                },
-            },
-        },
-    `;
-
-    public eventSubscriptionText = `
-...
-constructor(Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>) {
-    eventBus
-    .getStream(SELECTION)
-    // don't forget to unsubscribe!
-    .subscribe((selection: ISelection) => ...)
-}
-...
-    `;
+export class TableWidgetSelectableMultiExampleComponent {
+    public selectionConfiguration: TableWidgetSelectionConfig = {
+        enabled: true,
+        selectionMode: TableSelectionMode.Multi,
+        trackByProperty: "id",
+        clickableRow: true,
+    };
 }

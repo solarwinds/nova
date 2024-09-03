@@ -19,9 +19,9 @@
 //  THE SOFTWARE.
 
 import { HttpClient } from "@angular/common/http";
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
-import { LoggerService } from "@nova-ui/bits";
+import { LoggerService, TableSelectionMode } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     DEFAULT_PIZZAGNA_ROOT,
@@ -34,6 +34,7 @@ import {
     PizzagnaLayer,
     ProviderRegistryService,
     RawFormatterComponent,
+    TableWidgetSelectionConfig,
     WellKnownPathKey,
     WellKnownProviders,
     WidgetTypesService,
@@ -53,6 +54,11 @@ export class TableWidgetSelectableExampleComponent implements OnInit {
     public dashboard: IDashboard | undefined;
     public gridsterConfig: GridsterConfig = {};
     public editMode: boolean = false;
+
+    @Input() public selectionConfiguration: TableWidgetSelectionConfig = {
+        enabled: false,
+        selectionMode: TableSelectionMode.None,
+    };
 
     constructor(
         private widgetTypesService: WidgetTypesService,
@@ -93,7 +99,7 @@ export class TableWidgetSelectableExampleComponent implements OnInit {
     }
 
     public initializeDashboard(): void {
-        const tableWidget = widgetConfig;
+        const tableWidget = this.widgetConfig;
         const widgetIndex: IWidgets = {
             [tableWidget.id]:
                 this.widgetTypesService.mergeWithWidgetType(tableWidget),
@@ -113,84 +119,87 @@ export class TableWidgetSelectableExampleComponent implements OnInit {
             widgets: widgetIndex,
         };
     }
-}
 
-export const widgetConfig: IWidget = {
-    id: "widget1",
-    type: "table",
-    pizzagna: {
-        [PizzagnaLayer.Configuration]: {
-            [DEFAULT_PIZZAGNA_ROOT]: {
-                providers: {
-                    [WellKnownProviders.InteractionHandler]: {
-                        providerId: NOVA_URL_INTERACTION_HANDLER,
+    private get widgetConfig(): IWidget {
+        return {
+            id: "widget1",
+            type: "table",
+            pizzagna: {
+                [PizzagnaLayer.Configuration]: {
+                    [DEFAULT_PIZZAGNA_ROOT]: {
+                        providers: {
+                            [WellKnownProviders.InteractionHandler]: {
+                                providerId: NOVA_URL_INTERACTION_HANDLER,
+                            },
+                        },
+                    },
+                    header: {
+                        properties: {
+                            title: "Table Widget with Selection!",
+                            subtitle: "Basic table widget",
+                            collapsible: true,
+                        },
+                    },
+                    table: {
+                        providers: {
+                            [WellKnownProviders.DataSource]: {
+                                providerId: AcmeTableMockDataSource.providerId,
+                            } as IProviderConfiguration,
+                        },
+                        properties: {
+                            configuration: {
+                                // enabling selection here
+                                selectionConfiguration:
+                                    this.selectionConfiguration,
+                                columns: [
+                                    {
+                                        id: "column1",
+                                        label: "No.",
+                                        isActive: true,
+                                        formatter: {
+                                            componentType:
+                                                RawFormatterComponent.lateLoadKey,
+                                            properties: {
+                                                dataFieldIds: {
+                                                    value: "position",
+                                                },
+                                            },
+                                        },
+                                    },
+                                    {
+                                        id: "column2",
+                                        label: "Name",
+                                        isActive: true,
+                                        formatter: {
+                                            componentType:
+                                                RawFormatterComponent.lateLoadKey,
+                                            properties: {
+                                                dataFieldIds: {
+                                                    value: "name",
+                                                },
+                                            },
+                                        },
+                                    },
+                                    {
+                                        id: "column3",
+                                        label: "Status",
+                                        isActive: true,
+                                        formatter: {
+                                            componentType:
+                                                RawFormatterComponent.lateLoadKey,
+                                            properties: {
+                                                dataFieldIds: {
+                                                    value: "status",
+                                                },
+                                            },
+                                        },
+                                    },
+                                ],
+                            } as ITableWidgetConfig,
+                        },
                     },
                 },
             },
-            header: {
-                properties: {
-                    title: "Table Widget with Selection!",
-                    subtitle: "Basic table widget",
-                    collapsible: true,
-                },
-            },
-            table: {
-                providers: {
-                    [WellKnownProviders.DataSource]: {
-                        providerId: AcmeTableMockDataSource.providerId,
-                    } as IProviderConfiguration,
-                },
-                properties: {
-                    configuration: {
-                        // enabling selection here
-                        selectable: true,
-                        columns: [
-                            {
-                                id: "column1",
-                                label: "No.",
-                                isActive: true,
-                                formatter: {
-                                    componentType:
-                                        RawFormatterComponent.lateLoadKey,
-                                    properties: {
-                                        dataFieldIds: {
-                                            value: "position",
-                                        },
-                                    },
-                                },
-                            },
-                            {
-                                id: "column2",
-                                label: "Name",
-                                isActive: true,
-                                formatter: {
-                                    componentType:
-                                        RawFormatterComponent.lateLoadKey,
-                                    properties: {
-                                        dataFieldIds: {
-                                            value: "name",
-                                        },
-                                    },
-                                },
-                            },
-                            {
-                                id: "column3",
-                                label: "Status",
-                                isActive: true,
-                                formatter: {
-                                    componentType:
-                                        RawFormatterComponent.lateLoadKey,
-                                    properties: {
-                                        dataFieldIds: {
-                                            value: "status",
-                                        },
-                                    },
-                                },
-                            },
-                        ],
-                    } as ITableWidgetConfig,
-                },
-            },
-        },
-    },
-};
+        };
+    }
+}
