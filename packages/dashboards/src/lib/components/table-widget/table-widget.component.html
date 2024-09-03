@@ -120,9 +120,7 @@
                         [attr.role]="interactive ? 'button' : ''"
                         density="tiny"
                         [rowObject]="row.__record"
-                        [clickableRow]="
-                            configuration?.selectionConfiguration?.enabled
-                        "
+                        [clickableRow]="clickableRow"
                     ></tr>
                 </ng-template>
             </table>

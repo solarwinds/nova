@@ -62,6 +62,7 @@ import {
     TableAlignmentOptions,
     TableComponent,
     TableRowComponent,
+    TableSelectionMode,
     VirtualViewportManager,
 } from "@nova-ui/bits";
 
@@ -77,8 +78,8 @@ import {
 import { WidgetConfigurationService } from "../../services/widget-configuration.service";
 import {
     DATA_SOURCE,
-    PizzagnaLayer,
     PIZZAGNA_EVENT_BUS,
+    PizzagnaLayer,
     WellKnownDataSourceFeatures,
 } from "../../types";
 import { ITableFormatterDefinition } from "../types";
@@ -200,6 +201,15 @@ export class TableWidgetComponent
                 WellKnownDataSourceFeatures.Interactivity
             )?.enabled ??
             false
+        );
+    }
+
+    public get clickableRow(): boolean {
+        const configuration = this.configuration?.selectionConfiguration;
+        return (
+            !!configuration?.enabled &&
+            (configuration.clickableRow ||
+                configuration.selectionMode === TableSelectionMode.Single)
         );
     }
 

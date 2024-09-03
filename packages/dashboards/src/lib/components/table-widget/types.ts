@@ -116,10 +116,16 @@ interface ITableWidgetSelectionConfigEnabled
      *
      * Using property that is not unique across table data will result in a selection
      * of all rows with the same column value at once.
-     
+
      @default "id"
      */
     trackByProperty?: string;
+    /**
+     * If clicking on row should select it.
+     * True if selectionMode is set to "single".
+     * @default false
+     */
+    clickableRow?: boolean;
 }
 
 interface ITableWidgetSelectionConfigDisabled
