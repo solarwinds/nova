@@ -551,32 +551,32 @@ describe("components >", () => {
             });
 
             it("should emit selection from table on row click if clickable rows enabled", () => {
-                spyOn(component, "checkboxClicked");
+                spyOn(component, "rowSelected");
                 spyOnProperty(
                     tableStateHandlerService,
-                    "selectable",
+                    "selectionEnabled",
                     "get"
                 ).and.returnValue(true);
                 fixture.componentInstance.clickableRow = true;
 
-                const checkbox = {};
-                component.rowSelectionCheckbox = { nativeElement: checkbox };
+                const selectionElement = {};
+                component.rowSelectionElement = { nativeElement: selectionElement };
                 const eventTarget = constructEventTarget(
-                    { querySelector: () => checkbox },
+                    { querySelector: () => selectionElement },
                     null
                 );
 
                 fixture.componentInstance.rowClickHandler(
                     <HTMLElement>eventTarget
                 );
-                expect(component.checkboxClicked).toHaveBeenCalled();
+                expect(component.rowSelected).toHaveBeenCalled();
             });
 
             it("should not emit selection from table on row click if clickable rows enabled but an ignored element was clicked", () => {
-                spyOn(component, "checkboxClicked");
+                spyOn(component, "rowSelected");
                 spyOnProperty(
                     tableStateHandlerService,
-                    "selectable",
+                    "selectionEnabled",
                     "get"
                 ).and.returnValue(true);
                 fixture.componentInstance.clickableRow = true;
@@ -589,14 +589,14 @@ describe("components >", () => {
                 fixture.componentInstance.rowClickHandler(
                     <HTMLElement>eventTarget
                 );
-                expect(component.checkboxClicked).not.toHaveBeenCalled();
+                expect(component.rowSelected).not.toHaveBeenCalled();
             });
 
             it("should not emit selection from an unselectable table", () => {
-                spyOn(component, "checkboxClicked");
+                spyOn(component, "rowSelected");
                 spyOnProperty(
                     tableStateHandlerService,
-                    "selectable",
+                    "selectionEnabled",
                     "get"
                 ).and.returnValue(false);
                 fixture.componentInstance.clickableRow = true;
@@ -606,14 +606,14 @@ describe("components >", () => {
                 fixture.componentInstance.rowClickHandler(
                     <HTMLElement>eventTarget
                 );
-                expect(component.checkboxClicked).not.toHaveBeenCalled();
+                expect(component.rowSelected).not.toHaveBeenCalled();
             });
 
             it("should not emit selection from a selectable table when clickable rows are not enabled", () => {
-                spyOn(component, "checkboxClicked");
+                spyOn(component, "rowSelected");
                 spyOnProperty(
                     tableStateHandlerService,
-                    "selectable",
+                    "selectionEnabled",
                     "get"
                 ).and.returnValue(true);
                 fixture.componentInstance.clickableRow = false;
@@ -623,7 +623,7 @@ describe("components >", () => {
                 fixture.componentInstance.rowClickHandler(
                     <HTMLElement>eventTarget
                 );
-                expect(component.checkboxClicked).not.toHaveBeenCalled();
+                expect(component.rowSelected).not.toHaveBeenCalled();
             });
         });
         describe("columns types >", () => {

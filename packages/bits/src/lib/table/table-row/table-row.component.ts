@@ -353,7 +353,7 @@ export class TableHeaderRowComponent
 
     public ngAfterViewInit(): void {
         if (
-            this.tableStateHandlerService.selectable &&
+            this.tableStateHandlerService.selectable ||
             this.tableStateHandlerService.selectionMode ===
                 TableSelectionMode.Multi
         ) {
@@ -402,7 +402,7 @@ export class TableHeaderRowComponent
                 [checked]="isRowSelected()"
                 (valueChange)="rowSelected()"
                 (click)="stopPropagation($event)"
-                #rowSelectionRadio
+                #rowSelectionElement
             >
             </nui-radio>
             <nui-checkbox
@@ -411,7 +411,7 @@ export class TableHeaderRowComponent
                 [checked]="isRowSelected()"
                 (valueChange)="rowSelected()"
                 (click)="stopPropagation($event)"
-                #rowSelectionCheckbox
+                #rowSelectionElement
             >
             </nui-checkbox>
         </td>
@@ -459,11 +459,8 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
         return this.density.toLowerCase() === "tiny";
     }
 
-    @ViewChild("rowSelectionCheckbox", { read: ElementRef, static: false })
-    private rowSelectionCheckbox: ElementRef;
-
-    @ViewChild("rowSelectionRadio", { read: ElementRef, static: false })
-    private rowSelectionRadio: ElementRef;
+    @ViewChild("rowSelectionElement", { read: ElementRef, static: false })
+    private rowSelectionElement: ElementRef;
 
     private onDestroy$ = new Subject<void>();
 
@@ -495,6 +492,7 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
                 this.selectable = selectable;
                 this.changeDetectorRef.markForCheck();
             });
+
         this.tableStateHandlerService.selectionModeChanged
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((mode: TableSelectionMode) => {
@@ -530,22 +528,10 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
             return;
         }
 
-        // TODO refactor a bit
-        let rowSelector: Element | null = null;
-        if (this.selectionMode === TableSelectionMode.Multi) {
-            rowSelector = closestTableRow.querySelector("nui-checkbox");
-
-            if (rowSelector === this.rowSelectionCheckbox.nativeElement) {
-                this.rowSelected();
-                return;
-            }
-        }
-        if (this.selectionMode === TableSelectionMode.Radio) {
-            rowSelector = closestTableRow.querySelector("nui-radio");
-
-            if (rowSelector === this.rowSelectionRadio.nativeElement) {
-                this.rowSelected();
-            }
+        let rowSelector: Element | null = closestTableRow.querySelector(".nui-table__table-cell__checkbox");
+        if (rowSelector === this.rowSelectionElement?.nativeElement) {
+            this.rowSelected();
+            return;
         }
     }
 

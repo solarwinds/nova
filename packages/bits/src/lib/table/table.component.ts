@@ -104,7 +104,7 @@ export class TableComponent<T>
     @Input() sortable = false;
     @Input() resizable = false;
     /**
-     * @deprecated Use selectionMode instead.
+     * @deprecated Use selectionConfig instead.
      */
     @Input() selectable = false;
     @Input() selectionConfig: TableSelectionConfig = {
