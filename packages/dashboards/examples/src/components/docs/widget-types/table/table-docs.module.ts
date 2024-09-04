@@ -44,15 +44,9 @@ import { TableSelectableDocsComponent } from "./table-selectable-docs.component"
 import { TableWidgetSelectableExampleComponent } from "./table-widget-selectable/table-widget-selectable.example.component";
 import { TablePaginatorDocsComponent } from "./table-paginator-docs.component";
 import { TableWidgetPaginatorExampleComponent } from "./table-widget-paginator/table-widget-paginator-example.component";
-import {
-    TableWidgetSelectableMultiExampleComponent
-} from "./table-widget-selectable/table-widget-selectable-multi/table-widget-selectable-multi.example.component";
-import {
-    TableWidgetSelectableSingleExampleComponent
-} from "./table-widget-selectable/table-widget-selectable-single/table-widget-selectable-single.example.component";
-import {
-    TableWidgetSelectableRadioExampleComponent
-} from "./table-widget-selectable/table-widget-selectable-radio/table-widget-selectable-radio.example.component";
+import { TableWidgetSelectableMultiExampleComponent } from "./table-widget-selectable/table-widget-selectable-multi/table-widget-selectable-multi.example.component";
+import { TableWidgetSelectableSingleExampleComponent } from "./table-widget-selectable/table-widget-selectable-single/table-widget-selectable-single.example.component";
+import { TableWidgetSelectableRadioExampleComponent } from "./table-widget-selectable/table-widget-selectable-radio/table-widget-selectable-radio.example.component";
 
 const routes: Routes = [
     {

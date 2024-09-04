@@ -22,7 +22,8 @@ import { HttpClient } from "@angular/common/http";
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
-    Component, Inject,
+    Component,
+    Inject,
     OnDestroy,
     OnInit,
     ViewChild,
@@ -50,7 +51,9 @@ import {
     WidgetClonerService,
     WidgetTypesService,
     WIDGET_CREATE,
-    PIZZAGNA_EVENT_BUS, SELECTION, REFRESH,
+    PIZZAGNA_EVENT_BUS,
+    SELECTION,
+    REFRESH,
 } from "@nova-ui/dashboards";
 
 import {
@@ -180,8 +183,6 @@ export class AcmeDashboardComponent
     }
 
     public ngOnInit(): void {
-        this.eventBus.getStream(SELECTION).subscribe(value => console.log("SELECTION:", value));
-        this.eventBus.getStream(REFRESH).subscribe(value => console.log("REFRESH:", value));
         this.widgetTypesService
             .getWidgetType("table")
             .configurator?.[

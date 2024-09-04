@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {GridsterItem} from "angular-gridster2";
+import { GridsterItem } from "angular-gridster2";
 import moment from "moment/moment";
 
 import {
@@ -40,12 +40,10 @@ import {
     WellKnownProviders,
 } from "@nova-ui/dashboards";
 
-import {AcmeProportionalDataSource} from "../data/proportional-datasources";
-import {
-    AcmeTableMockDataSource
-} from "../data/table/acme-table-mock-data-source.service";
-import {AcmeTimeseriesDataSource} from "../data/timeseries-data-sources";
-import {TableSelectionMode} from "../../../../../../bits/dist";
+import { AcmeProportionalDataSource } from "../data/proportional-datasources";
+import { AcmeTableMockDataSource } from "../data/table/acme-table-mock-data-source.service";
+import { AcmeTimeseriesDataSource } from "../data/timeseries-data-sources";
+import { TableSelectionMode } from "../../../../../../bits/dist";
 
 export const positions: Record<string, GridsterItem> = {
     widget1: {
