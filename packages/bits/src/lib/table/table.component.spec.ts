@@ -51,6 +51,8 @@ import {
     TableFooterCellDefDirective,
     TableFooterCellDirective,
     TableHeaderCellDefDirective,
+    TableSelectionConfig,
+    TableSelectionMode,
     UtilService,
 } from "../../public_api";
 import { ISelection } from "../../services/public-api";
@@ -102,6 +104,22 @@ describe("components >", () => {
             fixture.detectChanges();
             tableElement =
                 fixture.nativeElement.querySelector(".nui-table__table");
+        }
+
+        function setTableSelectionConfiguration(
+            config: boolean | TableSelectionMode
+        ): void {
+            if (typeof config === "boolean") {
+                component.selectable = config;
+                component.selectionConfig = null;
+            } else {
+                component.selectable = config;
+                component.selectionConfig = {
+                    enabled: true,
+                    selectionMode: config,
+                };
+            }
+            fixture.detectChanges();
         }
 
         describe("pinned header table >", () => {
@@ -440,41 +458,81 @@ describe("components >", () => {
                 fixture.detectChanges();
             });
 
-            it("should add first header cell with selector", () => {
-                const headerRow: Element | undefined =
-                    TableSpecHelpers.getHeaderRow(tableElement) ?? undefined;
-                if (!headerRow) {
-                    throw new Error("headerRow is not defined");
-                }
-                const headerCell =
-                    TableSpecHelpers.getHeaderCells(headerRow)[0];
-                expect(
-                    headerCell.classList.contains(
-                        "nui-table__table-header-cell--selectable"
-                    )
-                ).toBeTruthy();
-            });
-
-            it("should add first column with checkbox", () => {
-                const rows = TableSpecHelpers.getRows(tableElement);
-                rows.forEach((row) => {
+            [
+                {
+                    name: "selectable",
+                    config: true,
+                },
+                {
+                    name: "selectionConfig.Multi",
+                    config: TableSelectionMode.Multi,
+                },
+                {
+                    name: "selectionConfig.Radio",
+                    config: TableSelectionMode.Radio,
+                },
+            ].forEach(({ name, config }) => {
+                it(`should add first header cell with selector [${name}]`, () => {
+                    setTableSelectionConfiguration(config);
+                    const headerRow: Element | undefined =
+                        TableSpecHelpers.getHeaderRow(tableElement) ??
+                        undefined;
+                    if (!headerRow) {
+                        throw new Error("headerRow is not defined");
+                    }
+                    const headerCell =
+                        TableSpecHelpers.getHeaderCells(headerRow)[0];
                     expect(
-                        TableSpecHelpers.getCells(row)[0].classList.contains(
-                            "nui-table__table-cell--selectable"
+                        headerCell.classList.contains(
+                            "nui-table__table-header-cell--selectable"
                         )
                     ).toBeTruthy();
                 });
+
+                it(`should add first column with checkbox [${name}]`, () => {
+                    setTableSelectionConfiguration(config);
+                    const rows = TableSpecHelpers.getRows(tableElement);
+                    rows.forEach((row) => {
+                        expect(
+                            TableSpecHelpers.getCells(
+                                row
+                            )[0].classList.contains(
+                                "nui-table__table-cell--selectable"
+                            )
+                        ).toBeTruthy();
+                    });
+                });
             });
 
-            it("should emit selection from table on (rowsSelected) output", () => {
-                spyOn(component, "onSelectorChange").and.callThrough();
-                (
-                    component.tableComponent.tableStateHandlerService as any
-                ).selectionChanged.next(SELECTION);
-                fixture.detectChanges();
-                expect(component.onSelectorChange).toHaveBeenCalledWith(
-                    SELECTION
-                );
+            [
+                {
+                    name: "selectable",
+                    config: true,
+                },
+                {
+                    name: "selectionConfig.Multi",
+                    config: TableSelectionMode.Multi,
+                },
+                {
+                    name: "selectionConfig.Radio",
+                    config: TableSelectionMode.Radio,
+                },
+                {
+                    name: "selectionConfig.Single",
+                    config: TableSelectionMode.Single,
+                },
+            ].forEach(({ name, config }) => {
+                it(`should emit selection from table on (rowsSelected) output [${name}]`, () => {
+                    setTableSelectionConfiguration(config);
+                    spyOn(component, "onSelectorChange").and.callThrough();
+                    (
+                        component.tableComponent.tableStateHandlerService as any
+                    ).selectionChanged.next(SELECTION);
+                    fixture.detectChanges();
+                    expect(component.onSelectorChange).toHaveBeenCalledWith(
+                        SELECTION
+                    );
+                });
             });
 
             describe("sticky header >", () => {
@@ -551,6 +609,35 @@ describe("components >", () => {
             });
 
             it("should emit selection from table on row click if clickable rows enabled", () => {
+                spyOn(component, "rowSelected");
+                spyOnProperty(
+                    tableStateHandlerService,
+                    "selectionEnabled",
+                    "get"
+                ).and.returnValue(true);
+                fixture.componentInstance.clickableRow = true;
+
+                const selectionElement = {};
+                component.rowSelectionElement = {
+                    nativeElement: selectionElement,
+                };
+                const eventTarget = constructEventTarget(
+                    { querySelector: () => selectionElement },
+                    null
+                );
+
+                fixture.componentInstance.rowClickHandler(
+                    <HTMLElement>eventTarget
+                );
+                expect(component.rowSelected).toHaveBeenCalled();
+            });
+
+            it("should emit selection from table on row click if clickable rows enabled [selectionConfig.Single]", () => {
+                component.selectable = false;
+                component.selectionConfig = {
+                    enabled: true,
+                    selectionMode: TableSelectionMode.Single,
+                };
                 spyOn(component, "rowSelected");
                 spyOnProperty(
                     tableStateHandlerService,
