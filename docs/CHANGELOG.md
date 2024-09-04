@@ -1,10 +1,11 @@
 # Changelog
 
-## [15.0.10] 📅 2024-08-023
+## [15.0.10] 📅 2024-09-04
 
 ### Added
 
-- `@nova-ui/dashboards` | Added `selectable` option to the table widget.
+- `@nova-ui/bits` | Added `selectionConfig` input and made `selectable` deprecated in the table component.
+- `@nova-ui/dashboards` | Added `selectionConfiguration` option to the table widget configuration.
 
 ## [15.0.9] 📅 2024-08-04
 

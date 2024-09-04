@@ -560,7 +560,9 @@ describe("components >", () => {
                 fixture.componentInstance.clickableRow = true;
 
                 const selectionElement = {};
-                component.rowSelectionElement = { nativeElement: selectionElement };
+                component.rowSelectionElement = {
+                    nativeElement: selectionElement,
+                };
                 const eventTarget = constructEventTarget(
                     { querySelector: () => selectionElement },
                     null

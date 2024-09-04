@@ -352,11 +352,7 @@ export class TableHeaderRowComponent
     }
 
     public ngAfterViewInit(): void {
-        if (
-            this.tableStateHandlerService.selectable ||
-            this.tableStateHandlerService.selectionMode ===
-                TableSelectionMode.Multi
-        ) {
+        if (this.tableStateHandlerService.selectionEnabled) {
             this.tableStateHandlerService.applyStickyStyles();
         }
     }
@@ -528,10 +524,11 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
             return;
         }
 
-        let rowSelector: Element | null = closestTableRow.querySelector(".nui-table__table-cell__checkbox");
+        const rowSelector: Element | null = closestTableRow.querySelector(
+            ".nui-table__table-cell__checkbox"
+        );
         if (rowSelector === this.rowSelectionElement?.nativeElement) {
             this.rowSelected();
-            return;
         }
     }
 
