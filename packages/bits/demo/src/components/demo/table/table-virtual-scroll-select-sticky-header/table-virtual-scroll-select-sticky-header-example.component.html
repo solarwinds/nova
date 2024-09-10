@@ -10,7 +10,7 @@
             [dataSource]="visibleItems$ | async"
             [trackBy]="trackByNo"
             [sortable]="true"
-            [selectable]="true"
+            [selectionConfig]="selectionConfig"
             [(selection)]="selection"
         >
             <!--         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  -->

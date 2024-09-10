@@ -53,7 +53,11 @@ import { DEFAULT_INTERACTIVE_ELEMENTS } from "../../../constants/interaction.con
 import { ISelectorState } from "../../../services/public-api";
 import { CheckboxStatus, SelectionType } from "../../selector/public-api";
 import { TableStateHandlerService } from "../table-state-handler.service";
-import { ClickableRowOptions, RowHeightOptions } from "../types";
+import {
+    ClickableRowOptions,
+    RowHeightOptions,
+    TableSelectionMode,
+} from "../types";
 
 /* eslint-disable */
 
@@ -229,7 +233,11 @@ export class TableFooterRowDefDirective
 
 @Component({
     template: ` <th
-            *ngIf="selectable"
+            *ngIf="
+                selectable ||
+                selectionMode === 'multi' ||
+                selectionMode === 'radio'
+            "
             nuiClickInterceptor
             class="nui-table__table-header-cell nui-table__table-header-cell--selectable"
             [ngClass]="{ 'no-options': !hasOptions }"
@@ -237,6 +245,7 @@ export class TableFooterRowDefDirective
             <nui-selector
                 class="nui-table__table-header-cell__selector"
                 [ngClass]="{ 'no-options': !hasOptions }"
+                [class.invisible]="selectionMode !== 'multi'"
                 [appendToBody]="true"
                 (selectionChange)="onSelectorChange($event)"
                 [checkboxStatus]="selectorState.checkboxStatus"
@@ -269,6 +278,7 @@ export class TableHeaderRowComponent
     };
 
     public selectable;
+    public selectionMode: TableSelectionMode;
     public selectionChangeSubscription: Subscription;
     public dataSourceChangeSubscription: Subscription;
 
@@ -299,10 +309,11 @@ export class TableHeaderRowComponent
     ) {
         super();
         this.selectable = this.tableStateHandlerService.selectable;
+        this.selectionMode = this.tableStateHandlerService.selectionMode;
     }
 
     public ngOnInit(): void {
-        if (this.tableStateHandlerService.selectable) {
+        if (this.tableStateHandlerService.selectionEnabled) {
             this.selectorState =
                 this.tableStateHandlerService.getSelectorState();
             this.updateSelectorState();
@@ -331,10 +342,17 @@ export class TableHeaderRowComponent
                 this.selectable = selectable;
                 this.changeDetectorRef.markForCheck();
             });
+
+        this.tableStateHandlerService.selectionModeChanged
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((mode: TableSelectionMode) => {
+                this.selectionMode = mode;
+                this.changeDetectorRef.markForCheck();
+            });
     }
 
     public ngAfterViewInit(): void {
-        if (this.tableStateHandlerService.selectable) {
+        if (this.tableStateHandlerService.selectionEnabled) {
             this.tableStateHandlerService.applyStickyStyles();
         }
     }
@@ -367,15 +385,29 @@ export class TableHeaderRowComponent
 @Component({
     selector: "nui-row, tr[nui-row]",
     template: ` <td
-            *ngIf="selectable"
+            *ngIf="
+                selectable ||
+                (selectionMode &&
+                    (selectionMode === 'multi' || selectionMode === 'radio'))
+            "
             class="nui-table__table-cell nui-table__table-cell--selectable"
         >
-            <nui-checkbox
+            <nui-radio
+                *ngIf="selectionMode === 'radio'"
                 class="nui-table__table-cell__checkbox d-inline-block"
                 [checked]="isRowSelected()"
-                (valueChange)="checkboxClicked()"
+                (valueChange)="rowSelected()"
                 (click)="stopPropagation($event)"
-                #rowSelectionCheckbox
+                #rowSelectionElement
+            >
+            </nui-radio>
+            <nui-checkbox
+                *ngIf="selectionMode === 'multi'"
+                class="nui-table__table-cell__checkbox d-inline-block"
+                [checked]="isRowSelected()"
+                (valueChange)="rowSelected()"
+                (click)="stopPropagation($event)"
+                #rowSelectionElement
             >
             </nui-checkbox>
         </td>
@@ -400,6 +432,7 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
         ignoredSelectors: DEFAULT_INTERACTIVE_ELEMENTS,
     };
     public selectable;
+    public selectionMode: TableSelectionMode;
     public selectionChangeSubscription: Subscription;
 
     @HostBinding("class.nui-table__table-row--selected")
@@ -422,8 +455,8 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
         return this.density.toLowerCase() === "tiny";
     }
 
-    @ViewChild("rowSelectionCheckbox", { read: ElementRef, static: false })
-    private rowSelectionCheckbox: ElementRef;
+    @ViewChild("rowSelectionElement", { read: ElementRef, static: false })
+    private rowSelectionElement: ElementRef;
 
     private onDestroy$ = new Subject<void>();
 
@@ -434,6 +467,7 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
     ) {
         super();
         this.selectable = this.tableStateHandlerService.selectable;
+        this.selectionMode = this.tableStateHandlerService.selectionMode;
     }
 
     public ngOnInit(): void {
@@ -454,12 +488,19 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
                 this.selectable = selectable;
                 this.changeDetectorRef.markForCheck();
             });
+
+        this.tableStateHandlerService.selectionModeChanged
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((mode: TableSelectionMode) => {
+                this.selectionMode = mode;
+                this.changeDetectorRef.markForCheck();
+            });
     }
 
     @HostListener("click", ["$event.target"])
     public rowClickHandler(target: HTMLElement): void {
         if (
-            !this.tableStateHandlerService.selectable ||
+            !this.tableStateHandlerService.selectionEnabled ||
             !this.clickableRow ||
             !this.clickableRowConfig.clickableSelectors.length
         ) {
@@ -477,14 +518,22 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
         ) {
             return;
         }
-        const rowSelectCheckbox = closestTableRow.querySelector("nui-checkbox");
-        if (rowSelectCheckbox === this.rowSelectionCheckbox.nativeElement) {
-            this.checkboxClicked();
+
+        if (this.selectionMode === TableSelectionMode.Single) {
+            this.rowSelected();
+            return;
+        }
+
+        const rowSelector: Element | null = closestTableRow.querySelector(
+            ".nui-table__table-cell__checkbox"
+        );
+        if (rowSelector === this.rowSelectionElement?.nativeElement) {
+            this.rowSelected();
         }
     }
 
-    public checkboxClicked(): void {
-        this.tableStateHandlerService.handleRowCheckbox(this.rowObject);
+    public rowSelected(): void {
+        this.tableStateHandlerService.handleRowSelect(this.rowObject);
     }
 
     /**
@@ -509,6 +558,7 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
             }
             return true;
         }
+
         return includedRows.length > 0
             ? _includes(includedRows, rowObjectTrackBy)
             : false;

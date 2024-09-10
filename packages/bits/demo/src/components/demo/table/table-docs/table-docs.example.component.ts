@@ -162,7 +162,16 @@ public ngOnInit(): void {
     selector: "nui-table-row-selection-instructions",
     template: `
         <ol>
-            <li>Specify <code>selectable = true</code> input.</li>
+            <li>
+                Specify <code>selectionConfig</code> input, with
+                <code>enabled = true</code> and
+                <code>selectionMode !== TableSelectionMode.None</code>.
+                <br />
+                <strong>Deprecated: </strong>Specify
+                <code>selectable = true</code> input. This approach will behave
+                as if <code>selectionMode</code> was set to
+                <code>TableSelectionMode.Multi</code>.
+            </li>
             <li>
                 Bind a trackBy handler to the
                 <code

@@ -18,21 +18,40 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { IDataField, INovaFilteringOutputs } from "@nova-ui/bits";
-export interface BasicTableModel {
-    id?: number;
-    position: number;
-    name: string;
-    features: any;
-    status: string;
-    checks: any;
-    "cpu-load": number;
-    firstUrl: string;
-    firstUrlLabel: string;
-    secondUrl: string;
-    secondUrlLabel: string;
-}
+import { Component } from "@angular/core";
 
-export interface ITableDataSourceOutput extends INovaFilteringOutputs {
-    dataFields: IDataField[];
+@Component({
+    selector: "nui-table-selectable-docs",
+    templateUrl: "./table-selectable-docs.component.html",
+})
+export class TableSelectableDocsComponent {
+    public tableConfigurationText = `
+        "table": {
+            ...
+            properties: {
+                // enabling selection here
+                selectionConfiguration: {
+                    // whether the selection is enabled or disabled
+                    enabled: true,
+                    // can be Multi | Radio | Single
+                    selectionMode: TableSelectionMode.Multi,
+                    // property that uniquely identifies row in a table
+                    trackByProperty: "id",
+                    // whether clicking on row should select it
+                    clickableRow: true,
+                },
+            },
+        },
+    `;
+
+    public eventSubscriptionText = `
+...
+constructor(Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>) {
+    eventBus
+    .getStream(SELECTION)
+    // don't forget to unsubscribe!
+    .subscribe((selection: ISelection) => ...)
+}
+...
+    `;
 }

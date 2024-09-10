@@ -43,6 +43,7 @@ import {
 import { AcmeProportionalDataSource } from "../data/proportional-datasources";
 import { AcmeTableMockDataSource } from "../data/table/acme-table-mock-data-source.service";
 import { AcmeTimeseriesDataSource } from "../data/timeseries-data-sources";
+import { TableSelectionMode } from "../../../../../../bits/dist";
 
 export const positions: Record<string, GridsterItem> = {
     widget1: {
@@ -342,6 +343,10 @@ export const widgets: IWidget[] = [
                     },
                     properties: {
                         configuration: {
+                            selectionConfiguration: {
+                                enabled: true,
+                                selectionMode: TableSelectionMode.Single,
+                            },
                             interactive: true,
                             columns: [
                                 {
@@ -491,6 +496,12 @@ export const widgets: IWidget[] = [
                     properties: {
                         configuration: {
                             interactive: true,
+                            selectionConfiguration: {
+                                enabled: true,
+                                selectionMode: TableSelectionMode.Radio,
+                                clickableRow: true,
+                            },
+                            clickableRow: true,
                             columns: [
                                 {
                                     id: "column1",
@@ -644,6 +655,11 @@ export const widgets: IWidget[] = [
                     properties: {
                         configuration: {
                             interactive: true,
+                            selectionConfiguration: {
+                                enabled: true,
+                                selectionMode: TableSelectionMode.Multi,
+                            },
+                            clickableRow: true,
                             columns: [
                                 {
                                     id: "column1",

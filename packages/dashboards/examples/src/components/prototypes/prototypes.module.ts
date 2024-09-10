@@ -22,9 +22,13 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
-import { ConfiguratorHeadingService } from "@nova-ui/dashboards";
+import {
+    ConfiguratorHeadingService,
+    PIZZAGNA_EVENT_BUS,
+} from "@nova-ui/dashboards";
 
 import { AcmeComponentsModule } from "./components/components.module";
+import { EventBusService } from "@nova-ui/bits";
 
 const routes = [
     {
@@ -63,6 +67,12 @@ const routes = [
         AcmeComponentsModule,
         RouterModule.forChild(routes),
     ],
-    providers: [ConfiguratorHeadingService],
+    providers: [
+        ConfiguratorHeadingService,
+        {
+            provide: PIZZAGNA_EVENT_BUS,
+            useClass: EventBusService,
+        },
+    ],
 })
 export default class DashboardPrototypesModule {}

@@ -1161,6 +1161,7 @@ export function getTimeseriesStatusIntervalData(): ITimeseriesWidgetData[] {
 
 export const TABLE_DATA: BasicTableModel[] = [
     {
+        id: 1,
         position: 1,
         name: "FOCUS-SVR-02258",
         features: ["remote-access-vpn-tunnel", "patch-manager01"],
@@ -1176,6 +1177,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 2,
         position: 2,
         name: "FOCUS-SVR-03312",
         features: ["tools", "database", "orion-ape-backup"],
@@ -1191,6 +1193,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 3,
         position: 3,
         name: "FOCUS-SVR-02258",
         features: [
@@ -1211,6 +1214,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 4,
         position: 4,
         name: "Man-LT-JYJ4AD5",
         features: [
@@ -1231,6 +1235,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "VirtualBox",
     },
     {
+        id: 5,
         position: 5,
         name: "Man-LT-JYJ425",
         features: [
@@ -1251,6 +1256,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "VirtualBox",
     },
     {
+        id: 6,
         position: 6,
         name: "Man-LT-JYJ4333",
         features: [
@@ -1271,6 +1277,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "VirtualBox",
     },
     {
+        id: 7,
         position: 7,
         name: "FOCUS-SVR-02258",
         features: ["remote-access-vpn-tunnel", "patch-manager01"],
@@ -1286,6 +1293,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 8,
         position: 8,
         name: "Man-LT-JYJ4AD5",
         features: [
@@ -1307,6 +1315,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 9,
         position: 9,
         name: "Man-LT-JYJ4AD5",
         features: [
@@ -1327,6 +1336,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 10,
         position: 10,
         name: "Man-LT-JYJ4AD5",
         features: [
@@ -1347,6 +1357,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 11,
         position: 11,
         name: "Man-LT-111",
         features: [],
@@ -1362,6 +1373,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 12,
         position: 12,
         name: "Man-LT-2222",
         features: [
@@ -1383,6 +1395,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 13,
         position: 13,
         name: "Man-LT-333333",
         features: [
@@ -1403,6 +1416,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 14,
         position: 14,
         name: "Man-LT-444444",
         features: [
@@ -1423,6 +1437,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 15,
         position: 15,
         name: "Man-LT-555555",
         features: [
@@ -1443,6 +1458,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 16,
         position: 16,
         name: "FOCUS-SVR-02258",
         features: ["remote-access-vpn-tunnel", "patch-manager01"],
@@ -1458,6 +1474,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 17,
         position: 17,
         name: "FOCUS-SVR-03312",
         features: ["tools", "database", "orion-ape-backup"],
@@ -1473,6 +1490,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 18,
         position: 18,
         name: "FOCUS-SVR-02258",
         features: [
@@ -1493,6 +1511,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 19,
         position: 19,
         name: "Man-LT-JYJ4AD5",
         features: [
@@ -1513,6 +1532,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "VirtualBox",
     },
     {
+        id: 20,
         position: 20,
         name: "Man-LT-JYJ425",
         features: [
@@ -1533,6 +1553,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "VirtualBox",
     },
     {
+        id: 21,
         position: 21,
         name: "Man-LT-JYJ4333",
         features: [
@@ -1553,6 +1574,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "VirtualBox",
     },
     {
+        id: 22,
         position: 22,
         name: "FOCUS-SVR-02258",
         features: ["remote-access-vpn-tunnel", "patch-manager01"],
@@ -1568,6 +1590,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 23,
         position: 23,
         name: "Man-LT-JYJ4AD5",
         features: [
@@ -1589,6 +1612,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 24,
         position: 24,
         name: "Man-LT-JYJ4AD5",
         features: [
@@ -1609,6 +1633,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 25,
         position: 25,
         name: "Man-LT-JYJ4AD5",
         features: [
@@ -1629,6 +1654,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 26,
         position: 26,
         name: "Man-LT-111",
         features: [],
@@ -1644,6 +1670,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 27,
         position: 27,
         name: "Man-LT-2222",
         features: [
@@ -1665,6 +1692,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 28,
         position: 28,
         name: "Man-LT-333333",
         features: [
@@ -1685,6 +1713,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 29,
         position: 29,
         name: "Man-LT-444444",
         features: [
@@ -1705,6 +1734,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 30,
         position: 30,
         name: "Man-LT-555555",
         features: [
@@ -1725,6 +1755,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 31,
         position: 31,
         name: "FOCUS-SVR-02258",
         features: ["remote-access-vpn-tunnel", "patch-manager01"],
@@ -1740,6 +1771,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 32,
         position: 32,
         name: "FOCUS-SVR-03312",
         features: ["tools", "database", "orion-ape-backup"],
@@ -1755,6 +1787,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 33,
         position: 33,
         name: "FOCUS-SVR-02258",
         features: [
@@ -1775,6 +1808,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 34,
         position: 34,
         name: "Man-LT-JYJ4AD5",
         features: [
@@ -1795,6 +1829,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "VirtualBox",
     },
     {
+        id: 35,
         position: 35,
         name: "Man-LT-JYJ425",
         features: [
@@ -1815,6 +1850,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "VirtualBox",
     },
     {
+        id: 36,
         position: 36,
         name: "Man-LT-JYJ4333",
         features: [
@@ -1835,6 +1871,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "VirtualBox",
     },
     {
+        id: 37,
         position: 37,
         name: "FOCUS-SVR-02258",
         features: ["remote-access-vpn-tunnel", "patch-manager01"],
@@ -1850,6 +1887,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 38,
         position: 38,
         name: "Man-LT-JYJ4AD5",
         features: [
@@ -1871,6 +1909,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 39,
         position: 39,
         name: "Man-LT-JYJ4AD5",
         features: [
@@ -1891,6 +1930,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 40,
         position: 40,
         name: "Man-LT-JYJ4AD5",
         features: [
@@ -1911,6 +1951,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 41,
         position: 41,
         name: "Man-LT-111",
         features: [],
@@ -1926,6 +1967,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 42,
         position: 42,
         name: "Man-LT-2222",
         features: [
@@ -1947,6 +1989,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 43,
         position: 43,
         name: "Man-LT-333333",
         features: [
@@ -1967,6 +2010,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 44,
         position: 44,
         name: "Man-LT-444444",
         features: [
@@ -1987,6 +2031,7 @@ export const TABLE_DATA: BasicTableModel[] = [
         secondUrlLabel: "Workstation",
     },
     {
+        id: 45,
         position: 45,
         name: "Man-LT-555555",
         features: [

@@ -29,6 +29,8 @@ import {
     PaginatorComponent,
     SearchComponent,
     TableComponent,
+    TableSelectionConfig,
+    TableSelectionMode,
 } from "@nova-ui/bits";
 
 interface IExampleTableModel {
@@ -71,6 +73,10 @@ export class TableSearchWithSelectAndPaginationComponent
         isAllPages: false,
         include: [],
         exclude: [],
+    };
+    public selectionConfig: TableSelectionConfig = {
+        enabled: true,
+        selectionMode: TableSelectionMode.Multi,
     };
     @ViewChild("filteringPaginator") filteringPaginator: PaginatorComponent;
     @ViewChild("filteringSearch") filteringSearch: SearchComponent;

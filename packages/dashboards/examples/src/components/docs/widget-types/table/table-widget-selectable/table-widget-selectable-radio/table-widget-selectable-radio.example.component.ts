@@ -18,21 +18,23 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { IDataField, INovaFilteringOutputs } from "@nova-ui/bits";
-export interface BasicTableModel {
-    id?: number;
-    position: number;
-    name: string;
-    features: any;
-    status: string;
-    checks: any;
-    "cpu-load": number;
-    firstUrl: string;
-    firstUrlLabel: string;
-    secondUrl: string;
-    secondUrlLabel: string;
-}
+import { Component } from "@angular/core";
+import { TableSelectionMode } from "@nova-ui/bits";
+import { TableWidgetSelectionConfig } from "@nova-ui/dashboards";
 
-export interface ITableDataSourceOutput extends INovaFilteringOutputs {
-    dataFields: IDataField[];
+/**
+ * A component that instantiates the dashboard
+ */
+@Component({
+    selector: "table-widget-selectable-radio-example",
+    templateUrl: "./table-widget-selectable-radio.example.component.html",
+    styleUrls: ["./table-widget-selectable-radio.example.component.less"],
+})
+export class TableWidgetSelectableRadioExampleComponent {
+    public selectionConfiguration: TableWidgetSelectionConfig = {
+        enabled: true,
+        selectionMode: TableSelectionMode.Radio,
+        trackByProperty: "id",
+        clickableRow: true,
+    };
 }

@@ -36,6 +36,8 @@ import {
     IFilteringOutputs,
     ISelection,
     SelectionModel,
+    TableSelectionConfig,
+    TableSelectionMode,
 } from "@nova-ui/bits";
 
 interface IRandomUserTableModel {
@@ -72,8 +74,13 @@ export class TableVirtualScrollSelectStickyHeaderExampleComponent
     ];
     public itemSize: number = 40;
     public selection: ISelection = new SelectionModel({
-        include: [1, 3, 5, 7, 9],
+        include: [5],
     });
+    public selectionConfig: TableSelectionConfig = {
+        enabled: true,
+        selectionMode: TableSelectionMode.Radio,
+    };
+
     // trackBy handler used to identify uniquely each item in the table
     public trackByNo: TrackByFunction<IRandomUserTableModel> = (
         index: number,

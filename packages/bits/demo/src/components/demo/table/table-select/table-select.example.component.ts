@@ -27,6 +27,8 @@ import {
     ISelection,
     PaginatorComponent,
     SelectorService,
+    TableSelectionConfig,
+    TableSelectionMode,
 } from "@nova-ui/bits";
 
 interface IExampleTableModel {
@@ -57,6 +59,10 @@ export class TableSelectExampleComponent implements AfterViewInit, OnDestroy {
         isAllPages: false,
         include: [2, 3],
         exclude: [],
+    };
+    public selectionConfig: TableSelectionConfig = {
+        enabled: true,
+        selectionMode: TableSelectionMode.Multi,
     };
 
     @ViewChild("filteringPaginator") filteringPaginator: PaginatorComponent;

@@ -44,11 +44,13 @@
                 nui-table
                 [reorderable]="configuration?.reorderable"
                 [sortable]="sortable"
+                [selectionConfig]="configuration?.selectionConfiguration"
                 [totalItems]="totalItems"
                 [dataSource]="virtualScrollAddon.visibleItems"
                 [sortedColumn]="sortedColumn"
                 (sortOrderChanged)="onSortOrderChanged($event)"
-                [trackBy]="dataTrackBy"
+                (selectionChange)="onSelectionChange($event)"
+                [trackBy]="dataTrackBy()"
                 #widgetTable
             >
                 <ng-container
@@ -117,6 +119,8 @@
                         (click)="onInteraction(row, $event)"
                         [attr.role]="interactive ? 'button' : ''"
                         density="tiny"
+                        [rowObject]="row.__record"
+                        [clickableRow]="clickableRow"
                     ></tr>
                 </ng-template>
             </table>

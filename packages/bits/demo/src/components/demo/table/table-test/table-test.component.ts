@@ -44,6 +44,8 @@ import {
     SearchComponent,
     TableAlignmentOptions,
     TableComponent,
+    TableSelectionConfig,
+    TableSelectionMode,
     ToastService,
 } from "@nova-ui/bits";
 
@@ -91,6 +93,10 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
     public sortedColumn: string = "position";
     public isFeatureColumnDisabled: boolean = true;
     public searchProperties: string[] = [];
+    public selectionConfig: TableSelectionConfig = {
+        enabled: true,
+        selectionMode: TableSelectionMode.Multi,
+    };
 
     @ViewChild("filteringPaginator") filteringPaginator: PaginatorComponent;
     @ViewChild("filteringSearch") filteringSearch: SearchComponent;

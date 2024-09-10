@@ -26,6 +26,8 @@ import {
     INovaFilteringOutputs,
     ISelection,
     SelectorService,
+    TableSelectionConfig,
+    TableSelectionMode,
 } from "@nova-ui/bits";
 
 interface IExampleTableModel {
@@ -56,6 +58,10 @@ export class TableRowClickableExampleComponent
         isAllPages: false,
         include: [2, 3],
         exclude: [],
+    };
+    public selectionConfig: TableSelectionConfig = {
+        enabled: true,
+        selectionMode: TableSelectionMode.Multi,
     };
 
     private outputsSubscription: Subscription;

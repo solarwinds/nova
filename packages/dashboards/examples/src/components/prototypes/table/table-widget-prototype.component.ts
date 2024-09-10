@@ -23,6 +23,7 @@ import {
     AfterViewInit,
     ChangeDetectionStrategy,
     Component,
+    Inject,
     OnDestroy,
     OnInit,
     ViewChild,
@@ -32,7 +33,13 @@ import keyBy from "lodash/keyBy";
 import { Subject } from "rxjs";
 import { take, takeUntil } from "rxjs/operators";
 
-import { immutableSet, LoggerService, SearchService } from "@nova-ui/bits";
+import {
+    EventBus,
+    IEvent,
+    immutableSet,
+    LoggerService,
+    SearchService,
+} from "@nova-ui/bits";
 import {
     DashboardComponent,
     DATA_SOURCE,
@@ -44,6 +51,9 @@ import {
     WidgetClonerService,
     WidgetTypesService,
     WIDGET_CREATE,
+    PIZZAGNA_EVENT_BUS,
+    SELECTION,
+    REFRESH,
 } from "@nova-ui/dashboards";
 
 import {
@@ -102,6 +112,7 @@ export class AcmeDashboardComponent
     private readonly destroy$ = new Subject<void>();
 
     constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) public eventBus: EventBus<IEvent>,
         private providerRegistry: ProviderRegistryService,
         public submitHandler: AcmeFormSubmitHandler,
         private widgetTypesService: WidgetTypesService,

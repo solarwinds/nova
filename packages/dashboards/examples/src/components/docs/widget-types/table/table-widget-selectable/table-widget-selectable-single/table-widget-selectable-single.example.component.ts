@@ -18,21 +18,22 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { IDataField, INovaFilteringOutputs } from "@nova-ui/bits";
-export interface BasicTableModel {
-    id?: number;
-    position: number;
-    name: string;
-    features: any;
-    status: string;
-    checks: any;
-    "cpu-load": number;
-    firstUrl: string;
-    firstUrlLabel: string;
-    secondUrl: string;
-    secondUrlLabel: string;
-}
+import { Component } from "@angular/core";
+import { TableSelectionMode } from "@nova-ui/bits";
+import { TableWidgetSelectionConfig } from "@nova-ui/dashboards";
 
-export interface ITableDataSourceOutput extends INovaFilteringOutputs {
-    dataFields: IDataField[];
+/**
+ * A component that instantiates the dashboard
+ */
+@Component({
+    selector: "table-widget-selectable-single-example",
+    templateUrl: "./table-widget-selectable-single.example.component.html",
+    styleUrls: ["./table-widget-selectable-single.example.component.less"],
+})
+export class TableWidgetSelectableSingleExampleComponent {
+    public selectionConfiguration: TableWidgetSelectionConfig = {
+        enabled: true,
+        selectionMode: TableSelectionMode.Single,
+        trackByProperty: "id",
+    };
 }

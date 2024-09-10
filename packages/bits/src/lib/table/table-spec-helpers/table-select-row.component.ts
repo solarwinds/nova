@@ -22,6 +22,7 @@ import { ChangeDetectorRef, Component, ViewChild } from "@angular/core";
 
 import { ISelection } from "../../../services/public-api";
 import { TableComponent } from "../table.component";
+import { TableSelectionConfig, TableSelectionMode } from "@nova-ui/bits";
 
 export interface TableSelectModel {
     position: number;
@@ -83,7 +84,8 @@ const ELEMENT_DATA: TableSelectModel[] = [
             <table
                 nui-table
                 [dataSource]="dataSource"
-                [selectable]="true"
+                [selectable]="selectable"
+                [selectionConfig]="selectionConfig"
                 (selectionChange)="onSelectorChange($event)"
             >
                 <ng-container nuiColumnDef="position">
@@ -161,6 +163,8 @@ export class TableSelectTestComponent {
     public dataSource = ELEMENT_DATA;
     public selectedItems: ISelection;
     public isSticky = false;
+    public selectable = true;
+    public selectionConfig: TableSelectionConfig | null = null;
 
     @ViewChild(TableComponent, { static: true })
     tableComponent: TableComponent<any>;

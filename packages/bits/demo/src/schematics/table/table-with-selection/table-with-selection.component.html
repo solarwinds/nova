@@ -20,7 +20,7 @@
         (sortOrderChanged)="sortData($event)"
         [(selection)]="selection"
         (selectionChange)="onSelectionChanged($event)"
-        [selectable]="true"
+        [selectionConfig]="selectionConfig"
         [trackBy]="trackBy"
     >
         <ng-container nuiColumnDef="name">

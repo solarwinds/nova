@@ -19,6 +19,12 @@
 //  THE SOFTWARE.
 
 import { IFormatter } from "../types";
+import {
+    ITableSelectionConfigDisabled,
+    ITableSelectionConfigEnabled,
+    TableSelectionConfig,
+    TableSelectionMode,
+} from "@nova-ui/bits";
 
 export interface ITableWidgetColumnConfig {
     id: string;
@@ -47,10 +53,19 @@ export interface ITableWidgetConfig {
     sortable?: boolean;
     sorterConfiguration: ITableWidgetSorterConfig;
     /**
+     * Allows to choose row selection behavior of a table.
+     * Can be None | Multi | Single | Radio.
+     */
+    selectionConfiguration?: TableWidgetSelectionConfig;
+    /**
      * @deprecated Use scrollType and set it to "infinite" instead
      */
     hasVirtualScroll?: boolean;
     scrollType?: ScrollType;
+    /**
+     * Makes table rows interactive.
+     * Disabled if 'selectable' is set to true.
+     */
     interactive?: boolean;
     headerTooltipsEnabled?: boolean;
     scrollActivationDelayMs?: number;
@@ -92,3 +107,30 @@ export enum ScrollType {
     paginator = "paginator",
     default = "default",
 }
+
+interface ITableWidgetSelectionConfigEnabled
+    extends ITableSelectionConfigEnabled {
+    /**
+     * Property name that is unique.
+     * Needs to be set in order for selection to work in combination with filtering.
+     *
+     * Using property that is not unique across table data will result in a selection
+     * of all rows with the same column value at once.
+
+     @default "id"
+     */
+    trackByProperty?: string;
+    /**
+     * If clicking on row should select it.
+     * True if selectionMode is set to "single".
+     * @default false
+     */
+    clickableRow?: boolean;
+}
+
+interface ITableWidgetSelectionConfigDisabled
+    extends ITableSelectionConfigDisabled {}
+
+export type TableWidgetSelectionConfig =
+    | ITableWidgetSelectionConfigEnabled
+    | ITableSelectionConfigDisabled;

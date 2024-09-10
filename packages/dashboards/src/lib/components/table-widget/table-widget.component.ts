@@ -54,7 +54,7 @@ import {
     IDataSource,
     IEvent,
     IFilter,
-    INovaFilteringOutputs,
+    ISelection,
     ISortedItem,
     LoggerService,
     PaginatorComponent,
@@ -62,6 +62,7 @@ import {
     TableAlignmentOptions,
     TableComponent,
     TableRowComponent,
+    TableSelectionMode,
     VirtualViewportManager,
 } from "@nova-ui/bits";
 
@@ -70,21 +71,21 @@ import { TableFormatterRegistryService } from "../../services/table-formatter-re
 import {
     INTERACTION,
     REFRESH,
+    SELECTION,
     WIDGET_READY,
     WIDGET_RESIZE,
 } from "../../services/types";
 import { WidgetConfigurationService } from "../../services/widget-configuration.service";
 import {
     DATA_SOURCE,
-    PizzagnaLayer,
     PIZZAGNA_EVENT_BUS,
+    PizzagnaLayer,
     WellKnownDataSourceFeatures,
 } from "../../types";
 import { ITableFormatterDefinition } from "../types";
 import { SearchFeatureAddonService } from "./addons/search-feature-addon.service";
 import { VirtualScrollFeatureAddonService } from "./addons/virtual-scroll-feature-addon.service";
 import {
-    IPaginatorState,
     ITableWidgetColumnConfig,
     ITableWidgetConfig,
     ScrollType,
@@ -200,6 +201,15 @@ export class TableWidgetComponent
                 WellKnownDataSourceFeatures.Interactivity
             )?.enabled ??
             false
+        );
+    }
+
+    public get clickableRow(): boolean {
+        const configuration = this.configuration?.selectionConfiguration;
+        return (
+            !!configuration?.enabled &&
+            (configuration.clickableRow ||
+                configuration.selectionMode === TableSelectionMode.Single)
         );
     }
 
@@ -384,8 +394,15 @@ export class TableWidgetComponent
             : columnsCondition && dataCondition;
     }
 
-    public dataTrackBy(index: number, item: any): any {
-        return item ? item.id : index;
+    public dataTrackBy(): (index: any, item: any) => any {
+        const configuration = this?.configuration?.selectionConfiguration;
+        const trackByProperty =
+            (configuration?.enabled && configuration.trackByProperty) || "id";
+
+        // we are returning a function here because the scope of "this" changes once it's passed
+        // to the table component and are therefore unable to access the configuration in its body
+        return (index: number, item: any): any =>
+            item ? item[trackByProperty] : index;
     }
 
     public columnTrackBy(
@@ -531,8 +548,17 @@ export class TableWidgetComponent
         this.eventBus.getStream(REFRESH).next({});
     }
 
+    public onSelectionChange(event: ISelection): void {
+        this.eventBus.getStream(SELECTION).next({ payload: event });
+    }
+
     public onInteraction(row: any, event: MouseEvent): void {
-        if (!this.interactive) {
+        if (
+            !this.interactive ||
+            this.configuration.selectionConfiguration?.enabled
+        ) {
+            // allowing interactive and selection at the same time would trigger both
+            // events when clicking on a row (not checkbox/radio)
             return;
         }
 
