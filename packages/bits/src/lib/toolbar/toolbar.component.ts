@@ -98,6 +98,12 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     @Input()
     public noEmptyMessage: boolean = false;
 
+    /**
+     * Passed to the toolbar menu
+     */
+    @Input()
+    public appendToBody: boolean = false;
+
     @ViewChild("menuComponent") public menu: MenuComponent;
 
     @ViewChildren("toolbarButtons")
