@@ -36,9 +36,9 @@ export function mapDataToFormatterProperties<T extends { [key: string]: any }>(
     const { dataFieldIds } = formatter.properties || {};
 
     let formatterProps;
-    if (!dataFieldIds) {
+    if (!dataFieldIds || !data) {
         // assign just "value" if no dataFields provided
-        formatterProps = { value: data.value };
+        formatterProps = { value: data?.value };
     } else {
         formatterProps = Object.keys(dataFieldIds).reduce(
             (dataFieldsAcc: any, formatterKey) => {
