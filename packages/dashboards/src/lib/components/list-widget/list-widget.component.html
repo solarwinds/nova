@@ -3,16 +3,20 @@
     [itemsSource]="data"
     [repeatItemTemplateRef]="repeatItemTemplate"
 >
+    |
+    <p>EMPTY</p>
 </nui-repeat>
 
 <div class="empty" *ngIf="!shouldDisplayRepeat()">
     <nui-image image="no-data-to-show"></nui-image>
+    <p>EMPTY VOBSHE</p>
 </div>
 
 <ng-template #repeatItemTemplate let-item="item">
-    <div class="empty" *ngIf="!item">
-        <nui-image image="no-data-to-show"></nui-image>
+    <div class="empty">
+        <p>{{ getDisplayText(item) }}</p>
     </div>
+
     <ng-container
         nuiComponentPortal
         #componentPortal="nuiComponentPortal"

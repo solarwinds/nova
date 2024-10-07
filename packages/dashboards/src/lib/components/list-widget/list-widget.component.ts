@@ -70,10 +70,23 @@ export class ListWidgetComponent
 
     public ngOnInit(): void {
         this.initResizeObserver();
+        this.data = [];
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
+        //this.data = [true,false, 1, 0, "", undefined, null, "ajajaja"]
+        this.data = this.data?.map((x) => {
+            if (x === undefined) {
+                return "undefined";
+            } else if (x === null) {
+                return "null";
+            } else {
+                return x;
+            }
+        });
+
         if (changes.data?.currentValue) {
+            //this.dismissNavigation(changes);
             changes.data.currentValue.forEach((v: any) =>
                 this.itemFormatterProps.set(v, this.calcItemProps(v))
             );
@@ -84,6 +97,50 @@ export class ListWidgetComponent
     // since it's very specific for drilldown and appstack
     public onListItemEvent(item: any): void {
         this.eventBus.getStream(DRILLDOWN).next({ payload: item });
+    }
+
+    public getDisplayText(item: any): string {
+        if (item === undefined || item === "undefined") {
+            return "-";
+        } else if (item === null || item === "null") {
+            return "-";
+        } else if (item === "") {
+            return "EMPTY STRING DETECTED";
+        } else if (item === false) {
+            return "FALSE DETECTED";
+        } else if (item === true) {
+            return "TRUE DETECTED";
+        } else if (item === 0) {
+            return "0 DETECTED";
+        } else if (item === 1) {
+            return "1 DETECTED";
+        } else {
+            return ""; // Default case if no condition matches
+        }
+    }
+
+    public dismissNavigation(data: SimpleChanges) {
+        if (this.data?.length > 0) {
+            console.log(this.configuration.itemProperties);
+            this.data.forEach((item, index) => {
+                console.log(item);
+                if (
+                    item === undefined ||
+                    item === null ||
+                    item.length === 0 ||
+                    item === ""
+                ) {
+                    item.configuration.itemProperties.canNavigate = false;
+                }
+            });
+        }
+    }
+
+    public displayRow(data: any): string {
+        if (data === undefined) {
+            return "-";
+        }
+        return data;
     }
 
     public ngOnDestroy(): void {

@@ -286,6 +286,7 @@ const widgetConfig: IWidget = {
                             // drillstate: [""],
                             groupBy: ["continent.name"],
 
+
                             // components
                             componentsConfig: {
                                 group: {
