@@ -69,7 +69,7 @@ export class ThemeSwitchService {
                 const showThemeSwitcher = (route.snapshot.data || {})
                     .showThemeSwitcher;
 
-                if (typeof showThemeSwitcher === "undefined"){
+                if (typeof showThemeSwitcher === "undefined") {
                     return;
                 }
 
