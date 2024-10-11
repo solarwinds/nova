@@ -23,6 +23,108 @@ import { IconStatus } from "@nova-ui/bits";
 export const GRAPH_DATA_MOCK = {
     data: {
         countries: [
+            {
+                name: "Andorra",
+                code: "AD",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Andorra la Vella",
+                continent: {
+                    name: "Europe",
+                },
+                currency: "EUR",
+                languages: [
+                    {
+                        name: "Catalan",
+                    },
+                ],
+            },
+            {
+                name: "United Arab Emirates",
+                code: "AE",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Abu Dhabi",
+                continent: {
+                    name: "Asia",
+                },
+                currency: "AED",
+                languages: [
+                    {
+                        name: "Arabic",
+                    },
+                ],
+            },
+            {
+                name: "Afghanistan",
+                code: "AF",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Kabul",
+                continent: {
+                    name: "Asia",
+                },
+                currency: "AFN",
+                languages: [
+                    {
+                        name: "Pashto",
+                    },
+                    {
+                        name: "Uzbek",
+                    },
+                    {
+                        name: "Turkmen",
+                    },
+                ],
+            },
+            {
+                name: "Antigua and Barbuda",
+                code: "AG",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Saint John's",
+                continent: {
+                    name: "North America",
+                },
+                currency: "XCD",
+                languages: [
+                    {
+                        name: "English",
+                    },
+                ],
+            },
+            {
+                name: "Anguilla",
+                code: "AI",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "The Valley",
+                continent: {
+                    name: "North America",
+                },
+                currency: "XCD",
+                languages: [
+                    {
+                        name: "English",
+                    },
+                ],
+            },
+            {
+                name: "Albania",
+                code: "AL",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Tirana",
+                continent: {
+                    name: "Europe",
+                },
+                currency: "ALL",
+                languages: [
+                    {
+                        name: "Albanian",
+                    },
+                ],
+            },
             undefined,
             null,
             true,
