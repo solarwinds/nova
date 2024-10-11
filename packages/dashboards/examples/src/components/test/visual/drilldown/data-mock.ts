@@ -20,13 +20,18 @@
 
 import { IconStatus } from "@nova-ui/bits";
 
-
-
-
 export const GRAPH_DATA_MOCK = {
     data: {
         countries: [
-            undefined, null, true,false, 1, 0, "", [], {},
+            undefined,
+            null,
+            true,
+            false,
+            1,
+            0,
+            "",
+            [],
+            {},
             {
                 name: "Armenia",
                 code: "AM",
@@ -4281,7 +4286,7 @@ export const GRAPH_DATA_MOCK = {
             null,
             undefined,
             true,
-            false, 
+            false,
         ],
     },
 };
