@@ -70,11 +70,9 @@ export class ListWidgetComponent
 
     public ngOnInit(): void {
         this.initResizeObserver();
-        this.data = [];
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        //this.data = [true,false, 1, 0, "", undefined, null, "ajajaja"]
         this.data = this.data?.map((x) => {
             if (x === undefined) {
                 return "undefined";
@@ -84,9 +82,8 @@ export class ListWidgetComponent
                 return x;
             }
         });
-
+        
         if (changes.data?.currentValue) {
-            //this.dismissNavigation(changes);
             changes.data.currentValue.forEach((v: any) =>
                 this.itemFormatterProps.set(v, this.calcItemProps(v))
             );
@@ -102,39 +99,36 @@ export class ListWidgetComponent
     public getDisplayText(item: any): string {
         if (item === undefined || item === "undefined") {
             return "-";
-        } else if (item === null || item === "null") {
+        } 
+        else if (item === null || item === "null") {
             return "-";
-        } else if (item === "") {
+        } 
+        else if (item === "") {
             return "EMPTY STRING DETECTED";
-        } else if (item === false) {
+        } 
+        else if (item === false) {
             return "FALSE DETECTED";
-        } else if (item === true) {
+        } 
+        else if (item === true) {
             return "TRUE DETECTED";
-        } else if (item === 0) {
+        } 
+        else if (item === 0) {
             return "0 DETECTED";
-        } else if (item === 1) {
+        } 
+        else if (item === 1) {
             return "1 DETECTED";
-        } else {
-            return ""; // Default case if no condition matches
+        } 
+        else if(item.length === 0){
+            return "EMPTY ARRAY"
+        }
+        else if (Object.keys(item).length === 0 && item.constructor === Object) {
+            return "EMPTY OBJECT";
+        }
+        else {
+            return ""; 
         }
     }
 
-    public dismissNavigation(data: SimpleChanges) {
-        if (this.data?.length > 0) {
-            console.log(this.configuration.itemProperties);
-            this.data.forEach((item, index) => {
-                console.log(item);
-                if (
-                    item === undefined ||
-                    item === null ||
-                    item.length === 0 ||
-                    item === ""
-                ) {
-                    item.configuration.itemProperties.canNavigate = false;
-                }
-            });
-        }
-    }
 
     public displayRow(data: any): string {
         if (data === undefined) {

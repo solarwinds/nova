@@ -4,12 +4,10 @@
     [repeatItemTemplateRef]="repeatItemTemplate"
 >
     |
-    <p>EMPTY</p>
 </nui-repeat>
 
 <div class="empty" *ngIf="!shouldDisplayRepeat()">
     <nui-image image="no-data-to-show"></nui-image>
-    <p>EMPTY VOBSHE</p>
 </div>
 
 <ng-template #repeatItemTemplate let-item="item">
