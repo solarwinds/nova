@@ -124,7 +124,7 @@
   },
   "schematics": "./sdk/schematics/collection.json",
   "scripts": {
-    "assemble": "run-s build-lib:locl build-lib:prod compodoc build-examples:prod build-schematics",
+    "assemble": "run-s prettier-check lint build-lib:locl build-lib:prod compodoc build-examples:prod build-schematics",
     "assemble-dev": "run-s build-lib:prod",
     "build-examples": "ng b examples",
     "build-examples:prod": "yarn run build-examples -c production",
@@ -160,7 +160,7 @@
     "pree2e:base": "webdriver-manager update --gecko=false --standalone=false",
     "prettier": "prettier --config ./.prettierrc.js",
     "prettier-check": "yarn run prettier --check .",
-    "prettier-fix": "yarn run prettier --write .",
+    "prettier-fix": "yarn run prettier --wite .",
     "serve-examples": "ng s examples",
     "serve-examples:prod": "npx local-web-server -p 4200 -d sdk/api-docs-ng2/examples --spa index.html",
     "start": "run-p -lr compodoc:serve build-examples:watch",

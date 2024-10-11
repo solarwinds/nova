@@ -142,7 +142,7 @@
     "a11y": "start-server-and-test serve-examples:prod 4200 a11y:base",
     "a11y:base": "yarn run e2e:base --suite a11y",
     "a11y:ci": "yarn run e2e:ci --suite a11y",
-    "assemble": "run-s build-lib:locl build-lib:prod compodoc-custom-theme build-examples:prod build-schematics",
+    "assemble": "run-s prettier-check lint build-lib:locl build-lib:prod compodoc-custom-theme build-examples:prod build-schematics",
     "assemble-dev": "run-s build-lib:prod",
     "build-examples": "ng build demo",
     "build-examples:prod": "yarn run build-examples -c production",
