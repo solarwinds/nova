@@ -3,6 +3,7 @@
     [itemsSource]="data"
     [repeatItemTemplateRef]="repeatItemTemplate"
 >
+    |
 </nui-repeat>
 
 <div class="empty" *ngIf="!shouldDisplayRepeat()">
@@ -10,9 +11,10 @@
 </div>
 
 <ng-template #repeatItemTemplate let-item="item">
-    <div class="empty" *ngIf="!item">
-        <nui-image image="no-data-to-show"></nui-image>
+    <div class="empty">
+        <p>{{ getDisplayText(item) }}</p>
     </div>
+
     <ng-container
         nuiComponentPortal
         #componentPortal="nuiComponentPortal"

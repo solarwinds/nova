@@ -58,5 +58,37 @@ describe(ListWidgetComponent.name, () => {
             component.data = [1, true, "hello", [true], { test: "value" }];
             expect(component.shouldDisplayRepeat()).toBeTrue();
         });
+
+        it("should display the correct value based on the input data", () => {
+            component.data = [
+                1,
+                true,
+                "hello",
+                false,
+                0,
+                1,
+                "",
+                undefined,
+                null,
+            ];
+
+            const expectedResults = [
+                "1 DETECTED", // for 1
+                "TRUE DETECTED", // for true
+                "", // for 'hello' (since no case in getDisplayText matches this string)
+                "FALSE DETECTED", // for false
+                "0 DETECTED", // for 0
+                "1 DETECTED", // for 1 (again)
+                "EMPTY STRING DETECTED", // for empty string
+                "-", // for undefined
+                "-", // for null
+            ];
+
+            component.data.forEach((item: any, index: number) => {
+                expect(component.getDisplayText(item)).toBe(
+                    expectedResults[index]
+                );
+            });
+        });
     });
 });

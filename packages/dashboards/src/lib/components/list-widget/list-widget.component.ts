@@ -73,6 +73,16 @@ export class ListWidgetComponent
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
+        this.data = this.data?.map((x) => {
+            if (x === undefined) {
+                return "undefined";
+            } else if (x === null) {
+                return "null";
+            } else {
+                return x;
+            }
+        });
+
         if (changes.data?.currentValue) {
             changes.data.currentValue.forEach((v: any) =>
                 this.itemFormatterProps.set(v, this.calcItemProps(v))
@@ -84,6 +94,47 @@ export class ListWidgetComponent
     // since it's very specific for drilldown and appstack
     public onListItemEvent(item: any): void {
         this.eventBus.getStream(DRILLDOWN).next({ payload: item });
+    }
+
+    public getDisplayText(item: any): string {
+        if (item === undefined || item === "undefined") {
+            return "-";
+        }
+        else if (item === null || item === "null") {
+            return "-";
+        }
+        else if (item === "") {
+            return "";
+        }
+        else if (item === false) {
+            return "False";
+        }
+        else if (item === true) {
+            return "True";
+        }
+        else if (item === 0) {
+            return "0";
+        }
+        else if (item === 1) {
+            return "1";
+        }
+        else if(item.length === 0){
+            return "[]"
+        }
+        else if (Object.keys(item).length === 0 && item.constructor === Object) {
+            return "{}";
+        }
+        else {
+            return "";
+        }
+    }
+
+
+    public displayRow(data: any): string {
+        if (data === undefined) {
+            return "-";
+        }
+        return data;
     }
 
     public ngOnDestroy(): void {

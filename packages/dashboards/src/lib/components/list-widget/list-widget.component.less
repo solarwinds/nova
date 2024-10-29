@@ -2,9 +2,20 @@
     height: 100%;
     overflow: auto;
 }
-
 .empty {
-    height: 100%;
+    width: auto;
     display: grid;
-    place-content: center;
+    align-items: center; /* Vertically centers all content in .empty */
+    justify-content: start; /* Aligns content to the left */
+}
+
+.empty.ng-star-inserted p,
+.empty .nui-list-leaf-item__info-container {
+    margin: 0; /* Remove any default margin */
+}
+
+.nui-list-leaf-item__info-container[_ngcontent-edr-c279] {
+    display: flex;
+    align-items: center; /* Vertically centers content within the flex container */
+    height: 40px; /* Keeps the specified height */
 }
