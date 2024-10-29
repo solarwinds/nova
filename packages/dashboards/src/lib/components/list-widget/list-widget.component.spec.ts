@@ -73,13 +73,13 @@ describe(ListWidgetComponent.name, () => {
             ];
 
             const expectedResults = [
-                "1 DETECTED", // for 1
-                "TRUE DETECTED", // for true
+                "1", // for 1
+                "True", // for true
                 "", // for 'hello' (since no case in getDisplayText matches this string)
-                "FALSE DETECTED", // for false
-                "0 DETECTED", // for 0
-                "1 DETECTED", // for 1 (again)
-                "EMPTY STRING DETECTED", // for empty string
+                "False", // for false
+                "0", // for 0
+                "1", // for 1 (again)
+                "", // for empty string
                 "-", // for undefined
                 "-", // for null
             ];
