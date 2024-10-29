@@ -120,7 +120,7 @@ export class WidgetSearchComponent implements OnInit, OnDestroy, OnChanges {
                 takeUntil(this.destroy$),
                 debounceTime(
                     searchOnKeyUpCfg?.debounceTime ||
-                    WidgetSearchComponent.defaultSearchDebounce
+                        WidgetSearchComponent.defaultSearchDebounce
                 )
             )
             .subscribe((searchTerm) => {

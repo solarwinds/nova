@@ -99,36 +99,29 @@ export class ListWidgetComponent
     public getDisplayText(item: any): string {
         if (item === undefined || item === "undefined") {
             return "-";
-        }
-        else if (item === null || item === "null") {
+        } else if (item === null || item === "null") {
             return "-";
-        }
-        else if (item === "") {
+        } else if (item === "") {
             return "";
-        }
-        else if (item === false) {
+        } else if (item === false) {
             return "False";
-        }
-        else if (item === true) {
+        } else if (item === true) {
             return "True";
-        }
-        else if (item === 0) {
+        } else if (item === 0) {
             return "0";
-        }
-        else if (item === 1) {
+        } else if (item === 1) {
             return "1";
-        }
-        else if(item.length === 0){
-            return "[]"
-        }
-        else if (Object.keys(item).length === 0 && item.constructor === Object) {
+        } else if (item.length === 0) {
+            return "[]";
+        } else if (
+            Object.keys(item).length === 0 &&
+            item.constructor === Object
+        ) {
             return "{}";
-        }
-        else {
+        } else {
             return "";
         }
     }
-
 
     public displayRow(data: any): string {
         if (data === undefined) {
