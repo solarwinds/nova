@@ -40,6 +40,19 @@ export const GRAPH_DATA_MOCK = {
                 ],
             },
             {
+                name: "Andorra",
+                code: "AD",
+                icon: "virtual-host",
+                icon_status: IconStatus.Up,
+                capital: "Andorra la Vella",
+                currency: "EUR",
+                languages: [
+                    {
+                        name: "Catalan",
+                    },
+                ],
+            },
+            {
                 name: "United Arab Emirates",
                 code: "AE",
                 icon: "virtual-host",

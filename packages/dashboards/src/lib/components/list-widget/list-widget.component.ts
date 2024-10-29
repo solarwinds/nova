@@ -104,25 +104,25 @@ export class ListWidgetComponent
             return "-";
         } 
         else if (item === "") {
-            return "EMPTY STRING DETECTED";
+            return "";
         } 
         else if (item === false) {
-            return "FALSE DETECTED";
+            return "False";
         } 
         else if (item === true) {
-            return "TRUE DETECTED";
+            return "True";
         } 
         else if (item === 0) {
-            return "0 DETECTED";
+            return "0";
         } 
         else if (item === 1) {
-            return "1 DETECTED";
+            return "1";
         } 
         else if(item.length === 0){
-            return "EMPTY ARRAY"
+            return "[]"
         }
         else if (Object.keys(item).length === 0 && item.constructor === Object) {
-            return "EMPTY OBJECT";
+            return "{}";
         }
         else {
             return ""; 
