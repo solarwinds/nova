@@ -22,7 +22,6 @@ import { AriaDescriber, FocusMonitor } from "@angular/cdk/a11y";
 import { coerceBooleanProperty } from "@angular/cdk/coercion";
 import { hasModifierKey } from "@angular/cdk/keycodes";
 import {
-    ComponentFactoryResolver,
     Directive,
     ElementRef,
     Input,
@@ -138,7 +137,6 @@ export class TooltipDirective implements OnDestroy {
         private _ngZone: NgZone,
         private _ariaDescriber: AriaDescriber,
         private _focusMonitor: FocusMonitor,
-        private resolver: ComponentFactoryResolver,
         private overlayPositionService: OverlayPositionService
     ) {
         this.overlayPositionService.setOverlayPositionConfig({
@@ -263,10 +261,8 @@ export class TooltipDirective implements OnDestroy {
     }
 
     private createTooltipComponent() {
-        const componentFactory =
-            this.resolver.resolveComponentFactory(TooltipComponent);
         const tooltipComponentRef =
-            this._viewContainerRef.createComponent(componentFactory);
+            this._viewContainerRef.createComponent(TooltipComponent);
         this._tooltipInstance = tooltipComponentRef.instance;
         this._tooltipInstance.toggleReference = this._elementRef;
         this._tooltipInstance.possiblePositions =
