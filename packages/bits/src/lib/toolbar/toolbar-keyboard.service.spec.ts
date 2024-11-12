@@ -80,11 +80,11 @@ describe("Services > ", () => {
             });
 
             it("should call navigateByArrow method", () => {
-                const spy = spyOn(service, "navigateByArrow" as never);
+                const spy = spyOn(service as any, "navigateByArrow");
                 const { code } = keyboardEventMock;
 
                 service.onKeyDown(keyboardEventMock);
-                expect(spy).toHaveBeenCalledWith(code as never);
+                expect(spy).toHaveBeenCalledWith(code);
             });
 
             it("should navigate to first if last element in focus on press right arrow button", () => {

@@ -57,11 +57,6 @@ describe("components >", () => {
                 schemas: [NO_ERRORS_SCHEMA],
                 providers: [IconService, LoggerService],
             });
-            TestBed.overrideModule(BrowserDynamicTestingModule, {
-                set: {
-                    entryComponents: [WizardStepComponent],
-                },
-            });
         });
 
         beforeEach(() => {
