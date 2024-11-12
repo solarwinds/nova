@@ -48,11 +48,6 @@ describe("Components >", () => {
         let resizerComponent: LayoutResizerComponent;
 
         beforeEach(() => {
-            TestBed.overrideModule(BrowserDynamicTestingModule, {
-                set: {
-                    entryComponents: [LayoutResizerComponent],
-                },
-            });
             TestBed.configureTestingModule({
                 declarations: [
                     LayoutResizerTestingComponent,

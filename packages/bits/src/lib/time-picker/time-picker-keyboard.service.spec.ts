@@ -56,20 +56,20 @@ describe("Services >", () => {
             });
 
             it("should call 'handleClosedMenu' if overlay not showing", () => {
-                const spy = spyOn(service, "handleClosedMenu" as never);
+                const spy = spyOn(service as any, "handleClosedMenu");
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
 
                 service.onKeyDown(event);
-                expect(spy).toHaveBeenCalledWith(event as never);
+                expect(spy).toHaveBeenCalledWith(event);
             });
 
             it("should call 'handleOpenedMenu' if overlay not showing", () => {
-                const spy = spyOn(service, "handleOpenedMenu" as never);
+                const spy = spyOn(service as any, "handleOpenedMenu");
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
                 (overlayMock as any).showing = true;
 
                 service.onKeyDown(event);
-                expect(spy).toHaveBeenCalledWith(event as never);
+                expect(spy).toHaveBeenCalledWith(event);
             });
         });
 
@@ -83,17 +83,17 @@ describe("Services >", () => {
             });
 
             it("should call 'navigateByArrow' on DOWN and UP arrow buttons", () => {
-                const spy = spyOn(service, "navigateByArrow" as never);
+                const spy = spyOn(service as any, "navigateByArrow");
                 const pressDown = keyBoardEventFactory(
                     KEYBOARD_CODE.ARROW_DOWN
                 );
                 const pressUp = keyBoardEventFactory(KEYBOARD_CODE.ARROW_UP);
 
                 service["handleOpenedMenu"](pressDown);
-                expect(spy).toHaveBeenCalledWith(pressDown as never);
+                expect(spy).toHaveBeenCalledWith(pressDown);
 
                 service["handleOpenedMenu"](pressUp);
-                expect(spy).toHaveBeenCalledWith(pressUp as never);
+                expect(spy).toHaveBeenCalledWith(pressUp);
             });
 
             it("should call event.preventDefault on Enter button", () => {
