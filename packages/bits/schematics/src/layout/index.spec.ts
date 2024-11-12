@@ -48,30 +48,27 @@ describe("layout", () => {
             skipPackageJson: false,
         };
         appTree = await runner
-            .runExternalSchematicAsync(
+            .runExternalSchematic(
                 "@schematics/angular",
                 "workspace",
                 workspaceOptions
             )
-            .toPromise();
         appTree = await runner
-            .runExternalSchematicAsync(
+            .runExternalSchematic(
                 "@schematics/angular",
                 "application",
                 appOptions,
                 appTree
             )
-            .toPromise();
     });
 
     it("adds basic component", async () => {
         const afterTree = await runner
-            .runSchematicAsync(
+            .runSchematic(
                 "layout",
                 { project: "bar", name: "comp" },
                 appTree
             )
-            .toPromise();
         const htmlFile = afterTree.readContent(
             "/projects/bar/src/app/comp/comp.component.html"
         );
