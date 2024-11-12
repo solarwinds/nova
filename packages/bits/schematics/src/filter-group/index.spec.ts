@@ -61,12 +61,11 @@ xdescribe("ng-generate filtered-view", () => {
         );
 
         const afterTree = await runner
-            .runSchematicAsync(
+            .runSchematic(
                 "filtered-view",
                 { name: "foo", project: "lib" },
                 beforeTree
             )
-            .toPromise();
 
         const fileContents = afterTree
             .read("foo/foo.component.ts")

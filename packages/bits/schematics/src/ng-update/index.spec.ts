@@ -48,20 +48,18 @@ describe("ng-update", () => {
             skipPackageJson: false,
         };
         appTree = await runner
-            .runExternalSchematicAsync(
+            .runExternalSchematic(
                 "@schematics/angular",
                 "workspace",
                 workspaceOptions
             )
-            .toPromise();
         appTree = await runner
-            .runExternalSchematicAsync(
+            .runExternalSchematic(
                 "@schematics/angular",
                 "application",
                 appOptions,
                 appTree
             )
-            .toPromise();
     });
 
     it("adds style to angular.json without property", async () => {
@@ -80,12 +78,11 @@ describe("ng-update", () => {
             })
         );
         const afterTree = await runner
-            .runSchematicAsync(
+            .runSchematic(
                 "nova-migration-v13",
                 { skipTsConfig: true, project: "bar", skipCss: false },
                 appTree
             )
-            .toPromise();
         const file = JSON.parse(
             (afterTree.read("angular.json") ?? "").toString("utf-8")
         );
@@ -115,12 +112,11 @@ describe("ng-update", () => {
         );
 
         const afterTree = await runner
-            .runSchematicAsync(
+            .runSchematic(
                 "nova-migration-v13",
                 { skipTsConfig: true, project: "bar", skipCss: false },
                 appTree
             )
-            .toPromise();
         const file = JSON.parse(
             (afterTree.read("angular.json") ?? "")?.toString("utf-8")
         );
@@ -131,12 +127,11 @@ describe("ng-update", () => {
 
     it("updates style array in angular.json", async () => {
         const afterTree = await runner
-            .runSchematicAsync(
+            .runSchematic(
                 "nova-migration-v13",
                 { skipTsConfig: true, project: "bar" },
                 appTree
             )
-            .toPromise();
         const file = JSON.parse(
             (afterTree.read("angular.json") ?? "").toString("utf-8")
         );
