@@ -250,45 +250,62 @@ function dispatchMouseEvent(
 
 /**
  * Creates a browser MouseEvent with the specified options.
+ * @docs-private
  */
-export function createMouseEvent(
+function createMouseEvent(
     type: string,
-    x = 0,
-    y = 0,
-    button = 0
-): MouseEvent {
-    const event = document.createEvent("MouseEvent");
-    const originalPreventDefault = event.preventDefault.bind(event);
+    clientX = 0,
+    clientY = 0,
+    offsetX = 0,
+    offsetY = 0,
+    button = 0,
+    modifiers : any = {},
+) {
+    // Note: We cannot determine the position of the mouse event based on the screen
+    // because the dimensions and position of the browser window are not available
+    // To provide reasonable `screenX` and `screenY` coordinates, we simply use the
+    // client coordinates as if the browser is opened in fullscreen.
+    const screenX = clientX;
+    const screenY = clientY;
 
-    event.initMouseEvent(
-        type,
-        true /* canBubble */,
-        true /* cancelable */,
-        window /* view */,
-        0 /* detail */,
-        x /* screenX */,
-        y /* screenY */,
-        x /* clientX */,
-        y /* clientY */,
-        false /* ctrlKey */,
-        false /* altKey */,
-        false /* shiftKey */,
-        false /* metaKey */,
-        button /* button */,
-        null /* relatedTarget */
-    );
+    const event = new MouseEvent(type, {
+        bubbles: true,
+        cancelable: true,
+        composed: true, // Required for shadow DOM events.
+        view: window,
+        detail: 1,
+        relatedTarget: null,
+        screenX,
+        screenY,
+        clientX,
+        clientY,
+        ctrlKey: modifiers.control,
+        altKey: modifiers.alt,
+        shiftKey: modifiers.shift,
+        metaKey: modifiers.meta,
+        button: button,
+        buttons: 1,
+    });
 
-    // `initMouseEvent` doesn't allow us to pass the `buttons` and
-    // defaults it to 0 which looks like a fake event.
-    Object.defineProperty(event, "buttons", { get: () => 1 });
+    // The `MouseEvent` constructor doesn't allow us to pass these properties into the constructor.
+    // Override them to `1`, because they're used for fake screen reader event detection.
+    if (offsetX != null) {
+        defineReadonlyEventProperty(event, 'offsetX', offsetX);
+    }
 
-    // IE won't set `defaultPrevented` on synthetic events so we need to do it manually.
-    event.preventDefault = () => {
-        Object.defineProperty(event, "defaultPrevented", { get: () => true });
-        return originalPreventDefault();
-    };
+    if (offsetY != null) {
+        defineReadonlyEventProperty(event, 'offsetY', offsetY);
+    }
 
     return event;
+}
+
+/**
+ * Defines a readonly property on the given event object. Readonly properties on an event object
+ * are always set as configurable as that matches default readonly properties for DOM event objects.
+ */
+function defineReadonlyEventProperty(event: Event, propertyName: string, value: any) {
+    Object.defineProperty(event, propertyName, {get: () => value, configurable: true});
 }
 
 /**
