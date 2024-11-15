@@ -275,7 +275,8 @@
                     "builder": "@angular-devkit/build-angular:karma",
                     "configurations": {
                         "coverage": {
-                            "codeCoverage": true
+                            "codeCoverage": true,
+                            "reporters": ["progress", "coverage", "junit"]
                         },
                         "dev": {
                             "reporters": ["progress"],
