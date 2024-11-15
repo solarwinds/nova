@@ -24,7 +24,7 @@ VERSION=$1
 echo Directory: $SCRIPTS
 echo Version: $VERSION
 
-paths=$(cat $SCRIPTS/paths.txt)
+paths=$(node -p "require('./scripts/projects.json').map(p => p.path).join(' ')")
 echo Package paths: $paths
 
 for p in $paths; do
