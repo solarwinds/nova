@@ -35,4 +35,4 @@ if [[ $package_version =~ alpha|beta|rc ]]; then
 fi
 
 # Save new version to package.json to be able create proper npm package
-npm --no-git-tag-version version --allow-same-version "$computed_version"
+yarn version --no-git-tag-version --allow-same-version --new-version "$computed_version"

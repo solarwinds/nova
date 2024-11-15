@@ -103,7 +103,6 @@
     "percy": "percy exec -- yarn run visual",
     "percy:ci": "yarn run visual:ci && percy upload -v _snapshots",
     "percy:gui": "percy exec -- yarn run visual:gui",
-    "postinstall": "cd .",
     "prebuild-examples": "run-s compile-colors compile-demo-paths",
     "precompodoc": "node scripts/compile-global-less-styles.js",
     "pree2e:base": "webdriver-manager update --gecko=false --standalone=false",
