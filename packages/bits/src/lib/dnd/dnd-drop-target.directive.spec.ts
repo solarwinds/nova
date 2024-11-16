@@ -259,7 +259,7 @@ function createMouseEvent(
     offsetX = 0,
     offsetY = 0,
     button = 0,
-    modifiers : any = {},
+    modifiers: any = {}
 ) {
     // Note: We cannot determine the position of the mouse event based on the screen
     // because the dimensions and position of the browser window are not available
@@ -290,11 +290,11 @@ function createMouseEvent(
     // The `MouseEvent` constructor doesn't allow us to pass these properties into the constructor.
     // Override them to `1`, because they're used for fake screen reader event detection.
     if (offsetX != null) {
-        defineReadonlyEventProperty(event, 'offsetX', offsetX);
+        defineReadonlyEventProperty(event, "offsetX", offsetX);
     }
 
     if (offsetY != null) {
-        defineReadonlyEventProperty(event, 'offsetY', offsetY);
+        defineReadonlyEventProperty(event, "offsetY", offsetY);
     }
 
     return event;
@@ -304,8 +304,15 @@ function createMouseEvent(
  * Defines a readonly property on the given event object. Readonly properties on an event object
  * are always set as configurable as that matches default readonly properties for DOM event objects.
  */
-function defineReadonlyEventProperty(event: Event, propertyName: string, value: any) {
-    Object.defineProperty(event, propertyName, {get: () => value, configurable: true});
+function defineReadonlyEventProperty(
+    event: Event,
+    propertyName: string,
+    value: any
+) {
+    Object.defineProperty(event, propertyName, {
+        get: () => value,
+        configurable: true,
+    });
 }
 
 /**
