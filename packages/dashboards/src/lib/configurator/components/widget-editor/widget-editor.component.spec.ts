@@ -115,14 +115,6 @@ describe("WidgetEditorComponent", () => {
                 },
             ],
         })
-            .overrideModule(BrowserDynamicTestingModule, {
-                set: {
-                    entryComponents: [
-                        DashwizButtonsComponent,
-                        TemplateLoadErrorComponent,
-                    ],
-                },
-            })
             .compileComponents();
     }));
 

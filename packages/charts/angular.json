@@ -225,8 +225,7 @@
                     "builder": "@angular-devkit/build-angular:karma",
                     "configurations": {
                         "coverage": {
-                            "codeCoverage": true,
-                            "reporters": ["spec"]
+                            "codeCoverage": true
                         },
                         "dev": {
                             "reporters": ["spec"],

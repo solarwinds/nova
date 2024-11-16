@@ -76,15 +76,6 @@ describe("components >", () => {
                     },
                 ],
             });
-            TestBed.overrideModule(BrowserDynamicTestingModule, {
-                set: {
-                    entryComponents: [
-                        DashwizButtonsComponent,
-                        DashwizStepComponent,
-                        TemplateLoadErrorComponent,
-                    ],
-                },
-            });
         });
 
         beforeEach(() => {

@@ -246,14 +246,14 @@ describe("DashboardComponent", () => {
             };
 
             const spy = spyOn(
-                component.gridsterConfig.api ?? {},
-                "getFirstPossiblePosition" as never
+                (component as any).gridsterConfig.api ?? {},
+                "getFirstPossiblePosition"
             );
 
             // component.dashboard.widgets = { [testWidget.id]: testWidget };
             component.updateWidget(testWidget);
 
-            expect(spy).toHaveBeenCalledWith(expectedPositions as never);
+            expect(spy).toHaveBeenCalledWith(expectedPositions);
         });
     });
 
