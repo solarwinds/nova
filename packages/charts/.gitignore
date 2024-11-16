@@ -2,6 +2,7 @@
 /.tmp*
 /_snapshots
 /coverage
+/test-results
 /dist
 /sdk
 package-lock.json
