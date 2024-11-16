@@ -1,5 +1,4 @@
 // just use .editorconfig
-module.export = {
+module.exports = {
     ...require("./.prettierrc.json"),
-    editorconfig: true,
 };

@@ -50,20 +50,18 @@ describe("ng-add", () => {
             skipPackageJson: false,
         };
         appTree = await runner
-            .runExternalSchematicAsync(
+            .runExternalSchematic(
                 "@schematics/angular",
                 "workspace",
                 workspaceOptions
             )
-            .toPromise();
         appTree = await runner
-            .runExternalSchematicAsync(
+            .runExternalSchematic(
                 "@schematics/angular",
                 "application",
                 appOptions,
                 appTree
             )
-            .toPromise();
     });
 
     it("adds styles to angular.json without property", async () => {
@@ -82,12 +80,11 @@ describe("ng-add", () => {
             })
         );
         const afterTree = await runner
-            .runSchematicAsync(
+            .runSchematic(
                 "ng-add",
                 { project: "bar", skipModuleUpdate: true },
                 appTree
-            )
-            .toPromise();
+            );
         const file = JSON.parse(
             (afterTree.read("angular.json") ?? "").toString("utf-8")
         );
@@ -118,12 +115,11 @@ describe("ng-add", () => {
         );
 
         const afterTree = await runner
-            .runSchematicAsync(
+            .runSchematic(
                 "ng-add",
                 { project: "bar", skipModuleUpdate: true },
                 appTree
             )
-            .toPromise();
         const file = JSON.parse(
             (afterTree.read("angular.json") ?? "").toString("utf-8")
         );
@@ -134,12 +130,11 @@ describe("ng-add", () => {
 
     it("updates style array in angular.json", async () => {
         const afterTree = await runner
-            .runSchematicAsync(
+            .runSchematic(
                 "ng-add",
                 { project: "bar", skipModuleUpdate: true },
                 appTree
-            )
-            .toPromise();
+            );
         const file = JSON.parse(
             (afterTree.read("angular.json") ?? "").toString("utf-8")
         );
@@ -150,12 +145,11 @@ describe("ng-add", () => {
 
     it("adds imports to module", async () => {
         const afterTree = await runner
-            .runSchematicAsync(
+            .runSchematic(
                 "ng-add",
                 { project: "bar", skipCss: true },
                 appTree
-            )
-            .toPromise();
+            );
         const moduleFile = (
             afterTree.read(`/projects/bar/src/app/app.module.ts`) ?? ""
         ).toString("utf-8");
@@ -165,7 +159,7 @@ describe("ng-add", () => {
 
     it("updates the dependencies in package.json with the dashboards peerDependencies", async () => {
         const afterTree = await runner
-            .runSchematicAsync(
+            .runSchematic(
                 "ng-add",
                 {
                     project: "bar",
@@ -173,8 +167,7 @@ describe("ng-add", () => {
                     skipModuleUpdate: true,
                 },
                 appTree
-            )
-            .toPromise();
+            );
         const file = JSON.parse(
             (afterTree.read("package.json") ?? "").toString("utf-8")
         );

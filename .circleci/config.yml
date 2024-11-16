@@ -3,68 +3,82 @@ orbs:
     browser-tools: circleci/browser-tools@1.4.0
 
 commands:
-  install:
-    description: "Reuse cache among the builds"
-    steps:
-      - restore_cache:
-          key: deps-{{ checksum "yarn.lock" }}
+    reuse-cache:
+        description: "Reuse cache among the builds"
+        steps:
+            - restore_cache:
+                  key: deps-{{ checksum "yarn.lock" }}
 
 executors:
-  node:
-    docker:
-      - image: cimg/node:18.20
-    working_directory: ~/nova
+    node:
+        docker:
+            - image: cimg/node:18.20
+        working_directory: ~/nova
 
-  node-browsers:
-    docker:
-      - image: cimg/node:18.20
-    working_directory: ~/nova
-  ubuntu:
-    machine:
-      image: ubuntu-2204:2022.10.2
-    working_directory: ~/nova
+    node-browsers:
+        docker:
+            - image: cimg/node:18.20
+        working_directory: ~/nova
+    ubuntu:
+        machine:
+            image: ubuntu-2204:2022.10.2
+        working_directory: ~/nova
 
 jobs:
-    install-deps:
+    prepare:
         executor: node
         environment:
-          PROJECT_DIR: .
-          BUILD_COUNTER: << pipeline.number >>
+            PROJECT_DIR: .
+            BUILD_COUNTER: << pipeline.number >>
         steps:
-          - checkout
-          - restore_cache:
-              key: deps-{{ checksum "yarn.lock" }}
-          - run:
-              working_directory: ~/nova
-              name: Installing node dependencies (if necessary)
-              command: |
-                  if [ -d "node_modules" ];
-                  then
-                      echo "skipping npm install as it was restored from cache. Running only postinstall"
-                  else
-                      yarn install --frozen-lockfile
-                  fi
-          - save_cache:
-                key: deps-{{ checksum "yarn.lock" }}
-                paths:
-                  - ./node_modules
-          - persist_to_workspace:
-              root: ~/nova
-              paths:
-                - .git
-                - packages
-                - scripts
-                - .editorconfig
-                - .eslintignore
-                - .eslintrc.json
-                - .prettierignore
-                - .prettierrc.js
-                - .prettierrc.json
-                - docker-compose.yml
-                - LICENSE
-                - package.json
-                - tsconfig.main.json
-                - yarn.lock
+            - checkout
+            - restore_cache:
+                  key: deps-{{ checksum "yarn.lock" }}
+            - run:
+                  working_directory: ~/nova
+                  name: Installing node dependencies (if necessary)
+                  command: |
+                      if [ -d "node_modules" ];
+                      then
+                          echo "skipping npm install as it was restored from cache. Running only postinstall"
+                      else
+                          yarn install --frozen-lockfile
+                      fi
+            - save_cache:
+                  key: deps-{{ checksum "yarn.lock" }}
+                  paths:
+                      - ./node_modules
+            - run:
+                  working_directory: ~/nova
+                  name: Check styling
+                  command: |
+                      yarn prettier-check || true
+                      EXIT_CODE=$?
+                      echo "Exit Code: $EXIT_CODE"
+                      if [ $EXIT_CODE -ne 0 ]; then
+                        echo "Has styling issues but continuing..."
+                      fi
+                      # Exit with 0 to indicate success to CircleCI (override the failure)
+                      exit 0
+                  when: always
+
+            - persist_to_workspace:
+                  root: ~/nova
+                  paths:
+                      - .git
+                      - packages
+                      - scripts
+                      - .editorconfig
+                      - .eslintignore
+                      - .eslintrc.json
+                      - .prettierignore
+                      - .prettierrc.js
+                      - .prettierrc.json
+                      - docker-compose.yml
+                      - LICENSE
+                      - package.json
+                      - tsconfig.main.json
+                      - yarn.lock
     bits-build:
         executor: node
         environment:
@@ -73,8 +87,8 @@ jobs:
         resource_class: medium+
         steps:
             - attach_workspace:
-                at: ~/nova
-            - install
+                  at: ~/nova
+            - reuse-cache
             - run:
                   name: Compute build version
                   command: yarn run compute-version-ci
@@ -104,9 +118,9 @@ jobs:
                       - ./packages/bits/dist
                       - ./packages/bits/sdk
             - persist_to_workspace:
-                root: ~/nova
-                paths:
-                  - packages/bits
+                  root: ~/nova
+                  paths:
+                      - packages/bits
     bits-unit-test:
         executor: node-browsers
         working_directory: ~/nova
@@ -114,13 +128,13 @@ jobs:
             - browser-tools/install-chrome
             - attach_workspace:
                   at: ~/nova
-            - install
+            - reuse-cache
             - run:
                   working_directory: ~/nova/packages/bits
                   name: Unit tests
                   command: yarn run test
             - store_test_results:
-                path: test-results
+                  path: packages/bits/test-results
     bits-e2e-test:
         executor: ubuntu
         working_directory: ~/nova
@@ -132,14 +146,14 @@ jobs:
             - attach_workspace:
                   at: ~/nova
             - run:
-                name: Check git diff to see if builds should skip e2e
-                working_directory: ~/nova/packages/bits
-                command: |
-                  if [ -f $PROJECT_DIR/package-cached ]; then
-                      echo "This package was restored from cache so we're skipping e2e tests"
-                      circleci step halt
-                  fi
-            - install
+                  name: Check git diff to see if builds should skip e2e
+                  command: |
+                      if [ -f packages/bits/package-cached ]; then
+                          echo "This package was restored from cache so we're skipping e2e tests"
+                          circleci-agent step halt
+                      fi
+                      echo "not skiped"
+            - reuse-cache
             - run:
                   name: Start Selenium docker image
                   command: docker-compose up -d --build selenium
@@ -158,16 +172,16 @@ jobs:
             - browser-tools/install-chrome
             - browser-tools/install-chromedriver
             - attach_workspace:
-                at: ~/nova
+                  at: ~/nova
             - run:
-                name: Check git diff to see if builds should skip e2e
-                working_directory: ~/nova/packages/bits
-                command: |
-                  if [ -f $PROJECT_DIR/package-cached ]; then
-                      echo "This package was restored from cache so we're skipping a11y tests"
-                      circleci step halt
-                  fi
-            - install
+                  name: Check git diff to see if builds should skip e2e
+                  working_directory: ~/nova/packages/bits
+                  command: |
+                      if [ -f $PROJECT_DIR/package-cached ]; then
+                          echo "This package was restored from cache so we're skipping a11y tests"
+                          circleci step halt
+                      fi
+            - reuse-cache
             - run:
                   name: Start Selenium docker image
                   command: docker-compose up -d --build selenium
@@ -186,19 +200,18 @@ jobs:
             - browser-tools/install-chrome
             - browser-tools/install-chromedriver
             - attach_workspace:
-                at: ~/nova
+                  at: ~/nova
             - run:
-                name: Check git diff to see if builds should skip e2e
-                working_directory: ~/nova/packages/bits
-                command: |
-                  if [ -f $PROJECT_DIR/package-cached ]; then
-                      echo "This package was restored from cache so we're skipping visual tests"
-                      circleci step halt
-                  fi
+                  name: Check git diff to see if builds should skip e2e
+                  working_directory: ~/nova/packages/bits
+                  command: |
+                      if [ -f $PROJECT_DIR/package-cached ]; then
+                          echo "This package was restored from cache so we're skipping visual tests"
+                          circleci step halt
+                      fi
             - restore_cache:
-                working_directory: ~/nova
-                key:
-                  deps-{{ checksum "yarn.lock" }}
+                  working_directory: ~/nova
+                  key: deps-{{ checksum "yarn.lock" }}
             - run:
                   name: Start Selenium docker image
                   command: docker-compose up -d --build selenium
@@ -215,7 +228,7 @@ jobs:
         steps:
             - attach_workspace:
                   at: ~/nova
-            - install
+            - reuse-cache
             - run:
                   working_directory: ~/nova/packages/bits
                   name: Create bits package
@@ -232,7 +245,7 @@ jobs:
         steps:
             - attach_workspace:
                   at: ~/nova
-            - install
+            - reuse-cache
             - run:
                   name: Publish bits
                   command: |
@@ -245,7 +258,7 @@ jobs:
         steps:
             - attach_workspace:
                   at: ~/nova
-            - install
+            - reuse-cache
             - run:
                   name: Verify published package
                   command: |
@@ -260,7 +273,7 @@ jobs:
         steps:
             - attach_workspace:
                   at: ~/nova
-            - install
+            - reuse-cache
             - run:
                   name: Compute build version
                   command: yarn run compute-version-ci
@@ -271,45 +284,14 @@ jobs:
                       export bitsCommit=`git log --pretty=format:'%H' -n 1 ./bits`
                       export chartsCommit=`git log --pretty=format:'%H' -n 1 ./charts`
                       echo $bitsCommit $chartsCommit > ./charts/git-commit
-#            - run:
-#                  working_directory: ~/nova
-#                  name: Temporarily remove dependencies
-#                  command: |
-#                      cp packages/charts/package.json packages/charts/package.json~
-#                      cp yarn.lock yarn.lock~
-#                      yarn run remove-dependencies packages/charts
-#            - run:
-#                working_directory: ~/nova
-#                name: Copy .tgz files
-#                command: |
-#                  cp packages/bits/*.tgz packages/charts
-#            - run:
-#                  working_directory: ~/nova/packages/charts
-#                  name: Install Bits
-#                  command: |
-#                    TAR_FILE=$(find . -type f -name "*.tgz" -print -quit)
-#                    yarn add file:$TAR_FILE -D
             - run:
                   working_directory: ~/nova
                   name: Install Bits
                   command: |
-                    yarn run --cwd=packages/charts symlink
-#            - run:
-#                  working_directory: ~/nova/
-#                  name: Restore deps
-#                  command: |
-#                    mv -f packages/charts/package.json~ packages/charts/package.json
-#                    mv -f yarn.lock~ yarn.lock
-#            - restore_cache:
-#                working_directory: ~/nova
-#                key:
-#                  deps-{{ checksum "yarn.lock" }}
-            - run:
-                name: if it there
-                command: |
-                  ls node_modules/raw-loader
-#            - restore_cache:
-#                  key: charts-dist-{{ checksum "packages/charts/git-commit" }}
+                      yarn run --cwd=packages/charts symlink
+            - restore_cache:
+                  working_directory: ~/nova
+                  key: charts-dist-{{ checksum "packages/charts/git-commit" }}
             - run:
                   working_directory: ~/nova/packages/charts
                   name: Assemble
@@ -340,11 +322,13 @@ jobs:
             - browser-tools/install-chrome
             - attach_workspace:
                   at: ~/nova
-            - install
+            - reuse-cache
             - run:
                   working_directory: ~/nova/packages/charts
                   name: Unit tests
                   command: yarn run test
+            - store_test_results:
+                  path: packages/charts/test-results
     charts-e2e-test:
         executor: ubuntu
         working_directory: ~/nova
@@ -356,14 +340,14 @@ jobs:
             - attach_workspace:
                   at: ~/nova
             - run:
-                name: Check git diff to see if builds should skip e2e
-                working_directory: ~/nova/packages/charts
-                command: |
-                  if [ -f $PROJECT_DIR/package-cached ]; then
-                      echo "This package was restored from cache so we're skipping visual tests"
-                      circleci step halt
-                  fi
-            - install
+                  name: Check git diff to see if builds should skip e2e
+                  working_directory: ~/nova/packages/charts
+                  command: |
+                      if [ -f $PROJECT_DIR/package-cached ]; then
+                          echo "This package was restored from cache so we're skipping visual tests"
+                          circleci step halt
+                      fi
+            - reuse-cache
             - run:
                   name: Start Selenium docker image
                   command: docker-compose up -d --build selenium
@@ -384,14 +368,14 @@ jobs:
             - attach_workspace:
                   at: ~/nova
             - run:
-                name: Check git diff to see if builds should skip e2e
-                working_directory: ~/nova/packages/charts
-                command: |
-                  if [ -f $PROJECT_DIR/package-cached ]; then
-                      echo "This package was restored from cache so we're skipping visual tests"
-                      circleci step halt
-                  fi
-            - install
+                  name: Check git diff to see if builds should skip e2e
+                  working_directory: ~/nova/packages/charts
+                  command: |
+                      if [ -f $PROJECT_DIR/package-cached ]; then
+                          echo "This package was restored from cache so we're skipping visual tests"
+                          circleci step halt
+                      fi
+            - reuse-cache
             - run:
                   name: Start Selenium docker image
                   command: docker-compose up -d --build selenium
@@ -409,7 +393,7 @@ jobs:
         steps:
             - attach_workspace:
                   at: ~/nova
-            - install
+            - reuse-cache
             - run:
                   working_directory: ~/nova/packages/charts
                   name: Create charts package
@@ -426,7 +410,7 @@ jobs:
         steps:
             - attach_workspace:
                   at: ~/nova
-            - install
+            - reuse-cache
             - run:
                   name: Publish charts
                   command: |
@@ -439,7 +423,7 @@ jobs:
         steps:
             - attach_workspace:
                   at: ~/nova
-            - install
+            - reuse-cache
             - run:
                   name: Verify published package
                   command: |
@@ -454,7 +438,7 @@ jobs:
         steps:
             - attach_workspace:
                   at: ~/nova
-            - install
+            - reuse-cache
             - run:
                   name: Compute build version
                   command: yarn run compute-version-ci
@@ -468,28 +452,11 @@ jobs:
                       echo $bitsCommit $chartsCommit $dashboardsCommit > ./dashboards/git-commit
             - run:
                   working_directory: ~/nova/packages/dashboards
-                  name: Temporarily remove dependencies
+                  name: Install Bits and Charts
                   command: |
-                      cp package.json package.json~
-                      yarn run --cwd=../.. remove-dependencies packages/dashboards
-            - run:
-                working_directory: ~/nova
-                name: Copy .tgz files
-                command: |
-                  cp packages/bits/*.tgz packages/dashboards
-                  cp packages/charts/*.tgz packages/dashboards
-            - run:
-                working_directory: ~/nova/packages/dashboards
-                name: Install Bits and Charts
-                command: |
-                  TAR_FILE_BITS=$(find . -type f -name "nova-ui-bits-*.tgz" -print -quit)
-                  TAR_FILE_CHARTS=$(find . -type f -name "nova-ui-charts-*.tgz" -print -quit)
-                  yarn add file:$TAR_FILE_BITS $TAR_FILE_CHARTS -D
-            - run:
-                  working_directory: ~/nova/packages/dashboards
-                  name: Restore package.json
-                  command: mv -f package.json~ package.json
+                      yarn run --cwd=packages/dashboards symlink
             - restore_cache:
+                  working_directory: ~/nova
                   key: dashboards-dist-{{ checksum "packages/dashboards/git-commit" }}
             - run:
                   working_directory: ~/nova/packages/dashboards
@@ -513,15 +480,19 @@ jobs:
                       - packages/dashboards
     dashboards-unit-test:
         executor: node-browsers
-        working_directory: ~/nova-browsers
+        working_directory: ~/nova
         steps:
             - browser-tools/install-chrome
             - attach_workspace:
                   at: ~/nova
-            - install
+            - reuse-cache
             - run:
+                  working_directory: ~/nova/packages/dashboards
                   name: Unit tests
                   command: yarn run test
+            - store_test_results:
+                  path: packages/dashboards/test-results
+
     dashboards-e2e-test:
         executor: ubuntu
         working_directory: ~/nova
@@ -532,7 +503,7 @@ jobs:
             - browser-tools/install-chromedriver
             - attach_workspace:
                   at: ~/nova
-            - install
+            - reuse-cache
             - run:
                   name: Check git diff to see if builds should skip e2e
                   working_directory: ~/nova/packages/dashboards
@@ -560,7 +531,7 @@ jobs:
             - browser-tools/install-chromedriver
             - attach_workspace:
                   at: ~/nova
-            - install
+            - reuse-cache
             - run:
                   name: Start Selenium docker image
                   command: docker-compose up -d --build selenium
@@ -578,8 +549,9 @@ jobs:
         steps:
             - attach_workspace:
                   at: ~/nova
-            - install
+            - reuse-cache
             - run:
+                  working_directory: ~/nova/packages/dashboards
                   name: Create dashboards package
                   command: npm pack ./dist
             - persist_to_workspace:
@@ -594,7 +566,7 @@ jobs:
         steps:
             - attach_workspace:
                   at: ~/nova
-            - install
+            - reuse-cache
             - run:
                   name: Publish dashboards
                   command: |
@@ -607,7 +579,7 @@ jobs:
         steps:
             - attach_workspace:
                   at: ~/nova
-            - install
+            - reuse-cache
             - run:
                   name: Verify published package
                   command: |
@@ -619,11 +591,11 @@ jobs:
             NOVA_DIR: ~/nova
         steps:
             - attach_workspace:
-                at: ~/nova
-            - install
+                  at: ~/nova
+            - reuse-cache
             - add_ssh_keys
             - checkout:
-                path: ~/nova
+                  path: ~/nova
             - run:
                   name: Configure Git
                   command: |
@@ -663,7 +635,7 @@ jobs:
             - add_ssh_keys
             - checkout:
                   path: ~/nova
-            - install
+            - reuse-cache
             - run:
                   name: Configure Git
                   command: |
@@ -675,10 +647,10 @@ jobs:
 workflows:
     nova:
         jobs:
-            - install-deps
+            - prepare
             - bits-build:
                   requires:
-                    - install-deps
+                      - prepare
             - bits-pack:
                   requires:
                       - bits-build

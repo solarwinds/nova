@@ -49,7 +49,7 @@
     "url": "https://github.com/solarwinds/nova.git"
   },
   "scripts": {
-    "assemble": "run-s  build-lib:locl build-lib:prod compodoc-custom-theme build-examples:prod",
+    "assemble": "run-s lint build-lib:locl build-lib:prod compodoc-custom-theme build-examples:prod",
     "assemble-dev": "run-s build-lib:prod",
     "build-examples": "ng build examples",
     "build-examples:prod": "run-s \"build-examples -c production\"",

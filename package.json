@@ -1,12 +1,6 @@
 {
   "author": "SolarWinds <nova-ui@solarwinds.com>",
   "description": "SolarWinds Nova Framework",
-  "workspaces": [
-    "packages/*"
-  ],
-  "engines": {
-    "node": ">=18"
-  },
   "devDependencies": {
     "@angular-devkit/build-angular": "16.2.16",
     "@angular-devkit/core": "16.2.16",
@@ -86,9 +80,13 @@
     "webpack": "5.96.1",
     "zone.js": "0.13.3"
   },
+  "engines": {
+    "node": ">=18"
+  },
   "license": "Apache-2.0",
   "main": "index.js",
   "name": "nova",
+  "packageManager": "yarn@1.22.18",
   "private": true,
   "repository": {
     "type": "git",
@@ -123,5 +121,5 @@
     "verify-ci": "bash scripts/verify-published"
   },
   "version": "16.0.0-0",
-  "packageManager": "yarn@1.22.18"
+  "workspaces": ["packages/*"]
 }
