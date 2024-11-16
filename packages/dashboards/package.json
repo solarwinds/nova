@@ -62,7 +62,7 @@
   },
   "schematics": "./sdk/schematics/collection.json",
   "scripts": {
-    "assemble": "run-s prettier-check lint build-lib:locl build-lib:prod compodoc build-examples:prod build-schematics",
+    "assemble": "run-s lint build-lib:locl build-lib:prod compodoc build-examples:prod build-schematics",
     "assemble-dev": "run-s build-lib:prod",
     "build-examples": "ng b examples",
     "build-examples:prod": "yarn run build-examples -c production",

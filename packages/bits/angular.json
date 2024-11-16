@@ -276,7 +276,7 @@
                     "configurations": {
                         "coverage": {
                             "codeCoverage": true,
-                            "reporters": ["progress", "coverage", "junit"]
+                            "reporters": ["progress", "coverage", "kjhtml", "junit"]
                         },
                         "dev": {
                             "reporters": ["progress"],

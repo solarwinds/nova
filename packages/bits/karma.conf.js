@@ -31,7 +31,6 @@ module.exports = function (config) {
                 { type: "html", subdir: "report-html" },
                 { type: "lcovonly", subdir: "report-lcovonly" },
             ],
-            useBrowserName: false,
         },
         angularCli: {
             environment: "dev",
@@ -57,7 +56,7 @@ module.exports = function (config) {
         },
         files: [
             {
-                pattern: "dist/fesm2015/nova-ui-bits.mjs",
+                pattern: "dist/fesm2022/nova-ui-bits.mjs",
                 watched: false,
                 included: false,
                 served: true,
