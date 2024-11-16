@@ -1,5 +1,5 @@
 {
-    "$schema": "./node_modules/@compodoc/compodoc/src/config/schema.json",
+    "$schema": "/node_modules/@compodoc/compodoc/src/config/schema.json",
     "assetsFolder": "src/docs/assets",
     "disableLifeCycleHooks": true,
     "disablePrivate": true,

@@ -2,6 +2,7 @@
 /.tmp*
 /_snapshots
 /coverage
+/test-results
 /dist
 /schematics/dist
 /sdk

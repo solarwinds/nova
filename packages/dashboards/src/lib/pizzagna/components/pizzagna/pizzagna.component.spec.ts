@@ -134,9 +134,6 @@ describe("Pizzagna", () => {
                 { provide: LOCALE_ID, useValue: "fr" },
             ],
         })
-            .overrideModule(BrowserDynamicTestingModule, {
-                set: { entryComponents },
-            })
             .compileComponents();
     }));
 

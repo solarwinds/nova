@@ -6,14 +6,14 @@
                 "arrowParens": "avoid",
                 "bracketSameLine": true,
                 "bracketSpacing": true,
+                "embeddedLanguageFormatting": "off",
+                "endOfLine": "auto",
                 "htmlWhitespaceSensitivity": "strict",
                 "quoteProps": "consistent",
                 "semi": true,
                 "singleQuote": false,
                 "trailingComma": "es5",
-                "useTabs": false,
-                "embeddedLanguageFormatting": "off",
-                "endOfLine": "auto"
+                "useTabs": false
             }
         },
         {

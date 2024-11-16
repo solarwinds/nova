@@ -141,10 +141,6 @@ describe("ComponentPortalDirective >", () => {
                 },
                 ComponentPortalDirective,
             ],
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                entryComponents: [Mock1Component, Mock2Component],
-            },
         });
         fixture = TestBed.createComponent(ComponentPortalTestComponent);
         const mockComponentFixture = TestBed.createComponent(Mock1Component);

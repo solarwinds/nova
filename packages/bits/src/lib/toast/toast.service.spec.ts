@@ -34,12 +34,6 @@ describe("services >", () => {
         let toastService: IToastService | any;
 
         beforeEach(() => {
-            TestBed.overrideModule(BrowserDynamicTestingModule, {
-                set: {
-                    entryComponents: [ToastComponent],
-                },
-            });
-
             TestBed.configureTestingModule({
                 declarations: [ToastComponent, IconComponent],
                 providers: [

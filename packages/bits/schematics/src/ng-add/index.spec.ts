@@ -55,20 +55,18 @@ describe("ng-add", () => {
             skipPackageJson: false,
         };
         appTree = await runner
-            .runExternalSchematicAsync(
+            .runExternalSchematic(
                 "@schematics/angular",
                 "workspace",
                 workspaceOptions
             )
-            .toPromise();
         appTree = await runner
-            .runExternalSchematicAsync(
+            .runExternalSchematic(
                 "@schematics/angular",
                 "application",
                 appOptions,
                 appTree
             )
-            .toPromise();
     });
 
     it("adds style to angular.json without property", async () => {
@@ -87,12 +85,11 @@ describe("ng-add", () => {
             })
         );
         const afterTree = await runner
-            .runSchematicAsync(
+            .runSchematic(
                 "ng-add",
                 { skipTsConfig: true, project: "bar", skipCss: false },
                 appTree
             )
-            .toPromise();
         const file = readJsonFile(afterTree, "angular.json");
         expect(file.projects.bar.architect.build.options.styles[0]).toEqual(
             "./node_modules/@nova-ui/bits/bundles/css/styles.css"
@@ -114,12 +111,11 @@ describe("ng-add", () => {
             })
         );
         const afterTree = await runner
-            .runSchematicAsync(
+            .runSchematic(
                 "ng-add",
                 { skipTsConfig: true, project: "bar", skipCss: false },
                 appTree
             )
-            .toPromise();
         const file = readJsonFile(afterTree, "angular.json");
         expect(
             file.projects.bar.architect.build.options.stylePreprocessorOptions
@@ -148,12 +144,11 @@ describe("ng-add", () => {
         );
 
         const afterTree = await runner
-            .runSchematicAsync(
+            .runSchematic(
                 "ng-add",
                 { skipTsConfig: true, project: "bar", skipCss: false },
                 appTree
             )
-            .toPromise();
         const file = readJsonFile(afterTree, "angular.json");
         expect(file.projects.bar.architect.build.options.styles).toEqual([
             "./node_modules/@nova-ui/bits/bundles/css/styles.css",
@@ -162,12 +157,11 @@ describe("ng-add", () => {
 
     it("updates style array in angular.json", async () => {
         const afterTree = await runner
-            .runSchematicAsync(
+            .runSchematic(
                 "ng-add",
                 { skipTsConfig: true, project: "bar" },
                 appTree
             )
-            .toPromise();
         const file = readJsonFile(afterTree, "angular.json");
         expect(file.projects.bar.architect.build.options.styles[1]).toContain(
             "@nova-ui/bits"
@@ -176,12 +170,11 @@ describe("ng-add", () => {
 
     it("add class to html", async () => {
         const afterTree = await runner
-            .runSchematicAsync(
+            .runSchematic(
                 "ng-add",
                 { skipTsConfig: true, project: "bar", skipCss: false },
                 appTree
             )
-            .toPromise();
         expect(
             (afterTree.read(`/projects/bar/src/index.html`) ?? "").toString(
                 "utf-8"
@@ -191,7 +184,7 @@ describe("ng-add", () => {
 
     it("add property to tsConfig", async () => {
         const afterTree = await runner
-            .runSchematicAsync(
+            .runSchematic(
                 "ng-add",
                 {
                     skipCss: true,
@@ -201,7 +194,6 @@ describe("ng-add", () => {
                 },
                 appTree
             )
-            .toPromise();
         const afterFile = readJsonFile(
             afterTree,
             `projects/bar/tsconfig.app.json`
@@ -225,7 +217,7 @@ describe("ng-add", () => {
         );
 
         const afterTree = await runner
-            .runSchematicAsync(
+            .runSchematic(
                 "ng-add",
                 {
                     skipCss: true,
@@ -235,7 +227,6 @@ describe("ng-add", () => {
                 },
                 appTree
             )
-            .toPromise();
         const afterFile = readJsonFile(
             afterTree,
             `projects/bar/tsconfig.app.json`
@@ -247,7 +238,7 @@ describe("ng-add", () => {
 
     it("updates the dependencies in package.json with the peerDependencies from Bits and ignores upper versions of peer dependencies if provided", async () => {
         const afterTree = await runner
-            .runSchematicAsync(
+            .runSchematic(
                 "ng-add",
                 {
                     project: "bar",
@@ -257,7 +248,6 @@ describe("ng-add", () => {
                 },
                 appTree
             )
-            .toPromise();
         const file = readJsonFile(afterTree, "package.json");
         const { peerDependencies } = require("../../../package.json");
         Object.keys(peerDependencies).forEach((key) => {

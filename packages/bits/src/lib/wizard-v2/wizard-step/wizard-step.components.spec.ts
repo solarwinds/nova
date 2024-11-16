@@ -64,13 +64,13 @@ describe("components >", () => {
             it("should call _errorStateMatcher 'isErrorState' method", () => {
                 const spy = spyOn(
                     component["_errorStateMatcher"],
-                    "isErrorState" as never
+                    "isErrorState"
                 );
 
                 component.isErrorState(control, form);
                 expect(spy).toHaveBeenCalledWith(
-                    control as never,
-                    form as never
+                    control,
+                    form
                 );
             });
 

@@ -9,12 +9,18 @@ module.exports = function (config) {
             require("@angular-devkit/build-angular/plugins/karma"),
             require("karma-chrome-launcher"),
             require("karma-coverage"),
+            require("karma-junit-reporter"),
             require("karma-jasmine-html-reporter"),
             require("karma-jasmine"),
             require("karma-spec-reporter"),
         ],
         client: {
             clearContext: false, // leave Jasmine Spec Runner output visible in browser
+        },
+        junitReporter: {
+            outputDir: 'test-results', // Directory for test results
+            outputFile: 'karma-results.xml', // Optional: file name for JUnit XML results
+            useBrowserName: false,
         },
         coverageReporter: {
             dir: require("path").join(__dirname, "coverage"),
@@ -26,7 +32,7 @@ module.exports = function (config) {
         angularCli: {
             environment: "dev",
         },
-        reporters: ["progress", "coverage", "kjhtml"],
+        reporters: ["progress", "coverage", "kjhtml", "junit"],
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
@@ -47,7 +53,7 @@ module.exports = function (config) {
         },
         files: [
             {
-                pattern: "dist/fesm2015/nova-ui-charts.mjs",
+                pattern: "dist/fesm2022/nova-ui-charts.mjs",
                 watched: false,
                 included: false,
                 served: true,

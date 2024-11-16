@@ -23,7 +23,6 @@ import {
     AfterViewChecked,
     ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver,
     ContentChildren,
     ElementRef,
     EventEmitter,
@@ -133,7 +132,7 @@ export class WizardComponent
 
     constructor(
         private changeDetector: ChangeDetectorRef,
-        private componentFactoryResolver: ComponentFactoryResolver,
+        private viewContainerRef: ViewContainerRef,
         private logger: LoggerService
     ) {}
 
@@ -193,11 +192,7 @@ export class WizardComponent
         wizardStep: IWizardStepComponent,
         indexToInsert: number
     ): IWizardStepComponent {
-        const componentFactory =
-            this.componentFactoryResolver.resolveComponentFactory(
-                WizardStepComponent
-            );
-        const componentRef = this.dynamicStep.createComponent(componentFactory);
+        const componentRef = this.dynamicStep.createComponent(WizardStepComponent);
         const instance: IWizardStepComponent = componentRef.instance;
         const wizardStepInputs = this.getInputsAndOutputs(wizardStep);
 

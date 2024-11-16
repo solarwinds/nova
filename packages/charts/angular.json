@@ -1,5 +1,5 @@
 {
-    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "$schema": "/node_modules/@angular/cli/lib/config/schema.json",
     "cli": {
         "analytics": false
     },
@@ -151,10 +151,10 @@
                         "outputPath": "./.tmp-css",
                         "sourceMap": true,
                         "stylePreprocessorOptions": {
-                            "includePaths": ["node_modules"]
+                            "includePaths": ["../../node_modules"]
                         },
                         "styles": ["src/styles.less"],
-                        "tsConfig": "tsconfig.json",
+                        "tsConfig": "./src/tsconfig.css.json",
                         "vendorChunk": true
                     }
                 }
@@ -225,8 +225,7 @@
                     "builder": "@angular-devkit/build-angular:karma",
                     "configurations": {
                         "coverage": {
-                            "codeCoverage": true,
-                            "reporters": ["spec"]
+                            "codeCoverage": true
                         },
                         "dev": {
                             "reporters": ["spec"],
