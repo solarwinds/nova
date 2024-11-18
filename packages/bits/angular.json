@@ -8,16 +8,14 @@
         "demo": {
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
+                    "builder": "@angular-devkit/build-angular:application",
                     "configurations": {
                         "dev": {
-                            "buildOptimizer": false,
                             "namedChunks": true,
                             "optimization": false,
                             "sourceMap": true
                         },
                         "e2e": {
-                            "buildOptimizer": true,
                             "extractLicenses": true,
                             "fileReplacements": [
                                 {
@@ -28,15 +26,13 @@
                             "namedChunks": false,
                             "optimization": true,
                             "outputHashing": "all",
-                            "sourceMap": false,
-                            "vendorChunk": false
+                            "sourceMap": false
                         },
                         "i18n": {
                             "localize": ["en-us"]
                         },
                         "production": {
                             "budgets": [],
-                            "buildOptimizer": true,
                             "extractLicenses": true,
                             "i18nMissingTranslation": "warning",
                             "namedChunks": false,
@@ -47,15 +43,19 @@
                     },
                     "defaultConfiguration": "",
                     "options": {
+                        "loader": {
+                            ".html": "text",
+                            ".ts": "text",
+                            ".less": "text"
+                        },
                         "allowedCommonJsDependencies": ["lodash"],
-                        "buildOptimizer": false,
                         "extractLicenses": false,
                         "index": "./demo/src/index.html",
-                        "main": "./demo/src/index.ts",
+                        "browser": "./demo/src/index.ts",
                         "namedChunks": true,
                         "optimization": false,
                         "outputPath": "./sdk/api-docs-ng2/examples",
-                        "polyfills": "./demo/src/polyfills.ts",
+                        "polyfills": ["./demo/src/polyfills.ts"],
                         "scripts": [],
                         "sourceMap": true,
                         "stylePreprocessorOptions": {
@@ -69,8 +69,7 @@
                             "./demo/src/demostyles.less",
                             "./src/styles/styles-font-roboto.less"
                         ],
-                        "tsConfig": "./demo/src/tsconfig.json",
-                        "vendorChunk": true
+                        "tsConfig": "./demo/src/tsconfig.json"
                     }
                 },
                 "extract-i18n": {
@@ -211,20 +210,18 @@
         "i18n": {
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
+                    "builder": "@angular-devkit/build-angular:application",
                     "defaultConfiguration": "",
                     "options": {
                         "allowedCommonJsDependencies": ["lodash"],
-                        "buildOptimizer": false,
                         "extractLicenses": false,
                         "index": "./src/index.html",
-                        "main": "./src/public_api.ts",
+                        "browser": "./src/public_api.ts",
                         "namedChunks": true,
                         "optimization": false,
                         "outputPath": "./.tmp",
                         "sourceMap": true,
-                        "tsConfig": "./src/tsconfig.i18n.json",
-                        "vendorChunk": true
+                        "tsConfig": "./src/tsconfig.i18n.json"
                     }
                 }
             },
