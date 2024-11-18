@@ -117,8 +117,6 @@
     "set-dependency-versions-ci": "bash scripts/set-dependency-versions",
     "set-release-versions-ci": "bash scripts/set-release-versions",
     "set-source-versions-ci": "bash scripts/set-source-versions",
-    "migrate-protractor": "node scripts/migrate-to-cypress/migrate-protractor-spec-to-cypress-spec.js --working_dir packages/bits",
-    "test:migration-scripts": "node scripts/migrate-to-cypress/migrate-protractor-spec-to-cypress-spec.test.js",
     "snyk-auth": "snyk auth $SNYK_TOKEN",
     "snyk-monitor": "snyk monitor --dev --all-projects --exclude=dist --strict-out-of-sync=false --org=solarwinds",
     "snyk-test": "snyk test --dev --all-projects --exclude=dist --strict-out-of-sync=false --org=solarwinds || true",
