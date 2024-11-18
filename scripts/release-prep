@@ -44,35 +44,12 @@ if ! git show-ref --quiet $RELEASE_BRANCH; then
     fi
 fi
 
-# initial merge with "ours" strategy to auto-resolve conflicts
-echo "initial merge with 'ours' strategy to auto-resolve conflicts"
-git checkout $SOURCE_BRANCH
-git pull origin $RELEASE_BRANCH --no-rebase -s ours
+echo updating the release branch with all what we have in main without making new commits
 git checkout $RELEASE_BRANCH
-git merge $SOURCE_BRANCH --no-edit -X theirs
+git merge $SOURCE_BRANCH --no-edit --ff-only --strategy theirs
 
-# Set Release Version
-echo "Set Release Version $RELEASE_VERSION"
+echo Make a new commit in release branch with new version $RELEASE_VERSION
 yarn run set-release-versions-ci
-
-# Set Release Dependency Versions
-echo "Set Next Release Dependency Versions $RELEASE_VERSION"
 yarn run set-dependency-versions-ci
-
-# Commit and Push Release Branch Changes
-echo "Commit and Push Release Branch Changes $RELEASE_VERSION"
-git commit -am "update files for version $RELEASE_VERSION"
-git push --verbose
-
-# Increment source branch version
-echo "Increment source branch version"
-git checkout $SOURCE_BRANCH
-yarn run set-source-versions-ci
-
-# Set source dependency versions
-echo "Set source dependency versions"
-yarn run set-dependency-versions-ci
-
-# Push source branch changes
-echo "Push source branch changes"
-git commit -am 'increment develop versions' && git push origin $SOURCE_BRANCH
+git commit --amend -am "Release :$RELEASE_VERSION"
+git push origin $RELEASE_BRANCH
