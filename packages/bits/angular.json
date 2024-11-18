@@ -76,7 +76,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "demo:build",
+                        "buildTarget": "demo:build",
                         "outputPath": "./.tmp-i18n"
                     }
                 },
@@ -93,17 +93,17 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "dev": {
-                            "browserTarget": "demo:build:dev"
+                            "buildTarget": "demo:build:dev"
                         },
                         "e2e": {
-                            "browserTarget": "demo:build:e2e"
+                            "buildTarget": "demo:build:e2e"
                         },
                         "production": {
-                            "browserTarget": "demo:build:production"
+                            "buildTarget": "demo:build:production"
                         }
                     },
                     "options": {
-                        "browserTarget": "demo:build"
+                        "buildTarget": "demo:build"
                     }
                 },
                 "test": {
@@ -254,7 +254,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "i18n:build",
+                        "buildTarget": "i18n:build",
                         "outputPath": "./.tmp-i18n"
                     }
                 },
@@ -268,7 +268,7 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {},
                     "options": {
-                        "browserTarget": "lib:build"
+                        "buildTarget": "lib:build"
                     }
                 },
                 "test": {
