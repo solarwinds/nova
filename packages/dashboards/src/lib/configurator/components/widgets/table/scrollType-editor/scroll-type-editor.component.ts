@@ -98,9 +98,12 @@ export class TableScrollTypeEditorComponent
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.scrollType) {
-            this.scrollTypeFormControl?.setValue(this.scrollType ?? ScrollType.virtual, {
-                emitEvent: false,
-            });
+            this.scrollTypeFormControl?.setValue(
+                this.scrollType ?? ScrollType.virtual,
+                {
+                    emitEvent: false,
+                }
+            );
 
             this.updateSubtitle();
             this.updateValidators();
