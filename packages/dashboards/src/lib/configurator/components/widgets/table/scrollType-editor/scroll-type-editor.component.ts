@@ -98,11 +98,13 @@ export class TableScrollTypeEditorComponent
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.scrollType) {
-            this.scrollTypeFormControl?.setValue(this.scrollType, {
-                emitEvent: false,
-            });
+            this.scrollTypeFormControl?.setValue(
+                this.scrollType ?? ScrollType.virtual,
+                {
+                    emitEvent: false,
+                }
+            );
 
-            this.changeExpanderState(false);
             this.updateSubtitle();
             this.updateValidators();
         }
@@ -194,16 +196,8 @@ export class TableScrollTypeEditorComponent
         this.emitUpdatedSelectedOptions();
     }
 
-    public get hasPaginator() {
+    public get hasPaginator(): boolean {
         return this.scrollTypeFormControl?.value === ScrollType.paginator;
-    }
-
-    public accordionToggle(isOpened: boolean) {
-        this.changeExpanderState(false);
-    }
-
-    public changeExpanderState(isOpen: boolean) {
-        this.isExpanderOpen = isOpen;
     }
 
     private updateSubtitle(): void {
@@ -239,7 +233,7 @@ export class TableScrollTypeEditorComponent
 
         this.updateDefaultPageSizeOptions(filteredPageSizeSet);
         this.pageSizeSetFormControl?.setValue(filteredPageSizeSet, {
-            emitEvent: false,
+            emitEvent: true,
         });
     }
 
