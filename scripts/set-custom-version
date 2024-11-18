@@ -32,5 +32,5 @@ for p in $paths; do
 
     cd ../$p
     echo Setting version in $p to $VERSION
-    npm version --force --allow-same-version --no-git-tag-version $VERSION
+    yarn version --allow-same-version --no-git-tag-version $VERSION
 done
