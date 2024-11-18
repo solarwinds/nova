@@ -3,7 +3,7 @@ set -e
 
 usage()
 {
-    echo "Usage: docker-compose run -e BUILD_COUNTER=%build.counter% build npm run compute-version-ci"
+    echo "Usage: docker-compose run -e BUILD_COUNTER=%build.counter% build yarn run compute-version-ci"
     echo "Compute build version from package version and build counter"
     echo
     echo "Options:"
