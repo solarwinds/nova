@@ -4,11 +4,11 @@
         (closed)="closeDialog()"
     ></nui-dialog-header>
     <div class="filter-group-dialog__body">
-        <app-item-picker
+        <app-item-picker-table-pagination
             [itemPickerOptions]="itemPickerOptions"
             [selectedValues]="selectedValues"
             (selectionChanged)="onSelectionChanged($event)"
-        ></app-item-picker>
+        ></app-item-picker-table-pagination>
     </div>
     <nui-dialog-footer>
         <button nui-button type="button" (click)="closeDialog()" i18n>
