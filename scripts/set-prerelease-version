@@ -1,0 +1,41 @@
+#!/bin/bash
+set -e
+
+usage()
+{
+    echo "Usage: docker-compose run -e BUILD_COUNTER=%build.counter% build yarn run compute-version-ci"
+    echo "Compute build version from package version and build counter"
+    echo
+    echo "Options:"
+    echo "  -h, --help       [Optional] Show this help message"
+}
+
+while [ -n "$1" ]; do
+    case "$1" in
+    -h|--help)
+        usage
+        exit
+        ;;
+    -i | --prerelease-id)
+            prerelease_id="$2"
+            shift 2
+        ;;
+    -*)
+        echo "Unexpected argument '$1'."
+        exit 1
+        ;;
+    esac
+done
+
+package_version=$(node -p "require('./package.json').version")
+BUILD_COUNTER=$prerelease_id
+# Create build number - add build counter to project version, don't add in case of alpha/beta/rc or regular release
+if [[ $package_version =~ alpha|beta|rc ]]; then
+  computed_version="${package_version}.${BUILD_COUNTER}";
+  else
+  computed_version=$(echo "$package_version" | sed -E "s/-([a-zA-Z.]*)([0-9]*)/-\1${BUILD_COUNTER}/");
+fi
+
+# Save new version to package.json to be able create proper npm package
+
+bash scripts/set-custom-version $computed_version
