@@ -37,6 +37,7 @@ import {
 import { IFormatterData } from "../types";
 
 @Component({
+    selector: "nui-dashboards-si-units-formatter",
     template: `
         <ng-container>
             <div class="d-flex flex-nowrap">

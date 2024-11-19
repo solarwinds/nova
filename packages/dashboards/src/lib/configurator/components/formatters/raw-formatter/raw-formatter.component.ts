@@ -28,7 +28,8 @@ import {
 import { IFormatterData } from "../types";
 
 @Component({
-    template: ` <ng-container>{{ data?.value }}</ng-container>`,
+    selector: "nui-dashboards-raw-formatter",
+    template: `<ng-container>{{ data?.value }}</ng-container>`,
 })
 export class RawFormatterComponent {
     static lateLoadKey = "RawFormatterComponent";

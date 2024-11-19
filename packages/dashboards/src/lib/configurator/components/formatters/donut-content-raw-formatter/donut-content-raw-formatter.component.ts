@@ -29,6 +29,7 @@ import { IProportionalWidgetConfig } from "../../../../components/public-api";
 import { IFormatterData } from "../types";
 
 @Component({
+    selector: "nui-donut-content-raw-formatter",
     template: `<ng-container>
         <nui-icon
             *ngIf="config?.chartDonutContentIcon"

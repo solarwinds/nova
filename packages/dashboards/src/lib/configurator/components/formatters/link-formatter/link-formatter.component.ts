@@ -30,6 +30,7 @@ import { IHasChangeDetector } from "../../../../types";
 import { ILinkFormatterData } from "../types";
 
 @Component({
+    // selector: "nui-dashboards-link-formatter",
     template: `<div class="link-formatter-container">
         <a
             *ngIf="isValid"
