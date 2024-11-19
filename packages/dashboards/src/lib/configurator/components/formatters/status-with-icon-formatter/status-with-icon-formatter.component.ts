@@ -23,6 +23,7 @@ import { ChangeDetectorRef, Component, Input, OnChanges } from "@angular/core";
 import { IHasChangeDetector } from "../../../../types";
 
 @Component({
+    selector: "nui-dashboards-status-icon-formatter",
     template: `
         <ng-container *ngIf="isValid">
             <div

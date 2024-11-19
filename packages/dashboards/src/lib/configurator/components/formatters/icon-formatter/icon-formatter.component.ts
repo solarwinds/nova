@@ -26,6 +26,7 @@ import { IHasChangeDetector } from "../../../../types";
 import { IFormatterData } from "../types";
 
 @Component({
+    selector: "nui-dashboards-icon-formatter",
     template: `
         <div
             *ngIf="isValid"
