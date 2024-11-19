@@ -90,6 +90,7 @@ export class Helpers {
         }
         await browser.angularAppRoot("app");
         await browser.get(url);
+        await browser.waitForAngular()
         browser.clearMockModules();
     }
 

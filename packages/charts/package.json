@@ -86,7 +86,7 @@
     "prettier-check": "yarn run prettier --check .",
     "prettier-fix": "yarn run prettier --write .",
     "serve-examples": "ng serve examples",
-    "serve-examples:prod": "npx local-web-server -p 4200 -d sdk/api-docs-ng2/examples --spa index.html",
+    "serve-examples:prod": "npx local-web-server -p 4200 -d sdk/api-docs-ng2/examples/browser --spa index.html",
     "start": "run-p -lr compodoc:serve build-examples:watch",
     "symlink": "run-s symlink:*",
     "symlink:bits": "yarn rimraf node_modules/@nova-ui/bits && yarn symlink-dir ../bits/dist/ node_modules/@nova-ui/bits",
