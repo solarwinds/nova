@@ -7,7 +7,10 @@
         },
         "skipLibCheck": true
     },
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "extends": "../../tsconfig.json",
+    "include": ["components"],
     "files": ["index.ts", "polyfills.ts"],
     "typeRoots": ["node_modules/@types"]
 }

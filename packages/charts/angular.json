@@ -88,12 +88,12 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "e2e": {
-                            "browserTarget": "examples:build:e2e"
+                            "buildTarget": "examples:build:e2e"
                         },
                         "production": {}
                     },
                     "options": {
-                        "browserTarget": "examples:build"
+                        "buildTarget": "examples:build"
                     }
                 }
             },
@@ -211,7 +211,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "i18n:build",
+                        "buildTarget": "i18n:build",
                         "outputPath": "./.tmp-i18n"
                     }
                 },

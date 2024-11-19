@@ -47,7 +47,7 @@ import {
 } from "./public-api";
 
 @Component({
-    selector: "app-filter-group",
+    selector: "app-filter-group-with-selection",
     templateUrl: "./filter-group.component.html",
     styleUrls: ["./filter-group.component.less"],
 })
