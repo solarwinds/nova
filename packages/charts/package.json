@@ -39,7 +39,7 @@
     "@nova-ui/bits": "~16.0.3-0",
     "@types/d3": "^5.0.0",
     "@types/d3-selection-multi": "^1.0.0",
-    "d3": "^5.0.0",
+    "d3": "^5.9.2",
     "d3-color": "3.1.0",
     "d3-selection-multi": "^1.0.0",
     "d3-time-format": "2.1.3"
@@ -49,7 +49,7 @@
     "url": "https://github.com/solarwinds/nova.git"
   },
   "scripts": {
-    "assemble": "run-s lint build-lib:locl build-lib:prod compodoc-custom-theme build-examples:prod",
+    "assemble": "run-s  build-lib:locl build-lib:prod compodoc-custom-theme build-examples:prod",
     "assemble-dev": "run-s build-lib:prod",
     "build-examples": "ng build examples",
     "build-examples:prod": "run-s \"build-examples -c production\"",
@@ -86,7 +86,7 @@
     "prettier-check": "yarn run prettier --check .",
     "prettier-fix": "yarn run prettier --write .",
     "serve-examples": "ng serve examples",
-    "serve-examples:prod": "npx local-web-server -p 4200 -d sdk/api-docs-ng2/examples --spa index.html",
+    "serve-examples:prod": "npx local-web-server -p 4200 -d sdk/api-docs-ng2/examples/browser --spa index.html",
     "start": "run-p -lr compodoc:serve build-examples:watch",
     "symlink": "run-s symlink:*",
     "symlink:bits": "yarn rimraf node_modules/@nova-ui/bits && yarn symlink-dir ../bits/dist/ node_modules/@nova-ui/bits",

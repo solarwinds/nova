@@ -36,7 +36,7 @@
                 service, which can be extended with custom filtering behavior.
             </p>
             <nui-schematic-docs-command
-                >ng g @nova-ui/bits:table --p=app --name=basic-table
+                >ng g &#64;nova-ui/bits:table --p=app --name=basic-table
                 --enable-search=false
                 --enable-sort=false</nui-schematic-docs-command
             >
@@ -48,7 +48,7 @@
         <nui-tab heading="Sort">
             <h2>Table Sorting</h2>
             <nui-schematic-docs-command
-                >ng g @nova-ui/bits:table --p=app --name=table-with-sort
+                >ng g &#64;nova-ui/bits:table --p=app --name=table-with-sort
                 --enable-sort --enable-search=false</nui-schematic-docs-command
             >
             <nui-schematic-docs-example exampleFolderName="table-with-sort">
@@ -59,7 +59,7 @@
         <nui-tab heading="Search">
             <h2>Table with Search</h2>
             <nui-schematic-docs-command
-                >ng g @nova-ui/bits:table --p=app --name=table-with-search
+                >ng g &#64;nova-ui/bits:table --p=app --name=table-with-search
                 --enable-search --enable-sort=false</nui-schematic-docs-command
             >
             <nui-schematic-docs-example exampleFolderName="table-with-search">
@@ -74,7 +74,7 @@
                 <code>nui-table</code> with a remote data source.
             </p>
             <nui-schematic-docs-command
-                >ng g @nova-ui/bits:table --name=table-with-pagination --p=app
+                >ng g &#64;nova-ui/bits:table --name=table-with-pagination --p=app
                 --pagingMode=pagination
                 --dataSource=serverSide</nui-schematic-docs-command
             >
@@ -92,7 +92,7 @@
                 <code>nui-table</code> with a remote data source.
             </p>
             <nui-schematic-docs-command
-                >ng g @nova-ui/bits:table --name=table-with-pagination --p=app
+                >ng g &#64;nova-ui/bits:table --name=table-with-pagination --p=app
                 --pagingMode=pagination --dataSource=serverSide
                 <strong
                     >--selectionMode=multi</strong
@@ -118,7 +118,7 @@
                 results whenever the filters are changed.
             </nui-message>
             <nui-schematic-docs-command
-                >ng g @nova-ui/bits:table --name=table-with-virtual-scroll
+                >ng g &#64;nova-ui/bits:table --name=table-with-virtual-scroll
                 --p=app --pagingMode=virtualScroll
                 --dataSource=serverSide</nui-schematic-docs-command
             >
@@ -134,7 +134,7 @@
         <nui-tab heading="Custom Virtual Scroll" #cvs>
             <h2>Virtual Scroll with Custom Strategy</h2>
             <nui-schematic-docs-command>
-                ng g @nova-ui/bits:table --name=table-with-virtual-scroll
+                ng g &#64;nova-ui/bits:table --name=table-with-virtual-scroll
                 --p=app --pagingMode=virtualScroll --dataSource=serverSide
                 <strong>--virtualScrollStrategy=custom</strong>
             </nui-schematic-docs-command>

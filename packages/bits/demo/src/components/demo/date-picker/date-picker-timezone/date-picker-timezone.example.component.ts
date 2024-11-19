@@ -18,25 +18,24 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormControl, Validators } from "@angular/forms";
 import moment from "moment-timezone";
 
 import { ISelectChangedEvent } from "@nova-ui/bits";
 
-const zonesData = require("moment-timezone/data/packed/latest.json");
-moment.tz.add(zonesData.zones);
-
 @Component({
     selector: "nui-date-picker-timezone-example",
     templateUrl: "./date-picker-timezone.example.component.html",
 })
-export class DatePickerTimezoneExampleComponent {
+export class DatePickerTimezoneExampleComponent implements OnInit {
     public control = new FormControl(moment(), {
         validators: [Validators.required],
         nonNullable: true,
     });
-    public zones: string[] = zonesData.zones.map(
+    public zonesData: any = {zones: []};
+
+    public zones: string[] = this.zonesData?.zones.map(
         (z: string) => z.split("|")[0]
     );
     public displayedZones = this.zones;
@@ -44,6 +43,12 @@ export class DatePickerTimezoneExampleComponent {
 
     constructor() {
         this.control.setValue(this.control.value.tz(this.initialZone));
+    }
+
+    async ngOnInit() {
+        const zonesData = await import("moment-timezone/data/packed/latest.json");
+        moment.tz.add(zonesData.default.zones);
+        this.zonesData = zonesData.default;
     }
 
     get selectedDate(): string {

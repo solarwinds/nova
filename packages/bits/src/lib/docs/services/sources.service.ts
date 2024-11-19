@@ -32,11 +32,11 @@ export class SourcesService {
         @Inject(DEMO_PATH_TOKEN)
         private config: {
             context: string;
-            files: { content: string; path: string }[];
+            files: Promise<{ content: string; path: string }>[];
         }
     ) {}
 
-    public getSourcesByFilenamePrefix(filenamePrefix: string): FileMetadata[] {
+    public async getSourcesByFilenamePrefix(filenamePrefix: string): Promise<FileMetadata[]> {
         if (!this.config.context) {
             this.logger.error(
                 `You need to configure SourceService in the module where you import NuiDocsModule e.g. {` +
@@ -46,23 +46,23 @@ export class SourcesService {
         }
 
         const files: FileMetadata[] = [];
-        this.config.files
-            .filter(
+        await Promise.all(this.config.files).then(e=>
+            e.filter(
                 (file: { content: string; path: string }) =>
                     file.path.includes(`${filenamePrefix}/`) ||
                     file.path.includes("package.json")
             )
-            .map((file: { content: string; path: string }) => {
-                files.push({
-                    filePath: this.getTrimmedFilePath(
-                        file.path,
-                        filenamePrefix
-                    ),
-                    fileContent: file.content,
-                    fileType: this.getFileType(file.path),
-                    fileName: this.getFilename(file.path),
-                });
-            });
+                .map((file: { content: string; path: string }) => {
+                    files.push({
+                        filePath: this.getTrimmedFilePath(
+                            file.path,
+                            filenamePrefix
+                        ),
+                        fileContent: file.content,
+                        fileType: this.getFileType(file.path),
+                        fileName: this.getFilename(file.path),
+                    });
+                }))
         return files;
     }
 

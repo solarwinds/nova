@@ -18,8 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser, by, element, ElementFinder } from "protractor";
+import {browser, by, element, ElementFinder, protractor} from "protractor";
 import { By, ILocation } from "selenium-webdriver";
+const EC = protractor.ExpectedConditions;
 
 export interface IAtomClass<T extends Atom> {
     new (element: ElementFinder): T;
@@ -172,6 +173,10 @@ export class Atom {
 
     public getElement(): ElementFinder {
         return this.element;
+    }
+
+    public async waitElementVisible(): Promise<void> {
+        await browser.wait(EC.visibilityOf(this.getElement()), 5000, "Element is not visible");
     }
 
     public async isChildElementPresent(locator: any): Promise<boolean> {
