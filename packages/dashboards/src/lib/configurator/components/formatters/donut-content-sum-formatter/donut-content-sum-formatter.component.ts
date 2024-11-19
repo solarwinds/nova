@@ -24,6 +24,7 @@ import sumBy from "lodash/sumBy";
 import { IFormatterData } from "../types";
 
 @Component({
+    selector: "nui-dashboards-donut-content-sum-formatter",
     template: `<ng-container
         ><div class="nui-text-page">{{ this.sum }}</div></ng-container
     >`,
