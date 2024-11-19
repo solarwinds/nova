@@ -7,5 +7,5 @@ paths=$(node -p "require('./scripts/projects.json').map(p => p.path).join(' ')")
 
 for p in $paths; do
     echo Setting source version in $p
-    bash $SCRIPTS/set-version --increment-type pre$INCREMENT_TYPE -p $p
+    bash $SCRIPTS/set-version --prerelease-id 1 -p $p
 done

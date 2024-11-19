@@ -120,6 +120,8 @@
     "trigger-pipeline-build-ci": "bash scripts/trigger-pipeline-build",
     "verify-ci": "bash scripts/verify-published"
   },
-  "version": "16.0.0-0",
-  "workspaces": ["packages/*"]
+  "version": "16.0.1-0",
+  "workspaces": [
+    "packages/*"
+  ]
 }
