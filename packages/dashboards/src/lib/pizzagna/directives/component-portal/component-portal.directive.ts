@@ -68,6 +68,7 @@ export class ComponentPortalDirective
     private providerInstances: Record<string, any> = {};
     private readonly destroy$ = new Subject<void>();
     private changesSubscription?: Subscription;
+    private listenerUnsubscriber?: () => void;
 
     constructor(
         private injector: Injector,
@@ -129,6 +130,7 @@ export class ComponentPortalDirective
         this.logger.debug("Portal destroyed:", this.componentId);
 
         this.destroyProviders();
+        this.listenerUnsubscriber?.();
 
         this.destroy$.next();
         this.destroy$.complete();
@@ -139,7 +141,7 @@ export class ComponentPortalDirective
 
         // ctrl+shift+click on a pizzagna to get a dump of its properties
         // this will propagate through the parent components, so it should dump the parent pizzagnas as well
-        this.renderer.listen(
+        this.listenerUnsubscriber = this.renderer.listen(
             componentRef.location.nativeElement,
             "click",
             (event: MouseEvent) => {
