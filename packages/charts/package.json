@@ -101,5 +101,5 @@
     "visual:gui": "yarn run visual:base -c gui",
     "visual:serve": "yarn run visual:base -c serve"
   },
-  "version": "16.0.3-0"
+  "version": "16.0.2-1"
 }
