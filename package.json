@@ -80,6 +80,9 @@
     "webpack": "5.96.1",
     "zone.js": "0.13.3"
   },
+  "resolutions": {
+    "d3-color": "3.1.0"
+  },
   "engines": {
     "node": ">=18"
   },
@@ -120,7 +123,7 @@
     "trigger-pipeline-build-ci": "bash scripts/trigger-pipeline-build",
     "verify-ci": "bash scripts/verify-published"
   },
-  "version": "16.0.1",
+  "version": "16.0.2",
   "workspaces": [
     "packages/*"
   ]

@@ -19,7 +19,7 @@ const getFilesRecursively = (directory) => {
 getFilesRecursively(dir);
 
 const trimmedFiles = files.map((filePath) =>
-    filePath.replaceAll("\\", "/").replace(dir, "")
+    filePath.replace(/\\/g, "/").replace(dir, "")
 );
 
 fs.writeFileSync(
