@@ -58,6 +58,7 @@
     "karma-jasmine-html-reporter": "^2.0.0",
     "karma-spec-reporter": "^0.0.34",
     "lodash": "^4.17.21",
+    "lz-string": "^1.5.0",
     "moment": "2.29.4",
     "moment-timezone": "^0.5.38",
     "ng-packagr": "^15.0.3",
@@ -72,8 +73,7 @@
     "tslib": "^2.4.1",
     "typescript": "~4.9.5",
     "webpack": "^5.76.0",
-    "zone.js": "~0.11.8",
-    "lz-string": "^1.5.0"
+    "zone.js": "~0.11.8"
   },
   "exports": {
     "./sdk/atoms": {
@@ -167,5 +167,5 @@
     "visual:gui": "yarn run visual:base -c gui",
     "visual:serve": "yarn run visual:base -c serve"
   },
-  "version": "15.0.11"
+  "version": "15.0.12"
 }
