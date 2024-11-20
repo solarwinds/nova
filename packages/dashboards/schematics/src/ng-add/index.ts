@@ -90,7 +90,8 @@ function updateModuleFile(options: any): Rule {
         try {
             const projectTargets = getBrowserProjectTargets(host, options);
 
-            const mainPath = projectTargets.options.main;
+            // @ts-ignore ng 17 defaults to application builder which has browser
+            const mainPath = projectTargets.options["browser"];
             const modulePath = getAppModulePath(host, mainPath);
             const moduleSource = readIntoSourceFile(host, modulePath);
 

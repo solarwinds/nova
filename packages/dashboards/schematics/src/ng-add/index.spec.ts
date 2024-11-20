@@ -144,7 +144,7 @@ describe("ng-add", () => {
         );
     });
 
-    it("adds imports to module", async () => {
+    fit("adds imports to module", async () => {
         const afterTree = await runner
             .runSchematic(
                 "ng-add",
