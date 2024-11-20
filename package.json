@@ -123,7 +123,7 @@
     "trigger-pipeline-build-ci": "bash scripts/trigger-pipeline-build",
     "verify-ci": "bash scripts/verify-published"
   },
-  "version": "16.0.1-2",
+  "version": "16.0.2-1",
   "workspaces": [
     "packages/*"
   ]
