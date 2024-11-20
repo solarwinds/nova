@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import "zone.js/bundles/async-test";
-import "zone.js/bundles/jasmine-patch";
-import "zone.js/bundles/proxy";
-import "zone.js/bundles/sync-test";
+import "zone.js/bundles/async-test.umd";
+import "zone.js/bundles/jasmine-patch.umd";
+import "zone.js/bundles/proxy.umd";
+import "zone.js/bundles/sync-test.umd";
