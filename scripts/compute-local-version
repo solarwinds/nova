@@ -1,0 +1,75 @@
+#!/bin/bash
+set -e
+
+#Expected Behavior
+#main_version |	release_version |	Output
+#16.0.0-3	16.0.1	16.0.2-0
+#16.0.1-0	16.0.1	16.0.2-0
+#16.0.2-0	16.0.1	16.0.2-1
+#16.0.2-2	16.0.2	16.0.3-0
+
+# Function to get the current version using Node.js
+get_current_version() {
+    node -e "console.log(require('./package.json').version)"
+}
+
+# Function to get the version from a specific branch
+get_branch_version() {
+    local branch=$1
+    git show "$branch:package.json" | node -e "let pkg = JSON.parse(require('fs').readFileSync(0, 'utf8')); console.log(pkg.version);"
+}
+
+# Variables
+export LANG=C.UTF-8
+SOURCE_BRANCH=`cat .circleci/config.yml | grep -oP '^ *SOURCE_BRANCH: \K.+'`
+RELEASE_BRANCH=`cat .circleci/config.yml | grep -oP '^ *RELEASE_BRANCH: \K.+'`
+
+main_branch_version=$(get_branch_version $SOURCE_BRANCH)
+release_branch_version=$(get_branch_version $RELEASE_BRANCH)
+
+# Function to compute the next version
+compute_next_version() {
+    local main_version=$1
+    local release_version=$2
+
+    # Extract base versions and pre-release numbers
+    local release_base="${release_version%-*}" # Remove pre-release suffix if present
+    local main_base="${main_version%-*}"       # Remove pre-release suffix if present
+    local main_suffix="${main_version##*-}"    # Extract pre-release suffix, if any
+
+    # Ensure main_suffix is numeric or default to -1 for no suffix
+    if [[ ! "$main_suffix" =~ ^[0-9]+$ ]]; then
+        main_suffix=-1
+    fi
+
+    # Compare versions
+    if [[ ! "$main_base" > "$release_base" ]]; then
+        # Increment release base patch and reset pre-release suffix
+        local next_patch=$(( ${release_base##*.} + 1 ))
+        local base_version="${release_base%.*}.$next_patch"
+        echo "${base_version}-0"
+    else
+        echo "${main_base}-$((main_suffix + 1))"
+    fi
+}
+
+# Compute the next version
+next_version=$(compute_next_version "$main_branch_version" "$release_branch_version")
+echo compute_next_version - main: "$main_branch_version" - release: "$release_branch_version"
+echo "Next Version: $next_version"
+
+# Use the computed next version in your scripts or export it
+export NEXT_VERSION=$next_version
+
+current_version=$(get_current_version)
+
+# Compare current_version and next_version
+if [[ "$current_version" != "$next_version" ]]; then
+    echo "The local version are different."
+    echo "Setting next version: $NEXT_VERSION."
+    bash scripts/set-custom-version $next_version
+    bash scripts/set-dependency-versions
+else
+    echo "The local version are correct."
+fi
+
