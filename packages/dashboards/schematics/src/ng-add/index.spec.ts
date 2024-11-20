@@ -47,6 +47,7 @@ describe("ng-add", () => {
             routing: false,
             style: "css",
             skipTests: false,
+            standalone: false,
             skipPackageJson: false,
         };
         appTree = await runner
