@@ -8,7 +8,7 @@
         "examples": {
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
+                    "builder": "@angular-devkit/build-angular:application",
                     "configurations": {
                         "e2e": {
                             "aot": true,
@@ -18,7 +18,6 @@
                                     "type": "anyComponentStyle"
                                 }
                             ],
-                            "buildOptimizer": true,
                             "extractLicenses": true,
                             "fileReplacements": [
                                 {
@@ -29,8 +28,7 @@
                             "namedChunks": false,
                             "optimization": true,
                             "outputHashing": "all",
-                            "sourceMap": false,
-                            "vendorChunk": false
+                            "sourceMap": false
                         },
                         "production": {
                             "aot": true,
@@ -40,27 +38,28 @@
                                     "type": "anyComponentStyle"
                                 }
                             ],
-                            "buildOptimizer": true,
                             "extractLicenses": true,
                             "namedChunks": false,
                             "optimization": true,
                             "outputHashing": "all",
-                            "sourceMap": false,
-                            "vendorChunk": false
+                            "sourceMap": false
                         }
                     },
                     "defaultConfiguration": "",
                     "options": {
-                        "aot": false,
+                        "loader": {
+                            ".html": "text",
+                            ".ts": "text",
+                            ".less": "text"
+                        },
                         "allowedCommonJsDependencies": ["lodash"],
-                        "buildOptimizer": false,
                         "extractLicenses": false,
                         "index": "./examples/src/index.html",
-                        "main": "./examples/src/index.ts",
+                        "browser": "./examples/src/index.ts",
                         "namedChunks": true,
                         "optimization": false,
                         "outputPath": "./sdk/api-docs-ng2/examples",
-                        "polyfills": "./examples/src/polyfills.ts",
+                        "polyfills": ["./examples/src/polyfills.ts"],
                         "preserveSymlinks": true,
                         "scripts": [],
                         "sourceMap": true,
@@ -68,11 +67,10 @@
                             "includePaths": ["node_modules"]
                         },
                         "styles": [
-                            "./examples/src/styles.less",
-                            "./src/styles.less"
+                            "./src/styles.less",
+                            "./examples/src/styles.less"
                         ],
-                        "tsConfig": "./examples/src/tsconfig.json",
-                        "vendorChunk": true
+                        "tsConfig": "./examples/src/tsconfig.json"
                     }
                 },
                 "lint": {
