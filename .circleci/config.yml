@@ -23,6 +23,8 @@ executors:
         machine:
             image: ubuntu-2204:2022.10.2
         working_directory: ~/nova
+        environment:
+          USE_CACHE: "false"
 
 jobs:
     prepare:
@@ -108,7 +110,7 @@ jobs:
                           echo "Skipping yarn assemble as it was restored from cache"
                           # this 'package-cached' file indicates that the dist folder was restored from cache
                           # we use it later to skip certain steps
-                          # touch package-cached
+                          touch package-cached
                       else
                           yarn run assemble
                       fi
@@ -148,11 +150,13 @@ jobs:
             - run:
                   name: Check git diff to see if builds should skip e2e
                   command: |
-                      if [ -f packages/bits/package-cached ]; then
+                      if [ -f packages/bits/package-cached  && [ "$USE_CACHE" == "true" ]; then
                           echo "This package was restored from cache so we're skipping e2e tests"
                           circleci-agent step halt
                       fi
                       echo "not skiped"
+            - restore_cache:
+                key: bits-dist-{{ checksum "packages/bits/git-commit" }}
             - reuse-cache
             - run:
                   name: Start Selenium docker image
@@ -177,10 +181,12 @@ jobs:
                   name: Check git diff to see if builds should skip e2e
                   working_directory: ~/nova/packages/bits
                   command: |
-                      if [ -f $PROJECT_DIR/package-cached ]; then
+                      if [ -f $PROJECT_DIR/package-cached && [ "$USE_CACHE" == "true" ]; then
                           echo "This package was restored from cache so we're skipping a11y tests"
                           circleci step halt
                       fi
+            - restore_cache:
+                key: bits-dist-{{ checksum "packages/bits/git-commit" }}
             - reuse-cache
             - run:
                   name: Start Selenium docker image
@@ -205,13 +211,13 @@ jobs:
                   name: Check git diff to see if builds should skip e2e
                   working_directory: ~/nova/packages/bits
                   command: |
-                      if [ -f $PROJECT_DIR/package-cached ]; then
+                      if [ -f $PROJECT_DIR/package-cached && [ "$USE_CACHE" == "true" ]; then
                           echo "This package was restored from cache so we're skipping visual tests"
                           circleci step halt
                       fi
             - restore_cache:
-                  working_directory: ~/nova
-                  key: deps-{{ checksum "yarn.lock" }}
+                key: bits-dist-{{ checksum "packages/bits/git-commit" }}
+            - reuse-cache
             - run:
                   name: Start Selenium docker image
                   command: docker-compose up -d --build selenium
@@ -299,7 +305,7 @@ jobs:
                       if [ -d "dist" ];
                       then
                           echo "skipping yarn assemble as it was restored from cache"
-                          # touch package-cached
+                          touch package-cached
                       else
                           yarn run assemble
                       fi
@@ -343,7 +349,7 @@ jobs:
                   name: Check git diff to see if builds should skip e2e
                   working_directory: ~/nova/packages/charts
                   command: |
-                      if [ -f $PROJECT_DIR/package-cached ]; then
+                      if [ -f $PROJECT_DIR/package-cached && [ "$USE_CACHE" == "true" ]; then
                           echo "This package was restored from cache so we're skipping visual tests"
                           circleci step halt
                       fi
@@ -371,7 +377,7 @@ jobs:
                   name: Check git diff to see if builds should skip e2e
                   working_directory: ~/nova/packages/charts
                   command: |
-                      if [ -f $PROJECT_DIR/package-cached ]; then
+                      if [ -f $PROJECT_DIR/package-cached && [ "$USE_CACHE" == "true" ]; then
                           echo "This package was restored from cache so we're skipping visual tests"
                           circleci step halt
                       fi
@@ -465,7 +471,7 @@ jobs:
                       if [ -d "dist" ];
                       then
                           echo "skipping yarn assemble as it was restored from cache"
-                          # touch package-cached
+                          touch package-cached
                       else
                           yarn run assemble
                       fi
