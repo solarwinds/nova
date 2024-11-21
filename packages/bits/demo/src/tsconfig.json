@@ -5,7 +5,8 @@
         "paths": {
             "@nova-ui/bits": ["../../src/public_api.ts"]
         },
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "target": "ES2022"
     },
     "resolveJsonModule": true,
     "esModuleInterop": true,
