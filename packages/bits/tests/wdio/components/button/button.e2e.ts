@@ -23,9 +23,6 @@
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { ButtonAtom } from "../public_api";
-import { browser, $ } from "@wdio/globals"
-
-import {getHarness} from "@badisi/wdio-harness";
 
 describe("USERCONTROL Button", () => {
     let primaryCompactBtn: ButtonAtom;

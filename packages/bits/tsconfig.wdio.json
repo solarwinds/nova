@@ -28,7 +28,7 @@
         "noFallthroughCasesInSwitch": true
     },
     "include": [
-        "test",
+        "tests/wdio",
         "./wdio.conf.ts"
     ],
     "extends": "./tsconfig.json"
