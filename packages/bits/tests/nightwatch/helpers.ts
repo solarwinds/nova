@@ -22,11 +22,11 @@ import * as fs from "fs";
 import * as path from "path";
 import { performance } from "perf_hooks";
 
-import { browser, by, ProtractorBrowser } from "protractor";
-import { WebElementPromise } from "selenium-webdriver";
+// import { browser, by, ProtractorBrowser } from "protractor";
+// import { WebElementPromise } from "selenium-webdriver";
 
 import { Atom, IAtomClass } from "./atom";
-import { Camera } from "./virtual-camera/Camera";
+// import { Camera } from "./virtual-camera/Camera";
 
 export enum Animations {
     ALL,
@@ -64,7 +64,7 @@ export function getCurrentBranchName(
 }
 
 export async function assertA11y<T extends Atom>(
-    browser: ProtractorBrowser,
+    browser: any,
     atomClassOrSelector: IAtomClass<T> | string,
     disabledRules?: string[]
 ): Promise<void> {
@@ -88,164 +88,164 @@ export class Helpers {
         if (pageName) {
             url += "#/" + pageName;
         }
-        await browser.angularAppRoot("app");
-        await browser.get(url);
-        browser.clearMockModules();
+        // await browser.angularAppRoot("app");
+        await browser.url(url);
+        // browser.clearMockModules();
     }
 
-    static prepareCamera(testName: string, suiteName?: string): Camera {
-        return new Camera().loadFilm(browser, testName, suiteName);
-    }
-
-    public static getElementByXpath(elementXpath: string): WebElementPromise {
-        return browser.driver.findElement(by.xpath(elementXpath));
-    }
-
-    public static getElementByCSS(elementCSS: string): WebElementPromise {
-        return browser.driver.findElement(by.css(elementCSS));
-    }
-
-    public static async setCustomWidth(size: string, id: string): Promise<{}> {
-        return browser.executeScript(
-            `document.getElementById("${id}").style.width = "${size}"`
-        );
-    }
-
-    public static async browserZoom(percent: number): Promise<unknown> {
-        return browser.executeScript(`document.body.style.zoom='${percent}%'`);
-    }
-
-    public static async pressKey(
-        key: string,
-        times: number = 1
-    ): Promise<void> {
-        while (times > 0) {
-            await browser.actions().sendKeys(key).perform();
-            times--;
-        }
-    }
-
-    public static async clickOnEmptySpace(
-        x: number = 0,
-        y: number = 0
-    ): Promise<void> {
-        return browser.executeScript(
-            "document.elementFromPoint(arguments[0],arguments[1]).click()",
-            x,
-            y
-        );
-    }
-
-    static async switchDarkTheme(mode: "on" | "off"): Promise<void> {
-        const htmlClassList: string = `document.getElementsByTagName("html")[0].classList`;
-        const script =
-            mode === "on"
-                ? `${htmlClassList}.add("dark-nova-theme")`
-                : `${htmlClassList}.remove("dark-nova-theme")`;
-        await browser.executeScript(script);
-    }
-
-    /**
-     * TODO: make this method configurable, so that we would be able to partly disable
-     * or enable the animations:
-     *
-     * https://jira.solarwinds.com/browse/NUI-2034
-     */
-    static async disableCSSAnimations(type: Animations): Promise<{}> {
-        let disableTransitions =
-            "-o-transition-property: none !important;" +
-            "-moz-transition-property: none !important;" +
-            "-ms-transition-property: none !important;" +
-            "-webkit-transition-property: none !important;" +
-            "transition-property: none !important;";
-
-        let disableTransforms =
-            "-o-transform: none !important;" +
-            "-moz-transform: none !important;" +
-            "-ms-transform: none !important;" +
-            "-webkit-transform: none !important;" +
-            "transform: none !important;";
-
-        let disableAnimations =
-            "-webkit-animation: none !important;" +
-            "-moz-animation: none !important;" +
-            "-o-animation: none !important;" +
-            "-ms-animation: none !important;" +
-            "animation: none !important;";
-
-        switch (type) {
-            case Animations.ALL:
-                break;
-            case Animations.TRANSITIONS:
-                disableTransforms = "";
-                disableAnimations = "";
-                break;
-            case Animations.TRANSFORMS:
-                disableAnimations = "";
-                disableTransitions = "";
-                break;
-            case Animations.ANIMATIONS:
-                disableTransforms = "";
-                disableTransitions = "";
-                break;
-            case Animations.TRANSFORMS_AND_ANIMATIONS:
-                disableTransitions = "";
-                break;
-            case Animations.TRANSITIONS_AND_ANIMATIONS:
-                disableTransforms = "";
-                break;
-            case Animations.TRANSITIONS_AND_TRANSFORMS:
-                disableAnimations = "";
-                break;
-        }
-
-        const css =
-            "*, *:before, *:after {" +
-            disableTransitions +
-            disableTransforms +
-            disableAnimations +
-            "}";
-
-        return browser.executeScript(`
-            var head = document.head || document.getElementsByTagName("head")[0];
-                            var style = document.createElement("style");
-                            style.type = "text/css";
-                            style.appendChild(document.createTextNode("${css}"));
-            head.appendChild(style);
-        `);
-    }
-
-    static async saveScreenShot(filename: string): Promise<void> {
-        return browser.takeScreenshot().then((data) => {
-            const stream = fs.createWriteStream(filename);
-            stream.write(Buffer.from(data, "base64"));
-            stream.end();
-        });
-    }
-
-    static async setLocation(url: string): Promise<void> {
-        return browser.executeScript(
-            (pUrl: string) => (window.location.href = `/#/${pUrl}`),
-            url
-        );
-    }
-
-    static async delayPromise(timeout: number): Promise<void> {
-        return new Promise<void>((resolve) => {
-            setTimeout(() => resolve(), timeout);
-        });
-    }
-
-    static async timed<T>(
-        fn: (() => Promise<T>) | (() => T),
-        name: string = fn.name
-    ): Promise<T> {
-        const start = performance.now();
-        try {
-            return await fn();
-        } finally {
-            const stop = performance.now();
-            console.log(`timed [${name}] took ${stop - start} ms`);
-        }
-    }
+    // static prepareCamera(testName: string, suiteName?: string): Camera {
+    //     return new Camera().loadFilm(browser, testName, suiteName);
+    // }
+    //
+    // public static getElementByXpath(elementXpath: string): WebElementPromise {
+    //     return browser.driver.findElement(by.xpath(elementXpath));
+    // }
+    //
+    // public static getElementByCSS(elementCSS: string): WebElementPromise {
+    //     return browser.driver.findElement(by.css(elementCSS));
+    // }
+    //
+    // public static async setCustomWidth(size: string, id: string): Promise<{}> {
+    //     return browser.executeScript(
+    //         `document.getElementById("${id}").style.width = "${size}"`
+    //     );
+    // }
+    //
+    // public static async browserZoom(percent: number): Promise<unknown> {
+    //     return browser.executeScript(`document.body.style.zoom='${percent}%'`);
+    // }
+    //
+    // public static async pressKey(
+    //     key: string,
+    //     times: number = 1
+    // ): Promise<void> {
+    //     while (times > 0) {
+    //         await browser.actions().sendKeys(key).perform();
+    //         times--;
+    //     }
+    // }
+    //
+    // public static async clickOnEmptySpace(
+    //     x: number = 0,
+    //     y: number = 0
+    // ): Promise<void> {
+    //     return browser.executeScript(
+    //         "document.elementFromPoint(arguments[0],arguments[1]).click()",
+    //         x,
+    //         y
+    //     );
+    // }
+    //
+    // static async switchDarkTheme(mode: "on" | "off"): Promise<void> {
+    //     const htmlClassList: string = `document.getElementsByTagName("html")[0].classList`;
+    //     const script =
+    //         mode === "on"
+    //             ? `${htmlClassList}.add("dark-nova-theme")`
+    //             : `${htmlClassList}.remove("dark-nova-theme")`;
+    //     await browser.executeScript(script);
+    // }
+    //
+    // /**
+    //  * TODO: make this method configurable, so that we would be able to partly disable
+    //  * or enable the animations:
+    //  *
+    //  * https://jira.solarwinds.com/browse/NUI-2034
+    //  */
+    // static async disableCSSAnimations(type: Animations): Promise<{}> {
+    //     let disableTransitions =
+    //         "-o-transition-property: none !important;" +
+    //         "-moz-transition-property: none !important;" +
+    //         "-ms-transition-property: none !important;" +
+    //         "-webkit-transition-property: none !important;" +
+    //         "transition-property: none !important;";
+    //
+    //     let disableTransforms =
+    //         "-o-transform: none !important;" +
+    //         "-moz-transform: none !important;" +
+    //         "-ms-transform: none !important;" +
+    //         "-webkit-transform: none !important;" +
+    //         "transform: none !important;";
+    //
+    //     let disableAnimations =
+    //         "-webkit-animation: none !important;" +
+    //         "-moz-animation: none !important;" +
+    //         "-o-animation: none !important;" +
+    //         "-ms-animation: none !important;" +
+    //         "animation: none !important;";
+    //
+    //     switch (type) {
+    //         case Animations.ALL:
+    //             break;
+    //         case Animations.TRANSITIONS:
+    //             disableTransforms = "";
+    //             disableAnimations = "";
+    //             break;
+    //         case Animations.TRANSFORMS:
+    //             disableAnimations = "";
+    //             disableTransitions = "";
+    //             break;
+    //         case Animations.ANIMATIONS:
+    //             disableTransforms = "";
+    //             disableTransitions = "";
+    //             break;
+    //         case Animations.TRANSFORMS_AND_ANIMATIONS:
+    //             disableTransitions = "";
+    //             break;
+    //         case Animations.TRANSITIONS_AND_ANIMATIONS:
+    //             disableTransforms = "";
+    //             break;
+    //         case Animations.TRANSITIONS_AND_TRANSFORMS:
+    //             disableAnimations = "";
+    //             break;
+    //     }
+    //
+    //     const css =
+    //         "*, *:before, *:after {" +
+    //         disableTransitions +
+    //         disableTransforms +
+    //         disableAnimations +
+    //         "}";
+    //
+    //     return browser.executeScript(`
+    //         var head = document.head || document.getElementsByTagName("head")[0];
+    //                         var style = document.createElement("style");
+    //                         style.type = "text/css";
+    //                         style.appendChild(document.createTextNode("${css}"));
+    //         head.appendChild(style);
+    //     `);
+    // }
+    //
+    // static async saveScreenShot(filename: string): Promise<void> {
+    //     return browser.takeScreenshot().then((data) => {
+    //         const stream = fs.createWriteStream(filename);
+    //         stream.write(Buffer.from(data, "base64"));
+    //         stream.end();
+    //     });
+    // }
+    //
+    // static async setLocation(url: string): Promise<void> {
+    //     return browser.executeScript(
+    //         (pUrl: string) => (window.location.href = `/#/${pUrl}`),
+    //         url
+    //     );
+    // }
+    //
+    // static async delayPromise(timeout: number): Promise<void> {
+    //     return new Promise<void>((resolve) => {
+    //         setTimeout(() => resolve(), timeout);
+    //     });
+    // }
+    //
+    // static async timed<T>(
+    //     fn: (() => Promise<T>) | (() => T),
+    //     name: string = fn.name
+    // ): Promise<T> {
+    //     const start = performance.now();
+    //     try {
+    //         return await fn();
+    //     } finally {
+    //         const stop = performance.now();
+    //         console.log(`timed [${name}] took ${stop - start} ms`);
+    //     }
+    // }
 }

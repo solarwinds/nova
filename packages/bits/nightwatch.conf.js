@@ -36,7 +36,6 @@ module.exports = {
   test_workers: {
     enabled: true
   },
-
   test_settings: {
     default: {
       disable_error_log: false,

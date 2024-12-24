@@ -128,7 +128,7 @@
     "xliff:demo": "ng extract-i18n demo && ngx-extractor -i \"src/**/*.ts\" \"demo/src/**/*.ts\" -f xlf -o .tmp-i18n/messages.xlf && xliffmerge --profile xliffmerge-examples.json",
     "xliff:lib": "ng extract-i18n lib && ngx-extractor -i \"src/**/*.ts\" -f xlf -o .tmp-i18n/messages.xlf && xliffmerge --profile xliffmerge.json",
     "wdio": "wdio wdio.conf.ts --suite e2e --spec ./tests/wdio/components/button/button.e2e.ts",
-    "nightwatch": "nightwatch ./tests/nightwatch"
+    "nightwatch": "nightwatch ./tests/nightwatch/components"
   },
   "typings": "public_api.d.ts",
   "version": "16.0.2-1",

@@ -19,37 +19,37 @@
 //  THE SOFTWARE.
 
 export interface IAtomClass<T extends Atom> {
-    new (element: ElementFinder): T;
+    new (element: any): T;
     CSS_CLASS?: string;
     CSS_SELECTOR?: string;
     findIn<M extends Atom>(
         atomClass: IAtomClass<M>,
-        parentElement: ElementFinder,
+        parentElement: any,
         index?: number
     ): M;
 }
 
-const byCssWithRoot = (selector: string): By => {
-    if (!Object.hasOwnProperty.call(by, "cssWithRoot")) {
-        by.addLocator(
-            "cssWithRoot",
-            // This function is executed inside browser, needs to be inline
-            (selector: string, rootElement: HTMLElement) => {
-                if (!rootElement) {
-                    rootElement = window.document.body;
-                }
-                if (!rootElement) {
-                    return;
-                }
-                if (rootElement.matches(selector)) {
-                    return rootElement;
-                }
-                return rootElement.querySelectorAll(selector);
-            }
-        );
-    }
-    return (by as any).cssWithRoot(selector);
-};
+// const byCssWithRoot = (selector: string): By => {
+//     if (!Object.hasOwnProperty.call(by, "cssWithRoot")) {
+//         by.addLocator(
+//             "cssWithRoot",
+//             // This function is executed inside browser, needs to be inline
+//             (selector: string, rootElement: HTMLElement) => {
+//                 if (!rootElement) {
+//                     rootElement = window.document.body;
+//                 }
+//                 if (!rootElement) {
+//                     return;
+//                 }
+//                 if (rootElement.matches(selector)) {
+//                     return rootElement;
+//                 }
+//                 return rootElement.querySelectorAll(selector);
+//             }
+//         );
+//     }
+//     return (by as any).cssWithRoot(selector);
+// };
 
 export class Atom {
     /**
@@ -76,136 +76,136 @@ export class Atom {
         );
     }
 
-    public static getLocator<T extends Atom>(atomClass: IAtomClass<T>): By {
-        return byCssWithRoot(Atom.getSelector(atomClass));
-    }
-
-    /**
-     * Finds given component inside provided element
-     * - Will match provided element directly if it's a component
-     * - Will provide a warning if more child components are found
-     * - Uses static CSS_CLASS property in component's class
-     */
-    public static findIn<T extends Atom>(
-        atomClass: IAtomClass<T>,
-        parentElement: ElementFinder,
-        index?: number
-    ): T {
-        if (atomClass.findIn !== Atom.findIn) {
-            return atomClass.findIn(atomClass, parentElement, index);
-        }
-        const locator = Atom.getLocator(atomClass);
-        const create = (root: ElementFinder) => new atomClass(root);
-        if (index !== undefined) {
-            if (!parentElement) {
-                return create(element.all(locator).get(index));
-            }
-            return create(parentElement.all(locator).get(index));
-        }
-        if (!parentElement) {
-            return create(element(locator));
-        }
-        return create(parentElement.element(locator));
-    }
-
-    public static async findCount<T extends Atom>(
-        atomClass: IAtomClass<T>,
-        parentElement?: ElementFinder
-    ): Promise<number> {
-        const locator = Atom.getLocator(atomClass);
-        return await (parentElement ?? element).all(locator).count();
-    }
-
-    public static async getClasses(el: ElementFinder): Promise<string[]> {
-        return (await el.getAttribute("class"))
-            .split(/\s+/)
-            .filter((name) => !!name);
-    }
-
-    public static async hasClass(
-        el: ElementFinder,
-        className: string
-    ): Promise<boolean> {
-        const classes = await Atom.getClasses(el);
-        return classes.includes(className);
-    }
-
-    public static async hasAnyClass(
-        el: ElementFinder,
-        classNamesToSearch: string[]
-    ): Promise<boolean> {
-        const classes = await Atom.getClasses(el);
-        return classes.some((name) => classNamesToSearch.includes(name));
-    }
-
-    public static async wait<T>(
-        callback: () => Promise<T>,
-        timeout = 5000
-    ): Promise<T> {
-        return await browser.wait(callback, timeout);
-    }
-
-    private element: ElementFinder;
-
-    constructor(element: ElementFinder) {
-        this.element = element;
-    }
-
-    public async isDisabled(): Promise<boolean> {
-        return !(await this.element.isEnabled());
-    }
-
-    public async isDisplayed(): Promise<boolean> {
-        return this.element.isDisplayed();
-    }
-
-    public async isPresent(): Promise<boolean> {
-        return this.element.isPresent();
-    }
-
-    public async hasClass(className: string): Promise<boolean> {
-        return Atom.hasClass(this.element, className);
-    }
-
-    public getElement(): ElementFinder {
-        return this.element;
-    }
-
-    public async isChildElementPresent(locator: any): Promise<boolean> {
-        return await this.element.isElementPresent(locator);
-    }
-
-    /**
-     * If no arguments are provided, will hover over center of the current element.
-     * If only an element argument is provided, will hover over center of provided element.
-     * If null element argument and location is provided, will offset from the top left corner of current element.
-     * If an element and location is provided, will offset from top left of provided element.
-     * @param {ElementFinder} [el] - accepts an element to mouse over center
-     * @param {ILocation} [location] - offsets the mouse from top left of element
-     */
-    public async hover(
-        el?: ElementFinder,
-        location?: ILocation
-    ): Promise<void> {
-        return browser
-            .actions()
-            .mouseMove(el ?? this.getElement(), location)
-            .perform();
-    }
-
-    public readonly scrollTo = async (
-        options?: ScrollIntoViewOptions
-    ): Promise<void> =>
-        browser.executeScript(
-            "arguments[0].scrollIntoView(arguments[1])",
-            this.getElement(),
-            options || null
-        );
-
-    public async wait<T>(
-        callback: () => Promise<T>,
-        timeout = 5000
-    ): Promise<T> {
-        return await Atom.wait(callback, timeout);
-    }
+    // public static getLocator<T extends Atom>(atomClass: IAtomClass<T>): By {
+    //     return byCssWithRoot(Atom.getSelector(atomClass));
+    // }
+    //
+    // /**
+    //  * Finds given component inside provided element
+    //  * - Will match provided element directly if it's a component
+    //  * - Will provide a warning if more child components are found
+    //  * - Uses static CSS_CLASS property in component's class
+    //  */
+    // public static findIn<T extends Atom>(
+    //     atomClass: IAtomClass<T>,
+    //     parentElement: ElementFinder,
+    //     index?: number
+    // ): T {
+    //     if (atomClass.findIn !== Atom.findIn) {
+    //         return atomClass.findIn(atomClass, parentElement, index);
+    //     }
+    //     const locator = Atom.getLocator(atomClass);
+    //     const create = (root: ElementFinder) => new atomClass(root);
+    //     if (index !== undefined) {
+    //         if (!parentElement) {
+    //             return create(element.all(locator).get(index));
+    //         }
+    //         return create(parentElement.all(locator).get(index));
+    //     }
+    //     if (!parentElement) {
+    //         return create(element(locator));
+    //     }
+    //     return create(parentElement.element(locator));
+    // }
+    //
+    // public static async findCount<T extends Atom>(
+    //     atomClass: IAtomClass<T>,
+    //     parentElement?: ElementFinder
+    // ): Promise<number> {
+    //     const locator = Atom.getLocator(atomClass);
+    //     return await (parentElement ?? element).all(locator).count();
+    // }
+    //
+    // public static async getClasses(el: ElementFinder): Promise<string[]> {
+    //     return (await el.getAttribute("class"))
+    //         .split(/\s+/)
+    //         .filter((name) => !!name);
+    // }
+    //
+    // public static async hasClass(
+    //     el: ElementFinder,
+    //     className: string
+    // ): Promise<boolean> {
+    //     const classes = await Atom.getClasses(el);
+    //     return classes.includes(className);
+    // }
+    //
+    // public static async hasAnyClass(
+    //     el: ElementFinder,
+    //     classNamesToSearch: string[]
+    // ): Promise<boolean> {
+    //     const classes = await Atom.getClasses(el);
+    //     return classes.some((name) => classNamesToSearch.includes(name));
+    // }
+    //
+    // public static async wait<T>(
+    //     callback: () => Promise<T>,
+    //     timeout = 5000
+    // ): Promise<T> {
+    //     return await browser.wait(callback, timeout);
+    // }
+    //
+    // private element: ElementFinder;
+    //
+    // constructor(element: ElementFinder) {
+    //     this.element = element;
+    // }
+    //
+    // public async isDisabled(): Promise<boolean> {
+    //     return !(await this.element.isEnabled());
+    // }
+    //
+    // public async isDisplayed(): Promise<boolean> {
+    //     return this.element.isDisplayed();
+    // }
+    //
+    // public async isPresent(): Promise<boolean> {
+    //     return this.element.isPresent();
+    // }
+    //
+    // public async hasClass(className: string): Promise<boolean> {
+    //     return Atom.hasClass(this.element, className);
+    // }
+    //
+    // public getElement(): ElementFinder {
+    //     return this.element;
+    // }
+    //
+    // public async isChildElementPresent(locator: any): Promise<boolean> {
+    //     return await this.element.isElementPresent(locator);
+    // }
+    //
+    // /**
+    //  * If no arguments are provided, will hover over center of the current element.
+    //  * If only an element argument is provided, will hover over center of provided element.
+    //  * If null element argument and location is provided, will offset from the top left corner of current element.
+    //  * If an element and location is provided, will offset from top left of provided element.
+    //  * @param {ElementFinder} [el] - accepts an element to mouse over center
+    //  * @param {ILocation} [location] - offsets the mouse from top left of element
+    //  */
+    // public async hover(
+    //     el?: ElementFinder,
+    //     location?: ILocation
+    // ): Promise<void> {
+    //     return browser
+    //         .actions()
+    //         .mouseMove(el ?? this.getElement(), location)
+    //         .perform();
+    // }
+    //
+    // public readonly scrollTo = async (
+    //     options?: ScrollIntoViewOptions
+    // ): Promise<void> =>
+    //     browser.executeScript(
+    //         "arguments[0].scrollIntoView(arguments[1])",
+    //         this.getElement(),
+    //         options || null
+    //     );
+    //
+    // public async wait<T>(
+    //     callback: () => Promise<T>,
+    //     timeout = 5000
+    // ): Promise<T> {
+    //     return await Atom.wait(callback, timeout);
+    // }
 }
