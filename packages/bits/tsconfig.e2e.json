@@ -8,6 +8,6 @@
         "target": "es6",
         "types": ["jasmine", "jasminewd2", "node", "selenium-webdriver"]
     },
-    "exclude": ["**/*.e2e.ts", "**/*.visual.ts"],
+    "exclude": ["./spec/**/*.e2e.ts", "./spec/**/*.visual.ts"],
     "extends": "./tsconfig.json"
 }

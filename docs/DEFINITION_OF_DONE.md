@@ -19,7 +19,7 @@
         -   [aria-label](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute)
     -   Security (where applicable)
 -   New behavior has been manually tested and verified
--   Changes tested in all [supported browsers](./docs/FAQ.md#what-browsers-are-supported-by-nova-ui)
+-   Changes tested in all [supported browsers](./FAQ.md#what-browsers-are-supported-by-nova-ui)
 -   Automation tests (visual / unit / e2e / atoms) have been created and are passing
     -   Strongly favor unit tests over e2e/visual
     -   Business logic (e.g. controllers, services, filters, etc) should be unit tested - goal for coverage is at least 80%.
