@@ -18,12 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-// import { Atom } from "../../atom";
+import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
-// import { ButtonAtom } from "./button.atom";
+import { ButtonAtom } from "../../atoms/button.atom";
 
 describe("USERCONTROL Button", () => {
-    // let primaryCompactBtn: ButtonAtom;
+    let primaryCompactBtn: ButtonAtom;
     // let primaryLargePlusIconBtn: ButtonAtom;
     // let primaryLargePlusIconDisabledBtn: ButtonAtom;
     // let primaryLargePlusIconBusyBtn: ButtonAtom;
@@ -34,12 +34,12 @@ describe("USERCONTROL Button", () => {
     // let upBtn: ButtonAtom;
     // let unlimitedWidthBtn: ButtonAtom;
 
-    beforeAll(async () => {
+    before(async () => {
         await Helpers.prepareBrowser("button/button-test");
-        // primaryCompactBtn = Atom.find(
-        //     ButtonAtom,
-        //     "nui-demo-primary-compact-btn"
-        // );
+        primaryCompactBtn = Atom.find(
+            ButtonAtom,
+            "nui-demo-primary-compact-btn"
+        );
         // primaryLargePlusIconBtn = Atom.find(
         //     ButtonAtom,
         //     "nui-demo-primary-large-plus-icon-btn"
@@ -60,10 +60,10 @@ describe("USERCONTROL Button", () => {
         // unlimitedWidthBtn = Atom.find(ButtonAtom, "nui-demo-long-text-btn");
     });
 
-    // it("should always have .nui-button class", async () => {
-    //     expect(await primaryCompactBtn.hasClass("nui-button")).toBe(true);
-    //     expect(await defaultLargeBtn.hasClass("nui-button")).toBe(true);
-    // });
+    it("should always have .nui-button class", async () => {
+        expect(await primaryCompactBtn.hasClass("nui-button")).toBe(true);
+        // expect(await defaultLargeBtn.hasClass("nui-button")).toBe(true);
+    });
 
     // it("should always have .btn class", async () => {
     //     expect(await primaryCompactBtn.hasClass("btn")).toBe(true);

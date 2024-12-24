@@ -84,7 +84,7 @@ export async function assertA11y<T extends Atom>(
 
 export class Helpers {
     static async prepareBrowser(pageName?: string): Promise<void> {
-        let url = "";
+        let url = "http://localhost:4200";
         if (pageName) {
             url += "#/" + pageName;
         }
