@@ -84,7 +84,7 @@
     "d3-color": "3.1.0"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "license": "Apache-2.0",
   "main": "index.js",
