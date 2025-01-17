@@ -22,7 +22,13 @@ import * as fs from "fs";
 import * as path from "path";
 import { performance } from "perf_hooks";
 
-import { browser, by, ProtractorBrowser } from "protractor";
+import {
+    browser,
+    by,
+    ElementFinder,
+    protractor,
+    ProtractorBrowser
+} from "protractor";
 import { WebElementPromise } from "selenium-webdriver";
 
 import { Atom, IAtomClass } from "./atom";
@@ -248,5 +254,12 @@ export class Helpers {
             const stop = performance.now();
             console.log(`timed [${name}] took ${stop - start} ms`);
         }
+    }
+
+    static async waitElementVisible(el: ElementFinder): Promise<void> {
+        await browser.wait(protractor.ExpectedConditions.visibilityOf(el), 5000, "Element is not visible");
+    }
+    static async waitElementToBeClickable(el: ElementFinder): Promise<void> {
+        await browser.wait(protractor.ExpectedConditions.elementToBeClickable(el), 5000, "Element is not visible");
     }
 }

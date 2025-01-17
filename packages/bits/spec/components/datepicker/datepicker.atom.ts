@@ -24,6 +24,7 @@ import { by, ElementFinder, Key, protractor } from "protractor";
 import { Atom } from "../../atom";
 import { OverlayAtom } from "../overlay/overlay.atom";
 import { TextboxAtom } from "../textbox/textbox.atom";
+import {Helpers} from "../../helpers";
 
 export class DatepickerAtom extends Atom {
     public static EXPECTED_FORMAT = "DD MMM YYYY";
@@ -142,8 +143,11 @@ export class DatepickerAtom extends Atom {
     /** @deprecated As of Nova v11, use 'toggle' method instead. Removal: NUI-5865 */
     public clickCalendarIcon = async (): Promise<void> => this.toggle();
 
-    public toggle = async (): Promise<void> =>
-        this.getElementByCss(".nui-datepicker__icon").click();
+    public toggle = async (): Promise<void> => {
+        const el = this.getElementByCss(".nui-datepicker__icon");
+        await Helpers.waitElementToBeClickable(el);
+        await el.click();
+    };
 
     public clickChangeModeButton = async (): Promise<void> =>
         this.getElementByCss(".change-mode-button").click();
