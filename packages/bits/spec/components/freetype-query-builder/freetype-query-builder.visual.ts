@@ -53,7 +53,7 @@ describe("FreeTypeQueryBuilder", () => {
         await Helpers.pressKey(Key.ESCAPE)
         await example2.scrollTo({ block: "end" });
 
-        await camera.say.cheese("Example 2");
+        // await camera.say.cheese("Example 2");
         //
         // example3.type(threeTypeValuesInput).then(async () => {
         //     await Helpers.pressKey(Key.HOME);

@@ -291,6 +291,7 @@ describe("USERCONTROL data-filter-service >", () => {
         });
 
         it("search should be applied only to table", async () => {
+            await isolatedTableSearch.waitElementVisible();
             await isolatedTableSearch.acceptInput("Issue 1");
 
             for (
