@@ -206,7 +206,7 @@ export class Atom {
     ): Promise<void> =>
         browser.executeScript(
             "arguments[0].scrollIntoView(arguments[1])",
-            this.getElement(),
+            this.getElement().getWebElement(),
             options || null
         );
 

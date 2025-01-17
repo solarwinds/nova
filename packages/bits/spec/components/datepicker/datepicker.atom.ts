@@ -85,8 +85,11 @@ export class DatepickerAtom extends Atom {
             .format(DatepickerAtom.EXPECTED_FORMAT);
     }
 
-    public getInputValue = async (): Promise<string> =>
-        this.getInput().getAttribute("value");
+    public getInputValue = async (): Promise<string> => {
+        const el = this.getInput();
+        await Helpers.waitElementVisible(el);
+        return el.getAttribute("value");
+    };
 
     public acceptText = async (text: string): Promise<void> =>
         this.getInput().sendKeys(text, protractor.Key.ENTER);
