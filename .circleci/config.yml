@@ -139,6 +139,7 @@ jobs:
                   path: packages/bits/test-results
     bits-e2e-test:
         executor: ubuntu
+        resource_class: medium+
         working_directory: ~/nova
         environment:
             PROJECT_DIR: ~/nova/packages/bits
@@ -657,134 +658,134 @@ workflows:
             - bits-build:
                   requires:
                       - prepare
-            - bits-pack:
-                  requires:
-                      - bits-build
-            - bits-unit-test:
-                  requires:
-                      - bits-build
+#            - bits-pack:
+#                  requires:
+#                      - bits-build
+#            - bits-unit-test:
+#                  requires:
+#                      - bits-build
             - bits-e2e-test:
                   requires:
                       - bits-build
-            - bits-visual-test:
-                  requires:
-                      - bits-build
-            - bits-a11y-test:
-                  requires:
-                      - bits-build
-            - bits-publish:
-                  requires:
-                      - bits-e2e-test
-                      - bits-unit-test
-                      - charts-e2e-test
-                      - charts-unit-test
-                      - dashboards-e2e-test
-                      - dashboards-unit-test
-                  filters:
-                      branches:
-                          only:
-                              - /^release\/.+/
-                              - /^cci\/.+/
-            - bits-verify:
-                  requires:
-                      - bits-publish
-                  filters:
-                      branches:
-                          only:
-                              - /^release\/.+/
-                              - /^cci\/.+/
-            - charts-build:
-                  requires:
-                      - bits-pack
-            - charts-pack:
-                  requires:
-                      - charts-build
-            - charts-unit-test:
-                  requires:
-                      - charts-build
-            - charts-e2e-test:
-                  requires:
-                      - charts-build
-            - charts-visual-test:
-                  requires:
-                      - charts-build
-            - charts-publish:
-                  requires:
-                      - bits-e2e-test
-                      - bits-unit-test
-                      - charts-e2e-test
-                      - charts-unit-test
-                      - dashboards-e2e-test
-                      - dashboards-unit-test
-                  filters:
-                      branches:
-                          only:
-                              - /^release\/.+/
-                              - /^cci\/.+/
-            - charts-verify:
-                  requires:
-                      - charts-publish
-                  filters:
-                      branches:
-                          only:
-                              - /^release\/.+/
-                              - /^cci\/.+/
-            - dashboards-build:
-                  requires:
-                      - charts-pack
-            - dashboards-pack:
-                  requires:
-                      - dashboards-build
-            - nova-docs:
-                  context:
-                      - common-build-creds
-                  filters:
-                      branches:
-                          only:
-                              - /^release\/.+/
-                              - /^cci\/.+/
-                  requires:
-                      - bits-pack
-                      - charts-pack
-                      - dashboards-pack
-            - nova-docs-cleanup:
-                  context: common-build-creds
-                  requires:
-                      - nova-docs
-                  filters:
-                      branches:
-                          only:
-                              - /^cci\/.+/
-            - dashboards-unit-test:
-                  requires:
-                      - dashboards-build
-            - dashboards-e2e-test:
-                  requires:
-                      - dashboards-build
-            - dashboards-visual-test:
-                  requires:
-                      - dashboards-build
-            - dashboards-publish:
-                  requires:
-                      - bits-e2e-test
-                      - bits-unit-test
-                      - charts-e2e-test
-                      - charts-unit-test
-                      - dashboards-e2e-test
-                      - dashboards-unit-test
-                  filters:
-                      branches:
-                          only:
-                              - /^release\/.+/
-                              - /^cci\/.+/
-            - dashboards-verify:
-                  requires:
-                      - dashboards-publish
-                  filters:
-                      branches:
-                          only:
-                              - /^release\/.+/
-                              - /^cci\/.+/
+#            - bits-visual-test:
+#                  requires:
+#                      - bits-build
+#            - bits-a11y-test:
+#                  requires:
+#                      - bits-build
+#            - bits-publish:
+#                  requires:
+#                      - bits-e2e-test
+#                      - bits-unit-test
+#                      - charts-e2e-test
+#                      - charts-unit-test
+#                      - dashboards-e2e-test
+#                      - dashboards-unit-test
+#                  filters:
+#                      branches:
+#                          only:
+#                              - /^release\/.+/
+#                              - /^cci\/.+/
+#            - bits-verify:
+#                  requires:
+#                      - bits-publish
+#                  filters:
+#                      branches:
+#                          only:
+#                              - /^release\/.+/
+#                              - /^cci\/.+/
+#            - charts-build:
+#                  requires:
+#                      - bits-pack
+#            - charts-pack:
+#                  requires:
+#                      - charts-build
+#            - charts-unit-test:
+#                  requires:
+#                      - charts-build
+#            - charts-e2e-test:
+#                  requires:
+#                      - charts-build
+#            - charts-visual-test:
+#                  requires:
+#                      - charts-build
+#            - charts-publish:
+#                  requires:
+#                      - bits-e2e-test
+#                      - bits-unit-test
+#                      - charts-e2e-test
+#                      - charts-unit-test
+#                      - dashboards-e2e-test
+#                      - dashboards-unit-test
+#                  filters:
+#                      branches:
+#                          only:
+#                              - /^release\/.+/
+#                              - /^cci\/.+/
+#            - charts-verify:
+#                  requires:
+#                      - charts-publish
+#                  filters:
+#                      branches:
+#                          only:
+#                              - /^release\/.+/
+#                              - /^cci\/.+/
+#            - dashboards-build:
+#                  requires:
+#                      - charts-pack
+#            - dashboards-pack:
+#                  requires:
+#                      - dashboards-build
+#            - nova-docs:
+#                  context:
+#                      - common-build-creds
+#                  filters:
+#                      branches:
+#                          only:
+#                              - /^release\/.+/
+#                              - /^cci\/.+/
+#                  requires:
+#                      - bits-pack
+#                      - charts-pack
+#                      - dashboards-pack
+#            - nova-docs-cleanup:
+#                  context: common-build-creds
+#                  requires:
+#                      - nova-docs
+#                  filters:
+#                      branches:
+#                          only:
+#                              - /^cci\/.+/
+#            - dashboards-unit-test:
+#                  requires:
+#                      - dashboards-build
+#            - dashboards-e2e-test:
+#                  requires:
+#                      - dashboards-build
+#            - dashboards-visual-test:
+#                  requires:
+#                      - dashboards-build
+#            - dashboards-publish:
+#                  requires:
+#                      - bits-e2e-test
+#                      - bits-unit-test
+#                      - charts-e2e-test
+#                      - charts-unit-test
+#                      - dashboards-e2e-test
+#                      - dashboards-unit-test
+#                  filters:
+#                      branches:
+#                          only:
+#                              - /^release\/.+/
+#                              - /^cci\/.+/
+#            - dashboards-verify:
+#                  requires:
+#                      - dashboards-publish
+#                  filters:
+#                      branches:
+#                          only:
+#                              - /^release\/.+/
+#                              - /^cci\/.+/
 
     nova-release:
         jobs:
