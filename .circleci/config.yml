@@ -658,12 +658,12 @@ workflows:
             - bits-build:
                   requires:
                       - prepare
-#            - bits-pack:
-#                  requires:
-#                      - bits-build
-#            - bits-unit-test:
-#                  requires:
-#                      - bits-build
+            - bits-pack:
+                  requires:
+                      - bits-build
+            - bits-unit-test:
+                  requires:
+                      - bits-build
             - bits-e2e-test:
                   requires:
                       - bits-build
