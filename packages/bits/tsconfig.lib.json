@@ -12,7 +12,7 @@
         "forceConsistentCasingInFileNames": true,
         "module": "ES6",
         "strict": false,
-        "target": "ES6"
+        "target": "ES2022"
     },
     "extends": "./tsconfig.json",
     "files": ["./src/public_api.ts"],

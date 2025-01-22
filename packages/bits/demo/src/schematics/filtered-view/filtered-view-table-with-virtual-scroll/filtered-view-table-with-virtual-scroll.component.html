@@ -2,11 +2,11 @@
     <nui-panel>
         <div nuiPanelEmbeddedBody>
             <app-filter-groups-wrapper>
-                <app-filter-group
+                <app-filter-group-with-tvs
                     *ngFor="let filterGroupItem of filterGroupItems"
                     [filterGroupItem]="filterGroupItem"
                     (filterChanged)="applyFilters()"
-                ></app-filter-group>
+                ></app-filter-group-with-tvs>
             </app-filter-groups-wrapper>
         </div>
         <div class="ml-2">

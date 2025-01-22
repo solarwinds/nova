@@ -25,10 +25,10 @@ import { Component } from "@angular/core";
     templateUrl: "./kpi-docs.component.html",
 })
 export class KpiDocsComponent {
-    public kpiWidgetFileText =
-        require("!!raw-loader!../../../../../../src/lib/widget-types/kpi/kpi-widget.ts")
-            .default;
-    public kpiConfiguratorFileText =
-        require("!!raw-loader!../../../../../../src/lib/widget-types/kpi/kpi-configurator.ts")
-            .default;
+    public kpiWidgetFileText = ""
+        // require("!!raw-loader!../../../../../../src/lib/widget-types/kpi/kpi-widget.ts")
+        //     .default;
+    public kpiConfiguratorFileText = ""
+        // require("!!raw-loader!../../../../../../src/lib/widget-types/kpi/kpi-configurator.ts")
+        //     .default;
 }

@@ -38,6 +38,7 @@ describe("USERCONTROL Panel", () => {
         );
 
         it("Should toggle panel css class upon icon click ", async () => {
+            await panelCollapsible.waitElementVisible();
             await browser.wait(
                 async () => await panelCollapsible.isCollapsed(),
                 1000
@@ -80,6 +81,7 @@ describe("USERCONTROL Panel", () => {
         const panelHidden = Atom.find(PanelAtom, "nui-demo-hidden-panel");
 
         it("should hide/unhide the left pane when hideLeftPane is toggled", async () => {
+            await panelHidden.waitElementVisible();
             expect(await panelHidden.isPaneDisplayed("left")).toEqual(true);
             await panelHidden.closeSidePane();
             expect(await panelHidden.isPaneDisplayed("left")).toEqual(false);
@@ -90,6 +92,7 @@ describe("USERCONTROL Panel", () => {
         const panelFloating = Atom.find(PanelAtom, "nui-demo-floating-panel");
 
         it("should not change width of center pane while displaying floating panel", async () => {
+            await panelFloating.waitElementVisible();
             const oldCenterPaneSize: ISize =
                 await panelFloating.getCenterPaneElementSize();
             await panelFloating.hoverOnSidePane();
@@ -102,6 +105,10 @@ describe("USERCONTROL Panel", () => {
     describe("Resize", () => {
         const panelResize = Atom.find(PanelAtom, "nui-demo-resizable-panel");
         const gutter = Atom.find(ResizerAtom, "nui-demo-resizable-panel");
+        beforeEach(async () => {
+            await panelResize.waitElementVisible();
+            await gutter.waitElementVisible();
+        });
 
         it("should make side panel bigger", async () => {
             const origWinSize = await browser.manage().window().getSize();

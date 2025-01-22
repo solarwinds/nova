@@ -28,7 +28,7 @@ import { Platform } from "@angular/cdk/platform";
 import { CdkVirtualForOf, ViewportRuler } from "@angular/cdk/scrolling";
 import {
     _COALESCED_STYLE_SCHEDULER,
-    _CoalescedStyleScheduler,
+    _CoalescedStyleScheduler, CDK_TABLE,
     CDK_TABLE_TEMPLATE,
     CdkTable,
     RenderRow,
@@ -92,6 +92,8 @@ import { TableSelectionConfig, TableSelectionMode } from "./types";
             provide: _COALESCED_STYLE_SCHEDULER,
             useClass: _CoalescedStyleScheduler,
         },
+        { provide: CdkTable, useExisting: TableComponent },
+        { provide: CDK_TABLE, useExisting: TableComponent },
     ],
     styleUrls: ["./table.component.less"],
     encapsulation: ViewEncapsulation.None,

@@ -72,9 +72,9 @@ export class ExampleWrapperComponent implements OnInit {
         );
     }
 
-    public ngOnInit(): void {
+    public async ngOnInit(): Promise<void> {
         this.componentSources =
-            this.sourcesService.getSourcesByFilenamePrefix(
+            await this.sourcesService.getSourcesByFilenamePrefix(
                 this.filenamePrefix
             ) ?? [];
     }

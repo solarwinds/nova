@@ -25,12 +25,13 @@ import { Component } from "@angular/core";
     templateUrl: "./drilldown-widget-docs.component.html",
 })
 export class DrilldownDocsComponent {
-    public widgetFileText =
-        require("!!raw-loader!../../../../../../src/lib/widget-types/drilldown/drilldown-widget.ts")
-            .default;
-    public configuratorFileText =
-        require("!!raw-loader!../../../../../../src/lib/widget-types/drilldown/drilldown-configurator")
-            .default;
+    public widgetFileText = ""
+        // require("!!raw-loader!../../../../../../src/lib/widget-types/drilldown/drilldown-widget.ts")
+        //     .default;
+    public configuratorFileText = ""
+        // require("!!raw-loader!../../../../../../src/lib/widget-types/drilldown/drilldown-configurator")
+        //     .default;
+
     public predefinedGroping = `
 listWidget: {
     providers: {

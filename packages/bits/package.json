@@ -10,7 +10,7 @@
   "devDependencies": {
     "@apollo/client": "^3.7.2",
     "animate.css": "^4.1.1",
-    "apollo-angular": "^5.0.2",
+    "apollo-angular": "^6.0.0",
     "bootstrap-less-port": "^0.3.0",
     "graphql": "^16.6.0",
     "modernizr": "~3.12.0",
@@ -51,22 +51,19 @@
   "peerDependencies": {
     "highlight.js": "^11.6.0",
     "lodash": "^4.17.21",
-    "moment": "^2.29.4",
-    "moment-timezone": "^0.5.38"
+    "moment": "^2.30.1",
+    "moment-timezone": "^0.5.46"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/solarwinds/nova.git"
-  },
-  "resolutions": {
-    "moment": "2.29.4"
   },
   "schematics": "./sdk/schematics/collection.json",
   "scripts": {
     "a11y": "start-server-and-test serve-examples:prod 4200 a11y:base",
     "a11y:base": "yarn run e2e:base --suite a11y",
     "a11y:ci": "yarn run e2e:ci --suite a11y",
-    "assemble": "run-s lint build-lib:locl build-lib:prod compodoc-custom-theme build-examples:prod build-schematics",
+    "assemble": "run-s  build-lib:locl build-lib:prod compodoc-custom-theme build-examples:prod build-schematics",
     "assemble-dev": "run-s build-lib:prod",
     "build-examples": "ng build demo",
     "build-examples:prod": "yarn run build-examples -c production",
@@ -92,7 +89,7 @@
     "e2e": "start-server-and-test serve-examples:prod 4200 e2e:base",
     "e2e:base": "ng e2e",
     "e2e:ci": "ng e2e",
-    "e2e:debug": "yarn run pree2e:base && node --inspect-brk /node_modules/protractor/bin/protractor ./protractor-gui.conf.js",
+    "e2e:debug": "yarn run pree2e:base && node --inspect-brk ../../node_modules/protractor/bin/protractor ./protractor-gui.conf.js",
     "e2e:full": "yarn run e2e:base -c full",
     "e2e:gui": "yarn run e2e:base -c gui",
     "e2e:serve": "yarn run e2e:base -c serve",
@@ -105,6 +102,7 @@
     "percy:gui": "percy exec -- yarn run visual:gui",
     "prebuild-examples": "run-s compile-colors compile-demo-paths",
     "precompodoc": "node scripts/compile-global-less-styles.js",
+    "some": "webdriver-manager status",
     "pree2e:base": "webdriver-manager update --gecko=false --standalone=false",
     "prepublish": "modernizr -c ./src/vendor/modernizr.config.json -d /node_modules/modernizr/",
     "preserve-examples": "yarn run compile-colors",

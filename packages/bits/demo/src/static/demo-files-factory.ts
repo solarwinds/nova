@@ -2,18 +2,12 @@ import { DEMO_PATHS } from "../components/demo/demo.files";
 
 export const getDemoFiles = (
     filePrefix: string
-): { context: string; files: { content: string; path: string }[] } => ({
+): { context: string; files: Promise<{ path: string; content: string }>[] } => ({
     context: filePrefix,
     files: DEMO_PATHS.filter((filePath) => filePath.includes(filePrefix))
-        .map((filePath) => ({
-            content: require(`!!raw-loader!./../components/demo/${filePath}`)
-                .default,
+        .map(async (filePath) => ({
+            content: await import(`./../components/demo/${filePath}`).then(e=> e.default),
             path: filePath,
         }))
-        .concat({
-            content:
-                require(`./../../../package.json.raw!=!raw-loader!./../../../package.json`)
-                    .default,
-            path: "package.json",
-        }),
+        ,
 });

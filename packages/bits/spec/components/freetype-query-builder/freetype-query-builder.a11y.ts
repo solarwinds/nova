@@ -33,7 +33,7 @@ describe("a11y: freetype-query-builder", () => {
         await Helpers.disableCSSAnimations(Animations.ALL);
     });
 
-    fit("should verify a11y of freetype-query-builder", async () => {
+    it("should verify a11y of freetype-query-builder", async () => {
         await assertA11y(browser, FreetypeQueryBuilderAtom, rulesToDisable);
     });
 });

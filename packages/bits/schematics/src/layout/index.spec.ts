@@ -22,6 +22,10 @@ import {
     SchematicTestRunner,
     UnitTestTree,
 } from "@angular-devkit/schematics/testing";
+import {
+    AngularApplicationOptionsSchema,
+    SchematicsAngularApplicationStyle
+} from "@angular/cli/lib/config/workspace-schema";
 
 describe("layout", () => {
     const runner = new SchematicTestRunner(
@@ -35,16 +39,18 @@ describe("layout", () => {
         const workspaceOptions = {
             name: "workspace",
             newProjectRoot: "projects",
-            version: "6.0.0",
+            version: "17.0.0",
         };
 
-        const appOptions = {
+        const appOptions: AngularApplicationOptionsSchema = {
             name: "bar",
             inlineStyle: false,
             inlineTemplate: false,
             routing: false,
-            style: "less",
+            prefix: "test",
+            style: SchematicsAngularApplicationStyle.Less,
             skipTests: false,
+            standalone: false,
             skipPackageJson: false,
         };
         appTree = await runner

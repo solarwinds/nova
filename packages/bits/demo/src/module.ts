@@ -21,7 +21,7 @@
 /// <reference path="ref.d.ts"/>
 
 import { HttpClientModule } from "@angular/common/http";
-import { NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT } from "@angular/core";
+import { NgModule, TRANSLATIONS_FORMAT } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 
@@ -31,7 +31,6 @@ import { AppRoutingModule } from "./components/app/app-routing.module";
 import { AppComponent } from "./components/app/app.component";
 import {
     AnimationsModule,
-    translationLibrary,
 } from "./environments/environment";
 
 @NgModule({
@@ -47,7 +46,6 @@ import {
     declarations: [AppComponent],
     providers: [
         { provide: TRANSLATIONS_FORMAT, useValue: "xlf" },
-        { provide: TRANSLATIONS, useValue: translationLibrary },
     ],
     bootstrap: [AppComponent],
 })
