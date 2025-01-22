@@ -41,7 +41,7 @@ services:
             - TEAMCITY_PROJECT_NAME
             - MAJOR_PROJECT_NAME
             - MACHINE_URL
-            - E2E_BASE_URL=http://web/
+            - E2E_BASE_URL=http://127.0.0.1:8080/
             - SELENIUM_ADDRESS=http://selenium:4444/wd/hub
             - CI='true'
         ports:
@@ -55,6 +55,8 @@ services:
         image: "nginx"
         volumes:
             - "${PROJECT_DIR}/sdk/api-docs-ng2/examples/browser:/usr/share/nginx/html:ro"
+        ports:
+            - "8080:80"
     selenium:
         image: "selenium/standalone-chrome-debug:3.141.59"
         ports:
