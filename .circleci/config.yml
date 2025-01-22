@@ -171,6 +171,7 @@ jobs:
     bits-a11y-test:
         executor: ubuntu
         working_directory: ~/nova
+        resource_class: medium+
         environment:
             PROJECT_DIR: ~/nova/packages/bits
         steps:
@@ -200,6 +201,7 @@ jobs:
                   command: docker-compose down -v --rmi=local
     bits-visual-test:
         executor: ubuntu
+        resource_class: medium+
         working_directory: ~/nova
         environment:
             PROJECT_DIR: ~/nova/packages/bits
