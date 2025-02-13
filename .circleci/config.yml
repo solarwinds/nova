@@ -12,12 +12,12 @@ commands:
 executors:
     node:
         docker:
-            - image: cimg/node:18.20
+            - image: cimg/node:20.18.1
         working_directory: ~/nova
 
     node-browsers:
         docker:
-            - image: cimg/node:18.20
+            - image: cimg/node:20.18.1
         working_directory: ~/nova
     ubuntu:
         machine:
