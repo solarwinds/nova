@@ -58,7 +58,8 @@ export class WidgetClonerComponent
     public static lateLoadKey = "WidgetClonerComponent";
 
     @Input() formPizzagna?: IPizzagna;
-    @Input() cloneSelectionComponentType: Function;
+
+    cloneSelectionComponentType: Function;
 
     public form: FormGroup;
     public widgetTemplate: IWidget;
@@ -97,6 +98,15 @@ export class WidgetClonerComponent
             .subscribe(() => {
                 this.toggleBusy();
             });
+    }
+
+    public ngOnChanges(c: any){
+        console.log('on changes',c);
+    }
+
+    public setCloneComponent(c: Function){
+        console.log('set', c)
+        this.cloneSelectionComponentType = c;
     }
 
     public ngAfterViewInit(): void {

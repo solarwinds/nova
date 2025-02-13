@@ -52,6 +52,8 @@ import { IDashwizButtonsComponent } from "../types";
             >
                 <span i18n>Back</span>
             </button>
+            {{!isLastStepActive}}
+            {{canProceed}}
             <button
                 *ngIf="!isLastStepActive && canProceed"
                 class="ml-3 nui-dashwiz-buttons__next-button"
@@ -107,7 +109,9 @@ export class DashwizButtonsComponent implements IDashwizButtonsComponent {
     public onBack(): void {
         this.back.emit();
     }
-
+public ngOnChanges(c: any){
+    console.log('c',c)
+}
     public onFinish(): void {
         this.finish.emit();
     }
