@@ -43,8 +43,14 @@ export class WidgetClonerService {
                 attached: (
                     componentRef: ComponentRef<WidgetClonerComponent>
                 ) => {
-                    componentRef.instance.cloneSelectionComponentType =
-                        cloner.widgetSelectionComponentType;
+                    // here the inputs not set it have other inejction?
+
+                    setTimeout(()=>{
+                        console.log('atacked', cloner.widgetSelectionComponentType)
+                        componentRef.instance.setCloneComponent(cloner.widgetSelectionComponentType)
+                        console.log('atacked', componentRef.instance.cloneSelectionComponentType)
+                    });
+
                 },
             };
 
