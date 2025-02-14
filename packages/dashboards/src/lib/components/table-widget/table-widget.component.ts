@@ -396,8 +396,6 @@ export class TableWidgetComponent
             console.log(items);
         })
 
-        // bus now contains
-        // Next events to handle the components interaction
         // SELECTION - emits when ISelection changes contains dataTrackBy properties
         // CHANGE_SELECTION - listens the ISelection to chanage the selection model programatically
         // SELECTED_ITEMS - emits when items changes when selection changes or total elements changes
@@ -587,7 +585,6 @@ export class TableWidgetComponent
 
     public onSelectionChange(event: ISelection): void {
         this.selection = event;
-        console.log(this.selection)
         this.eventBus.getStream(SELECTED_ITEMS).next({payload: this.selectorService.getSelectedItems(this.selection, this.widgetData, (a, b) => this.dataTrackBy()(0, a) === b), id: this.componentId})
         this.eventBus.getStream(SELECTION).next({payload: this.selection});
     }
@@ -772,5 +769,14 @@ export class TableWidgetComponent
             internalBuffer *
             scrollBuffer
         );
+    }
+
+    public onPagerAction(): void {
+        this.selection = {
+            isAllPages: false,
+            include: [],
+            exclude: [],
+        }
+        this.paginatorAddon.applyFilters()
     }
 }
