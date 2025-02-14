@@ -1,5 +1,22 @@
 # Changelog
 
+## [16.0.3] 📅 2025-02-14
+### Added
+- `@nova-ui/dasbhard` | Added table widget bus events for select items
+
+### Bugfix
+- `@nova-ui/dashboards` | Bug fix widget table with paginator, search with selection
+
+## [16.0.2] 📅 2024-11-20
+
+### Angular 16 update
+
+### Bugfix
+- `@nova-ui/bits` | fix memory leaks
+- `@nova-ui/dashboards` | remove warnings in formatter for prod
+- `@nova-ui/dashboards` | Bug fix widget table scroll type
+- `@nova-ui/dashboards` | Bug fix wiget timeseries dark mode
+
 ## [15.0.10] 📅 2024-09-04
 
 ### Added

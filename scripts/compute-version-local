@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+#echo "yes"
 
 #Expected Behavior
 #main_version |	release_version |	Output
@@ -24,8 +25,8 @@ export LANG=C.UTF-8
 SOURCE_BRANCH=`cat .circleci/config.yml | grep -oP '^ *SOURCE_BRANCH: \K.+'`
 RELEASE_BRANCH=`cat .circleci/config.yml | grep -oP '^ *RELEASE_BRANCH: \K.+'`
 
-main_branch_version=$(get_branch_version $SOURCE_BRANCH)
-release_branch_version=$(get_branch_version $RELEASE_BRANCH)
+main_branch_version=$(get_branch_version origin/$SOURCE_BRANCH)
+release_branch_version=$(get_branch_version origin/$RELEASE_BRANCH)
 
 # Function to compute the next version
 compute_next_version() {
