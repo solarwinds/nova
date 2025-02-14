@@ -58,6 +58,7 @@ import {
     ISortedItem,
     LoggerService,
     PaginatorComponent,
+    SelectorService,
     SorterDirection,
     TableAlignmentOptions,
     TableComponent,
@@ -69,8 +70,10 @@ import {
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { TableFormatterRegistryService } from "../../services/table-formatter-registry.service";
 import {
+    CHANGE_SELECTION,
     INTERACTION,
     REFRESH,
+    SELECTED_ITEMS,
     SELECTION,
     WIDGET_READY,
     WIDGET_RESIZE,
@@ -83,6 +86,7 @@ import {
     WellKnownDataSourceFeatures,
 } from "../../types";
 import { ITableFormatterDefinition } from "../types";
+import { PaginatorFeatureAddonService } from "./addons/paginator-feature-addon.service";
 import { SearchFeatureAddonService } from "./addons/search-feature-addon.service";
 import { VirtualScrollFeatureAddonService } from "./addons/virtual-scroll-feature-addon.service";
 import {
@@ -90,7 +94,6 @@ import {
     ITableWidgetConfig,
     ScrollType,
 } from "./types";
-import { PaginatorFeatureAddonService } from "./addons/paginator-feature-addon.service";
 
 /**
  * @ignore
@@ -125,23 +128,7 @@ export class TableWidgetComponent
     @Input() public indentFromTop: number = 70;
     @Input() public sortable: boolean = true;
     @Input() public delayedMousePresenceDetectionEnabled: boolean = true;
-
-    @Input()
-    public set range(value: number) {
-        this._range = value;
-    }
-
-    public get range(): number {
-        return this.getTableScrollRange();
-    }
-
-    public get headerTooltipsEnabled(): boolean {
-        // Note: If tooltip state is not provided treat is as true;
-        return this.configuration.headerTooltipsEnabled ?? true;
-    }
-
     @Input() @HostBinding("class") public elementClass: string;
-
     public tableData: any[] = [];
     public headers: string[];
     public sortedColumn: ISortedItem;
@@ -160,6 +147,54 @@ export class TableWidgetComponent
     public mousePresent$: BehaviorSubject<boolean> =
         new BehaviorSubject<boolean>(false);
     public rowHeight: number = 24;
+    public selection: ISelection = {
+        isAllPages: false,
+        include: [],
+        exclude: [],
+    };
+    @ViewChild("widgetTable") table: TableComponent<any>;
+    @ViewChild("paginator") paginator: PaginatorComponent;
+    @ViewChild(CdkVirtualScrollViewport)
+    vscrollViewport?: CdkVirtualScrollViewport;
+    @ViewChildren(TableRowComponent, { read: ElementRef })
+    tableRows: QueryList<ElementRef>;
+    private sortFilter: ISortedItem;
+    private totalPages: number = 0;
+    private lastPageFetched: number = 0;
+    public isBusy: boolean = this.lastPageFetched !== this.totalPages;
+    private sortableSet: Record<string, boolean> = {};
+    private formatters: {
+        version: string;
+        items: Record<string, ITableFormatterDefinition>;
+    };
+    private tableWidgetHeight: number;
+    private readonly defaultColumnAlignment: TableAlignmentOptions = "left";
+    private idle: boolean = false;
+
+    constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) public eventBus: EventBus<IEvent>,
+        @Optional() @Inject(DATA_SOURCE) public dataSource: IDataSource,
+        @Optional()
+        private widgetConfigurationService: WidgetConfigurationService,
+        public changeDetector: ChangeDetectorRef,
+        public pizzagnaService: PizzagnaService,
+        public viewportManager: VirtualViewportManager,
+        public zone: NgZone,
+        private el: ElementRef,
+        private logger: LoggerService,
+        private searchAddon: SearchFeatureAddonService,
+        public paginatorAddon: PaginatorFeatureAddonService,
+        public virtualScrollAddon: VirtualScrollFeatureAddonService,
+        private formattersRegistryService: TableFormatterRegistryService,
+        private selectorService: SelectorService
+    ) {}
+
+    public get headerTooltipsEnabled(): boolean {
+        // Note: If tooltip state is not provided treat is as true;
+        return this.configuration.headerTooltipsEnabled ?? true;
+    }
+
+    private _scrollBuffer: number = 0;
 
     public set scrollBuffer(value: number) {
         if (value > 100 || value < 0) {
@@ -170,29 +205,16 @@ export class TableWidgetComponent
         this._scrollBuffer = value;
     }
 
-    private _scrollBuffer: number = 0;
-    private sortFilter: ISortedItem;
-    private totalPages: number = 0;
-    private lastPageFetched: number = 0;
-    private sortableSet: Record<string, boolean> = {};
-    private formatters: {
-        version: string;
-        items: Record<string, ITableFormatterDefinition>;
-    };
-    private tableWidgetHeight: number;
     private _range: number;
 
-    private readonly defaultColumnAlignment: TableAlignmentOptions = "left";
+    public get range(): number {
+        return this.getTableScrollRange();
+    }
 
-    private idle: boolean = false;
-    public isBusy: boolean = this.lastPageFetched !== this.totalPages;
-
-    @ViewChild("widgetTable") table: TableComponent<any>;
-    @ViewChild("paginator") paginator: PaginatorComponent;
-    @ViewChild(CdkVirtualScrollViewport)
-    vscrollViewport?: CdkVirtualScrollViewport;
-    @ViewChildren(TableRowComponent, { read: ElementRef })
-    tableRows: QueryList<ElementRef>;
+    @Input()
+    public set range(value: number) {
+        this._range = value;
+    }
 
     public get interactive(): boolean {
         return (
@@ -213,22 +235,13 @@ export class TableWidgetComponent
         );
     }
 
-    constructor(
-        @Inject(PIZZAGNA_EVENT_BUS) public eventBus: EventBus<IEvent>,
-        @Optional() @Inject(DATA_SOURCE) public dataSource: IDataSource,
-        @Optional()
-        private widgetConfigurationService: WidgetConfigurationService,
-        public changeDetector: ChangeDetectorRef,
-        public pizzagnaService: PizzagnaService,
-        public viewportManager: VirtualViewportManager,
-        public zone: NgZone,
-        private el: ElementRef,
-        private logger: LoggerService,
-        private searchAddon: SearchFeatureAddonService,
-        public paginatorAddon: PaginatorFeatureAddonService,
-        public virtualScrollAddon: VirtualScrollFeatureAddonService,
-        private formattersRegistryService: TableFormatterRegistryService
-    ) {}
+    public get hasVirtualScroll(): boolean {
+        return this.scrollType === ScrollType.virtual;
+    }
+
+    public get hasPaginator(): boolean {
+        return this.scrollType === ScrollType.paginator;
+    }
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.dataFields) {
@@ -364,6 +377,19 @@ export class TableWidgetComponent
                 )
                 .subscribe();
         });
+
+        this.eventBus
+            .getStream(CHANGE_SELECTION)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(({ payload: selection }) => {
+                if (selection) {
+                    this.selection = selection;
+                } else {
+                    this.logger.warn(
+                        `widget CHANGE_SELECTION, ${this.componentId} has received the incorrect selection object`
+                    );
+                }
+            });
     }
 
     public ngOnDestroy(): void {
@@ -549,7 +575,18 @@ export class TableWidgetComponent
     }
 
     public onSelectionChange(event: ISelection): void {
-        this.eventBus.getStream(SELECTION).next({ payload: event });
+        this.selection = event;
+        this.eventBus
+            .getStream(SELECTED_ITEMS)
+            .next({
+                payload: this.selectorService.getSelectedItems(
+                    this.selection,
+                    this.widgetData,
+                    (a, b) => this.dataTrackBy()(0, a) === b
+                ),
+                id: this.componentId,
+            });
+        this.eventBus.getStream(SELECTION).next({ payload: this.selection });
     }
 
     public onInteraction(row: any, event: MouseEvent): void {
@@ -579,6 +616,11 @@ export class TableWidgetComponent
     public onSearchInputChanged(searchTerm: string): void {
         this.searchValue = searchTerm;
         this.searchTerm$.next("");
+        this.selection = {
+            include: [],
+            exclude: [],
+            isAllPages: false,
+        }
     }
 
     public getColumnAlignment(
@@ -616,14 +658,6 @@ export class TableWidgetComponent
             this.formatters.items[column.formatter.componentType]?.alignment ||
             this.defaultColumnAlignment
         );
-    }
-
-    public get hasVirtualScroll(): boolean {
-        return this.scrollType === ScrollType.virtual;
-    }
-
-    public get hasPaginator(): boolean {
-        return this.scrollType === ScrollType.paginator;
     }
 
     private setSortFilter() {
@@ -740,5 +774,14 @@ export class TableWidgetComponent
                 internalBuffer *
                 scrollBuffer
         );
+    }
+
+    public onPagerAction(): void {
+        this.selection = {
+            isAllPages: false,
+            include: [],
+            exclude: [],
+        };
+        this.paginatorAddon.applyFilters();
     }
 }

@@ -104,6 +104,8 @@ export const INTERACTION = new EventDefinition<IInteractionPayload<any>>(
     "INTERACTION"
 );
 export const SELECTION = new EventDefinition<ISelection>("SELECTION");
+export const CHANGE_SELECTION = new EventDefinition<ISelection>("CHANGE_SELECTION");
+export const SELECTED_ITEMS = new EventDefinition<any[]>("SELECTED_ITEMS");
 export const DATA_SOURCE_INVOKED = new EventDefinition<void>(
     "DATA_SOURCE_INVOKED"
 );

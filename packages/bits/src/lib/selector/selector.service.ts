@@ -149,13 +149,14 @@ export class SelectorService {
      * You may need to obtain the set of items that are selected given selection object and some set of items.
      * @param {ISelection} selection
      * @param {any[]} items
+     * @param comparator
      * @returns {any[]} Set of items
      */
-    public getSelectedItems(selection: ISelection, items: any[]): any[] {
+    public getSelectedItems(selection: ISelection, items: any[], comparator: (a: any, b: any) => boolean = _isEqual): any[] {
         if (selection.isAllPages) {
-            return _differenceWith(items, selection.exclude);
+            return _differenceWith(items, selection.exclude, comparator);
         } else {
-            return _intersectionWith(items, selection.include);
+            return _intersectionWith(items, selection.include, comparator);
         }
     }
 

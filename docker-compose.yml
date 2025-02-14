@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
     build:
-        image: cimg/node:18.20-browsers
+        image: cimg/node:20.18.1-browsers
         working_dir: /nova
         environment:
             - CI

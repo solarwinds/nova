@@ -44,6 +44,7 @@
                 nui-table
                 [reorderable]="configuration?.reorderable"
                 [sortable]="sortable"
+                [selection]="selection"
                 [selectionConfig]="configuration?.selectionConfiguration"
                 [totalItems]="totalItems"
                 [dataSource]="virtualScrollAddon.visibleItems"
@@ -112,6 +113,7 @@
                     let-row
                     [nuiRowDefColumns]="headers"
                     [cdkVirtualForOf]="tableData"
+                    [cdkVirtualForTemplateCacheSize]="10"
                     [cdkVirtualForTrackBy]="dataTrackBy"
                 >
                     <tr
@@ -136,11 +138,12 @@
         <nui-paginator
             #paginator
             id="nui-table-widget-paginator"
+            [appendToBody]="true"
             [page]="paginatorAddon.paginatorState.page"
             [pageSize]="paginatorAddon.paginatorState.pageSize"
             [pageSizeSet]="paginatorAddon.paginatorState.pageSizeSet"
             [total]="paginatorAddon.paginatorState.total"
-            (pagerAction)="paginatorAddon.applyFilters()"
+            (pagerAction)="onPagerAction()"
         >
         </nui-paginator>
     </footer>

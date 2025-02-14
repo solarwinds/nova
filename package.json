@@ -43,7 +43,7 @@
     "eslint": "8.57.1",
     "eslint-import-resolver-typescript": "3.6.3",
     "eslint-plugin-import": "2.31.0",
-    "eslint-plugin-jsdoc": "39.9.1",
+    "eslint-plugin-jsdoc": "50.6.1",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "highlight.js": "11.10.0",
     "jasmine-core": "4.0.1",
@@ -84,7 +84,7 @@
     "d3-color": "3.1.0"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "license": "Apache-2.0",
   "main": "index.js",
@@ -101,6 +101,7 @@
     "build-watch:bits": "yarn run in-bits build-lib:watch",
     "build-watch:charts": "yarn run in-charts build-lib:watch",
     "clean-docs-ci": "bash scripts/clean-docs",
+    "compute-version-local": "bash scripts/compute-version-local",
     "compute-version-ci": "bash scripts/compute-version",
     "deploy-docs-ci": "bash scripts/deploy-docs",
     "in-bits": "yarn run --cwd=packages/bits",
@@ -123,7 +124,7 @@
     "trigger-pipeline-build-ci": "bash scripts/trigger-pipeline-build",
     "verify-ci": "bash scripts/verify-published"
   },
-  "version": "16.0.2",
+  "version": "16.0.3",
   "workspaces": [
     "packages/*"
   ]
