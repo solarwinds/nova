@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {CdkVirtualScrollViewport} from "@angular/cdk/scrolling";
+import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
@@ -43,9 +43,9 @@ import get from "lodash/get";
 import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
 // eslint-disable-next-line import/no-deprecated
-import {BehaviorSubject, merge, Observable, of, Subject} from "rxjs";
+import { BehaviorSubject, merge, Observable, of, Subject } from "rxjs";
 // eslint-disable-next-line import/no-deprecated
-import {filter, map, take, takeUntil, tap} from "rxjs/operators";
+import { filter, map, take, takeUntil, tap } from "rxjs/operators";
 
 import {
     DEFAULT_INTERACTIVE_ELEMENTS,
@@ -57,7 +57,8 @@ import {
     ISelection,
     ISortedItem,
     LoggerService,
-    PaginatorComponent, SelectorService,
+    PaginatorComponent,
+    SelectorService,
     SorterDirection,
     TableAlignmentOptions,
     TableComponent,
@@ -66,35 +67,28 @@ import {
     VirtualViewportManager,
 } from "@nova-ui/bits";
 
-import {PizzagnaService} from "../../pizzagna/services/pizzagna.service";
-import {
-    TableFormatterRegistryService,
-} from "../../services/table-formatter-registry.service";
+import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
+import { TableFormatterRegistryService } from "../../services/table-formatter-registry.service";
 import {
     CHANGE_SELECTION,
     INTERACTION,
-    REFRESH, SELECTED_ITEMS,
+    REFRESH,
+    SELECTED_ITEMS,
     SELECTION,
     WIDGET_READY,
     WIDGET_RESIZE,
 } from "../../services/types";
-import {
-    WidgetConfigurationService,
-} from "../../services/widget-configuration.service";
+import { WidgetConfigurationService } from "../../services/widget-configuration.service";
 import {
     DATA_SOURCE,
     PIZZAGNA_EVENT_BUS,
     PizzagnaLayer,
     WellKnownDataSourceFeatures,
 } from "../../types";
-import {ITableFormatterDefinition} from "../types";
-import {
-    PaginatorFeatureAddonService,
-} from "./addons/paginator-feature-addon.service";
-import {SearchFeatureAddonService} from "./addons/search-feature-addon.service";
-import {
-    VirtualScrollFeatureAddonService,
-} from "./addons/virtual-scroll-feature-addon.service";
+import { ITableFormatterDefinition } from "../types";
+import { PaginatorFeatureAddonService } from "./addons/paginator-feature-addon.service";
+import { SearchFeatureAddonService } from "./addons/search-feature-addon.service";
+import { VirtualScrollFeatureAddonService } from "./addons/virtual-scroll-feature-addon.service";
 import {
     ITableWidgetColumnConfig,
     ITableWidgetConfig,
@@ -121,7 +115,8 @@ import {
     },
 })
 export class TableWidgetComponent
-    implements AfterViewInit, OnChanges, OnDestroy, OnInit {
+    implements AfterViewInit, OnChanges, OnDestroy, OnInit
+{
     static lateLoadKey = "TableWidgetComponent";
 
     @Input() public widgetData: any[];
@@ -161,7 +156,7 @@ export class TableWidgetComponent
     @ViewChild("paginator") paginator: PaginatorComponent;
     @ViewChild(CdkVirtualScrollViewport)
     vscrollViewport?: CdkVirtualScrollViewport;
-    @ViewChildren(TableRowComponent, {read: ElementRef})
+    @ViewChildren(TableRowComponent, { read: ElementRef })
     tableRows: QueryList<ElementRef>;
     private sortFilter: ISortedItem;
     private totalPages: number = 0;
@@ -192,8 +187,7 @@ export class TableWidgetComponent
         public virtualScrollAddon: VirtualScrollFeatureAddonService,
         private formattersRegistryService: TableFormatterRegistryService,
         private selectorService: SelectorService
-    ) {
-    }
+    ) {}
 
     public get headerTooltipsEnabled(): boolean {
         // Note: If tooltip state is not provided treat is as true;
@@ -384,14 +378,18 @@ export class TableWidgetComponent
                 .subscribe();
         });
 
-        this.eventBus.getStream(CHANGE_SELECTION).pipe(takeUntil(this.onDestroy$)).subscribe(({payload: selection}) => {
+        this.eventBus
+            .getStream(CHANGE_SELECTION)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(({ payload: selection }) => {
                 if (selection) {
                     this.selection = selection;
                 } else {
-                    this.logger.warn(`widget CHANGE_SELECTION, ${this.componentId} has received the incorrect selection object`)
+                    this.logger.warn(
+                        `widget CHANGE_SELECTION, ${this.componentId} has received the incorrect selection object`
+                    );
                 }
-            }
-        );
+            });
     }
 
     public ngOnDestroy(): void {
@@ -417,7 +415,7 @@ export class TableWidgetComponent
         const dataCondition = this.tableData?.length > 0;
 
         return this.isSearchEnabled ||
-        (this.hasVirtualScroll && (this.isBusy || this.idle))
+            (this.hasVirtualScroll && (this.isBusy || this.idle))
             ? columnsCondition
             : columnsCondition && dataCondition;
     }
@@ -463,7 +461,7 @@ export class TableWidgetComponent
                 sortable:
                     this.sortableSet[
                         column?.formatter?.properties?.dataFieldIds?.value
-                        ] ?? true,
+                    ] ?? true,
             };
         });
 
@@ -578,8 +576,17 @@ export class TableWidgetComponent
 
     public onSelectionChange(event: ISelection): void {
         this.selection = event;
-        this.eventBus.getStream(SELECTED_ITEMS).next({payload: this.selectorService.getSelectedItems(this.selection, this.widgetData, (a, b) => this.dataTrackBy()(0, a) === b), id: this.componentId})
-        this.eventBus.getStream(SELECTION).next({payload: this.selection});
+        this.eventBus
+            .getStream(SELECTED_ITEMS)
+            .next({
+                payload: this.selectorService.getSelectedItems(
+                    this.selection,
+                    this.widgetData,
+                    (a, b) => this.dataTrackBy()(0, a) === b
+                ),
+                id: this.componentId,
+            });
+        this.eventBus.getStream(SELECTION).next({ payload: this.selection });
     }
 
     public onInteraction(row: any, event: MouseEvent): void {
@@ -603,7 +610,7 @@ export class TableWidgetComponent
 
         this.eventBus
             .getStream(INTERACTION)
-            .next({payload: {data: row.__record}});
+            .next({ payload: { data: row.__record } });
     }
 
     public onSearchInputChanged(searchTerm: string): void {
@@ -683,7 +690,7 @@ export class TableWidgetComponent
         const equalSortingState =
             oldSortById === newSortById &&
             newSorterConfiguration.descendantSorting ===
-            oldSorterConfiguration.descendantSorting;
+                oldSorterConfiguration.descendantSorting;
 
         return !equalSortingState;
     }
@@ -738,7 +745,7 @@ export class TableWidgetComponent
         return (
             !!configurationChange.previousValue &&
             configurationChange.previousValue.scrollType !==
-            configurationChange.currentValue.scrollType
+                configurationChange.currentValue.scrollType
         );
     }
 
@@ -759,8 +766,8 @@ export class TableWidgetComponent
 
         return Math.floor(
             (this.tableWidgetHeight / this.rowHeight) *
-            internalBuffer *
-            scrollBuffer
+                internalBuffer *
+                scrollBuffer
         );
     }
 
@@ -769,7 +776,7 @@ export class TableWidgetComponent
             isAllPages: false,
             include: [],
             exclude: [],
-        }
-        this.paginatorAddon.applyFilters()
+        };
+        this.paginatorAddon.applyFilters();
     }
 }
