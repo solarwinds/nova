@@ -616,6 +616,11 @@ export class TableWidgetComponent
     public onSearchInputChanged(searchTerm: string): void {
         this.searchValue = searchTerm;
         this.searchTerm$.next("");
+        this.selection = {
+            include: [],
+            exclude: [],
+            isAllPages: false,
+        }
     }
 
     public getColumnAlignment(
