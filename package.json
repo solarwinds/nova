@@ -101,6 +101,7 @@
     "build-watch:bits": "yarn run in-bits build-lib:watch",
     "build-watch:charts": "yarn run in-charts build-lib:watch",
     "clean-docs-ci": "bash scripts/clean-docs",
+    "compute-version-local": "bash scripts/compute-version-local",
     "compute-version-ci": "bash scripts/compute-version",
     "deploy-docs-ci": "bash scripts/deploy-docs",
     "in-bits": "yarn run --cwd=packages/bits",
@@ -123,7 +124,7 @@
     "trigger-pipeline-build-ci": "bash scripts/trigger-pipeline-build",
     "verify-ci": "bash scripts/verify-published"
   },
-  "version": "16.0.2-1",
+  "version": "16.0.3-0",
   "workspaces": [
     "packages/*"
   ]
