@@ -24,6 +24,7 @@ Here's what you need to know to get started:
 6. Once the review is approved and all build checks have passed, we'll merge it back to the base repository.
 7. Any non-maintainer change requires review by 1 QA and 2 developers
 8. If you are making a medium-to-large change, please coordinate with a nova developer before starting work, so we can schedule time for code reviews. If you don't notify us before contributing, your change may be delayed.
+9. Run the increase local version before making a release
 
 ### When Can I Consume My Changes?
 
