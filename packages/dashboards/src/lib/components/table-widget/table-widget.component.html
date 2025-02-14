@@ -44,6 +44,7 @@
                 nui-table
                 [reorderable]="configuration?.reorderable"
                 [sortable]="sortable"
+                [selection]="selection"
                 [selectionConfig]="configuration?.selectionConfiguration"
                 [totalItems]="totalItems"
                 [dataSource]="virtualScrollAddon.visibleItems"
@@ -112,6 +113,7 @@
                     let-row
                     [nuiRowDefColumns]="headers"
                     [cdkVirtualForOf]="tableData"
+                    [cdkVirtualForTemplateCacheSize]="10"
                     [cdkVirtualForTrackBy]="dataTrackBy"
                 >
                     <tr
@@ -125,6 +127,7 @@
                 </ng-template>
             </table>
         </cdk-virtual-scroll-viewport>
+        {{ selection | json }}
     </div>
     <div [hidden]="!hasPaginator" class="mt-2">
         <ng-container *ngTemplateOutlet="footer"></ng-container>
@@ -136,6 +139,7 @@
         <nui-paginator
             #paginator
             id="nui-table-widget-paginator"
+            [appendToBody]="true"
             [page]="paginatorAddon.paginatorState.page"
             [pageSize]="paginatorAddon.paginatorState.pageSize"
             [pageSizeSet]="paginatorAddon.paginatorState.pageSizeSet"

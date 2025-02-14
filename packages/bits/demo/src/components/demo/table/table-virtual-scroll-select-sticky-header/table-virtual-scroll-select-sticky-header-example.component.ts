@@ -78,7 +78,7 @@ export class TableVirtualScrollSelectStickyHeaderExampleComponent
     });
     public selectionConfig: TableSelectionConfig = {
         enabled: true,
-        selectionMode: TableSelectionMode.Radio,
+        selectionMode: TableSelectionMode.Multi,
     };
 
     // trackBy handler used to identify uniquely each item in the table
