@@ -79,7 +79,7 @@ import {
     WIDGET_RESIZE,
 } from "../../services/types";
 import {
-    WidgetConfigurationService
+    WidgetConfigurationService,
 } from "../../services/widget-configuration.service";
 import {
     DATA_SOURCE,
@@ -88,18 +88,18 @@ import {
     WellKnownDataSourceFeatures,
 } from "../../types";
 import {ITableFormatterDefinition} from "../types";
+import {
+    PaginatorFeatureAddonService,
+} from "./addons/paginator-feature-addon.service";
 import {SearchFeatureAddonService} from "./addons/search-feature-addon.service";
 import {
-    VirtualScrollFeatureAddonService
+    VirtualScrollFeatureAddonService,
 } from "./addons/virtual-scroll-feature-addon.service";
 import {
     ITableWidgetColumnConfig,
     ITableWidgetConfig,
     ScrollType,
 } from "./types";
-import {
-    PaginatorFeatureAddonService,
-} from "./addons/paginator-feature-addon.service";
 
 /**
  * @ignore
