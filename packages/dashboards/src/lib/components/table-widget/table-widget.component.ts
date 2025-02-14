@@ -392,13 +392,6 @@ export class TableWidgetComponent
                 }
             }
         );
-        this.eventBus.getStream(SELECTED_ITEMS).subscribe(({payload: items}) => {
-            console.log(items);
-        })
-
-        // SELECTION - emits when ISelection changes contains dataTrackBy properties
-        // CHANGE_SELECTION - listens the ISelection to chanage the selection model programatically
-        // SELECTED_ITEMS - emits when items changes when selection changes or total elements changes
     }
 
     public ngOnDestroy(): void {
