@@ -64,6 +64,7 @@ export class PaginatorFeatureAddonService {
             this.widget.configuration?.paginatorConfiguration;
 
         if (this.widget.hasPaginator) {
+            this.registerPaginator();
             this.paginatorState.pageSize =
                 paginatorConfiguration?.pageSize ??
                 this.defaultPaginatorState.pageSize;
@@ -87,7 +88,6 @@ export class PaginatorFeatureAddonService {
                 this.widget.paginator.setItemsPerPage(pageSize);
             }
 
-            this.registerPaginator();
         } else {
             this.deregisterPaginator();
         }
