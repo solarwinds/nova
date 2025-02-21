@@ -116,7 +116,6 @@ export class PaginatorFeatureAddonService {
                 if (!payload) {
                     return;
                 }
-                console.log(payload);
                 this.updatePaginatorState({
                     page: payload.page ?? 1,
                 });
