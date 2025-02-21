@@ -75,6 +75,7 @@ import {
     REFRESH,
     SELECTED_ITEMS,
     SELECTION,
+    SET_NEXT_PAGE,
     WIDGET_READY,
     WIDGET_RESIZE,
 } from "../../services/types";
@@ -299,9 +300,7 @@ export class TableWidgetComponent
         ) as ScrollType;
 
         this.scrollType = newHasVirtualScroll ? ScrollType.virtual : scrollType;
-
-        this.virtualScrollAddon.initVirtualScroll(this);
-        this.paginatorAddon.initPaginator(this);
+        this.initPrefetchAddon();
 
         if (this.scrollTypeChanged(changes.configuration)) {
             this.dataSource.applyFilters();
@@ -328,10 +327,8 @@ export class TableWidgetComponent
                 takeUntil(this.onDestroy$)
             )
             .subscribe();
-
-        this.virtualScrollAddon.initVirtualScroll(this);
+        this.initPrefetchAddon();
         this.searchAddon.initWidget(this);
-        this.paginatorAddon.initPaginator(this);
 
         const tableHeightChanged$: Observable<number> = this.eventBus
             .getStream(WIDGET_RESIZE)
@@ -371,7 +368,9 @@ export class TableWidgetComponent
                     // eslint-disable-next-line import/no-deprecated
                     tap((value) => {
                         this.tableWidgetHeight = value;
-                        this.virtualScrollAddon.subscribeToVirtualScroll();
+                        if (this.hasVirtualScroll) {
+                            this.virtualScrollAddon.subscribeToVirtualScroll();
+                        }
                         this.eventBus.getStream(WIDGET_READY).next({});
                     })
                 )
@@ -427,8 +426,13 @@ export class TableWidgetComponent
 
         // we are returning a function here because the scope of "this" changes once it's passed
         // to the table component and are therefore unable to access the configuration in its body
-        return (index: number, item: any): any =>
-            item ? item[trackByProperty] : index;
+        return (index: number, item: any): any => {
+            // selection uses a set of the columns in prior of selection correct data id we need to use record
+            if (item["__record"]) {
+                item = item["__record"];
+            }
+            return item ? item[trackByProperty] : index;
+        };
     }
 
     public columnTrackBy(
@@ -482,18 +486,18 @@ export class TableWidgetComponent
     }
 
     /**
-     * Takes tableData from back-end, columns which are provided in table widget config and dataFields and maps them to data-format
+     * Takes widgetData from back-end, columns which are provided in table widget config and dataFields and maps them to data-format
      * which is acceptable by table component.
      * Also it can merge multiple data fields into one column. If you provide more than one dataFieldId in your
      * widget config, they will be merged to an object with needed data. This data can be passed to formatter and displayed
      * in one column.
-     * @param tableData
+     * @param widgetData
      * @param columns
      * @param dataFields
      * @returns any[]
      */
     public mapTableData(
-        tableData: any[],
+        widgetData: any[],
         columns: ITableWidgetColumnConfig[],
         dataFields: IDataField[]
     ): any[] {
@@ -504,7 +508,7 @@ export class TableWidgetComponent
             return [];
         }
 
-        return tableData.map((record) => {
+        return widgetData.map((record) => {
             const row = columns.reduce(
                 (result: Record<string, any>, column) => {
                     const dataFieldIds =
@@ -576,16 +580,14 @@ export class TableWidgetComponent
 
     public onSelectionChange(event: ISelection): void {
         this.selection = event;
-        this.eventBus
-            .getStream(SELECTED_ITEMS)
-            .next({
-                payload: this.selectorService.getSelectedItems(
-                    this.selection,
-                    this.widgetData,
-                    (a, b) => this.dataTrackBy()(0, a) === b
-                ),
-                id: this.componentId,
-            });
+        this.eventBus.getStream(SELECTED_ITEMS).next({
+            payload: this.selectorService.getSelectedItems(
+                this.selection,
+                this.widgetData,
+                (a, b) => this.dataTrackBy()(0, a) === b
+            ),
+            id: this.componentId,
+        });
         this.eventBus.getStream(SELECTION).next({ payload: this.selection });
     }
 
@@ -776,12 +778,17 @@ export class TableWidgetComponent
         );
     }
 
-    public onPagerAction(): void {
-        this.selection = {
-            isAllPages: false,
-            include: [],
-            exclude: [],
-        };
-        this.paginatorAddon.applyFilters();
+    public onPagerAction(page: any): void {
+        this.eventBus.getStream(SET_NEXT_PAGE).next(page);
+    }
+
+    private initPrefetchAddon() {
+        if (this.hasVirtualScroll) {
+            this.virtualScrollAddon.initVirtualScroll(this);
+        } else if (this.hasPaginator) {
+            this.paginatorAddon.initPaginator(this);
+        } else {
+            this.virtualScrollAddon.initVirtualScroll(this);
+        }
     }
 }

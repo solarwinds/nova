@@ -19,13 +19,14 @@
 //  THE SOFTWARE.
 
 import { Injectable } from "@angular/core";
-import { INovaFilteringOutputs, ISelectChangedEvent } from "@nova-ui/bits";
 import { IPaginatorState, TableWidgetComponent } from "../public-api";
+import { SET_NEXT_PAGE } from "../../../services/types";
+import { IEvent, INovaFilteringOutputs } from "@nova-ui/bits";
+import { takeUntil } from "rxjs/operators";
+import isEqual from "lodash/isEqual";
 
 @Injectable()
 export class PaginatorFeatureAddonService {
-    private widget: TableWidgetComponent; // TODO: generic widget
-
     public defaultPaginatorState: IPaginatorState = {
         page: 1,
         pageSize: 10,
@@ -33,10 +34,12 @@ export class PaginatorFeatureAddonService {
         total: 0,
     };
     public paginatorState: IPaginatorState = this.defaultPaginatorState;
+    private widget: TableWidgetComponent; // TODO: generic widget
 
     public initPaginator(widget: TableWidgetComponent): void {
         this.widget = widget;
         this.setPaginatorState();
+        this.listenPaginatorChanges();
     }
 
     public applyFilters(): void {
@@ -63,33 +66,61 @@ export class PaginatorFeatureAddonService {
         const paginatorConfiguration =
             this.widget.configuration?.paginatorConfiguration;
 
-        if (this.widget.hasPaginator) {
+        if (this.widget.hasPaginator && this.widget.paginator) {
             this.registerPaginator();
-            this.paginatorState.pageSize =
-                paginatorConfiguration?.pageSize ??
-                this.defaultPaginatorState.pageSize;
+            // pageSize, pageSizeSet comes from static config
+            const modifiedConfiguration = {
+                pageSize:
+                    paginatorConfiguration?.pageSize ??
+                    this.defaultPaginatorState.pageSize,
+                pageSizeSet:
+                    paginatorConfiguration?.pageSizeSet ??
+                    this.defaultPaginatorState.pageSizeSet,
+            };
 
-            this.paginatorState.pageSizeSet =
-                paginatorConfiguration?.pageSizeSet ??
-                this.defaultPaginatorState.pageSizeSet;
-
-            this.widget.dataSource.outputsSubject.subscribe(
-                (data: INovaFilteringOutputs) => {
-                    this.paginatorState.total = data.paginator?.total ?? 0;
-                }
-            );
-
-            // When changing page size from configurator, this will force preview update
-            if (this.widget.paginator) {
-                const pageSize: ISelectChangedEvent<number> = {
-                    oldValue: 0,
-                    newValue: this.paginatorState.pageSize,
-                };
-                this.widget.paginator.setItemsPerPage(pageSize);
+            // update only if needed to avoid additional calls to ds
+            if (!isEqual(modifiedConfiguration, {
+                pageSize: this.paginatorState.pageSize,
+                pageSizeSet: this.paginatorState.pageSizeSet,
+            } )) {
+                this.updatePaginatorState(modifiedConfiguration);
+                this.widget.eventBus.getStream(SET_NEXT_PAGE).next({});
+                this.widget.changeDetector.detectChanges();
             }
 
+            // page and total are dynamically set
+            this.widget.dataSource.outputsSubject
+                .pipe(takeUntil(this.widget.onDestroy$))
+                .subscribe((data: INovaFilteringOutputs) => {
+                    this.updatePaginatorState({
+                        total: data.paginator?.total ?? 0,
+                    });
+                });
         } else {
             this.deregisterPaginator();
         }
+    }
+
+    private updatePaginatorState(param: Partial<IPaginatorState>) {
+        this.paginatorState = {
+            ...this.paginatorState,
+            ...param,
+        };
+    }
+
+    private listenPaginatorChanges() {
+        this.widget.eventBus
+            .getStream(SET_NEXT_PAGE)
+            .pipe(takeUntil(this.widget.onDestroy$))
+            .subscribe(({ payload }: IEvent<any>) => {
+                if (!payload) {
+                    return;
+                }
+                console.log(payload);
+                this.updatePaginatorState({
+                    page: payload.page ?? 1,
+                });
+                this.applyFilters();
+            });
     }
 }
