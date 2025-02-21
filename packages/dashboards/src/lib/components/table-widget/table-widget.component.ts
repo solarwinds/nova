@@ -779,7 +779,7 @@ export class TableWidgetComponent
     }
 
     public onPagerAction(page: any): void {
-        this.eventBus.getStream(SET_NEXT_PAGE).next(page);
+        this.eventBus.getStream(SET_NEXT_PAGE).next({ payload: page, id: this.componentId });
     }
 
     private initPrefetchAddon() {
