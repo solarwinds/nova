@@ -47,7 +47,8 @@
                 [selection]="selection"
                 [selectionConfig]="configuration?.selectionConfiguration"
                 [totalItems]="totalItems"
-                [dataSource]="virtualScrollAddon.visibleItems"
+                [paginatorUsed]="hasPaginator"
+                [dataSource]="hasVirtualScroll ? virtualScrollAddon.visibleItems : tableData"
                 [sortedColumn]="sortedColumn"
                 (sortOrderChanged)="onSortOrderChanged($event)"
                 (selectionChange)="onSelectionChange($event)"
@@ -114,7 +115,7 @@
                     [nuiRowDefColumns]="headers"
                     [cdkVirtualForOf]="tableData"
                     [cdkVirtualForTemplateCacheSize]="10"
-                    [cdkVirtualForTrackBy]="dataTrackBy"
+                    [cdkVirtualForTrackBy]="dataTrackBy()"
                 >
                     <tr
                         nui-row
@@ -143,7 +144,7 @@
             [pageSize]="paginatorAddon.paginatorState.pageSize"
             [pageSizeSet]="paginatorAddon.paginatorState.pageSizeSet"
             [total]="paginatorAddon.paginatorState.total"
-            (pagerAction)="onPagerAction()"
+            (pagerAction)="onPagerAction($event)"
         >
         </nui-paginator>
     </footer>

@@ -124,6 +124,7 @@ export class TableComponent<T>
 
     @Input() selection: ISelection;
     @Input() sortedColumn: ISortedItem;
+    @Input() paginatorUsed: boolean = false;
 
     @Output() columnsOrderChange: EventEmitter<Array<any>> = new EventEmitter();
     @Output() sortOrderChanged: EventEmitter<ISortedItem> = new EventEmitter();
@@ -380,6 +381,6 @@ export class TableComponent<T>
         // @ts-ignore: Call parent method in case cdk adds it later
         super.ngAfterContentInit?.();
         // Note: Identifying if table is using virtual scroll.
-        this.tableStateHandlerService.hasVirtualScroll = !!this.virtualFor;
+        this.tableStateHandlerService.hasVirtualScroll = !!this.virtualFor && !this.paginatorUsed;
     }
 }

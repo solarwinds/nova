@@ -40,7 +40,12 @@ import {
 } from "@nova-ui/bits";
 
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
-import { REFRESH, SCROLL_NEXT_PAGE, WIDGET_READY } from "../../services/types";
+import {
+    REFRESH,
+    SCROLL_NEXT_PAGE,
+    SET_NEXT_PAGE,
+    WIDGET_READY,
+} from "../../services/types";
 import {
     DATA_SOURCE,
     IProperties,
@@ -84,7 +89,7 @@ export class TableDataSourceAdapter<
         );
 
         // eslint-disable-next-line import/no-deprecated
-        merge(refresh$, this.eventBus.getStream(SCROLL_NEXT_PAGE))
+        merge(refresh$, this.eventBus.getStream(SCROLL_NEXT_PAGE), this.eventBus.getStream(SET_NEXT_PAGE))
             .pipe(
                 // Note: While SCROLL_NEXT_PAGE is triggered on TableWidget initialization aka WIDGET_READY
                 // we might encounter REFRESH and SCROLL_NEXT_PAGE triggered at the same time.
