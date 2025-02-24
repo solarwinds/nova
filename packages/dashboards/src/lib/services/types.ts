@@ -69,6 +69,7 @@ export interface IWidgetResizePayload extends IWidgetPayload {
 }
 
 export const REFRESH = new EventDefinition("REFRESH");
+export const SET_NEXT_PAGE = new EventDefinition("SET_NEXT_PAGE");
 export const SCROLL_NEXT_PAGE = new EventDefinition("SCROLL_NEXT_PAGE");
 export const WIDGET_REMOVE = new EventDefinition("WIDGET_REMOVE");
 export const WIDGET_EDIT = new EventDefinition("WIDGET_EDIT");
