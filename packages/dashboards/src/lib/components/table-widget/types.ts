@@ -126,6 +126,11 @@ interface ITableWidgetSelectionConfigEnabled
      * @default false
      */
     clickableRow?: boolean;
+    /**
+     * Controls if the dropdown is needed for selection on other pages
+     * Only available for the pagination
+     */
+    allPages?: boolean;
 }
 
 interface ITableWidgetSelectionConfigDisabled
