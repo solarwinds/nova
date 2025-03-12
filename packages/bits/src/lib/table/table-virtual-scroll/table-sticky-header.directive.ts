@@ -308,6 +308,7 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
         );
         const tableColumnsUpdate$ = merge(
             this.table.columnsOrderChange,
+            this.table.columnsWidthChange,
             this.table._contentColumnDefs.changes
         ).pipe(
             // Note: Using delay(0) to grant some time to the table

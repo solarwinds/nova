@@ -301,7 +301,6 @@ export class TableHeaderCellComponent
                     );
                 if (columnWidth > 45) {
                     this.renderer.setStyle(this.elementRef.nativeElement, "width", columnWidth + "px");
-                    this.tableStateHandlerService.columnsState.next(this.tableStateHandlerService.tableColumns);
                 }
             })
         );

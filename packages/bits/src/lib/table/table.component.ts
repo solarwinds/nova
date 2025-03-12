@@ -129,6 +129,7 @@ export class TableComponent<T>
     @Output() columnsOrderChange: EventEmitter<Array<any>> = new EventEmitter();
     @Output() sortOrderChanged: EventEmitter<ISortedItem> = new EventEmitter();
     @Output() selectionChange: EventEmitter<ISelection> = new EventEmitter();
+    @Output() columnsWidthChange: EventEmitter<Array<any>> = new EventEmitter();
 
     public sortDirection: SorterDirection;
     public sortBy: string;
@@ -136,6 +137,7 @@ export class TableComponent<T>
     private tableSortingSubscription: Subscription;
     private selectionChangedSubscription: Subscription;
     private stickyChangedSubscription: Subscription;
+    private tableColumnsWidthSubscription: Subscription;
     @HostBinding("class.nui-table__table-fixed") layoutFixed = false;
     @ContentChild(CdkVirtualForOf) public virtualFor?: CdkVirtualForOf<unknown>;
 
@@ -249,6 +251,12 @@ export class TableComponent<T>
         });
 
         if (this.resizable) {
+            this.tableColumnsWidthSubscription =
+                this.tableStateHandlerService.columnWidthSubject.subscribe(
+                    () => {
+                        this.columnsWidthChange.emit();
+                    }
+                );
             const parentWidth =
                 this._elementRef.nativeElement.parentElement.getBoundingClientRect()
                     .width;
@@ -373,6 +381,9 @@ export class TableComponent<T>
 
         if (this.stickyChangedSubscription) {
             this.stickyChangedSubscription.unsubscribe();
+        }
+        if (this.tableColumnsWidthSubscription) {
+            this.tableColumnsWidthSubscription.unsubscribe();
         }
         super.ngOnDestroy();
     }
