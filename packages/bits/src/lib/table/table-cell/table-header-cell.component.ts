@@ -30,6 +30,7 @@ import {
     OnChanges,
     OnDestroy,
     OnInit,
+    Renderer2,
     SimpleChanges,
 } from "@angular/core";
 import _isNil from "lodash/isNil";
@@ -241,7 +242,8 @@ export class TableHeaderCellComponent
         private elementRef: ElementRef,
         private tableStateHandlerService: TableStateHandlerService,
         private utilService: UtilService,
-        private zone: NgZone
+        private zone: NgZone,
+        private renderer: Renderer2
     ) {
         super(columnDef, elementRef);
 
@@ -298,8 +300,8 @@ export class TableHeaderCellComponent
                         this.columnDef.name
                     );
                 if (columnWidth > 45) {
-                    this.elementRef.nativeElement.style.width =
-                        columnWidth + "px";
+                    this.renderer.setStyle(this.elementRef.nativeElement, "width", columnWidth + "px");
+                    this.tableStateHandlerService.columnsState.next(this.tableStateHandlerService.tableColumns);
                 }
             })
         );
@@ -366,12 +368,11 @@ export class TableHeaderCellComponent
     }
 
     public onColumnWidthChange(offset: number): void {
-        const calculatedWidth =
-            this.elementRef.nativeElement.getBoundingClientRect().width;
-        const resultWidth = calculatedWidth + offset;
+        const currentWidth = this.tableStateHandlerService.getColumnWidth(this.columnDef.name);
+        const resultWidth = currentWidth + offset;
+
         // resultWidth must be more than 45 because minimum width of the column is 46px
         if (resultWidth > 45 || offset > 0) {
-            this.elementRef.nativeElement.style.width = resultWidth + "px";
             this.tableStateHandlerService.setColumnWidth(
                 this.columnDef.name,
                 resultWidth

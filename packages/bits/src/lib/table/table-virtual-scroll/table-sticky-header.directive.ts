@@ -46,6 +46,7 @@ import {
 } from "rxjs/operators";
 
 import { FIXED_WIDTH_CLASS } from "../constants";
+import { TableStateHandlerService } from "../table-state-handler.service";
 import { TableComponent } from "../table.component";
 
 export enum TableVirtualScrollHeaderPosition {
@@ -218,6 +219,10 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
 
     public handleColumnsUpdate$: () => Observable<unknown> =
         (): Observable<unknown> => {
+            if (this.table.resizable) {
+                return EMPTY;
+            }
+
             // TODO: Perform a dirty check before starting assigning new values
             // Note: Setting the width of stickyHeadContainer container to be able to simulate horizontal scroll of the sticky header
             this.renderer.setStyle(
@@ -267,9 +272,12 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
         this.headRef =
             this.viewportEl.getElementsByTagName("thead").item(0) || undefined;
         this.userProvidedHeight = this.viewportEl.style.height;
-        Array.from(this.headRef?.getElementsByTagName("th") || []).forEach(
-            (th) => th.classList.add("virtual-sticky")
-        );
+        // Disable animation for resizable sticky header cells to prevent a lagging effect during width changes.
+        if (!this.table.resizable) {
+            Array.from(this.headRef?.getElementsByTagName("th") || []).forEach(
+                (th) => th.classList.add("virtual-sticky")
+            );
+        }
         this.bodyRef =
             this.viewportEl.getElementsByTagName("tbody").item(0) || undefined;
     }
