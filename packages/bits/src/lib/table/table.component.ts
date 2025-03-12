@@ -129,7 +129,7 @@ export class TableComponent<T>
     @Output() columnsOrderChange: EventEmitter<Array<any>> = new EventEmitter();
     @Output() sortOrderChanged: EventEmitter<ISortedItem> = new EventEmitter();
     @Output() selectionChange: EventEmitter<ISelection> = new EventEmitter();
-    @Output() columnsWidthChange: EventEmitter<Array<any>> = new EventEmitter();
+    @Output() columnsWidthChange: EventEmitter<void> = new EventEmitter();
 
     public sortDirection: SorterDirection;
     public sortBy: string;
