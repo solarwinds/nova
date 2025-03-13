@@ -22,7 +22,11 @@ import noop from "lodash/noop";
 
 import { LoggerService } from "./log-service";
 import { UnitConversionService } from "./unit-conversion.service";
-import { UnitBase, UnitOption } from "../constants/unit-conversion.constants";
+import {
+    UnitBase,
+    unitConversionBases,
+    UnitOption,
+} from "../constants/unit-conversion.constants";
 
 describe("services >", () => {
     describe("unit conversion >", () => {
@@ -124,7 +128,7 @@ describe("services >", () => {
 
             it("should remove trailing zeros", () => {
                 expect(
-                    subject.convert(998900, UnitBase.Standard, 2).value
+                    subject.convert(998_900, UnitBase.Standard, 2).value
                 ).toEqual("998.9");
             });
         });
@@ -562,25 +566,183 @@ describe("services >", () => {
                 // Uncomment in the scope of NUI-6056
                 /* {
                     name: "999994 Hz as 1.99 kHz with scale 2",
-                    inputValue: 999994,
+                    inputValue: 999_994,
                     unit: "hertz",
                     scale: 2,
                     expectedValue: "999.99 kHz",
                 }, */ {
                     name: "999995 Hz as 1 MHz with scale 2",
-                    inputValue: 999995,
+                    inputValue: 999_995,
                     unit: "hertz",
                     scale: 2,
                     expectedValue: "1 MHz",
+                },
+                {
+                    name: "1 ms as 1 ms",
+                    inputValue: 1,
+                    unit: "milliseconds",
+                    scale: 0,
+                    expectedValue: "1 ms",
+                },
+                {
+                    name: "100 ms as 100 ms",
+                    inputValue: 100,
+                    unit: "milliseconds",
+                    scale: 0,
+                    expectedValue: "100 ms",
+                },
+                {
+                    name: "1100 ms as 1 s",
+                    inputValue: 1_100,
+                    unit: "milliseconds",
+                    scale: 0,
+                    expectedValue: "1 s",
+                },
+                {
+                    name: "1100 ms as 1.1 s",
+                    inputValue: 1_100,
+                    unit: "milliseconds",
+                    scale: 1,
+                    expectedValue: "1.1 s",
+                },
+                {
+                    name: "5500 ms as 5.5 s",
+                    inputValue: 5_500,
+                    unit: "milliseconds",
+                    scale: 2,
+                    expectedValue: "5.5 s",
+                },
+                {
+                    name: "60000 ms as 1 m",
+                    inputValue: 60_000,
+                    unit: "milliseconds",
+                    scale: 0,
+                    expectedValue: "1 m",
+                },
+                {
+                    name: "60000 ms as 1 m",
+                    inputValue: 60_000,
+                    unit: "milliseconds",
+                    scale: 0,
+                    expectedValue: "1 m",
+                },
+                {
+                    name: "66000 ms as 1 m",
+                    inputValue: 66_000,
+                    unit: "milliseconds",
+                    scale: 0,
+                    expectedValue: "1 m",
+                },
+                {
+                    name: "72000 ms as 1.2 m",
+                    inputValue: 72_000,
+                    unit: "milliseconds",
+                    scale: 1,
+                    expectedValue: "1.2 m",
+                },
+                {
+                    name: "1830000 ms as 30.5 m",
+                    inputValue: 1_830_000,
+                    unit: "milliseconds",
+                    scale: 2,
+                    expectedValue: "30.5 m",
+                },
+                {
+                    name: "1835000 ms as 30.58 m",
+                    inputValue: 1_835_000,
+                    unit: "milliseconds",
+                    scale: 2,
+                    expectedValue: "30.58 m",
+                },
+                {
+                    name: "3600000 ms as 1 h",
+                    inputValue: 3_600_000,
+                    unit: "milliseconds",
+                    scale: 0,
+                    expectedValue: "1 h",
+                },
+                {
+                    name: "5400000 ms as 2 h",
+                    inputValue: 5_400_000,
+                    unit: "milliseconds",
+                    scale: 0,
+                    expectedValue: "2 h",
+                },
+                {
+                    name: "5400000 ms as 1.5 h",
+                    inputValue: 5_400_000,
+                    unit: "milliseconds",
+                    scale: 1,
+                    expectedValue: "1.5 h",
+                },
+                {
+                    name: "6330000 as 2 h",
+                    inputValue: 6_330_000,
+                    unit: "milliseconds",
+                    scale: 0,
+                    expectedValue: "2 h",
+                },
+                {
+                    name: "6330000 ms as 1.76 h",
+                    inputValue: 6_330_000,
+                    unit: "milliseconds",
+                    scale: 2,
+                    expectedValue: "1.76 h",
+                },
+                {
+                    name: "6330000 ms as 1.758 h",
+                    inputValue: 6_330_000,
+                    unit: "milliseconds",
+                    scale: 3,
+                    expectedValue: "1.758 h",
+                },
+                {
+                    name: "6330000 ms as 1.7583 h",
+                    inputValue: 6_330_000,
+                    unit: "milliseconds",
+                    scale: 4,
+                    expectedValue: "1.7583 h",
+                },
+                {
+                    name: "86400000 ms as 1 d",
+                    inputValue: 86400000,
+                    unit: "milliseconds",
+                    scale: 0,
+                    expectedValue: "1 d",
+                },
+                {
+                    name: "129600000 ms as 2 d",
+                    inputValue: 129600000,
+                    unit: "milliseconds",
+                    scale: 0,
+                    expectedValue: "2 d",
+                },
+                {
+                    name: "129600000 ms as 1.5 d",
+                    inputValue: 129600000,
+                    unit: "milliseconds",
+                    scale: 1,
+                    expectedValue: "1.5 d",
+                },
+                {
+                    name: "131400000 ms as 1.5 d",
+                    inputValue: 131400000,
+                    unit: "milliseconds",
+                    scale: 1,
+                    expectedValue: "1.5 d",
+                },
+                {
+                    name: "131400000 ms as 1.521 d",
+                    inputValue: 131400000,
+                    unit: "milliseconds",
+                    scale: 3,
+                    expectedValue: "1.521 d",
                 },
             ];
 
             testCases.forEach((testCase) => {
                 it(`should display ${testCase.name}`, () => {
-                    const base =
-                        testCase.unit !== "bytes"
-                            ? UnitBase.Standard
-                            : UnitBase.Bytes;
+                    const base = unitConversionBases[testCase.unit];
                     const conversion = subject.convert(
                         testCase.inputValue,
                         base,
