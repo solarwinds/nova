@@ -1,5 +1,9 @@
 # Changelog
 
+## [16.0.6] 📅 2025-03-12
+### Added
+- `@nova-ui/bits` | Added unit conversion for milliseconds
+
 ## [16.0.3] 📅 2025-02-14
 ### Added
 - `@nova-ui/dasbhard` | Added table widget bus events for select items

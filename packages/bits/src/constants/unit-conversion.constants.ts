@@ -30,7 +30,12 @@ export interface IUnitConversionConstants {
     bytesPerSecond: string[];
     bitsPerSecond: string[];
     hertz: string[];
+    milliseconds: string[];
     percent: string[];
+}
+
+export type TUnitConversionBases = {
+    [Key in keyof IUnitConversionConstants]: number[] | number;
 }
 
 /** Standard base values used in unit conversion */
@@ -68,14 +73,19 @@ export const unitConversionConstants: IUnitConversionConstants = {
         "Ybps",
     ],
     hertz: ["Hz", "kHz", "MHz", "GHz", "THz", "PHz", "EHz", "ZHz", "YHz"],
+    milliseconds: ["ms", "s", "m", "h", "d"],
     percent: ["%"],
 };
 
+export const unitConversionBases: TUnitConversionBases = {
+    generic: UnitBase.Standard,
+    bytes: UnitBase.Bytes,
+    bytesPerSecond: UnitBase.Standard,
+    bitsPerSecond: UnitBase.Standard,
+    hertz: UnitBase.Standard,
+    milliseconds: [1, 1_000, 60_000, 3_600_000, 86_400_000],
+    percent: UnitBase.Standard,
+};
+
 /** Available options for unit conversion */
-export type UnitOption =
-    | "generic"
-    | "bytes"
-    | "bytesPerSecond"
-    | "bitsPerSecond"
-    | "hertz"
-    | "percent";
+export type UnitOption = keyof IUnitConversionConstants;

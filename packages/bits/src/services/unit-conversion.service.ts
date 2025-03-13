@@ -42,53 +42,107 @@ export class UnitConversionService {
      *
      * @param value The value to convert
      * @param base The base to use for the exponential expression when calculating the conversion result
+     *
+     * @returns {{ [Key in keyof Pick<IUnitConversionResult, "value" | "order">]: number }} The value and order of conversion
+     */
+    private convertLinear(
+        value: number,
+        base: number
+    ): { [Key in keyof Pick<IUnitConversionResult, "value" | "order">]: number } {
+        let resultValue: number;
+        let resultOrder: number;
+
+        if (value === 0) {
+            return {
+                value: 0,
+                order: 0,
+            }
+        }
+
+        resultOrder = Math.floor(
+            Math.log(Math.abs(value)) / Math.log(base)
+        );
+        resultValue = value / Math.pow(base, Math.floor(resultOrder));
+
+        if (Math.abs(value) > 0 && Math.abs(value) < 1) {
+            return {
+                value: value,
+                order: 0,
+            };
+        }
+
+        // fix the precision edge case
+        const valueCeiled = Math.ceil(resultValue);
+        if (valueCeiled % base === 0) {
+            resultValue = valueCeiled / base;
+            resultOrder += 1;
+        }
+
+        return {
+            value: resultValue,
+            order: resultOrder,
+        };
+    }
+
+    /**
+     * Converts a raw value to a larger unit approximation of the value. For example, 1100ms to 1.1s, 66000ms to 1.1m, etc.
+     *
+     * @param value The value to convert
+     * @param factors Array of factors to use for calculating smallest possible not zero result
+     *
+     * @returns {{ [Key in keyof Pick<IUnitConversionResult, "value" | "order">]: number }} The value and order of conversion
+     */
+    private convertNonLinear(
+        value: number,
+        factors: number[]
+    ): { [Key in keyof Pick<IUnitConversionResult, "value" | "order">]: number } {
+        const sortedFactors = factors.sort((a, b) => a > b ? -1 : a < b ? 1 : 0);
+        const highestFactorIndex = sortedFactors.findIndex((factor) => value / factor >= 1)
+        const highestFactor = factors[highestFactorIndex]
+
+        if (Math.abs(value) > 0 && Math.abs(value) < 1) {
+            return {
+                value: value,
+                order: 0,
+            };
+        }
+
+        return {
+            value: value / highestFactor,
+            order: highestFactorIndex === -1 ? 0 : factors.length - highestFactorIndex - 1,
+        }
+    }
+
+    /**
+     * Converts a raw value to a larger unit approximation of the value. For example, 1024 B to 1 KB, 12345 Hz to 12.35 kHz, 66000ms to 1.1m, etc.
+     *
+     * @param value The value to convert
+     * @param base The base or array of factors to use for calculating the conversion result
      * @param scale The number of significant digits to the right of the decimal to include in the resulting converted value
      *
      * @returns {IUnitConversionResult} The conversion result
      */
     convert(
         value: number,
-        base: number = UnitBase.Standard,
+        base: number | number[] = UnitBase.Standard,
         scale: number = 1
     ): IUnitConversionResult {
-        let resultValue: number;
-        let resultOrder: number;
+        const result = Array.isArray(base) ?
+            this.convertNonLinear(value, base) :
+            this.convertLinear(value, base);
+
         let strValue: string;
 
         if (value !== 0) {
-            resultOrder = Math.floor(
-                Math.log(Math.abs(value)) / Math.log(base)
-            );
-            resultValue = value / Math.pow(base, Math.floor(resultOrder));
-
-            if (Math.abs(value) > 0 && Math.abs(value) < 1) {
-                return {
-                    value: value.toFixed(scale),
-                    scientificNotation: value.toExponential(scale),
-                    order: 0,
-                    scale,
-                };
-            }
-
-            // fix the precision edge case
-            const valueCeiled = Math.ceil(resultValue);
-            if (valueCeiled % base === 0) {
-                resultValue = valueCeiled / base;
-                resultOrder += 1;
-            }
-
-            strValue = resultValue.toFixed(scale);
-
-            // remove trailing zeros
-            strValue = parseFloat(strValue).toString();
+            strValue = parseFloat(result.value.toFixed(scale)).toString();
         } else {
-            resultOrder = 0;
+            result.order = 0;
             strValue = value.toString();
         }
 
         return {
             value: strValue,
-            order: resultOrder,
+            order: result.order,
             scientificNotation: value?.toExponential(scale),
             scale,
         };
@@ -195,6 +249,7 @@ export class UnitConversionService {
     public getUnitDisplayBaseValue(unit: UnitOption): string {
         return unitConversionConstants[unit][0];
     }
+
     /**
      * Gets the converted value display string in scientific notation
      *
