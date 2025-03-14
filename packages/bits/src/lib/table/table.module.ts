@@ -88,6 +88,5 @@ const DECLARATIONS_EXPORTS: Array<Type<any> | any[]> = [
     ],
     declarations: DECLARATIONS_EXPORTS,
     exports: DECLARATIONS_EXPORTS,
-    providers: [],
 })
 export class NuiTableModule {}

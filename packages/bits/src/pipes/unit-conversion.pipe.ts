@@ -20,7 +20,10 @@
 
 import { Pipe, PipeTransform } from "@angular/core";
 
-import { UnitBase, UnitOption } from "../constants/unit-conversion.constants";
+import {
+    unitConversionBases,
+    UnitOption,
+} from "../constants/unit-conversion.constants";
 import { UnitConversionService } from "../services/unit-conversion.service";
 
 /**
@@ -52,7 +55,7 @@ export class UnitConversionPipe implements PipeTransform {
         plusSign: boolean = false,
         unit: UnitOption = "bytes"
     ): string {
-        const base = unit === "bytes" ? UnitBase.Bytes : UnitBase.Standard;
+        const base = unitConversionBases[unit];
         const result = this.unitConversionService.convert(
             value as number,
             base,
