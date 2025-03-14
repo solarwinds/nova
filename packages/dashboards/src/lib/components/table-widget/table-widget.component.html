@@ -47,7 +47,7 @@
                 [selection]="selection"
                 [selectionConfig]="configuration?.selectionConfiguration"
                 [totalItems]="totalItems"
-                [paginatorUsed]="hasPaginator && configuration?.selectionConfiguration.allPages"
+                [paginatorUsed]="hasPaginator && configuration?.selectionConfiguration?.allPages"
                 [dataSource]="hasVirtualScroll ? virtualScrollAddon.visibleItems : tableData"
                 [sortedColumn]="sortedColumn"
                 (sortOrderChanged)="onSortOrderChanged($event)"
