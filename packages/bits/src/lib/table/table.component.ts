@@ -258,8 +258,10 @@ export class TableComponent<T>
                     }
                 );
             const parentWidth =
-                this._elementRef.nativeElement.parentElement.getBoundingClientRect()
-                    .width;
+                this._elementRef.nativeElement.parentElement.getBoundingClientRect().width ?
+                    this._elementRef.nativeElement.parentElement.getBoundingClientRect()
+                        .width : this._elementRef.nativeElement.parentElement.parentElement.getBoundingClientRect()
+                        .width;
             this.layoutFixed = true;
             this.tableStateHandlerService.tableParentWidth = parentWidth;
         }
