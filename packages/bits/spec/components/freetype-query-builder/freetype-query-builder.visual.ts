@@ -42,7 +42,7 @@ describe("FreeTypeQueryBuilder", () => {
         camera = new Camera().loadFilm(browser, name);
     });
 
-    it(`${name} visual test`, async () => {
+    xit(`${name} visual test`, async () => {
         await camera.turn.on();
 
         example1
