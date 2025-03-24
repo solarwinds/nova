@@ -64,7 +64,7 @@ export class ConfiguratorComponent implements OnInit, OnDestroy {
     @Output() result = new EventEmitter<IWidget | null>();
     @Output() formPortalAttached = new EventEmitter<ComponentRef<any>>();
 
-    @ViewChild("previewPizzagnaComponent", { static: true })
+    @ViewChild("previewPizzagnaComponent", { static: false })
     previewPizzagnaComponent: PizzagnaComponent;
 
     public submitError = new Subject<void>();
@@ -97,6 +97,10 @@ export class ConfiguratorComponent implements OnInit, OnDestroy {
     }
 
     // -----
+
+    public getPreview(): PizzagnaComponent {
+        return this.previewPizzagnaComponent;
+    }
 
     public handleSubmitError(): void {
         this.submitError.next();
