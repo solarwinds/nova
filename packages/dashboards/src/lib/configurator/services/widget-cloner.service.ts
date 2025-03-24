@@ -21,13 +21,16 @@
 import { ComponentRef, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 
-import { ComponentPortalService } from "../../pizzagna/services/component-portal.service";
-import { WidgetClonerComponent } from "../components/widget-cloner/widget-cloner.component";
 import { ConfiguratorService } from "./configurator.service";
 import { IComponentPortalBundle, IWidgetSelector } from "./types";
+import { ComponentPortalService } from "../../pizzagna/services/component-portal.service";
+import { WidgetClonerComponent } from "../components/widget-cloner/widget-cloner.component";
 
 @Injectable()
 export class WidgetClonerService {
+
+    private ref: ComponentRef<WidgetClonerComponent>;
+
     constructor(
         private configuratorService: ConfiguratorService,
         private componentPortalService: ComponentPortalService
@@ -45,11 +48,17 @@ export class WidgetClonerService {
                 ) => {
                     componentRef.instance.cloneSelectionComponentType =
                         cloner.widgetSelectionComponentType;
+                    setTimeout(() => {
+                        this.ref = componentRef;
+                    });
                 },
             };
 
             cloner.portalBundle = formPortal;
         }
+
+        cloner.previewPizzagnaComponent = () => this.ref.instance.configurator.getPreview();
+
 
         return this.configuratorService.open(cloner);
     }

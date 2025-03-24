@@ -24,6 +24,9 @@ import { Observable } from "rxjs";
 
 import { DashboardComponent } from "../../components/dashboard/dashboard.component";
 import { IWidget } from "../../components/widget/types";
+import {
+    PizzagnaComponent,
+} from "../../pizzagna/components/pizzagna/pizzagna.component";
 import { IPizzagna } from "../../types";
 
 export interface IComponentPortalBundle<T> {
@@ -34,6 +37,7 @@ export interface IComponentPortalBundle<T> {
 export interface IConfiguratorSource {
     dashboardComponent: DashboardComponent;
     widget?: IWidget;
+    previewPizzagnaComponent?: () => PizzagnaComponent;
 }
 
 export interface IConfigurator<T = any> extends IConfiguratorSource {
