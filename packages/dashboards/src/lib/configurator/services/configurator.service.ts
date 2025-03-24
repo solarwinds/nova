@@ -66,6 +66,7 @@ export class ConfiguratorService {
     public open(configurator: IConfigurator): Observable<void> {
         const source: IConfiguratorSource = {
             dashboardComponent: configurator.dashboardComponent,
+            previewPizzagnaComponent: configurator.previewPizzagnaComponent,
             widget: cloneDeep(configurator.widget),
         };
 
