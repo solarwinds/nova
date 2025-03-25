@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable } from "@angular/core";
+import { ComponentRef, Injectable } from "@angular/core";
 import cloneDeep from "lodash/cloneDeep";
 import { Observable } from "rxjs";
 
@@ -31,6 +31,8 @@ import { IComponentPortalBundle, IWidgetEditor } from "./types";
 
 @Injectable()
 export class WidgetEditorService {
+    private ref: ComponentRef<WidgetEditorComponent>;
+
     constructor(
         private configuratorService: ConfiguratorService,
         private componentPortalService: ComponentPortalService
@@ -48,6 +50,9 @@ export class WidgetEditorService {
                     editorComponent.formPizzagna = widgetEditor.formPizzagna;
                     editorComponent.formRoot = widgetEditor.paths?.root;
                     editorComponent.changeDetector.markForCheck();
+                    setTimeout(() => {
+                        this.ref = componentRef;
+                    });
                 },
             };
 
@@ -60,7 +65,8 @@ export class WidgetEditorService {
         // wipe the data layer of the preview
         delete widgetClone.pizzagna[PizzagnaLayer.Data];
         widgetEditor.widget = widgetClone;
-
+        widgetEditor.previewPizzagnaComponent = () =>
+            this.ref.instance.configurator.getPreview();
         return this.configuratorService.open(widgetEditor);
     }
 }
