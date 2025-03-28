@@ -35,6 +35,7 @@ export interface IKpiData {
     fontSize?: string;
     numberFormat?: string;
     link?: string;
+    margin?: number;
     [key: string]: any;
 }
 

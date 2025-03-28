@@ -82,11 +82,16 @@
     &__zoom-container {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 30% 40% 30%;
         width: 100%;
         height: 100%;
     }
+    &__zoom-container:has(.nui-kpi-indicator__zoom-container__row:nth-child(3)) {
+        grid-template-rows: 30% 40% 30%;
+    }
 
+    &__zoom-container:not(:has(.nui-kpi-indicator__zoom-container__row:nth-child(3))) {
+        grid-template-rows: 30% 70%;
+    }
     &--interactive {
         cursor: pointer;
 

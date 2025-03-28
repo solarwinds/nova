@@ -13,99 +13,65 @@
 </div>
 
 <ng-template #kpiContent>
-    <div
-        class="nui-kpi-indicator__background"
-        [class.nui-kpi-indicator--interactive]="interactive"
-        [ngStyle]="{
-            'background-color': backgroundColor || widgetData?.backgroundColor
-        }"
-    ></div>
-    <div
-        class="nui-kpi-indicator__text"
-        [ngStyle]="{
-            color:
-                widgetData?.textColor ||
-                backgroundColor ||
-                widgetData?.backgroundColor ||
-                defaultColor
-        }"
-    >
+    <div class="nui-kpi-indicator__background"
+         [class.nui-kpi-indicator--interactive]="interactive"
+         [ngStyle]="{'background-color': backgroundColor || widgetData?.backgroundColor}">
+    </div>
+    <div class="nui-kpi-indicator__text"
+         [ngStyle]="{'color': widgetData?.textColor || backgroundColor ||  widgetData?.backgroundColor || defaultColor}">
         <div class="nui-kpi-indicator__zoom-container">
-            <div
-                class="nui-kpi-indicator__description"
-                [title]="widgetData?.label"
-            >
-                <span
-                    nuiZoomContent
-                    [useZoom]="false"
-                    [minScale]="0.5"
-                    [scaleIN$]="getScaleBroker('label')?.out$"
-                    [scaleOUT$]="getScaleBroker('label')?.in$"
-                    >{{ widgetData?.label }}</span
-                >
+            <div class="nui-kpi-indicator__description nui-kpi-indicator__zoom-container__row"
+                 [title]="widgetData?.label">
+                    <span nuiZoomContent
+                          [useZoom]="false"
+                          [minScale]="0.5"
+                          [scaleIN$]="getScaleBroker('label')?.out$"
+                          [scaleOUT$]="getScaleBroker('label')?.in$"
+                    >{{widgetData?.label}}</span>
             </div>
 
-            <ng-container
-                *ngIf="configuration?.formatters?.Value; else kpiValueRaw"
-                nuiComponentPortal
-                #componentPortal="nuiComponentPortal"
-                componentId="KpiValueFormatter"
-                [componentType]="
-                    configuration?.formatters?.Value?.formatter?.componentType
-                "
-                [properties]="formattersProperties.Value"
-            >
-                <div class="nui-kpi-indicator__value">
-                    <span
-                        nuiZoomContent
-                        [ngClass]="
-                            configuration?.formatters?.Value?.formatter
-                                ?.componentType === 'IconFormatterComponent'
-                                ? 'without-filter'
-                                : ''
-                        "
-                        [useZoom]="false"
-                        [scaleIN$]="getScaleBroker('value')?.out$"
-                        [scaleOUT$]="getScaleBroker('value')?.in$"
-                    >
-                        <ng-template
-                            [cdkPortalOutlet]="componentPortal.portal"
-                            (attached)="componentPortal.attached($event)"
-                        ></ng-template>
-                    </span>
+            <ng-container *ngIf="configuration?.formatters?.Value; else kpiValueRaw"
+                          nuiComponentPortal
+                          #componentPortal="nuiComponentPortal"
+                          componentId="KpiValueFormatter"
+                          [componentType]="configuration?.formatters?.Value?.formatter?.componentType"
+                          [properties]="formattersProperties.Value">
+                <div class="nui-kpi-indicator__value nui-kpi-indicator__zoom-container__row">
+                            <span nuiZoomContent
+                                  [ngClass]="configuration?.formatters?.Value?.formatter?.componentType === 'IconFormatterComponent' ? 'without-filter' : ''"
+                                  [useZoom]="false"
+                                  [margin]="widgetData.margin ?? 2"
+                                  [scaleIN$]="getScaleBroker('value')?.out$"
+                                  [scaleOUT$]="getScaleBroker('value')?.in$">
+                                <ng-template
+                                    [cdkPortalOutlet]="componentPortal.portal"
+                                    (attached)="componentPortal.attached($event)"></ng-template>
+                            </span>
                 </div>
             </ng-container>
 
-            <div class="nui-kpi-indicator__units" [title]="widgetData?.units">
-                <span
-                    nuiZoomContent
-                    [useZoom]="false"
-                    [scaleIN$]="getScaleBroker('units')?.out$"
-                    [scaleOUT$]="getScaleBroker('units')?.in$"
-                    [minScale]="0.5"
-                    >{{ widgetData?.units }}</span
-                >
+            <div class="nui-kpi-indicator__units nui-kpi-indicator__zoom-container__row"
+                 *ngIf="widgetData?.units"
+                 [title]="widgetData?.units">
+                    <span nuiZoomContent
+                          [useZoom]="false"
+                          [scaleIN$]="getScaleBroker('units')?.out$"
+                          [scaleOUT$]="getScaleBroker('units')?.in$"
+                          [minScale]="0.5">{{widgetData?.units}}</span>
             </div>
         </div>
     </div>
 </ng-template>
 
 <ng-template #kpiValueRaw>
-    <div
-        class="nui-kpi-indicator__value"
-        [style.font-size]="widgetData?.fontSize"
-        [title]="widgetData?.value"
-    >
-        <div *ngIf="showEmpty" class="is-empty">
-            <nui-image image="no-data-to-show"></nui-image>
-        </div>
-        <span
-            nuiZoomContent
-            [useZoom]="false"
-            [scaleIN$]="getScaleBroker('value')?.out$"
-            [scaleOUT$]="getScaleBroker('value')?.in$"
-        >
-            {{ showEmpty ? "" : widgetData?.value }}</span
-        >
+    <div class="nui-kpi-indicator__value nui-kpi-indicator__zoom-container__row"
+         [style.font-size]="widgetData?.fontSize"
+         [title]="widgetData?.value">
+   <span nuiZoomContent
+         [useZoom]="false"
+         [margin]="widgetData.margin ?? 2"
+         [scaleIN$]="getScaleBroker('value')?.out$"
+         [scaleOUT$]="getScaleBroker('value')?.in$">
+       {{widgetData?.value}}</span>
     </div>
 </ng-template>
