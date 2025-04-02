@@ -94,7 +94,7 @@ export class WidgetEditorComponent
         public changeDetector: ChangeDetectorRef,
         private formBuilder: FormBuilder,
         private previewService: PreviewService,
-        private configurator: ConfiguratorComponent
+        public configurator: ConfiguratorComponent
     ) {
         this.form = this.formBuilder.group({});
     }
