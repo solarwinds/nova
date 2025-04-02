@@ -260,24 +260,9 @@ export class TableWidgetComponent
         }
 
         if (changes.configuration) {
-            // Note: We don't have to trigger sorting in case sortable flag is false.
-            // Note: Using true as a default sortable value to maintain backward compatibility
-            if (
-                this.isSortByUpdated(changes.configuration) &&
-                (changes.configuration.currentValue.sortable ?? true)
-            ) {
-                const sortedColumn = {
-                    direction: changes.configuration.currentValue
-                        .sorterConfiguration.descendantSorting
-                        ? SorterDirection.descending
-                        : SorterDirection.ascending,
-                    sortBy: changes.configuration.currentValue
-                        .sorterConfiguration.sortBy,
-                };
-                this.onSortOrderChanged(sortedColumn);
-            }
-
+            this.resolveSortBy(changes);
             this.resolveScrollType(changes);
+            this.resolveSearch(changes);
         }
 
         if (changes.totalItems) {
@@ -285,7 +270,7 @@ export class TableWidgetComponent
         }
     }
 
-    public resolveScrollType(changes: SimpleChanges) {
+    public resolveScrollType(changes: SimpleChanges): void {
         // Since removing "hasVirtualScroll" from configuration would cause breaking changes, it is used as primary source of truth
         const newHasVirtualScroll = get(
             changes,
@@ -622,7 +607,7 @@ export class TableWidgetComponent
             include: [],
             exclude: [],
             isAllPages: false,
-        }
+        };
     }
 
     public getColumnAlignment(
@@ -681,7 +666,7 @@ export class TableWidgetComponent
 
     /**
      * Checks if column id has changed or if sorting order has changed
-     * @param state
+     * @param configuration
      */
     private isSortByUpdated(configuration: SimpleChange) {
         const oldSorterConfiguration =
@@ -779,7 +764,9 @@ export class TableWidgetComponent
     }
 
     public onPagerAction(page: any): void {
-        this.eventBus.getStream(SET_NEXT_PAGE).next({ payload: page, id: this.componentId });
+        this.eventBus
+            .getStream(SET_NEXT_PAGE)
+            .next({ payload: page, id: this.componentId });
     }
 
     private initPrefetchAddon() {
@@ -789,6 +776,38 @@ export class TableWidgetComponent
             this.paginatorAddon.initPaginator(this);
         } else {
             this.virtualScrollAddon.initVirtualScroll(this);
+        }
+    }
+
+    private resolveSortBy(changes: SimpleChanges): void {
+        // Note: We don't have to trigger sorting in case sortable flag is false.
+        // Note: Using true as a default sortable value to maintain backward compatibility
+        if (
+            this.isSortByUpdated(changes.configuration) &&
+            (changes.configuration.currentValue.sortable ?? true)
+        ) {
+            const sortedColumn = {
+                direction: changes.configuration.currentValue
+                    .sorterConfiguration.descendantSorting
+                    ? SorterDirection.descending
+                    : SorterDirection.ascending,
+                sortBy: changes.configuration.currentValue.sorterConfiguration
+                    .sortBy,
+            };
+            this.onSortOrderChanged(sortedColumn);
+        }
+    }
+
+    private resolveSearch(changes: SimpleChanges) {
+        if (
+            !isEqual(
+                (changes.configuration.currentValue as ITableWidgetConfig)
+                    .searchConfiguration,
+                (changes.configuration.previousValue as ITableWidgetConfig)
+                    .searchConfiguration
+            )
+        ) {
+           this.searchAddon.initWidget(this);
         }
     }
 }
