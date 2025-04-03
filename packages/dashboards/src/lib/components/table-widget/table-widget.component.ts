@@ -802,9 +802,9 @@ export class TableWidgetComponent
         if (
             !isEqual(
                 (changes.configuration.currentValue as ITableWidgetConfig)
-                    .searchConfiguration,
+                    ?.searchConfiguration,
                 (changes.configuration.previousValue as ITableWidgetConfig)
-                    .searchConfiguration
+                    ?.searchConfiguration
             )
         ) {
            this.searchAddon.initWidget(this);
