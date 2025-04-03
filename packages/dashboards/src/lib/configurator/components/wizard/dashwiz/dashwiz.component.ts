@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { ScrollDispatcher } from "@angular/cdk/overlay";
 import {
     AfterContentInit,
     AfterViewChecked,
@@ -65,8 +66,7 @@ import { IDashwizComponent } from "./model";
     host: { class: "flex-grow-1 overflow-auto" },
 })
 export class DashwizComponent
-    implements
-        OnInit,
+    implements OnInit,
         AfterContentInit,
         AfterViewChecked,
         OnDestroy,
@@ -143,6 +143,7 @@ export class DashwizComponent
     public stepLineWidth: number = 65;
     public stepIndex: number;
     public buttonProperties: IDashwizButtonsComponent;
+    public scrolled = false;
 
     private stepNavigatedEvent: IDashwizStepNavigatedEvent;
     private previousStepIndex = 0;
@@ -154,7 +155,8 @@ export class DashwizComponent
         private changeDetector: ChangeDetectorRef,
         private componentFactoryResolver: ComponentFactoryResolver,
         private logger: LoggerService,
-        private dashwizService: DashwizService
+        private dashwizService: DashwizService,
+        private scrollDispatcher: ScrollDispatcher
     ) {
         if (dashwizService) {
             dashwizService.component = this;
@@ -162,6 +164,14 @@ export class DashwizComponent
     }
 
     public ngOnInit(): void {
+        this.scrollDispatcher.scrolled().subscribe((event) => {
+            const element = event?.getElementRef()?.nativeElement;
+
+            if (element?.classList?.contains("configurator-scrollable")) {
+                this.scrolled = !!element?.scrollTop;
+            }
+        })
+
         this.buttonComponentTypes = this.buttonComponentTypes || [
             DashwizButtonsComponent.lateLoadKey,
         ];

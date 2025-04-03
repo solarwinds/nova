@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { CdkScrollable, ScrollDispatcher } from "@angular/cdk/overlay";
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
@@ -47,6 +48,7 @@ import { IDashwizStepNavigatedEvent, IDashwizWaitEvent } from "../wizard/types";
 @Component({
     selector: "nui-widget-cloner",
     templateUrl: "./widget-cloner.component.html",
+    styleUrls: ["./widget-cloner.component.less"],
     host: { class: "d-flex flex-column h-100" },
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -69,6 +71,7 @@ export class WidgetClonerComponent
     private readonly destroy$ = new Subject<void>();
     private resetForm$ = new Subject<void>();
     public busy = false;
+    public scrolled = false;
     public isFormDisplayed = false;
 
     constructor(
@@ -76,7 +79,8 @@ export class WidgetClonerComponent
         public configurator: ConfiguratorComponent,
         private previewService: PreviewService,
         private formBuilder: FormBuilder,
-        private widgetTypesService: WidgetTypesService
+        private widgetTypesService: WidgetTypesService,
+        private scrollDispatcher: ScrollDispatcher
     ) {
         this.resetForm();
     }
@@ -98,6 +102,17 @@ export class WidgetClonerComponent
     public ngAfterViewInit(): void {
         // trigger dashwiz to update its button configuration
         this.changeDetector.markForCheck();
+
+        // Scroll shadows
+        this.scrollDispatcher.scrolled()
+            .subscribe((event: CdkScrollable | void) => {
+                const element = event?.getElementRef()?.nativeElement;
+
+                if (element?.classList?.contains("configurator-scrollable")) {
+                    this.scrolled = !!element?.scrollTop;
+                    this.changeDetector.detectChanges();
+                }
+            });
     }
 
     public ngOnDestroy(): void {
