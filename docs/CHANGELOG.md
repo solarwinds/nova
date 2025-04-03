@@ -1,10 +1,5 @@
 # Changelog
 
-## [16.0.9.1] 📅 2025-04-03
-### Bugfix
-- `@nova-ui/bits` | Removed inline-block from sorter compoenent causing input style break
-- `@nova-ui/dashboard` | Raised scroll shadow in the widget cloner above the content
-
 ## [16.0.6] 📅 2025-03-12
 ### Added
 - `@nova-ui/bits` | Added unit conversion for milliseconds
