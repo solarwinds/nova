@@ -1,28 +1,26 @@
 <div>
     <label *ngIf="caption" class="nui-sorter__label">{{ caption }}</label>
-    <div class="btn-group nui-sorter__popup">
-        <div class="d-inline-block" #toggleRef>
-            <button
-                nui-button
-                type="button"
-                class="nui-sorter__toggle-button"
-                [icon]="getSortIcon()"
-                [ariaLabel]="getAriaLabelForSortingButton()"
-                (click)="toggleSortDirection()"
-            >
-                <span class="nui-sorter__display-value">{{
-                    getSelectedItemTitle()
-                }}</span>
-            </button>
-            <button
-                nui-button
-                type="button"
-                class="nui-selector__toggle"
-                (click)="toggleSorterMenu()"
-                ariaLabel="Open Sorter Menu"
-                icon="caret-down"
-            ></button>
-        </div>
+    <div class="btn-group nui-sorter__popup" #toggleRef>
+        <button
+            nui-button
+            type="button"
+            class="nui-sorter__toggle-button"
+            [icon]="getSortIcon()"
+            [ariaLabel]="getAriaLabelForSortingButton()"
+            (click)="toggleSortDirection()"
+        >
+            <span class="nui-sorter__display-value">
+                {{ getSelectedItemTitle() }}
+            </span>
+        </button>
+        <button
+            nui-button
+            type="button"
+            class="nui-selector__toggle"
+            (click)="toggleSorterMenu()"
+            ariaLabel="Open Sorter Menu"
+            icon="caret-down"
+        ></button>
     </div>
 
     <div #popupArea></div>

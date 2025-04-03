@@ -1,8 +1,10 @@
 <nui-configurator-heading
     configuratorTitle="Creating Widget"
     i18n-configuratorTitle
+    class="header"
     (close)="onCancel()"
     [disableCloseButton]="busy"
+    [class.shadow]="scrolled"
 ></nui-configurator-heading>
 <nui-dashwiz
     [hideHeader]="true"

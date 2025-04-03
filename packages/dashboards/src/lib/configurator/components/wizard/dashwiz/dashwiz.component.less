@@ -166,5 +166,10 @@
         .setCssVariable(background-color, nui-color-bg-content);
         border-top: solid 1px
             var(--nui-color-line-default, @nui-color-line-default);
+        transition: box-shadow 0.3s ease-in-out;
+
+        &.shadow {
+            box-shadow: @nui-shadow-stronger;
+        }
     }
 }

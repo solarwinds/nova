@@ -33,8 +33,8 @@
                                         class="nui-dashwiz__header-step-title"
                                         #stepTitle
                                     >
-                                        {{ step.title }}</span
-                                    >
+                                        {{ step.title }}
+                                    </span>
                                     <div
                                         class="nui-dashwiz__header-step-link-container"
                                     >
@@ -74,12 +74,15 @@
         </ul>
     </div>
 
-    <div class="nui-scroll-shadows flex-grow-1 overflow-auto">
+    <div class="flex-grow-1 overflow-auto">
         <ng-content></ng-content>
         <ng-template #container></ng-template>
     </div>
 
-    <div class="nui-dashwiz__footer">
+    <div
+        class="nui-dashwiz__footer"
+        [class.shadow]="scrolled"
+    >
         <ng-container
             nuiComponentPortal
             componentId="dashwizButtons"
