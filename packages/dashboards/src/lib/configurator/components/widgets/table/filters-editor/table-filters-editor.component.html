@@ -36,9 +36,8 @@
             </div>
         </div>
     </div>
-    <div class="p-5">
+    <div class="p-5" *ngIf="!sortableColumns.length">
         <nui-message
-            *ngIf="!sortableColumns.length"
             type="info"
             [allowDismiss]="false"
             i18n
