@@ -55,6 +55,7 @@ import { ConfiguratorComponent } from "../components/configurator/configurator.c
 import { ConfiguratorService } from "./configurator.service";
 import { IConfigurator } from "./types";
 
+// todo clean up
 class MockComponentFactoryResolver {
     constructor(
         private configuratorComponentRef: ComponentRef<ConfiguratorComponent>
@@ -140,9 +141,6 @@ describe("ConfiguratorService > ", () => {
         widgetTypesService.registerWidgetType("proportional", 1, proportional);
 
         service = new ConfiguratorService(
-            new MockComponentFactoryResolver(
-                configComponentFixture.componentRef
-            ) as ComponentFactoryResolver,
             widgetTypesService,
             new MockInjector(),
             appRef,
