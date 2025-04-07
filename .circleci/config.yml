@@ -501,9 +501,9 @@ jobs:
                   command: yarn run test
             - store_test_results:
                   path: packages/dashboards/test-results
-
     dashboards-e2e-test:
         executor: ubuntu
+        resource_class: medium+
         working_directory: ~/nova
         environment:
             PROJECT_DIR: ~/nova/packages/dashboards
@@ -517,7 +517,7 @@ jobs:
                   name: Check git diff to see if builds should skip e2e
                   working_directory: ~/nova/packages/dashboards
                   command: |
-                      if [ -f package-cached ]; then
+                      if [ -f packages/dashboards/package-cached ] && [ "$USE_CACHE" == "true" ]; then
                           echo "This package was restored from cache so we're skipping e2e tests"
                           circleci step halt
                       fi

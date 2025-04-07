@@ -26,7 +26,7 @@ import {
     Component,
     Input,
     OnDestroy,
-    OnInit, ViewContainerRef,
+    OnInit,
 } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import cloneDeep from "lodash/cloneDeep";
@@ -67,12 +67,11 @@ export class WidgetClonerComponent
             busyState: { busy: false },
             allowStepChange: true,
         });
-
-    private readonly destroy$ = new Subject<void>();
-    private resetForm$ = new Subject<void>();
     public busy = false;
     public scrolled = false;
     public isFormDisplayed = false;
+    private readonly destroy$ = new Subject<void>();
+    private resetForm$ = new Subject<void>();
 
     constructor(
         public changeDetector: ChangeDetectorRef,
@@ -80,8 +79,7 @@ export class WidgetClonerComponent
         private previewService: PreviewService,
         private formBuilder: FormBuilder,
         private widgetTypesService: WidgetTypesService,
-        private scrollDispatcher: ScrollDispatcher,
-        public viewContainerRef: ViewContainerRef
+        private scrollDispatcher: ScrollDispatcher
     ) {
         this.resetForm();
     }
@@ -105,7 +103,8 @@ export class WidgetClonerComponent
         this.changeDetector.markForCheck();
 
         // Scroll shadows
-        this.scrollDispatcher.scrolled()
+        this.scrollDispatcher
+            .scrolled()
             .subscribe((event: CdkScrollable | void) => {
                 const element = event?.getElementRef()?.nativeElement;
 

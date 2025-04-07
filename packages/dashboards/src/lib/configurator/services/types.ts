@@ -19,14 +19,12 @@
 //  THE SOFTWARE.
 
 import { ComponentPortal } from "@angular/cdk/portal";
-import {ComponentRef, ViewContainerRef} from "@angular/core";
+import { ComponentRef } from "@angular/core";
 import { Observable } from "rxjs";
 
 import { DashboardComponent } from "../../components/dashboard/dashboard.component";
 import { IWidget } from "../../components/widget/types";
-import {
-    PizzagnaComponent,
-} from "../../pizzagna/components/pizzagna/pizzagna.component";
+import { PizzagnaComponent } from "../../pizzagna/components/pizzagna/pizzagna.component";
 import { IPizzagna } from "../../types";
 
 export interface IComponentPortalBundle<T> {
@@ -43,7 +41,6 @@ export interface IConfiguratorSource {
 export interface IConfigurator<T = any> extends IConfiguratorSource {
     trySubmit?: WidgetUpdateOperation;
     portalBundle?: IComponentPortalBundle<T>;
-    view?: ViewContainerRef;
 }
 
 export interface IWidgetSelector<T = any> extends IConfigurator<T> {
