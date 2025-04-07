@@ -27,7 +27,7 @@ import {
     Injector,
     Optional,
     Renderer2,
-    RendererFactory2, ViewContainerRef,
+    RendererFactory2,
 } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
 import cloneDeep from "lodash/cloneDeep";
@@ -52,10 +52,10 @@ export class ConfiguratorService {
     private close$: Subject<void> = new Subject<void>();
 
     constructor(
+        private componentFactoryResolver: ComponentFactoryResolver,
         private widgetTypesService: WidgetTypesService,
         private injector: Injector,
         private appRef: ApplicationRef,
-        public viewContainerRef: ViewContainerRef,
         private logger: LoggerService,
         rendererFactory: RendererFactory2,
         @Optional() private router: Router
@@ -186,9 +186,11 @@ export class ConfiguratorService {
             );
 
     private appendComponentToBody(): ComponentRef<ConfiguratorComponent> {
-        const componentRef: ComponentRef<ConfiguratorComponent> = this.viewContainerRef.createComponent(
-            ConfiguratorComponent, {injector: this.injector});
-
+        const factory = this.componentFactoryResolver.resolveComponentFactory(
+            ConfiguratorComponent
+        );
+        const componentRef: ComponentRef<ConfiguratorComponent> =
+            factory.create(this.injector);
 
         this.appRef.attachView(componentRef.hostView);
         this.renderer.appendChild(

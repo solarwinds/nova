@@ -55,6 +55,7 @@ export class WidgetClonerService {
             };
 
             cloner.portalBundle = formPortal;
+            cloner.portalBundle = formPortal;
         }
 
         cloner.previewPizzagnaComponent = () => this.ref.instance.configurator.getPreview();

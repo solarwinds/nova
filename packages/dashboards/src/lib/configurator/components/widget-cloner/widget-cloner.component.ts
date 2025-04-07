@@ -26,7 +26,7 @@ import {
     Component,
     Input,
     OnDestroy,
-    OnInit,
+    OnInit, ViewContainerRef,
 } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import cloneDeep from "lodash/cloneDeep";
@@ -58,8 +58,7 @@ export class WidgetClonerComponent
     public static lateLoadKey = "WidgetClonerComponent";
 
     @Input() formPizzagna?: IPizzagna;
-
-    cloneSelectionComponentType: Function;
+    @Input() cloneSelectionComponentType: Function;
 
     public form: FormGroup;
     public widgetTemplate: IWidget;
@@ -81,7 +80,8 @@ export class WidgetClonerComponent
         private previewService: PreviewService,
         private formBuilder: FormBuilder,
         private widgetTypesService: WidgetTypesService,
-        private scrollDispatcher: ScrollDispatcher
+        private scrollDispatcher: ScrollDispatcher,
+        public viewContainerRef: ViewContainerRef
     ) {
         this.resetForm();
     }
@@ -98,15 +98,6 @@ export class WidgetClonerComponent
             .subscribe(() => {
                 this.toggleBusy();
             });
-    }
-
-    public ngOnChanges(c: any){
-        console.log('on changes',c);
-    }
-
-    public setCloneComponent(c: Function){
-        console.log('set', c)
-        this.cloneSelectionComponentType = c;
     }
 
     public ngAfterViewInit(): void {

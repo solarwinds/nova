@@ -25,6 +25,7 @@ import { Component } from "@angular/core";
     templateUrl: "./embedded-content-docs.component.html",
 })
 export class EmbeddedContentDocsComponent {
+    // todo check docs
     public embeddedContentWidgetFileText = ""
         // require("!!raw-loader!../../../../../../src/lib/widget-types/embedded-content/embedded-content-widget.ts")
         //     .default;

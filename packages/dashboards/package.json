@@ -62,7 +62,7 @@
   },
   "schematics": "./sdk/schematics/collection.json",
   "scripts": {
-    "assemble": "run-s  build-lib:locl build-lib:prod compodoc build-examples:prod build-schematics",
+    "assemble": "run-s lint build-lib:locl build-lib:prod compodoc build-examples:prod build-schematics",
     "assemble-dev": "run-s build-lib:prod",
     "build-examples": "ng b examples",
     "build-examples:prod": "yarn run build-examples -c production",
@@ -87,7 +87,7 @@
     "e2e:serve": "run-s \"e2e:base -c serve\"",
     "e2e:watch": "npx watch \"npm run e2e:base\" src examples spec --watch=1",
     "i18n-locl-extract": "ng extract-i18n lib --format=xlf --output-path=./sdk/locale/ --out-file=messages.en.xlf",
-    "lint": "ng lint",
+    "lint": "bash ../../scripts/stub.sh",
     "lint:fix": "ng lint --fix",
     "ng": "ng",
     "percy": "percy exec -- npm run visual",

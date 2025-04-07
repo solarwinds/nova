@@ -26,7 +26,7 @@ import {
     ComponentRef,
     Injector,
     Renderer2,
-    RendererFactory2, ViewContainerRef,
+    RendererFactory2,
 } from "@angular/core";
 import {
     ComponentFixture,
@@ -55,7 +55,6 @@ import { ConfiguratorComponent } from "../components/configurator/configurator.c
 import { ConfiguratorService } from "./configurator.service";
 import { IConfigurator } from "./types";
 
-// todo clean up
 class MockComponentFactoryResolver {
     constructor(
         private configuratorComponentRef: ComponentRef<ConfiguratorComponent>
@@ -139,12 +138,14 @@ describe("ConfiguratorService > ", () => {
         widgetTypesService = TestBed.inject(WidgetTypesService);
         widgetTypesService.registerWidgetType("table", 2, table);
         widgetTypesService.registerWidgetType("proportional", 1, proportional);
-        const view = TestBed.inject(ViewContainerRef);
+
         service = new ConfiguratorService(
+            new MockComponentFactoryResolver(
+                configComponentFixture.componentRef
+            ) as ComponentFactoryResolver,
             widgetTypesService,
             new MockInjector(),
             appRef,
-            view,
             mockLoggerService,
             new MockRendererFactory() as RendererFactory2,
             router

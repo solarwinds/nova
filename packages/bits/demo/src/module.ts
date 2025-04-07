@@ -46,6 +46,8 @@ import {
     declarations: [AppComponent],
     providers: [
         { provide: TRANSLATIONS_FORMAT, useValue: "xlf" },
+        // check regression
+        // { provide: TRANSLATIONS, useValue: translationLibrary },
     ],
     bootstrap: [AppComponent],
 })

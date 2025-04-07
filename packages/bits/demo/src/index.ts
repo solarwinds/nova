@@ -25,6 +25,9 @@ import { NuiDemoModule } from "./module";
 
 void platformBrowserDynamic().bootstrapModule(NuiDemoModule, {
     providers: [
+        // todo check regression
+        // needed for JIT compiler
+        // { provide: TRANSLATIONS, useValue: translationLibrary },
         { provide: TRANSLATIONS_FORMAT, useValue: "xlf" },
     ],
 });

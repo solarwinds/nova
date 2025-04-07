@@ -28,7 +28,8 @@ import { Platform } from "@angular/cdk/platform";
 import { CdkVirtualForOf, ViewportRuler } from "@angular/cdk/scrolling";
 import {
     _COALESCED_STYLE_SCHEDULER,
-    _CoalescedStyleScheduler, CDK_TABLE,
+    _CoalescedStyleScheduler,
+    CDK_TABLE,
     CDK_TABLE_TEMPLATE,
     CdkTable,
     RenderRow,
@@ -92,6 +93,8 @@ import { TableSelectionConfig, TableSelectionMode } from "./types";
             provide: _COALESCED_STYLE_SCHEDULER,
             useClass: _CoalescedStyleScheduler,
         },
+        // check open issue
+        // https://github.com/solarwinds/nova/issues/738
         { provide: CdkTable, useExisting: TableComponent },
         { provide: CDK_TABLE, useExisting: TableComponent },
     ],

@@ -6,7 +6,6 @@
     [disableCloseButton]="busy"
     [class.shadow]="scrolled"
 ></nui-configurator-heading>
-{{!!widgetTemplate}}
 <nui-dashwiz
     [hideHeader]="true"
     [canProceed]="!!widgetTemplate"
@@ -27,7 +26,6 @@
     <div class="p-4 h-100">
         <ng-container
             nuiComponentPortal
-            *ngIf="cloneSelectionComponentType"
             [componentType]="cloneSelectionComponentType"
             [outputs]="['widgetSelected']"
             (output)="onSelect($event.payload)"

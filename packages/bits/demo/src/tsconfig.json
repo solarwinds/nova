@@ -6,7 +6,6 @@
             "@nova-ui/bits": ["../../src/public_api.ts"]
         },
         "skipLibCheck": true,
-        "target": "ES2022"
     },
     "resolveJsonModule": true,
     "esModuleInterop": true,

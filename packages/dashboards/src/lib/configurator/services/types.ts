@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { ComponentPortal } from "@angular/cdk/portal";
-import { ComponentRef } from "@angular/core";
+import {ComponentRef, ViewContainerRef} from "@angular/core";
 import { Observable } from "rxjs";
 
 import { DashboardComponent } from "../../components/dashboard/dashboard.component";
@@ -43,6 +43,7 @@ export interface IConfiguratorSource {
 export interface IConfigurator<T = any> extends IConfiguratorSource {
     trySubmit?: WidgetUpdateOperation;
     portalBundle?: IComponentPortalBundle<T>;
+    view?: ViewContainerRef;
 }
 
 export interface IWidgetSelector<T = any> extends IConfigurator<T> {

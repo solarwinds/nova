@@ -25,6 +25,7 @@ import { Component } from "@angular/core";
     templateUrl: "./drilldown-widget-docs.component.html",
 })
 export class DrilldownDocsComponent {
+    // todo check docs
     public widgetFileText = ""
         // require("!!raw-loader!../../../../../../src/lib/widget-types/drilldown/drilldown-widget.ts")
         //     .default;
