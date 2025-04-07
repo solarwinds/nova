@@ -18,11 +18,18 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
+import {
+    Component,
+    computed,
+    OnInit,
+    Signal,
+    signal,
+    WritableSignal,
+} from "@angular/core";
 import { FormControl, Validators } from "@angular/forms";
 import moment from "moment-timezone";
 
-import { ISelectChangedEvent } from "@nova-ui/bits";
+import { OptionValueType } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-date-time-picker-timezones-example",
@@ -30,39 +37,40 @@ import { ISelectChangedEvent } from "@nova-ui/bits";
 })
 export class DateTimePickerTimezonesExampleComponent implements OnInit {
     public control = new FormControl(moment(), {
-        validators: Validators.required,
+        validators: [Validators.required],
         nonNullable: true,
     });
-    public zonesData: any = {zones: []};
+    public selectedZone = new FormControl("");
+    public zonesDataS: WritableSignal<{
+        zones: string[];
+    }> = signal({ zones: [] });
 
-    public zones: string[] = this.zonesData?.zones.map(
-        (z: string) => z.split("|")[0]
+    public zonesS: Signal<string[]> = computed(() =>
+        this.zonesDataS().zones.map((z: string) => z.split("|")[0])
     );
-    public displayedZones = this.zones;
-    public initialZone = "Australia/Sydney";
 
-    async ngOnInit() {
-        const zonesData = await import("moment-timezone/data/packed/latest.json");
-        moment.tz.add(zonesData.default.zones);
-        this.zonesData = zonesData.default;
-    }
+    constructor() {}
 
     get selectedDate(): string {
-        return this.control.value.toString();
+        return this.control.value?.toString();
     }
 
-    constructor() {
-        this.control.setValue(this.control.value.tz(this.initialZone));
-    }
-
-    public textboxChanged(searchQuery: ISelectChangedEvent<any>): void {
-        const val = searchQuery.newValue;
-        this.displayedZones = this.zones.filter((z) =>
-            z.toLowerCase().includes(val.toLowerCase())
+    async ngOnInit(): Promise<void> {
+        const zonesData = await import(
+            "moment-timezone/data/packed/latest.json"
         );
+        moment.tz.add(zonesData.default.zones);
+        const zones = zonesData.default.zones;
+        this.zonesDataS.set({ zones });
+        this.selectedZone.setValue(this.zonesS()[0]);
+    }
 
-        if (this.zones.find((z) => z === val)) {
-            this.control.setValue(this.control.value.tz(val));
+    public changeZone(
+        $event: OptionValueType | OptionValueType[] | null
+    ): void {
+        if (!$event) {
+            return;
         }
+        this.control.setValue(this.control.value.tz($event as string));
     }
 }

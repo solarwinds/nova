@@ -55,7 +55,7 @@ export class DatePickerTimezoneExampleComponent implements OnInit {
         return this.control.value?.toString();
     }
 
-    async ngOnInit() {
+    async ngOnInit(): Promise<void> {
         const zonesData = await import(
             "moment-timezone/data/packed/latest.json"
         );
