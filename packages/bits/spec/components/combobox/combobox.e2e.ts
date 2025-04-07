@@ -453,7 +453,7 @@ describe("USERCONTROL Combobox >", () => {
         });
 
         describe("focus >", () => {
-            beforeEach(() => {
+            beforeEach(async () => {
                 await comboboxBasic.waitElementVisible();
             });
 
