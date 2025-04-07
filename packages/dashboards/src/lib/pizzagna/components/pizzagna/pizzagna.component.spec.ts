@@ -57,7 +57,7 @@ import { TilesComponent } from "../../../components/layouts/tiles/tiles.componen
 import { TableWidgetComponent } from "../../../components/table-widget/table-widget.component";
 import { TemplateLoadErrorComponent } from "../../../components/template-load-error/template-load-error.component";
 import { WidgetHeaderComponent } from "../../../components/widget/widget-header/widget-header.component";
-import { mockLoggerService } from "../../../mocks";
+import { mockLoggerService } from "../../../mocks.spec";
 import { ProviderRegistryService } from "../../../services/provider-registry.service";
 import {
     ISetPropertyPayload,

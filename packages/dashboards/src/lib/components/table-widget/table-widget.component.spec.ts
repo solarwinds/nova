@@ -42,7 +42,7 @@ import {
 } from "@nova-ui/bits";
 
 import { NuiDashboardsModule } from "../../dashboards.module";
-import { mockLoggerService } from "../../mocks";
+import { mockLoggerService } from "../../mocks.spec";
 import { NuiPizzagnaModule } from "../../pizzagna/pizzagna.module";
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";

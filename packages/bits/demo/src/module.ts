@@ -21,7 +21,7 @@
 /// <reference path="ref.d.ts"/>
 
 import { HttpClientModule } from "@angular/common/http";
-import { NgModule, TRANSLATIONS_FORMAT } from "@angular/core";
+import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 
@@ -44,11 +44,6 @@ import {
         NuiDocsModule,
     ],
     declarations: [AppComponent],
-    providers: [
-        { provide: TRANSLATIONS_FORMAT, useValue: "xlf" },
-        // check regression
-        // { provide: TRANSLATIONS, useValue: translationLibrary },
-    ],
     bootstrap: [AppComponent],
 })
 export class NuiDemoModule {}

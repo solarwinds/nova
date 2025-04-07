@@ -102,7 +102,6 @@
     "percy:gui": "percy exec -- yarn run visual:gui",
     "prebuild-examples": "run-s compile-colors compile-demo-paths",
     "precompodoc": "node scripts/compile-global-less-styles.js",
-    "some": "webdriver-manager status",
     "pree2e:base": "webdriver-manager update --gecko=false --standalone=false",
     "prepublish": "modernizr -c ./src/vendor/modernizr.config.json -d /node_modules/modernizr/",
     "preserve-examples": "yarn run compile-colors",

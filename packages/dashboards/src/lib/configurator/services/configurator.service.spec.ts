@@ -45,7 +45,7 @@ import { PreviewOverlayComponent } from "../../common/components/preview-overlay
 import { DashboardComponent } from "../../components/dashboard/dashboard.component";
 import { WidgetComponent } from "../../components/widget/widget.component";
 import { GridsterItemWidgetIdDirective } from "../../directives/gridster-item-widget-id/gridster-item-widget-id.directive";
-import { mockLoggerService } from "../../mocks";
+import { mockLoggerService } from "../../mocks.spec";
 import { PizzagnaComponent } from "../../pizzagna/components/pizzagna/pizzagna.component";
 import { ComponentPortalDirective } from "../../pizzagna/directives/component-portal/component-portal.directive";
 import { WidgetTypesService } from "../../services/widget-types.service";

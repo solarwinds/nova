@@ -20,10 +20,10 @@
 
 import moment from "moment/moment";
 
+import { MERGED, TILES_MOCK, TILES_PROVIDERS_MOCK } from "./mocks.spec";
 import { KpiComponent } from "../components/kpi-widget/kpi.component";
 import { DEFAULT_PIZZAGNA_ROOT } from "../services/types";
 import { IValueChange, mergeChanges } from "./merge-changes";
-import { MERGED, TILES_MOCK, TILES_PROVIDERS_MOCK } from "./spec-mocks";
 
 describe("merge changes", () => {
     it("merges primitive values", () => {

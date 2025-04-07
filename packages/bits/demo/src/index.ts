@@ -18,16 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { TRANSLATIONS_FORMAT } from "@angular/core";
 import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 
 import { NuiDemoModule } from "./module";
 
-void platformBrowserDynamic().bootstrapModule(NuiDemoModule, {
-    providers: [
-        // todo check regression
-        // needed for JIT compiler
-        // { provide: TRANSLATIONS, useValue: translationLibrary },
-        { provide: TRANSLATIONS_FORMAT, useValue: "xlf" },
-    ],
-});
+void platformBrowserDynamic().bootstrapModule(NuiDemoModule, {});

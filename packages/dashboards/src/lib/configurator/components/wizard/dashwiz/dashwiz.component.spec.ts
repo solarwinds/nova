@@ -31,7 +31,7 @@ import {
 } from "@nova-ui/bits";
 
 import { TemplateLoadErrorComponent } from "../../../../components/template-load-error/template-load-error.component";
-import { mockLoggerService } from "../../../../mocks";
+import { mockLoggerService } from "../../../../mocks.spec";
 import { ComponentPortalDirective } from "../../../../pizzagna/directives/component-portal/component-portal.directive";
 import { ProviderRegistryService } from "../../../../services/provider-registry.service";
 import { DashwizStepComponent } from "../dashwiz-step/dashwiz-step.component";

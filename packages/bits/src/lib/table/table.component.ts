@@ -93,8 +93,6 @@ import { TableSelectionConfig, TableSelectionMode } from "./types";
             provide: _COALESCED_STYLE_SCHEDULER,
             useClass: _CoalescedStyleScheduler,
         },
-        // check open issue
-        // https://github.com/solarwinds/nova/issues/738
         { provide: CdkTable, useExisting: TableComponent },
         { provide: CDK_TABLE, useExisting: TableComponent },
     ],

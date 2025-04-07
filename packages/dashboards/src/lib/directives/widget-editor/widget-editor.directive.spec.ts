@@ -37,7 +37,7 @@ import { WidgetComponent } from "../../components/widget/widget.component";
 import { ConfiguratorService } from "../../configurator/services/configurator.service";
 import { IConfiguratorSource } from "../../configurator/services/types";
 import { WidgetEditorService } from "../../configurator/services/widget-editor.service";
-import { mockLoggerService } from "../../mocks";
+import { mockLoggerService } from "../../mocks.spec";
 import { PizzagnaComponent } from "../../pizzagna/components/pizzagna/pizzagna.component";
 import { ComponentPortalDirective } from "../../pizzagna/directives/component-portal/component-portal.directive";
 import { WIDGET_EDIT, WIDGET_REMOVE } from "../../services/types";

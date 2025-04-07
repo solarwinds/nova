@@ -26,7 +26,7 @@ import { EventBus, IEvent } from "@nova-ui/bits";
 import { DynamicComponentCreator } from "../../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../../pizzagna/services/pizzagna.service";
 import { PreviewService } from "../../preview.service";
-import { EDITOR_PIZZAGNA, TABLE_WIDGET_PREVIEW_PIZZAGNA } from "./mocks";
+import { EDITOR_PIZZAGNA, TABLE_WIDGET_PREVIEW_PIZZAGNA } from "./mocks.spec";
 import { TableScrollTypeConverterService } from "./table-scroll-type-converter.service";
 import { ScrollType } from "@nova-ui/dashboards";
 

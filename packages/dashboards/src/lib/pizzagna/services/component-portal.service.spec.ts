@@ -20,7 +20,7 @@
 
 import { Injector } from "@angular/core";
 
-import { mockLoggerService } from "../../mocks";
+import { mockLoggerService } from "../../mocks.spec";
 import { ComponentPortalService } from "./component-portal.service";
 import { ComponentRegistryService } from "./component-registry.service";
 

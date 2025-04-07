@@ -41,7 +41,7 @@ import {
 
 import { TemplateLoadErrorComponent } from "../../../components/template-load-error/template-load-error.component";
 import { IWidget } from "../../../components/widget/types";
-import { mockLoggerService } from "../../../mocks";
+import { mockLoggerService } from "../../../mocks.spec";
 import { NuiPizzagnaModule } from "../../../pizzagna/pizzagna.module";
 import { ProviderRegistryService } from "../../../services/provider-registry.service";
 import { PizzagnaLayer } from "../../../types";
