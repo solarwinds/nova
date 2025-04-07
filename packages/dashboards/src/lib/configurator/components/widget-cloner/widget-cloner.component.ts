@@ -197,6 +197,7 @@ export class WidgetClonerComponent
         setTimeout(() => {
             // @ts-ignore: Type 'null' is not assignable to type 'string' on id property
             this.configurator.updateWidget(cloneDeep(previewWidget));
+            this.changeDetector.detectChanges();
         });
     }
 

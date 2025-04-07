@@ -183,7 +183,7 @@ jobs:
                   name: Check git diff to see if builds should skip e2e
                   working_directory: ~/nova/packages/bits
                   command: |
-                      if [ -f $PROJECT_DIR/package-cached ] && [ "$USE_CACHE" == "true" ]; then
+                      if [ -f packages/bits/package-cached ] && [ "$USE_CACHE" == "true" ]; then
                           echo "This package was restored from cache so we're skipping a11y tests"
                           circleci step halt
                       fi
