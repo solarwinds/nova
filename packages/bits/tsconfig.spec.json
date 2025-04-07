@@ -3,7 +3,6 @@
         "baseUrl": ".",
         "outDir": "./tmp-spec",
         "types": ["jasmine", "node"],
-        "target": "ES6"
     },
     "exclude": ["./schematics/**/files/**"],
     "extends": "./tsconfig.json",
