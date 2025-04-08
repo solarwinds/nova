@@ -2,14 +2,15 @@
 
 ## [16.0.9] 📅 2025-04-02
 ### Fixes
--
+
 - `@nova-ui/dashboards` | Fix kpi scale for values
 - `@nova-ui/dashboards` | Fix editor preview component
 - `@nova-ui/dashboards` | Fix search addon listening chagnes
+- `@nova-ui/dashboards` | Added saving columns to table widget configuration layer
 
 ## [16.0.8] 📅 2025-04-02
 ### Fixes
--
+
 - `@nova-ui/dashboards` | Fix selection config
 - `@nova-ui/dashboards` | Added ability to listen preview component through the cloner
 
@@ -19,9 +20,11 @@
 
 ## [16.0.3] 📅 2025-02-14
 ### Added
-- `@nova-ui/dasbhard` | Added table widget bus events for select items
+
+- `@nova-ui/dasbhoards` | Added table widget bus events for select items
 
 ### Bugfix
+
 - `@nova-ui/dashboards` | Bug fix widget table with paginator, search with selection
 
 ## [16.0.2] 📅 2024-11-20
