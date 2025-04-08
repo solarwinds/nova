@@ -468,6 +468,17 @@ export class TableWidgetComponent
                 Object.assign(c, columns[i], {});
             });
         }
+
+        this.pizzagnaService.setProperty(
+            {
+                pizzagnaKey: PizzagnaLayer.Configuration,
+                componentId: this.componentId,
+                propertyPath: [
+                    "configuration.columns",
+                ],
+            },
+            this.columns
+        );
     }
 
     /**
