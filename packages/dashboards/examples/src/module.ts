@@ -34,7 +34,6 @@ import { NuiChartsModule } from "@nova-ui/charts";
 import { AppComponent } from "./components";
 import { AppRoutingModule } from "./components/app/app-routing.module";
 import { AnimationsModule } from "./environments/environment";
-import { SourceInspectorModule } from "../../src/source-inspector/source-inspector.module";
 
 @NgModule({
     imports: [
@@ -48,12 +47,9 @@ import { SourceInspectorModule } from "../../src/source-inspector/source-inspect
         NuiDocsModule,
         NuiChartsModule,
         NuiSwitchModule,
-        SourceInspectorModule,
     ],
     declarations: [AppComponent],
     providers: [
-        // pay attention that 'The arguments passed to require.context must be literals!'
-        // https://webpack.js.org/guides/dependency-management/
         DatePipe,
         LocalFilteringDataSource,
     ],
