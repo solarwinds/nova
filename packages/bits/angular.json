@@ -45,7 +45,6 @@
                     "options": {
                         "loader": {
                             ".html": "text",
-                            ".ts": "text",
                             ".less": "text"
                         },
                         "allowedCommonJsDependencies": ["lodash"],
@@ -54,7 +53,10 @@
                         "browser": "./demo/src/index.ts",
                         "namedChunks": true,
                         "optimization": false,
-                        "outputPath": "./sdk/api-docs-ng2/examples",
+                        "outputPath": {
+                            "base": "sdk/api-docs-ng2/examples",
+                            "browser": ""
+                        },
                         "polyfills": ["./demo/src/polyfills.ts"],
                         "scripts": [],
                         "sourceMap": true,

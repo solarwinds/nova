@@ -71,7 +71,7 @@
     "build-lib": "ng build lib",
     "build-lib:locl": "run-s \"build-lib -c locl\" i18n-locl-extract",
     "build-lib:prod": "run-s \"build-lib -c production\" dist-copy build-css",
-    "build-lib:watch": "run-s build-css dist-copy \"build-lib -c dev\"",
+    "build-lib:watch": "run-s build-css dist-copy \"build-lib -c dev --watch\"",
     "build-css": "ng build generate-css && yarn run dist-copy-css",
     "build-schematics": "yarn run --cwd=schematics assemble",
     "compile-colors": "node ./scripts/colors-conf.js",

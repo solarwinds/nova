@@ -47,16 +47,20 @@ export class CodeSandboxService {
                 }
             );
             const json = await res.json();
-            return json["dist-tags"].main;
+            return json["dist-tags"].latest;
         }
 
         const form: HTMLFormElement = this.document.createElement("form");
 
         const latestNovaVersion = await mainVersion("@nova-ui/bits");
+        const packageJson = await import("../../../../../../package.json");
+        const packageLib = await import("../../../../package.json");
         const files = createAngularApp(
             prefix,
             this.config.context,
             sources,
+            packageJson.default,
+            packageLib.default,
             latestNovaVersion
         );
         // TODO fix modification of less files
