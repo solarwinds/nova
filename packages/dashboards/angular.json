@@ -43,6 +43,7 @@
                             "browser": ""
                         },
                         "polyfills": ["./examples/src/polyfills.ts"],
+                        "allowedCommonJsDependencies": ["lodash"],
                         "preserveSymlinks": true,
                         "scripts": [],
                         "sourceMap": true,
