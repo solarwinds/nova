@@ -141,15 +141,14 @@
                     "builder": "@angular-devkit/build-angular:browser",
                     "defaultConfiguration": "",
                     "options": {
-                        "aot": false,
                         "buildOptimizer": false,
                         "deleteOutputPath": true,
                         "extractLicenses": false,
-                        "index": "index.html",
+                        "index": "./index.html",
                         "main": "",
                         "namedChunks": true,
                         "outputPath": "./.tmp-css",
-                        "sourceMap": true,
+                        "sourceMap": false,
                         "stylePreprocessorOptions": {
                             "includePaths": ["../../node_modules"]
                         },
