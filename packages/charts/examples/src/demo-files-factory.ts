@@ -1,13 +1,27 @@
+import { CodeSourceFiles } from "@nova-ui/bits";
+
 import { DEMO_PATHS } from "./components/demo/demo.files";
 
 export const getDemoFiles = (
     filePrefix: string
-): { context: string; files: Promise<{ path: string; content: string }>[] } => ({
-    context: filePrefix,
-    files: DEMO_PATHS.filter((filePath) => filePath.includes(filePrefix))
-        .map(async (filePath) => ({
-            content: await import(`!!raw-loader!./components/demo/${filePath}`).then(e=> e.default),
+): CodeSourceFiles => {
+    const files = DEMO_PATHS.filter((filePath) =>
+        filePath.includes(filePrefix)
+    );
+    return {
+        context: filePrefix,
+        files: files.map((filePath) => ({
+            content: async () =>
+                import(`./components/demo/${filePath}`, {
+                    with: { loader: "text" },
+                }).then((e) => {
+                    if (e.default) {
+                        return e.default;
+                    }
+                    // typescript files may have exports non default members
+                    return `${Object.values(e).join("\n")}`;
+                }),
             path: filePath,
-        }))
-        ,
-});
+        })),
+    };
+};

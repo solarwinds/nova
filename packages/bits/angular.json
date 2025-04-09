@@ -47,7 +47,7 @@
                             ".html": "text",
                             ".less": "text"
                         },
-                        "allowedCommonJsDependencies": ["lodash"],
+                        "allowedCommonJsDependencies": ["lodash", "moment/moment"],
                         "extractLicenses": false,
                         "index": "./demo/src/index.html",
                         "browser": "./demo/src/index.ts",
