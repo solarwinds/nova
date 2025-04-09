@@ -638,8 +638,8 @@ jobs:
         environment:
             SOURCE_BRANCH: main
             CREATE_RELEASE_BRANCH: "true"
-            RELEASE_BRANCH: release/v16.0.x
-            INCREMENT_TYPE: patch
+            RELEASE_BRANCH: release/v17.0.x
+            INCREMENT_TYPE: major
         steps:
             - add_ssh_keys
             - checkout:
