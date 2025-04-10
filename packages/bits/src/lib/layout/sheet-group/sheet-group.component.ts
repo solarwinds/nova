@@ -21,7 +21,6 @@
 import {
     AfterViewInit,
     Component,
-    ComponentFactoryResolver,
     ComponentRef,
     ContentChildren,
     ElementRef,
@@ -31,6 +30,7 @@ import {
     OnInit,
     QueryList,
     Renderer2,
+    Type,
     ViewChild,
     ViewContainerRef,
 } from "@angular/core";
@@ -122,11 +122,9 @@ export class SheetGroupComponent implements OnInit, AfterViewInit, OnDestroy {
         this.calculateFlexBasis(resizableList, resizableList.length);
     }
 
-    public appendResizer(factory: any, resizeEl: any): void {
-        const componentRef =
-            this.componentFactoryResolver.resolveComponentFactory(factory);
+    public appendResizer(componentType: Type<any>, resizeEl: any): void {
+        const ref = this.view.createComponent(componentType);
 
-        const ref = this.resizerPlaceholder.createComponent(componentRef);
         (<LayoutResizerComponent>ref.instance).resizeElement = resizeEl;
         (<LayoutResizerComponent>ref.instance).resizeDirection =
             this.resizeDirection;
@@ -200,7 +198,7 @@ export class SheetGroupComponent implements OnInit, AfterViewInit, OnDestroy {
     constructor(
         public elRef: ElementRef,
         private renderer: Renderer2,
-        private componentFactoryResolver: ComponentFactoryResolver
+        private view: ViewContainerRef
     ) {}
 
     public ngOnInit(): void {

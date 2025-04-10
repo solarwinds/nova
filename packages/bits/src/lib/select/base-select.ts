@@ -266,7 +266,7 @@ export abstract class BaseSelect
         this.onChange = fn;
     }
 
-    public registerOnTouched(fn: () => {}): void {
+    public registerOnTouched(fn: () => void): void {
         this.onTouched = fn;
     }
 

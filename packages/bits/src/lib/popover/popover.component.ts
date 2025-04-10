@@ -27,7 +27,6 @@ import {
 import {
     ChangeDetectorRef,
     Component,
-    ComponentFactoryResolver,
     ComponentRef,
     ContentChild,
     ElementRef,
@@ -248,7 +247,6 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
 
     constructor(
         public host: ElementRef,
-        private componentFactoryResolver: ComponentFactoryResolver,
         private viewContainerRef: ViewContainerRef,
         private overlay: Overlay,
         private cdRef: ChangeDetectorRef,
@@ -325,10 +323,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         }
 
         this.hidingAnimationInProgress = false;
-        const factory = this.componentFactoryResolver.resolveComponentFactory(
-            PopoverModalComponent
-        );
-        this.popover = this.modalContainer.createComponent(factory);
+        this.popover = this.viewContainerRef.createComponent(PopoverModalComponent);
         this.initializePopover();
         this.setPositionStrategy(this.placement);
         this.overlayComponent.show();

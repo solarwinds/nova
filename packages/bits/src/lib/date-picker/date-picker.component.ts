@@ -319,11 +319,11 @@ export class DatePickerComponent
         this.value = value;
     }
 
-    public registerOnChange(fn: (value: any) => {}): void {
+    public registerOnChange(fn: (value: any) => void): void {
         this.onChange = fn;
     }
 
-    public registerOnTouched(fn: () => {}): void {
+    public registerOnTouched(fn: () => void): void {
         this.onTouched = fn;
     }
 

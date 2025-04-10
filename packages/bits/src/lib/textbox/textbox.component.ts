@@ -171,7 +171,7 @@ export class TextboxComponent
         this.onChange = fn;
     }
 
-    public registerOnTouched(fn: () => {}): void {
+    public registerOnTouched(fn: () => void): void {
         this._onTouched = fn;
     }
 
