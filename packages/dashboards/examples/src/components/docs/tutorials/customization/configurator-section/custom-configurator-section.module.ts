@@ -39,12 +39,12 @@ import {
     NuiDashboardsModule,
 } from "@nova-ui/dashboards";
 
-import { getDemoFiles } from "../../../../../demo-files-factory";
-import { CustomConfiguratorSectionDocsComponent } from "./custom-configurator-section-docs.component";
 import {
     CustomConfiguratorSectionExampleComponent,
     CustomKpiDescriptionConfigurationComponent,
 } from "./custom-configurator-section/custom-configurator-section.example.component";
+import { CustomConfiguratorSectionDocsComponent } from "./custom-configurator-section-docs.component";
+import { getDemoFiles } from "../../../../../demo-files-factory";
 
 const routes = [
     {

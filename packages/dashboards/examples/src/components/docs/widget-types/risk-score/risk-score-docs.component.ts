@@ -25,10 +25,10 @@ import { Component } from "@angular/core";
     templateUrl: "./risk-score-docs.component.html",
 })
 export class RiskScoreDocsComponent {
-    public riskScoreWidgetFileText = ""
+    public riskScoreWidgetFileText = "";
         // require("!!raw-loader!../../../../../../src/lib/widget-types/risk-score/risk-score-widget.ts")
         //     .default;
-    public riskScoreConfiguratorFileText = ""
+    public riskScoreConfiguratorFileText = "";
         // require("!!raw-loader!../../../../../../src/lib/widget-types/risk-score/risk-score-configurator.ts")
         //     .default;
 }

@@ -168,6 +168,12 @@
                         "suite": "e2e",
                         "webdriverUpdate": false
                     }
+                },
+                "lint": {
+                    "builder": "@angular-eslint/builder:lint",
+                    "options": {
+                        "lintFilePatterns": ["spec/**/*.ts", "spec/**/*.html"]
+                    }
                 }
             },
             "projectType": "application",

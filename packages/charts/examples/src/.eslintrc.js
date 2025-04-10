@@ -4,7 +4,9 @@ module.exports = {
         {
             files: ["*.ts"],
             parserOptions: {
-                projectService: true,
+                projectService: {
+                    allowDefaultProject: ["environments/environment.e2e.ts"],
+                },
                 createDefaultProgram: true,
                 tsconfigRootDir: __dirname,
             },

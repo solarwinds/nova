@@ -26,7 +26,7 @@ import { Component, OnInit } from "@angular/core";
 })
 export class TimeseriesDocsComponent implements OnInit {
     public timeseriesWidgetFileText = "";
-    public timeseriesConfiguratorFileText = ""
+    public timeseriesConfiguratorFileText = "";
     
     async ngOnInit(): Promise<void> {
         // todo rethink fetching the ts files

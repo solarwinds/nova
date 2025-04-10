@@ -46,11 +46,11 @@ describe("FreeTypeQueryBuilder", () => {
         await camera.turn.on();
 
         await example1.type(longInputValue);
-        await Helpers.pressKey(Key.ARROW_DOWN)
+        await Helpers.pressKey(Key.ARROW_DOWN);
         await camera.say.cheese("Example 1");
 
-        await example2.type(extraLongInputValue)
-        await Helpers.pressKey(Key.ESCAPE)
+        await example2.type(extraLongInputValue);
+        await Helpers.pressKey(Key.ESCAPE);
         await example2.scrollTo({ block: "end" });
 
         await camera.say.cheese("Example 2");

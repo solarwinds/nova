@@ -26,10 +26,10 @@ import { Component } from "@angular/core";
 })
 export class DrilldownDocsComponent {
     // todo check docs
-    public widgetFileText = ""
+    public widgetFileText = "";
         // require("!!raw-loader!../../../../../../src/lib/widget-types/drilldown/drilldown-widget.ts")
         //     .default;
-    public configuratorFileText = ""
+    public configuratorFileText = "";
         // require("!!raw-loader!../../../../../../src/lib/widget-types/drilldown/drilldown-configurator")
         //     .default;
 

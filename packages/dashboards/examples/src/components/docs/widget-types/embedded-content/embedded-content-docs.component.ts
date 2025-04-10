@@ -26,11 +26,11 @@ import { Component } from "@angular/core";
 })
 export class EmbeddedContentDocsComponent {
     // todo check docs
-    public embeddedContentWidgetFileText = ""
+    public embeddedContentWidgetFileText = "";
         // require("!!raw-loader!../../../../../../src/lib/widget-types/embedded-content/embedded-content-widget.ts")
         //     .default;
     // eslint-disable-next-line max-len
-    public embeddedContentConfiguratorFileText = ""
+    public embeddedContentConfiguratorFileText = "";
         // require("!!raw-loader!../../../../../../src/lib/widget-types/embedded-content/embedded-content-configurator.ts")
         //     .default;
 }

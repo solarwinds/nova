@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+
 import { TableSelectionMode } from "@nova-ui/bits";
 import { TableWidgetSelectionConfig } from "@nova-ui/dashboards";
 

@@ -23,10 +23,10 @@ import { browser, by, element, ElementFinder } from "protractor";
 import { Atom, Camera } from "@nova-ui/bits/sdk/atoms";
 import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
 
-import { GAUGE_REMAINDER_SERIES_ID } from "../../src/gauge/constants";
 import { ChartAtom } from "./atoms/chart.atom";
 import { SeriesAtom } from "./atoms/series.atom";
 import { TestPage } from "./test.po";
+import { GAUGE_REMAINDER_SERIES_ID } from "../../src/gauge/constants";
 
 const name: string = "Gauge";
 

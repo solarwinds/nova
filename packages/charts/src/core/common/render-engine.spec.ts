@@ -151,7 +151,7 @@ describe("components >", () => {
     const getSeriesContainer = (
         layerName: RenderLayerName,
         seriesId: string
-    ): Selection<SVGElement, any, BaseType, {}> => {
+    ): Selection<SVGElement, any, BaseType, object> => {
         const dataLayer = svg.selectAll(
             `g.${Lasagna.LAYER_CLASS}-${layerName}`
         );

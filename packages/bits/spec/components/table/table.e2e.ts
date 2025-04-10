@@ -298,7 +298,7 @@ describe("USERCONTROL table >", () => {
     describe("Sortable table >", () => {
         beforeEach(async () => {
             await Helpers.prepareBrowser("table/sorting");
-            await sortableTable.waitElementVisible()
+            await sortableTable.waitElementVisible();
         });
 
         it("should sort data properly", async () => {

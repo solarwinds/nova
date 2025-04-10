@@ -532,7 +532,7 @@ describe("USERCONTROL Combobox >", () => {
 
         describe("removeValueButton >", () => {
             beforeEach(() => {
-                comboboxRemoveValueButton.waitElementVisible()
+                comboboxRemoveValueButton.waitElementVisible();
             });
             it("should display removeValue button when text is typed", async () => {
                 expect(

@@ -25,10 +25,10 @@ import { Component } from "@angular/core";
     templateUrl: "./proportional-docs.component.html",
 })
 export class ProportionalDocsComponent {
-    public proportionalWidgetFileText = ""
+    public proportionalWidgetFileText = "";
         // require("!!raw-loader!../../../../../../src/lib/widget-types/proportional/proportional-widget.ts")
         //     .default;
-    public proportionalConfiguratorFileText = ""
+    public proportionalConfiguratorFileText = "";
         // require("!!raw-loader!../../../../../../src/lib/widget-types/proportional/proportional-configurator.ts")
         //     .default;
 }
