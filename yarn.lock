@@ -2713,7 +2713,7 @@
   resolved "https://registry.npmjs.org/@stackblitz/sdk/-/sdk-1.11.0.tgz#ba30c837decca221ce8d605ff768a774c0f92f89"
   integrity sha512-DFQGANNkEZRzFk1/rDP6TcFdM82ycHE+zfl9C/M/jXlH68jiqHWHFMQURLELoD8koxvu/eW5uhg94NSAZlYrUQ==
 
-"@stylistic/eslint-plugin-ts@3":
+"@stylistic/eslint-plugin-ts@3.1.0":
   version "3.1.0"
   resolved "https://registry.npmjs.org/@stylistic/eslint-plugin-ts/-/eslint-plugin-ts-3.1.0.tgz#bb2622bdb307a258e041e04bbce8c398097d0dfa"
   integrity sha512-ExsbaLmPTt3Y9bWN64nw+hpsnLAScLH25ncPxrV16FG2Lvg5wn6aRfMqldUGpu+YdqVmFFU1zehgFh6RIHT6YA==
