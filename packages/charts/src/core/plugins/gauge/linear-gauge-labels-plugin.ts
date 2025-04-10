@@ -24,6 +24,12 @@ import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
+import {
+    GAUGE_LABELS_CONTAINER_CLASS,
+    GAUGE_LABEL_FORMATTER_NAME_DEFAULT,
+    GAUGE_THRESHOLD_LABEL_CLASS,
+} from "./constants";
+import { IGaugeLabelsPluginConfig } from "./types";
 import { MOUSE_ACTIVE_EVENT, STANDARD_RENDER_LAYERS } from "../../../constants";
 import { GAUGE_THRESHOLD_MARKERS_SERIES_ID } from "../../../gauge/constants";
 import { RenderLayerName } from "../../../renderers/types";
@@ -36,12 +42,6 @@ import {
     IChartSeries,
     IDataSeries,
 } from "../../common/types";
-import {
-    GAUGE_LABELS_CONTAINER_CLASS,
-    GAUGE_LABEL_FORMATTER_NAME_DEFAULT,
-    GAUGE_THRESHOLD_LABEL_CLASS,
-} from "./constants";
-import { IGaugeLabelsPluginConfig } from "./types";
 
 /**
  * A chart plugin that handles the rendering of labels for a donut gauge

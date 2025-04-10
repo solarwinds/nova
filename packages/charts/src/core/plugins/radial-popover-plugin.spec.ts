@@ -22,11 +22,11 @@ import { select } from "d3-selection";
 
 import { INTERACTION_DATA_POINTS_EVENT } from "../../constants";
 import { Chart } from "../chart";
+import { RadialPopoverPlugin } from "./radial-popover-plugin";
 import { IChartEvent, InteractionType } from "../common/types";
 import { XYGridConfig } from "../grid/config/xy-grid-config";
 import { IGrid, IGridConfig } from "../grid/types";
 import { XYGrid } from "../grid/xy-grid";
-import { RadialPopoverPlugin } from "./radial-popover-plugin";
 
 describe("RadialPopoverPlugin >", () => {
     let grid: IGrid;

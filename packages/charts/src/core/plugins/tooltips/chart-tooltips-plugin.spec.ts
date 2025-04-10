@@ -20,6 +20,7 @@
 
 import { fakeAsync, tick } from "@angular/core/testing";
 
+import { ChartTooltipsPlugin } from "./chart-tooltips-plugin";
 import {
     INTERACTION_DATA_POINTS_EVENT,
     SERIES_STATE_CHANGE_EVENT,
@@ -33,7 +34,6 @@ import {
 } from "../../common/types";
 import { IGrid } from "../../grid/types";
 import { XYGrid } from "../../grid/xy-grid";
-import { ChartTooltipsPlugin } from "./chart-tooltips-plugin";
 
 describe("ChartTooltipsPlugin >", () => {
     let grid: IGrid;

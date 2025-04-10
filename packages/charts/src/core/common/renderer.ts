@@ -27,11 +27,6 @@ import get from "lodash/get";
 import { Subject } from "rxjs";
 
 import { DATA_POINT_NOT_FOUND, STANDARD_RENDER_LAYERS } from "../../constants";
-import {
-    IRenderSeries,
-    RenderLayerName,
-    RenderState,
-} from "../../renderers/types";
 import { EMPTY_CONTINUOUS_DOMAIN, IScale, Scales } from "./scales/types";
 import {
     D3Selection,
@@ -44,6 +39,11 @@ import {
     IRendererConfig,
     IRendererEventPayload,
 } from "./types";
+import {
+    IRenderSeries,
+    RenderLayerName,
+    RenderState,
+} from "../../renderers/types";
 
 /**
  * The abstract base class for chart renderers with some limited default functionality

@@ -20,8 +20,8 @@
 
 import { select, Selection } from "d3-selection";
 
-import { IGNORE_INTERACTION_CLASS } from "../../constants";
 import { defaultTextOverflowHandler } from "./default-text-overflow-handler";
+import { IGNORE_INTERACTION_CLASS } from "../../constants";
 
 describe("defaultTextOverflowHandler", () => {
     let root: HTMLElement;

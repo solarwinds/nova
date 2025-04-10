@@ -25,10 +25,10 @@ import { NuiDocsModule, NuiMessageModule, SrlcStage } from "@nova-ui/bits";
 import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { getDemoFiles } from "../../../../../demo-files-factory";
 import { ChartDocsAccessorsMarkersComponent } from "./chart-docs-accessors-markers.component";
 import { RendererMarkersCustomAccessorExampleComponent } from "./custom-accessor/markers-custom-accessor.example.component";
 import { RendererMarkersCustomProviderExampleComponent } from "./custom-provider/markers-custom-provider.example.component";
+import { getDemoFiles } from "../../../../../demo-files-factory";
 
 const exampleRoutes: Routes = [
     {

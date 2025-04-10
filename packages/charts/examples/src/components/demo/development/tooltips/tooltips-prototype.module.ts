@@ -29,9 +29,9 @@ import {
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { DemoCommonModule } from "../../common/demo-common.module";
 import { LineChartTooltipsPrototypeComponent } from "./line-chart/line-chart-tooltips-prototype.component";
 import { TooltipsPerformanceTestComponent } from "./line-chart/tooltips-performance-test.component";
+import { DemoCommonModule } from "../../common/demo-common.module";
 
 const routes: Routes = [
     {

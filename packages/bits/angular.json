@@ -29,7 +29,9 @@
                             "sourceMap": false
                         },
                         "i18n": {
-                            "localize": ["en-us"]
+                            "localize": [
+                                "en-us"
+                            ]
                         },
                         "production": {
                             "budgets": [],
@@ -47,7 +49,10 @@
                             ".html": "text",
                             ".less": "text"
                         },
-                        "allowedCommonJsDependencies": ["lodash", "moment/moment"],
+                        "allowedCommonJsDependencies": [
+                            "lodash",
+                            "moment/moment"
+                        ],
                         "extractLicenses": false,
                         "index": "./demo/src/index.html",
                         "browser": "./demo/src/index.ts",
@@ -57,11 +62,15 @@
                             "base": "sdk/api-docs-ng2/examples",
                             "browser": ""
                         },
-                        "polyfills": ["./demo/src/polyfills.ts"],
+                        "polyfills": [
+                            "./demo/src/polyfills.ts"
+                        ],
                         "scripts": [],
                         "sourceMap": true,
                         "stylePreprocessorOptions": {
-                            "includePaths": ["./src/styles"]
+                            "includePaths": [
+                                "./src/styles"
+                            ]
                         },
                         "styles": [
                             "./src/styles.less",
@@ -110,7 +119,9 @@
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
                     "options": {
-                        "assets": ["./demo/src/assets"],
+                        "assets": [
+                            "./demo/src/assets"
+                        ],
                         "karmaConfig": "./karma.conf.js",
                         "main": "./demo/src/module.ts",
                         "polyfills": "./demo/src/polyfills.ts",
@@ -156,15 +167,6 @@
                         "protractorConfig": "./protractor.conf.js",
                         "suite": "e2e",
                         "webdriverUpdate": false
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-eslint/builder:lint",
-                    "options": {
-                        "lintFilePatterns": [
-                            "./spec/**/*.ts",
-                            "./spec/**/*.html"
-                        ]
                     }
                 }
             },
@@ -215,7 +217,9 @@
                     "builder": "@angular-devkit/build-angular:application",
                     "defaultConfiguration": "",
                     "options": {
-                        "allowedCommonJsDependencies": ["lodash"],
+                        "allowedCommonJsDependencies": [
+                            "lodash"
+                        ],
                         "extractLicenses": false,
                         "index": "./src/index.html",
                         "browser": "./src/public_api.ts",
@@ -260,7 +264,10 @@
                 "lint": {
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
-                        "lintFilePatterns": ["./src/**/*.ts", "./src/**/*.html"]
+                        "lintFilePatterns": [
+                            "./src/**/*.ts",
+                            "./src/**/*.html"
+                        ]
                     }
                 },
                 "serve": {
@@ -275,10 +282,17 @@
                     "configurations": {
                         "coverage": {
                             "codeCoverage": true,
-                            "reporters": ["progress", "coverage", "kjhtml", "junit"]
+                            "reporters": [
+                                "progress",
+                                "coverage",
+                                "kjhtml",
+                                "junit"
+                            ]
                         },
                         "dev": {
-                            "reporters": ["progress"],
+                            "reporters": [
+                                "progress"
+                            ],
                             "watch": true
                         }
                     },
@@ -288,7 +302,9 @@
                         "karmaConfig": "./karma.conf.js",
                         "main": "./src/test.ts",
                         "polyfills": "./src/polyfills.ts",
-                        "reporters": ["spec"],
+                        "reporters": [
+                            "spec"
+                        ],
                         "scripts": [],
                         "sourceMap": false,
                         "styles": [],

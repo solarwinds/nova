@@ -22,9 +22,9 @@ import moment, { Moment } from "moment/moment";
 import { by, ElementFinder, Key, protractor } from "protractor";
 
 import { Atom } from "../../atom";
+import {Helpers} from "../../helpers";
 import { OverlayAtom } from "../overlay/overlay.atom";
 import { TextboxAtom } from "../textbox/textbox.atom";
-import {Helpers} from "../../helpers";
 
 export class DatepickerAtom extends Atom {
     public static EXPECTED_FORMAT = "DD MMM YYYY";

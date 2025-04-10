@@ -33,11 +33,11 @@ import {
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { DemoCommonModule } from "../../common/demo-common.module";
 import { ChartExampleComponent } from "./chart/chart.example.component";
 import { ChartDomainExampleComponent } from "./domain/chart-domain.example.component";
 import { ChartEventBusTestComponent } from "./event-bus/chart-event-bus-test.component";
 import { ChartMarkersExampleComponent } from "./markers/chart-markers.example.component";
+import { DemoCommonModule } from "../../common/demo-common.module";
 
 const coreRoutes: Routes = [
     {

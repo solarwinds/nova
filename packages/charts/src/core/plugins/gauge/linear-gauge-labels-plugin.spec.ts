@@ -18,6 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { GAUGE_LABELS_CONTAINER_CLASS } from "./constants";
+import { LinearGaugeLabelsPlugin } from "./linear-gauge-labels-plugin";
 import { MOUSE_ACTIVE_EVENT } from "../../../constants";
 import { linearGaugeGridConfig } from "../../../core/grid/config/linear-gauge-grid-config-fn";
 import { GaugeMode } from "../../../gauge/constants";
@@ -31,8 +33,6 @@ import {
 } from "../../common/types";
 import { XYGridConfig } from "../../grid/config/xy-grid-config";
 import { XYGrid } from "../../grid/xy-grid";
-import { GAUGE_LABELS_CONTAINER_CLASS } from "./constants";
-import { LinearGaugeLabelsPlugin } from "./linear-gauge-labels-plugin";
 
 describe("LinearGaugeLabelsPlugin >", () => {
     let chart: Chart;

@@ -22,6 +22,7 @@ import isEmpty from "lodash/isEmpty";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
+import { IInteractionValues } from "./types";
 import {
     INTERACTION_COORDINATES_EVENT,
     INTERACTION_VALUES_ACTIVE_EVENT,
@@ -32,7 +33,6 @@ import { ChartPlugin } from "../common/chart-plugin";
 import { MouseInteractiveArea } from "../common/mouse-interactive-area";
 import { IInteractionEvent, InteractionType } from "../common/types";
 import { UtilityService } from "../common/utility.service";
-import { IInteractionValues } from "./types";
 
 /** @ignore */
 export class MouseInteractiveAreaPlugin extends ChartPlugin {

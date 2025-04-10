@@ -30,12 +30,12 @@ import {
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { DemoCommonModule } from "../../common/demo-common.module";
 import { BarChartWithTooltipsExampleComponent } from "./bar-chart/bar-chart-with-tooltips.example.component";
 import { ChartDocsTooltipsComponent } from "./chart-docs-tooltips.component";
 import { DonutChartWithTooltipsExampleComponent } from "./donut-chart/donut-chart-with-tooltips.example.component";
 import { LineChartWithTooltipsExampleComponent } from "./line-chart/line-chart-with-tooltips.example.component";
 import { TooltipsVisualTestComponent } from "./visual-test/tooltips-visual-test.component";
+import { DemoCommonModule } from "../../common/demo-common.module";
 
 const exampleRoutes: Routes = [
     {

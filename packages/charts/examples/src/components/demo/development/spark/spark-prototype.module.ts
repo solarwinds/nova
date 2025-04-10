@@ -24,8 +24,8 @@ import { RouterModule, Routes } from "@angular/router";
 import { NuiButtonModule, NuiIconModule } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { DemoCommonModule } from "../../common/demo-common.module";
 import { SparkPrototypeComponent } from "./spark-prototype/spark-prototype.component";
+import { DemoCommonModule } from "../../common/demo-common.module";
 
 const routes: Routes = [
     {

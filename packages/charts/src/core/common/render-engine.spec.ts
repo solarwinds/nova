@@ -23,21 +23,16 @@ import { ValueMap } from "d3-selection-multi";
 import cloneDeep from "lodash/cloneDeep";
 import { Subject, Subscription } from "rxjs";
 
-import {
-    DATA_POINT_INTERACTION_RESET,
-    HIGHLIGHT_DATA_POINT_EVENT,
-    STANDARD_RENDER_LAYERS,
-} from "../../constants";
-import {
-    IRenderSeries,
-    RenderLayerName,
-    RenderState,
-} from "../../renderers/types";
 import { DataManager } from "./data-manager";
 import { Lasagna } from "./lasagna";
 import { TimeScale } from "./public-api";
 import { RenderEngine } from "./render-engine";
 import { Renderer } from "./renderer";
+import {
+    DATA_POINT_INTERACTION_RESET,
+    HIGHLIGHT_DATA_POINT_EVENT,
+    STANDARD_RENDER_LAYERS,
+} from "../../constants";
 import { IScale, Scales } from "./scales/types";
 import {
     D3Selection,
@@ -51,6 +46,11 @@ import {
     IPosition,
     IRendererEventPayload,
 } from "./types";
+import {
+    IRenderSeries,
+    RenderLayerName,
+    RenderState,
+} from "../../renderers/types";
 
 class MockRenderer<TA extends IAccessors> extends Renderer<TA> {
     public draw(

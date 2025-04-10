@@ -13,7 +13,7 @@
                 "plugin:@angular-eslint/template/process-inline-templates"
             ],
             "files": ["*.ts"],
-            "plugins": ["prefer-arrow"],
+            "plugins": ["prefer-arrow",  "@stylistic/ts"],
             "rules": {
                 // TODO: Remove errors in v12 in scope of NUI-6044
                 "@angular-eslint/component-selector": [
@@ -56,8 +56,8 @@
                     }
                 ],
                 // "semi": "off",
-                // "@typescript-eslint/semi": ["error"],
-                "@typescript-eslint/member-delimiter-style": [
+                "@stylistic/ts/semi": ["error"],
+                "@stylistic/ts/member-delimiter-style": [
                     "error",
                     {
                         "multiline": {
@@ -70,6 +70,7 @@
                         }
                     }
                 ],
+                "@stylistic/ts/type-annotation-spacing": "error",
                 "@typescript-eslint/member-ordering": [
                     "error",
                     {
@@ -161,9 +162,13 @@
                 "@typescript-eslint/restrict-plus-operands": "off",
                 "@typescript-eslint/restrict-template-expressions": "off",
                 "@typescript-eslint/triple-slash-reference": "off",
-                "@typescript-eslint/type-annotation-spacing": "error",
                 "@typescript-eslint/unbound-method": "off",
                 "@typescript-eslint/unified-signatures": "error",
+                // strict rules afte ng 17 update
+                "@typescript-eslint/no-redundant-type-constituents": "off",
+                "@typescript-eslint/no-base-to-string": "off",
+                "@typescript-eslint/no-unsafe-enum-comparison": "off",
+                "@typescript-eslint/no-unsafe-function-type": "warn",
                 /******************************
                  * ESLint rules
                  *******************************/

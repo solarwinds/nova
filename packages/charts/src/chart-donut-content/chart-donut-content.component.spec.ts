@@ -21,8 +21,8 @@
 import { Component, Input, ViewChild } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ChartDonutContentPlugin } from "../core/plugins/chart-donut-content-plugin";
 import { ChartDonutContentComponent } from "./chart-donut-content.component";
+import { ChartDonutContentPlugin } from "../core/plugins/chart-donut-content-plugin";
 
 // since Angular doesn't fire ngOnChanges while creating component directly, we have to use wrapper component
 @Component({

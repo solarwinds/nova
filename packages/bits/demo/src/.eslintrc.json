@@ -4,7 +4,8 @@
         {
             "files": ["*.ts"],
             "parserOptions": {
-                "project": ["tsconfig.json"]
+                "allowDefaultProject": ["**/environments/**"],
+                "projectService": true
             },
             "rules": {
                 "max-len": "off"
@@ -15,7 +16,7 @@
                 },
                 "import/resolver": {
                     "typescript": {
-                        "project": ["tsconfig.json"]
+                        "project": ["./demo/src/tsconfig.json"]
                     }
                 }
             }

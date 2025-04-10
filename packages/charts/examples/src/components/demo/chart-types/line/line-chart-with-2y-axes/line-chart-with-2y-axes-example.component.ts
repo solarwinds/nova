@@ -65,10 +65,10 @@ export class LineChartWith2YAxesExampleComponent implements OnInit, OnDestroy {
     public ngOnInit(): void {
         const xScale = new TimeScale();
         this.yLeftScale = new LinearScale();
-        this.yLeftScale.formatters.tick = (value: Number) => `${value}%`;
+        this.yLeftScale.formatters.tick = (value: number) => `${value}%`;
 
         this.yRightScale = new LinearScale();
-        this.yRightScale.formatters.tick = (value: Number) => `${value}G`;
+        this.yRightScale.formatters.tick = (value: number) => `${value}G`;
 
         const xyGrid = new XYGrid();
 

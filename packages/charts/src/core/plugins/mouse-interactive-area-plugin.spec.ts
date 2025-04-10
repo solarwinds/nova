@@ -21,6 +21,7 @@
 import { select } from "d3-selection";
 import { Subscription } from "rxjs";
 
+import { MouseInteractiveAreaPlugin } from "./mouse-interactive-area-plugin";
 import {
     INTERACTION_VALUES_ACTIVE_EVENT,
     INTERACTION_VALUES_EVENT,
@@ -32,7 +33,6 @@ import { MouseInteractiveArea } from "../common/mouse-interactive-area";
 import { LinearScale } from "../common/scales/linear-scale";
 import { IChartEvent, InteractionType } from "../common/types";
 import { XYGrid } from "../grid/xy-grid";
-import { MouseInteractiveAreaPlugin } from "./mouse-interactive-area-plugin";
 
 describe("MouseInteractiveAreaPlugin >", () => {
     let plugin: MouseInteractiveAreaPlugin;

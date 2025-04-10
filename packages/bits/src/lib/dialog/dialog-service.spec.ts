@@ -123,7 +123,7 @@ class TestComponent {
 
     constructor(public dialogService: DialogService) {}
 
-    open(content: string, options?: Object): NuiDialogRef {
+    open(content: string, options?: object): NuiDialogRef {
         this.openedDialog = this.dialogService.open(content, options);
         return this.openedDialog;
     }
@@ -136,22 +136,22 @@ class TestComponent {
         this.openedDialog = this.dialogService.confirm({ message: "foo" });
         return this.openedDialog;
     }
-    openTpl(options?: Object) {
+    openTpl(options?: object) {
         return this.dialogService.open(this.tplContent, options);
     }
-    openCmpt(cmptType: any, options?: Object) {
+    openCmpt(cmptType: any, options?: object) {
         return this.dialogService.open(cmptType, options);
     }
-    openDestroyableTpl(options?: Object) {
+    openDestroyableTpl(options?: object) {
         return this.dialogService.open(this.tplDestroyableContent, options);
     }
-    openTplClose(options?: Object) {
+    openTplClose(options?: object) {
         return this.dialogService.open(this.tplContentWithClose, options);
     }
-    openTplDismiss(options?: Object) {
+    openTplDismiss(options?: object) {
         return this.dialogService.open(this.tplContentWithDismiss, options);
     }
-    openTplIf(options?: Object) {
+    openTplIf(options?: object) {
         return this.dialogService.open(this.tplContentWithIf, options);
     }
 }

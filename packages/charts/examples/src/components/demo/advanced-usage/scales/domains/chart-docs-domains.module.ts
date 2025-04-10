@@ -30,9 +30,9 @@ import {
 import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { getDemoFiles } from "../../../../../demo-files-factory";
 import { ChartDocsDomainsComponent } from "./chart-docs-domains.component";
 import { FixedDomainsExampleComponent } from "./fixed-domains/fixed-domains.example.component";
+import { getDemoFiles } from "../../../../../demo-files-factory";
 
 const exampleRoutes: Routes = [
     {

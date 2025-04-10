@@ -25,9 +25,9 @@ import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import { NuiDocsModule, NuiMessageModule, SrlcStage } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { getDemoFiles } from "../../../../demo-files-factory";
 import { ChartDocsChartSetupComponent } from "./chart-docs-chart-setup.component";
 import { LineChartExampleComponent } from "./line-chart/line-chart.example.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
 
 const exampleRoutes: Routes = [
     {

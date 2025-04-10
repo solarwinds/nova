@@ -535,7 +535,7 @@ export abstract class BaseSelectV2
         });
     }
 
-    private isAllowedKeyOnManualDropdown(event: KeyboardEvent): Boolean {
+    private isAllowedKeyOnManualDropdown(event: KeyboardEvent): boolean {
         return this.allowedKeys.includes(event.code);
     }
 

@@ -30,13 +30,14 @@ import {
 import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { getDemoFiles } from "../../../../demo-files-factory";
-import { DemoCommonModule } from "../../common/demo-common.module";
+import { BarChartExampleComponent } from "./bar-chart/bar-chart.example.component";
 import { BarChartHorizontalExampleComponent } from "./bar-chart-horizontal/bar-chart-horizontal.example.component";
 import { BarChartTestComponent } from "./bar-chart-test/bar-chart-test.component";
+import { BarChartTickLabelMaxWidthTestComponent } from "./bar-chart-test/bar-chart-tick-label-max-width/bar-chart-tick-label-max-width-test.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
+import { DemoCommonModule } from "../../common/demo-common.module";
 // eslint-disable-next-line max-len
 import { BarChartTickLabelMaxWidthWithMarginTestComponent } from "./bar-chart-test/bar-chart-tick-label-max-width-with-margin/bar-chart-tick-label-max-width-with-margin-test.component";
-import { BarChartTickLabelMaxWidthTestComponent } from "./bar-chart-test/bar-chart-tick-label-max-width/bar-chart-tick-label-max-width-test.component";
 import { BasicHorizontalBarChartTestComponent } from "./bar-chart-test/basic-horizontal/basic-horizontal-bar-chart-test.component";
 import { BasicVerticalBarChartTestComponent } from "./bar-chart-test/basic-vertical/basic-vertical-bar-chart-test.component";
 import { BarChartTimeIntervalDstTestComponent } from "./bar-chart-test/daylight-saving-time/bar-chart-time-interval/bar-chart-time-interval-dst-test.component";
@@ -48,7 +49,6 @@ import { VerticalWithTimescaleBarChartTestComponent } from "./bar-chart-test/ver
 import { BarChartTimeIntervalExampleComponent } from "./bar-chart-time-interval/bar-chart-time-interval.example.component";
 import { BarChartTimeScaleExampleComponent } from "./bar-chart-time-scale/bar-chart-time-scale.example.component";
 import { BarChartWithLegendExampleComponent } from "./bar-chart-with-legend/bar-chart-with-legend.example.component";
-import { BarChartExampleComponent } from "./bar-chart/bar-chart.example.component";
 import { ChartDocsBarComponent } from "./chart-docs-bar.component";
 
 const exampleRoutes: Routes = [

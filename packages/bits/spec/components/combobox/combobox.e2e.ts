@@ -24,7 +24,7 @@ import {
     ElementArrayFinder,
     Key,
     protractor,
-    WebElement
+    WebElement,
 } from "protractor";
 
 import { ComboboxAtom } from "./combobox.atom";

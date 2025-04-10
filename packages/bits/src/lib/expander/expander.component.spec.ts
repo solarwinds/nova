@@ -253,7 +253,7 @@ describe("components >", () => {
                     });
 
                     it("emits open change event with expected value", (done: Function) => {
-                        subject.openChange.subscribe((isOpen: Boolean) => {
+                        subject.openChange.subscribe((isOpen: boolean) => {
                             expect(isOpen).toBeTruthy();
                             done();
                         });
@@ -272,7 +272,7 @@ describe("components >", () => {
                     });
 
                     it("emits open change event with expected value", (done: Function) => {
-                        subject.openChange.subscribe((isOpen: Boolean) => {
+                        subject.openChange.subscribe((isOpen: boolean) => {
                             expect(isOpen).toBeFalsy();
                             done();
                         });

@@ -18,8 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { IRendererConfig } from "../core/common/types";
 import { IMarkerInteractionConfig, RenderState } from "./types";
+import { IRendererConfig } from "../core/common/types";
 
 /** Renderer configuration for the thresholds on a chart */
 export const THRESHOLDS_MAIN_CHART_RENDERER_CONFIG: IRendererConfig = {

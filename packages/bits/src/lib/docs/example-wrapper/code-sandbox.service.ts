@@ -57,7 +57,7 @@ export class CodeSandboxService {
 
         const packageLib = sources.find(
             (source: FileMetadata) => source.fileName === "package.json"
-        )?.fileContent ?? ""
+        )?.fileContent ?? "";
 
         const files = createAngularApp(
             prefix,

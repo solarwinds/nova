@@ -28,10 +28,10 @@ import {
 
 import { NuiPopoverModule } from "@nova-ui/bits";
 
-import { ChartTooltipsPlugin } from "../core/plugins/tooltips";
 import { ChartTooltipComponent } from "./chart-tooltip.component";
 import { ChartTooltipDirective } from "./chart-tooltip.directive";
 import { ChartTooltipsComponent } from "./chart-tooltips.component";
+import { ChartTooltipsPlugin } from "../core/plugins/tooltips";
 
 describe("ChartTooltipsComponent", () => {
     let component: ChartTooltipsComponent;

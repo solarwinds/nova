@@ -30,12 +30,12 @@ import {
 import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { getDemoFiles } from "../../../../demo-files-factory";
-import { DemoCommonModule } from "../../common/demo-common.module";
 import { ChartDocsStatusComponent } from "./chart-docs-status.component";
 import { StatusChartExampleComponent } from "./status-chart/status-chart.example.component";
 import { StatusLegendChartExampleComponent } from "./status-legend-chart/status-legend-chart.example.component";
 import { StatusChartTestComponent } from "./status-test/status-chart-test.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
+import { DemoCommonModule } from "../../common/demo-common.module";
 
 const exampleRoutes: Routes = [
     {

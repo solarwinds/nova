@@ -27,7 +27,7 @@ import {
     by,
     ElementFinder,
     protractor,
-    ProtractorBrowser
+    ProtractorBrowser,
 } from "protractor";
 import { WebElementPromise } from "selenium-webdriver";
 

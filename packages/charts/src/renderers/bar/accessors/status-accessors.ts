@@ -18,9 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { IBarAccessors, IBarDataAccessors } from "./bar-accessors";
 import { DataAccessor } from "../../../core/common/types";
 import { IRectangleSeriesAccessors } from "../../accessors/rectangle-accessors";
-import { IBarAccessors, IBarDataAccessors } from "./bar-accessors";
 
 export interface IStatusDataAccessors extends IBarDataAccessors {
     status: DataAccessor;

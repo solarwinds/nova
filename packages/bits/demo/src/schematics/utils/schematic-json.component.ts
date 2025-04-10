@@ -59,8 +59,8 @@ export class SchematicJsonComponent implements OnInit {
         "default",
     ];
 
-    public ngOnInit(): void {
-        const schemaJson = require(`../../../../schematics/src/${this.schematicFolderName}/schema.json`);
+    public async ngOnInit(): Promise<void> {
+        const schemaJson = await import(`../../../../schematics/src/${this.schematicFolderName}/schema.json`);
         this.fillViewData(schemaJson.properties);
     }
 
