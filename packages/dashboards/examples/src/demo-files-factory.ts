@@ -12,9 +12,7 @@ export const getDemoFiles = (
         context: filePrefix,
         files: files.map((filePath) => ({
             content: async () =>
-                import(`./components/docs/${filePath}`, {
-                    with: { loader: "text" },
-                }).then((e) => {
+                import(`./components/docs/${filePath}`).then((e) => {
                     if (e.default) {
                         return e.default;
                     }

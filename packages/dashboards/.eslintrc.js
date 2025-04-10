@@ -15,6 +15,10 @@ module.exports = {
                     "@typescript-eslint/parser": [".ts", ".html"],
                 },
                 "import/resolver": {
+                    node: {
+                        extensions: [".js", ".ts"],
+                        paths: ["./src"],
+                    },
                     typescript: {
                         project: ["tsconfig.lib.json"],
                     },
@@ -28,6 +32,14 @@ module.exports = {
                 createDefaultProgram: true,
                 projectService: true,
                 tsconfigRootDir: __dirname,
+            },
+            settings: {
+                "import/resolver": {
+                    node: {
+                        extensions: [".js", ".ts"],
+                        paths: ["./src"],
+                    },
+                },
             },
         },
     ],

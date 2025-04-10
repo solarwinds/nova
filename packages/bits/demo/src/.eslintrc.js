@@ -1,14 +1,17 @@
 module.exports = {
     extends: "../../.eslintrc.js",
-    ignorePatterns: ["node_modules/**/*"],
     overrides: [
         {
             files: ["*.ts"],
             parserOptions: {
-                project: ["./tsconfig.lib.json"],
+                projectService: {
+                    allowDefaultProject: ["environments/environment.e2e.ts"],
+                },
                 createDefaultProgram: true,
-                projectService: true,
                 tsconfigRootDir: __dirname,
+            },
+            rules: {
+                "max-len": "off",
             },
             settings: {
                 "import/parsers": {
@@ -16,18 +19,9 @@ module.exports = {
                 },
                 "import/resolver": {
                     typescript: {
-                        project: ["tsconfig.lib.json"],
+                        project: ["./demo/src/tsconfig.json"],
                     },
                 },
-            },
-        },
-        {
-            files: ["*.spec.ts"],
-            parserOptions: {
-                project: ["./tsconfig.spec.json"],
-                createDefaultProgram: true,
-                projectService: true,
-                tsconfigRootDir: __dirname,
             },
         },
     ],

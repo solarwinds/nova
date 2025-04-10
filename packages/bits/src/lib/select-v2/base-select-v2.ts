@@ -356,7 +356,7 @@ export abstract class BaseSelectV2
         this.selectedOptions = option ? pull(this.selectedOptions, option) : [];
     }
 
-    public registerOnChange(fn: (value: any) => {}): void {
+    public registerOnChange(fn: (value: any) => void): void {
         this.onChange = fn;
     }
 

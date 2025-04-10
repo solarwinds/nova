@@ -1,8 +1,8 @@
-{
-    "ignorePatterns": ["projects/**/*", "node_modules/**/*"],
-    "overrides": [
+module.exports = {
+    ignorePatterns: ["projects/**/*", "node_modules/**/*"],
+    overrides: [
         {
-            "extends": [
+            extends: [
                 "plugin:@angular-eslint/recommended",
                 "eslint:recommended",
                 "plugin:@typescript-eslint/recommended",
@@ -10,19 +10,19 @@
                 "plugin:import/errors",
                 "plugin:import/warnings",
                 "plugin:import/typescript",
-                "plugin:@angular-eslint/template/process-inline-templates"
+                "plugin:@angular-eslint/template/process-inline-templates",
             ],
-            "files": ["*.ts"],
-            "plugins": ["prefer-arrow",  "@stylistic/ts"],
-            "rules": {
+            files: ["*.ts"],
+            plugins: ["prefer-arrow", "@stylistic/ts"],
+            rules: {
                 // TODO: Remove errors in v12 in scope of NUI-6044
                 "@angular-eslint/component-selector": [
                     "off",
                     {
-                        "prefix": "nui",
-                        "style": "kebab-case",
-                        "type": "element"
-                    }
+                        prefix: "nui",
+                        style: "kebab-case",
+                        type: "element",
+                    },
                 ],
                 "@angular-eslint/contextual-lifecycle": "off",
                 "@angular-eslint/directive-class-suffix": "error",
@@ -30,10 +30,10 @@
                 "@angular-eslint/directive-selector": [
                     "off",
                     {
-                        "prefix": "nui",
-                        "style": "camelCase",
-                        "type": "attribute"
-                    }
+                        prefix: "nui",
+                        style: "camelCase",
+                        type: "attribute",
+                    },
                 ],
                 "@angular-eslint/no-conflicting-lifecycle": "off",
                 /******************************
@@ -51,50 +51,50 @@
                 "@typescript-eslint/explicit-module-boundary-types": [
                     "warn",
                     {
-                        "allowArgumentsExplicitlyTypedAsAny": true,
-                        "allowTypedFunctionExpressions": false
-                    }
+                        allowArgumentsExplicitlyTypedAsAny: true,
+                        allowTypedFunctionExpressions: false,
+                    },
                 ],
                 // "semi": "off",
                 "@stylistic/ts/semi": ["error"],
                 "@stylistic/ts/member-delimiter-style": [
                     "error",
                     {
-                        "multiline": {
-                            "delimiter": "semi",
-                            "requireLast": true
+                        multiline: {
+                            delimiter: "semi",
+                            requireLast: true,
                         },
-                        "singleline": {
-                            "delimiter": "semi",
-                            "requireLast": false
-                        }
-                    }
+                        singleline: {
+                            delimiter: "semi",
+                            requireLast: false,
+                        },
+                    },
                 ],
                 "@stylistic/ts/type-annotation-spacing": "error",
                 "@typescript-eslint/member-ordering": [
                     "error",
                     {
-                        "default": [
+                        default: [
                             "static-field",
                             "static-method",
                             "instance-field",
-                            "instance-method"
-                        ]
-                    }
+                            "instance-method",
+                        ],
+                    },
                 ],
                 // Substitutes the 'class-name' tslint rule.
                 "@typescript-eslint/naming-convention": [
                     "error",
                     {
-                        "format": ["camelCase", "UPPER_CASE", "PascalCase"],
-                        "leadingUnderscore": "allow",
-                        "selector": "variable"
-                    }
+                        format: ["camelCase", "UPPER_CASE", "PascalCase"],
+                        leadingUnderscore: "allow",
+                        selector: "variable",
+                    },
                 ],
                 "@typescript-eslint/no-empty-function": [
                     "error",
                     {
-                        "allow": [
+                        allow: [
                             "private-constructors",
                             "protected-constructors",
                             "decoratedFunctions",
@@ -103,15 +103,15 @@
                             "functions",
                             "arrowFunctions",
                             "asyncFunctions",
-                            "asyncMethods"
-                        ]
-                    }
+                            "asyncMethods",
+                        ],
+                    },
                 ],
                 "@typescript-eslint/no-empty-interface": [
                     "error",
                     {
-                        "allowSingleExtends": true
-                    }
+                        allowSingleExtends: true,
+                    },
                 ],
                 "@typescript-eslint/no-explicit-any": "off",
                 "@typescript-eslint/no-floating-promises": "off",
@@ -123,15 +123,15 @@
                 "@typescript-eslint/no-type-alias": [
                     "off",
                     {
-                        "allowAliases": "always",
-                        "allowCallbacks": "always",
-                        "allowConditionalTypes": "always",
-                        "allowConstructors": "always",
-                        "allowGenerics": "always",
-                        "allowLiterals": "in-intersections",
-                        "allowMappedTypes": "always",
-                        "allowTupleTypes": "always"
-                    }
+                        allowAliases: "always",
+                        allowCallbacks: "always",
+                        allowConditionalTypes: "always",
+                        allowConstructors: "always",
+                        allowGenerics: "always",
+                        allowLiterals: "in-intersections",
+                        allowMappedTypes: "always",
+                        allowTupleTypes: "always",
+                    },
                 ],
                 "@typescript-eslint/no-unnecessary-type-assertion": "off",
                 // TODO: fix lint errors
@@ -144,15 +144,15 @@
                 "@typescript-eslint/no-unused-expressions": [
                     "error",
                     {
-                        "allowTernary": true
-                    }
+                        allowTernary: true,
+                    },
                 ],
                 "@typescript-eslint/no-unused-vars": [
                     "warn",
                     {
-                        "args": "none",
-                        "ignoreRestSiblings": true
-                    }
+                        args: "none",
+                        ignoreRestSiblings: true,
+                    },
                 ],
                 "@typescript-eslint/no-var-requires": "off",
                 // Substitutes the 'callable-types' tslint rule
@@ -179,12 +179,12 @@
                 "comma-dangle": [
                     "error",
                     {
-                        "arrays": "always-multiline",
-                        "exports": "always-multiline",
-                        "functions": "never",
-                        "imports": "always-multiline",
-                        "objects": "always-multiline"
-                    }
+                        arrays: "always-multiline",
+                        exports: "always-multiline",
+                        functions: "never",
+                        imports: "always-multiline",
+                        objects: "always-multiline",
+                    },
                 ],
                 "curly": "error",
                 "eol-last": "error",
@@ -195,7 +195,7 @@
                     "any",
                     "string",
                     "boolean",
-                    "undefined"
+                    "undefined",
                 ],
                 "id-match": "error",
                 "import/export": "off",
@@ -208,31 +208,31 @@
                     "warn",
                     {
                         "alphabetize": {
-                            "order": "asc"
+                            order: "asc",
                         },
                         "groups": [
                             "builtin",
                             "external",
                             "internal",
-                            ["parent", "sibling", "index"]
+                            ["parent", "sibling", "index"],
                         ],
                         "newlines-between": "always",
                         "pathGroups": [
                             {
-                                "group": "internal",
-                                "pattern": "@nova-ui/**",
-                                "position": "before"
-                            }
+                                group: "internal",
+                                pattern: "@nova-ui/**",
+                                position: "before",
+                            },
                         ],
-                        "pathGroupsExcludedImportTypes": ["builtin"]
-                    }
+                        "pathGroupsExcludedImportTypes": ["builtin"],
+                    },
                 ],
                 "indent": ["off"],
                 "max-len": [
                     "off",
                     {
-                        "code": 160
-                    }
+                        code: 160,
+                    },
                 ],
                 "no-bitwise": "error",
                 "no-caller": "error",
@@ -240,7 +240,7 @@
                 "no-console": [
                     "error",
                     {
-                        "allow": [
+                        allow: [
                             "log",
                             "warn",
                             "dir",
@@ -259,15 +259,15 @@
                             "profile",
                             "profileEnd",
                             "timeStamp",
-                            "context"
-                        ]
-                    }
+                            "context",
+                        ],
+                    },
                 ],
                 "no-empty": [
                     "error",
                     {
-                        "allowEmptyCatch": true
-                    }
+                        allowEmptyCatch: true,
+                    },
                 ],
                 // Must disable the base rule as it can report incorrect errors
                 // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-empty-function.md
@@ -282,21 +282,21 @@
                 "no-restricted-imports": [
                     "error",
                     {
-                        "paths": ["lodash", "moment"]
-                    }
+                        paths: ["lodash", "moment"],
+                    },
                 ],
                 "no-shadow": [
                     "off",
                     {
-                        "hoist": "all"
-                    }
+                        hoist: "all",
+                    },
                 ],
                 "no-throw-literal": "error",
                 "no-trailing-spaces": [
                     "error",
                     {
-                        "skipBlankLines": true
-                    }
+                        skipBlankLines: true,
+                    },
                 ],
                 "no-undef-init": "error",
                 "no-underscore-dangle": "off",
@@ -314,22 +314,22 @@
                 "prefer-arrow/prefer-arrow-functions": [
                     "warn",
                     {
-                        "allowStandaloneDeclarations": true,
-                        "singleReturnOnly": true
-                    }
+                        allowStandaloneDeclarations: true,
+                        singleReturnOnly: true,
+                    },
                 ],
                 "prefer-const": [
                     "warn",
                     {
-                        "ignoreReadBeforeAssign": true
-                    }
+                        ignoreReadBeforeAssign: true,
+                    },
                 ],
                 "quotes": [
                     "error",
                     "double",
                     {
-                        "allowTemplateLiterals": true
-                    }
+                        allowTemplateLiterals: true,
+                    },
                 ],
                 "radix": "error",
                 "require-await": "off",
@@ -339,25 +339,25 @@
                     "error",
                     "always",
                     {
-                        "block": {
-                            "balanced": true,
-                            "exceptions": ["*"],
-                            "markers": ["/"]
+                        block: {
+                            balanced: true,
+                            exceptions: ["*"],
+                            markers: ["/"],
                         },
-                        "line": {
-                            "markers": ["/"]
-                        }
-                    }
-                ]
-            }
+                        line: {
+                            markers: ["/"],
+                        },
+                    },
+                ],
+            },
         },
         {
-            "extends": ["plugin:@angular-eslint/template/recommended"],
-            "files": ["*.html"],
-            "rules": {
-                "@angular-eslint/template/no-negated-async": "error"
-            }
-        }
+            extends: ["plugin:@angular-eslint/template/recommended"],
+            files: ["*.html"],
+            rules: {
+                "@angular-eslint/template/no-negated-async": "error",
+            },
+        },
     ],
-    "root": true
-}
+    root: true,
+};
