@@ -112,6 +112,8 @@ jobs:
                           # we use it later to skip certain steps
                           touch package-cached
                       else
+                        ls ..
+                        ls ../..
                         cat ./../../.eslintrc.js
                         npx eslint --debug ./../../.eslintrc.js
                         npx eslint --debug .eslintrc.js
