@@ -72,12 +72,12 @@ jobs:
                       - scripts
                       - .editorconfig
                       - .eslintignore
-                      - .eslintrc.json
+                      - .eslintrc.js
                       - .prettierignore
                       - .prettierrc.js
                       - .prettierrc.json
                       - docker-compose.yml
-                      - LICENSE
+                      - LICENSE.md
                       - package.json
                       - tsconfig.main.json
                       - yarn.lock
@@ -112,7 +112,6 @@ jobs:
                           # we use it later to skip certain steps
                           touch package-cached
                       else
-                        ls ..
                         ls ../..
                         cat ./../../.eslintrc.js
                         npx eslint --debug ./../../.eslintrc.js
