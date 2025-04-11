@@ -48,7 +48,7 @@ export class WidgetClonerService {
                 ) => {
                     componentRef.instance.cloneSelectionComponentType =
                         cloner.widgetSelectionComponentType;
-                    componentRef.instance.changeDetector?.detectChanges()
+                    componentRef.instance.changeDetector?.detectChanges();
                     setTimeout(() => {
                         this.ref = componentRef;
                     });
