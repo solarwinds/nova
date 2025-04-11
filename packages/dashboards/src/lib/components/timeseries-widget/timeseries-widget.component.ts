@@ -34,7 +34,6 @@ import {
     ZoomPlugin,
 } from "@nova-ui/charts";
 
-import { IHasChangeDetector } from "../../types";
 import { TimeseriesChartPresetService } from "./timeseries-chart-preset.service";
 import {
     IChartPreset,
@@ -45,6 +44,7 @@ import {
     TimeseriesWidgetProjectType,
     TimeseriesWidgetZoomPlugin,
 } from "./types";
+import { IHasChangeDetector } from "../../types";
 
 /** @ignore */
 @Component({

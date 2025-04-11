@@ -23,10 +23,10 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { EventBus } from "@nova-ui/bits";
 import { XYGridConfig } from "@nova-ui/charts";
 
+import { LineChartComponent } from "./line-chart.component";
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../../types";
-import { LineChartComponent } from "./line-chart.component";
 
 describe("LineChartComponent", () => {
     let component: LineChartComponent;

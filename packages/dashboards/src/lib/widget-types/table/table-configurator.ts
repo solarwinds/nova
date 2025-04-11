@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 /* eslint-disable max-len */
-import { TableScrollTypeEditorComponent } from "../../configurator/components/widgets/table/scrollType-editor/scroll-type-editor.component";
+import { DEFAULT_TABLE_FORMATTERS } from "./default-table-formatters";
 import { FormStackComponent } from "../../configurator/components/form-stack/form-stack.component";
 import { WidgetConfiguratorSectionComponent } from "../../configurator/components/widget-configurator-section/widget-configurator-section.component";
 import { DataSourceConfigurationComponent } from "../../configurator/components/widgets/configurator-items/data-source-configuration/data-source-configuration.component";
@@ -27,6 +27,7 @@ import { TableDataSourceErrorComponent } from "../../configurator/components/wid
 import { TitleAndDescriptionConfigurationComponent } from "../../configurator/components/widgets/configurator-items/title-and-description-configuration/title-and-description-configuration.component";
 import { TableColumnsConfigurationV2Component } from "../../configurator/components/widgets/table/columns-editor-v2/table-columns-configuration-v2.component";
 import { TableFiltersEditorComponent } from "../../configurator/components/widgets/table/filters-editor/table-filters-editor.component";
+import { TableScrollTypeEditorComponent } from "../../configurator/components/widgets/table/scrollType-editor/scroll-type-editor.component";
 import {
     DEFAULT_PIZZAGNA_ROOT,
     NOVA_CONFIGURATOR_DATA_SOURCE_MANAGER,
@@ -39,7 +40,6 @@ import {
 } from "../../services/types";
 import { IPizzagna, PizzagnaLayer, WellKnownProviders } from "../../types";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
-import { DEFAULT_TABLE_FORMATTERS } from "./default-table-formatters";
 
 /* eslint-enable max-len */
 

@@ -25,6 +25,7 @@ import { ReplaySubject } from "rxjs";
 
 import { EventBus, IEvent, immutableSet } from "@nova-ui/bits";
 
+import { DynamicComponentCreator } from "./dynamic-component-creator.service";
 import { ISetPropertyPayload, SET_PROPERTY_VALUE } from "../../services/types";
 import {
     IComponentConfiguration,
@@ -37,7 +38,6 @@ import {
     getPizzagnaPropertyPath,
     IPizzagnaProperty,
 } from "../functions/get-pizzagna-property-path";
-import { DynamicComponentCreator } from "./dynamic-component-creator.service";
 
 /**
  * This service allows pizzagna sub-components to read data of other components and initiate changes of property values

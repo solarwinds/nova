@@ -38,8 +38,8 @@ import {
     XYGrid,
 } from "@nova-ui/charts";
 
-import { ProportionalWidgetChartTypes } from "../components/proportional-widget/types";
 import { CategoryChartUtilService } from "./category-chart-util.service";
+import { ProportionalWidgetChartTypes } from "../components/proportional-widget/types";
 
 describe("services >", () => {
     describe("CategoryChartUtilService >", () => {

@@ -23,9 +23,9 @@ import { Injectable, Injector } from "@angular/core";
 
 import { LoggerService } from "@nova-ui/bits";
 
+import { ComponentRegistryService } from "./component-registry.service";
 import { TemplateLoadErrorComponent } from "../../components/template-load-error/template-load-error.component";
 import { IPortalEnvironment } from "../../types";
-import { ComponentRegistryService } from "./component-registry.service";
 
 /** @ignore */
 @Injectable({

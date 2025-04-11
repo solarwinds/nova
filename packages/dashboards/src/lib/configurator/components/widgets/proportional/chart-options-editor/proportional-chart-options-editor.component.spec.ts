@@ -22,10 +22,10 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { EventBus } from "@nova-ui/bits";
 
+import { ProportionalChartOptionsEditorComponent } from "./proportional-chart-options-editor.component";
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
 import { PIZZAGNA_EVENT_BUS } from "../../../../../types";
-import { ProportionalChartOptionsEditorComponent } from "./proportional-chart-options-editor.component";
 
 describe("ProportionalChartOptionsEditorComponent", () => {
     let component: ProportionalChartOptionsEditorComponent;

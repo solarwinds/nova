@@ -31,13 +31,13 @@ import {
 } from "@nova-ui/bits";
 import { defaultPalette } from "@nova-ui/charts";
 
+import { ProportionalWidgetComponent } from "./proportional-widget.component";
+import { IProportionalWidgetConfig } from "./types";
 import { NuiDashboardsModule } from "../../dashboards.module";
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { ProviderRegistryService } from "../../services/provider-registry.service";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../types";
-import { ProportionalWidgetComponent } from "./proportional-widget.component";
-import { IProportionalWidgetConfig } from "./types";
 
 class MockDataSource implements IDataSource {
     public outputsSubject = new Subject<IFilteringOutputs>();

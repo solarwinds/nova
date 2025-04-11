@@ -6,9 +6,9 @@
             "@nova-ui/bits": ["../../src/public_api.ts"]
         },
         "skipLibCheck": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true
     },
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
     "extends": "../../tsconfig.json",
     "include": ["components"],
     "files": ["index.ts", "polyfills.ts"],

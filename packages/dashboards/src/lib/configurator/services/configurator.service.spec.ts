@@ -41,6 +41,8 @@ import { of } from "rxjs";
 
 import { NuiPanelModule } from "@nova-ui/bits";
 
+import { ConfiguratorService } from "./configurator.service";
+import { IConfigurator } from "./types";
 import { PreviewOverlayComponent } from "../../common/components/preview-overlay/preview-overlay.component";
 import { DashboardComponent } from "../../components/dashboard/dashboard.component";
 import { WidgetComponent } from "../../components/widget/widget.component";
@@ -52,8 +54,6 @@ import { WidgetTypesService } from "../../services/widget-types.service";
 import { proportional } from "../../widget-types/proportional/proportional";
 import { table } from "../../widget-types/table/table";
 import { ConfiguratorComponent } from "../components/configurator/configurator.component";
-import { ConfiguratorService } from "./configurator.service";
-import { IConfigurator } from "./types";
 
 class MockComponentFactoryResolver {
     constructor(

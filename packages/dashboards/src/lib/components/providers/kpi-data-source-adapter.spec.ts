@@ -29,14 +29,14 @@ import {
     IFilteringParticipants,
 } from "@nova-ui/bits";
 
-import { KpiWidgetThresholdColors } from "../../configurator/components/widgets/kpi/types";
-import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
-import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
-import { IKpiData } from "../kpi-widget/types";
 import {
     IKpiDataSourceAdapterConfiguration,
     KpiDataSourceAdapter,
 } from "./kpi-data-source-adapter";
+import { KpiWidgetThresholdColors } from "../../configurator/components/widgets/kpi/types";
+import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
+import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
+import { IKpiData } from "../kpi-widget/types";
 
 class MockDataSource implements IDataSource {
     public outputsSubject = new Subject<IFilteringOutputs>();

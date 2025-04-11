@@ -24,10 +24,10 @@ import { FormBuilder } from "@angular/forms";
 import { EventBus } from "@nova-ui/bits";
 import { PIZZAGNA_EVENT_BUS } from "@nova-ui/dashboards";
 
+import { PresentationConfigurationV2Component } from "./presentation-configuration-v2.component";
 import { IFormatterDefinition } from "../../../../../../../components/types";
 import { NuiDashboardsModule } from "../../../../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../../../../services/provider-registry.service";
-import { PresentationConfigurationV2Component } from "./presentation-configuration-v2.component";
 
 describe("PresentationConfigurationV2Component", () => {
     let component: PresentationConfigurationV2Component;

@@ -20,9 +20,9 @@
 
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
+import { KpiDescriptionConfigurationComponent } from "./kpi-description-configuration.component";
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
-import { KpiDescriptionConfigurationComponent } from "./kpi-description-configuration.component";
 
 describe("DataSourceConfigurationComponent", () => {
     let component: KpiDescriptionConfigurationComponent;

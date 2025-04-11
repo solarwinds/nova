@@ -18,11 +18,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { kpiConfigurator } from "./kpi-configurator";
+import { kpiWidget } from "./kpi-widget";
 import { IWidgetTypeDefinition } from "../../components/widget/types";
 import { DEFAULT_PIZZAGNA_ROOT } from "../../services/types";
 import { WellKnownPathKey } from "../../types";
-import { kpiConfigurator } from "./kpi-configurator";
-import { kpiWidget } from "./kpi-widget";
 
 const tileDescriptionConfiguratorTemplatePath = `tiles.properties.template[0]`;
 const dataSourceConfiguratorTemplatePath = `tiles.properties.template[1]`;

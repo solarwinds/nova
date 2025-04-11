@@ -34,6 +34,12 @@ import _isNil from "lodash/isNil";
 
 import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
 
+import {
+    IKpiConfiguration,
+    IKpiData,
+    IKpiFormatterProperties,
+    IKpiFormattersConfiguration,
+} from "./types";
 import { mapDataToFormatterProperties } from "../../functions/map-data-to-formatter-properties";
 import { INTERACTION } from "../../services/types";
 import {
@@ -43,12 +49,6 @@ import {
     WellKnownDataSourceFeatures,
 } from "../../types";
 import { IBroker } from "../providers/types";
-import {
-    IKpiConfiguration,
-    IKpiData,
-    IKpiFormatterProperties,
-    IKpiFormattersConfiguration,
-} from "./types";
 
 @Component({
     selector: "nui-kpi",

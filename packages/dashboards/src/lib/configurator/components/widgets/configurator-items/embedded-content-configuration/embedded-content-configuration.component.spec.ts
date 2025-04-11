@@ -21,9 +21,9 @@
 import { SimpleChange } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
+import { EmbeddedContentConfigurationComponent } from "./embedded-content-configuration.component";
 import { EmbeddedContentMode } from "../../../../../components/types";
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
-import { EmbeddedContentConfigurationComponent } from "./embedded-content-configuration.component";
 
 describe("EmbeddedContentConfigurationComponent > ", () => {
     let component: EmbeddedContentConfigurationComponent;

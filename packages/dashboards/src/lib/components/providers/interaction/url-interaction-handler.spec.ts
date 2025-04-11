@@ -21,10 +21,10 @@
 import { EventBus, IEvent } from "@nova-ui/bits";
 import { UrlInteractionService } from "@nova-ui/dashboards";
 
+import { IInteractionPayload } from "./interaction-handler";
 import { UrlInteractionHandler } from "./url-interaction-handler";
 import { mockLoggerService } from "../../../mocks.spec";
 import { INTERACTION } from "../../../services/types";
-import { IInteractionPayload } from "./interaction-handler";
 
 import Spy = jasmine.Spy;
 

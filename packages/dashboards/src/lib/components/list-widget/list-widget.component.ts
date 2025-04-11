@@ -36,10 +36,10 @@ import { takeUntil } from "rxjs/operators";
 
 import { EventBus, IEvent, ResizeObserverDirective } from "@nova-ui/bits";
 
+import { IListWidgetConfiguration } from "./types";
 import { mapDataToFormatterProperties } from "../../functions/map-data-to-formatter-properties";
 import { DRILLDOWN } from "../../services/types";
 import { IHasChangeDetector, PIZZAGNA_EVENT_BUS } from "../../types";
-import { IListWidgetConfiguration } from "./types";
 
 const RESIZE_DEBOUNCE_TIME = 10;
 

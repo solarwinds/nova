@@ -23,13 +23,13 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { EventBus } from "@nova-ui/bits";
 import { IHeaderLinkProvider } from "@nova-ui/dashboards";
 
+import { WidgetHeaderComponent } from "./widget-header.component";
 import { NuiDashboardsModule } from "../../../dashboards.module";
 import { DynamicComponentCreator } from "../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
 import { REFRESH, WIDGET_EDIT, WIDGET_REMOVE } from "../../../services/types";
 import { WidgetToDashboardEventProxyService } from "../../../services/widget-to-dashboard-event-proxy.service";
 import { HEADER_LINK_PROVIDER, PIZZAGNA_EVENT_BUS } from "../../../types";
-import { WidgetHeaderComponent } from "./widget-header.component";
 
 class TestHeaderLinkProviderService implements IHeaderLinkProvider {
     getLink(template: string): string {

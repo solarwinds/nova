@@ -20,10 +20,10 @@
 
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
+import { PresentationConfigurationComponent } from "./presentation-configuration.component";
 import { IFormatterDefinition } from "../../../../../../../components/types";
 import { NuiDashboardsModule } from "../../../../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../../../../services/provider-registry.service";
-import { PresentationConfigurationComponent } from "./presentation-configuration.component";
 
 describe("PresentationConfigurationComponent", () => {
     let component: PresentationConfigurationComponent;

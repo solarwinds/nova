@@ -2,14 +2,15 @@
     "compilerOptions": {
         "baseUrl": ".",
         "declaration": false,
-        "importHelpers": false,
         "paths": {
             "@nova-ui/dashboards": ["../../src/public-api.ts"]
         },
         "skipLibCheck": true,
-        "types": ["node"]
+        "resolveJsonModule": true,
+        "esModuleInterop": true
     },
-    "exclude": ["**/*.spec.ts"],
     "extends": "../../tsconfig.json",
-    "lib": ["ES2019", "DOM"]
+    "include": ["components"],
+    "files": ["index.ts", "polyfills.ts"],
+    "typeRoots": ["node_modules/@types"]
 }

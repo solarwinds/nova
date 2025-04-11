@@ -20,11 +20,11 @@
 
 import { EventBus, IEvent } from "@nova-ui/bits";
 
+import { KpiSectionConverterService } from "./kpi-section-converter.service";
 import { DynamicComponentCreator } from "../../../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
 import { IPizzagnaLayer, PizzagnaLayer } from "../../../../../types";
 import { PreviewService } from "../../../preview.service";
-import { KpiSectionConverterService } from "./kpi-section-converter.service";
 
 const testKey = "providerId";
 const testProviderId = "TestProviderId";
