@@ -54,7 +54,7 @@ services:
     web:
         image: "nginx"
         volumes:
-            - "${PROJECT_DIR}/sdk/api-docs-ng2/examples/browser:/usr/share/nginx/html:ro"
+            - "${PROJECT_DIR}/sdk/api-docs-ng2/examples:/usr/share/nginx/html:ro"
         ports:
             - "8080:80"
     selenium:
