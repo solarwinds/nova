@@ -112,7 +112,9 @@ jobs:
                           # we use it later to skip certain steps
                           touch package-cached
                       else
-                          yarn run lint
+                        npx eslint --debug .eslintrc.js
+                        npx eslint --print-config .eslintrc.js
+                        DEBUG=* yarn run lint
                       fi
             - save_cache:
                   key: bits-dist-{{ checksum "packages/bits/git-commit" }}
