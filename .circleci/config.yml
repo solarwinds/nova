@@ -112,7 +112,7 @@ jobs:
                           # we use it later to skip certain steps
                           touch package-cached
                       else
-                        yarn run assemble
+                          yarn run assemble
                       fi
             - save_cache:
                   key: bits-dist-{{ checksum "packages/bits/git-commit" }}

@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { WizardOverflowComponent } from "./wizard-overflow.component";
@@ -29,6 +30,7 @@ describe("WizardOverflowComponent", () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [WizardOverflowComponent],
+            schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
 
         fixture = TestBed.createComponent(WizardOverflowComponent);
