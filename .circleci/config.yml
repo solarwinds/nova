@@ -113,6 +113,7 @@ jobs:
                           touch package-cached
                       else
                         cat ./../../.eslintrc.js
+                        npx eslint --debug ./../../.eslintrc.js
                         npx eslint --debug .eslintrc.js
                         npx eslint --print-config .eslintrc.js
                         DEBUG=* yarn run lint
