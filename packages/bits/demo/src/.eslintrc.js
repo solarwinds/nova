@@ -8,7 +8,7 @@ module.exports = {
                     allowDefaultProject: ["environments/environment.e2e.ts"],
                 },
                 createDefaultProgram: true,
-                tsconfigRootDir: ".",
+                tsconfigRootDir: __dirname,
             },
             rules: {
                 "max-len": "off",
