@@ -27,6 +27,7 @@ import { Observable } from "rxjs";
 
 import { LoggerService } from "@nova-ui/bits";
 
+import { WidgetEditorDirective } from "./widget-editor.directive";
 import { DashboardComponent } from "../../components/dashboard/dashboard.component";
 import {
     IDashboard,
@@ -44,7 +45,6 @@ import { WIDGET_EDIT, WIDGET_REMOVE } from "../../services/types";
 import { WidgetTypesService } from "../../services/widget-types.service";
 import { kpi } from "../../widget-types/kpi/kpi";
 import { GridsterItemWidgetIdDirective } from "../gridster-item-widget-id/gridster-item-widget-id.directive";
-import { WidgetEditorDirective } from "./widget-editor.directive";
 
 @Injectable()
 class MockSubmitHandler implements IDashboardPersistenceHandler {

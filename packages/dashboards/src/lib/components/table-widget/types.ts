@@ -18,13 +18,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { IFormatter } from "../types";
 import {
     ITableSelectionConfigDisabled,
     ITableSelectionConfigEnabled,
     TableSelectionConfig,
     TableSelectionMode,
 } from "@nova-ui/bits";
+
+import { IFormatter } from "../types";
 
 export interface ITableWidgetColumnConfig {
     id: string;
@@ -133,8 +134,7 @@ interface ITableWidgetSelectionConfigEnabled
     allPages?: boolean;
 }
 
-interface ITableWidgetSelectionConfigDisabled
-    extends ITableSelectionConfigDisabled {}
+type ITableWidgetSelectionConfigDisabled = ITableSelectionConfigDisabled;
 
 export type TableWidgetSelectionConfig =
     | ITableWidgetSelectionConfigEnabled

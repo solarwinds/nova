@@ -28,7 +28,6 @@ import {
 } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
-import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
 
 import {
     LoggerService,
@@ -38,6 +37,7 @@ import {
     NuiSpinnerModule,
 } from "@nova-ui/bits";
 
+import { WidgetClonerComponent } from "./widget-cloner.component";
 import { TemplateLoadErrorComponent } from "../../../components/template-load-error/template-load-error.component";
 import { IWidget } from "../../../components/widget/types";
 import { mockChangeDetector, mockLoggerService } from "../../../mocks.spec";
@@ -51,11 +51,10 @@ import { PreviewService } from "../../services/preview.service";
 import { ConfiguratorHeadingService } from "../../services/public-api";
 import { ConfiguratorComponent } from "../configurator/configurator.component";
 import { ConfiguratorHeadingComponent } from "../heading/configurator-heading.component";
-import { DashwizStepComponent } from "../wizard/dashwiz-step/dashwiz-step.component";
 import { DashwizButtonsComponent } from "../wizard/dashwiz/dashwiz-buttons.component";
 import { DashwizComponent } from "../wizard/dashwiz/dashwiz.component";
+import { DashwizStepComponent } from "../wizard/dashwiz-step/dashwiz-step.component";
 import { IDashwizStepNavigatedEvent } from "../wizard/types";
-import { WidgetClonerComponent } from "./widget-cloner.component";
 
 @Component({
     selector: "mock-clone-selection",

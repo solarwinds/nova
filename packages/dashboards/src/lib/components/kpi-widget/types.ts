@@ -44,14 +44,12 @@ export interface IKpiConfiguration {
     formatters?: IKpiFormattersConfiguration;
 }
 
-export interface IKpiFormattersConfiguration
-    extends Partial<
+export type IKpiFormattersConfiguration = Partial<
         Record<
             KpiFormatterTypes | string,
             {
                 formatter: IFormatter;
             }
         >
-    > {}
-export interface IKpiFormatterProperties
-    extends Partial<Record<KpiFormatterTypes | string, any>> {}
+    >;
+export type IKpiFormatterProperties = Partial<Record<KpiFormatterTypes | string, any>>;
