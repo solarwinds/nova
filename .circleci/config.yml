@@ -24,7 +24,7 @@ executors:
             image: ubuntu-2204:2022.10.2
         working_directory: ~/nova
         environment:
-          USE_CACHE: "false"
+          USE_CACHE: "true"
 
 jobs:
     prepare:
