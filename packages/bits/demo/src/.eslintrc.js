@@ -1,5 +1,5 @@
 module.exports = {
-    extends: "../../.eslintrc.js",
+    extends: "./../../.eslintrc.js",
     overrides: [
         {
             files: ["*.ts"],
@@ -8,7 +8,7 @@ module.exports = {
                     allowDefaultProject: ["environments/environment.e2e.ts"],
                 },
                 createDefaultProgram: true,
-                tsconfigRootDir: __dirname,
+                tsconfigRootDir: ".",
             },
             rules: {
                 "max-len": "off",

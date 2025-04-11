@@ -112,7 +112,7 @@ jobs:
                           # we use it later to skip certain steps
                           touch package-cached
                       else
-                          yarn run assemble
+                          yarn run lint
                       fi
             - save_cache:
                   key: bits-dist-{{ checksum "packages/bits/git-commit" }}
@@ -123,6 +123,9 @@ jobs:
                   root: ~/nova
                   paths:
                       - packages/bits
+            -   store_artifacts:
+                  path: angular-errors.log
+                  destination: angular-errors.log
     bits-unit-test:
         executor: node-browsers
         working_directory: ~/nova
