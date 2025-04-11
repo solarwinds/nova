@@ -38,8 +38,8 @@ import { takeUntil } from "rxjs/operators";
 
 import { LoggerService } from "@nova-ui/bits";
 
-import { IHasChangeDetector, IHasForm } from "../../../../../types";
 import { thresholdsValidator } from "./thresholds-validator";
+import { IHasChangeDetector, IHasForm } from "../../../../../types";
 
 @Component({
     selector: "nui-thresholds-configuration",

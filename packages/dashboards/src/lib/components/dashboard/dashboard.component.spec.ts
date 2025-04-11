@@ -22,12 +22,12 @@ import { SimpleChange, SimpleChanges } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { GridsterItem } from "angular-gridster2";
 
-import { NuiDashboardsModule } from "../../dashboards.module";
-import { WIDGET_POSITION_CHANGE } from "../../services/types";
-import { IWidgets } from "../widget/types";
 import { DashboardComponent } from "./dashboard.component";
 import { DEFAULT_GRIDSTER_CONFIG } from "./default-gridster-config";
 import { IDashboard } from "./types";
+import { NuiDashboardsModule } from "../../dashboards.module";
+import { WIDGET_POSITION_CHANGE } from "../../services/types";
+import { IWidgets } from "../widget/types";
 
 describe("DashboardComponent", () => {
     let component: DashboardComponent;

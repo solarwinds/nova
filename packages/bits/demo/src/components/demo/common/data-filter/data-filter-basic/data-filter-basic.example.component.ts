@@ -377,7 +377,7 @@ export class NuiDataFilterListComponent implements AfterViewInit, OnDestroy {
         </nui-popover>
 
         <ng-template #popoverTimeFramePicker>
-            <div class="m-3">
+            <div class="p-3">
                 <nui-time-frame-picker
                     [startModel]="tf"
                     (changed)="updateTf($event)"

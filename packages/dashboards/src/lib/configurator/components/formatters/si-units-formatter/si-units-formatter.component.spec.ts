@@ -21,10 +21,10 @@
 import { SimpleChange } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
+import { SiUnitsFormatterComponent } from "./si-units-formatter.component";
 import { NuiDashboardsModule } from "../../../../dashboards.module";
 import { NuiPizzagnaModule } from "../../../../pizzagna/pizzagna.module";
 import { PizzagnaService } from "../../../../pizzagna/services/pizzagna.service";
-import { SiUnitsFormatterComponent } from "./si-units-formatter.component";
 
 const TEST_DATA: any[] = [
     {

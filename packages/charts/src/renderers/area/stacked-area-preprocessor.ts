@@ -18,10 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { IAreaAccessors } from "./area-accessors";
 import { ChartAssist } from "../../core/chart-assists/chart-assist";
 import { IChartAssistSeries, IChartSeries } from "../../core/common/types";
 import { IStackMetadata } from "../bar/types";
-import { IAreaAccessors } from "./area-accessors";
 
 export function stackedAreaPreprocessor(
     chartSeriesSet: IChartAssistSeries<IAreaAccessors>[],

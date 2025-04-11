@@ -8,7 +8,7 @@
         "examples": {
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
+                    "builder": "@angular-devkit/build-angular:application",
                     "configurations": {
                         "e2e": {
                             "aot": true,
@@ -18,7 +18,6 @@
                                     "type": "anyComponentStyle"
                                 }
                             ],
-                            "buildOptimizer": true,
                             "extractLicenses": true,
                             "fileReplacements": [
                                 {
@@ -29,8 +28,7 @@
                             "namedChunks": false,
                             "optimization": true,
                             "outputHashing": "all",
-                            "sourceMap": false,
-                            "vendorChunk": false
+                            "sourceMap": false
                         },
                         "production": {
                             "aot": true,
@@ -40,27 +38,30 @@
                                     "type": "anyComponentStyle"
                                 }
                             ],
-                            "buildOptimizer": true,
                             "extractLicenses": true,
                             "namedChunks": false,
                             "optimization": true,
                             "outputHashing": "all",
-                            "sourceMap": false,
-                            "vendorChunk": false
+                            "sourceMap": false
                         }
                     },
                     "defaultConfiguration": "",
                     "options": {
-                        "aot": false,
-                        "allowedCommonJsDependencies": ["lodash"],
-                        "buildOptimizer": false,
+                        "loader": {
+                            ".html": "text",
+                            ".less": "text"
+                        },
+                        "allowedCommonJsDependencies": ["lodash", "moment/moment"],
                         "extractLicenses": false,
                         "index": "./examples/src/index.html",
-                        "main": "./examples/src/index.ts",
+                        "browser": "./examples/src/index.ts",
                         "namedChunks": true,
                         "optimization": false,
-                        "outputPath": "./sdk/api-docs-ng2/examples",
-                        "polyfills": "./examples/src/polyfills.ts",
+                        "outputPath": {
+                            "base": "sdk/api-docs-ng2/examples",
+                            "browser": ""
+                        },
+                        "polyfills": ["./examples/src/polyfills.ts"],
                         "preserveSymlinks": true,
                         "scripts": [],
                         "sourceMap": true,
@@ -68,11 +69,10 @@
                             "includePaths": ["node_modules"]
                         },
                         "styles": [
-                            "./examples/src/styles.less",
-                            "./src/styles.less"
+                            "./src/styles.less",
+                            "./examples/src/styles.less"
                         ],
-                        "tsConfig": "./examples/src/tsconfig.json",
-                        "vendorChunk": true
+                        "tsConfig": "./examples/src/tsconfig.json"
                     }
                 },
                 "lint": {
@@ -88,12 +88,12 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "e2e": {
-                            "browserTarget": "examples:build:e2e"
+                            "buildTarget": "examples:build:e2e"
                         },
                         "production": {}
                     },
                     "options": {
-                        "browserTarget": "examples:build"
+                        "buildTarget": "examples:build"
                     }
                 }
             },
@@ -141,15 +141,14 @@
                     "builder": "@angular-devkit/build-angular:browser",
                     "defaultConfiguration": "",
                     "options": {
-                        "aot": false,
                         "buildOptimizer": false,
                         "deleteOutputPath": true,
                         "extractLicenses": false,
-                        "index": "index.html",
+                        "index": "./index.html",
                         "main": "",
                         "namedChunks": true,
                         "outputPath": "./.tmp-css",
-                        "sourceMap": true,
+                        "sourceMap": false,
                         "stylePreprocessorOptions": {
                             "includePaths": ["../../node_modules"]
                         },
@@ -211,7 +210,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "i18n:build",
+                        "buildTarget": "i18n:build",
                         "outputPath": "./.tmp-i18n"
                     }
                 },

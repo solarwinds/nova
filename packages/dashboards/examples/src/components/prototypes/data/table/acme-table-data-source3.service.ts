@@ -36,8 +36,8 @@ import {
 } from "@nova-ui/bits";
 import { WellKnownDataSourceFeatures } from "@nova-ui/dashboards";
 
-import { IBrewDatasourceResponse, IBrewInfo } from "../../../types";
 import { BREW_API_URL } from "./constants";
+import { IBrewDatasourceResponse, IBrewInfo } from "../../../types";
 
 @Injectable()
 export class AcmeTableDataSourceNoColumnGeneration

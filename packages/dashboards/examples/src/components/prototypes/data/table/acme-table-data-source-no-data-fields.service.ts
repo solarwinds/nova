@@ -34,8 +34,8 @@ import {
     LoggerService,
 } from "@nova-ui/bits";
 
-import { IBrewDatasourceResponse, IBrewInfo } from "../../../types";
 import { BREW_API_URL } from "./constants";
+import { IBrewDatasourceResponse, IBrewInfo } from "../../../types";
 
 @Injectable()
 export class AcmeTableDataSourceNoDataFields

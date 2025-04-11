@@ -40,13 +40,13 @@ import {
     NuiDashboardsModule,
 } from "@nova-ui/dashboards";
 
-import { getDemoFiles } from "../../../../../demo-files-factory";
 import { CustomWidgetDocsComponent } from "./custom-widget-docs.component";
 import {
     CustomConfiguratorSectionComponent,
     CustomWidgetBodyContentComponent,
     CustomWidgetComponent,
 } from "./custom-widget.component";
+import { getDemoFiles } from "../../../../../demo-files-factory";
 
 const routes = [
     {

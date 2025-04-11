@@ -21,7 +21,6 @@
 import { PortalModule } from "@angular/cdk/portal";
 import { Component, NO_ERRORS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
 
 import {
     ButtonComponent,
@@ -31,7 +30,7 @@ import {
 } from "@nova-ui/bits";
 
 import { TemplateLoadErrorComponent } from "../../../../components/template-load-error/template-load-error.component";
-import { mockLoggerService } from "../../../../mocks";
+import { mockLoggerService } from "../../../../mocks.spec";
 import { ComponentPortalDirective } from "../../../../pizzagna/directives/component-portal/component-portal.directive";
 import { ProviderRegistryService } from "../../../../services/provider-registry.service";
 import { DashwizStepComponent } from "../dashwiz-step/dashwiz-step.component";

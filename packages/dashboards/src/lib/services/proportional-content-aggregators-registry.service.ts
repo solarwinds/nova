@@ -22,8 +22,8 @@ import { Injectable } from "@angular/core";
 
 import { LoggerService } from "@nova-ui/bits";
 
-import { IProportionalDonutContentAggregatorDefinition } from "../functions/proportional-aggregators/types";
 import { RegistryService } from "./registry-service";
+import { IProportionalDonutContentAggregatorDefinition } from "../functions/proportional-aggregators/types";
 
 @Injectable({ providedIn: "root" })
 export class ProportionalContentAggregatorsRegistryService extends RegistryService<IProportionalDonutContentAggregatorDefinition> {

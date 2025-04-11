@@ -50,6 +50,10 @@ describe("USERCONTROL table >", () => {
         TableAtom,
         "nui-demo-table-row-height-set"
     );
+    const customActionsTable: TableAtom = Atom.find(
+        TableAtom,
+        "nui-demo-custom-table-actions"
+    );
     const resizableTableTextboxAtom: TextboxAtom = Atom.find(
         TextboxAtom,
         "position-input"
@@ -95,6 +99,7 @@ describe("USERCONTROL table >", () => {
     describe("Basic table >", () => {
         beforeEach(async () => {
             await Helpers.prepareBrowser("table/basic");
+            await table.waitElementVisible();
         });
 
         it("should have column with right alignment", async () => {
@@ -110,6 +115,7 @@ describe("USERCONTROL table >", () => {
     describe("Column width set table >", () => {
         beforeEach(async () => {
             await Helpers.prepareBrowser("table/width-set");
+            await widthSetTable.waitElementVisible();
         });
 
         it("table row should have height of 40px", async () => {
@@ -152,6 +158,7 @@ describe("USERCONTROL table >", () => {
     describe("Paginated table > ", () => {
         beforeEach(async () => {
             await Helpers.prepareBrowser("table/pagination");
+            await paginatedTable.waitElementVisible();
         });
 
         it("should return correct number of rows according to pagination", async () => {
@@ -164,6 +171,7 @@ describe("USERCONTROL table >", () => {
     describe("Searchable table >", () => {
         beforeEach(async () => {
             await Helpers.prepareBrowser("table/search");
+            await searchableTable.waitElementVisible();
         });
 
         it("should return rows depending on result of the search", async () => {
@@ -192,6 +200,7 @@ describe("USERCONTROL table >", () => {
     describe("Height set table >", () => {
         beforeEach(async () => {
             await Helpers.prepareBrowser("table/height");
+            await heightSetTable.waitElementVisible();
         });
 
         it("should have nui-row element with density=tiny height equal to 24px", async () => {
@@ -204,6 +213,7 @@ describe("USERCONTROL table >", () => {
     describe("Adding and removing table columns >", () => {
         beforeEach(async () => {
             await Helpers.prepareBrowser("table/custom-actions");
+            customActionsTable.waitElementVisible();
         });
 
         const editColumnsButton: ButtonAtom = Atom.find(
@@ -288,6 +298,7 @@ describe("USERCONTROL table >", () => {
     describe("Sortable table >", () => {
         beforeEach(async () => {
             await Helpers.prepareBrowser("table/sorting");
+            await sortableTable.waitElementVisible();
         });
 
         it("should sort data properly", async () => {
@@ -401,6 +412,7 @@ describe("USERCONTROL table >", () => {
     describe("Resizable table >", () => {
         beforeEach(async () => {
             await Helpers.prepareBrowser("table/resize");
+            await resizableTable.waitElementVisible();
         });
 
         it("should equally distribute width of non-specified columns", async () => {
@@ -525,6 +537,7 @@ describe("USERCONTROL table >", () => {
                 PaginatorAtom,
                 "nui-demo-table-select-paginator"
             );
+            await rowSelectionTable.waitElementVisible();
             const firstHeaderCell = rowSelectionTable.getCell(0, 0);
             selector = rowSelectionTable.getSelector(firstHeaderCell);
         });
@@ -623,6 +636,7 @@ describe("USERCONTROL table >", () => {
     describe("Reorderable table >", () => {
         beforeEach(async () => {
             await Helpers.prepareBrowser("table/reorder");
+            await reorderableTable.waitElementVisible();
         });
 
         // Chromedriver still does not support html 5 drag/drop. 18.07.2018
@@ -659,6 +673,7 @@ describe("USERCONTROL table >", () => {
 
         beforeAll(async () => {
             await Helpers.prepareBrowser("table/selectable-toggle");
+            selectableToggleTable.waitElementVisible();
         });
 
         it("should toggle selectability off", async () => {

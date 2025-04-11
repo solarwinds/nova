@@ -20,7 +20,8 @@
 
 import { Component } from "@angular/core";
 
-const addSchema = require("../../../../schematics/src/ng-add/schema.json");
+import addSchema from "../../../../schematics/src/ng-add/schema.json";
+
 @Component({
     selector: "nui-dashboard-schematics-docs",
     templateUrl: "./schematics-docs.component.html",

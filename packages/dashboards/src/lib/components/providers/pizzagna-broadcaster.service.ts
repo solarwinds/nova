@@ -23,11 +23,11 @@ import get from "lodash/get";
 import { Observable, Subscription } from "rxjs";
 import { distinctUntilChanged, map } from "rxjs/operators";
 
+import { BroadcasterTrackOnType, IBroadcasterConfig } from "./types";
 import { getParentComponentId } from "../../functions/get-parent-component-id";
 import { parseStringWithData } from "../../functions/parse-string-with-data";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { IConfigurable, IProperties } from "../../types";
-import { BroadcasterTrackOnType, IBroadcasterConfig } from "./types";
 
 @Injectable()
 export class PizzagnaBroadcasterService implements IConfigurable, OnDestroy {

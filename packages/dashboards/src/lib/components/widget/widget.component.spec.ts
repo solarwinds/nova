@@ -21,11 +21,11 @@
 import { SimpleChange } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
+import { WidgetComponent } from "./widget.component";
 import { NuiDashboardsModule } from "../../dashboards.module";
 import { ProviderRegistryService } from "../../services/provider-registry.service";
 import { DEFAULT_PIZZAGNA_ROOT } from "../../services/types";
 import { StackComponent } from "../layouts/stack/stack.component";
-import { WidgetComponent } from "./widget.component";
 
 describe("WidgetComponent", () => {
     let component: WidgetComponent;

@@ -128,7 +128,7 @@ export interface IDimensionConfig {
 /**
  * Interface for defining the SVGElements forming the top, right, bottom, and left borders of an entity
  */
-export interface IBorders extends IAllAround<SVGElement> {}
+export type IBorders = IAllAround<SVGElement>;
 
 /**
  * Configuration of grid borders

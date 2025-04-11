@@ -19,7 +19,6 @@
 //  THE SOFTWARE.
 
 import { fakeAsync, TestBed, tick } from "@angular/core/testing";
-import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
 
 import { IToastService } from "./public-api";
 import { ToastContainerService } from "./toast-container.service";

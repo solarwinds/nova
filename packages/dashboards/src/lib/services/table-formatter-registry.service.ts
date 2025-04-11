@@ -23,12 +23,12 @@ import { Observable } from "rxjs";
 
 import { LoggerService } from "@nova-ui/bits";
 
+import { RegistryService } from "./registry-service";
+import { IAddFormattersOptions } from "./types";
 import {
     IFormatterDefinition,
     ITableFormatterDefinition,
 } from "../components/types";
-import { RegistryService } from "./registry-service";
-import { IAddFormattersOptions } from "./types";
 
 export abstract class FormatterRegistryService<
     TFormatter extends IFormatterDefinition = IFormatterDefinition

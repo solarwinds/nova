@@ -18,20 +18,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Chart } from "../core/chart";
-import { ChartAssist } from "../core/chart-assists/chart-assist";
-import {
-    IChartPlugin,
-    IDonutGaugeThresholdsRendererConfig,
-    ILinearGaugeThresholdsRendererConfig,
-} from "../core/common/types";
-import { GAUGE_LABEL_FORMATTER_NAME_DEFAULT } from "../core/plugins/gauge/constants";
-import { DonutGaugeLabelsPlugin } from "../core/plugins/gauge/donut-gauge-labels-plugin";
-import { LinearGaugeLabelsPlugin } from "../core/plugins/gauge/linear-gauge-labels-plugin";
-import { BarRenderer } from "../renderers/bar/bar-renderer";
-import { LinearGaugeThresholdsRenderer } from "../renderers/bar/linear-gauge-thresholds-renderer";
-import { DonutGaugeThresholdsRenderer } from "../renderers/radial/gauge/donut-gauge-thresholds-renderer";
-import { RadialRenderer } from "../renderers/radial/radial-renderer";
 import {
     GaugeMode,
     GAUGE_QUANTITY_SERIES_ID,
@@ -46,6 +32,20 @@ import {
     IGaugeLabelsConfig,
     IGaugeThresholdsConfig,
 } from "./types";
+import { Chart } from "../core/chart";
+import { ChartAssist } from "../core/chart-assists/chart-assist";
+import {
+    IChartPlugin,
+    IDonutGaugeThresholdsRendererConfig,
+    ILinearGaugeThresholdsRendererConfig,
+} from "../core/common/types";
+import { GAUGE_LABEL_FORMATTER_NAME_DEFAULT } from "../core/plugins/gauge/constants";
+import { DonutGaugeLabelsPlugin } from "../core/plugins/gauge/donut-gauge-labels-plugin";
+import { LinearGaugeLabelsPlugin } from "../core/plugins/gauge/linear-gauge-labels-plugin";
+import { BarRenderer } from "../renderers/bar/bar-renderer";
+import { LinearGaugeThresholdsRenderer } from "../renderers/bar/linear-gauge-thresholds-renderer";
+import { DonutGaugeThresholdsRenderer } from "../renderers/radial/gauge/donut-gauge-thresholds-renderer";
+import { RadialRenderer } from "../renderers/radial/radial-renderer";
 
 describe("GaugeUtil >", () => {
     let gaugeConfig: IGaugeConfig;

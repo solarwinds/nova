@@ -33,17 +33,16 @@ import { NavigationEnd, Router } from "@angular/router";
 import cloneDeep from "lodash/cloneDeep";
 import isFunction from "lodash/isFunction";
 import { EMPTY, Observable, of, Subject } from "rxjs";
-// eslint-disable-next-line import/no-deprecated
 import { catchError, filter, switchMap, takeUntil } from "rxjs/operators";
 
 import { LoggerService, uuid } from "@nova-ui/bits";
 
+import { IConfigurator, IConfiguratorSource } from "./types";
 import { DashboardComponent } from "../../components/dashboard/dashboard.component";
 import { IWidget } from "../../components/widget/types";
 import { WidgetUpdateOperation } from "../../configurator/services/types";
 import { WidgetTypesService } from "../../services/widget-types.service";
 import { ConfiguratorComponent } from "../components/configurator/configurator.component";
-import { IConfigurator, IConfiguratorSource } from "./types";
 
 @Injectable()
 export class ConfiguratorService {
@@ -82,7 +81,11 @@ export class ConfiguratorService {
         if (configurator.portalBundle?.attached) {
             component.formPortalAttached
                 .pipe(takeUntil(this.close$))
-                .subscribe(configurator.portalBundle.attached);
+                .subscribe((e) => {
+                    if (configurator?.portalBundle?.attached) {
+                        configurator?.portalBundle?.attached(e);
+                    }
+                });
         }
 
         component.changeDetector.detectChanges();

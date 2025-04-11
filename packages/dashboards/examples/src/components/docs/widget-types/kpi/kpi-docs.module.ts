@@ -33,15 +33,15 @@ import {
     NuiDashboardsModule,
 } from "@nova-ui/dashboards";
 
-import { getDemoFiles } from "../../../../demo-files-factory";
-import { KpiWidgetBackgroundColorDocsComponent } from "./kpi-widget-background-color-docs.component";
-import { KpiWidgetBackgroundColorExampleComponent } from "./kpi-widget-background-color/kpi-widget-background-color-example.component";
 import { KpiDocsComponent } from "./kpi-docs.component";
-import { KpiSyncBrokerDocsComponent } from "./kpi-sync-broker-docs.component";
 import { KpiSyncBrokerExampleComponent } from "./kpi-sync-broker/kpi-sync-broker-example.component";
+import { KpiSyncBrokerDocsComponent } from "./kpi-sync-broker-docs.component";
 import { KpiSyncBrokerForAllTilesExampleComponent } from "./kpi-sync-broker-for-all-tiles/kpi-sync-broker-for-all-tiles-example.component";
 import { KpiWidgetExampleComponent } from "./kpi-widget/kpi-widget-example.component";
+import { KpiWidgetBackgroundColorExampleComponent } from "./kpi-widget-background-color/kpi-widget-background-color-example.component";
+import { KpiWidgetBackgroundColorDocsComponent } from "./kpi-widget-background-color-docs.component";
 import { KpiWidgetInteractiveExampleComponent } from "./kpi-widget-interactive/kpi-widget-interactive-example.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
 
 const routes: Routes = [
     {

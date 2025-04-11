@@ -90,6 +90,7 @@ describe("USERCONTROL datepicker", () => {
         // Get random month
         const randomMonth = () =>
             DatepickerAtom.MONTHNAMES_SHORT[Math.floor(Math.random() * 12)];
+        await datepickerInline.waitElementVisible();
         // Go upper level in title
         await datepickerInline.clickTitle();
 
@@ -100,6 +101,7 @@ describe("USERCONTROL datepicker", () => {
     });
 
     it("should have empty input if no value provided", async () => {
+        await datepickerDisabledTodayButton.waitElementVisible();
         expect(await datepickerDisabledTodayButton.getInputValue()).toEqual("");
     });
 

@@ -30,8 +30,8 @@ import {
     NuiMessageModule,
 } from "@nova-ui/bits";
 
-import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { DataSourceErrorComponent } from "./data-source-error.component";
+import { NuiDashboardsModule } from "../../../../../dashboards.module";
 
 class MockDataSource implements IDataSource {
     public outputsSubject = new Subject<IFilteringOutputs>();

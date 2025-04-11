@@ -67,12 +67,11 @@ export class WidgetClonerComponent
             busyState: { busy: false },
             allowStepChange: true,
         });
-
-    private readonly destroy$ = new Subject<void>();
-    private resetForm$ = new Subject<void>();
     public busy = false;
     public scrolled = false;
     public isFormDisplayed = false;
+    private readonly destroy$ = new Subject<void>();
+    private resetForm$ = new Subject<void>();
 
     constructor(
         public changeDetector: ChangeDetectorRef,
@@ -104,7 +103,8 @@ export class WidgetClonerComponent
         this.changeDetector.markForCheck();
 
         // Scroll shadows
-        this.scrollDispatcher.scrolled()
+        this.scrollDispatcher
+            .scrolled()
             .subscribe((event: CdkScrollable | void) => {
                 const element = event?.getElementRef()?.nativeElement;
 
@@ -197,6 +197,7 @@ export class WidgetClonerComponent
         setTimeout(() => {
             // @ts-ignore: Type 'null' is not assignable to type 'string' on id property
             this.configurator.updateWidget(cloneDeep(previewWidget));
+            this.changeDetector.detectChanges();
         });
     }
 

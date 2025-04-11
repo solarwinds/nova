@@ -30,13 +30,13 @@ import {
 import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { getDemoFiles } from "../../../../../demo-files-factory";
 import { ChartDocsBaseGridComponent } from "./chart-docs-base-grid.component";
 import { BaseGridDisablingInteractionExampleComponent } from "./disabling-interaction/base-grid-disabling-interaction.example.component";
 import { BaseGridHeightAndWidthExampleComponent } from "./height-and-width/base-grid-height-and-width.example.component";
 import { BaseGridAutoMarginsExampleComponent } from "./margins/base-grid-auto-margins.example.component";
 import { BaseGridMarginsExampleComponent } from "./margins/base-grid-margins.example.component";
 import { BaseGridPaddingExampleComponent } from "./padding/base-grid-padding.example.component";
+import { getDemoFiles } from "../../../../../demo-files-factory";
 
 const exampleRoutes: Routes = [
     {

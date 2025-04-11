@@ -35,3 +35,8 @@ export interface ComponentChange<T, P extends keyof T> extends SimpleChange {
 export type ComponentChanges<T> = {
     [P in keyof T]?: ComponentChange<T, P>;
 } & SimpleChanges;
+
+export interface CodeSourceFiles {
+    context: string;
+    files: { path: string; content: () => Promise <any> }[];
+}

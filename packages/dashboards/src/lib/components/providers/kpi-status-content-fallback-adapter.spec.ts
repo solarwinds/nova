@@ -20,6 +20,8 @@
 
 import { EventBus, IEvent } from "@nova-ui/bits";
 
+import { KpiStatusContentFallbackAdapter } from "./kpi-status-content-fallback-adapter";
+import { IDataSourceError, IDataSourceOutputPayload } from "./types";
 import {
     DATA_SOURCE_DESTROYED,
     DATA_SOURCE_OUTPUT,
@@ -28,8 +30,6 @@ import { IPizzagnaProperty } from "../../pizzagna/functions/get-pizzagna-propert
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { PizzagnaLayer } from "../../types";
-import { KpiStatusContentFallbackAdapter } from "./kpi-status-content-fallback-adapter";
-import { IDataSourceError, IDataSourceOutputPayload } from "./types";
 
 describe("KpiStatusContentFallbackAdapter > ", () => {
     let adapter: KpiStatusContentFallbackAdapter;

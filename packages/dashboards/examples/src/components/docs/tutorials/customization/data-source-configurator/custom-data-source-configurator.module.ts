@@ -40,12 +40,12 @@ import {
     NuiDashboardsModule,
 } from "@nova-ui/dashboards";
 
-import { getDemoFiles } from "../../../../../demo-files-factory";
 import { CustomDataSourceConfiguratorDocComponent } from "./custom-data-source-configurator-docs.component";
 import {
     CustomDataSourceConfiguratorExampleComponent,
     HarryPotterDataSourceConfiguratorComponent,
 } from "./example/custom-data-source-configurator-example.component";
+import { getDemoFiles } from "../../../../../demo-files-factory";
 
 const routes: Routes = [
     {

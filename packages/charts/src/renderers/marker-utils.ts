@@ -26,6 +26,7 @@ import {
     DATA_POINT_INTERACTION_RESET,
     INTERACTION_DATA_POINT_EVENT,
 } from "../constants";
+import { DEFAULT_MARKER_INTERACTION_CONFIG } from "./constants";
 import { isInRange } from "../core/common/scales/helpers/is-in-range";
 import { IXYScales } from "../core/common/scales/types";
 import {
@@ -38,7 +39,6 @@ import {
     InteractionType,
     IRendererEventPayload,
 } from "../core/common/types";
-import { DEFAULT_MARKER_INTERACTION_CONFIG } from "./constants";
 
 export class MarkerUtils {
     /** The default class for the marker's container */

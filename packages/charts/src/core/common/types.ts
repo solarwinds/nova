@@ -22,15 +22,15 @@ import { ScaleLinear } from "d3-scale";
 import { Selection } from "d3-selection";
 import { ValueMap } from "d3-selection-multi";
 
-import { StandardGaugeThresholdMarkerRadius } from "../../gauge/constants";
-import { RenderState } from "../../renderers/types";
-import { IGrid } from "../grid/types";
 import { ChartPlugin } from "./chart-plugin";
 import { DataManager } from "./data-manager";
 import { EventBus } from "./event-bus";
 import { RenderEngine } from "./render-engine";
 import { Renderer } from "./renderer";
 import { Scales } from "./scales/types";
+import { StandardGaugeThresholdMarkerRadius } from "../../gauge/constants";
+import { RenderState } from "../../renderers/types";
+import { IGrid } from "../grid/types";
 
 /**
  * Short-form alias for the most commonly used generic D3 Selection type

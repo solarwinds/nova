@@ -40,10 +40,10 @@ import {
     WellKnownProviders,
 } from "@nova-ui/dashboards";
 
+import { TableSelectionMode } from "../../../../../../bits/dist";
 import { AcmeProportionalDataSource } from "../data/proportional-datasources";
 import { AcmeTableMockDataSource } from "../data/table/acme-table-mock-data-source.service";
 import { AcmeTimeseriesDataSource } from "../data/timeseries-data-sources";
-import { TableSelectionMode } from "../../../../../../bits/dist";
 
 export const positions: Record<string, GridsterItem> = {
     widget1: {

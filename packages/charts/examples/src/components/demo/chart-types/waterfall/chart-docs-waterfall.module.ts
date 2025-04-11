@@ -31,12 +31,12 @@ import {
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { getDemoFiles } from "../../../../demo-files-factory";
-import { DemoCommonModule } from "../../common/demo-common.module";
 import { ChartDocsWaterfallComponent } from "./chart-docs-waterfall.component";
 import { WaterfallChartAdvancedComponent } from "./waterfall-advanced-charts/waterfall-chart-advanced.example.component";
 import { WaterfallChartSimpleComponent } from "./waterfall-chart-simple/waterfall-chart-simple.example.component";
 import { WaterfallChartTestComponent } from "./waterfall-test/waterfall-chart-test.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
+import { DemoCommonModule } from "../../common/demo-common.module";
 
 const collectionRoutes: Routes = [
     {

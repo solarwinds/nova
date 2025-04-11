@@ -24,6 +24,7 @@ import { compressToBase64 } from "lz-string";
 
 import { createAngularApp } from "./code-sandbox-files";
 import { DEMO_PATH_TOKEN } from "../../../constants/path.constants";
+import {FileMetadata} from "../services/sources.service";
 
 /** @dynamic */
 @Injectable({
@@ -47,16 +48,23 @@ export class CodeSandboxService {
                 }
             );
             const json = await res.json();
-            return json["dist-tags"].main;
+            return json["dist-tags"].latest;
         }
 
         const form: HTMLFormElement = this.document.createElement("form");
 
         const latestNovaVersion = await mainVersion("@nova-ui/bits");
+
+        const packageLib = sources.find(
+            (source: FileMetadata) => source.fileName === "package.json"
+        )?.fileContent ?? "";
+
         const files = createAngularApp(
             prefix,
             this.config.context,
             sources,
+            packageLib.default,
+            packageLib.default,
             latestNovaVersion
         );
         // TODO fix modification of less files

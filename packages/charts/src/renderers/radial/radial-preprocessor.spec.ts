@@ -18,10 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { radialPreprocessor } from "./radial-preprocessor";
 import { LinearScale } from "../../core/common/scales/linear-scale";
 import { IScale } from "../../core/common/scales/types";
 import { IAccessors, IChartSeries } from "../../core/common/types";
-import { radialPreprocessor } from "./radial-preprocessor";
 
 describe("Radial Preprocessor >", () => {
     let scale: IScale<any>;

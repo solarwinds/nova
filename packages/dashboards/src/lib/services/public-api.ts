@@ -20,6 +20,7 @@
 
 export * from "./types";
 export * from "./provider-registry.service";
+export * from "./unit-test-registry.service";
 export * from "./widget-configuration.service";
 export * from "./widget-to-dashboard-event-proxy.service";
 export * from "./widget-types.service";

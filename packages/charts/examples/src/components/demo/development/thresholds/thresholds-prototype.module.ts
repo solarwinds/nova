@@ -23,8 +23,8 @@ import { RouterModule, Routes } from "@angular/router";
 
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { DemoCommonModule } from "../../common/demo-common.module";
 import { ThresholdsPrototypeComponent } from "./thresholds-prototype.component";
+import { DemoCommonModule } from "../../common/demo-common.module";
 
 const routes: Routes = [
     {

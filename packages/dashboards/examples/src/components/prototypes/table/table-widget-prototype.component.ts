@@ -52,8 +52,6 @@ import {
     WidgetTypesService,
     WIDGET_CREATE,
     PIZZAGNA_EVENT_BUS,
-    SELECTION,
-    REFRESH,
 } from "@nova-ui/dashboards";
 
 import {

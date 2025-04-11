@@ -23,6 +23,8 @@ import moment from "moment/moment";
 
 import { LoggerService } from "@nova-ui/bits";
 
+import { ThresholdsService } from "./thresholds-service";
+import { ISimpleThresholdZone, ZoneBoundary } from "./types";
 import { SequentialColorProvider } from "../core/common/palette/sequential-color-provider";
 import { LinearScale } from "../core/common/scales/linear-scale";
 import { TimeScale } from "../core/common/scales/time-scale";
@@ -39,8 +41,6 @@ import {
     LineAccessors,
 } from "../renderers/line/line-accessors";
 import { LineRenderer } from "../renderers/line/line-renderer";
-import { ThresholdsService } from "./thresholds-service";
-import { ISimpleThresholdZone, ZoneBoundary } from "./types";
 
 describe("thresholds service", () => {
     let thresholdsService: ThresholdsService;

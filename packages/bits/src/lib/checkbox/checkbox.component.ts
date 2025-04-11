@@ -266,11 +266,11 @@ export class CheckboxComponent
         this.checked = value;
     }
 
-    public registerOnChange(fn: (value: boolean) => {}): void {
+    public registerOnChange(fn: (value: boolean) => void): void {
         this.onChange = fn;
     }
 
-    public registerOnTouched(fn: () => {}): void {
+    public registerOnTouched(fn: () => void): void {
         this.onTouched = fn;
     }
 

@@ -35,11 +35,11 @@ import {
     WidgetTypesService,
 } from "@nova-ui/dashboards";
 
+import { positions, widgets } from "./widgets";
 import {
     TestTableDataSource,
     TestTableDataSource2,
 } from "../../data/table-datasources";
-import { positions, widgets } from "./widgets";
 
 /**
  * A component that instantiates the dashboard

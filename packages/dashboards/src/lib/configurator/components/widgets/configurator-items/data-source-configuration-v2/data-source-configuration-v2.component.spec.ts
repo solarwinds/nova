@@ -30,12 +30,12 @@ import { Subject } from "rxjs";
 
 import { EventBus, LoggerService } from "@nova-ui/bits";
 
+import { DataSourceConfigurationV2Component } from "./data-source-configuration-v2.component";
 import { IKpiData } from "../../../../../components/public-api";
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../../types";
 import { DATA_SOURCE_OUTPUT } from "../../../../types";
-import { DataSourceConfigurationV2Component } from "./data-source-configuration-v2.component";
 
 class DataSource1 {
     // This is the ID we'll use to identify the provider

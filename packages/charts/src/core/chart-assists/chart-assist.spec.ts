@@ -23,12 +23,12 @@ import { LineAccessors } from "../../renderers/line/line-accessors";
 import { LineRenderer } from "../../renderers/line/line-renderer";
 import { RenderState } from "../../renderers/types";
 import { Chart } from "../chart";
+import { ChartAssist } from "./chart-assist";
+import { ChartAssistEventType, ChartAssistRenderStateData } from "./types";
 import { LinearScale } from "../common/scales/linear-scale";
 import { NoopScale } from "../common/scales/noop-scale";
 import { IAccessors, IChartSeries, IDataPoint } from "../common/types";
 import { XYGrid } from "../grid/xy-grid";
-import { ChartAssist } from "./chart-assist";
-import { ChartAssistEventType, ChartAssistRenderStateData } from "./types";
 
 describe("chart assist >", () => {
     let ca: ChartAssist;

@@ -54,7 +54,7 @@ export const POLYFILLS =
     "/***************************************************************************************************\n" +
     " * Zone JS is required by default for Angular itself.\n" +
     " */\n" +
-    `import "zone.js/dist/zone"; // Included with Angular CLI.\n` +
+    `import "zone.js"; // Included with Angular CLI.\n` +
     "\n" +
     "/***************************************************************************************************\n" +
     " * APPLICATION IMPORTS\n" +

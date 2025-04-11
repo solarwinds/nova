@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { HttpClientModule } from "@angular/common/http";
-import { NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT } from "@angular/core";
+import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 
@@ -42,10 +42,6 @@ import { AnimationsModule } from "./environments/environment";
         NuiExpanderModule,
     ],
     declarations: [AppComponent, ChartExampleIndexComponent],
-    providers: [
-        { provide: TRANSLATIONS_FORMAT, useValue: "xlf" },
-        { provide: TRANSLATIONS, useValue: "" },
-    ],
     bootstrap: [AppComponent],
 })
 export class ChartsDemoModule {}

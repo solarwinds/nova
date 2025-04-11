@@ -35,14 +35,13 @@ import {
     SimpleChanges,
 } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
 
-import { mockLoggerService } from "../../../mocks";
+import { ComponentPortalDirective } from "./component-portal.directive";
+import { mockLoggerService } from "../../../mocks.spec";
 import { ProviderRegistryService } from "../../../services/provider-registry.service";
 import { IStaticProviders } from "../../../services/types";
 import { IConfigurable, IProperties } from "../../../types";
 import { ComponentRegistryService } from "../../services/component-registry.service";
-import { ComponentPortalDirective } from "./component-portal.directive";
 
 @Directive()
 class MockProvider implements IConfigurable, OnInit, AfterViewInit, OnDestroy {

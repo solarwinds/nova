@@ -30,10 +30,10 @@ import {
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { DemoCommonModule } from "../../common/demo-common.module";
 import { DataPointPopoversPrototypeComponent } from "./data-point/data-point-popovers-prototype.component";
 import { LineChartPopoverPrototypeComponent } from "./line-chart/line-chart-popover-prototype.component";
 import { PopoverPerformanceTestComponent } from "./line-chart/popover-performance-test.component";
+import { DemoCommonModule } from "../../common/demo-common.module";
 
 const routes: Routes = [
     {

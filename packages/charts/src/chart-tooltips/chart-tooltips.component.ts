@@ -42,9 +42,9 @@ import isNil from "lodash/isNil";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
+import { ChartTooltipDirective } from "./chart-tooltip.directive";
 import { IPosition } from "../core/common/types";
 import { ChartTooltipsPlugin } from "../core/plugins/tooltips/chart-tooltips-plugin";
-import { ChartTooltipDirective } from "./chart-tooltip.directive";
 
 interface ITooltipNode extends SimulationNodeDatum {
     seriesId: string;

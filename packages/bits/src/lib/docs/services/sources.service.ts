@@ -22,6 +22,7 @@ import { Inject, Injectable, Optional } from "@angular/core";
 
 import { DEMO_PATH_TOKEN } from "../../../constants/path.constants";
 import { LoggerService } from "../../../services/log-service";
+import { CodeSourceFiles } from "../../../types";
 
 /** @ignore */
 @Injectable()
@@ -30,13 +31,12 @@ export class SourcesService {
         private logger: LoggerService,
         @Optional()
         @Inject(DEMO_PATH_TOKEN)
-        private config: {
-            context: string;
-            files: { content: string; path: string }[];
-        }
+        private config: CodeSourceFiles
     ) {}
 
-    public getSourcesByFilenamePrefix(filenamePrefix: string): FileMetadata[] {
+    public async getSourcesByFilenamePrefix(
+        filenamePrefix: string
+    ): Promise<FileMetadata[]> {
         if (!this.config.context) {
             this.logger.error(
                 `You need to configure SourceService in the module where you import NuiDocsModule e.g. {` +
@@ -45,25 +45,26 @@ export class SourcesService {
             return [];
         }
 
-        const files: FileMetadata[] = [];
-        this.config.files
-            .filter(
-                (file: { content: string; path: string }) =>
-                    file.path.includes(`${filenamePrefix}/`) ||
-                    file.path.includes("package.json")
+        const contentFiles = await Promise.all(
+            this.config.files.map(async (file) =>
+                file.content().then((content) => ({
+                    content,
+                    path: file.path,
+                }))
             )
-            .map((file: { content: string; path: string }) => {
-                files.push({
-                    filePath: this.getTrimmedFilePath(
-                        file.path,
-                        filenamePrefix
-                    ),
-                    fileContent: file.content,
-                    fileType: this.getFileType(file.path),
-                    fileName: this.getFilename(file.path),
-                });
-            });
-        return files;
+        );
+        const filteredContentFiles = contentFiles.filter(
+            (file) =>
+                file.path.includes(`${filenamePrefix}/`) ||
+                file.path.includes("package.json")
+        );
+
+        return filteredContentFiles.map((file) => ({
+            filePath: this.getTrimmedFilePath(file.path, filenamePrefix),
+            fileContent: file.content,
+            fileType: this.getFileType(file.path),
+            fileName: this.getFilename(file.path),
+        })) as FileMetadata[];
     }
 
     private getFilename(filePath: string): string {

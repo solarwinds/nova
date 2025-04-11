@@ -36,7 +36,7 @@ export interface IUnitConversionConstants {
 
 export type TUnitConversionBases = {
     [Key in keyof IUnitConversionConstants]: number[] | number;
-}
+};
 
 /** Standard base values used in unit conversion */
 export enum UnitBase {

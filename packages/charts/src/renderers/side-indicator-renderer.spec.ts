@@ -21,6 +21,12 @@
 import { select } from "d3-selection";
 import { Subject } from "rxjs";
 
+import {
+    ISideIndicatorAccessors,
+    SideIndicatorAccessors,
+    SideIndicatorRenderer,
+} from "./side-indicator-renderer";
+import { IRenderSeries, RenderLayerName } from "./types";
 import { LinearScale } from "../core/common/scales/linear-scale";
 import { TimeScale } from "../core/common/scales/time-scale";
 import {
@@ -30,12 +36,6 @@ import {
     IRendererEventPayload,
 } from "../core/common/types";
 import { GRAYSCALE_FILTER } from "../core/types";
-import {
-    ISideIndicatorAccessors,
-    SideIndicatorAccessors,
-    SideIndicatorRenderer,
-} from "./side-indicator-renderer";
-import { IRenderSeries, RenderLayerName } from "./types";
 
 describe("Side Indicator Renderer >", () => {
     let renderer: SideIndicatorRenderer;

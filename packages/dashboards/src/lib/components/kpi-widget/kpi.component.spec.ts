@@ -30,6 +30,7 @@ import {
     IFilteringParticipants,
 } from "@nova-ui/bits";
 
+import { KpiComponent } from "./kpi.component";
 import { NuiDashboardsModule } from "../../dashboards.module";
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
@@ -39,7 +40,6 @@ import {
     PIZZAGNA_EVENT_BUS,
     WellKnownDataSourceFeatures,
 } from "../../types";
-import { KpiComponent } from "./kpi.component";
 
 class MockDataSource implements IDataSource {
     public outputsSubject = new Subject<IFilteringOutputs>();

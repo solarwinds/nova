@@ -25,8 +25,8 @@ import {
 } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { SvgMarker } from "../core/common/palette/markers/svg-marker";
 import { ChartMarkerComponent } from "./chart-marker.component";
+import { SvgMarker } from "../core/common/palette/markers/svg-marker";
 
 describe("components >", () => {
     describe("chart-marker >", () => {

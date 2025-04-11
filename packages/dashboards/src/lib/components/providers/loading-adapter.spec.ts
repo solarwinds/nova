@@ -20,11 +20,11 @@
 
 import { EventBus, IEvent } from "@nova-ui/bits";
 
+import { LoadingAdapter } from "./loading-adapter";
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { DATA_SOURCE_BUSY } from "../../services/types";
 import { PizzagnaLayer } from "../../types";
-import { LoadingAdapter } from "./loading-adapter";
 
 describe("LoadingAdapter > ", () => {
     let adapter: LoadingAdapter;

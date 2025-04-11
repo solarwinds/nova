@@ -7,11 +7,13 @@
     </nui-form-field>
     <p class="mt-2">Value: {{ selectedDate }}</p>
 
-    <nui-combobox
-        [itemsSource]="displayedZones"
-        [value]="initialZone"
-        (changed)="textboxChanged($event)"
-        placeholder="Select item"
-        i18n-placeholder
-    ></nui-combobox>
+    <nui-combobox-v2
+        placeholder="Select zones"
+        [formControl]="selectedZone"
+        (valueSelected)="changeZone($event)"
+    >
+        <nui-select-v2-option *ngFor="let o of zonesS()" [value]="o">
+            {{ o }}
+        </nui-select-v2-option>
+    </nui-combobox-v2>
 </section>

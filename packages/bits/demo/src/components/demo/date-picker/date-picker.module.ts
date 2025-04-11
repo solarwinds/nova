@@ -29,6 +29,7 @@ import {
     NuiFormFieldModule,
     NuiMessageModule,
     NuiSelectModule,
+    NuiSelectV2Module,
     NuiValidationMessageModule,
     SrlcStage,
 } from "@nova-ui/bits";
@@ -96,6 +97,7 @@ const routes = [
         NuiMessageModule,
         NuiDocsModule,
         RouterModule.forChild(routes),
+        NuiSelectV2Module,
     ],
     declarations: [
         DatePickerBasicExampleComponent,

@@ -37,6 +37,9 @@ import {
     WidgetTypesService,
 } from "@nova-ui/dashboards";
 
+import { AcmeCloneSelectionComponent } from "./acme-clone-selection/acme-clone-selection.component";
+import { AcmeEditWithClonerComponent } from "./acme-clone-selection/acme-edit-with-cloner.component";
+import { AcmeDashboardComponent } from "./configurator-test.component";
 import { TestCommonModule } from "../../common/common.module";
 import {
     TestKpiDataSource,
@@ -55,9 +58,6 @@ import {
     TestTimeseriesDataSource,
     TestTimeseriesDataSource2,
 } from "../../data/timeseries-data-sources";
-import { AcmeCloneSelectionComponent } from "./acme-clone-selection/acme-clone-selection.component";
-import { AcmeEditWithClonerComponent } from "./acme-clone-selection/acme-edit-with-cloner.component";
-import { AcmeDashboardComponent } from "./configurator-test.component";
 
 const routes = [
     {

@@ -29,11 +29,11 @@ import {
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { DemoCommonModule } from "../../common/demo-common.module";
 import { DonutGaugePrototypeComponent } from "./donut/donut-gauge-prototype.component";
 import { GaugeTestPageComponent } from "./gauge-test-page.component";
 import { LinearGaugeHorizontalPrototypeComponent } from "./horizontal/linear-gauge-horizontal-prototype.component";
 import { LinearGaugeVerticalPrototypeComponent } from "./vertical/linear-gauge-vertical-prototype.component";
+import { DemoCommonModule } from "../../common/demo-common.module";
 
 const routes: Routes = [
     {

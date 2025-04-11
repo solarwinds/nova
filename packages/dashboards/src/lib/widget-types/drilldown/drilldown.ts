@@ -18,11 +18,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { drilldownConfigurator } from "./drilldown-configurator";
+import { drilldownWidget } from "./drilldown-widget";
 import { IWidgetTypeDefinition } from "../../components/widget/types";
 import { DEFAULT_PIZZAGNA_ROOT } from "../../services/types";
 import { WellKnownPathKey } from "../../types";
-import { drilldownConfigurator } from "./drilldown-configurator";
-import { drilldownWidget } from "./drilldown-widget";
 
 /***********************************************************************************************************
  * Drilldown widget definition starts here

@@ -39,13 +39,13 @@ import {
     WidgetTypesService,
 } from "@nova-ui/dashboards";
 
+import { positions, widgets } from "./widgets";
 import {
     TestProportionalDataSource,
     TestProportionalDataSource2,
     TestProportionalDataSource3,
     TestProportionalDataSource4,
 } from "../../data/proportional-data-sources";
-import { positions, widgets } from "./widgets";
 
 /**
  * A component that instantiates the dashboard

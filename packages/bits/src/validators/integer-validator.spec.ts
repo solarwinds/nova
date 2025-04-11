@@ -34,7 +34,7 @@ describe("validators >", () => {
             { num: "-10.8", result: false },
             { num: "0.8", result: false },
         ];
-        beforeAll(() => {
+        beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [ReactiveFormsModule],
             });

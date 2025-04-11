@@ -28,12 +28,12 @@ import {
     IFilteringParticipants,
 } from "@nova-ui/bits";
 
+import { TimeseriesDataSourceAdapter } from "./timeseries-data-source-adapter";
+import { ITimeseriesDataSourceAdapterConfiguration } from "./types";
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { REFRESH } from "../../services/types";
 import { PizzagnaLayer } from "../../types";
-import { TimeseriesDataSourceAdapter } from "./timeseries-data-source-adapter";
-import { ITimeseriesDataSourceAdapterConfiguration } from "./types";
 
 class MockDataSource implements IDataSource {
     public outputsSubject = new Subject<IFilteringOutputs>();

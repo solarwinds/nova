@@ -78,7 +78,7 @@ export class LineChartInterruptedPathTerminusExampleComponent
         const origDefinedAccessor = accessorsMissing.data.defined;
         // we're calling the original accessor implementation, but inverting it's logic
         accessorsMissing.data.defined = (d, i, data, dataSeries) =>
-            !origDefinedAccessor?.(d, i, data, dataSeries) ?? true;
+            !(origDefinedAccessor?.(d, i, data, dataSeries) ?? true);
 
         for (const s of incomingSeries) {
             const cs: IChartSeries<ILineAccessors> = {

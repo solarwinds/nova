@@ -25,10 +25,10 @@ import { takeUntil } from "rxjs/operators";
 
 import { EventBus, IEvent } from "@nova-ui/bits";
 
+import { IDataSourceBusyPayload } from "./types";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { DATA_SOURCE_BUSY } from "../../services/types";
 import { IHasComponent, PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../types";
-import { IDataSourceBusyPayload } from "./types";
 
 @Injectable()
 export class LoadingAdapter implements OnDestroy, IHasComponent {

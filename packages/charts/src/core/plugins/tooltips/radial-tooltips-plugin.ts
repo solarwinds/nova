@@ -21,6 +21,7 @@
 import { ConnectedPosition } from "@angular/cdk/overlay";
 import { DefaultArcObject } from "d3-shape";
 
+import { ChartTooltipsPlugin, ITooltipPosition } from "./chart-tooltips-plugin";
 import { RadialRenderer } from "../../../renderers/radial/radial-renderer";
 import {
     IAccessors,
@@ -28,7 +29,6 @@ import {
     IDataPoint,
     IPosition,
 } from "../../common/types";
-import { ChartTooltipsPlugin, ITooltipPosition } from "./chart-tooltips-plugin";
 
 /**
  * The circle is divided into 8 parts (E, SE, S, SW, ...), these values represent the connection points

@@ -27,6 +27,8 @@ import {
 import { XYGridConfig } from "../../core/grid/config/xy-grid-config";
 import { RenderState } from "../../renderers/types";
 import { Chart } from "../chart";
+import { ChartAssist } from "./chart-assist";
+import { IChartAssist, ISpark } from "./types";
 import { EventBus } from "../common/event-bus";
 import { ChartPalette } from "../common/palette/chart-palette";
 import { CHART_MARKERS, CHART_PALETTE_CS1 } from "../common/palette/palettes";
@@ -47,8 +49,6 @@ import { sparkChartGridConfig } from "../grid/config/spark-chart-grid-config";
 import { XYGrid } from "../grid/xy-grid";
 import { InteractionLabelPlugin } from "../plugins/interaction/interaction-label-plugin";
 import { InteractionLinePlugin } from "../plugins/interaction/interaction-line-plugin";
-import { ChartAssist } from "./chart-assist";
-import { IChartAssist, ISpark } from "./types";
 
 /**
  * Chart assist implementation to be used with spark charts

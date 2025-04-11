@@ -26,6 +26,9 @@ import {
     INTERACTION_DATA_POINT_EVENT,
 } from "src/constants";
 
+import { ILineAccessors, LineAccessors } from "./line/line-accessors";
+import { MarkerUtils } from "./marker-utils";
+import { RenderLayerName } from "./types";
 import { LinearScale } from "../core/common/scales/linear-scale";
 import { IXYScales } from "../core/common/scales/types";
 import {
@@ -37,9 +40,6 @@ import {
     IRenderContainers,
     IRendererEventPayload,
 } from "../core/common/types";
-import { ILineAccessors, LineAccessors } from "./line/line-accessors";
-import { MarkerUtils } from "./marker-utils";
-import { RenderLayerName } from "./types";
 
 describe("Marker Utils", () => {
     let svg: Selection<SVGSVGElement, any, null, undefined>;

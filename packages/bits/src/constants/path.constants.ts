@@ -20,9 +20,8 @@
 
 import { InjectionToken } from "@angular/core";
 
+import { CodeSourceFiles } from "../types";
+
 // This should not be here, but Angular DI is not recognizing this token when it in scope of docsModule
 // In any case doc helpers will be moved in separate preject and this will not be here
-export const DEMO_PATH_TOKEN = new InjectionToken<{
-    context: string;
-    files: { content: string; path: string }[];
-}>("DemoPathToken");
+export const DEMO_PATH_TOKEN = new InjectionToken<CodeSourceFiles>("DemoPathToken");

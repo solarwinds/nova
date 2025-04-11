@@ -38,14 +38,14 @@
     <code>nui-overlay</code> element put anything you see as its content. Then
     define an element which will be a toggle for the <code>nui-overlay</code> at
     the same level, and sent it as a reference to the popup's
-    <code>toggleReference</code> @Input. That is it!
+    <code>toggleReference</code> &#64;Input. That is it!
 
     <nui-message type="info">
         By default, <code>nui-overlay</code> can be closed only by toggling it
         via its <code>toggleReference</code> component, which means it won't
         close if click evens are triggered anywhere else on the page. Meaning
         this, it is recommended to subscribe to the popup's
-        <code>clickOutside</code> @Output and close the nui-overlay using it's
+        <code>clickOutside</code> &#64;Output and close the nui-overlay using it's
         public <code>toggle()</code> method.
     </nui-message>
 </p>
@@ -67,7 +67,7 @@
     To do that, you have to pass <code>"with-popup-styles"</code> class as a
     <code>panelClass</code> for the <code>overlayConfig</code>. You can import
     <code>OVERLAY_WITH_POPUP_STYLES_CLASS</code> from
-    <code>@nova-ui/bits</code> or just pass <code>"with-popup-styles"</code> as
+    <code>&#64;nova-ui/bits</code> or just pass <code>"with-popup-styles"</code> as
     a string.
 </p>
 <nui-example-wrapper
@@ -83,7 +83,7 @@
 <p>
     <code>nui-overlay</code> has all the benefits the
     <code>Angular CDK Overlay</code> provides, including a rich and flexible
-    configuration. Use <code>overlayConfig</code> @Input of the component and
+    configuration. Use <code>overlayConfig</code> &#64;Input of the component and
     follow the interface to configure the overlay to your likings. Please also
     reference the
     <a href="https://material.angular.io/cdk/overlay/api#OverlayConfig">
@@ -125,7 +125,7 @@
 <nui-message type="info">
     Notice below how <code>nui-overlay</code> is not closed if you click outside
     of its <code>toggleReference</code>. This is because we do not subscribe to
-    its <code>clickOutside</code> @Output, and so we are only able to close the
+    its <code>clickOutside</code> &#64;Output, and so we are only able to close the
     popup via a specific button, like <code>Hide</code>, or <code>Toggle</code>.
 </nui-message>
 
@@ -142,7 +142,7 @@
 <p>
     In case tweaking the <code>nui-overlay</code> overlay styles via the
     <code>overlayConfig</code> was not enough, and brute force is needed, one
-    can use the <code>styles</code> @Input to pass in the object with the inline
+    can use the <code>styles</code> &#64;Input to pass in the object with the inline
     styles to throw into the overlay.
 </p>
 
@@ -162,7 +162,7 @@
     are cases when it is necessary to have overlay container append to some
     custom container. It is possible to attache the popup container to any
     custom container by simply providing either a <code>selector</code>, or an
-    <code>element reference</code> to the <code>customContainer</code> @Input.
+    <code>element reference</code> to the <code>customContainer</code> &#64;Input.
     See two ways of doing that in the example below.
 </p>
 

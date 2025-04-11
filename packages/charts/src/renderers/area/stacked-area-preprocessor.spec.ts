@@ -18,13 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { AreaAccessors, IAreaAccessors } from "./area-accessors";
+import { AreaRenderer } from "./area-renderer";
+import { stackedAreaPreprocessor } from "./stacked-area-preprocessor";
 import { LinearScale } from "../../core/common/scales/linear-scale";
 import { TimeScale } from "../../core/common/scales/time-scale";
 import { IXYScales } from "../../core/common/scales/types";
 import { IChartSeries } from "../../core/common/types";
-import { AreaAccessors, IAreaAccessors } from "./area-accessors";
-import { AreaRenderer } from "./area-renderer";
-import { stackedAreaPreprocessor } from "./stacked-area-preprocessor";
 
 describe("Stacked Area Preprocessor >", () => {
     let accessors: any;

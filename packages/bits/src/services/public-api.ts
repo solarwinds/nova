@@ -111,13 +111,13 @@ export interface IUnitConversionResult {
 export interface ISelection {
     exclude: any[];
     include: any[];
-    isAllPages: Boolean;
+    isAllPages: boolean;
 }
 
 export class SelectionModel implements ISelection {
     public exclude: any[] = [];
     public include: any[] = [];
-    public isAllPages: Boolean = false;
+    public isAllPages: boolean = false;
 
     constructor(selection: Partial<ISelection> = {}) {
         Object.assign(this, selection);

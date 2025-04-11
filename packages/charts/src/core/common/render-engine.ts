@@ -24,12 +24,6 @@ import isUndefined from "lodash/isUndefined";
 import values from "lodash/values";
 import { Subject, Subscription } from "rxjs";
 
-import {
-    DATA_POINT_INTERACTION_RESET,
-    HIGHLIGHT_DATA_POINT_EVENT,
-    STANDARD_RENDER_LAYERS,
-} from "../../constants";
-import { IInteractionValuesPayload } from "../plugins/types";
 import { DataManager } from "./data-manager";
 import { Lasagna } from "./lasagna";
 import {
@@ -47,6 +41,12 @@ import {
     IRenderStateData,
 } from "./types";
 import { UtilityService } from "./utility.service";
+import {
+    DATA_POINT_INTERACTION_RESET,
+    HIGHLIGHT_DATA_POINT_EVENT,
+    STANDARD_RENDER_LAYERS,
+} from "../../constants";
+import { IInteractionValuesPayload } from "../plugins/types";
 
 /**
  * @ignore

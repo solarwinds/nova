@@ -18,11 +18,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { timeseriesConfigurator } from "./timeseries-configurator";
+import { timeseriesWidget } from "./timeseries-widget";
 import { IWidgetTypeDefinition } from "../../components/widget/types";
 import { DEFAULT_PIZZAGNA_ROOT } from "../../services/types";
 import { WellKnownPathKey } from "../../types";
-import { timeseriesConfigurator } from "./timeseries-configurator";
-import { timeseriesWidget } from "./timeseries-widget";
 
 /***********************************************************************************************************
  * Timeseries widget definition starts here

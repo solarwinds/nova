@@ -28,7 +28,7 @@ import { Moment } from "moment/moment";
 })
 export class DateTimePickerEmptyStateComponent {
     public dt: Moment | undefined = undefined;
-    public selectedDate: Date | String = "";
+    public selectedDate: Date | string = "";
     public initEmpty: boolean = true;
     public control = new FormControl(this.dt, Validators.required);
 

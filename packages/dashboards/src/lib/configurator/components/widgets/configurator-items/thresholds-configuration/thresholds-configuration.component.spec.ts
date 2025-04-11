@@ -20,10 +20,10 @@
 
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
-import { NuiDashboardsModule } from "../../../../../dashboards.module";
-import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
 import { ThresholdsConfigurationComponent } from "./thresholds-configuration.component";
 import { thresholdsValidator } from "./thresholds-validator";
+import { NuiDashboardsModule } from "../../../../../dashboards.module";
+import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
 
 describe("ThresholdsConfigurationComponent > ", () => {
     let component: ThresholdsConfigurationComponent;

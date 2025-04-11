@@ -18,13 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { BandScale } from "../../core/common/scales/band-scale";
-import { LinearScale } from "../../core/common/scales/linear-scale";
-import { IChartSeries } from "../../core/common/types";
 import { IBarAccessors } from "./accessors/bar-accessors";
 import { VerticalBarAccessors } from "./accessors/vertical-bar-accessors";
 import { BarRenderer } from "./bar-renderer";
 import { stackedPreprocessor } from "./stacked-preprocessor";
+import { BandScale } from "../../core/common/scales/band-scale";
+import { LinearScale } from "../../core/common/scales/linear-scale";
+import { IChartSeries } from "../../core/common/types";
 
 const allVisible = (series: IChartSeries<IBarAccessors>) => true;
 const allExceptSecondVisible = (series: IChartSeries<IBarAccessors>) =>

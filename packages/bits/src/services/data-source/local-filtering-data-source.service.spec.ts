@@ -29,6 +29,8 @@ import {
     INovaFilteringOutputs,
     INovaFilters,
 } from "./public-api";
+import { LoggerService } from "../log-service";
+import { SearchService } from "../search.service";
 import { CommonTestSuite } from "./spec-helpers/common-test-suite";
 import {
     allCategoriesArr,
@@ -50,8 +52,6 @@ import {
     searchThruResult,
     unchangedArrForComparison,
 } from "./spec-helpers/local-filtering-data-source.testdata";
-import { LoggerService } from "../log-service";
-import { SearchService } from "../search.service";
 
 describe("LocalFilteringDataSource >", () => {
     let loggerService: LoggerService;

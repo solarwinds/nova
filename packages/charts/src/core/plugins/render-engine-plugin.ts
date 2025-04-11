@@ -21,6 +21,7 @@
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
+import { IInteractionValuesPayload } from "./types";
 import {
     CHART_VIEW_STATUS_EVENT,
     INTERACTION_DATA_POINTS_EVENT,
@@ -34,7 +35,6 @@ import {
     IInteractionDataPointsEvent,
     IRendererEventPayload,
 } from "../common/types";
-import { IInteractionValuesPayload } from "./types";
 
 /** @ignore */
 export class RenderEnginePlugin extends ChartPlugin {

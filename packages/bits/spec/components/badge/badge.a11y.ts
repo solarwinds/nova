@@ -22,7 +22,7 @@ import { browser } from "protractor";
 
 import { Helpers } from "../../helpers";
 
-const AxeBuilder = require("@axe-core/webdriverjs");
+import AxeBuilder from "@axe-core/webdriverjs";
 
 describe("a11y: badge", () => {
     beforeAll(async () => {

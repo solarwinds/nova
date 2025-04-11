@@ -12,6 +12,8 @@ export const createAngularApp = (
     filenamePrefix: string,
     context: string,
     sources: FileMetadata[],
+    packageJson: any,
+    packageJsonLib: any,
     latestNovaVersion: string
 ): { files: Record<string, object> } => {
     let files: Record<string, object> = {
@@ -32,9 +34,7 @@ export const createAngularApp = (
         },
         "package.json": {
             content: getPackage(
-                sources.find(
-                    (source: FileMetadata) => source.fileName === "package.json"
-                )?.fileContent ?? "",
+                packageJson,
                 latestNovaVersion
             ),
         },
@@ -43,9 +43,7 @@ export const createAngularApp = (
                 sources,
                 filenamePrefix,
                 context,
-                sources.find(
-                    (source: FileMetadata) => source.fileName === "package.json"
-                )?.fileContent ?? ""
+                packageJsonLib
             ),
         },
         "src/app/app.component.ts": {
@@ -57,7 +55,6 @@ export const createAngularApp = (
     };
 
     sources
-        .filter((source: FileMetadata) => source.fileName !== `package.json`)
         .forEach((source: FileMetadata) => {
             files = Object.assign(files, {
                 [`src/app/${source.filePath}`]: { content: source.fileContent },
@@ -75,10 +72,10 @@ export const getAppModule = (
     sources: FileMetadata[],
     filenamePrefix: string,
     context: string,
-    packageJson: string
+    packageJson: any
 ): string => {
     const mainComponentName = getMainComponentName(sources, filenamePrefix);
-    const componentNames = sources
+    const componentNames = sources && sources
         .filter((source: FileMetadata) => source.fileType === "ts")
         .map((source: FileMetadata) => getComponentName(source))
         .join(",");
@@ -95,7 +92,7 @@ export const getAppModule = (
                 )}"`
         )
         .join("\n");
-    const libPackage = JSON.parse(packageJson).name;
+    const libPackage = packageJson.name;
     const chartsImport = libPackage === "@nova-ui/charts";
     const dashboardsImport = libPackage === "@nova-ui/dashboards";
     const customRoutes = !!sources.find(
@@ -123,10 +120,10 @@ export const getTSConfig = (): string => TSCONFIG_JSON;
 export const getPolyfills = (): string => POLYFILLS;
 
 export const getPackage = (
-    packageJson: string,
+    packageJson: any,
     latestNovaVersion: string
 ): string => {
-    const libPackage = JSON.parse(packageJson);
+    const libPackage = packageJson;
     const newPackage = PACKAGE_JSON;
 
     const getVersion = (name: string): string =>
@@ -200,7 +197,7 @@ export const getMainComponentName = (
 
 export const getComponentName = (source: FileMetadata): string => {
     const matches: RegExpMatchArray | null | undefined =
-        source?.fileContent.match(/export class (\w+Component)/);
+        source?.fileContent?.match && source?.fileContent?.match(/class (\w+Component)/);
     return (matches || [])[1]; // capture exported component name
 };
 

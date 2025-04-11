@@ -21,6 +21,10 @@
 import { CurveFactory } from "d3-shape";
 import { Subject } from "rxjs";
 
+import { IRectangleAccessors } from "./accessors/rectangle-accessors";
+import { BarRenderer } from "./bar/bar-renderer";
+import { ILineAccessors } from "./line/line-accessors";
+import { LineRenderer } from "./line/line-renderer";
 import { Renderer } from "../core/common/renderer";
 import { Scales } from "../core/common/scales/types";
 import {
@@ -31,10 +35,6 @@ import {
     IRendererConfig,
     IRendererEventPayload,
 } from "../core/common/types";
-import { IRectangleAccessors } from "./accessors/rectangle-accessors";
-import { BarRenderer } from "./bar/bar-renderer";
-import { ILineAccessors } from "./line/line-accessors";
-import { LineRenderer } from "./line/line-renderer";
 
 export enum RenderState {
     hidden = "hidden",

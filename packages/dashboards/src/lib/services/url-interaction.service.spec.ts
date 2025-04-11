@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { IInteractionPayload } from "../components/providers/interaction/interaction-handler";
-import { mockLoggerService } from "../mocks";
+import { mockLoggerService } from "../mocks.spec";
 import { UrlInteractionService } from "./url-interaction.service";
 
 const interaction: IInteractionPayload<any> = {

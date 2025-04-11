@@ -219,7 +219,7 @@ export class TooltipDirective implements OnDestroy {
      * Checks if the content is overflowing.
      * The content is considered overflowing if its scroll width is greater than its client width plus 1.
      */
-    isOverflowing() {
+    isOverflowing(): boolean {
         return (
             this._elementRef.nativeElement.scrollWidth >
             this._elementRef.nativeElement.clientWidth + 1

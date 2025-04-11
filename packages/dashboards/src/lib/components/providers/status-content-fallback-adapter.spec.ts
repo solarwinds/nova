@@ -20,13 +20,13 @@
 
 import { EventBus, IEvent } from "@nova-ui/bits";
 
+import { StatusContentFallbackAdapter } from "./status-content-fallback-adapter";
+import { IDataSourceError, IDataSourceOutput } from "./types";
 import { DATA_SOURCE_OUTPUT } from "../../configurator/types";
 import { IPizzagnaProperty } from "../../pizzagna/functions/get-pizzagna-property-path";
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { PizzagnaLayer } from "../../types";
-import { StatusContentFallbackAdapter } from "./status-content-fallback-adapter";
-import { IDataSourceError, IDataSourceOutput } from "./types";
 
 describe("StatusContentFallbackAdapter > ", () => {
     let adapter: StatusContentFallbackAdapter;

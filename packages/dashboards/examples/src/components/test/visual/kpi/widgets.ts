@@ -22,13 +22,13 @@ import { GridsterItem } from "angular-gridster2";
 
 import { IWidget, PizzagnaLayer } from "@nova-ui/dashboards";
 
+import { getKpiNode } from "./kpi-test-tiles";
 import {
     TestKpiDataSource,
     TestKpiDataSource2,
     TestKpiDataSourceBigNumber,
     TestKpiDataSourceSmallNumber,
 } from "../../data/kpi-data-sources";
-import { getKpiNode } from "./kpi-test-tiles";
 
 export const positions: Record<string, GridsterItem> = {
     widget0: { cols: 12, rows: 2, x: 0, y: 0 },

@@ -18,11 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { ErrorNodeKey } from "./types";
 import { WidgetErrorComponent } from "../../../common/components/widget-error/widget-error.component";
 import { LoadingComponent } from "../../../components/loading/loading.component";
 import { IWidgetErrorDisplayProperties } from "../../../components/widget/types";
-import { WidgetBodyContentComponent } from "../../../components/widget/widget-body-content/widget-body-content.component";
 import { WidgetBodyComponent } from "../../../components/widget/widget-body/widget-body.component";
+import { WidgetBodyContentComponent } from "../../../components/widget/widget-body-content/widget-body-content.component";
 import { WidgetHeaderComponent } from "../../../components/widget/widget-header/widget-header.component";
 import {
     NOVA_LOADING_ADAPTER,
@@ -34,7 +35,6 @@ import {
     IProviderConfiguration,
     WellKnownProviders,
 } from "../../../types";
-import { ErrorNodeKey } from "./types";
 
 /**
  * Component definition for the widget header node

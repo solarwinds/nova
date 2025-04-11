@@ -20,9 +20,9 @@
 
 import { Component } from "@angular/core";
 
-const layoutSchema = require("../../../schematics/src/layout/schema.json");
-const addSchema = require("../../../schematics/src/ng-add/schema.json");
-const tableSchema = require("../../../schematics/src/table/schema.json");
+import layoutSchema from "../../../schematics/src/layout/schema.json";
+import addSchema from "../../../schematics/src/ng-add/schema.json";
+import tableSchema from "../../../schematics/src/table/schema.json";
 
 @Component({
     selector: "schematics-docs",

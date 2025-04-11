@@ -22,9 +22,9 @@ import { LineAccessors } from "../../renderers/line/line-accessors";
 import { LineRenderer } from "../../renderers/line/line-renderer";
 import { RenderState } from "../../renderers/types";
 import { Chart } from "../chart";
+import { ChartAssist, LegendInteractionAssist } from "./chart-assist";
 import { IAccessors, IChartAssistSeries } from "../common/types";
 import { XYGrid } from "../grid/xy-grid";
-import { ChartAssist, LegendInteractionAssist } from "./chart-assist";
 
 describe("legend interaction assist >", () => {
     let chartAssist: ChartAssist;

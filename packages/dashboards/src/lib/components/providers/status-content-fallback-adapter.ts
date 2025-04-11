@@ -24,10 +24,10 @@ import { takeUntil } from "rxjs/operators";
 
 import { EventBus, IEvent } from "@nova-ui/bits";
 
+import { IDataSourceOutputPayload } from "./types";
 import { DATA_SOURCE_OUTPUT } from "../../configurator/types";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { IHasComponent, PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../types";
-import { IDataSourceOutputPayload } from "./types";
 
 @Injectable()
 export class StatusContentFallbackAdapter implements OnDestroy, IHasComponent {

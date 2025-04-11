@@ -31,6 +31,11 @@ import {
 } from "@nova-ui/bits";
 
 import {
+    IComponentIdPayload,
+    IDataSourceBusyPayload,
+    IDataSourceOutput,
+} from "./types";
+import {
     DATA_SOURCE_DESTROYED,
     DATA_SOURCE_OUTPUT,
 } from "../../configurator/types";
@@ -47,11 +52,6 @@ import {
     PizzagnaLayer,
     PIZZAGNA_EVENT_BUS,
 } from "../../types";
-import {
-    IComponentIdPayload,
-    IDataSourceBusyPayload,
-    IDataSourceOutput,
-} from "./types";
 
 @Injectable()
 export class DataSourceAdapter<T extends IFilteringOutputs = IFilteringOutputs>

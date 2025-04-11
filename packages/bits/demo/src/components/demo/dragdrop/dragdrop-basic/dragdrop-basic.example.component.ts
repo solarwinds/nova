@@ -52,7 +52,7 @@ export class DragdropBasicExampleComponent {
         imma: "little",
         teapot: "short and stout",
     };
-    public destObject: {};
+    public destObject: object;
     public destString: string;
     public destAnything: any;
     public draggableExcel =

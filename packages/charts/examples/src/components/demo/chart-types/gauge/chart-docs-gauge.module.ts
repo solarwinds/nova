@@ -36,9 +36,8 @@ import {
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { getDemoFiles } from "../../../../demo-files-factory";
-import { DemoCommonModule } from "../../common/demo-common.module";
 import { ChartDocsGaugeComponent } from "./chart-docs-gauge.component";
+import { DemoCommonModule } from "../../common/demo-common.module";
 import { DonutGaugeBasicExampleComponent } from "./donut/donut-gauge-basic/donut-gauge-basic.example.component";
 import { DonutGaugeWithContentExampleComponent } from "./donut/donut-gauge-with-content/donut-gauge-with-content.example.component";
 import { DonutGaugeWithCustomThresholdLabelsExampleComponent } from "./donut/donut-gauge-with-custom-threshold-labels/donut-gauge-with-custom-threshold-labels.example.component";
@@ -54,6 +53,7 @@ import { DonutGaugeTesterComponent } from "./visual-test/donut/donut-gauge-teste
 import { GaugeVisualTestComponent } from "./visual-test/gauge-visual-test.component";
 import { HorizontalGaugeTesterComponent } from "./visual-test/horizontal/horizontal-gauge-tester.component";
 import { VerticalGaugeTesterComponent } from "./visual-test/vertical/vertical-gauge-tester.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
 
 const exampleRoutes: Routes = [
     {

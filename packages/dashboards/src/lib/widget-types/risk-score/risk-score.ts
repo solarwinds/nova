@@ -18,11 +18,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { riskScoreConfigurator } from "./risk-score-configurator";
+import { riskScoreWidget } from "./risk-score-widget";
 import { IWidgetTypeDefinition } from "../../components/widget/types";
 import { DEFAULT_PIZZAGNA_ROOT } from "../../services/types";
 import { WellKnownPathKey } from "../../types";
-import { riskScoreConfigurator } from "./risk-score-configurator";
-import { riskScoreWidget } from "./risk-score-widget";
 
 const tileDescriptionConfiguratorTemplatePath = `tiles.properties.template[0]`;
 const dataSourceConfiguratorTemplatePath = `tiles.properties.template[1]`;

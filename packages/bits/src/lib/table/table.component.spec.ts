@@ -51,7 +51,6 @@ import {
     TableFooterCellDefDirective,
     TableFooterCellDirective,
     TableHeaderCellDefDirective,
-    TableSelectionConfig,
     TableSelectionMode,
     UtilService,
 } from "../../public_api";

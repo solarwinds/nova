@@ -145,7 +145,7 @@ export class BeerDataSource extends DataSourceService<IBrewInfo> {
     ): Promise<IBrewDatasourceResponse | undefined> {
         const delta: number = end - start;
         const currentPage: number = end / delta || 0;
-        const response: Object | Array<IBrewInfo> = await (
+        const response: object | Array<IBrewInfo> = await (
             await fetch(
                 `${BREW_API_URL}/?page=${currentPage}&per_page=${delta}`
             )

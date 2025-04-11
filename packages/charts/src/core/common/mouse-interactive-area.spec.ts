@@ -20,10 +20,10 @@
 
 import { select } from "d3-selection";
 
-import { IGNORE_INTERACTION_CLASS } from "../../constants";
-import { IAllAround } from "../grid/types";
 import { MouseInteractiveArea } from "./mouse-interactive-area";
 import { D3Selection, InteractionType } from "./types";
+import { IGNORE_INTERACTION_CLASS } from "../../constants";
+import { IAllAround } from "../grid/types";
 
 describe("mouse-interactive-area >", () => {
     // Using any as a fallback type to avoid strict mode error

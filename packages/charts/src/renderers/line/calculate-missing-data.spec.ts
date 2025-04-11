@@ -20,9 +20,9 @@
 
 import { duration } from "moment/moment";
 
-import { IDataSeries } from "../../core/common/types";
 import { calculateMissingData } from "./calculate-missing-data";
 import { LineAccessors } from "./line-accessors";
+import { IDataSeries } from "../../core/common/types";
 
 describe("calculateMissingData", () => {
     it("calculates additional points indicating missing data", () => {

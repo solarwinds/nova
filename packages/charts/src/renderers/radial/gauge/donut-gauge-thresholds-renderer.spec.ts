@@ -21,6 +21,8 @@
 import { arc, Arc, DefaultArcObject, select } from "d3";
 import { Subject } from "rxjs";
 
+import { DonutGaugeRenderingUtil } from "./donut-gauge-rendering-util";
+import { DonutGaugeThresholdsRenderer } from "./donut-gauge-thresholds-renderer";
 import {
     D3Selection,
     IAccessors,
@@ -33,8 +35,6 @@ import { GaugeUtil } from "../../../gauge/gauge-util";
 import { IGaugeConfig, GaugeThresholdDefs } from "../../../gauge/types";
 import { IRenderSeries, RenderLayerName } from "../../types";
 import { RadialAccessors } from "../accessors/radial-accessors";
-import { DonutGaugeRenderingUtil } from "./donut-gauge-rendering-util";
-import { DonutGaugeThresholdsRenderer } from "./donut-gauge-thresholds-renderer";
 
 describe("DonutGaugeThresholdsRenderer >", () => {
     let renderer: DonutGaugeThresholdsRenderer;

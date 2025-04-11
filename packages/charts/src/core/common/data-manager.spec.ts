@@ -18,12 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { LineAccessors } from "../../renderers/line/line-accessors";
-import { LineRenderer } from "../../renderers/line/line-renderer";
-import { RenderState } from "../../renderers/types";
 import { DataManager } from "./data-manager";
 import { LinearScale } from "./scales/linear-scale";
 import { IAccessors, IChartSeries } from "./types";
+import { LineAccessors } from "../../renderers/line/line-accessors";
+import { LineRenderer } from "../../renderers/line/line-renderer";
+import { RenderState } from "../../renderers/types";
 
 describe("data manager", () => {
     let dataManager: DataManager;

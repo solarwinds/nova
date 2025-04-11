@@ -21,9 +21,9 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { CHART_VIEW_STATUS_EVENT } from "../constants";
+import { ChartComponent } from "./chart.component";
 import { Chart } from "../core/chart";
 import { XYGrid } from "../core/grid/xy-grid";
-import { ChartComponent } from "./chart.component";
 
 describe("ChartComponent", () => {
     let fixture: ComponentFixture<ChartComponent>;

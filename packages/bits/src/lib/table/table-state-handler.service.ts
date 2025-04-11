@@ -31,11 +31,11 @@ import _isNumber from "lodash/isNumber";
 import { Subject } from "rxjs";
 
 import { TableResizePhase } from "./table-resizer/table-resizer.directive";
+import { TableSelectionMode } from "./types";
 import { ISelection, ISelectorState } from "../../services/public-api";
 import { SelectionType } from "../selector/public-api";
 import { SelectorService } from "../selector/selector.service";
 import { ISortedItem, SorterDirection } from "../sorter/public-api";
-import { TableSelectionMode } from "./types";
 
 export const enum AlignmentClasses {
     RIGHT = "align-right",
@@ -671,7 +671,7 @@ export class TableStateHandlerService {
      *
      * @param rowObject
      */
-    public handleRowSelect(rowObject: Object): void {
+    public handleRowSelect(rowObject: object): void {
         switch (this._selectionMode) {
             case TableSelectionMode.Single:
             case TableSelectionMode.Radio:
@@ -685,7 +685,7 @@ export class TableStateHandlerService {
         }
     }
 
-    private handleRowSelectSingle(rowObject: Object): void {
+    private handleRowSelectSingle(rowObject: object): void {
         const rowObjectTrackBy = this.trackBy(
             (<{ id: number }>rowObject)?.id,
             rowObject
@@ -699,7 +699,7 @@ export class TableStateHandlerService {
         this.selectionChanged.next(this.selection);
     }
 
-    private handleRowSelectMulti(rowObject: Object): void {
+    private handleRowSelectMulti(rowObject: object): void {
         const excludedRows = this.selection.exclude;
         const includedRows = this.selection.include;
 

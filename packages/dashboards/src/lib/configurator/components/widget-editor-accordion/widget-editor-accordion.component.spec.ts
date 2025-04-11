@@ -22,11 +22,11 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { EventBus } from "@nova-ui/bits";
 
+import { WidgetEditorAccordionComponent } from "./widget-editor-accordion.component";
 import { NuiDashboardsModule } from "../../../dashboards.module";
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
 import { ProviderRegistryService } from "../../../services/provider-registry.service";
 import { PIZZAGNA_EVENT_BUS } from "../../../types";
-import { WidgetEditorAccordionComponent } from "./widget-editor-accordion.component";
 
 describe("WidgetEditorAccordionComponent", () => {
     let component: WidgetEditorAccordionComponent;

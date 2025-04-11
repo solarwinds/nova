@@ -31,6 +31,7 @@ import {
     NuiPopoverModule,
 } from "@nova-ui/bits";
 
+import { ChartComponent } from "./chart/chart.component";
 import { ChartCollectionIdDirective } from "./chart-collection/chart-collection-id.directive";
 import { ChartCollectionService } from "./chart-collection/chart-collection.service";
 import { ChartDonutContentComponent } from "./chart-donut-content/chart-donut-content.component";
@@ -39,7 +40,6 @@ import { ChartPopoverComponent } from "./chart-popover/chart-popover.component";
 import { ChartTooltipComponent } from "./chart-tooltips/chart-tooltip.component";
 import { ChartTooltipDirective } from "./chart-tooltips/chart-tooltip.directive";
 import { ChartTooltipsComponent } from "./chart-tooltips/chart-tooltips.component";
-import { ChartComponent } from "./chart/chart.component";
 import { LegendSeriesComponent } from "./legend/legend-series/legend-series.component";
 import { BasicLegendTileComponent } from "./legend/legend-tile/basic-legend-tile/basic-legend-tile.component";
 import { RichLegendTileComponent } from "./legend/legend-tile/rich-legend-tile/rich-legend-tile.component";

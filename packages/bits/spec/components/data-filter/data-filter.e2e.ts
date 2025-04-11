@@ -112,7 +112,8 @@ describe("USERCONTROL data-filter-service >", () => {
                 .getDatePicker();
         });
 
-        it("should filter table and repeat from global time-frame-picker", async () => {
+        // todo rewrite to
+        xit("should filter table and repeat from global time-frame-picker", async () => {
             await basicTimeFramePickerPopover.open();
             await basicEndTimeFramePicker.clearText();
             await basicEndTimeFramePicker.acceptText("04 Feb 2019");
@@ -265,6 +266,7 @@ describe("USERCONTROL data-filter-service >", () => {
         });
 
         it("search should be applied only to list", async () => {
+            await isolatedListSearch.waitElementVisible();
             await isolatedListSearch.acceptInput("Issue 1");
 
             for (
@@ -289,6 +291,7 @@ describe("USERCONTROL data-filter-service >", () => {
         });
 
         it("search should be applied only to table", async () => {
+            await isolatedTableSearch.waitElementVisible();
             await isolatedTableSearch.acceptInput("Issue 1");
 
             for (

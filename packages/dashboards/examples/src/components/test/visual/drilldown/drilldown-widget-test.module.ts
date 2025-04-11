@@ -33,8 +33,8 @@ import {
     ProviderRegistryService,
 } from "@nova-ui/dashboards";
 
-import { TestCommonModule } from "../../common/common.module";
 import { DrilldownWidgetTestComponent } from "./drilldown-widget-test.component";
+import { TestCommonModule } from "../../common/common.module";
 
 const routes = [
     {

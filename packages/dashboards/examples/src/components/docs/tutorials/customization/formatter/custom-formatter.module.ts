@@ -37,7 +37,6 @@ import {
 } from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
-import { getDemoFiles } from "../../../../../demo-files-factory";
 import { CustomDonutContentFormatterDocComponent } from "./donut-content-formatter-example/custom-donut-content-formatter-docs.component";
 import {
     CustomDonutContentFormatterComponent,
@@ -50,6 +49,7 @@ import {
     CustomFormatterConfiguratorComponent,
     CustomFormatterExampleComponent,
 } from "./formatter-example/custom-formatter-example.component";
+import { getDemoFiles } from "../../../../../demo-files-factory";
 
 const routes: Routes = [
     {

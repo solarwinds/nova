@@ -18,9 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { BarAccessors, IBarDataAccessors } from "./bar-accessors";
 import { IChartMarker, IValueProvider } from "../../../core/common/types";
 import { IRectangleSeriesAccessors } from "../../accessors/rectangle-accessors";
-import { BarAccessors, IBarDataAccessors } from "./bar-accessors";
 
 export class VerticalBarAccessors extends BarAccessors {
     declare data: IBarDataAccessors;

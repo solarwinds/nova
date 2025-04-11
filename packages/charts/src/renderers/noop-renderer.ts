@@ -20,6 +20,8 @@
 
 import { Subject } from "rxjs";
 
+import { INoopAccessors } from "./accessors/noop-accessors";
+import { IRenderSeries } from "./types";
 import { Renderer } from "../core/common/renderer";
 import { Scales } from "../core/common/scales/types";
 import {
@@ -28,8 +30,6 @@ import {
     IPosition,
     IRendererEventPayload,
 } from "../core/common/types";
-import { INoopAccessors } from "./accessors/noop-accessors";
-import { IRenderSeries } from "./types";
 
 /**
  * Renderer that is able to draw line chart

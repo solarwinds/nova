@@ -22,9 +22,9 @@ import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
+import { RichLegendTileComponent } from "./rich-legend-tile.component";
 import { LegendSeriesComponent } from "../../legend-series/legend-series.component";
 import { LegendComponent } from "../../legend.component";
-import { RichLegendTileComponent } from "./rich-legend-tile.component";
 
 const testLegendSeriesUnitLabel = "Mbps";
 const testLegendSeriesColor = "fallback-legend-color";

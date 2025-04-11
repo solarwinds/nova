@@ -162,11 +162,9 @@ export class TableWithVirtualScrollComponent
         this.search.inputChange
             .pipe(
                 debounceTime(500),
-                // perform actual search
-                tap(async () => this.onSearch()),
                 takeUntil(this.destroy$)
             )
-            .subscribe();
+            .subscribe(async () => this.onSearch());
     }
 
     public ngOnDestroy(): void {

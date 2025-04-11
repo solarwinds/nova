@@ -23,7 +23,7 @@ import { Observable, of, Subject } from "rxjs";
 import { take } from "rxjs/operators";
 
 import { DashboardComponent } from "../components/dashboard/dashboard.component";
-import { mockLoggerService } from "../mocks";
+import { mockLoggerService } from "../mocks.spec";
 import { WidgetRemovalService } from "./widget-removal.service";
 
 describe("WidgetRemovalService > ", () => {

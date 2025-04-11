@@ -26,6 +26,12 @@ import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import {
+    GAUGE_LABELS_CONTAINER_CLASS,
+    GAUGE_LABEL_FORMATTER_NAME_DEFAULT,
+    GAUGE_THRESHOLD_LABEL_CLASS,
+} from "./constants";
+import { IGaugeLabelsPluginConfig } from "./types";
+import {
     DATA_POINT_NOT_FOUND,
     INTERACTION_DATA_POINTS_EVENT,
     STANDARD_RENDER_LAYERS,
@@ -40,12 +46,6 @@ import {
     IChartEvent,
     IChartSeries,
 } from "../../common/types";
-import {
-    GAUGE_LABELS_CONTAINER_CLASS,
-    GAUGE_LABEL_FORMATTER_NAME_DEFAULT,
-    GAUGE_THRESHOLD_LABEL_CLASS,
-} from "./constants";
-import { IGaugeLabelsPluginConfig } from "./types";
 
 /**
  * A chart plugin that handles the rendering of labels for a donut gauge

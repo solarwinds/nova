@@ -21,8 +21,8 @@
 import { BaseType } from "d3";
 import { Selection } from "d3-selection";
 
-import { IGNORE_INTERACTION_CLASS } from "../../constants";
 import { ITextOverflowArgs } from "./types";
+import { IGNORE_INTERACTION_CLASS } from "../../constants";
 
 /**
  * Default handler for text overflow

@@ -22,11 +22,11 @@ import { Subscription } from "rxjs";
 
 import { EventBus, EventDefinition, IEvent } from "@nova-ui/bits";
 
-import { IWidget } from "../components/widget/types";
-import { PizzagnaService } from "../pizzagna/services/pizzagna.service";
 import { EventRegistryService } from "./event-registry.service";
 import { WidgetConfigurationService } from "./widget-configuration.service";
 import { WidgetToDashboardEventProxyService } from "./widget-to-dashboard-event-proxy.service";
+import { IWidget } from "../components/widget/types";
+import { PizzagnaService } from "../pizzagna/services/pizzagna.service";
 
 describe("WidgetToDashboardEventProxyService", () => {
     let service: WidgetToDashboardEventProxyService;

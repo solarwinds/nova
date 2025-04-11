@@ -18,11 +18,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { tableConfigurator } from "./table-configurator";
+import { tableWidget } from "./table-widget";
 import { IWidgetTypeDefinition } from "../../components/widget/types";
 import { DEFAULT_PIZZAGNA_ROOT } from "../../services/types";
 import { WellKnownPathKey } from "../../types";
-import { tableConfigurator } from "./table-configurator";
-import { tableWidget } from "./table-widget";
 
 export const table: IWidgetTypeDefinition = {
     paths: {

@@ -57,7 +57,7 @@ export class WizardAtom extends Atom {
 
     public next = async (): Promise<void> => this.nextButton.click();
 
-    public async getHeaderSteps(): Promise<{}[]> {
+    public async getHeaderSteps(): Promise<any[]> {
         const stepsEl = this.root.element(
             by.className("nui-wizard__header-steps")
         );

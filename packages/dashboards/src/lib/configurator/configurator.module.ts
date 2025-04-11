@@ -81,12 +81,12 @@ import { PreviewPlaceholderComponent } from "./components/preview-placeholder/pr
 import { WidgetClonerComponent } from "./components/widget-cloner/widget-cloner.component";
 import { WidgetConfiguratorSectionCoordinatorService } from "./components/widget-configurator-section/widget-configurator-section-coordinator.service";
 import { WidgetConfiguratorSectionComponent } from "./components/widget-configurator-section/widget-configurator-section.component";
+import { WidgetEditorComponent } from "./components/widget-editor/widget-editor.component";
 import { WidgetEditorAccordionHeaderComponent } from "./components/widget-editor-accordion/widget-editor-accordion-header/widget-editor-accordion-header.component";
 import { WidgetEditorAccordionComponent } from "./components/widget-editor-accordion/widget-editor-accordion.component";
-import { WidgetEditorComponent } from "./components/widget-editor/widget-editor.component";
 import { BackgroundColorRulesConfigurationComponent } from "./components/widgets/configurator-items/background-color-rules-configuration/background-color-rules-configuration.component";
-import { DataSourceConfigurationV2Component } from "./components/widgets/configurator-items/data-source-configuration-v2/data-source-configuration-v2.component";
 import { DataSourceConfigurationComponent } from "./components/widgets/configurator-items/data-source-configuration/data-source-configuration.component";
+import { DataSourceConfigurationV2Component } from "./components/widgets/configurator-items/data-source-configuration-v2/data-source-configuration-v2.component";
 import { DataSourceErrorComponent } from "./components/widgets/configurator-items/data-source-error/data-source-error.component";
 import { TableDataSourceErrorComponent } from "./components/widgets/configurator-items/data-source-error/table/table-data-source-error.component";
 import { EmbeddedContentConfigurationComponent } from "./components/widgets/configurator-items/embedded-content-configuration/embedded-content-configuration.component";
@@ -103,26 +103,28 @@ import { GroupingConfigurationComponent } from "./components/widgets/drilldown/g
 import { KpiTilesConfigurationComponent } from "./components/widgets/kpi/kpi-tiles-configuration/kpi-tiles-configuration.component";
 import { AggregatorMetricSelectorConfigurationComponent } from "./components/widgets/proportional/aggregators-configurators/aggregator-configurator/aggregator-configurator.component";
 import { FieldMapperAggregatorConfiguratorComponent } from "./components/widgets/proportional/aggregators-configurators/field-mapper-aggregator-configurator/field-mapper-aggregator-configurator.component";
-import { ProportionalChartOptionsEditorV2Component } from "./components/widgets/proportional/chart-options-editor-v2/proportional-chart-options-editor-v2.component";
 import { ProportionalChartOptionsEditorComponent } from "./components/widgets/proportional/chart-options-editor/proportional-chart-options-editor.component";
+import { ProportionalChartOptionsEditorV2Component } from "./components/widgets/proportional/chart-options-editor-v2/proportional-chart-options-editor-v2.component";
 import { DonutContentConfigurationComponent } from "./components/widgets/proportional/donut-content-configuration/donut-content-configuration.component";
 import { RiskScoreTilesConfigurationComponent } from "./components/widgets/risk-score/risk-score-tiles-configuration/risk-score-tiles-configuration.component";
-import { DescriptionConfigurationV2Component } from "./components/widgets/table/columns-editor-v2/column-configuration/description-configuration/description-configuration-v2.component";
-import { PresentationConfigurationV2Component } from "./components/widgets/table/columns-editor-v2/column-configuration/presentation-configuration/presentation-configuration-v2.component";
-import { TableColumnConfigurationComponent } from "./components/widgets/table/columns-editor-v2/column-configuration/table-column-configuration/table-column-configuration.component";
-import { TableColumnsConfigurationV2Component } from "./components/widgets/table/columns-editor-v2/table-columns-configuration-v2.component";
 import { DescriptionConfigurationComponent } from "./components/widgets/table/columns-editor/column-configuration/description-configuration/description-configuration.component";
 import { LinkConfiguratorComponent } from "./components/widgets/table/columns-editor/column-configuration/presentation-configuration/portals/link-configurator/link-configurator.component";
 import { ValueSelectorComponent } from "./components/widgets/table/columns-editor/column-configuration/presentation-configuration/portals/value-selector/value-selector.component";
 import { PresentationConfigurationComponent } from "./components/widgets/table/columns-editor/column-configuration/presentation-configuration/presentation-configuration.component";
 import { TableColumnsConfigurationComponent } from "./components/widgets/table/columns-editor/table-columns-configuration.component";
+import { DescriptionConfigurationV2Component } from "./components/widgets/table/columns-editor-v2/column-configuration/description-configuration/description-configuration-v2.component";
+import { PresentationConfigurationV2Component } from "./components/widgets/table/columns-editor-v2/column-configuration/presentation-configuration/presentation-configuration-v2.component";
+import { TableColumnConfigurationComponent } from "./components/widgets/table/columns-editor-v2/column-configuration/table-column-configuration/table-column-configuration.component";
+import { TableColumnsConfigurationV2Component } from "./components/widgets/table/columns-editor-v2/table-columns-configuration-v2.component";
 import { TableFiltersEditorComponent } from "./components/widgets/table/filters-editor/table-filters-editor.component";
+import { TableScrollTypeEditorComponent } from "./components/widgets/table/scrollType-editor/scroll-type-editor.component";
+import { ScrollTypeEditorService } from "./components/widgets/table/scrollType-editor/scroll-type-editor.service";
 import { TimeseriesSeriesCollectionConfigurationComponent } from "./components/widgets/timeseries/timeseries-series-collection-configuration/timeseries-series-collection-configuration.component";
 import { TimeseriesTileDescriptionConfigurationComponent } from "./components/widgets/timeseries/timeseries-tile-description-configuration/timeseries-tile-description-configuration.component";
 import { TimeseriesTileIndicatorDataConfigurationComponent } from "./components/widgets/timeseries/timeseries-tile-indicator-data-configuration/timeseries-tile-indicator-data-configuration.component";
-import { DashwizStepComponent } from "./components/wizard/dashwiz-step/dashwiz-step.component";
 import { DashwizButtonsComponent } from "./components/wizard/dashwiz/dashwiz-buttons.component";
 import { DashwizComponent } from "./components/wizard/dashwiz/dashwiz.component";
+import { DashwizStepComponent } from "./components/wizard/dashwiz-step/dashwiz-step.component";
 import { AddDataPipe } from "./pipe/add-data.pipe";
 import { PizzagnaRootPipe } from "./pipe/pizzagna-root.pipe";
 import { WidgetConfiguratorSectionHeaderPipe } from "./pipe/widget-configurator-section-header.pipe";
@@ -133,8 +135,6 @@ import { KpiWidgetColorService } from "./services/kpi-widget-color.service";
 import { ConfiguratorHeadingService } from "./services/public-api";
 import { WidgetClonerService } from "./services/widget-cloner.service";
 import { WidgetEditorService } from "./services/widget-editor.service";
-import { TableScrollTypeEditorComponent } from "./components/widgets/table/scrollType-editor/scroll-type-editor.component";
-import { ScrollTypeEditorService } from "./components/widgets/table/scrollType-editor/scroll-type-editor.service";
 /* eslint-enable max-len */
 
 const entryComponents: IComponentWithLateLoadKey[] = [

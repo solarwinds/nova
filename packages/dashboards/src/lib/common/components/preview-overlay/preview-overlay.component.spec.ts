@@ -20,8 +20,8 @@
 
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
-import { NuiDashboardsModule } from "../../../dashboards.module";
 import { PreviewOverlayComponent } from "./preview-overlay.component";
+import { NuiDashboardsModule } from "../../../dashboards.module";
 
 describe("PreviewOverlayComponent", () => {
     let component: PreviewOverlayComponent;

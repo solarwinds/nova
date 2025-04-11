@@ -29,13 +29,13 @@ import {
     IFilteringParticipants,
 } from "@nova-ui/bits";
 
+import { DataSourceAdapter } from "./data-source-adapter";
+import { IDataSourceOutput } from "./types";
 import { DATA_SOURCE_OUTPUT } from "../../configurator/types";
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { REFRESH } from "../../services/types";
 import { IConfigurable, IProperties, PizzagnaLayer } from "../../types";
-import { DataSourceAdapter } from "./data-source-adapter";
-import { IDataSourceOutput } from "./types";
 
 class MockDataSource implements IDataSource, IConfigurable {
     public outputsSubject = new Subject<

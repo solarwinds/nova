@@ -29,6 +29,7 @@ import { CdkVirtualForOf, ViewportRuler } from "@angular/cdk/scrolling";
 import {
     _COALESCED_STYLE_SCHEDULER,
     _CoalescedStyleScheduler,
+    CDK_TABLE,
     CDK_TABLE_TEMPLATE,
     CdkTable,
     RenderRow,
@@ -64,10 +65,10 @@ import _keys from "lodash/keys";
 import { Subscription } from "rxjs";
 
 import { TableStateHandlerService } from "./table-state-handler.service";
+import { TableSelectionConfig, TableSelectionMode } from "./types";
 import { IFilteringParticipants, ISelection } from "../../services/public-api";
 import { ComponentChanges } from "../../types";
 import { ISortedItem, SorterDirection } from "../sorter/public-api";
-import { TableSelectionConfig, TableSelectionMode } from "./types";
 
 // <example-url>./../examples/index.html#/table</example-url>
 
@@ -92,6 +93,8 @@ import { TableSelectionConfig, TableSelectionMode } from "./types";
             provide: _COALESCED_STYLE_SCHEDULER,
             useClass: _CoalescedStyleScheduler,
         },
+        { provide: CdkTable, useExisting: TableComponent },
+        { provide: CDK_TABLE, useExisting: TableComponent },
     ],
     styleUrls: ["./table.component.less"],
     encapsulation: ViewEncapsulation.None,

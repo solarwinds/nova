@@ -45,8 +45,8 @@ import {
 } from "@nova-ui/bits";
 import { getColorValueByName } from "@nova-ui/charts";
 
-import { IPaletteColor } from "../../../types";
 import { ColorService } from "./color.service";
+import { IPaletteColor } from "../../../types";
 
 // Left and right paddings of .color-picker-container element
 const CONTAINER_SIDE_PADDINGS_PX: number = 20;
@@ -183,7 +183,7 @@ export class ColorPickerComponent
         this.onChange = fn;
     }
 
-    public registerOnTouched(fn: () => {}): void {
+    public registerOnTouched(fn: () => void): void {
         this._onTouched = fn;
     }
 

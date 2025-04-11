@@ -46,6 +46,7 @@ import {
     WellKnownProviders,
 } from "@nova-ui/dashboards";
 
+import { HeaderLinkProviderService } from "./header-link-provider.service";
 import {
     AcmeKpiDataSource,
     AcmeKpiDataSource2,
@@ -54,7 +55,6 @@ import {
 import { AcmeProportionalDataSource2 } from "../data/proportional-datasources";
 import { AcmeTableDataSource } from "../data/table/acme-table-data-source.service";
 import { AcmeTimeseriesDataSource } from "../data/timeseries-data-sources";
-import { HeaderLinkProviderService } from "./header-link-provider.service";
 
 export const positions: Record<string, GridsterItem> = {
     widget1: {

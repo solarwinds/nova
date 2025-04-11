@@ -23,6 +23,7 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { DataSourceFeatures, EventBus } from "@nova-ui/bits";
 
+import { TableColumnsConfigurationComponent } from "./table-columns-configuration.component";
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { DynamicComponentCreator } from "../../../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
@@ -31,7 +32,6 @@ import {
     WellKnownDataSourceFeatures,
 } from "../../../../../types";
 import { DATA_SOURCE_CREATED } from "../../../../types";
-import { TableColumnsConfigurationComponent } from "./table-columns-configuration.component";
 
 import Spy = jasmine.Spy;
 

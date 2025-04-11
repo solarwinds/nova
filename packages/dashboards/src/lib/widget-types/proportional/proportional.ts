@@ -18,11 +18,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { proportionalConfigurator } from "./proportional-configurator";
+import { proportionalWidget } from "./proportional-widget";
 import { IWidgetTypeDefinition } from "../../components/widget/types";
 import { DEFAULT_PIZZAGNA_ROOT } from "../../services/types";
 import { WellKnownPathKey } from "../../types";
-import { proportionalConfigurator } from "./proportional-configurator";
-import { proportionalWidget } from "./proportional-widget";
 
 /***********************************************************************************************************
  * Proportional widget definition starts here

@@ -42,12 +42,12 @@ export function mergeDomains(domains: any[][], scale: IScale<any>): any[] {
 
         const domainMin = min<Numeric>(
             nonEmptyDomains
-                .filter((e) => typeof e[0] !== undefined)
+                .filter((e) => typeof e[0] !== "undefined")
                 .map((e) => e[0])
         );
         const domainMax = max<Numeric>(
             nonEmptyDomains
-                .filter((e) => typeof e[1] !== undefined)
+                .filter((e) => typeof e[1] !== "undefined")
                 .map((e) => e[1])
         );
 

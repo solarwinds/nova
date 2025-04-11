@@ -83,6 +83,7 @@ export class BaseSelectV2Atom extends Atom {
      * method to ensure an accurate return value.
      */
     public async isOpened(): Promise<boolean> {
+        await this.waitElementVisible();
         return this.popup.isOpened();
     }
 

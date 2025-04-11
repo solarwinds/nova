@@ -29,9 +29,9 @@ import {
 } from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
-import { getDemoFiles } from "../../../../demo-files-factory";
 import { HelloDashboardsDocsComponent } from "./hello-dashboards-docs.component";
 import { HelloDashboardsExampleComponent } from "./hello-dashboards-example/hello-dashboards-example.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
 
 const routes = [
     {

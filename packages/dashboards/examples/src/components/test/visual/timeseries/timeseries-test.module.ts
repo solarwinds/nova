@@ -38,6 +38,7 @@ import {
     WidgetTypesService,
 } from "@nova-ui/dashboards";
 
+import { AcmeDashboardComponent } from "./timeseries-test.component";
 import { TestCommonModule } from "../../common/common.module";
 import {
     TestTimeseriesDataSource,
@@ -46,7 +47,6 @@ import {
     TestTimeseriesStatusDataSource,
     TestTimeseriesStatusIntervalDataSource,
 } from "../../data/timeseries-data-sources";
-import { AcmeDashboardComponent } from "./timeseries-test.component";
 
 const routes = [
     {

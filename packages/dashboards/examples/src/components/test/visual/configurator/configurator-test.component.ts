@@ -43,6 +43,9 @@ import {
     WidgetTypesService,
 } from "@nova-ui/dashboards";
 
+import { AcmeCloneSelectionComponent } from "./acme-clone-selection/acme-clone-selection.component";
+import { AcmeFormSubmitHandler } from "./acme-form-submit-handler";
+import { positions, widgets } from "./widgets";
 import {
     TestKpiDataSource,
     TestKpiDataSource2,
@@ -60,9 +63,6 @@ import {
     TestTimeseriesDataSource,
     TestTimeseriesDataSource2,
 } from "../../data/timeseries-data-sources";
-import { AcmeCloneSelectionComponent } from "./acme-clone-selection/acme-clone-selection.component";
-import { AcmeFormSubmitHandler } from "./acme-form-submit-handler";
-import { positions, widgets } from "./widgets";
 
 /**
  * A component that instantiates the dashboard

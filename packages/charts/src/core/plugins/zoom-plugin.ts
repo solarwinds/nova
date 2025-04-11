@@ -26,6 +26,7 @@ import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
+import { IInteractionCoordinatesPayload } from "./types";
 import {
     INTERACTION_COORDINATES_EVENT,
     INTERACTION_VALUES_ACTIVE_EVENT,
@@ -43,7 +44,6 @@ import {
 } from "../common/types";
 import { Grid } from "../grid/grid";
 import { XYGrid } from "../grid/xy-grid";
-import { IInteractionCoordinatesPayload } from "./types";
 
 export interface IZoomPluginConfiguration {
     enableExternalEvents?: boolean;

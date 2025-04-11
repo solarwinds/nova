@@ -24,12 +24,12 @@ import { Subject } from "rxjs";
 
 import { EventBus } from "@nova-ui/bits";
 
+import { FormStackComponent } from "./form-stack.component";
 import { NuiDashboardsModule } from "../../../dashboards.module";
 import { DynamicComponentCreator } from "../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
 import { ProviderRegistryService } from "../../../services/provider-registry.service";
 import { PIZZAGNA_EVENT_BUS } from "../../../types";
-import { FormStackComponent } from "./form-stack.component";
 
 class MockFormGroupDirective {
     public form: FormGroup = {

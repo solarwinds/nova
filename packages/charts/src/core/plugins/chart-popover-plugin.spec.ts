@@ -28,6 +28,7 @@ import {
     INTERACTION_DATA_POINT_EVENT,
 } from "../../constants";
 import { Chart } from "../chart";
+import { ChartPopoverPlugin } from "./chart-popover-plugin";
 import {
     IChartEvent,
     IDataPoint,
@@ -39,7 +40,6 @@ import {
 import { XYGridConfig } from "../grid/config/xy-grid-config";
 import { IGrid, IGridConfig } from "../grid/types";
 import { XYGrid } from "../grid/xy-grid";
-import { ChartPopoverPlugin } from "./chart-popover-plugin";
 
 describe("ChartPopoverPlugin >", () => {
     let grid: IGrid;

@@ -37,7 +37,6 @@ import {
     TestBed,
     waitForAsync,
 } from "@angular/core/testing";
-import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
 
 import {
     LoggerService,
@@ -51,13 +50,14 @@ import {
     NuiTableModule,
 } from "@nova-ui/bits";
 
+import { PizzagnaComponent } from "./pizzagna.component";
 import { KpiComponent } from "../../../components/kpi-widget/kpi.component";
 import { StackComponent } from "../../../components/layouts/stack/stack.component";
 import { TilesComponent } from "../../../components/layouts/tiles/tiles.component";
 import { TableWidgetComponent } from "../../../components/table-widget/table-widget.component";
 import { TemplateLoadErrorComponent } from "../../../components/template-load-error/template-load-error.component";
 import { WidgetHeaderComponent } from "../../../components/widget/widget-header/widget-header.component";
-import { mockLoggerService } from "../../../mocks";
+import { mockLoggerService } from "../../../mocks.spec";
 import { ProviderRegistryService } from "../../../services/provider-registry.service";
 import {
     ISetPropertyPayload,
@@ -68,7 +68,6 @@ import {
 } from "../../../services/types";
 import { IPizzagna, WellKnownProviders } from "../../../types";
 import { ComponentPortalDirective } from "../../directives/component-portal/component-portal.directive";
-import { PizzagnaComponent } from "./pizzagna.component";
 
 @Component({
     selector: "pizzagna-test",

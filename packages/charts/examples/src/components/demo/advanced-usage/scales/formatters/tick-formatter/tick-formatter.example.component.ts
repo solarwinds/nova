@@ -45,7 +45,7 @@ export class TickFormatterExampleComponent implements OnInit {
             y: new LinearScale(),
         };
 
-        scales.y.formatters.tick = (value: Number) => `> ${value} %`;
+        scales.y.formatters.tick = (value: number) => `> ${value} %`;
 
         const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
             (d) => ({

@@ -22,13 +22,13 @@ import { Inject, Injectable } from "@angular/core";
 
 import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
 
-import { UrlInteractionService } from "../../../services/url-interaction.service";
-import { PIZZAGNA_EVENT_BUS } from "../../../types";
 import {
     IInteractionHandlerProperties,
     IInteractionPayload,
     InteractionHandler,
 } from "./interaction-handler";
+import { UrlInteractionService } from "../../../services/url-interaction.service";
+import { PIZZAGNA_EVENT_BUS } from "../../../types";
 
 export interface IUrlInteractionHandlerProperties
     extends IInteractionHandlerProperties {

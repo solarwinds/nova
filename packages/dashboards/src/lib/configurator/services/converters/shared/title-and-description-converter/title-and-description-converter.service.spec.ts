@@ -23,12 +23,12 @@ import get from "lodash/get";
 
 import { EventBus, IEvent } from "@nova-ui/bits";
 
+import { TitleAndDescriptionConverterService } from "./title-and-description-converter.service";
 import { DynamicComponentCreator } from "../../../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
 import { IPizzagnaLayer, IProperties } from "../../../../../types";
 import { PreviewService } from "../../../preview.service";
 import { BaseConverter } from "../../base-converter";
-import { TitleAndDescriptionConverterService } from "./title-and-description-converter.service";
 
 describe("TitleAndDescriptionConverterService", () => {
     let service: TitleAndDescriptionConverterService;

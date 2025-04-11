@@ -20,9 +20,10 @@
 
 import { ChangeDetectorRef, Component, ViewChild } from "@angular/core";
 
+import { TableSelectionConfig, TableSelectionMode } from "@nova-ui/bits";
+
 import { ISelection } from "../../../services/public-api";
 import { TableComponent } from "../table.component";
-import { TableSelectionConfig, TableSelectionMode } from "@nova-ui/bits";
 
 export interface TableSelectModel {
     position: number;

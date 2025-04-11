@@ -46,7 +46,7 @@ export interface IItemPickerOption {
 }
 
 @Component({
-    selector: "app-item-picker",
+    selector: "app-item-picker-table-vs",
     templateUrl: "./item-picker.component.html",
     providers: [
         {

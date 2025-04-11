@@ -18,8 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { IChartMarker, IValueProvider } from "../../core/common/types";
 import { AreaAccessors, IAreaAccessors } from "./area-accessors";
+import { IChartMarker, IValueProvider } from "../../core/common/types";
 
 export function stackedAreaAccessors(
     colorProvider?: IValueProvider<string>,

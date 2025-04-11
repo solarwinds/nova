@@ -223,11 +223,11 @@ export class TextboxNumberComponent
         this.value = value;
     }
 
-    public registerOnChange(fn: (value: any) => {}): void {
+    public registerOnChange(fn: (value: any) => void): void {
         this.onChange = fn;
     }
 
-    public registerOnTouched(fn: () => {}): void {
+    public registerOnTouched(fn: () => void): void {
         this.onTouched = fn;
     }
 
@@ -281,7 +281,7 @@ export class TextboxNumberComponent
 
     // We need to restrict user input because safari does not prevent non numerical input in type 'number'
     public preventNonNumericalPaste(event: ClipboardEvent): void {
-        const pastedString: String | undefined =
+        const pastedString: string | undefined =
             event.clipboardData?.getData("text/plain");
         if (!pastedString) {
             throw new Error("Unable to parse clipboardData");
@@ -294,7 +294,7 @@ export class TextboxNumberComponent
     }
 
     public preventNonNumericalInput(event: KeyboardEvent): void {
-        const inputString: String = event.key;
+        const inputString: string = event.key;
         if (!this.isMetaKey(event)) {
             this.preventDefaultEventBehavior(
                 event,
@@ -306,7 +306,7 @@ export class TextboxNumberComponent
 
     private preventDefaultEventBehavior(
         event: KeyboardEvent | ClipboardEvent,
-        inputString: String,
+        inputString: string,
         regexp: RegExp
     ): void {
         if (!inputString?.match(regexp)) {

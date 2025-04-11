@@ -36,6 +36,8 @@ import {
     WidgetTypesService,
 } from "@nova-ui/dashboards";
 
+import { AcmeFormSubmitHandler } from "./acme-form-submit-handler";
+import { positions, widgets } from "./widgets";
 import {
     TestKpiDataSource,
     TestKpiDataSource2,
@@ -53,8 +55,6 @@ import {
     TestTimeseriesDataSource,
     TestTimeseriesDataSource2,
 } from "../../data/timeseries-data-sources";
-import { AcmeFormSubmitHandler } from "./acme-form-submit-handler";
-import { positions, widgets } from "./widgets";
 
 /**
  * A component that instantiates the dashboard

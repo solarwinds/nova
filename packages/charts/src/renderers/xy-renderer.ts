@@ -22,6 +22,7 @@ import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 
 import { DATA_POINT_INTERACTION_RESET } from "../constants";
+import { IRenderSeries } from "./types";
 import { Renderer } from "../core/common/renderer";
 import { Scales } from "../core/common/scales/types";
 import {
@@ -31,7 +32,6 @@ import {
     IRendererEventPayload,
 } from "../core/common/types";
 import { UtilityService } from "../core/common/utility.service";
-import { IRenderSeries } from "./types";
 
 export class XYRenderer<TA extends IAccessors> extends Renderer<TA> {
     // This is empty to allow this renderer to be used for series that represent metadata that may be shown in the legend but not visualized on the chart.

@@ -170,7 +170,7 @@ export class DashwizComponent
             if (element?.classList?.contains("configurator-scrollable")) {
                 this.scrolled = !!element?.scrollTop;
             }
-        })
+        });
 
         this.buttonComponentTypes = this.buttonComponentTypes || [
             DashwizButtonsComponent.lateLoadKey,

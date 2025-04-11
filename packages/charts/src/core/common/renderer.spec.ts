@@ -21,13 +21,8 @@
 import { ValueMap } from "d3-selection-multi";
 import { Subject } from "rxjs";
 
-import { STANDARD_RENDER_LAYERS } from "../../constants";
-import {
-    IRenderSeries,
-    RenderLayerName,
-    RenderState,
-} from "../../renderers/types";
 import { Renderer } from "./renderer";
+import { STANDARD_RENDER_LAYERS } from "../../constants";
 import { NoopScale } from "./scales/noop-scale";
 import { EMPTY_CONTINUOUS_DOMAIN, Scales } from "./scales/types";
 import {
@@ -37,6 +32,11 @@ import {
     IPosition,
     IRendererEventPayload,
 } from "./types";
+import {
+    IRenderSeries,
+    RenderLayerName,
+    RenderState,
+} from "../../renderers/types";
 
 class MockRenderer extends Renderer<IAccessors> {
     public draw(

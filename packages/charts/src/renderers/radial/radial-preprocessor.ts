@@ -20,9 +20,9 @@
 
 import { pie } from "d3-shape";
 
+import { IRadialAccessors } from "./accessors/radial-accessors";
 import { ChartAssist } from "../../core/chart-assists/chart-assist";
 import { IChartAssistSeries, IChartSeries } from "../../core/common/types";
-import { IRadialAccessors } from "./accessors/radial-accessors";
 
 /**
  * Pre-processing function for Pie and Donut chart renderers.

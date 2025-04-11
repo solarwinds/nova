@@ -18,11 +18,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { embeddedContentConfigurator } from "./embedded-content-configurator";
+import { embeddedContentWidget } from "./embedded-content-widget";
 import { IWidgetTypeDefinition } from "../../components/widget/types";
 import { DEFAULT_PIZZAGNA_ROOT } from "../../services/types";
 import { WellKnownPathKey } from "../../types";
-import { embeddedContentConfigurator } from "./embedded-content-configurator";
-import { embeddedContentWidget } from "./embedded-content-widget";
 
 /***********************************************************************************************************
  * EmbeddedContent widget definition starts here

@@ -19,11 +19,14 @@
 //  THE SOFTWARE.
 
 import { Injectable } from "@angular/core";
-import { IPaginatorState, TableWidgetComponent } from "../public-api";
-import { SET_NEXT_PAGE } from "../../../services/types";
-import { IEvent, INovaFilteringOutputs } from "@nova-ui/bits";
-import { takeUntil } from "rxjs/operators";
 import isEqual from "lodash/isEqual";
+import { takeUntil } from "rxjs/operators";
+
+import { IEvent, INovaFilteringOutputs } from "@nova-ui/bits";
+
+import { SET_NEXT_PAGE } from "../../../services/types";
+import { IPaginatorState, TableWidgetComponent } from "../public-api";
+
 
 @Injectable()
 export class PaginatorFeatureAddonService {

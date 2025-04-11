@@ -20,6 +20,9 @@
 
 import { Subject } from "rxjs";
 
+import { XYAccessors } from "./accessors/xy-accessors";
+import { IRenderSeries } from "./types";
+import { XYRenderer } from "./xy-renderer";
 import { LinearScale } from "../core/common/scales/linear-scale";
 import { Scales } from "../core/common/scales/types";
 import {
@@ -28,9 +31,6 @@ import {
     IPosition,
     IRendererEventPayload,
 } from "../core/common/types";
-import { XYAccessors } from "./accessors/xy-accessors";
-import { IRenderSeries } from "./types";
-import { XYRenderer } from "./xy-renderer";
 
 export class MockXYRenderer extends XYRenderer<XYAccessors> {
     public draw(

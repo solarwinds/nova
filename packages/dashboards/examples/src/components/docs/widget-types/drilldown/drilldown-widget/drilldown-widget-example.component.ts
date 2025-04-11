@@ -63,7 +63,6 @@ import {
     WidgetTypesService,
 } from "@nova-ui/dashboards";
 
-import { APOLLO_API_NAMESPACE } from "../../../types";
 import { DrilldownDataSource } from "./mock-data-source";
 
 /**

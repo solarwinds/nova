@@ -45,6 +45,8 @@ import _defaultsDeep from "lodash/defaultsDeep";
 
 import { EventBus, immutableSet } from "@nova-ui/bits";
 
+import { DEFAULT_GRIDSTER_CONFIG } from "./default-gridster-config";
+import { IDashboard, IDashboardBelowFoldLazyLoadingConfig } from "./types";
 import {
     DASHBOARD_EDIT_MODE,
     WIDGET_POSITION_CHANGE,
@@ -53,8 +55,6 @@ import {
 import { IWidgetEvent } from "../../services/widget-to-dashboard-event-proxy.service";
 import { DASHBOARD_EVENT_BUS } from "../../types";
 import { IWidget } from "../widget/types";
-import { DEFAULT_GRIDSTER_CONFIG } from "./default-gridster-config";
-import { IDashboard, IDashboardBelowFoldLazyLoadingConfig } from "./types";
 
 @Component({
     selector: "nui-dashboard",

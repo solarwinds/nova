@@ -20,10 +20,10 @@
 
 import isUndefined from "lodash/isUndefined";
 
-import { ChartAssist } from "../../core/chart-assists/chart-assist";
-import { IChartAssistSeries, IChartSeries } from "../../core/common/types";
 import { IBarAccessors } from "./accessors/bar-accessors";
 import { gatherCategories } from "./preprocessor-utils";
+import { ChartAssist } from "../../core/chart-assists/chart-assist";
+import { IChartAssistSeries, IChartSeries } from "../../core/common/types";
 
 export function stackedPreprocessor(
     chartSeriesSet: IChartSeries<IBarAccessors>[],

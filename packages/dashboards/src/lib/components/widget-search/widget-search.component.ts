@@ -34,9 +34,9 @@ import { debounceTime, takeUntil } from "rxjs/operators";
 
 import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
 
+import { ISearchOnKeyUp, IWidgetSearchConfiguration } from "./types";
 import { REFRESH, WIDGET_SEARCH } from "../../services/types";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../types";
-import { ISearchOnKeyUp, IWidgetSearchConfiguration } from "./types";
 
 @Component({
     selector: "nui-widget-search",

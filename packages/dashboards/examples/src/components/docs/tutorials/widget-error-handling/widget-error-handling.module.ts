@@ -39,9 +39,9 @@ import {
     NuiDashboardsModule,
 } from "@nova-ui/dashboards";
 
-import { getDemoFiles } from "../../../../demo-files-factory";
 import { WidgetErrorHandlingDocsComponent } from "./widget-error-handling-docs.component";
 import { WidgetErrorHandlingComponent } from "./widget-error-handling.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
 
 const routes = [
     {

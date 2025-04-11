@@ -24,11 +24,11 @@ import { takeUntil } from "rxjs/operators";
 
 import { IDataSource } from "@nova-ui/bits";
 
+import { IDataSourceOutput, IKpiColorRules } from "./types";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { KpiColorComparatorsRegistryService } from "../../services/kpi-color-comparators-registry.service";
 import { DATA_SOURCE, IComparatorsDict, IConfigurable } from "../../types";
 import { IKpiData } from "../kpi-widget/types";
-import { IDataSourceOutput, IKpiColorRules } from "./types";
 
 @Injectable()
 export class KpiColorPrioritizer implements IConfigurable, OnDestroy {

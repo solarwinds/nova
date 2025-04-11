@@ -18,9 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ScrollType } from "./../../../../components/table-widget/types";
 import { DEFAULT_PIZZAGNA_ROOT } from "../../../../services/types";
 import { PizzagnaLayer } from "../../../../types";
+import { ScrollType } from "./../../../../components/table-widget/types";
 
 export const TABLE_WIDGET_PREVIEW_PIZZAGNA = {
     id: "widget4",

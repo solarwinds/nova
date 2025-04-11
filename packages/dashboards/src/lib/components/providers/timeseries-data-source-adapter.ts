@@ -28,14 +28,14 @@ import {
     IFilteringOutputs,
 } from "@nova-ui/bits";
 
+import { DataSourceAdapter } from "./data-source-adapter";
+import { ITimeseriesDataSourceAdapterConfiguration } from "./types";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../types";
 import {
     ITimeseriesWidgetData,
     ITimeseriesWidgetSeries,
 } from "../timeseries-widget/types";
-import { DataSourceAdapter } from "./data-source-adapter";
-import { ITimeseriesDataSourceAdapterConfiguration } from "./types";
 
 export class TimeseriesDataSourceAdapter extends DataSourceAdapter {
     private seriesIndex: ITimeseriesWidgetSeries[] = [];

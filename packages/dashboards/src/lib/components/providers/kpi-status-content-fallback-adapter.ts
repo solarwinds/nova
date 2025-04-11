@@ -25,6 +25,8 @@ import { takeUntil } from "rxjs/operators";
 
 import { EventBus, IEvent } from "@nova-ui/bits";
 
+import { StatusContentFallbackAdapter } from "./status-content-fallback-adapter";
+import { IComponentIdPayload, IDataSourceOutputPayload } from "./types";
 import { DATA_SOURCE_DESTROYED } from "../../configurator/types";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import {
@@ -35,8 +37,6 @@ import {
     PizzagnaLayer,
     PIZZAGNA_EVENT_BUS,
 } from "../../types";
-import { StatusContentFallbackAdapter } from "./status-content-fallback-adapter";
-import { IComponentIdPayload, IDataSourceOutputPayload } from "./types";
 
 export interface IKpiFallbackAdapterProperties extends IProperties {
     // Fallback node key to use if multiple tile data sources report different errors

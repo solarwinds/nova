@@ -20,8 +20,8 @@
 
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
-import { NuiDashboardsModule } from "../../dashboards.module";
 import { TemplateLoadErrorComponent } from "./template-load-error.component";
+import { NuiDashboardsModule } from "../../dashboards.module";
 
 describe("TemplateLoadErrorComponent", () => {
     let component: TemplateLoadErrorComponent;

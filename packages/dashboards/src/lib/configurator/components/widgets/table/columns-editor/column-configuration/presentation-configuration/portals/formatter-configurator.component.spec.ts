@@ -34,9 +34,9 @@ import {
     NuiValidationMessageModule,
 } from "@nova-ui/bits";
 
+import { FormatterConfiguratorComponent } from "./formatter-configurator.component";
 import { IFormatterDefinition } from "../../../../../../../../components/types";
 import { ConfiguratorHeadingService } from "../../../../../../../services/configurator-heading.service";
-import { FormatterConfiguratorComponent } from "./formatter-configurator.component";
 
 @Component({
     selector: "nui-formatter-configurator-test",

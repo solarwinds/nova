@@ -22,7 +22,6 @@ import {
     ChangeDetectionStrategy,
     Component,
     Inject,
-    OnInit,
     TemplateRef,
     ViewChild,
 } from "@angular/core";

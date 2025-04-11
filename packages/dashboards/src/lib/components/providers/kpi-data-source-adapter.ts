@@ -24,6 +24,7 @@ import _isNil from "lodash/isNil";
 
 import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
 
+import { DataSourceAdapter } from "./data-source-adapter";
 import {
     IKpiThresholdsConfig,
     KpiWidgetThresholdColors,
@@ -31,7 +32,6 @@ import {
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../types";
 import { IKpiData } from "../kpi-widget/types";
-import { DataSourceAdapter } from "./data-source-adapter";
 
 export interface IKpiDataSourceAdapterConfiguration {
     thresholds: IKpiThresholdsConfig;

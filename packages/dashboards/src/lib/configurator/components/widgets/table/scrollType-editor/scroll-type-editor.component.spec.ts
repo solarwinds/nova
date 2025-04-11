@@ -18,19 +18,20 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { SimpleChange, SimpleChanges } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { FormBuilder } from "@angular/forms";
 
 import { EventBus } from "@nova-ui/bits";
+import { ScrollType } from "@nova-ui/dashboards";
 
+import { TableScrollTypeEditorComponent } from "./scroll-type-editor.component";
+import { ScrollTypeEditorService } from "./scroll-type-editor.service";
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { DynamicComponentCreator } from "../../../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
 import { PIZZAGNA_EVENT_BUS } from "../../../../../types";
-import { TableScrollTypeEditorComponent } from "./scroll-type-editor.component";
-import { SimpleChange, SimpleChanges } from "@angular/core";
-import { ScrollType } from "@nova-ui/dashboards";
-import { ScrollTypeEditorService } from "./scroll-type-editor.service";
+
 
 describe("TableScrollTypeEditorComponent", () => {
     let component: TableScrollTypeEditorComponent;

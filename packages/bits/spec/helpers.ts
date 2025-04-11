@@ -22,7 +22,13 @@ import * as fs from "fs";
 import * as path from "path";
 import { performance } from "perf_hooks";
 
-import { browser, by, ProtractorBrowser } from "protractor";
+import {
+    browser,
+    by,
+    ElementFinder,
+    protractor,
+    ProtractorBrowser,
+} from "protractor";
 import { WebElementPromise } from "selenium-webdriver";
 
 import { Atom, IAtomClass } from "./atom";
@@ -68,6 +74,7 @@ export async function assertA11y<T extends Atom>(
     atomClassOrSelector: IAtomClass<T> | string,
     disabledRules?: string[]
 ): Promise<void> {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const AxeBuilder = require("@axe-core/webdriverjs");
     const selector =
         typeof atomClassOrSelector === "string"
@@ -90,6 +97,7 @@ export class Helpers {
         }
         await browser.angularAppRoot("app");
         await browser.get(url);
+        await browser.waitForAngular();
         browser.clearMockModules();
     }
 
@@ -105,7 +113,7 @@ export class Helpers {
         return browser.driver.findElement(by.css(elementCSS));
     }
 
-    public static async setCustomWidth(size: string, id: string): Promise<{}> {
+    public static async setCustomWidth(size: string, id: string): Promise<any> {
         return browser.executeScript(
             `document.getElementById("${id}").style.width = "${size}"`
         );
@@ -151,7 +159,7 @@ export class Helpers {
      *
      * https://jira.solarwinds.com/browse/NUI-2034
      */
-    static async disableCSSAnimations(type: Animations): Promise<{}> {
+    static async disableCSSAnimations(type: Animations): Promise<any> {
         let disableTransitions =
             "-o-transition-property: none !important;" +
             "-moz-transition-property: none !important;" +
@@ -247,5 +255,12 @@ export class Helpers {
             const stop = performance.now();
             console.log(`timed [${name}] took ${stop - start} ms`);
         }
+    }
+
+    static async waitElementVisible(el: ElementFinder): Promise<void> {
+        await browser.wait(protractor.ExpectedConditions.visibilityOf(el), 5000, "Element is not visible");
+    }
+    static async waitElementToBeClickable(el: ElementFinder): Promise<void> {
+        await browser.wait(protractor.ExpectedConditions.elementToBeClickable(el), 5000, "Element is not visible");
     }
 }

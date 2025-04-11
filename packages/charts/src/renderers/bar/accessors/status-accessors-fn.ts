@@ -18,9 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { IChartMarker, IValueProvider } from "../../../core/common/types";
 import { HorizontalBarAccessors } from "./horizontal-bar-accessors";
 import { StatusAccessors } from "./status-accessors";
+import { IChartMarker, IValueProvider } from "../../../core/common/types";
 
 export function statusAccessors(
     colorProvider: IValueProvider<string>,

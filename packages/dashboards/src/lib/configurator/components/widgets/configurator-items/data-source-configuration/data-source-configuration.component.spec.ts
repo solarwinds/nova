@@ -22,10 +22,10 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { EventBus } from "@nova-ui/bits";
 
+import { DataSourceConfigurationComponent } from "./data-source-configuration.component";
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
 import { PIZZAGNA_EVENT_BUS } from "../../../../../types";
-import { DataSourceConfigurationComponent } from "./data-source-configuration.component";
 
 describe("DataSourceConfigurationComponent", () => {
     let component: DataSourceConfigurationComponent;

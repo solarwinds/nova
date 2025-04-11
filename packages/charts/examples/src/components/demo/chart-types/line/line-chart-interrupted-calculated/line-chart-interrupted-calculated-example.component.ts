@@ -87,7 +87,7 @@ export class LineChartInterruptedCalculatedExampleComponent implements OnInit {
         // We're calling the original 'defined' accessor implementation, but inverting it's logic because, from the missing data
         // series point of view, the undefined data are actually visualized as defined.
         accessorsMissing.data.defined = (d, i, data, dataSeries) =>
-            !origDefinedAccessor?.(d, i, data, dataSeries) ?? true;
+            !(origDefinedAccessor?.(d, i, data, dataSeries) ?? true);
 
         for (const s of incomingSeries) {
             // The first data series is for rendering the valid data

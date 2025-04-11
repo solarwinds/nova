@@ -36,6 +36,8 @@ import {
     WidgetTypesService,
 } from "@nova-ui/dashboards";
 
+import { KpiErrorTestComponent } from "./kpi-error/kpi-error-test.component";
+import { KpiDashboardComponent } from "./kpi-widget-test.component";
 import { TestCommonModule } from "../../common/common.module";
 import {
     TestKpiDataSource,
@@ -43,8 +45,6 @@ import {
     TestKpiDataSourceBigNumber,
     TestKpiDataSourceSmallNumber,
 } from "../../data/kpi-data-sources";
-import { KpiErrorTestComponent } from "./kpi-error/kpi-error-test.component";
-import { KpiDashboardComponent } from "./kpi-widget-test.component";
 
 const routes = [
     {

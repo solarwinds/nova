@@ -51,8 +51,8 @@ import {
     WidgetTypesService,
 } from "@nova-ui/dashboards";
 
-import { UnitTestRegistryService } from "../../../../../../src/lib/services/unit-test-registry.service";
 import { GRAPH_DATA_MOCK } from "./data-mock";
+import { UnitTestRegistryService } from "../../../../../../src/lib/services/unit-test-registry.service";
 
 /**
  * A simple KPI data source to retrieve the average rating of Harry Potter and the Sorcerer's Stone (book) via googleapis

@@ -39,6 +39,7 @@ import {
     VirtualViewportManager,
 } from "@nova-ui/bits";
 
+import { DataSourceAdapter } from "./data-source-adapter";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import {
     REFRESH,
@@ -52,7 +53,6 @@ import {
     PizzagnaLayer,
     PIZZAGNA_EVENT_BUS,
 } from "../../types";
-import { DataSourceAdapter } from "./data-source-adapter";
 
 export class TableDataSourceAdapter<
     T extends IFilteringOutputs

@@ -36,13 +36,13 @@ import {
 } from "@nova-ui/bits";
 import { IDataSourceOutput } from "@nova-ui/dashboards";
 
+import { apiRoute, RANDOMUSER_API_URL, responseError } from "./constants";
 import {
     IRandomUserResponse,
     IRandomUserResults,
     IRandomUserTableModel,
     UsersQueryResponse,
 } from "../../../types";
-import { apiRoute, RANDOMUSER_API_URL, responseError } from "./constants";
 
 // This datasource extends LocalFilteringDataSource. Link to api docs below:
 // https://nova-ui.solarwinds.io/bits/release_v12.x/injectables/LocalFilteringDataSource.html

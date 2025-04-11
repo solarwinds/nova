@@ -41,20 +41,20 @@ import {
     VirtualViewportManager,
 } from "@nova-ui/bits";
 
-import { NuiDashboardsModule } from "../../dashboards.module";
-import { mockLoggerService } from "../../mocks";
-import { NuiPizzagnaModule } from "../../pizzagna/pizzagna.module";
-import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
-import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
-import { ProviderRegistryService } from "../../services/provider-registry.service";
-import { REFRESH, SCROLL_NEXT_PAGE } from "../../services/types";
-import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../types";
 import { TableWidgetComponent } from "./table-widget.component";
 import {
     ITableWidgetColumnConfig,
     ITableWidgetConfig,
     ScrollType,
 } from "./types";
+import { NuiDashboardsModule } from "../../dashboards.module";
+import { mockLoggerService } from "../../mocks.spec";
+import { NuiPizzagnaModule } from "../../pizzagna/pizzagna.module";
+import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
+import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
+import { ProviderRegistryService } from "../../services/provider-registry.service";
+import { REFRESH, SCROLL_NEXT_PAGE } from "../../services/types";
+import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../types";
 
 interface BasicTableModel {
     position: number;

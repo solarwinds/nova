@@ -134,7 +134,7 @@ export class ChipsComponent
     @Output() public chipsOverflowed: EventEmitter<IChipsItemsSource> =
         new EventEmitter<IChipsItemsSource>();
 
-    public isOverflowed: Boolean;
+    public isOverflowed: boolean;
 
     @ViewChild("chipsMainCell") private mainCell: ElementRef;
     @ViewChild("clearAll") private set clearAll(elem: ElementRef) {

@@ -21,9 +21,9 @@
 import { event, mouse } from "d3-selection";
 import { BehaviorSubject } from "rxjs";
 
+import { D3Selection, IInteractionEvent, InteractionType } from "./types";
 import { IGNORE_INTERACTION_CLASS } from "../../constants";
 import { IAllAround } from "../grid/types";
-import { D3Selection, IInteractionEvent, InteractionType } from "./types";
 
 /**
  * @ignore

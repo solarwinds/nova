@@ -43,6 +43,7 @@ import { takeUntil } from "rxjs/operators";
 
 import { EventBus, IEvent } from "@nova-ui/bits";
 
+import { IHeaderLinkProvider } from "./types";
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
 import {
     DASHBOARD_EDIT_MODE,
@@ -56,7 +57,6 @@ import {
     PIZZAGNA_EVENT_BUS,
     PizzagnaLayer,
 } from "../../../types";
-import { IHeaderLinkProvider } from "./types";
 
 @Component({
     selector: "nui-widget-header",

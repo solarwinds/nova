@@ -27,6 +27,7 @@ import values from "lodash/values";
 
 import { LoggerService } from "@nova-ui/bits";
 
+import { ISimpleThresholdZone, ZoneBoundary, ZoneCross } from "./types";
 import { isBandScale, Scales } from "../core/common/scales/types";
 import {
     DataAccessor,
@@ -55,7 +56,6 @@ import {
     SideIndicatorAccessors,
     SideIndicatorRenderer,
 } from "../renderers/side-indicator-renderer";
-import { ISimpleThresholdZone, ZoneBoundary, ZoneCross } from "./types";
 
 /**
  * This service provides functionality that facilitates the creation of thresholds related visual element on charts.

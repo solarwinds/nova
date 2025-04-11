@@ -22,11 +22,11 @@ import moment, { Moment } from "moment/moment";
 
 import { ITimeframe } from "@nova-ui/bits";
 
+import { applyStatusEndpoints } from "./apply-status-endpoints";
 import {
     ITimeseriesWidgetData,
     ITimeseriesWidgetSeriesData,
 } from "../../types";
-import { applyStatusEndpoints } from "./apply-status-endpoints";
 
 describe("applyStatusEndpoints", () => {
     let widgetData: ITimeseriesWidgetData[];

@@ -19,9 +19,9 @@
 //  THE SOFTWARE.
 
 import { Chart } from "../chart";
+import { ChartDonutContentPlugin } from "./chart-donut-content-plugin";
 import { RadialGrid } from "../grid/radial-grid";
 import { IGrid } from "../grid/types";
-import { ChartDonutContentPlugin } from "./chart-donut-content-plugin";
 
 describe("ChartDonutContentPlugin >", () => {
     let grid: IGrid;

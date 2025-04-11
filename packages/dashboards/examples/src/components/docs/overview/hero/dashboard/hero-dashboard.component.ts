@@ -36,6 +36,7 @@ import {
     WidgetTypesService,
 } from "@nova-ui/dashboards";
 
+import { positions, widgets } from "./widget-configs";
 import {
     HarryPotterAverageRatingDataSource,
     HarryPotterRatingsCountDataSource,
@@ -50,7 +51,6 @@ import {
     BeerVsReadingMockDataSource,
     LoungingVsFrisbeeGolfMockDataSource,
 } from "../data/timeseries-data-sources";
-import { positions, widgets } from "./widget-configs";
 
 /**
  * A component that instantiates the dashboard
