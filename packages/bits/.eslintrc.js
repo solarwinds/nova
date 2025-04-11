@@ -1,6 +1,5 @@
 module.exports = {
     extends: "../../.eslintrc.js",
-    ignorePatterns: ["node_modules/**/*"],
     overrides: [
         {
             files: ["*.ts"],
@@ -8,7 +7,7 @@ module.exports = {
                 project: ["./tsconfig.lib.json"],
                 createDefaultProgram: true,
                 projectService: true,
-                tsconfigRootDir: __dirname,
+                tsconfigRootDir: ".",
             },
             settings: {
                 "import/parsers": {
@@ -27,7 +26,7 @@ module.exports = {
                 project: ["./tsconfig.spec.json"],
                 createDefaultProgram: true,
                 projectService: true,
-                tsconfigRootDir: __dirname,
+                tsconfigRootDir: ".",
             },
         },
     ],
