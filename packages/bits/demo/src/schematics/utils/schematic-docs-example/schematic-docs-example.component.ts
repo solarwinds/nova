@@ -66,8 +66,6 @@ export class SchematicDocsExampleComponent implements OnInit {
     ) {}
 
     public ngOnInit(): void {
-        console.log(this.exampleFolderName)
-
         this.componentSources = this.getSourcesByFilenamePrefix(
             this.exampleFolderName
         );
@@ -126,7 +124,6 @@ export class SchematicDocsExampleComponent implements OnInit {
         let fileContent = "";
         const regExResultArray = this.fileExtensionsRegex.exec(fileName);
         if (regExResultArray) {
-            console.log('her', fileName)
              fileContent = await this.context.files.find(f=>f.path.includes(fileName))?.content();
 
             const extension = <string>fileName.split(".").pop();
