@@ -310,10 +310,11 @@
                                 <code>nui-table</code> start with declaring the
                                 following variables:<br /><br />
                             </p>
-                            <nui-example-code language="typescript">{{
-                                tableScrollingSetup.vars
-                            }}</nui-example-code
-                            ><br />
+                            <nui-example-code
+                                language="typescript"
+                                [code]="tableScrollingSetup.vars"
+                            />
+                            <br />
 
                             <p>
                                 Import
@@ -326,64 +327,75 @@
                                 rendered range stream emitted from the CDK
                                 Viewport into distinct page ranges):<br />
                             </p>
-                            <nui-example-code language="typescript">{{
-                                tableScrollingSetup.viewportManagerImport
-                            }}</nui-example-code
-                            ><br />
+                            <nui-example-code
+                                language="typescript"
+                                [code]="
+                                    tableScrollingSetup.viewportManagerImport
+                                "
+                            />
+                            <br />
                             <p>
                                 Provide VirtualViewportManager on a component
                                 level providers:<br />
                             </p>
-                            <nui-example-code language="typescript">{{
-                                tableScrollingSetup.provideViewport
-                            }}</nui-example-code
-                            ><br />
+                            <nui-example-code
+                                language="typescript"
+                                [code]="tableScrollingSetup.provideViewport"
+                            />
+                            <br />
 
                             <p>
                                 Inject VirtualViewportManager type in the
                                 constructor:<br />
                             </p>
-                            <nui-example-code language="typescript">{{
-                                tableScrollingSetup.injectViewport
-                            }}</nui-example-code
-                            ><br />
+                            <nui-example-code
+                                language="typescript"
+                                [code]="tableScrollingSetup.injectViewport"
+                            />
+                            <br />
 
                             <p>
                                 Use the Angular ViewChild decorator to get a
                                 reference to the scrolling viewport
                                 (CdkVirtualScrollViewport):<br />
                             </p>
-                            <nui-example-code language="typescript">{{
-                                tableScrollingSetup.viewChildren
-                            }}</nui-example-code
-                            ><br />
+                            <nui-example-code
+                                language="typescript"
+                                [code]="tableScrollingSetup.viewChildren"
+                            />
+                            <br />
 
                             <p>
                                 Register the virtual scroll filter on
                                 dataSource:
                             </p>
-                            <nui-example-code language="typescript">{{
-                                tableScrollingSetup.registerScroll
-                            }}</nui-example-code
-                            ><br />
+                            <nui-example-code
+                                language="typescript"
+                                [code]="tableScrollingSetup.registerScroll"
+                            />
+                            <br />
 
                             <p>
                                 Optionally, subscribe to the
                                 <code>busy</code> state changes:
                             </p>
-                            <nui-example-code language="typescript">{{
-                                tableScrollingSetup.oninitSubscribeBusy
-                            }}</nui-example-code
-                            ><br />
+                            <nui-example-code
+                                language="typescript"
+                                [code]="tableScrollingSetup.oninitSubscribeBusy"
+                            />
+                            <br />
                             <p>
                                 Start setting up the
                                 <code>ngAfterViewInit()</code> lifecycle
                                 hook:<br />
                             </p>
-                            <nui-example-code language="typescript">{{
-                                tableScrollingSetup.ngAfterViewInitStart
-                            }}</nui-example-code
-                            ><br />
+                            <nui-example-code
+                                language="typescript"
+                                [code]="
+                                    tableScrollingSetup.ngAfterViewInitStart
+                                "
+                            />
+                            <br />
 
                             Setting up the viewportManager listener and
                             dataSource handler in the
@@ -445,10 +457,13 @@
                                     RxJS pipe operators.
                                 </li>
                             </ol>
-                            <nui-example-code language="typescript">{{
-                                tableScrollingSetup.ngAfterViewInitViewport
-                            }}</nui-example-code
-                            ><br />
+                            <nui-example-code
+                                language="typescript"
+                                [code]="
+                                    tableScrollingSetup.ngAfterViewInitViewport
+                                "
+                            />
+                            <br />
                         </ng-container>
                     </ng-template>
                     <p>
@@ -670,9 +685,10 @@
                             Create the <code>&#64;Injectable</code> class that
                             extends the data source service mentioned above.
                         </p>
-                        <nui-example-code language="typescript">{{
-                            dataSourceSetup.extendDS
-                        }}</nui-example-code>
+                        <nui-example-code
+                            language="typescript"
+                            [code]="dataSourceSetup.extendDS"
+                        />
                         <br />
 
                         <p>
@@ -699,12 +715,13 @@
                         is being fetched. This is optional.
                         <mark
                             >Consult with your UX team about using busy state
-                            and busy components in your list</mark
-                        >
+                            and busy components in your list
+                        </mark>
                         .
-                        <nui-example-code language="typescript">{{
-                            dataSourceSetup.defineFields
-                        }}</nui-example-code>
+                        <nui-example-code
+                            language="typescript"
+                            [code]="dataSourceSetup.defineFields"
+                        />
                         <br />
 
                         <p>
@@ -723,9 +740,10 @@
                             probably will, vary by API implementation. Your goal
                             here is to return the requested number of items.
                         </p>
-                        <nui-example-code language="typescript">{{
-                            fetch
-                        }}</nui-example-code>
+                        <nui-example-code
+                            language="typescript"
+                            [code]="fetch"
+                        />
                         <br />
 
                         <p>
@@ -738,9 +756,10 @@
                             <code>dataSource</code> input in order to render the
                             items correctly.
                         </p>
-                        <nui-example-code language="typescript">{{
-                            dataSourceSetup.getData
-                        }}</nui-example-code>
+                        <nui-example-code
+                            language="typescript"
+                            [code]="dataSourceSetup.getData"
+                        />
                         <br />
 
                         <p>
@@ -767,9 +786,10 @@
                             would contain AT LEAST the total number of items the
                             API is able to return and the list's cached data.
                         </p>
-                        <nui-example-code language="typescript">{{
-                            dataSourceSetup.getFilteredData
-                        }}</nui-example-code>
+                        <nui-example-code
+                            language="typescript"
+                            [code]="dataSourceSetup.getFilteredData"
+                        />
                         <br />
 
                         <p>
@@ -787,7 +807,8 @@
                             href="../injectables/ClientSideDataSource.html"
                             ><code>ClientSideDataSource</code></a
                         >
-                        which can be imported from <code>"&#64;nova-ui/bits"</code>.
+                        which can be imported from
+                        <code>"&#64;nova-ui/bits"</code>.
                     </p>
                 </nui-expander>
             </nui-expander>

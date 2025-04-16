@@ -56,9 +56,7 @@
     <code>groups</code> field contains possible <code>groupBy</code> options
 </nui-message>
 
-<nui-example-code language="typescript">{{
-    predefinedGroping
-}}</nui-example-code>
+<nui-example-code language="typescript" [code]="predefinedGroping" />
 
 <br />
 
@@ -81,9 +79,7 @@
     interface and have <em>features</em> property set.
 </p>
 <p>Default way to do that is to declare the features:</p>
-<nui-example-code language="typescript">
-    {{ featuredDeclaredText }}
-</nui-example-code>
+<nui-example-code language="typescript" [code]="featuredDeclaredText" />
 
 <p>
     And then pass it to the
@@ -93,16 +89,14 @@
         ><code>DataSourceFeatures</code></a
     >
 </p>
-<nui-example-code language="typescript">
-    {{ featuresUsedText }}
-</nui-example-code>
+<nui-example-code language="typescript" [code]="featuresUsedText" />
 
 <p>
     This part shows the actual widget definition. It includes, among other
     things, the components and providers that compose the widget itself.
 </p>
 
-<nui-example-code language="typescript">{{ widgetFileText }}</nui-example-code>
+<nui-example-code language="typescript" [code]="widgetFileText" />
 
 <h2>Configurator</h2>
 
@@ -111,6 +105,4 @@
     widget.
 </p>
 
-<nui-example-code language="typescript">{{
-    configuratorFileText
-}}</nui-example-code>
+<nui-example-code language="typescript" [code]="configuratorFileText" />

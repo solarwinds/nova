@@ -18,17 +18,24 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+
+import { mapContentFile } from "../../../../demo-files-factory";
 
 @Component({
     selector: "nui-table-docs",
     templateUrl: "./table-docs.component.html",
 })
-export class TableDocsComponent {
+export class TableDocsComponent implements OnInit {
     public widgetFileText = "";
-        // require("!!raw-loader!../../../../../../src/lib/widget-types/table/table-widget.ts")
-        //     .default;
     public configuratorFileText = "";
-        // require("!!raw-loader!../../../../../../src/lib/widget-types/table/table-configurator.ts")
-        //     .default;
+
+    public async ngOnInit(): Promise<void> {
+        this.widgetFileText = await import(
+            "./../../../../../../src/lib/widget-types/table/table-widget"
+        ).then(mapContentFile);
+        this.configuratorFileText = await import(
+            "./../../../../../../src/lib/widget-types/table/table-configurator"
+        ).then(mapContentFile);
+    }
 }

@@ -31,9 +31,7 @@
     default for widget error handling
 </p>
 <strong>The example of adapter</strong>
-<nui-example-code language="typescript">
-    {{ fallbackAdapter }}
-</nui-example-code>
+<nui-example-code language="typescript" [code]="fallbackAdapter" />
 
 <p>
     <strong>A map of error codes to widget error node keys</strong>
@@ -43,9 +41,7 @@
         the node keys may be any string as long as they correspond to an error
         configuration node defined in the widget structure.
     </nui-message>
-    <nui-example-code language="typescript">
-        {{ errorsMap }}
-    </nui-example-code>
+    <nui-example-code language="typescript" [code]="errorsMap" />
 </p>
 
 <strong>An index of common error configurations</strong>
@@ -58,9 +54,7 @@
         error details
     </li>
 </ul>
-<nui-example-code language="typescript">
-    {{ errorNodes }}
-</nui-example-code>
+<nui-example-code language="typescript" [code]="errorNodes" />
 
 <h2>Basic Steps</h2>
 <ol>
@@ -136,9 +130,7 @@
     definition by changing the retrieving the definitions for the body content
     nodes in the method <code>widgetBodyContentNodes</code>. You can see below
     the declaration of that method:
-    <nui-example-code language="typescript">
-        {{ widgetBodyContentNodesSignature }}
-    </nui-example-code>
+    <nui-example-code language="typescript" [code]="widgetBodyContentNodesSignature" />
     So, you can modify any parameter:
     <code>fallbackAdapterId, fallbackMap, fallbackNodes</code> to your own
     widget error handling.

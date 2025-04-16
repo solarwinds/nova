@@ -28,6 +28,7 @@ import { APOLLO_OPTIONS } from "apollo-angular";
 import { HttpLink } from "apollo-angular/http";
 
 import {
+    DEMO_PATH_TOKEN,
     NuiBusyModule,
     NuiButtonModule,
     NuiCheckboxModule,
@@ -107,6 +108,7 @@ import { SchematicsDocsCommandComponent } from "./utils/schematic-docs-command/s
 import { SchematicDocsExampleComponent } from "./utils/schematic-docs-example/schematic-docs-example.component";
 import { SchematicDocsPageComponent } from "./utils/schematic-docs-page/schematic-docs-page.component";
 import { SchematicJsonComponent } from "./utils/schematic-json.component";
+import { getDemoFiles } from "../static/demo-files-factory";
 
 const COUNTRIES_API = "https://countries-274616.ew.r.appspot.com/";
 
@@ -346,6 +348,11 @@ const staticRoutes: Routes = [
     providers: [
         DatePipe,
         FakeHTTPService,
+        {
+            provide: DEMO_PATH_TOKEN,
+            // todo sometime get docs for schematics working
+            useValue: getDemoFiles("schematics"),
+        },
         {
             provide: APOLLO_OPTIONS,
             useFactory: (httpLink: HttpLink) => ({

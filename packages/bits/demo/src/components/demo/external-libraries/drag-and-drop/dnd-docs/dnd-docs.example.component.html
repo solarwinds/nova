@@ -6,9 +6,7 @@
     To get started, import <code>DragDropModule</code> into the
     <code>NgModule</code> where you want to use drag-and-drop features:
 </p>
-<nui-example-code language="typescript">{{
-    initialSetupCode
-}}</nui-example-code>
+<nui-example-code language="typescript" [code]="initialSetupCode" />
 <p>
     For more details on the implementation of the &#64;angular/cdk/drag-drop, check
     the documentation
@@ -126,9 +124,7 @@
     In the example above the handle is still displayed while dragging an
     element; to hide the handle we just need to apply the properer styling on
     the cloned preview element as shown below:
-    <nui-example-code language="css">{{
-        hideHandleWhileDragging
-    }}</nui-example-code>
+    <nui-example-code language="css" [code]="hideHandleWhileDragging" />
 </p>
 
 <h2>Custom Placeholder</h2>

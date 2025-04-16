@@ -18,19 +18,24 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+
+import { mapContentFile } from "../../../../demo-files-factory";
 
 @Component({
     selector: "nui-embedded-content-docs",
     templateUrl: "./embedded-content-docs.component.html",
 })
-export class EmbeddedContentDocsComponent {
-    // todo check docs
+export class EmbeddedContentDocsComponent implements OnInit {
     public embeddedContentWidgetFileText = "";
-        // require("!!raw-loader!../../../../../../src/lib/widget-types/embedded-content/embedded-content-widget.ts")
-        //     .default;
-    // eslint-disable-next-line max-len
     public embeddedContentConfiguratorFileText = "";
-        // require("!!raw-loader!../../../../../../src/lib/widget-types/embedded-content/embedded-content-configurator.ts")
-        //     .default;
+
+    public async ngOnInit(): Promise<void> {
+        this.embeddedContentWidgetFileText = await import(
+            "./../../../../../../src/lib/widget-types/embedded-content/embedded-content-widget"
+        ).then(mapContentFile);
+        this.embeddedContentWidgetFileText = await import(
+            "./../../../../../../src/lib/widget-types/embedded-content/embedded-content-configurator"
+        ).then(mapContentFile);
+    }
 }

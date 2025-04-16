@@ -54,7 +54,5 @@
     </nui-checkbox-group>
 </div>
 <div class="mt-3">
-    <nui-example-code *ngFor="let event of parsedEvents" language="typescript">
-        {{ event }}
-    </nui-example-code>
+    <nui-example-code *ngFor="let event of parsedEvents" language="typescript" [code]="event" />
 </div>

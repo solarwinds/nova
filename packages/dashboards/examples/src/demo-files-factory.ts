@@ -23,3 +23,14 @@ export const getDemoFiles = (
         })),
     };
 };
+
+export function mapContentFile(e: any) {
+    return `${Object.values(e)
+        .map((e) => {
+            if (typeof e == "object") {
+                return JSON.stringify(e, null, 2);
+            }
+            return e;
+        })
+        .join("\n")}`;
+}

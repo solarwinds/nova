@@ -33,9 +33,7 @@
                     <nui-copy-text
                         fileContent="{{ getExampleComponents('html') }}"
                     ></nui-copy-text>
-                    <nui-example-code language="html">{{
-                        getExampleComponents("html")
-                    }}</nui-example-code>
+                    <nui-example-code language="html" [code]="getExampleComponents('html')" />
                 </div>
             </nui-tab>
             <nui-tab *ngIf="!!getExampleComponents('ts')" heading="Typescript">
@@ -43,9 +41,7 @@
                     fileContent="{{ getExampleComponents('ts') }}"
                 ></nui-copy-text>
                 <div class="media-body">
-                    <nui-example-code language="typescript">{{
-                        getExampleComponents("ts")
-                    }}</nui-example-code>
+                    <nui-example-code language="typescript" [code]="getExampleComponents('ts')" />
                 </div>
             </nui-tab>
             <nui-tab *ngIf="!!getExampleComponents('less')" heading="Less">
@@ -55,8 +51,7 @@
                 <div class="media-body">
                     <nui-example-code
                         *ngIf="!!getExampleComponents('less'); else noLess"
-                        >{{ getExampleComponents("less") }}</nui-example-code
-                    >
+                        [code]="getExampleComponents('less')"/>
                     <ng-template #noLess>
                         <nui-image image="no-data-to-show"></nui-image>
                     </ng-template>

@@ -18,20 +18,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { mapContentFile } from "../../../../demo-files-factory";
 
 @Component({
     selector: "nui-drilldown-docs",
     templateUrl: "./drilldown-widget-docs.component.html",
 })
-export class DrilldownDocsComponent {
-    // todo check docs
+export class DrilldownDocsComponent implements OnInit {
     public widgetFileText = "";
-        // require("!!raw-loader!../../../../../../src/lib/widget-types/drilldown/drilldown-widget.ts")
-        //     .default;
     public configuratorFileText = "";
-        // require("!!raw-loader!../../../../../../src/lib/widget-types/drilldown/drilldown-configurator")
-        //     .default;
 
     public predefinedGroping = `
 listWidget: {
@@ -57,4 +53,13 @@ listWidget: {
     public featuresUsedText = `
         this.features = new DataSourceFeatures(this.supportedFeatures);
     `;
+
+    public async ngOnInit(): Promise<void> {
+        this.widgetFileText = await import(
+            "./../../../../../../src/lib/widget-types/drilldown/drilldown-widget"
+        ).then(mapContentFile);
+        this.configuratorFileText = await import(
+            "./../../../../../../src/lib/widget-types/drilldown/drilldown-configurator"
+        ).then(mapContentFile);
+    }
 }

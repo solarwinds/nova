@@ -18,17 +18,24 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+
+import { mapContentFile } from "../../../../demo-files-factory";
 
 @Component({
     selector: "nui-proportional-docs",
     templateUrl: "./proportional-docs.component.html",
 })
-export class ProportionalDocsComponent {
+export class ProportionalDocsComponent implements OnInit {
     public proportionalWidgetFileText = "";
-        // require("!!raw-loader!../../../../../../src/lib/widget-types/proportional/proportional-widget.ts")
-        //     .default;
     public proportionalConfiguratorFileText = "";
-        // require("!!raw-loader!../../../../../../src/lib/widget-types/proportional/proportional-configurator.ts")
-        //     .default;
+
+    public async ngOnInit(): Promise<void> {
+        this.proportionalWidgetFileText = await import(
+            "./../../../../../../src/lib/widget-types/proportional/proportional-widget"
+        ).then(mapContentFile);
+        this.proportionalConfiguratorFileText = await import(
+            "./../../../../../../src/lib/widget-types/proportional/proportional-configurator"
+        ).then(mapContentFile);
+    }
 }

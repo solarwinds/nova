@@ -20,11 +20,8 @@
 
 /** @ignore */
 import {
-    AfterViewInit,
     Component,
-    ElementRef,
     Input,
-    ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
 import hljs from "highlight.js";
@@ -49,7 +46,6 @@ import hljs from "highlight.js";
  * where "highlight.js" should be used as alias to regular "highlight.js/lib/core.js"
  * to avoid loading all languages. And then just load what you really need, e.g. typescript
  *
- * hljs.registerLanguage("typescript", require("highlight.js/lib/languages/typescript"));
  *
  * __Name:__
  *
@@ -58,7 +54,7 @@ import hljs from "highlight.js";
  * __Usage:__
  *
  * ```html
- * <nui-example-code>{{code}}<nui-example-code>
+ * <nui-example-code [code]=[code]><nui-example-code>
  * ```
  *
  */
@@ -68,19 +64,19 @@ import hljs from "highlight.js";
     styleUrls: ["./example-code.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
-export class ExampleCodeComponent implements AfterViewInit {
+export class ExampleCodeComponent {
     /**
      * Programming language used (auto-detect if not present) - see
      * https://highlightjs.org/static/demo/ for possible values
      */
     @Input() public language: string;
 
-    @ViewChild("code") public codeElement: ElementRef<HTMLDivElement>;
-
-    public ngAfterViewInit(): void {
-        // remove wrapping spaces. They might appear due to passing content via ng-content into element
-        this.codeElement.nativeElement.innerHTML =
-            this.codeElement.nativeElement.innerHTML.trim();
-        hljs.highlightElement(this.codeElement.nativeElement as HTMLElement);
+    public codeText = "";
+    @Input() set code(c: string) {
+        const code = c.trim();
+        if (!code) {
+            return;
+        }
+        this.codeText = hljs.highlight(code, { language: this.language }).value;
     }
 }

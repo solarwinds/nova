@@ -20,6 +20,8 @@
 
 import { Component, OnInit } from "@angular/core";
 
+import { mapContentFile } from "../../../../demo-files-factory";
+
 @Component({
     selector: "nui-timeseries-docs",
     templateUrl: "./timeseries-docs.component.html",
@@ -27,11 +29,13 @@ import { Component, OnInit } from "@angular/core";
 export class TimeseriesDocsComponent implements OnInit {
     public timeseriesWidgetFileText = "";
     public timeseriesConfiguratorFileText = "";
-    
+
     async ngOnInit(): Promise<void> {
-        // todo rethink fetching the ts files
-        //  https://github.com/angular/angular-cli/issues/26575
-        // this.timeseriesWidgetFileText = await import("!!raw-loader!./../../../../../../src/lib/widget-types/timeseries/timeseries-widget.ts").then(e=>e.default);
-        // this.timeseriesConfiguratorFileText = await import("!!raw-loader!../../../../../../src/lib/widget-types/timeseries/timeseries-configurator.ts").then(e=>e.default);
+        this.timeseriesWidgetFileText = await import(
+            "./../../../../../../src/lib/widget-types/timeseries/timeseries-widget"
+        ).then(mapContentFile);
+        this.timeseriesConfiguratorFileText = await import(
+            "./../../../../../../src/lib/widget-types/timeseries/timeseries-configurator"
+        ).then(mapContentFile);
     }
 }
