@@ -69,7 +69,7 @@ export class ExampleCodeComponent {
      * Programming language used (auto-detect if not present) - see
      * https://highlightjs.org/static/demo/ for possible values
      */
-    @Input() public language: string;
+    @Input() public language: string = "typescript";
 
     public codeText = "";
     @Input() set code(c: string) {
