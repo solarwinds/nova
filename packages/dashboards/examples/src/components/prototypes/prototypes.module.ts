@@ -22,13 +22,13 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
+import { EventBusService } from "@nova-ui/bits";
 import {
     ConfiguratorHeadingService,
     PIZZAGNA_EVENT_BUS,
 } from "@nova-ui/dashboards";
 
 import { AcmeComponentsModule } from "./components/components.module";
-import { EventBusService } from "@nova-ui/bits";
 
 const routes = [
     {

@@ -27,8 +27,8 @@ import {
 } from "@angular/core";
 
 import { CHART_COMPONENT } from "../constants";
-import { IChartComponent } from "../core/common/types";
 import { ChartCollectionService } from "./chart-collection.service";
+import { IChartComponent } from "../core/common/types";
 
 /**
  * This directive represents a grouping behavior that is separated from chart components. Any chart component

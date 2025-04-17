@@ -26,6 +26,13 @@ import { Observable, of, Subject, Subscription } from "rxjs";
 import { filter, map, switchMap, takeUntil } from "rxjs/operators";
 
 import {
+    ChartAssistEventType,
+    ChartAssistRenderStateData,
+    IChartAssist,
+    IChartAssistEvent,
+    IRenderStatesIndex,
+} from "./types";
+import {
     DESTROY_EVENT,
     HIGHLIGHT_SERIES_EVENT,
     INTERACTION_DATA_POINTS_EVENT,
@@ -52,13 +59,6 @@ import {
     IRenderStateData,
     IValueProvider,
 } from "../common/types";
-import {
-    ChartAssistEventType,
-    ChartAssistRenderStateData,
-    IChartAssist,
-    IChartAssistEvent,
-    IRenderStatesIndex,
-} from "./types";
 
 /**
  * Helper class that helps to bootstrap a chart with legend, using data pre-processor.

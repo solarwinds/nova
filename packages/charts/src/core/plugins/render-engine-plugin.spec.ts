@@ -23,11 +23,11 @@ import {
     INTERACTION_VALUES_EVENT,
 } from "../../constants";
 import { Chart } from "../chart";
+import { RenderEnginePlugin } from "./render-engine-plugin";
+import { IInteractionValuesPayload } from "./types";
 import { InteractionType } from "../common/types";
 import { IGrid } from "../grid/types";
 import { XYGrid } from "../grid/xy-grid";
-import { RenderEnginePlugin } from "./render-engine-plugin";
-import { IInteractionValuesPayload } from "./types";
 
 describe("RenderEnginePlugin >", () => {
     let grid: IGrid;

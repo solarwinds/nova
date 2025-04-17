@@ -31,20 +31,23 @@ All Nova projects (`bits`, `charts` and `dashboards`) have the following npm com
 e2e tests:
 
 -   `npm run e2e` - to compile the project and run e2e-tests
--   `npm run e2e-dev` - to run ONLY the tests without compiling the project under test. Note: For this
-    task to work, the project itself should be served up separately by running `npm run start` in a
-    separate console window.
--   `npm run e2e-debug` - similar to `e2e-dev`, but used for e2e debugging purposes. It allows `debugger`
+-   `npm run e2e:watch` - to run the tests watching the changes from the demo. Before you should run `npm run start:examples` to serve the demo examples
+-   `npm run e2e:debug` - similar to `e2e:watch`, but used for e2e debugging purposes. It allows `debugger`
     statements to be run.
+
+#### Updating the webdriver manager
+Please do not use the protractor for the latest development. It's here for the legacy support.
+Here the issue that blocking to update the driver
+https://github.com/angular/webdriver-manager/issues/517#issuecomment-1673232896
 
 #### Debugging e2e
 
 <details>
   <summary>Click to view instructions on debugging e2e tests</summary>
 
-`npm run e2e-debug` runs e2e tests using Protractor directly without the Angular e2e test wrapper (for
+`npm run e2e:debug` runs e2e tests using Protractor directly without the Angular e2e test wrapper (for
 some reason the Angular version doesn't respond to `debugger` statements). After you run
-`npm run e2e-debug`, the node process will indicate that it's waiting until the debugger is attached by
+`npm run e2e:debug`, the node process will indicate that it's waiting until the debugger is attached by
 showing a message in the console.
 
 After that go to `chrome://inspect/#devices` and open the corresponding inspector under the **`target`**

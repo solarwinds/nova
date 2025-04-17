@@ -53,6 +53,7 @@ describe("USERCONTROL Combobox v2 >", () => {
     describe("combobox V2 >", () => {
         describe("keyboard navigation", () => {
             beforeEach(async () => {
+                await comboboxError.waitElementVisible();
                 await Helpers.pressKey(Key.TAB);
             });
 

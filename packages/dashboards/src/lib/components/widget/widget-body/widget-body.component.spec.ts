@@ -22,12 +22,12 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { EventBus, IEvent } from "@nova-ui/bits";
 
+import { WidgetBodyComponent } from "./widget-body.component";
 import { NuiDashboardsModule } from "../../../dashboards.module";
 import { DynamicComponentCreator } from "../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
 import { DASHBOARD_EDIT_MODE } from "../../../services/types";
 import { IPizza, PIZZAGNA_EVENT_BUS } from "../../../types";
-import { WidgetBodyComponent } from "./widget-body.component";
 
 describe("WidgetBodyComponent", () => {
     let component: WidgetBodyComponent;

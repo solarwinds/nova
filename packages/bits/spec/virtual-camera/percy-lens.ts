@@ -28,6 +28,7 @@ import {
 } from "./types";
 
 export class PercyLens implements ILens {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     private percySnapshot = require("@percy/protractor");
     private percyConfig: PercyLensSnapshotOptions;
 

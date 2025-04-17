@@ -67,48 +67,46 @@
         <strong>Bottom axis label</strong>
     </div>
 </div>
-<nui-example-code language="html">{{ intro }}</nui-example-code>
+<nui-example-code language="html" [code]="intro" />
 <div class="d-flex align-items-center code-line px-3">
     <nui-switch [(value)]="hasLegend"></nui-switch>
-    <nui-example-code language="html" [ngClass]="{ 'turned-off': !hasLegend }">
-        {{ getCodeLine("legend", "Legend") }}
-    </nui-example-code>
+    <nui-example-code
+        language="html"
+        [ngClass]="{ 'turned-off': !hasLegend }"
+        [code]="getCodeLine('legend', 'Legend')"
+    />
 </div>
 <div class="d-flex align-items-center code-line px-3">
     <nui-switch [(value)]="hasLegendBottom"></nui-switch>
     <nui-example-code
         language="html"
         [ngClass]="{ 'turned-off': !hasLegendBottom }"
-    >
-        {{ getCodeLine("legend-bottom", "Bottom legend") }}
-    </nui-example-code>
+        [code]="getCodeLine('legend-bottom', 'Bottom legend')"
+    />
 </div>
 <div class="d-flex align-items-center code-line px-3">
     <nui-switch [(value)]="hasAxisLabelLeft"></nui-switch>
     <nui-example-code
         language="html"
         [ngClass]="{ 'turned-off': !hasAxisLabelLeft }"
-    >
-        {{ getCodeLine("axis-label-left", "Left axis label") }}
-    </nui-example-code>
+        [code]="getCodeLine('axis-label-left', 'Left axis label')"
+    />
 </div>
 <div class="d-flex align-items-center code-line px-3">
     <nui-switch [(value)]="hasAxisLabelRight"></nui-switch>
     <nui-example-code
         language="html"
         [ngClass]="{ 'turned-off': !hasAxisLabelRight }"
-    >
-        {{ getCodeLine("axis-label-right", "Right axis label") }}
-    </nui-example-code>
+        [code]="getCodeLine('axis-label-right', 'Right axis label')"
+    />
 </div>
 <div class="d-flex align-items-center code-line px-3">
     <nui-switch [(value)]="hasAxisLabelBottom"></nui-switch>
     <nui-example-code
         language="html"
         [ngClass]="{ 'turned-off': !hasAxisLabelBottom }"
-    >
-        {{ getCodeLine("axis-label-bottom", "Bottom axis label") }}
-    </nui-example-code>
+        [code]="getCodeLine('axis-label-bottom', 'Bottom axis label')"
+    />
 </div>
 <nui-example-code language="html">{{ outro }}</nui-example-code>
 

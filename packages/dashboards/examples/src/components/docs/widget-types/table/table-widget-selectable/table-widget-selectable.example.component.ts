@@ -21,6 +21,7 @@
 import { HttpClient } from "@angular/common/http";
 import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
+
 import { LoggerService, TableSelectionMode } from "@nova-ui/bits";
 import {
     DATA_SOURCE,

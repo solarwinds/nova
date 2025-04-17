@@ -1,5 +1,5 @@
 {
-    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "$schema": "/node_modules/@angular/cli/lib/config/schema.json",
     "cli": {
         "analytics": false
     },
@@ -8,39 +8,42 @@
         "examples": {
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
+                    "builder": "@angular-devkit/build-angular:application",
                     "configurations": {
                         "e2e": {
                             "aot": true,
-                            "buildOptimizer": true,
                             "extractLicenses": true,
                             "namedChunks": false,
                             "optimization": true,
                             "outputHashing": "all",
-                            "sourceMap": false,
-                            "vendorChunk": false
+                            "sourceMap": false
                         },
                         "production": {
                             "aot": true,
-                            "buildOptimizer": true,
                             "extractLicenses": true,
                             "namedChunks": false,
                             "optimization": true,
                             "outputHashing": "all",
-                            "sourceMap": false,
-                            "vendorChunk": false
+                            "sourceMap": false
                         }
                     },
                     "defaultConfiguration": "",
                     "options": {
-                        "buildOptimizer": false,
+                        "loader": {
+                            ".html": "text",
+                            ".less": "text"
+                        },
                         "extractLicenses": false,
                         "index": "./examples/src/index.html",
-                        "main": "./examples/src/index.ts",
+                        "browser": "./examples/src/index.ts",
                         "namedChunks": true,
                         "optimization": false,
-                        "outputPath": "./sdk/api-docs-ng2/examples",
-                        "polyfills": "./examples/src/polyfills.ts",
+                        "outputPath": {
+                            "base": "sdk/api-docs-ng2/examples",
+                            "browser": ""
+                        },
+                        "polyfills": ["./examples/src/polyfills.ts"],
+                        "allowedCommonJsDependencies": ["lodash"],
                         "preserveSymlinks": true,
                         "scripts": [],
                         "sourceMap": true,
@@ -48,8 +51,7 @@
                             "includePaths": ["node_modules"]
                         },
                         "styles": ["./examples/src/styles.less"],
-                        "tsConfig": "./examples/src/tsconfig.json",
-                        "vendorChunk": true
+                        "tsConfig": "./examples/src/tsconfig.json"
                     }
                 },
                 "lint": {
@@ -65,12 +67,12 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "e2e": {
-                            "browserTarget": "examples:build:e2e"
+                            "buildTarget": "examples:build:e2e"
                         },
                         "production": {}
                     },
                     "options": {
-                        "browserTarget": "examples:build"
+                        "buildTarget": "examples:build"
                     }
                 }
             },
@@ -160,7 +162,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "i18n:build",
+                        "buildTarget": "i18n:build",
                         "outputPath": "./.tmp"
                     }
                 },

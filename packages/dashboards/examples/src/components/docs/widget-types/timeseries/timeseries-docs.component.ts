@@ -18,17 +18,24 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+
+import { mapContentFile } from "../../../../demo-files-factory";
 
 @Component({
     selector: "nui-timeseries-docs",
     templateUrl: "./timeseries-docs.component.html",
 })
-export class TimeseriesDocsComponent {
-    public timeseriesWidgetFileText =
-        require("!!raw-loader!../../../../../../src/lib/widget-types/timeseries/timeseries-widget.ts")
-            .default;
-    public timeseriesConfiguratorFileText =
-        require("!!raw-loader!../../../../../../src/lib/widget-types/timeseries/timeseries-configurator.ts")
-            .default;
+export class TimeseriesDocsComponent implements OnInit {
+    public timeseriesWidgetFileText = "";
+    public timeseriesConfiguratorFileText = "";
+
+    async ngOnInit(): Promise<void> {
+        this.timeseriesWidgetFileText = await import(
+            "./../../../../../../src/lib/widget-types/timeseries/timeseries-widget"
+        ).then(mapContentFile);
+        this.timeseriesConfiguratorFileText = await import(
+            "./../../../../../../src/lib/widget-types/timeseries/timeseries-configurator"
+        ).then(mapContentFile);
+    }
 }

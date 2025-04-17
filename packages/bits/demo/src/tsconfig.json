@@ -5,9 +5,12 @@
         "paths": {
             "@nova-ui/bits": ["../../src/public_api.ts"]
         },
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true
     },
     "extends": "../../tsconfig.json",
+    "include": ["components"],
     "files": ["index.ts", "polyfills.ts"],
     "typeRoots": ["node_modules/@types"]
 }

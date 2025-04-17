@@ -35,13 +35,13 @@ import {
     WidgetTypesService,
 } from "@nova-ui/dashboards";
 
+import { positions, widgets } from "./widgets";
 import {
     TestKpiDataSource,
     TestKpiDataSource2,
     TestKpiDataSourceBigNumber,
     TestKpiDataSourceSmallNumber,
 } from "../../data/kpi-data-sources";
-import { positions, widgets } from "./widgets";
 
 /**
  * A component that instantiates the dashboard

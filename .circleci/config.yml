@@ -23,6 +23,8 @@ executors:
         machine:
             image: ubuntu-2204:2022.10.2
         working_directory: ~/nova
+        environment:
+          USE_CACHE: "true"
 
 jobs:
     prepare:
@@ -70,12 +72,12 @@ jobs:
                       - scripts
                       - .editorconfig
                       - .eslintignore
-                      - .eslintrc.json
+                      - .eslintrc.js
                       - .prettierignore
                       - .prettierrc.js
                       - .prettierrc.json
                       - docker-compose.yml
-                      - LICENSE
+                      - LICENSE.md
                       - package.json
                       - tsconfig.main.json
                       - yarn.lock
@@ -137,6 +139,7 @@ jobs:
                   path: packages/bits/test-results
     bits-e2e-test:
         executor: ubuntu
+        resource_class: medium+
         working_directory: ~/nova
         environment:
             PROJECT_DIR: ~/nova/packages/bits
@@ -148,11 +151,13 @@ jobs:
             - run:
                   name: Check git diff to see if builds should skip e2e
                   command: |
-                      if [ -f packages/bits/package-cached ]; then
+                      if [ -f packages/bits/package-cached ] && [ "$USE_CACHE" == "true" ]; then
                           echo "This package was restored from cache so we're skipping e2e tests"
                           circleci-agent step halt
                       fi
                       echo "not skiped"
+            - restore_cache:
+                key: bits-dist-{{ checksum "packages/bits/git-commit" }}
             - reuse-cache
             - run:
                   name: Start Selenium docker image
@@ -166,6 +171,7 @@ jobs:
     bits-a11y-test:
         executor: ubuntu
         working_directory: ~/nova
+        resource_class: medium+
         environment:
             PROJECT_DIR: ~/nova/packages/bits
         steps:
@@ -177,10 +183,12 @@ jobs:
                   name: Check git diff to see if builds should skip e2e
                   working_directory: ~/nova/packages/bits
                   command: |
-                      if [ -f $PROJECT_DIR/package-cached ]; then
+                      if [ -f packages/bits/package-cached ] && [ "$USE_CACHE" == "true" ]; then
                           echo "This package was restored from cache so we're skipping a11y tests"
                           circleci step halt
                       fi
+            - restore_cache:
+                key: bits-dist-{{ checksum "packages/bits/git-commit" }}
             - reuse-cache
             - run:
                   name: Start Selenium docker image
@@ -193,6 +201,7 @@ jobs:
                   command: docker-compose down -v --rmi=local
     bits-visual-test:
         executor: ubuntu
+        resource_class: medium+
         working_directory: ~/nova
         environment:
             PROJECT_DIR: ~/nova/packages/bits
@@ -205,13 +214,13 @@ jobs:
                   name: Check git diff to see if builds should skip e2e
                   working_directory: ~/nova/packages/bits
                   command: |
-                      if [ -f $PROJECT_DIR/package-cached ]; then
+                      if [ -f $PROJECT_DIR/package-cached ] && [ "$USE_CACHE" == "true" ]; then
                           echo "This package was restored from cache so we're skipping visual tests"
                           circleci step halt
                       fi
             - restore_cache:
-                  working_directory: ~/nova
-                  key: deps-{{ checksum "yarn.lock" }}
+                key: bits-dist-{{ checksum "packages/bits/git-commit" }}
+            - reuse-cache
             - run:
                   name: Start Selenium docker image
                   command: docker-compose up -d --build selenium
@@ -343,7 +352,7 @@ jobs:
                   name: Check git diff to see if builds should skip e2e
                   working_directory: ~/nova/packages/charts
                   command: |
-                      if [ -f $PROJECT_DIR/package-cached ]; then
+                      if [ -f $PROJECT_DIR/package-cached ] && [ "$USE_CACHE" == "true" ]; then
                           echo "This package was restored from cache so we're skipping visual tests"
                           circleci step halt
                       fi
@@ -371,7 +380,7 @@ jobs:
                   name: Check git diff to see if builds should skip e2e
                   working_directory: ~/nova/packages/charts
                   command: |
-                      if [ -f $PROJECT_DIR/package-cached ]; then
+                      if [ -f $PROJECT_DIR/package-cached ] && [ "$USE_CACHE" == "true" ]; then
                           echo "This package was restored from cache so we're skipping visual tests"
                           circleci step halt
                       fi
@@ -492,9 +501,9 @@ jobs:
                   command: yarn run test
             - store_test_results:
                   path: packages/dashboards/test-results
-
     dashboards-e2e-test:
         executor: ubuntu
+        resource_class: medium+
         working_directory: ~/nova
         environment:
             PROJECT_DIR: ~/nova/packages/dashboards
@@ -508,7 +517,7 @@ jobs:
                   name: Check git diff to see if builds should skip e2e
                   working_directory: ~/nova/packages/dashboards
                   command: |
-                      if [ -f package-cached ]; then
+                      if [ -f packages/dashboards/package-cached ] && [ "$USE_CACHE" == "true" ]; then
                           echo "This package was restored from cache so we're skipping e2e tests"
                           circleci step halt
                       fi
@@ -629,8 +638,8 @@ jobs:
         environment:
             SOURCE_BRANCH: main
             CREATE_RELEASE_BRANCH: "true"
-            RELEASE_BRANCH: release/v16.0.x
-            INCREMENT_TYPE: patch
+            RELEASE_BRANCH: release/v17.0.x
+            INCREMENT_TYPE: major
         steps:
             - add_ssh_keys
             - checkout:

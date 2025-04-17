@@ -18,20 +18,47 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { RouterTestingModule } from "@angular/router/testing";
+import { Component, NgZone } from "@angular/core";
+import {
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
+    waitForAsync,
+} from "@angular/core/testing";
+import { Router, RouterModule, Routes } from "@angular/router";
 
 import { ThemeSwitcherComponent } from "./theme-switcher.component";
 import { SwitchComponent } from "../../switch/switch.component";
 
+@Component({
+    template: "",
+})
+class FakeComponent {
+    constructor(private zone: NgZone, private router: Router) {}
+
+    public navigate(commands: any[]) {
+        this.zone.run(async () => this.router.navigate(commands));
+    }
+}
+
+const routes: Routes = [
+    {
+        path: "route/with/allowed/theme/switcher",
+        component: FakeComponent,
+        data: { showThemeSwitcher: true },
+    },
+];
+
 describe("ThemeSwitcherComponent", () => {
     let component: ThemeSwitcherComponent;
+    let fakeComponent: FakeComponent;
     let fixture: ComponentFixture<ThemeSwitcherComponent>;
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [SwitchComponent, ThemeSwitcherComponent],
-            imports: [RouterTestingModule],
+            imports: [RouterModule.forRoot(routes)],
         });
     }));
 
@@ -39,11 +66,20 @@ describe("ThemeSwitcherComponent", () => {
         fixture = TestBed.createComponent(ThemeSwitcherComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-    });
+        const fixtureFake = TestBed.createComponent(FakeComponent);
 
-    // afterEach(() => {
-    //     fixture.destroy();
-    // });
+        fakeComponent = fixtureFake.componentInstance;
+    });
+    beforeEach(fakeAsync(() => {
+        fakeComponent.navigate([
+            "route",
+            "with",
+            "allowed",
+            "theme",
+            "switcher",
+        ]);
+        tick();
+    }));
 
     it("should create", () => {
         expect(component).toBeTruthy();

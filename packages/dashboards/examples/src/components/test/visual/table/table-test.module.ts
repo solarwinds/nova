@@ -35,12 +35,12 @@ import {
     WidgetTypesService,
 } from "@nova-ui/dashboards";
 
+import { AcmeDashboardComponent } from "./table-widget-test.component";
 import { TestCommonModule } from "../../common/common.module";
 import {
     TestTableDataSource,
     TestTableDataSource2,
 } from "../../data/table-datasources";
-import { AcmeDashboardComponent } from "./table-widget-test.component";
 
 const routes = [
     {

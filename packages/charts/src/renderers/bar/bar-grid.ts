@@ -18,10 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { IBarChartConfig } from "./types";
 import { BarGridConfig } from "../../core/grid/config/bar-grid-config";
 import { BarHorizontalGridConfig } from "../../core/grid/config/bar-horizontal-grid-config";
 import { XYGrid } from "../../core/grid/xy-grid";
-import { IBarChartConfig } from "./types";
 
 /**
  * Creates an {@link XYGrid} with predefined {@link BarGridConfig} or

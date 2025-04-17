@@ -24,6 +24,7 @@ import values from "lodash/values";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
+import { IElementPosition } from "./types";
 import {
     INTERACTION_DATA_POINTS_EVENT,
     INTERACTION_DATA_POINT_EVENT,
@@ -35,7 +36,6 @@ import {
     IDataPointsPayload,
     InteractionType,
 } from "../common/types";
-import { IElementPosition } from "./types";
 
 /** Configuration for the popover plugin */
 export interface IPopoverPluginConfig {

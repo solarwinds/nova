@@ -31,8 +31,6 @@ import {
 import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { getDemoFiles } from "../../../../demo-files-factory";
-import { DemoCommonModule } from "../../common/demo-common.module";
 import { ChartDocsSparkComponent } from "./chart-docs-spark.component";
 import { SparkChartAreaMultipleExampleComponent } from "./spark-chart-area-multiple/spark-chart-area-multiple.example.component";
 import { SparkChartBasicExampleComponent } from "./spark-chart-basic/spark-chart-basic.example.component";
@@ -41,6 +39,8 @@ import { SparkChartMultipleExampleComponent } from "./spark-chart-multiple/spark
 import { AreaSparkMinimalTestComponent } from "./spark-chart-stroke-test/area-spark-minimal-test.component";
 import { SparkChartTableExampleComponent } from "./spark-chart-table/spark-chart-table.example.component";
 import { SparkChartTestComponent } from "./spark-chart-test/spark-chart-test.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
+import { DemoCommonModule } from "../../common/demo-common.module";
 
 const exampleRoutes: Routes = [
     {

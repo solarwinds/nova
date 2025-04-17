@@ -20,6 +20,7 @@
 
 import { ConnectedPosition } from "@angular/cdk/overlay";
 
+import { RadialTooltipsPlugin } from "./radial-tooltips-plugin";
 import {
     IRadialAccessors,
     RadialAccessors,
@@ -37,7 +38,6 @@ import {
 import { GridConfig } from "../../grid/config/grid-config";
 import { RadialGrid } from "../../grid/radial-grid";
 import { IGrid } from "../../grid/types";
-import { RadialTooltipsPlugin } from "./radial-tooltips-plugin";
 
 function createDataPoint(startAngle = 0, endAngle = 0): IDataPoint {
     return {

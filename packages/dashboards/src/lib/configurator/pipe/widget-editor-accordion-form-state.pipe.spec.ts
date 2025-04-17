@@ -22,8 +22,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { AccordionState } from "../../types";
 import { WidgetEditorAccordionFormStatePipe } from "./widget-editor-accordion-form-state.pipe";
+import { AccordionState } from "../../types";
 
 describe("WidgetEditorAccordionFormStatePipe > ", () => {
     let pipe: WidgetEditorAccordionFormStatePipe;

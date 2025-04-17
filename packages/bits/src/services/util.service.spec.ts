@@ -32,7 +32,7 @@ describe("services >", () => {
         };
 
         beforeEach(() => {
-            utilService = new UtilService(fakeDocument, "browser");
+            utilService = new UtilService(fakeDocument, "browser" as any);
         });
 
         describe("when sizeof() is called", () => {

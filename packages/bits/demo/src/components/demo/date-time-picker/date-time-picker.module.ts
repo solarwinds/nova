@@ -33,6 +33,7 @@ import {
     NuiSelectModule,
     NuiValidationMessageModule,
     SrlcStage,
+    NuiSelectV2Module,
 } from "@nova-ui/bits";
 
 import {
@@ -99,6 +100,7 @@ const routes = [
         NuiDocsModule,
         RouterModule.forChild(routes),
         NuiDialogModule,
+        NuiSelectV2Module,
     ],
     declarations: [
         DateTimePickerTestComponent,

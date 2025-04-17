@@ -23,11 +23,11 @@ import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 
 import { EventBus, IEvent } from "@nova-ui/bits";
 
+import { EDITOR_PIZZAGNA, TABLE_WIDGET_PREVIEW_PIZZAGNA } from "./mocks.spec";
+import { TableColumnsConverterService } from "./table-columns-converter.service";
 import { DynamicComponentCreator } from "../../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../../pizzagna/services/pizzagna.service";
 import { PreviewService } from "../../preview.service";
-import { EDITOR_PIZZAGNA, TABLE_WIDGET_PREVIEW_PIZZAGNA } from "./mocks";
-import { TableColumnsConverterService } from "./table-columns-converter.service";
 
 class MockComponent {
     public static lateLoadKey = "MockComponent";

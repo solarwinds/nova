@@ -21,9 +21,9 @@
 import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 
+import { IElementPosition } from "./types";
 import { RadialRenderer } from "../../renderers/radial/radial-renderer";
 import { ChartPlugin } from "../common/chart-plugin";
-import { IElementPosition } from "./types";
 
 /**
  * This plugin calculates new size and position for content inside donut chart

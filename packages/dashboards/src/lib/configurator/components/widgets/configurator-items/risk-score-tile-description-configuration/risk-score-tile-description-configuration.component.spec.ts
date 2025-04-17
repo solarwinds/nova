@@ -20,9 +20,9 @@
 
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
+import { RiskScoreTileDescriptionConfigurationComponent } from "./risk-score-tile-description-configuration.component";
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
-import { RiskScoreTileDescriptionConfigurationComponent } from "./risk-score-tile-description-configuration.component";
 
 describe("RiskScoreTileDescriptionConfigurationComponent", () => {
     let component: RiskScoreTileDescriptionConfigurationComponent;

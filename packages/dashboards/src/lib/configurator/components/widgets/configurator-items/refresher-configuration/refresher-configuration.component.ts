@@ -37,13 +37,13 @@ import { filter, takeUntil, tap } from "rxjs/operators";
 
 import { LoggerService } from "@nova-ui/bits";
 
-import { RefresherSettingsService } from "../../../../../components/providers/refresher-settings.service";
-import { IHasChangeDetector, IHasForm } from "../../../../../types";
 import { RefreshRateConfiguratorComponent } from "./refresh-rate-configurator/refresh-rate-configurator.component";
 import {
     TimeUnit,
     TIME_UNITS_SHORT,
 } from "./refresh-rate-configurator/time-units";
+import { RefresherSettingsService } from "../../../../../components/providers/refresher-settings.service";
+import { IHasChangeDetector, IHasForm } from "../../../../../types";
 
 @Component({
     selector: "nui-refresher-configuration",

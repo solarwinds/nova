@@ -27,11 +27,11 @@ import {
     SimpleChanges,
 } from "@angular/core";
 
+import { IWidget } from "./types";
 import { DEFAULT_PIZZAGNA_ROOT } from "../../services/types";
 import { WidgetConfigurationService } from "../../services/widget-configuration.service";
 import { WidgetTypesService } from "../../services/widget-types.service";
 import { IPizzagna } from "../../types";
-import { IWidget } from "./types";
 
 @Component({
     selector: "nui-widget",

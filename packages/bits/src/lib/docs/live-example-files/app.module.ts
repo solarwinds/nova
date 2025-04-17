@@ -141,10 +141,6 @@ export const APP_MODULE = (
             : getDefaultRoute(context, mainComponentName)
     })\n` +
     "    ],\n" +
-    "    providers: [\n" +
-    `        { provide: TRANSLATIONS_FORMAT, useValue: "xlf" },\n` +
-    `        { provide: TRANSLATIONS, useValue: "" }\n` +
-    "    ],\n" +
     "    bootstrap: [AppComponent]\n" +
     "})\n" +
     "export class AppModule {}\n";

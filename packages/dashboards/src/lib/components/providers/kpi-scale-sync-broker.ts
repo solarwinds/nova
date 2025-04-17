@@ -25,6 +25,7 @@ import { distinctUntilChanged, filter, takeUntil, tap } from "rxjs/operators";
 
 import { EventBus, IEvent } from "@nova-ui/bits";
 
+import { IBroker, IBrokerUserConfig, IBrokerValue } from "./types";
 import { IPizzagnaProperty } from "../../pizzagna/functions/get-pizzagna-property-path";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import {
@@ -33,7 +34,6 @@ import {
     PizzagnaLayer,
     PIZZAGNA_EVENT_BUS,
 } from "../../types";
-import { IBroker, IBrokerUserConfig, IBrokerValue } from "./types";
 
 @Injectable()
 export class KpiScaleSyncBroker implements IConfigurable {

@@ -18,6 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { SparkChartAssist } from "./spark-chart-assist";
+import { ISpark } from "./types";
 import {
     INTERACTION_DATA_POINTS_EVENT,
     MOUSE_ACTIVE_EVENT,
@@ -33,8 +35,6 @@ import { IChartEvent, IChartSeries, InteractionType } from "../common/types";
 import { UtilityService } from "../common/utility.service";
 import { XYGridConfig } from "../grid/config/xy-grid-config";
 import { InteractionLabelPlugin } from "../plugins/interaction/interaction-label-plugin";
-import { SparkChartAssist } from "./spark-chart-assist";
-import { ISpark } from "./types";
 
 describe("SparkChartAssist >", () => {
     let chartAssist: SparkChartAssist;

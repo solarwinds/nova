@@ -22,6 +22,8 @@ import defaultsDeep from "lodash/defaultsDeep";
 import { Subject } from "rxjs";
 
 import { STANDARD_RENDER_LAYERS } from "../constants";
+import { IRenderSeries, RenderLayerName } from "./types";
+import { XYRenderer } from "./xy-renderer";
 import { Scales } from "../core/common/scales/types";
 import {
     DataAccessor,
@@ -34,8 +36,6 @@ import {
     SeriesAccessor,
 } from "../core/common/types";
 import { GRAYSCALE_FILTER } from "../core/types";
-import { IRenderSeries, RenderLayerName } from "./types";
-import { XYRenderer } from "./xy-renderer";
 
 /** Interface for side indicator data accessors */
 export interface ISideIndicatorDataAccessors extends IDataAccessors {

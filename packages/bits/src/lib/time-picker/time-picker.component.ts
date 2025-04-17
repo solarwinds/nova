@@ -277,11 +277,11 @@ export class TimePickerComponent
         this.isInErrorState = !moment(value, this.timeFormat, true).isValid();
     }
 
-    registerOnChange(fn: (value: any) => {}): void {
+    registerOnChange(fn: (value: any) => void): void {
         this.onChange = fn;
     }
 
-    registerOnTouched(fn: () => {}): void {
+    registerOnTouched(fn: () => void): void {
         this.onTouched = fn;
     }
 

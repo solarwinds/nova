@@ -36,13 +36,13 @@ import {
     WidgetTypesService,
 } from "@nova-ui/dashboards";
 
+import { AcmeDashboardComponent } from "./proportional-widget-test.component";
 import { TestCommonModule } from "../../common/common.module";
 import {
     TestProportionalDataSource,
     TestProportionalDataSource2,
     TestProportionalDataSource3,
 } from "../../data/proportional-data-sources";
-import { AcmeDashboardComponent } from "./proportional-widget-test.component";
 
 const routes = [
     {

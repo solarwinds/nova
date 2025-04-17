@@ -38,7 +38,7 @@ export class DragdropExampleComponent {
         hear: "me shout",
     };
     public draggableList = ["item 1", "item2", "item3"];
-    public destObject: {};
+    public destObject: object;
 
     public onDrop(payload: any): void {
         this.destObject = payload;

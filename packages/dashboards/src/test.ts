@@ -22,11 +22,11 @@
 
 import "zone.js/testing"; // this file always has to be on top
 import { getTestBed } from "@angular/core/testing";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import {
     BrowserDynamicTestingModule,
     platformBrowserDynamicTesting,
 } from "@angular/platform-browser-dynamic/testing";
-import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 
 // First, initialize the Angular testing environment.
 getTestBed().initTestEnvironment(

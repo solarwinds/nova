@@ -20,14 +20,14 @@
 
 import { EventBus, IEvent } from "@nova-ui/bits";
 
+import { DynamicComponentCreator } from "./dynamic-component-creator.service";
+import { PizzagnaService } from "./pizzagna.service";
 import { ISetPropertyPayload, SET_PROPERTY_VALUE } from "../../services/types";
 import { IPizzagna, PizzagnaLayer } from "../../types";
 import {
     getPizzagnaPropertyPath,
     IPizzagnaProperty,
 } from "../functions/get-pizzagna-property-path";
-import { DynamicComponentCreator } from "./dynamic-component-creator.service";
-import { PizzagnaService } from "./pizzagna.service";
 
 describe("PizzagnaService > ", () => {
     let service: PizzagnaService;

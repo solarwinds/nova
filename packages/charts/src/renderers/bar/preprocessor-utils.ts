@@ -20,8 +20,8 @@
 
 import unionBy from "lodash/unionBy";
 
-import { IChartSeries } from "../../core/common/types";
 import { IBarAccessors } from "./accessors/bar-accessors";
+import { IChartSeries } from "../../core/common/types";
 
 /** @ignore */
 export function gatherCategories(

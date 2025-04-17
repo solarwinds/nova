@@ -18,17 +18,23 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { mapContentFile } from "../../../../demo-files-factory";
 
 @Component({
     selector: "nui-kpi-docs",
     templateUrl: "./kpi-docs.component.html",
 })
-export class KpiDocsComponent {
-    public kpiWidgetFileText =
-        require("!!raw-loader!../../../../../../src/lib/widget-types/kpi/kpi-widget.ts")
-            .default;
-    public kpiConfiguratorFileText =
-        require("!!raw-loader!../../../../../../src/lib/widget-types/kpi/kpi-configurator.ts")
-            .default;
+export class KpiDocsComponent implements OnInit {
+    public kpiWidgetFileText = "";
+    public kpiConfiguratorFileText = "";
+
+    public async ngOnInit(): Promise<void> {
+        this.kpiWidgetFileText = await import(
+            "./../../../../../../src/lib/widget-types/kpi/kpi-widget"
+        ).then(mapContentFile);
+        this.kpiConfiguratorFileText = await import(
+            "./../../../../../../src/lib/widget-types/kpi/kpi-configurator"
+        ).then(mapContentFile);
+    }
 }

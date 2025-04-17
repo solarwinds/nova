@@ -35,17 +35,17 @@ import {
 import { IDataSourceOutput } from "@nova-ui/dashboards";
 
 import {
-    IRandomUserResponse,
-    IRandomUserResults,
-    IRandomUserTableModel,
-    UsersQueryResponse,
-} from "../../../types";
-import {
     apiRoute,
     corsProxy,
     RANDOMUSER_API_URL,
     responseError,
 } from "./constants";
+import {
+    IRandomUserResponse,
+    IRandomUserResults,
+    IRandomUserTableModel,
+    UsersQueryResponse,
+} from "../../../types";
 
 @Injectable()
 export class AcmeTableDataSource2 extends DataSourceService<IRandomUserTableModel> {

@@ -51,8 +51,7 @@ export interface IPreviewEventPayload {
 export interface IRegistryAddOptions {
     overrideExisting: boolean;
 }
-export interface IAddFormattersOptions
-    extends Pick<IRegistryAddOptions, "overrideExisting"> {}
+export type IAddFormattersOptions = Pick<IRegistryAddOptions, "overrideExisting">;
 
 export interface IRemoveMetricPayload {
     metricId: string;

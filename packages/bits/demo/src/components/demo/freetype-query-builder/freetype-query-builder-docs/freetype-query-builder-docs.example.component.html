@@ -42,9 +42,7 @@
         your custom logic to tokenize the user input. It takes a query string as
         input and should return an array of Token objects which should extend
         QueryToken interface.
-        <nui-example-code language="typescript">{{
-            tokenizerExample
-        }}</nui-example-code>
+        <nui-example-code language="typescript" [code]="tokenizerExample" />
     </li>
     <li>
         Create a renderer object that implements the
@@ -70,9 +68,7 @@
                 should be focused.
             </li>
         </ul>
-        <nui-example-code language="typescript">{{
-            rendererExample
-        }}</nui-example-code>
+        <nui-example-code language="typescript" [code]="rendererExample" />
     </li>
     <li>
         Optionally you can create a help entry array of type

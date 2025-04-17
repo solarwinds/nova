@@ -20,15 +20,22 @@
 
 import { Component } from "@angular/core";
 
+import { mapContentFile } from "../../../../demo-files-factory";
+
 @Component({
     selector: "nui-risk-score-docs",
     templateUrl: "./risk-score-docs.component.html",
 })
 export class RiskScoreDocsComponent {
-    public riskScoreWidgetFileText =
-        require("!!raw-loader!../../../../../../src/lib/widget-types/risk-score/risk-score-widget.ts")
-            .default;
-    public riskScoreConfiguratorFileText =
-        require("!!raw-loader!../../../../../../src/lib/widget-types/risk-score/risk-score-configurator.ts")
-            .default;
+    public riskScoreWidgetFileText = "";
+    public riskScoreConfiguratorFileText = "";
+
+    public async ngOnInit(): Promise<void> {
+        this.riskScoreWidgetFileText = await import(
+            "./../../../../../../src/lib/widget-types/risk-score/risk-score-widget"
+        ).then(mapContentFile);
+        this.riskScoreConfiguratorFileText = await import(
+            "./../../../../../../src/lib/widget-types/risk-score/risk-score-configurator"
+        ).then(mapContentFile);
+    }
 }

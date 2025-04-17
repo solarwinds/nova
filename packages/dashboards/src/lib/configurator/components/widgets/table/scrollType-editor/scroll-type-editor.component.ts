@@ -41,13 +41,13 @@ import get from "lodash/get";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
+import { ScrollTypeEditorService } from "./scroll-type-editor.service";
 import {
     ITableWidgetPaginatorConfig,
     ScrollType,
 } from "../../../../../components/table-widget/types";
 import { IHasChangeDetector, IHasForm } from "../../../../../types";
 import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
-import { ScrollTypeEditorService } from "./scroll-type-editor.service";
 
 export interface IPageSizeSetMenuOption {
     value: number;
@@ -227,7 +227,7 @@ export class TableScrollTypeEditorComponent
     }
 
     private emitUpdatedSelectedOptions() {
-        let filteredPageSizeSet = this.pageSizeSetOptions
+        const filteredPageSizeSet = this.pageSizeSetOptions
             .filter((o) => o.checked)
             .map((o) => o.value);
 

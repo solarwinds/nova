@@ -71,7 +71,7 @@ export class ToolbarAtom extends Atom {
     }
 
     public async getToolbarMessagesTexts(): Promise<string[]> {
-        return await this.getToolbarMessages().map<string>((el) =>
+        return await this.getToolbarMessages().map<string>(async (el) =>
             el?.getText()
         );
     }

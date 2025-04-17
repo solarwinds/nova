@@ -24,8 +24,8 @@ import { RouterModule, Routes } from "@angular/router";
 import { NuiDividerModule } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { DemoCommonModule } from "../../common/demo-common.module";
 import { StackedBarPrototypeComponent } from "./stacked-bar/stacked-bar-prototype.component";
+import { DemoCommonModule } from "../../common/demo-common.module";
 
 const routes: Routes = [
     {

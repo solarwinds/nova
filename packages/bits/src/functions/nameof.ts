@@ -24,7 +24,7 @@
 USAGE EXAMPLE
     console.log(nameof<Interface>("prop")); // "prop"
 */
-export function nameof<T extends Object>(
+export function nameof<T extends object>(
     prop: Extract<keyof T, string>
 ): string {
     return prop;

@@ -38,6 +38,7 @@ import {
     XYGrid,
 } from "@nova-ui/charts";
 
+import { XYChartComponent } from "./xy-chart.component";
 import { NuiDashboardsModule } from "../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../services/provider-registry.service";
 import {
@@ -56,7 +57,6 @@ import {
     TimeseriesInteractionType,
     TimeseriesTransformer,
 } from "../../types";
-import { XYChartComponent } from "./xy-chart.component";
 
 @Component({
     selector: "test-component",

@@ -7,7 +7,7 @@
             Use the following command to generate a
             {{ schematicHeading | titlecase }}:
             <code
-                >ng g @nova-ui/bits:{{
+                >ng g &#64;nova-ui/bits:{{
                     schematicFolderName
                 }}
                 --name=%name_of_component%
@@ -17,14 +17,12 @@
         <p>
             The schematic generates styles with a reference to files that are
             stored in
-            <code>node_modules/@nova-ui/bits/sdk/less</code>. You can provide
+            <code>node_modules/&#64;nova-ui/bits/sdk/less</code>. You can provide
             this path in your project's <code>angular.json</code> to make these
             references work:
         </p>
         <p>
-            <nui-example-code>
-                {{ angularJsonStylePreprocOptions }}
-            </nui-example-code>
+            <nui-example-code [code]="angularJsonStylePreprocOptions" />
         </p>
         <nui-schematic-json
             [schematicFolderName]="schematicFolderName"

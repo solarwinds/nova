@@ -23,12 +23,12 @@ import { Subscriber } from "rxjs";
 
 import { EventBus } from "@nova-ui/bits";
 
+import { WidgetConfiguratorSectionCoordinatorService } from "./widget-configurator-section-coordinator.service";
 import { NuiDashboardsModule } from "../../../dashboards.module";
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
 import { ProviderRegistryService } from "../../../services/provider-registry.service";
 import { PIZZAGNA_EVENT_BUS } from "../../../types";
 import { WidgetEditorAccordionComponent } from "../widget-editor-accordion/widget-editor-accordion.component";
-import { WidgetConfiguratorSectionCoordinatorService } from "./widget-configurator-section-coordinator.service";
 
 describe("WidgetConfiguratorSectionCoordinatorService", () => {
     let service: WidgetConfiguratorSectionCoordinatorService;

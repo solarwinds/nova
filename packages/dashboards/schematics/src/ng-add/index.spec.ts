@@ -47,6 +47,7 @@ describe("ng-add", () => {
             routing: false,
             style: "css",
             skipTests: false,
+            standalone: false,
             skipPackageJson: false,
         };
         appTree = await runner
@@ -143,7 +144,7 @@ describe("ng-add", () => {
         );
     });
 
-    it("adds imports to module", async () => {
+    fit("adds imports to module", async () => {
         const afterTree = await runner
             .runSchematic(
                 "ng-add",

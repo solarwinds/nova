@@ -22,13 +22,14 @@ import { fakeAsync, tick } from "@angular/core/testing";
 import { FormBuilder, FormGroup } from "@angular/forms";
 
 import { EventBus, IEvent } from "@nova-ui/bits";
+import { ScrollType } from "@nova-ui/dashboards";
 
+import { EDITOR_PIZZAGNA, TABLE_WIDGET_PREVIEW_PIZZAGNA } from "./mocks.spec";
+import { TableScrollTypeConverterService } from "./table-scroll-type-converter.service";
 import { DynamicComponentCreator } from "../../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../../pizzagna/services/pizzagna.service";
 import { PreviewService } from "../../preview.service";
-import { EDITOR_PIZZAGNA, TABLE_WIDGET_PREVIEW_PIZZAGNA } from "./mocks";
-import { TableScrollTypeConverterService } from "./table-scroll-type-converter.service";
-import { ScrollType } from "@nova-ui/dashboards";
+
 
 class MockComponent {
     public static lateLoadKey = "MockComponent";

@@ -23,8 +23,8 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { NuiPopoverModule, PopoverComponent } from "@nova-ui/bits";
 
-import { ChartPopoverPlugin } from "../core/plugins/chart-popover-plugin";
 import { ChartPopoverComponent } from "./chart-popover.component";
+import { ChartPopoverPlugin } from "../core/plugins/chart-popover-plugin";
 
 describe("ChartPopoverComponent", () => {
     let component: ChartPopoverComponent;

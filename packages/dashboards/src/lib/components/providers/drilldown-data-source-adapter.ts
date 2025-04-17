@@ -28,6 +28,11 @@ import {
     IFilteringOutputs,
 } from "@nova-ui/bits";
 
+import { DataSourceAdapter } from "./data-source-adapter";
+import {
+    IDrilldownComponentConfiguration,
+    IDrilldownComponentsConfiguration,
+} from "./types";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { DRILLDOWN, REFRESH } from "../../services/types";
 import {
@@ -36,11 +41,6 @@ import {
     PizzagnaLayer,
     PIZZAGNA_EVENT_BUS,
 } from "../../types";
-import { DataSourceAdapter } from "./data-source-adapter";
-import {
-    IDrilldownComponentConfiguration,
-    IDrilldownComponentsConfiguration,
-} from "./types";
 
 export class DrilldownDataSourceAdapter extends DataSourceAdapter {
     protected dataPath: string;

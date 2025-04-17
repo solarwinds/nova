@@ -18,7 +18,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser, by, ElementArrayFinder, Key, WebElement } from "protractor";
+import {
+    browser,
+    by,
+    ElementArrayFinder,
+    Key,
+    protractor,
+    WebElement,
+} from "protractor";
 
 import { ComboboxAtom } from "./combobox.atom";
 import { Atom } from "../../atom";
@@ -310,6 +317,7 @@ describe("USERCONTROL Combobox >", () => {
                 const submitButton = browser.element(
                     by.css(`button[type='submit']`)
                 );
+                await Helpers.waitElementVisible(submitButton);
                 await submitButton.click();
                 expect(
                     await reactiveFormCombobox.isRequiredStyleDisplayed()
@@ -323,6 +331,7 @@ describe("USERCONTROL Combobox >", () => {
                 const submitButton = browser.element(
                     by.css(`button[type = 'submit']`)
                 );
+                await Helpers.waitElementVisible(submitButton);
                 await submitButton.click();
                 await reactiveFormCombobox.toggleMenu();
                 expect(
@@ -343,6 +352,7 @@ describe("USERCONTROL Combobox >", () => {
                 const submitButton = browser.element(
                     by.css(`button[type = 'submit']`)
                 );
+                await Helpers.waitElementVisible(submitButton);
                 await submitButton.click();
                 expect(
                     await reactiveFormCombobox.isRequiredStyleDisplayed()
@@ -358,6 +368,7 @@ describe("USERCONTROL Combobox >", () => {
         describe("typeahead >", () => {
             // Will be enabled in scope of NUI-2357
             xit("should re-render dropdown for combobox with a plain list of items", async () => {
+                await comboboxTypeahead.waitElementVisible();
                 await comboboxTypeahead.toggleMenu();
                 expect(await comboboxTypeahead.getItemsCount()).toEqual(9);
                 await comboboxTypeahead.acceptInput("Item 1");
@@ -365,6 +376,7 @@ describe("USERCONTROL Combobox >", () => {
             });
 
             it("should re-render dropdown for combobox with groups", async () => {
+                await comboboxSeparators.waitElementVisible();
                 await comboboxSeparators.toggleMenu();
                 expect(await comboboxSeparators.getItemsCount()).toEqual(9);
                 await comboboxSeparators.acceptText("Item 1");
@@ -374,6 +386,7 @@ describe("USERCONTROL Combobox >", () => {
 
         describe("highlight >", () => {
             it("should highlight appropriate items in dropdown for combobox with a plain list of items", async () => {
+                await comboboxBasic.waitElementVisible();
                 await comboboxBasic.toggleMenu();
                 await comboboxBasic.acceptInput("Item");
                 expect(await comboboxBasic.getHighlightedItemsCount()).toEqual(
@@ -387,6 +400,7 @@ describe("USERCONTROL Combobox >", () => {
             });
 
             it("should highlight appropriate items in dropdown for combobox with groups", async () => {
+                await comboboxSeparators.waitElementVisible();
                 await comboboxSeparators.toggleMenu();
                 await comboboxSeparators.acceptInput("Item");
                 expect(
@@ -402,6 +416,7 @@ describe("USERCONTROL Combobox >", () => {
 
         describe("typeahead, displayValue, clearOnBlur >", () => {
             it("should not clear value after it's selected after dropdown", async () => {
+                await comboboxTypeahead.waitElementVisible();
                 await comboboxTypeahead.select("Item 111");
                 await comboboxTypeahead.toggleMenu();
                 expect(await comboboxTypeahead.getItemsCount()).toEqual(2);
@@ -411,6 +426,7 @@ describe("USERCONTROL Combobox >", () => {
             });
 
             it("should clear value if it's not in source array and re-render dropdown", async () => {
+                await comboboxTypeahead.waitElementVisible();
                 await comboboxTypeahead.acceptInput("Not in a source array");
                 await comboboxWithDisplayValue.toggleMenu();
                 expect(
@@ -423,6 +439,7 @@ describe("USERCONTROL Combobox >", () => {
 
         describe("with HTML-like strings, passed in source array", () => {
             it("should display HTML-like strings as strings and should not render them as DOM elements", async () => {
+                await comboboxHTMLItems.waitElementVisible();
                 await comboboxHTMLItems.toggleMenu();
                 expect(await comboboxHTMLItems.getItemText(1)).toEqual(
                     "<button>Button 1</button>"
@@ -436,6 +453,10 @@ describe("USERCONTROL Combobox >", () => {
         });
 
         describe("focus >", () => {
+            beforeEach(async () => {
+                await comboboxBasic.waitElementVisible();
+            });
+
             it("should be focused via keyboard", async () => {
                 await browser.actions().sendKeys(Key.TAB).perform();
                 const inputClass = await comboboxBasic
@@ -470,6 +491,10 @@ describe("USERCONTROL Combobox >", () => {
         });
 
         describe("custom template >", () => {
+            beforeEach(async () => {
+                await comboboxWithTemplate.waitElementVisible();
+            });
+
             it("applies the correct template", async () => {
                 await comboboxWithTemplate.toggleMenu();
                 const getItemsWithNestedClass = (): ElementArrayFinder =>
@@ -506,6 +531,9 @@ describe("USERCONTROL Combobox >", () => {
         });
 
         describe("removeValueButton >", () => {
+            beforeEach(() => {
+                comboboxRemoveValueButton.waitElementVisible();
+            });
             it("should display removeValue button when text is typed", async () => {
                 expect(
                     await comboboxRemoveValueButton.clearButton.isPresent()

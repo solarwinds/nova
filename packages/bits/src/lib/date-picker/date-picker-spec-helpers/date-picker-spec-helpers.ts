@@ -35,7 +35,7 @@ export class DatePickerSpecHelpers {
 
             "10.01.1988",
             "4.12.2000",
-            "01.2.88",
+            "01.02.88",
             "7.10.99",
 
             "10 1 1988",
@@ -67,6 +67,7 @@ export class DatePickerSpecHelpers {
             "abcdefg",
             "112233",
             "!@#$%^&*()_+",
+            "01.2.88",
 
             "10.01.1988 AD",
             "2019",

@@ -25,10 +25,10 @@ import { RouterModule, Routes } from "@angular/router";
 import { NuiIconModule } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { DemoCommonModule } from "../../common/demo-common.module";
 import { ChartStatusTestComponent } from "./status-test/chart-status-test.component";
 import { ChartWaterfallSimpleComponent } from "./waterfall-simple/chart-waterfall-simple.component";
 import { ChartWaterfallTestComponent } from "./waterfall-test/chart-waterfall-test.component";
+import { DemoCommonModule } from "../../common/demo-common.module";
 
 const collectionRoutes: Routes = [
     {

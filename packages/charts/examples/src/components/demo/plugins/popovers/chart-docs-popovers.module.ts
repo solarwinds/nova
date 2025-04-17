@@ -30,12 +30,12 @@ import {
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { DemoCommonModule } from "../../common/demo-common.module";
 import { BarChartWithPopoverExampleComponent } from "./bar-chart/bar-chart-with-popover.example.component";
 import { ChartDocsPopoversComponent } from "./chart-docs-popovers.component";
 import { DonutChartWithPopoverExampleComponent } from "./donut-chart/donut-chart-with-popover.example.component";
 import { LineChartWithPopoverExampleComponent } from "./line-chart/line-chart-with-popover.example.component";
 import { PopoverVisualTestComponent } from "./popover-visual-test/popover-visual-test.component";
+import { DemoCommonModule } from "../../common/demo-common.module";
 
 const exampleRoutes: Routes = [
     {

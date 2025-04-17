@@ -25,7 +25,6 @@ import {
 } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
-import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
 import set from "lodash/set";
 import { Subject } from "rxjs";
 
@@ -39,9 +38,10 @@ import {
     NuiSpinnerModule,
 } from "@nova-ui/bits";
 
+import { WidgetEditorComponent } from "./widget-editor.component";
 import { TemplateLoadErrorComponent } from "../../../components/template-load-error/template-load-error.component";
 import { IWidget } from "../../../components/widget/types";
-import { mockLoggerService } from "../../../mocks";
+import { mockLoggerService } from "../../../mocks.spec";
 import { NuiPizzagnaModule } from "../../../pizzagna/pizzagna.module";
 import { ProviderRegistryService } from "../../../services/provider-registry.service";
 import { PizzagnaLayer } from "../../../types";
@@ -49,10 +49,9 @@ import { PreviewService } from "../../services/preview.service";
 import { ConfiguratorHeadingService } from "../../services/public-api";
 import { ConfiguratorComponent } from "../configurator/configurator.component";
 import { ConfiguratorHeadingComponent } from "../heading/configurator-heading.component";
-import { DashwizStepComponent } from "../wizard/dashwiz-step/dashwiz-step.component";
 import { DashwizButtonsComponent } from "../wizard/dashwiz/dashwiz-buttons.component";
 import { DashwizComponent } from "../wizard/dashwiz/dashwiz.component";
-import { WidgetEditorComponent } from "./widget-editor.component";
+import { DashwizStepComponent } from "../wizard/dashwiz-step/dashwiz-step.component";
 
 class MockConfiguratorComponent {
     public submitError = new Subject<void>();

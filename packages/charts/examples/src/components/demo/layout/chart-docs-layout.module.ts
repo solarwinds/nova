@@ -23,8 +23,8 @@ import { RouterModule, Routes } from "@angular/router";
 
 import { NuiDocsModule, NuiSwitchModule, SrlcStage } from "@nova-ui/bits";
 
-import { DemoCommonModule } from "../common/demo-common.module";
 import { ChartDocsLayoutComponent } from "./chart-docs-layout.component";
+import { DemoCommonModule } from "../common/demo-common.module";
 
 const exampleRoutes: Routes = [
     {

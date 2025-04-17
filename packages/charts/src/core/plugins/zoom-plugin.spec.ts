@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { ZoomPlugin } from "./zoom-plugin";
 import {
     INTERACTION_COORDINATES_EVENT,
     INTERACTION_VALUES_ACTIVE_EVENT,
@@ -31,7 +32,6 @@ import { IAccessors, IChartSeries, InteractionType } from "../common/types";
 import { XYGridConfig } from "../grid/config/xy-grid-config";
 import { Grid } from "../grid/grid";
 import { XYGrid } from "../grid/xy-grid";
-import { ZoomPlugin } from "./zoom-plugin";
 
 describe("ZoomPlugin >", () => {
     let plugin: ZoomPlugin;

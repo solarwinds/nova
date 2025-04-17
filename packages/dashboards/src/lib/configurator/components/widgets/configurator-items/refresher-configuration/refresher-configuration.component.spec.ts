@@ -31,12 +31,12 @@ import {
     NuiValidationMessageModule,
 } from "@nova-ui/bits";
 
+import { RefreshRateConfiguratorComponent } from "./refresh-rate-configurator/refresh-rate-configurator.component";
+import { RefresherConfigurationComponent } from "./refresher-configuration.component";
 import { WidgetEditorAccordionFormStatePipe } from "../../../../pipe/widget-editor-accordion-form-state.pipe";
 import { FormHeaderIconPipePipe } from "../../../../pipe/widget-editor-accordion-header-icon.pipe";
 import { WidgetConfiguratorSectionCoordinatorService } from "../../../widget-configurator-section/widget-configurator-section-coordinator.service";
 import { WidgetEditorAccordionComponent } from "../../../widget-editor-accordion/widget-editor-accordion.component";
-import { RefreshRateConfiguratorComponent } from "./refresh-rate-configurator/refresh-rate-configurator.component";
-import { RefresherConfigurationComponent } from "./refresher-configuration.component";
 
 describe("RefresherConfigurationComponent", () => {
     let component: RefresherConfigurationComponent;

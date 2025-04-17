@@ -61,7 +61,6 @@ import { TitleAndDescriptionConverterService } from "../configurator/services/co
 import { TableColumnsConverterService } from "../configurator/services/converters/table/table-columns-converter.service";
 import { TableFiltersConverterService } from "../configurator/services/converters/table/table-filters-converter.service";
 import { TableScrollTypeConverterService } from "../configurator/services/converters/table/table-scroll-type-converter.service";
-
 import { TimeseriesMetadataConverterService } from "../configurator/services/converters/timeseries/timeseries-metadata-converter.service";
 import { TimeseriesSeriesConverterService } from "../configurator/services/converters/timeseries/timeseries-series-converter.service";
 import { TimeseriesTileIndicatorDataConverterService } from "../configurator/services/converters/timeseries/timeseries-tile-indicator-data-converter.service";

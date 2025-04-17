@@ -20,6 +20,8 @@
 
 import { arc, Arc, DefaultArcObject } from "d3-shape";
 
+import { GAUGE_LABELS_CONTAINER_CLASS } from "./constants";
+import { DonutGaugeLabelsPlugin } from "./donut-gauge-labels-plugin";
 import {
     DATA_POINT_NOT_FOUND,
     INTERACTION_DATA_POINTS_EVENT,
@@ -36,8 +38,6 @@ import {
     IAccessors,
     IChartAssistSeries,
 } from "../../common/types";
-import { GAUGE_LABELS_CONTAINER_CLASS } from "./constants";
-import { DonutGaugeLabelsPlugin } from "./donut-gauge-labels-plugin";
 
 describe("DonutGaugeLabelsPlugin >", () => {
     let chart: Chart;

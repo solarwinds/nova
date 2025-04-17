@@ -29,8 +29,8 @@ import {
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { DemoCommonModule } from "../../common/demo-common.module";
 import { PieChartTestComponent } from "./pie-chart-test/pie-chart.example.component";
+import { DemoCommonModule } from "../../common/demo-common.module";
 
 const bubbleRoutes: Routes = [
     {

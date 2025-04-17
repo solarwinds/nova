@@ -102,7 +102,7 @@ export class OverlayService implements OnDestroy {
     }
 
     public updateSize(size: OverlaySizeConfig): void {
-        this.overlayRef.updateSize(size);
+        this.overlayRef?.updateSize(size);
     }
 
     public ngOnDestroy(): void {

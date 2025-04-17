@@ -32,9 +32,9 @@ import {
 } from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
-import { getDemoFiles } from "../../../../demo-files-factory";
 import { WidgetEditorDocsComponent } from "./widget-editor-setup-docs.component";
 import { WidgetEditorSetupComponent } from "./widget-editor-setup.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
 
 const routes = [
     {

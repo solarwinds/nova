@@ -32,10 +32,10 @@ import {
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { getDemoFiles } from "../../../../demo-files-factory";
 import { ChartDocsEventsComponent } from "./chart-docs-events.component";
 import { EventSamplerComponent } from "./event-sampler/event-sampler.component";
 import { EventsBasicExampleComponent } from "./events-basic/events-basic-example.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
 
 const exampleRoutes: Routes = [
     {

@@ -18,10 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { IBarChartConfig } from "./types";
 import { BandScale } from "../../core/common/scales/band-scale";
 import { LinearScale } from "../../core/common/scales/linear-scale";
 import { IXYScales } from "../../core/common/scales/types";
-import { IBarChartConfig } from "./types";
 
 /**
  * Generates scales definition to be used with category+value based bar charts

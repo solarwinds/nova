@@ -18,12 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { DimensionConfig } from "./dimension-config";
+import { XYGridConfig } from "./xy-grid-config";
 import {
     GaugeMode,
     StandardLinearGaugeThickness,
 } from "../../../gauge/constants";
-import { DimensionConfig } from "./dimension-config";
-import { XYGridConfig } from "./xy-grid-config";
 
 /**
  * Assembles a linear-gauge-specific grid configuration

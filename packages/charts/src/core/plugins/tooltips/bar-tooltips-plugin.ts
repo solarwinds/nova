@@ -18,8 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { IBarChartConfig } from "../../../renderers/bar/types";
 import { ChartTooltipsPlugin } from "./chart-tooltips-plugin";
+import { IBarChartConfig } from "../../../renderers/bar/types";
 
 export class BarTooltipsPlugin extends ChartTooltipsPlugin {
     constructor(config?: IBarChartConfig) {

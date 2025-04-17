@@ -108,7 +108,7 @@
             </form>
         </ng-template>
     </section>
-    <table nui-table [dataSource]="dataSource">
+    <table nui-table [dataSource]="dataSource" id="nui-demo-custom-table-actions">
         <ng-container
             *ngFor="let column of displayedColumns"
             nuiColumnDef="{{ column }}"

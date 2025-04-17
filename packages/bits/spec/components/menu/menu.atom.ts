@@ -84,13 +84,13 @@ export class MenuAtom extends Atom {
 
     public getItemTextArray = async (): Promise<string[]> =>
         await this.getItemElements().map<string>(
-            (elementFinder: ElementFinder | undefined) =>
+            async (elementFinder: ElementFinder | undefined) =>
                 elementFinder?.getText()
         );
 
     public getHeaderTextArray = async (): Promise<string[]> =>
         await this.getHeaderElements().map<string>(
-            (elementFinder: ElementFinder | undefined) =>
+            async (elementFinder: ElementFinder | undefined) =>
                 elementFinder?.getText()
         );
 

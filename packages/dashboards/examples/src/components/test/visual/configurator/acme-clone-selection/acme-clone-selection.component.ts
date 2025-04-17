@@ -53,7 +53,6 @@ export class AcmeCloneSelectionComponent
         const titleCasePipe = new TitleCasePipe();
 
         this.widgetItems = widgets.map((w) => {
-            console.log(w);
             const typeDisplay = titleCasePipe.transform(w.type);
             return {
                 title: typeDisplay,

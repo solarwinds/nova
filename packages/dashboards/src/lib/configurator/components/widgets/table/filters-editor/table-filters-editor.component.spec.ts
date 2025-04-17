@@ -24,12 +24,12 @@ import { FormBuilder } from "@angular/forms";
 
 import { EventBus } from "@nova-ui/bits";
 
+import { TableFiltersEditorComponent } from "./table-filters-editor.component";
 import { IFormatter } from "../../../../../components/types";
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { DynamicComponentCreator } from "../../../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
 import { PIZZAGNA_EVENT_BUS } from "../../../../../types";
-import { TableFiltersEditorComponent } from "./table-filters-editor.component";
 
 describe("TableFiltersEditorComponent", () => {
     let component: TableFiltersEditorComponent;

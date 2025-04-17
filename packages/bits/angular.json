@@ -8,16 +8,14 @@
         "demo": {
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
+                    "builder": "@angular-devkit/build-angular:application",
                     "configurations": {
                         "dev": {
-                            "buildOptimizer": false,
                             "namedChunks": true,
                             "optimization": false,
                             "sourceMap": true
                         },
                         "e2e": {
-                            "buildOptimizer": true,
                             "extractLicenses": true,
                             "fileReplacements": [
                                 {
@@ -28,15 +26,15 @@
                             "namedChunks": false,
                             "optimization": true,
                             "outputHashing": "all",
-                            "sourceMap": false,
-                            "vendorChunk": false
+                            "sourceMap": false
                         },
                         "i18n": {
-                            "localize": ["en-us"]
+                            "localize": [
+                                "en-us"
+                            ]
                         },
                         "production": {
                             "budgets": [],
-                            "buildOptimizer": true,
                             "extractLicenses": true,
                             "i18nMissingTranslation": "warning",
                             "namedChunks": false,
@@ -47,19 +45,32 @@
                     },
                     "defaultConfiguration": "",
                     "options": {
-                        "allowedCommonJsDependencies": ["lodash"],
-                        "buildOptimizer": false,
+                        "loader": {
+                            ".html": "text",
+                            ".less": "text"
+                        },
+                        "allowedCommonJsDependencies": [
+                            "lodash",
+                            "moment/moment"
+                        ],
                         "extractLicenses": false,
                         "index": "./demo/src/index.html",
-                        "main": "./demo/src/index.ts",
+                        "browser": "./demo/src/index.ts",
                         "namedChunks": true,
                         "optimization": false,
-                        "outputPath": "./sdk/api-docs-ng2/examples",
-                        "polyfills": "./demo/src/polyfills.ts",
+                        "outputPath": {
+                            "base": "sdk/api-docs-ng2/examples",
+                            "browser": ""
+                        },
+                        "polyfills": [
+                            "./demo/src/polyfills.ts"
+                        ],
                         "scripts": [],
                         "sourceMap": true,
                         "stylePreprocessorOptions": {
-                            "includePaths": ["./src/styles"]
+                            "includePaths": [
+                                "./src/styles"
+                            ]
                         },
                         "styles": [
                             "./src/styles.less",
@@ -69,14 +80,13 @@
                             "./demo/src/demostyles.less",
                             "./src/styles/styles-font-roboto.less"
                         ],
-                        "tsConfig": "./demo/src/tsconfig.json",
-                        "vendorChunk": true
+                        "tsConfig": "./demo/src/tsconfig.json"
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "demo:build",
+                        "buildTarget": "demo:build",
                         "outputPath": "./.tmp-i18n"
                     }
                 },
@@ -93,23 +103,25 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "dev": {
-                            "browserTarget": "demo:build:dev"
+                            "buildTarget": "demo:build:dev"
                         },
                         "e2e": {
-                            "browserTarget": "demo:build:e2e"
+                            "buildTarget": "demo:build:e2e"
                         },
                         "production": {
-                            "browserTarget": "demo:build:production"
+                            "buildTarget": "demo:build:production"
                         }
                     },
                     "options": {
-                        "browserTarget": "demo:build"
+                        "buildTarget": "demo:build"
                     }
                 },
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
                     "options": {
-                        "assets": ["./demo/src/assets"],
+                        "assets": [
+                            "./demo/src/assets"
+                        ],
                         "karmaConfig": "./karma.conf.js",
                         "main": "./demo/src/module.ts",
                         "polyfills": "./demo/src/polyfills.ts",
@@ -160,10 +172,7 @@
                 "lint": {
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
-                        "lintFilePatterns": [
-                            "./spec/**/*.ts",
-                            "./spec/**/*.html"
-                        ]
+                        "lintFilePatterns": ["spec/**/*.ts", "spec/**/*.html"]
                     }
                 }
             },
@@ -211,20 +220,20 @@
         "i18n": {
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
+                    "builder": "@angular-devkit/build-angular:application",
                     "defaultConfiguration": "",
                     "options": {
-                        "allowedCommonJsDependencies": ["lodash"],
-                        "buildOptimizer": false,
+                        "allowedCommonJsDependencies": [
+                            "lodash"
+                        ],
                         "extractLicenses": false,
                         "index": "./src/index.html",
-                        "main": "./src/public_api.ts",
+                        "browser": "./src/public_api.ts",
                         "namedChunks": true,
                         "optimization": false,
                         "outputPath": "./.tmp",
                         "sourceMap": true,
-                        "tsConfig": "./src/tsconfig.i18n.json",
-                        "vendorChunk": true
+                        "tsConfig": "./src/tsconfig.i18n.json"
                     }
                 }
             },
@@ -254,21 +263,24 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "i18n:build",
+                        "buildTarget": "i18n:build",
                         "outputPath": "./.tmp-i18n"
                     }
                 },
                 "lint": {
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
-                        "lintFilePatterns": ["./src/**/*.ts", "./src/**/*.html"]
+                        "lintFilePatterns": [
+                            "./src/**/*.ts",
+                            "./src/**/*.html"
+                        ]
                     }
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {},
                     "options": {
-                        "browserTarget": "lib:build"
+                        "buildTarget": "lib:build"
                     }
                 },
                 "test": {
@@ -276,10 +288,17 @@
                     "configurations": {
                         "coverage": {
                             "codeCoverage": true,
-                            "reporters": ["progress", "coverage", "kjhtml", "junit"]
+                            "reporters": [
+                                "progress",
+                                "coverage",
+                                "kjhtml",
+                                "junit"
+                            ]
                         },
                         "dev": {
-                            "reporters": ["progress"],
+                            "reporters": [
+                                "progress"
+                            ],
                             "watch": true
                         }
                     },
@@ -289,7 +308,9 @@
                         "karmaConfig": "./karma.conf.js",
                         "main": "./src/test.ts",
                         "polyfills": "./src/polyfills.ts",
-                        "reporters": ["spec"],
+                        "reporters": [
+                            "spec"
+                        ],
                         "scripts": [],
                         "sourceMap": false,
                         "styles": [],

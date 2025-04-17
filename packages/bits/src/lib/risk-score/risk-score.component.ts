@@ -27,7 +27,6 @@ import {
     NgZone,
     OnChanges,
     OnDestroy,
-    SimpleChanges,
     ViewChild,
     ViewEncapsulation,
 } from "@angular/core";

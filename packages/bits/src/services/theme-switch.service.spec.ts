@@ -20,8 +20,7 @@
 
 import { Component, NgZone } from "@angular/core";
 import { fakeAsync, TestBed, tick } from "@angular/core/testing";
-import { Router, Routes } from "@angular/router";
-import { RouterTestingModule } from "@angular/router/testing";
+import {Router, RouterModule, Routes} from "@angular/router";
 
 import { ThemeSwitchService } from "./theme-switch.service";
 
@@ -51,7 +50,7 @@ describe("ThemeSwitchService", () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [RouterTestingModule.withRoutes(routes)],
+            imports: [RouterModule.forRoot(routes)],
             declarations: [FakeComponent],
         });
 

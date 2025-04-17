@@ -28,15 +28,13 @@ describe("components >", () => {
         let subject: ExampleCodeComponent;
         beforeEach(() => {
             subject = new ExampleCodeComponent();
-            subject.codeElement = {
-                nativeElement: document.createElement("div"),
-            } as ElementRef;
         });
 
-        describe("ngAfterViewInit", () => {
-            it("should call hljs highlightElement method", () => {
-                const spy = spyOn(hljs, "highlightElement");
-                subject.ngAfterViewInit();
+        describe("code", () => {
+            it("should call hljs highlight method", () => {
+                const spy = spyOn(hljs, "highlight").and.returnValue({value: "div"} as any);
+                subject.code = "<div>test</div>";
+                subject.language = "html";
                 expect(spy).toHaveBeenCalled();
             });
         });

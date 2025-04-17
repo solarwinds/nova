@@ -256,6 +256,7 @@ describe("USERCONTROL popover", () => {
             );
         });
         it("should honor right 'placement'", async () => {
+            await popoverRightPlacement.waitElementVisible();
             await popoverRightPlacement.open();
             await expect(await popoverRightPlacement.isDisplayedLeft()).toBe(
                 false

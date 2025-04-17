@@ -21,7 +21,6 @@
 import { Component, NO_ERRORS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
 
 import { IWizardSelectionEvent } from "./public-api";
 import { WizardStepComponent } from "./wizard-step.component";

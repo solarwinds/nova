@@ -24,11 +24,11 @@ import { takeUntil } from "rxjs/operators";
 
 import { EventBus, EventDefinition } from "@nova-ui/bits";
 
+import { RefresherSettingsService } from "./refresher-settings.service";
+import { DEFAULT_REFRESH_INTERVAL } from "./types";
 import { REFRESH } from "../../services/types";
 import { IWidgetEvent } from "../../services/widget-to-dashboard-event-proxy.service";
 import { IConfigurable, IProperties, PIZZAGNA_EVENT_BUS } from "../../types";
-import { RefresherSettingsService } from "./refresher-settings.service";
-import { DEFAULT_REFRESH_INTERVAL } from "./types";
 
 export interface IRefresherProperties extends IProperties {
     // refresh interval in seconds

@@ -41,6 +41,7 @@ import {
     WidgetTypesService,
 } from "@nova-ui/dashboards";
 
+import { AcmeDashboardComponent } from "./timeseries-widget-prototype.component";
 import { AcmeProportionalDSConfigComponent } from "../components/data-source-configuration/proportional-ds-config.component";
 import { AcmeKpiDataSource, AcmeKpiDataSource2 } from "../data/kpi-datasources";
 import {
@@ -57,7 +58,6 @@ import {
     AcmeTimeseriesStatusDataSource,
     AcmeTimeseriesStatusIntervalDataSource,
 } from "../data/timeseries-data-sources";
-import { AcmeDashboardComponent } from "./timeseries-widget-prototype.component";
 
 const routes = [
     {

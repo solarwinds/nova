@@ -30,12 +30,12 @@ import {
 } from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
-import { getDemoFiles } from "../../../../demo-files-factory";
 import { ProportionalDocsComponent } from "./proportional-docs.component";
 import { ProportionalDonutContentDocsComponent } from "./proportional-donut-content-docs.component";
 import { ProportionalWidgetDonutContentFormattersExampleComponent } from "./proportional-donut-content-formatters/proportional-donut-content-formatters-example.component";
 import { ProportionalWidgetExampleComponent } from "./proportional-widget/proportional-widget-example.component";
 import { ProportionalWidgetInteractiveExampleComponent } from "./proportional-widget-interactive/proportional-widget-interactive-example.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
 
 const routes: Routes = [
     {

@@ -20,9 +20,9 @@
 
 import { Injector } from "@angular/core";
 
-import { mockLoggerService } from "../../mocks";
 import { ComponentPortalService } from "./component-portal.service";
 import { ComponentRegistryService } from "./component-registry.service";
+import { mockLoggerService } from "../../mocks.spec";
 
 class MockComponent {
     public static lateLoadKey = "MockComponent";

@@ -21,6 +21,24 @@
 import isEmpty from "lodash/isEmpty";
 import isUndefined from "lodash/isUndefined";
 
+import {
+    DONUT_GAUGE_LABEL_CLEARANCE_DEFAULT,
+    GaugeMode,
+    GAUGE_QUANTITY_SERIES_ID,
+    GAUGE_REMAINDER_SERIES_ID,
+    GAUGE_THRESHOLD_MARKERS_SERIES_ID,
+    LINEAR_GAUGE_LABEL_CLEARANCE_DEFAULTS,
+    StandardGaugeColor,
+    StandardGaugeThresholdId,
+    StandardGaugeThresholdMarkerRadius,
+} from "./constants";
+import {
+    IGaugeConfig,
+    IGaugeThresholdDatum,
+    IGaugeThresholdDef,
+    IGaugeThresholdsData,
+    IGaugeThresholdsConfig,
+} from "./types";
 import { Chart } from "../core/chart";
 import { ChartAssist } from "../core/chart-assists/chart-assist";
 import { Renderer } from "../core/common/renderer";
@@ -51,24 +69,6 @@ import { radialGrid } from "../renderers/radial/radial-grid-fn";
 import { radial } from "../renderers/radial/radial-preprocessor";
 import { RadialRenderer } from "../renderers/radial/radial-renderer";
 import { radialScales } from "../renderers/radial/radial-scales";
-import {
-    DONUT_GAUGE_LABEL_CLEARANCE_DEFAULT,
-    GaugeMode,
-    GAUGE_QUANTITY_SERIES_ID,
-    GAUGE_REMAINDER_SERIES_ID,
-    GAUGE_THRESHOLD_MARKERS_SERIES_ID,
-    LINEAR_GAUGE_LABEL_CLEARANCE_DEFAULTS,
-    StandardGaugeColor,
-    StandardGaugeThresholdId,
-    StandardGaugeThresholdMarkerRadius,
-} from "./constants";
-import {
-    IGaugeConfig,
-    IGaugeThresholdDatum,
-    IGaugeThresholdDef,
-    IGaugeThresholdsData,
-    IGaugeThresholdsConfig,
-} from "./types";
 
 /**
  * @ignore

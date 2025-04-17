@@ -9,5 +9,6 @@
     },
     "extends": "../../tsconfig.json",
     "files": ["index.ts", "polyfills.ts"],
+    "include": ["./components"],
     "typeRoots": ["node_modules/@types"]
 }
