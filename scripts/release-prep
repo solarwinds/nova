@@ -29,22 +29,22 @@ if [ "$SOURCE_BRANCH" != "$CIRCLE_BRANCH" ]; then
     fi
 fi
 
-# Merge Changes
-echo "Merge Changes"
-
 if ! git show-ref --quiet $RELEASE_BRANCH; then
     echo "Creating release branch:" $CREATE_RELEASE_BRANCH
     if [ "$CREATE_RELEASE_BRANCH" == "true" ]; then
         echo "Creating $RELEASE_BRANCH"
         git checkout -b $RELEASE_BRANCH
         git push --set-upstream origin $RELEASE_BRANCH
+        exit 0
     else
         echo "ERROR: release branch does not exist"
         exit 1
     fi
 fi
 
-echo updating the release branch with all what we have in main without making new commits
+# Merge Changes
+echo "Merge Changes"
+echo "Updating the release branch with all what we have in main without making new commits"
 git checkout $RELEASE_BRANCH
 git merge $SOURCE_BRANCH --no-edit --no-ff -X theirs
 
