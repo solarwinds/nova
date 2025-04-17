@@ -23,6 +23,7 @@ import { Component, OnDestroy } from "@angular/core";
 @Component({
     selector: "nui-progress-with-help-template-example",
     templateUrl: "./progress-with-help-template-example.component.html",
+    standalone: false
 })
 export class ProgressWithHelpTemplateExampleComponent implements OnDestroy {
     public show = false;

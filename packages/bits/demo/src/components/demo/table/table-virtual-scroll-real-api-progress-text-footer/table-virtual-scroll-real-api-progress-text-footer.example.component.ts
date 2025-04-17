@@ -43,13 +43,13 @@ import { RandomuserTableDataSource } from "../table-virtual-scroll-datasource";
 
 @Component({
     selector: "nui-table-virtual-scroll-real-api-progress-text-footer-example",
-    templateUrl:
-        "./table-virtual-scroll-real-api-progress-text-footer.example.component.html",
+    templateUrl: "./table-virtual-scroll-real-api-progress-text-footer.example.component.html",
     styleUrls: [
         "./table-virtual-scroll-real-api-progress-text-footer.example.component.less",
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [VirtualViewportManager],
+    standalone: false
 })
 export class TableVirtualScrollRealApiProgressTextFooterExampleComponent
     implements AfterViewInit, OnDestroy, OnInit

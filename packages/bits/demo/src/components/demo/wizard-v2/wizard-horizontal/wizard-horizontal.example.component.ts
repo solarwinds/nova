@@ -25,6 +25,7 @@ import { ToastService, WizardHorizontalComponent } from "@nova-ui/bits";
 @Component({
     selector: "nui-wizard-horizontal-example",
     templateUrl: "./wizard-horizontal.example.component.html",
+    standalone: false
 })
 export class WizardHorizontalExampleComponent {
     @ViewChild("wizard") private wizard: WizardHorizontalComponent;

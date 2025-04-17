@@ -34,6 +34,7 @@ interface IExampleItem {
     templateUrl: "combobox-v2-custom-control.example.component.html",
     styleUrls: ["combobox-v2-custom-control.example.component.less"],
     host: { class: "combobox-container d-flex" },
+    standalone: false
 })
 export class ComboboxV2CustomControlExampleComponent
     implements OnDestroy, AfterViewInit

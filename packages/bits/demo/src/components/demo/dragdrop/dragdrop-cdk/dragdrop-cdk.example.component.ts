@@ -24,5 +24,6 @@ import { Component } from "@angular/core";
     selector: "nui-dragdrop-cdk-example",
     templateUrl: "./dragdrop-cdk.example.component.html",
     styleUrls: ["./dragdrop-cdk.example.component.less"],
+    standalone: false
 })
 export class DragdropCdkExampleComponent {}

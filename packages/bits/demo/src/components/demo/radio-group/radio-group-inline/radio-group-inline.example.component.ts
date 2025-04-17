@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-radio-group-inline-example",
     templateUrl: "./radio-group-inline.example.component.html",
+    standalone: false
 })
 export class RadioGroupInlineExampleComponent {
     public fruits = [

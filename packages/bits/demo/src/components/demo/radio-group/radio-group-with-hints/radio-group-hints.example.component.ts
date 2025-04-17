@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-with-hints-radio-group-example",
     templateUrl: "./radio-group-hints.example.component.html",
+    standalone: false
 })
 export class RadioGroupHintsExampleComponent {
     public colors = [$localize`Red`, $localize`Green`, $localize`Blue`];

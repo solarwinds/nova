@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-combobox-with-remove-value-example",
     templateUrl: "./combobox-with-remove-value.example.component.html",
+    standalone: false
 })
 export class ComboboxWithRemoveValueExampleComponent {
     public dataset = {

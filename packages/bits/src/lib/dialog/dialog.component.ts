@@ -60,6 +60,7 @@ const FOCUSABLE_SELECTOR =
     templateUrl: "./dialog.component.html",
     styleUrls: ["./dialog.component.less"],
     encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
     private elWithFocus: any;

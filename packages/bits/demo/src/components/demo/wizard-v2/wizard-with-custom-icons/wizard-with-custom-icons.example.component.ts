@@ -44,6 +44,7 @@ import {
             } as IWizardConfig,
         },
     ],
+    standalone: false
 })
 export class WizardWithCustomIconsExampleComponent {
     @ViewChild("wizard") wizard: WizardHorizontalComponent;

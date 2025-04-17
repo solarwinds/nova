@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-message-ok-example",
     templateUrl: "./message-ok.example.component.html",
+    standalone: false
 })
 export class MessageOkExampleComponent {
     public onMessageDismiss(): void {

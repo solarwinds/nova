@@ -26,6 +26,7 @@ import { ISelectChangedEvent } from "@nova-ui/bits";
 @Component({
     selector: "combobox-visual-test",
     templateUrl: "./combobox-visual-test.component.html",
+    standalone: false
 })
 export class ComboboxVisualTestComponent implements OnInit {
     public isRequired: boolean = true;

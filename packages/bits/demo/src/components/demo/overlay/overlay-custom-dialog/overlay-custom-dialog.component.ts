@@ -31,6 +31,7 @@ import { DialogService, NuiDialogRef, OverlayComponent } from "@nova-ui/bits";
     templateUrl: "./overlay-custom-dialog.component.html",
     styleUrls: ["./overlay-custom-dialog.component.less"],
     encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class OverlayCustomDialogComponent {
     private overlayRef: OverlayRef;

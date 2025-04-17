@@ -71,6 +71,7 @@ import { OptionKeyControlService } from "../option-key-control.service";
         class: "nui-select-v2",
         role: "button",
     },
+    standalone: false
 })
 
 // Will be renamed in scope of the NUI-5797

@@ -62,6 +62,7 @@ import { IServer, IServerFilters } from "./types";
             useClass: ClientSideDataSource,
         },
     ],
+    standalone: false
 })
 export class SelectionListComponent implements AfterViewInit, OnDestroy {
     public readonly sorterItems: IMenuItem[] = [

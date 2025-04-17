@@ -43,6 +43,7 @@ import { DndDropTargetDirective } from "./dnd-drop-target.directive";
             <div cdkDrag [cdkDragData]="'not-allowed'">Not Allowed</div>
         </div>
     `,
+    standalone: false
 })
 class DropTargetTestingComponent {
     @ViewChild(CdkDropList) dropListInstance: CdkDropList;

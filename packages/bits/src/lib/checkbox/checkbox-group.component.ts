@@ -56,6 +56,7 @@ import { NuiFormFieldControl } from "../form-field/public-api";
         },
     ],
     host: { role: "group" },
+    standalone: false
 })
 /**
  * Component for combining of nui-checkbox components in to group

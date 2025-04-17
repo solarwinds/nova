@@ -76,6 +76,7 @@ import { NuiFormFieldControl } from "../../form-field/public-api";
         "[attr.aria-valuemax]": "maxValue || null",
         "[attr.aria-valuenow]": "value || 0",
     },
+    standalone: false
 })
 export class TextboxNumberComponent
     implements ControlValueAccessor, NuiFormFieldControl, OnChanges

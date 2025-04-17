@@ -28,6 +28,7 @@ import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "@nova-ui/bits";
     selector: "nui-popover-visual-test",
     templateUrl: "./popover-visual-test.component.html",
     styleUrls: ["./popover-visual-test.component.less"],
+    standalone: false
 })
 export class PopoverVisualTestComponent {
     public dataset = {

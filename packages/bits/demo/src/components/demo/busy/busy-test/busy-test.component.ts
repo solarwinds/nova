@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-busy-test",
     templateUrl: "./busy-test.component.html",
+    standalone: false
 })
 export class BusyTestComponent {
     public busy: boolean;

@@ -23,5 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-textbox-docs-example",
     templateUrl: "./textbox-docs.example.component.html",
+    standalone: false
 })
 export class TextboxDocsExampleComponent {}

@@ -49,6 +49,7 @@ export function complexScrollStrategyFactory(
             deps: [forwardRef(() => TableVirtualScrollLinearDirective)],
         },
     ],
+    standalone: false
 })
 export class TableVirtualScrollLinearDirective implements OnChanges {
     /** Height of table row. */
@@ -94,6 +95,7 @@ export class TableVirtualScrollLinearDirective implements OnChanges {
             deps: [forwardRef(() => TableVirtualScrollDirective)],
         },
     ],
+    standalone: false
 })
 export class TableVirtualScrollDirective implements OnChanges {
     /** Height of table row. */

@@ -36,6 +36,7 @@ interface IWizardStepData {
 @Component({
     selector: "nui-wizard-step-change-example",
     templateUrl: "./wizard-step-change.example.component.html",
+    standalone: false
 })
 export class WizardStepChangeExampleComponent implements AfterViewInit {
     public steps: IWizardStepData[] = [];

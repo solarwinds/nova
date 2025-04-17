@@ -39,6 +39,7 @@ const defaultContainerHeight: number = 300;
     selector: "nui-combobox-v2-virtual-scroll-example",
     templateUrl: "combobox-v2-virtual-scroll.example.component.html",
     host: { class: "combobox-container" },
+    standalone: false
 })
 export class ComboboxV2VirtualScrollExampleComponent
     implements OnDestroy, AfterViewInit

@@ -26,6 +26,7 @@ import { ITimeframe } from "@nova-ui/bits";
 @Component({
     selector: "nui-time-frame-picker-inline",
     templateUrl: "./time-frame-picker-inline.example.component.html",
+    standalone: false
 })
 export class TimeFramePickerInlineExampleComponent {
     public tf: ITimeframe = {

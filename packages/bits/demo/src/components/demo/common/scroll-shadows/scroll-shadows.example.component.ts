@@ -23,5 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-scroll-shadows-example",
     templateUrl: "./scroll-shadows.example.component.html",
+    standalone: false
 })
 export class ScrollShadowsExampleComponent {}

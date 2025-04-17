@@ -30,6 +30,7 @@ import {
 @Component({
     selector: "nui-sorter-docs-example",
     templateUrl: "./sorter-docs.example.component.html",
+    standalone: false
 })
 export class SorterExampleComponent {
     getSorterPropKey(key: keyof SorterComponent): string {

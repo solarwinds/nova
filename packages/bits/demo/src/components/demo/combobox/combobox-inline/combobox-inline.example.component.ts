@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-combobox-inline-example",
     templateUrl: "combobox-inline.example.component.html",
+    standalone: false
 })
 export class ComboboxInlineExampleComponent {
     public dataset = {

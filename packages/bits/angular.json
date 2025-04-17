@@ -1,7 +1,8 @@
 {
     "$schema": "/node_modules/@angular/cli/lib/config/schema.json",
     "cli": {
-        "analytics": false
+        "analytics": false,
+        "packageManager": "yarn"
     },
     "newProjectRoot": "projects",
     "projects": {
@@ -63,7 +64,8 @@
                             "browser": ""
                         },
                         "polyfills": [
-                            "./demo/src/polyfills.ts"
+                          "./demo/src/polyfills.ts",
+                          "@angular/localize/init"
                         ],
                         "scripts": [],
                         "sourceMap": true,
@@ -183,16 +185,17 @@
         "generate-css": {
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
+                    "builder": "@angular-devkit/build-angular:application",
                     "defaultConfiguration": "",
                     "options": {
-                        "buildOptimizer": false,
-                        "deleteOutputPath": true,
+                      "deleteOutputPath": true,
                         "extractLicenses": false,
                         "index": "./index.html",
-                        "main": "",
                         "namedChunks": true,
-                        "outputPath": "./.tmp-css",
+                        "outputPath": {
+                          "base": "./.tmp-css",
+                           "browser": ""
+                        },
                         "sourceMap": false,
                         "styles": [
                             "./src/styles.less",
@@ -209,7 +212,7 @@
                             }
                         ],
                         "tsConfig": "./src/tsconfig.css.json",
-                        "vendorChunk": true
+                        "browser": ""
                     }
                 }
             },

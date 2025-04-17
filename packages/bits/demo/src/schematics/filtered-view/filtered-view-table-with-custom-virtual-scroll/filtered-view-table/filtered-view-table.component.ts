@@ -60,6 +60,7 @@ import { IServer } from "../types";
             useValue: RESULTS_PER_PAGE,
         },
     ],
+    standalone: false
 })
 export class FilteredViewTableComponent
     implements OnInit, OnDestroy, AfterViewInit

@@ -31,6 +31,7 @@ interface IExampleItem {
     selector: "nui-combobox-v2-disabled-example",
     templateUrl: "combobox-v2-disabled.example.component.html",
     host: { class: "combobox-container" },
+    standalone: false
 })
 export class ComboboxV2DisabledExampleComponent {
     public items: IExampleItem[] = Array.from({ length: 100 }).map((_, i) => ({

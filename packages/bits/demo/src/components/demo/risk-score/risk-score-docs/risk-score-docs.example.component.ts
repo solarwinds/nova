@@ -23,5 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-risk-score-docs-example",
     templateUrl: "./risk-score-docs.example.component.html",
+    standalone: false
 })
 export class RiskScoreDocsExampleComponent {}

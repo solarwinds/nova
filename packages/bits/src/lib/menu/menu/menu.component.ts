@@ -61,6 +61,7 @@ import { IMenuGroup } from "../public-api";
     styleUrls: ["./menu.component.less"],
     encapsulation: ViewEncapsulation.None,
     providers: [MenuKeyControlService],
+    standalone: false
 })
 export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     public iconSize = "";

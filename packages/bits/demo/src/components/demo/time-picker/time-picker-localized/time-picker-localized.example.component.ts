@@ -26,6 +26,7 @@ import { ITimeframe } from "@nova-ui/bits";
 @Component({
     selector: "nui-time-picker-localized",
     templateUrl: "./time-picker-localized.example.component.html",
+    standalone: false
 })
 export class TimePickerLocalizedExampleComponent implements OnInit, OnDestroy {
     public minDate: Moment;

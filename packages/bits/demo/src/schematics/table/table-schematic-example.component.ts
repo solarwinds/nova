@@ -52,5 +52,6 @@ import { SchematicsDocsComponentType } from "../utils/schematic-docs-cli-option/
             useValue: SchematicsDocsComponentType.table,
         },
     ],
+    standalone: false
 })
 export class TableSchematicExampleComponent {}

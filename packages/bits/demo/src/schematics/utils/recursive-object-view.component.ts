@@ -48,6 +48,7 @@ import _sortBy from "lodash/sortBy";
             </ng-template>
         </div>
     `,
+    standalone: false
 })
 export class RecursiveObjectViewComponent implements OnInit {
     @Input() object: any;

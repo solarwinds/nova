@@ -41,6 +41,7 @@ import {
     selector: "app-basic-filter-group",
     templateUrl: "./basic-filter-group.component.html",
     styleUrls: ["./basic-filter-group.component.less"],
+    standalone: false
 })
 export class BasicFilterGroupCompositeComponent implements IFilterPub, OnInit {
     @Input() filterGroupItem: IFilterGroupItem;

@@ -75,6 +75,7 @@ export class ClientSideCustomSearchService extends SearchService {
         ClientSideDataSource,
         { provide: SearchService, useClass: ClientSideCustomSearchService },
     ],
+    standalone: false
 })
 export class DataSourceClientSideCustomSearchExampleComponent
     implements AfterViewInit, OnDestroy

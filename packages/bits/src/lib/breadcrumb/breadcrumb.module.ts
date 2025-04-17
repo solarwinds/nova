@@ -29,7 +29,6 @@ import { NuiIconModule } from "../icon/icon.module";
  * @ignore
  */
 @NgModule({
-    imports: [NuiCommonModule, NuiIconModule],
     declarations: [BreadcrumbComponent],
     exports: [BreadcrumbComponent],
     providers: [BreadcrumbStateService],

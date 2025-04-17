@@ -25,6 +25,7 @@ import { Component, ViewEncapsulation } from "@angular/core";
     templateUrl: "./popup-test.example.component.html",
     styleUrls: ["popup-test.example.component.less"],
     encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class PopupTestComponent {
     public width = "200px";

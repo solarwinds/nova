@@ -36,6 +36,7 @@ import { RESIZE_DEBOUNCE_TIME } from "../../../constants/resize.constants";
  */
 @Directive({
     selector: "[nuiResizeObserver]",
+    standalone: false
 })
 export class ResizeObserverDirective implements OnDestroy, AfterViewInit {
     @Output()

@@ -24,6 +24,7 @@ import { Component } from "@angular/core";
     selector: "nui-select-custom-template-example",
     templateUrl: "./select-custom-template.example.component.html",
     styleUrls: ["./select-custom-template.example.component.less"],
+    standalone: false
 })
 export class SelectCustomTemplateExampleComponent {
     public dataset = {

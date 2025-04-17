@@ -26,6 +26,7 @@ import { SelectV2Component } from "@nova-ui/bits";
     selector: "nui-select-v2-custom-control-example",
     templateUrl: "select-v2-custom-control.example.component.html",
     host: { class: "select-container d-flex justify-content-between" },
+    standalone: false
 })
 export class SelectV2CustomControlExampleComponent implements AfterViewInit {
     public items = Array.from({ length: 100 }).map(

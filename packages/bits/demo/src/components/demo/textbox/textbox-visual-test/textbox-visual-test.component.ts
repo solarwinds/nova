@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "textbox-visual-test",
     templateUrl: "./textbox-visual-test.component.html",
+    standalone: false
 })
 export class TextboxVisualTestComponent {
     public isRequired = true;

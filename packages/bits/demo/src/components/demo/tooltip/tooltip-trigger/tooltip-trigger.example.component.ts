@@ -25,6 +25,7 @@ import { TooltipDirective } from "@nova-ui/bits";
 @Component({
     selector: "nui-tooltip-trigger-example",
     templateUrl: "tooltip-trigger.example.component.html",
+    standalone: false
 })
 export class TooltipTriggerExampleComponent {
     public tooltipText = "I am a Tooltip!";

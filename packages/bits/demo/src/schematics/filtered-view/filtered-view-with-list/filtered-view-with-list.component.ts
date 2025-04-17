@@ -60,6 +60,7 @@ import { IFilterable, IServer, ServerStatus } from "./types";
         },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class FilteredViewWithListComponent implements AfterViewInit, OnDestroy {
     public filterGroupItems: IFilterGroupItem[] = [

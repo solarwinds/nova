@@ -26,6 +26,7 @@ import { IWizardSelectionEvent, WizardComponent } from "@nova-ui/bits";
 @Component({
     selector: "nui-wizard-reset-step-example",
     templateUrl: "./wizard-reset-step.example.component.html",
+    standalone: false
 })
 export class WizardResetStepExampleComponent {
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;

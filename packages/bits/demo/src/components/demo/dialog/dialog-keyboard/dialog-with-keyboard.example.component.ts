@@ -25,6 +25,7 @@ import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-dialog-with-keyboard-example",
     templateUrl: "./dialog-with-keyboard.example.component.html",
+    standalone: false
 })
 export class DialogWithKeyboardExampleComponent {
     private activeDialog: NuiDialogRef;

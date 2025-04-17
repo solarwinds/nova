@@ -24,6 +24,7 @@ import { Component } from "@angular/core";
     selector: "nui-freetype-query-builder-docs-example",
     templateUrl: "freetype-query-builder-docs.example.component.html",
     styleUrls: ["freetype-query-builder-docs.example.component.less"],
+    standalone: false
 })
 export class FreetypeQueryBuilderDocsExampleComponent {
     tokenizerExample =

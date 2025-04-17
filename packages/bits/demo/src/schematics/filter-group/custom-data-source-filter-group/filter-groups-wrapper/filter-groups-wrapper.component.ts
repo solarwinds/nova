@@ -35,6 +35,7 @@ import { CustomDataSourceFilterGroupCompositeComponent } from "../custom-data-so
     selector: "app-custom-data-source-filter-groups-wrapper",
     templateUrl: "filter-groups-wrapper.component.html",
     styleUrls: ["filter-groups-wrapper.component.less"],
+    standalone: false
 })
 export class CustomDataSourceFilterGroupsWrapperComponent
     implements AfterViewInit

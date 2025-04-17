@@ -24,6 +24,7 @@ import { Component } from "@angular/core";
     selector: "nui-menu-custom-item-example",
     templateUrl: "./menu-custom-item.example.component.html",
     styleUrls: ["./menu-custom-item.example.component.less"],
+    standalone: false
 })
 export class MenuCustomItemExampleComponent {
     public checked: boolean = false;

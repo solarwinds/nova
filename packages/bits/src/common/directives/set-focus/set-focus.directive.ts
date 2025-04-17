@@ -43,7 +43,10 @@ import {
  * @dynamic
  * @ignore
  */
-@Directive({ selector: "[nuiSetFocus]" })
+@Directive({
+    selector: "[nuiSetFocus]",
+    standalone: false
+})
 export class SetFocusDirective implements AfterViewInit, OnChanges {
     private static readonly focusablesToCapture: string[] = [
         "input",

@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-progress-visual-test",
     templateUrl: "./progress-visual-test.component.html",
+    standalone: false
 })
 export class ProgressVisualTestComponent {
     public show = false;

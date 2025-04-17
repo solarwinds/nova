@@ -44,6 +44,7 @@ const BOX_WIDTH_PX: number = 30;
     selector: "nui-select-v2-color-picker",
     templateUrl: "./select-v2-color-picker.component.html",
     styleUrls: ["./select-v2-color-picker.component.less"],
+    standalone: false
 })
 export class SelectV2ColorPickerComponent {
     // With this param one is able to configure how many columns wide should the color picker be

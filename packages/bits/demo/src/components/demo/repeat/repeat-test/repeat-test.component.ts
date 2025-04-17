@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-repeat-test",
     templateUrl: "./repeat-test.component.html",
+    standalone: false
 })
 export class RepeatTestComponent {
     public colors = [

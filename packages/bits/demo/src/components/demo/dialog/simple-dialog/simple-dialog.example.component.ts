@@ -25,6 +25,7 @@ import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-simple-dialog-example",
     templateUrl: "./simple-dialog.example.component.html",
+    standalone: false
 })
 export class SimpleDialogExampleComponent {
     private activeDialog: NuiDialogRef;

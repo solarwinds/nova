@@ -47,6 +47,7 @@ import {
     styleUrls: ["./table-virtual-scroll-real-api.example.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [VirtualViewportManager],
+    standalone: false
 })
 export class TableVirtualScrollRealApiExampleComponent
     implements AfterViewInit, OnDestroy, OnInit

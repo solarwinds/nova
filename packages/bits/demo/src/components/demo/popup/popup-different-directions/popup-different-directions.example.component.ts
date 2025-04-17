@@ -24,6 +24,7 @@ import { Component, ViewEncapsulation } from "@angular/core";
     selector: "nui-popup-different-directions-example",
     templateUrl: "./popup-different-directions.example.component.html",
     encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class PopupDifferentDirectionsExampleComponent {
     public icon = "caret-down";

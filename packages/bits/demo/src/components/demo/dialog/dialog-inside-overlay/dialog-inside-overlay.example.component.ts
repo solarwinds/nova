@@ -25,6 +25,7 @@ import { DialogService, NuiDialogRef } from "@nova-ui/bits";
 @Component({
     selector: "nui-dialog-inside-overlay-example",
     templateUrl: "./dialog-inside-overlay.example.component.html",
+    standalone: false
 })
 export class DialogInsideOverlayExampleComponent {
     public options1 = Array.from({ length: 25 }).map(

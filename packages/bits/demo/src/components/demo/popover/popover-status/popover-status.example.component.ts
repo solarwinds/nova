@@ -23,5 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-popover-status-example",
     templateUrl: "popover-status.example.component.html",
+    standalone: false
 })
 export class PopoverStatusExampleComponent {}

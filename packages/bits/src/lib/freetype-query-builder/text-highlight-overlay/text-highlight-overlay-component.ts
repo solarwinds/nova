@@ -42,6 +42,7 @@ import {
     selector: "nui-text-highlight-overlay",
     templateUrl: "./text-highlight-overlay-component.html",
     styleUrls: ["./text-highlight-overlay-component.less"],
+    standalone: false
 })
 export class TextHighlightOverlayComponent<T extends QueryToken>
     implements OnInit, OnChanges

@@ -33,6 +33,7 @@ import {
 @Component({
     selector: "nui-wizard-visual",
     templateUrl: "./wizard-visual-test.component.html",
+    standalone: false
 })
 export class WizardVisualTestComponent {
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;

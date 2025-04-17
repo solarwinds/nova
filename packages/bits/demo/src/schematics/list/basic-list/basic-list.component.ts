@@ -59,6 +59,7 @@ import { IServer, IServerFilters } from "./types";
             useClass: ClientSideDataSource,
         },
     ],
+    standalone: false
 })
 export class BasicListComponent implements AfterViewInit, OnDestroy {
     public readonly sorterItems: IMenuItem[] = [

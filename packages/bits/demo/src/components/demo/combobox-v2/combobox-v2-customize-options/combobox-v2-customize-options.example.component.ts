@@ -31,6 +31,7 @@ interface IExampleItem {
     selector: "nui-combobox-v2-customize-options-example",
     templateUrl: "combobox-v2-customize-options.example.component.html",
     host: { class: "combobox-container" },
+    standalone: false
 })
 export class ComboboxV2CustomizeOptionsExampleComponent {
     public icons: any[] = ["check", "email", "execute"];

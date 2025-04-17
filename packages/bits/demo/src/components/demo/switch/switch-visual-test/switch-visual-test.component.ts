@@ -23,6 +23,7 @@ import { Component, Input } from "@angular/core";
 @Component({
     selector: "nui-switch-visual",
     templateUrl: "./switch-visual-test.component.html",
+    standalone: false
 })
 export class SwitchVisualTestComponent {
     @Input() isOn = true;

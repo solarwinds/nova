@@ -38,6 +38,7 @@ import {
     selector: "nui-wizard-v2-dialog-example",
     templateUrl: "./wizard-dialog.example.component.html",
     styleUrls: ["./wizard-dialog.example.component.less"],
+    standalone: false
 })
 export class WizardDialogExampleComponent implements OnDestroy {
     public onDestroy$ = new Subject<void>();

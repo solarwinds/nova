@@ -25,6 +25,7 @@ import { IToastService, ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-toast-basic-html-example",
     templateUrl: "./toast-basic-html.example.component.html",
+    standalone: false
 })
 export class ToastBasicHtmlExampleComponent implements OnInit {
     constructor(@Inject(ToastService) private toastService: IToastService) {}

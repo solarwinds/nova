@@ -24,5 +24,6 @@ import { Component } from "@angular/core";
     selector: "nui-layout-separate-sheets-example",
     templateUrl: "./layout-separate-sheets.example.component.html",
     styleUrls: ["./layout-separate-sheets.example.component.less"],
+    standalone: false
 })
 export class LayoutSeparateSheetsExampleComponent {}

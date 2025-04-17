@@ -25,6 +25,7 @@ import { NavigationEnd, Router } from "@angular/router";
     selector: "nui-tab-heading-group-with-router-example",
     templateUrl: "./tab-heading-group-with-router.example.component.html",
     styleUrls: ["./tab-heading-group-with-router.example.component.less"],
+    standalone: false
 })
 export class TabHeadingGroupWithRouterExampleComponent implements OnDestroy {
     public currentTabRoute: string;

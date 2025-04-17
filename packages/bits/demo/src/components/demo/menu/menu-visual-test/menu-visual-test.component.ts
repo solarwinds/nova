@@ -25,6 +25,7 @@ import { IMenuGroup, MenuActionType } from "@nova-ui/bits";
 @Component({
     selector: "nui-menu-visual-test",
     templateUrl: "./menu-visual-test.component.html",
+    standalone: false
 })
 export class MenuVisualTestComponent {
     public itemsSource: IMenuGroup[] = [

@@ -24,5 +24,6 @@ import { Component } from "@angular/core";
     selector: "nui-select-v2-docs-example",
     templateUrl: "./select-v2-docs.example.component.html",
     styleUrls: ["select-v2-docs.example.component.less"],
+    standalone: false
 })
 export class SelectV2DocsComponent {}

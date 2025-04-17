@@ -31,6 +31,7 @@ import {
 @Component({
     selector: "nui-toast-events-example",
     templateUrl: "./toast-events.example.component.html",
+    standalone: false
 })
 export class ToastEventsExampleComponent implements OnInit {
     public lastShown?: number;

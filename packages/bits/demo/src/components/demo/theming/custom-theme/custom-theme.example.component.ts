@@ -33,6 +33,7 @@ import {
     templateUrl: "./custom-theme.example.component.html",
     styleUrls: ["./custom-theme.example.component.less"],
     encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class CustomThemeExampleComponent implements OnDestroy {
     private readonly renderer: Renderer2;

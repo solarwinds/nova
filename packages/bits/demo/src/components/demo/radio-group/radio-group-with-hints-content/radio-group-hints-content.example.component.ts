@@ -35,6 +35,7 @@ import { ToastService } from "@nova-ui/bits";
             }
         `,
     ],
+    standalone: false
 })
 export class RadioGroupHintsContentExampleComponent {
     public colors = [$localize`Red`, $localize`Green`, $localize`Blue`];

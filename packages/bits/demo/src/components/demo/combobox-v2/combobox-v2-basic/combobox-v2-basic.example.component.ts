@@ -24,6 +24,7 @@ import { Component } from "@angular/core";
     selector: "nui-combobox-v2-basic-example",
     templateUrl: "combobox-v2-basic.example.component.html",
     host: { class: "combobox-container" },
+    standalone: false
 })
 export class ComboboxV2BasicExampleComponent {
     public items = Array.from({ length: 50 }).map(

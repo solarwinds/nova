@@ -31,6 +31,7 @@ import { WizardStepV2Component } from "../wizard-step/wizard-step.component";
 
         <nui-wizard-step-v2 label="step 2"> </nui-wizard-step-v2>
     </nui-wizard-horizontal>`,
+    standalone: false
 })
 class TestWrapperComponent {}
 

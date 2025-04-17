@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-combobox-basic-example",
     templateUrl: "./combobox-basic.example.component.html",
+    standalone: false
 })
 export class ComboboxBasicExampleComponent {
     public dataset = {

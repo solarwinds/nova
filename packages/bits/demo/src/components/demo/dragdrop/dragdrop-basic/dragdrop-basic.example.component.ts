@@ -45,6 +45,7 @@ class IsObjectValidator implements IDropValidator {
 @Component({
     selector: "nui-dragdrop-validator-example",
     templateUrl: "./dragdrop-basic.example.component.html",
+    standalone: false
 })
 export class DragdropBasicExampleComponent {
     public draggableString = "this is a string";

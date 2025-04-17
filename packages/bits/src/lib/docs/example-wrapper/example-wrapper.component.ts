@@ -37,6 +37,7 @@ import { FileMetadata, SourcesService } from "../services/sources.service";
     templateUrl: "./example-wrapper.component.html",
     selector: "nui-example-wrapper",
     styleUrls: ["./example-wrapper.component.less"],
+    standalone: false
 })
 export class ExampleWrapperComponent implements OnInit {
     // Prefix of the example component's filenames

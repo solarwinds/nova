@@ -23,6 +23,7 @@ import { Component, OnDestroy } from "@angular/core";
 @Component({
     selector: "nui-runtime-i18n-example",
     templateUrl: "./runtime-i18n-example.component.html",
+    standalone: false
 })
 export class RuntimeI18NExampleComponent implements OnDestroy {
     public firstNamePlaceholder: string = `John`;

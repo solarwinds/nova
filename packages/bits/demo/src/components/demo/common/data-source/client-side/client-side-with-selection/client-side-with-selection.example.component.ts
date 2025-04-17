@@ -48,6 +48,7 @@ interface IExampleItem {
     providers: [ClientSideDataSource],
     templateUrl: "./client-side-with-selection.example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class DataSourceWithSelectionExampleComponent
     implements AfterViewInit, OnDestroy

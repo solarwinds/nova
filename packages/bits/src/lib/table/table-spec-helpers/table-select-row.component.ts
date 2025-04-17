@@ -152,6 +152,7 @@ const ELEMENT_DATA: TableSelectModel[] = [
             </table>
         </div>
     `,
+    standalone: false
 })
 export class TableSelectTestComponent {
     public displayedColumns = [

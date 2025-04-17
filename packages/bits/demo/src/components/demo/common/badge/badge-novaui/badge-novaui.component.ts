@@ -24,6 +24,7 @@ import { Component } from "@angular/core";
     selector: "nui-badge-novaui",
     templateUrl: "./badge-novaui.component.html",
     styleUrls: ["./badge-novaui.component.less"],
+    standalone: false
 })
 export class BadgeNovauiComponent {
     buttonCounter = "1";

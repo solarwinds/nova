@@ -24,6 +24,7 @@ import { FormBuilder } from "@angular/forms";
 @Component({
     selector: "nui-radio-group-visual-test",
     templateUrl: "./radio-group-visual-test.component.html",
+    standalone: false
 })
 export class RadioGroupVisualTestComponent {
     public disabledForm;

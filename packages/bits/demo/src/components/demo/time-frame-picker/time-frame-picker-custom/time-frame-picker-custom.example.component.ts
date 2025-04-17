@@ -31,6 +31,7 @@ import {
     selector: "nui-time-frame-picker-custom",
     templateUrl: "./time-frame-picker-custom.example.component.html",
     providers: [TimeframeService],
+    standalone: false
 })
 export class TimeFramePickerCustomExampleComponent {
     public presets: ITimeFramePresetDictionary = {

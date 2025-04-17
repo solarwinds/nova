@@ -26,6 +26,7 @@ import { FormBuilder, Validators } from "@angular/forms";
     templateUrl: "./popup-with-custom-content.example.component.html",
     styleUrls: ["./popup-with-custom-content.example.component.less"],
     encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class PopupWithCustomContentComponent {
     public icon = "caret-down";

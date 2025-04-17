@@ -24,6 +24,7 @@ import { FormBuilder } from "@angular/forms";
 @Component({
     selector: "nui-textbox-number-visual",
     templateUrl: "./textbox-number-visual-test.component.html",
+    standalone: false
 })
 export class TextboxNumberVisualTestComponent {
     public reactiveForm;

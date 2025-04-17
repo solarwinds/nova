@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-textbox-required-example",
     templateUrl: "./textbox-required.example.component.html",
+    standalone: false
 })
 export class TextboxRequiredExampleComponent {
     public isRequired = true;

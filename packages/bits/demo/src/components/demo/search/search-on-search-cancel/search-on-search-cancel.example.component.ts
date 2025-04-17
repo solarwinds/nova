@@ -25,6 +25,7 @@ import { ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-search-on-search-cancel",
     templateUrl: "search-on-search-cancel.example.component.html",
+    standalone: false
 })
 export class SearchOnSearchCancelExampleComponent {
     constructor(@Inject(ToastService) public toastService: ToastService) {}

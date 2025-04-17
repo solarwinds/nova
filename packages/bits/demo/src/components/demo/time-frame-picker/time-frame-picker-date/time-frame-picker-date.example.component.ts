@@ -29,6 +29,7 @@ import { IQuickPickPresetDictionary } from "@nova-ui/bits";
 @Component({
     selector: "nui-time-frame-picker-date",
     templateUrl: "./time-frame-picker-date.example.component.html",
+    standalone: false
 })
 export class TimeFramePickerDateExampleComponent {
     public presets: IQuickPickPresetDictionary;

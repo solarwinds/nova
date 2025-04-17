@@ -56,6 +56,7 @@ const resizeClass = "nui-resize-gutter";
  */
 @Directive({
     selector: "[nuiResizer]",
+    standalone: false
 })
 export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
     /**

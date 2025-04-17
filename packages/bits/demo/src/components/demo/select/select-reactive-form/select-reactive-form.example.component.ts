@@ -26,6 +26,7 @@ import { ISelectChangedEvent, ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-select-reactive-form",
     templateUrl: "./select-reactive-form.example.component.html",
+    standalone: false
 })
 export class SelectReactiveFormExampleComponent implements OnInit {
     public dataset = {

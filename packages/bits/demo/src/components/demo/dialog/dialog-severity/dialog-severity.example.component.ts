@@ -25,6 +25,7 @@ import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-dialog-severity-example",
     templateUrl: "./dialog-severity.example.component.html",
+    standalone: false
 })
 export class DialogSeverityExampleComponent {
     public severity: string;

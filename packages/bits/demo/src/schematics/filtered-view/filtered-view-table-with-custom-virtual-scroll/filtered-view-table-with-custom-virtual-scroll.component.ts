@@ -54,8 +54,7 @@ import { IFilterable, IServer, ServerStatus } from "./types";
     styleUrls: [
         "./filtered-view-table-with-custom-virtual-scroll.component.less",
     ],
-    templateUrl:
-        "./filtered-view-table-with-custom-virtual-scroll.component.html",
+    templateUrl: "./filtered-view-table-with-custom-virtual-scroll.component.html",
     providers: [
         VirtualViewportManager,
         {
@@ -64,6 +63,7 @@ import { IFilterable, IServer, ServerStatus } from "./types";
         },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class FilteredViewTableWithCustomVirtualScrollComponent
     implements AfterViewInit, OnDestroy

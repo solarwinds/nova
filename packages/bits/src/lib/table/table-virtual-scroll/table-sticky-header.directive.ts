@@ -60,6 +60,7 @@ export enum TableVirtualScrollHeaderPosition {
         "[class.sticky-table-header]": "true",
         style: "overflow-y:overlay",
     },
+    standalone: false
 })
 export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
     @ContentChild(TableComponent) public table: TableComponent<unknown>;

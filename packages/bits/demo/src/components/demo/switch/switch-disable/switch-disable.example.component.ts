@@ -23,6 +23,7 @@ import { Component, Input } from "@angular/core";
 @Component({
     selector: "nui-switch-disable-example",
     templateUrl: "./switch-disable.example.component.html",
+    standalone: false
 })
 export class SwitchDisableExampleComponent {
     @Input() isOn = true;

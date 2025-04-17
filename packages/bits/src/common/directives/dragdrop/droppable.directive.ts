@@ -96,6 +96,7 @@ import {
 /** @ignore */
 @Directive({
     selector: "[nuiDroppable]",
+    standalone: false
 })
 export class DroppableDirective implements OnInit, OnDestroy {
     @Input() dragOverClass = "nui-drag--over";

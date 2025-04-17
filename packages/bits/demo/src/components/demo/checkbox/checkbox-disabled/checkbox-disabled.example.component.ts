@@ -23,5 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-checkbox-disabled-example",
     templateUrl: "./checkbox-disabled.example.component.html",
+    standalone: false
 })
 export class CheckboxDisabledExampleComponent {}

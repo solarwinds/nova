@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-button-repeatable-example",
     templateUrl: "./button-repeatable.example.component.html",
+    standalone: false
 })
 export class ButtonRepeatableExampleComponent {
     count = 100;

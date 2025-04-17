@@ -26,6 +26,7 @@ import { IItemsReorderedEvent } from "@nova-ui/bits";
     selector: "nui-repeat-drag-simple-example",
     templateUrl: "./repeat-drag-simple.example.component.html",
     encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class RepeatDragSimpleExampleComponent {
     public companies: string[] = ["Adobe", "IBM", "Dell", "Microsoft"];

@@ -29,6 +29,7 @@ import { default as colors } from "../../../../src/styles/data/framework-colors.
     selector: "framework-colors-example",
     styleUrls: ["./framework-colors-example.component.less"],
     templateUrl: "./framework-colors-example.component.html",
+    standalone: false
 })
 export class FrameworkColorsExampleComponent {
     public colors = colors;

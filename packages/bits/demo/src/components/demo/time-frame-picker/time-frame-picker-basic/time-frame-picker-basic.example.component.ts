@@ -30,6 +30,7 @@ import {
 @Component({
     selector: "nui-time-frame-picker-basic-example",
     templateUrl: "./time-frame-picker-basic.example.component.html",
+    standalone: false
 })
 export class TimeFramePickerBasicExampleComponent {
     public presets: ITimeFramePresetDictionary;

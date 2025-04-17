@@ -29,6 +29,7 @@ import { SeverityLevels } from "./public-api";
 @Component({
     selector: "nui-dialog-header",
     templateUrl: "./dialog-header.component.html",
+    standalone: false
 })
 export class DialogHeaderComponent implements OnInit {
     /**

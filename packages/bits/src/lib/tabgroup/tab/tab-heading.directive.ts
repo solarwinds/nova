@@ -24,7 +24,10 @@ import { TabComponent } from "./tab.component";
 
 /** Should be used to mark <ng-template> element as a template for tab heading */
 /** @ignore */
-@Directive({ selector: "[nuiTabHeading]" })
+@Directive({
+    selector: "[nuiTabHeading]",
+    standalone: false
+})
 export class TabHeadingDirective {
     templateRef: TemplateRef<any>;
 

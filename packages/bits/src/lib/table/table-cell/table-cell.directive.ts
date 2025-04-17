@@ -48,6 +48,7 @@ import { TableAlignmentOptions } from "../types";
         role: "gridcell",
         class: "nui-table__table-cell",
     },
+    standalone: false
 })
 export class TableCellDirective
     extends CdkCell

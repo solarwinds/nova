@@ -24,6 +24,7 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
     selector: "nui-select-basic-example",
     templateUrl: "./select-basic.example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SelectBasicExampleComponent {
     public dataset = {

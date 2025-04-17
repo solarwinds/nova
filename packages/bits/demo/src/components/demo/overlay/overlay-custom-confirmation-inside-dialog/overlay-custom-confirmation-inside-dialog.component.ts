@@ -32,6 +32,7 @@ import { DialogService, NuiDialogRef, OverlayComponent } from "@nova-ui/bits";
     selector: "nui-custom-confirmation-inside-dialog",
     templateUrl: "./overlay-custom-confirmation-inside-dialog.component.html",
     styleUrls: ["./overlay-custom-confirmation-inside-dialog.component.less"],
+    standalone: false
 })
 export class CustomConfirmationInsideDialogComponent implements OnDestroy {
     public onDestroy$ = new Subject<void>();

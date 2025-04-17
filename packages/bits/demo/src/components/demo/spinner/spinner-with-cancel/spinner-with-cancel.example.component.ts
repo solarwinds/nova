@@ -23,6 +23,7 @@ import { Component, OnDestroy } from "@angular/core";
 @Component({
     selector: "nui-spinner-with-cancel-example",
     templateUrl: "./spinner-with-cancel.example.component.html",
+    standalone: false
 })
 export class SpinnerWithCancelExampleComponent implements OnDestroy {
     public show = false;

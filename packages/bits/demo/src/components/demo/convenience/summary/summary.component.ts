@@ -23,5 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-convenience-summary",
     templateUrl: "./summary.component.html",
+    standalone: false
 })
 export class SummaryComponent {}
