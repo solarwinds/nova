@@ -19,11 +19,15 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { FreetypeQueryBuilderBasicExampleComponent } from "../freetype-query-builder-basic/freetype-query-builder-basic.example.component";
 
 @Component({
     selector: "nui-freetype-query-builder-docs-example",
     templateUrl: "freetype-query-builder-docs.example.component.html",
     styleUrls: ["freetype-query-builder-docs.example.component.less"],
+    imports: [NuiMessageModule, NuiDocsModule, FreetypeQueryBuilderBasicExampleComponent]
 })
 export class FreetypeQueryBuilderDocsExampleComponent {
     tokenizerExample =

@@ -19,10 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiExpanderModule } from "../../../../src/lib/expander/expander.module";
+import { NuiDividerModule } from "../../../../src/lib/divider/divider.module";
 
 @Component({
     selector: "typography-example",
     templateUrl: "./typography-example.component.html",
     styleUrls: ["./typography-example.component.css"],
+    imports: [NuiExpanderModule, NuiDividerModule]
 })
 export class TypographyExampleComponent {}

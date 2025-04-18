@@ -22,6 +22,7 @@ import { Component } from "@angular/core";
 import _pull from "lodash/pull";
 
 import { IChipsItem, IChipsItemsSource } from "@nova-ui/bits";
+import { NuiChipsModule } from "../../../../../../src/lib/chips/chips.module";
 
 const horizontalFlatItems: IChipsItem[] = [
     { id: "flatId1", label: "Down" },
@@ -34,6 +35,7 @@ const horizontalFlatItems: IChipsItem[] = [
 @Component({
     selector: "nui-basic-chips-example",
     templateUrl: "./basic-chips.example.component.html",
+    imports: [NuiChipsModule]
 })
 export class BasicChipsExampleComponent {
     public horizontalFlatItemsSource: IChipsItemsSource = {

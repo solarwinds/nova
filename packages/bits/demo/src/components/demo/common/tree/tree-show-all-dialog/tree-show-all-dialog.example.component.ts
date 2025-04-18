@@ -19,11 +19,7 @@
 //  THE SOFTWARE.
 
 import { ArrayDataSource } from "@angular/cdk/collections";
-import {
-    CdkNestedTreeNode,
-    CdkTree,
-    NestedTreeControl,
-} from "@angular/cdk/tree";
+import { CdkNestedTreeNode, CdkTree, NestedTreeControl, CdkTreeNodeDef, CdkTreeNodeToggle, CdkTreeNodeOutlet } from "@angular/cdk/tree";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import {
     AfterViewInit,
@@ -65,6 +61,12 @@ import {
     RepeatComponent,
     VirtualViewportManager,
 } from "@nova-ui/bits";
+import { NuiButtonModule } from "../../../../../../../src/lib/button/button.module";
+import { NuiIconModule } from "../../../../../../../src/lib/icon/icon.module";
+import { NuiBusyModule } from "../../../../../../../src/lib/busy/busy.module";
+import { NgIf } from "@angular/common";
+import { NuiDialogModule } from "../../../../../../../src/lib/dialog/dialog.module";
+import { NuiRepeatModule } from "../../../../../../../src/lib/repeat/repeat.module";
 
 interface IServerNode extends Partial<IServer> {
     name: string;
@@ -263,6 +265,7 @@ export class VirtualScrollListDataSource<T = any>
     styleUrls: ["./tree-show-all-dialog.component.example.less"],
     animations: [expand],
     providers: [VirtualScrollListDataSource],
+    imports: [CdkTree, CdkTreeNodeDef, CdkNestedTreeNode, NuiButtonModule, CdkTreeNodeToggle, NuiIconModule, NuiBusyModule, CdkTreeNodeOutlet, NgIf]
 })
 export class TreeShowAllDialogExampleComponent implements OnDestroy {
     private activeDialogRef: NuiDialogRef;
@@ -468,6 +471,7 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
         `,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [NuiDialogModule, NuiBusyModule, NuiRepeatModule, NuiButtonModule]
 })
 export class TreeDialogContentExampleComponent implements AfterViewInit {
     @Input() items: IServerNode[] = [];

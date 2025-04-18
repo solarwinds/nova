@@ -21,6 +21,9 @@
 import { Component, ViewEncapsulation } from "@angular/core";
 
 import { IItemsReorderedEvent } from "@nova-ui/bits";
+import { NuiSwitchModule } from "../../../../../../src/lib/switch/switch.module";
+import { NuiRepeatModule } from "../../../../../../src/lib/repeat/repeat.module";
+import { JsonPipe } from "@angular/common";
 
 type ISortingOrderTrimmedData = Omit<IItemsReorderedEvent, "item" | "dropListRef">;
 
@@ -28,6 +31,7 @@ type ISortingOrderTrimmedData = Omit<IItemsReorderedEvent, "item" | "dropListRef
     selector: "nui-repeat-reorder-simple-example",
     templateUrl: "./repeat-reorder-simple-example.component.html",
     encapsulation: ViewEncapsulation.None,
+    imports: [NuiSwitchModule, NuiRepeatModule, JsonPipe]
 })
 export class RepeatReorderSimpleExampleComponent {
     public companies: string[] = ["Adobe", "IBM", "Dell", "Microsoft"];

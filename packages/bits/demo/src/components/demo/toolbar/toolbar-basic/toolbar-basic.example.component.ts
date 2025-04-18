@@ -21,10 +21,12 @@
 import { Component, Inject } from "@angular/core";
 
 import { IToastService, ToastService } from "@nova-ui/bits";
+import { NuiToolbarModule } from "../../../../../../src/lib/toolbar/toolbar.module";
 
 @Component({
     selector: "nui-toolbar-basic-example",
     templateUrl: "./toolbar-basic.example.component.html",
+    imports: [NuiToolbarModule]
 })
 export class ToolbarBasicExampleComponent {
     constructor(@Inject(ToastService) private toastService: IToastService) {}

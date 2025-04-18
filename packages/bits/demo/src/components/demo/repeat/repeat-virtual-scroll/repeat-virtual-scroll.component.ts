@@ -44,6 +44,8 @@ import {
 import { RESULTS_PER_PAGE } from "./repeat-virtual-scroll-data";
 import { RepeatVirtualScrollDataSource } from "./repeat-virtual-scroll-data-source";
 import { IServer } from "./types";
+import { NuiRepeatModule } from "../../../../../../src/lib/repeat/repeat.module";
+import { NgFor, AsyncPipe, KeyValuePipe } from "@angular/common";
 
 @Component({
     selector: "repeat-virtual-scroll",
@@ -57,6 +59,7 @@ import { IServer } from "./types";
             useClass: RepeatVirtualScrollDataSource,
         },
     ],
+    imports: [NuiRepeatModule, NgFor, AsyncPipe, KeyValuePipe]
 })
 export class RepeatVirtualScrollComponent
     implements OnInit, AfterViewInit, OnDestroy

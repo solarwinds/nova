@@ -19,9 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiContentModule } from "../../../../../src/lib/content/content.module";
+import { NuiButtonModule } from "../../../../../src/lib/button/button.module";
 
 @Component({
     templateUrl: "./content.example.component.html",
+    imports: [NuiContentModule, NuiButtonModule]
 })
 export class ContentExampleComponent {
     public dynamicContent = `

@@ -101,8 +101,6 @@ const routes = [
         NuiDocsModule,
         RouterModule.forChild(routes),
         NuiIconModule,
-    ],
-    declarations: [
         AutohideChipsExampleComponent,
         BasicChipsExampleComponent,
         ChipsDocsExampleComponent,

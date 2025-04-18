@@ -19,10 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiSearchModule } from "../../../../../../src/lib/search/search.module";
 
 @Component({
     selector: "nui-search-visual-test",
     templateUrl: "./search-visual-test.component.html",
+    imports: [NuiSearchModule]
 })
 export class SearchVisualTestComponent {
     public value: string = "example value";

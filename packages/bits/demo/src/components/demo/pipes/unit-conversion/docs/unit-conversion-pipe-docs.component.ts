@@ -19,9 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiMessageModule } from "../../../../../../../src/lib/message/message.module";
+import { NuiDocsModule } from "../../../../../../../src/lib/docs/docs.module";
+import { UnitConversionPipeBasicExampleComponent } from "../unit-conversion-basic/unit-conversion-pipe-basic.example.component";
 
 @Component({
     templateUrl: "./unit-conversion-pipe-docs.component.html",
     styleUrls: ["./unit-conversion-pipe-docs.component.less"],
+    imports: [NuiMessageModule, NuiDocsModule, UnitConversionPipeBasicExampleComponent]
 })
 export class UnitConversionPipeDocsComponent {}

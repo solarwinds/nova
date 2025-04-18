@@ -19,9 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiImageModule } from "../../../../../../src/lib/image/image.module";
 
 @Component({
     selector: "nui-image-watermarked-example",
     templateUrl: "./image-watermarked.example.component.html",
+    imports: [NuiImageModule]
 })
 export class ImageWatermarkedExampleComponent {}

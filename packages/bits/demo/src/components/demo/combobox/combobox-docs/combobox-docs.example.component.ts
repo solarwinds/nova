@@ -19,9 +19,25 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { ComboboxBasicExampleComponent } from "../combobox-basic/combobox-basic.example.component";
+import { ComboboxDisabledExampleComponent } from "../combobox-disabled/combobox-disabled.example.component";
+import { ComboboxRequiredExampleComponent } from "../combobox-required/combobox-required.example.component";
+import { ComboboxInlineExampleComponent } from "../combobox-inline/combobox-inline.example.component";
+import { ComboboxClearExampleComponent } from "../combobox-clear/combobox-clear.example.component";
+import { ComboboxIconExampleComponent } from "../combobox-icon/combobox-icon.example.component";
+import { ComboboxJustifiedExampleComponent } from "../combobox-justified/combobox-justified.example.component";
+import { ComboboxDisplayValueExampleComponent } from "../combobox-display-value/combobox-display-value.example.component";
+import { ComboboxReactiveFormExampleComponent } from "../combobox-reactive-form/combobox-reactive-form.example.component";
+import { ComboboxTypeaheadExampleComponent } from "../combobox-typeahead/combobox-typeahead.example.component";
+import { ComboboxSeparatorsExampleComponent } from "../combobox-separators/combobox-separators.example.component";
+import { ComboboxCustomTemplateExampleComponent } from "../combobox-custom-template/combobox-custom-template.example.component";
+import { ComboboxAppendToBodyExampleComponent } from "../combobox-append-to-body/combobox-append-to-body.example.component";
+import { ComboboxWithRemoveValueExampleComponent } from "../combobox-with-remove-value/combobox-with-remove-value.example.component";
 
 @Component({
     selector: "nui-combobox-docs-example",
     templateUrl: "./combobox-docs.example.component.html",
+    imports: [NuiDocsModule, ComboboxBasicExampleComponent, ComboboxDisabledExampleComponent, ComboboxRequiredExampleComponent, ComboboxInlineExampleComponent, ComboboxClearExampleComponent, ComboboxIconExampleComponent, ComboboxJustifiedExampleComponent, ComboboxDisplayValueExampleComponent, ComboboxReactiveFormExampleComponent, ComboboxTypeaheadExampleComponent, ComboboxSeparatorsExampleComponent, ComboboxCustomTemplateExampleComponent, ComboboxAppendToBodyExampleComponent, ComboboxWithRemoveValueExampleComponent]
 })
 export class ComboboxDocsComponent {}

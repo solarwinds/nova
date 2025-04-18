@@ -33,11 +33,16 @@ import {
     OverlayComponent,
     OVERLAY_WITH_POPUP_STYLES_CLASS,
 } from "@nova-ui/bits";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiOverlayModule } from "../../../../../../src/lib/overlay/overlay.module";
+import { NgFor } from "@angular/common";
+import { NuiMenuModule } from "../../../../../../src/lib/menu/menu.module";
 
 @Component({
     selector: "nui-overlay-viewport-margin-example",
     templateUrl: "./overlay-viewport-margin.example.component.html",
     encapsulation: ViewEncapsulation.Emulated,
+    imports: [NuiButtonModule, NuiOverlayModule, NgFor, NuiMenuModule]
 })
 export class OverlayViewportMarginExampleComponent
     implements AfterViewInit, OnDestroy

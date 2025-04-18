@@ -28,6 +28,14 @@ import {
 import { FormBuilder, Validators } from "@angular/forms";
 
 import { DialogService, TableComponent } from "@nova-ui/bits";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NgIf, NgFor } from "@angular/common";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
+import { NuiDividerModule } from "../../../../../../src/lib/divider/divider.module";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
+import { NuiTableModule } from "../../../../../../src/lib/table/table.module";
+import { NuiMenuModule } from "../../../../../../src/lib/menu/menu.module";
 
 interface IExampleTableModel {
     issue: string;
@@ -45,6 +53,7 @@ interface IExampleTableModel {
     templateUrl: "./table-columns-add-remove.example.component.html",
     styleUrls: ["table-columns-add-remove.example.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [NuiButtonModule, NgIf, NuiMessageModule, NuiCheckboxModule, NgFor, NuiDividerModule, NuiTextboxModule, NuiTableModule, NuiMenuModule]
 })
 export class TableColumnsAddRemoveExampleComponent {
     public availableColumns = [

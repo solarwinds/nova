@@ -21,10 +21,20 @@
 import { Component } from "@angular/core";
 
 import { IToastConfig, IToastDeclaration } from "@nova-ui/bits";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { ToastBasicExampleComponent } from "../toast-basic/toast-basic.example.component";
+import { ToastBasicHtmlExampleComponent } from "../toast-basic-html/toast-basic-html.example.component";
+import { ToastTypeExampleComponent } from "../toast-type/toast-type.example.component";
+import { ToastConfigExampleComponent } from "../toast-config/toast-config.example.component";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
+import { ToastPositionExampleComponent } from "../toast-position/toast-position.example.component";
+import { ToastStickyErrorExampleComponent } from "../toast-sticky-error/toast-sticky-error.example.component";
+import { ToastEventsExampleComponent } from "../toast-events/toast-events.example.component";
 
 @Component({
     selector: "nui-toast-docs-example",
     templateUrl: "./toast-docs.example.component.html",
+    imports: [NuiDocsModule, ToastBasicExampleComponent, ToastBasicHtmlExampleComponent, ToastTypeExampleComponent, ToastConfigExampleComponent, NuiMessageModule, ToastPositionExampleComponent, ToastStickyErrorExampleComponent, ToastEventsExampleComponent]
 })
 export class ToastExampleComponent {
     getToastDeclarationKey(key: keyof IToastDeclaration): string {

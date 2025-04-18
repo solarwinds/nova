@@ -29,7 +29,7 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
-import { FormBuilder, FormControl, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -40,6 +40,15 @@ import {
     OVERLAY_WITH_POPUP_STYLES_CLASS,
     SelectV2Component,
 } from "@nova-ui/bits";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NgFor, NgIf } from "@angular/common";
+import { NuiFormFieldModule } from "../../../../../../src/lib/form-field/form-field.module";
+import { NuiValidationMessageModule } from "../../../../../../src/lib/validation-message/validation-message.module";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
+import { NuiDividerModule } from "../../../../../../src/lib/divider/divider.module";
+import { NuiSwitchModule } from "../../../../../../src/lib/switch/switch.module";
+import { NuiDialogModule } from "../../../../../../src/lib/dialog/dialog.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 interface IExampleItem {
     id: string;
@@ -54,6 +63,7 @@ interface IExampleItem {
     styleUrls: ["./select-v2-test.example.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: { class: "select-container" },
+    imports: [NuiSelectV2Module, FormsModule, ReactiveFormsModule, NgFor, NuiFormFieldModule, NuiValidationMessageModule, NuiIconModule, NgIf, NuiDividerModule, NuiSwitchModule, NuiDialogModule, NuiButtonModule]
 })
 export class SelectV2TestExampleComponent
     implements OnInit, AfterViewInit, OnDestroy

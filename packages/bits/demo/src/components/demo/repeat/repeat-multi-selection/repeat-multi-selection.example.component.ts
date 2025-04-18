@@ -19,10 +19,14 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiSwitchModule } from "../../../../../../src/lib/switch/switch.module";
+import { NuiRepeatModule } from "../../../../../../src/lib/repeat/repeat.module";
+import { JsonPipe } from "@angular/common";
 
 @Component({
     selector: "nui-repeat-multi-selection-example",
     templateUrl: "./repeat-multi-selection.example.component.html",
+    imports: [NuiSwitchModule, NuiRepeatModule, JsonPipe]
 })
 export class RepeatMultiSelectionExampleComponent {
     public colors = [

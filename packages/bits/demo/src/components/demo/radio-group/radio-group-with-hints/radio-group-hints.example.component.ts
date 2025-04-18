@@ -19,10 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiRadioModule } from "../../../../../../src/lib/radio/radio.module";
+import { NgFor } from "@angular/common";
 
 @Component({
     selector: "nui-with-hints-radio-group-example",
     templateUrl: "./radio-group-hints.example.component.html",
+    imports: [NuiRadioModule, NgFor]
 })
 export class RadioGroupHintsExampleComponent {
     public colors = [$localize`Red`, $localize`Green`, $localize`Blue`];

@@ -19,9 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../../src/lib/docs/docs.module";
+import { DataFilterBasicExampleComponent } from "../data-filter-basic/data-filter-basic.example.component";
+import { DataFilterIsolatedExampleComponent } from "../data-filter-isolated/data-filter-isolated.example.component";
 
 @Component({
     selector: "nui-data-filter-example",
     templateUrl: "./data-filter-docs.example.component.html",
+    imports: [NuiDocsModule, DataFilterBasicExampleComponent, DataFilterIsolatedExampleComponent]
 })
 export class DataFilterDocsExampleComponent {}

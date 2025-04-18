@@ -87,8 +87,6 @@ const routes: Route[] = [
         NuiProgressModule,
         NuiDocsModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         BusyBasicExampleComponent,
         BusyDocsExampleComponent,
         BusySpinnerExampleComponent,

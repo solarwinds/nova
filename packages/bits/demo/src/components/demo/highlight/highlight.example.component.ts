@@ -19,10 +19,16 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../src/lib/docs/docs.module";
+import { NgFor } from "@angular/common";
+import { NuiDividerModule } from "../../../../../src/lib/divider/divider.module";
+import { FormsModule } from "@angular/forms";
+import { NuiCommonModule } from "../../../../../src/common/common.module";
 
 @Component({
     selector: "nui-highlight",
     templateUrl: "./highlight.example.component.html",
+    imports: [NuiDocsModule, NgFor, NuiDividerModule, FormsModule, NuiCommonModule]
 })
 export class HighlightExampleComponent {
     public contentString = $localize`

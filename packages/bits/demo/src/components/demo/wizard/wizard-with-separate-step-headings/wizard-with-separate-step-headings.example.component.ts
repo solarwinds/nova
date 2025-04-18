@@ -19,10 +19,14 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
+import { NuiWizardModule } from "../../../../../../src/lib/wizard/wizard.module";
 
 @Component({
     selector: "nui-wizard-with-separate-step-headings-example",
     templateUrl: "./wizard-with-separate-step-headings.example.component.html",
+    imports: [NuiTextboxModule, NuiCheckboxModule, NuiWizardModule]
 })
 export class WizardWithSeparateStepHeadingsExampleComponent {
     public textboxValue = "Example Textbox Value";

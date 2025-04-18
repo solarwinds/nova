@@ -19,9 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiPanelModule } from "../../../../../../src/lib/panel/panel.module";
 
 @Component({
     selector: "nui-panel-basic-example",
     templateUrl: "./panel-basic.example.component.html",
+    imports: [NuiPanelModule]
 })
 export class PanelBasicExampleComponent {}

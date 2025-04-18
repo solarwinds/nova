@@ -47,12 +47,18 @@ import {
 
 import { LOCAL_DATA, RESULTS_PER_PAGE } from "../filtered-view-with-list-data";
 import { IServer, IServerFilters } from "../types";
+import { NuiSorterModule } from "../../../../../../src/lib/sorter/sorter.module";
+import { NuiSearchModule } from "../../../../../../src/lib/search/search.module";
+import { NgIf, NgFor, KeyValuePipe } from "@angular/common";
+import { NuiRepeatModule } from "../../../../../../src/lib/repeat/repeat.module";
+import { NuiPaginatorModule } from "../../../../../../src/lib/paginator/paginator.module";
 
 @Component({
     selector: "app-filtered-view-with-list-list",
     templateUrl: "./filtered-view-list.component.html",
     styleUrls: ["./filtered-view-list.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [NuiSorterModule, NuiSearchModule, NgIf, NuiRepeatModule, NuiPaginatorModule, NgFor, KeyValuePipe]
 })
 export class FilteredViewListComponent implements AfterViewInit, OnDestroy {
     public readonly sorterItems: IMenuItem[] = [

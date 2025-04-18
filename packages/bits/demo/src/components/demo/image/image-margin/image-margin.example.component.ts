@@ -19,9 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiImageModule } from "../../../../../../src/lib/image/image.module";
 
 @Component({
     selector: "nui-image-margin-example",
     templateUrl: "./image-margin.example.component.html",
+    imports: [NuiImageModule]
 })
 export class ImageMarginExampleComponent {}

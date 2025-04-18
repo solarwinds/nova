@@ -21,11 +21,15 @@
 import { Component } from "@angular/core";
 
 import { TooltipPosition } from "@nova-ui/bits";
+import { NuiRadioModule } from "../../../../../../src/lib/radio/radio.module";
+import { NgFor } from "@angular/common";
+import { NuiTooltipModule } from "../../../../../../src/lib/tooltip/tooltip.module";
 
 @Component({
     selector: "nui-tooltip-position-example",
     templateUrl: "tooltip-position.example.component.html",
     styleUrls: ["./tooltip-position.example.component.less"],
+    imports: [NuiRadioModule, NgFor, NuiTooltipModule]
 })
 export class TooltipPositionExampleComponent {
     public positions: TooltipPosition[] = ["top", "bottom", "left", "right"];

@@ -19,10 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
 
 @Component({
     selector: "nui-message-warning-example",
     templateUrl: "./message-warning.example.component.html",
+    imports: [NuiMessageModule]
 })
 export class MessageWarningExampleComponent {
     public onMessageDismiss(): void {

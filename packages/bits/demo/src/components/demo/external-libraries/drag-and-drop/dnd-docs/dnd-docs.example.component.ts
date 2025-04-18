@@ -19,10 +19,20 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../../src/lib/docs/docs.module";
+import { NuiMessageModule } from "../../../../../../../src/lib/message/message.module";
+import { DndBasicExampleComponent } from "../dnd-basic/dnd-basic.example.component";
+import { DndAxisConstraintsExampleComponent } from "../dnd-axis-constraints/dnd-axis-constraints.example.component";
+import { DndDragDisabledExampleComponent } from "../dnd-drag-disabled/dnd-drag-disabled-example.component";
+import { DndDragPreviewExampleComponent } from "../dnd-drag-preview/dnd-drag-preview.example.component";
+import { DndCustomHandleExampleComponent } from "../dnd-custom-handle/dnd-custom-handle.example.component";
+import { DndDragPlaceholderExampleComponent } from "../dnd-drag-placeholder/dnd-drag-placeholder-example.component";
+import { DndDropzoneExampleComponent } from "../dnd-dropzone/dnd-dropzone.example.component";
 
 @Component({
     selector: "nui-dnd-docs",
     templateUrl: "./dnd-docs.example.component.html",
+    imports: [NuiDocsModule, NuiMessageModule, DndBasicExampleComponent, DndAxisConstraintsExampleComponent, DndDragDisabledExampleComponent, DndDragPreviewExampleComponent, DndCustomHandleExampleComponent, DndDragPlaceholderExampleComponent, DndDropzoneExampleComponent]
 })
 export class DndDocsExampleComponent {
     public initialSetupCode = `

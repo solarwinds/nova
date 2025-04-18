@@ -22,6 +22,10 @@ import { OverlayConfig } from "@angular/cdk/overlay";
 import { Component, ViewEncapsulation } from "@angular/core";
 
 import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "@nova-ui/bits";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiOverlayModule } from "../../../../../../src/lib/overlay/overlay.module";
+import { NgFor } from "@angular/common";
+import { NuiOverlayAdditionsModule } from "../../../../../../src/lib/overlay/overlay-additions.module";
 
 @Component({
     selector: "nui-overlay-custom-styles-example",
@@ -30,6 +34,7 @@ import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "@nova-ui/bits";
     // This is done to make class from the less file global.
     // Make sure the class from the less file is added to your global style sheet.
     encapsulation: ViewEncapsulation.None,
+    imports: [NuiButtonModule, NuiOverlayModule, NgFor, NuiOverlayAdditionsModule]
 })
 export class OverlayCustomStylesExampleComponent {
     public itemsSource: string[] = [

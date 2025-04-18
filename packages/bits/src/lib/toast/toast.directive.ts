@@ -32,6 +32,7 @@ import { NotificationService } from "../../services/notification-service";
 /** @ignore */
 @Directive({
     selector: "[nuiToast]",
+    standalone: false
 })
 /**
  * __Name :__

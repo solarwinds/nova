@@ -44,8 +44,6 @@ import { ItemPickerModule } from "./item-picker/item-picker.module";
         NuiExpanderModule,
         NuiPopoverModule,
         ItemPickerModule,
-    ],
-    declarations: [
         FilterGroupsWrapperComponent,
         FilterGroupDialogComponent,
         FilterGroupComponent,

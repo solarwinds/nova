@@ -71,8 +71,6 @@ const routes = [
         NuiMessageModule,
         NuiDocsModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         SorterBasicExampleComponent,
         SorterLegacyStringInputUsageVisualTestComponent,
         SorterExampleComponent,

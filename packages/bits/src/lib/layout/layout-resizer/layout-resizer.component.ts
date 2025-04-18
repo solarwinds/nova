@@ -52,6 +52,7 @@ import { UtilService } from "../../../services/util.service";
         "[class.nui-layout-resizer--vertical]": "!isResizeHorizontal()",
         "[class.nui-layout-resizer--horizontal]": "isResizeHorizontal()",
     },
+    standalone: false
 })
 export class LayoutResizerComponent
     extends ResizerDirective

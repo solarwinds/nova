@@ -35,12 +35,39 @@ import {
     NuiDialogRef,
     ToastService,
 } from "@nova-ui/bits";
+import { SimpleDialogExampleComponent } from "../simple-dialog/simple-dialog.example.component";
+import { ComponentAsContentExampleComponent } from "../component-as-content/component-as-content.example.component";
+import { DialogSeverityExampleComponent } from "../dialog-severity/dialog-severity.example.component";
+import { HeaderButtonsExampleComponent } from "../header-buttons/header-buttons.example.component";
+import { DialogSizesExampleComponent } from "../dialog-sizes/dialog-sizes.example.component";
+import { DialogPositionExampleComponent } from "../dialog-position/dialog-position.example.component";
+import { DialogCustomClassExampleComponent } from "../dialog-custom-class/dialog-custom-class.example.component";
+import { ConfirmationDialogExampleComponent } from "../confirmation-dialog/confirmation-dialog.example.component";
+import { DialogWithKeyboardExampleComponent } from "../dialog-keyboard/dialog-with-keyboard.example.component";
+import { DialogWithStaticBackdropExampleComponent } from "../dialog-static-backdrop/dialog-with-static-backdrop.example.component";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NgTemplateOutlet, NgFor } from "@angular/common";
+import { NuiDialogModule } from "../../../../../../src/lib/dialog/dialog.module";
+import { NuiMenuModule } from "../../../../../../src/lib/menu/menu.module";
+import { PopupAdapterModule } from "../../../../../../src/lib/popup-adapter/popup-adapter.module";
+import { NuiPopupModule } from "../../../../../../src/lib/popup/popup.module";
+import { NuiTooltipModule } from "../../../../../../src/lib/tooltip/tooltip.module";
+import { NuiSelectModule } from "../../../../../../src/lib/select/select.module";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NuiSpinnerModule } from "../../../../../../src/lib/spinner/spinner.module";
+import { NuiBusyModule } from "../../../../../../src/lib/busy/busy.module";
+import { NuiDateTimePickerModule } from "../../../../../../src/lib/date-time-picker/date-time-picker.module";
+import { NuiTimeFrameBarModule } from "../../../../../../src/lib/convenience/time-frame-bar/time-frame-bar.module";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
+import { NuiTimeFramePickerModule } from "../../../../../../src/lib/time-frame-picker/time-frame-picker.module";
+import { NuiPopoverModule } from "../../../../../../src/lib/popover/popover.module";
 
 @Component({
     selector: "nui-dialog-zindex--test",
     templateUrl: "./dialog-zindex-test.component.html",
     styleUrls: ["./dialog-zindex-test.component.less"],
     encapsulation: ViewEncapsulation.None,
+    imports: [SimpleDialogExampleComponent, ComponentAsContentExampleComponent, DialogSeverityExampleComponent, HeaderButtonsExampleComponent, DialogSizesExampleComponent, DialogPositionExampleComponent, DialogCustomClassExampleComponent, ConfirmationDialogExampleComponent, DialogWithKeyboardExampleComponent, DialogWithStaticBackdropExampleComponent, NuiButtonModule, NgTemplateOutlet, NuiDialogModule, NuiMenuModule, NgFor, PopupAdapterModule, NuiPopupModule, NuiTooltipModule, NuiSelectModule, NuiSelectV2Module, NuiSpinnerModule, NuiBusyModule, NuiDateTimePickerModule, NuiTimeFrameBarModule, NuiIconModule, NuiTimeFramePickerModule, NuiPopoverModule]
 })
 export class DialogZIndexTestComponent implements OnInit {
     public busy: boolean = false;

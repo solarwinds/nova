@@ -69,6 +69,7 @@ const ADAPTER_OVERLAY_CONFIG: OverlayConfig = {
         role: "dialog",
         "[attr.aria-label]": "ariaLabel",
     },
+    standalone: false
 })
 export class PopupComponent
     implements AfterContentInit, AfterViewInit, OnChanges, OnDestroy

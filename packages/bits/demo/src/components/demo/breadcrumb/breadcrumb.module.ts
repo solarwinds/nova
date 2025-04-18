@@ -132,8 +132,6 @@ const routes = [
         NuiBreadcrumbModule,
         NuiButtonModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         BreadcrumbDocsExampleComponent,
         BreadcrumbBasicExampleComponent,
         BreadcrumbCountriesSubviewComponent,

@@ -19,13 +19,18 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { CheckboxChangeEvent } from "@nova-ui/bits";
+import { NuiRadioModule } from "../../../../../../src/lib/radio/radio.module";
+import { NgFor } from "@angular/common";
+import { NuiFormFieldModule } from "../../../../../../src/lib/form-field/form-field.module";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
 
 @Component({
     selector: "nui-radio-group-test",
     templateUrl: "./radio-group-test.component.html",
+    imports: [NuiRadioModule, NgFor, FormsModule, ReactiveFormsModule, NuiFormFieldModule, NuiCheckboxModule]
 })
 export class RadioGroupTestComponent {
     public disabledForm;

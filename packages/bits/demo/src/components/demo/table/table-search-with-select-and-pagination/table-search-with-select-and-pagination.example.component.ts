@@ -32,6 +32,11 @@ import {
     TableSelectionConfig,
     TableSelectionMode,
 } from "@nova-ui/bits";
+import { NuiSearchModule } from "../../../../../../src/lib/search/search.module";
+import { NuiTableModule } from "../../../../../../src/lib/table/table.module";
+import { NgFor, JsonPipe } from "@angular/common";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
+import { NuiPaginatorModule } from "../../../../../../src/lib/paginator/paginator.module";
 
 interface IExampleTableModel {
     position: number;
@@ -47,11 +52,11 @@ interface IExampleTableModel {
 @Component({
     selector: "nui-table-search-with-select-and-pagination",
     providers: [ClientSideDataSource],
-    templateUrl:
-        "./table-search-with-select-and-pagination.example.component.html",
+    templateUrl: "./table-search-with-select-and-pagination.example.component.html",
     styleUrls: [
         "./table-search-with-select-and-pagination.example.component.less",
     ],
+    imports: [NuiSearchModule, NuiTableModule, NgFor, NuiIconModule, NuiPaginatorModule, JsonPipe]
 })
 export class TableSearchWithSelectAndPaginationComponent
     implements AfterViewInit, OnDestroy

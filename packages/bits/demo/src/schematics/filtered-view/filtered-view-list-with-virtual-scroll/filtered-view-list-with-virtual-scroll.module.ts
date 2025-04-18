@@ -50,8 +50,6 @@ import { FilteredViewListWithVirtualScrollComponent } from "./filtered-view-list
         FilterGroupModule,
         NuiChipsModule,
         NuiPopoverModule,
-    ],
-    declarations: [
         FilteredViewListWithVirtualScrollComponent,
         FilteredViewListComponent,
     ],

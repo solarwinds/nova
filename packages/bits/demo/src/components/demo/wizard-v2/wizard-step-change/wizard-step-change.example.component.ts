@@ -27,6 +27,9 @@ import {
 } from "@angular/core";
 
 import { ToastService, WizardHorizontalComponent } from "@nova-ui/bits";
+import { NuiWizardV2Module } from "../../../../../../src/lib/wizard-v2/wizard.module";
+import { NgFor, NgTemplateOutlet, NgIf } from "@angular/common";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 interface IWizardStepData {
     title: string;
@@ -36,6 +39,7 @@ interface IWizardStepData {
 @Component({
     selector: "nui-wizard-step-change-example",
     templateUrl: "./wizard-step-change.example.component.html",
+    imports: [NuiWizardV2Module, NgFor, NgTemplateOutlet, NgIf, NuiButtonModule]
 })
 export class WizardStepChangeExampleComponent implements AfterViewInit {
     public steps: IWizardStepData[] = [];

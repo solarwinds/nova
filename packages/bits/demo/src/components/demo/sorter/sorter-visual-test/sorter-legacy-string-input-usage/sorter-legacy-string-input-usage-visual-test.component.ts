@@ -22,6 +22,9 @@ import { AfterViewInit, Component } from "@angular/core";
 import _orderBy from "lodash/orderBy";
 
 import { ISorterChanges, SorterDirection } from "@nova-ui/bits";
+import { NuiSorterModule } from "../../../../../../../src/lib/sorter/sorter.module";
+import { NuiRepeatModule } from "../../../../../../../src/lib/repeat/repeat.module";
+import { NgFor, TitleCasePipe } from "@angular/common";
 
 interface IFilm {
     title: string;
@@ -31,11 +34,11 @@ interface IFilm {
 
 @Component({
     selector: "nui-sorter-legacy-string-input-usage-visual-test",
-    templateUrl:
-        "./sorter-legacy-string-input-usage-visual-test.component.html",
+    templateUrl: "./sorter-legacy-string-input-usage-visual-test.component.html",
     styleUrls: [
         "./sorter-legacy-string-input-usage-visual-test.component.less",
     ],
+    imports: [NuiSorterModule, NuiRepeatModule, NgFor, TitleCasePipe]
 })
 export class SorterLegacyStringInputUsageVisualTestComponent
     implements AfterViewInit

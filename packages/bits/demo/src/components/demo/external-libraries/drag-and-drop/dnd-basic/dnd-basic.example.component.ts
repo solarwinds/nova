@@ -19,10 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { CdkDrag } from "@angular/cdk/drag-drop";
 
 @Component({
     selector: "dnd-basic",
     templateUrl: "./dnd-basic.example.component.html",
     styleUrls: ["./dnd-basic.example.component.less"],
+    imports: [CdkDrag]
 })
 export class DndBasicExampleComponent {}

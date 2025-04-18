@@ -19,6 +19,9 @@
 //  THE SOFTWARE.
 
 import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
+import { NuiTableModule } from "../../../../../../src/lib/table/table.module";
+import { NgFor } from "@angular/common";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
 
 interface IExampleTableModel {
     position: number;
@@ -36,6 +39,7 @@ interface IExampleTableModel {
     templateUrl: "./table-row-height-set.example.component.html",
     styleUrls: ["./table-row-height-set.example.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [NuiTableModule, NgFor, NuiIconModule]
 })
 export class TableRowHeightSetExampleComponent {
     public displayedColumns = [

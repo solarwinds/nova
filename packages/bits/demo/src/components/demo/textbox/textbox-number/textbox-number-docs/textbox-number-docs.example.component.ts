@@ -19,10 +19,15 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiMessageModule } from "../../../../../../../src/lib/message/message.module";
+import { NuiDocsModule } from "../../../../../../../src/lib/docs/docs.module";
+import { TextboxNumberBasicExampleComponent } from "../textbox-number-basic/textbox-number-basic.example.component";
+import { TextboxNumberMinMaxExampleComponent } from "../textbox-number-min-max/textbox-number-min-max.example.component";
 
 @Component({
     selector: "nui-textbox-number-docs-example",
     templateUrl: "./textbox-number-docs.example.component.html",
     styleUrls: ["./textbox-number-docs.example.component.less"],
+    imports: [NuiMessageModule, NuiDocsModule, TextboxNumberBasicExampleComponent, TextboxNumberMinMaxExampleComponent]
 })
 export class TextboxNumberDocsExampleComponent {}

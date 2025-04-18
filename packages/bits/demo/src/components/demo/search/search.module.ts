@@ -88,8 +88,6 @@ const routes = [
         ReactiveFormsModule,
         RouterModule.forChild(routes),
         NuiSelectModule,
-    ],
-    declarations: [
         SearchTestExampleComponent,
         SearchBasicExampleComponent,
         SearchDocsExampleComponent,

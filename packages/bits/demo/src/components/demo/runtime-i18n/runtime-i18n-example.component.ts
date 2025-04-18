@@ -19,10 +19,15 @@
 //  THE SOFTWARE.
 
 import { Component, OnDestroy } from "@angular/core";
+import { NuiDocsModule } from "../../../../../src/lib/docs/docs.module";
+import { NuiButtonModule } from "../../../../../src/lib/button/button.module";
+import { NuiFormFieldModule } from "../../../../../src/lib/form-field/form-field.module";
+import { NuiTextboxModule } from "../../../../../src/lib/textbox/textbox.module";
 
 @Component({
     selector: "nui-runtime-i18n-example",
     templateUrl: "./runtime-i18n-example.component.html",
+    imports: [NuiDocsModule, NuiButtonModule, NuiFormFieldModule, NuiTextboxModule]
 })
 export class RuntimeI18NExampleComponent implements OnDestroy {
     public firstNamePlaceholder: string = `John`;

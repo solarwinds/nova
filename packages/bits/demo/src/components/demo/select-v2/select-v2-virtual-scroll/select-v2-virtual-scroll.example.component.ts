@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
+import { CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf } from "@angular/cdk/scrolling";
 import {
     AfterViewInit,
     Component,
@@ -27,16 +27,18 @@ import {
     OnInit,
     ViewChild,
 } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { SelectV2Component } from "@nova-ui/bits";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
 
 @Component({
     selector: "nui-select-v2-virtual-scroll-example",
     templateUrl: "select-v2-virtual-scroll.example.component.html",
     host: { class: "select-container" },
+    imports: [NuiSelectV2Module, FormsModule, ReactiveFormsModule, CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf]
 })
 export class SelectV2VirtualScrollExampleComponent
     implements OnInit, OnDestroy, AfterViewInit

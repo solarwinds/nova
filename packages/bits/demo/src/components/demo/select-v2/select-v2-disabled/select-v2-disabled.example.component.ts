@@ -19,6 +19,9 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NgFor } from "@angular/common";
+import { NuiSwitchModule } from "../../../../../../src/lib/switch/switch.module";
 
 interface IExampleItem {
     name: string;
@@ -29,6 +32,7 @@ interface IExampleItem {
     selector: "nui-select-v2-disabled-example",
     templateUrl: "./select-v2-disabled.example.component.html",
     host: { class: "select-container" },
+    imports: [NuiSelectV2Module, NgFor, NuiSwitchModule]
 })
 export class SelectV2DisabledExampleComponent {
     public items: IExampleItem[] = Array.from({ length: 100 }).map((_, i) => ({

@@ -24,11 +24,15 @@ import { ToastService } from "@nova-ui/bits";
 
 /* eslint-disable-next-line */
 import { default as colors } from "../../../../src/styles/data/framework-colors.json";
+import { NuiMessageModule } from "../../../../src/lib/message/message.module";
+import { NgFor, NgIf, NgClass, SlicePipe, TitleCasePipe, KeyValuePipe } from "@angular/common";
+import { NuiCommonModule } from "../../../../src/common/common.module";
 
 @Component({
     selector: "framework-colors-example",
     styleUrls: ["./framework-colors-example.component.less"],
     templateUrl: "./framework-colors-example.component.html",
+    imports: [NuiMessageModule, NgFor, NgIf, NuiCommonModule, NgClass, SlicePipe, TitleCasePipe, KeyValuePipe]
 })
 export class FrameworkColorsExampleComponent {
     public colors = colors;

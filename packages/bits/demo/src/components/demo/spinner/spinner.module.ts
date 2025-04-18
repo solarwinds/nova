@@ -74,8 +74,6 @@ const routes = [
         NuiSpinnerModule,
         NuiDocsModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         SpinnerBasicExampleComponent,
         SpinnerDeterminateExampleComponent,
         SpinnerTestComponent,

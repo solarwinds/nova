@@ -19,9 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiExpanderModule } from "../../../../../../src/lib/expander/expander.module";
 
 @Component({
     selector: "nui-expander-without-border-example",
     templateUrl: "expander-without-border.example.component.html",
+    imports: [NuiExpanderModule]
 })
 export class ExpanderWithoutBorderExampleComponent {}

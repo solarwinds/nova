@@ -19,9 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
 
 @Component({
     selector: "nui-icon-basic-example",
     templateUrl: "./icon-basic.example.component.html",
+    imports: [NuiIconModule]
 })
 export class IconBasicExampleComponent {}

@@ -19,9 +19,17 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { SearchBasicExampleComponent } from "../search-basic/search-basic.example.component";
+import { SearchPlaceholderExampleComponent } from "../search-placeholder/search-placeholder.example.component";
+import { SearchErrorStateExampleComponent } from "../search-error-state/search-error-state.example.component";
+import { SearchInputChangeExampleComponent } from "../search-input-change/search-input-change.example.component";
+import { SearchFocusChangeExampleComponent } from "../search-focus-change/search-focus-change.example.component";
+import { SearchOnSearchCancelExampleComponent } from "../search-on-search-cancel/search-on-search-cancel.example.component";
 
 @Component({
     selector: "nui-search-docs-example",
     templateUrl: "./search-docs.example.component.html",
+    imports: [NuiDocsModule, SearchBasicExampleComponent, SearchPlaceholderExampleComponent, SearchErrorStateExampleComponent, SearchInputChangeExampleComponent, SearchFocusChangeExampleComponent, SearchOnSearchCancelExampleComponent]
 })
 export class SearchDocsExampleComponent {}

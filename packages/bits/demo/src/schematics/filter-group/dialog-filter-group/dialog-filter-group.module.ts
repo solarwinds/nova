@@ -46,8 +46,6 @@ import { ItemPickerCompositeModule } from "./item-picker/item-picker.module";
         NuiPopoverModule,
         NuiExpanderModule,
         NuiCheckboxModule,
-    ],
-    declarations: [
         FilterGroupsWrapperComponent,
         FilterGroupCompositeDialogComponent,
         DialogFilterGroupCompositeComponent,

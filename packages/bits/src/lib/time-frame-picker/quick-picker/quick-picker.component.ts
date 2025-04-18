@@ -36,6 +36,7 @@ import { IQuickPickPresetDictionary } from "../public-api";
     styleUrls: ["./quick-picker.component.less"],
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class QuickPickerComponent {
     @Input() presets: IQuickPickPresetDictionary;

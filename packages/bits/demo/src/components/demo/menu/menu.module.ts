@@ -91,8 +91,6 @@ const routes = [
         NuiMessageModule,
         NuiSwitchModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         BasicMenuExampleComponent,
         MenuExampleComponent,
         MenuAppendToBodyExampleComponent,

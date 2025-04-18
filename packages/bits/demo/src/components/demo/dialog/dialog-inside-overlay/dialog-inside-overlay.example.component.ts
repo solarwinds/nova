@@ -21,10 +21,15 @@
 import { Component, TemplateRef } from "@angular/core";
 
 import { DialogService, NuiDialogRef } from "@nova-ui/bits";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NgFor } from "@angular/common";
+import { NuiDialogModule } from "../../../../../../src/lib/dialog/dialog.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-dialog-inside-overlay-example",
     templateUrl: "./dialog-inside-overlay.example.component.html",
+    imports: [NuiSelectV2Module, NgFor, NuiDialogModule, NuiButtonModule]
 })
 export class DialogInsideOverlayExampleComponent {
     public options1 = Array.from({ length: 25 }).map(

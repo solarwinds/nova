@@ -80,8 +80,6 @@ const routes = [
         NuiMessageModule,
         NuiDocsModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         BasicProgressExampleComponent,
         IndeterminateProgressExampleComponent,
         ProgressCompactExampleComponent,

@@ -21,10 +21,12 @@
 import { Component } from "@angular/core";
 
 import { ISelectChangedEvent } from "@nova-ui/bits";
+import { NuiSelectModule } from "../../../../../../src/lib/select/select.module";
 
 @Component({
     selector: "nui-combobox-icon-example",
     templateUrl: "./combobox-icon.example.component.html",
+    imports: [NuiSelectModule]
 })
 export class ComboboxIconExampleComponent {
     public dataset = {

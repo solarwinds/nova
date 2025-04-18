@@ -19,9 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiTimePickerModule } from "../../../../../../src/lib/time-picker/time-picker.module";
 
 @Component({
     selector: "nui-time-picker-disabled",
     templateUrl: "./time-picker-disabled.example.component.html",
+    imports: [NuiTimePickerModule]
 })
 export class TimePickerDisabledExampleComponent {}

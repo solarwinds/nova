@@ -36,6 +36,7 @@ export enum TableResizePhase {
 /** @ignore */
 @Directive({
     selector: "[nuiTableResizer]",
+    standalone: false
 })
 export class TableResizerDirective {
     @HostBinding("class") hostClasses = "nui-table__resizer";

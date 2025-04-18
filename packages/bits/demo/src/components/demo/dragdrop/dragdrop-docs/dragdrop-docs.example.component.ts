@@ -19,9 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { DragdropFilesExampleComponent } from "../dragdrop-files/dragdrop-files.example.component";
+import { FileDropExampleComponent } from "../file-drop/file-drop.component";
 
 @Component({
     selector: "nui-dragdrop-example",
     templateUrl: "./dragdrop-docs.example.component.html",
+    imports: [NuiDocsModule, DragdropFilesExampleComponent, FileDropExampleComponent]
 })
 export class DragdropExampleComponent {}

@@ -19,11 +19,14 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
+import { NgFor } from "@angular/common";
 
 @Component({
     selector: "nui-checkbox-group-visual-test",
     templateUrl: "./checkbox-group-visual-test.component.html",
+    imports: [NuiCheckboxModule, NgFor, FormsModule, ReactiveFormsModule]
 })
 export class CheckboxGroupVisualTestComponent {
     public cabbage = "Cabbage";

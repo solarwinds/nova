@@ -53,8 +53,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    declarations: [SummaryComponent],
+    imports: [RouterModule.forChild(routes), SummaryComponent],
     providers: [
         {
             provide: DEMO_PATH_TOKEN,

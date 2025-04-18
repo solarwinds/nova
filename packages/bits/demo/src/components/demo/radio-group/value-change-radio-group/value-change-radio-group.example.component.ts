@@ -21,10 +21,13 @@
 import { Component, Inject } from "@angular/core";
 
 import { IToastService, ToastService } from "@nova-ui/bits";
+import { NuiRadioModule } from "../../../../../../src/lib/radio/radio.module";
+import { NgFor } from "@angular/common";
 
 @Component({
     selector: "nui-value-change-radio-group-example",
     templateUrl: "./value-change-radio-group.example.component.html",
+    imports: [NuiRadioModule, NgFor]
 })
 export class ValueChangeRadioGroupExampleComponent {
     public colors = [$localize`Red`, $localize`Green`, $localize`Blue`];

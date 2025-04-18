@@ -19,9 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { ISelectChangedEvent } from "@nova-ui/bits";
+import { NuiSelectModule } from "../../../../../../src/lib/select/select.module";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
+import { NuiProgressModule } from "../../../../../../src/lib/progress/progress.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-select-visual",
@@ -29,6 +33,7 @@ import { ISelectChangedEvent } from "@nova-ui/bits";
     styleUrls: [
         "../select-custom-template/select-custom-template.example.component.less",
     ],
+    imports: [NuiSelectModule, NuiIconModule, NuiProgressModule, FormsModule, ReactiveFormsModule, NuiButtonModule]
 })
 export class SelectVisualTestComponent {
     public isRequired = true;

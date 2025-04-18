@@ -19,9 +19,24 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { WizardHorizontalExampleComponent } from "../wizard-horizontal/wizard-horizontal.example.component";
+import { WizardWithConfirmationDialogOnCancelExampleComponent } from "../wizard-with-confirmation-dialog-on-cancel/wizard-with-confirmation-dialog-on-cancel.example.component";
+import { WizardDialogExampleComponent } from "../wizard-dialog/wizard-dialog.example.component";
+import { WizardBusyExampleComponent } from "../wizard-busy/wizard-busy.example.component";
+import { WizardDynamicExampleComponent } from "../wizard-dynamic/wizard-dynamic.example.component";
+import { WizardRemoveStepExampleComponent } from "../wizard-remove-step/wizard-remove-step.example.component";
+import { WizardAsyncFormValidationExampleComponent } from "../wizard-async-validation-form/wizard-async-form-validation.example.component";
+import { WizardWithCustomIconsExampleComponent } from "../wizard-with-custom-icons/wizard-with-custom-icons.example.component";
+import { WizardCustomFooterExampleComponent } from "../wizard-custom-footer/wizard-custom-footer.example.component";
+import { WizardRestoreStateExampleComponent } from "../wizard-restore-state/wizard-restore-state.example.component";
+import { WizardStepChangeExampleComponent } from "../wizard-step-change/wizard-step-change.example.component";
+import { WizardResponsiveHeaderExampleComponent } from "../wizard-responsive-header/wizard-responsive-header.example.component";
+import { WizardTooltipExampleComponent } from "../wizard-tooltip/wizard-tooltip.example.component";
 
 @Component({
     selector: "nui-wizard-v2-example",
     templateUrl: "./wizard-docs.component.html",
+    imports: [NuiDocsModule, WizardHorizontalExampleComponent, WizardWithConfirmationDialogOnCancelExampleComponent, WizardDialogExampleComponent, WizardBusyExampleComponent, WizardDynamicExampleComponent, WizardRemoveStepExampleComponent, WizardAsyncFormValidationExampleComponent, WizardWithCustomIconsExampleComponent, WizardCustomFooterExampleComponent, WizardRestoreStateExampleComponent, WizardStepChangeExampleComponent, WizardResponsiveHeaderExampleComponent, WizardTooltipExampleComponent]
 })
 export class WizardDocsComponent {}

@@ -39,6 +39,8 @@ import {
 
 import { LOCAL_DATA, RESULTS_PER_PAGE } from "./basic-table-data";
 import { IServer } from "./types";
+import { NuiTableModule } from "../../../../../src/lib/table/table.module";
+import { NuiPaginatorModule } from "../../../../../src/lib/paginator/paginator.module";
 
 @Component({
     selector: "app-basic-table",
@@ -51,6 +53,7 @@ import { IServer } from "./types";
             useClass: ClientSideDataSource,
         },
     ],
+    imports: [NuiTableModule, NuiPaginatorModule]
 })
 export class BasicTableComponent implements OnDestroy, AfterViewInit {
     public items: IServer[] = [];

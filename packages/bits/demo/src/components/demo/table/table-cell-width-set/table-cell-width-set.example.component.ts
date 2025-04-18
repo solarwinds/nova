@@ -19,6 +19,9 @@
 //  THE SOFTWARE.
 
 import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
+import { NuiTableModule } from "../../../../../../src/lib/table/table.module";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
 
 interface IExampleTableModel {
     position: number;
@@ -32,6 +35,7 @@ interface IExampleTableModel {
     selector: "nui-table-cell-width-set",
     templateUrl: "./table-cell-width-set.example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [NuiTextboxModule, NuiTableModule, NuiIconModule]
 })
 export class TableCellWidthSetExampleComponent {
     public positionWidth = 50;

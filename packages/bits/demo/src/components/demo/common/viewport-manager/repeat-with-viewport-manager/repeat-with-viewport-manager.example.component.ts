@@ -58,6 +58,10 @@ import {
     SearchComponent,
     VirtualViewportManager,
 } from "@nova-ui/bits";
+import { NuiSearchModule } from "../../../../../../../src/lib/search/search.module";
+import { NgIf, AsyncPipe } from "@angular/common";
+import { NuiRepeatModule } from "../../../../../../../src/lib/repeat/repeat.module";
+import { NuiProgressModule } from "../../../../../../../src/lib/progress/progress.module";
 
 const API_URL = "https://www.googleapis.com/books/v1/volumes";
 const RESULTS_PER_PAGE = 20;
@@ -244,6 +248,7 @@ export class GBooksDataSourceWithSearch
     selector: "nui-repeat-with-viewport-manager-example",
     templateUrl: "./repeat-with-viewport-manager.example.component.html",
     providers: [VirtualViewportManager, GBooksDataSourceWithSearch],
+    imports: [NuiSearchModule, NgIf, NuiRepeatModule, NuiProgressModule, AsyncPipe]
 })
 export class RepeatWithViewportManagerExampleComponent
     implements OnInit, OnDestroy, AfterViewInit

@@ -22,6 +22,9 @@ import { Component, OnInit } from "@angular/core";
 import _orderBy from "lodash/orderBy";
 
 import { IMenuItem, ISorterChanges, SorterDirection } from "@nova-ui/bits";
+import { NuiSorterModule } from "../../../../../../../src/lib/sorter/sorter.module";
+import { NuiRepeatModule } from "../../../../../../../src/lib/repeat/repeat.module";
+import { NgFor } from "@angular/common";
 
 interface IFilm {
     title: string;
@@ -33,6 +36,7 @@ interface IFilm {
     selector: "nui-sorter-recommended-usage-visual-test",
     templateUrl: "./sorter-recommended-usage-visual-test.component.html",
     styleUrls: ["./sorter-recommended-usage-visual-test.component.less"],
+    imports: [NuiSorterModule, NuiRepeatModule, NgFor]
 })
 export class SorterRecommendedUsageVisualTestComponent implements OnInit {
     public readonly columns: IMenuItem[] = [

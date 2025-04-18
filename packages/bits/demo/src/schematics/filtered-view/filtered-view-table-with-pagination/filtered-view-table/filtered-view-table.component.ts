@@ -41,12 +41,17 @@ import {
 import { RESULTS_PER_PAGE } from "../filtered-view-table-with-pagination-data";
 import { FilteredViewTableWithPaginationDataSource } from "../filtered-view-table-with-pagination-data-source.service";
 import { IServer } from "../types";
+import { NuiTableModule } from "../../../../../../src/lib/table/table.module";
+import { NgIf } from "@angular/common";
+import { NuiProgressModule } from "../../../../../../src/lib/progress/progress.module";
+import { NuiPaginatorModule } from "../../../../../../src/lib/paginator/paginator.module";
 
 @Component({
     selector: "app-filtered-view-table-with-pagination-table",
     templateUrl: "./filtered-view-table.component.html",
     styleUrls: ["./filtered-view-table.component.less"],
     encapsulation: ViewEncapsulation.None,
+    imports: [NuiTableModule, NgIf, NuiProgressModule, NuiPaginatorModule]
 })
 export class FilteredViewTableComponent
     implements OnInit, OnDestroy, AfterViewInit

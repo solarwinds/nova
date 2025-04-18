@@ -21,10 +21,12 @@
 import { Component } from "@angular/core";
 
 import { CheckboxStatus, IMenuGroup, SelectionType } from "@nova-ui/bits";
+import { NuiSelectorModule } from "../../../../../src/lib/selector/selector.module";
 
 @Component({
     selector: "nui-selector-example",
     templateUrl: "./selector.example.component.html",
+    imports: [NuiSelectorModule]
 })
 export class SelectorExampleComponent {
     public selection: SelectionType = SelectionType.None;

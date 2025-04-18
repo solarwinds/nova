@@ -106,8 +106,6 @@ const routes = [
         NuiMessageModule,
         NuiDocsModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         TextboxAreaExampleComponent,
         TextboxCustomBoxWidthExampleComponent,
         TextboxDocsExampleComponent,

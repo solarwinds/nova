@@ -55,12 +55,19 @@ import {
 import { RESULTS_PER_PAGE } from "../filtered-view-list-with-virtual-scroll-data";
 import { FilteredViewListWithVirtualScrollDataSource } from "../filtered-view-list-with-virtual-scroll-data-source.service";
 import { IServer, IServerFilters } from "../types";
+import { NuiBusyModule } from "../../../../../../src/lib/busy/busy.module";
+import { NuiSpinnerModule } from "../../../../../../src/lib/spinner/spinner.module";
+import { NuiSorterModule } from "../../../../../../src/lib/sorter/sorter.module";
+import { NuiSearchModule } from "../../../../../../src/lib/search/search.module";
+import { NgIf, NgFor, AsyncPipe, KeyValuePipe } from "@angular/common";
+import { NuiRepeatModule } from "../../../../../../src/lib/repeat/repeat.module";
 
 @Component({
     selector: "app-filtered-view-list-with-virtual-scroll-list",
     templateUrl: "./filtered-view-list.component.html",
     styleUrls: ["./filtered-view-list.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [NuiBusyModule, NuiSpinnerModule, NuiSorterModule, NuiSearchModule, NgIf, NuiRepeatModule, NgFor, AsyncPipe, KeyValuePipe]
 })
 export class FilteredViewListComponent
     implements OnInit, AfterViewInit, OnDestroy

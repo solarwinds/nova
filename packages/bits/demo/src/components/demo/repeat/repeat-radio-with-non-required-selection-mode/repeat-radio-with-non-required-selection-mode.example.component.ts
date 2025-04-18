@@ -19,11 +19,14 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiSwitchModule } from "../../../../../../src/lib/switch/switch.module";
+import { NuiRepeatModule } from "../../../../../../src/lib/repeat/repeat.module";
+import { JsonPipe } from "@angular/common";
 
 @Component({
     selector: "nui-repeat-radio-with-non-required-selection-mode-example",
-    templateUrl:
-        "./repeat-radio-with-non-required-selection-mode.example.component.html",
+    templateUrl: "./repeat-radio-with-non-required-selection-mode.example.component.html",
+    imports: [NuiSwitchModule, NuiRepeatModule, JsonPipe]
 })
 export class RepeatRadioWithNonRequiredSelectionModeExampleComponent {
     public colors = [

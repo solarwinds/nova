@@ -19,9 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiPaginatorModule } from "../../../../../../src/lib/paginator/paginator.module";
 
 @Component({
     selector: "nui-paginator-hidden-prev-next-example",
     templateUrl: "./paginator-hidden-prev-next.example.component.html",
+    imports: [NuiPaginatorModule]
 })
 export class PaginatorHiddenPrevNextExampleComponent {}

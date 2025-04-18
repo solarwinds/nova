@@ -84,8 +84,6 @@ const routes = [
         NuiValidationMessageModule,
         ReactiveFormsModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         BasicRadioGroupExampleComponent,
         DisabledRadioGroupExampleComponent,
         RadioGroupDocsExampleComponent,

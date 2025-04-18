@@ -19,9 +19,17 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { SpinnerBasicExampleComponent } from "../spinner-basic/spinner-basic.example.component";
+import { SpinnerSizesExampleComponent } from "../spinner-sizes/spinner-sizes.example.component";
+import { SpinnerWithTextExampleComponent } from "../spinner-with-text/spinner-with-text.example.component";
+import { SpinnerDeterminateExampleComponent } from "../spinner-determinate/spinner-determinate.example.component";
+import { SpinnerWithCancelExampleComponent } from "../spinner-with-cancel/spinner-with-cancel.example.component";
+import { SpinnerWithDelayToggleExampleComponent } from "../spinner-with-delay-toggle/spinner-with-delay-toggle.example.component";
 
 @Component({
     selector: "nui-spinner-docs-example",
     templateUrl: "./spinner-docs.example.component.html",
+    imports: [NuiDocsModule, SpinnerBasicExampleComponent, SpinnerSizesExampleComponent, SpinnerWithTextExampleComponent, SpinnerDeterminateExampleComponent, SpinnerWithCancelExampleComponent, SpinnerWithDelayToggleExampleComponent]
 })
 export class SpinnerExampleComponent {}

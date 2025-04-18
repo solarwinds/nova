@@ -58,7 +58,7 @@ export interface IItemPickerOption {
             useClass: LocalFilteringDataSource,
         },
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ItemPickerCompositeComponent
     implements AfterViewInit, OnInit, OnDestroy

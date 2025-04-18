@@ -19,9 +19,15 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { ResizeBasicExampleComponent } from "../resize-basic/resize-basic.example.component";
+import { ResizePercentsExampleComponent } from "../resize-percents/resize-percents.example.component";
+import { ResizeNestedExampleComponent } from "../resize-nested/resize-nested.example.component";
 
 @Component({
     selector: "nui-resize-docs-example",
     templateUrl: "resize-docs.example.component.html",
+    imports: [NuiMessageModule, NuiDocsModule, ResizeBasicExampleComponent, ResizePercentsExampleComponent, ResizeNestedExampleComponent]
 })
 export class ResizeDocsExampleComponent {}

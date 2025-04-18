@@ -19,10 +19,16 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiCommonModule } from "../../../../../../src/common/common.module";
+import { NgIf } from "@angular/common";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
 
 @Component({
     selector: "nui-clipboard-demo",
     templateUrl: "./clipboard.example.component.html",
+    imports: [NuiTextboxModule, NuiButtonModule, NuiCommonModule, NgIf, NuiMessageModule]
 })
 export class ClipboardExampleComponent {
     public textToCopy: string;

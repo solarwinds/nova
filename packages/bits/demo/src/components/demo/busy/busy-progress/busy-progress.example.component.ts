@@ -19,11 +19,16 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiBusyModule } from "../../../../../../src/lib/busy/busy.module";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
+import { NuiProgressModule } from "../../../../../../src/lib/progress/progress.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-busy-progress-example",
     templateUrl: "./busy-progress.example.component.html",
     styleUrls: ["./busy-progress.example.component.less"],
+    imports: [NuiBusyModule, NuiCheckboxModule, NuiProgressModule, NuiButtonModule]
 })
 export class BusyProgressExampleComponent {
     public busy: boolean;

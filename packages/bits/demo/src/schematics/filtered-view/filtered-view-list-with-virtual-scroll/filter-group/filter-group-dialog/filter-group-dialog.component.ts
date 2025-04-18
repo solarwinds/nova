@@ -23,11 +23,14 @@ import { Component, EventEmitter, Inject, Input, Output } from "@angular/core";
 import { ISelection, NuiActiveDialog, SelectorService } from "@nova-ui/bits";
 
 import { IFilterGroupOption } from "../public-api";
+import { NuiDialogModule } from "../../../../../../../src/lib/dialog/dialog.module";
+import { ItemPickerComponent } from "../item-picker/item-picker.component";
 
 @Component({
     selector: "app-filter-group-dialog",
     templateUrl: "./filter-group-dialog.component.html",
     styleUrls: ["./filter-group-dialog.component.less"],
+    imports: [NuiDialogModule, ItemPickerComponent]
 })
 export class FilterGroupDialogComponent {
     @Input() title: string;

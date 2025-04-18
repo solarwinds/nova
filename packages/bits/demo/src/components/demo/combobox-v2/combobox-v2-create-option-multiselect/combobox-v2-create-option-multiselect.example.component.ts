@@ -23,14 +23,19 @@ import {
     Component,
     SecurityContext,
 } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DomSanitizer } from "@angular/platform-browser";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NgFor, NgIf, AsyncPipe } from "@angular/common";
+import { NuiChipsModule } from "../../../../../../src/lib/chips/chips.module";
+import { NuiOverlayAdditionsModule } from "../../../../../../src/lib/overlay/overlay-additions.module";
 
 @Component({
     selector: "nui-combobox-v2-create-option-multiselect-example",
     templateUrl: "combobox-v2-create-option-multiselect.example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["combobox-v2-create-option-multiselect.example.component.less"],
+    imports: [NuiSelectV2Module, FormsModule, ReactiveFormsModule, NgFor, NuiChipsModule, NgIf, NuiOverlayAdditionsModule, AsyncPipe]
 })
 export class ComboboxV2CreateOptionMultiselectExampleComponent {
     public options = Array.from({ length: 3 }).map(

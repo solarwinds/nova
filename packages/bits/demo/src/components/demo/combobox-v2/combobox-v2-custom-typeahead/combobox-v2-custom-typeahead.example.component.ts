@@ -19,8 +19,10 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Subject } from "rxjs";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NgFor, AsyncPipe } from "@angular/common";
 
 interface IExampleItem {
     id: string;
@@ -31,6 +33,7 @@ interface IExampleItem {
     selector: "nui-combobox-v2-custom-typeahead-example",
     templateUrl: "combobox-v2-custom-typeahead.example.component.html",
     host: { class: "combobox-container" },
+    imports: [NuiSelectV2Module, FormsModule, ReactiveFormsModule, NgFor, AsyncPipe]
 })
 export class ComboboxV2CustomTypeaheadExampleComponent {
     public items: IExampleItem[] = Array.from({ length: 100 }).map((_, i) => ({

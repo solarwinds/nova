@@ -19,10 +19,15 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiSearchModule } from "../../../../../../src/lib/search/search.module";
+import { FormsModule } from "@angular/forms";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiCommonModule } from "../../../../../../src/common/common.module";
 
 @Component({
     selector: "nui-search-example",
     templateUrl: "./search-test.example.component.html",
+    imports: [NuiSearchModule, FormsModule, NuiButtonModule, NuiCommonModule]
 })
 export class SearchTestExampleComponent {
     public active = false;

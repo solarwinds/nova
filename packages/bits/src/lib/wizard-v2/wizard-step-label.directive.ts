@@ -23,5 +23,6 @@ import { Directive } from "@angular/core";
 
 @Directive({
     selector: "[nuiWizardStepLabel]",
+    standalone: false
 })
 export class WizardStepLabelDirective extends CdkStepLabel {}

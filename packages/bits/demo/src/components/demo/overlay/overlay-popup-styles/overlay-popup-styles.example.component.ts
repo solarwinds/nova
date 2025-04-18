@@ -27,10 +27,13 @@ import {
     OverlayComponent,
     OVERLAY_WITH_POPUP_STYLES_CLASS,
 } from "@nova-ui/bits";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiOverlayModule } from "../../../../../../src/lib/overlay/overlay.module";
 
 @Component({
     selector: "nui-overlay-popup-styles-example",
     templateUrl: "./overlay-popup-styles.example.component.html",
+    imports: [NuiButtonModule, NuiOverlayModule]
 })
 export class OverlayPopupStylesExampleComponent
     implements AfterViewInit, OnDestroy

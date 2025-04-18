@@ -19,9 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiCommonModule } from "../../../../../../src/common/common.module";
 
 @Component({
     selector: "nui-resize-nested-example",
     templateUrl: "./resize-nested.example.component.html",
+    imports: [NuiCommonModule]
 })
 export class ResizeNestedExampleComponent {}

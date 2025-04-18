@@ -18,17 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    Component,
-    EventEmitter,
-    Injectable,
-    OnDestroy,
-    OnInit,
-    Output,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, Component, EventEmitter, Injectable, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation, forwardRef } from "@angular/core";
 import moment from "moment/moment";
 import { Subject, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -51,6 +41,16 @@ import {
 } from "@nova-ui/bits";
 
 import { ListModel, LIST_DATA, TableModel, TABLE_DATA } from "./mocked-data";
+import { NuiDividerModule } from "../../../../../../../src/lib/divider/divider.module";
+import { NuiSearchModule } from "../../../../../../../src/lib/search/search.module";
+import { NuiRepeatModule } from "../../../../../../../src/lib/repeat/repeat.module";
+import { DatePipe } from "@angular/common";
+import { NuiSorterModule } from "../../../../../../../src/lib/sorter/sorter.module";
+import { NuiTableModule } from "../../../../../../../src/lib/table/table.module";
+import { NuiPopoverModule } from "../../../../../../../src/lib/popover/popover.module";
+import { NuiTimeFramePickerModule } from "../../../../../../../src/lib/time-frame-picker/time-frame-picker.module";
+import { NuiDialogModule } from "../../../../../../../src/lib/dialog/dialog.module";
+import { NuiButtonModule } from "../../../../../../../src/lib/button/button.module";
 
 // custom data sources used for filtering
 @Injectable()
@@ -157,6 +157,7 @@ export class TableDatasource
     selector: "nui-data-filter-basic-example",
     templateUrl: "./data-filter-basic.example.component.html",
     providers: [DataFilterService],
+    imports: [forwardRef(() => FilteringTimeFramePickerComponent), NuiDividerModule, forwardRef(() => NuiDataFilterTableComponent)]
 })
 export class DataFilterBasicExampleComponent implements AfterViewInit {
     @ViewChild("timeFramePicker")
@@ -232,6 +233,7 @@ export class DataFilterBasicExampleComponent implements AfterViewInit {
         </div>
     `,
     providers: [DataFilterService, TableDatasource],
+    imports: [NuiSorterModule, NuiTableModule, forwardRef(() => NuiDataFilterListComponent), DatePipe]
 })
 export class NuiDataFilterTableComponent implements AfterViewInit, OnDestroy {
     public dataSource?: any[] = [];
@@ -318,6 +320,7 @@ export class NuiDataFilterTableComponent implements AfterViewInit, OnDestroy {
         </div>
     `,
     providers: [DataFilterService, ListDatasource],
+    imports: [NuiSearchModule, NuiRepeatModule, DatePipe]
 })
 export class NuiDataFilterListComponent implements AfterViewInit, OnDestroy {
     public state: INovaFilteringOutputs = {
@@ -411,6 +414,7 @@ export class NuiDataFilterListComponent implements AfterViewInit, OnDestroy {
         </ng-template>
     `,
     encapsulation: ViewEncapsulation.None,
+    imports: [NuiPopoverModule, NuiTimeFramePickerModule, NuiDialogModule, NuiButtonModule]
 })
 export class FilteringTimeFramePickerComponent implements IFilterPub, OnInit {
     @Output() timeFrameChanged: EventEmitter<any> = new EventEmitter();

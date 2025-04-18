@@ -19,9 +19,18 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { TimePickerBasicExampleComponent } from "../time-picker-basic/time-picker-basic.example.component";
+import { TimePickerModelChangeExampleComponent } from "../time-picker-model-change/time-picker-model-change.example.component";
+import { TimePickerPreserveInsignificantExampleComponent } from "../time-picker-preserve-isignificant/time-picker-preserve-insignificant.example.component";
+import { TimePickerDisabledExampleComponent } from "../time-picker-disabled/time-picker-disabled.example.component";
+import { TimePickerCustomFormatExampleComponent } from "../time-picker-custom-format/time-picker-custom-format.example.component";
+import { TimePickerCustomStepExampleComponent } from "../time-picker-custom-step/time-picker-custom-step.example.component";
+import { TimePickerReactiveFormExampleComponent } from "../time-picker-reactive-form/time-picker-reactive-form.example.component";
 
 @Component({
     selector: "nui-time-picker-docs",
     templateUrl: "./time-picker-docs.example.component.html",
+    imports: [NuiDocsModule, TimePickerBasicExampleComponent, TimePickerModelChangeExampleComponent, TimePickerPreserveInsignificantExampleComponent, TimePickerDisabledExampleComponent, TimePickerCustomFormatExampleComponent, TimePickerCustomStepExampleComponent, TimePickerReactiveFormExampleComponent]
 })
 export class TimePickerDocsExampleComponent {}

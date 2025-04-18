@@ -19,10 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiPanelModule } from "../../../../../../src/lib/panel/panel.module";
 
 @Component({
     selector: "nui-panel-hide-example",
     templateUrl: "./panel-hide.example.component.html",
+    imports: [NuiPanelModule]
 })
 export class PanelHideExampleComponent {
     public isHidden = false;

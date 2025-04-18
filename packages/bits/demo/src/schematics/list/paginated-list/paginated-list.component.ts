@@ -48,6 +48,13 @@ import {
 import { RESULTS_PER_PAGE } from "./paginated-list-data";
 import { PaginatedListDataSource } from "./paginated-list-data-source.service";
 import { IServer, IServerFilters } from "./types";
+import { NuiBusyModule } from "../../../../../src/lib/busy/busy.module";
+import { NuiSpinnerModule } from "../../../../../src/lib/spinner/spinner.module";
+import { NuiSorterModule } from "../../../../../src/lib/sorter/sorter.module";
+import { NuiSearchModule } from "../../../../../src/lib/search/search.module";
+import { NgIf, NgFor, AsyncPipe, KeyValuePipe } from "@angular/common";
+import { NuiRepeatModule } from "../../../../../src/lib/repeat/repeat.module";
+import { NuiPaginatorModule } from "../../../../../src/lib/paginator/paginator.module";
 
 @Component({
     selector: "app-paginated-list",
@@ -60,6 +67,7 @@ import { IServer, IServerFilters } from "./types";
             useClass: PaginatedListDataSource,
         },
     ],
+    imports: [NuiBusyModule, NuiSpinnerModule, NuiSorterModule, NuiSearchModule, NgIf, NuiRepeatModule, NuiPaginatorModule, NgFor, AsyncPipe, KeyValuePipe]
 })
 export class PaginatedListComponent
     implements OnInit, AfterViewInit, OnDestroy

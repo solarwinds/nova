@@ -56,9 +56,26 @@ ng g "./schematics/src/collection.json":filtered-view --lint-fix --force --path=
  --virtualScrollStrategy=custom --selectionMode=none
 */
 import { Component } from "@angular/core";
+import { SchematicDocsPageComponent } from "../utils/schematic-docs-page/schematic-docs-page.component";
+import { SchematicsDocsCliOptionComponent } from "../utils/schematic-docs-cli-option/schematic-docs-cli-option.component";
+import { NuiTabsModule } from "../../../../src/lib/tabgroup/tabs.module";
+import { SchematicsDocsCommandComponent } from "../utils/schematic-docs-command/schematic-docs-command.component";
+import { SchematicDocsExampleComponent } from "../utils/schematic-docs-example/schematic-docs-example.component";
+import { FilteredViewWithListComponent } from "./filtered-view-with-list/filtered-view-with-list.component";
+import { FilteredViewListWithPaginationComponent } from "./filtered-view-list-with-pagination/filtered-view-list-with-pagination.component";
+import { FilteredViewListWithVirtualScrollComponent } from "./filtered-view-list-with-virtual-scroll/filtered-view-list-with-virtual-scroll.component";
+import { FilteredViewWithTableComponent } from "./filtered-view-with-table/filtered-view-with-table.component";
+import { FilteredViewTableWithPaginationComponent } from "./filtered-view-table-with-pagination/filtered-view-table-with-pagination.component";
+import { FilteredViewTableWithSelectionComponent } from "./filtered-view-table-with-selection/filtered-view-table-with-selection.component";
+import { NgIf } from "@angular/common";
+import { FilteredViewTableWithVirtualScrollComponent } from "./filtered-view-table-with-virtual-scroll/filtered-view-table-with-virtual-scroll.component";
+import { FilteredViewTableWithVirtualScrollSelectionComponent } from "./filtered-view-table-with-virtual-scroll-selection/filtered-view-table-with-virtual-scroll-selection.component";
+import { FilteredViewTableWithCustomVirtualScrollComponent } from "./filtered-view-table-with-custom-virtual-scroll/filtered-view-table-with-custom-virtual-scroll.component";
+import { FilteredViewWithTreeComponent } from "./filtered-view-with-tree/filtered-view-with-tree.component";
 
 @Component({
     selector: "schematics-docs-example",
     templateUrl: "./filtered-view-schematic.example.component.html",
+    imports: [SchematicDocsPageComponent, SchematicsDocsCliOptionComponent, NuiTabsModule, SchematicsDocsCommandComponent, SchematicDocsExampleComponent, FilteredViewWithListComponent, FilteredViewListWithPaginationComponent, FilteredViewListWithVirtualScrollComponent, FilteredViewWithTableComponent, FilteredViewTableWithPaginationComponent, FilteredViewTableWithSelectionComponent, NgIf, FilteredViewTableWithVirtualScrollComponent, FilteredViewTableWithVirtualScrollSelectionComponent, FilteredViewTableWithCustomVirtualScrollComponent, FilteredViewWithTreeComponent]
 })
 export class FilteredViewSchematicExampleComponent {}

@@ -19,12 +19,16 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
-import { FormControl, Validators } from "@angular/forms";
+import { FormControl, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Moment } from "moment/moment";
+import { NuiFormFieldModule } from "../../../../../../src/lib/form-field/form-field.module";
+import { NuiDateTimePickerModule } from "../../../../../../src/lib/date-time-picker/date-time-picker.module";
+import { NuiValidationMessageModule } from "../../../../../../src/lib/validation-message/validation-message.module";
 
 @Component({
     selector: "nui-date-time-picker-empty-state",
     templateUrl: "./date-time-picker-empty-state.component.html",
+    imports: [NuiFormFieldModule, NuiDateTimePickerModule, FormsModule, ReactiveFormsModule, NuiValidationMessageModule]
 })
 export class DateTimePickerEmptyStateComponent {
     public dt: Moment | undefined = undefined;

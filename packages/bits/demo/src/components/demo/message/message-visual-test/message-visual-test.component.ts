@@ -19,9 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
 
 @Component({
     selector: "nui-message-visual-test",
     templateUrl: "./message-visual-test.component.html",
+    imports: [NuiMessageModule]
 })
 export class MessageVisualTestComponent {}

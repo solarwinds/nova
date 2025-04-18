@@ -27,6 +27,7 @@ import { DatePickerInnerComponent } from "./date-picker-inner.component";
 @Component({
     selector: "nui-year-picker",
     templateUrl: "./date-picker-year-picker.component.html",
+    standalone: false
 })
 export class YearPickerComponent implements OnInit {
     title: string;

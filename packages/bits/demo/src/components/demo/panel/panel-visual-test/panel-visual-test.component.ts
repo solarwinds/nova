@@ -21,10 +21,16 @@
 import { Component, Input } from "@angular/core";
 
 import { IMenuGroup, PanelBackgroundColor } from "@nova-ui/bits";
+import { NuiPanelModule } from "../../../../../../src/lib/panel/panel.module";
+import { NgIf } from "@angular/common";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiMenuModule } from "../../../../../../src/lib/menu/menu.module";
 
 @Component({
     selector: "nui-panel-visual-test",
     templateUrl: "./panel-visual-test.component.html",
+    imports: [NuiPanelModule, NgIf, NuiIconModule, NuiButtonModule, NuiMenuModule]
 })
 export class PanelVisualTestComponent {
     @Input() isOn = true;

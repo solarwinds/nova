@@ -19,9 +19,18 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { MessageBasicExampleComponent } from "../message-basic/message-basic.example.component";
+import { MessageCriticalExampleComponent } from "../message-critical/message-critical.example.component";
+import { MessageWarningExampleComponent } from "../message-warning/message-warning.example.component";
+import { MessageOkExampleComponent } from "../message-ok/message-ok.example.component";
+import { MessageInfoExampleComponent } from "../message-info/message-info.example.component";
+import { MessageNotDismissableExampleComponent } from "../message-not-dismissable/message-not-dismissable.example.component";
+import { MessageManualControlExampleComponent } from "../message-manual-control/message-manual-control.example.component";
 
 @Component({
     selector: "nui-message-docs-example",
     templateUrl: "./message-docs.example.component.html",
+    imports: [NuiDocsModule, MessageBasicExampleComponent, MessageCriticalExampleComponent, MessageWarningExampleComponent, MessageOkExampleComponent, MessageInfoExampleComponent, MessageNotDismissableExampleComponent, MessageManualControlExampleComponent]
 })
 export class MessageDocsComponent {}

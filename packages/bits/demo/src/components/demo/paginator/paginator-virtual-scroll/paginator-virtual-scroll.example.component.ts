@@ -19,10 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiPaginatorModule } from "../../../../../../src/lib/paginator/paginator.module";
 
 @Component({
     selector: "nui-paginator-virtual-scroll-example",
     templateUrl: "./paginator-virtual-scroll.example.component.html",
+    imports: [NuiPaginatorModule]
 })
 export class PaginatorVirtualScrollExampleComponent {
     public customPageSizeSet = [1, 30, 200];

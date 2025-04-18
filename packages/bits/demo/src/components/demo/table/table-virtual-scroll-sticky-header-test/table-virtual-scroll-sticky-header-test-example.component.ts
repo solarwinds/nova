@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
+import { CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf } from "@angular/cdk/scrolling";
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
@@ -35,6 +35,10 @@ import {
     IFilteringOutputs,
     TableStickyHeaderDirective,
 } from "@nova-ui/bits";
+import { NuiSwitchModule } from "../../../../../../src/lib/switch/switch.module";
+import { NuiTableModule } from "../../../../../../src/lib/table/table.module";
+import { NgFor, NgIf, AsyncPipe } from "@angular/common";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
 
 interface IRandomUserTableModel {
     no: number;
@@ -47,10 +51,10 @@ interface IRandomUserTableModel {
 
 @Component({
     selector: "nui-table-virtual-scroll-sticky-header-test-example",
-    templateUrl:
-        "./table-virtual-scroll-sticky-header-test-example.component.html",
+    templateUrl: "./table-virtual-scroll-sticky-header-test-example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [ClientSideDataSource],
+    imports: [NuiSwitchModule, CdkVirtualScrollViewport, NuiTableModule, CdkFixedSizeVirtualScroll, NgFor, NgIf, NuiIconModule, CdkVirtualForOf, AsyncPipe]
 })
 export class TableVirtualScrollStickyHeaderTestExampleComponent
     implements AfterViewInit

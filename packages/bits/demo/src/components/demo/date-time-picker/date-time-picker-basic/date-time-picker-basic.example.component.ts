@@ -20,10 +20,12 @@
 
 import { Component } from "@angular/core";
 import moment, { Moment } from "moment/moment";
+import { NuiDateTimePickerModule } from "../../../../../../src/lib/date-time-picker/date-time-picker.module";
 
 @Component({
     selector: "nui-date-time-picker-basic-example",
     templateUrl: "./date-time-picker-basic.example.component.html",
+    imports: [NuiDateTimePickerModule]
 })
 export class DateTimePickerBasicExampleComponent {
     public dt: Moment;

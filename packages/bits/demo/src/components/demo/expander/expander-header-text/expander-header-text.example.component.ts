@@ -19,9 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiExpanderModule } from "../../../../../../src/lib/expander/expander.module";
 
 @Component({
     selector: "nui-expander-header-text-example",
     templateUrl: "expander-header-text.example.component.html",
+    imports: [NuiExpanderModule]
 })
 export class ExpanderHeaderTextExampleComponent {}

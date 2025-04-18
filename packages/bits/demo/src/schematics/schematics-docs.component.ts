@@ -23,10 +23,13 @@ import { Component } from "@angular/core";
 import layoutSchema from "../../../schematics/src/layout/schema.json";
 import addSchema from "../../../schematics/src/ng-add/schema.json";
 import tableSchema from "../../../schematics/src/table/schema.json";
+import { NgFor, NgIf } from "@angular/common";
+import { NuiExpanderModule } from "../../../src/lib/expander/expander.module";
 
 @Component({
     selector: "schematics-docs",
     templateUrl: "./schematics-docs.component.html",
+    imports: [NgFor, NuiExpanderModule, NgIf]
 })
 export class SchematicsDocsComponent {
     public layoutJsonScheme: any = {};

@@ -21,10 +21,14 @@
 import { Component } from "@angular/core";
 
 import { IMenuGroup } from "@nova-ui/bits";
+import { NuiToolbarModule } from "../../../../../../src/lib/toolbar/toolbar.module";
+import { NuiSearchModule } from "../../../../../../src/lib/search/search.module";
+import { NuiMenuModule } from "../../../../../../src/lib/menu/menu.module";
 
 @Component({
     selector: "nui-toolbar-visual-test",
     templateUrl: "./toolbar-visual-test.component.html",
+    imports: [NuiToolbarModule, NuiSearchModule, NuiMenuModule]
 })
 export class ToolbarVisualTestExampleComponent {
     public value = "";

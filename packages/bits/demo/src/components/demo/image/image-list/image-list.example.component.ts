@@ -21,10 +21,13 @@
 import { Component, Inject } from "@angular/core";
 
 import { IImagesPresetItem, imagesPresetToken } from "@nova-ui/bits";
+import { NgFor } from "@angular/common";
+import { NuiImageModule } from "../../../../../../src/lib/image/image.module";
 
 @Component({
     selector: "nui-image-list-example",
     templateUrl: "./image-list.example.component.html",
+    imports: [NgFor, NuiImageModule]
 })
 export class ImageListExampleComponent {
     constructor(

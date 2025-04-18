@@ -70,8 +70,6 @@ const routes = [
         NuiDocsModule,
         NuiSwitchModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         CustomThemeExampleComponent,
         ThemingDocsExampleComponent,
         ThemeSwitchServiceExampleComponent,

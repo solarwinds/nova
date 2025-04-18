@@ -19,12 +19,14 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import moment, { Moment } from "moment/moment";
+import { NuiDatePickerModule } from "../../../../../../src/lib/date-picker/date-picker.module";
 
 @Component({
     selector: "date-picker-visual-test",
     templateUrl: "./date-picker-visual-test.component.html",
+    imports: [NuiDatePickerModule, FormsModule, ReactiveFormsModule]
 })
 export class DatePickerVisualTestComponent {
     public initDate: Moment = moment().set({

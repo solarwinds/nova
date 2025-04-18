@@ -47,6 +47,12 @@ import { FilterGroupComponent } from "./filter-group/filter-group.component";
 import { IFilterGroupItem } from "./filter-group/public-api";
 import { FilteredViewListWithPaginationDataSource } from "./filtered-view-list-with-pagination-data-source.service";
 import { IFilterable, IServer, ServerStatus } from "./types";
+import { NuiPanelModule } from "../../../../../src/lib/panel/panel.module";
+import { FilterGroupsWrapperComponent } from "./filter-group/filter-groups-wrapper/filter-groups-wrapper.component";
+import { NgFor, NgIf } from "@angular/common";
+import { NuiChipsModule } from "../../../../../src/lib/chips/chips.module";
+import { NuiPopoverModule } from "../../../../../src/lib/popover/popover.module";
+import { FilteredViewListComponent } from "./filtered-view-list/filtered-view-list.component";
 
 @Component({
     selector: "app-filtered-view-list-with-pagination",
@@ -59,6 +65,7 @@ import { IFilterable, IServer, ServerStatus } from "./types";
         },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [NuiPanelModule, FilterGroupsWrapperComponent, NgFor, FilterGroupComponent, NuiChipsModule, NgIf, NuiPopoverModule, FilteredViewListComponent]
 })
 export class FilteredViewListWithPaginationComponent
     implements AfterViewInit, OnDestroy

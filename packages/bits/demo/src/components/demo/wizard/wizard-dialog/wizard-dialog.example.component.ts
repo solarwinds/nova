@@ -26,10 +26,16 @@ import {
     ToastService,
     WizardComponent,
 } from "@nova-ui/bits";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
+import { NgFor } from "@angular/common";
+import { NuiDialogModule } from "../../../../../../src/lib/dialog/dialog.module";
+import { NuiWizardModule } from "../../../../../../src/lib/wizard/wizard.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-wizard-dialog-example",
     templateUrl: "./wizard-dialog.example.component.html",
+    imports: [NuiCheckboxModule, NgFor, NuiDialogModule, NuiWizardModule, NuiButtonModule]
 })
 export class WizardDialogExampleComponent {
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;

@@ -19,11 +19,7 @@
 //  THE SOFTWARE.
 
 import { ArrayDataSource } from "@angular/cdk/collections";
-import {
-    CdkNestedTreeNode,
-    CdkTree,
-    NestedTreeControl,
-} from "@angular/cdk/tree";
+import { CdkNestedTreeNode, CdkTree, NestedTreeControl, CdkTreeNodeDef, CdkTreeNodeToggle, CdkTreeNodeOutlet } from "@angular/cdk/tree";
 import {
     Component,
     IterableDiffer,
@@ -34,6 +30,10 @@ import {
 import { DOCUMENT_CLICK_EVENT, EventBusService, expand } from "@nova-ui/bits";
 
 import { HttpMockService } from "../http-mock.service";
+import { NuiButtonModule } from "../../../../../../../src/lib/button/button.module";
+import { NuiIconModule } from "../../../../../../../src/lib/icon/icon.module";
+import { NgIf } from "@angular/common";
+import { NuiSpinnerModule } from "../../../../../../../src/lib/spinner/spinner.module";
 
 interface FoodNode {
     name: string;
@@ -74,6 +74,7 @@ const TREE_DATA: FoodNode[] = [
     styleUrls: ["./tree-load-more.component.example.less"],
     animations: [expand],
     providers: [HttpMockService],
+    imports: [CdkTree, CdkTreeNodeDef, CdkNestedTreeNode, NuiButtonModule, CdkTreeNodeToggle, NuiIconModule, CdkTreeNodeOutlet, NgIf, NuiSpinnerModule]
 })
 export class TreeLoadMoreExampleComponent {
     public pageSize = 10;

@@ -28,5 +28,6 @@ import { Component } from "@angular/core";
     selector: "nui-dialog-backdrop",
     template: "",
     host: { class: "dialog-backdrop fade in" },
+    standalone: false
 })
 export class DialogBackdropComponent {}

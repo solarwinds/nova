@@ -19,13 +19,16 @@
 //  THE SOFTWARE.
 
 import { Component, Inject, OnInit } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { ISelectChangedEvent, ToastService } from "@nova-ui/bits";
+import { NuiSelectModule } from "../../../../../../src/lib/select/select.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-select-reactive-form",
     templateUrl: "./select-reactive-form.example.component.html",
+    imports: [FormsModule, ReactiveFormsModule, NuiSelectModule, NuiButtonModule]
 })
 export class SelectReactiveFormExampleComponent implements OnInit {
     public dataset = {

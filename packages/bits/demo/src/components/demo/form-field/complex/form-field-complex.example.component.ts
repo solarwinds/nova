@@ -19,11 +19,15 @@
 //  THE SOFTWARE.
 
 import { ChangeDetectorRef, Component } from "@angular/core";
-import { AbstractControl, FormBuilder, Validators } from "@angular/forms";
+import { AbstractControl, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NuiFormFieldModule } from "../../../../../../src/lib/form-field/form-field.module";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
+import { NuiValidationMessageModule } from "../../../../../../src/lib/validation-message/validation-message.module";
 
 @Component({
     selector: "nui-form-field-complex-example",
     templateUrl: "./form-field-complex.example.component.html",
+    imports: [FormsModule, ReactiveFormsModule, NuiFormFieldModule, NuiTextboxModule, NuiValidationMessageModule]
 })
 export class FormFieldComplexExampleComponent {
     static matchPassword(group: AbstractControl): { isValid: boolean } | null {

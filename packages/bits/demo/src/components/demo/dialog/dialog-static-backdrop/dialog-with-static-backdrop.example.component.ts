@@ -21,10 +21,13 @@
 import { Component, Inject, TemplateRef } from "@angular/core";
 
 import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
+import { NuiDialogModule } from "../../../../../../src/lib/dialog/dialog.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-dialog-with-static-backdrop-example",
     templateUrl: "./dialog-with-static-backdrop.example.component.html",
+    imports: [NuiDialogModule, NuiButtonModule]
 })
 export class DialogWithStaticBackdropExampleComponent {
     private activeDialog: NuiDialogRef;

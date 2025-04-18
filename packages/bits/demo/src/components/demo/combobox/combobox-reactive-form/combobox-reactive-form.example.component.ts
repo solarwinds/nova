@@ -19,15 +19,18 @@
 //  THE SOFTWARE.
 
 import { Component, Inject, OnDestroy, OnInit } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { ToastService } from "@nova-ui/bits";
+import { NuiSelectModule } from "../../../../../../src/lib/select/select.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-combobox-reactive-form",
     templateUrl: "./combobox-reactive-form.example.component.html",
+    imports: [FormsModule, ReactiveFormsModule, NuiSelectModule, NuiButtonModule]
 })
 export class ComboboxReactiveFormExampleComponent implements OnInit, OnDestroy {
     public dataset = {

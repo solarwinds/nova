@@ -19,9 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiLayoutModule } from "../../../../../../src/lib/layout/layout.module";
 
 @Component({
     selector: "nui-layout-test",
     templateUrl: "./layout-test.component.html",
+    imports: [NuiLayoutModule]
 })
 export class LayoutTestComponent {}

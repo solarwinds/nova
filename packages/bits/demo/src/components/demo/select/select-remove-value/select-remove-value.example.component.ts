@@ -19,11 +19,13 @@
 //  THE SOFTWARE.
 
 import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { NuiSelectModule } from "../../../../../../src/lib/select/select.module";
 
 @Component({
     selector: "nui-select-remove-value",
     templateUrl: "./select-remove-value.example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [NuiSelectModule]
 })
 export class SelectRemoveValueExampleComponent {
     public dataset = {

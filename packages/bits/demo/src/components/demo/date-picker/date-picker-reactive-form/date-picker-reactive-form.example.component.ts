@@ -19,12 +19,16 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
-import { FormControl, Validators } from "@angular/forms";
+import { FormControl, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import moment, { Moment } from "moment/moment";
+import { NuiFormFieldModule } from "../../../../../../src/lib/form-field/form-field.module";
+import { NuiDatePickerModule } from "../../../../../../src/lib/date-picker/date-picker.module";
+import { NuiValidationMessageModule } from "../../../../../../src/lib/validation-message/validation-message.module";
 
 @Component({
     selector: "nui-date-picker-reactive-forms-example",
     templateUrl: "./date-picker-reactive-form.example.component.html",
+    imports: [NuiFormFieldModule, NuiDatePickerModule, FormsModule, ReactiveFormsModule, NuiValidationMessageModule]
 })
 export class DatePickerReactiveFormExampleComponent {
     public dt: Moment = moment();

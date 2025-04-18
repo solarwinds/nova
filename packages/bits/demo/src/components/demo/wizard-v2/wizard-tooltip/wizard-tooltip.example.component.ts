@@ -21,10 +21,15 @@
 import { Component, ViewChild } from "@angular/core";
 
 import { ToastService, WizardHorizontalComponent } from "@nova-ui/bits";
+import { NuiWizardV2Module } from "../../../../../../src/lib/wizard-v2/wizard.module";
+import { NgTemplateOutlet } from "@angular/common";
+import { NuiTooltipModule } from "../../../../../../src/lib/tooltip/tooltip.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-wizard-tooltip-example",
     templateUrl: "./wizard-tooltip.example.component.html",
+    imports: [NuiWizardV2Module, NgTemplateOutlet, NuiTooltipModule, NuiButtonModule]
 })
 export class WizardTooltipExampleComponent {
     @ViewChild("wizardComponent") wizard: WizardHorizontalComponent;

@@ -18,11 +18,27 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, forwardRef } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { TableBasicExampleComponent } from "../table-basic/table-basic.example.component";
+import { TablePinnedHeaderComponent } from "../table-pinned-header/table-pinned-header.example.component";
+import { TableCellContentAlignComponent } from "../table-cell-content-align/table-cell-content-align.example.component";
+import { TableCellWidthSetExampleComponent } from "../table-cell-width-set/table-cell-width-set.example.component";
+import { TableRowHeightSetExampleComponent } from "../table-row-height-set/table-row-height-set.example.component";
+import { TableReorderExampleComponent } from "../table-reorder/table-reorder.example.component";
+import { TableColumnsAddRemoveExampleComponent } from "../table-columns-add-remove/table-columns-add-remove.example.component";
+import { TableResizeExampleComponent } from "../table-resize/table-resize.example.component";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
+import { TableSelectExampleComponent } from "../table-select/table-select.example.component";
+import { TableRowClickableExampleComponent } from "../table-row-clickable/table-row-clickable.example.component";
+import { TableVirtualScrollStepsAndButtonExampleComponent } from "../table-virtual-scroll-steps-and-button/table-virtual-scroll-steps-and-button.example.component";
+import { TableVirtualScrollStickyHeaderExampleComponent } from "../table-virtual-scroll-sticky-header/table-virtual-scroll-sticky-header-example.component";
+import { TableVirtualScrollSelectStickyHeaderExampleComponent } from "../table-virtual-scroll-select-sticky-header/table-virtual-scroll-select-sticky-header-example.component";
 
 @Component({
     selector: "nui-table-docs-example",
     templateUrl: "./table-docs.example.component.html",
+    imports: [NuiDocsModule, TableBasicExampleComponent, TablePinnedHeaderComponent, TableCellContentAlignComponent, TableCellWidthSetExampleComponent, TableRowHeightSetExampleComponent, TableReorderExampleComponent, TableColumnsAddRemoveExampleComponent, TableResizeExampleComponent, forwardRef(() => TableRowSelectInstructionsComponent), NuiMessageModule, TableSelectExampleComponent, TableRowClickableExampleComponent, TableVirtualScrollStepsAndButtonExampleComponent, TableVirtualScrollStickyHeaderExampleComponent, TableVirtualScrollSelectStickyHeaderExampleComponent]
 })
 export class TableDocsComponent {
     public alignmentCode = `<td nui-cell *nuiCellDef="let element">
@@ -227,6 +243,6 @@ public ngOnInit(): void {
                 >.
             </li>
         </ol>
-    `,
+    `
 })
 export class TableRowSelectInstructionsComponent {}

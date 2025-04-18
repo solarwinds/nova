@@ -19,14 +19,17 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import moment, { Moment } from "moment/moment";
 
 import { IDatePickerDisabledDate } from "@nova-ui/bits";
+import { NuiDatePickerModule } from "../../../../../../src/lib/date-picker/date-picker.module";
+import { JsonPipe } from "@angular/common";
 
 @Component({
     selector: "nui-date-picker-test",
     templateUrl: "./date-picker-test.component.html",
+    imports: [NuiDatePickerModule, FormsModule, ReactiveFormsModule, JsonPipe]
 })
 export class DatePickerTestComponent {
     public dt: Moment;

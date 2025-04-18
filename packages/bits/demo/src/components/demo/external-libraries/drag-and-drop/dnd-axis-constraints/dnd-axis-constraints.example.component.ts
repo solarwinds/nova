@@ -19,10 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { CdkDrag } from "@angular/cdk/drag-drop";
 
 @Component({
     selector: "dnd-axis-constraints",
     templateUrl: "./dnd-axis-constraints.example.component.html",
     styleUrls: ["./dnd-axis-constraints.example.component.less"],
+    imports: [CdkDrag]
 })
 export class DndAxisConstraintsExampleComponent {}

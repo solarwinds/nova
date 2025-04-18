@@ -22,10 +22,12 @@ import { Component } from "@angular/core";
 import _cloneDeep from "lodash/cloneDeep";
 
 import { ISelectChangedEvent } from "@nova-ui/bits";
+import { NuiSelectModule } from "../../../../../../src/lib/select/select.module";
 
 @Component({
     selector: "nui-combobox-separators-example",
     templateUrl: "./combobox-separators.example.component.html",
+    imports: [NuiSelectModule]
 })
 export class ComboboxSeparatorsExampleComponent {
     public dataset = {

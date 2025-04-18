@@ -39,6 +39,10 @@ import {
     SearchComponent,
     SelectionType,
 } from "@nova-ui/bits";
+import { NuiSelectorModule } from "../../../../../../../../src/lib/selector/selector.module";
+import { NuiSearchModule } from "../../../../../../../../src/lib/search/search.module";
+import { NuiRepeatModule } from "../../../../../../../../src/lib/repeat/repeat.module";
+import { NuiPaginatorModule } from "../../../../../../../../src/lib/paginator/paginator.module";
 
 interface IExampleItem {
     color: string;
@@ -53,6 +57,7 @@ interface IExampleItem {
     providers: [LocalFilteringDataSource],
     templateUrl: "./client-side-with-selection.example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [NuiSelectorModule, NuiSearchModule, NuiRepeatModule, NuiPaginatorModule]
 })
 export class DepreacatedDataSourceWithSelectionExampleComponent
     implements AfterViewInit, OnDestroy

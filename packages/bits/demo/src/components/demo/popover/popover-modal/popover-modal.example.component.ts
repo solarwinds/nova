@@ -20,10 +20,13 @@
 
 import { Component } from "@angular/core";
 import { Subject } from "rxjs";
+import { NuiPopoverModule } from "../../../../../../src/lib/popover/popover.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-popover-modal-example",
     templateUrl: "./popover-modal.example.component.html",
+    imports: [NuiPopoverModule, NuiButtonModule]
 })
 export class PopoverModalExampleComponent {
     public closePopoverSubject: Subject<void> = new Subject<void>();

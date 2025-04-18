@@ -19,11 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NuiTextboxModule } from "../../../../../../../src/lib/textbox/textbox.module";
 
 @Component({
     selector: "nui-textbox-number-visual",
     templateUrl: "./textbox-number-visual-test.component.html",
+    imports: [NuiTextboxModule, FormsModule, ReactiveFormsModule]
 })
 export class TextboxNumberVisualTestComponent {
     public reactiveForm;

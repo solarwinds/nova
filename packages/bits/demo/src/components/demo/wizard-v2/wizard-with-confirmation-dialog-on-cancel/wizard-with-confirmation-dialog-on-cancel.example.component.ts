@@ -26,7 +26,7 @@ import {
     TemplateRef,
     ViewChild,
 } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import {
     DialogService,
@@ -34,15 +34,23 @@ import {
     ToastService,
     WizardHorizontalComponent,
 } from "@nova-ui/bits";
+import { NgIf, NgTemplateOutlet } from "@angular/common";
+import { NuiWizardV2Module } from "../../../../../../src/lib/wizard-v2/wizard.module";
+import { NuiFormFieldModule } from "../../../../../../src/lib/form-field/form-field.module";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
+import { NuiValidationMessageModule } from "../../../../../../src/lib/validation-message/validation-message.module";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
+import { NuiDialogModule } from "../../../../../../src/lib/dialog/dialog.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-wizard-with-confirmation-dialog-on-cancel-example",
-    templateUrl:
-        "./wizard-with-confirmation-dialog-on-cancel.example.component.html",
+    templateUrl: "./wizard-with-confirmation-dialog-on-cancel.example.component.html",
     styleUrls: [
         "./wizard-with-confirmation-dialog-on-cancel.example.component.less",
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [NgIf, FormsModule, ReactiveFormsModule, NuiWizardV2Module, NuiFormFieldModule, NuiTextboxModule, NuiValidationMessageModule, NgTemplateOutlet, NuiCheckboxModule, NuiDialogModule, NuiButtonModule]
 })
 export class WizardWithConfirmationDialogOnCancelExampleComponent {
     public confirmationDialog: NuiDialogRef;

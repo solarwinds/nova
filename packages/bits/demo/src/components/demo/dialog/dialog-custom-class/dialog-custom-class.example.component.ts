@@ -21,10 +21,13 @@
 import { Component, Inject, TemplateRef } from "@angular/core";
 
 import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
+import { NuiDialogModule } from "../../../../../../src/lib/dialog/dialog.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-dialog-custom-class-example",
     templateUrl: "./dialog-custom-class.example.component.html",
+    imports: [NuiDialogModule, NuiButtonModule]
 })
 export class DialogCustomClassExampleComponent {
     private activeDialog: NuiDialogRef;

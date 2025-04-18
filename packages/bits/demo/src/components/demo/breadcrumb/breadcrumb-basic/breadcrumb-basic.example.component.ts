@@ -19,14 +19,17 @@
 //  THE SOFTWARE.
 
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router, RouterOutlet } from "@angular/router";
 import { Subscription } from "rxjs";
 
 import { BreadcrumbItem, BreadcrumbStateService } from "@nova-ui/bits";
+import { NuiBreadcrumbModule } from "../../../../../../src/lib/breadcrumb/breadcrumb.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-breadcrumb-basic-example",
     templateUrl: "./breadcrumb-basic.example.component.html",
+    imports: [NuiBreadcrumbModule, NuiButtonModule, RouterOutlet]
 })
 export class BreadcrumbBasicExampleComponent implements OnInit, OnDestroy {
     public breadcrumbSource: Array<BreadcrumbItem>;
@@ -105,6 +108,7 @@ export class BreadcrumbBasicExampleComponent implements OnInit, OnDestroy {
         </button>
         <router-outlet></router-outlet>
     </div>`,
+    imports: [NuiButtonModule, RouterOutlet]
 })
 export class BreadcrumbCountriesSubviewComponent {
     constructor(private router: Router, private routerState: ActivatedRoute) {}
@@ -118,7 +122,7 @@ export class BreadcrumbCountriesSubviewComponent {
     selector: "nui-breadcrumb-second-subview",
     template: ` <div>
         <p i18n class="nui-text-default">Some data about country here</p>
-    </div>`,
+    </div>`
 })
 export class BreadcrumbSingleCountryComponent {}
 
@@ -126,6 +130,6 @@ export class BreadcrumbSingleCountryComponent {}
     selector: "nui-breadcrumb-offices-subview",
     template: ` <div>
         <p i18n class="nui-text-default">Some data about offices here</p>
-    </div>`,
+    </div>`
 })
 export class BreadcrumbOfficesSubviewComponent {}

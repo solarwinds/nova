@@ -22,10 +22,12 @@ import { Component } from "@angular/core";
 import moment from "moment/moment";
 
 import { ITimeframe } from "@nova-ui/bits";
+import { NuiTimeFramePickerModule } from "../../../../../../src/lib/time-frame-picker/time-frame-picker.module";
 
 @Component({
     selector: "nui-time-frame-picker-inline",
     templateUrl: "./time-frame-picker-inline.example.component.html",
+    imports: [NuiTimeFramePickerModule]
 })
 export class TimeFramePickerInlineExampleComponent {
     public tf: ITimeframe = {

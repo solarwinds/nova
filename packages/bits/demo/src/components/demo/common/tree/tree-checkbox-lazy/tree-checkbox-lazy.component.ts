@@ -19,11 +19,7 @@
 //  THE SOFTWARE.
 
 import { ArrayDataSource, SelectionModel } from "@angular/cdk/collections";
-import {
-    CdkNestedTreeNode,
-    CdkTree,
-    NestedTreeControl,
-} from "@angular/cdk/tree";
+import { CdkNestedTreeNode, CdkTree, NestedTreeControl, CdkTreeNodeDef, CdkTreeNodeToggle, CdkTreeNodeOutlet } from "@angular/cdk/tree";
 import {
     Component,
     Injectable,
@@ -35,6 +31,11 @@ import { Observable, of } from "rxjs";
 import { delay } from "rxjs/operators";
 
 import { expand } from "@nova-ui/bits";
+import { NuiButtonModule } from "../../../../../../../src/lib/button/button.module";
+import { NuiCheckboxModule } from "../../../../../../../src/lib/checkbox/checkbox.module";
+import { NuiIconModule } from "../../../../../../../src/lib/icon/icon.module";
+import { NgIf } from "@angular/common";
+import { NuiSpinnerModule } from "../../../../../../../src/lib/spinner/spinner.module";
 
 interface ServerNode {
     name: string;
@@ -101,6 +102,7 @@ export class HttpMock {
     styleUrls: ["./tree-checkbox-lazy.component.less"],
     animations: [expand],
     providers: [HttpMock],
+    imports: [CdkTree, CdkTreeNodeDef, CdkNestedTreeNode, NuiButtonModule, NuiCheckboxModule, CdkTreeNodeToggle, NuiIconModule, NgIf, NuiSpinnerModule, CdkTreeNodeOutlet]
 })
 export class TreeCheckboxLazyComponent {
     public selectionModel = new SelectionModel<ServerNode>(true);

@@ -97,8 +97,6 @@ const routes = [
         NuiTooltipModule,
         NuiTimeFrameBarModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         TimeFrameBarBasicExampleComponent,
         TimeFrameBarZoomExampleComponent,
         TimeFrameBarDocsExampleComponent,

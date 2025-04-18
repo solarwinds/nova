@@ -18,13 +18,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag, CdkDragPlaceholder } from "@angular/cdk/drag-drop";
 import { Component } from "@angular/core";
+import { NgFor } from "@angular/common";
 
 @Component({
     selector: "dnd-drag-placeholder",
     templateUrl: "./dnd-drag-placeholder-example.component.html",
     styleUrls: ["./dnd-drag-placeholder-example.component.less"],
+    imports: [CdkDropList, NgFor, CdkDrag, CdkDragPlaceholder]
 })
 export class DndDragPlaceholderExampleComponent {
     public listItems: string[] = ["Adobe", "IBM", "Dell"];

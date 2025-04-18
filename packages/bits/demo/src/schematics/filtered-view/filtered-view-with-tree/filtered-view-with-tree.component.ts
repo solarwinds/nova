@@ -43,6 +43,12 @@ import { FilterGroupComponent } from "./filter-group/filter-group.component";
 import { IFilterGroupItem } from "./filter-group/public-api";
 import { FilteredViewWithTreeDataSource } from "./filtered-view-with-tree-data-source.service";
 import { IFilterable, IServer } from "./types";
+import { NuiPanelModule } from "../../../../../src/lib/panel/panel.module";
+import { FilterGroupsWrapperComponent } from "./filter-group/filter-groups-wrapper/filter-groups-wrapper.component";
+import { NgFor, NgIf } from "@angular/common";
+import { NuiChipsModule } from "../../../../../src/lib/chips/chips.module";
+import { NuiPopoverModule } from "../../../../../src/lib/popover/popover.module";
+import { FilteredViewTreeComponent } from "./filtered-view-tree/filtered-view-tree.component";
 
 @Component({
     selector: "app-filtered-view-with-tree",
@@ -55,6 +61,7 @@ import { IFilterable, IServer } from "./types";
         },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [NuiPanelModule, FilterGroupsWrapperComponent, NgFor, FilterGroupComponent, NuiChipsModule, NgIf, NuiPopoverModule, FilteredViewTreeComponent]
 })
 export class FilteredViewWithTreeComponent implements AfterViewInit {
     public filterGroupItems: IFilterGroupItem[] = [

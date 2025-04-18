@@ -21,10 +21,13 @@
 import { Component, Inject } from "@angular/core";
 
 import { ToastService } from "@nova-ui/bits";
+import { NuiSearchModule } from "../../../../../../src/lib/search/search.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-search-focus-change-example",
     templateUrl: "./search-focus-change.example.component.html",
+    imports: [NuiSearchModule, NuiButtonModule]
 })
 export class SearchFocusChangeExampleComponent {
     public isFocused: boolean = false;

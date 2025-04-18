@@ -22,10 +22,14 @@ import { Component, Inject, TemplateRef } from "@angular/core";
 import moment, { Moment } from "moment/moment";
 
 import { DialogService } from "@nova-ui/bits";
+import { NuiDateTimePickerModule } from "../../../../../../src/lib/date-time-picker/date-time-picker.module";
+import { NuiDialogModule } from "../../../../../../src/lib/dialog/dialog.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-date-time-picker-visual-test",
     templateUrl: "./date-time-picker-visual-test.component.html",
+    imports: [NuiDateTimePickerModule, NuiDialogModule, NuiButtonModule]
 })
 export class DateTimePickerVisualTestComponent {
     public dt: Moment = moment("2018-02-02");

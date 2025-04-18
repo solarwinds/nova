@@ -58,8 +58,6 @@ import { FilteredViewTableWithVirtualScrollComponent } from "./filtered-view-tab
         FilterGroupModule,
         NuiChipsModule,
         NuiPopoverModule,
-    ],
-    declarations: [
         FilteredViewTableWithVirtualScrollComponent,
         FilteredViewTableComponent,
     ],

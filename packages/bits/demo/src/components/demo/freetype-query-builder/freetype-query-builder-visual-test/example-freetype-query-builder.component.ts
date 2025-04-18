@@ -33,10 +33,12 @@ import { ExampleHelp } from "../freetype-query-builder-test/example-help";
 import { ExampleTokenizer } from "../freetype-query-builder-test/example-tokenizer";
 import { ExampleAppToken } from "../freetype-query-builder-test/models";
 import { ExampleAppRenderer } from "../freetype-query-builder-test/renderer";
+import { NuiFreetypeQueryModule } from "../../../../../../src/lib/freetype-query-builder/freetype-query-builder.module";
 
 @Component({
     selector: "example-freetype-query-builder",
     templateUrl: "./example-freetype-query-builder.component.html",
+    imports: [NuiFreetypeQueryModule]
 })
 export class ExampleFreetypeQueryBuilderComponent {
     @Input() exampleId: string;

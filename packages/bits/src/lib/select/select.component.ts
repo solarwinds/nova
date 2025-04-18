@@ -68,6 +68,7 @@ import { MenuComponent } from "../menu";
     ],
     styleUrls: ["./select.component.less"],
     encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class SelectComponent
     extends BaseSelect

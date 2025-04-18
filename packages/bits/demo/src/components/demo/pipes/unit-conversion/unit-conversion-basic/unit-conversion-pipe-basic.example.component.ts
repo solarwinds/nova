@@ -19,11 +19,16 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiFormFieldModule } from "../../../../../../../src/lib/form-field/form-field.module";
+import { NuiTextboxModule } from "../../../../../../../src/lib/textbox/textbox.module";
+import { FormsModule } from "@angular/forms";
+import { NuiCommonModule } from "../../../../../../../src/common/common.module";
 
 @Component({
     selector: "unit-conversion-pipe-basic-example",
     templateUrl: "./unit-conversion-pipe-basic.example.component.html",
     styleUrls: ["./unit-conversion-pipe-basic.example.component.less"],
+    imports: [NuiFormFieldModule, NuiTextboxModule, FormsModule, NuiCommonModule]
 })
 export class UnitConversionPipeBasicExampleComponent {
     public num = 998990;

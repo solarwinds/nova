@@ -43,6 +43,10 @@ import {
 import { RESULTS_PER_PAGE } from "./table-with-sort-data";
 import { TableWithSortDataSource } from "./table-with-sort-data-source.service";
 import { IServer } from "./types";
+import { NuiTableModule } from "../../../../../src/lib/table/table.module";
+import { NgIf } from "@angular/common";
+import { NuiProgressModule } from "../../../../../src/lib/progress/progress.module";
+import { NuiPaginatorModule } from "../../../../../src/lib/paginator/paginator.module";
 
 @Component({
     selector: "app-table-with-sort",
@@ -55,6 +59,7 @@ import { IServer } from "./types";
             useClass: TableWithSortDataSource,
         },
     ],
+    imports: [NuiTableModule, NgIf, NuiProgressModule, NuiPaginatorModule]
 })
 export class TableWithSortComponent
     implements OnInit, OnDestroy, AfterViewInit

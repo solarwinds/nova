@@ -58,8 +58,8 @@ import { FilteredViewWithTreeComponent } from "./filtered-view-with-tree.compone
         NuiChipsModule,
         NuiPopoverModule,
         CdkTreeModule,
+        FilteredViewWithTreeComponent, FilteredViewTreeComponent,
     ],
-    declarations: [FilteredViewWithTreeComponent, FilteredViewTreeComponent],
     exports: [FilteredViewWithTreeComponent, FilteredViewTreeComponent],
 })
 export class FilteredViewWithTreeModule {}

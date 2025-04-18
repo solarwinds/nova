@@ -19,11 +19,15 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NgFor } from "@angular/common";
+import { NuiSwitchModule } from "../../../../../../src/lib/switch/switch.module";
 
 @Component({
     selector: "nui-select-v2-error-example",
     templateUrl: "./select-v2-error.example.component.html",
     host: { class: "select-container" },
+    imports: [NuiSelectV2Module, NgFor, NuiSwitchModule]
 })
 export class SelectV2ErrorExampleComponent {
     public items = Array.from({ length: 100 }).map(

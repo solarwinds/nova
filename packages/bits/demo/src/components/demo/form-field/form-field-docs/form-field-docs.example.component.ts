@@ -21,10 +21,22 @@
 import { Component } from "@angular/core";
 
 import { FormFieldComponent } from "@nova-ui/bits";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { FormFieldBasicExampleComponent } from "../basic/basic-form-field.example.component";
+import { FormFieldBasicReactiveExampleComponent } from "../basic-reactive/basic-reactive-form-field.example.component";
+import { FormFieldBasicReactiveCustomValidationExampleComponent } from "../basic-reactive/basic-reactive-form-field-custom-validation.example.component";
+import { FormFieldComplexExampleComponent } from "../complex/form-field-complex.example.component";
+import { FormFieldWithHTMLExampleComponent } from "../html-as-info/html-as-info-in-form-field.example.component";
+import { FormFieldBasicHintExampleComponent } from "../basic-hint/form-field-hint.example.component";
+import { FormFieldDynamicDisablingExampleComponent } from "../dynamic-disabling/form-field-dynamic-disabling.example.component";
+import { NestedFormsAsComponentExampleComponent } from "../nested-forms-as-component/nested-forms-as-component.example.component";
+import { FormFieldInFormExampleComponent } from "../in-form/in-form-form-field.example.component";
+import { FormFieldValidationTriggeringxampleComponent } from "../form-field-validation-triggering/form-field-validation-triggering.example.component";
 
 @Component({
     selector: "nui-form-field-docs-example",
     templateUrl: "./form-field-docs.example.component.html",
+    imports: [NuiDocsModule, FormFieldBasicExampleComponent, FormFieldBasicReactiveExampleComponent, FormFieldBasicReactiveCustomValidationExampleComponent, FormFieldComplexExampleComponent, FormFieldWithHTMLExampleComponent, FormFieldBasicHintExampleComponent, FormFieldDynamicDisablingExampleComponent, NestedFormsAsComponentExampleComponent, FormFieldInFormExampleComponent, FormFieldValidationTriggeringxampleComponent]
 })
 export class FormFieldExampleComponent {
     getItemConfigKey(key: keyof FormFieldComponent): string {

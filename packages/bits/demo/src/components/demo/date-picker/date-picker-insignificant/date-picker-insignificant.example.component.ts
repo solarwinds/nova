@@ -19,14 +19,16 @@
 //  THE SOFTWARE.
 
 import { Component, Inject } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import moment, { Moment } from "moment/moment";
 
 import { IToastService, ToastService } from "@nova-ui/bits";
+import { NuiDatePickerModule } from "../../../../../../src/lib/date-picker/date-picker.module";
 
 @Component({
     selector: "nui-date-picker-insignificant-example",
     templateUrl: "./date-picker-insignificant.example.component.html",
+    imports: [NuiDatePickerModule, FormsModule, ReactiveFormsModule]
 })
 export class DatePickerInsignificantExampleComponent {
     public dt: Moment = moment().endOf("day");

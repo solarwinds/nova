@@ -22,10 +22,13 @@ import { Component, TemplateRef } from "@angular/core";
 import { take, takeUntil } from "rxjs/operators";
 
 import { DialogService, NuiDialogEvent, NuiDialogRef } from "@nova-ui/bits";
+import { NuiDialogModule } from "../../../../../../src/lib/dialog/dialog.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-dialog-actions-before-closure-example",
     templateUrl: "./dialog-actions-before-closure.example.component.html",
+    imports: [NuiDialogModule, NuiButtonModule]
 })
 export class DialogActionBeforeClosureExampleComponent {
     private activeDialog: NuiDialogRef;

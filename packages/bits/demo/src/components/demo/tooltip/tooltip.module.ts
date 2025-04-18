@@ -119,8 +119,6 @@ const routes = [
         NuiDocsModule,
         NuiMessageModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         TooltipBasicExampleComponent,
         TooltipDocsExampleComponent,
         TooltipDisabledExampleComponent,

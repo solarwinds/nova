@@ -19,11 +19,14 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NgFor } from "@angular/common";
 
 @Component({
     selector: "nui-select-v2-inline-example",
     templateUrl: "./select-v2-inline.example.component.html",
     host: { class: "select-container" },
+    imports: [NuiSelectV2Module, NgFor]
 })
 export class SelectV2InlineExampleComponent {
     public items = Array.from({ length: 100 }).map(

@@ -19,10 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiButtonModule } from "../../../../../../../src/lib/button/button.module";
+import { NuiTextboxModule } from "../../../../../../../src/lib/textbox/textbox.module";
 
 @Component({
     selector: "nui-badge-visual-test",
     templateUrl: "./badge-visual-test.component.html",
     styleUrls: ["./badge-visual-test.component.less"],
+    imports: [NuiButtonModule, NuiTextboxModule]
 })
 export class BadgeVisualTestComponent {}

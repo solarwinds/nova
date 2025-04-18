@@ -42,6 +42,11 @@ import {
 import { RESULTS_PER_PAGE } from "./table-with-search-data";
 import { TableWithSearchDataSource } from "./table-with-search-data-source.service";
 import { IServer } from "./types";
+import { NuiSearchModule } from "../../../../../src/lib/search/search.module";
+import { NuiTableModule } from "../../../../../src/lib/table/table.module";
+import { NgIf } from "@angular/common";
+import { NuiProgressModule } from "../../../../../src/lib/progress/progress.module";
+import { NuiPaginatorModule } from "../../../../../src/lib/paginator/paginator.module";
 
 @Component({
     selector: "app-table-with-search",
@@ -54,6 +59,7 @@ import { IServer } from "./types";
             useClass: TableWithSearchDataSource,
         },
     ],
+    imports: [NuiSearchModule, NuiTableModule, NgIf, NuiProgressModule, NuiPaginatorModule]
 })
 export class TableWithSearchComponent
     implements OnInit, OnDestroy, AfterViewInit

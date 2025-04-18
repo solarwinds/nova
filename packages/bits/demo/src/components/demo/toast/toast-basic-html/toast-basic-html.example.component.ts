@@ -21,10 +21,12 @@
 import { Component, Inject, OnInit } from "@angular/core";
 
 import { IToastService, ToastService } from "@nova-ui/bits";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-toast-basic-html-example",
     templateUrl: "./toast-basic-html.example.component.html",
+    imports: [NuiButtonModule]
 })
 export class ToastBasicHtmlExampleComponent implements OnInit {
     constructor(@Inject(ToastService) private toastService: IToastService) {}

@@ -19,10 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component, OnDestroy } from "@angular/core";
+import { NuiProgressModule } from "../../../../../../src/lib/progress/progress.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-indeterminate-progress-example",
     templateUrl: "./indeterminate-progress.example.component.html",
+    imports: [NuiProgressModule, NuiButtonModule]
 })
 export class IndeterminateProgressExampleComponent implements OnDestroy {
     public show = false;

@@ -19,10 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
 
 @Component({
     selector: "nui-textbox-required-example",
     templateUrl: "./textbox-required.example.component.html",
+    imports: [NuiTextboxModule]
 })
 export class TextboxRequiredExampleComponent {
     public isRequired = true;

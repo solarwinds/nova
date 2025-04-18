@@ -21,10 +21,12 @@
 import { Component } from "@angular/core";
 
 import { IMenuGroup, MenuActionType } from "@nova-ui/bits";
+import { NuiMenuModule } from "../../../../../../src/lib/menu/menu.module";
 
 @Component({
     selector: "nui-menu-visual-test",
     templateUrl: "./menu-visual-test.component.html",
+    imports: [NuiMenuModule]
 })
 export class MenuVisualTestComponent {
     public itemsSource: IMenuGroup[] = [

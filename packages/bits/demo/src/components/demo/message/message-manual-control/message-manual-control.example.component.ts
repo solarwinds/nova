@@ -20,10 +20,13 @@
 
 import { Component } from "@angular/core";
 import { Subject } from "rxjs";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
 
 @Component({
     selector: "nui-message-manual-control-example",
     templateUrl: "./message-manual-control.example.component.html",
+    imports: [NuiButtonModule, NuiMessageModule]
 })
 export class MessageManualControlExampleComponent {
     public isVisible: boolean = true;

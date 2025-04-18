@@ -19,6 +19,8 @@
 //  THE SOFTWARE.
 
 import { Component, Input, OnInit } from "@angular/core";
+import { NgFor, NgIf, KeyValuePipe } from "@angular/common";
+import { NuiPopoverModule } from "../../../../src/lib/popover/popover.module";
 
 @Component({
     selector: "nui-schematic-json",
@@ -45,6 +47,7 @@ import { Component, Input, OnInit } from "@angular/core";
             </ng-template>
         </div>
     `,
+    imports: [NgFor, NuiPopoverModule, NgIf, KeyValuePipe]
 })
 export class SchematicJsonComponent implements OnInit {
     // Folder from where schema.json should be taken

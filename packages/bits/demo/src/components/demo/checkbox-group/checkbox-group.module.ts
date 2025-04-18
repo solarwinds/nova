@@ -79,8 +79,6 @@ const routes = [
         ReactiveFormsModule,
         NuiButtonModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         CheckboxGroupExampleComponent,
         CheckboxGroupInlineExampleComponent,
         CheckboxGroupInFormExampleComponent,

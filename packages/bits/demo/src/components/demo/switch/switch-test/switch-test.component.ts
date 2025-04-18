@@ -19,9 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { SwitchSimpleExampleComponent } from "../switch-simple/switch-simple.example.component";
+import { SwitchDisableExampleComponent } from "../switch-disable/switch-disable.example.component";
 
 @Component({
     selector: "nui-switch-test",
     templateUrl: "./switch-test.component.html",
+    imports: [SwitchSimpleExampleComponent, SwitchDisableExampleComponent]
 })
 export class SwitchTestComponent {}

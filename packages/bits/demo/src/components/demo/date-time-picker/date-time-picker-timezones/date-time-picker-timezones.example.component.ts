@@ -26,14 +26,19 @@ import {
     signal,
     WritableSignal,
 } from "@angular/core";
-import { FormControl, Validators } from "@angular/forms";
+import { FormControl, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import moment from "moment-timezone";
 
 import { OptionValueType } from "@nova-ui/bits";
+import { NuiFormFieldModule } from "../../../../../../src/lib/form-field/form-field.module";
+import { NuiDateTimePickerModule } from "../../../../../../src/lib/date-time-picker/date-time-picker.module";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NgFor } from "@angular/common";
 
 @Component({
     selector: "nui-date-time-picker-timezones-example",
     templateUrl: "./date-time-picker-timezones.example.component.html",
+    imports: [NuiFormFieldModule, NuiDateTimePickerModule, FormsModule, ReactiveFormsModule, NuiSelectV2Module, NgFor]
 })
 export class DateTimePickerTimezonesExampleComponent implements OnInit {
     public control = new FormControl(moment(), {

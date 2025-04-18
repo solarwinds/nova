@@ -25,11 +25,15 @@ import {
     UnitBase,
     UnitConversionService,
 } from "@nova-ui/bits";
+import { NuiFormFieldModule } from "../../../../../../../src/lib/form-field/form-field.module";
+import { NuiTextboxModule } from "../../../../../../../src/lib/textbox/textbox.module";
+import { FormsModule } from "@angular/forms";
 
 @Component({
     selector: "unit-conversion-service-basic-example",
     templateUrl: "./unit-conversion-service-basic.example.component.html",
     styleUrls: ["./unit-conversion-service-basic.example.component.less"],
+    imports: [NuiFormFieldModule, NuiTextboxModule, FormsModule]
 })
 export class UnitConversionServiceBasicExampleComponent implements OnInit {
     constructor(public unitConversionService: UnitConversionService) {}

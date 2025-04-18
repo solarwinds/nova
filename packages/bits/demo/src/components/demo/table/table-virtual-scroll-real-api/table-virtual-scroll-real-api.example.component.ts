@@ -40,6 +40,10 @@ import {
     INovaFilters,
     VirtualViewportManager,
 } from "@nova-ui/bits";
+import { NuiSwitchModule } from "../../../../../../src/lib/switch/switch.module";
+import { NuiTableModule } from "../../../../../../src/lib/table/table.module";
+import { NgIf, NgTemplateOutlet } from "@angular/common";
+import { NuiSpinnerModule } from "../../../../../../src/lib/spinner/spinner.module";
 
 @Component({
     selector: "nui-table-virtual-scroll-real-api-example",
@@ -47,6 +51,7 @@ import {
     styleUrls: ["./table-virtual-scroll-real-api.example.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [VirtualViewportManager],
+    imports: [NuiSwitchModule, CdkVirtualScrollViewport, NuiTableModule, NgIf, NgTemplateOutlet, NuiSpinnerModule]
 })
 export class TableVirtualScrollRealApiExampleComponent
     implements AfterViewInit, OnDestroy, OnInit

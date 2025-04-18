@@ -23,6 +23,9 @@ import { Component, OnInit } from "@angular/core";
 import { orderBy } from "lodash";
 
 import { IMenuItem, ISorterChanges, SorterDirection } from "@nova-ui/bits";
+import { NuiSorterModule } from "../../../../../../src/lib/sorter/sorter.module";
+import { NuiRepeatModule } from "../../../../../../src/lib/repeat/repeat.module";
+import { NgFor } from "@angular/common";
 
 interface IFilm {
     title: string;
@@ -34,6 +37,7 @@ interface IFilm {
     selector: "nui-sorter-basic-example",
     templateUrl: "./sorter-basic.example.component.html",
     styleUrls: ["./sorter-basic.example.component.less"],
+    imports: [NuiSorterModule, NuiRepeatModule, NgFor]
 })
 export class SorterBasicExampleComponent implements OnInit {
     public readonly columns: IMenuItem[] = [

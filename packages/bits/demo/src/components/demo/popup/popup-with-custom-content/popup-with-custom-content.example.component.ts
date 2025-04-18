@@ -19,13 +19,21 @@
 //  THE SOFTWARE.
 
 import { Component, ViewEncapsulation } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { PopupAdapterModule } from "../../../../../../src/lib/popup-adapter/popup-adapter.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiPopupModule } from "../../../../../../src/lib/popup/popup.module";
+import { NuiSearchModule } from "../../../../../../src/lib/search/search.module";
+import { NgIf, NgFor } from "@angular/common";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
 
 @Component({
     selector: "nui-popup-with-custom-content-example",
     templateUrl: "./popup-with-custom-content.example.component.html",
     styleUrls: ["./popup-with-custom-content.example.component.less"],
     encapsulation: ViewEncapsulation.None,
+    imports: [PopupAdapterModule, NuiButtonModule, NuiPopupModule, NuiSearchModule, FormsModule, ReactiveFormsModule, NgIf, NuiMessageModule, NuiCheckboxModule, NgFor]
 })
 export class PopupWithCustomContentComponent {
     public icon = "caret-down";

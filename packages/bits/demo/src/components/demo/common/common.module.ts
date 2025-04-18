@@ -228,8 +228,6 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         NuiCommonModule,
         NuiProgressModule,
-    ],
-    declarations: [
         ClipboardExampleComponent,
         DataFilterDocsExampleComponent,
         DataFilterBasicExampleComponent,

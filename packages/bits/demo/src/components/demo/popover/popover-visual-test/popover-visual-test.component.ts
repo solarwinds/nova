@@ -23,11 +23,18 @@ import { Component } from "@angular/core";
 import { Subject } from "rxjs";
 
 import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "@nova-ui/bits";
+import { NuiPopoverModule } from "../../../../../../src/lib/popover/popover.module";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
+import { NuiSelectModule } from "../../../../../../src/lib/select/select.module";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NgFor } from "@angular/common";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-popover-visual-test",
     templateUrl: "./popover-visual-test.component.html",
     styleUrls: ["./popover-visual-test.component.less"],
+    imports: [NuiPopoverModule, NuiCheckboxModule, NuiSelectModule, NuiSelectV2Module, NgFor, NuiButtonModule]
 })
 export class PopoverVisualTestComponent {
     public dataset = {

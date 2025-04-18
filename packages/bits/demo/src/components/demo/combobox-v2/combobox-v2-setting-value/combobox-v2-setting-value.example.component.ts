@@ -19,12 +19,15 @@
 //  THE SOFTWARE.
 
 import { Component, OnInit } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NgFor } from "@angular/common";
 
 @Component({
     selector: "nui-combobox-v2-setting-value-example",
     templateUrl: "combobox-v2-setting-value.example.component.html",
     host: { class: "combobox-container" },
+    imports: [NuiSelectV2Module, NgFor, FormsModule, ReactiveFormsModule]
 })
 export class ComboboxV2SettingValueExampleComponent implements OnInit {
     public items = Array.from({ length: 50 }).map(

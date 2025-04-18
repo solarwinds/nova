@@ -97,8 +97,6 @@ const routes = [
         NuiButtonModule,
         NuiDocsModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         ComboboxBasicExampleComponent,
         ComboboxClearExampleComponent,
         ComboboxCustomTemplateExampleComponent,

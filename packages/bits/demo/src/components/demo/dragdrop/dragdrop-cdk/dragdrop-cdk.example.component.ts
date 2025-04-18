@@ -19,10 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { CdkDrag } from "@angular/cdk/drag-drop";
 
 @Component({
     selector: "nui-dragdrop-cdk-example",
     templateUrl: "./dragdrop-cdk.example.component.html",
     styleUrls: ["./dragdrop-cdk.example.component.less"],
+    imports: [CdkDrag]
 })
 export class DragdropCdkExampleComponent {}

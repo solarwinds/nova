@@ -19,11 +19,16 @@
 //  THE SOFTWARE.
 
 import { ChangeDetectorRef, Component, Input } from "@angular/core";
+import { NuiTabsModule } from "../../../../../../src/lib/tabgroup/tabs.module";
+import { NgFor, NgIf } from "@angular/common";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
+import { NuiContentModule } from "../../../../../../src/lib/content/content.module";
 
 @Component({
     selector: "nui-tab-heading-group-with-content-example",
     templateUrl: "./tab-heading-group-with-content.example.component.html",
     styleUrls: ["./tab-heading-group-with-content.example.component.less"],
+    imports: [NuiTabsModule, NgFor, NgIf, NuiIconModule, NuiContentModule]
 })
 export class TabHeadingGroupWithContentExampleComponent {
     @Input() public icon: boolean = false;

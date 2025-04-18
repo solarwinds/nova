@@ -30,11 +30,13 @@ import _isEmpty from "lodash/isEmpty";
 import { DataSourceService, IFilteringParticipants } from "@nova-ui/bits";
 
 import { BasicFilterGroupCompositeComponent } from "../basic-filter-group.component";
+import { NgIf, I18nPluralPipe } from "@angular/common";
 
 @Component({
     selector: "app-basic-filter-groups-wrapper",
     templateUrl: "filter-groups-wrapper.component.html",
     styleUrls: ["filter-groups-wrapper.component.less"],
+    imports: [NgIf, I18nPluralPipe]
 })
 export class BasicFilterGroupsWrapperComponent implements AfterViewInit {
     @ContentChildren(BasicFilterGroupCompositeComponent)

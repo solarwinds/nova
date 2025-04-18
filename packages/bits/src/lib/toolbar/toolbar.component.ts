@@ -69,6 +69,7 @@ import { MenuComponent } from "../menu";
     styleUrls: ["./toolbar.component.less"],
     encapsulation: ViewEncapsulation.None,
     providers: [ToolbarKeyboardService],
+    standalone: false
 })
 export class ToolbarComponent implements AfterViewInit, OnDestroy {
     @ContentChildren(ToolbarGroupComponent)

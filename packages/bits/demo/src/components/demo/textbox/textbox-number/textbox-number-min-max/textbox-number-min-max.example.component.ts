@@ -19,11 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NuiTextboxModule } from "../../../../../../../src/lib/textbox/textbox.module";
 
 @Component({
     selector: "nui-textbox-number-min-max-example",
     templateUrl: "./textbox-number-min-max.example.component.html",
+    imports: [FormsModule, ReactiveFormsModule, NuiTextboxModule]
 })
 export class TextboxNumberMinMaxExampleComponent {
     public value = 10;

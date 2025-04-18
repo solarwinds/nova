@@ -107,8 +107,6 @@ const routes = [
         NuiTabsModule,
         RouterModule.forChild(routes),
         ScrollingModule,
-    ],
-    declarations: [
         RepeatExampleComponent,
         RepeatItemExampleComponent,
         RepeatDisabledMultiSelectionExampleComponent,

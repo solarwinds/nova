@@ -84,8 +84,6 @@ const routes = [
         NuiMessageModule,
         NuiDocsModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         ExpanderBasicExampleComponent,
         ExpanderCustomHeaderExampleComponent,
         ExpanderDocsExampleComponent,

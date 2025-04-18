@@ -48,14 +48,19 @@ import { FilterGroupComponent } from "./filter-group/filter-group.component";
 import { IFilterGroupItem } from "./filter-group/public-api";
 import { FilteredViewTableWithVirtualScrollSelectionDataSource } from "./filtered-view-table-with-virtual-scroll-selection-data-source.service";
 import { IFilterable, IServer, ServerStatus } from "./types";
+import { NuiPanelModule } from "../../../../../src/lib/panel/panel.module";
+import { FilterGroupsWrapperComponent } from "./filter-group/filter-groups-wrapper/filter-groups-wrapper.component";
+import { NgFor, NgIf } from "@angular/common";
+import { NuiChipsModule } from "../../../../../src/lib/chips/chips.module";
+import { NuiPopoverModule } from "../../../../../src/lib/popover/popover.module";
+import { FilteredViewTableComponent } from "./filtered-view-table/filtered-view-table.component";
 
 @Component({
     selector: "app-filtered-view-table-with-virtual-scroll-selection",
     styleUrls: [
         "./filtered-view-table-with-virtual-scroll-selection.component.less",
     ],
-    templateUrl:
-        "./filtered-view-table-with-virtual-scroll-selection.component.html",
+    templateUrl: "./filtered-view-table-with-virtual-scroll-selection.component.html",
     providers: [
         VirtualViewportManager,
         {
@@ -64,6 +69,7 @@ import { IFilterable, IServer, ServerStatus } from "./types";
         },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [NuiPanelModule, FilterGroupsWrapperComponent, NgFor, FilterGroupComponent, NuiChipsModule, NgIf, NuiPopoverModule, FilteredViewTableComponent]
 })
 export class FilteredViewTableWithVirtualScrollSelectionComponent
     implements AfterViewInit, OnDestroy

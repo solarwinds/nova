@@ -19,11 +19,16 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NuiRadioModule } from "../../../../../../src/lib/radio/radio.module";
+import { NgFor } from "@angular/common";
+import { RadioGroupInFormExampleComponent } from "../radio-group-in-form/radio-group-in-form.example.component";
+import { NuiFormFieldModule } from "../../../../../../src/lib/form-field/form-field.module";
 
 @Component({
     selector: "nui-radio-group-visual-test",
     templateUrl: "./radio-group-visual-test.component.html",
+    imports: [NuiRadioModule, NgFor, RadioGroupInFormExampleComponent, FormsModule, ReactiveFormsModule, NuiFormFieldModule]
 })
 export class RadioGroupVisualTestComponent {
     public disabledForm;

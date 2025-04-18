@@ -19,9 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiPopoverModule } from "../../../../../../src/lib/popover/popover.module";
 
 @Component({
     selector: "nui-popover-focus-trigger-example",
     templateUrl: "./popover-focus-trigger.example.component.html",
+    imports: [NuiPopoverModule]
 })
 export class PopoverFocusTriggerExampleComponent {}

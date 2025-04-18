@@ -57,10 +57,6 @@ const routes = [
 ];
 
 @NgModule({
-    declarations: [
-        UnitConversionPipeDocsComponent,
-        UnitConversionPipeBasicExampleComponent,
-    ],
     imports: [
         FormsModule,
         NuiCommonModule,
@@ -69,6 +65,8 @@ const routes = [
         NuiMessageModule,
         NuiTextboxModule,
         RouterModule.forChild(routes),
+        UnitConversionPipeDocsComponent,
+        UnitConversionPipeBasicExampleComponent,
     ],
     exports: [RouterModule],
 })

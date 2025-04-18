@@ -21,10 +21,15 @@
 import { Component, Inject } from "@angular/core";
 
 import { LoggerService } from "@nova-ui/bits";
+import { NuiToolbarModule } from "../../../../../../src/lib/toolbar/toolbar.module";
+import { NgIf } from "@angular/common";
+import { NuiSearchModule } from "../../../../../../src/lib/search/search.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-toolbar-selection-example",
     templateUrl: "./toolbar-selection.example.component.html",
+    imports: [NuiToolbarModule, NgIf, NuiSearchModule, NuiButtonModule]
 })
 export class ToolbarSelectionExampleComponent {
     public selectionEnabled = true;

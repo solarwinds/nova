@@ -7,17 +7,16 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "@apollo/client": "^3.7.3",
-    "@types/d3": "^5.7.2",
-    "@types/d3-selection-multi": "^1.0.7",
-    "@yarnpkg/lockfile": "^1.1.0",
-    "angular-gridster2": "17.0.0",
-    "apollo-angular": "^6.0.0",
-    "d3": "^5.9.2",
+    "@apollo/client": "3.7.3",
+    "@types/d3": "5.7.2",
+    "@types/d3-selection-multi": "1.0.7",
+    "angular-gridster2": "19.0.0",
+    "apollo-angular": "10.0.3",
+    "d3": "5.9.2",
     "d3-color": "3.1.0",
-    "d3-selection-multi": "^1.0.1",
+    "d3-selection-multi": "1.0.1",
     "d3-time-format": "2.1.3",
-    "graphql": "^16.6.0"
+    "graphql": "16.8.1"
   },
   "exports": {
     "./sdk/atoms": {

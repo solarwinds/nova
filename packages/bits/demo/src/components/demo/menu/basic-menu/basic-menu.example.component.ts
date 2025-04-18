@@ -19,10 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiMenuModule } from "../../../../../../src/lib/menu/menu.module";
+import { NgFor } from "@angular/common";
 
 @Component({
     selector: "nui-basic-menu-example",
     templateUrl: "./basic-menu.example.component.html",
+    imports: [NuiMenuModule, NgFor]
 })
 export class BasicMenuExampleComponent {
     public items = ["Item 1", "Item 2", "Item 3"];

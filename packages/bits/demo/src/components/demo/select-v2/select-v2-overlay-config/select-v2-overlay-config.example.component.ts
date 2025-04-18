@@ -22,11 +22,14 @@ import { OverlayConfig } from "@angular/cdk/overlay";
 import { Component } from "@angular/core";
 
 import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "@nova-ui/bits";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NgFor } from "@angular/common";
 
 @Component({
     selector: "nui-select-v2-overlay-config-example",
     templateUrl: "./select-v2-overlay-config.example.component.html",
     host: { class: "select-container" },
+    imports: [NuiSelectV2Module, NgFor]
 })
 export class SelectV2OverlayConfigExampleComponent {
     public overlayConfig: OverlayConfig = {

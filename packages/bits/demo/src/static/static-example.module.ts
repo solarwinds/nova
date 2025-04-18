@@ -89,13 +89,6 @@ const staticRoutes: Routes = [
 ];
 
 @NgModule({
-    declarations: [
-        TypographyExampleComponent,
-        SemanticVariablesExampleComponent,
-        FrameworkColorsExampleComponent,
-        FrameworkColorsDarkExampleComponent,
-        LinksExampleComponent,
-    ],
     imports: [
         NuiIconModule,
         CommonModule,
@@ -110,6 +103,11 @@ const staticRoutes: Routes = [
         NuiButtonModule,
         NuiValidationMessageModule,
         RouterModule.forChild(staticRoutes),
+        TypographyExampleComponent,
+        SemanticVariablesExampleComponent,
+        FrameworkColorsExampleComponent,
+        FrameworkColorsDarkExampleComponent,
+        LinksExampleComponent,
     ],
 })
 export default class StaticExampleModule {}

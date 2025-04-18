@@ -92,8 +92,6 @@ const routes = [
         NuiMenuModule,
         RouterModule.forChild(routes),
         NuiTextboxModule,
-    ],
-    declarations: [
         PopupSimpleExampleComponent,
         PopupDifferentDirectionsExampleComponent,
         PopupWithCustomStylingComponent,

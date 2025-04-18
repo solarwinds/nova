@@ -19,12 +19,24 @@
 //  THE SOFTWARE.
 
 import { ChangeDetectorRef, Component } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import moment from "moment/moment";
+import { NuiFormFieldModule } from "../../../../../../src/lib/form-field/form-field.module";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
+import { NuiValidationMessageModule } from "../../../../../../src/lib/validation-message/validation-message.module";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
+import { NgFor } from "@angular/common";
+import { NuiRadioModule } from "../../../../../../src/lib/radio/radio.module";
+import { NuiSwitchModule } from "../../../../../../src/lib/switch/switch.module";
+import { NuiSelectModule } from "../../../../../../src/lib/select/select.module";
+import { NuiDatePickerModule } from "../../../../../../src/lib/date-picker/date-picker.module";
+import { NuiTimePickerModule } from "../../../../../../src/lib/time-picker/time-picker.module";
+import { NuiDateTimePickerModule } from "../../../../../../src/lib/date-time-picker/date-time-picker.module";
 
 @Component({
     selector: "nui-form-field-in-form-example",
     templateUrl: "./in-form-form-field.example.component.html",
+    imports: [FormsModule, ReactiveFormsModule, NuiFormFieldModule, NuiTextboxModule, NuiValidationMessageModule, NuiCheckboxModule, NgFor, NuiRadioModule, NuiSwitchModule, NuiSelectModule, NuiDatePickerModule, NuiTimePickerModule, NuiDateTimePickerModule]
 })
 export class FormFieldInFormExampleComponent {
     public vegetables = [

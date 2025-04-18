@@ -19,10 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
+import { NgFor } from "@angular/common";
 
 @Component({
     selector: "nui-checkbox-group-justified-example",
     templateUrl: "./checkbox-group-justified.example.component.html",
+    imports: [NuiCheckboxModule, NgFor]
 })
 export class CheckboxGroupJustifiedExampleComponent {
     public cabbage = $localize`Cabbage`;

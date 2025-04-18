@@ -36,8 +36,6 @@ import { CustomTemplateFilterGroupsWrapperComponent } from "./filter-groups-wrap
         NuiExpanderModule,
         NuiCheckboxModule,
         NuiPopoverModule,
-    ],
-    declarations: [
         CustomTemplateFilterGroupsWrapperComponent,
         CustomTemplateFilterGroupCompositeComponent,
     ],

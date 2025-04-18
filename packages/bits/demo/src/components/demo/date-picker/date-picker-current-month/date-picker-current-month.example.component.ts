@@ -19,9 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDatePickerModule } from "../../../../../../src/lib/date-picker/date-picker.module";
 
 @Component({
     selector: "nui-date-picker-current-month-example",
     templateUrl: "./date-picker-current-month.example.component.html",
+    imports: [NuiDatePickerModule]
 })
 export class DatePickerCurrentMonthExampleComponent {}

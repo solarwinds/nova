@@ -19,9 +19,20 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { SelectBasicExampleComponent } from "../select-basic/select-basic.example.component";
+import { SelectDisabledExampleComponent } from "../select-disabled/select-disabled.example.component";
+import { SelectRequiredExampleComponent } from "../select-required/select-required.example.component";
+import { SelectInlineExampleComponent } from "../select-inline/select-inline.example.component";
+import { SelectSeparatorsExampleComponent } from "../select-separators/select-separators.example.component";
+import { SelectJustifiedExampleComponent } from "../select-justified/select-justified.example.component";
+import { SelectCustomTemplateExampleComponent } from "../select-custom-template/select-custom-template.example.component";
+import { SelectReactiveFormExampleComponent } from "../select-reactive-form/select-reactive-form.example.component";
+import { SelectRemoveValueExampleComponent } from "../select-remove-value/select-remove-value.example.component";
 
 @Component({
     selector: "nui-select-docs-example",
     templateUrl: "./select-docs.example.component.html",
+    imports: [NuiDocsModule, SelectBasicExampleComponent, SelectDisabledExampleComponent, SelectRequiredExampleComponent, SelectInlineExampleComponent, SelectSeparatorsExampleComponent, SelectJustifiedExampleComponent, SelectCustomTemplateExampleComponent, SelectReactiveFormExampleComponent, SelectRemoveValueExampleComponent]
 })
 export class SelectDocsComponent {}

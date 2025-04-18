@@ -21,12 +21,16 @@
 import { Component, ViewEncapsulation } from "@angular/core";
 
 import { ThemeSwitchService } from "@nova-ui/bits";
+import { NgIf, AsyncPipe } from "@angular/common";
+import { NuiDocsModule } from "../../../../src/lib/docs/docs.module";
+import { RouterOutlet } from "@angular/router";
 
 @Component({
     selector: "nui-app",
     templateUrl: "app.component.html",
     styleUrls: ["app.component.less"],
     encapsulation: ViewEncapsulation.None,
+    imports: [NgIf, NuiDocsModule, RouterOutlet, AsyncPipe]
 })
 export class AppComponent {
     constructor(public themeSwitcherService: ThemeSwitchService) {}

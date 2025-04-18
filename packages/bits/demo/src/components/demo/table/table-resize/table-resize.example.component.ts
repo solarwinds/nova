@@ -19,6 +19,9 @@
 //  THE SOFTWARE.
 
 import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { NuiTableModule } from "../../../../../../src/lib/table/table.module";
+import { NgFor } from "@angular/common";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
 
 interface IExampleTableModel {
     position: number;
@@ -35,6 +38,7 @@ interface IExampleTableModel {
     selector: "nui-table-resize-example",
     templateUrl: "./table-resize.example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [NuiTableModule, NgFor, NuiIconModule]
 })
 export class TableResizeExampleComponent {
     public displayedColumns = [

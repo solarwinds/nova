@@ -315,8 +315,6 @@ const routes = [
         ScrollingModule,
         NuiOverlayAdditionsModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         ComboboxV2BasicExampleComponent,
         ComboboxV2DocsComponent,
         ComboboxV2GroupedOptionsExampleComponent,

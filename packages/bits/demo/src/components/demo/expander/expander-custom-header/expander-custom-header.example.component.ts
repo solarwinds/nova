@@ -21,10 +21,13 @@
 import { Component } from "@angular/core";
 
 import { IMenuGroup } from "@nova-ui/bits";
+import { NuiExpanderModule } from "../../../../../../src/lib/expander/expander.module";
+import { NuiMenuModule } from "../../../../../../src/lib/menu/menu.module";
 
 @Component({
     selector: "nui-expander-custom-header-example",
     templateUrl: "expander-custom-header.example.component.html",
+    imports: [NuiExpanderModule, NuiMenuModule]
 })
 export class ExpanderCustomHeaderExampleComponent {
     public itemsSource: IMenuGroup[] = [

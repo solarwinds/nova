@@ -26,10 +26,14 @@ import {
     ToastPositionClass,
     ToastService,
 } from "@nova-ui/bits";
+import { NuiRadioModule } from "../../../../../../src/lib/radio/radio.module";
+import { NgFor } from "@angular/common";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-toast-position-example",
     templateUrl: "./toast-position.example.component.html",
+    imports: [NuiRadioModule, NgFor, NuiButtonModule]
 })
 export class ToastPositionExampleComponent implements OnInit {
     public toastPositions = [

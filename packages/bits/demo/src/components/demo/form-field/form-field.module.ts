@@ -119,8 +119,6 @@ const routes = [
         NuiCheckboxModule,
         RouterModule.forChild(routes),
         NuiSelectV2Module,
-    ],
-    declarations: [
         FormFieldExampleComponent,
         FormFieldBasicExampleComponent,
         FormFieldBasicHintExampleComponent,

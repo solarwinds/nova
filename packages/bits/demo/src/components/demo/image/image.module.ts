@@ -74,9 +74,7 @@ const routes = [
 ];
 
 @NgModule({
-    imports: [NuiImageModule, NuiDocsModule, RouterModule.forChild(routes)],
-    declarations: [
-        ImageBasicExampleComponent,
+    imports: [NuiImageModule, NuiDocsModule, RouterModule.forChild(routes), ImageBasicExampleComponent,
         ImageDocsExampleComponent,
         ImageExternalExampleComponent,
         ImageFloatExampleComponent,
@@ -85,8 +83,7 @@ const routes = [
         ImageVisualTestComponent,
         ImageWatermarkedExampleComponent,
         ImageWidthHeightAndAutoFillExampleComponent,
-        ImageTestComponent,
-    ],
+        ImageTestComponent],
     providers: [
         {
             provide: DEMO_PATH_TOKEN,

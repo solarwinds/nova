@@ -19,9 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
 
 @Component({
     selector: "nui-checkbox-visual-test",
     templateUrl: "./checkbox-visual-test.component.html",
+    imports: [NuiCheckboxModule]
 })
 export class CheckboxVisualTestComponent {}

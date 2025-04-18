@@ -20,6 +20,20 @@
 
 import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 
-import { NuiDemoModule } from "./module";
 
-void platformBrowserDynamic().bootstrapModule(NuiDemoModule, {});
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { AppRoutingModule } from "./components/app/app-routing.module";
+import { BrowserModule, bootstrapApplication } from "@angular/platform-browser";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { provideAnimations } from "@angular/platform-browser/animations";
+import { NuiDocsModule } from "@nova-ui/bits";
+import { AppComponent } from "./components/app/app.component";
+import { importProvidersFrom } from "@angular/core";
+
+void bootstrapApplication(AppComponent, {
+    providers: [
+        importProvidersFrom(AppRoutingModule, BrowserModule, FormsModule, ReactiveFormsModule, NuiDocsModule),
+        provideHttpClient(withInterceptorsFromDi()),
+        provideAnimations(),
+    ]
+});

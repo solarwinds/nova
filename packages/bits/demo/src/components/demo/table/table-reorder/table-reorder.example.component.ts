@@ -21,6 +21,9 @@
 import { Component, Inject } from "@angular/core";
 
 import { IToastService, ToastService } from "@nova-ui/bits";
+import { NuiTableModule } from "../../../../../../src/lib/table/table.module";
+import { NgFor } from "@angular/common";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
 
 interface IExampleTableModel {
     position: number;
@@ -37,6 +40,7 @@ interface IExampleTableModel {
     selector: "nui-table-reorder-example",
     templateUrl: "./table-reorder.example.component.html",
     styleUrls: ["./table-reorder.example.component.less"],
+    imports: [NuiTableModule, NgFor, NuiIconModule]
 })
 export class TableReorderExampleComponent {
     public displayedColumns = [

@@ -98,8 +98,6 @@ const routes = [
         NuiDocsModule,
         RouterModule.forChild(routes),
         NuiSelectV2Module,
-    ],
-    declarations: [
         DatePickerBasicExampleComponent,
         DatePickerCurrentMonthExampleComponent,
         DatePickerDateRangeExampleComponent,

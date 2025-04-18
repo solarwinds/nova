@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
+import { CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf } from "@angular/cdk/scrolling";
 import {
     AfterViewInit,
     ChangeDetectorRef,
@@ -52,6 +52,10 @@ import {
 import { RESULTS_PER_PAGE } from "./table-with-virtual-scroll-data";
 import { TableWithVirtualScrollDataSource } from "./table-with-virtual-scroll-data-source.service";
 import { IServer } from "./types";
+import { NuiSearchModule } from "../../../../../src/lib/search/search.module";
+import { NuiTableModule } from "../../../../../src/lib/table/table.module";
+import { NgIf } from "@angular/common";
+import { NuiProgressModule } from "../../../../../src/lib/progress/progress.module";
 
 @Component({
     selector: "app-table-with-virtual-scroll",
@@ -65,6 +69,7 @@ import { IServer } from "./types";
             useClass: TableWithVirtualScrollDataSource,
         },
     ],
+    imports: [NuiSearchModule, CdkVirtualScrollViewport, NuiTableModule, CdkFixedSizeVirtualScroll, CdkVirtualForOf, NgIf, NuiProgressModule]
 })
 export class TableWithVirtualScrollComponent
     implements OnInit, OnDestroy, AfterViewInit

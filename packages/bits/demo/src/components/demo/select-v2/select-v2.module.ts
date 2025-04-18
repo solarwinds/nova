@@ -260,8 +260,6 @@ const routes = [
         NuiDialogModule,
         NuiOverlayAdditionsModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         SelectV2BasicExampleComponent,
         SelectV2DisabledExampleComponent,
         SelectV2ErrorExampleComponent,

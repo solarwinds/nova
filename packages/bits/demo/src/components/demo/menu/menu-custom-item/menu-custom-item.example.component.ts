@@ -19,11 +19,15 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiMenuModule } from "../../../../../../src/lib/menu/menu.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiSwitchModule } from "../../../../../../src/lib/switch/switch.module";
 
 @Component({
     selector: "nui-menu-custom-item-example",
     templateUrl: "./menu-custom-item.example.component.html",
     styleUrls: ["./menu-custom-item.example.component.less"],
+    imports: [NuiMenuModule, NuiButtonModule, NuiSwitchModule]
 })
 export class MenuCustomItemExampleComponent {
     public checked: boolean = false;

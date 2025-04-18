@@ -19,7 +19,10 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NgFor } from "@angular/common";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
 
 interface IExampleItem {
     id: string;
@@ -31,6 +34,7 @@ interface IExampleItem {
     selector: "nui-combobox-v2-customize-options-example",
     templateUrl: "combobox-v2-customize-options.example.component.html",
     host: { class: "combobox-container" },
+    imports: [NuiSelectV2Module, FormsModule, ReactiveFormsModule, NgFor, NuiIconModule]
 })
 export class ComboboxV2CustomizeOptionsExampleComponent {
     public icons: any[] = ["check", "email", "execute"];

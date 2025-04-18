@@ -19,11 +19,14 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiButtonModule } from "../../../../../../../src/lib/button/button.module";
+import { NuiTextboxModule } from "../../../../../../../src/lib/textbox/textbox.module";
 
 @Component({
     selector: "nui-badge-novaui",
     templateUrl: "./badge-novaui.component.html",
     styleUrls: ["./badge-novaui.component.less"],
+    imports: [NuiButtonModule, NuiTextboxModule]
 })
 export class BadgeNovauiComponent {
     buttonCounter = "1";

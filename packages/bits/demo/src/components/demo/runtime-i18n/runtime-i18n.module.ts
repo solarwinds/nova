@@ -51,8 +51,8 @@ const routes = [
         NuiFormFieldModule,
         NuiTextboxModule,
         RouterModule.forChild(routes),
+        RuntimeI18NExampleComponent,
     ],
-    declarations: [RuntimeI18NExampleComponent],
     providers: [
         {
             provide: DEMO_PATH_TOKEN,

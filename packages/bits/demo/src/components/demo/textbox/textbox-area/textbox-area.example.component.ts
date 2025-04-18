@@ -19,9 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
 
 @Component({
     selector: "nui-textbox-area-example",
     templateUrl: "./textbox-area.example.component.html",
+    imports: [NuiTextboxModule]
 })
 export class TextboxAreaExampleComponent {}

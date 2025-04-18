@@ -19,9 +19,18 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { BasicChipsExampleComponent } from "../basic-chips/basic-chips.example.component";
+import { GroupedChipsExampleComponent } from "../grouped-chips/grouped-chips.example.component";
+import { VerticalFlatChipsExampleComponent } from "../vertical-flat-chips/vertical-flat-chips.example.component";
+import { VerticalGroupedChipsExampleComponent } from "../vertical-grouped-chips/vertical-grouped-chips.example.component";
+import { AutohideChipsExampleComponent } from "../autohide-chips/autohide-chips.example.component";
+import { ChipsOverflowExampleComponent } from "../chips-overflow/chips-overflow.example.component";
+import { ChipsCustomCssExampleComponent } from "../chips-custom-css/chips-custom-css.example.component";
 
 @Component({
     selector: "nui-chips-docs-example",
     templateUrl: "./chips-docs.example.component.html",
+    imports: [NuiDocsModule, BasicChipsExampleComponent, GroupedChipsExampleComponent, VerticalFlatChipsExampleComponent, VerticalGroupedChipsExampleComponent, AutohideChipsExampleComponent, ChipsOverflowExampleComponent, ChipsCustomCssExampleComponent]
 })
 export class ChipsDocsExampleComponent {}

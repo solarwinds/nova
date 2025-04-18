@@ -22,11 +22,15 @@ import { Component } from "@angular/core";
 import moment from "moment/moment";
 
 import { HistoryStorage, ITimeframe } from "@nova-ui/bits";
+import { NuiTimeFrameBarModule } from "../../../../../../../src/lib/convenience/time-frame-bar/time-frame-bar.module";
+import { NuiIconModule } from "../../../../../../../src/lib/icon/icon.module";
+import { NuiTimeFramePickerModule } from "../../../../../../../src/lib/time-frame-picker/time-frame-picker.module";
 
 @Component({
     selector: "nui-convenience-time-frame-bar-test",
     templateUrl: "./time-frame-bar-test.component.html",
     providers: [HistoryStorage],
+    imports: [NuiTimeFrameBarModule, NuiIconModule, NuiTimeFramePickerModule]
 })
 export class TimeFrameBarTestComponent {
     private baseDate = moment([2018, 5, 1, 15, 0, 0]);

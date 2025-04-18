@@ -21,10 +21,12 @@
 import { Component, Inject } from "@angular/core";
 
 import { IToastService, ToastService } from "@nova-ui/bits";
+import { NuiPopoverModule } from "../../../../../../src/lib/popover/popover.module";
 
 @Component({
     selector: "nui-popover-outputs-example",
     templateUrl: "./popover-outputs.example.component.html",
+    imports: [NuiPopoverModule]
 })
 export class PopoverOutputsExampleComponent {
     constructor(@Inject(ToastService) private toastService: IToastService) {}

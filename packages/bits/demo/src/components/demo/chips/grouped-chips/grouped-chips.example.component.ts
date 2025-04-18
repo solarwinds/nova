@@ -23,6 +23,7 @@ import _cloneDeep from "lodash/cloneDeep";
 import _pull from "lodash/pull";
 
 import { IChipsGroup, IChipsItem } from "@nova-ui/bits";
+import { NuiChipsModule } from "../../../../../../src/lib/chips/chips.module";
 
 const groupedItems: IChipsGroup[] = [
     {
@@ -50,6 +51,7 @@ const groupedItems: IChipsGroup[] = [
 @Component({
     selector: "nui-grouped-chips-example",
     templateUrl: "./grouped-chips.example.component.html",
+    imports: [NuiChipsModule]
 })
 export class GroupedChipsExampleComponent {
     public horizontalGroupedItemsSource = {

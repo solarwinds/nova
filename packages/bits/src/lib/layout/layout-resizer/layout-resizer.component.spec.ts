@@ -31,6 +31,7 @@ import {
 
 @Component({
     template: `<div>Loren Ipsum</div>`,
+    standalone: false
 })
 class LayoutResizerTestingComponent implements AfterViewInit {
     constructor(public elRef: ElementRef) {}

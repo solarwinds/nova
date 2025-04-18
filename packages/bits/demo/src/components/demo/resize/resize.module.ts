@@ -67,8 +67,6 @@ const routes = [
         NuiTextboxModule,
         NuiMessageModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         ResizeBasicExampleComponent,
         ResizePercentsExampleComponent,
         ResizeNestedExampleComponent,

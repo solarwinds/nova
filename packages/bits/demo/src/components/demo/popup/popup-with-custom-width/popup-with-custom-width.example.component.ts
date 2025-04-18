@@ -19,11 +19,17 @@
 //  THE SOFTWARE.
 
 import { Component, ViewEncapsulation } from "@angular/core";
+import { PopupAdapterModule } from "../../../../../../src/lib/popup-adapter/popup-adapter.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiPopupModule } from "../../../../../../src/lib/popup/popup.module";
+import { NgFor } from "@angular/common";
+import { NuiMenuModule } from "../../../../../../src/lib/menu/menu.module";
 
 @Component({
     selector: "nui-popup-with-custom-width-example",
     templateUrl: "./popup-with-custom-width.example.component.html",
     encapsulation: ViewEncapsulation.None,
+    imports: [PopupAdapterModule, NuiButtonModule, NuiPopupModule, NgFor, NuiMenuModule]
 })
 export class PopupWithCustomWidthComponent {
     public icon = "caret-down";

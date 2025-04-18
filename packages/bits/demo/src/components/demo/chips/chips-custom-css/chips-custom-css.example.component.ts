@@ -22,12 +22,16 @@ import { Component, ViewEncapsulation } from "@angular/core";
 import _pull from "lodash/pull";
 
 import { IChipRemoved, IChipsItem, IChipsItemsSource } from "@nova-ui/bits";
+import { NgFor, NgIf } from "@angular/common";
+import { NuiChipsModule } from "../../../../../../src/lib/chips/chips.module";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
 
 @Component({
     selector: "nui-chips-custom-css-example",
     templateUrl: "./chips-custom-css.example.component.html",
     styleUrls: ["chips-custom-css.example.component.less"],
     encapsulation: ViewEncapsulation.None,
+    imports: [NgFor, NuiChipsModule, NgIf, NuiIconModule]
 })
 export class ChipsCustomCssExampleComponent {
     public standaloneChips: Array<IChipsItem & any> = [

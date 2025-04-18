@@ -22,10 +22,12 @@ import { Component, Inject } from "@angular/core";
 import moment, { Moment } from "moment/moment";
 
 import { ToastService } from "@nova-ui/bits";
+import { NuiTimePickerModule } from "../../../../../../src/lib/time-picker/time-picker.module";
 
 @Component({
     selector: "nui-time-picker-preserve-insignificant",
     templateUrl: "./time-picker-preserve-insignificant.example.component.html",
+    imports: [NuiTimePickerModule]
 })
 export class TimePickerPreserveInsignificantExampleComponent {
     public time: Moment;

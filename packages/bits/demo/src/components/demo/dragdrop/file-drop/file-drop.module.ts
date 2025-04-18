@@ -28,8 +28,7 @@ import { FileDropExampleComponent } from "./file-drop.component";
  * @ignore
  */
 @NgModule({
-    imports: [NuiCommonModule],
-    declarations: [FileDropExampleComponent],
+    imports: [NuiCommonModule, FileDropExampleComponent],
     exports: [FileDropExampleComponent],
     providers: [],
 })

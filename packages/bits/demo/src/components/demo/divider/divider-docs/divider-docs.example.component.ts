@@ -19,9 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { HorizontalDividersExampleComponent } from "../horizontal-dividers/horizontal-dividers.example.component";
+import { VerticalDividersExampleComponent } from "../vertical-dividers/vertical-dividers.example.component";
 
 @Component({
     selector: "nui-divider-docs-example",
     templateUrl: "./divider-docs.example.component.html",
+    imports: [NuiDocsModule, HorizontalDividersExampleComponent, VerticalDividersExampleComponent]
 })
 export class DividerExampleComponent {}

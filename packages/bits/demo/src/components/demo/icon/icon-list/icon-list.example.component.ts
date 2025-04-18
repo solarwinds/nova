@@ -21,10 +21,14 @@
 import { Component, OnInit } from "@angular/core";
 
 import { IconService } from "./../../../../../../src/lib/icon/icon.service";
+import { NgFor, NgIf } from "@angular/common";
+import { NuiExpanderModule } from "../../../../../../src/lib/expander/expander.module";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
 
 @Component({
     selector: "nui-icon-list-example",
     templateUrl: "./icon-list.example.component.html",
+    imports: [NgFor, NuiExpanderModule, NgIf, NuiIconModule]
 })
 export class IconListExampleComponent implements OnInit {
     public icons: any[];

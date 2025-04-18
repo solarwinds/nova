@@ -35,6 +35,9 @@ import {
     SearchComponent,
     SearchService,
 } from "@nova-ui/bits";
+import { NuiSearchModule } from "../../../../../../../../src/lib/search/search.module";
+import { NuiRepeatModule } from "../../../../../../../../src/lib/repeat/repeat.module";
+import { NuiPaginatorModule } from "../../../../../../../../src/lib/paginator/paginator.module";
 
 const RANDOM_ARRAY = [
     { color: "regular-blue" },
@@ -75,6 +78,7 @@ export class ClientSideCustomSearchService extends SearchService {
         ClientSideDataSource,
         { provide: SearchService, useClass: ClientSideCustomSearchService },
     ],
+    imports: [NuiSearchModule, NuiRepeatModule, NuiPaginatorModule]
 })
 export class DataSourceClientSideCustomSearchExampleComponent
     implements AfterViewInit, OnDestroy

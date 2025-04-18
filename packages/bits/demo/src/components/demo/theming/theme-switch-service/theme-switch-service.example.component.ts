@@ -21,10 +21,13 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 
 import { ThemeSwitchService } from "@nova-ui/bits";
+import { NuiSwitchModule } from "../../../../../../src/lib/switch/switch.module";
+import { AsyncPipe } from "@angular/common";
 
 @Component({
     selector: "theme-switch-service-example",
     templateUrl: "./theme-switch-service.example.component.html",
+    imports: [NuiSwitchModule, AsyncPipe]
 })
 export class ThemeSwitchServiceExampleComponent implements OnInit, OnDestroy {
     // Inject the service

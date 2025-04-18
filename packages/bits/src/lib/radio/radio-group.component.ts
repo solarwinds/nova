@@ -68,6 +68,7 @@ import { NuiFormFieldControl } from "../form-field/public-api";
         },
     ],
     host: { role: "radiogroup" },
+    standalone: false
 })
 export class RadioGroupComponent
     implements AfterContentInit, OnDestroy, ControlValueAccessor
@@ -222,6 +223,7 @@ export class RadioGroupComponent
         "[class.nui-radio--checked]": "checked",
         role: "radio",
     },
+    standalone: false
 })
 export class RadioComponent implements OnInit, OnDestroy {
     /**

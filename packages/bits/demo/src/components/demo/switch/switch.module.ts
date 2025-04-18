@@ -71,8 +71,6 @@ const routes = [
         NuiSwitchModule,
         NuiDocsModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         SwitchDisableExampleComponent,
         SwitchDocsExampleComponent,
         SwitchSimpleExampleComponent,

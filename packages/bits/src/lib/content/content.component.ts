@@ -31,6 +31,7 @@ import { Component, Input, ViewEncapsulation } from "@angular/core";
     styleUrls: ["./content.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: { role: "document" },
+    standalone: false
 })
 export class ContentComponent {
     @Input() size: "small" | "normal" | "large" = "normal";

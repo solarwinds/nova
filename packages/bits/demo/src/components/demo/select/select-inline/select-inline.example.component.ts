@@ -19,10 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiSelectModule } from "../../../../../../src/lib/select/select.module";
 
 @Component({
     selector: "nui-select-inline-example",
     templateUrl: "select-inline.example.component.html",
+    imports: [NuiSelectModule]
 })
 export class SelectInlineExampleComponent {
     public dataset = {

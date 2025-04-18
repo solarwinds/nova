@@ -90,8 +90,6 @@ const routes = [
         NuiSelectV2Module,
         NuiDocsModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         PopoverBasicUsageExampleComponent,
         PopoverClickTriggerExampleComponent,
         PopoverDisabledExampleComponent,

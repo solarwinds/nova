@@ -21,10 +21,13 @@
 import { ChangeDetectorRef, Component, Inject } from "@angular/core";
 
 import { ToastService } from "@nova-ui/bits";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiPanelModule } from "../../../../../../src/lib/panel/panel.module";
 
 @Component({
     selector: "nui-panel-hide-outside-control-example",
     templateUrl: "./panel-hide-outside-control.example.component.html",
+    imports: [NuiButtonModule, NuiPanelModule]
 })
 export class PanelHideOutsideControlExampleComponent {
     public isHidden = false;

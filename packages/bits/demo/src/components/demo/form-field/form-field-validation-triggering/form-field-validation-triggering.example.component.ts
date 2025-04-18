@@ -19,11 +19,16 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NuiFormFieldModule } from "../../../../../../src/lib/form-field/form-field.module";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
+import { NuiValidationMessageModule } from "../../../../../../src/lib/validation-message/validation-message.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-form-field-validation-triggering-example",
     templateUrl: "./form-field-validation-triggering.example.component.html",
+    imports: [FormsModule, ReactiveFormsModule, NuiFormFieldModule, NuiTextboxModule, NuiValidationMessageModule, NuiButtonModule]
 })
 export class FormFieldValidationTriggeringxampleComponent {
     public reactiveForm;

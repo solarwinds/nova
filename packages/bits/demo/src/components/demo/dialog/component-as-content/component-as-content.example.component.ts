@@ -23,10 +23,12 @@ import { Component, Inject } from "@angular/core";
 import { DialogService } from "@nova-ui/bits";
 
 import { DialogContentExampleComponent } from "./dialog-content.example.component";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-component-as-content-example",
     templateUrl: "./component-as-content.example.component.html",
+    imports: [NuiButtonModule]
 })
 export class ComponentAsContentExampleComponent {
     constructor(@Inject(DialogService) private dialogService: DialogService) {}

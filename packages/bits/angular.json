@@ -1,7 +1,8 @@
 {
     "$schema": "/node_modules/@angular/cli/lib/config/schema.json",
     "cli": {
-        "analytics": false
+        "analytics": false,
+        "packageManager": "yarn"
     },
     "newProjectRoot": "projects",
     "projects": {
@@ -63,7 +64,8 @@
                             "browser": ""
                         },
                         "polyfills": [
-                            "./demo/src/polyfills.ts"
+                          "./demo/src/polyfills.ts",
+                          "@angular/localize/init"
                         ],
                         "scripts": [],
                         "sourceMap": true,
@@ -217,29 +219,6 @@
             "root": "./src/styles",
             "sourceRoot": "./src/styles"
         },
-        "i18n": {
-            "architect": {
-                "build": {
-                    "builder": "@angular-devkit/build-angular:application",
-                    "defaultConfiguration": "",
-                    "options": {
-                        "allowedCommonJsDependencies": [
-                            "lodash"
-                        ],
-                        "extractLicenses": false,
-                        "index": "./src/index.html",
-                        "browser": "./src/public_api.ts",
-                        "namedChunks": true,
-                        "optimization": false,
-                        "outputPath": "./.tmp",
-                        "sourceMap": true,
-                        "tsConfig": "./src/tsconfig.i18n.json"
-                    }
-                }
-            },
-            "projectType": "library",
-            "root": "i18n"
-        },
         "lib": {
             "architect": {
                 "build": {
@@ -247,9 +226,6 @@
                     "configurations": {
                         "dev": {
                             "project": "./ng-package-dev.json"
-                        },
-                        "locl": {
-                            "tsConfig": "./tsconfig.lib.locl.json"
                         },
                         "production": {
                             "tsConfig": "./tsconfig.lib.prod.json"

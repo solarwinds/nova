@@ -19,12 +19,15 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NgFor } from "@angular/common";
 
 @Component({
     selector: "nui-select-v2-basic-example",
     templateUrl: "select-v2-basic.example.component.html",
     host: { class: "select-container" },
+    imports: [NuiSelectV2Module, FormsModule, ReactiveFormsModule, NgFor]
 })
 export class SelectV2BasicExampleComponent {
     public items = Array.from({ length: 50 }).map(

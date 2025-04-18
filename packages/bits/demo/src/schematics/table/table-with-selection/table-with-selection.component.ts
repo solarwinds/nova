@@ -47,6 +47,11 @@ import {
 import { RESULTS_PER_PAGE } from "./table-with-selection-data";
 import { TableWithSelectionDataSource } from "./table-with-selection-data-source.service";
 import { IServer } from "./types";
+import { NuiSearchModule } from "../../../../../src/lib/search/search.module";
+import { NuiTableModule } from "../../../../../src/lib/table/table.module";
+import { NgIf, JsonPipe } from "@angular/common";
+import { NuiProgressModule } from "../../../../../src/lib/progress/progress.module";
+import { NuiPaginatorModule } from "../../../../../src/lib/paginator/paginator.module";
 
 @Component({
     selector: "app-table-with-selection",
@@ -59,6 +64,7 @@ import { IServer } from "./types";
             useClass: TableWithSelectionDataSource,
         },
     ],
+    imports: [NuiSearchModule, NuiTableModule, NgIf, NuiProgressModule, NuiPaginatorModule, JsonPipe]
 })
 export class TableWithSelectionComponent
     implements OnInit, OnDestroy, AfterViewInit

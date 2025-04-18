@@ -19,9 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-button-size-example",
     templateUrl: "./button-size.example.component.html",
+    imports: [NuiButtonModule]
 })
 export class ButtonSizeExampleComponent {}

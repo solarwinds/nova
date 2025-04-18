@@ -19,9 +19,18 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { CheckboxBasicExampleComponent } from "../checkbox-basic/checkbox-basic.example.component";
+import { CheckboxHelpHintExampleComponent } from "../checkbox-helphint/checkbox-helphint.example.component";
+import { CheckboxDisabledExampleComponent } from "../checkbox-disabled/checkbox-disabled.example.component";
+import { CheckboxIndeterminateExampleComponent } from "../checkbox-indeterminate/checkbox-indeterminate.example.component";
+import { CheckboxOutputExampleComponent } from "../checkbox-output/checkbox-output.example.component";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
+import { CheckboxInFormExampleComponent } from "../checkbox-in-form/checkbox-in-form.example.component";
 
 @Component({
     selector: "nui-checkbox-docs-example",
     templateUrl: "./checkbox-docs.example.component.html",
+    imports: [NuiDocsModule, CheckboxBasicExampleComponent, CheckboxHelpHintExampleComponent, CheckboxDisabledExampleComponent, CheckboxIndeterminateExampleComponent, CheckboxOutputExampleComponent, NuiMessageModule, CheckboxInFormExampleComponent]
 })
 export class CheckboxExampleComponent {}

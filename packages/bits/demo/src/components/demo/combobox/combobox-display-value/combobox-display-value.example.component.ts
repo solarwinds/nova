@@ -21,10 +21,13 @@
 import { Component } from "@angular/core";
 
 import { ISelectChangedEvent } from "@nova-ui/bits";
+import { NuiSelectModule } from "../../../../../../src/lib/select/select.module";
+import { JsonPipe } from "@angular/common";
 
 @Component({
     selector: "nui-combobox-display-value-example",
     templateUrl: "combobox-display-value.example.component.html",
+    imports: [NuiSelectModule, JsonPipe]
 })
 export class ComboboxDisplayValueExampleComponent {
     public dataset = {

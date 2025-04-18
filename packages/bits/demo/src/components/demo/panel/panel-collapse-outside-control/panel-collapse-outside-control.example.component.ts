@@ -21,10 +21,13 @@
 import { Component, Inject } from "@angular/core";
 
 import { ToastService } from "@nova-ui/bits";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiPanelModule } from "../../../../../../src/lib/panel/panel.module";
 
 @Component({
     selector: "nui-panel-collapse-outside-control-example",
     templateUrl: "./panel-collapse-outside-control.example.component.html",
+    imports: [NuiButtonModule, NuiPanelModule]
 })
 export class PanelCollapseOutsideControlExampleComponent {
     public isCollapsed: boolean = false;

@@ -28,6 +28,11 @@ import {
     SearchComponent,
     TableComponent,
 } from "@nova-ui/bits";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
+import { NuiSearchModule } from "../../../../../../src/lib/search/search.module";
+import { NuiTableModule } from "../../../../../../src/lib/table/table.module";
+import { NgFor } from "@angular/common";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
 
 interface IExampleTableModel {
     position: number;
@@ -45,6 +50,7 @@ interface IExampleTableModel {
     providers: [ClientSideDataSource],
     templateUrl: "./table-search.example.component.html",
     styleUrls: ["./table-search.example.component.less"],
+    imports: [NuiCheckboxModule, NuiSearchModule, NuiTableModule, NgFor, NuiIconModule]
 })
 export class TableSearchExampleComponent implements AfterViewInit, OnDestroy {
     public displayedColumns = [

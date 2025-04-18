@@ -36,6 +36,7 @@ import {
     styleUrls: ["./repeat-item.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: { "[attr.role]": "role" },
+    standalone: false
 })
 export class RepeatItemComponent {
     @Input() public clickable = false;

@@ -19,14 +19,17 @@
 //  THE SOFTWARE.
 
 import { ChangeDetectorRef, Component } from "@angular/core";
+import { NuiTabsModule } from "../../../../../../src/lib/tabgroup/tabs.module";
+import { NgFor } from "@angular/common";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
 
 @Component({
     selector: "nui-tab-heading-group-horizontal-with-icons-example",
-    templateUrl:
-        "./tab-heading-group-horizontal-with-icons.example.component.html",
+    templateUrl: "./tab-heading-group-horizontal-with-icons.example.component.html",
     styleUrls: [
         "./tab-heading-group-horizontal-with-icons.example.component.less",
     ],
+    imports: [NuiTabsModule, NgFor, NuiIconModule]
 })
 export class TabHeadingGroupHorizontalWithIconsExampleComponent {
     public currentTabId: string;

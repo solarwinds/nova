@@ -21,10 +21,16 @@
 import { Component } from "@angular/core";
 
 import { IMenuGroup } from "@nova-ui/bits";
+import { ExpanderBasicExampleComponent } from "../expander-basic/expander-basic.example.component";
+import { ExpanderTextAndIconExampleComponent } from "../expander-text-and-icon/expander-text-and-icon.example.component";
+import { ExpanderCustomHeaderExampleComponent } from "../expander-custom-header/expander-custom-header.example.component";
+import { ExpanderInitiallyExpandedExampleComponent } from "../expander-initially-expanded/expander-initially-expanded.example.component";
+import { ExpanderOpenChangeExampleComponent } from "../expander-open-change/expander-open-change.example.component";
 
 @Component({
     selector: "expander-test",
     templateUrl: "./expander-test.component.html",
+    imports: [ExpanderBasicExampleComponent, ExpanderTextAndIconExampleComponent, ExpanderCustomHeaderExampleComponent, ExpanderInitiallyExpandedExampleComponent, ExpanderOpenChangeExampleComponent]
 })
 export class ExpanderTestComponent {
     public itemsSource: IMenuGroup[] = [

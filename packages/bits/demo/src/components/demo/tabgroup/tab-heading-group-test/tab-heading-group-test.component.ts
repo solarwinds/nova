@@ -19,9 +19,18 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { TabHeadingGroupHorizontalExampleComponent } from "../tab-heading-group-horizontal/tab-heading-group-horizontal.example.component";
+import { TabHeadingGroupHorizontalWithIconsExampleComponent } from "../tab-heading-group-horizontal-with-icons/tab-heading-group-horizontal-with-icons.example.component";
+import { TabHeadingGroupHorizontalWithIconsOnlyExampleComponent } from "../tab-heading-group-horizontal-with-icons-only/tab-heading-group-horizontal-with-icons-only.example.component";
+import { TabHeadingGroupVerticalExampleComponent } from "../tab-heading-group-vertical/tab-heading-group-vertical.example.component";
+import { TabHeadingGroupVerticalWithIconsExampleComponent } from "../tab-heading-group-vertical-with-icons/tab-heading-group-vertical-with-icons.example.component";
+import { TabHeadingGroupWithIconsExampleComponent } from "../tab-heading-group-with-icons/tab-heading-group-with-icons.example.component";
+import { TabHeadingGroupResponsiveExampleComponent } from "../tab-heading-group-responsive/tab-heading-group-responsive.example.component";
+import { TabHeadingGroupWithContentExampleComponent } from "../tab-heading-group-with-content/tab-heading-group-with-content.example.component";
 
 @Component({
     selector: "nui-tab-heading-group-test",
     templateUrl: "./tab-heading-group-test.component.html",
+    imports: [TabHeadingGroupHorizontalExampleComponent, TabHeadingGroupHorizontalWithIconsExampleComponent, TabHeadingGroupHorizontalWithIconsOnlyExampleComponent, TabHeadingGroupVerticalExampleComponent, TabHeadingGroupVerticalWithIconsExampleComponent, TabHeadingGroupWithIconsExampleComponent, TabHeadingGroupResponsiveExampleComponent, TabHeadingGroupWithContentExampleComponent]
 })
 export class TabHeadingGroupTestComponent {}
