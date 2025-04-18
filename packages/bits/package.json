@@ -18,20 +18,20 @@
   },
   "exports": {
     "./sdk/atoms": {
-      "default": "./sdk/atoms/index.js",
-      "types": "./sdk/atmos/index.d.ts"
+      "types": "./sdk/atmos/index.d.ts",
+      "default": "./sdk/atoms/index.js"
     },
     "./sdk/atoms/*": {
-      "default": "./sdk/atoms/*.js",
-      "types": "./sdk/atoms/*.d.ts"
+      "types": "./sdk/atoms/*.d.ts",
+      "default": "./sdk/atoms/*.js"
     },
     "./sdk/schematics": {
-      "default": "./sdk/schematics/index.js",
-      "types": "./sdk/schematics/index.d.ts"
+      "types": "./sdk/schematics/index.d.ts",
+      "default": "./sdk/schematics/index.js"
     },
     "./sdk/schematics/*": {
-      "default": "./sdk/schematics/*.js",
-      "types": "./sdk/schematics/*.d.ts"
+      "types": "./sdk/schematics/*.d.ts",
+      "default": "./sdk/schematics/*.js"
     },
     "./sdk/*": "./sdk/*",
     "./bundles/*": "./bundles/*"

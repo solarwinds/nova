@@ -185,17 +185,16 @@
         "generate-css": {
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-angular:application",
+                    "builder": "@angular-devkit/build-angular:browser",
                     "defaultConfiguration": "",
                     "options": {
-                      "deleteOutputPath": true,
+                        "buildOptimizer": false,
+                        "deleteOutputPath": true,
                         "extractLicenses": false,
                         "index": "./index.html",
+                        "main": "",
                         "namedChunks": true,
-                        "outputPath": {
-                          "base": "./.tmp-css",
-                           "browser": ""
-                        },
+                        "outputPath": "./.tmp-css",
                         "sourceMap": false,
                         "styles": [
                             "./src/styles.less",
@@ -212,7 +211,7 @@
                             }
                         ],
                         "tsConfig": "./src/tsconfig.css.json",
-                        "browser": ""
+                        "vendorChunk": true
                     }
                 }
             },
