@@ -30,7 +30,7 @@
     "@percy/cli": "1.30.2",
     "@percy/protractor": "2.0.1",
     "@stackblitz/sdk": "1.11.0",
-    "@stylistic/eslint-plugin-ts": "4.2.0",
+    "@stylistic/eslint-plugin-ts": "3.1.0",
     "@types/jasmine": "5.1.4",
     "@types/jasminewd2": "2.0.13",
     "@types/lodash": "4.17.13",
