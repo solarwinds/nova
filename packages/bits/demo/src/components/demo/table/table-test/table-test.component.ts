@@ -51,12 +51,22 @@ import {
 
 import { ELEMENT_DATA, ITestTableModel } from "./table-test-data-source";
 import { TableStateHandlerService } from "../../../../../../src/lib/table/table-state-handler.service";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
+import { NgIf, NgFor } from "@angular/common";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
+import { NuiDividerModule } from "../../../../../../src/lib/divider/divider.module";
+import { NuiSearchModule } from "../../../../../../src/lib/search/search.module";
+import { NuiTableModule } from "../../../../../../src/lib/table/table.module";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
+import { NuiPaginatorModule } from "../../../../../../src/lib/paginator/paginator.module";
 
 @Component({
     selector: "nui-table-test",
     providers: [ClientSideDataSource, TableStateHandlerService],
     templateUrl: "./table-test.component.html",
-    standalone: false
+    imports: [NuiButtonModule, NuiCheckboxModule, NuiTextboxModule, NgIf, NuiMessageModule, NgFor, NuiDividerModule, NuiSearchModule, NuiTableModule, NuiIconModule, NuiPaginatorModule]
 })
 export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
     public dataSource?: ITestTableModel[] = ELEMENT_DATA;

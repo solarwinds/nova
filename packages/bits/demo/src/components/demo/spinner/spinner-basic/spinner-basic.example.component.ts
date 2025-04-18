@@ -19,10 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiSpinnerModule } from "../../../../../../src/lib/spinner/spinner.module";
 
 @Component({
     selector: "nui-spinner-basic-example",
     templateUrl: "./spinner-basic.example.component.html",
-    standalone: false
+    imports: [NuiSpinnerModule]
 })
 export class SpinnerBasicExampleComponent {}

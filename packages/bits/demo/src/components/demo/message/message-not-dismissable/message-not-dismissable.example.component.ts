@@ -19,10 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
 
 @Component({
     selector: "nui-message-not-dismissable-example",
     templateUrl: "./message-not-dismissable.example.component.html",
-    standalone: false
+    imports: [NuiMessageModule]
 })
 export class MessageNotDismissableExampleComponent {}

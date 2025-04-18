@@ -19,11 +19,14 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiPanelModule } from "../../../../../../src/lib/panel/panel.module";
+import { NgIf } from "@angular/common";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
 
 @Component({
     selector: "nui-panel-collapse-example",
     templateUrl: "./panel-collapse.example.component.html",
-    standalone: false
+    imports: [NuiPanelModule, NgIf, NuiIconModule]
 })
 export class PanelCollapseExampleComponent {
     public isCollapsible = true;

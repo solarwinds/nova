@@ -19,9 +19,16 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { SimpleDialogExampleComponent } from "../simple-dialog/simple-dialog.example.component";
+import { DialogWithKeyboardExampleComponent } from "../dialog-keyboard/dialog-with-keyboard.example.component";
+import { DialogSeverityExampleComponent } from "../dialog-severity/dialog-severity.example.component";
+import { DialogCustomClassExampleComponent } from "../dialog-custom-class/dialog-custom-class.example.component";
+import { DialogWithStaticBackdropExampleComponent } from "../dialog-static-backdrop/dialog-with-static-backdrop.example.component";
+import { DialogInsideOverlayExampleComponent } from "../dialog-inside-overlay/dialog-inside-overlay.example.component";
+import { DialogInsideOverlayWithDateTimePickerExampleComponent } from "../dialog-inside-overlay-with-date-time-picker/dialog-inside-overlay-with-date-time-picker.example.component";
 
 @Component({
     templateUrl: "./dialog-test.example.component.html",
-    standalone: false
+    imports: [SimpleDialogExampleComponent, DialogWithKeyboardExampleComponent, DialogSeverityExampleComponent, DialogCustomClassExampleComponent, DialogWithStaticBackdropExampleComponent, DialogInsideOverlayExampleComponent, DialogInsideOverlayWithDateTimePickerExampleComponent]
 })
 export class DialogTestComponent {}

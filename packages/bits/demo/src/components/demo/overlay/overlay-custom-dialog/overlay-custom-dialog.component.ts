@@ -25,13 +25,15 @@ import {
 import { Component, ViewChild, ViewEncapsulation } from "@angular/core";
 
 import { DialogService, NuiDialogRef, OverlayComponent } from "@nova-ui/bits";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiOverlayModule } from "../../../../../../src/lib/overlay/overlay.module";
 
 @Component({
     selector: "nui-overlay-custom-dialog",
     templateUrl: "./overlay-custom-dialog.component.html",
     styleUrls: ["./overlay-custom-dialog.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    imports: [NuiButtonModule, NuiOverlayModule]
 })
 export class OverlayCustomDialogComponent {
     private overlayRef: OverlayRef;

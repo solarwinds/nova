@@ -56,8 +56,6 @@ import { FilteredViewTableWithSelectionComponent } from "./filtered-view-table-w
         FilterGroupModule,
         NuiChipsModule,
         NuiPopoverModule,
-    ],
-    declarations: [
         FilteredViewTableWithSelectionComponent,
         FilteredViewTableComponent,
     ],

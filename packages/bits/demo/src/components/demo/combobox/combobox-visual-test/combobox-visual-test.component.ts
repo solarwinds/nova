@@ -22,11 +22,12 @@ import { Component, OnInit } from "@angular/core";
 import _cloneDeep from "lodash/cloneDeep";
 
 import { ISelectChangedEvent } from "@nova-ui/bits";
+import { NuiSelectModule } from "../../../../../../src/lib/select/select.module";
 
 @Component({
     selector: "combobox-visual-test",
     templateUrl: "./combobox-visual-test.component.html",
-    standalone: false
+    imports: [NuiSelectModule]
 })
 export class ComboboxVisualTestComponent implements OnInit {
     public isRequired: boolean = true;

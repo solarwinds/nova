@@ -19,10 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
 
 @Component({
     selector: "nui-message-basic-example",
     templateUrl: "./message-basic.example.component.html",
-    standalone: false
+    imports: [NuiMessageModule]
 })
 export class MessageBasicExampleComponent {}

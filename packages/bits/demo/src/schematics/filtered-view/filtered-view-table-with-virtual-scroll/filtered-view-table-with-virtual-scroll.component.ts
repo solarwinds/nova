@@ -48,6 +48,12 @@ import { FilterGroupComponent } from "./filter-group/filter-group.component";
 import { IFilterGroupItem } from "./filter-group/public-api";
 import { FilteredViewTableWithVirtualScrollDataSource } from "./filtered-view-table-with-virtual-scroll-data-source.service";
 import { IFilterable, IServer, ServerStatus } from "./types";
+import { NuiPanelModule } from "../../../../../src/lib/panel/panel.module";
+import { FilterGroupsWrapperComponent } from "./filter-group/filter-groups-wrapper/filter-groups-wrapper.component";
+import { NgFor, NgIf } from "@angular/common";
+import { NuiChipsModule } from "../../../../../src/lib/chips/chips.module";
+import { NuiPopoverModule } from "../../../../../src/lib/popover/popover.module";
+import { FilteredViewTableComponent } from "./filtered-view-table/filtered-view-table.component";
 
 @Component({
     selector: "app-filtered-view-table-with-virtual-scroll",
@@ -61,7 +67,7 @@ import { IFilterable, IServer, ServerStatus } from "./types";
         },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [NuiPanelModule, FilterGroupsWrapperComponent, NgFor, FilterGroupComponent, NuiChipsModule, NgIf, NuiPopoverModule, FilteredViewTableComponent]
 })
 export class FilteredViewTableWithVirtualScrollComponent
     implements AfterViewInit, OnDestroy

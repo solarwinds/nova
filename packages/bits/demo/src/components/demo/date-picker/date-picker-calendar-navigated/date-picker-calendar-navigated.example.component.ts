@@ -20,11 +20,12 @@
 
 import { Component } from "@angular/core";
 import { Moment } from "moment/moment";
+import { NuiDatePickerModule } from "../../../../../../src/lib/date-picker/date-picker.module";
 
 @Component({
     selector: "nui-date-picker-calendar-navigated-example",
     templateUrl: "./date-picker-calendar-navigated.example.component.html",
-    standalone: false
+    imports: [NuiDatePickerModule]
 })
 export class DatePickerCalendarNavigatedExampleComponent {
     public calendarChangedDate: Date;

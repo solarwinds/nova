@@ -22,12 +22,17 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
 import _set from "lodash/set";
 
 import { EdgeDetectionService, IEdgeDetectionResult } from "@nova-ui/bits";
+import { FormsModule } from "@angular/forms";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NgIf, NgClass, NgStyle } from "@angular/common";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
 
 @Component({
     selector: "nui-edge-detection-service-example",
     templateUrl: "./edge-detection-service.example.component.html",
     styleUrls: ["./edge-detection-service.example.component.less"],
-    standalone: false
+    imports: [FormsModule, NuiTextboxModule, NuiButtonModule, NgIf, NgClass, NuiCheckboxModule, NgStyle]
 })
 export class EdgeDetectionServiceExampleComponent implements AfterViewInit {
     @ViewChild("parent") private parentElement: ElementRef;

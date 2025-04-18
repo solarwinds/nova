@@ -55,15 +55,13 @@ const routes = [
 ];
 
 @NgModule({
-    declarations: [
-        HighlightPipeDocsExampleComponent,
-        HighlightPipeExampleComponent,
-    ],
     imports: [
         NuiCommonModule,
         NuiDocsModule,
         NuiSearchModule,
         RouterModule.forChild(routes),
+        HighlightPipeDocsExampleComponent,
+        HighlightPipeExampleComponent,
     ],
     exports: [RouterModule],
 })

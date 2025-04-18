@@ -21,11 +21,13 @@
 import { Component, Inject, TemplateRef } from "@angular/core";
 
 import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
+import { NuiDialogModule } from "../../../../../../src/lib/dialog/dialog.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-dialog-with-keyboard-example",
     templateUrl: "./dialog-with-keyboard.example.component.html",
-    standalone: false
+    imports: [NuiDialogModule, NuiButtonModule]
 })
 export class DialogWithKeyboardExampleComponent {
     private activeDialog: NuiDialogRef;

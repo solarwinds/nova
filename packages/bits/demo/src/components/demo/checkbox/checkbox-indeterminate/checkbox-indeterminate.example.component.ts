@@ -19,11 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
 
 @Component({
     selector: "nui-checkbox-indeterminate-example",
     templateUrl: "./checkbox-indeterminate.example.component.html",
-    standalone: false
+    imports: [NuiCheckboxModule]
 })
 export class CheckboxIndeterminateExampleComponent {
     public isIndeterminate = true;

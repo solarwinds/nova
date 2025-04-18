@@ -21,6 +21,8 @@
 import { Component, Input, OnInit, TemplateRef } from "@angular/core";
 import _isObject from "lodash/isObject";
 import _sortBy from "lodash/sortBy";
+import { NgFor, NgIf, NgTemplateOutlet } from "@angular/common";
+import { NuiExpanderModule } from "../../../../src/lib/expander/expander.module";
 
 @Component({
     selector: "nui-recursive-object-view",
@@ -48,7 +50,7 @@ import _sortBy from "lodash/sortBy";
             </ng-template>
         </div>
     `,
-    standalone: false
+    imports: [NgFor, NgIf, NuiExpanderModule, NgTemplateOutlet]
 })
 export class RecursiveObjectViewComponent implements OnInit {
     @Input() object: any;

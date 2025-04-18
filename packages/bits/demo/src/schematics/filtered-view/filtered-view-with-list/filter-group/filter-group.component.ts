@@ -45,12 +45,15 @@ import {
     IFilterGroupMultiFilterMetadata,
     IFilterGroupOption,
 } from "./public-api";
+import { NgIf, NgTemplateOutlet, NgFor, SlicePipe } from "@angular/common";
+import { NuiExpanderModule } from "../../../../../../src/lib/expander/expander.module";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
 
 @Component({
     selector: "app-filter-group-with-list",
     templateUrl: "./filter-group.component.html",
     styleUrls: ["./filter-group.component.less"],
-    standalone: false
+    imports: [NgIf, NuiExpanderModule, NgTemplateOutlet, NuiCheckboxModule, NgFor, SlicePipe]
 })
 export class FilterGroupComponent implements IFilterPub, OnInit, OnDestroy {
     // mark this filter to be monitored by our datasource for any changes in order reset other filters(eg: pagination)

@@ -50,8 +50,8 @@ const routes = [
         NuiContentModule,
         NuiDocsModule,
         RouterModule.forChild(routes),
+        ContentExampleComponent,
     ],
-    declarations: [ContentExampleComponent],
     providers: [
         {
             provide: DEMO_PATH_TOKEN,

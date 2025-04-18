@@ -27,11 +27,15 @@ import {
     ToastPositionClass,
     ToastService,
 } from "@nova-ui/bits";
+import { NgIf } from "@angular/common";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
+import { NuiDividerModule } from "../../../../../../src/lib/divider/divider.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-toast-events-example",
     templateUrl: "./toast-events.example.component.html",
-    standalone: false
+    imports: [NgIf, NuiMessageModule, NuiDividerModule, NuiButtonModule]
 })
 export class ToastEventsExampleComponent implements OnInit {
     public lastShown?: number;

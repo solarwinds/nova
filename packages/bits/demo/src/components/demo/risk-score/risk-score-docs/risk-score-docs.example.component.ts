@@ -19,10 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { RiskScoreBasicExampleComponent } from "../risk-score-basic/risk-score-basic.example.component";
 
 @Component({
     selector: "nui-risk-score-docs-example",
     templateUrl: "./risk-score-docs.example.component.html",
-    standalone: false
+    imports: [NuiDocsModule, RiskScoreBasicExampleComponent]
 })
 export class RiskScoreDocsExampleComponent {}

@@ -19,11 +19,24 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { TabHeadingGroupHorizontalExampleComponent } from "../tab-heading-group-horizontal/tab-heading-group-horizontal.example.component";
+import { TabHeadingGroupHorizontalWithIconsExampleComponent } from "../tab-heading-group-horizontal-with-icons/tab-heading-group-horizontal-with-icons.example.component";
+import { TabHeadingGroupHorizontalWithIconsOnlyExampleComponent } from "../tab-heading-group-horizontal-with-icons-only/tab-heading-group-horizontal-with-icons-only.example.component";
+import { TabHeadingGroupVerticalExampleComponent } from "../tab-heading-group-vertical/tab-heading-group-vertical.example.component";
+import { TabHeadingGroupVerticalWithIconsExampleComponent } from "../tab-heading-group-vertical-with-icons/tab-heading-group-vertical-with-icons.example.component";
+import { TabHeadingGroupWithIconsExampleComponent } from "../tab-heading-group-with-icons/tab-heading-group-with-icons.example.component";
+import { TabHeadingGroupResponsiveExampleComponent } from "../tab-heading-group-responsive/tab-heading-group-responsive.example.component";
+import { TabHeadingGroupWithContentExampleComponent } from "../tab-heading-group-with-content/tab-heading-group-with-content.example.component";
+import { TabHeadingGroupDynamicExampleComponent } from "../tab-heading-group-dynamic/tab-heading-group-dynamic.example.component";
+import { NuiExpanderModule } from "../../../../../../src/lib/expander/expander.module";
+import { TabHeadingGroupWithRouterExampleComponent } from "../tab-heading-group-with-router/tab-heading-group-with-router.example.component";
 
 @Component({
     selector: "nui-tabgroup-example",
     templateUrl: "./tabgroup-docs.example.component.html",
-    standalone: false
+    imports: [NuiMessageModule, NuiDocsModule, TabHeadingGroupHorizontalExampleComponent, TabHeadingGroupHorizontalWithIconsExampleComponent, TabHeadingGroupHorizontalWithIconsOnlyExampleComponent, TabHeadingGroupVerticalExampleComponent, TabHeadingGroupVerticalWithIconsExampleComponent, TabHeadingGroupWithIconsExampleComponent, TabHeadingGroupResponsiveExampleComponent, TabHeadingGroupWithContentExampleComponent, TabHeadingGroupDynamicExampleComponent, NuiExpanderModule, TabHeadingGroupWithRouterExampleComponent]
 })
 export class TabgroupDocsExampleComponent {
     public tabsRouteConfig: string = `

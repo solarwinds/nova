@@ -28,11 +28,12 @@ import {
     ToastPositionClass,
     ToastService,
 } from "@nova-ui/bits";
+import { FormsModule } from "@angular/forms";
 
 @Component({
     selector: "nui-toast-test",
     templateUrl: "./toast-test.component.html",
-    standalone: false
+    imports: [FormsModule]
 })
 export class ToastTestComponent implements OnInit {
     constructor(@Inject(ToastService) private toastService: IToastService) {}

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
+import { CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf } from "@angular/cdk/scrolling";
 import {
     AfterViewInit,
     ChangeDetectorRef,
@@ -49,6 +49,11 @@ import {
 import { TableWithCustomVirtualScrollDataSource } from "./table-with-custom-virtual-scroll-data-source.service";
 import { IServer } from "./types";
 import { VirtualScrollCustomStrategyService } from "./virtual-scroll-custom-strategy.service";
+import { NuiSearchModule } from "../../../../../src/lib/search/search.module";
+import { NuiTableModule } from "../../../../../src/lib/table/table.module";
+import { NgIf } from "@angular/common";
+import { NuiProgressModule } from "../../../../../src/lib/progress/progress.module";
+import { NuiButtonModule } from "../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "app-table-with-custom-virtual-scroll",
@@ -67,7 +72,7 @@ import { VirtualScrollCustomStrategyService } from "./virtual-scroll-custom-stra
             useClass: TableWithCustomVirtualScrollDataSource,
         },
     ],
-    standalone: false
+    imports: [NuiSearchModule, CdkVirtualScrollViewport, NuiTableModule, CdkFixedSizeVirtualScroll, CdkVirtualForOf, NgIf, NuiProgressModule, NuiButtonModule]
 })
 export class TableWithCustomVirtualScrollComponent
     implements OnInit, OnDestroy, AfterViewInit

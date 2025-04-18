@@ -19,11 +19,18 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../../src/lib/docs/docs.module";
+import { BadgeCounterBasicComponent } from "../badge-counter-basic/badge-counter-basic.component";
+import { BadgeEmptyBasicComponent } from "../badge-empty-basic/badge-empty-basic.component";
+import { BadgeSystemStatusesComponent } from "../badge-system-statuses/badge-system-statuses.component";
+import { BadgeColorBlackComponent } from "../badge-color-black/badge-color-black.component";
+import { BadgeCustomizationComponent } from "../badge-customization/badge-customization.component";
+import { BadgeNovauiComponent } from "../badge-novaui/badge-novaui.component";
 
 @Component({
     selector: "nui-badge-docs",
     templateUrl: "./badge-docs.component.html",
     styleUrls: ["./badge-docs.component.less"],
-    standalone: false
+    imports: [NuiDocsModule, BadgeCounterBasicComponent, BadgeEmptyBasicComponent, BadgeSystemStatusesComponent, BadgeColorBlackComponent, BadgeCustomizationComponent, BadgeNovauiComponent]
 })
 export class BadgeDocsComponent {}

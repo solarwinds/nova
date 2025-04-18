@@ -19,11 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiTooltipModule } from "../../../../../../src/lib/tooltip/tooltip.module";
+import { NuiSwitchModule } from "../../../../../../src/lib/switch/switch.module";
 
 @Component({
     selector: "nui-tooltip-disabled-example",
     templateUrl: "tooltip-disabled.example.component.html",
-    standalone: false
+    imports: [NuiTooltipModule, NuiSwitchModule]
 })
 export class TooltipDisabledExampleComponent {
     public isDisabled = false;

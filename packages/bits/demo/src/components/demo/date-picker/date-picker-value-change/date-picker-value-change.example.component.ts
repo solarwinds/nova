@@ -22,11 +22,12 @@ import { Component, Inject } from "@angular/core";
 import moment, { Moment } from "moment/moment";
 
 import { IToastService, ToastService } from "@nova-ui/bits";
+import { NuiDatePickerModule } from "../../../../../../src/lib/date-picker/date-picker.module";
 
 @Component({
     selector: "nui-date-picker-value-change-example",
     templateUrl: "./date-picker-value-change.example.component.html",
-    standalone: false
+    imports: [NuiDatePickerModule]
 })
 export class DatePickerValueChangeExampleComponent {
     public selectedDate: Date = new Date(moment().valueOf());

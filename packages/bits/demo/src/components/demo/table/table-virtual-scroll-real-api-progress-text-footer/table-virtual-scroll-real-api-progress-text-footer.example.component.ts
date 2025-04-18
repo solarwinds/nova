@@ -40,6 +40,9 @@ import {
 
 import { IRandomUserTableModel } from "../index";
 import { RandomuserTableDataSource } from "../table-virtual-scroll-datasource";
+import { NuiTableModule } from "../../../../../../src/lib/table/table.module";
+import { NgIf } from "@angular/common";
+import { NuiProgressModule } from "../../../../../../src/lib/progress/progress.module";
 
 @Component({
     selector: "nui-table-virtual-scroll-real-api-progress-text-footer-example",
@@ -49,7 +52,7 @@ import { RandomuserTableDataSource } from "../table-virtual-scroll-datasource";
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [VirtualViewportManager],
-    standalone: false
+    imports: [CdkVirtualScrollViewport, NuiTableModule, NgIf, NuiProgressModule]
 })
 export class TableVirtualScrollRealApiProgressTextFooterExampleComponent
     implements AfterViewInit, OnDestroy, OnInit

@@ -18,13 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    QueryList,
-    ViewChildren,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, QueryList, ViewChildren, forwardRef } from "@angular/core";
 import { Subject } from "rxjs";
 
 import {
@@ -32,6 +26,11 @@ import {
     ITimeFramePresetDictionary,
     TimeframeService,
 } from "@nova-ui/bits";
+import { NgFor, NgIf } from "@angular/common";
+import { NuiPopoverModule } from "../../../../../../src/lib/popover/popover.module";
+import { NuiTimeFramePickerModule } from "../../../../../../src/lib/time-frame-picker/time-frame-picker.module";
+import { NuiDialogModule } from "../../../../../../src/lib/dialog/dialog.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 interface IPicker {
     id: string;
@@ -45,7 +44,7 @@ interface IPicker {
 @Component({
     selector: "nui-time-frame-picker-multiple-custom-pickers",
     templateUrl: "./time-frame-picker-multiple-custom-pickers.example.component.html",
-    standalone: false
+    imports: [NgFor, forwardRef(() => TimeframeServiceScoperExampleComponent), NuiPopoverModule, NuiTimeFramePickerModule, NgIf, NuiDialogModule, NuiButtonModule]
 })
 export class TimeFramePickerMultipleCustomPickersExampleComponent
     implements AfterViewInit
@@ -178,8 +177,7 @@ export class TimeFramePickerMultipleCustomPickersExampleComponent
 @Component({
     selector: "nui-time-frame-service-scoper",
     providers: [TimeframeService],
-    template: `<ng-content></ng-content>`,
-    standalone: false
+    template: `<ng-content></ng-content>`
 })
 export class TimeframeServiceScoperExampleComponent {
     constructor(public timeframeService: TimeframeService) {}

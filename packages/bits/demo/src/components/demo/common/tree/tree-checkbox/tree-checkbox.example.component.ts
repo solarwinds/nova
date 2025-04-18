@@ -19,10 +19,14 @@
 //  THE SOFTWARE.
 
 import { ArrayDataSource, SelectionModel } from "@angular/cdk/collections";
-import { NestedTreeControl } from "@angular/cdk/tree";
+import { NestedTreeControl, CdkTree, CdkTreeNodeDef, CdkNestedTreeNode, CdkTreeNodeToggle, CdkTreeNodeOutlet } from "@angular/cdk/tree";
 import { Component } from "@angular/core";
 
 import { expand } from "@nova-ui/bits";
+import { NuiButtonModule } from "../../../../../../../src/lib/button/button.module";
+import { NuiCheckboxModule } from "../../../../../../../src/lib/checkbox/checkbox.module";
+import { NuiIconModule } from "../../../../../../../src/lib/icon/icon.module";
+import { NgFor } from "@angular/common";
 
 interface FoodNode {
     name: string;
@@ -65,7 +69,7 @@ const TREE_DATA: FoodNode[] = [
     styleUrls: ["tree-checkbox.example.component.less"],
     host: { id: "nui-tree-checkbox-example" },
     animations: [expand],
-    standalone: false
+    imports: [CdkTree, CdkTreeNodeDef, CdkNestedTreeNode, NuiButtonModule, NuiCheckboxModule, CdkTreeNodeToggle, NuiIconModule, CdkTreeNodeOutlet, NgFor]
 })
 export class TreeCheckboxExampleComponent {
     public treeControl = new NestedTreeControl<FoodNode>(

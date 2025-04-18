@@ -19,12 +19,13 @@
 //  THE SOFTWARE.
 
 import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { NuiSelectModule } from "../../../../../../src/lib/select/select.module";
 
 @Component({
     selector: "nui-select-basic-example",
     templateUrl: "./select-basic.example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [NuiSelectModule]
 })
 export class SelectBasicExampleComponent {
     public dataset = {

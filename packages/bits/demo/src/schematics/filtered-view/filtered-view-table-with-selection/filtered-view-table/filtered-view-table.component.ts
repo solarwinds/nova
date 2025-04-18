@@ -45,13 +45,18 @@ import {
 import { RESULTS_PER_PAGE } from "../filtered-view-table-with-selection-data";
 import { FilteredViewTableWithSelectionDataSource } from "../filtered-view-table-with-selection-data-source.service";
 import { IServer } from "../types";
+import { NuiSearchModule } from "../../../../../../src/lib/search/search.module";
+import { NuiTableModule } from "../../../../../../src/lib/table/table.module";
+import { NgIf, JsonPipe } from "@angular/common";
+import { NuiProgressModule } from "../../../../../../src/lib/progress/progress.module";
+import { NuiPaginatorModule } from "../../../../../../src/lib/paginator/paginator.module";
 
 @Component({
     selector: "app-filtered-view-table-with-selection-table",
     templateUrl: "./filtered-view-table.component.html",
     styleUrls: ["./filtered-view-table.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    imports: [NuiSearchModule, NuiTableModule, NgIf, NuiProgressModule, NuiPaginatorModule, JsonPipe]
 })
 export class FilteredViewTableComponent
     implements OnInit, OnDestroy, AfterViewInit

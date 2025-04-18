@@ -38,8 +38,7 @@ const routes = [
 ];
 
 @NgModule({
-    imports: [NuiSelectorModule, NuiDocsModule, RouterModule.forChild(routes)],
-    declarations: [SelectorExampleComponent],
+    imports: [NuiSelectorModule, NuiDocsModule, RouterModule.forChild(routes), SelectorExampleComponent],
     providers: [
         {
             provide: DEMO_PATH_TOKEN,

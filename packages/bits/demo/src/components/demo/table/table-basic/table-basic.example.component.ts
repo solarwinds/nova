@@ -19,6 +19,9 @@
 //  THE SOFTWARE.
 
 import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { NuiTableModule } from "../../../../../../src/lib/table/table.module";
+import { NgFor } from "@angular/common";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
 
 interface IExampleTableModel {
     position: number;
@@ -36,7 +39,7 @@ interface IExampleTableModel {
     templateUrl: "./table-basic.example.component.html",
     styleUrls: ["./table-basic.example.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [NuiTableModule, NgFor, NuiIconModule]
 })
 export class TableBasicExampleComponent {
     public displayedColumns = [

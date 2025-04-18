@@ -18,15 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, EventEmitter, Inject, OnInit, Output } from "@angular/core";
-import {
-    FormBuilder,
-    FormControl,
-    FormGroup,
-    Validators,
-} from "@angular/forms";
+import { Component, EventEmitter, Inject, OnInit, Output, forwardRef } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { ToastService } from "@nova-ui/bits";
+import { NuiFormFieldModule } from "../../../../../../src/lib/form-field/form-field.module";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
+import { NuiValidationMessageModule } from "../../../../../../src/lib/validation-message/validation-message.module";
 
 type NestedFormGroup = FormGroup<{
     nickname: FormControl;
@@ -47,7 +45,7 @@ type SecondFormGroup = FormGroup<{
 @Component({
     selector: "nui-nested-forms-as-component-example",
     templateUrl: "./nested-forms-as-component.example.component.html",
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, NuiFormFieldModule, NuiTextboxModule, NuiValidationMessageModule, forwardRef(() => FirstCustomFormExampleComponent), forwardRef(() => SecondCustomFormExampleComponent)]
 })
 export class NestedFormsAsComponentExampleComponent implements OnInit {
     public fancyForm: NestedFormGroup;
@@ -110,7 +108,7 @@ export class NestedFormsAsComponentExampleComponent implements OnInit {
             </nui-validation-message>
         </nui-form-field>
     </div>`,
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, NuiFormFieldModule, NuiTextboxModule, NuiValidationMessageModule]
 })
 export class FirstCustomFormExampleComponent implements OnInit {
     @Output() formReady = new EventEmitter<FirstFormGroup>();
@@ -155,7 +153,7 @@ export class FirstCustomFormExampleComponent implements OnInit {
             </nui-validation-message>
         </nui-form-field>
     </div>`,
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, NuiFormFieldModule, NuiTextboxModule, NuiValidationMessageModule]
 })
 export class SecondCustomFormExampleComponent implements OnInit {
     @Output() formReady = new EventEmitter<SecondFormGroup>();

@@ -21,11 +21,12 @@
 import { Component } from "@angular/core";
 
 import { IImagesPresetItem } from "@nova-ui/bits";
+import { NuiImageModule } from "../../../../../../src/lib/image/image.module";
 
 @Component({
     selector: "nui-image-external-example",
     templateUrl: "./image-external.example.component.html",
-    standalone: false
+    imports: [NuiImageModule]
 })
 export class ImageExternalExampleComponent {
     public bookCover = {

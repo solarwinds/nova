@@ -21,11 +21,12 @@
 import { Component, Inject } from "@angular/core";
 
 import { DialogService, ToastService } from "@nova-ui/bits";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-confirmation-dialog-example",
     templateUrl: "./confirmation-dialog.example.component.html",
-    standalone: false
+    imports: [NuiButtonModule]
 })
 export class ConfirmationDialogExampleComponent {
     constructor(

@@ -19,11 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component, Input } from "@angular/core";
+import { NuiSwitchModule } from "../../../../../../src/lib/switch/switch.module";
 
 @Component({
     selector: "nui-switch-value-change-example",
     templateUrl: "./switch-value-change.example.component.html",
-    standalone: false
+    imports: [NuiSwitchModule]
 })
 export class SwitchValueChangeExampleComponent {
     @Input() isOn = true;

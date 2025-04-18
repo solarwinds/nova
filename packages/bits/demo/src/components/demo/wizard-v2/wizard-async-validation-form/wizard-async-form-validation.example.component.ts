@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { Component, ViewChild } from "@angular/core";
-import { AbstractControl, FormBuilder, Validators } from "@angular/forms";
+import { AbstractControl, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { of } from "rxjs";
 import { delay, take } from "rxjs/operators";
 
@@ -28,13 +28,21 @@ import {
     WizardHorizontalComponent,
     WizardStepV2Component,
 } from "@nova-ui/bits";
+import { NuiBusyModule } from "../../../../../../src/lib/busy/busy.module";
+import { NgIf, NgTemplateOutlet } from "@angular/common";
+import { NuiWizardV2Module } from "../../../../../../src/lib/wizard-v2/wizard.module";
+import { NuiFormFieldModule } from "../../../../../../src/lib/form-field/form-field.module";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
+import { NuiValidationMessageModule } from "../../../../../../src/lib/validation-message/validation-message.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiSpinnerModule } from "../../../../../../src/lib/spinner/spinner.module";
 
 const fakeAsyncValidator = (c: AbstractControl) => of(null).pipe(delay(4000));
 
 @Component({
     selector: "nui-wizard-async-form-validation-example",
     templateUrl: "./wizard-async-form-validation.example.component.html",
-    standalone: false
+    imports: [NuiBusyModule, NgIf, FormsModule, ReactiveFormsModule, NuiWizardV2Module, NuiFormFieldModule, NuiTextboxModule, NuiValidationMessageModule, NgTemplateOutlet, NuiButtonModule, NuiSpinnerModule]
 })
 export class WizardAsyncFormValidationExampleComponent {
     public busy: boolean;

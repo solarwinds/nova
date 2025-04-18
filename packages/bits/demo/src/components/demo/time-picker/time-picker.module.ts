@@ -93,8 +93,6 @@ const routes = [
         NuiDateTimePickerModule,
         NuiTimeFramePickerModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         TimePickerBasicExampleComponent,
         TimePickerCustomFormatExampleComponent,
         TimePickerCustomStepExampleComponent,

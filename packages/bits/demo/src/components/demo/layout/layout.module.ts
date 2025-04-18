@@ -80,8 +80,6 @@ const routes = [
         NuiDocsModule,
         NuiMessageModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         LayoutExampleComponent,
         LayoutBasicExampleComponent,
         LayoutSeparateSheetsExampleComponent,

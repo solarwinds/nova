@@ -19,10 +19,25 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { ButtonBasicExampleComponent } from "../button-basic/button-basic.example.component";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
+import { ButtonDisplayStylePrimaryExampleComponent } from "../button-display-style-primary/button-display-style-primary.example.component";
+import { ButtonDisplayStyleActionExampleComponent } from "../button-display-style-action/button-display-style-action.example.component";
+import { ButtonDisplayStyleDestructiveExampleComponent } from "../button-display-style-destructive/button-display-style-destructive.example.component";
+import { ButtonSizeExampleComponent } from "../button-size/button-size.example.component";
+import { ButtonWithLongTextExampleComponent } from "../button-long-text/button-with-long-text-example.component";
+import { ButtonWithIconExampleComponent } from "../button-with-icon/button-with-icon.example.component";
+import { ButtonWithIconRightExampleComponent } from "../button-with-icon-right/button-with-icon-right.example.component";
+import { ButtonWithIconCustomColorExampleComponent } from "../button-with-icon-custom-color/button-with-icon-custom-color.example.component";
+import { ButtonWithIconOnlyExampleComponent } from "../button-with-icon-only/button-with-icon-only.example.component";
+import { ButtonRepeatableExampleComponent } from "../button-repeatable/button-repeatable.example.component";
+import { ButtonBusyExampleComponent } from "../button-busy/button-busy.example.component";
+import { ButtonGroupExampleComponent } from "../button-group/button-group.example.component";
 
 @Component({
     selector: "nui-button-docs-example",
     templateUrl: "./button-docs.example.component.html",
-    standalone: false
+    imports: [NuiDocsModule, ButtonBasicExampleComponent, NuiMessageModule, ButtonDisplayStylePrimaryExampleComponent, ButtonDisplayStyleActionExampleComponent, ButtonDisplayStyleDestructiveExampleComponent, ButtonSizeExampleComponent, ButtonWithLongTextExampleComponent, ButtonWithIconExampleComponent, ButtonWithIconRightExampleComponent, ButtonWithIconCustomColorExampleComponent, ButtonWithIconOnlyExampleComponent, ButtonRepeatableExampleComponent, ButtonBusyExampleComponent, ButtonGroupExampleComponent]
 })
 export class ButtonDocsComponent {}

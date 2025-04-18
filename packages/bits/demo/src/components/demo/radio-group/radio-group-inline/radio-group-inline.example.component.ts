@@ -19,11 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiRadioModule } from "../../../../../../src/lib/radio/radio.module";
+import { NgFor } from "@angular/common";
 
 @Component({
     selector: "nui-radio-group-inline-example",
     templateUrl: "./radio-group-inline.example.component.html",
-    standalone: false
+    imports: [NuiRadioModule, NgFor]
 })
 export class RadioGroupInlineExampleComponent {
     public fruits = [

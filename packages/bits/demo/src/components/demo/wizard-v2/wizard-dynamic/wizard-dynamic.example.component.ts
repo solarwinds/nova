@@ -26,6 +26,9 @@ import {
 } from "@angular/core";
 
 import { ToastService, WizardHorizontalComponent } from "@nova-ui/bits";
+import { NuiWizardV2Module } from "../../../../../../src/lib/wizard-v2/wizard.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NgTemplateOutlet, NgIf, NgFor } from "@angular/common";
 
 interface IWizardStepData {
     title: string;
@@ -35,7 +38,7 @@ interface IWizardStepData {
 @Component({
     selector: "nui-wizard-dynamic-example",
     templateUrl: "./wizard-dynamic.example.component.html",
-    standalone: false
+    imports: [NuiWizardV2Module, NuiButtonModule, NgTemplateOutlet, NgIf, NgFor]
 })
 export class WizardDynamicExampleComponent implements AfterViewInit {
     public enableDynamicStepWithButton = false;

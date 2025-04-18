@@ -19,14 +19,20 @@
 //  THE SOFTWARE.
 
 import { Component, ViewChild } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { IWizardSelectionEvent, WizardComponent } from "@nova-ui/bits";
+import { NuiFormFieldModule } from "../../../../../../src/lib/form-field/form-field.module";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
+import { NgIf } from "@angular/common";
+import { NuiValidationMessageModule } from "../../../../../../src/lib/validation-message/validation-message.module";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
+import { NuiWizardModule } from "../../../../../../src/lib/wizard/wizard.module";
 
 @Component({
     selector: "nui-wizard-reset-step-example",
     templateUrl: "./wizard-reset-step.example.component.html",
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, NuiFormFieldModule, NuiTextboxModule, NgIf, NuiValidationMessageModule, NuiCheckboxModule, NuiWizardModule]
 })
 export class WizardResetStepExampleComponent {
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;

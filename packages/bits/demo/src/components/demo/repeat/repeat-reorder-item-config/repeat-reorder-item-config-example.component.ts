@@ -25,6 +25,8 @@ import {
     IRepeatItem,
     IRepeatItemConfig,
 } from "@nova-ui/bits";
+import { NuiSwitchModule } from "../../../../../../src/lib/switch/switch.module";
+import { NuiRepeatModule } from "../../../../../../src/lib/repeat/repeat.module";
 
 interface IRepeatColorItem extends IRepeatItem {
     color: string;
@@ -35,7 +37,7 @@ interface IRepeatColorItem extends IRepeatItem {
     selector: "nui-repeat-reorder-config-example",
     templateUrl: "./repeat-reorder-item-config-example.component.html",
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    imports: [NuiSwitchModule, NuiRepeatModule]
 })
 export class RepeatReorderItemConfigExampleComponent {
     public colors: IRepeatColorItem[] = [

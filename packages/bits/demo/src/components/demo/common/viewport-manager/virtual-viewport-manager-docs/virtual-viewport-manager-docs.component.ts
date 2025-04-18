@@ -21,11 +21,14 @@
 import { Component } from "@angular/core";
 
 import { RepeatComponent } from "@nova-ui/bits";
+import { NuiMessageModule } from "../../../../../../../src/lib/message/message.module";
+import { NuiDocsModule } from "../../../../../../../src/lib/docs/docs.module";
+import { RepeatWithViewportManagerExampleComponent } from "../repeat-with-viewport-manager/repeat-with-viewport-manager.example.component";
 
 @Component({
     selector: "nui-virtual-viewport-manager-docs",
     templateUrl: "./virtual-viewport-manager-docs.component.html",
-    standalone: false
+    imports: [NuiMessageModule, NuiDocsModule, RepeatWithViewportManagerExampleComponent]
 })
 export class VirtualViewportManagerDocsComponent {
     getRepeatPropKey(key: keyof RepeatComponent): string {

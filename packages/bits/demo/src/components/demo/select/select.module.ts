@@ -96,8 +96,6 @@ const routes = [
         NuiSelectModule,
         NuiDocsModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         SelectBasicExampleComponent,
         SelectCustomTemplateExampleComponent,
         SelectDisabledExampleComponent,

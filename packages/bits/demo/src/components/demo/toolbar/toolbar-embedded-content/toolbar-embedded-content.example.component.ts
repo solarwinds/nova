@@ -21,11 +21,14 @@
 import { Component, Inject } from "@angular/core";
 
 import { IMenuGroup, LoggerService } from "@nova-ui/bits";
+import { NuiToolbarModule } from "../../../../../../src/lib/toolbar/toolbar.module";
+import { NuiSearchModule } from "../../../../../../src/lib/search/search.module";
+import { NuiMenuModule } from "../../../../../../src/lib/menu/menu.module";
 
 @Component({
     selector: "nui-toolbar-embedded-content-example",
     templateUrl: "./toolbar-embedded-content.example.component.html",
-    standalone: false
+    imports: [NuiToolbarModule, NuiSearchModule, NuiMenuModule]
 })
 export class ToolbarEmbeddedContentExampleComponent {
     public itemsSource: IMenuGroup[] = [

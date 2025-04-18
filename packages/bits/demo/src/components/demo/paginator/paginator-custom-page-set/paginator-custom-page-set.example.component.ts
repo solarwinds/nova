@@ -19,11 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiPaginatorModule } from "../../../../../../src/lib/paginator/paginator.module";
 
 @Component({
     selector: "nui-paginator-custom-page-set-example",
     templateUrl: "./paginator-custom-page-set.example.component.html",
-    standalone: false
+    imports: [NuiPaginatorModule]
 })
 export class PaginatorCustomPageSetExampleComponent {
     public customPageSizeSet = [5, 15, 30, 150, 200];

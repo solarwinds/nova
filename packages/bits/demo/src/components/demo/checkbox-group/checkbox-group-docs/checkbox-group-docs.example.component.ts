@@ -19,10 +19,15 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { CheckboxGroupBasicExampleComponent } from "../checkbox-group-basic/checkbox-group-basic.example.component";
+import { CheckboxGroupInlineExampleComponent } from "../checkbox-group-inline/checkbox-group-inline.example.component";
+import { CheckboxGroupInFormExampleComponent } from "../checkbox-group-in-form/checkbox-group-in-form.example.component";
+import { CheckboxGroupJustifiedExampleComponent } from "../checkbox-group-justified/checkbox-group-justified.example.component";
 
 @Component({
     selector: "nui-checkbox-group-docs-example",
     templateUrl: "./checkbox-group-docs.example.component.html",
-    standalone: false
+    imports: [NuiDocsModule, CheckboxGroupBasicExampleComponent, CheckboxGroupInlineExampleComponent, CheckboxGroupInFormExampleComponent, CheckboxGroupJustifiedExampleComponent]
 })
 export class CheckboxGroupExampleComponent {}

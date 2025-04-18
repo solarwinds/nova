@@ -89,8 +89,6 @@ const routes = [
         NuiDividerModule,
         NuiDocsModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         ToastBasicExampleComponent,
         ToastBasicHtmlExampleComponent,
         ToastConfigExampleComponent,

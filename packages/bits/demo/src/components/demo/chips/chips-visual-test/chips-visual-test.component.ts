@@ -23,6 +23,10 @@ import _cloneDeep from "lodash/cloneDeep";
 import _pull from "lodash/pull";
 
 import { IChipsGroup, IChipsItem, IChipsItemsSource } from "@nova-ui/bits";
+import { NuiChipsModule } from "../../../../../../src/lib/chips/chips.module";
+import { ChipsOverflowExampleComponent } from "../chips-overflow/chips-overflow.example.component";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
+import { ChipsCustomCssExampleComponent } from "../chips-custom-css/chips-custom-css.example.component";
 
 const horizontalFlatItems: IChipsItem[] = [
     { id: "flatId1", label: "Down" },
@@ -66,7 +70,7 @@ const verticalFlatItemsVisual: IChipsItem[] = [
 @Component({
     selector: "nui-chips-visual-test",
     templateUrl: "./chips-visual-test.component.html",
-    standalone: false
+    imports: [NuiChipsModule, ChipsOverflowExampleComponent, NuiIconModule, ChipsCustomCssExampleComponent]
 })
 export class ChipsVisualTestComponent {
     public horizontalFlatItemsSource: IChipsItemsSource = {

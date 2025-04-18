@@ -19,11 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component, Input } from "@angular/core";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiSwitchModule } from "../../../../../../src/lib/switch/switch.module";
 
 @Component({
     selector: "nui-switch-disable-example",
     templateUrl: "./switch-disable.example.component.html",
-    standalone: false
+    imports: [NuiButtonModule, NuiSwitchModule]
 })
 export class SwitchDisableExampleComponent {
     @Input() isOn = true;

@@ -26,11 +26,20 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 // eslint-disable-next-line import/no-deprecated
 import { tap } from "rxjs/operators";
 
 import { WizardDirective, WizardStepV2Component } from "@nova-ui/bits";
+import { NuiProgressModule } from "../../../../../../src/lib/progress/progress.module";
+import { NgSwitch, NgSwitchCase, NgSwitchDefault, NgIf, NgTemplateOutlet, DecimalPipe, NgFor } from "@angular/common";
+import { NuiWizardV2Module } from "../../../../../../src/lib/wizard-v2/wizard.module";
+import { NuiFormFieldModule } from "../../../../../../src/lib/form-field/form-field.module";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
+import { NuiValidationMessageModule } from "../../../../../../src/lib/validation-message/validation-message.module";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
+import { NuiDatePickerModule } from "../../../../../../src/lib/date-picker/date-picker.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-wizard-custom",
@@ -46,7 +55,7 @@ import { WizardDirective, WizardStepV2Component } from "@nova-ui/bits";
     ],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [NgFor, NuiWizardV2Module, NgIf, NgTemplateOutlet]
 })
 export class WizardCustomComponent extends WizardDirective {}
 
@@ -60,7 +69,7 @@ export class WizardCustomComponent extends WizardDirective {}
             useValue: { displayDefaultIndicatorType: false },
         },
     ],
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, WizardCustomComponent, NuiProgressModule, NgSwitch, NgSwitchCase, NgSwitchDefault, NuiWizardV2Module, NuiFormFieldModule, NuiTextboxModule, NgIf, NuiValidationMessageModule, NuiCheckboxModule, NgTemplateOutlet, NuiDatePickerModule, NuiButtonModule, DecimalPipe]
 })
 export class WizardCustomExampleComponent implements AfterViewInit {
     public form;

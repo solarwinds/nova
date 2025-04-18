@@ -23,11 +23,13 @@ import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { OverlayComponent } from "@nova-ui/bits";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiOverlayModule } from "../../../../../../src/lib/overlay/overlay.module";
 
 @Component({
     selector: "nui-overlay-simple-usage-example",
     templateUrl: "./overlay-simple-usage.example.component.html",
-    standalone: false
+    imports: [NuiButtonModule, NuiOverlayModule]
 })
 export class OverlaySimpleExampleComponent implements AfterViewInit {
     private readonly destroy$ = new Subject<void>();

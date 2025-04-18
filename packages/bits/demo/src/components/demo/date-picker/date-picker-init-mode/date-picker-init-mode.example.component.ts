@@ -19,10 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDatePickerModule } from "../../../../../../src/lib/date-picker/date-picker.module";
 
 @Component({
     selector: "nui-date-picker-init-mode-example",
     templateUrl: "./date-picker-init-mode.example.component.html",
-    standalone: false
+    imports: [NuiDatePickerModule]
 })
 export class DatePickerInitModeExampleComponent {}

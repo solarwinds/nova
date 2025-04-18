@@ -140,8 +140,6 @@ const routes = [
         NuiIconModule,
         NuiMessageModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         PanelBasicExampleComponent,
         PanelCollapseExampleComponent,
         PanelCollapseOutsideControlExampleComponent,

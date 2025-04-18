@@ -21,12 +21,18 @@
 import { Component, ViewChild } from "@angular/core";
 
 import { ToastService, WizardHorizontalComponent } from "@nova-ui/bits";
+import { NuiBusyModule } from "../../../../../../src/lib/busy/busy.module";
+import { NuiWizardV2Module } from "../../../../../../src/lib/wizard-v2/wizard.module";
+import { NgTemplateOutlet } from "@angular/common";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiSpinnerModule } from "../../../../../../src/lib/spinner/spinner.module";
 
 @Component({
     selector: "nui-wizard-v2-busy-example",
     templateUrl: "./wizard-busy.example.component.html",
     styleUrls: ["./wizard-busy.example.component.less"],
-    standalone: false
+    imports: [NuiBusyModule, NuiWizardV2Module, NgTemplateOutlet, NuiCheckboxModule, NuiButtonModule, NuiSpinnerModule]
 })
 export class WizardBusyExampleComponent {
     public busy: boolean;

@@ -21,11 +21,13 @@
 import { Component } from "@angular/core";
 
 import { TooltipDirective } from "@nova-ui/bits";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiTooltipModule } from "../../../../../../src/lib/tooltip/tooltip.module";
 
 @Component({
     selector: "nui-tooltip-trigger-example",
     templateUrl: "tooltip-trigger.example.component.html",
-    standalone: false
+    imports: [NuiButtonModule, NuiTooltipModule]
 })
 export class TooltipTriggerExampleComponent {
     public tooltipText = "I am a Tooltip!";

@@ -19,18 +19,14 @@
 //  THE SOFTWARE.
 
 import { Component, OnInit } from "@angular/core";
-import {
-    FormBuilder,
-    FormControl,
-    FormGroup,
-    Validators,
-} from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import moment, { Moment } from "moment/moment";
+import { NuiTimePickerModule } from "../../../../../../src/lib/time-picker/time-picker.module";
 
 @Component({
     selector: "time-picker-visual-test",
     templateUrl: "./time-picker-visual-test.component.html",
-    standalone: false
+    imports: [NuiTimePickerModule, FormsModule, ReactiveFormsModule]
 })
 export class TimePickerVisualTestComponent implements OnInit {
     public time: Moment;

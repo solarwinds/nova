@@ -27,9 +27,15 @@ import {
     DataSourceService,
     INovaFilteringOutputs,
     LocalFilteringDataSource,
+    NuiPanelModule,
+    NuiImageModule,
+    NuiRepeatModule
 } from "@nova-ui/bits";
 
 import { IFilterGroupItem } from "./public-api";
+import { BasicFilterGroupsWrapperComponent } from "./filter-groups-wrapper/filter-groups-wrapper.component";
+import { NgFor, NgIf } from "@angular/common";
+import { BasicFilterGroupCompositeComponent } from "./basic-filter-group.component";
 
 interface ExampleItem {
     color: string;
@@ -58,7 +64,15 @@ const RANDOM_ARRAY = [
             useClass: LocalFilteringDataSource,
         },
     ],
-    standalone: false
+    imports: [
+        NuiImageModule,
+        NuiPanelModule,
+        BasicFilterGroupsWrapperComponent,
+        NgFor,
+        BasicFilterGroupCompositeComponent,
+        NgIf,
+        NuiRepeatModule,
+    ],
 })
 export class BasicFilterGroupExampleComponent
     implements AfterViewInit, OnDestroy

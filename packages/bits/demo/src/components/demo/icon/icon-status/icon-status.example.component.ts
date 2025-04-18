@@ -21,11 +21,12 @@
 import { Component } from "@angular/core";
 
 import { IconStatus } from "@nova-ui/bits";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
 
 @Component({
     selector: "nui-icon-status-example",
     templateUrl: "./icon-status.example.component.html",
-    standalone: false
+    imports: [NuiIconModule]
 })
 export class IconStatusExampleComponent {
     status: IconStatus = IconStatus.Up;

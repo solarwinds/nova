@@ -21,11 +21,12 @@
 import { Component, Inject, OnInit } from "@angular/core";
 
 import { IToastConfig, IToastService, ToastService } from "@nova-ui/bits";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-toast-type-example",
     templateUrl: "./toast-type.example.component.html",
-    standalone: false
+    imports: [NuiButtonModule]
 })
 export class ToastTypeExampleComponent implements OnInit {
     constructor(@Inject(ToastService) private toastService: IToastService) {}

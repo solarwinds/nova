@@ -21,11 +21,12 @@
 import { Component, Inject } from "@angular/core";
 
 import { ToastService } from "@nova-ui/bits";
+import { NuiSearchModule } from "../../../../../../src/lib/search/search.module";
 
 @Component({
     selector: "nui-search-on-search-cancel",
     templateUrl: "search-on-search-cancel.example.component.html",
-    standalone: false
+    imports: [NuiSearchModule]
 })
 export class SearchOnSearchCancelExampleComponent {
     constructor(@Inject(ToastService) public toastService: ToastService) {}

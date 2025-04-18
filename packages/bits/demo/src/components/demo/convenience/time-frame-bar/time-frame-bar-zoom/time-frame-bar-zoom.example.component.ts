@@ -22,12 +22,17 @@ import { Component, OnInit } from "@angular/core";
 import moment, { DurationInputArg2, Moment } from "moment/moment";
 
 import { HistoryStorage, ITimeframe } from "@nova-ui/bits";
+import { NuiTimeFrameBarModule } from "../../../../../../../src/lib/convenience/time-frame-bar/time-frame-bar.module";
+import { NuiIconModule } from "../../../../../../../src/lib/icon/icon.module";
+import { NuiTimeFramePickerModule } from "../../../../../../../src/lib/time-frame-picker/time-frame-picker.module";
+import { NuiButtonModule } from "../../../../../../../src/lib/button/button.module";
+import { JsonPipe } from "@angular/common";
 
 @Component({
     selector: "nui-convenience-time-frame-bar-zoom-example",
     templateUrl: "./time-frame-bar-zoom.example.component.html",
     providers: [HistoryStorage],
-    standalone: false
+    imports: [NuiTimeFrameBarModule, NuiIconModule, NuiTimeFramePickerModule, NuiButtonModule, JsonPipe]
 })
 export class TimeFrameBarZoomExampleComponent implements OnInit {
     public minDate: Moment;

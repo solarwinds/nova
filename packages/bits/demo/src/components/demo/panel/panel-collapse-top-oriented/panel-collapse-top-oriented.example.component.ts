@@ -21,11 +21,14 @@
 import { Component, Inject, Input } from "@angular/core";
 
 import { IMenuGroup, ToastService } from "@nova-ui/bits";
+import { NuiPanelModule } from "../../../../../../src/lib/panel/panel.module";
+import { NuiMenuModule } from "../../../../../../src/lib/menu/menu.module";
+import { NuiSwitchModule } from "../../../../../../src/lib/switch/switch.module";
 
 @Component({
     selector: "nui-panel-collapse-top-oriented-example",
     templateUrl: "./panel-collapse-top-oriented.example.component.html",
-    standalone: false
+    imports: [NuiPanelModule, NuiMenuModule, NuiSwitchModule]
 })
 export class PanelCollapseTopOrientedExampleComponent {
     @Input() isOn = true;

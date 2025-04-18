@@ -19,10 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiTimePickerModule } from "../../../../../../src/lib/time-picker/time-picker.module";
 
 @Component({
     selector: "nui-time-picker-basic",
     templateUrl: "./time-picker-basic.example.component.html",
-    standalone: false
+    imports: [NuiTimePickerModule]
 })
 export class TimePickerBasicExampleComponent {}

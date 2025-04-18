@@ -141,8 +141,6 @@ const routes = [
         NuiTimeFrameBarModule,
         NuiTimeFramePickerModule,
         NuiIconModule,
-    ],
-    declarations: [
         DialogContentExampleComponent,
         ComponentAsContentExampleComponent,
         ConfirmationDialogExampleComponent,

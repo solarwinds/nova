@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
+import { CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf } from "@angular/cdk/scrolling";
 import {
     AfterViewInit,
     ChangeDetectorRef,
@@ -48,13 +48,16 @@ import {
 import { RESULTS_PER_PAGE } from "../filtered-view-table-with-virtual-scroll-data";
 import { FilteredViewTableWithVirtualScrollDataSource } from "../filtered-view-table-with-virtual-scroll-data-source.service";
 import { IServer } from "../types";
+import { NuiTableModule } from "../../../../../../src/lib/table/table.module";
+import { NgIf } from "@angular/common";
+import { NuiProgressModule } from "../../../../../../src/lib/progress/progress.module";
 
 @Component({
     selector: "app-filtered-view-table-with-virtual-scroll-table",
     templateUrl: "./filtered-view-table.component.html",
     styleUrls: ["./filtered-view-table.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    imports: [CdkVirtualScrollViewport, NuiTableModule, CdkFixedSizeVirtualScroll, CdkVirtualForOf, NgIf, NuiProgressModule]
 })
 export class FilteredViewTableComponent
     implements OnInit, OnDestroy, AfterViewInit

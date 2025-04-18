@@ -21,12 +21,14 @@
 import { Component, ViewEncapsulation } from "@angular/core";
 
 import { IItemsReorderedEvent } from "@nova-ui/bits";
+import { NuiSwitchModule } from "../../../../../../src/lib/switch/switch.module";
+import { NuiRepeatModule } from "../../../../../../src/lib/repeat/repeat.module";
 
 @Component({
     selector: "nui-repeat-drag-simple-example",
     templateUrl: "./repeat-drag-simple.example.component.html",
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    imports: [NuiSwitchModule, NuiRepeatModule]
 })
 export class RepeatDragSimpleExampleComponent {
     public companies: string[] = ["Adobe", "IBM", "Dell", "Microsoft"];

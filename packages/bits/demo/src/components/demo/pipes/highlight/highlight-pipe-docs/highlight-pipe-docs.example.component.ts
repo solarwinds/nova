@@ -19,10 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../../src/lib/docs/docs.module";
+import { HighlightPipeExampleComponent } from "../highlight-pipe/highlight-pipe.example.component";
 
 @Component({
     selector: "nui-pipes-docs-example",
     templateUrl: "./highlight-pipe-docs.example.component.html",
-    standalone: false
+    imports: [NuiDocsModule, HighlightPipeExampleComponent]
 })
 export class HighlightPipeDocsExampleComponent {}

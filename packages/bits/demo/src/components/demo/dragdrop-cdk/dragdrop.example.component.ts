@@ -19,12 +19,14 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDragDropModule } from "../../../../../src/lib/dragdrop/dragdrop.module";
+import { NgFor, JsonPipe } from "@angular/common";
 
 @Component({
     selector: "nui-dd-cdk-example",
     templateUrl: "./dragdrop.example.component.html",
     styleUrls: ["./dragdrop.example.component.less"],
-    standalone: false
+    imports: [NuiDragDropModule, NgFor, JsonPipe]
 })
 export class DragdropExampleComponent {
     public draggableObj = {

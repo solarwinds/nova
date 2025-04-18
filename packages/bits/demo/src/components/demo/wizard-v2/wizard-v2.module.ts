@@ -123,8 +123,6 @@ const routes = [
         NuiSelectV2Module,
         NuiOverlayModule,
         NuiTooltipModule,
-    ],
-    declarations: [
         WizardDocsComponent,
         WizardHorizontalExampleComponent,
         WizardVerticalExampleComponent,

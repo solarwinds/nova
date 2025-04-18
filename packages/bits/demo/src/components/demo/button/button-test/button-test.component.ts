@@ -19,11 +19,14 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { ButtonWithLongTextExampleComponent } from "../button-long-text/button-with-long-text-example.component";
 
 @Component({
     selector: "nui-button-test",
     templateUrl: "./button-test.component.html",
-    standalone: false
+    imports: [FormsModule, NuiButtonModule, ButtonWithLongTextExampleComponent]
 })
 export class ButtonTestComponent {
     isRepeat = "true";

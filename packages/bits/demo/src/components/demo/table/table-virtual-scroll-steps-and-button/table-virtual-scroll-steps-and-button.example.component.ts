@@ -35,6 +35,12 @@ import {
 
 import { IRandomUserTableModel } from "../index";
 import { RandomuserTableDataSource1 } from "../table-virtual-scroll-datasource-1";
+import { NuiSwitchModule } from "../../../../../../src/lib/switch/switch.module";
+import { CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf } from "@angular/cdk/scrolling";
+import { NuiTableModule } from "../../../../../../src/lib/table/table.module";
+import { NgIf, NgTemplateOutlet, AsyncPipe } from "@angular/common";
+import { NuiSpinnerModule } from "../../../../../../src/lib/spinner/spinner.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-table-virtual-scroll-steps-and-button-example",
@@ -43,7 +49,7 @@ import { RandomuserTableDataSource1 } from "../table-virtual-scroll-datasource-1
         "./table-virtual-scroll-steps-and-button.example.component.less",
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [NuiSwitchModule, CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, NuiTableModule, CdkVirtualForOf, NgIf, NgTemplateOutlet, NuiSpinnerModule, NuiButtonModule, AsyncPipe]
 })
 export class TableVirtualScrollStepsAndButtonExampleComponent
     implements OnDestroy, OnInit

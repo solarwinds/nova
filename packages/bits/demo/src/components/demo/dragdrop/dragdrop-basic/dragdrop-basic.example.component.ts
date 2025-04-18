@@ -26,6 +26,8 @@ import {
     IToastService,
     ToastService,
 } from "@nova-ui/bits";
+import { NuiCommonModule } from "../../../../../../src/common/common.module";
+import { JsonPipe } from "@angular/common";
 
 class IsStringValidator implements IDropValidator {
     isValidDropTarget(payload: any, isExternal: boolean): boolean {
@@ -45,7 +47,7 @@ class IsObjectValidator implements IDropValidator {
 @Component({
     selector: "nui-dragdrop-validator-example",
     templateUrl: "./dragdrop-basic.example.component.html",
-    standalone: false
+    imports: [NuiCommonModule, JsonPipe]
 })
 export class DragdropBasicExampleComponent {
     public draggableString = "this is a string";

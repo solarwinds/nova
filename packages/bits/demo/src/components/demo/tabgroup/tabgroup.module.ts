@@ -136,8 +136,6 @@ const routes: Routes = [
         NuiDocsModule,
         NuiIconModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         TabgroupDocsExampleComponent,
         TabContentAboutExampleComponent,
         TabContentSettingsExampleComponent,

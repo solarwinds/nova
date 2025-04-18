@@ -19,10 +19,15 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { BusyBasicExampleComponent } from "../busy-basic/busy-basic.example.component";
+import { BusySpinnerExampleComponent } from "../busy-spinner/busy-spinner.example.component";
+import { BusyProgressExampleComponent } from "../busy-progress/busy-progress.example.component";
 
 @Component({
     selector: "nui-busy-docs-example",
     templateUrl: "./busy-docs.example.component.html",
-    standalone: false
+    imports: [NuiMessageModule, NuiDocsModule, BusyBasicExampleComponent, BusySpinnerExampleComponent, BusyProgressExampleComponent]
 })
 export class BusyDocsExampleComponent {}

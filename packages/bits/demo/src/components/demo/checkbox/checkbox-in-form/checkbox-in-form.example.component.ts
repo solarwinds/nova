@@ -18,19 +18,16 @@
 //  THE SOFTWARE.
 
 import { Component, OnInit } from "@angular/core";
-import {
-    FormBuilder,
-    FormControl,
-    FormGroup,
-    Validators,
-} from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { ToastService } from "@nova-ui/bits";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-checkbox-in-form-example",
     templateUrl: "./checkbox-in-form.example.component.html",
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, NuiCheckboxModule, NuiButtonModule]
 })
 export class CheckboxInFormExampleComponent implements OnInit {
     public myForm: FormGroup<{ checkbox: FormControl<boolean | null> }>;

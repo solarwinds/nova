@@ -29,6 +29,10 @@ import {
     TableSelectionConfig,
     TableSelectionMode,
 } from "@nova-ui/bits";
+import { NuiTableModule } from "../../../../../../src/lib/table/table.module";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { JsonPipe } from "@angular/common";
 
 interface IExampleTableModel {
     position: number;
@@ -41,7 +45,7 @@ interface IExampleTableModel {
     selector: "nui-table-row-clickable",
     providers: [ClientSideDataSource],
     templateUrl: "./table-row-clickable.example.component.html",
-    standalone: false
+    imports: [NuiTableModule, NuiIconModule, NuiButtonModule, JsonPipe]
 })
 export class TableRowClickableExampleComponent
     implements AfterViewInit, OnDestroy

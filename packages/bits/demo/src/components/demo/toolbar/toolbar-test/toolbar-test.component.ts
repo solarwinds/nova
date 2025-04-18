@@ -21,11 +21,18 @@
 import { Component } from "@angular/core";
 
 import { IMenuGroup } from "@nova-ui/bits";
+import { NuiToolbarModule } from "../../../../../../src/lib/toolbar/toolbar.module";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
+import { NuiSearchModule } from "../../../../../../src/lib/search/search.module";
+import { NuiMenuModule } from "../../../../../../src/lib/menu/menu.module";
+import { NgIf } from "@angular/common";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiSwitchModule } from "../../../../../../src/lib/switch/switch.module";
 
 @Component({
     selector: "nui-toolbar-test",
     templateUrl: "./toolbar-test.component.html",
-    standalone: false
+    imports: [NuiToolbarModule, NuiTextboxModule, NuiSearchModule, NuiMenuModule, NgIf, NuiButtonModule, NuiSwitchModule]
 })
 export class ToolbarTestExampleComponent {
     public width = "800px";

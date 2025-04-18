@@ -21,12 +21,15 @@
 import { Component } from "@angular/core";
 
 import { FileDropState } from "../file-drop/public-api";
+import { FileDropExampleComponent } from "../file-drop/file-drop.component";
+import { NgIf, NgFor } from "@angular/common";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-dragdrop-files-example",
     templateUrl: "./dragdrop-files.example.component.html",
     styleUrls: ["./dragdrop-files.example.component.less"],
-    standalone: false
+    imports: [FileDropExampleComponent, NgIf, NgFor, NuiButtonModule]
 })
 export class DragdropFilesExampleComponent {
     public gifError = false;

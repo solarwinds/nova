@@ -18,10 +18,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag, CdkDragPreview } from "@angular/cdk/drag-drop";
 import { Component } from "@angular/core";
 
 import { IRepeatItem } from "@nova-ui/bits";
+import { NgFor } from "@angular/common";
 
 interface IListItem extends IRepeatItem {
     title: string;
@@ -32,7 +33,7 @@ interface IListItem extends IRepeatItem {
     selector: "dnd-drag-preview",
     templateUrl: "./dnd-drag-preview.example.component.html",
     styleUrls: ["./dnd-drag-preview.example.component.less"],
-    standalone: false
+    imports: [CdkDropList, NgFor, CdkDrag, CdkDragPreview]
 })
 export class DndDragPreviewExampleComponent {
     public listItems: IListItem[] = [

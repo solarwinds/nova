@@ -28,6 +28,9 @@ import {
     PopoverComponent,
     PopoverOverlayPosition,
 } from "@nova-ui/bits";
+import { NuiChipsModule } from "../../../../../../src/lib/chips/chips.module";
+import { NgIf } from "@angular/common";
+import { NuiPopoverModule } from "../../../../../../src/lib/popover/popover.module";
 
 const flatItems: IChipsItem[] = [
     { id: "flatId1", label: "Down" },
@@ -95,7 +98,7 @@ const groupedItems: IChipsGroup[] = [
             }
         `,
     ],
-    standalone: false
+    imports: [NuiChipsModule, NgIf, NuiPopoverModule]
 })
 export class ChipsOverflowExampleComponent {
     public horizontalGroupedItemsSource = { flatItems, groupedItems };

@@ -36,8 +36,6 @@ import { CustomDataSourceFilterGroupsWrapperComponent } from "./filter-groups-wr
         NuiExpanderModule,
         NuiCheckboxModule,
         NuiPopoverModule,
-    ],
-    declarations: [
         CustomDataSourceFilterGroupsWrapperComponent,
         CustomDataSourceFilterGroupCompositeComponent,
     ],

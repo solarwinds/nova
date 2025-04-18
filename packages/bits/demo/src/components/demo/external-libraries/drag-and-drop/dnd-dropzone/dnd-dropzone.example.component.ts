@@ -18,19 +18,17 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    CdkDragDrop,
-    CdkDropList,
-    copyArrayItem,
-} from "@angular/cdk/drag-drop";
+import { CdkDragDrop, CdkDropList, copyArrayItem, CdkDropListGroup, CdkDrag } from "@angular/cdk/drag-drop";
 import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { NgFor, NgTemplateOutlet, NgIf, AsyncPipe } from "@angular/common";
+import { NuiDndModule } from "../../../../../../../src/lib/dnd/dnd.module";
 
 @Component({
     selector: "dnd-dropzone",
     templateUrl: "./dnd-dropzone.example.component.html",
     styleUrls: ["./dnd-dropzone.example.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [CdkDropListGroup, CdkDropList, NgFor, CdkDrag, NuiDndModule, NgTemplateOutlet, NgIf, AsyncPipe]
 })
 export class DndDropzoneExampleComponent {
     public sourceItems: string[] = ["Adobe", "IBM"];

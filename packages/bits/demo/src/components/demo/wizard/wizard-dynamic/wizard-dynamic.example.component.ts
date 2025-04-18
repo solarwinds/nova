@@ -27,11 +27,13 @@ import {
     WizardComponent,
     WizardStepComponent,
 } from "@nova-ui/bits";
+import { NuiWizardModule } from "../../../../../../src/lib/wizard/wizard.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-wizard-dynamic-example",
     templateUrl: "./wizard-dynamic.example.component.html",
-    standalone: false
+    imports: [NuiWizardModule, NuiButtonModule]
 })
 export class WizardDynamicExampleComponent implements OnDestroy {
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;

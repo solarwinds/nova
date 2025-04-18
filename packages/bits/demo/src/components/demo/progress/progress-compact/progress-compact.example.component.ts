@@ -19,11 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiProgressModule } from "../../../../../../src/lib/progress/progress.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-progress-compact-example",
     templateUrl: "./progress-compact.example.component.html",
-    standalone: false
+    imports: [NuiProgressModule, NuiButtonModule]
 })
 export class ProgressCompactExampleComponent {
     public show = false;

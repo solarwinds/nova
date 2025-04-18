@@ -19,11 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component, OnDestroy } from "@angular/core";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiSpinnerModule } from "../../../../../../src/lib/spinner/spinner.module";
 
 @Component({
     selector: "nui-spinner-determinate-example",
     templateUrl: "./spinner-determinate.example.component.html",
-    standalone: false
+    imports: [NuiButtonModule, NuiSpinnerModule]
 })
 export class SpinnerDeterminateExampleComponent implements OnDestroy {
     public show = false;

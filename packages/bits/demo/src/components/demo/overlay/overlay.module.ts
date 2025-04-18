@@ -178,8 +178,6 @@ const routes = [
         NuiMenuModule,
         DragDropModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         OverlaySimpleExampleComponent,
         OverlayShowHideToggleExampleComponent,
         OverlayTestComponent,

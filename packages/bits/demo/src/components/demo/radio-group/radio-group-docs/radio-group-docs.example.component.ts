@@ -19,10 +19,18 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { BasicRadioGroupExampleComponent } from "../basic-radio-group/basic-radio-group.example.component";
+import { RadioGroupInlineExampleComponent } from "../radio-group-inline/radio-group-inline.example.component";
+import { DisabledRadioGroupExampleComponent } from "../disabled-radio-group/disabled-radio-group.example.component";
+import { RadioGroupHintsExampleComponent } from "../radio-group-with-hints/radio-group-hints.example.component";
+import { RadioGroupHintsContentExampleComponent } from "../radio-group-with-hints-content/radio-group-hints-content.example.component";
+import { ValueChangeRadioGroupExampleComponent } from "../value-change-radio-group/value-change-radio-group.example.component";
+import { RadioGroupInFormExampleComponent } from "../radio-group-in-form/radio-group-in-form.example.component";
 
 @Component({
     selector: "nui-radio-docs-example",
     templateUrl: "./radio-group-docs.example.component.html",
-    standalone: false
+    imports: [NuiDocsModule, BasicRadioGroupExampleComponent, RadioGroupInlineExampleComponent, DisabledRadioGroupExampleComponent, RadioGroupHintsExampleComponent, RadioGroupHintsContentExampleComponent, ValueChangeRadioGroupExampleComponent, RadioGroupInFormExampleComponent]
 })
 export class RadioGroupDocsExampleComponent {}

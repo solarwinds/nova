@@ -26,11 +26,13 @@ import {
     icons as iconsData,
     ITypedIconData,
 } from "../../../../../../src/lib/icon/icons";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
+import { NgFor } from "@angular/common";
 
 @Component({
     selector: "nui-icon-visual-test",
     templateUrl: "./icon-visual-test.component.html",
-    standalone: false
+    imports: [NuiIconModule, NgFor]
 })
 export class IconVisualTestComponent implements OnInit {
     public icons: ITypedIconData[];

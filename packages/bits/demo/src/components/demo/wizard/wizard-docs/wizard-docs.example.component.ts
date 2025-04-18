@@ -19,10 +19,27 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { WizardSimpleExampleComponent } from "../wizard-simple/wizard-simple.example.component";
+import { WizardWithSeparateStepHeadingsExampleComponent } from "../wizard-with-separate-step-headings/wizard-with-separate-step-headings.example.component";
+import { WizardDialogExampleComponent } from "../wizard-dialog/wizard-dialog.example.component";
+import { WizardBusyExampleComponent } from "../wizard-busy/wizard-busy.example.component";
+import { WizardValidationExampleComponent } from "../wizard-validation/wizard-validation.example.component";
+import { WizardDisabledExampleComponent } from "../wizard-disabled/wizard-disabled.example.component";
+import { WizardHiddenExampleComponent } from "../wizard-hide/wizard-hide.example.component";
+import { WizardDynamicExampleComponent } from "../wizard-dynamic/wizard-dynamic.example.component";
+import { WizardDynamicRemoveExampleComponent } from "../wizard-dynamic-remove/wizard-dynamic-remove.example.component";
+import { WizardAdditionalButtonExampleComponent } from "../wizard-additional-button/wizard-additional-button.example.component";
+import { WizardConfirmationDialogExampleComponent } from "../wizard-confirmation-dialog/wizard-confirmation-dialog.example.component";
+import { WizardConstantHeightExampleComponent } from "../wizard-constant-height/wizard-constant-height.example.component";
+import { WizardCustomStepLineWidthComponent } from "../wizard-custom-step-line-width/wizard-custom-step-line-width.example.component";
+import { WizardStepsExampleComponent } from "../wizard-steps/wizard-steps.example.component";
+import { WizardResetStepExampleComponent } from "../wizard-reset-step/wizard-reset-step-example.component";
 
 @Component({
     selector: "nui-wizard-example",
     templateUrl: "./wizard-docs.example.component.html",
-    standalone: false
+    imports: [NuiMessageModule, NuiDocsModule, WizardSimpleExampleComponent, WizardWithSeparateStepHeadingsExampleComponent, WizardDialogExampleComponent, WizardBusyExampleComponent, WizardValidationExampleComponent, WizardDisabledExampleComponent, WizardHiddenExampleComponent, WizardDynamicExampleComponent, WizardDynamicRemoveExampleComponent, WizardAdditionalButtonExampleComponent, WizardConfirmationDialogExampleComponent, WizardConstantHeightExampleComponent, WizardCustomStepLineWidthComponent, WizardStepsExampleComponent, WizardResetStepExampleComponent]
 })
 export class WizardExampleComponent {}

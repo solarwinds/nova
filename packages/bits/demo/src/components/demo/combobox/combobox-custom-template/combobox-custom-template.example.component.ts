@@ -22,12 +22,13 @@ import { Component } from "@angular/core";
 import _cloneDeep from "lodash/cloneDeep";
 
 import { ISelectChangedEvent } from "@nova-ui/bits";
+import { NuiSelectModule } from "../../../../../../src/lib/select/select.module";
 
 @Component({
     selector: "nui-combobox-custom-template-example",
     templateUrl: "./combobox-custom-template.example.component.html",
     styleUrls: ["./combobox-custom-template.example.component.less"],
-    standalone: false
+    imports: [NuiSelectModule]
 })
 export class ComboboxCustomTemplateExampleComponent {
     public dataset = {

@@ -56,8 +56,6 @@ import { FilteredViewTableWithPaginationComponent } from "./filtered-view-table-
         FilterGroupModule,
         NuiChipsModule,
         NuiPopoverModule,
-    ],
-    declarations: [
         FilteredViewTableWithPaginationComponent,
         FilteredViewTableComponent,
     ],

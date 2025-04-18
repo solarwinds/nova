@@ -56,16 +56,6 @@ const routes = [
 ];
 
 @NgModule({
-    declarations: [
-        BadgeDocsComponent,
-        BadgeCounterBasicComponent,
-        BadgeEmptyBasicComponent,
-        BadgeSystemStatusesComponent,
-        BadgeColorBlackComponent,
-        BadgeCustomizationComponent,
-        BadgeNovauiComponent,
-        BadgeVisualTestComponent,
-    ],
     imports: [
         NuiButtonModule,
         NuiFormFieldModule,
@@ -74,6 +64,14 @@ const routes = [
         NuiTextboxModule,
         ScrollingModule,
         RouterModule.forChild(routes),
+        BadgeDocsComponent,
+        BadgeCounterBasicComponent,
+        BadgeEmptyBasicComponent,
+        BadgeSystemStatusesComponent,
+        BadgeColorBlackComponent,
+        BadgeCustomizationComponent,
+        BadgeNovauiComponent,
+        BadgeVisualTestComponent,
     ],
     exports: [RouterModule],
 })

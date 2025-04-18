@@ -21,11 +21,15 @@
 import { Component, Inject } from "@angular/core";
 
 import { ToastService } from "@nova-ui/bits";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiPanelModule } from "../../../../../../src/lib/panel/panel.module";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
+import { NgIf } from "@angular/common";
 
 @Component({
     selector: "nui-panel-embedded-content-example",
     templateUrl: "./panel-embedded-content.example.component.html",
-    standalone: false
+    imports: [NuiButtonModule, NuiPanelModule, NuiIconModule, NgIf]
 })
 export class PanelEmbeddedContentExampleComponent {
     public isCollapsed = false;

@@ -21,11 +21,13 @@
 import { Component } from "@angular/core";
 
 import { IMenuGroup } from "@nova-ui/bits";
+import { NuiExpanderModule } from "../../../../../../src/lib/expander/expander.module";
+import { NuiMenuModule } from "../../../../../../src/lib/menu/menu.module";
 
 @Component({
     selector: "expander-visual-test",
     templateUrl: "./expander-visual-test.component.html",
-    standalone: false
+    imports: [NuiExpanderModule, NuiMenuModule]
 })
 export class ExpanderVisualTestComponent {
     public itemsSource: IMenuGroup[] = [

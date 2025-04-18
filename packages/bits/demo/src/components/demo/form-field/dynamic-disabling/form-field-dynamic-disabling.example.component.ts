@@ -19,14 +19,17 @@
 //  THE SOFTWARE.
 
 import { Component, Inject } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { ToastService } from "@nova-ui/bits";
+import { NuiFormFieldModule } from "../../../../../../src/lib/form-field/form-field.module";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
+import { NuiValidationMessageModule } from "../../../../../../src/lib/validation-message/validation-message.module";
 
 @Component({
     selector: "nui-form-field-dynamic-disabling-example",
     templateUrl: "./form-field-dynamic-disabling.example.component.html",
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, NuiFormFieldModule, NuiTextboxModule, NuiValidationMessageModule]
 })
 export class FormFieldDynamicDisablingExampleComponent {
     public dynamicForm;

@@ -36,12 +36,15 @@ import {
     IFilterGroupMultiFilterMetadata,
     IFilterGroupOption,
 } from "./public-api";
+import { NgIf, NgTemplateOutlet, NgFor, SlicePipe } from "@angular/common";
+import { NuiExpanderModule } from "../../../../../src/lib/expander/expander.module";
+import { NuiCheckboxModule } from "../../../../../src/lib/checkbox/checkbox.module";
 
 @Component({
     selector: "app-custom-data-source-filter-group",
     templateUrl: "./custom-data-source-filter-group.component.html",
     styleUrls: ["./custom-data-source-filter-group.component.less"],
-    standalone: false
+    imports: [NgIf, NuiExpanderModule, NgTemplateOutlet, NuiCheckboxModule, NgFor, SlicePipe]
 })
 export class CustomDataSourceFilterGroupCompositeComponent
     implements IFilterPub, OnInit

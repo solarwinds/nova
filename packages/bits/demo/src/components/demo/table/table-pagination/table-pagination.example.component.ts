@@ -26,6 +26,10 @@ import {
     INovaFilteringOutputs,
     PaginatorComponent,
 } from "@nova-ui/bits";
+import { NuiTableModule } from "../../../../../../src/lib/table/table.module";
+import { NgFor } from "@angular/common";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
+import { NuiPaginatorModule } from "../../../../../../src/lib/paginator/paginator.module";
 
 interface IExampleTableModel {
     position: number;
@@ -42,7 +46,7 @@ interface IExampleTableModel {
     selector: "nui-table-pagination-example",
     providers: [ClientSideDataSource],
     templateUrl: "./table-pagination.example.component.html",
-    standalone: false
+    imports: [NuiTableModule, NgFor, NuiIconModule, NuiPaginatorModule]
 })
 export class TablePaginationExampleComponent
     implements AfterViewInit, OnDestroy

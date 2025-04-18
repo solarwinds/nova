@@ -103,8 +103,6 @@ const routes = [
         RouterModule.forChild(routes),
         NuiDialogModule,
         NuiDatePickerModule,
-    ],
-    declarations: [
         QuickPickerBasicExampleComponent,
         TimeFramePickerBasicExampleComponent,
         TimeFramePickerCustomExampleComponent,

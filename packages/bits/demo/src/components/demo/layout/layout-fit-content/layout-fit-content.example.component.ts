@@ -19,11 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiLayoutModule } from "../../../../../../src/lib/layout/layout.module";
 
 @Component({
     selector: "nui-layout-fit-content",
     templateUrl: "./layout-fit-content.example.component.html",
     styleUrls: ["./layout-fit-content.example.component.less"],
-    standalone: false
+    imports: [NuiLayoutModule]
 })
 export class LayoutFitContentComponent {}

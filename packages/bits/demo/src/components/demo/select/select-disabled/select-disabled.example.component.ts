@@ -19,11 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiSelectModule } from "../../../../../../src/lib/select/select.module";
 
 @Component({
     selector: "nui-select-disabled-example",
     templateUrl: "./select-disabled.example.component.html",
-    standalone: false
+    imports: [NuiSelectModule]
 })
 export class SelectDisabledExampleComponent {
     public dataset = {

@@ -21,11 +21,12 @@
 import { Component, OnInit } from "@angular/core";
 
 import { ISelectChangedEvent } from "@nova-ui/bits";
+import { NuiSelectModule } from "../../../../../../src/lib/select/select.module";
 
 @Component({
     selector: "nui-combobox-required-example",
     templateUrl: "./combobox-required.example.component.html",
-    standalone: false
+    imports: [NuiSelectModule]
 })
 export class ComboboxRequiredExampleComponent implements OnInit {
     public isRequired: boolean = true;

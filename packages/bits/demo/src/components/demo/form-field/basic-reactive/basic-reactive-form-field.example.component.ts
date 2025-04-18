@@ -19,12 +19,15 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
-import { UntypedFormBuilder, Validators } from "@angular/forms";
+import { UntypedFormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NuiFormFieldModule } from "../../../../../../src/lib/form-field/form-field.module";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
+import { NuiValidationMessageModule } from "../../../../../../src/lib/validation-message/validation-message.module";
 
 @Component({
     selector: "nui-form-field-basic-reactive-example",
     templateUrl: "./basic-reactive-form-field.example.component.html",
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, NuiFormFieldModule, NuiTextboxModule, NuiValidationMessageModule]
 })
 export class FormFieldBasicReactiveExampleComponent {
     public reactiveForm;

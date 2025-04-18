@@ -19,10 +19,16 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../../src/lib/docs/docs.module";
+import { TagBasicExampleComponent } from "../tag-basic/tag-basic.example.component";
+import { TagColorExampleComponent } from "../tag-color/tag-color.example.component";
+import { TagBorderColorExampleComponent } from "../tag-border-color/tag-border-color.example.component";
+import { TagWithIconExampleComponent } from "../tag-with-icon/tag-with-icon.example.component";
+import { TagWithHoverExampleComponent } from "../tag-with-hover/tag-with-hover.example.component";
 
 @Component({
     selector: "nui-tag-docs-example",
     templateUrl: "./tag-docs.example.component.html",
-    standalone: false
+    imports: [NuiDocsModule, TagBasicExampleComponent, TagColorExampleComponent, TagBorderColorExampleComponent, TagWithIconExampleComponent, TagWithHoverExampleComponent]
 })
 export class TagDocsExampleComponent {}

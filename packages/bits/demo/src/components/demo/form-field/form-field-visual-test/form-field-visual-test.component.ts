@@ -19,12 +19,23 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NuiFormFieldModule } from "../../../../../../src/lib/form-field/form-field.module";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
+import { NuiValidationMessageModule } from "../../../../../../src/lib/validation-message/validation-message.module";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
+import { NuiSwitchModule } from "../../../../../../src/lib/switch/switch.module";
+import { NgFor } from "@angular/common";
+import { NuiRadioModule } from "../../../../../../src/lib/radio/radio.module";
+import { NuiSelectModule } from "../../../../../../src/lib/select/select.module";
+import { NuiTimePickerModule } from "../../../../../../src/lib/time-picker/time-picker.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-form-field-visual-test",
     templateUrl: "./form-field-visual-test.component.html",
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, NuiFormFieldModule, NuiTextboxModule, NuiValidationMessageModule, NuiIconModule, NuiCheckboxModule, NuiSwitchModule, NgFor, NuiRadioModule, NuiSelectModule, NuiTimePickerModule, NuiButtonModule]
 })
 export class FormFieldVisualTestComponent {
     public fancyForm;

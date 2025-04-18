@@ -26,7 +26,7 @@ import {
     TemplateRef,
     ViewChild,
 } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import isEqual from "lodash/isEqual";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -38,6 +38,17 @@ import {
     ToastService,
     WizardStepV2Component,
 } from "@nova-ui/bits";
+import { NuiDialogModule } from "../../../../../../src/lib/dialog/dialog.module";
+import { NgIf, NgTemplateOutlet, NgFor } from "@angular/common";
+import { NuiWizardV2Module } from "../../../../../../src/lib/wizard-v2/wizard.module";
+import { NuiFormFieldModule } from "../../../../../../src/lib/form-field/form-field.module";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
+import { NuiValidationMessageModule } from "../../../../../../src/lib/validation-message/validation-message.module";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
+import { NuiDatePickerModule } from "../../../../../../src/lib/date-picker/date-picker.module";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
 
 interface IWizardStepData {
     title: string;
@@ -48,7 +59,7 @@ interface IWizardStepData {
     selector: "nui-wizard-restore-state-example",
     templateUrl: "./wizard-restore-state.example.component.html",
     styleUrls: ["wizard-restore-state.example.component.less"],
-    standalone: false
+    imports: [NuiDialogModule, NgIf, FormsModule, ReactiveFormsModule, NuiWizardV2Module, NuiFormFieldModule, NuiTextboxModule, NuiValidationMessageModule, NuiCheckboxModule, NgTemplateOutlet, NuiDatePickerModule, NgFor, NuiSelectV2Module, NuiButtonModule, NuiMessageModule]
 })
 export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
     public form;

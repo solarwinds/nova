@@ -21,11 +21,12 @@
 import { Component } from "@angular/core";
 
 import { PanelBackgroundColor } from "@nova-ui/bits";
+import { NuiPanelModule } from "../../../../../../src/lib/panel/panel.module";
 
 @Component({
     selector: "nui-panel-custom-styles-example",
     templateUrl: "./panel-custom-styles.example.component.html",
-    standalone: false
+    imports: [NuiPanelModule]
 })
 export class PanelCustomStylesExampleComponent {
     constructor() {}

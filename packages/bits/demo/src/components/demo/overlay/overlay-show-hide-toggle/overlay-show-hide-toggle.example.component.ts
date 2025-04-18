@@ -19,10 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiOverlayModule } from "../../../../../../src/lib/overlay/overlay.module";
 
 @Component({
     selector: "nui-overlay-show-hide-toggle-example",
     templateUrl: "./overlay-show-hide-toggle.example.component.html",
-    standalone: false
+    imports: [NuiButtonModule, NuiOverlayModule]
 })
 export class OverlayShowHideToggleExampleComponent {}

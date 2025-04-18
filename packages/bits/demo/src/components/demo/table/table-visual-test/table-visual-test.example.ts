@@ -19,10 +19,20 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { TableBasicExampleComponent } from "../table-basic/table-basic.example.component";
+import { TablePinnedHeaderComponent } from "../table-pinned-header/table-pinned-header.example.component";
+import { TableCellContentAlignComponent } from "../table-cell-content-align/table-cell-content-align.example.component";
+import { TableRowHeightSetExampleComponent } from "../table-row-height-set/table-row-height-set.example.component";
+import { TableSortingExampleComponent } from "../table-sorting/table-sorting.example.component";
+import { TableColumnsAddRemoveExampleComponent } from "../table-columns-add-remove/table-columns-add-remove.example.component";
+import { TableResizeExampleComponent } from "../table-resize/table-resize.example.component";
+import { TableSelectExampleComponent } from "../table-select/table-select.example.component";
+import { TableSelectPinnedHeaderComponent } from "../table-select-pinned-header/table-select-pinned-header.example.component";
+import { TableVirtualScrollStickyHeaderTestExampleComponent } from "../table-virtual-scroll-sticky-header-test/table-virtual-scroll-sticky-header-test-example.component";
 
 @Component({
     selector: "table-visual-test-example",
     templateUrl: "./table-visual-test.example.html",
-    standalone: false
+    imports: [TableBasicExampleComponent, TablePinnedHeaderComponent, TableCellContentAlignComponent, TableRowHeightSetExampleComponent, TableSortingExampleComponent, TableColumnsAddRemoveExampleComponent, TableResizeExampleComponent, TableSelectExampleComponent, TableSelectPinnedHeaderComponent, TableVirtualScrollStickyHeaderTestExampleComponent]
 })
 export class TableVisualTestComponent {}

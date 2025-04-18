@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { OverlayConfig } from "@angular/cdk/overlay";
-import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
+import { CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf } from "@angular/cdk/scrolling";
 import {
     AfterViewInit,
     Component,
@@ -27,7 +27,7 @@ import {
     TemplateRef,
     ViewChild,
 } from "@angular/core";
-import { FormBuilder, FormControl, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Observable, of, Subject } from "rxjs";
 // eslint-disable-next-line import/no-deprecated
 import { delay, filter, takeUntil, tap } from "rxjs/operators";
@@ -39,6 +39,17 @@ import {
     OVERLAY_WITH_POPUP_STYLES_CLASS,
     ToastService,
 } from "@nova-ui/bits";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NgFor, NgIf, AsyncPipe } from "@angular/common";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
+import { NuiFormFieldModule } from "../../../../../../src/lib/form-field/form-field.module";
+import { NuiValidationMessageModule } from "../../../../../../src/lib/validation-message/validation-message.module";
+import { NuiOverlayAdditionsModule } from "../../../../../../src/lib/overlay/overlay-additions.module";
+import { NuiChipsModule } from "../../../../../../src/lib/chips/chips.module";
+import { NuiDialogModule } from "../../../../../../src/lib/dialog/dialog.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiPopoverModule } from "../../../../../../src/lib/popover/popover.module";
+import { NuiMenuModule } from "../../../../../../src/lib/menu/menu.module";
 
 interface IExampleItem {
     id: string;
@@ -54,7 +65,7 @@ const defaultContainerHeight: number = 300;
     templateUrl: "combobox-v2-test.example.component.html",
     styleUrls: ["combobox-v2-test.example.component.less"],
     host: { class: "combobox-container" },
-    standalone: false
+    imports: [NuiSelectV2Module, FormsModule, ReactiveFormsModule, NgFor, NuiIconModule, NuiFormFieldModule, NuiValidationMessageModule, NgIf, NuiOverlayAdditionsModule, NuiChipsModule, CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf, NuiDialogModule, NuiButtonModule, NuiPopoverModule, NuiMenuModule, AsyncPipe]
 })
 export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
     public virtualItems = Array.from({ length: 100000 }).map(

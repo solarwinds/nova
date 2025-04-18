@@ -85,8 +85,6 @@ const routes = [
         NuiButtonModule,
         NuiDocsModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         CheckboxDisabledExampleComponent,
         CheckboxHelpHintExampleComponent,
         CheckboxIndeterminateExampleComponent,

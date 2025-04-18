@@ -19,9 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiWizardV2Module } from "../../../../../../src/lib/wizard-v2/wizard.module";
+import { NgTemplateOutlet } from "@angular/common";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 @Component({
     selector: "nui-wizard-vertical-example",
     templateUrl: "./wizard-vertical.example.component.html",
-    standalone: false
+    imports: [NuiWizardV2Module, NgTemplateOutlet, NuiButtonModule]
 })
 export class WizardVerticalExampleComponent {}

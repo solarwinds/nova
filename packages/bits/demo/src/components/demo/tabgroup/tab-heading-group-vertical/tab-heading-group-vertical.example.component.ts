@@ -19,11 +19,13 @@
 //  THE SOFTWARE.
 
 import { ChangeDetectorRef, Component } from "@angular/core";
+import { NuiTabsModule } from "../../../../../../src/lib/tabgroup/tabs.module";
+import { NgFor } from "@angular/common";
 
 @Component({
     selector: "nui-tab-heading-group-vertical-example",
     templateUrl: "./tab-heading-group-vertical.example.component.html",
-    standalone: false
+    imports: [NuiTabsModule, NgFor]
 })
 export class TabHeadingGroupVerticalExampleComponent {
     public currentTabId: string;

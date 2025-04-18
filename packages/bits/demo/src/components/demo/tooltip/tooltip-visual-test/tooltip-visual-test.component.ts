@@ -19,11 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiTooltipModule } from "../../../../../../src/lib/tooltip/tooltip.module";
 
 @Component({
     selector: "nui-tooltip-visual-test",
     templateUrl: "./tooltip-visual-test.component.html",
-    standalone: false
+    imports: [NuiButtonModule, NuiTooltipModule]
 })
 export class TooltipVisualTestComponent {
     tooltipMessage =

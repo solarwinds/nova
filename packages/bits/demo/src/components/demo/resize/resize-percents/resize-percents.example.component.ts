@@ -21,11 +21,12 @@
 import { Component } from "@angular/core";
 
 import { ResizeUnit } from "@nova-ui/bits";
+import { NuiCommonModule } from "../../../../../../src/common/common.module";
 
 @Component({
     selector: "nui-resize-percents-example",
     templateUrl: "./resize-percents.example.component.html",
-    standalone: false
+    imports: [NuiCommonModule]
 })
 export class ResizePercentsExampleComponent {
     public measurement = ResizeUnit.percent;

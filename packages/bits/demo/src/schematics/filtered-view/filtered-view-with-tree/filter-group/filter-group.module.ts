@@ -41,8 +41,8 @@ import { FilterGroupsWrapperComponent } from "./filter-groups-wrapper/filter-gro
         NuiDividerModule,
         NuiExpanderModule,
         NuiPopoverModule,
+        FilterGroupsWrapperComponent, FilterGroupComponent,
     ],
-    declarations: [FilterGroupsWrapperComponent, FilterGroupComponent],
     exports: [FilterGroupsWrapperComponent, FilterGroupComponent],
     providers: [FilterGroupService],
 })

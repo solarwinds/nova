@@ -19,10 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiPaginatorModule } from "../../../../../../src/lib/paginator/paginator.module";
 
 @Component({
     selector: "nui-paginator-styling-example",
     templateUrl: "./paginator-styling.example.component.html",
-    standalone: false
+    imports: [NuiPaginatorModule]
 })
 export class PaginatorStylingExampleComponent {}

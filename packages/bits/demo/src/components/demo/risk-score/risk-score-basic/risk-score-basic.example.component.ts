@@ -19,11 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
+import { NuiRiskScoreModule } from "../../../../../../src/lib/risk-score/risk-score.module";
 
 @Component({
     selector: "nui-risk-score-basic-example",
     templateUrl: "risk-score-basic.example.component.html",
-    standalone: false
+    imports: [NuiTextboxModule, NuiRiskScoreModule]
 })
 export class RiskScoreBasicExampleComponent {
     public value: number = 3.7;

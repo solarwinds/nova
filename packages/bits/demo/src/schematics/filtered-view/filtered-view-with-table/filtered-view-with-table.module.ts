@@ -54,8 +54,8 @@ import { FilteredViewWithTableComponent } from "./filtered-view-with-table.compo
         FilterGroupModule,
         NuiChipsModule,
         NuiPopoverModule,
+        FilteredViewWithTableComponent, FilteredViewTableComponent,
     ],
-    declarations: [FilteredViewWithTableComponent, FilteredViewTableComponent],
     exports: [FilteredViewWithTableComponent, FilteredViewTableComponent],
 })
 export class FilteredViewWithTableModule {}

@@ -19,11 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiMenuModule } from "../../../../../../src/lib/menu/menu.module";
+import { NgFor } from "@angular/common";
 
 @Component({
     selector: "nui-menu-append-to-body-example",
     templateUrl: "./menu-append-to-body.example.component.html",
-    standalone: false
+    imports: [NuiMenuModule, NgFor]
 })
 export class MenuAppendToBodyExampleComponent {
     public dataset = {

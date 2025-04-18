@@ -19,11 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-with-button-long-text-example",
     templateUrl: "./button-with-long-text-example.component.html",
-    standalone: false
+    imports: [NuiButtonModule]
 })
 export class ButtonWithLongTextExampleComponent {
     public disableWidthRestriction = true;

@@ -19,12 +19,16 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiSwitchModule } from "../../../../../../src/lib/switch/switch.module";
+import { NuiRepeatModule } from "../../../../../../src/lib/repeat/repeat.module";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
+import { NgClass, JsonPipe } from "@angular/common";
 
 @Component({
     selector: "nui-repeat-single-selection-mode-example",
     templateUrl: "./repeat-single-selection-mode.example.component.html",
     styleUrls: ["./repeat-single-selection-mode.example.less"],
-    standalone: false
+    imports: [NuiSwitchModule, NuiRepeatModule, NuiIconModule, NgClass, JsonPipe]
 })
 export class RepeatSingleSelectionModeExampleComponent {
     public people = [

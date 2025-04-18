@@ -26,11 +26,12 @@ import {
     ToastPositionClass,
     ToastService,
 } from "@nova-ui/bits";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-toast-sticky-error-example",
     templateUrl: "./toast-sticky-error.example.component.html",
-    standalone: false
+    imports: [NuiButtonModule]
 })
 export class ToastStickyErrorExampleComponent implements OnInit {
     public selectedPosition: string;

@@ -19,12 +19,15 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
+import { NuiProgressModule } from "../../../../../../src/lib/progress/progress.module";
+import { NuiSelectModule } from "../../../../../../src/lib/select/select.module";
 
 @Component({
     selector: "nui-select-custom-template-example",
     templateUrl: "./select-custom-template.example.component.html",
     styleUrls: ["./select-custom-template.example.component.less"],
-    standalone: false
+    imports: [NuiIconModule, NuiProgressModule, NuiSelectModule]
 })
 export class SelectCustomTemplateExampleComponent {
     public dataset = {

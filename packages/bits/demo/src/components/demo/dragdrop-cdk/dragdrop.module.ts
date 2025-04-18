@@ -52,8 +52,8 @@ const routes = [
         NuiDndModule,
         RouterModule.forChild(routes),
         NuiDragDropModule,
+        DragdropExampleComponent,
     ],
-    declarations: [DragdropExampleComponent],
     providers: [
         {
             provide: DEMO_PATH_TOKEN,

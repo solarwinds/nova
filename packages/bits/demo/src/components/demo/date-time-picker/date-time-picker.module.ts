@@ -101,8 +101,6 @@ const routes = [
         RouterModule.forChild(routes),
         NuiDialogModule,
         NuiSelectV2Module,
-    ],
-    declarations: [
         DateTimePickerTestComponent,
         DateTimePickerBasicExampleComponent,
         DateTimePickerInlineExampleComponent,

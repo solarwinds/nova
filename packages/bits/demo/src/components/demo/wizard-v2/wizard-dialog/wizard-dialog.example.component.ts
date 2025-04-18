@@ -33,12 +33,19 @@ import {
     ToastService,
     WizardHorizontalComponent,
 } from "@nova-ui/bits";
+import { NuiBusyModule } from "../../../../../../src/lib/busy/busy.module";
+import { NuiDialogModule } from "../../../../../../src/lib/dialog/dialog.module";
+import { NuiWizardV2Module } from "../../../../../../src/lib/wizard-v2/wizard.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NgTemplateOutlet } from "@angular/common";
+import { NuiSpinnerModule } from "../../../../../../src/lib/spinner/spinner.module";
+import { NuiOverlayModule } from "../../../../../../src/lib/overlay/overlay.module";
 
 @Component({
     selector: "nui-wizard-v2-dialog-example",
     templateUrl: "./wizard-dialog.example.component.html",
     styleUrls: ["./wizard-dialog.example.component.less"],
-    standalone: false
+    imports: [NuiBusyModule, NuiDialogModule, NuiWizardV2Module, NuiButtonModule, NgTemplateOutlet, NuiSpinnerModule, NuiOverlayModule]
 })
 export class WizardDialogExampleComponent implements OnDestroy {
     public onDestroy$ = new Subject<void>();

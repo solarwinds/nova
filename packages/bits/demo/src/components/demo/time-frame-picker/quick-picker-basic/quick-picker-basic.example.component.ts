@@ -21,11 +21,13 @@
 import { Component } from "@angular/core";
 
 import { IQuickPickPresetDictionary } from "@nova-ui/bits";
+import { NuiTimeFramePickerModule } from "../../../../../../src/lib/time-frame-picker/time-frame-picker.module";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
 
 @Component({
     selector: "nui-quick-picker-basic",
     templateUrl: "./quick-picker-basic.example.component.html",
-    standalone: false
+    imports: [NuiTimeFramePickerModule, NuiTextboxModule]
 })
 export class QuickPickerBasicExampleComponent {
     public presets: IQuickPickPresetDictionary = {

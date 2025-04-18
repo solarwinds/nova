@@ -19,10 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiFormFieldModule } from "../../../../../../src/lib/form-field/form-field.module";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
 
 @Component({
     selector: "nui-textbox-hint-example",
     templateUrl: "./textbox-hint.example.component.html",
-    standalone: false
+    imports: [NuiFormFieldModule, NuiTextboxModule]
 })
 export class TextboxHintExampleComponent {}

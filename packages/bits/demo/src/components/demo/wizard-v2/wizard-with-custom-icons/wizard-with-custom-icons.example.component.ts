@@ -27,6 +27,9 @@ import {
     WizardStepStateConfig,
     WIZARD_CONFIG,
 } from "@nova-ui/bits";
+import { NuiWizardV2Module } from "../../../../../../src/lib/wizard-v2/wizard.module";
+import { NgTemplateOutlet } from "@angular/common";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-wizard-with-custom-icons-example",
@@ -44,7 +47,7 @@ import {
             } as IWizardConfig,
         },
     ],
-    standalone: false
+    imports: [NuiWizardV2Module, NgTemplateOutlet, NuiButtonModule]
 })
 export class WizardWithCustomIconsExampleComponent {
     @ViewChild("wizard") wizard: WizardHorizontalComponent;

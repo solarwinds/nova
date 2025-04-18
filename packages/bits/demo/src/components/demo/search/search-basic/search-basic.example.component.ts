@@ -19,10 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiSearchModule } from "../../../../../../src/lib/search/search.module";
 
 @Component({
     selector: "nui-search-basic-example",
     templateUrl: "search-basic.example.component.html",
-    standalone: false
+    imports: [NuiSearchModule]
 })
 export class SearchBasicExampleComponent {}

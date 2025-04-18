@@ -19,10 +19,17 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { BasicTableComponent } from "../basic-table/basic-table.component";
+import { TableWithPaginationComponent } from "../table-with-pagination/table-with-pagination.component";
+import { TableWithSearchComponent } from "../table-with-search/table-with-search.component";
+import { TableWithSelectionComponent } from "../table-with-selection/table-with-selection.component";
+import { TableWithSortComponent } from "../table-with-sort/table-with-sort.component";
+import { TableWithVirtualScrollComponent } from "../table-with-virtual-scroll/table-with-virtual-scroll.component";
+import { TableWithCustomVirtualScrollComponent } from "../table-with-custom-virtual-scroll/table-with-custom-virtual-scroll.component";
 
 @Component({
     selector: "table-schematics-visual-test",
     templateUrl: "table-schematics-visual-test.component.html",
-    standalone: false
+    imports: [BasicTableComponent, TableWithPaginationComponent, TableWithSearchComponent, TableWithSelectionComponent, TableWithSortComponent, TableWithVirtualScrollComponent, TableWithCustomVirtualScrollComponent]
 })
 export class TableSchematicsVisualTestComponent {}

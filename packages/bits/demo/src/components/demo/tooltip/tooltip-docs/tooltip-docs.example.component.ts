@@ -19,10 +19,17 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { TooltipBasicExampleComponent } from "../tooltip-basic/tooltip-basic.example.component";
+import { TooltipDisabledExampleComponent } from "../tooltip-disabled/tooltip-disabled.example.component";
+import { TooltipEllipsisExampleComponent } from "../tooltip-ellipsis/tooltip-ellipsis.example.component";
+import { TooltipPositionExampleComponent } from "../tooltip-position/tooltip-position.example.component";
+import { TooltipTriggerExampleComponent } from "../tooltip-trigger/tooltip-trigger.example.component";
 
 @Component({
     selector: "nui-tooltip-docs-example",
     templateUrl: "./tooltip-docs.example.component.html",
-    standalone: false
+    imports: [NuiMessageModule, NuiDocsModule, TooltipBasicExampleComponent, TooltipDisabledExampleComponent, TooltipEllipsisExampleComponent, TooltipPositionExampleComponent, TooltipTriggerExampleComponent]
 })
 export class TooltipDocsExampleComponent {}

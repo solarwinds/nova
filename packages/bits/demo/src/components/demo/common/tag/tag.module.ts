@@ -45,19 +45,17 @@ const routes = [
 ];
 
 @NgModule({
-    declarations: [
+    imports: [
+        NuiDocsModule,
+        ScrollingModule,
+        NuiIconModule,
+        RouterModule.forChild(routes),
         TagBasicExampleComponent,
         TagDocsExampleComponent,
         TagColorExampleComponent,
         TagWithIconExampleComponent,
         TagBorderColorExampleComponent,
         TagWithHoverExampleComponent,
-    ],
-    imports: [
-        NuiDocsModule,
-        ScrollingModule,
-        NuiIconModule,
-        RouterModule.forChild(routes),
     ],
     exports: [RouterModule],
 })

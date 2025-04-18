@@ -41,7 +41,20 @@ ng g "./schematics/src/collection.json":table --lint-fix --force --path=demo/src
 */
 import { Component } from "@angular/core";
 
-import { SchematicsDocsComponentType } from "../utils/schematic-docs-cli-option/schematic-docs-cli-option.component";
+import { SchematicsDocsComponentType, SchematicsDocsCliOptionComponent } from "../utils/schematic-docs-cli-option/schematic-docs-cli-option.component";
+import { SchematicDocsPageComponent } from "../utils/schematic-docs-page/schematic-docs-page.component";
+import { NuiTabsModule } from "../../../../src/lib/tabgroup/tabs.module";
+import { SchematicsDocsCommandComponent } from "../utils/schematic-docs-command/schematic-docs-command.component";
+import { SchematicDocsExampleComponent } from "../utils/schematic-docs-example/schematic-docs-example.component";
+import { BasicTableComponent } from "./basic-table/basic-table.component";
+import { TableWithSortComponent } from "./table-with-sort/table-with-sort.component";
+import { TableWithSearchComponent } from "./table-with-search/table-with-search.component";
+import { TableWithPaginationComponent } from "./table-with-pagination/table-with-pagination.component";
+import { TableWithSelectionComponent } from "./table-with-selection/table-with-selection.component";
+import { NuiMessageModule } from "../../../../src/lib/message/message.module";
+import { NgIf } from "@angular/common";
+import { TableWithVirtualScrollComponent } from "./table-with-virtual-scroll/table-with-virtual-scroll.component";
+import { TableWithCustomVirtualScrollComponent } from "./table-with-custom-virtual-scroll/table-with-custom-virtual-scroll.component";
 
 @Component({
     selector: "nui-table-schematics-docs-example",
@@ -52,6 +65,6 @@ import { SchematicsDocsComponentType } from "../utils/schematic-docs-cli-option/
             useValue: SchematicsDocsComponentType.table,
         },
     ],
-    standalone: false
+    imports: [SchematicDocsPageComponent, SchematicsDocsCliOptionComponent, NuiTabsModule, SchematicsDocsCommandComponent, SchematicDocsExampleComponent, BasicTableComponent, TableWithSortComponent, TableWithSearchComponent, TableWithPaginationComponent, TableWithSelectionComponent, NuiMessageModule, NgIf, TableWithVirtualScrollComponent, TableWithCustomVirtualScrollComponent]
 })
 export class TableSchematicExampleComponent {}

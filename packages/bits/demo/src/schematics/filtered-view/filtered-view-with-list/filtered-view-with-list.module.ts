@@ -50,8 +50,8 @@ import { FilteredViewWithListComponent } from "./filtered-view-with-list.compone
         FilterGroupModule,
         NuiChipsModule,
         NuiPopoverModule,
+        FilteredViewWithListComponent, FilteredViewListComponent,
     ],
-    declarations: [FilteredViewWithListComponent, FilteredViewListComponent],
     exports: [FilteredViewWithListComponent, FilteredViewListComponent],
 })
 export class FilteredViewWithListModule {}

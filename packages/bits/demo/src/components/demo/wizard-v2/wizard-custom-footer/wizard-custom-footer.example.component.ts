@@ -21,12 +21,15 @@
 import { Component, ViewChild } from "@angular/core";
 
 import { ToastService, WizardHorizontalComponent } from "@nova-ui/bits";
+import { NuiWizardV2Module } from "../../../../../../src/lib/wizard-v2/wizard.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NgTemplateOutlet } from "@angular/common";
 
 @Component({
     selector: "nui-wizard-custom-footer-example",
     templateUrl: "./wizard-custom-footer.example.component.html",
     styleUrls: ["./wizard-custom-footer.example.component.less"],
-    standalone: false
+    imports: [NuiWizardV2Module, NuiButtonModule, NgTemplateOutlet]
 })
 export class WizardCustomFooterExampleComponent {
     @ViewChild("wizard") private wizard: WizardHorizontalComponent;

@@ -22,6 +22,10 @@ import { Component, OnInit } from "@angular/core";
 import moment from "moment/moment";
 
 import { HistoryStorage, ITimeframe, TimeframeService } from "@nova-ui/bits";
+import { NgFor } from "@angular/common";
+import { NuiTimeFrameBarModule } from "../../../../../../../src/lib/convenience/time-frame-bar/time-frame-bar.module";
+import { NuiIconModule } from "../../../../../../../src/lib/icon/icon.module";
+import { NuiTimeFramePickerModule } from "../../../../../../../src/lib/time-frame-picker/time-frame-picker.module";
 
 class TestBar {
     private _baseDate = moment([2018, 5, 1, 15, 0, 0]);
@@ -52,7 +56,7 @@ class TestBar {
 @Component({
     selector: "nui-convenience-time-frame-bar-visual-test",
     templateUrl: "./time-frame-bar-visual.component.html",
-    standalone: false
+    imports: [NgFor, NuiTimeFrameBarModule, NuiIconModule, NuiTimeFramePickerModule]
 })
 export class TimeFrameBarVisualTestComponent implements OnInit {
     public bars: TestBar[] = ["first", "second", "third"].map(

@@ -19,12 +19,14 @@
 //  THE SOFTWARE.
 
 import { ArrayDataSource } from "@angular/cdk/collections";
-import { NestedTreeControl } from "@angular/cdk/tree";
+import { NestedTreeControl, CdkTree, CdkTreeNodeDef, CdkNestedTreeNode, CdkTreeNodeToggle, CdkTreeNodeOutlet } from "@angular/cdk/tree";
 import { Component } from "@angular/core";
 
 import { expand } from "@nova-ui/bits";
 
 import { FoodNode, TREE_DATA } from "../data";
+import { NuiButtonModule } from "../../../../../../../../src/lib/button/button.module";
+import { NuiIconModule } from "../../../../../../../../src/lib/icon/icon.module";
 
 @Component({
     selector: "nui-tree-basic-test",
@@ -32,7 +34,7 @@ import { FoodNode, TREE_DATA } from "../data";
     styleUrls: ["./tree-basic-test.component.less"],
     host: { id: "nui-tree-basic-example" },
     animations: [expand],
-    standalone: false
+    imports: [CdkTree, CdkTreeNodeDef, CdkNestedTreeNode, NuiButtonModule, CdkTreeNodeToggle, NuiIconModule, CdkTreeNodeOutlet]
 })
 export class TreeBasicTestComponent {
     treeControl = new NestedTreeControl<FoodNode>((node) => node.children);

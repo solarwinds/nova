@@ -33,6 +33,12 @@ import {
 import { FilterGroupCompositeDialogComponent } from "./filter-group-dialog/filter-group-dialog.component";
 import { FilterGroupService } from "./filter-group.service";
 import { IFilterGroupItem } from "./public-api";
+import { NuiImageModule } from "../../../../../src/lib/image/image.module";
+import { NuiPanelModule } from "../../../../../src/lib/panel/panel.module";
+import { FilterGroupsWrapperComponent } from "./filter-groups-wrapper/filter-groups-wrapper.component";
+import { NgFor, NgIf } from "@angular/common";
+import { DialogFilterGroupCompositeComponent } from "./dialog-filter-group.component";
+import { NuiRepeatModule } from "../../../../../src/lib/repeat/repeat.module";
 
 interface ExampleItem {
     color: string;
@@ -66,7 +72,7 @@ const RANDOM_ARRAY = [
             useClass: LocalFilteringDataSource,
         },
     ],
-    standalone: false
+    imports: [NuiImageModule, NuiPanelModule, FilterGroupsWrapperComponent, NgFor, DialogFilterGroupCompositeComponent, NgIf, NuiRepeatModule]
 })
 export class DialogFilterGroupExampleComponent
     implements AfterViewInit, OnDestroy

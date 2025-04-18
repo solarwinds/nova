@@ -19,10 +19,18 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { PaginatorBasicExampleComponent } from "../paginator-basic/paginator-basic.example.component";
+import { PaginatorAdjacentExampleComponent } from "../paginator-adjacent/paginator-adjacent.example.component";
+import { PaginatorCustomPageSetExampleComponent } from "../paginator-custom-page-set/paginator-custom-page-set.example.component";
+import { PaginatorHiddenPrevNextExampleComponent } from "../paginator-hidden-prev-next/paginator-hidden-prev-next.example.component";
+import { PaginatorStylingExampleComponent } from "../paginator-styling/paginator-styling.example.component";
+import { PaginatorVirtualScrollExampleComponent } from "../paginator-virtual-scroll/paginator-virtual-scroll.example.component";
 
 @Component({
     selector: "nui-paginator-docs-example",
     templateUrl: "./paginator-docs.example.component.html",
-    standalone: false
+    imports: [NuiMessageModule, NuiDocsModule, PaginatorBasicExampleComponent, PaginatorAdjacentExampleComponent, PaginatorCustomPageSetExampleComponent, PaginatorHiddenPrevNextExampleComponent, PaginatorStylingExampleComponent, PaginatorVirtualScrollExampleComponent]
 })
 export class PaginatorExampleComponent {}

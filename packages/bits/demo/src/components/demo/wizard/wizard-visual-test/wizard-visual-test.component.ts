@@ -29,11 +29,14 @@ import {
     WizardComponent,
     WizardStepComponent,
 } from "@nova-ui/bits";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiWizardModule } from "../../../../../../src/lib/wizard/wizard.module";
+import { NuiDialogModule } from "../../../../../../src/lib/dialog/dialog.module";
 
 @Component({
     selector: "nui-wizard-visual",
     templateUrl: "./wizard-visual-test.component.html",
-    standalone: false
+    imports: [NuiButtonModule, NuiWizardModule, NuiDialogModule]
 })
 export class WizardVisualTestComponent {
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;

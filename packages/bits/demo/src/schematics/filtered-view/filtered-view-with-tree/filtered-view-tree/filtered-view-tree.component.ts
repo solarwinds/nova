@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { ArrayDataSource } from "@angular/cdk/collections";
-import { NestedTreeControl } from "@angular/cdk/tree";
+import { NestedTreeControl, CdkTree, CdkTreeNodeDef, CdkNestedTreeNode, CdkTreeNodeToggle, CdkTreeNodeOutlet } from "@angular/cdk/tree";
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
@@ -40,6 +40,9 @@ import {
 
 import { FilteredViewWithTreeDataSource } from "../filtered-view-with-tree-data-source.service";
 import { IServer } from "../types";
+import { NgIf } from "@angular/common";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
 
 @Component({
     selector: "app-filtered-view-tree",
@@ -47,7 +50,7 @@ import { IServer } from "../types";
     styleUrls: ["./filtered-view-tree.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: [expand],
-    standalone: false
+    imports: [NgIf, CdkTree, CdkTreeNodeDef, CdkNestedTreeNode, NuiButtonModule, CdkTreeNodeToggle, NuiIconModule, CdkTreeNodeOutlet]
 })
 export class FilteredViewTreeComponent implements OnDestroy, AfterViewInit {
     treeControl = new NestedTreeControl<any>((node) => node.children);

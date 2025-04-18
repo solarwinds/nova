@@ -48,13 +48,20 @@ import {
 import { RESULTS_PER_PAGE } from "../filtered-view-list-with-pagination-data";
 import { FilteredViewListWithPaginationDataSource } from "../filtered-view-list-with-pagination-data-source.service";
 import { IServer, IServerFilters } from "../types";
+import { NuiBusyModule } from "../../../../../../src/lib/busy/busy.module";
+import { NuiSpinnerModule } from "../../../../../../src/lib/spinner/spinner.module";
+import { NuiSorterModule } from "../../../../../../src/lib/sorter/sorter.module";
+import { NuiSearchModule } from "../../../../../../src/lib/search/search.module";
+import { NgIf, NgFor, AsyncPipe, KeyValuePipe } from "@angular/common";
+import { NuiRepeatModule } from "../../../../../../src/lib/repeat/repeat.module";
+import { NuiPaginatorModule } from "../../../../../../src/lib/paginator/paginator.module";
 
 @Component({
     selector: "app-filtered-view-list-with-pagination-list",
     templateUrl: "./filtered-view-list.component.html",
     styleUrls: ["./filtered-view-list.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [NuiBusyModule, NuiSpinnerModule, NuiSorterModule, NuiSearchModule, NgIf, NuiRepeatModule, NuiPaginatorModule, NgFor, AsyncPipe, KeyValuePipe]
 })
 export class FilteredViewListComponent
     implements OnInit, AfterViewInit, OnDestroy

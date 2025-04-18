@@ -19,15 +19,19 @@
 //  THE SOFTWARE.
 
 import { Component, OnDestroy } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Subject } from "rxjs";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NgFor } from "@angular/common";
+import { NuiChipsModule } from "../../../../../../src/lib/chips/chips.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-combobox-v2-multiselect-example",
     templateUrl: "combobox-v2-multiselect.example.component.html",
     styleUrls: ["combobox-v2-multiselect.example.component.less"],
     host: { class: "combobox-container" },
-    standalone: false
+    imports: [NuiSelectV2Module, FormsModule, ReactiveFormsModule, NgFor, NuiChipsModule, NuiButtonModule]
 })
 export class ComboboxV2MultiselectExampleComponent implements OnDestroy {
     public items = Array.from({ length: 100 }).map(

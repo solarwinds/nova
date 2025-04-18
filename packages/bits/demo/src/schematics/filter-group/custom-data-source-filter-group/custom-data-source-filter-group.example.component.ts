@@ -39,6 +39,11 @@ import {
 import { CustomDataSourceFilterGroupCompositeComponent } from "./custom-data-source-filter-group.component";
 import { FilterGroupCustomDataSourceService } from "./custom-data-source.service";
 import { ICustomDSFilteredData, IFilterGroupItem } from "./public-api";
+import { NuiImageModule } from "../../../../../src/lib/image/image.module";
+import { NuiPanelModule } from "../../../../../src/lib/panel/panel.module";
+import { CustomDataSourceFilterGroupsWrapperComponent } from "./filter-groups-wrapper/filter-groups-wrapper.component";
+import { NgFor, NgIf } from "@angular/common";
+import { NuiRepeatModule } from "../../../../../src/lib/repeat/repeat.module";
 
 @Component({
     selector: "app-custom-data-source-filter-group-composite-example",
@@ -49,7 +54,7 @@ import { ICustomDSFilteredData, IFilterGroupItem } from "./public-api";
             useClass: FilterGroupCustomDataSourceService,
         },
     ],
-    standalone: false
+    imports: [NuiImageModule, NuiPanelModule, CustomDataSourceFilterGroupsWrapperComponent, NgFor, CustomDataSourceFilterGroupCompositeComponent, NgIf, NuiRepeatModule]
 })
 export class CustomDataSourceFilterGroupExampleComponent
     implements AfterViewInit, OnDestroy

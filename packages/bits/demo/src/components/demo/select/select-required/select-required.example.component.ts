@@ -21,11 +21,12 @@
 import { Component } from "@angular/core";
 
 import { ISelectChangedEvent } from "@nova-ui/bits";
+import { NuiSelectModule } from "../../../../../../src/lib/select/select.module";
 
 @Component({
     selector: "nui-select-required-example",
     templateUrl: "./select-required.example.component.html",
-    standalone: false
+    imports: [NuiSelectModule]
 })
 export class SelectRequiredExampleComponent {
     public isRequired = true;

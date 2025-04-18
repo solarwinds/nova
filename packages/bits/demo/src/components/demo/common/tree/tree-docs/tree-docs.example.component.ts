@@ -19,11 +19,21 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../../src/lib/docs/docs.module";
+import { TreeBasicExampleComponent } from "../tree-basic/tree-basic.example.component";
+import { TreeStylingExampleComponent } from "../tree-styling/tree-styling.example.component";
+import { TreeLazyExampleComponent } from "../tree-lazy/tree-lazy.example.component";
+import { TreeCheckboxExampleComponent } from "../tree-checkbox/tree-checkbox.example.component";
+import { TreeCheckboxLazyComponent } from "../tree-checkbox-lazy/tree-checkbox-lazy.component";
+import { TreeLeafPaginationExampleComponent } from "../tree-leaf-pagination/tree-leaf-pagination.example.component";
+import { TreeWithAdditionalContentExampleComponent } from "../tree-with-additional-content/tree-with-additional-content.example.component";
+import { TreeLoadMoreExampleComponent } from "../tree-load-more/tree-load-more.example.component";
+import { TreeShowAllDialogExampleComponent } from "../tree-show-all-dialog/tree-show-all-dialog.example.component";
 
 @Component({
     selector: "nui-tree-docs-example",
     templateUrl: "./tree-docs.example.component.html",
-    standalone: false
+    imports: [NuiDocsModule, TreeBasicExampleComponent, TreeStylingExampleComponent, TreeLazyExampleComponent, TreeCheckboxExampleComponent, TreeCheckboxLazyComponent, TreeLeafPaginationExampleComponent, TreeWithAdditionalContentExampleComponent, TreeLoadMoreExampleComponent, TreeShowAllDialogExampleComponent]
 })
 export class TreeDocsExampleComponent {
     initialSetupCode = `

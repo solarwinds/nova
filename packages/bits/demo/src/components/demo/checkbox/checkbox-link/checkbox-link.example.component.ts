@@ -21,11 +21,12 @@
 import { Component } from "@angular/core";
 
 import { ToastService } from "@nova-ui/bits";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
 
 @Component({
     selector: "nui-checkbox-link-example",
     templateUrl: "./checkbox-link.example.component.html",
-    standalone: false
+    imports: [NuiCheckboxModule]
 })
 export class CheckboxLinkExampleComponent {
     public action(): boolean {

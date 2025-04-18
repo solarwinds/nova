@@ -19,6 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { ToolbarBasicExampleComponent } from "../toolbar-basic/toolbar-basic.example.component";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
+import { ToolbarItemTypesExampleComponent } from "../toolbar-item-types/toolbar-item-types.example.component";
+import { ToolbarEmbeddedContentExampleComponent } from "../toolbar-embedded-content/toolbar-embedded-content.example.component";
+import { ToolbarSelectionExampleComponent } from "../toolbar-selection/toolbar-selection.example.component";
 
 @Component({
     selector: "nui-toolbar-docs-example",
@@ -26,6 +32,6 @@ import { Component } from "@angular/core";
     host: {
         class: "nui-edge-definer",
     },
-    standalone: false
+    imports: [NuiDocsModule, ToolbarBasicExampleComponent, NuiMessageModule, ToolbarItemTypesExampleComponent, ToolbarEmbeddedContentExampleComponent, ToolbarSelectionExampleComponent]
 })
 export class ToolbarDocsExampleComponent {}

@@ -69,20 +69,6 @@ const routes = [
 ];
 
 @NgModule({
-    declarations: [
-        ClientSideDataSourceDocsComponent,
-        DataSourceExampleComponent,
-        DepreacatedDataSourceClientSideBasicExampleComponent,
-        DepreacatedDataSourceClientSideFilteringExampleComponent,
-        DepreacatedDataSourceClientSideDelayedExampleComponent,
-        DepreacatedDataSourceClientSideCustomSearchExampleComponent,
-        DepreacatedDataSourceWithSelectionExampleComponent,
-        DataSourceClientSideBasicExampleComponent,
-        DataSourceClientSideFilteringExampleComponent,
-        DataSourceClientSideDelayedExampleComponent,
-        DataSourceClientSideCustomSearchExampleComponent,
-        DataSourceWithSelectionExampleComponent,
-    ],
     imports: [
         NuiDocsModule,
         NuiPaginatorModule,
@@ -97,6 +83,18 @@ const routes = [
         NuiPanelModule,
         NuiMessageModule,
         RouterModule.forChild(routes),
+        ClientSideDataSourceDocsComponent,
+        DataSourceExampleComponent,
+        DepreacatedDataSourceClientSideBasicExampleComponent,
+        DepreacatedDataSourceClientSideFilteringExampleComponent,
+        DepreacatedDataSourceClientSideDelayedExampleComponent,
+        DepreacatedDataSourceClientSideCustomSearchExampleComponent,
+        DepreacatedDataSourceWithSelectionExampleComponent,
+        DataSourceClientSideBasicExampleComponent,
+        DataSourceClientSideFilteringExampleComponent,
+        DataSourceClientSideDelayedExampleComponent,
+        DataSourceClientSideCustomSearchExampleComponent,
+        DataSourceWithSelectionExampleComponent,
     ],
     exports: [
         RouterModule,

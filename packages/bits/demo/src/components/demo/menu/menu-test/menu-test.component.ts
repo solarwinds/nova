@@ -21,11 +21,12 @@
 import { Component } from "@angular/core";
 
 import { IMenuGroup } from "@nova-ui/bits";
+import { NuiMenuModule } from "../../../../../../src/lib/menu/menu.module";
 
 @Component({
     selector: "nui-menu-test",
     templateUrl: "./menu-test.component.html",
-    standalone: false
+    imports: [NuiMenuModule]
 })
 export class MenuTestComponent {
     public itemsSource: IMenuGroup[] = [

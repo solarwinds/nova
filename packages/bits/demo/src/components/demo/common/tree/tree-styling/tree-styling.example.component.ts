@@ -19,10 +19,13 @@
 //  THE SOFTWARE.
 
 import { ArrayDataSource } from "@angular/cdk/collections";
-import { NestedTreeControl } from "@angular/cdk/tree";
+import { NestedTreeControl, CdkTree, CdkTreeNodeDef, CdkNestedTreeNode, CdkTreeNodeToggle, CdkTreeNodeOutlet } from "@angular/cdk/tree";
 import { Component } from "@angular/core";
 
 import { expand } from "@nova-ui/bits";
+import { NuiButtonModule } from "../../../../../../../src/lib/button/button.module";
+import { NgIf } from "@angular/common";
+import { NuiIconModule } from "../../../../../../../src/lib/icon/icon.module";
 
 interface FoodNode {
     name: string;
@@ -80,7 +83,7 @@ const TREE_DATA: FoodNode[] = [
     templateUrl: "tree-styling.example.component.html",
     styleUrls: ["tree-styling.example.component.less"],
     animations: [expand],
-    standalone: false
+    imports: [CdkTree, CdkTreeNodeDef, CdkNestedTreeNode, NuiButtonModule, NgIf, NuiIconModule, CdkTreeNodeToggle, CdkTreeNodeOutlet]
 })
 export class TreeStylingExampleComponent {
     treeControl = new NestedTreeControl<FoodNode>((node) => node.children);

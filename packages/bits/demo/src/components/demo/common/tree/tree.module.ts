@@ -176,8 +176,6 @@ const routes = [
         NuiRepeatModule,
         NuiBusyModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         TreeBasicExampleComponent,
         TreeDocsExampleComponent,
         TreeStylingExampleComponent,

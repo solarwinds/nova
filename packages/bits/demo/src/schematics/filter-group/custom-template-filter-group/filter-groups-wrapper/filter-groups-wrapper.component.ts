@@ -30,12 +30,14 @@ import _isEmpty from "lodash/isEmpty";
 import { DataSourceService, IFilteringParticipants } from "@nova-ui/bits";
 
 import { CustomTemplateFilterGroupCompositeComponent } from "../custom-template-filter-group.component";
+import { NgIf, I18nPluralPipe } from "@angular/common";
+import { NuiPopoverModule } from "../../../../../../src/lib/popover/popover.module";
 
 @Component({
     selector: "app-custom-template-filter-groups-wrapper",
     templateUrl: "filter-groups-wrapper.component.html",
     styleUrls: ["filter-groups-wrapper.component.less"],
-    standalone: false
+    imports: [NgIf, NuiPopoverModule, I18nPluralPipe]
 })
 export class CustomTemplateFilterGroupsWrapperComponent
     implements AfterViewInit

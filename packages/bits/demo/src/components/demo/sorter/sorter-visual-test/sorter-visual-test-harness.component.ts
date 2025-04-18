@@ -19,9 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { SorterRecommendedUsageVisualTestComponent } from "./sorter-recommended-usage/sorter-recommended-usage-visual-test.component";
+import { SorterLegacyStringInputUsageVisualTestComponent } from "./sorter-legacy-string-input-usage/sorter-legacy-string-input-usage-visual-test.component";
 
 @Component({
     templateUrl: "./sorter-visual-test-harness.component.html",
-    standalone: false
+    imports: [SorterRecommendedUsageVisualTestComponent, SorterLegacyStringInputUsageVisualTestComponent]
 })
 export class SorterVisualTestHarnessComponent {}

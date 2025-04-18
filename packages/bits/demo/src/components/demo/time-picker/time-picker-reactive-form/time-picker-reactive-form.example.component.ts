@@ -19,20 +19,17 @@
 //  THE SOFTWARE.
 
 import { Component, Inject, OnInit } from "@angular/core";
-import {
-    FormBuilder,
-    FormControl,
-    FormGroup,
-    Validators,
-} from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Moment } from "moment/moment";
 
 import { ToastService } from "@nova-ui/bits";
+import { NuiTimePickerModule } from "../../../../../../src/lib/time-picker/time-picker.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-time-picker-reactive-form",
     templateUrl: "./time-picker-reactive-form.example.component.html",
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, NuiTimePickerModule, NuiButtonModule]
 })
 export class TimePickerReactiveFormExampleComponent implements OnInit {
     public time: Moment;

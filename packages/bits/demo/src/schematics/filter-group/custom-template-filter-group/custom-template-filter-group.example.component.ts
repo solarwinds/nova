@@ -30,6 +30,13 @@ import {
 } from "@nova-ui/bits";
 
 import { IFilterGroupItem, IFilterGroupOption } from "./public-api";
+import { NuiIconModule } from "../../../../../src/lib/icon/icon.module";
+import { NgIf, NgFor } from "@angular/common";
+import { NuiImageModule } from "../../../../../src/lib/image/image.module";
+import { NuiPanelModule } from "../../../../../src/lib/panel/panel.module";
+import { CustomTemplateFilterGroupsWrapperComponent } from "./filter-groups-wrapper/filter-groups-wrapper.component";
+import { CustomTemplateFilterGroupCompositeComponent } from "./custom-template-filter-group.component";
+import { NuiRepeatModule } from "../../../../../src/lib/repeat/repeat.module";
 
 interface ExampleItem {
     color: string;
@@ -67,7 +74,7 @@ const RANDOM_ARRAY = [
             useClass: LocalFilteringDataSource,
         },
     ],
-    standalone: false
+    imports: [NuiIconModule, NgIf, NuiImageModule, NuiPanelModule, CustomTemplateFilterGroupsWrapperComponent, NgFor, CustomTemplateFilterGroupCompositeComponent, NuiRepeatModule]
 })
 export class CustomTemplateFilterGroupExampleComponent
     implements AfterViewInit, OnDestroy

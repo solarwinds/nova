@@ -59,8 +59,6 @@ const routes = [
         NuiCommonModule,
         NuiFileDropExampleModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         DragdropExampleComponent,
         DragdropBasicExampleComponent,
         DragdropCdkExampleComponent,

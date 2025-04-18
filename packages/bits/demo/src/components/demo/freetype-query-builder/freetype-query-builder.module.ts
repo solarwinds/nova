@@ -94,8 +94,6 @@ const routes = [
         RouterModule.forChild(routes),
         NuiDocsModule,
         NuiMessageModule,
-    ],
-    declarations: [
         FreetypeQueryBuilderDocsExampleComponent,
         FreetypeQueryBuilderTestComponent,
         FreetypeQueryBuilderVisualTestComponent,

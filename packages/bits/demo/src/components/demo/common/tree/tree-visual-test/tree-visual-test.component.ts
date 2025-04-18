@@ -19,10 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { TreeBasicTestComponent } from "./tree-basic-test/tree-basic-test.component";
+import { TreeCheckboxTestComponent } from "./tree-checkbox-test/tree-checkbox-test.component";
+import { TreePaginatorTestComponent } from "./tree-paginator-test/tree-paginator-test.component";
 
 @Component({
     selector: "nui-tree-visual-test",
     templateUrl: "./tree-visual-test.component.html",
-    standalone: false
+    imports: [TreeBasicTestComponent, TreeCheckboxTestComponent, TreePaginatorTestComponent]
 })
 export class TreeVisualTestComponent {}

@@ -21,11 +21,14 @@
 import { Component, Inject, TemplateRef } from "@angular/core";
 
 import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
+import { NuiDialogModule } from "../../../../../../src/lib/dialog/dialog.module";
+import { NgClass } from "@angular/common";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-dialog-position-example",
     templateUrl: "./dialog-position.example.component.html",
-    standalone: false
+    imports: [NuiDialogModule, NgClass, NuiButtonModule]
 })
 export class DialogPositionExampleComponent {
     public isResponsiveMode = false;

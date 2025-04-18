@@ -26,11 +26,17 @@ import {
     IToastService,
     ToastService,
 } from "@nova-ui/bits";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiRadioModule } from "../../../../../../src/lib/radio/radio.module";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
+import { NuiDividerModule } from "../../../../../../src/lib/divider/divider.module";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
 
 @Component({
     selector: "nui-event-propagation-service-example",
     templateUrl: "./event-propagation-service.example.component.html",
-    standalone: false
+    imports: [NuiTextboxModule, NuiButtonModule, NuiRadioModule, NuiCheckboxModule, NuiDividerModule, NuiIconModule]
 })
 export class EventPropagationServiceExampleComponent {
     constructor(

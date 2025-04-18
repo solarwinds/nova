@@ -19,14 +19,17 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { ToastService } from "@nova-ui/bits";
+import { NgIf, NgFor } from "@angular/common";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-checkbox-group-in-form-example",
     templateUrl: "./checkbox-group-in-form.example.component.html",
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, NgIf, NuiCheckboxModule, NgFor, NuiButtonModule]
 })
 export class CheckboxGroupInFormExampleComponent {
     public cabbage = $localize`Cabbage`;

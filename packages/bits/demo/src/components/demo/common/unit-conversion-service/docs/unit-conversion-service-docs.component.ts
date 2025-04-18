@@ -19,10 +19,14 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiMessageModule } from "../../../../../../../src/lib/message/message.module";
+import { NuiDocsModule } from "../../../../../../../src/lib/docs/docs.module";
+import { UnitConversionServiceBasicExampleComponent } from "../unit-conversion-service-basic/unit-conversion-service-basic.example.component";
+import { UnitConversionServiceSeparateUnitDisplayExampleComponent } from "../unit-conversion-service-separate-unit-display/unit-conversion-service-separate-unit-display.example.component";
 
 @Component({
     templateUrl: "./unit-conversion-service-docs.component.html",
     styleUrls: ["./unit-conversion-service-docs.component.less"],
-    standalone: false
+    imports: [NuiMessageModule, NuiDocsModule, UnitConversionServiceBasicExampleComponent, UnitConversionServiceSeparateUnitDisplayExampleComponent]
 })
 export class UnitConversionServiceDocsComponent {}

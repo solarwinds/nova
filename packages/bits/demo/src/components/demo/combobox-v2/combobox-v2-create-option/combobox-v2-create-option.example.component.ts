@@ -24,16 +24,19 @@ import {
     SecurityContext,
     ViewChild,
 } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DomSanitizer } from "@angular/platform-browser";
 
 import { ComboboxV2Component } from "@nova-ui/bits";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NgFor, NgIf, AsyncPipe } from "@angular/common";
+import { NuiOverlayAdditionsModule } from "../../../../../../src/lib/overlay/overlay-additions.module";
 
 @Component({
     selector: "nui-combobox-v2-create-option-example",
     templateUrl: "combobox-v2-create-option.example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [NuiSelectV2Module, FormsModule, ReactiveFormsModule, NgFor, NgIf, NuiOverlayAdditionsModule, AsyncPipe]
 })
 export class ComboboxV2CreateOptionExampleComponent {
     public options = Array.from({ length: 3 }).map(

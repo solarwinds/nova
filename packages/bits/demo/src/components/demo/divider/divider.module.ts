@@ -48,12 +48,9 @@ const routes = [
 ];
 
 @NgModule({
-    imports: [NuiDividerModule, NuiDocsModule, RouterModule.forChild(routes)],
-    declarations: [
-        DividerExampleComponent,
+    imports: [NuiDividerModule, NuiDocsModule, RouterModule.forChild(routes), DividerExampleComponent,
         HorizontalDividersExampleComponent,
-        VerticalDividersExampleComponent,
-    ],
+        VerticalDividersExampleComponent],
     providers: [
         {
             provide: DEMO_PATH_TOKEN,

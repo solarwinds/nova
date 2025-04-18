@@ -19,13 +19,17 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NuiFormFieldModule } from "../../../../../../src/lib/form-field/form-field.module";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NgFor } from "@angular/common";
+import { NuiValidationMessageModule } from "../../../../../../src/lib/validation-message/validation-message.module";
 
 @Component({
     selector: "nui-select-v2-reactive-form-field-example",
     templateUrl: "./select-v2-reactive-form-field.example.component.html",
     host: { class: "select-container" },
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, NuiFormFieldModule, NuiSelectV2Module, NgFor, NuiValidationMessageModule]
 })
 export class SelectV2ReactiveFormFieldExampleComponent {
     public items = Array.from({ length: 100 }).map(

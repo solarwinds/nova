@@ -72,8 +72,6 @@ const routes = [
         NuiExpanderModule,
         NuiDocsModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         IconBasicExampleComponent,
         IconChildStatusExampleComponent,
         IconColorExampleComponent,

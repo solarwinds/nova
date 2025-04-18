@@ -21,13 +21,18 @@
 import { ChangeDetectionStrategy, Component, Inject } from "@angular/core";
 
 import { ToastService } from "@nova-ui/bits";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NgFor, NgIf } from "@angular/common";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiDividerModule } from "../../../../../../src/lib/divider/divider.module";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
 
 @Component({
     selector: "nui-select-v2-custom-content-example",
     templateUrl: "./select-v2-custom-content.example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["select-v2-custom-content.example.component.less"],
-    standalone: false
+    imports: [NuiSelectV2Module, NgFor, NuiButtonModule, NuiDividerModule, NgIf, NuiIconModule]
 })
 export class SelectV2CustomContentExampleComponent {
     public items = [

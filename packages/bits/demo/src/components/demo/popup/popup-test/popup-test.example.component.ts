@@ -19,13 +19,17 @@
 //  THE SOFTWARE.
 
 import { Component, ViewEncapsulation } from "@angular/core";
+import { PopupAdapterModule } from "../../../../../../src/lib/popup-adapter/popup-adapter.module";
+import { NuiPopupModule } from "../../../../../../src/lib/popup/popup.module";
+import { NgFor } from "@angular/common";
+import { NuiMenuModule } from "../../../../../../src/lib/menu/menu.module";
 
 @Component({
     selector: "nui-popup-test",
     templateUrl: "./popup-test.example.component.html",
     styleUrls: ["popup-test.example.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    imports: [PopupAdapterModule, NuiPopupModule, NgFor, NuiMenuModule]
 })
 export class PopupTestComponent {
     public width = "200px";

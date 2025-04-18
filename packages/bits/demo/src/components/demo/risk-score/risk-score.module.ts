@@ -52,8 +52,6 @@ const routes = [
         NuiTextboxModule,
         NuiRiskScoreModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         RiskScoreBasicExampleComponent,
         RiskScoreDocsExampleComponent,
     ],

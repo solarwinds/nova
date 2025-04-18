@@ -19,11 +19,15 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { NuiRadioModule } from "../../../../../../src/lib/radio/radio.module";
+import { NuiCommonModule } from "../../../../../../src/common/common.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-set-focus-example",
     templateUrl: "./set-focus.example.component.html",
-    standalone: false
+    imports: [FormsModule, NuiRadioModule, NuiCommonModule, NuiButtonModule]
 })
 export class SetFocusExampleComponent {
     public carrotFocused = false;

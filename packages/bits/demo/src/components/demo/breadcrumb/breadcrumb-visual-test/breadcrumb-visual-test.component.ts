@@ -19,15 +19,16 @@
 //  THE SOFTWARE.
 
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router, RouterOutlet } from "@angular/router";
 import { Subscription } from "rxjs";
 
 import { BreadcrumbItem, BreadcrumbStateService } from "@nova-ui/bits";
+import { NuiBreadcrumbModule } from "../../../../../../src/lib/breadcrumb/breadcrumb.module";
 
 @Component({
     selector: "nui-breadcrumb-visual-test",
     templateUrl: "./breadcrumb-visual-test.component.html",
-    standalone: false
+    imports: [NuiBreadcrumbModule, RouterOutlet]
 })
 export class BreadcrumbVisualTestComponent implements OnInit, OnDestroy {
     public breadcrumbSource: Array<BreadcrumbItem>;
@@ -86,7 +87,7 @@ export class BreadcrumbVisualTestComponent implements OnInit, OnDestroy {
         </button>
         <router-outlet></router-outlet>
     </div>`,
-    standalone: false
+    imports: [RouterOutlet]
 })
 export class BreadcrumbFirstSubviewLevelComponent {
     constructor(private router: Router, private routerState: ActivatedRoute) {}
@@ -102,7 +103,6 @@ export class BreadcrumbFirstSubviewLevelComponent {
     selector: "nui-breadcrumb-second-level",
     template: ` <div>
         <p>Some data here</p>
-    </div>`,
-    standalone: false
+    </div>`
 })
 export class BreadcrumbSecondSubviewLevelComponent {}

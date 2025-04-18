@@ -287,8 +287,6 @@ const routes = [
         ScrollingModule,
         NuiSpinnerModule,
         NuiProgressModule,
-    ],
-    declarations: [
         TableBasicExampleComponent,
         TableCellWidthSetExampleComponent,
         TableColumnsAddRemoveExampleComponent,

@@ -19,11 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiSelectModule } from "../../../../../../src/lib/select/select.module";
 
 @Component({
     selector: "nui-combobox-justified-example",
     templateUrl: "./combobox-justified.example.component.html",
-    standalone: false
+    imports: [NuiSelectModule]
 })
 export class ComboboxJustifiedExampleComponent {
     public dataset = {

@@ -56,7 +56,13 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    declarations: [
+    imports: [
+        NuiDocsModule,
+        NuiDndModule,
+        NuiMessageModule,
+        RouterModule.forChild(routes),
+        DragDropModule,
+        CdkTreeModule,
         DndBasicExampleComponent,
         DndCustomHandleExampleComponent,
         DndDragDisabledExampleComponent,
@@ -66,14 +72,6 @@ const routes: Routes = [
         DndDropzoneExampleComponent,
         DndDropzoneVisualExampleComponent,
         DndAxisConstraintsExampleComponent,
-    ],
-    imports: [
-        NuiDocsModule,
-        NuiDndModule,
-        NuiMessageModule,
-        RouterModule.forChild(routes),
-        DragDropModule,
-        CdkTreeModule,
     ],
 })
 export default class DndModule {}

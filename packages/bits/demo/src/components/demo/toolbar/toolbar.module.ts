@@ -82,8 +82,6 @@ const routes = [
         NuiMessageModule,
         NuiDocsModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
         ToolbarBasicExampleComponent,
         ToolbarDocsExampleComponent,
         ToolbarEmbeddedContentExampleComponent,

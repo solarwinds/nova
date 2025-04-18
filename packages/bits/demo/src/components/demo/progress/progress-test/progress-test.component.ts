@@ -19,11 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { IndeterminateProgressExampleComponent } from "../indeterminate-progress/indeterminate-progress.example.component";
+import { ProgressCompactExampleComponent } from "../progress-compact/progress-compact.example.component";
 
 @Component({
     selector: "nui-progress-test",
     templateUrl: "./progress-test.component.html",
-    standalone: false
+    imports: [IndeterminateProgressExampleComponent, ProgressCompactExampleComponent]
 })
 export class ProgressTestComponent {
     public show = false;

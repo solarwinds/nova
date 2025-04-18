@@ -28,6 +28,9 @@ import {
     SorterComponent,
     SorterDirection,
 } from "@nova-ui/bits";
+import { NuiSorterModule } from "../../../../../../src/lib/sorter/sorter.module";
+import { NuiRepeatModule } from "../../../../../../src/lib/repeat/repeat.module";
+import { NgFor } from "@angular/common";
 
 interface IFilm {
     title: string;
@@ -39,7 +42,7 @@ interface IFilm {
     selector: "nui-sorter-test-example",
     templateUrl: "./sorter-test.example.component.html",
     styleUrls: ["./sorter-test.example.component.less"],
-    standalone: false
+    imports: [NuiSorterModule, NuiRepeatModule, NgFor]
 })
 export class SorterTestExampleComponent implements OnInit {
     private readonly emptyColumns: IMenuItem[] = [

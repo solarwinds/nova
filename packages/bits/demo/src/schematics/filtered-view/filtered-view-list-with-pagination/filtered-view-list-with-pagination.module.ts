@@ -50,8 +50,6 @@ import { FilteredViewListWithPaginationComponent } from "./filtered-view-list-wi
         FilterGroupModule,
         NuiChipsModule,
         NuiPopoverModule,
-    ],
-    declarations: [
         FilteredViewListWithPaginationComponent,
         FilteredViewListComponent,
     ],

@@ -47,8 +47,8 @@ const routes = [
         NuiDocsModule,
         RouterModule.forChild(routes),
         NuiCommonModule,
+        HighlightExampleComponent,
     ],
-    declarations: [HighlightExampleComponent],
     providers: [
         {
             provide: DEMO_PATH_TOKEN,

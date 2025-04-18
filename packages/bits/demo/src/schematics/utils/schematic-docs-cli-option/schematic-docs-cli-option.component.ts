@@ -21,6 +21,10 @@
 import { Component, Inject, Input, Optional } from "@angular/core";
 
 import { RepeatComponent } from "@nova-ui/bits";
+import { NgSwitch, NgSwitchCase, NgTemplateOutlet, NgIf, NgSwitchDefault, NgFor } from "@angular/common";
+import { NuiExpanderModule } from "../../../../../src/lib/expander/expander.module";
+import { NuiMessageModule } from "../../../../../src/lib/message/message.module";
+import { NuiDocsModule } from "../../../../../src/lib/docs/docs.module";
 
 export enum SchematicsDocsComponentType {
     "list" = "list",
@@ -30,7 +34,7 @@ export enum SchematicsDocsComponentType {
 @Component({
     selector: "nui-schematic-cli-option",
     templateUrl: "./schematic-docs-cli-option.component.html",
-    standalone: false
+    imports: [NgSwitch, NgSwitchCase, NgTemplateOutlet, NuiExpanderModule, NgIf, NuiMessageModule, NuiDocsModule, NgSwitchDefault, NgFor]
 })
 export class SchematicsDocsCliOptionComponent {
     @Input() name: string;

@@ -19,10 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { DataFilterBasicExampleComponent } from "../data-filter-basic/data-filter-basic.example.component";
+import { DataFilterIsolatedExampleComponent } from "../data-filter-isolated/data-filter-isolated.example.component";
 
 @Component({
     selector: "nui-data-filter-example",
     templateUrl: "./data-filter-test.component.html",
-    standalone: false
+    imports: [DataFilterBasicExampleComponent, DataFilterIsolatedExampleComponent]
 })
 export class DataFilterTestComponent {}

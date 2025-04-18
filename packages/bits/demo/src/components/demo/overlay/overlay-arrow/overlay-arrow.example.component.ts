@@ -29,7 +29,7 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -38,6 +38,12 @@ import {
     OverlayComponent,
     OverlayPlacement,
 } from "@nova-ui/bits";
+import { CdkDrag } from "@angular/cdk/drag-drop";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiOverlayModule } from "../../../../../../src/lib/overlay/overlay.module";
+import { NgIf, NgFor } from "@angular/common";
+import { NuiOverlayAdditionsModule } from "../../../../../../src/lib/overlay/overlay-additions.module";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
 
 const CUSTOM_OVERLAY_PANEL_CLASS = "custom-overlay-panel-class";
 
@@ -46,7 +52,7 @@ const CUSTOM_OVERLAY_PANEL_CLASS = "custom-overlay-panel-class";
     templateUrl: "./overlay-arrow.example.component.html",
     styleUrls: ["./overlay-arrow.example.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    imports: [CdkDrag, NuiButtonModule, NuiOverlayModule, NgIf, NuiOverlayAdditionsModule, NuiSelectV2Module, FormsModule, ReactiveFormsModule, NgFor]
 })
 export class OverlayArrowExampleComponent implements AfterViewInit, OnDestroy {
     private readonly destroy$ = new Subject<void>();

@@ -19,12 +19,14 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NgFor } from "@angular/common";
 
 @Component({
     selector: "nui-combobox-v2-inline-example",
     templateUrl: "combobox-v2-inline.example.component.html",
     host: { class: "combobox-container" },
-    standalone: false
+    imports: [NuiSelectV2Module, NgFor]
 })
 export class ComboboxV2InlineExampleComponent {
     public items = Array.from({ length: 100 }).map(

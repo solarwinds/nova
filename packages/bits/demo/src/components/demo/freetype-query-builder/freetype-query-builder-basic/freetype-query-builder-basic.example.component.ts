@@ -27,11 +27,12 @@ import { ExampleHelp } from "./example-help";
 import { ExampleTokenizer } from "./example-tokenizer";
 import { ExampleAppToken, ExampleAppTokenType } from "./models";
 import { ExampleAppRenderer } from "./renderer";
+import { NuiFreetypeQueryModule } from "../../../../../../src/lib/freetype-query-builder/freetype-query-builder.module";
 
 @Component({
     selector: "nui-freetype-query-builder-basic-example",
     templateUrl: "freetype-query-builder-basic.example.component.html",
-    standalone: false
+    imports: [NuiFreetypeQueryModule]
 })
 export class FreetypeQueryBuilderBasicExampleComponent {
     readonly: boolean = false;

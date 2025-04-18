@@ -19,11 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiIconModule } from "../../../../../../../src/lib/icon/icon.module";
 
 @Component({
     selector: "nui-tag-with-icon-example",
     templateUrl: "./tag-with-icon.example.component.html",
     styleUrls: ["./tag-with-icon.example.component.less"],
-    standalone: false
+    imports: [NuiIconModule]
 })
 export class TagWithIconExampleComponent {}

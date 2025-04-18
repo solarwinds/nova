@@ -26,11 +26,12 @@ import {
     ToastPositionClass,
     ToastService,
 } from "@nova-ui/bits";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-toast-config-example",
     templateUrl: "./toast-config.example.component.html",
-    standalone: false
+    imports: [NuiButtonModule]
 })
 export class ToastConfigExampleComponent implements OnInit {
     public selectedPosition: string;

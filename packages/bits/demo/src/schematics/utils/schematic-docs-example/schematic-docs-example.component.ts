@@ -30,13 +30,19 @@ import {
 import _set from "lodash/set";
 
 import {CodeSourceFiles, DEMO_PATH_TOKEN} from "@nova-ui/bits";
+import { NgFor, NgIf, KeyValuePipe } from "@angular/common";
+import { NuiExpanderModule } from "../../../../../src/lib/expander/expander.module";
+import { RecursiveObjectViewComponent } from "../recursive-object-view.component";
+import { NuiDocsModule } from "../../../../../src/lib/docs/docs.module";
+import { NuiIconModule } from "../../../../../src/lib/icon/icon.module";
+import { NuiButtonModule } from "../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-schematic-docs-example",
     templateUrl: "schematic-docs-example.component.html",
     styleUrls: ["schematic-docs-example.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    imports: [NgFor, NuiExpanderModule, RecursiveObjectViewComponent, NgIf, NuiDocsModule, NuiIconModule, NuiButtonModule, KeyValuePipe]
 })
 export class SchematicDocsExampleComponent implements OnInit {
     @Input() exampleFolderName: string;

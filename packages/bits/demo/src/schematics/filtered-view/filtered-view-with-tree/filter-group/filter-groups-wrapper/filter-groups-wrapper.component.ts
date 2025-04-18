@@ -30,12 +30,15 @@ import _isEmpty from "lodash/isEmpty";
 import { DataSourceService, IFilteringParticipants } from "@nova-ui/bits";
 
 import { FilterGroupComponent } from "../filter-group.component";
+import { NgIf, I18nPluralPipe } from "@angular/common";
+import { NuiPopoverModule } from "../../../../../../../src/lib/popover/popover.module";
+import { NuiDividerModule } from "../../../../../../../src/lib/divider/divider.module";
 
 @Component({
     selector: "app-filter-groups-wrapper",
     templateUrl: "filter-groups-wrapper.component.html",
     styleUrls: ["filter-groups-wrapper.component.less"],
-    standalone: false
+    imports: [NgIf, NuiPopoverModule, NuiDividerModule, I18nPluralPipe]
 })
 export class FilterGroupsWrapperComponent implements AfterViewInit {
     @ContentChildren(FilterGroupComponent)

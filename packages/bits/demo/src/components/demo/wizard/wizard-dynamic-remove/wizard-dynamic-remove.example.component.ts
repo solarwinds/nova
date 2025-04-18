@@ -27,11 +27,15 @@ import {
     WizardComponent,
     WizardStepComponent,
 } from "@nova-ui/bits";
+import { NuiWizardModule } from "../../../../../../src/lib/wizard/wizard.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NgStyle } from "@angular/common";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
 
 @Component({
     selector: "nui-wizard-dynamic-remove-example",
     templateUrl: "./wizard-dynamic-remove.example.component.html",
-    standalone: false
+    imports: [NuiWizardModule, NuiButtonModule, NgStyle, NuiTextboxModule]
 })
 export class WizardDynamicRemoveExampleComponent implements OnDestroy {
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;

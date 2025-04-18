@@ -107,8 +107,6 @@ const routes = [
         RouterModule.forChild(routes),
         NuiBusyModule,
         NuiSpinnerModule,
-    ],
-    declarations: [
         WizardAdditionalButtonExampleComponent,
         WizardBusyExampleComponent,
         WizardConfirmationDialogExampleComponent,

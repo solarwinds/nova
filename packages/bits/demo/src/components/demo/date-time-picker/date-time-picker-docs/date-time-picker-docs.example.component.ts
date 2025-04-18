@@ -19,10 +19,19 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { DateTimePickerBasicExampleComponent } from "../date-time-picker-basic/date-time-picker-basic.example.component";
+import { DateTimePickerEmptyStateComponent } from "../date-time-picker-empty-state/date-time-picker-empty-state.component";
+import { DateTimePickerReactiveFormExampleComponent } from "../date-time-picker-reactive-form/date-time-picker-reactive-form.example.component";
+import { DateTimePickerRangeValuesExampleComponent } from "../date-time-picker-range-values/date-time-picker-range-values.example.component";
+import { DateTimePickerDisabledExampleComponent } from "../date-time-picker-disabled/date-time-picker-disabled.example.component";
+import { DateTimePickerInlineExampleComponent } from "../date-time-picker-inline/date-time-picker-inline.example.component";
+import { DateTimePickerTimezonesExampleComponent } from "../date-time-picker-timezones/date-time-picker-timezones.example.component";
+import { DateTimePickerDialogExampleComponent } from "../date-time-picker-dialog/date-time-picker-dialog.example.component";
 
 @Component({
     selector: "nui-date-time-picker-docs-example",
     templateUrl: "./date-time-picker-docs.example.component.html",
-    standalone: false
+    imports: [NuiDocsModule, DateTimePickerBasicExampleComponent, DateTimePickerEmptyStateComponent, DateTimePickerReactiveFormExampleComponent, DateTimePickerRangeValuesExampleComponent, DateTimePickerDisabledExampleComponent, DateTimePickerInlineExampleComponent, DateTimePickerTimezonesExampleComponent, DateTimePickerDialogExampleComponent]
 })
 export class DateTimePickerDocsComponent {}

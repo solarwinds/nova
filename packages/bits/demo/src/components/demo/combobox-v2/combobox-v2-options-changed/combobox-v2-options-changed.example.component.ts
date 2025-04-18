@@ -19,13 +19,18 @@
 //  THE SOFTWARE.
 
 import { Component, OnInit } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NgFor } from "@angular/common";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiDividerModule } from "../../../../../../src/lib/divider/divider.module";
+import { NuiChipsModule } from "../../../../../../src/lib/chips/chips.module";
 
 @Component({
     selector: "nui-combobox-v2-options-changed-example",
     templateUrl: "combobox-v2-options-changed.example.component.html",
     host: { class: "combobox-container" },
-    standalone: false
+    imports: [NuiSelectV2Module, FormsModule, ReactiveFormsModule, NgFor, NuiButtonModule, NuiDividerModule, NuiChipsModule]
 })
 export class ComboboxV2OpitionsChangedExampleComponent implements OnInit {
     public items: string[] = [];

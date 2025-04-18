@@ -19,10 +19,19 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiDocsModule } from "../../../../../../src/lib/docs/docs.module";
+import { ExpanderBasicExampleComponent } from "../expander-basic/expander-basic.example.component";
+import { ExpanderHeaderTextExampleComponent } from "../expander-header-text/expander-header-text.example.component";
+import { ExpanderTextAndIconExampleComponent } from "../expander-text-and-icon/expander-text-and-icon.example.component";
+import { NuiMessageModule } from "../../../../../../src/lib/message/message.module";
+import { ExpanderCustomHeaderExampleComponent } from "../expander-custom-header/expander-custom-header.example.component";
+import { ExpanderInitiallyExpandedExampleComponent } from "../expander-initially-expanded/expander-initially-expanded.example.component";
+import { ExpanderOpenChangeExampleComponent } from "../expander-open-change/expander-open-change.example.component";
+import { ExpanderWithoutBorderExampleComponent } from "../expander-without-border/expander-without-border.example.component";
 
 @Component({
     selector: "nui-expander-docs-example",
     templateUrl: "expander-docs.example.component.html",
-    standalone: false
+    imports: [NuiDocsModule, ExpanderBasicExampleComponent, ExpanderHeaderTextExampleComponent, ExpanderTextAndIconExampleComponent, NuiMessageModule, ExpanderCustomHeaderExampleComponent, ExpanderInitiallyExpandedExampleComponent, ExpanderOpenChangeExampleComponent, ExpanderWithoutBorderExampleComponent]
 })
 export class ExpanderDocsExampleComponent {}

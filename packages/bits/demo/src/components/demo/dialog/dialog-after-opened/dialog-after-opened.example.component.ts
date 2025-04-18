@@ -25,11 +25,12 @@ import { takeUntil } from "rxjs/operators";
 import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
 
 import { DialogContentExampleComponent } from "../component-as-content/dialog-content.example.component";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-dialog-after-opened-example",
     templateUrl: "./dialog-after-opened.example.component.html",
-    standalone: false
+    imports: [NuiButtonModule]
 })
 export class DialogAfterOpenedExampleComponent implements OnInit, OnDestroy {
     constructor(

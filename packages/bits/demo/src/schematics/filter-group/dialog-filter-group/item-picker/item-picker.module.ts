@@ -26,8 +26,7 @@ import { NuiRepeatModule } from "@nova-ui/bits";
 import { ItemPickerCompositeComponent } from "./item-picker.component";
 
 @NgModule({
-    imports: [CommonModule, NuiRepeatModule],
-    declarations: [ItemPickerCompositeComponent],
+    imports: [CommonModule, NuiRepeatModule, ItemPickerCompositeComponent],
     exports: [ItemPickerCompositeComponent],
     providers: [],
 })

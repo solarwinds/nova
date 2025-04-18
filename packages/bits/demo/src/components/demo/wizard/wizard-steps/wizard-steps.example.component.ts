@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { Component, OnDestroy, ViewChild } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -28,11 +28,17 @@ import {
     WizardComponent,
     WizardStepComponent,
 } from "@nova-ui/bits";
+import { NuiWizardModule } from "../../../../../../src/lib/wizard/wizard.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
+import { NuiFormFieldModule } from "../../../../../../src/lib/form-field/form-field.module";
+import { NuiTextboxModule } from "../../../../../../src/lib/textbox/textbox.module";
+import { NgIf } from "@angular/common";
+import { NuiValidationMessageModule } from "../../../../../../src/lib/validation-message/validation-message.module";
 
 @Component({
     selector: "nui-wizard-steps-example",
     templateUrl: "./wizard-steps.example.component.html",
-    standalone: false
+    imports: [NuiWizardModule, NuiButtonModule, FormsModule, ReactiveFormsModule, NuiFormFieldModule, NuiTextboxModule, NgIf, NuiValidationMessageModule]
 })
 export class WizardStepsExampleComponent implements OnDestroy {
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;

@@ -19,11 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiSelectModule } from "../../../../../../src/lib/select/select.module";
 
 @Component({
     selector: "nui-combobox-with-remove-value-example",
     templateUrl: "./combobox-with-remove-value.example.component.html",
-    standalone: false
+    imports: [NuiSelectModule]
 })
 export class ComboboxWithRemoveValueExampleComponent {
     public dataset = {

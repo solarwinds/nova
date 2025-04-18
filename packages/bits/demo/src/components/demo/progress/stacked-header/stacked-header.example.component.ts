@@ -19,11 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component, OnDestroy } from "@angular/core";
+import { NuiProgressModule } from "../../../../../../src/lib/progress/progress.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-stacked-header-example",
     templateUrl: "./stacked-header.example.component.html",
-    standalone: false
+    imports: [NuiProgressModule, NuiButtonModule]
 })
 export class StackedHeaderProgressExampleComponent implements OnDestroy {
     public show = false;

@@ -23,12 +23,14 @@ import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 
 import { SelectV2Component } from "@nova-ui/bits";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NgFor } from "@angular/common";
 
 @Component({
     selector: "nui-select-v2-getting-value-example",
     templateUrl: "select-v2-getting-value.example.component.html",
     host: { class: "select-container" },
-    standalone: false
+    imports: [NuiSelectV2Module, NgFor]
 })
 export class SelectV2GettingValueExampleComponent implements AfterViewInit {
     public items = Array.from({ length: 50 }).map(

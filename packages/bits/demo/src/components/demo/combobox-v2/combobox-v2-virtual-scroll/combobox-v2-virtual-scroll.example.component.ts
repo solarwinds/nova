@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
+import { CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf } from "@angular/cdk/scrolling";
 import {
     AfterViewInit,
     Component,
@@ -26,12 +26,14 @@ import {
     OnDestroy,
     ViewChild,
 } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Observable, of, Subject } from "rxjs";
 // eslint-disable-next-line import/no-deprecated
 import { delay, filter, takeUntil, tap } from "rxjs/operators";
 
 import { ComboboxV2Component } from "@nova-ui/bits";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { AsyncPipe } from "@angular/common";
 
 const defaultContainerHeight: number = 300;
 
@@ -39,7 +41,7 @@ const defaultContainerHeight: number = 300;
     selector: "nui-combobox-v2-virtual-scroll-example",
     templateUrl: "combobox-v2-virtual-scroll.example.component.html",
     host: { class: "combobox-container" },
-    standalone: false
+    imports: [NuiSelectV2Module, FormsModule, ReactiveFormsModule, CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf, AsyncPipe]
 })
 export class ComboboxV2VirtualScrollExampleComponent
     implements OnDestroy, AfterViewInit

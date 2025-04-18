@@ -20,6 +20,9 @@
 
 import { OverlayConfig } from "@angular/cdk/overlay";
 import { Component } from "@angular/core";
+import { NuiSelectV2Module } from "../../../../../../src/lib/select-v2/select-v2.module";
+import { NgFor, NgIf } from "@angular/common";
+import { NuiIconModule } from "../../../../../../src/lib/icon/icon.module";
 
 const CHART_PALETTE_CS1: string[] = [
     "var(--nui-color-bg-secondary)",
@@ -44,7 +47,7 @@ const BOX_WIDTH_PX: number = 30;
     selector: "nui-select-v2-color-picker",
     templateUrl: "./select-v2-color-picker.component.html",
     styleUrls: ["./select-v2-color-picker.component.less"],
-    standalone: false
+    imports: [NuiSelectV2Module, NgFor, NgIf, NuiIconModule]
 })
 export class SelectV2ColorPickerComponent {
     // With this param one is able to configure how many columns wide should the color picker be

@@ -21,11 +21,13 @@
 import { Component } from "@angular/core";
 
 import { ToastService } from "@nova-ui/bits";
+import { NuiCheckboxModule } from "../../../../../../src/lib/checkbox/checkbox.module";
+import { NgFor } from "@angular/common";
 
 @Component({
     selector: "nui-checkbox-group-basic-example",
     templateUrl: "./checkbox-group-basic.example.component.html",
-    standalone: false
+    imports: [NuiCheckboxModule, NgFor]
 })
 export class CheckboxGroupBasicExampleComponent {
     public cabbage = $localize`Cabbage`;

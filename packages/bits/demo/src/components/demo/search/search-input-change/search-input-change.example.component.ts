@@ -19,11 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { NuiSearchModule } from "../../../../../../src/lib/search/search.module";
 
 @Component({
     selector: "nui-search-input-change-example",
     templateUrl: "search-input-change.example.component.html",
-    standalone: false
+    imports: [NuiSearchModule]
 })
 export class SearchInputChangeExampleComponent {
     public value: string = "example value";

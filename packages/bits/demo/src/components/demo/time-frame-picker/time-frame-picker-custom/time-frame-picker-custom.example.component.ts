@@ -26,12 +26,17 @@ import {
     ITimeFramePresetDictionary,
     TimeframeService,
 } from "@nova-ui/bits";
+import { NuiPopoverModule } from "../../../../../../src/lib/popover/popover.module";
+import { NuiTimeFramePickerModule } from "../../../../../../src/lib/time-frame-picker/time-frame-picker.module";
+import { NgIf } from "@angular/common";
+import { NuiDialogModule } from "../../../../../../src/lib/dialog/dialog.module";
+import { NuiButtonModule } from "../../../../../../src/lib/button/button.module";
 
 @Component({
     selector: "nui-time-frame-picker-custom",
     templateUrl: "./time-frame-picker-custom.example.component.html",
     providers: [TimeframeService],
-    standalone: false
+    imports: [NuiPopoverModule, NuiTimeFramePickerModule, NgIf, NuiDialogModule, NuiButtonModule]
 })
 export class TimeFramePickerCustomExampleComponent {
     public presets: ITimeFramePresetDictionary = {
