@@ -219,29 +219,6 @@
             "root": "./src/styles",
             "sourceRoot": "./src/styles"
         },
-        "i18n": {
-            "architect": {
-                "build": {
-                    "builder": "@angular-devkit/build-angular:application",
-                    "defaultConfiguration": "",
-                    "options": {
-                        "allowedCommonJsDependencies": [
-                            "lodash"
-                        ],
-                        "extractLicenses": false,
-                        "index": "./src/index.html",
-                        "browser": "./src/public_api.ts",
-                        "namedChunks": true,
-                        "optimization": false,
-                        "outputPath": "./.tmp",
-                        "sourceMap": true,
-                        "tsConfig": "./src/tsconfig.i18n.json"
-                    }
-                }
-            },
-            "projectType": "library",
-            "root": "i18n"
-        },
         "lib": {
             "architect": {
                 "build": {
@@ -249,9 +226,6 @@
                     "configurations": {
                         "dev": {
                             "project": "./ng-package-dev.json"
-                        },
-                        "locl": {
-                            "tsConfig": "./tsconfig.lib.locl.json"
                         },
                         "production": {
                             "tsConfig": "./tsconfig.lib.prod.json"
