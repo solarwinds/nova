@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-chart-docs-formatters",
     templateUrl: "./chart-docs-formatters.component.html",
+    standalone: false
 })
 export class ChartDocsFormattersComponent {
     public customTicks = `scales.x.formatters.tick = (value: Number) => (Number(value).toFixed(2));

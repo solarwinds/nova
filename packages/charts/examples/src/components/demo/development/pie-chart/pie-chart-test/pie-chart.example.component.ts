@@ -47,6 +47,7 @@ import { DataGenerator } from "../../../../../data-generator";
 @Component({
     selector: "nui-pie-chart-example",
     templateUrl: "./pie-chart.example.component.html",
+    standalone: false
 })
 export class PieChartTestComponent implements OnInit {
     public compact = false;

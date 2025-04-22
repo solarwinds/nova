@@ -37,6 +37,7 @@ import {
     selector: "donut-gauge-prototype",
     templateUrl: "./donut-gauge-prototype.component.html",
     styleUrls: ["./donut-gauge-prototype.component.less"],
+    standalone: false
 })
 export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
     @Input() public size: number;

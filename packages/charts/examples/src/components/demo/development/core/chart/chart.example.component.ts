@@ -54,6 +54,7 @@ const statuses = ["down", "critical", "warning", "unknown", "up"];
     selector: "nui-chart-example",
     templateUrl: "./chart.example.component.html",
     styleUrls: ["./chart.example.component.less"],
+    standalone: false
 })
 export class ChartExampleComponent implements OnInit {
     public compact = true;

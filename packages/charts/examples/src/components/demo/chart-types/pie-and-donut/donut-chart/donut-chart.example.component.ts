@@ -33,6 +33,7 @@ import {
 @Component({
     selector: "nui-donut-chart-example",
     templateUrl: "./donut-chart.example.component.html",
+    standalone: false
 })
 export class DonutChartExampleComponent implements OnInit {
     public chartAssist: ChartAssist;

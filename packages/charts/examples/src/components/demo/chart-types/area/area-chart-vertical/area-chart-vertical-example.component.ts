@@ -36,6 +36,7 @@ import {
     selector: "area-chart-vertical-example",
     templateUrl: "./area-chart-vertical-example.component.html",
     styleUrls: ["./area-chart-vertical-example.component.less"],
+    standalone: false
 })
 export class AreaChartVerticalExampleComponent implements OnInit {
     public chart: Chart;

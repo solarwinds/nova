@@ -43,6 +43,7 @@ import { DataGenerator } from "../../../../../data-generator";
     selector: "nui-spark-prototype",
     templateUrl: "./spark-prototype.component.html",
     styleUrls: ["./spark-prototype.component.less"],
+    standalone: false
 })
 export class SparkPrototypeComponent implements OnInit {
     public chartAssist: SparkChartAssist;

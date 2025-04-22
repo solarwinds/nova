@@ -39,6 +39,7 @@ import {
 @Component({
     selector: "line-chart-interrupted-basic-example",
     templateUrl: "./line-chart-interrupted-basic-example.component.html",
+    standalone: false
 })
 export class LineChartInterruptedBasicExampleComponent implements OnInit {
     // XYGrid is used for rendering axes as well as other grid elements

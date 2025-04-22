@@ -44,6 +44,7 @@ import {
     selector: "nui-line-chart-with-tooltips-example",
     templateUrl: "./line-chart-with-tooltips.example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class LineChartWithTooltipsExampleComponent implements OnInit {
     public chart = new Chart(new XYGrid());

@@ -60,6 +60,7 @@ interface IMyChart {
 @Component({
     selector: "nui-chart-collection-test",
     templateUrl: "./chart-collection-test.component.html",
+    standalone: false
 })
 export class ChartCollectionTestComponent implements OnInit, AfterViewInit {
     @ViewChildren(ChartComponent) charts: QueryList<ChartComponent>;

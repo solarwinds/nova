@@ -27,6 +27,7 @@ import { ThemeSwitchService } from "@nova-ui/bits";
     templateUrl: "app.component.html",
     styleUrls: ["app.component.less"],
     encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class AppComponent {
     constructor(public themeSwitcherService: ThemeSwitchService) {

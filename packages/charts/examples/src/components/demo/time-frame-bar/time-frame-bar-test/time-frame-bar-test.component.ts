@@ -49,6 +49,7 @@ import { TimeFrameBarDataService } from "./time-frame-bar-data.service";
     selector: "nui-time-frame-bar-test",
     templateUrl: "./time-frame-bar-test.component.html",
     providers: [NoopDataSourceService, HistoryStorage],
+    standalone: false
 })
 export class TimeFrameBarTestComponent implements AfterContentInit, OnDestroy {
     public fromDate = moment("2018-05-01 15:00:00").subtract(2, "days");

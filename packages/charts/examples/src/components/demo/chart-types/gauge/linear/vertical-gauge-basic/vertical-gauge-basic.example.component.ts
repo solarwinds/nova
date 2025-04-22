@@ -33,6 +33,7 @@ import {
     selector: "vertical-gauge-basic-example",
     templateUrl: "./vertical-gauge-basic.example.component.html",
     styleUrls: ["./vertical-gauge-basic.example.component.less"],
+    standalone: false
 })
 export class VerticalGaugeBasicExampleComponent implements OnInit {
     public chartAssist: ChartAssist;

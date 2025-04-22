@@ -39,6 +39,7 @@ import {
 @Component({
     selector: "bar-chart-time-interval-dst-test",
     templateUrl: "./bar-chart-time-interval-dst-test.component.html",
+    standalone: false
 })
 export class BarChartTimeIntervalDstTestComponent implements OnInit {
     @Input() data: Partial<IDataSeries<IAccessors>>[];

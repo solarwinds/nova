@@ -55,6 +55,7 @@ const OPACITY_BACKGROUND_EMPHASIZED = 0.4;
     selector: "nui-status-legend-chart-example",
     templateUrl: "./status-legend-chart.example.component.html",
     styleUrls: ["./status-legend-chart.example.component.less"],
+    standalone: false
 })
 export class StatusLegendChartExampleComponent implements OnInit {
     public chartAssist: ChartAssist;

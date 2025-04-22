@@ -38,6 +38,7 @@ import {
 @Component({
     selector: "nui-line-chart-with-popover-example",
     templateUrl: "./line-chart-with-popover.example.component.html",
+    standalone: false
 })
 export class LineChartWithPopoverExampleComponent implements OnInit {
     public chart = new Chart(new XYGrid());

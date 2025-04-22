@@ -41,6 +41,7 @@ import {
 @Component({
     selector: "line-chart-with-2y-axes-example",
     templateUrl: "./line-chart-with-2y-axes-example.component.html",
+    standalone: false
 })
 export class LineChartWith2YAxesExampleComponent implements OnInit, OnDestroy {
     public chart: Chart;

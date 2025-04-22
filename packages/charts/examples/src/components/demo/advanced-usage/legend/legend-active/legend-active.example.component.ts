@@ -30,6 +30,7 @@ import {
 @Component({
     selector: "nui-legend-active-example",
     templateUrl: "./legend-active.example.component.html",
+    standalone: false
 })
 export class LegendActiveExampleComponent {
     public firstSeriesId = "1";

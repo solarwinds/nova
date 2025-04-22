@@ -30,6 +30,7 @@ import {
 @Component({
     selector: "nui-legend-horizontal-example",
     templateUrl: "./legend-horizontal.example.component.html",
+    standalone: false
 })
 export class LegendHorizontalExampleComponent {
     public firstSeriesId = "1";

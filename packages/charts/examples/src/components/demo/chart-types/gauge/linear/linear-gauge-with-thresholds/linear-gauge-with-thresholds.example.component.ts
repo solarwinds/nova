@@ -34,6 +34,7 @@ import {
     selector: "linear-gauge-with-thresholds-example",
     templateUrl: "./linear-gauge-with-thresholds.example.component.html",
     styleUrls: ["./linear-gauge-with-thresholds.example.component.less"],
+    standalone: false
 })
 export class LinearGaugeWithThresholdsExampleComponent implements OnInit {
     public horizontalChartAssist: ChartAssist;

@@ -45,6 +45,7 @@ enum Status {
 @Component({
     selector: "nui-donut-chart-interactive-example",
     templateUrl: "./donut-chart-interactive.example.component.html",
+    standalone: false
 })
 export class DonutChartInteractiveExampleComponent implements OnInit {
     public chartAssist: ChartAssist;

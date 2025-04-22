@@ -27,6 +27,7 @@ import { DateTimeUtil } from "./date-time-util";
 
 @Component({
     templateUrl: "./dst-time-interval-test-page.component.html",
+    standalone: false
 })
 export class DstTimeIntervalTestPageComponent {
     public insideDstData = getInsideDstData();

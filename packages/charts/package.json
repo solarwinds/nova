@@ -6,21 +6,22 @@
     }
   ],
   "devDependencies": {
-    "@types/d3": "5.7.2",
-    "@types/d3-selection-multi": "1.0.7",
-    "d3": "5.9.2",
-    "d3-color": "3.1.0",
-    "d3-selection-multi": "1.0.1",
-    "d3-time-format": "2.1.3"
+    "@types/d3": "^5.7.2",
+    "@types/d3-selection-multi": "^1.0.7",
+    "d3": "^5.9.2",
+    "d3-color": "^3.1.0",
+    "d3-selection": "^1.4.2",
+    "d3-selection-multi": "^1.0.1",
+    "d3-time-format": "^2.1.3"
   },
   "exports": {
     "./sdk/atoms": {
-      "default": "./sdk/atoms/index.js",
-      "types": "./sdk/atmos/index.d.ts"
+      "types": "./sdk/atmos/index.d.ts",
+      "default": "./sdk/atoms/index.js"
     },
     "./sdk/atoms/*": {
-      "default": "./sdk/atoms/*.js",
-      "types": "./sdk/atoms/*.d.ts"
+      "types": "./sdk/atoms/*.d.ts",
+      "default": "./sdk/atoms/*.js"
     },
     "./sdk/*": {
       "default": "./sdk/*"
@@ -35,8 +36,10 @@
   ],
   "license": "Apache-2.0",
   "name": "@nova-ui/charts",
+  "dependencies": {
+    "@nova-ui/bits": "^17.0.0"
+  },
   "peerDependencies": {
-    "@nova-ui/bits": "~17.0.0",
     "@types/d3": "^5.0.0",
     "@types/d3-selection-multi": "^1.0.0",
     "d3": "^5.9.2",
@@ -55,7 +58,6 @@
     "build-examples:prod": "run-s \"build-examples -c production\"",
     "build-examples:watch": "run-s \"build-examples -c dev\"",
     "build-lib": "ng build lib",
-    "build-lib:locl": "run-s \"build-lib -c locl\" i18n-locl-extract",
     "build-lib:prod": "run-s \"build-lib -c production\" dist-copy",
     "build-lib:watch": "run-s dist-copy \"build-lib -c dev\"",
     "compile-demo-paths": "node ./scripts/compile-demo-paths.js",

@@ -35,6 +35,7 @@ import {
 @Component({
     selector: "nui-bar-chart-with-tooltips-example",
     templateUrl: "./bar-chart-with-tooltips.example.component.html",
+    standalone: false
 })
 export class BarChartWithTooltipsExampleComponent implements OnInit {
     public grid = barGrid();

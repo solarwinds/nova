@@ -50,6 +50,7 @@ import { DataGenerator } from "../../../../../data-generator";
 @Component({
     selector: "nui-chart-markers-example",
     templateUrl: "./chart-markers.example.component.html",
+    standalone: false
 })
 export class ChartMarkersExampleComponent implements OnInit {
     public compact = true;

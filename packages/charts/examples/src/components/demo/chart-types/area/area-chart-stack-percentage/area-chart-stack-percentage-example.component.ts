@@ -38,6 +38,7 @@ import {
 @Component({
     selector: "area-chart-stack-percentage-example",
     templateUrl: "./area-chart-stack-percentage-example.component.html",
+    standalone: false
 })
 export class AreaChartStackPercentageExampleComponent implements OnInit {
     public chart: Chart;

@@ -51,6 +51,7 @@ enum Status {
 @Component({
     selector: "nui-thresholds-basic-example",
     templateUrl: "./thresholds-basic.example.component.html",
+    standalone: false
 })
 export class ThresholdsBasicExampleComponent implements OnInit {
     public chart = new Chart(new XYGrid());

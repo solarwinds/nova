@@ -36,6 +36,7 @@ import {
     selector: "linear-gauge-thickness-adjustment-example",
     templateUrl: "./linear-gauge-thickness-adjustment.example.component.html",
     styleUrls: ["./linear-gauge-thickness-adjustment.example.component.less"],
+    standalone: false
 })
 export class LinearGaugeThicknessAdjustmentExampleComponent implements OnInit {
     public gaugeConfig: IGaugeConfig;

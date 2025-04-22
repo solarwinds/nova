@@ -35,6 +35,7 @@ import {
     selector: "linear-gauge-vertical-prototype",
     templateUrl: "./linear-gauge-vertical-prototype.component.html",
     styleUrls: ["./linear-gauge-vertical-prototype.component.less"],
+    standalone: false
 })
 export class LinearGaugeVerticalPrototypeComponent
     implements OnChanges, OnInit

@@ -40,6 +40,7 @@ interface IExampleSeries {
 @Component({
     selector: "nui-donut-chart-with-content-example",
     templateUrl: "./donut-chart-with-content.example.component.html",
+    standalone: false
 })
 export class DonutChartWithContentExampleComponent implements OnInit {
     public chartAssist1: ChartAssist;

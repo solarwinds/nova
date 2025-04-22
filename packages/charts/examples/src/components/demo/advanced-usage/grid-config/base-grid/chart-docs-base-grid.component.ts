@@ -25,6 +25,7 @@ import { XYGridConfig } from "@nova-ui/charts";
 @Component({
     selector: "nui-chart-docs-base-grid",
     templateUrl: "./chart-docs-base-grid.component.html",
+    standalone: false
 })
 export class ChartDocsBaseGridComponent {
     public gridInstantiation = `const gridConfig = new XYGridConfig();

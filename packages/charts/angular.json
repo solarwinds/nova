@@ -162,30 +162,6 @@
             "root": "./src/styles",
             "sourceRoot": "./src/styles"
         },
-        "i18n": {
-            "architect": {
-                "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
-                    "defaultConfiguration": "",
-                    "options": {
-                        "allowedCommonJsDependencies": ["lodash"],
-                        "buildOptimizer": false,
-                        "extractLicenses": false,
-                        "index": "./src/index.html",
-                        "main": "./src/public-api.ts",
-                        "namedChunks": true,
-                        "optimization": false,
-                        "outputPath": "./.tmp-i18n",
-                        "sourceMap": true,
-                        "tsConfig": "tsconfig.lib.json",
-                        "vendorChunk": true
-                    }
-                }
-            },
-            "projectType": "library",
-            "root": "src",
-            "sourceRoot": "src"
-        },
         "lib": {
             "architect": {
                 "build": {
@@ -193,9 +169,6 @@
                     "configurations": {
                         "dev": {
                             "project": "ng-package-dev.json"
-                        },
-                        "locl": {
-                            "tsConfig": "./tsconfig.lib.locl.json"
                         },
                         "production": {
                             "project": "ng-package.json",

@@ -46,6 +46,7 @@ const createRandomData = () =>
 @Component({
     selector: "nui-line-chart-stacked-test",
     templateUrl: "./line-chart-stacked-test.component.html",
+    standalone: false
 })
 export class LineChartStackedTestComponent implements OnInit {
     public collectionId = "";
