@@ -77,7 +77,7 @@ export class DestroyableComponent implements OnDestroy {
 
 @Component({
     selector: "nui-dialog-content-cmpt",
-    template: "<button class='closeFromInside' (click)='close()'>Close</button>",
+    template: "<button type='button' class='closeFromInside' (click)='close()'>Close</button>",
     standalone: false
 })
 export class WithActiveDialogComponent {
@@ -97,19 +97,19 @@ export class WithActiveDialogComponent {
             ><nui-destroyable-cmpt></nui-destroyable-cmpt
         ></ng-template>
         <ng-template #contentWithClose let-close="close">
-            <button id="close" (click)="close('myResult')">Close me</button>
+            <button type="button" id="close" (click)="close('myResult')">Close me</button>
         </ng-template>
         <ng-template #contentWithDismiss let-dismiss="dismiss">
-            <button id="dismiss" (click)="dismiss('myReason')">
+            <button type="button" id="dismiss" (click)="dismiss('myReason')">
                 Dismiss me
             </button>
         </ng-template>
         <ng-template #contentWithIf>
             <ng-template [ngIf]="show">
-                <button id="if" (click)="show = false">Click me</button>
+                <button type="button" id="if" (click)="show = false">Click me</button>
             </ng-template>
         </ng-template>
-        <button id="open" (click)="open('from button')">Open</button>
+        <button type="button" id="open" (click)="open('from button')">Open</button>
         <div id="open-no-focus" (click)="open('from non focusable element')">
             Open
         </div>

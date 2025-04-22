@@ -41,6 +41,8 @@ module.exports = {
                  *******************************/
                 "@angular-eslint/no-empty-lifecycle-method": "off",
                 "@angular-eslint/no-host-metadata-property": "off",
+                // todo migrate all components to standalone
+                "@angular-eslint/prefer-standalone": "off",
                 /******************************
                  * Typescript-specific rules
                  *******************************/

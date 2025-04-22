@@ -64,8 +64,7 @@
                             "browser": ""
                         },
                         "polyfills": [
-                          "./demo/src/polyfills.ts",
-                          "@angular/localize/init"
+                          "./demo/src/polyfills.ts"
                         ],
                         "scripts": [],
                         "sourceMap": true,
