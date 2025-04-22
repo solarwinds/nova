@@ -3,9 +3,5 @@
     "allowedNonPeerDependencies": ["."],
     "lib": {
         "entryFile": "./src/public_api.ts"
-    },
-    "assets": [
-        "../../CHANGELOG.md",
-        { "input": "src/styles", "glob": "**/*.less", "output": "styles" }
-    ]
+    }
 }
