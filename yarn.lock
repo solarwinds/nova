@@ -252,14 +252,13 @@
   optionalDependencies:
     lmdb "3.2.6"
 
-"@angular/cdk@18.2.14":
-  version "18.2.14"
-  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-18.2.14.tgz#6114f37a77f2f182de482da2273c70f74a6cc52d"
-  integrity sha512-vDyOh1lwjfVk9OqoroZAP8pf3xxKUvyl+TVR8nJxL4c5fOfUFkD7l94HaanqKSRwJcI2xiztuu92IVoHn8T33Q==
+"@angular/cdk@19.2.10":
+  version "19.2.10"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-19.2.10.tgz#b7646fe8bb36bf4640ac3a02be5eb963e8ffcedb"
+  integrity sha512-lWBKGZtZ2JMB7r/2xLQIVtiMM2B70WJqSWT3sXyzTNzFBHtCQvH2kqdG7RuLr+2OZih4I/SgiBK2i8FzjwRIgA==
   dependencies:
-    tslib "^2.3.0"
-  optionalDependencies:
     parse5 "^7.1.2"
+    tslib "^2.3.0"
 
 "@angular/cli@19.2.8":
   version "19.2.8"
