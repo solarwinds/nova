@@ -95,7 +95,7 @@
     "symunlink": "run-s symunlink:*",
     "symunlink:bits": "yarn rimraf node_modules/@nova-ui/bits && yarn --check",
     "test": "ng test lib -c coverage",
-    "test:dev": "ng test",
+    "test:dev": "ng test lib -c dev",
     "visual": "npx start-server-and-test serve-examples:prod 4200 visual:base",
     "visual:base": "yarn run e2e:base --suite visual",
     "visual:ci": "yarn run e2e:ci --suite visual",

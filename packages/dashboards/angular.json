@@ -114,30 +114,6 @@
             "root": "spec",
             "sourceRoot": "spec"
         },
-        "i18n": {
-            "architect": {
-                "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
-                    "defaultConfiguration": "",
-                    "options": {
-                        "allowedCommonJsDependencies": ["lodash"],
-                        "buildOptimizer": false,
-                        "extractLicenses": false,
-                        "index": "./src/index.html",
-                        "main": "./src/public-api.ts",
-                        "namedChunks": true,
-                        "optimization": false,
-                        "outputPath": "./.tmp",
-                        "sourceMap": true,
-                        "tsConfig": "tsconfig.lib.json",
-                        "vendorChunk": true
-                    }
-                }
-            },
-            "projectType": "library",
-            "root": "src",
-            "sourceRoot": "src"
-        },
         "lib": {
             "architect": {
                 "build": {
@@ -176,7 +152,13 @@
                     "builder": "@angular-devkit/build-angular:karma",
                     "configurations": {
                         "coverage": {
-                            "codeCoverage": true
+                            "codeCoverage": true,
+                            "reporters": [
+                                "progress",
+                                "coverage",
+                                "kjhtml",
+                                "junit"
+                            ]
                         },
                         "dev": {
                             "reporters": ["spec"],
@@ -193,7 +175,7 @@
                         "stylePreprocessorOptions": {
                             "includePaths": ["src/**/*.less"]
                         },
-                        "tsConfig": "tsconfig.spec.json",
+                        "tsConfig": "./tsconfig.spec.json",
                         "watch": false
                     }
                 }

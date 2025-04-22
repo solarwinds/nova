@@ -271,24 +271,20 @@
                             ]
                         },
                         "dev": {
-                            "reporters": [
-                                "progress"
-                            ],
+                            "reporters": ["spec"],
                             "watch": true
                         }
                     },
                     "options": {
-                        "assets": [],
                         "codeCoverage": false,
                         "karmaConfig": "./karma.conf.js",
                         "main": "./src/test.ts",
                         "polyfills": "./src/polyfills.ts",
-                        "reporters": [
-                            "spec"
-                        ],
-                        "scripts": [],
+                        "preserveSymlinks": true,
                         "sourceMap": false,
-                        "styles": [],
+                        "stylePreprocessorOptions": {
+                            "includePaths": ["src/**/*.less"]
+                        },
                         "tsConfig": "./tsconfig.spec.json",
                         "watch": false
                     }

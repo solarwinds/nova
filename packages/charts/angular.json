@@ -197,7 +197,13 @@
                     "builder": "@angular-devkit/build-angular:karma",
                     "configurations": {
                         "coverage": {
-                            "codeCoverage": true
+                            "codeCoverage": true,
+                            "reporters": [
+                                "progress",
+                                "coverage",
+                                "kjhtml",
+                                "junit"
+                            ]
                         },
                         "dev": {
                             "reporters": ["spec"],
@@ -210,6 +216,7 @@
                         "main": "src/test.ts",
                         "polyfills": "src/polyfills.ts",
                         "preserveSymlinks": true,
+                        "sourceMap": false,
                         "stylePreprocessorOptions": {
                             "includePaths": ["node_modules"]
                         },
