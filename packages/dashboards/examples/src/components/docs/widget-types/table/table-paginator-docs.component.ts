@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-table-paginator-docs",
     templateUrl: "./table-paginator-docs.component.html",
+    standalone: false
 })
 export class TablePaginatorDocsComponent {
     public tableConfigurationText = `

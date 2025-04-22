@@ -57,6 +57,7 @@ import {
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
     host: { class: "proportional-widget", id: "proportional-widget" },
+    standalone: false
 })
 export class AcmeDashboardComponent implements OnInit {
     public dashboard: IDashboard = {

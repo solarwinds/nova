@@ -33,6 +33,7 @@ import { ConfiguratorHeadingService } from "../../services/configurator-heading.
     selector: "nui-configurator-heading",
     templateUrl: "./configurator-heading.component.html",
     styleUrls: ["./configurator-heading.component.less"],
+    standalone: false
 })
 export class ConfiguratorHeadingComponent implements OnChanges {
     @Input() public configuratorTitle: string;

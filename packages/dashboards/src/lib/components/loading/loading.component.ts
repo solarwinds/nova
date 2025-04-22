@@ -40,6 +40,7 @@ import { IHasChangeDetector } from "../../types";
             transition("false <=> true", animate(500)),
         ]),
     ],
+    standalone: false
 })
 export class LoadingComponent implements IHasChangeDetector {
     static lateLoadKey = "LoadingComponent";

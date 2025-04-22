@@ -30,6 +30,7 @@ import { FormatterConfiguratorComponent } from "../formatter-configurator.compon
 @Component({
     selector: "nui-link-configurator",
     templateUrl: "./link-configurator.component.html",
+    standalone: false
 })
 export class LinkConfiguratorComponent
     extends FormatterConfiguratorComponent

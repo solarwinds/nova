@@ -30,6 +30,7 @@ import { FormatterConfiguratorComponent } from "../formatter-configurator.compon
 @Component({
     selector: "nui-value-selector",
     templateUrl: "./value-selector.component.html",
+    standalone: false
 })
 export class ValueSelectorComponent extends FormatterConfiguratorComponent {
     static lateLoadKey = "ValueSelectorComponent";

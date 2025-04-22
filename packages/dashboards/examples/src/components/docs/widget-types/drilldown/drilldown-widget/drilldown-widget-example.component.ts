@@ -303,6 +303,7 @@ export class DrilldownDataSourceRealApi<T = any>
     selector: "drilldown-widget-example",
     templateUrl: "./drilldown-widget-example.component.html",
     styleUrls: ["./drilldown-widget-example.component.less"],
+    standalone: false
 })
 export class DrilldownWidgetExampleComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.

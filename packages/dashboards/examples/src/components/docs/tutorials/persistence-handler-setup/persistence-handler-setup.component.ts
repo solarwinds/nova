@@ -142,6 +142,7 @@ export class PersistenceHandler implements IDashboardPersistenceHandler {
     styleUrls: ["./persistence-handler-setup.component.less"],
     // Here we provide our persistence handler at the component level; this can also be done in the module.
     providers: [PersistenceHandler],
+    standalone: false
 })
 export class PersistenceHandlerSetupComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.

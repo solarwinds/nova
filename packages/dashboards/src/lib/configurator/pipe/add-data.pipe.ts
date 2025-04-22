@@ -22,7 +22,10 @@ import { Pipe, PipeTransform } from "@angular/core";
 import isArray from "lodash/isArray";
 import isNil from "lodash/isNil";
 
-@Pipe({ name: "nuiAddData" })
+@Pipe({
+    name: "nuiAddData",
+    standalone: false
+})
 export class AddDataPipe implements PipeTransform {
     transform(
         origin: object | Array<any> | undefined,

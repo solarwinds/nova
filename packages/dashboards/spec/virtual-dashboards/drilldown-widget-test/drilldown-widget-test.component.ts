@@ -202,6 +202,7 @@ export class DrilldownDataSource
     selector: "drilldown-widget-test",
     templateUrl: "./drilldown-widget-test.component.html",
     styleUrls: ["./drilldown-widget-test.component.less"],
+    standalone: false
 })
 export class DrilldownWidgetTestComponent implements OnInit {
     public dashboard: IDashboard | undefined;

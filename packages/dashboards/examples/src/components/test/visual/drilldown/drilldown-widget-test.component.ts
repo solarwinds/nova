@@ -197,6 +197,7 @@ export class DrilldownDataSource
     templateUrl: "./drilldown-widget-test.component.html",
     styleUrls: ["./drilldown-widget-test.component.less"],
     host: { class: "drilldown-widget", id: "drilldown-widget" },
+    standalone: false
 })
 export class DrilldownWidgetTestComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.

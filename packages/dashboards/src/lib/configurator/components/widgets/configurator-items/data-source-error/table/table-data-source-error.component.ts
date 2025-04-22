@@ -31,6 +31,7 @@ import { DataSourceErrorComponent } from "../data-source-error.component";
     selector: "nui-table-data-source-error",
     templateUrl: "./table-data-source-error.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class TableDataSourceErrorComponent
     extends DataSourceErrorComponent

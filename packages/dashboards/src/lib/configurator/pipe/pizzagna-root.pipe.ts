@@ -26,6 +26,7 @@ import { WidgetTypesService } from "../../services/widget-types.service";
 @Pipe({
     name: "nuiPizzagnaRoot",
     pure: true,
+    standalone: false
 })
 export class PizzagnaRootPipe implements PipeTransform {
     constructor(private widgetTypesService: WidgetTypesService) {}

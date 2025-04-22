@@ -39,6 +39,7 @@ import { IPizzagna } from "../../types";
     styleUrls: ["./widget.component.less"],
     providers: [WidgetConfigurationService],
     host: { class: "nui-widget" },
+    standalone: false
 })
 export class WidgetComponent implements OnChanges {
     @Input() widget: IWidget;

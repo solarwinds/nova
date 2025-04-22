@@ -185,6 +185,7 @@ export class BeerDataSource extends DataSourceService<IBrewInfo> {
     selector: "table-widget-example",
     templateUrl: "./table-widget-example.component.html",
     styleUrls: ["./table-widget-example.component.less"],
+    standalone: false
 })
 export class TableWidgetExampleComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.

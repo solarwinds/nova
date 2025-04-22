@@ -79,6 +79,7 @@ import { TimeseriesChartComponent } from "../timeseries-chart.component";
     selector: "nui-status-bar-chart",
     templateUrl: "./status-bar-chart.component.html",
     styleUrls: ["./status-bar-chart.component.less"],
+    standalone: false
 })
 export class StatusBarChartComponent
     extends TimeseriesChartComponent<ITimeseriesWidgetStatusData>

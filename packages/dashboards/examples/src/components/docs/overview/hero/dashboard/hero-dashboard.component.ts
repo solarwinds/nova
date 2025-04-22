@@ -61,6 +61,7 @@ import {
     styleUrls: ["./hero-dashboard.component.less"],
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
+    standalone: false
 })
 export class HeroDashboardComponent implements OnInit {
     public dashboard: IDashboard = {

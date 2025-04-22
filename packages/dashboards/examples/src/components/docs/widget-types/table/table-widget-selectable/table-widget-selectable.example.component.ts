@@ -50,6 +50,7 @@ import { AcmeTableMockDataSource } from "../../../../prototypes/data/table/acme-
     selector: "table-widget-selectable-example",
     templateUrl: "./table-widget-selectable.example.component.html",
     styleUrls: ["./table-widget-selectable.example.component.less"],
+    standalone: false
 })
 export class TableWidgetSelectableExampleComponent implements OnInit {
     public dashboard: IDashboard | undefined;

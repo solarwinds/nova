@@ -91,6 +91,7 @@ export class BeerReviewCountsByCityMockDataSource
     selector: "proportional-widget-example",
     templateUrl: "./proportional-widget-example.component.html",
     styleUrls: ["./proportional-widget-example.component.less"],
+    standalone: false
 })
 export class ProportionalWidgetExampleComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.

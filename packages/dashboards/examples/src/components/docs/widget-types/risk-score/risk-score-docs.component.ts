@@ -25,6 +25,7 @@ import { mapContentFile } from "../../../../demo-files-factory";
 @Component({
     selector: "nui-risk-score-docs",
     templateUrl: "./risk-score-docs.component.html",
+    standalone: false
 })
 export class RiskScoreDocsComponent {
     public riskScoreWidgetFileText = "";

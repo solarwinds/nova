@@ -67,6 +67,7 @@ import { IWidget } from "../widget/types";
             useClass: EventBus,
         },
     ],
+    standalone: false
 })
 export class DashboardComponent implements OnChanges, AfterViewInit {
     @Input() gridsterConfig: GridsterConfig;

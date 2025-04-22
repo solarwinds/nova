@@ -75,6 +75,7 @@ import { DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
     styleUrls: ["./table-columns-configuration-v2.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class TableColumnsConfigurationV2Component
     implements OnInit, IHasForm, OnChanges, OnDestroy

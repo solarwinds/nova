@@ -48,6 +48,7 @@ import { ConfiguratorHeadingService } from "../../../../services/configurator-he
     templateUrl: "table-filters-editor.component.html",
     styleUrls: ["table-filters-editor.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class TableFiltersEditorComponent
     implements OnInit, OnChanges, OnDestroy, IHasForm, IHasChangeDetector

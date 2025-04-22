@@ -66,6 +66,7 @@ import { DataSourceErrorComponent } from "../data-source-error/data-source-error
     templateUrl: "./data-source-configuration-v2.component.html",
     styleUrls: ["./data-source-configuration-v2.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class DataSourceConfigurationV2Component
     implements IHasChangeDetector, IHasForm, OnInit, OnChanges, AfterViewInit

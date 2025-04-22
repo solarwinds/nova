@@ -136,6 +136,7 @@ import {
     `,
     styleUrls: ["./custom-configurator-section.example.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 // Remember to declare this class in the parent module
 export class CustomKpiDescriptionConfigurationComponent
@@ -298,6 +299,7 @@ export class RatingsCountKpiDataSource
     selector: "custom-configurator-section-example",
     templateUrl: "./custom-configurator-section.example.component.html",
     styleUrls: ["./custom-configurator-section.example.component.less"],
+    standalone: false
 })
 export class CustomConfiguratorSectionExampleComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.

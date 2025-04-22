@@ -43,6 +43,7 @@ import { EmbeddedContentMode } from "../types";
     selector: "nui-embedded-content",
     template: `<div style="width: 100%; height: 100%" #anchor></div>`,
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class EmbeddedContentComponent
     implements IHasChangeDetector, OnInit, OnChanges

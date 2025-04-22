@@ -29,6 +29,7 @@ import { DonutChartFormatterConfiguratorComponent } from "../widget-formatter-co
 @Component({
     selector: "nui-donut-content-configurator",
     templateUrl: "donut-content-percentage-configuration.component.html",
+    standalone: false
 })
 export class DonutContentPercentageConfigurationComponent extends DonutChartFormatterConfiguratorComponent {
     static lateLoadKey = "DonutContentPercentageConfigurationComponent";

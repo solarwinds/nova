@@ -28,7 +28,10 @@ import { DEFAULT_UNIT_CONVERSION_THRESHOLD } from "../constants";
  * Pipe for transforming large values to their abbreviated counterparts.
  * Conversions are applied for values 10000 or greater
  */
-@Pipe({ name: "nuiDashboardUnitConversion" })
+@Pipe({
+    name: "nuiDashboardUnitConversion",
+    standalone: false
+})
 export class DashboardUnitConversionPipe implements PipeTransform {
     constructor(private unitConversionService: UnitConversionService) {}
 

@@ -50,6 +50,7 @@ import {
     styleUrls: ["./table-widget-test.component.less"],
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
+    standalone: false
 })
 export class AcmeDashboardComponent implements OnInit {
     public dashboard: IDashboard = {

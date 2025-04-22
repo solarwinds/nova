@@ -102,6 +102,7 @@ export class BookRatingDataSource
     selector: "kpi-widget-interactive-example",
     templateUrl: "./kpi-widget-interactive-example.component.html",
     styleUrls: ["./kpi-widget-interactive-example.component.less"],
+    standalone: false
 })
 export class KpiWidgetInteractiveExampleComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.

@@ -57,6 +57,7 @@ import { PizzagnaService } from "../../services/pizzagna.service";
             useClass: EventBus,
         },
     ],
+    standalone: false
 })
 export class PizzagnaComponent implements OnChanges {
     @Input() rootNode = DEFAULT_PIZZAGNA_ROOT;

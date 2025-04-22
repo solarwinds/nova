@@ -59,6 +59,7 @@ import { IKpiItemConfiguration } from "../types";
     selector: "nui-kpi-tiles-configuration-component",
     templateUrl: "./kpi-tiles-configuration.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class KpiTilesConfigurationComponent
     implements IHasChangeDetector, IHasForm, OnChanges
