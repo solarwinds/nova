@@ -40,21 +40,21 @@ import { LoggerService } from "../../services/log-service";
 @Component({
     selector: "nui-button-on-button",
     template: ` <button nui-button type="button">Click me!</button> `,
-    standalone: false
+    standalone: false,
 })
 class TestAppButtonComponent {}
 
 @Component({
     selector: "nui-button-on-button-no-type",
     template: ` <button nui-button>Click me!</button> `,
-    standalone: false
+    standalone: false,
 })
 class TestAppButtonNoTypeComponent {}
 
 @Component({
     selector: "nui-button-on-div-no-type",
     template: ` <div nui-button>Click me!</div> `,
-    standalone: false
+    standalone: false,
 })
 class TestAppButtonOnDivNoTypeComponent {}
 
@@ -67,7 +67,7 @@ class TestAppButtonOnDivNoTypeComponent {}
             </li>
         </ul>
     `,
-    standalone: false
+    standalone: false,
 })
 class TestAppButtonInRepeaterComponent implements OnInit {
     public buttonLabels: string[];

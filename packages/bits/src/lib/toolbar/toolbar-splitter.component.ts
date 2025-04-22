@@ -28,6 +28,6 @@ import { Component } from "@angular/core";
     selector: "nui-toolbar-splitter",
     template: "",
     host: { class: "nui-toolbar-splitter nui-flex-item-grow" },
-    standalone: false
+    standalone: false,
 })
 export class ToolbarSplitterComponent {}

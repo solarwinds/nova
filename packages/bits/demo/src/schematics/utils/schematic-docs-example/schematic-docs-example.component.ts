@@ -36,7 +36,7 @@ import {CodeSourceFiles, DEMO_PATH_TOKEN} from "@nova-ui/bits";
     templateUrl: "schematic-docs-example.component.html",
     styleUrls: ["schematic-docs-example.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    standalone: false,
 })
 export class SchematicDocsExampleComponent implements OnInit {
     @Input() exampleFolderName: string;

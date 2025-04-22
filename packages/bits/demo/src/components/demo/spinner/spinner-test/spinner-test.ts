@@ -24,7 +24,7 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
     selector: "nui-spinner-e2e",
     templateUrl: "./spinner-test.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class SpinnerTestComponent {
     public show1: boolean;

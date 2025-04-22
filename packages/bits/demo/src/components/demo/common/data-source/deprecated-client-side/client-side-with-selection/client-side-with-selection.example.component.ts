@@ -53,7 +53,7 @@ interface IExampleItem {
     providers: [LocalFilteringDataSource],
     templateUrl: "./client-side-with-selection.example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class DepreacatedDataSourceWithSelectionExampleComponent
     implements AfterViewInit, OnDestroy

@@ -32,7 +32,7 @@ import {
 @Component({
     selector: "nui-wizard-steps-example",
     templateUrl: "./wizard-steps.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class WizardStepsExampleComponent implements OnDestroy {
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;

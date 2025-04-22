@@ -23,6 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-panel-size-example",
     templateUrl: "./panel-size.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class PanelSizeExampleComponent {}

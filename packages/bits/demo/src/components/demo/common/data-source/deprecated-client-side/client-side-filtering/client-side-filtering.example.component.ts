@@ -112,7 +112,7 @@ const RANDOM_ARRAY = [
             useClass: LocalFilteringDataSource,
         },
     ],
-    standalone: false
+    standalone: false,
 })
 export class DepreacatedDataSourceClientSideFilteringExampleComponent
     implements AfterViewInit, OnDestroy

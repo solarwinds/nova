@@ -25,7 +25,7 @@ import { ISelectChangedEvent } from "@nova-ui/bits";
 @Component({
     selector: "nui-select-separators-example",
     templateUrl: "./select-separators.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class SelectSeparatorsExampleComponent {
     public dataset = {

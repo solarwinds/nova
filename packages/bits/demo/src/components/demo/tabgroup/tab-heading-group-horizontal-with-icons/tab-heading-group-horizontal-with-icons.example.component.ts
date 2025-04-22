@@ -26,7 +26,7 @@ import { ChangeDetectorRef, Component } from "@angular/core";
     styleUrls: [
         "./tab-heading-group-horizontal-with-icons.example.component.less",
     ],
-    standalone: false
+    standalone: false,
 })
 export class TabHeadingGroupHorizontalWithIconsExampleComponent {
     public currentTabId: string;

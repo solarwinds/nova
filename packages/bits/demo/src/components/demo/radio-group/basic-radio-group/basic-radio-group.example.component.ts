@@ -23,7 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-basic-radio-group-example",
     templateUrl: "./basic-radio-group.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class BasicRadioGroupExampleComponent {
     public fruits = [

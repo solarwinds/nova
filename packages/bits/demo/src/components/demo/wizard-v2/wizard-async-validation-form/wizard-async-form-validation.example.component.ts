@@ -34,7 +34,7 @@ const fakeAsyncValidator = (c: AbstractControl) => of(null).pipe(delay(4000));
 @Component({
     selector: "nui-wizard-async-form-validation-example",
     templateUrl: "./wizard-async-form-validation.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class WizardAsyncFormValidationExampleComponent {
     public busy: boolean;

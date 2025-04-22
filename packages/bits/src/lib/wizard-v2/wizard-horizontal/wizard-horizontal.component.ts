@@ -65,7 +65,7 @@ import { WizardDirective } from "../wizard.directive";
     ],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class WizardHorizontalComponent
     extends WizardDirective

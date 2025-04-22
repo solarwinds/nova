@@ -26,7 +26,7 @@ import { CheckboxChangeEvent } from "@nova-ui/bits";
 @Component({
     selector: "nui-radio-group-test",
     templateUrl: "./radio-group-test.component.html",
-    standalone: false
+    standalone: false,
 })
 export class RadioGroupTestComponent {
     public disabledForm;

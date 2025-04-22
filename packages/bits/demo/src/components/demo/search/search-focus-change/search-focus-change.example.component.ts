@@ -25,7 +25,7 @@ import { ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-search-focus-change-example",
     templateUrl: "./search-focus-change.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class SearchFocusChangeExampleComponent {
     public isFocused: boolean = false;

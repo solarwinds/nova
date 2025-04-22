@@ -42,7 +42,7 @@ import {
         "./wizard-with-confirmation-dialog-on-cancel.example.component.less",
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class WizardWithConfirmationDialogOnCancelExampleComponent {
     public confirmationDialog: NuiDialogRef;

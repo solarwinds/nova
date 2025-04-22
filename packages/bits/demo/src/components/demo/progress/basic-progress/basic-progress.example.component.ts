@@ -23,7 +23,7 @@ import { Component, OnDestroy } from "@angular/core";
 @Component({
     selector: "nui-basic-progress-example",
     templateUrl: "./basic-progress.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class BasicProgressExampleComponent implements OnDestroy {
     public show = false;

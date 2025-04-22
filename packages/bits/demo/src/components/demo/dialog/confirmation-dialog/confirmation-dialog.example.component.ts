@@ -25,7 +25,7 @@ import { DialogService, ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-confirmation-dialog-example",
     templateUrl: "./confirmation-dialog.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ConfirmationDialogExampleComponent {
     constructor(

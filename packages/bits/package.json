@@ -92,7 +92,7 @@
     "e2e:gui": "yarn run e2e:base -c gui",
     "e2e:serve": "yarn run e2e:base -c serve",
     "e2e:watch": "npx watch \"yarn run e2e:base\" src demo spec --watch=1",
-    "lint": "bash ../../scripts/stub.sh lint stylitick migrate legacy conf",
+    "lint": "ng lint",
     "lint:fix": "ng lint --fix",
     "percy": "percy exec -- yarn run visual",
     "percy:ci": "yarn run visual:ci && percy upload -v _snapshots",

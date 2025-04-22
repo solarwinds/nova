@@ -59,7 +59,7 @@ import { IFilterable, IServer, ServerStatus } from "./types";
         },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class FilteredViewListWithPaginationComponent
     implements AfterViewInit, OnDestroy

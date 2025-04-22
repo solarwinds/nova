@@ -61,7 +61,7 @@ import { IFilterable, IServer, ServerStatus } from "./types";
         },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class FilteredViewTableWithVirtualScrollComponent
     implements AfterViewInit, OnDestroy

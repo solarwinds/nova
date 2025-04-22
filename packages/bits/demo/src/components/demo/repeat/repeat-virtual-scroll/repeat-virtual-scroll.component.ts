@@ -57,7 +57,7 @@ import { IServer } from "./types";
             useClass: RepeatVirtualScrollDataSource,
         },
     ],
-    standalone: false
+    standalone: false,
 })
 export class RepeatVirtualScrollComponent
     implements OnInit, AfterViewInit, OnDestroy

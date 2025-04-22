@@ -69,7 +69,7 @@ import { NuiFormFieldControl } from "../form-field/public-api";
         "[class.nui-checkbox--hovered]": "hovered",
         "[class.nui-checkbox--checked]": "checked",
     },
-    standalone: false
+    standalone: false,
 })
 
 /**

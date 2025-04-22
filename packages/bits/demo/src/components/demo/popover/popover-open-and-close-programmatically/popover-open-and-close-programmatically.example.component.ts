@@ -24,7 +24,7 @@ import { Subject } from "rxjs";
 @Component({
     selector: "nui-popover-open-and-close-programmatically-example",
     templateUrl: "./popover-open-and-close-programmatically.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class PopoverOpenAndCloseProgrammaticallyExampleComponent {
     public closePopoverSubject = new Subject<void>();

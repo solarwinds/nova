@@ -32,7 +32,7 @@ import {
     styleUrls: [
         "./unit-conversion-service-separate-unit-display.example.component.less",
     ],
-    standalone: false
+    standalone: false,
 })
 export class UnitConversionServiceSeparateUnitDisplayExampleComponent
     implements OnInit

@@ -31,7 +31,7 @@ import {
 @Component({
     selector: "nui-time-frame-picker-test",
     templateUrl: "./time-frame-picker-test.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class TimeFramePickerTestExampleComponent {
     public presets: ITimeFramePresetDictionary;

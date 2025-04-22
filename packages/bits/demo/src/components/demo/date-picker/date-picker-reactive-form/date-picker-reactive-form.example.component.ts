@@ -25,7 +25,7 @@ import moment, { Moment } from "moment/moment";
 @Component({
     selector: "nui-date-picker-reactive-forms-example",
     templateUrl: "./date-picker-reactive-form.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class DatePickerReactiveFormExampleComponent {
     public dt: Moment = moment();

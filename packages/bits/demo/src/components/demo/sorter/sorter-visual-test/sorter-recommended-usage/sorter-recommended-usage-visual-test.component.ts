@@ -33,7 +33,7 @@ interface IFilm {
     selector: "nui-sorter-recommended-usage-visual-test",
     templateUrl: "./sorter-recommended-usage-visual-test.component.html",
     styleUrls: ["./sorter-recommended-usage-visual-test.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class SorterRecommendedUsageVisualTestComponent implements OnInit {
     public readonly columns: IMenuItem[] = [

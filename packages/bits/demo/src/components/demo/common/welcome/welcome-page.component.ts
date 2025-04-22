@@ -23,6 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-demo-welcome-page",
     templateUrl: "./welcome-page.component.html",
-    standalone: false
+    standalone: false,
 })
 export class WelcomePageComponent {}

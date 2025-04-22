@@ -31,7 +31,7 @@ describe("services >", () => {
         let sourceElement: HTMLElement;
 
         @Component({
-    standalone: false
+    standalone: false,
 })
         class DomUtilServiceTestComponent {}
 

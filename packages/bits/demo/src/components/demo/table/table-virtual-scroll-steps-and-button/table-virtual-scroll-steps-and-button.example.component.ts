@@ -43,7 +43,7 @@ import { RandomuserTableDataSource1 } from "../table-virtual-scroll-datasource-1
         "./table-virtual-scroll-steps-and-button.example.component.less",
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class TableVirtualScrollStepsAndButtonExampleComponent
     implements OnDestroy, OnInit

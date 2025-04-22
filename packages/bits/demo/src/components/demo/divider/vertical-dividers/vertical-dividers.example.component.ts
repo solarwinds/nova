@@ -23,6 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-vertical-dividers-example",
     templateUrl: "./vertical-dividers.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class VerticalDividersExampleComponent {}

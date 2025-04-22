@@ -51,7 +51,7 @@ import { WizardDirective } from "../wizard.directive";
     ],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class WizardVerticalComponent extends WizardDirective {
     static ngAcceptInputTypeEditable: BooleanInput = undefined;

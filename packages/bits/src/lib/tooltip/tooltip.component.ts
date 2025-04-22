@@ -74,7 +74,7 @@ const ANIMATION_DELAY = 200; // ms
             </div>
         </nui-overlay>
     `,
-    standalone: false
+    standalone: false,
 })
 export class TooltipComponent implements OnDestroy, OnInit {
     /** Message to display in the tooltip */

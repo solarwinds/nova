@@ -31,7 +31,7 @@ import {
 @Component({
     selector: "nui-wizard-dynamic-remove-example",
     templateUrl: "./wizard-dynamic-remove.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class WizardDynamicRemoveExampleComponent implements OnDestroy {
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;

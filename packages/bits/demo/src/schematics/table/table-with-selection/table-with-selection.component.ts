@@ -59,7 +59,7 @@ import { IServer } from "./types";
             useClass: TableWithSelectionDataSource,
         },
     ],
-    standalone: false
+    standalone: false,
 })
 export class TableWithSelectionComponent
     implements OnInit, OnDestroy, AfterViewInit

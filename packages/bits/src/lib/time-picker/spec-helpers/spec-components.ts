@@ -44,7 +44,7 @@ import { ToastService } from "../../toast/toast.service";
             </div>
         </form>
     `,
-    standalone: false
+    standalone: false,
 })
 export class TimePickerReactiveFormTestComponent implements OnInit {
     public time: Moment;

@@ -60,7 +60,7 @@ import { MenuGroupComponent } from "../menu-group/menu-group.component";
     ],
     encapsulation: ViewEncapsulation.None,
     host: { role: "menuitem" },
-    standalone: false
+    standalone: false,
 })
 export class MenuItemComponent extends MenuItemBaseComponent {
     @ViewChild("menuItemDefault") menuItem: ElementRef;

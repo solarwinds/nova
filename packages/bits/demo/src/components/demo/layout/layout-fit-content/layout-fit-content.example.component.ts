@@ -24,6 +24,6 @@ import { Component } from "@angular/core";
     selector: "nui-layout-fit-content",
     templateUrl: "./layout-fit-content.example.component.html",
     styleUrls: ["./layout-fit-content.example.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class LayoutFitContentComponent {}

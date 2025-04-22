@@ -31,7 +31,7 @@ import { Directive, ElementRef } from "@angular/core";
         class: "mat-footer-cell",
         role: "gridcell",
     },
-    standalone: false
+    standalone: false,
 })
 export class TableFooterCellDirective extends CdkFooterCell {
     constructor(columnDef: CdkColumnDef, elementRef: ElementRef) {

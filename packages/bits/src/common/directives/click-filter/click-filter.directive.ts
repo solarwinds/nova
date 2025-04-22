@@ -10,7 +10,7 @@ import { IEventFilter, isTargetNotAnAnchor, makePredicate } from "./public-api";
 
 @Directive({
     selector: "[nuiClickFilter]",
-    standalone: false
+    standalone: false,
 })
 export class ClickFilterDirective {
     private _cancelBubble: IEventFilter = makePredicate(true);

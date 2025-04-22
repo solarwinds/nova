@@ -27,7 +27,7 @@ import { HistoryStorage, ITimeframe } from "@nova-ui/bits";
     selector: "nui-convenience-time-frame-bar-zoom-example",
     templateUrl: "./time-frame-bar-zoom.example.component.html",
     providers: [HistoryStorage],
-    standalone: false
+    standalone: false,
 })
 export class TimeFrameBarZoomExampleComponent implements OnInit {
     public minDate: Moment;

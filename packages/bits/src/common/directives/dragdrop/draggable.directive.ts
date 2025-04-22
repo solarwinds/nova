@@ -74,7 +74,7 @@ import { UtilService } from "../../../services/util.service";
  */
 @Directive({
     selector: "[nuiDraggable]",
-    standalone: false
+    standalone: false,
 })
 export class DraggableDirective implements OnInit {
     private static draggableClass = "nui-drag__draggable";

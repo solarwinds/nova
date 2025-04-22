@@ -42,7 +42,7 @@ import { ISelectChangedEvent } from "../public-api";
             </div>
         </form>
     `,
-    standalone: false
+    standalone: false,
 })
 export class SelectReactiveFormTestComponent implements OnInit {
     public myForm: FormGroup;
@@ -93,7 +93,7 @@ export class SelectReactiveFormTestComponent implements OnInit {
             </div>
         </form>
     `,
-    standalone: false
+    standalone: false,
 })
 export class ComboboxReactiveFormTestComponent implements OnInit {
     public myForm: FormGroup;

@@ -25,7 +25,7 @@ import { IImagesPresetItem } from "@nova-ui/bits";
 @Component({
     selector: "nui-image-external-example",
     templateUrl: "./image-external.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ImageExternalExampleComponent {
     public bookCover = {

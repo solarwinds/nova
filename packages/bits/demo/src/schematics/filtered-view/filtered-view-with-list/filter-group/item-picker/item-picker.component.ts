@@ -55,7 +55,7 @@ export interface IItemPickerOption {
         },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class ItemPickerComponent implements OnInit, AfterViewInit {
     @Input() itemPickerOptions: IItemPickerOption[];

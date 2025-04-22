@@ -40,7 +40,7 @@ import { WizardDirective } from "./wizard.directive";
         <nui-wizard-step-v2 label="step2"></nui-wizard-step-v2>
         <nui-wizard-step-v2 label="step3"></nui-wizard-step-v2>
     </div>`,
-    standalone: false
+    standalone: false,
 })
 class TestWrapperComponent extends WizardDirective {}
 

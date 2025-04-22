@@ -34,7 +34,7 @@ import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "@nova-ui/bits";
     templateUrl: "./overlay-custom-container.example.component.html",
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class OverlayCustomContainerExampleComponent {
     public itemsSource: string[] = [

@@ -34,7 +34,7 @@ import { UnitConversionService } from "../services/unit-conversion.service";
  */
 @Pipe({
     name: "unitConversion",
-    standalone: false
+    standalone: false,
 })
 export class UnitConversionPipe implements PipeTransform {
     constructor(private unitConversionService: UnitConversionService) {}

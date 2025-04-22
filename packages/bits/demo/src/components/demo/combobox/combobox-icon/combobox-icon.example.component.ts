@@ -25,7 +25,7 @@ import { ISelectChangedEvent } from "@nova-ui/bits";
 @Component({
     selector: "nui-combobox-icon-example",
     templateUrl: "./combobox-icon.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ComboboxIconExampleComponent {
     public dataset = {

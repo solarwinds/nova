@@ -27,7 +27,7 @@ import { Subject } from "rxjs";
     templateUrl: "combobox-v2-multiselect.example.component.html",
     styleUrls: ["combobox-v2-multiselect.example.component.less"],
     host: { class: "combobox-container" },
-    standalone: false
+    standalone: false,
 })
 export class ComboboxV2MultiselectExampleComponent implements OnDestroy {
     public items = Array.from({ length: 100 }).map(

@@ -39,7 +39,7 @@ import { ColumnTypes } from "../types";
     providers: [
         { provide: CdkColumnDef, useExisting: TableColumnDefDirective },
     ],
-    standalone: false
+    standalone: false,
 })
 export class TableColumnDefDirective
     extends CdkColumnDef

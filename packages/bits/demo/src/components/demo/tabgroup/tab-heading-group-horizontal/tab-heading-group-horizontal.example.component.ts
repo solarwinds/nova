@@ -24,7 +24,7 @@ import { ChangeDetectorRef, Component } from "@angular/core";
     selector: "nui-tab-heading-group-horizontal-example",
     templateUrl: "./tab-heading-group-horizontal.example.component.html",
     styleUrls: ["./tab-heading-group-horizontal.example.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class TabHeadingGroupHorizontalExampleComponent {
     public currentTabId: string;

@@ -30,7 +30,7 @@ import {
 @Component({
     selector: "nui-toast-visual",
     templateUrl: "./toast-visual-test.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ToastVisualTestComponent implements OnInit {
     private errorMessage: string = `Something went wrong + in addition there is an extremely

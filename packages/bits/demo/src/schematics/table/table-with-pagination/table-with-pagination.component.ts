@@ -56,7 +56,7 @@ import { IServer } from "./types";
             useClass: TableWithPaginationDataSource,
         },
     ],
-    standalone: false
+    standalone: false,
 })
 export class TableWithPaginationComponent
     implements OnInit, OnDestroy, AfterViewInit

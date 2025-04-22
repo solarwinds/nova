@@ -37,7 +37,7 @@ import take from "lodash/take";
  */
 @Pipe({
     name: "limitTo",
-    standalone: false
+    standalone: false,
 })
 export class LimitToPipe implements PipeTransform {
     transform(collection: any[], limitTo: number): any[] {

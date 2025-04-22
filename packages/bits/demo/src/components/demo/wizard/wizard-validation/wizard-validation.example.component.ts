@@ -26,7 +26,7 @@ import { WizardComponent } from "@nova-ui/bits";
 @Component({
     selector: "nui-wizard-validation-example",
     templateUrl: "./wizard-validation.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class WizardValidationExampleComponent {
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;

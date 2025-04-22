@@ -25,7 +25,7 @@ import { ISelectChangedEvent } from "@nova-ui/bits";
 @Component({
     selector: "nui-combobox-display-value-example",
     templateUrl: "combobox-display-value.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ComboboxDisplayValueExampleComponent {
     public dataset = {

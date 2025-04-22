@@ -59,7 +59,7 @@ const INITIAL_ARRAY = [
     selector: "nui-client-side-delayed-data-source-example",
     providers: [ClientSideDataSource],
     templateUrl: "./client-side-delayed.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class DataSourceClientSideDelayedExampleComponent
     implements AfterViewInit, OnDestroy

@@ -25,7 +25,7 @@ import { ToastService, WizardHorizontalComponent } from "@nova-ui/bits";
 @Component({
     selector: "nui-wizard-tooltip-example",
     templateUrl: "./wizard-tooltip.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class WizardTooltipExampleComponent {
     @ViewChild("wizardComponent") wizard: WizardHorizontalComponent;

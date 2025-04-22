@@ -26,7 +26,7 @@ import { IToastService, ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-date-picker-value-change-example",
     templateUrl: "./date-picker-value-change.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class DatePickerValueChangeExampleComponent {
     public selectedDate: Date = new Date(moment().valueOf());

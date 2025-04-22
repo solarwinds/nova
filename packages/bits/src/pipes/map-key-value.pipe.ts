@@ -37,7 +37,7 @@ import { Pipe, PipeTransform } from "@angular/core";
  */
 @Pipe({
     name: "nuiMapKeyValue",
-    standalone: false
+    standalone: false,
 })
 export class MapKeyValuePipe implements PipeTransform {
     public transform<K, V>(input: ReadonlyMap<K, V>): Array<KeyValue<K, V>> {

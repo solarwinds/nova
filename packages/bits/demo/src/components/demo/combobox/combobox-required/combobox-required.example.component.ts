@@ -25,7 +25,7 @@ import { ISelectChangedEvent } from "@nova-ui/bits";
 @Component({
     selector: "nui-combobox-required-example",
     templateUrl: "./combobox-required.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ComboboxRequiredExampleComponent implements OnInit {
     public isRequired: boolean = true;

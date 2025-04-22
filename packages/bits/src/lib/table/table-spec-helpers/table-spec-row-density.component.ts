@@ -56,7 +56,7 @@ import { TableSpecHelpers } from "./table-spec-helpers";
             ></tr>
         </table>
     `,
-    standalone: false
+    standalone: false,
 })
 export class RowDensityTableComponent {
     public displayedColumns = ["position", "name", "asset", "location"];

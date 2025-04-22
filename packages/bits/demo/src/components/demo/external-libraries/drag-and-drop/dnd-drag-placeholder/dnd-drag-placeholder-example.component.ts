@@ -25,7 +25,7 @@ import { Component } from "@angular/core";
     selector: "dnd-drag-placeholder",
     templateUrl: "./dnd-drag-placeholder-example.component.html",
     styleUrls: ["./dnd-drag-placeholder-example.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class DndDragPlaceholderExampleComponent {
     public listItems: string[] = ["Adobe", "IBM", "Dell"];

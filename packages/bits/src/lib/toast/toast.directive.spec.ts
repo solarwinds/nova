@@ -30,7 +30,7 @@ import { INotificationService } from "../../services/public-api";
 
 @Component({
     template: `<div [nuiToast]="model"></div>`,
-    standalone: false
+    standalone: false,
 })
 class ToastTestingComponent {
     public model = {

@@ -26,7 +26,7 @@ import { ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-form-field-dynamic-disabling-example",
     templateUrl: "./form-field-dynamic-disabling.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class FormFieldDynamicDisablingExampleComponent {
     public dynamicForm;

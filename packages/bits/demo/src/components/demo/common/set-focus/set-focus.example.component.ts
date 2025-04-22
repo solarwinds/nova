@@ -23,7 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-set-focus-example",
     templateUrl: "./set-focus.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class SetFocusExampleComponent {
     public carrotFocused = false;

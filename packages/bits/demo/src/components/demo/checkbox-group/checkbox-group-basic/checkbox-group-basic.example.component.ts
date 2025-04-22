@@ -25,7 +25,7 @@ import { ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-checkbox-group-basic-example",
     templateUrl: "./checkbox-group-basic.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class CheckboxGroupBasicExampleComponent {
     public cabbage = $localize`Cabbage`;

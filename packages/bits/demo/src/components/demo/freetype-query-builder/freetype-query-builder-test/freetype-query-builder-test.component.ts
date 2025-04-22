@@ -37,7 +37,7 @@ import { ExampleAppRenderer } from "./renderer";
 @Component({
     selector: "nui-freetype-query-builder-visual-test",
     templateUrl: "freetype-query-builder-test.component.html",
-    standalone: false
+    standalone: false,
 })
 export class FreetypeQueryBuilderTestComponent {
     @Input() exampleId: string;

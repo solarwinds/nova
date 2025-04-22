@@ -30,7 +30,7 @@ import {
 @Component({
     selector: "nui-toast-config-example",
     templateUrl: "./toast-config.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ToastConfigExampleComponent implements OnInit {
     public selectedPosition: string;

@@ -29,7 +29,7 @@ interface IExampleItem {
     selector: "nui-select-v2-disabled-example",
     templateUrl: "./select-v2-disabled.example.component.html",
     host: { class: "select-container" },
-    standalone: false
+    standalone: false,
 })
 export class SelectV2DisabledExampleComponent {
     public items: IExampleItem[] = Array.from({ length: 100 }).map((_, i) => ({

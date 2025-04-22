@@ -23,7 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-panel-hide-example",
     templateUrl: "./panel-hide.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class PanelHideExampleComponent {
     public isHidden = false;

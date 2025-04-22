@@ -54,7 +54,7 @@ const defaultContainerHeight: number = 300;
     templateUrl: "combobox-v2-test.example.component.html",
     styleUrls: ["combobox-v2-test.example.component.less"],
     host: { class: "combobox-container" },
-    standalone: false
+    standalone: false,
 })
 export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
     public virtualItems = Array.from({ length: 100000 }).map(

@@ -26,7 +26,7 @@ import { nameof } from "../../../functions/nameof";
 
 @Pipe({
     name: "sliceRange", pure: false,
-    standalone: false
+    standalone: false,
 })
 export class SliceRangePipe implements PipeTransform {
     slicePipe: SlicePipe = new SlicePipe();

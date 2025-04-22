@@ -23,7 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-combobox-disabled-example",
     templateUrl: "./combobox-disabled.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ComboboxDisabledExampleComponent {
     public dataset = {

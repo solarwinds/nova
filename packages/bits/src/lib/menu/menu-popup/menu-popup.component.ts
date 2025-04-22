@@ -52,7 +52,7 @@ import { IMenuGroup, IMenuItem } from "../public-api";
     templateUrl: "./menu-popup.component.html",
     styleUrls: ["./menu-popup.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    standalone: false,
 })
 export class MenuPopupComponent {
     @Input() public itemsSource: IMenuGroup[];

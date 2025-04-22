@@ -23,7 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-combobox-justified-example",
     templateUrl: "./combobox-justified.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ComboboxJustifiedExampleComponent {
     public dataset = {

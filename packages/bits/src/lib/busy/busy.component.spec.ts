@@ -47,7 +47,7 @@ import { TooltipDirective } from "../tooltip/tooltip.directive";
             <input type="text" value="empty" />
         </div>
     `,
-    standalone: false
+    standalone: false,
 })
 class TestBusyWithTabNavigatableChildrensComponent {
     public busy: boolean;

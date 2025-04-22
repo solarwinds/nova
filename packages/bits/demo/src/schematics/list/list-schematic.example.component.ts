@@ -49,6 +49,6 @@ import { SchematicsDocsComponentType } from "../utils/schematic-docs-cli-option/
             useValue: SchematicsDocsComponentType.list,
         },
     ],
-    standalone: false
+    standalone: false,
 })
 export class ListSchematicExampleComponent {}

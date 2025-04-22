@@ -35,7 +35,7 @@ interface IRepeatColorItem extends IRepeatItem {
     selector: "nui-repeat-reorder-config-example",
     templateUrl: "./repeat-reorder-item-config-example.component.html",
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    standalone: false,
 })
 export class RepeatReorderItemConfigExampleComponent {
     public colors: IRepeatColorItem[] = [

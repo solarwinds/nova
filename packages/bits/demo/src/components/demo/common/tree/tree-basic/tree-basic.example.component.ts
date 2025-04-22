@@ -65,7 +65,7 @@ const TREE_DATA: FoodNode[] = [
     styleUrls: ["tree-basic.example.component.less"],
     host: { id: "nui-tree-basic-example" },
     animations: [expand],
-    standalone: false
+    standalone: false,
 })
 export class TreeBasicExampleComponent {
     treeControl = new NestedTreeControl<FoodNode>((node) => node.children);

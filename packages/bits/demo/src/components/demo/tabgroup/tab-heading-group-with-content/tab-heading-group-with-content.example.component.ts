@@ -24,7 +24,7 @@ import { ChangeDetectorRef, Component, Input } from "@angular/core";
     selector: "nui-tab-heading-group-with-content-example",
     templateUrl: "./tab-heading-group-with-content.example.component.html",
     styleUrls: ["./tab-heading-group-with-content.example.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class TabHeadingGroupWithContentExampleComponent {
     @Input() public icon: boolean = false;

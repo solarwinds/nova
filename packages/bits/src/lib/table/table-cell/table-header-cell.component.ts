@@ -74,7 +74,7 @@ import { NonResizableColumnTypes, TableAlignmentOptions } from "../types";
             [columnIndex]="currentCellIndex"
             (resizerMovement)="onColumnWidthChange($event)"
         ></span>`,
-    standalone: false
+    standalone: false,
 })
 export class TableHeaderCellComponent
     extends CdkHeaderCell

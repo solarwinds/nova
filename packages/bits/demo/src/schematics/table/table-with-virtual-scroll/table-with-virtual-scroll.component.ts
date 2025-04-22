@@ -65,7 +65,7 @@ import { IServer } from "./types";
             useClass: TableWithVirtualScrollDataSource,
         },
     ],
-    standalone: false
+    standalone: false,
 })
 export class TableWithVirtualScrollComponent
     implements OnInit, OnDestroy, AfterViewInit

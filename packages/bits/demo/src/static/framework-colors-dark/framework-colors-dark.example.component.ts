@@ -29,7 +29,7 @@ import { default as colors } from "../../../../src/styles/data/framework-colors-
     selector: "framework-colors-dark.example",
     styleUrls: ["./framework-colors-dark.example.component.less"],
     templateUrl: "./framework-colors-dark.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class FrameworkColorsDarkExampleComponent {
     public colors = colors;

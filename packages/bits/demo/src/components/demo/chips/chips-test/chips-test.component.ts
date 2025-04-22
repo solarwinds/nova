@@ -66,7 +66,7 @@ const groupedItems: IChipsGroup[] = [
 @Component({
     selector: "chips-test-component",
     templateUrl: "./chips-test.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ChipsTestComponent {
     public horizontalFlatItemsSource: IChipsItemsSource = {

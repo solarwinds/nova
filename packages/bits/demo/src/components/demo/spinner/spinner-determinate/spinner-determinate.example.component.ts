@@ -23,7 +23,7 @@ import { Component, OnDestroy } from "@angular/core";
 @Component({
     selector: "nui-spinner-determinate-example",
     templateUrl: "./spinner-determinate.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class SpinnerDeterminateExampleComponent implements OnDestroy {
     public show = false;

@@ -34,7 +34,7 @@ import {
     templateUrl: "./tab-heading.component.html",
     styleUrls: ["./tab-heading.component.less"],
     host: { role: "tab" },
-    standalone: false
+    standalone: false,
 })
 export class TabHeadingComponent {
     /** This adds 'disabled' class to the host component depending on the 'disabled' @Input to properly style disabled tabs */

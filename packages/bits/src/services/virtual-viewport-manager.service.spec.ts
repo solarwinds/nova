@@ -66,7 +66,7 @@ import { NuiRepeatModule } from "../lib/repeat/repeat.module";
         `,
     ],
     providers: [VirtualViewportManager],
-    standalone: false
+    standalone: false,
 })
 class ViewportInRepeatComponent implements AfterViewInit, OnDestroy {
     @ViewChild(RepeatComponent) public repeat: RepeatComponent;

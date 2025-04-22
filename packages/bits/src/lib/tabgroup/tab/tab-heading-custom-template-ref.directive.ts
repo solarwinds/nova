@@ -22,7 +22,7 @@ import { Directive, Input, TemplateRef, ViewContainerRef } from "@angular/core";
 /** @ignore */
 @Directive({
     selector: "[nuiTabHeadingCustomTemplateRef]",
-    standalone: false
+    standalone: false,
 })
 export class TabHeadingCustomTemplateRefDirective {
     viewRef: ViewContainerRef;

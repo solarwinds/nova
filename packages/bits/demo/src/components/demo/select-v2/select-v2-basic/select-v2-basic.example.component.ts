@@ -25,7 +25,7 @@ import { FormControl } from "@angular/forms";
     selector: "nui-select-v2-basic-example",
     templateUrl: "select-v2-basic.example.component.html",
     host: { class: "select-container" },
-    standalone: false
+    standalone: false,
 })
 export class SelectV2BasicExampleComponent {
     public items = Array.from({ length: 50 }).map(

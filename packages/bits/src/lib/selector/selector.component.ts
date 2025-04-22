@@ -74,7 +74,7 @@ import { OverlayComponent } from "../overlay/overlay-component/overlay.component
     templateUrl: "./selector.component.html",
     styleUrls: ["./selector.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    standalone: false,
 })
 export class SelectorComponent
     implements OnChanges, AfterViewInit, OnDestroy, IFilterPub

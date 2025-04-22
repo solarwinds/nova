@@ -30,7 +30,7 @@ import moment, { Moment } from "moment/moment";
 @Component({
     selector: "time-picker-visual-test",
     templateUrl: "./time-picker-visual-test.component.html",
-    standalone: false
+    standalone: false,
 })
 export class TimePickerVisualTestComponent implements OnInit {
     public time: Moment;

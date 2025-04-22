@@ -23,6 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-image-docs-example",
     templateUrl: "./image-docs.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ImageDocsExampleComponent {}

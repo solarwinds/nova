@@ -24,6 +24,6 @@ import { Component } from "@angular/core";
     selector: "nui-layout-resize-example",
     templateUrl: "./layout-resize.example.component.html",
     styleUrls: ["./layout-resize.example.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class LayoutResizeExampleComponent {}

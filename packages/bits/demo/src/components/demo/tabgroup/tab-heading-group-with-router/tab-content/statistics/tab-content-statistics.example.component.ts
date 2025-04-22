@@ -23,7 +23,7 @@ import { Component, Input } from "@angular/core";
 @Component({
     selector: "nui-content-statistics-example",
     templateUrl: "./tab-content-statistics.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class TabContentStatisticsExampleComponent {
     public tabTitle: string = "Statistics Options";

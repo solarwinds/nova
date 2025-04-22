@@ -25,7 +25,7 @@ import { IImagesPresetItem, imagesPresetToken } from "@nova-ui/bits";
 @Component({
     selector: "nui-image-visual-test",
     templateUrl: "./image-visual-test.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ImageVisualTestComponent {
     constructor(

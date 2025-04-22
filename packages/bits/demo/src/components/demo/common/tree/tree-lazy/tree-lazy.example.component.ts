@@ -75,7 +75,7 @@ class HttpMock {
     styleUrls: ["./tree-lazy.component.example.less"],
     animations: [expand],
     providers: [HttpMock],
-    standalone: false
+    standalone: false,
 })
 export class TreeLazyExampleComponent {
     treeControl = new NestedTreeControl<FoodNode>((node) => node.children);

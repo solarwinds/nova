@@ -23,6 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-button-display-style-action-example",
     templateUrl: "./button-display-style-action.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ButtonDisplayStyleActionExampleComponent {}

@@ -86,7 +86,7 @@ import { ISelectGroup } from "../public-api";
     ],
     styleUrls: ["./combobox.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    standalone: false,
 })
 export class ComboboxComponent
     extends BaseSelect

@@ -30,7 +30,7 @@ import {
 @Component({
     selector: "nui-toast-position-example",
     templateUrl: "./toast-position.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ToastPositionExampleComponent implements OnInit {
     public toastPositions = [

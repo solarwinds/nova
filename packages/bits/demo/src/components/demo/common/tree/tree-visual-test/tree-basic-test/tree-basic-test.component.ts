@@ -32,7 +32,7 @@ import { FoodNode, TREE_DATA } from "../data";
     styleUrls: ["./tree-basic-test.component.less"],
     host: { id: "nui-tree-basic-example" },
     animations: [expand],
-    standalone: false
+    standalone: false,
 })
 export class TreeBasicTestComponent {
     treeControl = new NestedTreeControl<FoodNode>((node) => node.children);

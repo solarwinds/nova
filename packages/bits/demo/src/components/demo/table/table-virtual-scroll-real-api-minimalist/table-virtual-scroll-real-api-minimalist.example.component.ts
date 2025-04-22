@@ -51,7 +51,7 @@ import { RandomuserTableDataSource } from "../table-virtual-scroll-datasource";
         "./table-virtual-scroll-real-api-minimalist.example.component.less",
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class TableVirtualScrollRealApiMinimalistExampleComponent
     implements AfterViewInit, OnDestroy, OnInit

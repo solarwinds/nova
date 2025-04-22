@@ -30,7 +30,7 @@ import { ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-checkbox-in-form-example",
     templateUrl: "./checkbox-in-form.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class CheckboxInFormExampleComponent implements OnInit {
     public myForm: FormGroup<{ checkbox: FormControl<boolean | null> }>;

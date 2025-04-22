@@ -26,6 +26,6 @@ import { Component } from "@angular/core";
     host: {
         class: "nui-edge-definer",
     },
-    standalone: false
+    standalone: false,
 })
 export class ToolbarDocsExampleComponent {}

@@ -30,7 +30,7 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
     templateUrl: "./dnd-dropzone.example.component.html",
     styleUrls: ["./dnd-dropzone.example.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class DndDropzoneExampleComponent {
     public sourceItems: string[] = ["Adobe", "IBM"];

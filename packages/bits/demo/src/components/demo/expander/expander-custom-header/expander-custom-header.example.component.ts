@@ -25,7 +25,7 @@ import { IMenuGroup } from "@nova-ui/bits";
 @Component({
     selector: "nui-expander-custom-header-example",
     templateUrl: "expander-custom-header.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ExpanderCustomHeaderExampleComponent {
     public itemsSource: IMenuGroup[] = [

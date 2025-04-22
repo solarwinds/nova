@@ -33,7 +33,7 @@ import { ConfirmationDialogButtons, SeverityLevels } from "./public-api";
         role: "dialog",
         "[attr.aria-label]": "getAriaLabel()",
     },
-    standalone: false
+    standalone: false,
 })
 export class ConfirmationDialogComponent {
     @Input()

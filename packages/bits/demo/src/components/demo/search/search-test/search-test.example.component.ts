@@ -23,7 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-search-example",
     templateUrl: "./search-test.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class SearchTestExampleComponent {
     public active = false;

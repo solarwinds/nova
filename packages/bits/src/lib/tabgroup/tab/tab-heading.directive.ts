@@ -26,7 +26,7 @@ import { TabComponent } from "./tab.component";
 /** @ignore */
 @Directive({
     selector: "[nuiTabHeading]",
-    standalone: false
+    standalone: false,
 })
 export class TabHeadingDirective {
     templateRef: TemplateRef<any>;

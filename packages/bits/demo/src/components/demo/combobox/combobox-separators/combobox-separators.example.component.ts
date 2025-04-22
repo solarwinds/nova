@@ -26,7 +26,7 @@ import { ISelectChangedEvent } from "@nova-ui/bits";
 @Component({
     selector: "nui-combobox-separators-example",
     templateUrl: "./combobox-separators.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ComboboxSeparatorsExampleComponent {
     public dataset = {

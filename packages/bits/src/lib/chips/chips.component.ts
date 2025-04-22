@@ -78,7 +78,7 @@ import {
     encapsulation: ViewEncapsulation.None,
     providers: [ChipsOverflowService],
     host: { "[attr.role]": "role" },
-    standalone: false
+    standalone: false,
 })
 export class ChipsComponent
     implements OnInit, OnDestroy, OnChanges, AfterViewInit

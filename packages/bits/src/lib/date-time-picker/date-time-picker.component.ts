@@ -59,7 +59,7 @@ import { NuiFormFieldControl } from "../form-field/public-api";
     styleUrls: ["./date-time-picker.component.less"],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class DateTimePickerComponent
     implements AfterViewInit, OnInit, ControlValueAccessor

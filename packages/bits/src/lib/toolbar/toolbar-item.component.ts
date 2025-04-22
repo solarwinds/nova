@@ -35,7 +35,7 @@ import { ToolbarItemDisplayStyle, ToolbarItemType } from "./public-api";
     selector: "nui-toolbar-item",
     template: "<ng-content></ng-content>",
     host: { class: "nui-toolbar-item" },
-    standalone: false
+    standalone: false,
 })
 export class ToolbarItemComponent implements AfterContentInit {
     @Input() public type = ToolbarItemType.primary;

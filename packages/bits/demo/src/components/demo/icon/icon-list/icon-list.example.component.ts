@@ -25,7 +25,7 @@ import { IconService } from "./../../../../../../src/lib/icon/icon.service";
 @Component({
     selector: "nui-icon-list-example",
     templateUrl: "./icon-list.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class IconListExampleComponent implements OnInit {
     public icons: any[];

@@ -95,7 +95,7 @@ const groupedItems: IChipsGroup[] = [
             }
         `,
     ],
-    standalone: false
+    standalone: false,
 })
 export class ChipsOverflowExampleComponent {
     public horizontalGroupedItemsSource = { flatItems, groupedItems };

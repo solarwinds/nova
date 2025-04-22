@@ -36,7 +36,7 @@ import { BreadcrumbItem } from "./public-api";
     templateUrl: "./breadcrumb.component.html",
     encapsulation: ViewEncapsulation.None,
     host: { "[attr.aria-label]": "ariaLabel" },
-    standalone: false
+    standalone: false,
 })
 export class BreadcrumbComponent {
     @Input() items: BreadcrumbItem[];

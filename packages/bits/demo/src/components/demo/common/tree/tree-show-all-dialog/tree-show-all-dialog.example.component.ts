@@ -263,7 +263,7 @@ export class VirtualScrollListDataSource<T = any>
     styleUrls: ["./tree-show-all-dialog.component.example.less"],
     animations: [expand],
     providers: [VirtualScrollListDataSource],
-    standalone: false
+    standalone: false,
 })
 export class TreeShowAllDialogExampleComponent implements OnDestroy {
     private activeDialogRef: NuiDialogRef;
@@ -469,7 +469,7 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
         `,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class TreeDialogContentExampleComponent implements AfterViewInit {
     @Input() items: IServerNode[] = [];

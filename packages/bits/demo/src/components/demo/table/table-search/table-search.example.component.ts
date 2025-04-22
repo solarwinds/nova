@@ -45,7 +45,7 @@ interface IExampleTableModel {
     providers: [ClientSideDataSource],
     templateUrl: "./table-search.example.component.html",
     styleUrls: ["./table-search.example.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class TableSearchExampleComponent implements AfterViewInit, OnDestroy {
     public displayedColumns = [

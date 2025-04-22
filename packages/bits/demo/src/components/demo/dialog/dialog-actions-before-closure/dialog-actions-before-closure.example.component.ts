@@ -26,7 +26,7 @@ import { DialogService, NuiDialogEvent, NuiDialogRef } from "@nova-ui/bits";
 @Component({
     selector: "nui-dialog-actions-before-closure-example",
     templateUrl: "./dialog-actions-before-closure.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class DialogActionBeforeClosureExampleComponent {
     private activeDialog: NuiDialogRef;

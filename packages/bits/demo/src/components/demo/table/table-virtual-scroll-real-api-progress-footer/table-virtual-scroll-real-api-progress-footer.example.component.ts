@@ -51,7 +51,7 @@ import { RandomuserTableDataSource } from "../table-virtual-scroll-datasource";
         "./table-virtual-scroll-real-api-progress-footer.example.component.less",
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class TableVirtualScrollRealApiProgressFooterExampleComponent
     implements AfterViewInit, OnDestroy, OnInit

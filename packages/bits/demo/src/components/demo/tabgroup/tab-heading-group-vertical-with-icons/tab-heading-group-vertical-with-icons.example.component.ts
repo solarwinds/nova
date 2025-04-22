@@ -23,7 +23,7 @@ import { ChangeDetectorRef, Component } from "@angular/core";
 @Component({
     selector: "nui-tab-heading-group-vertical-with-icons-example",
     templateUrl: "./tab-heading-group-vertical-with-icons.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class TabHeadingGroupVerticalWithIconsExampleComponent {
     public currentTabId: string;

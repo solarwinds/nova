@@ -72,7 +72,7 @@ const TREE_DATA: FoodNode[] = [
     styleUrls: ["./tree-leaf-pagination.component.example.less"],
     animations: [expand],
     providers: [HttpMockService],
-    standalone: false
+    standalone: false,
 })
 export class TreeLeafPaginationExampleComponent {
     public pageSize = 25; // used for 'nui-paginator'

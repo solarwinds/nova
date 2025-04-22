@@ -36,7 +36,7 @@ interface IExampleTableModel {
     templateUrl: "./table-cell-content-align.example.component.html",
     styleUrls: ["./table-cell-content-align.example.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class TableCellContentAlignComponent {
     public displayedColumns = [

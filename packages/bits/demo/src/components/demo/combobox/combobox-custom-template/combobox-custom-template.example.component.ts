@@ -27,7 +27,7 @@ import { ISelectChangedEvent } from "@nova-ui/bits";
     selector: "nui-combobox-custom-template-example",
     templateUrl: "./combobox-custom-template.example.component.html",
     styleUrls: ["./combobox-custom-template.example.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class ComboboxCustomTemplateExampleComponent {
     public dataset = {

@@ -44,7 +44,7 @@ import { NuiOverlayModule } from "../overlay.module";
             </nui-select-v2-option>
         </nui-overlay>
     `,
-    standalone: false
+    standalone: false,
 })
 class PopupWrapperComponent implements AfterViewInit {
     public items = Array.from({ length: 50 }).map((_, i) => `Item ${i}`);

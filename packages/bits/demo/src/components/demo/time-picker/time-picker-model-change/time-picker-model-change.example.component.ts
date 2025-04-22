@@ -26,7 +26,7 @@ import { ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-time-picker-model-change",
     templateUrl: "./time-picker-model-change.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class TimePickerModelChangeExampleComponent {
     public time: Moment;

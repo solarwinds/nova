@@ -35,7 +35,7 @@ interface IFilm {
     styleUrls: [
         "./sorter-legacy-string-input-usage-visual-test.component.less",
     ],
-    standalone: false
+    standalone: false,
 })
 export class SorterLegacyStringInputUsageVisualTestComponent
     implements AfterViewInit

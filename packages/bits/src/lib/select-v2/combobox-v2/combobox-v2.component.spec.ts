@@ -68,7 +68,7 @@ const nonExistentItem = { id: "item-101", name: "Item 101" };
             </nui-select-v2-option>
         </nui-combobox-v2>
     `,
-    standalone: false
+    standalone: false,
 })
 class ComboboxV2WrapperComponent {
     public items = Array.from({ length: 10 }).map((_, i) => `Item ${i}`);

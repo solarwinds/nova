@@ -50,7 +50,7 @@ import { TableComponent } from "../table.component";
             <tr nui-row *nuiRowDef="let row; columns: displayedColumns"></tr>
         </table>
     `,
-    standalone: false
+    standalone: false,
 })
 export class SortableTableComponent {
     public displayedColumns = ["position", "name", "asset", "location"];

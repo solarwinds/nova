@@ -51,7 +51,7 @@ interface IExampleTableModel {
     styleUrls: [
         "./table-search-with-select-and-pagination.example.component.less",
     ],
-    standalone: false
+    standalone: false,
 })
 export class TableSearchWithSelectAndPaginationComponent
     implements AfterViewInit, OnDestroy

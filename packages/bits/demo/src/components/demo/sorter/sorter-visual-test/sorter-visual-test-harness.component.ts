@@ -22,6 +22,6 @@ import { Component } from "@angular/core";
 
 @Component({
     templateUrl: "./sorter-visual-test-harness.component.html",
-    standalone: false
+    standalone: false,
 })
 export class SorterVisualTestHarnessComponent {}

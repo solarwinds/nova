@@ -23,6 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-expander-header-text-example",
     templateUrl: "expander-header-text.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ExpanderHeaderTextExampleComponent {}

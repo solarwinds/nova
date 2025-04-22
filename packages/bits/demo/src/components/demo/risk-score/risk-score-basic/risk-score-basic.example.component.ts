@@ -23,7 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-risk-score-basic-example",
     templateUrl: "risk-score-basic.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class RiskScoreBasicExampleComponent {
     public value: number = 3.7;

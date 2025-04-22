@@ -22,7 +22,7 @@ import { Component } from "@angular/core";
 
 @Component({
     templateUrl: "./content.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ContentExampleComponent {
     public dynamicContent = `

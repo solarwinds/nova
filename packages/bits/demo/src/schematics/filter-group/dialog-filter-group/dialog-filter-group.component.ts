@@ -41,7 +41,7 @@ import {
     selector: "app-dialog-filter-group",
     templateUrl: "./dialog-filter-group.component.html",
     styleUrls: ["./dialog-filter-group.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class DialogFilterGroupCompositeComponent implements IFilterPub, OnInit {
     @Input() filterGroupItem: IFilterGroupItem;

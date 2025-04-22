@@ -25,7 +25,7 @@ import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-dialog-with-static-backdrop-example",
     templateUrl: "./dialog-with-static-backdrop.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class DialogWithStaticBackdropExampleComponent {
     private activeDialog: NuiDialogRef;

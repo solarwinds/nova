@@ -24,7 +24,7 @@ import { Component, ViewEncapsulation } from "@angular/core";
     selector: "nui-popup-with-custom-width-example",
     templateUrl: "./popup-with-custom-width.example.component.html",
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    standalone: false,
 })
 export class PopupWithCustomWidthComponent {
     public icon = "caret-down";

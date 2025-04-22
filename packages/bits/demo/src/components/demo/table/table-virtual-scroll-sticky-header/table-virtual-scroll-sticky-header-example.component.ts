@@ -50,7 +50,7 @@ interface IRandomUserTableModel {
     templateUrl: "./table-virtual-scroll-sticky-header-example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [ClientSideDataSource],
-    standalone: false
+    standalone: false,
 })
 export class TableVirtualScrollStickyHeaderExampleComponent
     implements AfterViewInit

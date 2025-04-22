@@ -66,7 +66,7 @@ const verticalFlatItemsVisual: IChipsItem[] = [
 @Component({
     selector: "nui-chips-visual-test",
     templateUrl: "./chips-visual-test.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ChipsVisualTestComponent {
     public horizontalFlatItemsSource: IChipsItemsSource = {

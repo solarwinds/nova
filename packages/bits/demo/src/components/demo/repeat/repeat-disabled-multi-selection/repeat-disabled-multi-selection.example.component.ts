@@ -23,7 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-repeat-disabled-multi-selection-example",
     templateUrl: "./repeat-disabled-multi-selection.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class RepeatDisabledMultiSelectionExampleComponent {
     public colors = Object.freeze([

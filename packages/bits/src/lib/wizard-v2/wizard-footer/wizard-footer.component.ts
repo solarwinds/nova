@@ -42,7 +42,7 @@ import { WizardStepFooterDirective } from "../wizard-step-footer.directive";
     },
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class WizardFooterComponent
     implements FocusableOption, AfterViewInit, OnDestroy

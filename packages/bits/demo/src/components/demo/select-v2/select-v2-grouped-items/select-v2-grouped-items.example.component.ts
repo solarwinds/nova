@@ -29,7 +29,7 @@ const getRandomNumberTo = (max: number) =>
     selector: "nui-select-v2-grouped-items-example",
     templateUrl: "select-v2-grouped-items.example.component.html",
     host: { class: "select-container" },
-    standalone: false
+    standalone: false,
 })
 export class SelectV2GroupedItemsExampleComponent {
     public items: ISelectGroup[] = Array.from({ length: 10 }).map((_, i) => ({

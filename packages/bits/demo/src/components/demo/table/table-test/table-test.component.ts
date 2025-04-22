@@ -56,7 +56,7 @@ import { TableStateHandlerService } from "../../../../../../src/lib/table/table-
     selector: "nui-table-test",
     providers: [ClientSideDataSource, TableStateHandlerService],
     templateUrl: "./table-test.component.html",
-    standalone: false
+    standalone: false,
 })
 export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
     public dataSource?: ITestTableModel[] = ELEMENT_DATA;

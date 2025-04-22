@@ -28,7 +28,7 @@ import { ThemeSwitchService } from "../../../services/theme-switch.service";
 @Component({
     selector: "nui-theme-switcher",
     templateUrl: "./theme-switcher.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ThemeSwitcherComponent {
     constructor(public themeSwitcherService: ThemeSwitchService) {}

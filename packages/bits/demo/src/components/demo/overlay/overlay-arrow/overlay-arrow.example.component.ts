@@ -46,7 +46,7 @@ const CUSTOM_OVERLAY_PANEL_CLASS = "custom-overlay-panel-class";
     templateUrl: "./overlay-arrow.example.component.html",
     styleUrls: ["./overlay-arrow.example.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    standalone: false,
 })
 export class OverlayArrowExampleComponent implements AfterViewInit, OnDestroy {
     private readonly destroy$ = new Subject<void>();

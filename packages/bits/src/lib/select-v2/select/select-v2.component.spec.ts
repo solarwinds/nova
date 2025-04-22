@@ -54,7 +54,7 @@ import { InputValueTypes } from "../types";
             }}</nui-select-v2-option>
         </nui-select-v2>
     `,
-    standalone: false
+    standalone: false,
 })
 class SelectV2WrapperWithFormControlComponent {
     public items = Array.from({ length: 10 }).map((_, i) => `Item ${i}`);
@@ -71,7 +71,7 @@ class SelectV2WrapperWithFormControlComponent {
             }}</nui-select-v2-option>
         </nui-select-v2>
     `,
-    standalone: false
+    standalone: false,
 })
 class SelectV2WrapperWithValueComponent {
     public items = Array.from({ length: 10 }).map((_, i) => `Item ${i}`);
@@ -90,7 +90,7 @@ class SelectV2WrapperWithValueComponent {
             >
         </nui-select-v2>
     `,
-    standalone: false
+    standalone: false,
 })
 class SelectV2WrapperAsyncComponent {
     public items: any[];

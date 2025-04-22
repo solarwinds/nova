@@ -23,7 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-message-warning-example",
     templateUrl: "./message-warning.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class MessageWarningExampleComponent {
     public onMessageDismiss(): void {

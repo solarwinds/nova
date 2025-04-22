@@ -31,7 +31,7 @@ import { DomSanitizer } from "@angular/platform-browser";
     templateUrl: "combobox-v2-create-option-multiselect.example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["combobox-v2-create-option-multiselect.example.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class ComboboxV2CreateOptionMultiselectExampleComponent {
     public options = Array.from({ length: 3 }).map(

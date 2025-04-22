@@ -67,7 +67,7 @@ interface ExampleItem {
     selector: "nui-deprecated-client-side-basic-data-source-example",
     providers: [LocalFilteringDataSource],
     templateUrl: "./client-side-basic.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class DepreacatedDataSourceClientSideBasicExampleComponent
     implements AfterViewInit, OnDestroy

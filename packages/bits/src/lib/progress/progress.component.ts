@@ -36,7 +36,7 @@ import {
     templateUrl: "./progress.component.html",
     styleUrls: ["./progress.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    standalone: false,
 })
 export class ProgressComponent implements OnChanges {
     @Input() public show: boolean;

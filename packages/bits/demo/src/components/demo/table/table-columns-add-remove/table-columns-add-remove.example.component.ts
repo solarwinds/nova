@@ -45,7 +45,7 @@ interface IExampleTableModel {
     templateUrl: "./table-columns-add-remove.example.component.html",
     styleUrls: ["table-columns-add-remove.example.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class TableColumnsAddRemoveExampleComponent {
     public availableColumns = [

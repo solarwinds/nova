@@ -23,7 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-menu-item-variations-example",
     templateUrl: "./menu-item-variations.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class MenuItemVariationsExampleComponent {
     public onActionDone($event?:   boolean): void {

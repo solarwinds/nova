@@ -80,7 +80,7 @@ const TREE_DATA: FoodNode[] = [
     templateUrl: "tree-styling.example.component.html",
     styleUrls: ["tree-styling.example.component.less"],
     animations: [expand],
-    standalone: false
+    standalone: false,
 })
 export class TreeStylingExampleComponent {
     treeControl = new NestedTreeControl<FoodNode>((node) => node.children);

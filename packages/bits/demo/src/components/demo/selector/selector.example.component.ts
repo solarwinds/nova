@@ -25,7 +25,7 @@ import { CheckboxStatus, IMenuGroup, SelectionType } from "@nova-ui/bits";
 @Component({
     selector: "nui-selector-example",
     templateUrl: "./selector.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class SelectorExampleComponent {
     public selection: SelectionType = SelectionType.None;

@@ -53,7 +53,7 @@ class CustomSpyService {
 
 @Component({
     selector: "nui-custom-injector-cmpt", template: "Some content",
-    standalone: false
+    standalone: false,
 })
 export class CustomInjectorComponent implements OnDestroy {
     constructor(private _spyService: CustomSpyService) {}
@@ -65,7 +65,7 @@ export class CustomInjectorComponent implements OnDestroy {
 
 @Component({
     selector: "nui-destroyable-cmpt", template: "Some content",
-    standalone: false
+    standalone: false,
 })
 export class DestroyableComponent implements OnDestroy {
     constructor(private _spyService: SpyService) {}
@@ -78,7 +78,7 @@ export class DestroyableComponent implements OnDestroy {
 @Component({
     selector: "nui-dialog-content-cmpt",
     template: "<button type='button' class='closeFromInside' (click)='close()'>Close</button>",
-    standalone: false
+    standalone: false,
 })
 export class WithActiveDialogComponent {
     constructor(public activeDialog: NuiActiveDialog) {}
@@ -114,7 +114,7 @@ export class WithActiveDialogComponent {
             Open
         </div>
     `,
-    standalone: false
+    standalone: false,
 })
 class TestComponent {
     name = "World";

@@ -60,6 +60,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "schematics-docs-example",
     templateUrl: "./filtered-view-schematic.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class FilteredViewSchematicExampleComponent {}

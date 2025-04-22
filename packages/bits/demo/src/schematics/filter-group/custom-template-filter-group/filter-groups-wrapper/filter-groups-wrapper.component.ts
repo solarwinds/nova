@@ -35,7 +35,7 @@ import { CustomTemplateFilterGroupCompositeComponent } from "../custom-template-
     selector: "app-custom-template-filter-groups-wrapper",
     templateUrl: "filter-groups-wrapper.component.html",
     styleUrls: ["filter-groups-wrapper.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class CustomTemplateFilterGroupsWrapperComponent
     implements AfterViewInit

@@ -31,7 +31,7 @@ const customBodyHtml = `<div><span>Covfefe</span></div>`;
     template: `<nui-expander [open]="open"
         >${customHeaderHtml}${customBodyHtml}</nui-expander
     >`,
-    standalone: false
+    standalone: false,
 })
 class ExpanderUsageWithContentComponent {
     @Input() open = false;
@@ -40,7 +40,7 @@ class ExpanderUsageWithContentComponent {
 @Component({
     selector: "nui-icon",
     template: "",
-    standalone: false
+    standalone: false,
 })
 class MockIconComponent {
     @Input() icon: string;

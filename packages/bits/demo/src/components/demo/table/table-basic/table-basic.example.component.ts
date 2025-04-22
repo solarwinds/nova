@@ -36,7 +36,7 @@ interface IExampleTableModel {
     templateUrl: "./table-basic.example.component.html",
     styleUrls: ["./table-basic.example.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class TableBasicExampleComponent {
     public displayedColumns = [

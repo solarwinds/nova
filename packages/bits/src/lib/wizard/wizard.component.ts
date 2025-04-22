@@ -59,7 +59,7 @@ import { LoggerService } from "../../services/log-service";
     templateUrl: "./wizard.component.html",
     styleUrls: ["./wizard.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    standalone: false,
 })
 export class WizardComponent
     implements OnInit, AfterContentInit, AfterViewChecked, OnDestroy

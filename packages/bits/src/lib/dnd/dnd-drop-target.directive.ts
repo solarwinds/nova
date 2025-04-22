@@ -52,7 +52,7 @@ import {
         "[class.nui-dnd-dropzone--drop-allowed]": "isDropZoneActive && canLastDragItemBeDropped",
         "[class.nui-dnd-dropzone--drop-not-allowed]": "isDropZoneActive && canLastDragItemBeDropped === false",
     },
-    standalone: false
+    standalone: false,
 })
 export class DndDropTargetDirective implements AfterContentInit, OnDestroy {
     @ContentChildren(CdkDrag, { descendants: true })

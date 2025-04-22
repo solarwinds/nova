@@ -27,7 +27,7 @@ import { ISelectChangedEvent, ISelectGroup, ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-combobox-test",
     templateUrl: "./combobox-test.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ComboboxTestComponent implements OnInit {
     public dataset = [

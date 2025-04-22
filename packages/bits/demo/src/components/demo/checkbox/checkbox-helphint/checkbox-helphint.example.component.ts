@@ -23,6 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-checkbox-helphint-example",
     templateUrl: "./checkbox-helphint.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class CheckboxHelpHintExampleComponent {}

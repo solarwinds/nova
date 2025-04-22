@@ -26,7 +26,7 @@ import { ThemeSwitchService } from "./theme-switch.service";
 
 @Component({
     template: "",
-    standalone: false
+    standalone: false,
 })
 class FakeComponent {
     constructor(private zone: NgZone, private router: Router) {}

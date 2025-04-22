@@ -30,7 +30,7 @@ import { Component, EventEmitter, Output, ViewChild } from "@angular/core";
     selector: "nui-droppable",
     templateUrl: "./droppable.component.html",
     styleUrls: ["./droppable.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class DroppableComponent {
     // @Input() dragSource: DraggableComponent;

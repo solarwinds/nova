@@ -66,7 +66,7 @@ import { IMenuGroup } from "../public-api";
             </body>
         </html>
     `,
-    standalone: false
+    standalone: false,
 })
 class TestAppComponent {
     @ViewChild(MenuComponent) menu: MenuComponent;

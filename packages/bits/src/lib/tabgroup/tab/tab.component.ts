@@ -39,7 +39,7 @@ import { TabGroupComponent } from "../tab-group/tab-group.component";
         </ng-template>
     `,
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    standalone: false,
 })
 export class TabComponent {
     /** Tab header text */

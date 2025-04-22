@@ -23,7 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-tree-docs-example",
     templateUrl: "./tree-docs.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class TreeDocsExampleComponent {
     initialSetupCode = `

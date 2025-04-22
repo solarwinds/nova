@@ -98,7 +98,7 @@ import { ISortedItem, SorterDirection } from "../sorter/public-api";
     ],
     styleUrls: ["./table.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    standalone: false,
 })
 export class TableComponent<T>
     extends CdkTable<T>

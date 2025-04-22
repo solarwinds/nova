@@ -26,7 +26,7 @@ import { DialogService, NuiDialogRef } from "@nova-ui/bits";
 @Component({
     selector: "nui-dialog-inside-overlay-with-date-time-picker-example",
     templateUrl: "./dialog-inside-overlay-with-date-time-picker.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class DialogInsideOverlayWithDateTimePickerExampleComponent {
     public dt: Moment;

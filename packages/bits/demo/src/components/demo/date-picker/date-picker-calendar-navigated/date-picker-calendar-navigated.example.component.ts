@@ -24,7 +24,7 @@ import { Moment } from "moment/moment";
 @Component({
     selector: "nui-date-picker-calendar-navigated-example",
     templateUrl: "./date-picker-calendar-navigated.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class DatePickerCalendarNavigatedExampleComponent {
     public calendarChangedDate: Date;

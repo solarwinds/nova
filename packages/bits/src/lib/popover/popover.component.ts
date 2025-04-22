@@ -87,7 +87,7 @@ import { OverlayUtilitiesService } from "../overlay/overlay-utilities.service";
     styleUrls: ["./popover.component.less"],
     encapsulation: ViewEncapsulation.None,
     providers: [PopoverPositionService],
-    standalone: false
+    standalone: false,
 })
 export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
     public static getHostView(

@@ -23,7 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-repeat-single-with-required-selection-mode-example",
     templateUrl: "./repeat-single-with-required-selection-mode.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class RepeatSingleWithRequiredSelectionModeExampleComponent {
     public colors = [

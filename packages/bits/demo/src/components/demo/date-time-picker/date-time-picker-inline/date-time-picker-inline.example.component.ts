@@ -24,7 +24,7 @@ import moment, { Moment } from "moment/moment";
 @Component({
     selector: "nui-date-time-picker-inline-example",
     templateUrl: "./date-time-picker-inline.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class DateTimePickerInlineExampleComponent {
     public dt: Moment;

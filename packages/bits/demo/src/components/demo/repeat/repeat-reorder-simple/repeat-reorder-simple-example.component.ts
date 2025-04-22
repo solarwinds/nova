@@ -28,7 +28,7 @@ type ISortingOrderTrimmedData = Omit<IItemsReorderedEvent, "item" | "dropListRef
     selector: "nui-repeat-reorder-simple-example",
     templateUrl: "./repeat-reorder-simple-example.component.html",
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    standalone: false,
 })
 export class RepeatReorderSimpleExampleComponent {
     public companies: string[] = ["Adobe", "IBM", "Dell", "Microsoft"];

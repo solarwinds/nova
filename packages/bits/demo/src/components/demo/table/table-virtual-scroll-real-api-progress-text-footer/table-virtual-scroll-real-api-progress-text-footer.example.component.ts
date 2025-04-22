@@ -49,7 +49,7 @@ import { RandomuserTableDataSource } from "../table-virtual-scroll-datasource";
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [VirtualViewportManager],
-    standalone: false
+    standalone: false,
 })
 export class TableVirtualScrollRealApiProgressTextFooterExampleComponent
     implements AfterViewInit, OnDestroy, OnInit

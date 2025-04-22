@@ -33,7 +33,7 @@ interface IRepeatCompanyItem extends IRepeatItem {
     templateUrl: "./repeat-drag-preview.example.component.html",
     styleUrls: ["./repeat-drag-preview.example.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    standalone: false,
 })
 export class RepeatDragPreviewExampleComponent {
     public companies: IRepeatCompanyItem[] = [

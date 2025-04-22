@@ -53,7 +53,7 @@ import { IServer, IServerFilters } from "../types";
     templateUrl: "./filtered-view-list.component.html",
     styleUrls: ["./filtered-view-list.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class FilteredViewListComponent implements AfterViewInit, OnDestroy {
     public readonly sorterItems: IMenuItem[] = [

@@ -25,7 +25,7 @@ import { FormControl } from "@angular/forms";
     selector: "nui-combobox-v2-typeahead-example",
     templateUrl: "combobox-v2-typeahead.example.component.html",
     host: { class: "combobox-container" },
-    standalone: false
+    standalone: false,
 })
 export class ComboboxV2TypeaheadExampleComponent {
     public items = Array.from({ length: 50 }).map(

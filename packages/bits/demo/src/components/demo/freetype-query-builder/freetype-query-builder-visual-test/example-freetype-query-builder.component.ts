@@ -37,7 +37,7 @@ import { ExampleAppRenderer } from "../freetype-query-builder-test/renderer";
 @Component({
     selector: "example-freetype-query-builder",
     templateUrl: "./example-freetype-query-builder.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ExampleFreetypeQueryBuilderComponent {
     @Input() exampleId: string;

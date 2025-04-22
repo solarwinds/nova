@@ -24,7 +24,7 @@ import { FormBuilder, Validators } from "@angular/forms";
 @Component({
     selector: "nui-form-field-basic-reactive-custom-validation-example",
     templateUrl: "./basic-reactive-form-field-custom-validation.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class FormFieldBasicReactiveCustomValidationExampleComponent {
     public reactiveForm;

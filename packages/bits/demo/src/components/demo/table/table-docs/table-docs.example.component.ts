@@ -23,7 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-table-docs-example",
     templateUrl: "./table-docs.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class TableDocsComponent {
     public alignmentCode = `<td nui-cell *nuiCellDef="let element">
@@ -229,6 +229,6 @@ public ngOnInit(): void {
             </li>
         </ol>
     `,
-    standalone: false
+    standalone: false,
 })
 export class TableRowSelectInstructionsComponent {}

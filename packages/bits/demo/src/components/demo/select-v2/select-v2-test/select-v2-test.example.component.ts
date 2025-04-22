@@ -54,7 +54,7 @@ interface IExampleItem {
     styleUrls: ["./select-v2-test.example.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: { class: "select-container" },
-    standalone: false
+    standalone: false,
 })
 export class SelectV2TestExampleComponent
     implements OnInit, AfterViewInit, OnDestroy

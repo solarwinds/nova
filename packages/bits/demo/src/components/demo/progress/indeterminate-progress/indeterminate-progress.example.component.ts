@@ -23,7 +23,7 @@ import { Component, OnDestroy } from "@angular/core";
 @Component({
     selector: "nui-indeterminate-progress-example",
     templateUrl: "./indeterminate-progress.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class IndeterminateProgressExampleComponent implements OnDestroy {
     public show = false;

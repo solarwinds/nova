@@ -81,7 +81,7 @@ const isMouseEvent = (event: Event): event is MouseEvent =>
     ],
     styleUrls: ["overlay.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    standalone: false,
 })
 export class OverlayComponent
     implements

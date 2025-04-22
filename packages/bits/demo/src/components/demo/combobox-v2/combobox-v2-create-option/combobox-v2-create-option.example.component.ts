@@ -33,7 +33,7 @@ import { ComboboxV2Component } from "@nova-ui/bits";
     selector: "nui-combobox-v2-create-option-example",
     templateUrl: "combobox-v2-create-option.example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class ComboboxV2CreateOptionExampleComponent {
     public options = Array.from({ length: 3 }).map(

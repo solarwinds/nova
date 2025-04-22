@@ -28,7 +28,7 @@ import { ToastService } from "../../toast/toast.service";
     templateUrl: "./copy-text.component.html",
     selector: "nui-copy-text",
     styleUrls: ["./copy-text.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class CopyTextComponent {
     // file to which the copy applies

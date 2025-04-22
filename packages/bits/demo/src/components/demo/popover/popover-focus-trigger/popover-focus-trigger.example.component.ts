@@ -23,6 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-popover-focus-trigger-example",
     templateUrl: "./popover-focus-trigger.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class PopoverFocusTriggerExampleComponent {}

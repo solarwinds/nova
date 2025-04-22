@@ -60,7 +60,7 @@ import { IServer, IServerFilters } from "./types";
             useClass: PaginatedListDataSource,
         },
     ],
-    standalone: false
+    standalone: false,
 })
 export class PaginatedListComponent
     implements OnInit, AfterViewInit, OnDestroy

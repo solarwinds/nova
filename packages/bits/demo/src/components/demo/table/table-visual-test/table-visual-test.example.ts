@@ -23,6 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "table-visual-test-example",
     templateUrl: "./table-visual-test.example.html",
-    standalone: false
+    standalone: false,
 })
 export class TableVisualTestComponent {}

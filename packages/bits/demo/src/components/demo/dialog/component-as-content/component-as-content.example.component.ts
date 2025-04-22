@@ -27,7 +27,7 @@ import { DialogContentExampleComponent } from "./dialog-content.example.componen
 @Component({
     selector: "nui-component-as-content-example",
     templateUrl: "./component-as-content.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ComponentAsContentExampleComponent {
     constructor(@Inject(DialogService) private dialogService: DialogService) {}

@@ -26,7 +26,7 @@ import { ISearchService, SearchService } from "@nova-ui/bits";
 @Component({
     selector: "nui-search-service-example",
     templateUrl: "./search-service.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class SearchServiceExampleComponent {
     private now = new Date().getTime();

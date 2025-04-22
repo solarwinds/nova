@@ -56,7 +56,7 @@ import { Subject, Subscription } from "rxjs";
     styleUrls: ["./message.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: { "[attr.role]": "role" },
-    standalone: false
+    standalone: false,
 })
 export class MessageComponent implements OnInit, OnDestroy {
     public static ICON_MAP: { [id: string]: string } = {

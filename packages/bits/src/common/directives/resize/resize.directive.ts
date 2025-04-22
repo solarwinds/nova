@@ -72,7 +72,7 @@ interface IResizeElement extends HTMLElement {
  */
 @Directive({
     selector: "[nuiResize]",
-    standalone: false
+    standalone: false,
 })
 export class ResizeDirective implements AfterViewInit, OnDestroy {
     /**
