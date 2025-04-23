@@ -272,6 +272,7 @@
                         },
                         "dev": {
                             "reporters": ["spec"],
+                            "sourceMap": true,
                             "watch": true
                         }
                     },
