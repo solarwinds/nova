@@ -19,7 +19,12 @@
 //  THE SOFTWARE.
 
 import { CdkStepper } from "@angular/cdk/stepper";
-import { Component, NO_ERRORS_SCHEMA } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    NO_ERRORS_SCHEMA,
+} from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import {
@@ -62,7 +67,11 @@ describe("directives >", () => {
                     WizardStepperPreviousDirective,
                     TestWrapperComponent,
                 ],
-                providers: [CdkStepper],
+                providers: [
+                    CdkStepper,
+                    {provide: ChangeDetectorRef, useValue: jasmine.createSpyObj(["markForCheck"])},
+                    { provide: ElementRef<HTMLElement>, useValue: {} as any },
+                ],
                 schemas: [NO_ERRORS_SCHEMA],
             });
 
