@@ -183,7 +183,7 @@ export class DrilldownDataSourceRealApi<T = any>
             // mock delay
             delay(300),
             // data mapping, !DS specific!
-            map((res: any) => res.data.Country),
+            map((res) => res.data.countries),
             // adds mock icons to be displayed on leaf nodes !DS specific!
             map((res: any[]) =>
                 res.map((v) => ({
@@ -205,35 +205,26 @@ export class DrilldownDataSourceRealApi<T = any>
 
     private generateQuery(filters: INovaFilters) {
         const { search } = filters;
-        const searchValue = search?.value ?? "";
+        const searchValue = search?.value ? `^[${search.value}]*` : "";
 
         const queryString = `
             query {
-                Country(filter: {
-                    OR: [
-                      { name_contains: "${searchValue}" },
-                      { capital_contains: "${searchValue}" }
-                    ],
-                }) {
+                countries(filter: {name: {regex: "${searchValue}"} }) {
                     name
+                    native
                     capital
-                    population
-                    officialLanguages {
+                    languages {
                         name
                     }
-                    currencies {
+                    currencies
+                    subdivisions {
                         name
-                    }
-                    subregion {
-                        name
-                        region {
-                            name
-                        }
                     }
                 }
             }
         `;
 
+        console.log(queryString)
         return gql`
             ${queryString}
         `;

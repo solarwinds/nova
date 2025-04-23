@@ -83,7 +83,7 @@ export class DrilldownDataSource
     private groupBy: string[];
     private cache: any;
     private lastDrillState: string[] = [];
-    private leafGroup: string = "Country";
+    private leafGroup: string = "country";
     private applyFilters$ = new Subject<IFilters>();
 
     constructor(private http: HttpClient, private apollo: Apollo) {
