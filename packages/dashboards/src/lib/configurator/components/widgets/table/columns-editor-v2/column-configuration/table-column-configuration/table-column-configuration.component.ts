@@ -57,7 +57,7 @@ import { onMarkAsTouched } from "../../../../../../../functions/on-mark-as-touch
             multi: true,
         },
     ],
-    standalone: false
+    standalone: false,
 })
 export class TableColumnConfigurationComponent
     implements ControlValueAccessor, OnInit, OnDestroy

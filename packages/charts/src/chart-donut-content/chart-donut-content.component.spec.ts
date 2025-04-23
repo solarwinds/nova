@@ -30,7 +30,7 @@ import { ChartDonutContentPlugin } from "../core/plugins/chart-donut-content-plu
     template: `<nui-chart-donut-content
         [plugin]="plugin"
     ></nui-chart-donut-content>`,
-    standalone: false
+    standalone: false,
 })
 class ChartContentWrapperComponent {
     @Input() plugin: ChartDonutContentPlugin;

@@ -41,7 +41,7 @@ import { ConfiguratorHeadingService } from "../../../../../../../services/config
 @Component({
     selector: "nui-formatter-configurator-test",
     template: "",
-    standalone: false
+    standalone: false,
 })
 class FormatterConfiguratorTestComponent extends FormatterConfiguratorComponent {
     constructor(

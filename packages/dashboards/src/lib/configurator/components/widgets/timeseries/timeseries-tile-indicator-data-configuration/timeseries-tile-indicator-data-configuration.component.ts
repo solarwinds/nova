@@ -49,7 +49,7 @@ import { ConfiguratorHeadingService } from "../../../../services/configurator-he
         "./timeseries-tile-indicator-data-configuration.component.less",
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class TimeseriesTileIndicatorDataConfigurationComponent
     implements IHasChangeDetector, IHasForm, OnInit, OnDestroy, OnChanges

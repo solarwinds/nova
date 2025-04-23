@@ -91,7 +91,7 @@ import { DATA_SOURCE_OUTPUT } from "../../../../../../types";
             multi: true,
         },
     ],
-    standalone: false
+    standalone: false,
 })
 export class PresentationConfigurationV2Component
     implements

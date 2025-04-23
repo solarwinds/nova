@@ -62,7 +62,7 @@ import { NumberValidationParams } from "./types";
         },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class RefreshRateConfiguratorComponent
     implements ControlValueAccessor, OnInit, OnDestroy

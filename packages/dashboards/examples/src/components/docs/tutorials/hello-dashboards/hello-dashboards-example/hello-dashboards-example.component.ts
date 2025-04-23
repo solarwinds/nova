@@ -37,7 +37,7 @@ import {
     selector: "hello-dashboards-example",
     templateUrl: "./hello-dashboards-example.component.html",
     styleUrls: ["./hello-dashboards-example.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class HelloDashboardsExampleComponent implements OnInit {
     // This variable will have all the data needed to render the widgets widgets.

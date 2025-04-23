@@ -36,7 +36,7 @@ import {
 @Component({
     selector: "nui-spark-chart-table-example",
     templateUrl: "./spark-chart-table.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class SparkChartTableExampleComponent implements OnInit {
     public displayedColumns = ["name", "chart"];

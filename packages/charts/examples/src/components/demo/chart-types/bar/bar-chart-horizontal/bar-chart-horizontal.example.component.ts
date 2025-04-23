@@ -32,7 +32,7 @@ import {
 @Component({
     selector: "nui-bar-chart-horizontal-example",
     templateUrl: "./bar-chart-horizontal.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class BarChartHorizontalExampleComponent implements OnInit {
     public barConfig: IBarChartConfig = { horizontal: true };

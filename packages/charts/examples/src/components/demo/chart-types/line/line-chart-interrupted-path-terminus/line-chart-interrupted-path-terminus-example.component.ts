@@ -39,7 +39,7 @@ import {
 @Component({
     selector: "line-chart-interrupted-path-terminus-example",
     templateUrl: "./line-chart-interrupted-path-terminus-example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class LineChartInterruptedPathTerminusExampleComponent
     implements OnInit

@@ -63,7 +63,7 @@ class MockProviderWithProperties extends MockProvider {
 
 @Component({
     template: ``,
-    standalone: false
+    standalone: false,
 })
 class Mock1Component implements OnChanges {
     public static lateLoadKey = "Mock1Component";
@@ -79,7 +79,7 @@ class Mock1Component implements OnChanges {
 
 @Component({
     template: ``,
-    standalone: false
+    standalone: false,
 })
 class Mock2Component implements OnChanges {
     public static lateLoadKey = "Mock2Component";
@@ -104,7 +104,7 @@ class Mock2Component implements OnChanges {
             (attached)="componentPortal.attached($event)"
         ></ng-template>
     </ng-container>`,
-    standalone: false
+    standalone: false,
 })
 class ComponentPortalTestComponent {}
 

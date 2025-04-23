@@ -35,7 +35,7 @@ import {
 @Component({
     selector: "nui-colors-custom-provider-example",
     templateUrl: "./colors-custom-provider.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class RendererColorsCustomProviderExampleComponent implements OnInit {
     public chart = new Chart(new XYGrid());

@@ -50,7 +50,7 @@ import { ComponentPortalService } from "../../services/component-portal.service"
 @Directive({
     selector: "[nuiComponentPortal]",
     exportAs: "nuiComponentPortal",
-    standalone: false
+    standalone: false,
 })
 export class ComponentPortalDirective
     implements OnInit, AfterViewInit, OnDestroy, OnChanges

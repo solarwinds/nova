@@ -67,7 +67,7 @@ import {
     selector: "nui-chart-waterfall-test",
     templateUrl: "./chart-waterfall-test.component.html",
     styleUrls: ["./chart-waterfall-test.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class ChartWaterfallTestComponent implements AfterViewInit, OnInit {
     // TODO: 1. overlay for grid. 2. top axis 3. popup on hover example

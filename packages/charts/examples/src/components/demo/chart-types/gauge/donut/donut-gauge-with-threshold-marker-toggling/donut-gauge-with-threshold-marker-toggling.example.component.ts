@@ -37,7 +37,7 @@ import {
     styleUrls: [
         "./donut-gauge-with-threshold-marker-toggling.example.component.less",
     ],
-    standalone: false
+    standalone: false,
 })
 export class DonutGaugeWithThresholdMarkerTogglingExampleComponent
     implements OnInit

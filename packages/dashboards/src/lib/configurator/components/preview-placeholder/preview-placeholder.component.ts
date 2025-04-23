@@ -24,7 +24,7 @@ import { Component } from "@angular/core";
     selector: "nui-preview-placeholder",
     templateUrl: "./preview-placeholder.component.html",
     styleUrls: ["./preview-placeholder.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class PreviewPlaceholderComponent {
     public static lateLoadKey = "PreviewPlaceholderComponent";

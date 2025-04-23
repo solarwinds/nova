@@ -39,7 +39,7 @@ import { IHasChangeDetector, IHasForm } from "../../../../../types";
     templateUrl: "./risk-score-tile-description-configuration.component.html",
     styleUrls: ["./risk-score-tile-description-configuration.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class RiskScoreTileDescriptionConfigurationComponent
     implements OnInit, OnChanges, IHasChangeDetector, IHasForm

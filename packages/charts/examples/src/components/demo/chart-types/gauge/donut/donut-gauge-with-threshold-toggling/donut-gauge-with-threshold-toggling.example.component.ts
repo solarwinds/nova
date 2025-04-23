@@ -35,7 +35,7 @@ import {
     selector: "donut-gauge-with-threshold-toggling-example",
     templateUrl: "./donut-gauge-with-threshold-toggling.example.component.html",
     styleUrls: ["./donut-gauge-with-threshold-toggling.example.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class DonutGaugeWithThresholdTogglingExampleComponent implements OnInit {
     public chartAssist: ChartAssist;

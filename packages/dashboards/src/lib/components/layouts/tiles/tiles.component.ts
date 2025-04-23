@@ -39,7 +39,7 @@ import { BaseLayout } from "../base-layout";
     selector: "nui-tiles",
     styleUrls: ["./tiles.component.less"],
     templateUrl: "./tiles.component.html",
-    standalone: false
+    standalone: false,
 })
 export class TilesComponent
     extends BaseLayout

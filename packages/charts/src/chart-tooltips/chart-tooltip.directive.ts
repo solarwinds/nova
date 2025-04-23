@@ -46,7 +46,7 @@ import { ChartTooltipComponent } from "./chart-tooltip.component";
 /** @ignore */
 @Directive({
     selector: "[nuiChartTooltip]",
-    standalone: false
+    standalone: false,
 })
 export class ChartTooltipDirective implements OnInit, OnDestroy {
     @Input() template: TemplateRef<any>;

@@ -72,7 +72,7 @@ import { ComponentPortalDirective } from "../../directives/component-portal/comp
 @Component({
     selector: "pizzagna-test",
     template: ` <nui-pizzagna [(pizzagna)]="pizzagna"></nui-pizzagna>`,
-    standalone: false
+    standalone: false,
 })
 class PizzagnaTestComponent {
     @Input()

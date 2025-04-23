@@ -32,7 +32,7 @@ import { IHasChangeDetector } from "../../../../../types";
     selector: "nui-info-message-configuration",
     templateUrl: "./info-message-configuration.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class InfoMessageConfigurationComponent implements IHasChangeDetector {
     public static lateLoadKey = "InfoMessageConfigurationComponent";

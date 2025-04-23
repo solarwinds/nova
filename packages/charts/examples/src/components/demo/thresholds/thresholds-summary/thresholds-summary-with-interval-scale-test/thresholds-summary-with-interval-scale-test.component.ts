@@ -53,7 +53,7 @@ import {
 @Component({
     selector: "nui-thresholds-summary-with-interval-scale-test",
     templateUrl: "./thresholds-summary-with-interval-scale-test.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ThresholdsSummaryWithIntervalScaleTestComponent implements OnInit {
     public zones = [

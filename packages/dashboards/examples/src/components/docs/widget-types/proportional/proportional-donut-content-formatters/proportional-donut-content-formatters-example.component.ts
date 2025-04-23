@@ -176,7 +176,7 @@ export class BeerReviewCountsByCityMockDataSource
     styleUrls: [
         "./proportional-donut-content-formatters-example.component.less",
     ],
-    standalone: false
+    standalone: false,
 })
 export class ProportionalWidgetDonutContentFormattersExampleComponent
     implements OnInit

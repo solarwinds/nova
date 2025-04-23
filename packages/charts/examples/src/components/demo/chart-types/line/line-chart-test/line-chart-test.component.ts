@@ -43,7 +43,7 @@ interface ChartDatum {
 @Component({
     selector: "nui-line-chart-test",
     templateUrl: "./line-chart-test.component.html",
-    standalone: false
+    standalone: false,
 })
 export class LineChartTestComponent implements OnInit {
     public input: string;

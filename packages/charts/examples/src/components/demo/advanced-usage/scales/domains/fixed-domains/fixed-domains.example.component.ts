@@ -38,7 +38,7 @@ import {
 @Component({
     selector: "nui-chart-fixed-domains-example",
     templateUrl: "./fixed-domains.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class FixedDomainsExampleComponent implements OnInit {
     public xScale: IScale<Date> = new TimeScale();

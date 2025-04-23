@@ -33,7 +33,7 @@ import {
 @Component({
     selector: "nui-pie-chart-example",
     templateUrl: "./pie-chart.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class PieChartExampleComponent implements OnInit {
     public chartAssist: ChartAssist;

@@ -34,7 +34,7 @@ import {
 @Component({
     selector: "nui-spark-chart-multiple-example",
     templateUrl: "./spark-chart-multiple.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class SparkChartMultipleExampleComponent implements OnInit {
     public chartAssist: SparkChartAssist;

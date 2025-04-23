@@ -39,7 +39,7 @@ import {
     selector: "nui-area-spark-minimal-test",
     templateUrl: "./area-spark-minimal-test.component.html",
     styleUrls: ["./area-spark-minimal-test.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class AreaSparkMinimalTestComponent implements OnInit {
     public chart: IChart;

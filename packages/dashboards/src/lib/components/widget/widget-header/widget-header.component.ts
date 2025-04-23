@@ -71,7 +71,7 @@ import {
             ]),
         ]),
     ],
-    standalone: false
+    standalone: false,
 })
 export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     static lateLoadKey = "WidgetHeaderComponent";

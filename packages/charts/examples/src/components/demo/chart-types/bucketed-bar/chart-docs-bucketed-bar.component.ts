@@ -23,6 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-chart-docs-bucketed-bar",
     templateUrl: "./chart-docs-bucketed-bar.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ChartDocsBucketedBarComponent {}

@@ -42,7 +42,7 @@ import {
 @Component({
     selector: "nui-chart-waterfall-simple",
     templateUrl: "./chart-waterfall-simple.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ChartWaterfallSimpleComponent implements AfterViewInit {
     public palette = new ChartPalette(

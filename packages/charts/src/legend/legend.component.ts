@@ -35,7 +35,7 @@ import { LegendOrientation } from "./types";
     host: { class: "d-inline-block" },
     templateUrl: "./legend.component.html",
     encapsulation: ViewEncapsulation.Emulated,
-    standalone: false
+    standalone: false,
 })
 export class LegendComponent implements OnChanges, OnDestroy {
     /**

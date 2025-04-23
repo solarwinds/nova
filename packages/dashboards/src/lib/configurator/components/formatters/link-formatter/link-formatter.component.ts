@@ -49,7 +49,7 @@ import { ILinkFormatterData } from "../types";
             }
         `,
     ],
-    standalone: false
+    standalone: false,
 })
 export class LinkFormatterComponent implements OnChanges, IHasChangeDetector {
     static lateLoadKey = "LinkFormatterComponent";

@@ -39,7 +39,7 @@ interface IMyDataPoint {
 @Component({
     selector: "nui-accessors-example",
     templateUrl: "./accessors.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class RendererAccessorsExampleComponent implements OnInit {
     public chart = new Chart(new XYGrid());

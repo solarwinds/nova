@@ -38,7 +38,7 @@ import {
 @Component({
     selector: "nui-waterfall-chart-simple-example",
     templateUrl: "./waterfall-chart-simple.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class WaterfallChartSimpleComponent implements OnInit {
     // Step 1 - Create a new horizontal bar chart

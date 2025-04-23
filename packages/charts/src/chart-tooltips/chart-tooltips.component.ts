@@ -55,7 +55,7 @@ interface ITooltipNode extends SimulationNodeDatum {
     selector: "nui-chart-tooltips",
     templateUrl: "./chart-tooltips.component.html",
     styleUrls: ["./chart-tooltips.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class ChartTooltipsComponent implements OnChanges, OnDestroy {
     @Input() plugin: ChartTooltipsPlugin;

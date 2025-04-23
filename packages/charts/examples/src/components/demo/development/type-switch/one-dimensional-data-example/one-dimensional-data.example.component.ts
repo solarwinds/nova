@@ -49,7 +49,7 @@ import {
 @Component({
     selector: "nui-chart-one-dimensional-data-example",
     templateUrl: "./one-dimensional-data.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class OneDimensionalDataExampleComponent implements OnInit {
     public chartTypes = ["horizontal bar", "vertical bar", "pie", "donut"];

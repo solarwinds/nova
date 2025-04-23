@@ -46,7 +46,7 @@ import { IFormatterData } from "../types";
             </div>
         </ng-container>
     `,
-    standalone: false
+    standalone: false,
 })
 export class SiUnitsFormatterComponent implements OnChanges {
     static lateLoadKey = "SiUnitsFormatterComponent";

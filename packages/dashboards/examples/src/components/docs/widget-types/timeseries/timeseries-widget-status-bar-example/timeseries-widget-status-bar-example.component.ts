@@ -182,7 +182,7 @@ function filterDates(dateToCheck: Date, startDate: Moment, endDate: Moment) {
     selector: "timeseries-widget-status-bar-example",
     templateUrl: "./timeseries-widget-status-bar-example.component.html",
     styleUrls: ["./timeseries-widget-status-bar-example.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class TimeseriesWidgetStatusBarExampleComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.

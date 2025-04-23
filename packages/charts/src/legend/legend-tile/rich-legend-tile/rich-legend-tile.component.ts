@@ -38,7 +38,7 @@ import { LegendComponent } from "../../legend.component";
     templateUrl: "./rich-legend-tile.component.html",
     styleUrls: ["./rich-legend-tile.component.less"],
     encapsulation: ViewEncapsulation.Emulated,
-    standalone: false
+    standalone: false,
 })
 export class RichLegendTileComponent
     implements AfterContentInit, AfterViewInit

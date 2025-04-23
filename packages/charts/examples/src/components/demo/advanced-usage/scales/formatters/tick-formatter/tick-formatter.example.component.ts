@@ -35,7 +35,7 @@ import {
 @Component({
     selector: "nui-chart-tick-formatter-example",
     templateUrl: "./tick-formatter.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class TickFormatterExampleComponent implements OnInit {
     public chart: Chart;

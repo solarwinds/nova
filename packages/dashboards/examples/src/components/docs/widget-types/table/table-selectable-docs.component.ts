@@ -23,7 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-table-selectable-docs",
     templateUrl: "./table-selectable-docs.component.html",
-    standalone: false
+    standalone: false,
 })
 export class TableSelectableDocsComponent {
     public tableConfigurationText = `

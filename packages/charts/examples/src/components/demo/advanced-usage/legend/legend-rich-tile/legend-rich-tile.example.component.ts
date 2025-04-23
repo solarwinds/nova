@@ -30,7 +30,7 @@ import {
 @Component({
     selector: "nui-legend-rich-tile-example",
     templateUrl: "./legend-rich-tile.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class LegendRichTileExampleComponent {
     public firstSeriesId = "1";

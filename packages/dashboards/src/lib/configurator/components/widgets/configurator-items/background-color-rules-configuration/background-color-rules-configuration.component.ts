@@ -54,7 +54,7 @@ const DEFAULT_LABEL = "Custom Comparator";
     templateUrl: "./background-color-rules-configuration.component.html",
     styleUrls: ["./background-color-rules-configuration.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class BackgroundColorRulesConfigurationComponent
     implements IHasChangeDetector, IHasForm, OnChanges, OnInit, OnDestroy

@@ -114,7 +114,7 @@ export interface IChartAttributes<T extends IAccessors = IAccessors> {
     styleUrls: ["./event-sampler.component.less"],
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class EventSamplerComponent implements OnInit {
     public parsedEvent = {};

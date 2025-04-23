@@ -26,7 +26,7 @@ import { Component } from "@angular/core";
         This is a non-interactive widget preview
     </div>`,
     styleUrls: ["./preview-overlay.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class PreviewOverlayComponent {
     static lateLoadKey = "PreviewOverlayComponent";

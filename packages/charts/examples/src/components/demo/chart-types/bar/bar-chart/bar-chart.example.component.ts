@@ -32,7 +32,7 @@ import {
 @Component({
     selector: "nui-bar-chart-example",
     templateUrl: "./bar-chart.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class BarChartExampleComponent implements OnInit {
     // this configuration passed to barGrid, barAccessors, barScales determines the orientation of the bar chart

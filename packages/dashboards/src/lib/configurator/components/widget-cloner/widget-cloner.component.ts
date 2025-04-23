@@ -51,7 +51,7 @@ import { IDashwizStepNavigatedEvent, IDashwizWaitEvent } from "../wizard/types";
     styleUrls: ["./widget-cloner.component.less"],
     host: { class: "d-flex flex-column h-100" },
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class WidgetClonerComponent
     implements OnInit, OnDestroy, AfterViewInit, IHasChangeDetector

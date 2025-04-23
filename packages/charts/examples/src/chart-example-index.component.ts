@@ -56,7 +56,7 @@ import { Component } from "@angular/core";
             </li>
         </ul>
     `,
-    standalone: false
+    standalone: false,
 })
 export class ChartExampleIndexComponent {
     public prototypes = [

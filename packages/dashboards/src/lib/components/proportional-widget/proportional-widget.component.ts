@@ -87,7 +87,7 @@ import {
     templateUrl: "./proportional-widget.component.html",
     styleUrls: ["./proportional-widget.component.less"],
     encapsulation: ViewEncapsulation.Emulated,
-    standalone: false
+    standalone: false,
 })
 export class ProportionalWidgetComponent
     implements AfterViewInit, OnChanges, IHasChangeDetector, OnDestroy

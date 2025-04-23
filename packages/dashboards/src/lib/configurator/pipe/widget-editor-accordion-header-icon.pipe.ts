@@ -30,7 +30,7 @@ import { hasControlInErrorState } from "../functions/has-control-in-error-state"
 @Pipe({
     name: "nuiFormHeaderIconPipe",
     pure: false,
-    standalone: false
+    standalone: false,
 })
 export class FormHeaderIconPipePipe implements PipeTransform {
     public static readonly ERROR_ICON_DEFAULT = "status_critical";

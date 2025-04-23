@@ -47,7 +47,7 @@ import { IProperties } from "../../../../types";
             </div>
         </div>
     </ng-container>`,
-    standalone: false
+    standalone: false,
 })
 export class DonutContentPercentageFormatterComponent
     implements OnChanges, OnInit

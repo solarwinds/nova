@@ -30,7 +30,7 @@ import { DEFAULT_UNIT_CONVERSION_THRESHOLD } from "../constants";
  */
 @Pipe({
     name: "nuiDashboardUnitConversion",
-    standalone: false
+    standalone: false,
 })
 export class DashboardUnitConversionPipe implements PipeTransform {
     constructor(private unitConversionService: UnitConversionService) {}

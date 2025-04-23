@@ -50,7 +50,7 @@ import {
     templateUrl: "./kpi-description-configuration.component.html",
     styleUrls: ["./kpi-description-configuration.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class KpiDescriptionConfigurationComponent
     implements OnInit, OnChanges, IHasChangeDetector, IHasForm

@@ -40,7 +40,7 @@ import { IHasChangeDetector, IHasForm } from "../../../../../types";
     templateUrl: "./title-and-description-configuration.component.html",
     styleUrls: ["title-and-description-configuration.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class TitleAndDescriptionConfigurationComponent
     implements IHasChangeDetector, IHasForm, OnInit, OnChanges

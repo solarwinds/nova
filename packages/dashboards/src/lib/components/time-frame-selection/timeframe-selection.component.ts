@@ -57,7 +57,7 @@ import {
     templateUrl: "./timeframe-selection.component.html",
     styleUrls: ["./timeframe-selection.component.less"],
     providers: [HistoryStorage],
-    standalone: false
+    standalone: false,
 })
 export class TimeframeSelectionComponent
     implements OnChanges, OnInit, IHasChangeDetector

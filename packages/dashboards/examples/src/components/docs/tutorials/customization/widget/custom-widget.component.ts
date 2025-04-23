@@ -75,7 +75,7 @@ const IMAGE_SELECTION_CONFIGURATOR_PATH_KEY = "imageSelection";
     template: `<nui-image [image]="imageSource"></nui-image>`,
     styleUrls: ["./custom-widget.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 // Remember to declare this class in the parent module
 export class CustomWidgetBodyContentComponent implements IHasChangeDetector {
@@ -149,7 +149,7 @@ export class CustomWidgetBodyContentComponent implements IHasChangeDetector {
     `,
     styleUrls: ["./custom-widget.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 // Remember to declare this class in the parent module
 export class CustomConfiguratorSectionComponent
@@ -225,7 +225,7 @@ export class CustomConfiguratorSectionComponent
     selector: "custom-widget",
     templateUrl: "./custom-widget.component.html",
     styleUrls: ["./custom-widget.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class CustomWidgetComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.

@@ -61,7 +61,7 @@ interface IChartOptionViewModel {
     templateUrl: "proportional-chart-options-editor.component.html",
     styleUrls: ["proportional-chart-options-editor.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class ProportionalChartOptionsEditorComponent
     implements IHasChangeDetector, IHasForm, OnInit, OnChanges

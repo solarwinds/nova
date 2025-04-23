@@ -33,7 +33,7 @@ import {
 @Component({
     selector: "nui-bar-chart-with-legend-example",
     templateUrl: "./bar-chart-with-legend.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class BarChartWithLegendExampleComponent implements OnInit {
     public barConfig = { horizontal: false };

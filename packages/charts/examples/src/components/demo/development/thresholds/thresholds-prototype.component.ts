@@ -51,7 +51,7 @@ enum Status {
 
 @Component({
     templateUrl: "./thresholds-prototype.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ThresholdsPrototypeComponent implements OnInit {
     public chart = new Chart(new XYGrid());

@@ -42,7 +42,7 @@ import {
 @Component({
     selector: "area-chart-bi-directional-stacked-test",
     templateUrl: "./area-chart-bi-directional-stacked-test.component.html",
-    standalone: false
+    standalone: false,
 })
 export class AreaChartBiDirectionalStackedTestComponent implements OnInit {
     @Input()

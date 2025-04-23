@@ -30,7 +30,7 @@ import { TableWidgetSelectionConfig } from "@nova-ui/dashboards";
     selector: "table-widget-selectable-single-example",
     templateUrl: "./table-widget-selectable-single.example.component.html",
     styleUrls: ["./table-widget-selectable-single.example.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class TableWidgetSelectableSingleExampleComponent {
     public selectionConfiguration: TableWidgetSelectionConfig = {

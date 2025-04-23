@@ -35,7 +35,7 @@ import {
 @Component({
     selector: "nui-bar-chart-grouped-horizontal-example",
     templateUrl: "./bar-chart-grouped-horizontal.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class BarChartGroupedHorizontalExampleComponent implements OnInit {
     public chartAssist: ChartAssist;

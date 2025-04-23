@@ -41,7 +41,7 @@ const format = "YYYY-MM-DDTHH:mm:ssZ";
 @Component({
     selector: "nui-line-time-series-test",
     templateUrl: "./line-time-series-test.component.html",
-    standalone: false
+    standalone: false,
 })
 export class LineTimeSeriesTestComponent implements OnInit {
     // XYGrid is used for rendering the axes

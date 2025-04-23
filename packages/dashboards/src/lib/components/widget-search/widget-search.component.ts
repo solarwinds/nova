@@ -44,7 +44,7 @@ import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../types";
     styleUrls: ["./widget-search.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: { "[class.default]": "enabled", "[class.invisible]": "!enabled" },
-    standalone: false
+    standalone: false,
 })
 export class WidgetSearchComponent implements OnInit, OnDestroy, OnChanges {
     static lateLoadKey = "WidgetSearchComponent";

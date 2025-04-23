@@ -36,7 +36,7 @@ import {
 @Component({
     selector: "nui-basic-horizontal-bar-chart-test",
     templateUrl: "./basic-horizontal-bar-chart-test.component.html",
-    standalone: false
+    standalone: false,
 })
 export class BasicHorizontalBarChartTestComponent implements AfterViewInit {
     public config: IBarChartConfig = { horizontal: true };

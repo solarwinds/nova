@@ -26,7 +26,7 @@ import { ThemeSwitchService } from "@nova-ui/bits";
     selector: "dashboard-test-harness",
     templateUrl: "./dashboard-test-harness.component.html",
     host: { class: "dashboard-test-harness" },
-    standalone: false
+    standalone: false,
 })
 export class DashboardTestHarnessComponent {
     constructor(public themeSwitcher: ThemeSwitchService) {}

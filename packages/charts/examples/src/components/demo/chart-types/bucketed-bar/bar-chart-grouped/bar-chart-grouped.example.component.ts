@@ -36,7 +36,7 @@ import {
 @Component({
     selector: "nui-bar-chart-grouped-example",
     templateUrl: "./bar-chart-grouped.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class BarChartGroupedExampleComponent implements OnInit {
     public chartAssist: ChartAssist;

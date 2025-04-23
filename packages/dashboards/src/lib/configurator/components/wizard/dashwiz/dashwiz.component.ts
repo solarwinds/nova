@@ -64,7 +64,7 @@ import { IDashwizComponent } from "./model";
     templateUrl: "./dashwiz.component.html",
     styleUrls: ["./dashwiz.component.less"],
     host: { class: "flex-grow-1 overflow-auto" },
-    standalone: false
+    standalone: false,
 })
 export class DashwizComponent
     implements OnInit,

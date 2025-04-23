@@ -35,7 +35,7 @@ import {
 @Component({
     selector: "nui-markers-custom-provider-example",
     templateUrl: "./markers-custom-provider.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class RendererMarkersCustomProviderExampleComponent implements OnInit {
     public chart = new Chart(new XYGrid());

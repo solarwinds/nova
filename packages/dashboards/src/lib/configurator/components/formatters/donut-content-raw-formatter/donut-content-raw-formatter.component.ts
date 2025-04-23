@@ -49,7 +49,7 @@ import { IFormatterData } from "../types";
             {{ config?.chartDonutContentLabel }}
         </div>
     </ng-container>`,
-    standalone: false
+    standalone: false,
 })
 export class DonutContentRawFormatterComponent implements OnChanges {
     static lateLoadKey = "DonutContentRawFormatterComponent";

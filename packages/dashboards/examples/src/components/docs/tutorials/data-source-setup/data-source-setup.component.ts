@@ -101,7 +101,7 @@ export class AverageRatingKpiDataSource
     selector: "data-source-setup",
     templateUrl: "./data-source-setup.component.html",
     styleUrls: ["./data-source-setup.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class DataSourceSetupComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.

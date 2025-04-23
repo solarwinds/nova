@@ -54,7 +54,7 @@ import {
             useExisting: forwardRef(() => ChartComponent),
         },
     ],
-    standalone: false
+    standalone: false,
 })
 export class ChartComponent
     implements

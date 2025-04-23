@@ -34,7 +34,7 @@ import {
 @Component({
     selector: "nui-base-grid-height-and-width-example",
     templateUrl: "./base-grid-height-and-width.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class BaseGridHeightAndWidthExampleComponent implements OnInit {
     public chart: Chart;

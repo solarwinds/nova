@@ -24,7 +24,7 @@ import isNil from "lodash/isNil";
 
 @Pipe({
     name: "nuiAddData",
-    standalone: false
+    standalone: false,
 })
 export class AddDataPipe implements PipeTransform {
     transform(

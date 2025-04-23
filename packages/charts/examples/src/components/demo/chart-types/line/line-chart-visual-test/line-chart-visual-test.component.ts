@@ -22,6 +22,6 @@ import { Component } from "@angular/core";
 
 @Component({
     templateUrl: "./line-chart-visual-test.component.html",
-    standalone: false
+    standalone: false,
 })
 export class LineChartVisualTestComponent {}

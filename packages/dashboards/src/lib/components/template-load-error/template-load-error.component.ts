@@ -25,7 +25,7 @@ import { Component } from "@angular/core";
     template: `<code>
         <pre>Template load error!</pre>
     </code>`,
-    standalone: false
+    standalone: false,
 })
 export class TemplateLoadErrorComponent {
     static lateLoadKey = "TemplateLoadErrorComponent";

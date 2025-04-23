@@ -47,7 +47,7 @@ const RESIZE_DEBOUNCE_TIME = 10;
     selector: "nui-list-widget",
     templateUrl: "./list-widget.component.html",
     styleUrls: ["./list-widget.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class ListWidgetComponent
     implements OnDestroy, OnInit, IHasChangeDetector, OnChanges

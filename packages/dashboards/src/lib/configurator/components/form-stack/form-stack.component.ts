@@ -52,7 +52,7 @@ import { PIZZAGNA_EVENT_BUS } from "../../../types";
             useExisting: FormGroupDirective,
         },
     ],
-    standalone: false
+    standalone: false,
 })
 export class FormStackComponent
     extends BaseLayout

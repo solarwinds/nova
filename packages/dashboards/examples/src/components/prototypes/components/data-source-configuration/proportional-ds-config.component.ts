@@ -54,7 +54,7 @@ import {
     templateUrl: "./proportional-ds-config.component.html",
     styleUrls: ["./proportional-ds-config.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class AcmeProportionalDSConfigComponent
     implements IHasChangeDetector, OnInit, OnChanges, OnDestroy

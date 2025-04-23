@@ -36,7 +36,7 @@ import {
     styleUrls: [
         "./donut-gauge-with-custom-threshold-labels.example.component.less",
     ],
-    standalone: false
+    standalone: false,
 })
 export class DonutGaugeWithCustomThresholdLabelsExampleComponent
     implements OnInit

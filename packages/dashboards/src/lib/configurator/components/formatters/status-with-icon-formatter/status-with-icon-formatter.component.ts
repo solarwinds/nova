@@ -63,7 +63,7 @@ import { IHasChangeDetector } from "../../../../types";
             }
         `,
     ],
-    standalone: false
+    standalone: false,
 })
 export class StatusWithIconFormatterComponent
     implements OnChanges, IHasChangeDetector

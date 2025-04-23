@@ -52,7 +52,7 @@ import { IItemConfiguration } from "../types";
     styleUrls: ["items-dynamic.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    standalone: false,
 })
 export class ItemsDynamicComponent
     extends BaseLayout

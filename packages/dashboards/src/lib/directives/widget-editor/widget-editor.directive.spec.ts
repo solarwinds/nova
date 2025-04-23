@@ -67,7 +67,7 @@ class MockSubmitHandler implements IDashboardPersistenceHandler {
         </nui-dashboard>
     `,
     providers: [MockSubmitHandler],
-    standalone: false
+    standalone: false,
 })
 class WidgetEditorDirectiveTestComponent {
     constructor(public submitHandler: MockSubmitHandler) {}

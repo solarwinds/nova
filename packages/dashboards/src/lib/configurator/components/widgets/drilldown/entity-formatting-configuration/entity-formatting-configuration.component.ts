@@ -40,7 +40,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
             }
         `,
     ],
-    standalone: false
+    standalone: false,
 })
 export class EntityFormattingConfigurationComponent
     implements OnInit, OnChanges

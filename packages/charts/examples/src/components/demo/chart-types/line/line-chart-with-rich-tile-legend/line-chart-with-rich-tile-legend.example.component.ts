@@ -38,7 +38,7 @@ import {
 @Component({
     selector: "nui-line-chart-with-rich-tile-legend-example",
     templateUrl: "./line-chart-with-rich-tile-legend.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class LineChartWithRichTileLegendExampleComponent implements OnInit {
     public chart = new Chart(new XYGrid());

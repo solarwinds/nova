@@ -39,7 +39,7 @@ import { INavigationBarConfig } from "../../types";
     templateUrl: "./list-navigation-bar.component.html",
     styleUrls: ["list-navigation-bar.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class ListNavigationBarComponent {
     static lateLoadKey = "ListNavigationBarComponent";

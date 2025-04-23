@@ -23,7 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-chart-docs-popovers",
     templateUrl: "./chart-docs-popovers.component.html",
-    standalone: false
+    standalone: false,
 })
 export class ChartDocsPopoversComponent {
     public popoverTypeScript = `this.popoverPlugin = new ChartPopoverPlugin();

@@ -34,7 +34,7 @@ import {
 @Component({
     selector: "nui-donut-chart-test",
     templateUrl: "./donut-chart-test.component.html",
-    standalone: false
+    standalone: false,
 })
 export class DonutChartTestComponent implements OnInit {
     public chartAssist = new ChartAssist(new Chart(radialGrid()), radial);

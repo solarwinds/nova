@@ -60,7 +60,7 @@ export interface ITimeSpanOption {
     selector: "nui-timeseries-metadata-configuration",
     templateUrl: "./timeseries-metadata-configuration.component.html",
     styleUrls: ["./timeseries-metadata-configuration.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class TimeseriesMetadataConfigurationComponent
     implements IHasChangeDetector, IHasForm, OnInit, OnChanges, OnDestroy

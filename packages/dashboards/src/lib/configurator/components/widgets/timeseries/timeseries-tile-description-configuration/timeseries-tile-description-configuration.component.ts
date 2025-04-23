@@ -39,7 +39,7 @@ import { IHasChangeDetector, IHasForm } from "../../../../../types";
     templateUrl: "./timeseries-tile-description-configuration.component.html",
     styleUrls: ["./timeseries-tile-description-configuration.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
 })
 export class TimeseriesTileDescriptionConfigurationComponent
     implements OnInit, OnDestroy, OnChanges, IHasChangeDetector, IHasForm

@@ -36,7 +36,7 @@ import {
 @Component({
     selector: "nui-line-chart-basic-example",
     templateUrl: "./line-chart-basic.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class LineChartBasicExampleComponent implements OnInit {
     // XYGrid is used for rendering axes and other grid elements

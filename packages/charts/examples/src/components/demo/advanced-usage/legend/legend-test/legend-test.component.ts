@@ -38,7 +38,7 @@ import {
 @Component({
     selector: "nui-legend-test",
     templateUrl: "./legend-test.component.html",
-    standalone: false
+    standalone: false,
 })
 export class LegendTestExampleComponent {
     public palette: IChartPalette = new ChartPalette(CHART_PALETTE_CS1);

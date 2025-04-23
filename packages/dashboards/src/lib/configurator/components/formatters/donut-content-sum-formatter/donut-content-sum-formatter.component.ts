@@ -28,7 +28,7 @@ import { IFormatterData } from "../types";
     template: `<ng-container
         ><div class="nui-text-page">{{ this.sum }}</div></ng-container
     >`,
-    standalone: false
+    standalone: false,
 })
 export class DonutContentSumFormatterComponent implements OnChanges {
     static lateLoadKey = "DonutContentSumFormatterComponent";

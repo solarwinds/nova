@@ -23,7 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-legend-docs-example",
     templateUrl: "./legend-docs.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class LegendDocsExampleComponent {
     public legendHtml = `<nui-legend-series (mouseenter)="chartAssist.emphasizeSeries(seriesId)"

@@ -45,7 +45,7 @@ import { IHasForm } from "../../../types";
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: { class: "nui-widget-configurator-section" },
-    standalone: false
+    standalone: false,
 })
 export class WidgetConfiguratorSectionComponent
     extends BaseLayout

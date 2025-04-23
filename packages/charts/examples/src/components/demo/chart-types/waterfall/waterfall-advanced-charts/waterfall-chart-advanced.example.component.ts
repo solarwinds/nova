@@ -68,7 +68,7 @@ import {
     selector: "nui-waterfall-chart-advanced-example",
     templateUrl: "./waterfall-chart-advanced.example.component.html",
     styleUrls: ["./waterfall-chart-advanced.example.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class WaterfallChartAdvancedComponent implements AfterViewInit, OnInit {
     // Declaring chart config for charts in series

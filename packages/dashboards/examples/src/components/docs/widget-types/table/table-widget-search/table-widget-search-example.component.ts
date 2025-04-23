@@ -249,7 +249,7 @@ export class AcmeTableGBooksDataSource
     selector: "table-widget-search-example",
     templateUrl: "./table-widget-search-example.component.html",
     styleUrls: ["./table-widget-search-example.component.less"],
-    standalone: false
+    standalone: false,
 })
 export class TableWidgetSearchExampleComponent implements OnInit {
     public dashboard: IDashboard | undefined;

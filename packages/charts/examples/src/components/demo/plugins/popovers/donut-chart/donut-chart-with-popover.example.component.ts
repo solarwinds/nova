@@ -36,7 +36,7 @@ import {
 @Component({
     selector: "nui-donut-chart-with-popover-example",
     templateUrl: "./donut-chart-with-popover.example.component.html",
-    standalone: false
+    standalone: false,
 })
 export class DonutChartWithPopoverExampleComponent implements OnInit {
     public popoverPlugin: RadialPopoverPlugin;
