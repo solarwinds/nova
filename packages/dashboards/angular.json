@@ -80,40 +80,6 @@
             "root": "examples",
             "sourceRoot": "examples"
         },
-        "examples-e2e": {
-            "architect": {
-                "e2e": {
-                    "builder": "@angular-devkit/build-angular:protractor",
-                    "configurations": {
-                        "full": {
-                            "devServerTarget": "examples:serve:e2e",
-                            "protractorConfig": "./protractor-gui.conf.js"
-                        },
-                        "gui": {
-                            "protractorConfig": "./protractor-gui.conf.js"
-                        },
-                        "serve": {
-                            "devServerTarget": "examples:serve:e2e"
-                        }
-                    },
-                    "options": {
-                        "devServerTarget": "",
-                        "protractorConfig": "./protractor.conf.js",
-                        "suite": "e2e",
-                        "webdriverUpdate": false
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-eslint/builder:lint",
-                    "options": {
-                        "lintFilePatterns": ["spec/**/*.ts", "spec/**/*.html"]
-                    }
-                }
-            },
-            "projectType": "application",
-            "root": "spec",
-            "sourceRoot": "spec"
-        },
         "lib": {
             "architect": {
                 "build": {
