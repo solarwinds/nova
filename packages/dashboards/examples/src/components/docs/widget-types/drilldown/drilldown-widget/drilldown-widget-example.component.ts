@@ -224,7 +224,6 @@ export class DrilldownDataSourceRealApi<T = any>
             }
         `;
 
-        console.log(queryString)
         return gql`
             ${queryString}
         `;
