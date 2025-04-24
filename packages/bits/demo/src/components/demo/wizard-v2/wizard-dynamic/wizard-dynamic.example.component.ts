@@ -35,6 +35,7 @@ interface IWizardStepData {
 @Component({
     selector: "nui-wizard-dynamic-example",
     templateUrl: "./wizard-dynamic.example.component.html",
+    standalone: false,
 })
 export class WizardDynamicExampleComponent implements AfterViewInit {
     public enableDynamicStepWithButton = false;

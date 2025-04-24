@@ -31,6 +31,7 @@ import {
     selector: "nui-legend-rich-tile-content-projection-example",
     templateUrl: "legend-rich-tile-content-projection.example.component.html",
     styleUrls: ["legend-rich-tile-content-projection.example.component.less"],
+    standalone: false,
 })
 export class LegendRichTileContentProjectionExampleComponent {
     public firstSeriesId = "1";

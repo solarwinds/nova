@@ -42,6 +42,7 @@ import { KEYBOARD_CODE } from "../../constants/keycode.constants";
     animations: [expandV2],
     styleUrls: ["./expander.component.less"],
     encapsulation: ViewEncapsulation.None,
+    standalone: false,
 })
 export class ExpanderComponent implements AfterContentInit {
     /**

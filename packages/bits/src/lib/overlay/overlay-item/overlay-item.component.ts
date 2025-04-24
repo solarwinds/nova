@@ -45,6 +45,7 @@ import { IOption } from "../types";
             useExisting: forwardRef(() => OverlayItemComponent),
         },
     ],
+    standalone: false,
 })
 export class OverlayItemComponent implements Highlightable, IOption {
     /** Whether the Item is active */

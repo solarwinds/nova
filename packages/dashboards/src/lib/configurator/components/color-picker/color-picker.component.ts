@@ -71,6 +71,7 @@ const BOX_WIDTH_PX: number = 30;
         },
         ColorService,
     ],
+    standalone: false,
 })
 export class ColorPickerComponent
     implements

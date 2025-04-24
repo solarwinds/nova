@@ -42,6 +42,7 @@ import { FoodNode, HttpMock, IApiResponse, TREE_DATA_PAGINATOR } from "../data";
     host: { id: "nui-tree-paginator-example" },
     animations: [expand],
     providers: [HttpMock],
+    standalone: false,
 })
 export class TreePaginatorTestComponent {
     public pageSize = 10; // used for 'nui-paginator'

@@ -87,6 +87,7 @@ export interface ITimeseriesZoomPluginExploreData {
     selector: "nui-timeseries-inspection-menu",
     templateUrl: "./timeseries-inspection-menu.component.html",
     styleUrls: ["./timeseries-inspection-menu.component.less"],
+    standalone: false,
 })
 export class TimeseriesInspectionMenuComponent
     implements OnInit, OnChanges, OnDestroy

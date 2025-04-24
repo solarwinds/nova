@@ -23,5 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-chart-popover-visual-test",
     templateUrl: "./popover-visual-test.component.html",
+    standalone: false,
 })
 export class PopoverVisualTestComponent {}

@@ -36,6 +36,7 @@ interface IExampleTableModel {
     templateUrl: "./table-pinned-header.example.component.html",
     styleUrls: ["./table-pinned-header.example.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class TablePinnedHeaderComponent {
     public displayedColumns = [

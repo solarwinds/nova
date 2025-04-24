@@ -41,6 +41,7 @@ import { XYChartComponent } from "../xy-chart.component";
     selector: "nui-stacked-percentage-area-chart",
     templateUrl: "../xy-chart.component.html",
     styleUrls: ["../xy-chart.component.less"],
+    standalone: false,
 })
 export class StackedPercentageAreaChartComponent extends XYChartComponent {
     public static lateLoadKey = "StackedPercentageAreaChartComponent";

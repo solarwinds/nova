@@ -39,6 +39,7 @@ import { IHasChangeDetector } from "../../../../../../../types";
     templateUrl: "./description-configuration.component.html",
     styleUrls: ["./description-configuration.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class DescriptionConfigurationComponent
     implements OnInit, OnDestroy, OnChanges, IHasChangeDetector

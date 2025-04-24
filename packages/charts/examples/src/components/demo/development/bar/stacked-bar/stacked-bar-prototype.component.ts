@@ -39,6 +39,7 @@ import {
 @Component({
     selector: "stacked-bar-prototype",
     templateUrl: "./stacked-bar-prototype.component.html",
+    standalone: false,
 })
 export class StackedBarPrototypeComponent implements OnInit {
     public chartAssist: ChartAssist;

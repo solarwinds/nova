@@ -83,7 +83,7 @@ export class DrilldownDataSource
     private groupBy: string[];
     private cache: any;
     private lastDrillState: string[] = [];
-    private leafGroup: string = "Country";
+    private leafGroup: string = "country";
     private applyFilters$ = new Subject<IFilters>();
 
     constructor(private http: HttpClient, private apollo: Apollo) {
@@ -253,6 +253,7 @@ export class DrilldownDataSource
     selector: "drilldown-multi-request-widget-example",
     templateUrl: "./drilldown-multi-request-widget-example.component.html",
     styleUrls: ["./drilldown-multi-request-widget-example.component.less"],
+    standalone: false,
 })
 export class DrilldownMultiRequestWidgetExampleComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.

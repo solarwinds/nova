@@ -33,6 +33,7 @@ import {
 @Component({
     selector: "nui-basic-vertical-bar-chart-test",
     templateUrl: "./basic-vertical-bar-chart-test.component.html",
+    standalone: false,
 })
 export class BasicVerticalBarChartTestComponent implements OnInit {
     public chartAssist = new ChartAssist(new Chart(barGrid()));

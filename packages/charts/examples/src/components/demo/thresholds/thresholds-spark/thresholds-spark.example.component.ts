@@ -51,6 +51,7 @@ enum Status {
 @Component({
     selector: "nui-thresholds-spark-example",
     templateUrl: "./thresholds-spark.example.component.html",
+    standalone: false,
 })
 export class ThresholdsSparkExampleComponent implements OnInit {
     public chartAssist: SparkChartAssist;

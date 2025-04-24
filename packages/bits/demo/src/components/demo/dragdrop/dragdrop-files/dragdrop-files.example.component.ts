@@ -26,6 +26,7 @@ import { FileDropState } from "../file-drop/public-api";
     selector: "nui-dragdrop-files-example",
     templateUrl: "./dragdrop-files.example.component.html",
     styleUrls: ["./dragdrop-files.example.component.less"],
+    standalone: false,
 })
 export class DragdropFilesExampleComponent {
     public gifError = false;

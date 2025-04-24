@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "kpi-sync-broker-docs",
     templateUrl: "./kpi-sync-broker-docs.component.html",
+    standalone: false,
 })
 export class KpiSyncBrokerDocsComponent {
     public kpiScaleSyncBroker = `

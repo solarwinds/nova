@@ -46,6 +46,7 @@ export interface IAggregatorConfiguratorProperties {
     selector: "nui-aggregator-configurator",
     templateUrl: "./aggregator-configurator.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class AggregatorMetricSelectorConfigurationComponent
     implements OnInit, OnChanges, IHasChangeDetector

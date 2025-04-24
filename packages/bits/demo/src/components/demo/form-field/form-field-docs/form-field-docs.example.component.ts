@@ -25,6 +25,7 @@ import { FormFieldComponent } from "@nova-ui/bits";
 @Component({
     selector: "nui-form-field-docs-example",
     templateUrl: "./form-field-docs.example.component.html",
+    standalone: false,
 })
 export class FormFieldExampleComponent {
     getItemConfigKey(key: keyof FormFieldComponent): string {

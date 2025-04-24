@@ -25,6 +25,7 @@ import { IImagesPresetItem, imagesPresetToken } from "@nova-ui/bits";
 @Component({
     selector: "nui-image-list-example",
     templateUrl: "./image-list.example.component.html",
+    standalone: false,
 })
 export class ImageListExampleComponent {
     constructor(

@@ -24,6 +24,7 @@ import { Component } from "@angular/core";
     selector: "nui-badge-customization",
     templateUrl: "./badge-customization.component.html",
     styleUrls: ["./badge-customization.component.less"],
+    standalone: false,
 })
 export class BadgeCustomizationComponent {
     counter = "999+";

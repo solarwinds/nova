@@ -24,6 +24,7 @@ import { Component, ViewEncapsulation } from "@angular/core";
     selector: "nui-popup-simple-usage-example",
     templateUrl: "./popup-simple-usage.example.component.html",
     encapsulation: ViewEncapsulation.None,
+    standalone: false,
 })
 export class PopupSimpleExampleComponent {
     public icon = "caret-down";

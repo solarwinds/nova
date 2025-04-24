@@ -1,7 +1,8 @@
 {
     "$schema": "/node_modules/@angular/cli/lib/config/schema.json",
     "cli": {
-        "analytics": false
+        "analytics": false,
+        "packageManager": "yarn"
     },
     "newProjectRoot": "projects",
     "projects": {
@@ -63,7 +64,7 @@
                             "browser": ""
                         },
                         "polyfills": [
-                            "./demo/src/polyfills.ts"
+                          "./demo/src/polyfills.ts"
                         ],
                         "scripts": [],
                         "sourceMap": true,
@@ -146,40 +147,6 @@
             "root": "./demo",
             "sourceRoot": "./src"
         },
-        "demo-e2e": {
-            "architect": {
-                "e2e": {
-                    "builder": "@angular-devkit/build-angular:protractor",
-                    "configurations": {
-                        "full": {
-                            "devServerTarget": "demo:serve:e2e",
-                            "protractorConfig": "./protractor-gui.conf.js"
-                        },
-                        "gui": {
-                            "protractorConfig": "./protractor-gui.conf.js"
-                        },
-                        "serve": {
-                            "devServerTarget": "demo:serve:e2e"
-                        }
-                    },
-                    "options": {
-                        "devServerTarget": "",
-                        "protractorConfig": "./protractor.conf.js",
-                        "suite": "e2e",
-                        "webdriverUpdate": false
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-eslint/builder:lint",
-                    "options": {
-                        "lintFilePatterns": ["spec/**/*.ts", "spec/**/*.html"]
-                    }
-                }
-            },
-            "projectType": "application",
-            "root": "./demo",
-            "sourceRoot": ""
-        },
         "generate-css": {
             "architect": {
                 "build": {
@@ -217,29 +184,6 @@
             "root": "./src/styles",
             "sourceRoot": "./src/styles"
         },
-        "i18n": {
-            "architect": {
-                "build": {
-                    "builder": "@angular-devkit/build-angular:application",
-                    "defaultConfiguration": "",
-                    "options": {
-                        "allowedCommonJsDependencies": [
-                            "lodash"
-                        ],
-                        "extractLicenses": false,
-                        "index": "./src/index.html",
-                        "browser": "./src/public_api.ts",
-                        "namedChunks": true,
-                        "optimization": false,
-                        "outputPath": "./.tmp",
-                        "sourceMap": true,
-                        "tsConfig": "./src/tsconfig.i18n.json"
-                    }
-                }
-            },
-            "projectType": "library",
-            "root": "i18n"
-        },
         "lib": {
             "architect": {
                 "build": {
@@ -247,9 +191,6 @@
                     "configurations": {
                         "dev": {
                             "project": "./ng-package-dev.json"
-                        },
-                        "locl": {
-                            "tsConfig": "./tsconfig.lib.locl.json"
                         },
                         "production": {
                             "tsConfig": "./tsconfig.lib.prod.json"
@@ -296,24 +237,21 @@
                             ]
                         },
                         "dev": {
-                            "reporters": [
-                                "progress"
-                            ],
+                            "reporters": ["spec"],
+                            "sourceMap": true,
                             "watch": true
                         }
                     },
                     "options": {
-                        "assets": [],
                         "codeCoverage": false,
                         "karmaConfig": "./karma.conf.js",
                         "main": "./src/test.ts",
                         "polyfills": "./src/polyfills.ts",
-                        "reporters": [
-                            "spec"
-                        ],
-                        "scripts": [],
+                        "preserveSymlinks": true,
                         "sourceMap": false,
-                        "styles": [],
+                        "stylePreprocessorOptions": {
+                            "includePaths": ["src/**/*.less"]
+                        },
                         "tsConfig": "./tsconfig.spec.json",
                         "watch": false
                     }

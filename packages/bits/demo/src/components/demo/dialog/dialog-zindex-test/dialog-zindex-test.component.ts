@@ -41,6 +41,7 @@ import {
     templateUrl: "./dialog-zindex-test.component.html",
     styleUrls: ["./dialog-zindex-test.component.less"],
     encapsulation: ViewEncapsulation.None,
+    standalone: false,
 })
 export class DialogZIndexTestComponent implements OnInit {
     public busy: boolean = false;

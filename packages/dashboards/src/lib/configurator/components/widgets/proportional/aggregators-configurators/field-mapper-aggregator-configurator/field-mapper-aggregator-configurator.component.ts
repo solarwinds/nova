@@ -60,6 +60,7 @@ const DEFAULT_CHART_SERIES_DATA_FIELD: IDataField = {
     selector: "nui-field-mapper-aggregator-configurator",
     templateUrl: "./field-mapper-aggregator-configurator.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class FieldMapperAggregatorConfiguratorComponent
     extends AggregatorMetricSelectorConfigurationComponent

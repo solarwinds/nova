@@ -45,6 +45,7 @@ import { Component, Input, OnInit } from "@angular/core";
             </ng-template>
         </div>
     `,
+    standalone: false,
 })
 export class SchematicJsonComponent implements OnInit {
     // Folder from where schema.json should be taken

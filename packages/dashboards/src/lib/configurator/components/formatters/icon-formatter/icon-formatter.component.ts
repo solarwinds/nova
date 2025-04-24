@@ -46,6 +46,7 @@ import { IFormatterData } from "../types";
             ></nui-icon>
         </ng-template>
     `,
+    standalone: false,
 })
 export class IconFormatterComponent implements OnChanges, IHasChangeDetector {
     static lateLoadKey = "IconFormatterComponent";

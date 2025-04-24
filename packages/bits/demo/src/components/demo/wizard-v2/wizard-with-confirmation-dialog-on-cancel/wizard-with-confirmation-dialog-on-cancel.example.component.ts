@@ -37,12 +37,12 @@ import {
 
 @Component({
     selector: "nui-wizard-with-confirmation-dialog-on-cancel-example",
-    templateUrl:
-        "./wizard-with-confirmation-dialog-on-cancel.example.component.html",
+    templateUrl: "./wizard-with-confirmation-dialog-on-cancel.example.component.html",
     styleUrls: [
         "./wizard-with-confirmation-dialog-on-cancel.example.component.less",
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class WizardWithConfirmationDialogOnCancelExampleComponent {
     public confirmationDialog: NuiDialogRef;

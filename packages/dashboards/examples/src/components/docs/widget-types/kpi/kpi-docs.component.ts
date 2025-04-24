@@ -19,11 +19,13 @@
 //  THE SOFTWARE.
 
 import { Component, OnInit } from "@angular/core";
+
 import { mapContentFile } from "../../../../demo-files-factory";
 
 @Component({
     selector: "nui-kpi-docs",
     templateUrl: "./kpi-docs.component.html",
+    standalone: false,
 })
 export class KpiDocsComponent implements OnInit {
     public kpiWidgetFileText = "";

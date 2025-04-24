@@ -121,6 +121,7 @@ function filterDates(dateToCheck: Date, startDate: Moment, endDate: Moment) {
     selector: "timeseries-widget-example",
     templateUrl: "./timeseries-widget-example.component.html",
     styleUrls: ["./timeseries-widget-example.component.less"],
+    standalone: false,
 })
 export class TimeseriesWidgetExampleComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.

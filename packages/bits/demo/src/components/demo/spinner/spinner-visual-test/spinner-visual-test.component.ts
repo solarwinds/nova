@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-spinner-visual",
     templateUrl: "./spinner-visual-test.component.html",
+    standalone: false,
 })
 export class SpinnerVisualTestComponent {
     public show: boolean = true;

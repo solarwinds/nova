@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-with-button-long-text-example",
     templateUrl: "./button-with-long-text-example.component.html",
+    standalone: false,
 })
 export class ButtonWithLongTextExampleComponent {
     public disableWidthRestriction = true;

@@ -25,6 +25,7 @@ import { IconStatus } from "@nova-ui/bits";
 @Component({
     selector: "nui-icon-child-status-example",
     templateUrl: "./icon-child-status.example.component.html",
+    standalone: false,
 })
 export class IconChildStatusExampleComponent {
     status: IconStatus = IconStatus.Up;

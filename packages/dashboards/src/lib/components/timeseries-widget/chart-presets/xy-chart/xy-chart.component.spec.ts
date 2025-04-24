@@ -61,6 +61,7 @@ import {
 @Component({
     selector: "test-component",
     template: "",
+    standalone: false,
 })
 class TestComponent extends XYChartComponent {
     public static lateLoadKey = "TestComponent";

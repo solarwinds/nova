@@ -31,11 +31,11 @@ interface IFilm {
 
 @Component({
     selector: "nui-sorter-legacy-string-input-usage-visual-test",
-    templateUrl:
-        "./sorter-legacy-string-input-usage-visual-test.component.html",
+    templateUrl: "./sorter-legacy-string-input-usage-visual-test.component.html",
     styleUrls: [
         "./sorter-legacy-string-input-usage-visual-test.component.less",
     ],
+    standalone: false,
 })
 export class SorterLegacyStringInputUsageVisualTestComponent
     implements AfterViewInit

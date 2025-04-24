@@ -23,5 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-panel-position-example",
     templateUrl: "./panel-position.example.component.html",
+    standalone: false,
 })
 export class PanelPositionExampleComponent {}

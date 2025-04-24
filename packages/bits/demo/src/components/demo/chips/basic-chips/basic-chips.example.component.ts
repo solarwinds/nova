@@ -34,6 +34,7 @@ const horizontalFlatItems: IChipsItem[] = [
 @Component({
     selector: "nui-basic-chips-example",
     templateUrl: "./basic-chips.example.component.html",
+    standalone: false,
 })
 export class BasicChipsExampleComponent {
     public horizontalFlatItemsSource: IChipsItemsSource = {

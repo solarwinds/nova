@@ -65,6 +65,7 @@ const TREE_DATA: FoodNode[] = [
     styleUrls: ["tree-with-additional-content.example.component.less"],
     host: { id: "tree-with-additional-content-example" },
     animations: [expand],
+    standalone: false,
 })
 export class TreeWithAdditionalContentExampleComponent {
     treeControl = new NestedTreeControl<FoodNode>((node) => node.children);

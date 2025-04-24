@@ -5,36 +5,22 @@
       "name": "SolarWinds Nova Team"
     }
   ],
-  "dependencies": {},
-  "devDependencies": {
-    "@apollo/client": "^3.7.3",
-    "@types/d3": "^5.7.2",
-    "@types/d3-selection-multi": "^1.0.7",
-    "@yarnpkg/lockfile": "^1.1.0",
-    "angular-gridster2": "17.0.0",
-    "apollo-angular": "^6.0.0",
-    "d3": "^5.9.2",
-    "d3-color": "3.1.0",
-    "d3-selection-multi": "^1.0.1",
-    "d3-time-format": "2.1.3",
-    "graphql": "^16.6.0"
-  },
   "exports": {
     "./sdk/atoms": {
-      "default": "./sdk/atoms/index.js",
-      "types": "./sdk/atmos/index.d.ts"
+      "types": "./sdk/atmos/index.d.ts",
+      "default": "./sdk/atoms/index.js"
     },
     "./sdk/atoms/*": {
-      "default": "./sdk/atoms/*.js",
-      "types": "./sdk/atoms/*.d.ts"
+      "types": "./sdk/atoms/*.d.ts",
+      "default": "./sdk/atoms/*.js"
     },
     "./sdk/schematics": {
-      "default": "./sdk/schematics/index.js",
-      "types": "./sdk/schematics/index.d.ts"
+      "types": "./sdk/schematics/index.d.ts",
+      "default": "./sdk/schematics/index.js"
     },
     "./sdk/schematics/*": {
-      "default": "./sdk/schematics/*.js",
-      "types": "./sdk/schematics/*.d.ts"
+      "types": "./sdk/schematics/*.d.ts",
+      "default": "./sdk/schematics/*.js"
     },
     "./sdk/*": "./sdk/*"
   },
@@ -46,12 +32,17 @@
   ],
   "license": "Apache-2.0",
   "name": "@nova-ui/dashboards",
+  "dependencies": {
+    "@nova-ui/bits": "^17.0.0",
+    "@nova-ui/charts": "^17.0.0"
+  },
+  "devDependencies": {
+    "@apollo/client": "3.7.3",
+    "apollo-angular": "10.0.3",
+    "angular-gridster2": "19.0.0"
+  },
   "peerDependencies": {
-    "@nova-ui/bits": "~17.0.0",
-    "@nova-ui/charts": "~17.0.0",
-    "angular-gridster2": "^15.0.0",
-    "d3": "^5.9.2",
-    "d3-selection-multi": "^1.0.1"
+    "angular-gridster2": "^19.0.0"
   },
   "repository": {
     "type": "git",
@@ -62,13 +53,12 @@
   },
   "schematics": "./sdk/schematics/collection.json",
   "scripts": {
-    "assemble": "run-s lint build-lib:locl build-lib:prod compodoc build-examples:prod build-schematics",
+    "assemble": "run-s lint build-lib:prod compodoc build-examples:prod build-schematics",
     "assemble-dev": "run-s build-lib:prod",
     "build-examples": "ng b examples",
     "build-examples:prod": "yarn run build-examples -c production",
     "build-examples:watch": "yarn run build-examples -c dev",
     "build-lib": "ng b lib",
-    "build-lib:locl": "run-s \"build-lib -c locl\" i18n-locl-extract",
     "build-lib:prod": "run-s \"build-lib -c production\" dist-copy",
     "build-lib:watch": "run-s dist-copy \"build-lib -c dev\"",
     "build-schematics": "yarn run --cwd=schematics assemble",
@@ -79,14 +69,13 @@
     "dist-copy:atoms": "tsc -p spec/tsconfig.atom.json",
     "dist-copy:locl": "npx copyfiles -f sdk/locale/* dist/sdk/locale",
     "e2e": "start-server-and-test serve-examples:prod 4200 e2e:base",
-    "e2e:base": "ng e2e",
-    "e2e:ci": "ng e2e",
+    "e2e:base": "node ../../node_modules/protractor/bin/protractor ./protractor.conf.js",
+    "e2e:ci": "node ../../node_modules/protractor/bin/protractor ./protractor.conf.js",
     "e2e:debug": "yarn run pree2e:base && node --inspect-brk ./node_modules/protractor/bin/protractor",
     "e2e:full": "run-s \"e2e:base -c full\"",
     "e2e:gui": "run-s \"e2e:base -c gui\"",
     "e2e:serve": "run-s \"e2e:base -c serve\"",
     "e2e:watch": "npx watch \"npm run e2e:base\" src examples spec --watch=1",
-    "i18n-locl-extract": "ng extract-i18n lib --format=xlf --output-path=./sdk/locale/ --out-file=messages.en.xlf",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
     "ng": "ng",

@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-widget-error-handling-docs",
     templateUrl: "./widget-error-handling-docs.component.html",
+    standalone: false,
 })
 export class WidgetErrorHandlingDocsComponent {
     public fallbackAdapter = `

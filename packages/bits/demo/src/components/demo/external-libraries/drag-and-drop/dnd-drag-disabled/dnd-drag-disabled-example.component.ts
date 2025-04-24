@@ -30,6 +30,7 @@ class IListItem {
     selector: "dnd-drag-disabled",
     templateUrl: "./dnd-drag-disabled-example.component.html",
     styleUrls: ["./dnd-drag-disabled-example.component.less"],
+    standalone: false,
 })
 export class DndDragDisabledExampleComponent {
     public listItems: IListItem[] = [

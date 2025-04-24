@@ -26,6 +26,7 @@ import { ThemeSwitchService } from "@nova-ui/bits";
     selector: "charts-test-harness",
     templateUrl: "./charts-test-harness.component.html",
     host: { class: "charts-test-harness" },
+    standalone: false,
 })
 export class ChartsTestHarnessComponent implements OnDestroy {
     public originalWithRefreshRoute: boolean;

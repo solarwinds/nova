@@ -55,6 +55,7 @@ enum Status {
 @Component({
     selector: "nui-status-chart-example",
     templateUrl: "./status-chart.example.component.html",
+    standalone: false,
 })
 export class StatusChartExampleComponent implements OnInit {
     public chart = new Chart(new XYGrid(new BarStatusGridConfig()));

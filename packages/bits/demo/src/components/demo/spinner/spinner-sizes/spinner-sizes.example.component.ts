@@ -23,5 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-spinner-sizes-example",
     templateUrl: "./spinner-sizes.example.component.html",
+    standalone: false,
 })
 export class SpinnerSizesExampleComponent {}

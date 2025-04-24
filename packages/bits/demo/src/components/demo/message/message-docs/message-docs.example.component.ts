@@ -23,5 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-message-docs-example",
     templateUrl: "./message-docs.example.component.html",
+    standalone: false,
 })
 export class MessageDocsComponent {}

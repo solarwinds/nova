@@ -25,6 +25,7 @@ import { mapContentFile } from "../../../../demo-files-factory";
 @Component({
     selector: "nui-embedded-content-docs",
     templateUrl: "./embedded-content-docs.component.html",
+    standalone: false,
 })
 export class EmbeddedContentDocsComponent implements OnInit {
     public embeddedContentWidgetFileText = "";

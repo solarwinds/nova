@@ -55,6 +55,7 @@ import { IFilterable, IServer } from "./types";
         },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class FilteredViewWithTreeComponent implements AfterViewInit {
     public filterGroupItems: IFilterGroupItem[] = [

@@ -24,5 +24,6 @@ import { Component } from "@angular/core";
     selector: "nui-chart-tooltips-visual-test",
     templateUrl: "./tooltips-visual-test.component.html",
     styleUrls: ["./tooltips-visual-test.component.less"],
+    standalone: false,
 })
 export class TooltipsVisualTestComponent {}

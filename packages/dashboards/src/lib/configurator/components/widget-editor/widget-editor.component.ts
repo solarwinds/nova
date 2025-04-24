@@ -51,6 +51,7 @@ import { IDashwizWaitEvent } from "../wizard/types";
     templateUrl: "./widget-editor.component.html",
     host: { class: "d-flex flex-column h-100" },
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class WidgetEditorComponent
     implements OnInit, OnDestroy, IHasChangeDetector

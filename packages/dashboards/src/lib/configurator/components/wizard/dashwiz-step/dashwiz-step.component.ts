@@ -40,6 +40,7 @@ import { IDashwizStepComponent, IDashwizStepNavigatedEvent } from "../types";
     selector: "nui-dashwiz-step",
     templateUrl: "./dashwiz-step.component.html",
     styleUrls: ["./dashwiz-step.component.less"],
+    standalone: false,
 })
 export class DashwizStepComponent
     implements IDashwizStepComponent, OnInit, OnChanges

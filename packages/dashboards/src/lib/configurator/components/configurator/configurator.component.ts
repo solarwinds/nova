@@ -53,6 +53,7 @@ import { PreviewService } from "../../services/preview.service";
         },
     ],
     host: { class: "nui-configurator" },
+    standalone: false,
 })
 export class ConfiguratorComponent implements OnInit, OnDestroy {
     public static lateLoadKey = "ConfiguratorComponent";

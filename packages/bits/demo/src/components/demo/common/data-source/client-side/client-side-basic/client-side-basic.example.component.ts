@@ -63,6 +63,7 @@ interface ExampleItem {
     selector: "nui-client-side-basic-data-source-example",
     providers: [ClientSideDataSource],
     templateUrl: "./client-side-basic.example.component.html",
+    standalone: false,
 })
 export class DataSourceClientSideBasicExampleComponent
     implements AfterViewInit, OnDestroy

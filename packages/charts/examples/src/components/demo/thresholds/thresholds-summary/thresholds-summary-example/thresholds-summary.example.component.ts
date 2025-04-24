@@ -59,6 +59,7 @@ enum Status {
 @Component({
     selector: "nui-thresholds-summary-example",
     templateUrl: "./thresholds-summary.example.component.html",
+    standalone: false,
 })
 export class ThresholdsSummaryExampleComponent implements OnInit {
     public chartAssist: ChartAssist;

@@ -38,6 +38,7 @@ import {
 @Component({
     selector: "nui-grouped-vertical-bar-chart-test",
     templateUrl: "./grouped-vertical-bar-chart-test.component.html",
+    standalone: false,
 })
 export class GroupedVerticalBarChartTestComponent implements OnInit {
     public chartAssist: ChartAssist;

@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-content-about-example",
     templateUrl: "./tab-content-about.example.component.html",
+    standalone: false,
 })
 export class TabContentAboutExampleComponent {
     public content: string = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sed erat eget

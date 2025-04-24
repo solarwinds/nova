@@ -30,6 +30,7 @@ const getRandomNumberTo = (max: number) =>
     selector: "nui-combobox-v2-grouped-options-example",
     templateUrl: "combobox-v2-grouped-options.example.component.html",
     host: { class: "combobox-container" },
+    standalone: false,
 })
 export class ComboboxV2GroupedOptionsExampleComponent {
     public items: ISelectGroup[] = Array.from({ length: 10 }).map((_, i) => ({

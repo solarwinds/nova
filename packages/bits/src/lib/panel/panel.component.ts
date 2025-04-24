@@ -91,6 +91,7 @@ const panelMap: any = {
     templateUrl: "./panel.component.html",
     styleUrls: ["./panel.component.less"],
     encapsulation: ViewEncapsulation.None,
+    standalone: false,
 })
 export class PanelComponent
     implements AfterViewInit, OnChanges, OnInit, OnDestroy

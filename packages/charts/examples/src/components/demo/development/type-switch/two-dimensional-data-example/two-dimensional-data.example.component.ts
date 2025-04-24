@@ -84,6 +84,7 @@ export interface IChartAttributes<T extends IAccessors = IAccessors> {
 @Component({
     selector: "nui-chart-two-dimensional-data-example",
     templateUrl: "./two-dimensional-data.example.component.html",
+    standalone: false,
 })
 export class TwoDimensionalDataExampleComponent implements OnInit {
     public chartTypes = [

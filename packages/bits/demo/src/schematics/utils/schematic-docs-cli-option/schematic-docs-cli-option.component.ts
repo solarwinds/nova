@@ -30,6 +30,7 @@ export enum SchematicsDocsComponentType {
 @Component({
     selector: "nui-schematic-cli-option",
     templateUrl: "./schematic-docs-cli-option.component.html",
+    standalone: false,
 })
 export class SchematicsDocsCliOptionComponent {
     @Input() name: string;

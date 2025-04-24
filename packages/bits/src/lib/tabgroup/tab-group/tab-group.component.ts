@@ -40,6 +40,7 @@ import { TabComponent } from "../tab/tab.component";
     },
     styleUrls: ["./tab-group.component.less"],
     encapsulation: ViewEncapsulation.None,
+    standalone: false,
 })
 export class TabGroupComponent implements OnDestroy, AfterViewInit {
     /** If true tabs will be placed vertically */

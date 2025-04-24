@@ -34,6 +34,7 @@ import {
 @Component({
     selector: "nui-base-grid-margins-example",
     templateUrl: "./base-grid-margins.example.component.html",
+    standalone: false,
 })
 export class BaseGridMarginsExampleComponent implements OnInit {
     public chart: Chart;

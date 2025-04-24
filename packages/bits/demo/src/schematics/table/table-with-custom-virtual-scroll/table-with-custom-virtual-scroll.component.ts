@@ -67,6 +67,7 @@ import { VirtualScrollCustomStrategyService } from "./virtual-scroll-custom-stra
             useClass: TableWithCustomVirtualScrollDataSource,
         },
     ],
+    standalone: false,
 })
 export class TableWithCustomVirtualScrollComponent
     implements OnInit, OnDestroy, AfterViewInit

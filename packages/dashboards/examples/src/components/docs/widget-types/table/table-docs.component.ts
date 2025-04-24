@@ -25,6 +25,7 @@ import { mapContentFile } from "../../../../demo-files-factory";
 @Component({
     selector: "nui-table-docs",
     templateUrl: "./table-docs.component.html",
+    standalone: false,
 })
 export class TableDocsComponent implements OnInit {
     public widgetFileText = "";

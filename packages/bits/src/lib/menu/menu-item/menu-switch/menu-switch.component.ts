@@ -66,6 +66,7 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     styleUrls: ["./menu-switch.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: { role: "menuitemcheckbox" },
+    standalone: false,
 })
 export class MenuSwitchComponent extends MenuItemBaseComponent {
     /**

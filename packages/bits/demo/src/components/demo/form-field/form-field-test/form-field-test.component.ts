@@ -25,6 +25,7 @@ import moment from "moment/moment";
 @Component({
     selector: "nui-form-field-test",
     templateUrl: "./form-field-test.component.html",
+    standalone: false,
 })
 export class FormFieldTestComponent implements OnInit {
     public dynamicForm;

@@ -66,6 +66,7 @@ import {
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
     providers: [AcmeFormSubmitHandler],
+    standalone: false,
 })
 export class AcmeDashboardComponent implements OnInit {
     public dashboard: IDashboard = {

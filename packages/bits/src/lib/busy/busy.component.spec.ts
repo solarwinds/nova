@@ -42,11 +42,12 @@ import { TooltipDirective } from "../tooltip/tooltip.directive";
     template: `
         <div #ref nui-busy [busy]="busy">
             <div tabindex="1"></div>
-            <button>button</button>
+            <button type="button">button</button>
             <a href="#" tabindex="2">link</a>
             <input type="text" value="empty" />
         </div>
     `,
+    standalone: false,
 })
 class TestBusyWithTabNavigatableChildrensComponent {
     public busy: boolean;

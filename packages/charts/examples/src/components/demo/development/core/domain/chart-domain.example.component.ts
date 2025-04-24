@@ -55,6 +55,7 @@ import { DataGenerator } from "../../../../../data-generator";
 @Component({
     selector: "nui-chart-domain-example",
     templateUrl: "./chart-domain.example.component.html",
+    standalone: false,
 })
 export class ChartDomainExampleComponent implements OnInit, AfterViewInit {
     @ViewChildren(ChartComponent) chartComponents: QueryList<ChartComponent>;

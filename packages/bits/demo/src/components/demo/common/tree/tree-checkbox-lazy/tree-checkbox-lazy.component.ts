@@ -101,6 +101,7 @@ export class HttpMock {
     styleUrls: ["./tree-checkbox-lazy.component.less"],
     animations: [expand],
     providers: [HttpMock],
+    standalone: false,
 })
 export class TreeCheckboxLazyComponent {
     public selectionModel = new SelectionModel<ServerNode>(true);

@@ -34,6 +34,7 @@ import { IElementPosition } from "../core/plugins/types";
     selector: "nui-chart-donut-content",
     templateUrl: "./chart-donut-content.component.html",
     styleUrls: ["./chart-donut-content.component.less"],
+    standalone: false,
 })
 export class ChartDonutContentComponent implements OnDestroy, OnChanges {
     /** The plugin instance */

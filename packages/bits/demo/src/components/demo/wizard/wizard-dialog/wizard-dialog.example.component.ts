@@ -30,6 +30,7 @@ import {
 @Component({
     selector: "nui-wizard-dialog-example",
     templateUrl: "./wizard-dialog.example.component.html",
+    standalone: false,
 })
 export class WizardDialogExampleComponent {
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;

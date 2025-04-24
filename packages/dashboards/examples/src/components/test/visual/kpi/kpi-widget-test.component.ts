@@ -52,6 +52,7 @@ import {
     styleUrls: ["./kpi-widget-test.component.less"],
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
+    standalone: false,
 })
 export class KpiDashboardComponent implements OnInit {
     public dashboard: IDashboard = {

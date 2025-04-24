@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-chart-docs-accessors-markers",
     templateUrl: "./chart-docs-accessors-markers.component.html",
+    standalone: false,
 })
 export class ChartDocsAccessorsMarkersComponent {
     public customAccessorSnippet = `const accessors = new LineAccessors();

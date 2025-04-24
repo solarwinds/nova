@@ -73,6 +73,7 @@ const PANE_HEADER = "DEFAULT HEADER";
             <div>${CENTER_PANE_CONTENT}</div>
         </nui-panel>
     `,
+    standalone: false,
 })
 class TestAppComponent {
     paneSize = PanelComponent.SIZE_VALUES.width.DEFAULT_VALUE;

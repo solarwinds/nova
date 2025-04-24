@@ -28,6 +28,7 @@ import { IChipRemoved, IChipsItem, IChipsItemsSource } from "@nova-ui/bits";
     templateUrl: "./chips-custom-css.example.component.html",
     styleUrls: ["chips-custom-css.example.component.less"],
     encapsulation: ViewEncapsulation.None,
+    standalone: false,
 })
 export class ChipsCustomCssExampleComponent {
     public standaloneChips: Array<IChipsItem & any> = [

@@ -61,6 +61,7 @@ import {
 @Component({
     selector: "nui-thresholds-summary-test",
     templateUrl: "./thresholds-summary-test.component.html",
+    standalone: false,
 })
 export class ThresholdsSummaryTestComponent implements OnChanges, OnInit {
     @Input() data: Record<string, number[]>;

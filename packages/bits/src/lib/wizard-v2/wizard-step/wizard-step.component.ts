@@ -66,6 +66,7 @@ import { WizardStepLabelDirective } from "../wizard-step-label.directive";
     ],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class WizardStepV2Component
     extends CdkStep

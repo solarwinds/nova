@@ -24,6 +24,7 @@ import { Component } from "@angular/core";
     selector: "nui-busy-basic-example",
     templateUrl: "./busy-basic.example.component.html",
     styleUrls: ["./busy-basic.example.component.less"],
+    standalone: false,
 })
 export class BusyBasicExampleComponent {
     public busy: boolean;

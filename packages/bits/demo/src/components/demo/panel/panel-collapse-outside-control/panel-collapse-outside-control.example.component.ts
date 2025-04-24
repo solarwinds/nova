@@ -25,6 +25,7 @@ import { ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-panel-collapse-outside-control-example",
     templateUrl: "./panel-collapse-outside-control.example.component.html",
+    standalone: false,
 })
 export class PanelCollapseOutsideControlExampleComponent {
     public isCollapsed: boolean = false;

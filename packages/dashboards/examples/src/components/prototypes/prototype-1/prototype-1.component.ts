@@ -85,6 +85,7 @@ import { positions, widgets } from "./widgets";
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
     providers: [AcmeFormSubmitHandler, GlobalFilteringDataSource],
+    standalone: false,
 })
 export class AcmeDashboardComponent
     implements OnInit, AfterViewInit, OnDestroy

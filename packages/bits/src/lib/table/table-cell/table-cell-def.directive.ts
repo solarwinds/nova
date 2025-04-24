@@ -28,6 +28,7 @@ import { Directive, TemplateRef } from "@angular/core";
 @Directive({
     selector: "[nuiCellDef]",
     providers: [{ provide: CdkCellDef, useExisting: TableCellDefDirective }],
+    standalone: false,
 })
 export class TableCellDefDirective extends CdkCellDef {
     constructor(public template: TemplateRef<any>) {

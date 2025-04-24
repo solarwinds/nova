@@ -25,6 +25,7 @@ import { IToastService, NuiActiveDialog, ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-dialog-content-example",
     templateUrl: "./dialog-content.example.component.html",
+    standalone: false,
 })
 export class DialogContentExampleComponent {
     @Input() name: string;

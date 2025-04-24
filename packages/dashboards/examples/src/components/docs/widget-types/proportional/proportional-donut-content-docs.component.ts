@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-proportional-donut-content-docs",
     templateUrl: "./proportional-donut-content-docs.component.html",
+    standalone: false,
 })
 export class ProportionalDonutContentDocsComponent {
     public dataSourceDataFieldsConfig = `

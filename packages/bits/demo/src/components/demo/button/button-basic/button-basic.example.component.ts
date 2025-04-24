@@ -25,6 +25,7 @@ import { ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-button-basic-example",
     templateUrl: "./button-basic.example.component.html",
+    standalone: false,
 })
 export class ButtonBasicExampleComponent {
     constructor(@Inject(ToastService) private toastService: ToastService) {}

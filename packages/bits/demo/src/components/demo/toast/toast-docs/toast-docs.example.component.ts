@@ -25,6 +25,7 @@ import { IToastConfig, IToastDeclaration } from "@nova-ui/bits";
 @Component({
     selector: "nui-toast-docs-example",
     templateUrl: "./toast-docs.example.component.html",
+    standalone: false,
 })
 export class ToastExampleComponent {
     getToastDeclarationKey(key: keyof IToastDeclaration): string {

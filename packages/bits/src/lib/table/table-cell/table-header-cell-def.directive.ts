@@ -30,6 +30,7 @@ import { Directive, TemplateRef } from "@angular/core";
     providers: [
         { provide: CdkHeaderCellDef, useExisting: TableHeaderCellDefDirective },
     ],
+    standalone: false,
 })
 export class TableHeaderCellDefDirective extends CdkHeaderCellDef {
     constructor(public template: TemplateRef<any>) {

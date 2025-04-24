@@ -24,5 +24,6 @@ import { Component } from "@angular/core";
     selector: "nui-badge-empty-basic",
     templateUrl: "./badge-empty-basic.component.html",
     styleUrls: ["./badge-empty-basic.component.less"],
+    standalone: false,
 })
 export class BadgeEmptyBasicComponent {}

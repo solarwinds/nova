@@ -114,6 +114,7 @@ import {
         // Used to prevent table overflowing preview container in the edit/configuration mode.
         "[class.table-widget-fullwidth]": "true",
     },
+    standalone: false,
 })
 export class TableWidgetComponent
     implements AfterViewInit, OnChanges, OnDestroy, OnInit

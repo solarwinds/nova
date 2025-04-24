@@ -156,6 +156,7 @@ export class RatingsCountKpiDataSource
     selector: "widget-editor-setup",
     templateUrl: "./widget-editor-setup.component.html",
     styleUrls: ["./widget-editor-setup.component.less"],
+    standalone: false,
 })
 export class WidgetEditorSetupComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.

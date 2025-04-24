@@ -25,6 +25,7 @@ import { DialogService, NuiDialogRef } from "@nova-ui/bits";
 @Component({
     selector: "nui-dialog-visual-test",
     templateUrl: "./dialog-visual-test.component.html",
+    standalone: false,
 })
 export class DialogVisualTestComponent {
     public severity: string;

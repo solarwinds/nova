@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-checkbox-group-justified-example",
     templateUrl: "./checkbox-group-justified.example.component.html",
+    standalone: false,
 })
 export class CheckboxGroupJustifiedExampleComponent {
     public cabbage = $localize`Cabbage`;

@@ -24,5 +24,6 @@ import { Component } from "@angular/core";
     selector: "semantic-variables-example",
     styleUrls: ["semantic-variables.example.component.less"],
     templateUrl: "./semantic-variables.example.component.html",
+    standalone: false,
 })
 export class SemanticVariablesExampleComponent {}

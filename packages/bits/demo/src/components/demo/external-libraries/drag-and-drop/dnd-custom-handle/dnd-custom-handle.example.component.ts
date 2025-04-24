@@ -31,6 +31,7 @@ class IListItem {
     selector: "dnd-custom-handle",
     templateUrl: "./dnd-custom-handle.example.component.html",
     styleUrls: ["./dnd-custom-handle.example.component.less"],
+    standalone: false,
 })
 export class DndCustomHandleExampleComponent {
     public mousedOver: boolean[] = [];

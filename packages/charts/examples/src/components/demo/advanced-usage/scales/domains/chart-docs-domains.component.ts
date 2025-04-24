@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-chart-docs-domains",
     templateUrl: "./chart-docs-domains.component.html",
+    standalone: false,
 })
 export class ChartDocsDomainsComponent {
     public fixedDomainExplicit = `const bandScale = new BandScale();

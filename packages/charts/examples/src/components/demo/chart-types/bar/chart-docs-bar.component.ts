@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-chart-docs-bar",
     templateUrl: "./chart-docs-bar.component.html",
+    standalone: false,
 })
 export class ChartDocsBarComponent {
     public horizontalConfig = `public config = { horizontal: true } as IBarChartConfig;

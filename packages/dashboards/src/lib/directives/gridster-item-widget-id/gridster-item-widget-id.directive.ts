@@ -34,6 +34,7 @@ import { GridsterItemComponent } from "angular-gridster2";
  */
 @Directive({
     selector: "[nuiGridsterItemWidgetId]",
+    standalone: false,
 })
 export class GridsterItemWidgetIdDirective implements OnChanges {
     @Input() nuiGridsterItemWidgetId: string;

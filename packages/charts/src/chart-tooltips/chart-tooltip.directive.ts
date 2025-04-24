@@ -44,7 +44,10 @@ import { Subject, Subscription } from "rxjs";
 import { ChartTooltipComponent } from "./chart-tooltip.component";
 
 /** @ignore */
-@Directive({ selector: "[nuiChartTooltip]" })
+@Directive({
+    selector: "[nuiChartTooltip]",
+    standalone: false,
+})
 export class ChartTooltipDirective implements OnInit, OnDestroy {
     @Input() template: TemplateRef<any>;
 

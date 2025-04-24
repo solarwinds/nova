@@ -30,5 +30,6 @@ import { Component, ViewEncapsulation } from "@angular/core";
     template: `<div class="nui-overlay-arrow"></div>`,
     styleUrls: ["./overlay-arrow.component.less"],
     encapsulation: ViewEncapsulation.None,
+    standalone: false,
 })
 export class OverlayArrowComponent {}

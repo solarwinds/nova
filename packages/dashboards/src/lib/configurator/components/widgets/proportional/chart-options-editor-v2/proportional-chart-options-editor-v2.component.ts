@@ -57,6 +57,7 @@ import { ConfiguratorHeadingService } from "../../../../services/configurator-he
     templateUrl: "proportional-chart-options-editor-v2.component.html",
     styleUrls: ["proportional-chart-options-editor-v2.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class ProportionalChartOptionsEditorV2Component
     implements OnInit, IHasChangeDetector, IHasForm, OnChanges, OnDestroy

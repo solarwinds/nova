@@ -47,6 +47,7 @@ export const LEGEND_SERIES_CLASS_NAME = "nui-legend-series";
     selector: "nui-legend-series",
     templateUrl: "./legend-series.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class LegendSeriesComponent implements AfterContentInit {
     /**

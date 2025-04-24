@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-message-critical-example",
     templateUrl: "./message-critical.example.component.html",
+    standalone: false,
 })
 export class MessageCriticalExampleComponent {
     public onMessageDismiss(): void {

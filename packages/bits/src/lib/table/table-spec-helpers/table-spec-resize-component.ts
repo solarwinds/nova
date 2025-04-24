@@ -74,6 +74,7 @@ import { TableSpecHelpers } from "./table-spec-helpers";
     `,
     styleUrls: ["../../../styles.less", "../table.component.less"],
     encapsulation: ViewEncapsulation.None,
+    standalone: false,
 })
 export class ResizeTableComponent {
     public displayedColumns = ["position", "name", "asset", "location"];

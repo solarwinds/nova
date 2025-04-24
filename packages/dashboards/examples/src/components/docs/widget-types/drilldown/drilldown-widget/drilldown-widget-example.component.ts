@@ -183,7 +183,7 @@ export class DrilldownDataSourceRealApi<T = any>
             // mock delay
             delay(300),
             // data mapping, !DS specific!
-            map((res: any) => res.data.Country),
+            map((res) => res.data.countries),
             // adds mock icons to be displayed on leaf nodes !DS specific!
             map((res: any[]) =>
                 res.map((v) => ({
@@ -205,30 +205,20 @@ export class DrilldownDataSourceRealApi<T = any>
 
     private generateQuery(filters: INovaFilters) {
         const { search } = filters;
-        const searchValue = search?.value ?? "";
+        const searchValue = search?.value ? `^[${search.value}]*` : "";
 
         const queryString = `
             query {
-                Country(filter: {
-                    OR: [
-                      { name_contains: "${searchValue}" },
-                      { capital_contains: "${searchValue}" }
-                    ],
-                }) {
+                countries(filter: {name: {regex: "${searchValue}"} }) {
                     name
+                    native
                     capital
-                    population
-                    officialLanguages {
+                    languages {
                         name
                     }
-                    currencies {
+                    currencies
+                    subdivisions {
                         name
-                    }
-                    subregion {
-                        name
-                        region {
-                            name
-                        }
                     }
                 }
             }
@@ -303,6 +293,7 @@ export class DrilldownDataSourceRealApi<T = any>
     selector: "drilldown-widget-example",
     templateUrl: "./drilldown-widget-example.component.html",
     styleUrls: ["./drilldown-widget-example.component.less"],
+    standalone: false,
 })
 export class DrilldownWidgetExampleComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.

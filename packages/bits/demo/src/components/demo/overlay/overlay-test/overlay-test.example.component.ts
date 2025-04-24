@@ -25,5 +25,6 @@ import { Component, ViewEncapsulation } from "@angular/core";
     templateUrl: "./overlay-test.example.component.html",
     styleUrls: ["overlay-test.example.component.less"],
     encapsulation: ViewEncapsulation.None,
+    standalone: false,
 })
 export class OverlayTestComponent {}

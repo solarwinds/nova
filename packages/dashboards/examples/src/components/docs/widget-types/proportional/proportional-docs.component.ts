@@ -25,6 +25,7 @@ import { mapContentFile } from "../../../../demo-files-factory";
 @Component({
     selector: "nui-proportional-docs",
     templateUrl: "./proportional-docs.component.html",
+    standalone: false,
 })
 export class ProportionalDocsComponent implements OnInit {
     public proportionalWidgetFileText = "";

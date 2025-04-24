@@ -18,15 +18,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 
 import { mapContentFile } from "../../../../demo-files-factory";
 
 @Component({
     selector: "nui-risk-score-docs",
     templateUrl: "./risk-score-docs.component.html",
+    standalone: false,
 })
-export class RiskScoreDocsComponent {
+export class RiskScoreDocsComponent implements OnInit {
     public riskScoreWidgetFileText = "";
     public riskScoreConfiguratorFileText = "";
 
