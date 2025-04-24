@@ -60,7 +60,7 @@ export class ToastBasicHtmlExampleComponent implements OnInit {
     public showToastWithScriptTagIncluded(): void {
         this.toastService.info({
             title: $localize`Toast with forbidden tags and enableHtml set to true`,
-            message: $localize`
+            message: `
                 Hi there! I'm a toast message with forbidden tags:
                 <script>alert("You shall not pass")</script>
                 <object width="400" height="400"></object>
