@@ -118,7 +118,7 @@
     "visual:full": "yarn run visual:base -c full",
     "visual:gui": "yarn run visual:base -c gui",
     "visual:serve": "yarn run visual:base -c serve",
-    "visual:watch": "npx watch \"yarn run visual:base\" src demo spec --watch=1",
+    "visual:watch": "npx watch \"yarn run visual:base\" src demo spec --watch=1"
   },
   "typings": "public_api.d.ts",
   "version": "17.0.0",
