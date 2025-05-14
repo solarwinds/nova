@@ -35,6 +35,7 @@ import {
 @Component({
     selector: "nui-spark-chart-legend-example",
     templateUrl: "./spark-chart-legend.example.component.html",
+    standalone: false,
 })
 export class SparkChartLegendExampleComponent implements OnInit {
     public chartAssist: SparkChartAssist;

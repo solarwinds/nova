@@ -54,6 +54,7 @@ import { IServer } from "./types";
             useClass: TableWithSearchDataSource,
         },
     ],
+    standalone: false,
 })
 export class TableWithSearchComponent
     implements OnInit, OnDestroy, AfterViewInit

@@ -26,6 +26,7 @@ import { ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-time-picker-preserve-insignificant",
     templateUrl: "./time-picker-preserve-insignificant.example.component.html",
+    standalone: false,
 })
 export class TimePickerPreserveInsignificantExampleComponent {
     public time: Moment;

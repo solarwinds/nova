@@ -23,6 +23,7 @@ import { Component, Input } from "@angular/core";
 @Component({
     selector: "nui-switch-value-change-example",
     templateUrl: "./switch-value-change.example.component.html",
+    standalone: false,
 })
 export class SwitchValueChangeExampleComponent {
     @Input() isOn = true;

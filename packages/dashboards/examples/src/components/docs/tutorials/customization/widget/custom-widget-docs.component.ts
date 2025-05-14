@@ -23,5 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "custom-widget-docs",
     templateUrl: "./custom-widget-docs.component.html",
+    standalone: false,
 })
 export class CustomWidgetDocsComponent {}

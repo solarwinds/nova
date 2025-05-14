@@ -38,6 +38,7 @@ import {
     selector: "nui-overlay-viewport-margin-example",
     templateUrl: "./overlay-viewport-margin.example.component.html",
     encapsulation: ViewEncapsulation.Emulated,
+    standalone: false,
 })
 export class OverlayViewportMarginExampleComponent
     implements AfterViewInit, OnDestroy

@@ -37,6 +37,7 @@ import {
 @Component({
     selector: "nui-line-chart-with-legend-example",
     templateUrl: "./line-chart-with-legend.example.component.html",
+    standalone: false,
 })
 export class LineChartWithLegendExampleComponent implements OnInit {
     public chart = new Chart(new XYGrid());

@@ -95,6 +95,7 @@ interface IDndItemDropped<T = unknown> {
         "[attr.role]": "role",
         "[attr.aria-multiselectable]": "ariaMultiselectable",
     },
+    standalone: false,
 })
 export class RepeatComponent<T extends IRepeatItem = unknown>
     implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub

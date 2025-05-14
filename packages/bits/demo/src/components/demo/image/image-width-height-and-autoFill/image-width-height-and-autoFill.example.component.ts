@@ -24,5 +24,6 @@ import { Component } from "@angular/core";
     selector: "nui-image-width-height-autofill-example",
     templateUrl: "./image-width-height-and-autoFill.example.component.html",
     styleUrls: ["image-width-height-and-autoFill.example.component.less"],
+    standalone: false,
 })
 export class ImageWidthHeightAndAutoFillExampleComponent {}

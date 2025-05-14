@@ -27,6 +27,7 @@ import { ToastService } from "@nova-ui/bits";
     templateUrl: "./select-v2-custom-content.example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["select-v2-custom-content.example.component.less"],
+    standalone: false,
 })
 export class SelectV2CustomContentExampleComponent {
     public items = [

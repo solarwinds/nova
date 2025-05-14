@@ -63,6 +63,7 @@ import hljs from "highlight.js";
     templateUrl: "./example-code.component.html",
     styleUrls: ["./example-code.component.less"],
     encapsulation: ViewEncapsulation.None,
+    standalone: false,
 })
 export class ExampleCodeComponent {
     /**

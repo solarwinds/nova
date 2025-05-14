@@ -45,6 +45,7 @@ import { ValidationMessageComponent } from "../validation-message/validation-mes
     templateUrl: "./form-field.component.html",
     styleUrls: ["./form-field.component.less"],
     encapsulation: ViewEncapsulation.None,
+    standalone: false,
 })
 export class FormFieldComponent
     implements AfterContentInit, AfterContentChecked

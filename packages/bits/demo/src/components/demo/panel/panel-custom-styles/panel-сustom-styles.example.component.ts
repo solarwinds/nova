@@ -25,6 +25,7 @@ import { PanelBackgroundColor } from "@nova-ui/bits";
 @Component({
     selector: "nui-panel-custom-styles-example",
     templateUrl: "./panel-custom-styles.example.component.html",
+    standalone: false,
 })
 export class PanelCustomStylesExampleComponent {
     constructor() {}

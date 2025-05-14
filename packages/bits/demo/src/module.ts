@@ -20,7 +20,10 @@
 
 /// <reference path="ref.d.ts"/>
 
-import { HttpClientModule } from "@angular/common/http";
+import {
+    provideHttpClient,
+    withInterceptorsFromDi,
+} from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
@@ -29,21 +32,19 @@ import { NuiDocsModule } from "@nova-ui/bits";
 
 import { AppRoutingModule } from "./components/app/app-routing.module";
 import { AppComponent } from "./components/app/app.component";
-import {
-    AnimationsModule,
-} from "./environments/environment";
+import { AnimationsModule } from "./environments/environment";
 
 @NgModule({
+    declarations: [AppComponent],
+    bootstrap: [AppComponent],
     imports: [
         AppRoutingModule,
         BrowserModule,
         FormsModule,
-        HttpClientModule,
         ReactiveFormsModule,
         AnimationsModule,
         NuiDocsModule,
     ],
-    declarations: [AppComponent],
-    bootstrap: [AppComponent],
+    providers: [provideHttpClient(withInterceptorsFromDi())],
 })
 export class NuiDemoModule {}

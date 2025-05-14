@@ -24,6 +24,7 @@ import { Subject } from "rxjs";
 @Component({
     selector: "nui-message-manual-control-example",
     templateUrl: "./message-manual-control.example.component.html",
+    standalone: false,
 })
 export class MessageManualControlExampleComponent {
     public isVisible: boolean = true;

@@ -46,6 +46,7 @@ import { WizardDirective, WizardStepV2Component } from "@nova-ui/bits";
     ],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class WizardCustomComponent extends WizardDirective {}
 
@@ -59,6 +60,7 @@ export class WizardCustomComponent extends WizardDirective {}
             useValue: { displayDefaultIndicatorType: false },
         },
     ],
+    standalone: false,
 })
 export class WizardCustomExampleComponent implements AfterViewInit {
     public form;

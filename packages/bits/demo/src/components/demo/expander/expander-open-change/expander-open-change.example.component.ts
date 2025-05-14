@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-expander-open-change-example",
     templateUrl: "expander-open-change.example.component.html",
+    standalone: false,
 })
 export class ExpanderOpenChangeExampleComponent {
     public bindingExampleOpen: boolean = false;

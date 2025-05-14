@@ -24,6 +24,7 @@ import { Component } from "@angular/core";
     selector: "nui-combobox-v2-docs-example",
     templateUrl: "./combobox-v2-docs.example.component.html",
     styleUrls: ["combobox-v2-docs.example.component.less"],
+    standalone: false,
 })
 export class ComboboxV2DocsComponent {
     public scrollTo($element: HTMLElement): void {

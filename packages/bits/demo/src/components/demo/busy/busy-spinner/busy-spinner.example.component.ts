@@ -24,6 +24,7 @@ import { Component } from "@angular/core";
     selector: "nui-busy-spinner-example",
     templateUrl: "./busy-spinner.example.component.html",
     styleUrls: ["./busy-spinner.example.component.less"],
+    standalone: false,
 })
 export class BusySpinnerExampleComponent {
     public busy: boolean;

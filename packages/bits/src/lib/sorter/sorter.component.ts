@@ -64,6 +64,7 @@ import { OverlayComponent } from "../overlay/overlay-component/overlay.component
     styleUrls: ["./sorter.component.less"],
     encapsulation: ViewEncapsulation.None,
     providers: [SorterKeyboardService],
+    standalone: false,
 })
 export class SorterComponent
     implements OnChanges, OnInit, OnDestroy, AfterViewInit, IFilterPub

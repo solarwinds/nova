@@ -25,6 +25,7 @@ import { IToastService, ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-value-change-radio-group-example",
     templateUrl: "./value-change-radio-group.example.component.html",
+    standalone: false,
 })
 export class ValueChangeRadioGroupExampleComponent {
     public colors = [$localize`Red`, $localize`Green`, $localize`Blue`];

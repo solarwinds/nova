@@ -25,6 +25,7 @@ import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-dialog-position-example",
     templateUrl: "./dialog-position.example.component.html",
+    standalone: false,
 })
 export class DialogPositionExampleComponent {
     public isResponsiveMode = false;

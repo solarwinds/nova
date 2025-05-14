@@ -27,6 +27,7 @@ import { IToastService, ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-date-picker-insignificant-example",
     templateUrl: "./date-picker-insignificant.example.component.html",
+    standalone: false,
 })
 export class DatePickerInsignificantExampleComponent {
     public dt: Moment = moment().endOf("day");

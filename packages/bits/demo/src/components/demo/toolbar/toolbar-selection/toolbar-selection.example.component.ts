@@ -25,6 +25,7 @@ import { LoggerService } from "@nova-ui/bits";
 @Component({
     selector: "nui-toolbar-selection-example",
     templateUrl: "./toolbar-selection.example.component.html",
+    standalone: false,
 })
 export class ToolbarSelectionExampleComponent {
     public selectionEnabled = true;

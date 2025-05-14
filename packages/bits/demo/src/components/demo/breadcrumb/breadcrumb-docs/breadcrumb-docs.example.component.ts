@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-breadcrumb-docs-example",
     templateUrl: "./breadcrumb-docs.example.component.html",
+    standalone: false,
 })
 export class BreadcrumbDocsExampleComponent {
     public routesExample = `{

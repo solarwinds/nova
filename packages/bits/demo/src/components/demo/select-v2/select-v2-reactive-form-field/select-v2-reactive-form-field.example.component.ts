@@ -25,6 +25,7 @@ import { FormBuilder, Validators } from "@angular/forms";
     selector: "nui-select-v2-reactive-form-field-example",
     templateUrl: "./select-v2-reactive-form-field.example.component.html",
     host: { class: "select-container" },
+    standalone: false,
 })
 export class SelectV2ReactiveFormFieldExampleComponent {
     public items = Array.from({ length: 100 }).map(

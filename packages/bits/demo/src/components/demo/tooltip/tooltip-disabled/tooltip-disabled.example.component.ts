@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-tooltip-disabled-example",
     templateUrl: "tooltip-disabled.example.component.html",
+    standalone: false,
 })
 export class TooltipDisabledExampleComponent {
     public isDisabled = false;

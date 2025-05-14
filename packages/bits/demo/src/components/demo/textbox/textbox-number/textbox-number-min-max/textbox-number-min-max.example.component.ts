@@ -24,6 +24,7 @@ import { FormBuilder } from "@angular/forms";
 @Component({
     selector: "nui-textbox-number-min-max-example",
     templateUrl: "./textbox-number-min-max.example.component.html",
+    standalone: false,
 })
 export class TextboxNumberMinMaxExampleComponent {
     public value = 10;

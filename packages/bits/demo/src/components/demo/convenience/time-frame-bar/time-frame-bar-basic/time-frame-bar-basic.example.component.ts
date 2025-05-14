@@ -26,6 +26,7 @@ import { ITimeframe } from "@nova-ui/bits";
 @Component({
     selector: "nui-convenience-time-frame-bar-basic-example",
     templateUrl: "./time-frame-bar-basic.example.component.html",
+    standalone: false,
 })
 export class TimeFrameBarBasicExampleComponent implements OnInit {
     public minDate: Moment;

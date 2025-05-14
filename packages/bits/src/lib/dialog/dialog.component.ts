@@ -28,7 +28,6 @@ import {
     HostListener,
     Inject,
     Input,
-    NgZone,
     OnDestroy,
     OnInit,
     Output,
@@ -60,8 +59,9 @@ const FOCUSABLE_SELECTOR =
     templateUrl: "./dialog.component.html",
     styleUrls: ["./dialog.component.less"],
     encapsulation: ViewEncapsulation.None,
+    standalone: false,
 })
-export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
+export class DialogComponent implements OnInit, AfterViewInit, OnDestroy  {
     private elWithFocus: any;
     /**
      * Whether a backdrop element should be created for a given dialog (true by default).
@@ -96,8 +96,6 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
         @Inject(DOCUMENT) private document: Document,
         private elRef: ElementRef,
         private renderer: Renderer2,
-        private ngZone: NgZone,
-        private scrollDispatcher: ScrollDispatcher,
         private router: Router
     ) {}
 
@@ -145,13 +143,6 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
     public ngOnInit(): void {
         this.elWithFocus = this.document.activeElement;
         this.renderer.addClass(this.document.body, "dialog-open");
-        this.scrollableElement = new CdkScrollable(
-            this.elRef,
-            this.scrollDispatcher,
-            this.ngZone
-        );
-        this.scrollDispatcher.register(this.scrollableElement);
-
         this.router.events
             .pipe(
                 filter((e) => e instanceof NavigationEnd),
@@ -183,7 +174,6 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.elWithFocus = null;
         this.renderer.removeClass(body, "dialog-open");
-        this.scrollDispatcher.deregister(this.scrollableElement);
     }
 
     private handleFocus(event: KeyboardEvent): void {

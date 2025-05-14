@@ -39,6 +39,7 @@ import {
 @Component({
     selector: "nui-spark-chart-basic-example",
     templateUrl: "./spark-chart-basic.example.component.html",
+    standalone: false,
 })
 export class SparkChartBasicExampleComponent implements OnInit {
     public chart: IChart;

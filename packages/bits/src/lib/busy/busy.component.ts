@@ -43,6 +43,7 @@ import { SpinnerComponent } from "../spinner/spinner.component";
     providers: [TabNavigationService],
     encapsulation: ViewEncapsulation.None,
     host: { "[attr.aria-busy]": "busy" },
+    standalone: false,
 })
 /* eslint-enable @angular-eslint/component-selector */
 export class BusyComponent implements AfterContentInit, OnChanges {

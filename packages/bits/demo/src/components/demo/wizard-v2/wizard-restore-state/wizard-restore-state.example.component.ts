@@ -48,6 +48,7 @@ interface IWizardStepData {
     selector: "nui-wizard-restore-state-example",
     templateUrl: "./wizard-restore-state.example.component.html",
     styleUrls: ["wizard-restore-state.example.component.less"],
+    standalone: false,
 })
 export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
     public form;

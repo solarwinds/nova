@@ -58,6 +58,7 @@ import { IAggregatorConfiguratorProperties } from "../aggregators-configurators/
     templateUrl: "./donut-content-configuration.component.html",
     styleUrls: ["./donut-content-configuration.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class DonutContentConfigurationComponent
     implements OnInit, OnChanges, IHasChangeDetector, OnDestroy

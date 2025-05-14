@@ -47,6 +47,7 @@ import { ITimeframe } from "./public-api";
 
 @Pipe({
     name: "timeFrame",
+    standalone: false,
 })
 export class TimeFrameFormatPipe implements PipeTransform {
     transform(timeFrame: ITimeframe, momentFormat: string = "LLL"): string {

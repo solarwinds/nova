@@ -75,6 +75,7 @@ import { DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
     selector: "nui-table-columns-configuration",
     templateUrl: "./table-columns-configuration.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class TableColumnsConfigurationComponent
     implements OnInit, IHasForm, OnChanges, OnDestroy

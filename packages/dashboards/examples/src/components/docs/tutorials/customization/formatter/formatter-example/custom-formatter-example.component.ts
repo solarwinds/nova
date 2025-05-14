@@ -76,6 +76,7 @@ export const BREW_API_URL = "https://api.punkapi.com/v2/beers";
         </div>
     `,
     styleUrls: ["./custom-formatter-example.component.less"],
+    standalone: false,
 })
 export class CustomFormatterComponent implements IHasChangeDetector {
     public static lateLoadKey = "CustomFormatterComponent";
@@ -207,6 +208,7 @@ export class CustomFormatterComponent implements IHasChangeDetector {
             </ng-template>
         </ng-template>
     `,
+    standalone: false,
 })
 export class CustomFormatterConfiguratorComponent
     extends FormatterConfiguratorComponent
@@ -255,6 +257,7 @@ export class CustomFormatterConfiguratorComponent
     selector: "custom-formatter-example",
     templateUrl: "./custom-formatter-example.component.html",
     styleUrls: ["./custom-formatter-example.component.less"],
+    standalone: false,
 })
 export class CustomFormatterExampleComponent implements OnInit {
     public editMode: boolean = false;

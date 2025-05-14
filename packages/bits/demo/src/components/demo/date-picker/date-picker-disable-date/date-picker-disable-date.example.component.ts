@@ -26,6 +26,7 @@ import { IDatePickerDisabledDate } from "@nova-ui/bits";
 @Component({
     selector: "nui-date-picker-disable-date-example",
     templateUrl: "./date-picker-disable-date.example.component.html",
+    standalone: false,
 })
 export class DatePickerDisableDateExampleComponent {
     private currentDate = moment();

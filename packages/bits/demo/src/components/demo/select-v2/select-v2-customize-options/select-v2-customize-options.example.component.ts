@@ -31,6 +31,7 @@ interface IExampleItem {
     selector: "nui-select-v2-customize-options-example",
     templateUrl: "select-v2-customize-options.example.component.html",
     host: { class: "select-container" },
+    standalone: false,
 })
 export class SelectV2CustomizeOptionsExampleComponent {
     public icons: string[] = ["check", "email", "execute"];

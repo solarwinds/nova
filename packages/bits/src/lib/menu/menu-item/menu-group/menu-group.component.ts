@@ -43,6 +43,7 @@ import { Component, Input, ViewEncapsulation } from "@angular/core";
     styleUrls: ["./menu-group.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: { role: "group" },
+    standalone: false,
 })
 export class MenuGroupComponent {
     @Input() header?: string;

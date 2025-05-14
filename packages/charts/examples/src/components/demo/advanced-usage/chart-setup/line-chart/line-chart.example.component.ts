@@ -33,6 +33,7 @@ import {
 @Component({
     selector: "nui-line-chart-example",
     templateUrl: "./line-chart.example.component.html",
+    standalone: false,
 })
 export class LineChartExampleComponent implements OnInit {
     public chart = new Chart(new XYGrid());

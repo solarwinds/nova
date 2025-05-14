@@ -44,6 +44,7 @@ enum Status {
 @Component({
     selector: "nui-vertical-with-legend-bar-chart-test",
     templateUrl: "./vertical-with-legend-bar-chart-test.component.html",
+    standalone: false,
 })
 export class VerticalWithLegendBarChartTestComponent implements OnInit {
     public chartAssist = new ChartAssist(new Chart(barGrid()));

@@ -41,6 +41,7 @@ import {
     selector: "app-custom-data-source-filter-group",
     templateUrl: "./custom-data-source-filter-group.component.html",
     styleUrls: ["./custom-data-source-filter-group.component.less"],
+    standalone: false,
 })
 export class CustomDataSourceFilterGroupCompositeComponent
     implements IFilterPub, OnInit

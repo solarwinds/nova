@@ -51,6 +51,7 @@ interface IWizardStepData {
     selector: "nui-wizard-test",
     templateUrl: "./wizard-test.component.html",
     styleUrls: ["./wizard-test.less"],
+    standalone: false,
 })
 export class WizardV2TestComponent implements AfterViewInit, OnDestroy {
     public onDestroy$ = new Subject<void>();
