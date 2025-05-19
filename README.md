@@ -17,6 +17,7 @@ Nova UI consists of three packages within a single monorepo:
 
 ## Contributions
 
+
 We encourage [contributions to Nova](./docs/CONTRIBUTION.md#contributing-to-nova) whenever your team needs a new component, new functionality in an existing component, new icons, bug fixes or atom extensions.
 
 ## Need help?
