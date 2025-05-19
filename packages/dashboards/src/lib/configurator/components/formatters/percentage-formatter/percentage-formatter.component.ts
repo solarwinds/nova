@@ -25,7 +25,6 @@ import { RawFormatterComponent } from "../raw-formatter/raw-formatter.component"
 @Component({
     selector: "nui-dashboards-percentage-formatter",
     template: `<ng-container> {{ data?.value }}% </ng-container>`,
-    standalone: false,
 })
 export class PercentageFormatterComponent extends RawFormatterComponent {
     static lateLoadKey = "PercentageFormatterComponent";

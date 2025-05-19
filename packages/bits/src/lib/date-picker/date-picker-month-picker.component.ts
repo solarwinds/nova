@@ -27,7 +27,6 @@ import { DatePickerInnerComponent } from "./date-picker-inner.component";
 @Component({
     selector: "nui-month-picker",
     templateUrl: "./date-picker-month-picker.component.html",
-    standalone: false,
 })
 export class MonthPickerComponent implements OnInit {
     title: string;

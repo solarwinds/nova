@@ -23,6 +23,5 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-time-picker-disabled",
     templateUrl: "./time-picker-disabled.example.component.html",
-    standalone: false,
 })
 export class TimePickerDisabledExampleComponent {}

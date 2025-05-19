@@ -102,7 +102,6 @@ export class AverageRatingKpiDataSource
     selector: "kpi-widget-example",
     templateUrl: "./kpi-widget-example.component.html",
     styleUrls: ["./kpi-widget-example.component.less"],
-    standalone: false,
 })
 export class KpiWidgetExampleComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.

@@ -58,7 +58,6 @@ import { UtilService } from "../../services/util.service";
         role: "img",
         "[attr.aria-label]": "hasAlt ? null : description || imageName",
     },
-    standalone: false,
 })
 export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
     /**

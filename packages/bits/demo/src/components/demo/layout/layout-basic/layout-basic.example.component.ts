@@ -24,6 +24,5 @@ import { Component } from "@angular/core";
     selector: "nui-layout-basic-example",
     templateUrl: "./layout-basic.example.component.html",
     styleUrls: ["./layout-basic.example.component.less"],
-    standalone: false,
 })
 export class LayoutBasicExampleComponent {}

@@ -8,30 +8,30 @@
   ],
   "description": "SolarWinds Nova Framework",
   "devDependencies": {
-    "@apollo/client": "3.7.3",
-    "animate.css": "4.1.1",
-    "apollo-angular": "10.0.3",
-    "bootstrap-less-port": "0.3.0",
-    "graphql": "16.8.1",
-    "modernizr": "3.12.0",
-    "proxyquire": "2.1.3"
+    "@apollo/client": "^3.7.2",
+    "animate.css": "^4.1.1",
+    "apollo-angular": "^6.0.0",
+    "bootstrap-less-port": "^0.3.0",
+    "graphql": "^16.6.0",
+    "modernizr": "~3.12.0",
+    "proxyquire": "^2.1.3"
   },
   "exports": {
     "./sdk/atoms": {
-      "types": "./sdk/atmos/index.d.ts",
-      "default": "./sdk/atoms/index.js"
+      "default": "./sdk/atoms/index.js",
+      "types": "./sdk/atmos/index.d.ts"
     },
     "./sdk/atoms/*": {
-      "types": "./sdk/atoms/*.d.ts",
-      "default": "./sdk/atoms/*.js"
+      "default": "./sdk/atoms/*.js",
+      "types": "./sdk/atoms/*.d.ts"
     },
     "./sdk/schematics": {
-      "types": "./sdk/schematics/index.d.ts",
-      "default": "./sdk/schematics/index.js"
+      "default": "./sdk/schematics/index.js",
+      "types": "./sdk/schematics/index.d.ts"
     },
     "./sdk/schematics/*": {
-      "types": "./sdk/schematics/*.d.ts",
-      "default": "./sdk/schematics/*.js"
+      "default": "./sdk/schematics/*.js",
+      "types": "./sdk/schematics/*.d.ts"
     },
     "./sdk/*": "./sdk/*",
     "./bundles/*": "./bundles/*"
@@ -63,12 +63,13 @@
     "a11y": "start-server-and-test serve-examples:prod 4200 a11y:base",
     "a11y:base": "yarn run e2e:base --suite a11y",
     "a11y:ci": "yarn run e2e:ci --suite a11y",
-    "assemble": "run-s lint build-lib:prod compodoc-custom-theme build-examples:prod build-schematics",
+    "assemble": "run-s lint build-lib:locl build-lib:prod compodoc-custom-theme build-examples:prod build-schematics",
     "assemble-dev": "run-s build-lib:prod",
     "build-examples": "ng build demo",
     "build-examples:prod": "yarn run build-examples -c production",
     "build-examples:watch": "yarn run build-examples --watch",
     "build-lib": "ng build lib",
+    "build-lib:locl": "run-s \"build-lib -c locl\" i18n-locl-extract",
     "build-lib:prod": "run-s \"build-lib -c production\" dist-copy build-css",
     "build-lib:watch": "run-s build-css dist-copy \"build-lib -c dev --watch\"",
     "build-css": "ng build generate-css && yarn run dist-copy-css",
@@ -81,18 +82,19 @@
     "dist-copy": "run-s dist-copy:*",
     "dist-copy:atoms": "tsc -p spec/tsconfig.atom.json",
     "dist-copy:less": "npx copyfiles -u 3 \"src/styles/mixins/**/*\" dist/sdk/less/mixins/ && npx copyfiles -f \"src/styles/{mixins,nui-framework-*}.less\" dist/sdk/less",
+    "dist-copy:locl": "npx copyfiles -f sdk/locale/* dist/sdk/locale",
     "dist-copy:tslint": "npx copyfiles \"tslint.*\" dist/sdk/",
     "dist-copy:xliff": "npx copyfiles -f \"src/locale/*\" dist/sdk/locale",
     "dist-copy-css": "npx copyfiles -f \".tmp-css/*.{css,svg,woff,woff2}\" dist/bundles/css/",
     "e2e": "start-server-and-test serve-examples:prod 4200 e2e:base",
-    "e2e:base": "node ../../node_modules/protractor/bin/protractor ./protractor.conf.js",
-    "e2e:ci": "node ../../node_modules/protractor/bin/protractor ./protractor.conf.js",
+    "e2e:base": "ng e2e",
+    "e2e:ci": "ng e2e",
     "e2e:debug": "yarn run pree2e:base && node --inspect-brk ../../node_modules/protractor/bin/protractor ./protractor-gui.conf.js",
     "e2e:full": "yarn run e2e:base -c full",
     "e2e:gui": "yarn run e2e:base -c gui",
     "e2e:serve": "yarn run e2e:base -c serve",
     "e2e:watch": "npx watch \"yarn run e2e:base\" src demo spec --watch=1",
-    "extract-i18n": "ng extract-i18n demo --output-path demo/src/locale",
+    "i18n-locl-extract": "ng extract-i18n lib --format=xlf --output-path=./sdk/locale/ --out-file=messages.en.xlf",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
     "percy": "percy exec -- yarn run visual",
@@ -107,7 +109,7 @@
     "prettier-check": "yarn run prettier --check .",
     "prettier-fix": "yarn run prettier --write .",
     "prexliff": "yarn run compile-colors",
-    "serve-examples": "ng serve demo -c dev",
+    "serve-examples": "ng serve demo",
     "serve-examples:prod": "npx local-web-server -p 4200 -d sdk/api-docs-ng2/examples --spa index.html",
     "start": "run-p -lr compodoc:serve build-examples:watch",
     "test": "ng test lib -c coverage",
@@ -118,7 +120,10 @@
     "visual:full": "yarn run visual:base -c full",
     "visual:gui": "yarn run visual:base -c gui",
     "visual:serve": "yarn run visual:base -c serve",
-    "visual:watch": "npx watch \"yarn run visual:base\" src demo spec --watch=1"
+    "visual:watch": "npx watch \"yarn run visual:base\" src demo spec --watch=1",
+    "xliff": "run-s xliff:*",
+    "xliff:demo": "ng extract-i18n demo && ngx-extractor -i \"src/**/*.ts\" \"demo/src/**/*.ts\" -f xlf -o .tmp-i18n/messages.xlf && xliffmerge --profile xliffmerge-examples.json",
+    "xliff:lib": "ng extract-i18n lib && ngx-extractor -i \"src/**/*.ts\" -f xlf -o .tmp-i18n/messages.xlf && xliffmerge --profile xliffmerge.json"
   },
   "typings": "public_api.d.ts",
   "version": "17.0.1",

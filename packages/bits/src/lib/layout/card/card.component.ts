@@ -27,7 +27,6 @@ import { ILayoutElementDirection } from "../public-api";
     selector: "nui-card",
     templateUrl: "./card.component.html",
     styleUrls: ["./card.component.less"],
-    standalone: false,
 })
 export class CardComponent implements OnInit {
     @Input() direction: ILayoutElementDirection;

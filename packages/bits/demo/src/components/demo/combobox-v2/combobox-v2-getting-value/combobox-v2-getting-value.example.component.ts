@@ -29,7 +29,6 @@ import { ComboboxV2Component } from "@nova-ui/bits";
     selector: "nui-combobox-v2-getting-value-example",
     templateUrl: "combobox-v2-getting-value.example.component.html",
     host: { class: "combobox-container" },
-    standalone: false,
 })
 export class ComboboxV2GettingValueExampleComponent implements AfterViewInit {
     public items = Array.from({ length: 50 }).map(

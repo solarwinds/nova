@@ -30,6 +30,5 @@ import { Component } from "@angular/core";
             [inverted]="true"
         ></area-chart-bi-directional-stacked-test>
     `,
-    standalone: false,
 })
 export class AreaChartBiDirectionalStackedVisualTestComponent {}

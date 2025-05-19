@@ -25,6 +25,5 @@ import { Component, ViewEncapsulation } from "@angular/core";
     templateUrl: "./basic-legend-tile.component.html",
     styleUrls: ["./basic-legend-tile.component.less"],
     encapsulation: ViewEncapsulation.Emulated,
-    standalone: false,
 })
 export class BasicLegendTileComponent {}

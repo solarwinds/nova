@@ -51,7 +51,6 @@ import { LoggerService } from "../../services/log-service";
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["./button.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false,
 })
 export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
     /**

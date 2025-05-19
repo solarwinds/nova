@@ -25,7 +25,6 @@ import { ISelectChangedEvent } from "@nova-ui/bits";
 @Component({
     selector: "nui-select-required-example",
     templateUrl: "./select-required.example.component.html",
-    standalone: false,
 })
 export class SelectRequiredExampleComponent {
     public isRequired = true;

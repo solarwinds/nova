@@ -51,10 +51,7 @@ class CustomSpyService {
     called = false;
 }
 
-@Component({
-    selector: "nui-custom-injector-cmpt", template: "Some content",
-    standalone: false,
-})
+@Component({ selector: "nui-custom-injector-cmpt", template: "Some content" })
 export class CustomInjectorComponent implements OnDestroy {
     constructor(private _spyService: CustomSpyService) {}
 
@@ -63,10 +60,7 @@ export class CustomInjectorComponent implements OnDestroy {
     }
 }
 
-@Component({
-    selector: "nui-destroyable-cmpt", template: "Some content",
-    standalone: false,
-})
+@Component({ selector: "nui-destroyable-cmpt", template: "Some content" })
 export class DestroyableComponent implements OnDestroy {
     constructor(private _spyService: SpyService) {}
 
@@ -77,8 +71,8 @@ export class DestroyableComponent implements OnDestroy {
 
 @Component({
     selector: "nui-dialog-content-cmpt",
-    template: "<button type='button' class='closeFromInside' (click)='close()'>Close</button>",
-    standalone: false,
+    template:
+        "<button class='closeFromInside' (click)='close()'>Close</button>",
 })
 export class WithActiveDialogComponent {
     constructor(public activeDialog: NuiActiveDialog) {}
@@ -97,24 +91,23 @@ export class WithActiveDialogComponent {
             ><nui-destroyable-cmpt></nui-destroyable-cmpt
         ></ng-template>
         <ng-template #contentWithClose let-close="close">
-            <button type="button" id="close" (click)="close('myResult')">Close me</button>
+            <button id="close" (click)="close('myResult')">Close me</button>
         </ng-template>
         <ng-template #contentWithDismiss let-dismiss="dismiss">
-            <button type="button" id="dismiss" (click)="dismiss('myReason')">
+            <button id="dismiss" (click)="dismiss('myReason')">
                 Dismiss me
             </button>
         </ng-template>
         <ng-template #contentWithIf>
             <ng-template [ngIf]="show">
-                <button type="button" id="if" (click)="show = false">Click me</button>
+                <button id="if" (click)="show = false">Click me</button>
             </ng-template>
         </ng-template>
-        <button type="button" id="open" (click)="open('from button')">Open</button>
+        <button id="open" (click)="open('from button')">Open</button>
         <div id="open-no-focus" (click)="open('from non focusable element')">
             Open
         </div>
     `,
-    standalone: false,
 })
 class TestComponent {
     name = "World";

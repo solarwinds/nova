@@ -51,7 +51,6 @@ import { ITimeseriesItemConfiguration } from "../types";
     selector: "nui-timeseries-series-collection-configuration",
     templateUrl: "timeseries-series-collection-configuration.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class TimeseriesSeriesCollectionConfigurationComponent
     implements IHasChangeDetector, IHasForm, OnDestroy, OnChanges

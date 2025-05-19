@@ -45,7 +45,6 @@ import { IChipsItem } from "../public-api";
         class: "nui-chip",
         role: "listitem",
     },
-    standalone: false,
 })
 export class ChipComponent implements AfterViewInit {
     /**

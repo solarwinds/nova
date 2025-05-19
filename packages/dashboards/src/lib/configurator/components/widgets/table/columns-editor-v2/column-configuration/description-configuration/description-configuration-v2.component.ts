@@ -62,7 +62,6 @@ import { IHasChangeDetector } from "../../../../../../../types";
             multi: true,
         },
     ],
-    standalone: false,
 })
 export class DescriptionConfigurationV2Component
     implements IHasChangeDetector, ControlValueAccessor, OnDestroy, OnInit

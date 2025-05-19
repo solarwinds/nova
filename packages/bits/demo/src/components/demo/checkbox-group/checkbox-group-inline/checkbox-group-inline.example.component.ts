@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-checkbox-group-inline-example",
     templateUrl: "./checkbox-group-inline.example.component.html",
-    standalone: false,
 })
 export class CheckboxGroupInlineExampleComponent {
     public cabbage = $localize`Cabbage`;

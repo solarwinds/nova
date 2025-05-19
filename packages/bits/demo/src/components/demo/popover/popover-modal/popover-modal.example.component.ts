@@ -24,7 +24,6 @@ import { Subject } from "rxjs";
 @Component({
     selector: "nui-popover-modal-example",
     templateUrl: "./popover-modal.example.component.html",
-    standalone: false,
 })
 export class PopoverModalExampleComponent {
     public closePopoverSubject: Subject<void> = new Subject<void>();

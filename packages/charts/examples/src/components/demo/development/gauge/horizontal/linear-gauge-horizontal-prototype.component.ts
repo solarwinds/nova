@@ -35,7 +35,6 @@ import {
     selector: "linear-gauge-horizontal-prototype",
     templateUrl: "./linear-gauge-horizontal-prototype.component.html",
     styleUrls: ["./linear-gauge-horizontal-prototype.component.less"],
-    standalone: false,
 })
 export class LinearGaugeHorizontalPrototypeComponent
     implements OnChanges, OnInit

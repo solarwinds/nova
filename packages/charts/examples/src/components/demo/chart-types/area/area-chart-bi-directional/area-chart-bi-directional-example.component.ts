@@ -37,7 +37,6 @@ import {
 @Component({
     selector: "area-chart-bi-directional-example",
     templateUrl: "./area-chart-bi-directional-example.component.html",
-    standalone: false,
 })
 export class AreaChartBiDirectionalExampleComponent implements OnInit {
     public chart: Chart;

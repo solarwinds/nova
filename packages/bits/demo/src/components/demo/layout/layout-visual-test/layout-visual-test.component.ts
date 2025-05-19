@@ -23,6 +23,5 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-layout-visual-test",
     templateUrl: "./layout-visual-test.component.html",
-    standalone: false,
 })
 export class LayoutVisualTestComponent {}

@@ -31,19 +31,7 @@ xdescribe("ng-generate filtered-view", () => {
 
     let beforeTree: UnitTestTree; // tslint:disable-line
 
-    beforeEach(async () => {
-        const workspaceOptions = {
-            name: "workspace",
-            newProjectRoot: "projects",
-            version: "17.0.0",
-        };
-        beforeTree = await runner
-            .runExternalSchematic(
-                "@schematics/angular",
-                "workspace",
-                workspaceOptions
-            )
-
+    beforeEach(() => {
         beforeTree.create(
             "package.json",
             JSON.stringify({

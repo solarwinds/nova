@@ -25,7 +25,6 @@ import { FormControl } from "@angular/forms";
     selector: "nui-select-v2-options-changed-example",
     templateUrl: "select-v2-options-changed.example.component.html",
     host: { class: "select-container" },
-    standalone: false,
 })
 export class SelectV2OptionsChangedExampleComponent implements OnInit {
     public items: string[] = [];

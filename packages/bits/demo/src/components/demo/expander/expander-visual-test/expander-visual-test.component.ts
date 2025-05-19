@@ -25,7 +25,6 @@ import { IMenuGroup } from "@nova-ui/bits";
 @Component({
     selector: "expander-visual-test",
     templateUrl: "./expander-visual-test.component.html",
-    standalone: false,
 })
 export class ExpanderVisualTestComponent {
     public itemsSource: IMenuGroup[] = [

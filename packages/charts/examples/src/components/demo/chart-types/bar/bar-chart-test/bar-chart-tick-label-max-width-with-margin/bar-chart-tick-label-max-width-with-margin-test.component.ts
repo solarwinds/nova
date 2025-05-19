@@ -37,8 +37,8 @@ import {
 
 @Component({
     selector: "nui-bar-chart-tick-label-max-width-with-margin-test",
-    templateUrl: "./bar-chart-tick-label-max-width-with-margin-test.component.html",
-    standalone: false,
+    templateUrl:
+        "./bar-chart-tick-label-max-width-with-margin-test.component.html",
 })
 export class BarChartTickLabelMaxWidthWithMarginTestComponent
     implements OnInit

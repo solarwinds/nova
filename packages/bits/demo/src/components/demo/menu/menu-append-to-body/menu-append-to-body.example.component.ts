@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-menu-append-to-body-example",
     templateUrl: "./menu-append-to-body.example.component.html",
-    standalone: false,
 })
 export class MenuAppendToBodyExampleComponent {
     public dataset = {

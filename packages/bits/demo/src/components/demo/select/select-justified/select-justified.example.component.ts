@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-select-justified-example",
     templateUrl: "./select-justified.example.component.html",
-    standalone: false,
 })
 export class SelectJustifiedExampleComponent {
     public dataset = {

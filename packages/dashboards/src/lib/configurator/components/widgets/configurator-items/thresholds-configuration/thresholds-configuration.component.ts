@@ -46,7 +46,6 @@ import { IHasChangeDetector, IHasForm } from "../../../../../types";
     templateUrl: "./thresholds-configuration.component.html",
     styleUrls: ["./thresholds-configuration.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class ThresholdsConfigurationComponent
     implements OnInit, OnDestroy, OnChanges, IHasChangeDetector, IHasForm

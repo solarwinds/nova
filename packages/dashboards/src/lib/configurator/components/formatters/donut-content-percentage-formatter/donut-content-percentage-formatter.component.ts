@@ -47,7 +47,6 @@ import { IProperties } from "../../../../types";
             </div>
         </div>
     </ng-container>`,
-    standalone: false,
 })
 export class DonutContentPercentageFormatterComponent
     implements OnChanges, OnInit
@@ -101,7 +100,7 @@ export class DonutContentPercentageFormatterComponent
     public getProperSeriesData(): number {
         return this.emphasizedSeriesData
             ? this.emphasizedSeriesData?.data[0]
-            : this.currentMetricData ?? 0;
+            : this.currentMetricData;
     }
 
     public getProperContentValue(): void {

@@ -45,7 +45,6 @@ import { LoggerService } from "../../../services/log-service";
  */
 @Directive({
     selector: "[nuiClipboard]",
-    standalone: false,
 })
 export class ClipboardDirective implements OnInit {
     /* eslint-disable @angular-eslint/no-input-rename */

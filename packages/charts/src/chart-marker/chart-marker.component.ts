@@ -41,7 +41,6 @@ const SVG_PADDING = 3;
     selector: "nui-chart-marker",
     templateUrl: "./chart-marker.component.html",
     styleUrls: ["./chart-marker.component.less"],
-    standalone: false,
 })
 export class ChartMarkerComponent
     implements OnDestroy, AfterViewInit, OnChanges

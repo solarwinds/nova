@@ -77,7 +77,6 @@ import { IDashwizButtonsComponent } from "../types";
             </button>
         </div>
     `,
-    standalone: false,
 })
 export class DashwizButtonsComponent implements IDashwizButtonsComponent {
     static lateLoadKey = "DashwizButtonsComponent";

@@ -36,7 +36,6 @@ import {
 @Component({
     selector: "area-chart-variable-baseline-example",
     templateUrl: "./area-chart-variable-baseline-example.component.html",
-    standalone: false,
 })
 export class AreaChartVariableBaselineExampleComponent implements OnInit {
     public chart: Chart;

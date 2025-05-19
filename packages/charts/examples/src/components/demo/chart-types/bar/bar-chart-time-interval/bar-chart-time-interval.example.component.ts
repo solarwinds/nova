@@ -35,7 +35,6 @@ import {
 @Component({
     selector: "nui-bar-chart-time-interval-example",
     templateUrl: "./bar-chart-time-interval.example.component.html",
-    standalone: false,
 })
 export class BarChartTimeIntervalExampleComponent implements OnInit {
     public chart = new Chart(barGrid());

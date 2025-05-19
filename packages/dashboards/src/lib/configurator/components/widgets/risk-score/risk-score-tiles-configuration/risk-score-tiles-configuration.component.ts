@@ -59,7 +59,6 @@ import { IRiskScoreItemConfiguration } from "../types";
     selector: "nui-risk-score-tiles-configuration-component",
     templateUrl: "./risk-score-tiles-configuration.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class RiskScoreTilesConfigurationComponent
     implements IHasChangeDetector, IHasForm, OnChanges

@@ -37,7 +37,6 @@ import { UtilService } from "../../../services/util.service";
             (resizerSizeChanged)="containerResizeHandler($event)"
         ></div>
     </div>`,
-    standalone: false,
 })
 class ResizeSplitTestingComponent {
     public resizeDirection = ResizeDirection.right;

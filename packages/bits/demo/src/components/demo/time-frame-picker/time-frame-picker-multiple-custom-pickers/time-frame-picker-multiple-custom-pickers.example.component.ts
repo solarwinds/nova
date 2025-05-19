@@ -44,8 +44,8 @@ interface IPicker {
 
 @Component({
     selector: "nui-time-frame-picker-multiple-custom-pickers",
-    templateUrl: "./time-frame-picker-multiple-custom-pickers.example.component.html",
-    standalone: false,
+    templateUrl:
+        "./time-frame-picker-multiple-custom-pickers.example.component.html",
 })
 export class TimeFramePickerMultipleCustomPickersExampleComponent
     implements AfterViewInit
@@ -179,7 +179,6 @@ export class TimeFramePickerMultipleCustomPickersExampleComponent
     selector: "nui-time-frame-service-scoper",
     providers: [TimeframeService],
     template: `<ng-content></ng-content>`,
-    standalone: false,
 })
 export class TimeframeServiceScoperExampleComponent {
     constructor(public timeframeService: TimeframeService) {}

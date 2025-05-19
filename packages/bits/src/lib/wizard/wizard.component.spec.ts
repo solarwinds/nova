@@ -37,7 +37,6 @@ import { LoggerService } from "../../services/log-service";
         <nui-wizard-step [title]="'step2'"></nui-wizard-step>
         <nui-wizard-step [title]="'step3'"></nui-wizard-step>
     </nui-wizard>`,
-    standalone: false,
 })
 class TestWrapperComponent {}
 

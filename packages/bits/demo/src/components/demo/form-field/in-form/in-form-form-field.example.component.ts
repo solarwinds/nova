@@ -25,7 +25,6 @@ import moment from "moment/moment";
 @Component({
     selector: "nui-form-field-in-form-example",
     templateUrl: "./in-form-form-field.example.component.html",
-    standalone: false,
 })
 export class FormFieldInFormExampleComponent {
     public vegetables = [

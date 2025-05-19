@@ -58,7 +58,6 @@ export interface IPageSizeSetMenuOption {
     templateUrl: "scroll-type-editor.component.html",
     styleUrls: ["scroll-type-editor.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class TableScrollTypeEditorComponent
     implements OnInit, OnChanges, OnDestroy, IHasForm, IHasChangeDetector

@@ -30,7 +30,6 @@ import {
 @Component({
     selector: "nui-icon-visual-test",
     templateUrl: "./icon-visual-test.component.html",
-    standalone: false,
 })
 export class IconVisualTestComponent implements OnInit {
     public icons: ITypedIconData[];

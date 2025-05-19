@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-popover-disabled-example",
     templateUrl: "./popover-disabled.example.component.html",
-    standalone: false,
 })
 export class PopoverDisabledExampleComponent {
     public disabled = false;

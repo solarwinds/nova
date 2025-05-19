@@ -22,6 +22,5 @@ import { Component } from "@angular/core";
 
 @Component({
     templateUrl: "./dialog-docs.example.component.html",
-    standalone: false,
 })
 export class DialogDocsComponent {}

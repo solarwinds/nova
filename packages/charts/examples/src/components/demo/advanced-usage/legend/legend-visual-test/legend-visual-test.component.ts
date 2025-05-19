@@ -32,7 +32,6 @@ import {
     selector: "nui-legend-visual-test",
     templateUrl: "./legend-visual-test.component.html",
     styleUrls: ["legend-visual-test.component.less"],
-    standalone: false,
 })
 export class LegendVisualTestComponent {
     public markers: IValueProvider<IChartMarker> =

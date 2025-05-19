@@ -30,9 +30,7 @@ describe("services >", () => {
         let fixture: ComponentFixture<DomUtilServiceTestComponent>;
         let sourceElement: HTMLElement;
 
-        @Component({
-    standalone: false,
-})
+        @Component({})
         class DomUtilServiceTestComponent {}
 
         const createHtml = () =>

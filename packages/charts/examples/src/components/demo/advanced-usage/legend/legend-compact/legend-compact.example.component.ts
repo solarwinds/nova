@@ -30,7 +30,6 @@ import {
 @Component({
     selector: "nui-legend-compact-example",
     templateUrl: "./legend-compact.example.component.html",
-    standalone: false,
 })
 export class LegendCompactExampleComponent {
     public firstSeriesId = "1";

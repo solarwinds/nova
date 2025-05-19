@@ -45,7 +45,6 @@ import { DashwizComponent } from "./dashwiz.component";
         <nui-dashwiz-step></nui-dashwiz-step>
         <nui-dashwiz-step></nui-dashwiz-step>
     </nui-dashwiz>`,
-    standalone: false,
 })
 class TestWrapperComponent {}
 

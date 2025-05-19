@@ -24,7 +24,6 @@ import { FormBuilder, Validators } from "@angular/forms";
 @Component({
     selector: "nui-content-settings-example",
     templateUrl: "./tab-content-settings.example.component.html",
-    standalone: false,
 })
 export class TabContentSettingsExampleComponent {
     public content: string =

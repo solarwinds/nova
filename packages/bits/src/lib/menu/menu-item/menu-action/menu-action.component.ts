@@ -70,7 +70,6 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     styleUrls: ["./menu-action.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: { role: "menuitem" },
-    standalone: false,
 })
 export class MenuActionComponent extends MenuItemBaseComponent {
     /**

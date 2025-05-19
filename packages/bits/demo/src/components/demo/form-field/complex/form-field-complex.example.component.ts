@@ -24,7 +24,6 @@ import { AbstractControl, FormBuilder, Validators } from "@angular/forms";
 @Component({
     selector: "nui-form-field-complex-example",
     templateUrl: "./form-field-complex.example.component.html",
-    standalone: false,
 })
 export class FormFieldComplexExampleComponent {
     static matchPassword(group: AbstractControl): { isValid: boolean } | null {

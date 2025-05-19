@@ -26,7 +26,6 @@ import { ToastService, WizardHorizontalComponent } from "@nova-ui/bits";
     selector: "nui-wizard-v2-busy-example",
     templateUrl: "./wizard-busy.example.component.html",
     styleUrls: ["./wizard-busy.example.component.less"],
-    standalone: false,
 })
 export class WizardBusyExampleComponent {
     public busy: boolean;

@@ -41,7 +41,6 @@ interface IWidgetItem {
     selector: "acme-clone-selection",
     templateUrl: "./acme-clone-selection.component.html",
     styleUrls: ["./acme-clone-selection.component.less"],
-    standalone: false,
 })
 export class AcmeCloneSelectionComponent
     implements IWidgetTemplateSelector, OnInit

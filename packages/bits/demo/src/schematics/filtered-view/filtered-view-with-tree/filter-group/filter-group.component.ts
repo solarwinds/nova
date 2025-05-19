@@ -50,7 +50,6 @@ import {
     selector: "app-filter-group-with-tree",
     templateUrl: "./filter-group.component.html",
     styleUrls: ["./filter-group.component.less"],
-    standalone: false,
 })
 export class FilterGroupComponent implements IFilterPub, OnInit, OnDestroy {
     @Input() filterGroupItem: IFilterGroupItem;

@@ -56,7 +56,6 @@ enum ToastState {
     styleUrls: ["./toast.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: { "[attr.role]": "role" },
-    standalone: false,
 })
 export class ToastComponent implements OnDestroy {
     public body?: string | SafeHtml | null;

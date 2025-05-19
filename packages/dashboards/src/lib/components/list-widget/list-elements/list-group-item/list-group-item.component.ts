@@ -40,7 +40,6 @@ const SMALL_WIDTH = 480;
     host: {
         class: "w-100",
     },
-    standalone: false,
 })
 export class ListGroupItemComponent implements IHasChangeDetector {
     static lateLoadKey = "ListGroupItemComponent";

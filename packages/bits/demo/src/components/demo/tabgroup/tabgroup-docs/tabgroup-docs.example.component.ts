@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-tabgroup-example",
     templateUrl: "./tabgroup-docs.example.component.html",
-    standalone: false,
 })
 export class TabgroupDocsExampleComponent {
     public tabsRouteConfig: string = `

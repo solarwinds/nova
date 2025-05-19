@@ -68,7 +68,6 @@ import { VirtualScrollListDataSource } from "./virtual-scroll-list-data-source.s
             useClass: VirtualScrollListDataSource,
         },
     ],
-    standalone: false,
 })
 export class VirtualScrollListComponent
     implements OnInit, AfterViewInit, OnDestroy

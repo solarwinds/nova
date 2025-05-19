@@ -35,10 +35,7 @@ import { Pipe, PipeTransform } from "@angular/core";
  *   "let items of itemsMap | nuiMapKeyValue"
  *
  */
-@Pipe({
-    name: "nuiMapKeyValue",
-    standalone: false,
-})
+@Pipe({ name: "nuiMapKeyValue" })
 export class MapKeyValuePipe implements PipeTransform {
     public transform<K, V>(input: ReadonlyMap<K, V>): Array<KeyValue<K, V>> {
         return Array.from(input.entries(), ([key, value]) => ({ key, value }));

@@ -37,7 +37,6 @@ import {
 @Component({
     selector: "line-chart-with-axis-labels-example",
     templateUrl: "./line-chart-with-axis-labels.example.component.html",
-    standalone: false,
 })
 export class LineChartWithAxisLabelsExampleComponent implements OnInit {
     public chart = new Chart(new XYGrid());

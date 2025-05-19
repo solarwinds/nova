@@ -25,7 +25,6 @@ import { ToastService, WizardHorizontalComponent } from "@nova-ui/bits";
 @Component({
     selector: "nui-wizard-responsive-header-example",
     templateUrl: "./wizard-responsive-header.example.component.html",
-    standalone: false,
 })
 export class WizardResponsiveHeaderExampleComponent {
     public steps: Array<any> = Array.from({ length: 20 });

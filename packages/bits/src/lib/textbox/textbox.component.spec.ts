@@ -35,7 +35,6 @@ import { SpinnerComponent } from "../spinner/spinner.component";
             </nui-form-field>
         </div>
     `,
-    standalone: false,
 })
 class TextboxFormComponent {
     @ViewChild(TextboxComponent) input: TextboxComponent;

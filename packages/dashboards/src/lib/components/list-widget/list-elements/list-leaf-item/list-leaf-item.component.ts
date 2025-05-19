@@ -42,7 +42,6 @@ import { IHasChangeDetector, PIZZAGNA_EVENT_BUS } from "../../../../types";
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: { class: "w-100" },
     styleUrls: ["list-leaf-item.component.less"],
-    standalone: false,
 })
 export class ListLeafItemComponent implements IHasChangeDetector, OnInit {
     static lateLoadKey = "ListLeafItemComponent";

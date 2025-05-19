@@ -97,7 +97,6 @@ export enum Units {
         </div>
     </ng-container>`,
     styleUrls: ["./custom-donut-content-formatter-example.component.less"],
-    standalone: false,
 })
 export class CustomDonutContentFormatterComponent
     implements IHasChangeDetector, OnInit, OnChanges
@@ -270,7 +269,6 @@ export class CustomDonutContentFormatterComponent
             </div>
         </div>
     `,
-    standalone: false,
 })
 export class CustomDonutContentFormatterConfiguratorComponent
     extends DonutChartFormatterConfiguratorComponent
@@ -305,7 +303,6 @@ export class CustomDonutContentFormatterConfiguratorComponent
     selector: "custom-donut-content-formatter-example",
     templateUrl: "./custom-donut-content-formatter-example.component.html",
     styleUrls: ["./custom-donut-content-formatter-example.component.less"],
-    standalone: false,
 })
 export class CustomDonutContentFormatterExampleComponent implements OnInit {
     public editMode: boolean = false;

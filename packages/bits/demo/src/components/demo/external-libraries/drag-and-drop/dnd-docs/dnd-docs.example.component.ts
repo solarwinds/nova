@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-dnd-docs",
     templateUrl: "./dnd-docs.example.component.html",
-    standalone: false,
 })
 export class DndDocsExampleComponent {
     public initialSetupCode = `

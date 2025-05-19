@@ -33,7 +33,6 @@ import { IHasChangeDetector } from "../../../types";
     selector: "nui-widget-error",
     templateUrl: "./widget-error.component.html",
     styleUrls: ["./widget-error.component.less"],
-    standalone: false,
 })
 export class WidgetErrorComponent
     implements OnInit, IHasChangeDetector, IWidgetErrorDisplayProperties

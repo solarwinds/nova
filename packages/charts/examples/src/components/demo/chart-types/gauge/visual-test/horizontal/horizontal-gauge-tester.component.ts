@@ -34,7 +34,6 @@ import {
     selector: "horizontal-gauge-tester",
     templateUrl: "./horizontal-gauge-tester.component.html",
     styleUrls: ["./horizontal-gauge-tester.component.less"],
-    standalone: false,
 })
 export class HorizontalGaugeTesterComponent implements OnInit, OnChanges {
     @Input() public gaugeConfig: IGaugeConfig;

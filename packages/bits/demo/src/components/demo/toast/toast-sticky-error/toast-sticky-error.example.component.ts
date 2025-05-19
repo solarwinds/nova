@@ -30,7 +30,6 @@ import {
 @Component({
     selector: "nui-toast-sticky-error-example",
     templateUrl: "./toast-sticky-error.example.component.html",
-    standalone: false,
 })
 export class ToastStickyErrorExampleComponent implements OnInit {
     public selectedPosition: string;

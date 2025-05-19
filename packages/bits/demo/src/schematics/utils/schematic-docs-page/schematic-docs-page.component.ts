@@ -25,7 +25,6 @@ import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
     templateUrl: "schematic-docs-page.component.html",
     styleUrls: ["schematic-docs-page.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false,
 })
 export class SchematicDocsPageComponent implements OnInit {
     @Input() schematicFolderName: string;

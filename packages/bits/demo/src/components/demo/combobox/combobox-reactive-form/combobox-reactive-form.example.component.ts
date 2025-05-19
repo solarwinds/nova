@@ -28,7 +28,6 @@ import { ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-combobox-reactive-form",
     templateUrl: "./combobox-reactive-form.example.component.html",
-    standalone: false,
 })
 export class ComboboxReactiveFormExampleComponent implements OnInit, OnDestroy {
     public dataset = {

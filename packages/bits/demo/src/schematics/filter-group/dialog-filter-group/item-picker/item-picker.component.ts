@@ -52,7 +52,6 @@ export interface IItemPickerOption {
         },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class ItemPickerCompositeComponent implements OnInit {
     @Input() itemPickerOptions: IFilterGroupOption[];

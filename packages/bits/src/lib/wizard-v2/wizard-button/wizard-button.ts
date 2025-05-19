@@ -27,7 +27,6 @@ import { Directive, Input } from "@angular/core";
 @Directive({
     selector: "button[nuiWizardNext]",
     host: { "[type]": "type" },
-    standalone: false,
 })
 export class WizardStepperNextDirective extends CdkStepperNext {
     @Input() declare type: string;
@@ -39,7 +38,6 @@ export class WizardStepperNextDirective extends CdkStepperNext {
 @Directive({
     selector: "button[nuiWizardPrevious]",
     host: { "[type]": "type" },
-    standalone: false,
 })
 export class WizardStepperPreviousDirective extends CdkStepperPrevious {
     @Input() declare type: string;

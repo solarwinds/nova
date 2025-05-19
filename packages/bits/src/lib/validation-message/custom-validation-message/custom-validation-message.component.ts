@@ -49,6 +49,5 @@ import { ValidationMessageComponent } from "../validation-message.component";
             useExisting: forwardRef(() => CustomValidationMessageComponent),
         },
     ],
-    standalone: false,
 })
 export class CustomValidationMessageComponent extends ValidationMessageComponent {}

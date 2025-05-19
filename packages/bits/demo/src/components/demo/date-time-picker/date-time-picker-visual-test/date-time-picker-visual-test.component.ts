@@ -26,7 +26,6 @@ import { DialogService } from "@nova-ui/bits";
 @Component({
     selector: "nui-date-time-picker-visual-test",
     templateUrl: "./date-time-picker-visual-test.component.html",
-    standalone: false,
 })
 export class DateTimePickerVisualTestComponent {
     public dt: Moment = moment("2018-02-02");

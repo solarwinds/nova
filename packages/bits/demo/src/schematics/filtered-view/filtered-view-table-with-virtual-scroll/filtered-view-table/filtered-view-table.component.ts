@@ -54,7 +54,6 @@ import { IServer } from "../types";
     templateUrl: "./filtered-view-table.component.html",
     styleUrls: ["./filtered-view-table.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false,
 })
 export class FilteredViewTableComponent
     implements OnInit, OnDestroy, AfterViewInit

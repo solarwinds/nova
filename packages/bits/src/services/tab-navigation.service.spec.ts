@@ -31,7 +31,7 @@ describe("services >", () => {
     describe("tab-navigation-service >", () => {
         const htmlTemplate = `
             <div tabindex="1"></div>
-            <button type="button">button</button>
+            <button>button</button>
             <a href="#" tabindex="2">link</a>
             <input type="text" value="empty"/>
         `;

@@ -33,7 +33,6 @@ import {
     selector: "donut-gauge-basic-example",
     templateUrl: "./donut-gauge-basic.example.component.html",
     styleUrls: ["./donut-gauge-basic.example.component.less"],
-    standalone: false,
 })
 export class DonutGaugeBasicExampleComponent implements OnInit {
     public chartAssist: ChartAssist;

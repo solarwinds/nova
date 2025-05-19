@@ -40,7 +40,6 @@ import {
             transition(":leave", [animate(300, style({ opacity: 0 }))]),
         ]),
     ],
-    standalone: false,
 })
 export class ChartTooltipComponent {
     @Input() template: TemplateRef<any>;

@@ -28,7 +28,6 @@ import { SelectV2Component } from "@nova-ui/bits";
     selector: "nui-select-v2-getting-value-example",
     templateUrl: "select-v2-getting-value.example.component.html",
     host: { class: "select-container" },
-    standalone: false,
 })
 export class SelectV2GettingValueExampleComponent implements AfterViewInit {
     public items = Array.from({ length: 50 }).map(

@@ -25,7 +25,6 @@ import { mapContentFile } from "../../../../demo-files-factory";
 @Component({
     selector: "nui-timeseries-docs",
     templateUrl: "./timeseries-docs.component.html",
-    standalone: false,
 })
 export class TimeseriesDocsComponent implements OnInit {
     public timeseriesWidgetFileText = "";

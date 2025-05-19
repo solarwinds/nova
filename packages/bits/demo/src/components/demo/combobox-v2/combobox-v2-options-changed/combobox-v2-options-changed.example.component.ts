@@ -25,7 +25,6 @@ import { FormControl } from "@angular/forms";
     selector: "nui-combobox-v2-options-changed-example",
     templateUrl: "combobox-v2-options-changed.example.component.html",
     host: { class: "combobox-container" },
-    standalone: false,
 })
 export class ComboboxV2OpitionsChangedExampleComponent implements OnInit {
     public items: string[] = [];
