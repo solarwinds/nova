@@ -35,6 +35,7 @@ interface IExampleTableModel {
     selector: "nui-table-resize-example",
     templateUrl: "./table-resize.example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class TableResizeExampleComponent {
     public displayedColumns = [

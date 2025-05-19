@@ -36,6 +36,7 @@ import { EventBusService } from "../../../services/event-bus.service";
 
 @Directive({
     selector: "[nuiClickInterceptor]",
+    standalone: false,
 })
 export class ClickInterceptorDirective {
     @HostListener("click", ["$event"])

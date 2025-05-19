@@ -62,6 +62,7 @@ import { TimeFramePickerComponent } from "../../time-frame-picker/time-frame-pic
     styleUrls: ["./time-frame-bar.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: { role: "spinbutton" },
+    standalone: false,
 })
 export class TimeFrameBarComponent
     implements AfterContentInit, OnChanges, OnDestroy

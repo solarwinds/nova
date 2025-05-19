@@ -50,6 +50,7 @@ const groupedItems: IChipsGroup[] = [
 @Component({
     selector: "nui-grouped-chips-example",
     templateUrl: "./grouped-chips.example.component.html",
+    standalone: false,
 })
 export class GroupedChipsExampleComponent {
     public horizontalGroupedItemsSource = {

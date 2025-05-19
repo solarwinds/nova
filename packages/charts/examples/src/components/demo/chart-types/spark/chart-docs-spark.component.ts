@@ -23,6 +23,7 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-chart-docs-spark",
     templateUrl: "./chart-docs-spark.component.html",
+    standalone: false,
 })
 export class ChartDocsSparkComponent {
     public gridConfiguration = `public chart = new Chart(new XYGrid(new SparkChartGridConfig(false, false)));

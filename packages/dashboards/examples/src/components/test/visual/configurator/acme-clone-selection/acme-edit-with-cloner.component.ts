@@ -33,6 +33,7 @@ import { AcmeCloneSelectionComponent } from "./acme-clone-selection.component";
     selector: "acme-clone-selection",
     templateUrl: "./acme-clone-selection.component.html",
     styleUrls: ["./acme-clone-selection.component.less"],
+    standalone: false,
 })
 export class AcmeEditWithClonerComponent
     extends AcmeCloneSelectionComponent

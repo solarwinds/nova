@@ -79,6 +79,7 @@ import { ToastService } from "../toast/toast.service";
             multi: true,
         },
     ],
+    standalone: false,
 })
 export class FreetypeQueryBuilderComponent<T extends QueryToken>
     implements OnChanges, OnDestroy, AfterViewInit

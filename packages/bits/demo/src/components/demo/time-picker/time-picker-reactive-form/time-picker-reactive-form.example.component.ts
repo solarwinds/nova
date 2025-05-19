@@ -32,6 +32,7 @@ import { ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-time-picker-reactive-form",
     templateUrl: "./time-picker-reactive-form.example.component.html",
+    standalone: false,
 })
 export class TimePickerReactiveFormExampleComponent implements OnInit {
     public time: Moment;

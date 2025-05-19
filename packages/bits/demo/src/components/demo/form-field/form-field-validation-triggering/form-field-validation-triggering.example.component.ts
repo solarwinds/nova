@@ -24,6 +24,7 @@ import { FormBuilder, Validators } from "@angular/forms";
 @Component({
     selector: "nui-form-field-validation-triggering-example",
     templateUrl: "./form-field-validation-triggering.example.component.html",
+    standalone: false,
 })
 export class FormFieldValidationTriggeringxampleComponent {
     public reactiveForm;

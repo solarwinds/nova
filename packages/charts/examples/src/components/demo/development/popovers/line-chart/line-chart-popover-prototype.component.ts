@@ -38,6 +38,7 @@ import {
 @Component({
     selector: "line-chart-popover-prototype",
     templateUrl: "./line-chart-popover-prototype.component.html",
+    standalone: false,
 })
 export class LineChartPopoverPrototypeComponent implements OnInit {
     public chart = new Chart(new XYGrid());

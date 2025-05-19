@@ -25,6 +25,7 @@ import { FormBuilder, Validators } from "@angular/forms";
     selector: "nui-combobox-v2-reactive-form-field-example",
     templateUrl: "combobox-v2-reactive-form-field.example.component.html",
     host: { class: "combobox-container" },
+    standalone: false,
 })
 export class ComboboxV2ReactiveFormFieldExampleComponent {
     public icons: any[] = ["check", "email", "execute"];

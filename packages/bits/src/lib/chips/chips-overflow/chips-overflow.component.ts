@@ -34,6 +34,7 @@ import { IChipsGroup, IChipsItem, IChipsItemsSource } from "../public-api";
     styleUrls: ["./chips-overflow.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: { class: "nui-chips-overflow" },
+    standalone: false,
 })
 export class ChipsOverflowComponent {
     @Input() overflowSource: IChipsItemsSource;

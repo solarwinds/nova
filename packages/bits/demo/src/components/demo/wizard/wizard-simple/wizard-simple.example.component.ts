@@ -34,6 +34,7 @@ import {
 @Component({
     selector: "nui-wizard-simple-example",
     templateUrl: "./wizard-simple.example.component.html",
+    standalone: false,
 })
 export class WizardSimpleExampleComponent {
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;

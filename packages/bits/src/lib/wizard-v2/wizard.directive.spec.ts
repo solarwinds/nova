@@ -19,7 +19,12 @@
 //  THE SOFTWARE.
 
 import { CdkStepper } from "@angular/cdk/stepper";
-import { Component, NO_ERRORS_SCHEMA } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    NO_ERRORS_SCHEMA,
+} from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import {
@@ -40,6 +45,7 @@ import { WizardDirective } from "./wizard.directive";
         <nui-wizard-step-v2 label="step2"></nui-wizard-step-v2>
         <nui-wizard-step-v2 label="step3"></nui-wizard-step-v2>
     </div>`,
+    standalone: false,
 })
 class TestWrapperComponent extends WizardDirective {}
 
@@ -61,7 +67,11 @@ describe("directives >", () => {
                     WizardStepperPreviousDirective,
                     TestWrapperComponent,
                 ],
-                providers: [CdkStepper],
+                providers: [
+                    CdkStepper,
+                    {provide: ChangeDetectorRef, useValue: jasmine.createSpyObj(["markForCheck"])},
+                    { provide: ElementRef<HTMLElement>, useValue: {} as any },
+                ],
                 schemas: [NO_ERRORS_SCHEMA],
             });
 

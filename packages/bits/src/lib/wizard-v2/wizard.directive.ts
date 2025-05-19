@@ -49,6 +49,7 @@ import { WizardStepHeaderComponent } from "./wizard-step-header/wizard-step-head
 @Directive({
     selector: "[nuiWizard]",
     providers: [{ provide: CdkStepper, useExisting: WizardDirective }],
+    standalone: false,
 })
 export class WizardDirective
     extends CdkStepper

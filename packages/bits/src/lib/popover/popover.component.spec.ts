@@ -43,6 +43,7 @@ import { NuiOverlayModule } from "../overlay/overlay.module";
         (shown)="handleShowPopover()"
         (hidden)="handleHidePopover()"
     ></nui-popover>`,
+    standalone: false,
 })
 class PopoverComponentTestingComponent {
     public handleShowPopover() {

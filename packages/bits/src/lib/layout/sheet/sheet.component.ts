@@ -35,6 +35,7 @@ import { ILayoutElementDirection } from "../public-api";
     templateUrl: "./sheet.component.html",
     host: { class: "nui-sheet" },
     styleUrls: ["./sheet.component.less"],
+    standalone: false,
 })
 export class SheetComponent implements OnInit {
     @HostBinding("class.sheet-fit-content")

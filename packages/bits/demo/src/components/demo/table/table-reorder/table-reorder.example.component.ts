@@ -37,6 +37,7 @@ interface IExampleTableModel {
     selector: "nui-table-reorder-example",
     templateUrl: "./table-reorder.example.component.html",
     styleUrls: ["./table-reorder.example.component.less"],
+    standalone: false,
 })
 export class TableReorderExampleComponent {
     public displayedColumns = [

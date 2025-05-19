@@ -41,8 +41,8 @@ import {
 
 @Component({
     selector: "area-chart-bi-directional-stacked-inverted-example",
-    templateUrl:
-        "./area-chart-bi-directional-stacked-inverted-example.component.html",
+    templateUrl: "./area-chart-bi-directional-stacked-inverted-example.component.html",
+    standalone: false,
 })
 export class AreaChartBiDirectionalStackedInvertedExampleComponent
     implements OnInit

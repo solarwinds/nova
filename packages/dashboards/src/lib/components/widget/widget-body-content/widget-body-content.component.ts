@@ -37,6 +37,7 @@ import { BaseLayout } from "../../layouts/base-layout";
 @Component({
     selector: "nui-widget-body-content",
     templateUrl: "./widget-body-content.component.html",
+    standalone: false,
 })
 export class WidgetBodyContentComponent
     extends BaseLayout

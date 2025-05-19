@@ -70,6 +70,7 @@ const containerPaddingsWithScroll = 37;
     encapsulation: ViewEncapsulation.None,
     providers: [PopupContainerService],
     host: { role: "navigation" },
+    standalone: false,
 })
 export class PaginatorComponent
     implements OnInit, OnChanges, OnDestroy, IFilterPub

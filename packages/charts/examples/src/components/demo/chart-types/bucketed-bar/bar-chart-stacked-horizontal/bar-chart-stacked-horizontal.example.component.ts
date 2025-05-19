@@ -38,6 +38,7 @@ import {
 @Component({
     selector: "nui-bar-chart-stacked-horizontal-example",
     templateUrl: "./bar-chart-stacked-horizontal.example.component.html",
+    standalone: false,
 })
 export class BarChartStackedHorizontalExampleComponent implements OnInit {
     public chartAssist: ChartAssist;

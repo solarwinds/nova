@@ -59,6 +59,7 @@ import { IDashwizStepNavigatedEvent } from "../wizard/types";
 @Component({
     selector: "mock-clone-selection",
     template: ``,
+    standalone: false,
 })
 class MockCloneSelectionComponent {
     public static lateLoadKey = "MockCloneSelectionComponent";

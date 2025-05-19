@@ -24,6 +24,7 @@ import { Component } from "@angular/core";
     selector: "theming-docs-example",
     templateUrl: "./theming-docs.example.component.html",
     styleUrls: ["./theming-docs.example.component.less"],
+    standalone: false,
 })
 export class ThemingDocsExampleComponent {
     public lessCode = `

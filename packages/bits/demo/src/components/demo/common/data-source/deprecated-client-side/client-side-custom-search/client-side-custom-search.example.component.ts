@@ -79,6 +79,7 @@ export class ClientSideCustomSearchService extends SearchService {
         LocalFilteringDataSource,
         { provide: SearchService, useClass: ClientSideCustomSearchService },
     ],
+    standalone: false,
 })
 export class DepreacatedDataSourceClientSideCustomSearchExampleComponent
     implements AfterViewInit, OnDestroy

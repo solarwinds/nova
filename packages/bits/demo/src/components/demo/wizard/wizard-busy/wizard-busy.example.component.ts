@@ -25,6 +25,7 @@ import { IBusyConfig, WizardComponent } from "@nova-ui/bits";
 @Component({
     selector: "nui-wizard-busy-example",
     templateUrl: "./wizard-busy.example.component.html",
+    standalone: false,
 })
 export class WizardBusyExampleComponent {
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;

@@ -65,6 +65,7 @@ const TREE_DATA: FoodNode[] = [
     styleUrls: ["tree-checkbox.example.component.less"],
     host: { id: "nui-tree-checkbox-example" },
     animations: [expand],
+    standalone: false,
 })
 export class TreeCheckboxExampleComponent {
     public treeControl = new NestedTreeControl<FoodNode>(

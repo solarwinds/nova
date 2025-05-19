@@ -25,6 +25,7 @@ import { Moment } from "moment/moment";
 @Component({
     selector: "nui-date-time-picker-empty-state",
     templateUrl: "./date-time-picker-empty-state.component.html",
+    standalone: false,
 })
 export class DateTimePickerEmptyStateComponent {
     public dt: Moment | undefined = undefined;

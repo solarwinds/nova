@@ -28,6 +28,7 @@ import { IFilterGroupOption } from "../public-api";
     selector: "nui-filter-group-composite-dialog",
     templateUrl: "./filter-group-dialog.component.html",
     styleUrls: ["./filter-group-dialog.component.less"],
+    standalone: false,
 })
 export class FilterGroupCompositeDialogComponent {
     @Input() title: string;

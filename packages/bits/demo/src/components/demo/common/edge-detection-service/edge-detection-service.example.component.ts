@@ -27,6 +27,7 @@ import { EdgeDetectionService, IEdgeDetectionResult } from "@nova-ui/bits";
     selector: "nui-edge-detection-service-example",
     templateUrl: "./edge-detection-service.example.component.html",
     styleUrls: ["./edge-detection-service.example.component.less"],
+    standalone: false,
 })
 export class EdgeDetectionServiceExampleComponent implements AfterViewInit {
     @ViewChild("parent") private parentElement: ElementRef;

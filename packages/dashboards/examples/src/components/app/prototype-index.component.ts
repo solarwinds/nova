@@ -52,6 +52,7 @@ import { WidgetTypesRoute } from "../docs/widget-types/widget-types.module";
             <li><a routerLink="schematics">overview</a></li>
         </ul>
     `,
+    standalone: false,
 })
 export class DeveloperQuickLinksComponent {
     public docs = [

@@ -37,6 +37,7 @@ import { IPizza, PIZZAGNA_EVENT_BUS } from "../../types";
 @Component({
     selector: "test-layout",
     template: ``,
+    standalone: false,
 })
 class TestLayoutComponent extends BaseLayout {
     @Input() nodes: string[] = ["myId"];

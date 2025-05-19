@@ -28,6 +28,7 @@ import { IFilterGroupOption } from "../public-api";
     selector: "app-filter-group-dialog",
     templateUrl: "./filter-group-dialog.component.html",
     styleUrls: ["./filter-group-dialog.component.less"],
+    standalone: false,
 })
 export class FilterGroupDialogComponent {
     @Input() title: string;

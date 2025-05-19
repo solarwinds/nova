@@ -34,6 +34,7 @@ const horizontalFlatItems: IChipsItem[] = [
 @Component({
     selector: "nui-autohide-chips-example",
     templateUrl: "autohide-chips.example.component.html",
+    standalone: false,
 })
 export class AutohideChipsExampleComponent {
     public horizontalFlatItemsSource: IChipsItemsSource = {

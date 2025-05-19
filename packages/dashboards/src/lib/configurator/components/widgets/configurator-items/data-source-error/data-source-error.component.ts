@@ -41,6 +41,7 @@ import { IDataSourceError } from "../../../../../components/providers/types";
     selector: "nui-data-source-error",
     templateUrl: "./data-source-error.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class DataSourceErrorComponent implements OnDestroy, OnChanges {
     public static lateLoadKey = "DataSourceErrorComponent";

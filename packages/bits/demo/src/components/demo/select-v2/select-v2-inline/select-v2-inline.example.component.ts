@@ -24,6 +24,7 @@ import { Component } from "@angular/core";
     selector: "nui-select-v2-inline-example",
     templateUrl: "./select-v2-inline.example.component.html",
     host: { class: "select-container" },
+    standalone: false,
 })
 export class SelectV2InlineExampleComponent {
     public items = Array.from({ length: 100 }).map(

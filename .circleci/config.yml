@@ -637,9 +637,9 @@ jobs:
         working_directory: ~/nova
         environment:
             SOURCE_BRANCH: main
-            CREATE_RELEASE_BRANCH: "true"
+            CREATE_RELEASE_BRANCH: "false"
             RELEASE_BRANCH: release/v17.0.x
-            INCREMENT_TYPE: major
+            INCREMENT_TYPE: patch
         steps:
             - add_ssh_keys
             - checkout:

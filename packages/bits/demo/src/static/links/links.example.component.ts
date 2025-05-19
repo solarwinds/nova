@@ -24,5 +24,6 @@ import { Component } from "@angular/core";
     selector: "links-example",
     styleUrls: ["links.example.component.less"],
     templateUrl: "./links.example.component.html",
+    standalone: false,
 })
 export class LinksExampleComponent {}

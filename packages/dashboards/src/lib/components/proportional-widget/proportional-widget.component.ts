@@ -87,8 +87,7 @@ import {
     templateUrl: "./proportional-widget.component.html",
     styleUrls: ["./proportional-widget.component.less"],
     encapsulation: ViewEncapsulation.Emulated,
-    // TODO: uncomment when NUI-4307 is fixed
-    // changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class ProportionalWidgetComponent
     implements AfterViewInit, OnChanges, IHasChangeDetector, OnDestroy

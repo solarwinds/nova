@@ -64,6 +64,7 @@ const INITIAL_ARRAY = [
     selector: "nui-deprecated-client-side-delayed-data-source-example",
     providers: [LocalFilteringDataSource],
     templateUrl: "./client-side-delayed.example.component.html",
+    standalone: false,
 })
 export class DepreacatedDataSourceClientSideDelayedExampleComponent
     implements AfterViewInit, OnDestroy

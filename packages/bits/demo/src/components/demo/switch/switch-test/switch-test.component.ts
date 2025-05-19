@@ -23,5 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-switch-test",
     templateUrl: "./switch-test.component.html",
+    standalone: false,
 })
 export class SwitchTestComponent {}

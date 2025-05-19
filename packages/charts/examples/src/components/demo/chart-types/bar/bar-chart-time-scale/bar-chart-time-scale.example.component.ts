@@ -41,6 +41,7 @@ import {
 @Component({
     selector: "nui-bar-chart-time-scale-example",
     templateUrl: "./bar-chart-time-scale.example.component.html",
+    standalone: false,
 })
 export class BarChartTimeScaleExampleComponent implements OnInit {
     public chart = new Chart(barGrid());

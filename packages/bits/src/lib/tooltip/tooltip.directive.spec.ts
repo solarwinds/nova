@@ -40,6 +40,7 @@ import { NuiButtonModule } from "../button/button.module";
         [nuiTooltipDisabled]="isDisabled"
         >Tooltip</span
     >`,
+    standalone: false,
 })
 class TooltipTestComponent {
     public tooltipValue? = "test tooltip";
@@ -54,6 +55,7 @@ class TooltipTestComponent {
         [tooltipPlacement]="position"
         >Tooltip</span
     >`,
+    standalone: false,
 })
 class TooltipWithPositionTestComponent {
     public tooltipValue = "test tooltip";
@@ -73,6 +75,7 @@ class TooltipWithPositionTestComponent {
     >
         Tooltip
     </button>`,
+    standalone: false,
 })
 class TooltipOnButtonTestComponent {
     public tooltipValue = "test tooltip";
@@ -87,6 +90,7 @@ class TooltipOnButtonTestComponent {
             <span nuiTooltip="Tooltip content">Tooltip target</span>
         </div>
     `,
+    standalone: false,
 })
 class TooltipInOverlapingScrollContainerComponent {}
 

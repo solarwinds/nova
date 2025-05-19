@@ -31,6 +31,7 @@ interface IExampleItem {
     selector: "nui-combobox-v2-custom-typeahead-example",
     templateUrl: "combobox-v2-custom-typeahead.example.component.html",
     host: { class: "combobox-container" },
+    standalone: false,
 })
 export class ComboboxV2CustomTypeaheadExampleComponent {
     public items: IExampleItem[] = Array.from({ length: 100 }).map((_, i) => ({

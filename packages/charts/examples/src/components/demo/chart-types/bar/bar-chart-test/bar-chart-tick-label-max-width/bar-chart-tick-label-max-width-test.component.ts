@@ -38,6 +38,7 @@ import {
 @Component({
     selector: "nui-bar-chart-tick-label-max-width-test",
     templateUrl: "./bar-chart-tick-label-max-width-test.component.html",
+    standalone: false,
 })
 export class BarChartTickLabelMaxWidthTestComponent implements OnInit {
     public chart: IChart;

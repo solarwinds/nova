@@ -38,6 +38,7 @@ import { IBusyConfig } from "../busy/public-api";
 @Component({
     selector: "nui-wizard-step",
     templateUrl: "./wizard-step.component.html",
+    standalone: false,
 })
 export class WizardStepComponent
     implements IWizardStepComponent, OnInit, OnChanges

@@ -145,6 +145,7 @@ import {
             </div>
         </nui-widget-editor-accordion>
     `,
+    standalone: false,
 })
 @Injectable()
 export class HarryPotterDataSourceConfiguratorComponent
@@ -296,6 +297,7 @@ export class AcmeKpiDataSource
     selector: "custom-data-source-configurator-example",
     templateUrl: "./custom-data-source-configurator-example.component.html",
     styleUrls: ["./custom-data-source-configurator-example.component.less"],
+    standalone: false,
 })
 export class CustomDataSourceConfiguratorExampleComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.

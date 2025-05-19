@@ -48,6 +48,7 @@ import { IOptionedComponent } from "../types";
     styleUrls: ["./select-v2-option-group.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: { role: "group" },
+    standalone: false,
 })
 export class SelectV2OptionGroupComponent
     implements AfterContentInit, OnDestroy
