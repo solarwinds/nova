@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-chart-docs-accessors-colors",
     templateUrl: "./chart-docs-accessors-colors.component.html",
-    standalone: false,
 })
 export class ChartDocsAccessorsColorsComponent {
     public customAccessorSnippet = `const accessors: ILineAccessors = new LineAccessors();

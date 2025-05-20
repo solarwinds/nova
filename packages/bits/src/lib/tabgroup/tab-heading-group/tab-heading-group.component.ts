@@ -45,7 +45,6 @@ import { TabHeadingComponent } from "../tab-heading/tab-heading.component";
     styleUrls: ["./tab-heading-group.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: { role: "tablist" },
-    standalone: false,
 })
 export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
     @ContentChildren(TabHeadingComponent) _tabs: QueryList<TabHeadingComponent>;

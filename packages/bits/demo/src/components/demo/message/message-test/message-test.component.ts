@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "message-test-component",
     templateUrl: "message-test.component.html",
-    standalone: false,
 })
 export class MessageTestComponent {
     public onMessageDismiss(): void {

@@ -18,17 +18,17 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { provideHttpClient } from "@angular/common/http";
-import { inject, NgModule, Type } from "@angular/core";
+import { NgModule, Type } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { InMemoryCache } from "@apollo/client/core";
-import { provideApollo } from "apollo-angular";
+import { APOLLO_OPTIONS, ApolloModule } from "apollo-angular";
 import { HttpLink } from "apollo-angular/http";
 
 import { NuiDocsModule, NuiMessageModule } from "@nova-ui/bits";
 
-
-const COUNTRIES_API = "https://countries.trevorblades.com/graphql";
+// https://swicloud.atlassian.net/browse/NUI-6196
+// TODO fix api, now it send 500
+const COUNTRIES_API = "https://countries-274616.ew.r.appspot.com/";
 
 const exampleRoutes: Routes = [
     {
@@ -58,18 +58,20 @@ const exampleRoutes: Routes = [
     imports: [
         NuiDocsModule,
         NuiMessageModule,
+        ApolloModule,
         RouterModule.forChild(exampleRoutes),
     ],
     providers: [
-        provideHttpClient(),
-        provideApollo(() => {
-            const httpLink = inject(HttpLink);
-
-            return {
-                link: httpLink.create({ uri: COUNTRIES_API }),
+        {
+            provide: APOLLO_OPTIONS,
+            useFactory: (httpLink: HttpLink) => ({
                 cache: new InMemoryCache(),
-            };
-        }),
+                link: httpLink.create({
+                    uri: COUNTRIES_API,
+                }),
+            }),
+            deps: [HttpLink],
+        },
     ],
 })
 export default class DashboardDocsModule {}

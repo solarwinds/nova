@@ -48,7 +48,6 @@ import { IconData, IconStatus } from "./types";
     },
     styleUrls: ["./icon.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false,
 })
 export class IconComponent implements OnChanges {
     public static SIZE_MAP: { [key: string]: string } = {

@@ -25,7 +25,6 @@ import { IRepeatItemConfig, RepeatComponent } from "@nova-ui/bits";
 @Component({
     selector: "nui-repeat-example",
     templateUrl: "./repeat-docs.example.component.html",
-    standalone: false,
 })
 export class RepeatExampleComponent {
     getItemConfigKey(key: keyof IRepeatItemConfig): string {

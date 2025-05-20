@@ -20,6 +20,7 @@
 
 import { AfterViewInit, Component, ElementRef } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
 
 import { LayoutResizerComponent } from "./layout-resizer.component";
 import { ResizerDirective } from "../../../common/directives";
@@ -30,7 +31,6 @@ import {
 
 @Component({
     template: `<div>Loren Ipsum</div>`,
-    standalone: false,
 })
 class LayoutResizerTestingComponent implements AfterViewInit {
     constructor(public elRef: ElementRef) {}

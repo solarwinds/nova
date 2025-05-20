@@ -36,7 +36,6 @@ interface IExampleTableModel {
     templateUrl: "./table-row-height-set.example.component.html",
     styleUrls: ["./table-row-height-set.example.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class TableRowHeightSetExampleComponent {
     public displayedColumns = [

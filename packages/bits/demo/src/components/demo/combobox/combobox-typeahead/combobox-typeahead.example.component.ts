@@ -26,7 +26,6 @@ import { ISelectChangedEvent, ISelectGroup } from "@nova-ui/bits";
 @Component({
     selector: "nui-combobox-typeahead-example",
     templateUrl: "./combobox-typeahead.example.component.html",
-    standalone: false,
 })
 export class ComboboxTypeaheadExampleComponent {
     public dataset: ISelectGroup[] = [

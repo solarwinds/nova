@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { ElementRef } from "@angular/core";
 import hljs from "highlight.js/lib/core";
 
 import { ExampleCodeComponent } from "./example-code.component";

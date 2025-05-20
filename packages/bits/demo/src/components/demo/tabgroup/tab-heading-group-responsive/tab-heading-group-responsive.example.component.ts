@@ -30,7 +30,6 @@ import { ChangeDetectorRef, Component, Input } from "@angular/core";
         `,
     ],
     templateUrl: "./tab-heading-group-responsive.example.component.html",
-    standalone: false,
 })
 export class TabHeadingGroupResponsiveExampleComponent {
     @Input() public icon: boolean = false;

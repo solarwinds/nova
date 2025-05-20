@@ -49,7 +49,6 @@ import { IHasChangeDetector, IHasForm } from "../../../../../types";
     selector: "nui-refresher-configuration",
     templateUrl: "./refresher-configuration.component.html",
     styleUrls: ["./refresher-configuration.component.less"],
-    standalone: false,
 })
 export class RefresherConfigurationComponent
     implements OnInit, OnChanges, OnDestroy, IHasChangeDetector, IHasForm

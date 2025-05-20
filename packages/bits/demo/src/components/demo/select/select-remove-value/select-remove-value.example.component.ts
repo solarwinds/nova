@@ -24,7 +24,6 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
     selector: "nui-select-remove-value",
     templateUrl: "./select-remove-value.example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class SelectRemoveValueExampleComponent {
     public dataset = {

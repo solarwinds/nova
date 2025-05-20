@@ -35,7 +35,6 @@ import {
     selector: "donut-gauge-tester",
     templateUrl: "./donut-gauge-tester.component.html",
     styleUrls: ["./donut-gauge-tester.component.less"],
-    standalone: false,
 })
 export class DonutGaugeTesterComponent implements OnInit, OnChanges {
     @Input() public gaugeConfig: IGaugeConfig;

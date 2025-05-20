@@ -45,7 +45,6 @@ import { IHasChangeDetector, IHasForm } from "../../../../../types";
     templateUrl: "./embedded-content-configuration.component.html",
     styleUrls: ["./embedded-content-configuration.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class EmbeddedContentConfigurationComponent
     implements OnInit, OnChanges, IHasChangeDetector, IHasForm, OnDestroy

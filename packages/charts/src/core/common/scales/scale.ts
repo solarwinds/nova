@@ -33,7 +33,6 @@ export abstract class Scale<T> implements IScale<T> {
     public isDomainFixed: boolean;
     public scaleUnits?: UnitOption;
     public isTimeseriesScale = false;
-    public __domainCalculatedWithTicks?: boolean;
     private isReversed = false;
 
     protected _fixDomainValues: T[] = [];

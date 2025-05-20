@@ -19,13 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component, OnInit } from "@angular/core";
-
 import { mapContentFile } from "../../../../demo-files-factory";
 
 @Component({
     selector: "nui-drilldown-docs",
     templateUrl: "./drilldown-widget-docs.component.html",
-    standalone: false,
 })
 export class DrilldownDocsComponent implements OnInit {
     public widgetFileText = "";

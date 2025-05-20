@@ -24,7 +24,6 @@ import { Component } from "@angular/core";
     selector: "nui-busy-progress-example",
     templateUrl: "./busy-progress.example.component.html",
     styleUrls: ["./busy-progress.example.component.less"],
-    standalone: false,
 })
 export class BusyProgressExampleComponent {
     public busy: boolean;

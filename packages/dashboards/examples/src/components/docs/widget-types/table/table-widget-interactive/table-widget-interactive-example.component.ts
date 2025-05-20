@@ -191,7 +191,6 @@ export class MockBeerDataSource extends DataSourceService<IBrewInfo> {
     selector: "table-widget-interactive-example",
     templateUrl: "./table-widget-interactive-example.component.html",
     styleUrls: ["./table-widget-interactive-example.component.less"],
-    standalone: false,
 })
 export class TableWidgetInteractiveExampleComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.

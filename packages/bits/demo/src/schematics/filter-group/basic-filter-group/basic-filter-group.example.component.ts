@@ -58,7 +58,6 @@ const RANDOM_ARRAY = [
             useClass: LocalFilteringDataSource,
         },
     ],
-    standalone: false,
 })
 export class BasicFilterGroupExampleComponent
     implements AfterViewInit, OnDestroy

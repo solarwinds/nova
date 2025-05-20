@@ -25,7 +25,6 @@ import moment, { Moment } from "moment/moment";
 @Component({
     selector: "date-picker-visual-test",
     templateUrl: "./date-picker-visual-test.component.html",
-    standalone: false,
 })
 export class DatePickerVisualTestComponent {
     public initDate: Moment = moment().set({

@@ -28,7 +28,6 @@ import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "@nova-ui/bits";
     selector: "nui-combobox-v2-overlay-config-example",
     templateUrl: "./combobox-v2-overlay-config.example.component.html",
     host: { class: "combobox-container" },
-    standalone: false,
 })
 export class ComboboxV2OverlayConfigExampleComponent {
     public items = Array.from({ length: 100 }).map(

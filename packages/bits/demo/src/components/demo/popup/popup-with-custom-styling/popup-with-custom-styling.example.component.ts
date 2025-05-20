@@ -25,7 +25,6 @@ import { Component, ViewEncapsulation } from "@angular/core";
     templateUrl: "./popup-with-custom-styling.example.component.html",
     styleUrls: ["popup-with-custom-styling.example.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false,
 })
 export class PopupWithCustomStylingComponent {
     public icon = "caret-down";

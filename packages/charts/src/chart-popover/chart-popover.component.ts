@@ -45,7 +45,6 @@ import { IElementPosition } from "../core/plugins/types";
     selector: "nui-chart-popover",
     templateUrl: "./chart-popover.component.html",
     styleUrls: ["./chart-popover.component.less"],
-    standalone: false,
 })
 export class ChartPopoverComponent implements OnChanges, OnInit, OnDestroy {
     @Input() plugin: ChartPopoverPlugin;

@@ -27,7 +27,6 @@ import { OverlayComponent } from "@nova-ui/bits";
 @Component({
     selector: "nui-overlay-simple-usage-example",
     templateUrl: "./overlay-simple-usage.example.component.html",
-    standalone: false,
 })
 export class OverlaySimpleExampleComponent implements AfterViewInit {
     private readonly destroy$ = new Subject<void>();

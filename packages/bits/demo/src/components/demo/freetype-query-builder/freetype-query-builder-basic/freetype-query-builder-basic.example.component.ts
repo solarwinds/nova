@@ -31,7 +31,6 @@ import { ExampleAppRenderer } from "./renderer";
 @Component({
     selector: "nui-freetype-query-builder-basic-example",
     templateUrl: "freetype-query-builder-basic.example.component.html",
-    standalone: false,
 })
 export class FreetypeQueryBuilderBasicExampleComponent {
     readonly: boolean = false;

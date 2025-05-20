@@ -101,6 +101,40 @@
             "root": "./examples",
             "sourceRoot": "./src"
         },
+        "examples-e2e": {
+            "architect": {
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "configurations": {
+                        "full": {
+                            "devServerTarget": "demo:serve:e2e",
+                            "protractorConfig": "./protractor-gui.conf.js"
+                        },
+                        "gui": {
+                            "protractorConfig": "./protractor-gui.conf.js"
+                        },
+                        "serve": {
+                            "devServerTarget": "demo:serve:e2e"
+                        }
+                    },
+                    "options": {
+                        "devServerTarget": "",
+                        "protractorConfig": "./protractor.conf.js",
+                        "suite": "e2e",
+                        "webdriverUpdate": false
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-eslint/builder:lint",
+                    "options": {
+                        "lintFilePatterns": ["spec/**/*.ts", "spec/**/*.html"]
+                    }
+                }
+            },
+            "projectType": "application",
+            "root": "spec",
+            "sourceRoot": "spec"
+        },
         "generate-css": {
             "architect": {
                 "build": {
@@ -128,6 +162,30 @@
             "root": "./src/styles",
             "sourceRoot": "./src/styles"
         },
+        "i18n": {
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "defaultConfiguration": "",
+                    "options": {
+                        "allowedCommonJsDependencies": ["lodash"],
+                        "buildOptimizer": false,
+                        "extractLicenses": false,
+                        "index": "./src/index.html",
+                        "main": "./src/public-api.ts",
+                        "namedChunks": true,
+                        "optimization": false,
+                        "outputPath": "./.tmp-i18n",
+                        "sourceMap": true,
+                        "tsConfig": "tsconfig.lib.json",
+                        "vendorChunk": true
+                    }
+                }
+            },
+            "projectType": "library",
+            "root": "src",
+            "sourceRoot": "src"
+        },
         "lib": {
             "architect": {
                 "build": {
@@ -135,6 +193,9 @@
                     "configurations": {
                         "dev": {
                             "project": "ng-package-dev.json"
+                        },
+                        "locl": {
+                            "tsConfig": "./tsconfig.lib.locl.json"
                         },
                         "production": {
                             "project": "ng-package.json",
@@ -163,13 +224,7 @@
                     "builder": "@angular-devkit/build-angular:karma",
                     "configurations": {
                         "coverage": {
-                            "codeCoverage": true,
-                            "reporters": [
-                                "progress",
-                                "coverage",
-                                "kjhtml",
-                                "junit"
-                            ]
+                            "codeCoverage": true
                         },
                         "dev": {
                             "reporters": ["spec"],
@@ -182,7 +237,6 @@
                         "main": "src/test.ts",
                         "polyfills": "src/polyfills.ts",
                         "preserveSymlinks": true,
-                        "sourceMap": false,
                         "stylePreprocessorOptions": {
                             "includePaths": ["node_modules"]
                         },

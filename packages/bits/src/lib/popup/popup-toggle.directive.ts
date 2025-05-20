@@ -30,7 +30,6 @@ import {
 /** @ignore */
 @Directive({
     selector: "[nuiPopupToggle]",
-    standalone: false,
 })
 export class PopupToggleDirective {
     /** sets disable state and which prevents emitting toggle */

@@ -29,7 +29,6 @@ import { ISelectChangedEvent } from "@nova-ui/bits";
     styleUrls: [
         "../select-custom-template/select-custom-template.example.component.less",
     ],
-    standalone: false,
 })
 export class SelectVisualTestComponent {
     public isRequired = true;

@@ -28,7 +28,6 @@ import {
 
 @Directive({
     selector: "[nuiMarkAsSelectedItem]",
-    standalone: false,
 })
 export class MarkAsSelectedItemDirective implements Highlightable {
     @HostBinding("class.active") private isActive: boolean = false;

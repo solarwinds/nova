@@ -65,7 +65,6 @@ import { DataGenerator } from "../../../../../data-generator";
     templateUrl: "./chart-event-bus-test.component.html",
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class ChartEventBusTestComponent implements OnInit {
     public parsedEvents: string[] = [];

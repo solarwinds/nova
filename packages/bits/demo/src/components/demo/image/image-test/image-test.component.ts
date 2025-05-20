@@ -23,6 +23,5 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-image-test",
     templateUrl: "./image-test.component.html",
-    standalone: false,
 })
 export class ImageTestComponent {}

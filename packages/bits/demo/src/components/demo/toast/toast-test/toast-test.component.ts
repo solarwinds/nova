@@ -32,7 +32,6 @@ import {
 @Component({
     selector: "nui-toast-test",
     templateUrl: "./toast-test.component.html",
-    standalone: false,
 })
 export class ToastTestComponent implements OnInit {
     constructor(@Inject(ToastService) private toastService: IToastService) {}

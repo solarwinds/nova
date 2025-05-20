@@ -43,7 +43,6 @@ interface IExampleTableModel {
     selector: "nui-table-select",
     providers: [ClientSideDataSource],
     templateUrl: "./table-select.example.component.html",
-    standalone: false,
 })
 export class TableSelectExampleComponent implements AfterViewInit, OnDestroy {
     public displayedColumns = [

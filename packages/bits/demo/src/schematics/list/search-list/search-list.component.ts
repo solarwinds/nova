@@ -56,7 +56,6 @@ import { IServer, IServerFilters } from "./types";
             useClass: SearchListDataSource,
         },
     ],
-    standalone: false,
 })
 export class SearchListComponent implements OnInit, AfterViewInit, OnDestroy {
     public listItems$ = new BehaviorSubject<IServer[]>([]);

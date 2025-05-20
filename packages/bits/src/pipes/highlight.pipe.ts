@@ -53,7 +53,6 @@ import isString from "lodash/isString";
  */
 @Pipe({
     name: "nuiHighlight",
-    standalone: false,
 })
 export class HighlightPipe implements PipeTransform {
     private readonly deduplicateStarsRegex = new RegExp("(\\\\\\*)+", "gi");

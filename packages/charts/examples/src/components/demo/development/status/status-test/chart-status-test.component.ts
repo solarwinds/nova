@@ -51,7 +51,6 @@ enum Status {
 @Component({
     selector: "nui-status-chart-test-example",
     templateUrl: "./chart-status-test.component.html",
-    standalone: false,
 })
 export class ChartStatusTestComponent implements AfterViewInit {
     public chartThreshold = new Chart(new XYGrid(new BarStatusGridConfig()));

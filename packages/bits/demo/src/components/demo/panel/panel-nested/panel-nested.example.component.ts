@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-panel-nested-example",
     templateUrl: "./panel-nested.example.component.html",
-    standalone: false,
 })
 export class PanelNestedExampleComponent {
     public isCollapsible = true;

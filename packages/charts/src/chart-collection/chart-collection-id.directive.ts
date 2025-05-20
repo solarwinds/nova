@@ -38,7 +38,6 @@ import { IChartComponent } from "../core/common/types";
  */
 @Directive({
     selector: "[nuiChartCollectionId]",
-    standalone: false,
 })
 export class ChartCollectionIdDirective implements OnChanges {
     @Input("nuiChartCollectionId")

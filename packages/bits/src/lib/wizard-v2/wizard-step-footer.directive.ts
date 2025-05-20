@@ -22,7 +22,6 @@ import { Directive, TemplateRef } from "@angular/core";
 
 @Directive({
     selector: "[nuiWizardStepFooter]",
-    standalone: false,
 })
 export class WizardStepFooterDirective {
     constructor(public template: TemplateRef<any>) {}

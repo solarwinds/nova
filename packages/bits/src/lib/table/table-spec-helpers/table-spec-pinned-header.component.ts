@@ -52,7 +52,6 @@ import { TableSpecHelpers } from "./table-spec-helpers";
             <tr nui-row *nuiRowDef="let row; columns: displayedColumns"></tr>
         </table>
     `,
-    standalone: false,
 })
 export class PinnedHeaderTableComponent {
     public displayedColumns = ["position", "name", "asset", "location"];

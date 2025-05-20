@@ -36,7 +36,6 @@ import { UtilService } from "../../../services/util.service";
         (dragStart)="onDragStart($event)"
         (dragEnd)="onDragEnd()"
     ></div>`,
-    standalone: false,
 })
 class DraggableTestingComponent {
     public draggableString = "this is a string";

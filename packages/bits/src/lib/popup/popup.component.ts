@@ -105,7 +105,6 @@ const isMouseEvent = (event: Event): event is MouseEvent =>
     `,
     styleUrls: ["./popup.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false,
 })
 export class PopupDeprecatedComponent
     implements AfterContentInit, OnDestroy, OnInit

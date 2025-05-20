@@ -4,7 +4,6 @@ import { Component, Input } from "@angular/core";
     selector: "nui-widget-editor-accordion-header",
     templateUrl: "./widget-editor-accordion-header.component.html",
     styleUrls: [],
-    standalone: false,
 })
 export class WidgetEditorAccordionHeaderComponent {
     @Input() public headerIcon?: string;

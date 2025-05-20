@@ -42,7 +42,6 @@ interface IExampleTableModel {
     selector: "nui-table-pagination-example",
     providers: [ClientSideDataSource],
     templateUrl: "./table-pagination.example.component.html",
-    standalone: false,
 })
 export class TablePaginationExampleComponent
     implements AfterViewInit, OnDestroy

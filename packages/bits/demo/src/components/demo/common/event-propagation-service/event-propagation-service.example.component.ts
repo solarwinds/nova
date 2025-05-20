@@ -30,7 +30,6 @@ import {
 @Component({
     selector: "nui-event-propagation-service-example",
     templateUrl: "./event-propagation-service.example.component.html",
-    standalone: false,
 })
 export class EventPropagationServiceExampleComponent {
     constructor(

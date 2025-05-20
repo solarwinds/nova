@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-client-side-data-source-docs",
     templateUrl: "./client-side-data-source-docs.example.component.html",
-    standalone: false,
 })
 export class ClientSideDataSourceDocsComponent {
     public subclassCode = `

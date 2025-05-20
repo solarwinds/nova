@@ -2,7 +2,6 @@
     "compileOnSave": true,
     "compilerOptions": {
         "baseUrl": ".",
-        "esModuleInterop": true,
         "useDefineForClassFields": false,
         "forceConsistentCasingInFileNames": true,
         "importHelpers": true,

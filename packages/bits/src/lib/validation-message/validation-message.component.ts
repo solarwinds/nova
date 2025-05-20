@@ -26,7 +26,6 @@ import { Component, Input, ViewEncapsulation } from "@angular/core";
     styleUrls: ["./validation-message.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: { role: "alert" },
-    standalone: false,
 })
 export class ValidationMessageComponent {
     /**

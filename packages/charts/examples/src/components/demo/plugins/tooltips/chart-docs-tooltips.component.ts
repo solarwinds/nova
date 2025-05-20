@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-chart-docs-tooltips",
     templateUrl: "./chart-docs-tooltips.component.html",
-    standalone: false,
 })
 export class ChartDocsTooltipsComponent {
     public tooltipsTypeScript = `this.tooltipsPlugin = new ChartTooltipsPlugin();

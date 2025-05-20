@@ -37,7 +37,6 @@ import { SelectV2Component } from "@nova-ui/bits";
     selector: "nui-select-v2-virtual-scroll-example",
     templateUrl: "select-v2-virtual-scroll.example.component.html",
     host: { class: "select-container" },
-    standalone: false,
 })
 export class SelectV2VirtualScrollExampleComponent
     implements OnInit, OnDestroy, AfterViewInit

@@ -29,7 +29,6 @@ import {
 @Component({
     selector: "nui-chart-docs-line",
     templateUrl: "./chart-docs-line.component.html",
-    standalone: false,
 })
 export class ChartDocsLineComponent {
     getEnhancedLineCapConfigPropKey(key: keyof IEnhancedLineCapConfig): string {

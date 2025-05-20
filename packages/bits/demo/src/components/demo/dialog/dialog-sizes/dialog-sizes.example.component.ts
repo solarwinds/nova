@@ -25,7 +25,6 @@ import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-dialog-sizes-example",
     templateUrl: "./dialog-sizes.example.component.html",
-    standalone: false,
 })
 export class DialogSizesExampleComponent {
     private activeDialog: NuiDialogRef;

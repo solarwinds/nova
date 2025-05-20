@@ -42,7 +42,6 @@ interface IExampleTableModel {
     templateUrl: "./table-select-pinned-header.example.component.html",
     styleUrls: ["./table-select-pinned-header.example.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class TableSelectPinnedHeaderComponent {
     public displayedColumns = [

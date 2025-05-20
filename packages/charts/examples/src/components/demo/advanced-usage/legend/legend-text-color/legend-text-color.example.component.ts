@@ -30,7 +30,6 @@ import {
 @Component({
     selector: "nui-legend-text-color-example",
     templateUrl: "./legend-text-color.example.component.html",
-    standalone: false,
 })
 export class LegendTextColorExampleComponent {
     public firstSeriesId = "1";

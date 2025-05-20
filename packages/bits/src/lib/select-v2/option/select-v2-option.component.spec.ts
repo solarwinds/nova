@@ -29,7 +29,6 @@ import { SelectV2Component } from "../select/select-v2.component";
 // noinspection AngularIncorrectTemplateDefinition
 @Component({
     selector: "select-mock",
-    standalone: false,
 })
 class SelectMockComponent {
     public multiselect: boolean = false;

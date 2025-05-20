@@ -39,7 +39,6 @@ import {
 @Component({
     selector: "nui-vertical-with-timescale-bar-chart-test",
     templateUrl: "./vertical-with-timescale-bar-chart-test.component.html",
-    standalone: false,
 })
 export class VerticalWithTimescaleBarChartTestComponent implements OnInit {
     public chart = new Chart(barGrid());

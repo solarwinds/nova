@@ -91,7 +91,6 @@ export class ReviewCountsByCityMockDataSource
     selector: "proportional-widget-interactive-example",
     templateUrl: "./proportional-widget-interactive-example.component.html",
     styleUrls: ["./proportional-widget-interactive-example.component.less"],
-    standalone: false,
 })
 export class ProportionalWidgetInteractiveExampleComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.

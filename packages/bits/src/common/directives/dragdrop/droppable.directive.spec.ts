@@ -49,7 +49,6 @@ const DEFAULT_DRAGOVER_CLASS = "nui-drag--over";
             (dragEnter)="onDragEnter($event)"
             (dragLeave)="onDragLeave($event)"
         ></div>`,
-    standalone: false,
 })
 class DroppableTestingComponent {
     public draggableString = "this is a string";

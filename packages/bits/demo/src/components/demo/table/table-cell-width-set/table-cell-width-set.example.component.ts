@@ -32,7 +32,6 @@ interface IExampleTableModel {
     selector: "nui-table-cell-width-set",
     templateUrl: "./table-cell-width-set.example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class TableCellWidthSetExampleComponent {
     public positionWidth = 50;

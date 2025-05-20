@@ -25,7 +25,6 @@ import { IQuickPickPresetDictionary } from "@nova-ui/bits";
 @Component({
     selector: "nui-quick-picker-basic",
     templateUrl: "./quick-picker-basic.example.component.html",
-    standalone: false,
 })
 export class QuickPickerBasicExampleComponent {
     public presets: IQuickPickPresetDictionary = {

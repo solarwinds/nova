@@ -32,7 +32,6 @@ interface IListItem extends IRepeatItem {
     selector: "dnd-drag-preview",
     templateUrl: "./dnd-drag-preview.example.component.html",
     styleUrls: ["./dnd-drag-preview.example.component.less"],
-    standalone: false,
 })
 export class DndDragPreviewExampleComponent {
     public listItems: IListItem[] = [

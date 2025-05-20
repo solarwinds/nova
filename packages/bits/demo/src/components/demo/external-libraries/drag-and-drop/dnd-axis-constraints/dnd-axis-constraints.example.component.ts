@@ -24,6 +24,5 @@ import { Component } from "@angular/core";
     selector: "dnd-axis-constraints",
     templateUrl: "./dnd-axis-constraints.example.component.html",
     styleUrls: ["./dnd-axis-constraints.example.component.less"],
-    standalone: false,
 })
 export class DndAxisConstraintsExampleComponent {}

@@ -38,7 +38,6 @@ import {
 @Component({
     selector: "nui-grouped-horizontal-bar-chart-test",
     templateUrl: "./grouped-horizontal-bar-chart-test.component.html",
-    standalone: false,
 })
 export class GroupedHorizontalBarChartTestComponent implements OnInit {
     public chartAssist: ChartAssist;

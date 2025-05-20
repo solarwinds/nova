@@ -53,7 +53,6 @@ import { OverlayPlacement } from "../overlay/types";
         "(touchend)": "_handleTouchend()",
     },
     providers: [OverlayPositionService],
-    standalone: false,
 })
 export class TooltipDirective implements OnDestroy {
     _tooltipInstance?: TooltipComponent;

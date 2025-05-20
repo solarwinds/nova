@@ -29,6 +29,5 @@ import { Component, ViewEncapsulation } from "@angular/core";
     templateUrl: "./dialog-footer.component.html",
     styleUrls: ["./dialog-footer.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false,
 })
 export class DialogFooterComponent {}

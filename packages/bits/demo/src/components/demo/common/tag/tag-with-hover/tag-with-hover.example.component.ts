@@ -24,6 +24,5 @@ import { Component } from "@angular/core";
     selector: "nui-tag-with-hover-example",
     templateUrl: "./tag-with-hover.example.component.html",
     styleUrls: ["./tag-with-hover.example.component.less"],
-    standalone: false,
 })
 export class TagWithHoverExampleComponent {}

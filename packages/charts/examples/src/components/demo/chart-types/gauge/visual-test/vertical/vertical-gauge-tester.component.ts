@@ -34,7 +34,6 @@ import {
     selector: "vertical-gauge-tester",
     templateUrl: "./vertical-gauge-tester.component.html",
     styleUrls: ["./vertical-gauge-tester.component.less"],
-    standalone: false,
 })
 export class VerticalGaugeTesterComponent implements OnInit, OnChanges {
     @Input() public gaugeConfig: IGaugeConfig;

@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-tooltip-ellipsis-example",
     templateUrl: "tooltip-ellipsis.example.component.html",
-    standalone: false,
 })
 export class TooltipEllipsisExampleComponent {
     public isEllipsisActive = true;

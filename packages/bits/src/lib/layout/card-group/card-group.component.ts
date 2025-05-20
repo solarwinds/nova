@@ -27,7 +27,6 @@ import { ILayoutElementDirection } from "../public-api";
     selector: "nui-card-group",
     templateUrl: "./card-group.component.html",
     styleUrls: ["./card-group.component.less"],
-    standalone: false,
 })
 export class CardGroupComponent implements OnInit {
     @Input() direction: ILayoutElementDirection = "row";

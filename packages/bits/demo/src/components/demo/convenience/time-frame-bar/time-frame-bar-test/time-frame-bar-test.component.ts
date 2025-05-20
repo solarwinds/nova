@@ -27,7 +27,6 @@ import { HistoryStorage, ITimeframe } from "@nova-ui/bits";
     selector: "nui-convenience-time-frame-bar-test",
     templateUrl: "./time-frame-bar-test.component.html",
     providers: [HistoryStorage],
-    standalone: false,
 })
 export class TimeFrameBarTestComponent {
     private baseDate = moment([2018, 5, 1, 15, 0, 0]);

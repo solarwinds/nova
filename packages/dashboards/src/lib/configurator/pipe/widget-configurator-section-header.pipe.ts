@@ -22,7 +22,6 @@ import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
     name: "nuiWidgetConfiguratorSectionHeader",
-    standalone: false,
 })
 export class WidgetConfiguratorSectionHeaderPipe implements PipeTransform {
     private readonly defaultHeaderPrefix = $localize`Value`;

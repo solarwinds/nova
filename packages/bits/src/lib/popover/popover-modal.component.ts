@@ -56,7 +56,6 @@ export type PopoverModalEvents =
     templateUrl: "./popover-modal.component.html",
     animations: [fadeIn],
     host: { role: "dialog" },
-    standalone: false,
 })
 export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
     /**

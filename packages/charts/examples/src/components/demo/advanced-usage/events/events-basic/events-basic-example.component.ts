@@ -44,7 +44,6 @@ import {
     selector: "nui-chart-events-basic",
     templateUrl: "./events-basic-example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class EventsBasicExampleComponent implements OnInit {
     public chart = new Chart(new XYGrid());

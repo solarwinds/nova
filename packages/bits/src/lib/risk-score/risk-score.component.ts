@@ -43,7 +43,6 @@ import { BehaviorSubject } from "rxjs";
     templateUrl: "./risk-score.component.html",
     styleUrls: ["./risk-score.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false,
 })
 
 // <example-url>./../examples/index.html#/risk-score</example-url>

@@ -23,7 +23,6 @@ import { Component, OnDestroy } from "@angular/core";
 @Component({
     selector: "nui-stacked-header-example",
     templateUrl: "./stacked-header.example.component.html",
-    standalone: false,
 })
 export class StackedHeaderProgressExampleComponent implements OnDestroy {
     public show = false;

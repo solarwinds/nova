@@ -36,7 +36,6 @@ import {
 @Component({
     selector: "nui-bar-chart-percentage-example",
     templateUrl: "./bar-chart-percentage.example.component.html",
-    standalone: false,
 })
 export class BarChartPercentageExampleComponent implements OnInit {
     public chartAssist: ChartAssist;

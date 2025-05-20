@@ -102,7 +102,6 @@ export class AverageRatingRiskScoreDataSource
     selector: "risk-score-widget-example",
     templateUrl: "./risk-score-widget-example.component.html",
     styleUrls: ["./risk-score-widget-example.component.less"],
-    standalone: false,
 })
 export class RiskScoreWidgetExampleComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.

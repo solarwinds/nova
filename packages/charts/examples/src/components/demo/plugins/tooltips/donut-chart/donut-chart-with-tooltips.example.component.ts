@@ -37,7 +37,6 @@ import {
 @Component({
     selector: "nui-donut-chart-with-tooltips-example",
     templateUrl: "./donut-chart-with-tooltips.example.component.html",
-    standalone: false,
 })
 export class DonutChartWithTooltipsExampleComponent implements OnInit {
     public chartAssist = new ChartAssist(

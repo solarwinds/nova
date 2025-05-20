@@ -59,7 +59,6 @@ import { IDonutContentConfig } from "../types";
     templateUrl: "./proportional-donut-content.component.html",
     styleUrls: ["./proportional-donut-content.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class ProportionalDonutContentComponent
     implements OnChanges, OnDestroy, IHasChangeDetector

@@ -31,7 +31,6 @@ import { hasControlInErrorState } from "../functions/has-control-in-error-state"
 @Pipe({
     name: "nuiWidgetEditorAccordionFormState",
     pure: false,
-    standalone: false,
 })
 export class WidgetEditorAccordionFormStatePipe implements PipeTransform {
     public transform(

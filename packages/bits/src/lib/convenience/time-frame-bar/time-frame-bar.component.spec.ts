@@ -54,7 +54,6 @@ import { NuiTooltipModule } from "../../tooltip/tooltip.module";
             </nui-quick-picker>
         </nui-time-frame-bar>
     `,
-    standalone: false,
 })
 class TestWrapperComponent implements OnInit {
     public minDate: Moment;

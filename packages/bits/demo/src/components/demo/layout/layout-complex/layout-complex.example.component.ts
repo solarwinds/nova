@@ -24,6 +24,5 @@ import { Component } from "@angular/core";
     selector: "nui-layout-complex-example",
     templateUrl: "./layout-complex.example.component.html",
     styleUrls: ["./layout-complex.example.component.less"],
-    standalone: false,
 })
 export class LayoutComplexExampleComponent {}

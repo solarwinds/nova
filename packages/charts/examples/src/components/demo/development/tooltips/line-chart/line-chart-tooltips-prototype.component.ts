@@ -38,7 +38,6 @@ import {
 @Component({
     selector: "line-chart-tooltips-prototype",
     templateUrl: "./line-chart-tooltips-prototype.component.html",
-    standalone: false,
 })
 export class LineChartTooltipsPrototypeComponent implements OnInit {
     public chart = new Chart(new XYGrid());

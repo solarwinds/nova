@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-select-inline-example",
     templateUrl: "select-inline.example.component.html",
-    standalone: false,
 })
 export class SelectInlineExampleComponent {
     public dataset = {

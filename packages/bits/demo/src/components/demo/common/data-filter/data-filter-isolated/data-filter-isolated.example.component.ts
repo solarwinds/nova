@@ -51,7 +51,6 @@ import {
     selector: "nui-data-filter-isolated-example",
     templateUrl: "data-filter-isolated.example.component.html",
     providers: [DataFilterService],
-    standalone: false,
 })
 export class DataFilterIsolatedExampleComponent implements AfterViewInit {
     @ViewChild("timeFramePicker")
@@ -118,7 +117,6 @@ export class DataFilterIsolatedExampleComponent implements AfterViewInit {
         </table>
     `,
     providers: [DataFilterService, TableDatasource],
-    standalone: false,
 })
 export class NuiDataFilterIsolatedTableComponent
     implements AfterViewInit, OnDestroy
@@ -188,7 +186,6 @@ export class NuiDataFilterIsolatedTableComponent
         </ng-template>
     `,
     providers: [DataFilterService, ListDatasource],
-    standalone: false,
 })
 export class NuiDataFilterIsolatedListComponent
     implements AfterViewInit, OnDestroy
@@ -281,7 +278,6 @@ export class NuiDataFilterIsolatedListComponent
         </ng-template>
     `,
     encapsulation: ViewEncapsulation.None,
-    standalone: false,
 })
 export class FilteringIsolatedTimeFramePickerComponent
     implements IFilterPub, OnInit

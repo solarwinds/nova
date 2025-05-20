@@ -34,7 +34,6 @@ interface IFilm {
     selector: "nui-sorter-basic-example",
     templateUrl: "./sorter-basic.example.component.html",
     styleUrls: ["./sorter-basic.example.component.less"],
-    standalone: false,
 })
 export class SorterBasicExampleComponent implements OnInit {
     public readonly columns: IMenuItem[] = [

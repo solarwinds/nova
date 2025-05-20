@@ -44,7 +44,6 @@ import { TimeframeService } from "./services/timeframe.service";
     styleUrls: ["./time-frame-picker.component.less"],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class TimeFramePickerComponent implements OnChanges, OnInit {
     /**  earliest selectable date */

@@ -38,7 +38,7 @@ import { DroppableComponent } from "./droppable.component";
     selector: "nui-draggable",
     templateUrl: "./draggable.component.html",
     styleUrls: ["./draggable.component.less"],
-    standalone: false,
+    // host: { "aria-grabbed": "supported" },
 })
 export class DraggableComponent implements OnInit {
     @Input() payload: any;

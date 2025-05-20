@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-resize-basic-example",
     templateUrl: "./resize-basic.example.component.html",
-    standalone: false,
 })
 export class ResizeBasicExampleComponent {
     public newSizeText: string = "Size is not changed.";

@@ -31,7 +31,6 @@ import {
 @Component({
     selector: "gauge-visual-test",
     templateUrl: "./gauge-visual-test.component.html",
-    standalone: false,
 })
 export class GaugeVisualTestComponent {
     public warningEnabled = true;

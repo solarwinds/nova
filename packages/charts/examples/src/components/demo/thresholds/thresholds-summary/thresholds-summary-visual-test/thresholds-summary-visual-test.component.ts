@@ -24,7 +24,6 @@ import moment from "moment/moment";
 @Component({
     selector: "nui-thresholds-summary-visual-test",
     templateUrl: "./thresholds-summary-visual-test.component.html",
-    standalone: false,
 })
 export class ThresholdsSummaryVisualTestComponent {
     public singleSeries = { "series-1": [30, 95, 15, 60, 35] };

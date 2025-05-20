@@ -24,7 +24,6 @@ import { FormBuilder } from "@angular/forms";
 @Component({
     selector: "nui-checkbox-group-visual-test",
     templateUrl: "./checkbox-group-visual-test.component.html",
-    standalone: false,
 })
 export class CheckboxGroupVisualTestComponent {
     public cabbage = "Cabbage";

@@ -50,7 +50,6 @@ import { AcmeTableMockDataSource } from "../../../../prototypes/data/table/acme-
     selector: "table-widget-paginator-example",
     templateUrl: "./table-widget-paginator-example.component.html",
     styleUrls: ["./table-widget-paginator-example.component.less"],
-    standalone: false,
 })
 export class TableWidgetPaginatorExampleComponent implements OnInit {
     public dashboard: IDashboard | undefined;

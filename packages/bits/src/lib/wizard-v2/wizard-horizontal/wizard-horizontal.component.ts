@@ -54,8 +54,10 @@ import { WizardDirective } from "../wizard.directive";
     styleUrls: ["../wizard.component.less"],
     host: {
         class: "nui-wizard-horizontal-layout",
-        "[class.nui-wizard-step-header__label-position--end]": "labelPosition == 'end'",
-        "[class.nui-wizard-step-header__label-position--top]": "labelPosition == 'top'",
+        "[class.nui-wizard-step-header__label-position--end]":
+            "labelPosition == 'end'",
+        "[class.nui-wizard-step-header__label-position--top]":
+            "labelPosition == 'top'",
         "aria-orientation": "horizontal",
         role: "tablist",
     },
@@ -65,7 +67,6 @@ import { WizardDirective } from "../wizard.directive";
     ],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class WizardHorizontalComponent
     extends WizardDirective

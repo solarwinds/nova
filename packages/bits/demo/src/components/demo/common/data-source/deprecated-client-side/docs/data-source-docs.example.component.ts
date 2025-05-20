@@ -27,7 +27,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-data-source-example",
     templateUrl: "./data-source-docs.example.component.html",
-    standalone: false,
 })
 export class DataSourceExampleComponent {
     public subclassCode = `

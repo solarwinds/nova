@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-repeat-multi-selection-example",
     templateUrl: "./repeat-multi-selection.example.component.html",
-    standalone: false,
 })
 export class RepeatMultiSelectionExampleComponent {
     public colors = [

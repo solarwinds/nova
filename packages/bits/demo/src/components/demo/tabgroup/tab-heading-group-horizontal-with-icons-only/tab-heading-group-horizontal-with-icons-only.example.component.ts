@@ -22,11 +22,11 @@ import { ChangeDetectorRef, Component } from "@angular/core";
 
 @Component({
     selector: "nui-tab-heading-group-horizontal-with-icons-only-example",
-    templateUrl: "./tab-heading-group-horizontal-with-icons-only.example.component.html",
+    templateUrl:
+        "./tab-heading-group-horizontal-with-icons-only.example.component.html",
     styleUrls: [
         "./tab-heading-group-horizontal-with-icons-only.example.component.less",
     ],
-    standalone: false,
 })
 export class TabHeadingGroupHorizontalWithIconsOnlyExampleComponent {
     public currentTabId: string;

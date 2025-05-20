@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-chart-docs-scales",
     templateUrl: "./chart-docs-scales.component.html",
-    standalone: false,
 })
 export class ChartDocsScalesComponent {
     scaleDefinition = `const xScale = new LinearScale();

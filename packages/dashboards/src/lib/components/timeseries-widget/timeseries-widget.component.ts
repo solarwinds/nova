@@ -51,7 +51,6 @@ import { IHasChangeDetector } from "../../types";
     selector: "nui-timeseries-widget",
     styleUrls: ["./timeseries-widget.component.less"],
     templateUrl: "./timeseries-widget.component.html",
-    standalone: false,
 })
 export class TimeseriesWidgetComponent
     implements OnInit, OnChanges, IHasChangeDetector

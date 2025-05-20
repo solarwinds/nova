@@ -27,7 +27,6 @@ import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "@nova-ui/bits";
     selector: "nui-select-v2-overlay-config-example",
     templateUrl: "./select-v2-overlay-config.example.component.html",
     host: { class: "select-container" },
-    standalone: false,
 })
 export class SelectV2OverlayConfigExampleComponent {
     public overlayConfig: OverlayConfig = {

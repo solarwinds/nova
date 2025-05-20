@@ -38,7 +38,6 @@ import {
 @Component({
     selector: "line-chart-with-large-values-example",
     templateUrl: "./line-chart-with-large-values.example.component.html",
-    standalone: false,
 })
 export class LineChartWithLargeValuesExampleComponent implements OnInit {
     public chart = new Chart(new XYGrid());

@@ -107,7 +107,6 @@ export class AverageRatingKpiDataSource
     selector: "kpi-widget-background-color-example",
     templateUrl: "./kpi-widget-background-color-example.component.html",
     styleUrls: ["./kpi-widget-background-color-example.component.less"],
-    standalone: false,
 })
 export class KpiWidgetBackgroundColorExampleComponent implements OnInit {
     public dashboard: IDashboard | undefined;

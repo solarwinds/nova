@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-highlight",
     templateUrl: "./highlight.example.component.html",
-    standalone: false,
 })
 export class HighlightExampleComponent {
     public contentString = $localize`

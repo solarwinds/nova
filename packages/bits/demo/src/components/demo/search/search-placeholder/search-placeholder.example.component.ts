@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-search-placeholder-example",
     templateUrl: "search-placeholder.example.component.html",
-    standalone: false,
 })
 export class SearchPlaceholderExampleComponent {
     public placeholder = "Search something...";

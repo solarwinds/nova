@@ -84,7 +84,6 @@ import { InputValueTypes } from "../types";
         "aria-haspopup": "listbox",
         "aria-owns": "nui-overlay",
     },
-    standalone: false,
 })
 
 // Will be renamed in scope of the NUI-5797

@@ -41,7 +41,6 @@ import {
     selector: "app-custom-template-filter-group",
     templateUrl: "./custom-template-filter-group.component.html",
     styleUrls: ["./custom-template-filter-group.component.less"],
-    standalone: false,
 })
 export class CustomTemplateFilterGroupCompositeComponent
     implements IFilterPub, OnInit

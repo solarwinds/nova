@@ -94,7 +94,6 @@ interface IWidgetItem {
             </div>
         </ng-template>
     `,
-    standalone: false,
 })
 export class WidgetTemplateSelectionComponent
     implements IWidgetTemplateSelector, OnInit
@@ -226,7 +225,6 @@ export class PersistenceHandler implements IDashboardPersistenceHandler {
     styleUrls: ["./widget-creation.component.less"],
     // Here we provide our persistence handler at the component level; this can also be done in the module.
     providers: [PersistenceHandler],
-    standalone: false,
 })
 export class WidgetCreationComponent implements OnInit {
     // The WidgetClonerService will need this for updating the dashboard

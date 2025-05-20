@@ -25,7 +25,6 @@ import { IToastService, ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-toast-basic-html-example",
     templateUrl: "./toast-basic-html.example.component.html",
-    standalone: false,
 })
 export class ToastBasicHtmlExampleComponent implements OnInit {
     constructor(@Inject(ToastService) private toastService: IToastService) {}
@@ -60,7 +59,7 @@ export class ToastBasicHtmlExampleComponent implements OnInit {
     public showToastWithScriptTagIncluded(): void {
         this.toastService.info({
             title: $localize`Toast with forbidden tags and enableHtml set to true`,
-            message: `
+            message: $localize`
                 Hi there! I'm a toast message with forbidden tags:
                 <script>alert("You shall not pass")</script>
                 <object width="400" height="400"></object>

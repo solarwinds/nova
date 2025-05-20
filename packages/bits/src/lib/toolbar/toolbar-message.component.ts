@@ -27,6 +27,5 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-toolbar-message",
     template: "<ng-content></ng-content>",
-    standalone: false,
 })
 export class ToolbarMessageComponent {}

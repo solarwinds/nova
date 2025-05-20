@@ -29,7 +29,6 @@ import { ISrlcDetails, SrlcStage } from "./public-api";
 @Component({
     selector: "nui-srlc-indicator",
     templateUrl: "./srlc-indicator.component.html",
-    standalone: false,
 })
 export class SrlcIndicatorComponent implements OnInit {
     constructor(private router: Router) {}

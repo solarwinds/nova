@@ -29,7 +29,6 @@ import { DialogContentExampleComponent } from "../component-as-content/dialog-co
 @Component({
     selector: "nui-dialog-after-opened-example",
     templateUrl: "./dialog-after-opened.example.component.html",
-    standalone: false,
 })
 export class DialogAfterOpenedExampleComponent implements OnInit, OnDestroy {
     constructor(

@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-chart-docs-chart-setup",
     templateUrl: "./chart-docs-chart-setup.component.html",
-    standalone: false,
 })
 export class ChartDocsChartSetupComponent {
     public basicChartTemplate = `<nui-chart [chart]="chart"></nui-chart>`;

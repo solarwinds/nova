@@ -31,7 +31,6 @@ import {
 @Component({
     selector: "nui-legend-interactive-example",
     templateUrl: "./legend-interactive.example.component.html",
-    standalone: false,
 })
 export class LegendInteractiveExampleComponent implements OnInit {
     // Set up the chart assist to keep track of the series selection and emphasis states

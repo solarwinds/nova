@@ -25,7 +25,6 @@ import { ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-wizard-additional-button-example",
     templateUrl: "./wizard-additional-button.example.component.html",
-    standalone: false,
 })
 export class WizardAdditionalButtonExampleComponent {
     constructor(@Inject(ToastService) private toastService: ToastService) {}

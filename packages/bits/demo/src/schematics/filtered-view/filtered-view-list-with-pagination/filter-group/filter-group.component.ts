@@ -50,7 +50,6 @@ import {
     selector: "app-filter-group-with-pagination",
     templateUrl: "./filter-group.component.html",
     styleUrls: ["./filter-group.component.less"],
-    standalone: false,
 })
 export class FilterGroupComponent implements IFilterPub, OnInit, OnDestroy {
     // mark this filter to be monitored by our datasource for any changes in order reset other filters(eg: pagination)

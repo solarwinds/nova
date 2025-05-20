@@ -86,7 +86,6 @@ import { TextboxComponent } from "../textbox/textbox.component";
     ],
     styleUrls: ["./date-picker.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false,
 })
 export class DatePickerComponent
     implements

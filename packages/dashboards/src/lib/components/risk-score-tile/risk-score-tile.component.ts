@@ -56,7 +56,6 @@ import { IBroker } from "../providers/types";
     styleUrls: ["./risk-score-tile.component.less"],
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class RiskScoreTileComponent implements IHasChangeDetector, OnChanges {
     public static lateLoadKey = "RiskScoreTileComponent";

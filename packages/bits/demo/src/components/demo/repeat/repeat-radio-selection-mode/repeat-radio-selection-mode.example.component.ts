@@ -23,7 +23,6 @@ import { Component, Input } from "@angular/core";
 @Component({
     selector: "nui-repeat-radio-selection-mode-example",
     templateUrl: "./repeat-radio-selection-mode.example.component.html",
-    standalone: false,
 })
 export class RepeatRadioSelectionModeExampleComponent {
     @Input() public colors = [

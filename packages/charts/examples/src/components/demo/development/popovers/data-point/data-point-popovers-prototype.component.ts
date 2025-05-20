@@ -42,7 +42,6 @@ import {
 
 @Component({
     templateUrl: "./data-point-popovers-prototype.component.html",
-    standalone: false,
 })
 export class DataPointPopoversPrototypeComponent implements OnInit {
     public chart: Chart;

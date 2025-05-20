@@ -24,6 +24,5 @@ import { Component } from "@angular/core";
     selector: "dnd-basic",
     templateUrl: "./dnd-basic.example.component.html",
     styleUrls: ["./dnd-basic.example.component.less"],
-    standalone: false,
 })
 export class DndBasicExampleComponent {}

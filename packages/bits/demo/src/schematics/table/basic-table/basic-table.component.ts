@@ -51,7 +51,6 @@ import { IServer } from "./types";
             useClass: ClientSideDataSource,
         },
     ],
-    standalone: false,
 })
 export class BasicTableComponent implements OnDestroy, AfterViewInit {
     public items: IServer[] = [];

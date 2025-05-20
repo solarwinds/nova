@@ -25,7 +25,6 @@ import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-wizard-confirmation-dialog-example",
     templateUrl: "./wizard-confirmation-dialog.example.component.html",
-    standalone: false,
 })
 export class WizardConfirmationDialogExampleComponent {
     public activeDialog: NuiDialogRef;

@@ -44,7 +44,6 @@ interface IExampleTableModel {
     selector: "nui-table-sorting-example",
     templateUrl: "./table-sorting.example.component.html",
     providers: [ClientSideDataSource],
-    standalone: false,
 })
 export class TableSortingExampleComponent implements AfterViewInit, OnDestroy {
     public displayedColumns = [

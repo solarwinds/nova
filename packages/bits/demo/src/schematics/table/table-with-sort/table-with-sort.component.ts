@@ -55,7 +55,6 @@ import { IServer } from "./types";
             useClass: TableWithSortDataSource,
         },
     ],
-    standalone: false,
 })
 export class TableWithSortComponent
     implements OnInit, OnDestroy, AfterViewInit

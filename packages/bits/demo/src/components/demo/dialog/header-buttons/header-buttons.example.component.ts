@@ -25,7 +25,6 @@ import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-header-buttons-example",
     templateUrl: "./header-buttons.example.component.html",
-    standalone: false,
 })
 export class HeaderButtonsExampleComponent {
     private activeDialog: NuiDialogRef;

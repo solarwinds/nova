@@ -31,7 +31,6 @@ import {
 @Component({
     selector: "nui-overlay-popup-styles-example",
     templateUrl: "./overlay-popup-styles.example.component.html",
-    standalone: false,
 })
 export class OverlayPopupStylesExampleComponent
     implements AfterViewInit, OnDestroy

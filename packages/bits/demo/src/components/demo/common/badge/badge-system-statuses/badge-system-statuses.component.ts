@@ -24,6 +24,5 @@ import { Component } from "@angular/core";
     selector: "nui-badge-system-statuses",
     templateUrl: "./badge-system-statuses.component.html",
     styleUrls: ["./badge-system-statuses.component.less"],
-    standalone: false,
 })
 export class BadgeSystemStatusesComponent {}

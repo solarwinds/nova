@@ -34,7 +34,6 @@ import { OptionValueType } from "@nova-ui/bits";
 @Component({
     selector: "nui-date-time-picker-timezones-example",
     templateUrl: "./date-time-picker-timezones.example.component.html",
-    standalone: false,
 })
 export class DateTimePickerTimezonesExampleComponent implements OnInit {
     public control = new FormControl(moment(), {

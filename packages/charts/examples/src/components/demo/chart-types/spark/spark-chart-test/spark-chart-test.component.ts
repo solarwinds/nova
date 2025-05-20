@@ -38,7 +38,6 @@ import {
 @Component({
     selector: "nui-spark-chart-test",
     templateUrl: "./spark-chart-test.component.html",
-    standalone: false,
 })
 export class SparkChartTestComponent implements OnInit {
     private colors = [

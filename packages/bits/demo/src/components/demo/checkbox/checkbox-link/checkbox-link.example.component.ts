@@ -25,7 +25,6 @@ import { ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-checkbox-link-example",
     templateUrl: "./checkbox-link.example.component.html",
-    standalone: false,
 })
 export class CheckboxLinkExampleComponent {
     public action(): boolean {

@@ -22,6 +22,5 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-chart-docs-gauge",
     templateUrl: "./chart-docs-gauge.component.html",
-    standalone: false,
 })
 export class ChartDocsGaugeComponent {}

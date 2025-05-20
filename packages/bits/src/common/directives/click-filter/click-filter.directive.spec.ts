@@ -12,7 +12,6 @@ import { isTargetAnAnchor, makePredicate } from "./public-api";
             <span id="span">Span</span>
         </div>
     </div>`,
-    standalone: false,
 })
 class TestComponent {
     @ViewChild(ClickFilterDirective, { static: true })

@@ -46,7 +46,6 @@ import { PositionService } from "../../services/position.service";
         </div>
     `,
     encapsulation: ViewEncapsulation.None,
-    standalone: false,
 })
 export class PopupContainerComponent implements AfterViewInit {
     public hostElement: HTMLElement;

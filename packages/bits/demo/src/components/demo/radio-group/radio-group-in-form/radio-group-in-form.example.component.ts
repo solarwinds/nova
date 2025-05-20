@@ -24,7 +24,6 @@ import { FormBuilder, Validators } from "@angular/forms";
 @Component({
     selector: "nui-radio-group-in-form-example",
     templateUrl: "./radio-group-in-form.example.component.html",
-    standalone: false,
 })
 export class RadioGroupInFormExampleComponent {
     public vegetables = [

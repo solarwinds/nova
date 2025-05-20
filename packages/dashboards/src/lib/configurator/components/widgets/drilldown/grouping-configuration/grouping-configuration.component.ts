@@ -63,7 +63,6 @@ import { DATA_SOURCE_CREATED } from "../../../../types";
             }
         `,
     ],
-    standalone: false,
 })
 // Remember to declare this class in the parent module
 export class GroupingConfigurationComponent

@@ -24,7 +24,6 @@ import { Subject } from "rxjs";
 @Component({
     selector: "nui-popover-prevent-close-on-click-example",
     templateUrl: "./popover-prevent-close-on-click.example.component.html",
-    standalone: false,
 })
 export class PopoverPreventCloseOnClickExampleComponent {
     public dataset = {

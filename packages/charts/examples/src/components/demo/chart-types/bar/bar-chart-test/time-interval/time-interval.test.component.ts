@@ -34,7 +34,6 @@ import {
 @Component({
     selector: "nui-time-interval-test",
     templateUrl: "./time-interval.test.component.html",
-    standalone: false,
 })
 export class TimeIntervalTestComponent implements OnInit {
     public chart = new Chart(barGrid());

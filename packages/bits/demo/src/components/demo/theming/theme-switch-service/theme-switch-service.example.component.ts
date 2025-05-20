@@ -25,7 +25,6 @@ import { ThemeSwitchService } from "@nova-ui/bits";
 @Component({
     selector: "theme-switch-service-example",
     templateUrl: "./theme-switch-service.example.component.html",
-    standalone: false,
 })
 export class ThemeSwitchServiceExampleComponent implements OnInit, OnDestroy {
     // Inject the service

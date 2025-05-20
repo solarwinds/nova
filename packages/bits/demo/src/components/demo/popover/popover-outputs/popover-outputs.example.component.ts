@@ -25,7 +25,6 @@ import { IToastService, ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-popover-outputs-example",
     templateUrl: "./popover-outputs.example.component.html",
-    standalone: false,
 })
 export class PopoverOutputsExampleComponent {
     constructor(@Inject(ToastService) private toastService: IToastService) {}

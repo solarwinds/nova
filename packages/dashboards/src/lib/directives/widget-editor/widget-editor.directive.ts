@@ -37,7 +37,6 @@ import { WidgetTypesService } from "../../services/widget-types.service";
 
 @Directive({
     selector: "[nuiWidgetEditor]",
-    standalone: false,
 })
 export class WidgetEditorDirective implements OnInit, OnDestroy {
     @Input("nuiWidgetEditor")

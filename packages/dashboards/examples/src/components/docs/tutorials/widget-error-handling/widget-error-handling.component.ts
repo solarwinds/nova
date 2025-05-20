@@ -228,7 +228,6 @@ export class ErrorNotFoundDataSource
     selector: "widget-error-handling",
     templateUrl: "./widget-error-handling.component.html",
     styleUrls: ["./widget-error-handling.component.less"],
-    standalone: false,
 })
 export class WidgetErrorHandlingComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.

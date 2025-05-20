@@ -25,7 +25,6 @@ import { Component, ElementRef, Input, TemplateRef } from "@angular/core";
     selector: "nui-wizard-overflow",
     templateUrl: "./wizard-overflow.component.html",
     styleUrls: ["./wizard-overflow.component.less"],
-    standalone: false,
 })
 export class WizardOverflowComponent {
     public tooltipText: string = $localize` more steps are available`;

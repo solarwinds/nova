@@ -25,7 +25,6 @@ import addSchema from "../../../../schematics/src/ng-add/schema.json";
 @Component({
     selector: "nui-dashboard-schematics-docs",
     templateUrl: "./schematics-docs.component.html",
-    standalone: false,
 })
 export class SchematicsDocsComponent {
     public addJsonScheme: any = {};

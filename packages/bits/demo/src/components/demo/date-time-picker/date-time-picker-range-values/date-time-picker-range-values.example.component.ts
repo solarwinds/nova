@@ -24,7 +24,6 @@ import moment, { Moment } from "moment/moment";
 @Component({
     selector: "nui-date-time-picker-range-values-example",
     templateUrl: "./date-time-picker-range-values.example.component.html",
-    standalone: false,
 })
 export class DateTimePickerRangeValuesExampleComponent {
     private currentDate = moment();

@@ -23,6 +23,5 @@ import { Component } from "@angular/core";
 @Component({
     selector: "waterfall-chart-test-component",
     templateUrl: "./waterfall-chart-test.component.html",
-    standalone: false,
 })
 export class WaterfallChartTestComponent {}

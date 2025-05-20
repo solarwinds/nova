@@ -66,7 +66,6 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     ],
     encapsulation: ViewEncapsulation.None,
     host: { role: "menuitemcheckbox" },
-    standalone: false,
 })
 export class MenuOptionComponent extends MenuItemBaseComponent {
     /**

@@ -25,7 +25,6 @@ import { IMenuGroup, PanelBackgroundColor } from "@nova-ui/bits";
 @Component({
     selector: "nui-panel-visual-test",
     templateUrl: "./panel-visual-test.component.html",
-    standalone: false,
 })
 export class PanelVisualTestComponent {
     @Input() isOn = true;

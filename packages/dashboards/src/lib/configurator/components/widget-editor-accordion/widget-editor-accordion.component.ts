@@ -41,7 +41,6 @@ import { WidgetConfiguratorSectionCoordinatorService } from "../widget-configura
     encapsulation: ViewEncapsulation.None,
     styleUrls: ["./widget-editor-accordion.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class WidgetEditorAccordionComponent implements OnInit, OnDestroy {
     @Input() public showOpenStateIcon: boolean = true;

@@ -20,7 +20,7 @@
 
 import { ChangeDetectorRef, Component, ViewChild } from "@angular/core";
 
-import { TableSelectionConfig } from "@nova-ui/bits";
+import { TableSelectionConfig, TableSelectionMode } from "@nova-ui/bits";
 
 import { ISelection } from "../../../services/public-api";
 import { TableComponent } from "../table.component";
@@ -152,7 +152,6 @@ const ELEMENT_DATA: TableSelectModel[] = [
             </table>
         </div>
     `,
-    standalone: false,
 })
 export class TableSelectTestComponent {
     public displayedColumns = [
@@ -170,7 +169,6 @@ export class TableSelectTestComponent {
 
     @ViewChild(TableComponent, { static: true })
     tableComponent: TableComponent<any>;
-    positionWidth = 100;
     constructor(public changeDetection: ChangeDetectorRef) {}
 
     public onSelectorChange(selection: ISelection): void {

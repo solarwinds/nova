@@ -152,7 +152,6 @@ export class FakeHTTPService {
             useClass: LocalFilteringDataSource,
         },
     ],
-    standalone: false,
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
 export class FakeServer implements OnDestroy {

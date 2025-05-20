@@ -25,7 +25,6 @@ import { FormControl } from "@angular/forms";
     selector: "nui-select-v2-setting-value-example",
     templateUrl: "select-v2-setting-value.example.component.html",
     host: { class: "select-container" },
-    standalone: false,
 })
 export class SelectV2SettingValueExampleComponent implements OnInit {
     public items = Array.from({ length: 50 }).map(

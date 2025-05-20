@@ -23,6 +23,5 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-chart-docs-events",
     templateUrl: "./chart-docs-events.component.html",
-    standalone: false,
 })
 export class ChartDocsEventsComponent {}

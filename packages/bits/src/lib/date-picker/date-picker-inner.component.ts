@@ -41,7 +41,6 @@ import { IDatePickerDisabledDate } from "./public-api";
 @Component({
     selector: "nui-date-picker-inner",
     templateUrl: "./date-picker-inner.component.html",
-    standalone: false,
 })
 export class DatePickerInnerComponent
     implements AfterContentInit, OnInit, OnChanges, OnDestroy

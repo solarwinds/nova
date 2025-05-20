@@ -60,7 +60,6 @@ const availableCompanies: Company[] = [
     templateUrl: "./dnd-dropzone-visual-example.component.html",
     styleUrls: ["./dnd-dropzone-visual-example.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class DndDropzoneVisualExampleComponent {
     public companies: Company[] = availableCompanies;

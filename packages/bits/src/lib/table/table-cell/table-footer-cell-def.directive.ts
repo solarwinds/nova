@@ -30,7 +30,6 @@ import { Directive, TemplateRef } from "@angular/core";
     providers: [
         { provide: CdkFooterCellDef, useExisting: TableFooterCellDefDirective },
     ],
-    standalone: false,
 })
 export class TableFooterCellDefDirective extends CdkFooterCellDef {
     constructor(public template: TemplateRef<any>) {

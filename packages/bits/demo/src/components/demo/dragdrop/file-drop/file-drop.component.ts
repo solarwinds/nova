@@ -41,7 +41,6 @@ import { FileDropState } from "./public-api";
     host: {
         class: "d-inline-flex align-items-center justify-content-center",
     },
-    standalone: false,
 })
 export class FileDropExampleComponent {
     // TODO: consider renaming this class to DropAreaComponent since it is not file-specific at all

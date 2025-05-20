@@ -34,7 +34,6 @@ import {
 @Component({
     selector: "nui-base-grid-padding-example",
     templateUrl: "./base-grid-padding.example.component.html",
-    standalone: false,
 })
 export class BaseGridPaddingExampleComponent implements OnInit {
     public chart: Chart;

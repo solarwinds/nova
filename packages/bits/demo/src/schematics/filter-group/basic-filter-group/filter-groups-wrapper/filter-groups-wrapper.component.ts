@@ -35,7 +35,6 @@ import { BasicFilterGroupCompositeComponent } from "../basic-filter-group.compon
     selector: "app-basic-filter-groups-wrapper",
     templateUrl: "filter-groups-wrapper.component.html",
     styleUrls: ["filter-groups-wrapper.component.less"],
-    standalone: false,
 })
 export class BasicFilterGroupsWrapperComponent implements AfterViewInit {
     @ContentChildren(BasicFilterGroupCompositeComponent)

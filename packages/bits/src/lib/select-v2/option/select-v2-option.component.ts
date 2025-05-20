@@ -56,7 +56,6 @@ import { IOptionedComponent } from "../types";
             useExisting: forwardRef(() => SelectV2OptionComponent),
         },
     ],
-    standalone: false,
 })
 export class SelectV2OptionComponent
     extends OverlayItemComponent

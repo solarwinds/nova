@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-tooltip-basic-example",
     templateUrl: "tooltip-basic.example.component.html",
-    standalone: false,
 })
 export class TooltipBasicExampleComponent {
     public tooltip = $localize`I am a Tooltip!`;
