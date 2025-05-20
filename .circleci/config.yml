@@ -19,12 +19,18 @@ executors:
         docker:
             - image: cimg/node:20.18.1
         working_directory: ~/nova
+
+    node-browsers2:
+        docker:
+            - image: mcr.microsoft.com/playwright:v1.52.0-noble
+        working_directory: ~/nova
+
     ubuntu:
         machine:
             image: ubuntu-2204:2022.10.2
         working_directory: ~/nova
         environment:
-          USE_CACHE: "true"
+            USE_CACHE: "true"
 
 jobs:
     prepare:
@@ -50,26 +56,13 @@ jobs:
                   key: deps-{{ checksum "yarn.lock" }}
                   paths:
                       - ./node_modules
-            - run:
-                  working_directory: ~/nova
-                  name: Check styling
-                  command: |
-                      yarn prettier-check || true
-                      EXIT_CODE=$?
-                      echo "Exit Code: $EXIT_CODE"
-                      if [ $EXIT_CODE -ne 0 ]; then
-                        echo "Has styling issues but continuing..."
-                      fi
-                      # Exit with 0 to indicate success to CircleCI (override the failure)
-                      exit 0
-                  when: always
-
             - persist_to_workspace:
                   root: ~/nova
                   paths:
                       - .git
                       - packages
                       - scripts
+                      - test
                       - .editorconfig
                       - .eslintignore
                       - .eslintrc.js
@@ -94,6 +87,9 @@ jobs:
             - run:
                   name: Compute build version
                   command: yarn run compute-version-ci
+            - run:
+                  name: Compute build c
+                  command: ls
             - run:
                   name: Grab latest commit of package
                   command: |
@@ -137,6 +133,17 @@ jobs:
                   command: yarn run test
             - store_test_results:
                   path: packages/bits/test-results
+    bits-unit-test2:
+        executor: node-browsers2
+        working_directory: ~/nova
+        steps:
+            - attach_workspace:
+                  at: ~/nova
+            - reuse-cache
+            - run:
+                  working_directory: ~/nova
+                  name: ls
+                  command: ls
     bits-e2e-test:
         executor: ubuntu
         resource_class: medium+
@@ -158,7 +165,7 @@ jobs:
                       fi
                       echo "not skiped"
             - restore_cache:
-                key: bits-dist-{{ checksum "packages/bits/git-commit" }}
+                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
             - reuse-cache
             - run:
                   name: Start Selenium docker image
@@ -189,7 +196,7 @@ jobs:
                           circleci step halt
                       fi
             - restore_cache:
-                key: bits-dist-{{ checksum "packages/bits/git-commit" }}
+                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
             - reuse-cache
             - run:
                   name: Start Selenium docker image
@@ -220,7 +227,7 @@ jobs:
                           circleci step halt
                       fi
             - restore_cache:
-                key: bits-dist-{{ checksum "packages/bits/git-commit" }}
+                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
             - reuse-cache
             - run:
                   name: Start Selenium docker image
@@ -233,6 +240,25 @@ jobs:
             - run:
                   name: Cleanup
                   command: docker-compose down -v --rmi=local
+    bits-e2e-test-playwright:
+        executor: node
+        parallelism: 4
+        steps:
+            - attach_workspace:
+                  at: ~/nova
+            - reuse-cache
+            - run:
+                  name: Compute build c
+                  command: ls
+            - run:
+                  working_directory: ~/nova
+                  name: Install playwright
+                  command: yarn playwright install --with-deps
+            - run:
+                  working_directory: ~/nova/packages/bits
+                  name: Run tests
+                  command: SHARD="$((${CIRCLE_NODE_INDEX}+1))"; start-server-and-test serve-examples:prod 4200 'yarn run e2e:playwright:ci --shard=${SHARD}/${CIRCLE_NODE_TOTAL}'
+
     bits-pack:
         executor: node
         steps:
@@ -667,7 +693,13 @@ workflows:
             - bits-unit-test:
                   requires:
                       - bits-build
+            - bits-unit-test2:
+                  requires:
+                      - bits-build
             - bits-e2e-test:
+                  requires:
+                      - bits-build
+            - bits-e2e-test-playwright:
                   requires:
                       - bits-build
             - bits-visual-test:
