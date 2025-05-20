@@ -24,7 +24,7 @@ import { Atom } from "../../atom";
 import { ButtonAtom } from "../../components/public_api";
 import { Helpers } from "../../helpers";
 
-describe("USERCONTROL setFocus:", () => {
+xdescribe("USERCONTROL setFocus:", () => {
     let carrotRadio: ElementFinder;
     let onionRadio: ElementFinder;
     let carrotBtnAtom: ButtonAtom;

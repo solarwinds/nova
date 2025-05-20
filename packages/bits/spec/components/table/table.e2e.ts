@@ -29,8 +29,14 @@ import { CheckboxGroupAtom } from "../checkbox-group/checkbox-group.atom";
 import { PaginatorAtom } from "../paginator/paginator.atom";
 import { SearchAtom } from "../search/search.atom";
 import { SelectorAtom } from "../selector/selector.atom";
-import { SelectionType } from "../selector/selector.e2e";
 import { TextboxAtom } from "../textbox/textbox.atom";
+
+export enum SelectionType {
+    All = "Select all items on this page",
+    UnselectAll = "Unselect all items on this page",
+    None = "Unselect all items",
+    AllPages = "Select all items on all pages",
+}
 
 describe("USERCONTROL table >", () => {
     const table: TableAtom = Atom.find(TableAtom, "nui-demo-basic-table");

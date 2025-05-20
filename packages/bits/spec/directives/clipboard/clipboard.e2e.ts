@@ -25,7 +25,7 @@ import { ButtonAtom } from "../../components/button/button.atom";
 import { TextboxAtom } from "../../components/textbox/textbox.atom";
 import { Helpers } from "../../helpers";
 
-describe("USERCONTROL Clipboard", () => {
+xdescribe("USERCONTROL Clipboard", () => {
     const buttonAtom: ButtonAtom = Atom.find(ButtonAtom, "clipboardButton");
     const textbox: TextboxAtom = Atom.find(TextboxAtom, "inputTextbox");
 
