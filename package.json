@@ -24,11 +24,11 @@
     "@angular/platform-browser": "19.2.7",
     "@angular/platform-browser-dynamic": "19.2.7",
     "@angular/router": "19.2.7",
-    "@schematics/angular": "19.2.8",
     "@axe-core/webdriverjs": "4.10.1",
     "@compodoc/compodoc": "1.1.26",
     "@percy/cli": "1.30.2",
     "@percy/protractor": "2.0.1",
+    "@schematics/angular": "19.2.8",
     "@stackblitz/sdk": "1.11.0",
     "@stylistic/eslint-plugin-ts": "3.1.0",
     "@types/jasmine": "5.1.4",
@@ -124,7 +124,7 @@
     "trigger-pipeline-build-ci": "bash scripts/trigger-pipeline-build",
     "verify-ci": "bash scripts/verify-published"
   },
-  "version": "19.0.0",
+  "version": "19.0.1",
   "workspaces": [
     "packages/*"
   ]

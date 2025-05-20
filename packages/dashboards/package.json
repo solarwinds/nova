@@ -38,8 +38,8 @@
   },
   "devDependencies": {
     "@apollo/client": "3.7.3",
-    "apollo-angular": "10.0.3",
-    "angular-gridster2": "19.0.0"
+    "angular-gridster2": "19.0.0",
+    "apollo-angular": "10.0.3"
   },
   "peerDependencies": {
     "angular-gridster2": "^19.0.0"
@@ -105,5 +105,5 @@
     "visual:gui": "yarn run visual:base -c gui",
     "visual:serve": "yarn run visual:base -c serve"
   },
-  "version": "17.0.0"
+  "version": "17.0.1"
 }
