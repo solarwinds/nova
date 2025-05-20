@@ -9,6 +9,9 @@ for (const project of projects) {
     const packageJson = require(`../${project.path}/package.json`);
 
     for (const dep of project.dependencies) {
+        if (packageJson.dependencies[dep]) {
+            packageJson.dependencies[dep] = `~${version}`;
+        }
         if (packageJson.devDependencies[dep]) {
             packageJson.devDependencies[dep] = `~${version}`;
         }
