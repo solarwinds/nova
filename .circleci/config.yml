@@ -245,7 +245,7 @@ jobs:
                   working_directory: ~/nova/packages/bits
                   command: |
                       SHARD="$((${CIRCLE_NODE_INDEX}+1))";
-                      yarn run playwright test --shard=${SHARD}/${CIRCLE_NODE_TOTAL}
+                      yarn run e2e:playwright:ci --shard=${SHARD}/${CIRCLE_NODE_TOTAL}
     bits-pack:
         executor: node
         steps:

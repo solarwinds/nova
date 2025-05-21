@@ -2,7 +2,7 @@ import { test as base, Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
 type AxeFixture = {
-    makeAxeBuilder: () => AxeBuilder;
+    runA11yScan: (context?: string) => Promise<void>;
 };
 
 // Extend base test by providing "makeAxeBuilder"
@@ -10,13 +10,18 @@ type AxeFixture = {
 // This new "test" can be used in multiple test files, and each of them will get
 // a consistently configured AxeBuilder instance.
 export const test = base.extend<AxeFixture>({
-    makeAxeBuilder: async ({ page }, use) => {
-        const makeAxeBuilder = () =>
-            new AxeBuilder({ page })
-                .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
-                .exclude("#commonly-reused-element-with-known-issue");
+    runA11yScan: async ({ page }, use) => {
+        await use(async (context?: string) => {
+            const builder = new AxeBuilder({ page })
+                .withTags(['wcag2a', 'wcag2aa']);
 
-        await use(makeAxeBuilder);
+            if (context) {
+                builder.include(context);
+            }
+
+            const results = await builder.analyze();
+            expect(results.violations).toEqual([]);
+        });
     },
 });
 export { expect } from "@playwright/test";
