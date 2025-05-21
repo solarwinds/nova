@@ -61,8 +61,8 @@
   "schematics": "./sdk/schematics/collection.json",
   "scripts": {
     "a11y:playwright": "start-server-and-test serve-examples:prod 4200 a11y:base",
-    "a11y:playwright:base": "yarn run e2e:playwright:base --suite a11y",
-    "a11y:playwright:ci": "yarn run e2e:playwright:ci --suite a11y",
+    "a11y:playwright:base": "yarn run e2e:playwright:base --project=a11y",
+    "a11y:playwright:ci": "yarn run e2e:playwright:ci --project=a11y",
 
     "a11y": "start-server-and-test serve-examples:prod 4200 a11y:base",
     "a11y:base": "yarn run e2e:base --suite a11y",
@@ -101,8 +101,8 @@
     "e2e:watch": "npx watch \"yarn run e2e:base\" src demo spec --watch=1",
 
     "e2e:playwright": "start-server-and-test serve-examples:prod 4200 e2e:playwright:base",
-    "e2e:playwright:base": "playwright test",
-    "e2e:playwright:ci": "playwright test",
+    "e2e:playwright:base": "npx playwright test",
+    "e2e:playwright:ci": "npx playwright test",
 
     "extract-i18n": "ng extract-i18n demo --output-path demo/src/locale",
     "lint": "ng lint",

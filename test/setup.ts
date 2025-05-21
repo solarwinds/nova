@@ -1,30 +1,39 @@
-import { test as base, Page } from "@playwright/test";
+import { test as base, Page, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
-type AxeFixture = {
-    runA11yScan: (context?: string) => Promise<void>;
-};
+import { IAtomClass, Atom } from "./atom";
 
-// Extend base test by providing "makeAxeBuilder"
-//
-// This new "test" can be used in multiple test files, and each of them will get
-// a consistently configured AxeBuilder instance.
+type AxeFixture = {
+    runA11yScan: (
+        context?: IAtomClass | string,
+        disabledRules?: string[]
+    ) => Promise<void>;
+};
+export { expect } from "@playwright/test";
+
 export const test = base.extend<AxeFixture>({
     runA11yScan: async ({ page }, use) => {
-        await use(async (context?: string) => {
-            const builder = new AxeBuilder({ page })
-                .withTags(['wcag2a', 'wcag2aa']);
+        await use(async (context?: IAtomClass | string, disabledRules = []) => {
+            const builder = new AxeBuilder({ page }).withTags([
+                "wcag2a",
+                "wcag2aa",
+            ]);
 
             if (context) {
-                builder.include(context);
+                const locator =
+                    typeof context === "string"
+                        ? context
+                        : Atom.getSelector(context);
+
+                builder.include(locator);
             }
 
-            const results = await builder.analyze();
+            const results = await builder.disableRules(disabledRules).analyze();
             expect(results.violations).toEqual([]);
         });
     },
 });
-export { expect } from "@playwright/test";
+
 
 export class Helpers {
     public static page: Page;

@@ -28,6 +28,8 @@ executors:
     pw-noble-development:
         docker:
             - image: mcr.microsoft.com/playwright:v1.52.0-noble
+        resource_class: medium
+
 jobs:
     prepare:
         executor: node
