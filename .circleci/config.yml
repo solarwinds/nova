@@ -25,7 +25,9 @@ executors:
         working_directory: ~/nova
         environment:
           USE_CACHE: "true"
-
+    pw-noble-development:
+        docker:
+            - image: mcr.microsoft.com/playwright:v1.52.0-noble
 jobs:
     prepare:
         executor: node
@@ -232,6 +234,12 @@ jobs:
             - run:
                   name: Cleanup
                   command: docker-compose down -v --rmi=local
+    playwright-job-name:
+        executor: pw-noble-development
+        parallelism: 4
+        steps:
+            -   run:
+                    SHARD="$((${CIRCLE_NODE_INDEX}+1))"; npx playwright test --shard=${SHARD}/${CIRCLE_NODE_TOTAL}
     bits-pack:
         executor: node
         steps:
@@ -667,6 +675,9 @@ workflows:
                   requires:
                       - bits-build
             - bits-e2e-test:
+                  requires:
+                      - bits-build
+            - playwright-job-name:
                   requires:
                       - bits-build
             - bits-visual-test:
