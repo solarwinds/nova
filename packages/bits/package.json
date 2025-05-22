@@ -85,6 +85,7 @@
     "compodoc:serve": "yarn run compodoc-custom-theme -s -w --includes ./src/docs/development",
     "dist-copy": "run-s dist-copy:*",
     "dist-copy:atoms": "tsc -p spec/tsconfig.atom.json",
+    "dist-copy:atoms:playwright": "tsc -p e2e/tsconfig.json",
     "dist-copy:less": "npx copyfiles -u 3 \"src/styles/mixins/**/*\" dist/sdk/less/mixins/ && npx copyfiles -f \"src/styles/{mixins,nui-framework-*}.less\" dist/sdk/less",
     "dist-copy:tslint": "npx copyfiles \"tslint.*\" dist/sdk/",
     "dist-copy:xliff": "npx copyfiles -f \"src/locale/*\" dist/sdk/locale",
@@ -101,8 +102,10 @@
     "e2e:watch": "npx watch \"yarn run e2e:base\" src demo spec --watch=1",
 
     "e2e:playwright": "start-server-and-test serve-examples:prod 4200 e2e:playwright:base",
-    "e2e:playwright:base": "npx playwright test",
-    "e2e:playwright:ci": "npx playwright test",
+    "e2e:playwright:base": "yarn playwright test",
+    "e2e:playwright:ci": "yarn playwright test",
+    "e2e:playwright:ui": "yarn run e2e:playwright:base --ui",
+    "e2e:playwright:report": "yarn playwright show-report",
 
     "extract-i18n": "ng extract-i18n demo --output-path demo/src/locale",
     "lint": "ng lint",
