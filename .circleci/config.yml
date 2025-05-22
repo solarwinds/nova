@@ -253,7 +253,7 @@ jobs:
             - run: npx playwright install chrome
             - run:
                   name: Run tests
-                  command: SHARD="$((${CIRCLE_NODE_INDEX}+1))"; npx pwc --key $CURRENTS_RECORD_KEY --project-id bnsqNa --shard=${SHARD}/${CIRCLE_NODE_TOTAL}
+                  command: SHARD="$((${CIRCLE_NODE_INDEX}+1))"; npx playwright test --shard=${SHARD}/${CIRCLE_NODE_TOTAL}
     bits-a11y-test-playwright:
         executor: pw-noble-development
         parallelism: 4
