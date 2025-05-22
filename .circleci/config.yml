@@ -249,11 +249,9 @@ jobs:
             - reuse-cache
             - run:
                 name: Install Playwright Browsers
-                command: npx playwright install --with-deps
-            - run:
-                  name: E2E tests playwright
-                  working_directory: ~/nova/packages/bits
-                  command: |
+                working_directory: ~/nova/packages/bits
+                command: |
+                      npx playwright install --with-deps;
                       SHARD="$((${CIRCLE_NODE_INDEX}+1))";
                       npx playwright test --shard=${SHARD}/${CIRCLE_NODE_TOTAL}
     bits-a11y-test-playwright:
