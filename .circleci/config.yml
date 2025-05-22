@@ -24,7 +24,7 @@ executors:
             image: ubuntu-2204:2022.10.2
         working_directory: ~/nova
         environment:
-          USE_CACHE: "true"
+            USE_CACHE: "true"
     pw-noble-development:
         docker:
             - image: mcr.microsoft.com/playwright:v1.52.0-noble
@@ -162,7 +162,7 @@ jobs:
                       fi
                       echo "not skiped"
             - restore_cache:
-                key: bits-dist-{{ checksum "packages/bits/git-commit" }}
+                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
             - reuse-cache
             - run:
                   name: Start Selenium docker image
@@ -193,7 +193,7 @@ jobs:
                           circleci step halt
                       fi
             - restore_cache:
-                key: bits-dist-{{ checksum "packages/bits/git-commit" }}
+                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
             - reuse-cache
             - run:
                   name: Start Selenium docker image
@@ -224,7 +224,7 @@ jobs:
                           circleci step halt
                       fi
             - restore_cache:
-                key: bits-dist-{{ checksum "packages/bits/git-commit" }}
+                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
             - reuse-cache
             - run:
                   name: Start Selenium docker image
@@ -238,22 +238,22 @@ jobs:
                   name: Cleanup
                   command: docker-compose down -v --rmi=local
     bits-e2e-test-playwright:
-        executor: pw-noble-development
-        parallelism: 4
-        working_directory: ~/nova
-        environment:
-            PROJECT_DIR: ~/nova/packages/bits
+        docker:
+            - image: mcr.microsoft.com/playwright:latest
+        parallelism: 3
         steps:
             - attach_workspace:
                   at: ~/nova
             - reuse-cache
+            - add_ssh_keys
+            - checkout:
+                  path: ~/nova
+            - run: npm i -D @playwright/test
+            - run: npx playwright install
+            - run: npx playwright install chrome
             - run:
-                name: Install Playwright Browsers
-                working_directory: ~/nova/packages/bits
-                command: |
-                      npx playwright install --with-deps;
-                      SHARD="$((${CIRCLE_NODE_INDEX}+1))";
-                      npx playwright test --shard=${SHARD}/${CIRCLE_NODE_TOTAL}
+                  name: Run tests
+                  command: SHARD="$((${CIRCLE_NODE_INDEX}+1))"; npx pwc --key $CURRENTS_RECORD_KEY --project-id bnsqNa --shard=${SHARD}/${CIRCLE_NODE_TOTAL}
     bits-a11y-test-playwright:
         executor: pw-noble-development
         parallelism: 4
@@ -704,6 +704,7 @@ workflows:
                   requires:
                       - bits-build
             - bits-e2e-test-playwright:
+                  context: currents
                   requires:
                       - bits-build
             - bits-visual-test:
