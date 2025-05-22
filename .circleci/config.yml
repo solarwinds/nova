@@ -74,6 +74,7 @@ jobs:
                       - .git
                       - packages
                       - scripts
+                      - test
                       - .editorconfig
                       - .eslintignore
                       - .eslintrc.js
@@ -242,12 +243,25 @@ jobs:
         steps:
             - attach_workspace:
                   at: ~/nova
+            - reuse-cache
             - run:
                   name: E2E tests playwright
                   working_directory: ~/nova/packages/bits
                   command: |
                       SHARD="$((${CIRCLE_NODE_INDEX}+1))";
                       yarn run e2e:playwright:ci --shard=${SHARD}/${CIRCLE_NODE_TOTAL}
+    bits-a11y-test-playwright:
+        executor: pw-noble-development
+        parallelism: 4
+        steps:
+            - attach_workspace:
+                  at: ~/nova
+            - run:
+                  name: a11y tests playwright
+                  working_directory: ~/nova/packages/bits
+                  command: |
+                      SHARD="$((${CIRCLE_NODE_INDEX}+1))";
+                      yarn run a11y:playwright:ci --shard=${SHARD}/${CIRCLE_NODE_TOTAL}
     bits-pack:
         executor: node
         steps:
