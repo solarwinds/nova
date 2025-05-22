@@ -1,5 +1,5 @@
 import { ButtonAtom } from "./button.atom";
-import { Helpers, test } from "../../../../../test/setup";
+import { Helpers, test } from "../../setup";
 
 const rulesToDisable: string[] = ["duplicate-id-active"];
 

@@ -1,28 +1,24 @@
-import { expect, Helpers } from "./setup";
 import { Locator } from "playwright-core";
 
+import { expect, Helpers } from "./setup";
+
 export interface IAtomClass<T> {
-    findIn: (atomClass: IAtomClass<T>, arg: Locator) => T;
+    findIn: (atomClass: IAtomClass<T>, arg: Locator, root?: boolean) => T;
     CSS_CLASS?: string;
     CSS_SELECTOR?: string;
     new (locator: Locator): T;
 }
 
 export class Atom {
-    public locator: Locator;
-
-    constructor(locator: Locator) {
-        this.locator = locator;
-    }
-
     /**
      * Create atom from the css id
      */
     public static find<T extends Atom>(
         atomClass: IAtomClass<T>,
-        id: string
+        id: string,
+        root = false
     ): T {
-        return atomClass.findIn(atomClass, Helpers.page.locator(`#${id}`));
+        return atomClass.findIn(atomClass, Helpers.page.locator(`#${id}`), root);
     }
 
     /**
@@ -30,15 +26,19 @@ export class Atom {
      */
     public static findIn<T extends Atom>(
         atomClass: IAtomClass<T>,
-        parentLocator: Locator
+        parentLocator: Locator,
+        root = false
     ): T {
         const create = (locator: Locator) => new atomClass(locator);
         const selector = Atom.getSelector(atomClass);
         if (!parentLocator) {
             return create(Atom.getFromRoot(selector));
         }
+        const sibling = Helpers.page.locator(selector);
 
-        return create(parentLocator);
+        const operation =   root ? "and" : "locator";
+
+        return create(parentLocator[operation](sibling));
     }
 
     public static getFromRoot(selector: string): Locator {
@@ -59,24 +59,34 @@ export class Atom {
         );
     }
 
-    public async toNotContainClass(className: string | string[]) {
+    public locator: Locator;
+
+    constructor(locator: Locator) {
+        this.locator = locator;
+    }
+
+    public async toNotContainClass(className: string | string[]): Promise<any> {
         return await expect(this.locator).not.toContainClass(className);
     }
 
-    public async toContainClass(className: string | string[]) {
+    public async toContainClass(className: string | string[]): Promise<any> {
         return await expect(this.locator).toContainClass(className);
     }
 
+    /**
+     * @Deprecated: use Atom.toContainClass.
+     * see ../../ASSERTING_VALUE.md
+     */
     public async hasClass(cls: string): Promise<boolean> {
         const classList = await this.locator.getAttribute("class");
         return (classList || "").split(" ").includes(cls);
     }
 
-    public async isDisabled() {
+    public async isDisabled(): Promise<any> {
         return await expect(this.locator).toBeDisabled();
     }
 
-    public async isVisible() {
+    public async isVisible(): Promise<any> {
         return await expect(this.locator).toBeVisible();
     }
 

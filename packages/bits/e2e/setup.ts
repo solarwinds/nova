@@ -1,19 +1,20 @@
-import { test as base, Page, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import { test as base, Page, expect } from "@playwright/test";
 
-import { IAtomClass, Atom } from "./atom";
+import { Atom } from "./atom";
 
-type AxeFixture = {
+interface AxeFixture {
     runA11yScan: (
-        context?: IAtomClass | string,
+        context?: string | any,
         disabledRules?: string[]
     ) => Promise<void>;
-};
+}
+
 export { expect } from "@playwright/test";
 
 export const test = base.extend<AxeFixture>({
     runA11yScan: async ({ page }, use) => {
-        await use(async (context?: IAtomClass | string, disabledRules = []) => {
+        await use(async (context?: any | string, disabledRules = []) => {
             const builder = new AxeBuilder({ page }).withTags([
                 "wcag2a",
                 "wcag2aa",
@@ -34,14 +35,14 @@ export const test = base.extend<AxeFixture>({
     },
 });
 
-
 export class Helpers {
     public static page: Page;
-    public static setPage(page: Page) {
+
+    public static setPage(page: Page): void {
         this.page = page;
     }
 
-    static async prepareBrowser(pageName: string, page?: Page): Promise<void> {
+    static async prepareBrowser(pageName: string, page: Page): Promise<void> {
         Helpers.setPage(page);
         await Helpers.page.goto(`#/${pageName}`); // Update path as needed
     }

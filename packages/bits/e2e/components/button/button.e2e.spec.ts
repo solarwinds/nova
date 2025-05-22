@@ -1,6 +1,6 @@
 import { ButtonAtom } from "./button.atom";
-import { Atom } from "../../../../../test/atom";
-import { Helpers, test, expect } from "../../../../../test/setup";
+import { Atom } from "../../atom";
+import { Helpers, test, expect } from "../../setup";
 
 let primaryCompactBtn: ButtonAtom;
 let defaultLargeBtn: ButtonAtom;
@@ -12,71 +12,78 @@ let primaryLargePlusIconBusyBtn: ButtonAtom;
 let upBtn: ButtonAtom;
 let unlimitedWidthBtn: ButtonAtom;
 
-test.describe("Button component E2E", () => {
+test.describe("USERCONTROL Button >", () => {
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("button/button-test", page);
         primaryCompactBtn = Atom.find<ButtonAtom>(
             ButtonAtom,
-            "nui-demo-primary-compact-btn"
+            "nui-demo-primary-compact-btn",
+            true
         );
         defaultLargeBtn = Atom.find<ButtonAtom>(
             ButtonAtom,
-            "nui-default-large-btn"
+            "nui-default-large-btn",
+            true
         );
         actionCompactBtn = Atom.find<ButtonAtom>(
             ButtonAtom,
-            "nui-demo-action-compact-btn"
+            "nui-demo-action-compact-btn",
+            true
         );
         defaultBtnWithIcon = Atom.find<ButtonAtom>(
             ButtonAtom,
-            "nui-demo-btn-with-icon"
+            "nui-demo-btn-with-icon",
+            true
         );
         primaryLargePlusIconDisabledBtn = Atom.find<ButtonAtom>(
             ButtonAtom,
-            "nui-demo-primary-large-plus-icon-disabled-btn"
+            "nui-demo-primary-large-plus-icon-disabled-btn",
+            true
         );
         primaryLargePlusIconBtn = Atom.find<ButtonAtom>(
             ButtonAtom,
-            "nui-demo-primary-large-plus-icon-btn"
+            "nui-demo-primary-large-plus-icon-btn",
+            true
         );
         primaryLargePlusIconBusyBtn = Atom.find<ButtonAtom>(
             ButtonAtom,
-            "nui-demo-primary-large-plus-icon-busy-btn"
+            "nui-demo-primary-large-plus-icon-busy-btn",
+            true
         );
-        upBtn = Atom.find<ButtonAtom>(ButtonAtom, "nui-demo-up-btn");
+        upBtn = Atom.find<ButtonAtom>(ButtonAtom, "nui-demo-up-btn", true);
         unlimitedWidthBtn = Atom.find<ButtonAtom>(
             ButtonAtom,
-            "nui-demo-long-text-btn button"
+            "nui-demo-long-text-btn"
         );
     });
 
     test("should always have .nui-button class", async () => {
-        await primaryCompactBtn.hasClass("nui-button");
-        await defaultLargeBtn.hasClass("nui-button");
+        await primaryCompactBtn.toContainClass("nui-button");
+        await defaultLargeBtn.toContainClass("nui-button");
     });
 
     test("should always have .btn class", async () => {
-        await primaryCompactBtn.hasClass("btn");
-        await defaultLargeBtn.hasClass("btn");
+        await primaryCompactBtn.toContainClass("btn");
+        await defaultLargeBtn.toContainClass("btn");
     });
 
     test("should have type class based on 'size' attribute", async () => {
-        await primaryCompactBtn.hasClass("btn-xs");
-        await defaultLargeBtn.hasClass("btn-lg");
+        await primaryCompactBtn.toContainClass("btn-xs");
+        await defaultLargeBtn.toContainClass("btn-lg");
     });
 
     test("should have type class based on 'displayStyle' attribute", async () => {
-        await primaryCompactBtn.hasClass("btn-primary");
-        await defaultLargeBtn.hasClass("btn-default");
-        await actionCompactBtn.hasClass("btn-action");
+        await primaryCompactBtn.toContainClass("btn-primary");
+        await defaultLargeBtn.toContainClass("btn-default");
+        await actionCompactBtn.toContainClass("btn-action");
     });
 
     test("should have 'btn-default' css class if 'displayStyle' prop is not defined", async () => {
-        await defaultBtnWithIcon.hasClass("btn-default");
+        await defaultBtnWithIcon.toContainClass("btn-default");
     });
 
     test("should not override user classes in host element with its own classes", async () => {
-        await defaultLargeBtn.hasClass("testClass");
+        await defaultLargeBtn.toContainClass("testClass");
     });
 
     test("should be disabled with 'disabled' DOM property", async () => {
@@ -103,19 +110,19 @@ test.describe("Button component E2E", () => {
     });
 
     test("should have left/right icon css class depending on \"iconRight\" prop", async () => {
-        expect(await defaultLargeBtn.hasClass("icon-left")).toBe(true);
-        expect(await defaultLargeBtn.hasClass("icon-right")).toBe(false);
+        await defaultLargeBtn.toContainClass("icon-left");
+        await defaultLargeBtn.toNotContainClass("icon-right");
 
-        expect(await primaryLargePlusIconBtn.hasClass("icon-right")).toBe(true);
-        expect(await primaryLargePlusIconBtn.hasClass("icon-left")).toBe(false);
+        await primaryLargePlusIconBtn.toContainClass("icon-right");
+        await primaryLargePlusIconBtn.toNotContainClass("icon-left");
     });
 
     test("should have .is-empty class if host's innerHTML is empty", async () => {
-        expect(await upBtn.hasClass("is-empty")).toEqual(true);
+        await upBtn.toContainClass("is-empty");
     });
 
     test("should not have .is-empty class if host's innerHTML is not empty", async () => {
-        expect(await primaryCompactBtn.hasClass("is-empty")).toEqual(false);
+        await primaryCompactBtn.toNotContainClass("is-empty");
     });
 
     test("should fire event twice when clicking twice", async () => {
@@ -124,7 +131,7 @@ test.describe("Button component E2E", () => {
         const count: number = parseInt(text ?? "", 10);
         await upBtn.click();
         await upBtn.click();
-        expect(await resultSpan.textContent()).toBe(String(count + 2));
+        await expect(resultSpan).toHaveText(String(count + 2));
     });
 
     test("should remove width restriction with .unlimited-width class by click", async () => {
