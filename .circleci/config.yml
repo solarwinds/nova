@@ -151,6 +151,7 @@ jobs:
             - run:
                   name: Check git diff to see if builds should skip e2e
                   command: |
+                      circleci-agent step halt
                       if [ -f packages/bits/package-cached ] && [ "$USE_CACHE" == "true" ]; then
                           echo "This package was restored from cache so we're skipping e2e tests"
                           circleci-agent step halt
