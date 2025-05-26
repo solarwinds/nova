@@ -140,6 +140,8 @@ jobs:
             - attach_workspace:
                   at: ~/nova
             - reuse-cache
+            -  restore_cache:
+                    key: deps-{{ checksum "yarn.lock" }}
             - run:
                   working_directory: ~/nova
                   name: ls
