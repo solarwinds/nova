@@ -231,8 +231,6 @@ jobs:
                   command: docker-compose down -v --rmi=local
     bits-e2e-test-playwright:
         executor: node
-        docker:
-            - image: mcr.microsoft.com/playwright:v1.52.0-noble
         parallelism: 4
         steps:
             - attach_workspace:
@@ -241,6 +239,10 @@ jobs:
             - run:
                   name: Compute build c
                   command: ls
+            - run:
+                  working_directory: ~/nova
+                  name: Install playwright
+                  command: yarn playwright install --with-deps
             - run:
                   working_directory: ~/nova/packages/bits
                   name: Run tests
