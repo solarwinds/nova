@@ -249,7 +249,7 @@ jobs:
                   command: |
                     SHARD="$((${CIRCLE_NODE_INDEX}+1))";
                     SHARD2="${SHARD}/${CIRCLE_NODE_TOTAL}";
-                    RUND="yarn run e2e:playwright:ci --shard=${SHARD2}";
+                    RUND="'yarn run e2e:playwright:ci --shard=${SHARD2}'";
                     echo $SHARD;
                     echo $CIRCLE_NODE_INDEX;
                     echo ${SHARD}/${CIRCLE_NODE_TOTAL}
