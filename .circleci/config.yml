@@ -144,6 +144,13 @@ jobs:
                   working_directory: ~/nova
                   name: ls
                   command: ls
+            - run:
+                  working_directory: ~/nova
+                  name: ls
+                  command: |
+                      cd ..
+                      ls
+
     bits-e2e-test:
         executor: ubuntu
         resource_class: medium+
@@ -257,7 +264,7 @@ jobs:
             - run:
                   working_directory: ~/nova/packages/bits
                   name: Run tests
-                  command: SHARD="$((${CIRCLE_NODE_INDEX}+1))"; start-server-and-test serve-examples:prod 4200 'yarn run e2e:playwright:ci --shard=${SHARD}/${CIRCLE_NODE_TOTAL}'
+                  command: SHARD="$((${CIRCLE_NODE_INDEX}+1))"; yarn start-server-and-test serve-examples:prod 4200 'yarn run e2e:playwright:ci --shard=${SHARD}/${CIRCLE_NODE_TOTAL}'
 
     bits-pack:
         executor: node
