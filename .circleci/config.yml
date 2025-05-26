@@ -133,26 +133,6 @@ jobs:
                   command: yarn run test
             - store_test_results:
                   path: packages/bits/test-results
-    bits-unit-test2:
-        executor: node-browsers2
-        working_directory: ~/nova
-        steps:
-            - attach_workspace:
-                  at: ~/nova
-            - reuse-cache
-            -  restore_cache:
-                    key: deps-{{ checksum "yarn.lock" }}
-            - run:
-                  working_directory: ~/nova
-                  name: ls
-                  command: ls
-            - run:
-                  working_directory: ~/nova
-                  name: ls
-                  command: |
-                      cd ..
-                      ls
-
     bits-e2e-test:
         executor: ubuntu
         resource_class: medium+
@@ -251,6 +231,8 @@ jobs:
                   command: docker-compose down -v --rmi=local
     bits-e2e-test-playwright:
         executor: node
+        docker:
+            - image: mcr.microsoft.com/playwright:v1.52.0-noble
         parallelism: 4
         steps:
             - attach_workspace:
@@ -259,10 +241,6 @@ jobs:
             - run:
                   name: Compute build c
                   command: ls
-            - run:
-                  working_directory: ~/nova
-                  name: Install playwright
-                  command: yarn playwright install --with-deps
             - run:
                   working_directory: ~/nova/packages/bits
                   name: Run tests
@@ -704,9 +682,6 @@ workflows:
                   requires:
                       - bits-build
             - bits-unit-test:
-                  requires:
-                      - bits-build
-            - bits-unit-test2:
                   requires:
                       - bits-build
             - bits-e2e-test:
