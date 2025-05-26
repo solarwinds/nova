@@ -123,7 +123,7 @@
     "prettier-fix": "yarn run prettier --write .",
     "prexliff": "yarn run compile-colors",
     "serve-examples": "ng serve demo -c dev",
-    "serve-examples:prod": "yarn local-web-server -p 4200 -d sdk/api-docs-ng2/examples --spa index.html",
+    "serve-examples:prod": "npx local-web-server -p 4200 -d sdk/api-docs-ng2/examples --spa index.html",
     "start": "run-p -lr compodoc:serve build-examples:watch",
     "test": "ng test lib -c coverage",
     "test:dev": "ng test lib -c dev",
