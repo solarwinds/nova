@@ -255,7 +255,7 @@ jobs:
                     echo ${SHARD}/${CIRCLE_NODE_TOTAL}
                     echo ${SHARD2}
                     echo ${RUND}
-                    yarn start-server-and-test serve-examples:prod 4200 '${RUND}'
+                    yarn start-server-and-test serve-examples:prod 4200 ${RUND}
 
     bits-pack:
         executor: node
