@@ -249,14 +249,9 @@ jobs:
                   command: |
                     SHARD="$((${CIRCLE_NODE_INDEX}+1))";
                     SHARD2="${SHARD}/${CIRCLE_NODE_TOTAL}";
-                    RUND="'yarn run e2e:playwright:ci --shard=${SHARD2}'";
-                    echo $SHARD;
-                    echo $CIRCLE_NODE_INDEX;
-                    echo ${SHARD}/${CIRCLE_NODE_TOTAL}
-                    echo ${SHARD2}
-                    echo ${RUND}
-                    yarn start-server-and-test serve-examples:prod 4200 ${RUND}
-
+                    yarn start-server-and-test serve-examples:prod 4200 'yarn run e2e:playwright:ci --shard=${SHARD2}'
+            - store_test_results:
+                  path: packages/bits/test-results
     bits-pack:
         executor: node
         steps:
