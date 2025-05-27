@@ -13,17 +13,18 @@ This document outlines the strategy and implementation for migrating existing UI
 
 ## 🔁 Protractor vs Playwright Equivalents
 
-| Protractor                                | Playwright                                      |
-|------------------------------------------|-------------------------------------------------|
-| `browser.get(url)`                       | `page.goto(url)`                                |
-| `element(by.css('#my-id'))`              | `page.locator('#my-id')`                        |
-| `element(by.id('my-id'))`                | `page.locator('#my-id')`                        |
-| `element(by.cssContainingText(...))`     | `page.getByText(...)` or `locator.filter(...)` |
-| `await elem.getText()`                   | `await locator.textContent()`                  |
-| `await elem.click()`                     | `await locator.click()`                         |
-| `await elem.sendKeys(Key.ENTER)`         | `await locator.press('Enter')`                 |
+| Protractor                                                  | Playwright                                      |
+|-------------------------------------------------------------|-------------------------------------------------|
+| `browser.get(url)`                                          | `page.goto(url)`                                |
+| `element(by.css('#my-id'))`                                 | `page.locator('#my-id')`                        |
+| `element(by.id('my-id'))`                                   | `page.locator('#my-id')`                        |
+| `element(by.cssContainingText(...))`                        | `page.getByText(...)` or `locator.filter(...)` |
+| `await elem.getText()`                                      | `await locator.textContent()`                  |
+| `await elem.isVisible()`                                    | `await locator.isVisible()`                  |
+| `await elem.click()`                                        | `await locator.click()`                         |
+| `await elem.sendKeys(Key.ENTER)`                            | `await locator.press('Enter')`                 |
 | `expect(await elem.getAttribute('class')).toContain('btn')` | `expect(locator).toHaveClass(/btn/)` |
-| `browser.waitForAngular()`              | 🔥 *Not needed (Playwright doesn't rely on Angular internals)* |
+| `browser.waitForAngular()`                                  | 🔥 *Not needed (Playwright doesn't rely on Angular internals)* |
 
 ---
 

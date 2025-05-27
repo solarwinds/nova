@@ -1,5 +1,12 @@
 # Changelog
 
+## [19.0.1] 📅 2025-05-26
+### Initial playwrite e2e tests migration
+
+
+## [19.0.0] 📅 2025-05-26
+### Angular upgrade 19
+
 ## [17.0.0] 📅 2025-04-20
 ### Angular upgrade 17
 
@@ -120,8 +127,6 @@
 ### Added
 
 -   `@nova-ui/bits` | _NUI-6163_ | Added _preventRowClick_ flag on **nui-repeater** (to be used when items contain clickable content)
-
-</details>
 
 ## [12.0.3] 📅 2022-04-14
 

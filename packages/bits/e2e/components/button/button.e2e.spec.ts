@@ -87,7 +87,7 @@ test.describe("USERCONTROL Button >", () => {
     });
 
     test("should be disabled with 'disabled' DOM property", async () => {
-        await primaryLargePlusIconDisabledBtn.isDisabled();
+        await primaryLargePlusIconDisabledBtn.toBeDisabled();
     });
 
     test("should show icon with \"icon\" prop", async () => {
@@ -135,7 +135,7 @@ test.describe("USERCONTROL Button >", () => {
     });
 
     test("should remove width restriction with .unlimited-width class by click", async () => {
-        await unlimitedWidthBtn.isVisible();
+        await unlimitedWidthBtn.toBeVisible();
         await unlimitedWidthBtn.toContainClass("unlimited-width");
         await unlimitedWidthBtn.click();
         await unlimitedWidthBtn.toNotContainClass("unlimited-width");
