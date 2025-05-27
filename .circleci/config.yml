@@ -6,12 +6,12 @@ aliases:
     - &cache_restore
         restore_cache:
             keys:
-                - v2-dependencies-{{ checksum "yarn.lock" }}
+                - v3-dependencies-{{ checksum "yarn.lock" }}
     - &cache_save
         save_cache:
             paths:
                 - ./node_modules
-            key: v2-dependencies-{{ checksum "yarn.lock" }}
+            key: v3-dependencies-{{ checksum "yarn.lock" }}
 
     - &install_dependencies
         run:
@@ -36,7 +36,8 @@ commands:
     reuse-cache:
         description: "Reuse cache among the builds"
         steps:
-            - *cache_restore
+            - restore_cache:
+                  key: v3-dependencies-{{ checksum "yarn.lock" }}
 
 executors:
     node:
