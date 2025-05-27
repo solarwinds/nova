@@ -2,7 +2,29 @@ version: 2.1
 orbs:
     browser-tools: circleci/browser-tools@1.4.0
 
+aliases:
+    - &cache_restore
+        restore_cache:
+            keys:
+                - v2-dependencies-{{ checksum "yarn.lock" }}
+    - &cache_save
+        save_cache:
+            paths:
+                - node_modules
+                - ~/.cache/yarn
+            key: v2-dependencies-{{ checksum "yarn.lock" }}
+
+    - &install_dependencies
+        run: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+
 commands:
+    install-deps:
+        description: "Install deps v2"
+        steps:
+            - *cache_restore
+            - *install_dependencies
+            - *cache_save
+
     reuse-cache:
         description: "Reuse cache among the builds"
         steps:
@@ -24,7 +46,8 @@ executors:
         docker:
             - image: mcr.microsoft.com/playwright:v1.52.0-noble
         working_directory: ~/nova
-
+        environment:
+            NODE_ENV: development
     ubuntu:
         machine:
             image: ubuntu-2204:2022.10.2
@@ -235,9 +258,7 @@ jobs:
         steps:
             - attach_workspace:
                   at: ~/nova
-            - run:
-                  name: Compute build c
-                  command: yarn install --frozen-lockfile
+            - install-deps
             - run:
                   name: Install
                   command: ls
@@ -251,8 +272,9 @@ jobs:
                   command: |
                     NODE_INDEX="$((${CIRCLE_NODE_INDEX}+1))";
                     SHARD="${NODE_INDEX}/${CIRCLE_NODE_TOTAL}";
-                    PLAYWRIGHT="'yarn run e2e:playwright:ci --shard=${SHARD}'";
-                    yarn start-server-and-test serve-examples:prod 4200 ${PLAYWRIGHT}
+#                    PLAYWRIGHT="''";
+#                    yarn start-server-and-test serve-examples:prod 4200 ${PLAYWRIGHT}
+                    yarn run e2e:playwright:ci --shard=${SHARD}
             -  store_artifacts:
                     path: ./playwright-report
                     destination: playwright-report-first
