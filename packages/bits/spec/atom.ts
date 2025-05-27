@@ -75,6 +75,7 @@ export class Atom {
         if (atomClass.CSS_SELECTOR) {
             return atomClass.CSS_SELECTOR;
         }
+
         throw new ReferenceError(
             `expected atom class ${atomClass.name} to have either CSS_CLASS or CSS_SELECTOR nonempty`
         );

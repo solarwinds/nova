@@ -253,6 +253,8 @@ jobs:
                     destination: playwright-report-first
             -  store_artifacts:
                     path: /tmp/artifacts
+            - store_test_results:
+                    path: ./packages/bits/test-results
     bits-pack:
         executor: node
         steps:

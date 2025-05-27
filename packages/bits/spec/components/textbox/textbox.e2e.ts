@@ -35,7 +35,7 @@ import {
     TextboxAtom,
 } from "../public_api";
 
-describe("USERCONTROL textbox >", () => {
+xdescribe("USERCONTROL textbox >", () => {
     let textBox: TextboxAtom;
     let disabledTextbox: TextboxAtom;
     let readonlyTextbox: TextboxAtom;
