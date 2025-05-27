@@ -262,18 +262,12 @@ jobs:
             - run:
                   name: Install
                   command: ls
-#            - run:
-#                  working_directory: ~/nova
-#                  name: Install playwright
-#                  command: yarn playwright install --with-deps
             - run:
                   working_directory: ~/nova/packages/bits
                   name: Run tests
                   command: |
                     NODE_INDEX="$((${CIRCLE_NODE_INDEX}+1))";
                     SHARD="${NODE_INDEX}/${CIRCLE_NODE_TOTAL}";
-#                    PLAYWRIGHT="''";
-#                    yarn start-server-and-test serve-examples:prod 4200 ${PLAYWRIGHT}
                     yarn run e2e:playwright:ci --shard=${SHARD}
             -  store_artifacts:
                     path: ./playwright-report
