@@ -11,7 +11,6 @@ aliases:
         save_cache:
             paths:
                 - ./node_modules
-                - ~/.cache/yarn
             key: v2-dependencies-{{ checksum "yarn.lock" }}
 
     - &install_dependencies
@@ -23,12 +22,12 @@ aliases:
                 then
                     echo "skipping npm install as it was restored from cache. Running only postinstall"
                 else
-                    yarn install --frozen-lockfile  --cache-folder ~/.cache/yarn
+                    yarn install --frozen-lockfile
                 fi
 
 commands:
     install-deps:
-        description: "Install deps v2"
+        description: "Install deps"
         steps:
             - *cache_restore
             - *install_dependencies
@@ -37,8 +36,7 @@ commands:
     reuse-cache:
         description: "Reuse cache among the builds"
         steps:
-            - restore_cache:
-                  key: deps-{{ checksum "yarn.lock" }}
+            - *cache_restore
 
 executors:
     node:
