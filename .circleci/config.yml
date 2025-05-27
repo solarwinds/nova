@@ -10,12 +10,21 @@ aliases:
     - &cache_save
         save_cache:
             paths:
-                - node_modules
+                - ./node_modules
                 - ~/.cache/yarn
             key: v2-dependencies-{{ checksum "yarn.lock" }}
 
     - &install_dependencies
-        run: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+        run:
+            working_directory: ~/nova
+            name: Installing node dependencies (if necessary)
+            command: |
+                if [ -d "node_modules" ];
+                then
+                    echo "skipping npm install as it was restored from cache. Running only postinstall"
+                else
+                    yarn install --frozen-lockfile  --cache-folder ~/.cache/yarn
+                fi
 
 commands:
     install-deps:
@@ -63,22 +72,7 @@ jobs:
             BUILD_COUNTER: << pipeline.number >>
         steps:
             - checkout
-            - restore_cache:
-                  key: deps-{{ checksum "yarn.lock" }}
-            - run:
-                  working_directory: ~/nova
-                  name: Installing node dependencies (if necessary)
-                  command: |
-                      if [ -d "node_modules" ];
-                      then
-                          echo "skipping npm install as it was restored from cache. Running only postinstall"
-                      else
-                          yarn install --frozen-lockfile
-                      fi
-            - save_cache:
-                  key: deps-{{ checksum "yarn.lock" }}
-                  paths:
-                      - ./node_modules
+            - install-deps
             - persist_to_workspace:
                   root: ~/nova
                   paths:
@@ -110,9 +104,6 @@ jobs:
             - run:
                   name: Compute build version
                   command: yarn run compute-version-ci
-            - run:
-                  name: Compute build c
-                  command: ls
             - run:
                   name: Grab latest commit of package
                   command: |
