@@ -36,8 +36,7 @@ commands:
     reuse-cache:
         description: "Reuse cache among the builds"
         steps:
-            - restore_cache:
-                  key: v3-dependencies-{{ checksum "yarn.lock" }}
+            - *cache_restore
 
 executors:
     node:
