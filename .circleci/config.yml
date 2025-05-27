@@ -260,9 +260,6 @@ jobs:
                   at: ~/nova
             - install-deps
             - run:
-                  name: Install
-                  command: ls
-            - run:
                   working_directory: ~/nova/packages/bits
                   name: Run tests
                   command: |
@@ -270,7 +267,7 @@ jobs:
                     SHARD="${NODE_INDEX}/${CIRCLE_NODE_TOTAL}";
                     yarn run e2e:playwright:ci --shard=${SHARD}
             -  store_artifacts:
-                    path: ./playwright-report
+                    path: ./packages/bits/playwright-report
                     destination: playwright-report-first
             -  store_artifacts:
                     path: /tmp/artifacts
