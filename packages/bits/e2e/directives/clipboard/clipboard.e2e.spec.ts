@@ -9,8 +9,8 @@ let textbox: TextboxAtom;
 test.describe("USERCONTROL Clipboard", () => {
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("common/clipboard", page);
-        buttonAtom = Atom.find(ButtonAtom, "clipboardButton");
-        textbox = Atom.find(TextboxAtom, "inputTextbox");
+        buttonAtom = Atom.find<ButtonAtom>(ButtonAtom, "clipboardButton", true);
+        textbox = Atom.find<TextboxAtom>(TextboxAtom, "inputTextbox");
     });
 
     test("should copy text to clipboard", async () => {
