@@ -111,7 +111,6 @@ const RANDOM_ARRAY = [
             useClass: LocalFilteringDataSource,
         },
     ],
-    standalone: false,
 })
 export class DataSourceClientSideFilteringExampleComponent
     implements AfterViewInit, OnDestroy

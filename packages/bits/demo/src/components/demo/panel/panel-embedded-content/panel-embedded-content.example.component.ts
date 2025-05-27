@@ -25,7 +25,6 @@ import { ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-panel-embedded-content-example",
     templateUrl: "./panel-embedded-content.example.component.html",
-    standalone: false,
 })
 export class PanelEmbeddedContentExampleComponent {
     public isCollapsed = false;

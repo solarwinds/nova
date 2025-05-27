@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-demo-highlight-pipe",
     templateUrl: "./highlight-pipe.example.component.html",
-    standalone: false,
 })
 export class HighlightPipeExampleComponent {
     term: string = "bar";

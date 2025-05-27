@@ -47,7 +47,6 @@ import { IServer } from "../types";
     styleUrls: ["./filtered-view-tree.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: [expand],
-    standalone: false,
 })
 export class FilteredViewTreeComponent implements OnDestroy, AfterViewInit {
     treeControl = new NestedTreeControl<any>((node) => node.children);

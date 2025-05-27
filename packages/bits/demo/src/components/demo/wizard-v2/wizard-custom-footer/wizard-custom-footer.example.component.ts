@@ -26,7 +26,6 @@ import { ToastService, WizardHorizontalComponent } from "@nova-ui/bits";
     selector: "nui-wizard-custom-footer-example",
     templateUrl: "./wizard-custom-footer.example.component.html",
     styleUrls: ["./wizard-custom-footer.example.component.less"],
-    standalone: false,
 })
 export class WizardCustomFooterExampleComponent {
     @ViewChild("wizard") private wizard: WizardHorizontalComponent;

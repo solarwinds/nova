@@ -47,16 +47,18 @@ import { Subject, Subscription } from "rxjs";
     animations: [
         trigger("dismiss", [
             state("initial", style({})),
-            state("dismissed", style({
-                opacity: 0,
-            })),
+            state(
+                "dismissed",
+                style({
+                    opacity: 0,
+                })
+            ),
             transition("initial <=> dismissed", animate(`0.3s linear`)),
         ]),
     ],
     styleUrls: ["./message.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: { "[attr.role]": "role" },
-    standalone: false,
 })
 export class MessageComponent implements OnInit, OnDestroy {
     public static ICON_MAP: { [id: string]: string } = {

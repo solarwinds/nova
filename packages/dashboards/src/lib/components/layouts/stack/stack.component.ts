@@ -35,7 +35,6 @@ import { BaseLayout } from "../base-layout";
 @Component({
     selector: "nui-stack",
     templateUrl: "./stack.component.html",
-    standalone: false,
 })
 export class StackComponent extends BaseLayout implements OnInit, OnDestroy {
     public static lateLoadKey = "StackComponent";

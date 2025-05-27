@@ -69,7 +69,6 @@ import { ConfiguratorHeadingService } from "../../../../../../services/configura
         { provide: ControlContainer, useExisting: FormGroupDirective },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class PresentationConfigurationComponent
     implements IHasChangeDetector, OnInit, OnDestroy, OnChanges, AfterViewInit

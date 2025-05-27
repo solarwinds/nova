@@ -52,7 +52,6 @@ interface IExampleTableModel {
     providers: [ClientSideDataSource],
     templateUrl: "./table-selectable-toggle.example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class TableSelectableToggleExampleComponent
     implements AfterViewInit, OnDestroy

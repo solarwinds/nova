@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-table-search-docs",
     templateUrl: "./table-widget-search-docs.component.html",
-    standalone: false,
 })
 export class TableSearchDocsComponent {
     public featuredDeclaredText = `

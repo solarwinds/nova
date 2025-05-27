@@ -52,7 +52,6 @@ import {
     selector: "kpi-error-test",
     templateUrl: "./kpi-error-test.component.html",
     styleUrls: ["./kpi-error-test.component.less"],
-    standalone: false,
 })
 export class KpiErrorTestComponent implements OnInit {
     public dashboard: IDashboard | undefined;

@@ -27,7 +27,6 @@ import tableSchema from "../../../schematics/src/table/schema.json";
 @Component({
     selector: "schematics-docs",
     templateUrl: "./schematics-docs.component.html",
-    standalone: false,
 })
 export class SchematicsDocsComponent {
     public layoutJsonScheme: any = {};

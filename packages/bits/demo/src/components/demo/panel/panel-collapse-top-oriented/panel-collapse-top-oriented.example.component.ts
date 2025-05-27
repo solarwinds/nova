@@ -25,7 +25,6 @@ import { IMenuGroup, ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-panel-collapse-top-oriented-example",
     templateUrl: "./panel-collapse-top-oriented.example.component.html",
-    standalone: false,
 })
 export class PanelCollapseTopOrientedExampleComponent {
     @Input() isOn = true;

@@ -25,7 +25,6 @@ import { IMenuGroup, LoggerService } from "@nova-ui/bits";
 @Component({
     selector: "nui-toolbar-embedded-content-example",
     templateUrl: "./toolbar-embedded-content.example.component.html",
-    standalone: false,
 })
 export class ToolbarEmbeddedContentExampleComponent {
     public itemsSource: IMenuGroup[] = [

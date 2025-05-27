@@ -49,7 +49,6 @@ import { ICustomDSFilteredData, IFilterGroupItem } from "./public-api";
             useClass: FilterGroupCustomDataSourceService,
         },
     ],
-    standalone: false,
 })
 export class CustomDataSourceFilterGroupExampleComponent
     implements AfterViewInit, OnDestroy

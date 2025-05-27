@@ -25,7 +25,6 @@ import { FormControl } from "@angular/forms";
     selector: "nui-combobox-v2-remove-value-example",
     templateUrl: "combobox-v2-remove-value.example.component.html",
     host: { class: "combobox-container" },
-    standalone: false,
 })
 export class ComboboxV2RemoveValueExampleComponent {
     public items = Array.from({ length: 100 }).map(

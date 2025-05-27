@@ -62,7 +62,6 @@ import { MenuComponent } from "../menu";
             </nui-toolbar-group>
         </nui-toolbar>
     `,
-    standalone: false,
 })
 class TestWrapperComponent {}
 

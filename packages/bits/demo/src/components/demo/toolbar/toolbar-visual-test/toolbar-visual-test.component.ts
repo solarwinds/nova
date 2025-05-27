@@ -25,7 +25,6 @@ import { IMenuGroup } from "@nova-ui/bits";
 @Component({
     selector: "nui-toolbar-visual-test",
     templateUrl: "./toolbar-visual-test.component.html",
-    standalone: false,
 })
 export class ToolbarVisualTestExampleComponent {
     public value = "";

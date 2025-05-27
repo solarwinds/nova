@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-search-input-change-example",
     templateUrl: "search-input-change.example.component.html",
-    standalone: false,
 })
 export class SearchInputChangeExampleComponent {
     public value: string = "example value";

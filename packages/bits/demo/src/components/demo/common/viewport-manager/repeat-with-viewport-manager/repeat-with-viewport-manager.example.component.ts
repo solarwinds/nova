@@ -244,7 +244,6 @@ export class GBooksDataSourceWithSearch
     selector: "nui-repeat-with-viewport-manager-example",
     templateUrl: "./repeat-with-viewport-manager.example.component.html",
     providers: [VirtualViewportManager, GBooksDataSourceWithSearch],
-    standalone: false,
 })
 export class RepeatWithViewportManagerExampleComponent
     implements OnInit, OnDestroy, AfterViewInit

@@ -24,6 +24,5 @@ import { Component } from "@angular/core";
     selector: "nui-tag-with-icon-example",
     templateUrl: "./tag-with-icon.example.component.html",
     styleUrls: ["./tag-with-icon.example.component.less"],
-    standalone: false,
 })
 export class TagWithIconExampleComponent {}

@@ -30,7 +30,7 @@ import { Component, EventEmitter, Output, ViewChild } from "@angular/core";
     selector: "nui-droppable",
     templateUrl: "./droppable.component.html",
     styleUrls: ["./droppable.component.less"],
-    standalone: false,
+    // host: { "[attr.aria-dropeffect]": "move" },
 })
 export class DroppableComponent {
     // @Input() dragSource: DraggableComponent;

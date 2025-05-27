@@ -24,7 +24,6 @@ import { Component, ViewEncapsulation } from "@angular/core";
     selector: "nui-popup-append-to-body-example",
     templateUrl: "./popup-append-to-body.example.component.html",
     encapsulation: ViewEncapsulation.None,
-    standalone: false,
 })
 export class PopupAppendToBodyExampleComponent {
     public icon = "caret-down";

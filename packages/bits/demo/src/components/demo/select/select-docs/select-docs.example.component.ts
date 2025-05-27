@@ -23,6 +23,5 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-select-docs-example",
     templateUrl: "./select-docs.example.component.html",
-    standalone: false,
 })
 export class SelectDocsComponent {}

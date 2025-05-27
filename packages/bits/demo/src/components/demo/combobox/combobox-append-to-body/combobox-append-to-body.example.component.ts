@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-combobox-append-to-body-example",
     templateUrl: "./combobox-append-to-body.example.component.html",
-    standalone: false,
 })
 export class ComboboxAppendToBodyExampleComponent {
     public dataset = {

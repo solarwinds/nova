@@ -23,7 +23,6 @@ import { Subject } from "rxjs";
 
 @Directive({
     selector: "[nuiDelayedMousePresenceDetection]",
-    standalone: false,
 })
 export class DelayedMousePresenceDetectionDirective {
     @Input("nuiDelayedMousePresenceDetection") public enabled: boolean = true;

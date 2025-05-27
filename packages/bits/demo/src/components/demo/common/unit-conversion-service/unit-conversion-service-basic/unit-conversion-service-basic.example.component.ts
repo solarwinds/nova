@@ -30,7 +30,6 @@ import {
     selector: "unit-conversion-service-basic-example",
     templateUrl: "./unit-conversion-service-basic.example.component.html",
     styleUrls: ["./unit-conversion-service-basic.example.component.less"],
-    standalone: false,
 })
 export class UnitConversionServiceBasicExampleComponent implements OnInit {
     constructor(public unitConversionService: UnitConversionService) {}

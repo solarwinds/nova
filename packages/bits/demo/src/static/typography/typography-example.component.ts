@@ -24,6 +24,5 @@ import { Component } from "@angular/core";
     selector: "typography-example",
     templateUrl: "./typography-example.component.html",
     styleUrls: ["./typography-example.component.css"],
-    standalone: false,
 })
 export class TypographyExampleComponent {}

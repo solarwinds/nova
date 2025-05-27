@@ -47,7 +47,6 @@ type SecondFormGroup = FormGroup<{
 @Component({
     selector: "nui-nested-forms-as-component-example",
     templateUrl: "./nested-forms-as-component.example.component.html",
-    standalone: false,
 })
 export class NestedFormsAsComponentExampleComponent implements OnInit {
     public fancyForm: NestedFormGroup;
@@ -110,7 +109,6 @@ export class NestedFormsAsComponentExampleComponent implements OnInit {
             </nui-validation-message>
         </nui-form-field>
     </div>`,
-    standalone: false,
 })
 export class FirstCustomFormExampleComponent implements OnInit {
     @Output() formReady = new EventEmitter<FirstFormGroup>();
@@ -155,7 +153,6 @@ export class FirstCustomFormExampleComponent implements OnInit {
             </nui-validation-message>
         </nui-form-field>
     </div>`,
-    standalone: false,
 })
 export class SecondCustomFormExampleComponent implements OnInit {
     @Output() formReady = new EventEmitter<SecondFormGroup>();

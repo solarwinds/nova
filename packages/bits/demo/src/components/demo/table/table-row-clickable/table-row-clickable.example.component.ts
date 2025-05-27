@@ -41,7 +41,6 @@ interface IExampleTableModel {
     selector: "nui-table-row-clickable",
     providers: [ClientSideDataSource],
     templateUrl: "./table-row-clickable.example.component.html",
-    standalone: false,
 })
 export class TableRowClickableExampleComponent
     implements AfterViewInit, OnDestroy

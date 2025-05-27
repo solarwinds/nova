@@ -29,7 +29,6 @@ import { ResizeObserverDirective } from "./resize-observer.directive";
         nuiResizeObserver
         (containerResize)="containerResizeHandler(entry)"
     ></div>`,
-    standalone: false,
 })
 class ResizeObserverTestingComponent {
     public containerResizeHandler(entry: any) {

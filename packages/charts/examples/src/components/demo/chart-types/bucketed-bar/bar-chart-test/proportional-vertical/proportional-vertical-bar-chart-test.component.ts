@@ -37,7 +37,6 @@ import {
 @Component({
     selector: "nui-proportional-vertical-bar-chart-test",
     templateUrl: "./proportional-vertical-bar-chart-test.component.html",
-    standalone: false,
 })
 export class ProportionalVerticalBarChartTestComponent implements OnInit {
     public chartAssist: ChartAssist;

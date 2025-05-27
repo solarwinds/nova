@@ -28,7 +28,6 @@ import { DatePickerInnerComponent } from "./date-picker-inner.component";
     selector: "nui-day-picker",
     templateUrl: "./date-picker-day-picker.component.html",
     encapsulation: ViewEncapsulation.None,
-    standalone: false,
 })
 export class DayPickerComponent implements OnInit {
     public labels: any[] = [];

@@ -157,7 +157,6 @@ export class TableDatasource
     selector: "nui-data-filter-basic-example",
     templateUrl: "./data-filter-basic.example.component.html",
     providers: [DataFilterService],
-    standalone: false,
 })
 export class DataFilterBasicExampleComponent implements AfterViewInit {
     @ViewChild("timeFramePicker")
@@ -233,7 +232,6 @@ export class DataFilterBasicExampleComponent implements AfterViewInit {
         </div>
     `,
     providers: [DataFilterService, TableDatasource],
-    standalone: false,
 })
 export class NuiDataFilterTableComponent implements AfterViewInit, OnDestroy {
     public dataSource?: any[] = [];
@@ -320,7 +318,6 @@ export class NuiDataFilterTableComponent implements AfterViewInit, OnDestroy {
         </div>
     `,
     providers: [DataFilterService, ListDatasource],
-    standalone: false,
 })
 export class NuiDataFilterListComponent implements AfterViewInit, OnDestroy {
     public state: INovaFilteringOutputs = {
@@ -414,7 +411,6 @@ export class NuiDataFilterListComponent implements AfterViewInit, OnDestroy {
         </ng-template>
     `,
     encapsulation: ViewEncapsulation.None,
-    standalone: false,
 })
 export class FilteringTimeFramePickerComponent implements IFilterPub, OnInit {
     @Output() timeFrameChanged: EventEmitter<any> = new EventEmitter();

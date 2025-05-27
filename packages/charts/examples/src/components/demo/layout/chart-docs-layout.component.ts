@@ -24,7 +24,6 @@ import { Component } from "@angular/core";
     selector: "nui-chart-docs-layout",
     templateUrl: "./chart-docs-layout.component.html",
     styleUrls: ["./chart-docs-layout.component.less"],
-    standalone: false,
 })
 export class ChartDocsLayoutComponent {
     hasLegend = true;

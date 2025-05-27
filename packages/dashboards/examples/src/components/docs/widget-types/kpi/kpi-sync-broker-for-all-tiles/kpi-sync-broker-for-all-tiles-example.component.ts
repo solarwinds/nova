@@ -196,7 +196,6 @@ export class MockKpiDataSource
     selector: "kpi-sync-broker-for-all-tiles-example",
     templateUrl: "./kpi-sync-broker-for-all-tiles-example.component.html",
     styleUrls: ["./kpi-sync-broker-for-all-tiles-example.component.less"],
-    standalone: false,
 })
 export class KpiSyncBrokerForAllTilesExampleComponent implements OnInit {
     public dashboard: IDashboard | undefined;

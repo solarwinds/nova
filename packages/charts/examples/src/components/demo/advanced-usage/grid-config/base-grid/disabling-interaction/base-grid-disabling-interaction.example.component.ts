@@ -34,7 +34,6 @@ import {
 @Component({
     selector: "nui-base-grid-disabling-interaction-example",
     templateUrl: "./base-grid-disabling-interaction.example.component.html",
-    standalone: false,
 })
 export class BaseGridDisablingInteractionExampleComponent implements OnInit {
     public chart: Chart;

@@ -35,7 +35,6 @@ import {
     selector: "gauge-test-page",
     templateUrl: "./gauge-test-page.component.html",
     styleUrls: ["./gauge-test-page.component.less"],
-    standalone: false,
 })
 export class GaugeTestPageComponent implements OnDestroy {
     public value = 950;

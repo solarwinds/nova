@@ -24,7 +24,6 @@ import { FormBuilder } from "@angular/forms";
 @Component({
     selector: "nui-textbox-number-test",
     templateUrl: "./textbox-number-test.component.html",
-    standalone: false,
 })
 export class TextboxNumberTestComponent {
     public value = 10;

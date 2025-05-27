@@ -26,7 +26,6 @@ import { ISimpleThresholdZone } from "@nova-ui/charts";
 @Component({
     selector: "nui-thresholds-summary-test-harness",
     templateUrl: "./thresholds-summary-test-harness.component.html",
-    standalone: false,
 })
 export class ThresholdsSummaryTestHarnessComponent implements OnInit {
     public data = {

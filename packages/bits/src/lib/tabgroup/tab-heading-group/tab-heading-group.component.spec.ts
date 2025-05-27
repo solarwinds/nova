@@ -49,7 +49,6 @@ import { TabHeadingComponent } from "../tab-heading/tab-heading.component";
             </div>
         </nui-tab-heading>
     </nui-tab-heading-group>`,
-    standalone: false,
 })
 class TestTabHeadingComponent {
     public currentTabId: string;

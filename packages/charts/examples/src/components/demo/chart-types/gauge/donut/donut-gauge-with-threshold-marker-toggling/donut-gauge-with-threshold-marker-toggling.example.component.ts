@@ -33,11 +33,11 @@ import {
 
 @Component({
     selector: "donut-gauge-with-threshold-marker-toggling-example",
-    templateUrl: "./donut-gauge-with-threshold-marker-toggling.example.component.html",
+    templateUrl:
+        "./donut-gauge-with-threshold-marker-toggling.example.component.html",
     styleUrls: [
         "./donut-gauge-with-threshold-marker-toggling.example.component.less",
     ],
-    standalone: false,
 })
 export class DonutGaugeWithThresholdMarkerTogglingExampleComponent
     implements OnInit

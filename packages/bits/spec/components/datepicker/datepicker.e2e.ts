@@ -540,7 +540,6 @@ describe("USERCONTROL datepicker", () => {
     });
 
     it("should apply appropriate styles to selected day/month/year on day selection in day-picker", async () => {
-        await datepickerInline.waitElementVisible();
         await datepickerInline.clickChangeModeButton();
         await datepickerInline.clickChangeModeButton();
         const newYear = moment().add(1, "year").year();
@@ -628,7 +627,6 @@ describe("USERCONTROL datepicker", () => {
         it("should not validate invalid typed in date and should not change it's format to dateFormat", async () => {
             const invalidDate: string = "20189-50.Nov2";
 
-            await datepickerBasic.waitElementVisible();
             await datepickerBasic.clearText();
             await datepickerBasic.acceptText(invalidDate);
             let selectedDate = await datepickerBasic.getInputValue();

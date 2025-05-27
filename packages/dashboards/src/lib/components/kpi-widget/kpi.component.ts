@@ -56,7 +56,6 @@ import { IBroker } from "../providers/types";
     styleUrls: ["./kpi.component.less"],
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class KpiComponent implements IHasChangeDetector, OnChanges {
     public static lateLoadKey = "KpiComponent";

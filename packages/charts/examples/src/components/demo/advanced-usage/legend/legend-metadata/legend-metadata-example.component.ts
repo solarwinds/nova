@@ -42,7 +42,6 @@ import {
 @Component({
     selector: "nui-legend-metadata-example",
     templateUrl: "./legend-metadata-example.component.html",
-    standalone: false,
 })
 export class LegendMetadataExampleComponent implements OnInit {
     public chart: Chart;

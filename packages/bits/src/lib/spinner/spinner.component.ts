@@ -60,7 +60,6 @@ import { LoggerService } from "../../services/log-service";
         "aria-valuemax": "100",
         "[attr.aria-label]": "ariaLabel",
     },
-    standalone: false,
 })
 export class SpinnerComponent implements OnChanges, OnDestroy {
     private static defaultSize: SpinnerSize = SpinnerSize.Small;

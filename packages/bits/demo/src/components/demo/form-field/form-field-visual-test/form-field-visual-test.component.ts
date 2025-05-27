@@ -24,7 +24,6 @@ import { FormBuilder, Validators } from "@angular/forms";
 @Component({
     selector: "nui-form-field-visual-test",
     templateUrl: "./form-field-visual-test.component.html",
-    standalone: false,
 })
 export class FormFieldVisualTestComponent {
     public fancyForm;

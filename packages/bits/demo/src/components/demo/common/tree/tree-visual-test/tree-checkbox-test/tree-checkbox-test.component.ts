@@ -32,7 +32,6 @@ import { FoodNode, TREE_DATA_CHECKBOX } from "../data";
     styleUrls: ["./tree-checkbox-test.component.less"],
     host: { id: "nui-tree-checkbox-example" },
     animations: [expand],
-    standalone: false,
 })
 export class TreeCheckboxTestComponent {
     public treeControl = new NestedTreeControl<FoodNode>(

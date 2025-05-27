@@ -36,7 +36,6 @@ import {
 @Component({
     selector: "nui-bar-chart-with-popover-example",
     templateUrl: "./bar-chart-with-popover.example.component.html",
-    standalone: false,
 })
 export class BarChartWithPopoverExampleComponent implements OnInit {
     public chartAssist = new ChartAssist(new Chart(barGrid()));

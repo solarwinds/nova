@@ -23,7 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-button-test",
     templateUrl: "./button-test.component.html",
-    standalone: false,
 })
 export class ButtonTestComponent {
     isRepeat = "true";

@@ -23,6 +23,5 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-expander-basic-example",
     templateUrl: "expander-basic.example.component.html",
-    standalone: false,
 })
 export class ExpanderBasicExampleComponent {}

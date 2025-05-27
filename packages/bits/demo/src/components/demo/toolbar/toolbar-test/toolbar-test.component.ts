@@ -25,7 +25,6 @@ import { IMenuGroup } from "@nova-ui/bits";
 @Component({
     selector: "nui-toolbar-test",
     templateUrl: "./toolbar-test.component.html",
-    standalone: false,
 })
 export class ToolbarTestExampleComponent {
     public width = "800px";

@@ -24,7 +24,6 @@ import { Component } from "@angular/core";
     selector: "nui-repeat-single-selection-mode-example",
     templateUrl: "./repeat-single-selection-mode.example.component.html",
     styleUrls: ["./repeat-single-selection-mode.example.less"],
-    standalone: false,
 })
 export class RepeatSingleSelectionModeExampleComponent {
     public people = [

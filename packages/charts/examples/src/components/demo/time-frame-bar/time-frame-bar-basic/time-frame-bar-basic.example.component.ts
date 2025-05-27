@@ -49,7 +49,6 @@ import {
     selector: "nui-time-frame-bar-example",
     templateUrl: "./time-frame-bar-basic.example.component.html",
     providers: [NoopDataSourceService, HistoryStorage],
-    standalone: false,
 })
 export class TimeFrameBarBasicExampleComponent implements OnInit, OnDestroy {
     private series = getData();

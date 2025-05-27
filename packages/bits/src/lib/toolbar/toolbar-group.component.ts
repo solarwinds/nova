@@ -27,7 +27,6 @@ import { ToolbarItemComponent } from "./toolbar-item.component";
 @Component({
     selector: "nui-toolbar-group",
     template: ` <ng-content></ng-content> `,
-    standalone: false,
 })
 export class ToolbarGroupComponent {
     @Input() title: string;

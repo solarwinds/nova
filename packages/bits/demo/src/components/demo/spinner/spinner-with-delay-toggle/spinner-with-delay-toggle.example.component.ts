@@ -23,7 +23,6 @@ import { Component, OnDestroy } from "@angular/core";
 @Component({
     selector: "nui-spinner-with-delay-toggle-example",
     templateUrl: "./spinner-with-delay-toggle.example.component.html",
-    standalone: false,
 })
 export class SpinnerWithDelayToggleExampleComponent implements OnDestroy {
     public show = false;

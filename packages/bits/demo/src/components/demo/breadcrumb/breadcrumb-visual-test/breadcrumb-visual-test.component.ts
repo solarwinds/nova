@@ -27,7 +27,6 @@ import { BreadcrumbItem, BreadcrumbStateService } from "@nova-ui/bits";
 @Component({
     selector: "nui-breadcrumb-visual-test",
     templateUrl: "./breadcrumb-visual-test.component.html",
-    standalone: false,
 })
 export class BreadcrumbVisualTestComponent implements OnInit, OnDestroy {
     public breadcrumbSource: Array<BreadcrumbItem>;
@@ -86,7 +85,6 @@ export class BreadcrumbVisualTestComponent implements OnInit, OnDestroy {
         </button>
         <router-outlet></router-outlet>
     </div>`,
-    standalone: false,
 })
 export class BreadcrumbFirstSubviewLevelComponent {
     constructor(private router: Router, private routerState: ActivatedRoute) {}
@@ -103,6 +101,5 @@ export class BreadcrumbFirstSubviewLevelComponent {
     template: ` <div>
         <p>Some data here</p>
     </div>`,
-    standalone: false,
 })
 export class BreadcrumbSecondSubviewLevelComponent {}

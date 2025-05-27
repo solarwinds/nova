@@ -30,7 +30,6 @@ import { TableWidgetSelectionConfig } from "@nova-ui/dashboards";
     selector: "table-widget-selectable-radio-example",
     templateUrl: "./table-widget-selectable-radio.example.component.html",
     styleUrls: ["./table-widget-selectable-radio.example.component.less"],
-    standalone: false,
 })
 export class TableWidgetSelectableRadioExampleComponent {
     public selectionConfiguration: TableWidgetSelectionConfig = {

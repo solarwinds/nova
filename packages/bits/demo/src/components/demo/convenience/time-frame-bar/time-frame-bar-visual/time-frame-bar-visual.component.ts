@@ -52,7 +52,6 @@ class TestBar {
 @Component({
     selector: "nui-convenience-time-frame-bar-visual-test",
     templateUrl: "./time-frame-bar-visual.component.html",
-    standalone: false,
 })
 export class TimeFrameBarVisualTestComponent implements OnInit {
     public bars: TestBar[] = ["first", "second", "third"].map(

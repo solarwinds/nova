@@ -75,7 +75,6 @@ enum Status {
     templateUrl: "./data-point-selection-prototype.component.html",
     styleUrls: ["./data-point-selection-prototype.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false,
 })
 export class DataPointSelectionPrototypeComponent implements OnInit {
     public barChart: Chart;

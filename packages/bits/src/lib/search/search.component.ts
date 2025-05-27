@@ -40,7 +40,6 @@ import { IFilter, IFilterPub } from "../../services/data-source/public-api";
     templateUrl: "./search.component.html",
     styleUrls: ["./search.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false,
 })
 
 // <example-url>./../examples/index.html#/search</example-url>

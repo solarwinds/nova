@@ -25,7 +25,6 @@ import { FormControl } from "@angular/forms";
     selector: "nui-combobox-v2-error-example",
     templateUrl: "combobox-v2-error.example.component.html",
     host: { class: "combobox-container" },
-    standalone: false,
 })
 export class ComboboxV2ErrorExampleComponent {
     public items = Array.from({ length: 100 }).map(

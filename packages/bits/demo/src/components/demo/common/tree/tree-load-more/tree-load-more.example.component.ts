@@ -74,7 +74,6 @@ const TREE_DATA: FoodNode[] = [
     styleUrls: ["./tree-load-more.component.example.less"],
     animations: [expand],
     providers: [HttpMockService],
-    standalone: false,
 })
 export class TreeLoadMoreExampleComponent {
     public pageSize = 10;

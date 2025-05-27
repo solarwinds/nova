@@ -24,6 +24,5 @@ import { Component } from "@angular/core";
     selector: "nui-badge-visual-test",
     templateUrl: "./badge-visual-test.component.html",
     styleUrls: ["./badge-visual-test.component.less"],
-    standalone: false,
 })
 export class BadgeVisualTestComponent {}

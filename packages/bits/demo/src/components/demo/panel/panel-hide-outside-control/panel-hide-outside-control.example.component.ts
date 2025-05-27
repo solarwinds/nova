@@ -25,7 +25,6 @@ import { ToastService } from "@nova-ui/bits";
 @Component({
     selector: "nui-panel-hide-outside-control-example",
     templateUrl: "./panel-hide-outside-control.example.component.html",
-    standalone: false,
 })
 export class PanelHideOutsideControlExampleComponent {
     public isHidden = false;

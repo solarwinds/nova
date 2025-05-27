@@ -55,7 +55,6 @@ interface IElementInfo {
     templateUrl: "./sheet-group.component.html",
     host: { class: "nui-sheet-group" },
     styleUrls: ["./sheet-group.component.less"],
-    standalone: false,
 })
 export class SheetGroupComponent implements OnInit, AfterViewInit, OnDestroy {
     /**

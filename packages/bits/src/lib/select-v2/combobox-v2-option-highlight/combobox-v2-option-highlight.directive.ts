@@ -45,7 +45,6 @@ import { InputValueTypes } from "../types";
 @Directive({
     selector: "[nuiComboboxV2OptionHighlight]",
     providers: [HighlightPipe],
-    standalone: false,
 })
 export class ComboboxV2OptionHighlightDirective
     implements OnChanges, OnInit, OnDestroy

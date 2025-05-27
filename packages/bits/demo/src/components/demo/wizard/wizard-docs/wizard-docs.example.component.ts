@@ -23,6 +23,5 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-wizard-example",
     templateUrl: "./wizard-docs.example.component.html",
-    standalone: false,
 })
 export class WizardExampleComponent {}

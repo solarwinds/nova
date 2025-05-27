@@ -66,7 +66,6 @@ const RANDOM_ARRAY = [
             useClass: LocalFilteringDataSource,
         },
     ],
-    standalone: false,
 })
 export class DialogFilterGroupExampleComponent
     implements AfterViewInit, OnDestroy

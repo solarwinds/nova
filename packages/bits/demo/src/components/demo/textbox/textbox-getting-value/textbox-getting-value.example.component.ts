@@ -33,7 +33,6 @@ import { TextboxComponent } from "@nova-ui/bits";
     selector: "nui-textbox-getting-value-example",
     templateUrl: "./textbox-getting-value.example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
 })
 export class TextboxGettingValueExampleComponent implements AfterViewInit {
     public textboxValueChangedValue: string | number;

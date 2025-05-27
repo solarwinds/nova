@@ -23,6 +23,5 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-message-visual-test",
     templateUrl: "./message-visual-test.component.html",
-    standalone: false,
 })
 export class MessageVisualTestComponent {}
