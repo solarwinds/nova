@@ -3,6 +3,16 @@ import { test as base, Page, expect } from "@playwright/test";
 
 import { Atom } from "./atom";
 
+export enum Animations {
+    ALL,
+    TRANSITIONS,
+    TRANSFORMS,
+    ANIMATIONS,
+    TRANSFORMS_AND_ANIMATIONS,
+    TRANSITIONS_AND_ANIMATIONS,
+    TRANSITIONS_AND_TRANSFORMS,
+}
+
 interface AxeFixture {
     runA11yScan: (
         context?: string | any,
@@ -50,4 +60,70 @@ export class Helpers {
     static async clickOnEmptySpace(): Promise<void>{
         await Helpers.page.click("body", { position: { y: 0, x: 0 } });
     }
+
+
+    static async disableCSSAnimations(type: Animations): Promise<any> {
+        let disableTransitions =
+            "-o-transition-property: none !important;" +
+            "-moz-transition-property: none !important;" +
+            "-ms-transition-property: none !important;" +
+            "-webkit-transition-property: none !important;" +
+            "transition-property: none !important;";
+
+        let disableTransforms =
+            "-o-transform: none !important;" +
+            "-moz-transform: none !important;" +
+            "-ms-transform: none !important;" +
+            "-webkit-transform: none !important;" +
+            "transform: none !important;";
+
+        let disableAnimations =
+            "-webkit-animation: none !important;" +
+            "-moz-animation: none !important;" +
+            "-o-animation: none !important;" +
+            "-ms-animation: none !important;" +
+            "animation: none !important;";
+
+        switch (type) {
+            case Animations.ALL:
+                break;
+            case Animations.TRANSITIONS:
+                disableTransforms = "";
+                disableAnimations = "";
+                break;
+            case Animations.TRANSFORMS:
+                disableAnimations = "";
+                disableTransitions = "";
+                break;
+            case Animations.ANIMATIONS:
+                disableTransforms = "";
+                disableTransitions = "";
+                break;
+            case Animations.TRANSFORMS_AND_ANIMATIONS:
+                disableTransitions = "";
+                break;
+            case Animations.TRANSITIONS_AND_ANIMATIONS:
+                disableTransforms = "";
+                break;
+            case Animations.TRANSITIONS_AND_TRANSFORMS:
+                disableAnimations = "";
+                break;
+        }
+
+        const css =
+            "*, *:before, *:after {" +
+            disableTransitions +
+            disableTransforms +
+            disableAnimations +
+            "}";
+
+        return Helpers.page.addInitScript(`
+            var head = document.head || document.getElementsByTagName("head")[0];
+                            var style = document.createElement("style");
+                            style.type = "text/css";
+                            style.appendChild(document.createTextNode("${css}"));
+            head.appendChild(style);
+        `);
+    }
+
 }

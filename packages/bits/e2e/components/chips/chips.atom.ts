@@ -25,10 +25,8 @@ import { Helpers } from "../../setup";
 
 export class ChipsAtom extends Atom {
     public static CSS_CLASS = "nui-chips";
-    public static verticalClass = "nui-chips__vertical";
     public static qtyLabelClass = "nui-chips__count";
     public static itemClass = "nui-chip__value";
-    public static itemNameClass = "nui-chip__value-name";
     public static itemRemoveIconClass = "nui-chip__value-remove";
     public static groupNameClass = "nui-chips__group-name";
     public static clearAllLinkClass = "nui-chips__clear";
@@ -40,45 +38,10 @@ export class ChipsAtom extends Atom {
         );
     }
 
-    // public async isVertical(): Promise<boolean> {
-    //     return super.hasClass(ChipsAtom.verticalClass);
-    // }
-    //
     public get getChipElements(): Locator {
         return this.getLocator().locator(`.${ChipsAtom.itemClass}`);
     }
-    //
-    // public getChipsCount = async (): Promise<number> =>
-    //     this.getChipElements().count();
-    //
-    // public getChipElement = (index: number): ElementFinder =>
-    //     this.getChipElements().get(index);
-    //
-    // public getChipName = async (element: ElementFinder): Promise<string> =>
-    //     element.all(by.className(ChipsAtom.itemNameClass)).first().getText();
-    //
-    // public getChipsNames = async (): Promise<string[]> =>
-    //     this.getChipElements().map(async (el) => {
-    //         if (!el) {
-    //             throw new Error("elementFinder is not defined");
-    //         }
-    //
-    //         return await this.getChipName(el);
-    //     });
-    //
-    // public getChipsGroupNames = async (): Promise<string[]> =>
-    //     this.groups.map(async (el) => {
-    //         if (!el) {
-    //             throw new Error("elementFinder is not defined");
-    //         }
-    //         return await this.getGroupName(el);
-    //     });
-    //
-    // public getGroupsCount = async (): Promise<number> => this.groups.count();
-    //
-    // public getGroupName = async (element: ElementFinder): Promise<string> =>
-    //     element.getText();
-    //
+
     public removeItem = async (index: number): Promise<void> => {
         return this.getLocator()
             .locator(Helpers.page.locator(`.${ChipsAtom.itemRemoveIconClass}`))
@@ -87,7 +50,9 @@ export class ChipsAtom extends Atom {
     };
 
     public clearAll = async (): Promise<void> => {
-        await this.getLocator().locator(`.${ChipsAtom.clearAllLinkClass}`).click();
+        await this.getLocator()
+            .locator(`.${ChipsAtom.clearAllLinkClass}`)
+            .click();
     };
 
     public async getChipsQuantityFromLabel(): Promise<number> {

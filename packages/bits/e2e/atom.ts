@@ -31,6 +31,9 @@ export class Atom {
     ): T {
         const create = (locator: Locator) => new atomClass(locator);
         const selector = Atom.getSelector(atomClass);
+        if(!selector){
+            return create(parentLocator);
+        }
         if (!parentLocator) {
             return create(Atom.getFromRoot(selector));
         }
@@ -47,19 +50,18 @@ export class Atom {
 
     public static getSelector<T extends Atom>(
         atomClass: IAtomClass<T>
-    ): string {
+    ): string | null     {
         if (atomClass.CSS_CLASS) {
             return `.${atomClass.CSS_CLASS}`;
         }
         if (atomClass.CSS_SELECTOR) {
             return atomClass.CSS_SELECTOR;
         }
-        throw new ReferenceError(
-            `expected atom class ${atomClass.name} to have either CSS_CLASS or CSS_SELECTOR nonempty`
-        );
+
+        return null;
     }
 
-    public locator: Locator;
+    private locator: Locator;
 
     constructor(locator: Locator) {
         this.locator = locator;
