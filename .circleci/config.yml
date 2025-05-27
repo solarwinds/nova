@@ -20,7 +20,7 @@ executors:
             - image: cimg/node:20.18.1
         working_directory: ~/nova
 
-    node-browsers2:
+    playwright:
         docker:
             - image: mcr.microsoft.com/playwright:v1.52.0-noble
         working_directory: ~/nova
@@ -230,29 +230,34 @@ jobs:
                   name: Cleanup
                   command: docker-compose down -v --rmi=local
     bits-e2e-test-playwright:
-        executor: node
+        executor: playwright
         parallelism: 4
         steps:
             - attach_workspace:
                   at: ~/nova
-            - reuse-cache
             - run:
                   name: Compute build c
-                  command: ls
+                  command: yarn install --frozen-lockfile
             - run:
-                  working_directory: ~/nova
-                  name: Install playwright
-                  command: yarn playwright install --with-deps
+                  name: Install
+                  command: ls
+#            - run:
+#                  working_directory: ~/nova
+#                  name: Install playwright
+#                  command: yarn playwright install --with-deps
             - run:
                   working_directory: ~/nova/packages/bits
                   name: Run tests
                   command: |
-                    SHARD="$((${CIRCLE_NODE_INDEX}+1))";
-                    SHARD2="${SHARD}/${CIRCLE_NODE_TOTAL}";
-                    RUND="'yarn run e2e:playwright:ci --shard=${SHARD2}'";
-                    yarn start-server-and-test serve-examples:prod 4200 ${RUND}
-            - store_test_results:
-                  path: packages/bits/test-results
+                    NODE_INDEX="$((${CIRCLE_NODE_INDEX}+1))";
+                    SHARD="${NODE_INDEX}/${CIRCLE_NODE_TOTAL}";
+                    PLAYWRIGHT="'yarn run e2e:playwright:ci --shard=${SHARD}'";
+                    yarn start-server-and-test serve-examples:prod 4200 ${PLAYWRIGHT}
+            -  store_artifacts:
+                    path: ./playwright-report
+                    destination: playwright-report-first
+            -  store_artifacts:
+                    path: /tmp/artifacts
     bits-pack:
         executor: node
         steps:
