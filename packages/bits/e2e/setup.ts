@@ -46,4 +46,8 @@ export class Helpers {
         Helpers.setPage(page);
         await Helpers.page.goto(`#/${pageName}`); // Update path as needed
     }
+
+    static async clickOnEmptySpace(): Promise<void>{
+        await Helpers.page.click("body", { position: { y: 0, x: 0 } });
+    }
 }

@@ -19,17 +19,18 @@ await expect(page.locator('h1')).toHaveText('Welcome');
 
 Playwright provides smart matchers that understand DOM semantics and wait for the expected state. These are much more stable than manually checking properties like `textContent` or `getAttribute`.
 
-| Matcher              | Description                                |
-|----------------------|--------------------------------------------|
-| `toHaveText`         | Assert that an element has specific text   |
-| `toHaveValue`        | Assert the value of an input field         |
-| `toHaveAttribute`    | Assert an element has a specific attribute |
-| `toHaveClass`        | Assert the presence of specific CSS class  |
-| `toBeVisible`        | Assert that the element is visible         |
-| `toBeHidden`         | Assert that the element is hidden          |
-| `toBeEnabled`        | Assert the element is enabled              |
-| `toBeDisabled`       | Assert the element is disabled             |
-| `toBeChecked`        | Assert that a checkbox or radio is checked |
+| Matcher           | Description                                |
+|-------------------|--------------------------------------------|
+| `toHaveText`      | Assert that an element has specific text   |
+| `toHaveValue`     | Assert the value of an input field         |
+| `toHaveAttribute` | Assert an element has a specific attribute |
+| `toHaveClass`     | Assert the presence of specific CSS class  |
+| `ToHaveCount`     | Assert the number of nodes                 |
+| `toBeVisible`     | Assert that the element is visible         |
+| `toBeHidden`      | Assert that the element is hidden          |
+| `toBeEnabled`     | Assert the element is enabled              |
+| `toBeDisabled`    | Assert the element is disabled             |
+| `toBeChecked`     | Assert that a checkbox or radio is checked |
 
 **Examples:**
 

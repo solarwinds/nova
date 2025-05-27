@@ -82,12 +82,16 @@ export class Atom {
         return (classList || "").split(" ").includes(cls);
     }
 
-    public async isDisabled(): Promise<any> {
+    public async toBeDisabled(): Promise<any> {
         return await expect(this.locator).toBeDisabled();
     }
 
-    public async isVisible(): Promise<any> {
+    public async toBeVisible(): Promise<any> {
         return await expect(this.locator).toBeVisible();
+    }
+
+    public async toBeHidden(): Promise<any> {
+        return await expect(this.locator).toBeHidden();
     }
 
     public getLocator(): Locator {
