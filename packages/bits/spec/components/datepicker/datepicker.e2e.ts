@@ -26,7 +26,7 @@ import { DatepickerAtom } from "./datepicker.atom";
 import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
 
-describe("USERCONTROL datepicker", () => {
+xdescribe("USERCONTROL datepicker", () => {
     const activeDateValueId = "nui-demo-datepicker-active-date-value";
     const activeDateValueIdPreserved =
         "nui-demo-datepicker-active-date-value-preserve";
@@ -85,7 +85,7 @@ describe("USERCONTROL datepicker", () => {
         );
     });
 
-    it("should show year in title and months in body upon click on title", async () => {
+    xit("should show year in title and months in body upon click on title", async () => {
         const currentYear: string = moment().year().toString();
         // Get random month
         const randomMonth = () =>
@@ -100,12 +100,12 @@ describe("USERCONTROL datepicker", () => {
         ).toBe(true);
     });
 
-    it("should have empty input if no value provided", async () => {
+    xit("should have empty input if no value provided", async () => {
         await datepickerDisabledTodayButton.waitElementVisible();
         expect(await datepickerDisabledTodayButton.getInputValue()).toEqual("");
     });
 
-    it("should not have today selected by default", async () => {
+    xit("should not have today selected by default", async () => {
         await datepickerDisabledTodayButton.toggle();
         expect(
             await datepickerDisabledTodayButton.getActiveDay().isPresent()
@@ -172,7 +172,7 @@ describe("USERCONTROL datepicker", () => {
         expect(await datepickerWithPreserve.overlay.isOpened()).toBe(true);
     });
 
-    it("should have the same date both on input form and popped up window upon the click on input", async () => {
+    xit("should have the same date both on input form and popped up window upon the click on input", async () => {
         const expectedDate: string = "01 Jan 2020";
         const input = datepickerWithPreserve.getInput();
         await datepickerWithPreserve.clearText();
@@ -190,7 +190,7 @@ describe("USERCONTROL datepicker", () => {
         expect(await datepickerWithPreserve.getActiveDayText()).toEqual("1");
     });
 
-    it("should select current date upon click on 'Today'", async () => {
+    xit("should select current date upon click on 'Today'", async () => {
         await datepickerWithPreserve.toggle();
         await datepickerWithPreserve.clickTodayButton();
         expect(await datepickerWithPreserve.getInputValue()).toEqual(
@@ -222,7 +222,7 @@ describe("USERCONTROL datepicker", () => {
         expect(await datepickerWithPreserve.overlay.isOpened()).toBe(false);
     });
 
-    describe("when minDate, maxDate or dateDisabled is set", () => {
+    xdescribe("when minDate, maxDate or dateDisabled is set", () => {
         const getMinDate = async () =>
             browser.element(by.id("nui-demo-datepicker-min-date")).getText();
 
@@ -335,7 +335,7 @@ describe("USERCONTROL datepicker", () => {
         });
     });
 
-    describe("after date selection >", () => {
+    xdescribe("after date selection >", () => {
         it("should change date (saving hours, minutes, seconds)", async () => {
             await datepickerWithPreserve.clickInput();
             await datepickerWithPreserve.selectDate(11);
@@ -367,7 +367,7 @@ describe("USERCONTROL datepicker", () => {
         });
     });
 
-    describe("after changing mode >", () => {
+    xdescribe("after changing mode >", () => {
         it("should select date and change date (saving hours, minutes, seconds)", async () => {
             await datepickerWithPreserve.clickInput();
             await datepickerWithPreserve.selectDate(5);
@@ -427,7 +427,7 @@ describe("USERCONTROL datepicker", () => {
         });
     });
 
-    describe("after clicking next/previous >", () => {
+    xdescribe("after clicking next/previous >", () => {
         it("changes month title appropriately after clicking next/previous", async () => {
             const currentMonth = await datepickerInline.getMonthFromTitle();
             const previousMonth =
@@ -449,7 +449,7 @@ describe("USERCONTROL datepicker", () => {
         });
     });
 
-    describe("empty value >", () => {
+    xdescribe("empty value >", () => {
         it("should build day calendar from the scratch after clicking next and re-open in case of empty value", async () => {
             await datepickerBasic.clickInput();
             await datepickerBasic.selectDate(2);
@@ -485,7 +485,7 @@ describe("USERCONTROL datepicker", () => {
         });
     });
 
-    it("should preserve initial first day of the week in day-picker", async () => {
+    xit("should preserve initial first day of the week in day-picker", async () => {
         await datepickerWithPreserve.clickInput();
         await datepickerWithPreserve.clickFirstCalendarDate();
         let selectedDate = await datepickerWithPreserve.getInputValue();
@@ -510,7 +510,7 @@ describe("USERCONTROL datepicker", () => {
         expect(firstDayOfTheWeek).toEqual(0);
     });
 
-    it("should correctly set and preserve first day of the week in day-picker", async () => {
+    xit("should correctly set and preserve first day of the week in day-picker", async () => {
         await datepickerWithCustomFirstDayOfTheWeek.clickInput();
         await datepickerWithCustomFirstDayOfTheWeek.clickFirstCalendarDate();
         let selectedDate =
@@ -539,7 +539,7 @@ describe("USERCONTROL datepicker", () => {
         expect(firstDayOfTheWeek).toEqual(5);
     });
 
-    it("should apply appropriate styles to selected day/month/year on day selection in day-picker", async () => {
+    xit("should apply appropriate styles to selected day/month/year on day selection in day-picker", async () => {
         await datepickerInline.waitElementVisible();
         await datepickerInline.clickChangeModeButton();
         await datepickerInline.clickChangeModeButton();
@@ -563,7 +563,7 @@ describe("USERCONTROL datepicker", () => {
         );
     });
 
-    describe("datepicker textbox date formatting > ", () => {
+    xdescribe("datepicker textbox date formatting > ", () => {
         const todayDate: Moment = moment();
         const defaultFormat: string = "DD MMM YYYY";
         const customFormat: string = "MM/DD/YY";

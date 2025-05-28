@@ -17,43 +17,37 @@ test.describe("USERCONTROL Button >", () => {
         await Helpers.prepareBrowser("button/button-test", page);
         primaryCompactBtn = Atom.find<ButtonAtom>(
             ButtonAtom,
-            "nui-demo-primary-compact-btn",
-            true
+            "nui-demo-primary-compact-btn"
         );
         defaultLargeBtn = Atom.find<ButtonAtom>(
             ButtonAtom,
-            "nui-default-large-btn",
-            true
+            "nui-default-large-btn"
         );
         actionCompactBtn = Atom.find<ButtonAtom>(
             ButtonAtom,
-            "nui-demo-action-compact-btn",
-            true
+            "nui-demo-action-compact-btn"
         );
         defaultBtnWithIcon = Atom.find<ButtonAtom>(
             ButtonAtom,
-            "nui-demo-btn-with-icon",
-            true
+            "nui-demo-btn-with-icon"
         );
         primaryLargePlusIconDisabledBtn = Atom.find<ButtonAtom>(
             ButtonAtom,
-            "nui-demo-primary-large-plus-icon-disabled-btn",
-            true
+            "nui-demo-primary-large-plus-icon-disabled-btn"
         );
         primaryLargePlusIconBtn = Atom.find<ButtonAtom>(
             ButtonAtom,
-            "nui-demo-primary-large-plus-icon-btn",
-            true
+            "nui-demo-primary-large-plus-icon-btn"
         );
         primaryLargePlusIconBusyBtn = Atom.find<ButtonAtom>(
             ButtonAtom,
-            "nui-demo-primary-large-plus-icon-busy-btn",
-            true
+            "nui-demo-primary-large-plus-icon-busy-btn"
         );
-        upBtn = Atom.find<ButtonAtom>(ButtonAtom, "nui-demo-up-btn", true);
+        upBtn = Atom.find<ButtonAtom>(ButtonAtom, "nui-demo-up-btn");
         unlimitedWidthBtn = Atom.find<ButtonAtom>(
             ButtonAtom,
-            "nui-demo-long-text-btn"
+            "nui-demo-long-text-btn",
+            false
         );
     });
 
