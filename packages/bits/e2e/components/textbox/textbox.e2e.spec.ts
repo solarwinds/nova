@@ -72,14 +72,14 @@ test.describe("USERCONTROL textbox >", () => {
     //         expect(await validationMessage.isPresent()).toBe(false);
     //     });
     //
-    //     it("should spinner be visible during the async validate of the textbox", async () => {
+    //     test("should spinner be visible during the async validate of the textbox", async () => {
     //         await textBox.clearText();
     //         await textBox.acceptText("abcde");
     //         await asyncSpinner.waitForDisplayed(5000);
     //         expect(await asyncSpinner.isDisplayed()).toBe(true);
     //     });
     //
-    //     it("should prevent async validation if sync is triggered first", async () => {
+    //     test("should prevent async validation if sync is triggered first", async () => {
     //         await textBox.clearText();
     //         await textBox.acceptText("Ted");
     //         expect(await validationMessage.isDisplayed()).toBe(true);
@@ -88,19 +88,19 @@ test.describe("USERCONTROL textbox >", () => {
     //         );
     //     });
     //
-    //     it("should trigger sync validation on invalid value", async () => {
+    //     test("should trigger sync validation on invalid value", async () => {
     //         await textBox.clearText();
     //         await textBox.acceptText("1");
     //         await browser.sleep(2000);
     //         expect(await asyncSpinner.isDisplayed()).toBe(false);
-    //         await browser.wait(
+    //         await browser.watest(
     //             ExpectedConditions.visibilityOf(validationMessage),
     //             2000
     //         );
     //         expect(await validationMessage.isDisplayed()).toBe(true);
     //     });
     //
-    //     it("should not trigger sync validation if user clears optional field", async () => {
+    //     test("should not trigger sync validation if user clears optional field", async () => {
     //         await textBox.clearText();
     //         await textBox.acceptText("1");
     //         await textBox.deleteTextManually();
@@ -110,11 +110,11 @@ test.describe("USERCONTROL textbox >", () => {
     //         expect(await validationMessage.isPresent()).toBe(false);
     //     });
     //
-    //     it("should show error message if async validation fails as user types letters in", async () => {
+    //     test("should show error message if async validation fails as user types letters in", async () => {
     //         // Checking the min length checkbox off for the test to get rid off sync validation
     //         await checkboxGroup.getFirst().toggle();
     //         await textBox.clearText();
-    //         const ted = "Ted".split("");
+    //         const ted = "Ted".spltest("");
     //
     //         // Simulating user's behavior by entering each letter one by one and checking the validation state
     //         for (let idx = 0; idx < ted.length; idx++) {

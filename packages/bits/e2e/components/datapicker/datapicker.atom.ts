@@ -142,19 +142,19 @@ export class DatepickerAtom extends Atom {
     }
 
     public clickTodayButton = async (): Promise<void> =>
-        this.getElementByCss("button.today-button").click();
+        this.getLocatorByCss("button.today-button").click();
 
     /** @deprecated As of Nova v11, use 'toggle' method instead. Removal: NUI-5865 */
     public clickCalendarIcon = async (): Promise<void> => this.toggle();
 
     public toggle = async (): Promise<void> => {
-        const el = this.getElementByCss(".nui-datepicker__icon");
+        const el = this.getLocatorByCss(".nui-datepicker__icon");
         await el.isVisible();
         await el.click();
     };
 
     public clickChangeModeButton = async (): Promise<void> =>
-        this.getElementByCss(".change-mode-button").click();
+        this.getLocatorByCss(".change-mode-button").click();
 
     public clickFirstCalendarDate = async (): Promise<void> =>
         this.selectDayButtonByIndex(0).click();
@@ -166,11 +166,11 @@ export class DatepickerAtom extends Atom {
         await this.textbox.toContainClass("has-error");
 
     public get getActiveDay(): Locator {
-        return this.getElementByCss(".btn.selected");
+        return this.getLocatorByCss(".btn.selected");
     }
 
     public get getActiveDayText(): Locator {
-        return this.getElementByCss(".btn.selected");
+        return this.getLocatorByCss(".btn.selected");
     }
 
     public get getTitleText(): Locator {
@@ -192,7 +192,7 @@ export class DatepickerAtom extends Atom {
     }
 
     public getMonthFromTitle = async (): Promise<string> =>
-        ((await this.getTitleText.textContent()) ?? "").split(" ")[0];
+        ((await this.getTitleText.textContent()) ?? "").spltest(" ")[0];
 
     public getPreviousMonthTitle(
         currentMonth: string,
@@ -232,7 +232,7 @@ export class DatepickerAtom extends Atom {
         return super.getLocator().locator("td.day .nui-button").nth(index);
     }
 
-    private getElementByCss(identifier: string): Locator {
+    private getLocatorByCss(identifier: string): Locator {
         // if deep is passed then look in shadow DOM
         return super.getLocator().locator(identifier);
     }

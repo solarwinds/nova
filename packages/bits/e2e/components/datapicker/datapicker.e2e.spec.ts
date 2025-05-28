@@ -223,11 +223,11 @@ test.describe("USERCONTROL datepicker", () => {
 
     test.describe("when minDate, maxDate or dateDisabled is set", () => {
         const getMinDate = async () =>
-            Atom.find(Atom, "nui-demo-datepicker-min-date")
+            Atom.find<Atom>(Atom, "nui-demo-datepicker-min-date")
                 .getLocator()
                 .textContent();
         const getMaxDate = async () =>
-            Atom.find(Atom, "nui-demo-datepicker-max-date")
+            Atom.find<Atom>(Atom, "nui-demo-datepicker-max-date")
                 .getLocator()
                 .textContent();
 
@@ -342,11 +342,11 @@ test.describe("USERCONTROL datepicker", () => {
             await datepickerWithPreserve.clickInput();
             await datepickerWithPreserve.selectDate(11);
             await datepickerWithPreserve.toggle();
-            const oldValue = await Atom.find(Atom, activeDateValueIdPreserved)
+            const oldValue = await Atom.find<Atom>(Atom, activeDateValueIdPreserved)
                 .getLocator()
                 .textContent();
             await datepickerWithPreserve.selectDate(10);
-            const newValue = await Atom.find(Atom, activeDateValueIdPreserved)
+            const newValue = await Atom.find<Atom>(Atom, activeDateValueIdPreserved)
                 .getLocator()
                 .textContent();
 
@@ -357,11 +357,11 @@ test.describe("USERCONTROL datepicker", () => {
 
         test("should change date (NOT saving hours, minutes, seconds)", async () => {
             await datepickerInline.selectDate(11);
-            const oldValue = await Atom.find(Atom, activeDateValueId)
+            const oldValue = await Atom.find<Atom>(Atom, activeDateValueId)
                 .getLocator()
                 .textContent();
             await datepickerInline.selectDate(10);
-            const newValue = await Atom.find(Atom, activeDateValueId)
+            const newValue = await Atom.find<Atom>(Atom, activeDateValueId)
                 .getLocator()
                 .textContent();
 
@@ -376,7 +376,7 @@ test.describe("USERCONTROL datepicker", () => {
             await datepickerWithPreserve.selectDate(5);
             const month = moment().month();
             const monthName = DatepickerAtom.MONTHNAMES_SHORT[month];
-            const oldValue = await Atom.find(Atom, activeDateValueIdPreserved)
+            const oldValue = await Atom.find<Atom>(Atom, activeDateValueIdPreserved)
                 .getLocator()
                 .textContent();
             await datepickerWithPreserve.clickInput();
@@ -385,7 +385,7 @@ test.describe("USERCONTROL datepicker", () => {
             await datepickerWithPreserve.selectDate(
                 moment().date() > 15 ? 10 : 20
             );
-            const newValue = await Atom.find(Atom, activeDateValueIdPreserved)
+            const newValue = await Atom.find<Atom>(Atom, activeDateValueIdPreserved)
                 .getLocator()
                 .textContent();
 
@@ -397,13 +397,13 @@ test.describe("USERCONTROL datepicker", () => {
             await datepickerInline.selectDate(5);
             const month = moment().month();
             const monthName = DatepickerAtom.MONTHNAMES_SHORT[month];
-            const oldValue = await Atom.find(Atom, activeDateValueId)
+            const oldValue = await Atom.find<Atom>(Atom, activeDateValueId)
                 .getLocator()
                 .textContent();
             await datepickerInline.clickTitle();
             await datepickerInline.selectMonth(monthName);
             await datepickerInline.selectDate(moment().date() > 15 ? 10 : 20);
-            const newValue = await Atom.find(Atom, activeDateValueId)
+            const newValue = await Atom.find<Atom>(Atom, activeDateValueId)
                 .getLocator()
                 .textContent();
 
@@ -414,14 +414,14 @@ test.describe("USERCONTROL datepicker", () => {
         test("should save hour correctly when triggered at 23:00 - 0:00", async () => {
             await datepickerWithInitAndPreserve.clickInput();
             await datepickerWithInitAndPreserve.selectDate(5);
-            const oldValue = await Atom.find(Atom, initDateValueIdPreserved)
+            const oldValue = await Atom.find<Atom>(Atom, initDateValueIdPreserved)
                 .getLocator()
                 .textContent();
             await datepickerWithInitAndPreserve.clickInput();
             await datepickerWithInitAndPreserve.selectDate(
                 moment().date() > 15 ? 10 : 20
             );
-            const newValue = await Atom.find(Atom, initDateValueIdPreserved)
+            const newValue = await Atom.find<Atom>(Atom, initDateValueIdPreserved)
                 .getLocator()
                 .textContent();
 

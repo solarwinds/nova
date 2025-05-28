@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { test as base, Page, expect } from "@playwright/test";
+import {expect, JSHandle, Page, test as base} from "@playwright/test";
 
 import { Atom } from "./atom";
 
@@ -36,7 +36,7 @@ export const test = base.extend<AxeFixture>({
                         ? context
                         : Atom.getSelector(context);
 
-                builder.include(locator);
+                builder.include(locator ?? "");
             }
 
             const results = await builder.disableRules(disabledRules).analyze();
@@ -47,9 +47,12 @@ export const test = base.extend<AxeFixture>({
 
 export class Helpers {
     public static page: Page;
-
     public static setPage(page: Page): void {
         this.page = page;
+    }
+
+    static async getActiveElement(): Promise<JSHandle | null> {
+        return await Helpers.page.evaluateHandle(() => document.activeElement);
     }
 
     static async prepareBrowser(pageName: string, page: Page): Promise<void> {

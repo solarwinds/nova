@@ -26,13 +26,13 @@ export class Atom {
      */
     public static findIn<T extends Atom>(
         atomClass: IAtomClass<T>,
-        parentLocator: Locator,
+        parentLocator?: Locator,
         root = false
     ): T {
         const create = (locator: Locator) => new atomClass(locator);
         const selector = Atom.getSelector(atomClass);
         if(!selector){
-            return create(parentLocator);
+            return create(parentLocator ?? Atom.getFromRoot("body"));
         }
         if (!parentLocator) {
             return create(Atom.getFromRoot(selector));
