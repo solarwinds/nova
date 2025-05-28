@@ -1,5 +1,10 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const baseUse = {
+    ...devices["Desktop Chrome"],
+    viewport: { width: 1280, height: 720 },
+};
+
 export default defineConfig({
     // Default settings for all projects
 
@@ -20,24 +25,21 @@ export default defineConfig({
         {
             name: "e2e",
             testMatch: /.*\.e2e\.spec\.ts/,
-            use: { ...devices["Desktop Chrome"] },
+            use: baseUse,
         },
 
         // Accessibility Tests
         {
             name: "a11y",
             testMatch: /.*\.a11y\.spec\.ts/,
-            use: { ...devices["Desktop Chrome"] },
+            use: baseUse,
         },
 
         // Visual Regression Tests
         {
             name: "visual",
             testMatch: /.*\.visual\.spec\.ts/,
-            use: {
-                ...devices["Desktop Chrome"],
-                screenshot: "on",
-            },
+            use: { ...baseUse, screenshot: "on" },
         },
     ],
 
@@ -49,8 +51,8 @@ export default defineConfig({
 
     reporter: process.env.CI ? "blob" : "html",
     webServer: {
-      command: "yarn run serve-examples:prod",
-      url: "http://localhost:4200",
-      reuseExistingServer: !process.env["CI"],
+        command: "yarn run serve-examples:prod",
+        url: "http://localhost:4200",
+        reuseExistingServer: !process.env["CI"],
     },
 });

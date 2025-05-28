@@ -80,6 +80,10 @@ test.describe("USERCONTROL chips", () => {
 
         test("should hide correct number of chips", async ({ page }) => {
             await overflowChips.toBeVisible();
+            await page.setViewportSize({
+                width: 1280,
+                height: 890,
+            });
             await expect(overflowChips.getChipsOverflow).toHaveText("+2");
             await page.setViewportSize({
                 width: 900,
