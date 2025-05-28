@@ -8,13 +8,13 @@ export class ButtonAtom extends Atom {
     public static findIn<T extends Atom>(
         atomClass: IAtomClass<T>,
         parentLocator: Locator,
-        root = false
+        root = true
     ): T {
-        return Atom.findIn(atomClass, parentLocator, true);
+        return Atom.findIn(atomClass, parentLocator, root);
     }
 
     public isIconShown = async (): Promise<boolean> =>
-        await this.locator
+        await this.getLocator()
             .locator(Helpers.page.locator("nui-icon"))
             .isVisible();
 

@@ -22,8 +22,8 @@ import moment, { Moment } from "moment/moment";
 import { Locator } from "playwright-core";
 
 import { Atom } from "../../atom";
-import { Helpers, expect } from "../../setup";
-// import { OverlayAtom } from "../overlay/overlay.atom";
+import { expect } from "../../setup";
+import { OverlayAtom } from "../overlay/overlay.atom";
 import { TextboxAtom } from "../textbox/textbox.atom";
 
 export class DatepickerAtom extends Atom {
@@ -58,8 +58,11 @@ export class DatepickerAtom extends Atom {
         "December",
     ];
 
-    // public overlay = Atom.findIn(OverlayAtom, this.getElement());
-    public textbox = Atom.findIn(TextboxAtom, this.getLocator());
+    public get getOverlay(): OverlayAtom {
+        return Atom.findIn<OverlayAtom>(OverlayAtom, this.getLocator());
+    }
+
+    public textbox = Atom.findIn<TextboxAtom>(TextboxAtom, this.getLocator());
 
     public selectDate = async (day: number): Promise<void> =>
         this.clickCalendarItem(day.toString());
@@ -111,30 +114,28 @@ export class DatepickerAtom extends Atom {
         await this.getInput.press("Delete");
     };
 
-    // /**
-    //  * Gets title which will be after current title is clicked.
-    //  * For example, when daypicker mode is enabled then it gets title of monthpicker.
-    //  * In monthpicker mode gets title of yearpicker.
-    //  * @returns {Promise<string>}
-    //  */
-    // public async getLargerPeriodTitle(): Promise<string> {
-    //     let newTitle: string;
-    //
-    //     return this.getTitleText().then(async (currentTitle) => {
-    //         if (currentTitle.length === 4) {
-    //             const currentYear: number = Math.floor(
-    //                 parseInt(currentTitle, 10)
-    //             );
-    //             const rangeStart: number = currentYear;
-    //             const rangeEnd: number = currentYear + 19;
-    //             newTitle = `${rangeStart} - ${rangeEnd}`;
-    //         } else {
-    //             newTitle = currentTitle.substring(currentTitle.length - 4);
-    //         }
-    //
-    //         return newTitle;
-    //     });
-    // }
+    /**
+     * Gets title which will be after current title is clicked.
+     * For example, when daypicker mode is enabled then it gets title of monthpicker.
+     * In monthpicker mode gets title of yearpicker.
+     * @returns {Promise<string>}
+     */
+    public async getLargerPeriodTitle(): Promise<string> {
+        let newTitle: string = "";
+        const currentTitle = await this.getTitleText.textContent();
+        if (currentTitle && currentTitle.length === 4) {
+            const currentYear: number = Math.floor(
+                parseInt(currentTitle, 10)
+            );
+            const rangeStart: number = currentYear;
+            const rangeEnd: number = currentYear + 19;
+            newTitle = `${rangeStart} - ${rangeEnd}`;
+        } else if(currentTitle) {
+            newTitle = currentTitle.substring(currentTitle.length - 4);
+        }
+
+        return newTitle;
+    }
 
     public async clickTitle(): Promise<void> {
         return super.getLocator().locator(`button[id*='title']`).click();

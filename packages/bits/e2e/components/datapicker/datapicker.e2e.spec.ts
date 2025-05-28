@@ -145,31 +145,29 @@ test.describe("USERCONTROL datepicker", () => {
         await expect(datepickerInline.getTitleText).toContainText(currentTitle);
     });
 
-    // todo
-    // test("should show years in body upon click on title (in state of year)", async () => {
-    //     // go to month picker
-    //     await datepickerInline.clickTitle();
-    //     const nextTitle: any = await datepickerInline.getLargerPeriodTitle();
-    //     const currentYear: string = moment().year().toString();
-    //     // go to year picker
-    //     await datepickerInline.clickTitle();
-    //
-    //     expect(await datepickerInline.getTitleText()).toEqual(nextTitle);
-    //     expect(
-    //         await datepickerInline.getYearElement(currentYear).isPresent()
-    //     ).toBe(true);
-    // });
+    test("should show years in body upon click on title (in state of year)", async () => {
+        // go to month picker
+        await datepickerInline.clickTitle();
+        const nextTitle: any = await datepickerInline.getLargerPeriodTitle();
+        const currentYear: string = moment().year().toString();
+        // go to year picker
+        await datepickerInline.clickTitle();
 
-    // todo
-    // test("should open popup upon click on icon", async () => {
-    //     await datepickerWithPreserve.toggle();
-    //     expect(await datepickerWithPreserve.overlay.isOpened()).toBe(true);
-    // });
-    //
-    // test("should show datepicker popup upon click on input", async () => {
-    //     await datepickerWithPreserve.clickInput();
-    //     expect(await datepickerWithPreserve.overlay.isOpened()).toBe(true);
-    // });
+        await expect( datepickerInline.getTitleText).toContainText(nextTitle);
+        await expect(
+             datepickerInline.getYearElement(currentYear)
+        ).toBeVisible();
+    });
+
+    test("should open popup upon click on icon", async () => {
+        await datepickerWithPreserve.toggle();
+        await datepickerWithPreserve.getOverlay.toBeOpened();
+    });
+
+    test("should show datepicker popup upon click on input", async () => {
+        await datepickerWithPreserve.clickInput();
+        await datepickerWithPreserve.getOverlay.toBeOpened();
+    });
 
     test("should have the same date both on input form and popped up window upon the click on input", async () => {
         const expectedDate: string = "01 Jan 2020";
@@ -199,29 +197,29 @@ test.describe("USERCONTROL datepicker", () => {
         );
     });
 
-    // test("should correctly change to the selected date", async () => {
-    //     const day: number = 20;
-    //     const date: Moment = moment();
-    //     date.date(day);
-    //     await datepickerWithPreserve.clickInput();
-    //     expect(await datepickerWithPreserve.overlay.isOpened()).toBe(true);
-    //
-    //     await datepickerWithPreserve.selectDate(day);
-    //     expect(await datepickerWithPreserve.getInputValue()).toEqual(
-    //         datepickerWithPreserve.formatDate(date, "en-US")
-    //     );
-    //
-    //     await datepickerWithPreserve.toggle();
-    //     expect(await datepickerWithPreserve.getActiveDayText()).toEqual("20");
-    // });
+    test("should correctly change to the selected date", async () => {
+        const day: number = 20;
+        const date: Moment = moment();
+        date.date(day);
+        await datepickerWithPreserve.clickInput();
+        await datepickerWithPreserve.getOverlay.toBeOpened();
 
-    // test("should close datepicker popup upon click on a date", async () => {
-    //     // open popup by clicking on popup
-    //     await datepickerWithPreserve.clickInput();
-    //     expect(await datepickerWithPreserve.overlay.isOpened()).toBe(true);
-    //     await datepickerWithPreserve.getActiveDay().click();
-    //     expect(await datepickerWithPreserve.overlay.isOpened()).toBe(false);
-    // });
+        await datepickerWithPreserve.selectDate(day);
+        await expect(datepickerWithPreserve.getInput).toHaveValue(
+            datepickerWithPreserve.formatDate(date, "en-US")
+        );
+
+        await datepickerWithPreserve.toggle();
+        await expect(datepickerWithPreserve.getActiveDayText).toContainText("20");
+    });
+
+    test("should close datepicker popup upon click on a date", async () => {
+        // open popup by clicking on popup
+        await datepickerWithPreserve.clickInput();
+        await datepickerWithPreserve.getOverlay.toBeOpened();
+        await datepickerWithPreserve.getActiveDay.click();
+        await datepickerWithPreserve.getOverlay.toNotBeOpened();
+    });
 
     test.describe("when minDate, maxDate or dateDisabled is set", () => {
         const getMinDate = async () =>
