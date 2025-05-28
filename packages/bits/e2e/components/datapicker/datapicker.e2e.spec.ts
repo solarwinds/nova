@@ -586,7 +586,7 @@ test.describe("USERCONTROL datepicker", () => {
         test("should display date in textbox in accordance with default dateFormat", async () => {
             await datepickerBasic.toggle();
             await datepickerBasic.clickTodayButton();
-            await expect(datepickerBasic.getInput).toHaveText(
+            await expect(datepickerBasic.getInput).toHaveValue(
                 todayDateDefaultFormat
             );
         });
@@ -594,7 +594,7 @@ test.describe("USERCONTROL datepicker", () => {
         test("should display date in textbox in accordance with custom user's dateFormat", async () => {
             await datepickerWithCustomDateFormat.toggle();
             await datepickerWithCustomDateFormat.clickTodayButton();
-            await expect(datepickerWithCustomDateFormat.getInput).toHaveText(
+            await expect(datepickerWithCustomDateFormat.getInput).toHaveValue(
                 todayDateCustomFormat
             );
         });
@@ -604,50 +604,35 @@ test.describe("USERCONTROL datepicker", () => {
 
             await datepickerBasic.clickInput();
             await datepickerBasic.selectDate(newDateDay);
-            let selectedDate: string = await datepickerBasic.getInput.inputValue();
-            expect(selectedDate).toEqual(newDateDefaultFormat);
+            await expect(datepickerBasic.getInput).toHaveValue(newDateDefaultFormat);
 
             await datepickerWithCustomDateFormat.clickInput();
             await datepickerWithCustomDateFormat.selectDate(newDateDay);
-            selectedDate = await datepickerWithCustomDateFormat.getInput.inputValue();
-            expect(selectedDate).toEqual(newDateCustomFormat);
+            await expect(datepickerWithCustomDateFormat.getInput).toHaveValue(newDateCustomFormat);
         });
 
         test("should validate typed in date and change it's format in accordance with dateFormat", async () => {
             await datepickerBasic.clearText();
             await datepickerBasic.acceptText(newDateCustomFormat);
-            let selectedDate = await datepickerBasic.getInput.inputValue();
-            expect(selectedDate).toEqual(newDateDefaultFormat);
-            expect(await datepickerBasic.isInputValid()).toEqual(true);
-
+            await expect(datepickerBasic.getInput).toHaveValue(newDateDefaultFormat);
+            await datepickerBasic.isInputValid();
             await datepickerWithCustomDateFormat.clearText();
-            await datepickerWithCustomDateFormat.acceptText(
-                newDateDefaultFormat
-            );
-            selectedDate = await datepickerWithCustomDateFormat.getInput.inputValue();
-            expect(selectedDate).toEqual(newDateCustomFormat);
-            expect(await datepickerWithCustomDateFormat.isInputValid()).toEqual(
-                true
-            );
+            await datepickerWithCustomDateFormat.acceptText(newDateDefaultFormat);
+            await expect(datepickerWithCustomDateFormat.getInput).toHaveValue(newDateCustomFormat);
+            await datepickerWithCustomDateFormat.isInputValid();
         });
 
         test("should not validate invalid typed in date and should not change it's format to dateFormat", async () => {
             const invalidDate: string = "20189-50.Nov2";
-
             await datepickerBasic.toBeVisible();
             await datepickerBasic.clearText();
             await datepickerBasic.acceptText(invalidDate);
-            let selectedDate = await datepickerBasic.getInput.inputValue();
-            expect(selectedDate).toEqual(invalidDate);
-            expect(await datepickerBasic.isInputValid()).toEqual(false);
-
+            await expect(datepickerBasic.getInput).toHaveValue(invalidDate);
+            await datepickerBasic.isInputValid();
             await datepickerWithCustomDateFormat.clearText();
             await datepickerWithCustomDateFormat.acceptText(invalidDate);
-            selectedDate = await datepickerWithCustomDateFormat.getInput.inputValue();
-            expect(selectedDate).toEqual(invalidDate);
-            expect(await datepickerWithCustomDateFormat.isInputValid()).toEqual(
-                false
-            );
+            await expect(datepickerWithCustomDateFormat.getInput).toHaveValue(invalidDate);
+            await datepickerWithCustomDateFormat.isNotInputValid();
         });
     });
 });
