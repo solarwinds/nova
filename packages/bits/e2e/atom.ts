@@ -16,7 +16,7 @@ export class Atom {
     public static find<T extends Atom>(
         atomClass: IAtomClass<T>,
         id: string,
-        root = false
+        root?: boolean
     ): T {
         return atomClass.findIn(atomClass, Helpers.page.locator(`#${id}`), root);
     }

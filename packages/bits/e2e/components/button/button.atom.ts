@@ -22,5 +22,5 @@ export class ButtonAtom extends Atom {
         await this.toNotContainClass("is-busy");
     public isBusy = async (): Promise<void> =>
         await this.toContainClass("is-busy");
-    public click = async (): Promise<void> => this.locator.click();
+    public click = async (): Promise<void> => this.getLocator().click();
 }
