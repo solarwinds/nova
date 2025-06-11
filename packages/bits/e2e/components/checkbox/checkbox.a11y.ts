@@ -18,30 +18,18 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Key } from "protractor";
+import { CheckboxAtom } from "./checkbox.atom";
+import { test, Helpers } from "../../setup";
 
-import { Atom } from "../../atom";
-import { ButtonAtom } from "../../components/button/button.atom";
-import { TextboxAtom } from "../../components/textbox/textbox.atom";
-import { Helpers } from "../../helpers";
+// disabling the rule until NUI-6015 is addressed
+const rulesToDisable: string[] = ["aria-allowed-role", "nested-interactive"];
 
-xdescribe("USERCONTROL Clipboard", () => {
-    const buttonAtom: ButtonAtom = Atom.find(ButtonAtom, "clipboardButton");
-    const textbox: TextboxAtom = Atom.find(TextboxAtom, "inputTextbox");
-
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("common/clipboard");
+test.describe("a11y: checkbox", () => {
+    test.beforeAll(async ({ page }) => {
+        await Helpers.prepareBrowser("checkbox/checkbox-visual-test", page);
     });
 
-    it("should copy text to clipboard", async () => {
-        const textToCopy = "text to copy";
-
-        await textbox.acceptText(textToCopy);
-        await buttonAtom.click();
-        await textbox.clearText();
-        expect(await textbox.getValue()).toBe("");
-
-        await textbox.input.sendKeys(Key.CONTROL, "v");
-        expect(await textbox.getValue()).toBe(textToCopy, "Text wasn't pasted");
+    test("should verify a11y of checkbox", async ({ runA11yScan }) => {
+        await runA11yScan(CheckboxAtom, rulesToDisable);
     });
 });

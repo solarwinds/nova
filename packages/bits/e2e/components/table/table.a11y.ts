@@ -17,31 +17,21 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
+import { TableAtom } from "./table.atom";
+import { Helpers, test } from "../../setup";
 
-import { Key } from "protractor";
-
-import { Atom } from "../../atom";
-import { ButtonAtom } from "../../components/button/button.atom";
-import { TextboxAtom } from "../../components/textbox/textbox.atom";
-import { Helpers } from "../../helpers";
-
-xdescribe("USERCONTROL Clipboard", () => {
-    const buttonAtom: ButtonAtom = Atom.find(ButtonAtom, "clipboardButton");
-    const textbox: TextboxAtom = Atom.find(TextboxAtom, "inputTextbox");
-
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("common/clipboard");
+const rulesToDisable: string[] = [
+    "duplicate-id", // we don't care for the testing pages
+    "aria-allowed-role", // NUI-6015
+    "aria-required-parent", // NUI-6133
+    "nested-interactive",
+];
+test.describe("a11y: table", () => {
+    test.beforeEach(async ({ page }): Promise<void> => {
+        await Helpers.prepareBrowser("chips/chips-visual-test", page);
     });
 
-    it("should copy text to clipboard", async () => {
-        const textToCopy = "text to copy";
-
-        await textbox.acceptText(textToCopy);
-        await buttonAtom.click();
-        await textbox.clearText();
-        expect(await textbox.getValue()).toBe("");
-
-        await textbox.input.sendKeys(Key.CONTROL, "v");
-        expect(await textbox.getValue()).toBe(textToCopy, "Text wasn't pasted");
+    test("should check a11y of table", async ({ runA11yScan }) => {
+        await runA11yScan(TableAtom, rulesToDisable);
     });
 });

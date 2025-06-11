@@ -18,30 +18,19 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Key } from "protractor";
+import { IconAtom } from "./icon.atom";
+import { test, Helpers } from "../../setup";
 
-import { Atom } from "../../atom";
-import { ButtonAtom } from "../../components/button/button.atom";
-import { TextboxAtom } from "../../components/textbox/textbox.atom";
-import { Helpers } from "../../helpers";
+describe("a11y: icon", () => {
+    const rulesToDisable: string[] = [
+        "duplicate-id", // has nothing to do with the icons
+    ];
 
-xdescribe("USERCONTROL Clipboard", () => {
-    const buttonAtom: ButtonAtom = Atom.find(ButtonAtom, "clipboardButton");
-    const textbox: TextboxAtom = Atom.find(TextboxAtom, "inputTextbox");
-
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("common/clipboard");
+    test.beforeAll(async ({ page }) => {
+        await Helpers.prepareBrowser("icon/icon-visual-test", page);
     });
 
-    it("should copy text to clipboard", async () => {
-        const textToCopy = "text to copy";
-
-        await textbox.acceptText(textToCopy);
-        await buttonAtom.click();
-        await textbox.clearText();
-        expect(await textbox.getValue()).toBe("");
-
-        await textbox.input.sendKeys(Key.CONTROL, "v");
-        expect(await textbox.getValue()).toBe(textToCopy, "Text wasn't pasted");
+    test("should check a11y of icon", async ({ runA11yScan }) => {
+        await runA11yScan(IconAtom, rulesToDisable);
     });
 });

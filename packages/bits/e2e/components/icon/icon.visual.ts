@@ -18,30 +18,36 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Key } from "protractor";
+import { browser } from "protractor";
 
 import { Atom } from "../../atom";
-import { ButtonAtom } from "../../components/button/button.atom";
-import { TextboxAtom } from "../../components/textbox/textbox.atom";
 import { Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
+import { IconAtom } from "../icon/icon.atom";
 
-xdescribe("USERCONTROL Clipboard", () => {
-    const buttonAtom: ButtonAtom = Atom.find(ButtonAtom, "clipboardButton");
-    const textbox: TextboxAtom = Atom.find(TextboxAtom, "inputTextbox");
+const name: string = "Icon";
 
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("common/clipboard");
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera, iconBasic: IconAtom;
+
+    test.beforeAll(async () => {
+        await Helpers.prepareBrowser("icon/icon-visual-test");
+        iconBasic = Atom.find<IconAtom>(IconAtom, "nui-icon-test-basic-usage");
+
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    it("should copy text to clipboard", async () => {
-        const textToCopy = "text to copy";
+    test(`${name} visual test`, async () => {
+        await camera.turn.on();
 
-        await textbox.acceptText(textToCopy);
-        await buttonAtom.click();
-        await textbox.clearText();
-        expect(await textbox.getValue()).toBe("");
+        await camera.say.cheese(`Default`);
 
-        await textbox.input.sendKeys(Key.CONTROL, "v");
-        expect(await textbox.getValue()).toBe(textToCopy, "Text wasn't pasted");
-    });
+        await iconBasic.hover();
+        await camera.say.cheese(`Default with hover`);
+
+        await Helpers.switchDarkTheme("on");
+        await camera.say.cheese(`Dark theme`);
+
+        await camera.turn.off();
+    }, 100000);
 });

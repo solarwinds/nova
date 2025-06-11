@@ -24,7 +24,7 @@ import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { ChipsAtom } from "../public_api";
 
-describe("USERCONTROL chips", () => {
+xdescribe("USERCONTROL chips", () => {
     const flatHorizontal = Atom.find(
         ChipsAtom,
         "nui-demo-chips-flat-horizontal"

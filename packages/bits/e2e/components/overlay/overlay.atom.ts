@@ -18,30 +18,32 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Key } from "protractor";
+import { Locator } from "playwright-core";
 
 import { Atom } from "../../atom";
-import { ButtonAtom } from "../../components/button/button.atom";
-import { TextboxAtom } from "../../components/textbox/textbox.atom";
-import { Helpers } from "../../helpers";
+import { Helpers } from "../../setup";
 
-xdescribe("USERCONTROL Clipboard", () => {
-    const buttonAtom: ButtonAtom = Atom.find(ButtonAtom, "clipboardButton");
-    const textbox: TextboxAtom = Atom.find(TextboxAtom, "inputTextbox");
+export class OverlayAtom extends Atom {
+    get cdkContainerPane(): Locator {
+        return Helpers.page.locator(`.${OverlayAtom.CDK_CONTAINER_PANE}`);
+    }
+    get cdkContainerBox(): Locator {
+        return Helpers.page.locator(`.${OverlayAtom.CDK_CONTAINER_BOX}`);
+    }
+    get cdkContainer(): Locator {
+        return Helpers.page.locator(`.${OverlayAtom.CDK_CONTAINER}`);
+    }
 
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("common/clipboard");
-    });
+    public static CSS_CLASS = "nui-overlay";
+    public static CDK_CONTAINER = "cdk-overlay-container";
+    public static CDK_CONTAINER_BOX =
+        "cdk-overlay-connected-position-bounding-box";
+    public static CDK_CONTAINER_PANE = "cdk-overlay-pane";
 
-    it("should copy text to clipboard", async () => {
-        const textToCopy = "text to copy";
-
-        await textbox.acceptText(textToCopy);
-        await buttonAtom.click();
-        await textbox.clearText();
-        expect(await textbox.getValue()).toBe("");
-
-        await textbox.input.sendKeys(Key.CONTROL, "v");
-        expect(await textbox.getValue()).toBe(textToCopy, "Text wasn't pasted");
-    });
-});
+    public async toBeOpened(): Promise<boolean> {
+        return this.cdkContainerPane.isVisible();
+    }
+    public async toNotBeOpened(): Promise<boolean> {
+        return this.cdkContainerPane.isHidden();
+    }
+}
