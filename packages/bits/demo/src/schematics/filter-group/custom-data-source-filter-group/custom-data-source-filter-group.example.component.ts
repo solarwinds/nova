@@ -18,14 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    Component,
-    Inject,
-    OnDestroy,
-    QueryList,
-    ViewChildren,
-} from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, QueryList, ViewChildren, inject } from "@angular/core";
 import _get from "lodash/get";
 import _isEmpty from "lodash/isEmpty";
 import { Subscription } from "rxjs";
@@ -54,6 +47,8 @@ import { ICustomDSFilteredData, IFilterGroupItem } from "./public-api";
 export class CustomDataSourceFilterGroupExampleComponent
     implements AfterViewInit, OnDestroy
 {
+    private filterGroupCustomDataSourceService = inject(DataSourceService) as FilterGroupCustomDataSourceService;
+
     @ViewChildren(CustomDataSourceFilterGroupCompositeComponent)
     filterGroups: QueryList<CustomDataSourceFilterGroupCompositeComponent>;
 
@@ -66,11 +61,6 @@ export class CustomDataSourceFilterGroupExampleComponent
         status: [],
     };
     private filterGroupSubscriptions: Array<Subscription> = [];
-
-    constructor(
-        @Inject(DataSourceService)
-        private filterGroupCustomDataSourceService: FilterGroupCustomDataSourceService
-    ) {}
 
     public ngAfterViewInit(): void {
         this.filterGroupSubscriptions.push(

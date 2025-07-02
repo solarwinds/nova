@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { DOCUMENT } from "@angular/common";
-import { Inject, Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 
 // TODO: Refactor class to use strongly typed values
 /**
@@ -30,7 +30,8 @@ import { Inject, Injectable } from "@angular/core";
  */
 @Injectable({ providedIn: "root" })
 export class DomUtilService {
-    constructor(@Inject(DOCUMENT) private document: any) {}
+    private document = inject(DOCUMENT);
+
 
     /**
      * Gets the closest parent element matching the specified selector
@@ -67,7 +68,7 @@ export class DomUtilService {
         // Get the closest matching element
         for (
             ;
-            elem && elem !== this.document;
+            elem;
             elem = elem.parentElement ?? undefined
         ) {
             if (elem?.matches(selector)) {

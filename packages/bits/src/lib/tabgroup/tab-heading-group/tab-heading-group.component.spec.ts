@@ -18,13 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    ChangeDetectorRef,
-    Component,
-    QueryList,
-    ViewChild,
-    ViewChildren,
-} from "@angular/core";
+import { ChangeDetectorRef, Component, QueryList, ViewChild, ViewChildren, inject } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { TabHeadingGroupComponent } from "./tab-heading-group.component";
@@ -52,6 +46,8 @@ import { TabHeadingComponent } from "../tab-heading/tab-heading.component";
     standalone: false,
 })
 class TestTabHeadingComponent {
+    private changeDetector = inject(ChangeDetectorRef);
+
     public currentTabId: string;
     public tabsetContent: any[] = [];
 
@@ -60,7 +56,7 @@ class TestTabHeadingComponent {
     @ViewChildren(TabHeadingComponent)
     tabHeadings: QueryList<TabHeadingComponent>;
 
-    constructor(private changeDetector: ChangeDetectorRef) {
+    constructor() {
         this.addTab();
         this.addTab();
     }

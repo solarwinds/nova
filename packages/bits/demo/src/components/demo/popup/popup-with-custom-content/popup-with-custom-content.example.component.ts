@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, ViewEncapsulation } from "@angular/core";
+import { Component, ViewEncapsulation, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
@@ -29,6 +29,8 @@ import { FormBuilder, Validators } from "@angular/forms";
     standalone: false,
 })
 export class PopupWithCustomContentComponent {
+    private formBuilder = inject(FormBuilder);
+
     public icon = "caret-down";
     public width = "200px";
     public itemsSource: string[] = [
@@ -39,7 +41,7 @@ export class PopupWithCustomContentComponent {
     ];
     public demoFormGroup;
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor() {
         this.demoFormGroup = this.formBuilder.group({
             checkboxGroup: this.formBuilder.control(
                 [this.itemsSource[0], this.itemsSource[1], this.itemsSource[2]],

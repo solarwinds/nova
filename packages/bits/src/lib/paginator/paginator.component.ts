@@ -19,20 +19,7 @@
 //  THE SOFTWARE.
 
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 import _chunk from "lodash/chunk";
 import _clone from "lodash/clone";
 import _get from "lodash/get";
@@ -75,6 +62,10 @@ const containerPaddingsWithScroll = 37;
 export class PaginatorComponent
     implements OnInit, OnChanges, OnDestroy, IFilterPub
 {
+    private logger = inject(LoggerService);
+    private popupContainer = inject(PopupContainerService);
+    private cd = inject(ChangeDetectorRef);
+
     @Input() public itemsList: Array<IPaginatorItem> = [];
     /**
      * Current page number
@@ -159,11 +150,7 @@ export class PaginatorComponent
     private mainRangeStart: number;
     private mainRangeEnd: number;
 
-    public constructor(
-        private logger: LoggerService,
-        private popupContainer: PopupContainerService,
-        private cd: ChangeDetectorRef
-    ) {
+    public constructor() {
         this.popupContainer.parent = this;
     }
 

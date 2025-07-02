@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, TemplateRef } from "@angular/core";
+import { Component, TemplateRef, inject } from "@angular/core";
 import { take, takeUntil } from "rxjs/operators";
 
 import { DialogService, NuiDialogEvent, NuiDialogRef } from "@nova-ui/bits";
@@ -29,9 +29,9 @@ import { DialogService, NuiDialogEvent, NuiDialogRef } from "@nova-ui/bits";
     standalone: false,
 })
 export class DialogActionBeforeClosureExampleComponent {
-    private activeDialog: NuiDialogRef;
+    private dialogService = inject(DialogService);
 
-    constructor(private dialogService: DialogService) {}
+    private activeDialog: NuiDialogRef;
 
     public open(content: TemplateRef<string>): void {
         // You can return 'false' from the optional beforeDismiss function anytime you want to prevent the dialog from closing.

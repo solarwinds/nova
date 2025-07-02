@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 
 import { LoggerService } from "./log-service";
 import { IUnitConversionResult } from "./public-api";
@@ -35,7 +35,8 @@ import {
  */
 @Injectable({ providedIn: "root" })
 export class UnitConversionService {
-    constructor(private logger: LoggerService) {}
+    private logger = inject(LoggerService);
+
 
     /**
      * Converts a raw value to a larger unit approximation of the value. For example, 1024 B to 1 KB, 12345 Hz to 12.35 kHz, etc.

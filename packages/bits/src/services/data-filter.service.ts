@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable, OnDestroy, Optional, SkipSelf } from "@angular/core";
+import { Injectable, OnDestroy, inject } from "@angular/core";
 import _forEach from "lodash/forEach";
 import _omit from "lodash/omit";
 import { Subject, Subscription } from "rxjs";
@@ -37,11 +37,13 @@ import {
  */
 @Injectable()
 export class DataFilterService implements IFilterPub, OnDestroy {
+    parent = inject(DataFilterService, { optional: true, skipSelf: true });
+
     protected _filters: IFilteringParticipants = {};
     public filteringSubject: Subject<void> = new Subject<void>();
     public onDestroy$ = new Subject<void>();
     private destroySubscriptions: Subscription[] = [];
-    constructor(@Optional() @SkipSelf() public parent: DataFilterService) {
+    constructor() {
         if (this.parent) {
             this.parent.filteringSubject
                 .pipe(takeUntil(this.onDestroy$))

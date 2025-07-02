@@ -18,15 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    Input,
-    OnDestroy,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, ViewEncapsulation, inject } from "@angular/core";
 
 import { TabComponent } from "../tab/tab.component";
 
@@ -43,6 +35,9 @@ import { TabComponent } from "../tab/tab.component";
     standalone: false,
 })
 export class TabGroupComponent implements OnDestroy, AfterViewInit {
+    private el = inject(ElementRef);
+    private changeDetectorRef = inject(ChangeDetectorRef);
+
     /** If true tabs will be placed vertically */
     @Input()
     get vertical(): boolean {
@@ -63,11 +58,6 @@ export class TabGroupComponent implements OnDestroy, AfterViewInit {
 
     protected isDestroyed: boolean;
     protected _vertical: boolean;
-
-    constructor(
-        private el: ElementRef,
-        private changeDetectorRef: ChangeDetectorRef
-    ) {}
 
     public ngAfterViewInit(): void {
         this.checkTraverse();

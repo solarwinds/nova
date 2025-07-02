@@ -20,14 +20,7 @@
 
 import { ArrayDataSource } from "@angular/cdk/collections";
 import { NestedTreeControl } from "@angular/cdk/tree";
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    OnDestroy,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, inject } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 
@@ -50,7 +43,10 @@ import { IServer } from "../types";
     standalone: false,
 })
 export class FilteredViewTreeComponent implements OnDestroy, AfterViewInit {
-    treeControl = new NestedTreeControl<any>(node => node.children);
+    private dataSource = inject(DataSourceService) as FilteredViewWithTreeDataSource<IServer>;
+    private cdRef = inject(ChangeDetectorRef);
+
+    treeControl = new NestedTreeControl<any>((node) => node.children);
     dataSourceTree: ArrayDataSource<any>;
 
     public readonly sorterItems: IMenuItem[] = [
@@ -71,12 +67,6 @@ export class FilteredViewTreeComponent implements OnDestroy, AfterViewInit {
     public filteringState: INovaFilteringOutputs = {};
 
     private readonly destroy$ = new Subject<void>();
-
-    constructor(
-        @Inject(DataSourceService)
-        private dataSource: FilteredViewWithTreeDataSource<IServer>,
-        private cdRef: ChangeDetectorRef
-    ) {}
 
     async ngAfterViewInit(): Promise<void> {
         this.dataSource.outputsSubject

@@ -18,22 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    ContentChildren,
-    ElementRef,
-    HostBinding,
-    Input,
-    OnDestroy,
-    OnInit,
-    QueryList,
-    Renderer2,
-    ViewChild,
-    ViewContainerRef,
-} from "@angular/core";
+import { AfterViewInit, Component, ComponentFactoryResolver, ComponentRef, ContentChildren, ElementRef, HostBinding, Input, OnDestroy, OnInit, QueryList, Renderer2, ViewChild, ViewContainerRef, inject } from "@angular/core";
 
 import {
     ResizeDirection,
@@ -58,6 +43,10 @@ interface IElementInfo {
     standalone: false,
 })
 export class SheetGroupComponent implements OnInit, AfterViewInit, OnDestroy {
+    elRef = inject(ElementRef);
+    private renderer = inject(Renderer2);
+    private componentFactoryResolver = inject(ComponentFactoryResolver);
+
     /**
      * Set whether the child elements can be resizable.
      */
@@ -197,12 +186,6 @@ export class SheetGroupComponent implements OnInit, AfterViewInit, OnDestroy {
             );
         });
     }
-
-    constructor(
-        public elRef: ElementRef,
-        private renderer: Renderer2,
-        private componentFactoryResolver: ComponentFactoryResolver
-    ) {}
 
     public ngOnInit(): void {
         this.applyJoinedSheetsClass =

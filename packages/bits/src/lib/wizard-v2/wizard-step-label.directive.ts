@@ -18,12 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Directive, TemplateRef } from "@angular/core";
+import { Directive, TemplateRef, inject } from "@angular/core";
 
 @Directive({
     selector: "[nuiWizardStepLabel]",
     standalone: false,
 })
-export class WizardStepLabelDirective {
-    constructor(public template: TemplateRef<any>) {}
+export class WizardStepLabelDirective {    template = inject<TemplateRef<any>>(TemplateRef);
+
 }

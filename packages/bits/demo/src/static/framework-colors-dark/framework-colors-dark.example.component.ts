@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 
 import { ToastService } from "@nova-ui/bits";
 
@@ -32,8 +32,9 @@ import { default as colors } from "../../../../src/styles/data/framework-colors-
     standalone: false,
 })
 export class FrameworkColorsDarkExampleComponent {
+    private toastService = inject(ToastService);
+
     public colors = colors;
-    constructor(private toastService: ToastService) {}
 
     public onClipboardSuccess(): void {
         this.toastService.success({
