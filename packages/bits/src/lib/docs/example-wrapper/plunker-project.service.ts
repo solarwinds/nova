@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { DOCUMENT } from "@angular/common";
-import { Inject, Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 
 import { PlunkerFiles } from "./plunker-files";
 
@@ -28,10 +28,9 @@ import { PlunkerFiles } from "./plunker-files";
     providedIn: "root",
 })
 export class PlunkerProjectService {
-    constructor(
-        @Inject(DOCUMENT) private document: Document,
-        private plunkerFiles: PlunkerFiles
-    ) {}
+    private document = inject<Document>(DOCUMENT);
+    private plunkerFiles = inject(PlunkerFiles);
+
 
     public open(prefix: string, sources: any, translations?: any): void {
         const form: HTMLFormElement = this.document.createElement("form");

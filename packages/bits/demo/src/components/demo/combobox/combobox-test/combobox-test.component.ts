@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import _cloneDeep from "lodash/cloneDeep";
 
@@ -30,6 +30,9 @@ import { ISelectChangedEvent, ISelectGroup, ToastService } from "@nova-ui/bits";
     standalone: false,
 })
 export class ComboboxTestComponent implements OnInit {
+    private formBuilder = inject(FormBuilder);
+    private toastService = inject<ToastService>(ToastService);
+
     public dataset = [
         "Item 1",
         "Item 2",
@@ -151,10 +154,7 @@ export class ComboboxTestComponent implements OnInit {
     public errorState: boolean = true;
     public separatorsDisplayedItems = this.separatorsDataset.itemsInGroups;
 
-    constructor(
-        private formBuilder: FormBuilder,
-        @Inject(ToastService) private toastService: ToastService
-    ) {
+    constructor() {
         this.myForm = this.formBuilder.group({
             item: this.formBuilder.control(
                 this.reactiveFormDataset.selectedItem,

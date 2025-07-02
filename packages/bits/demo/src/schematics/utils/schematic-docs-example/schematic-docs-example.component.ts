@@ -18,15 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    Component,
-    Inject,
-    Input,
-    OnInit,
-    Optional,
-    SkipSelf,
-    ViewEncapsulation,
-} from "@angular/core";
+import { Component, Input, OnInit, ViewEncapsulation, inject } from "@angular/core";
 import _set from "lodash/set";
 
 import {CodeSourceFiles, DEMO_PATH_TOKEN} from "@nova-ui/bits";
@@ -39,6 +31,8 @@ import {CodeSourceFiles, DEMO_PATH_TOKEN} from "@nova-ui/bits";
     standalone: false,
 })
 export class SchematicDocsExampleComponent implements OnInit {
+    private context = inject<CodeSourceFiles>(DEMO_PATH_TOKEN, { skipSelf: true, optional: true })!;
+
     @Input() exampleFolderName: string;
     public componentSources: string[];
     public shouldCodeRender: boolean;
@@ -61,10 +55,6 @@ export class SchematicDocsExampleComponent implements OnInit {
             this.shouldCodeRender = true;
         }, 100);
     }
-
-    constructor(
-        @SkipSelf() @Optional() @Inject(DEMO_PATH_TOKEN) private context: CodeSourceFiles
-    ) {}
 
     public ngOnInit(): void {
         this.componentSources = this.getSourcesByFilenamePrefix(

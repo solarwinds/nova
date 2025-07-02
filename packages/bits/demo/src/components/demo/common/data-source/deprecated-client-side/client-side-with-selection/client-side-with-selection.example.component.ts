@@ -18,14 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    OnDestroy,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, ViewChild, inject } from "@angular/core";
 import isUndefined from "lodash/isUndefined";
 import { Subscription } from "rxjs";
 
@@ -58,6 +51,10 @@ interface IExampleItem {
 export class DepreacatedDataSourceWithSelectionExampleComponent
     implements AfterViewInit, OnDestroy
 {
+    dataSourceService = inject<LocalFilteringDataSource<IExampleItem>>(LocalFilteringDataSource);
+    changeDetection = inject(ChangeDetectorRef);
+    private listService = inject(ListService);
+
     public searchTerm = "";
     public page = 1;
 
@@ -69,11 +66,9 @@ export class DepreacatedDataSourceWithSelectionExampleComponent
 
     private outputsSubscription: Subscription;
 
-    constructor(
-        public dataSourceService: LocalFilteringDataSource<IExampleItem>,
-        public changeDetection: ChangeDetectorRef,
-        private listService: ListService
-    ) {
+    constructor() {
+        const dataSourceService = this.dataSourceService;
+
         dataSourceService.setData(getData());
     }
 

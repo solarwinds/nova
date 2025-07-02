@@ -19,14 +19,7 @@
 //  THE SOFTWARE.
 
 import { Highlightable } from "@angular/cdk/a11y";
-import {
-    ChangeDetectionStrategy,
-    Component,
-    ElementRef,
-    forwardRef,
-    HostBinding,
-    Input,
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, HostBinding, Input, inject } from "@angular/core";
 
 import { OVERLAY_ITEM } from "../constants";
 import { IOption } from "../types";
@@ -48,6 +41,8 @@ import { IOption } from "../types";
     standalone: false,
 })
 export class OverlayItemComponent implements Highlightable, IOption {
+    element = inject<ElementRef<HTMLElement>>(ElementRef);
+
     /** Whether the Item is active */
     @HostBinding("class.active")
     public active: boolean = false;
@@ -56,8 +51,6 @@ export class OverlayItemComponent implements Highlightable, IOption {
     @Input()
     @HostBinding("class.disabled")
     public isDisabled: boolean = false;
-
-    constructor(public element: ElementRef<HTMLElement>) {}
 
     /** Applies active class */
     public setActiveStyles(): void {

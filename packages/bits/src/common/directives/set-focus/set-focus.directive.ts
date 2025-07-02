@@ -19,17 +19,7 @@
 //  THE SOFTWARE.
 
 import { DOCUMENT } from "@angular/common";
-import {
-    AfterViewInit,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    Inject,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges,
-} from "@angular/core";
+import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject } from "@angular/core";
 
 /**
  * <example-url>./../examples/index.html#/common/set-focus</example-url>
@@ -52,6 +42,10 @@ export class SetFocusDirective implements AfterViewInit, OnChanges {
         "input",
         "textarea",
     ];
+
+    private el = inject(ElementRef);
+    private document = inject<Document>(DOCUMENT);
+
     /**
      * This property controls whether element is focused (true) or not (false).
      */
@@ -66,11 +60,6 @@ export class SetFocusDirective implements AfterViewInit, OnChanges {
     @Output() public focusChange = new EventEmitter<boolean>();
 
     private focusableElement: HTMLElement;
-
-    constructor(
-        private el: ElementRef,
-        @Inject(DOCUMENT) private document: Document
-    ) {}
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (!this.focusableElement || !changes["nuiSetFocus"]) {

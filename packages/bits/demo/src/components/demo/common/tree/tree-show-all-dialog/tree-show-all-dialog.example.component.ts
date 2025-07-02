@@ -25,19 +25,7 @@ import {
     NestedTreeControl,
 } from "@angular/cdk/tree";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    Injectable,
-    Input,
-    IterableDiffer,
-    IterableDiffers,
-    OnDestroy,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Injectable, Input, IterableDiffer, IterableDiffers, OnDestroy, ViewChild, inject } from "@angular/core";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
 import { firstValueFrom, Observable, of, Subject } from "rxjs";
@@ -142,14 +130,13 @@ export class VirtualScrollListDataSource<T = any>
     extends DataSourceService<T>
     implements IDataSource
 {
+    private logger = inject(LoggerService);
+    private http = inject(HttpClient);
+
     // cache used to store our previous fetched results while scrolling
     // and more data is automatically fetched from the backend
     private cache = Array.from<IServer>({ length: 0 });
     private previousFilters: INovaFilters;
-
-    constructor(private logger: LoggerService, private http: HttpClient) {
-        super();
-    }
 
     public async getFilteredData(
         filters: INovaFilters
@@ -266,6 +253,11 @@ export class VirtualScrollListDataSource<T = any>
     standalone: false,
 })
 export class TreeShowAllDialogExampleComponent implements OnDestroy {
+    private virtualScrollListDataSource = inject(VirtualScrollListDataSource);
+    private differ = inject(IterableDiffers);
+    private eventBusService = inject(EventBusService);
+    private dialogService = inject(DialogService);
+
     private activeDialogRef: NuiDialogRef;
     private get activeDialogComponent(): TreeDialogContentExampleComponent {
         return this.activeDialogRef.componentInstance;
@@ -282,13 +274,6 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
 
     public hasChild = (_: number, node: IServerNode): boolean =>
         !!node.children;
-
-    constructor(
-        private virtualScrollListDataSource: VirtualScrollListDataSource,
-        private differ: IterableDiffers,
-        private eventBusService: EventBusService,
-        private dialogService: DialogService
-    ) {}
 
     public showAll(node: IServerNode): void {
         // setup the Dialog
@@ -472,6 +457,10 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
     standalone: false,
 })
 export class TreeDialogContentExampleComponent implements AfterViewInit {
+    cdRef = inject(ChangeDetectorRef);
+    viewPortManager = inject(VirtualViewportManager);
+    activeDialog = inject(NuiActiveDialog);
+
     @Input() items: IServerNode[] = [];
     @Input() isLoading: boolean = false;
 
@@ -482,12 +471,6 @@ export class TreeDialogContentExampleComponent implements AfterViewInit {
 
     @ViewChild(RepeatComponent)
     public repeat: RepeatComponent;
-
-    constructor(
-        public cdRef: ChangeDetectorRef,
-        public viewPortManager: VirtualViewportManager,
-        @Inject(NuiActiveDialog) public activeDialog: any
-    ) {}
 
     public ngAfterViewInit(): void {
         this.viewPortManager.setViewport(this.repeat.viewportRef);

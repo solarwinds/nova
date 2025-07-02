@@ -18,17 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    Component,
-    EventEmitter,
-    Injectable,
-    OnDestroy,
-    OnInit,
-    Output,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, Component, EventEmitter, Injectable, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 import moment from "moment/moment";
 import { Subject, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -58,12 +48,12 @@ export class ListDatasource
     extends LocalFilteringDataSource<ListModel>
     implements OnDestroy
 {
+    private filterService = inject(DataFilterService);
+
     private onDestroy$ = new Subject<void>();
-    constructor(
-        searchService: SearchService,
-        private filterService: DataFilterService
-    ) {
-        super(searchService);
+    constructor() {
+        super();
+
         // Subscribe to service, and automatically unsubscribe upon `ngOnDestroy`
         this.filterService.filteringSubject
             .pipe(takeUntil(this.onDestroy$))
@@ -108,12 +98,11 @@ export class TableDatasource
     extends LocalFilteringDataSource<TableModel>
     implements OnDestroy
 {
+    private filterService = inject(DataFilterService);
+
     private onDestroy$ = new Subject<void>();
-    constructor(
-        searchService: SearchService,
-        private filterService: DataFilterService
-    ) {
-        super(searchService);
+    constructor() {
+        super();
         // Subscribe to service, and automatically unsubscribe upon `ngOnDestroy`
         this.filterService.filteringSubject
             .pipe(takeUntil(this.onDestroy$))
@@ -160,10 +149,10 @@ export class TableDatasource
     standalone: false,
 })
 export class DataFilterBasicExampleComponent implements AfterViewInit {
+    private filterService = inject(DataFilterService);
+
     @ViewChild("timeFramePicker")
     timeFramePicker: FilteringTimeFramePickerComponent;
-
-    constructor(private filterService: DataFilterService) {}
 
     public ngAfterViewInit(): void {
         // registering top-level filter which will be applied to all children
@@ -236,6 +225,9 @@ export class DataFilterBasicExampleComponent implements AfterViewInit {
     standalone: false,
 })
 export class NuiDataFilterTableComponent implements AfterViewInit, OnDestroy {
+    private dataFilter = inject(DataFilterService);
+    private dataSourceService = inject(TableDatasource);
+
     public dataSource?: any[] = [];
     public displayedColumns = ["position", "issue", "date"];
 
@@ -252,11 +244,6 @@ export class NuiDataFilterTableComponent implements AfterViewInit, OnDestroy {
     @ViewChild(SorterComponent) sorterComponent: SorterComponent;
 
     private outputsSubscription: Subscription;
-
-    constructor(
-        private dataFilter: DataFilterService,
-        private dataSourceService: TableDatasource
-    ) {}
 
     public ngAfterViewInit(): void {
         // this filter will be applied in this component and NuiDataFilterListComponent
@@ -323,6 +310,9 @@ export class NuiDataFilterTableComponent implements AfterViewInit, OnDestroy {
     standalone: false,
 })
 export class NuiDataFilterListComponent implements AfterViewInit, OnDestroy {
+    private filterService = inject(DataFilterService);
+    private dataSourceService = inject(ListDatasource);
+
     public state: INovaFilteringOutputs = {
         repeat: {
             itemsSource: [],
@@ -332,11 +322,6 @@ export class NuiDataFilterListComponent implements AfterViewInit, OnDestroy {
     @ViewChild("listSearch") search: SearchComponent;
 
     private outputsSubscription: Subscription;
-
-    constructor(
-        private filterService: DataFilterService,
-        private dataSourceService: ListDatasource
-    ) {}
 
     public ngAfterViewInit(): void {
         // this filter will be applied only in this component
@@ -417,6 +402,8 @@ export class NuiDataFilterListComponent implements AfterViewInit, OnDestroy {
     standalone: false,
 })
 export class FilteringTimeFramePickerComponent implements IFilterPub, OnInit {
+    timeframeService = inject(TimeframeService);
+
     @Output() timeFrameChanged: EventEmitter<any> = new EventEmitter();
     public acceptedTimeframe: ITimeframe;
     public tf: ITimeframe = {
@@ -428,8 +415,6 @@ export class FilteringTimeFramePickerComponent implements IFilterPub, OnInit {
     public maxDate = moment();
 
     public showFooter: boolean = false;
-
-    constructor(public timeframeService: TimeframeService) {}
 
     public closePopoverSubject = new Subject<void>();
     public openPopoverSubject = new Subject<void>();

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 
 import { IconService } from "./../../../../../../src/lib/icon/icon.service";
 
@@ -28,10 +28,10 @@ import { IconService } from "./../../../../../../src/lib/icon/icon.service";
     standalone: false,
 })
 export class IconListExampleComponent implements OnInit {
+    private iconService = inject(IconService);
+
     public icons: any[];
     public categories: any[];
-
-    constructor(private iconService: IconService) {}
 
     public ngOnInit(): void {
         this.icons = this.iconService.icons;

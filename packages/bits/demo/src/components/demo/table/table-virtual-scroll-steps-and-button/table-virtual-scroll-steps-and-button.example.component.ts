@@ -18,13 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    OnDestroy,
-    OnInit,
-} from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 
 import {
@@ -48,6 +42,10 @@ import { RandomuserTableDataSource1 } from "../table-virtual-scroll-datasource-1
 export class TableVirtualScrollStepsAndButtonExampleComponent
     implements OnDestroy, OnInit
 {
+    selectorService = inject(SelectorService);
+    private cd = inject(ChangeDetectorRef);
+    private searchService = inject(SearchService);
+
     // This value is obtained from the server and used to evaluate the total number of pages to display
     private _loadedItems: number = 0;
     private _isBusy: boolean = false;
@@ -83,12 +81,8 @@ export class TableVirtualScrollStepsAndButtonExampleComponent
 
     private dataSource: RandomuserTableDataSource1;
 
-    constructor(
-        public selectorService: SelectorService,
-        private cd: ChangeDetectorRef,
-        private searchService: SearchService
-    ) {
-        this.dataSource = new RandomuserTableDataSource1(searchService);
+    constructor() {
+        this.dataSource = new RandomuserTableDataSource1();
         this.dataSource.step.next(this.step);
         this.dataSource.itemsToLoad.next(this.itemsToLoad);
     }

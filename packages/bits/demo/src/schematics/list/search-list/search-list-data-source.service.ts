@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { firstValueFrom, Observable, of } from "rxjs";
 import { catchError, delay, map } from "rxjs/operators";
 
@@ -47,10 +47,6 @@ export class SearchListDataSource<T>
     extends ServerSideDataSource<T>
     implements IDataSource
 {
-    constructor(private logger: LoggerService, private http: HttpClient) {
-        super();
-    }
-
     // build query params specific to our backend API
     private static getRequestParams(filters: IServerFilters): HttpParams {
         const paging = filters.paginator?.value ?? { start: 0, end: 0 };
@@ -69,6 +65,9 @@ export class SearchListDataSource<T>
 
         return params;
     }
+
+    private logger = inject(LoggerService);
+    private http = inject(HttpClient);
 
     public async getFilteredData(
         data: IServersCollection

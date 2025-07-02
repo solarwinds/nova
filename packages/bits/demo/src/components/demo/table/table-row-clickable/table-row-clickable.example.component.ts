@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AfterViewInit, Component, OnDestroy } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, inject } from "@angular/core";
 import { Subscription } from "rxjs";
 
 import {
@@ -46,6 +46,9 @@ interface IExampleTableModel {
 export class TableRowClickableExampleComponent
     implements AfterViewInit, OnDestroy
 {
+    dataSourceService = inject<ClientSideDataSource<IExampleTableModel>>(ClientSideDataSource);
+    selectorService = inject(SelectorService);
+
     public displayedColumns = [
         "position",
         "description",
@@ -66,11 +69,6 @@ export class TableRowClickableExampleComponent
     };
 
     private outputsSubscription: Subscription;
-
-    constructor(
-        public dataSourceService: ClientSideDataSource<IExampleTableModel>,
-        public selectorService: SelectorService
-    ) {}
 
     public ngAfterViewInit(): void {
         this.outputsSubscription =

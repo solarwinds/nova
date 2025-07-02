@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ComponentFactoryResolver, Injectable, Injector } from "@angular/core";
+import { ComponentFactoryResolver, Injectable, Injector, inject } from "@angular/core";
 import assign from "lodash/assign";
 import defaults from "lodash/defaults";
 import pick from "lodash/pick";
@@ -34,11 +34,10 @@ import { IConfirmationDialogOptions, IDialogOptions } from "./public-api";
  */
 @Injectable({ providedIn: "root" })
 export class DialogService {
-    constructor(
-        private moduleCFR: ComponentFactoryResolver,
-        private injector: Injector,
-        private dialogStack: DialogStackService
-    ) {}
+    private moduleCFR = inject(ComponentFactoryResolver);
+    private injector = inject(Injector);
+    private dialogStack = inject(DialogStackService);
+
 
     public afterOpened$: Subject<NuiDialogRef> = new Subject<NuiDialogRef>();
 

@@ -18,14 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    Directive,
-    ElementRef,
-    EventEmitter,
-    HostListener,
-    Input,
-    Output,
-} from "@angular/core";
+import { Directive, ElementRef, EventEmitter, HostListener, Input, Output, inject } from "@angular/core";
 
 /** @ignore */
 @Directive({
@@ -33,14 +26,14 @@ import {
     standalone: false,
 })
 export class PopupToggleDirective {
+    host = inject(ElementRef);
+
     /** sets disable state and which prevents emitting toggle */
     @Input() isDisabled: boolean;
     /** sets disable state and which prevents emitting toggle (for using it on textbox component) */
     @Input() disabled: boolean;
 
     @Output() toggle = new EventEmitter();
-
-    constructor(public host: ElementRef) {}
 
     @HostListener("click", ["$event"])
     public handleElementFocus(event: Event): void {

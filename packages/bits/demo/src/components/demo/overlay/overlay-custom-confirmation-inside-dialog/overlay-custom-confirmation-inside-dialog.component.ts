@@ -22,7 +22,7 @@ import {
     FlexibleConnectedPositionStrategy,
     OverlayRef,
 } from "@angular/cdk/overlay";
-import { Component, OnDestroy, TemplateRef } from "@angular/core";
+import { Component, OnDestroy, TemplateRef, inject } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -35,13 +35,13 @@ import { DialogService, NuiDialogRef, OverlayComponent } from "@nova-ui/bits";
     standalone: false,
 })
 export class CustomConfirmationInsideDialogComponent implements OnDestroy {
+    private dialogService = inject(DialogService);
+
     public onDestroy$ = new Subject<void>();
     public overlayTriggered$ = new Subject<void>();
 
     private overlayRef: OverlayRef;
     private activeDialog: NuiDialogRef;
-
-    constructor(private dialogService: DialogService) {}
 
     triggerOverlay(overlay: OverlayComponent): void {
         this.overlayTriggered$.next();

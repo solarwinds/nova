@@ -18,18 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Inject,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, inject } from "@angular/core";
 import { Subscription } from "rxjs";
 
 import {
@@ -64,6 +53,9 @@ export interface IItemPickerOption {
 export class ItemPickerCompositeComponent
     implements AfterViewInit, OnInit, OnDestroy
 {
+    dataSource = inject(DataSourceService) as DataSourceService<IFilterGroupOption>;
+    changeDetection = inject(ChangeDetectorRef);
+
     @Input() itemPickerOptions: IItemPickerOption[];
     @Input() selectedValues: string[] = [];
 
@@ -96,12 +88,6 @@ export class ItemPickerCompositeComponent
     // @ViewChild("list", {static: false}) listComposite: ListCompositeComponent;
 
     private outputsSubscription: Subscription;
-
-    constructor(
-        @Inject(DataSourceService)
-        public dataSource: DataSourceService<IFilterGroupOption>,
-        public changeDetection: ChangeDetectorRef
-    ) {}
 
     public ngOnInit(): void {
         (

@@ -18,14 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    TemplateRef,
-    ViewChild,
-} from "@angular/core";
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import isEqual from "lodash/isEqual";
 import { Subject } from "rxjs";
@@ -51,6 +44,10 @@ interface IWizardStepData {
     standalone: false,
 })
 export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
+    private formBuilder = inject(FormBuilder);
+    private dialogService = inject<DialogService>(DialogService);
+    private toastService = inject(ToastService);
+
     public form;
     public activeDialog: NuiDialogRef;
     public state: IWizardState;
@@ -60,11 +57,7 @@ export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
     @ViewChild("dynamicTemplate2") public template2: TemplateRef<string>;
     private readonly destroy$ = new Subject<void>();
 
-    constructor(
-        private formBuilder: FormBuilder,
-        @Inject(DialogService) private dialogService: DialogService,
-        private toastService: ToastService
-    ) {
+    constructor() {
         this.form = this.formBuilder.group({
             personDetails: this.formBuilder.group({
                 name: ["", [Validators.required, Validators.minLength(3)]],

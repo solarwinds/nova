@@ -18,19 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterContentInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    SimpleChanges,
-} from "@angular/core";
+import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges, inject } from "@angular/core";
 import moment, { Moment } from "moment/moment";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -67,6 +55,10 @@ import { TimeFramePickerComponent } from "../../time-frame-picker/time-frame-pic
 export class TimeFrameBarComponent
     implements AfterContentInit, OnChanges, OnDestroy
 {
+    timeframeService = inject(TimeframeService);
+    private logger = inject(LoggerService);
+    private changeDetectorRef = inject(ChangeDetectorRef);
+
     /** Earliest selectable date */
     @Input() minDate: Moment;
     /** Latest selectable date */
@@ -102,11 +94,7 @@ export class TimeFrameBarComponent
 
     private readonly destroy$ = new Subject<void>();
 
-    constructor(
-        public timeframeService: TimeframeService,
-        private logger: LoggerService,
-        private changeDetectorRef: ChangeDetectorRef
-    ) {
+    constructor() {
         this.presets = this.timeframeService.getDefaultPresets();
     }
 

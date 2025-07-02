@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { CdkColumnDef, CdkFooterCell } from "@angular/cdk/table";
-import { Directive, ElementRef } from "@angular/core";
+import { Directive, ElementRef, inject } from "@angular/core";
 
 /**
  * @ignore
@@ -34,7 +34,10 @@ import { Directive, ElementRef } from "@angular/core";
     standalone: false,
 })
 export class TableFooterCellDirective extends CdkFooterCell {
-    constructor(columnDef: CdkColumnDef, elementRef: ElementRef) {
+    constructor() {
+        const columnDef = inject(CdkColumnDef);
+        const elementRef = inject(ElementRef);
+
         super(columnDef, elementRef);
     }
 }

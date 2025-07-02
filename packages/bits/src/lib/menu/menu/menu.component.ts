@@ -19,22 +19,7 @@
 //  THE SOFTWARE.
 
 import { FocusMonitor, FocusOrigin } from "@angular/cdk/a11y";
-import {
-    AfterViewInit,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    QueryList,
-    Renderer2,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, Output, QueryList, Renderer2, SimpleChanges, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
 import { Subject, Subscription } from "rxjs";
 
@@ -64,6 +49,10 @@ import { IMenuGroup } from "../public-api";
     standalone: false,
 })
 export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
+    private keyControlService = inject(MenuKeyControlService);
+    private renderer = inject(Renderer2);
+    private focusMonitor = inject(FocusMonitor);
+
     public iconSize = "";
     public iconColor = "";
     @Input() public widthOfPopup: string;
@@ -120,11 +109,6 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     private menuKeyControlListeners: Function[] = [];
     private focusMonitorSubscription: Subscription;
-    constructor(
-        private keyControlService: MenuKeyControlService,
-        private renderer: Renderer2,
-        private focusMonitor: FocusMonitor
-    ) {}
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes["size"]) {

@@ -26,25 +26,7 @@ import {
     CdkRow,
     CdkRowDef,
 } from "@angular/cdk/table";
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Directive,
-    ElementRef,
-    HostBinding,
-    HostListener,
-    Input,
-    IterableDiffers,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    SimpleChanges,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Directive, ElementRef, HostBinding, HostListener, Input, IterableDiffers, OnChanges, OnDestroy, OnInit, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 import _includes from "lodash/includes";
 import { Subject, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -77,6 +59,8 @@ export class TableHeaderRowDefDirective
     extends CdkHeaderRowDef
     implements OnInit, OnDestroy, OnChanges
 {
+    private tableStateHandlerService = inject(TableStateHandlerService);
+
     @Input() set nuiHeaderRowDef(value: any) {
         this.columns = value ?? [];
     }
@@ -87,11 +71,10 @@ export class TableHeaderRowDefDirective
 
     public tableColumnsSubscription: Subscription;
 
-    constructor(
-        template: TemplateRef<any>,
-        _differs: IterableDiffers,
-        private tableStateHandlerService: TableStateHandlerService
-    ) {
+    constructor() {
+        const template = inject<TemplateRef<any>>(TemplateRef);
+        const _differs = inject(IterableDiffers);
+
         super(template, _differs);
     }
 
@@ -137,6 +120,8 @@ export class TableRowDefDirective<T>
     extends CdkRowDef<T>
     implements OnInit, OnDestroy
 {
+    private tableStateHandlerService = inject(TableStateHandlerService);
+
     @Input() set nuiRowDefColumns(value: any) {
         this.columns = value ?? [];
     }
@@ -147,11 +132,10 @@ export class TableRowDefDirective<T>
 
     public tableColumnsSubscription: Subscription;
 
-    constructor(
-        template: TemplateRef<any>,
-        _differs: IterableDiffers,
-        private tableStateHandlerService: TableStateHandlerService
-    ) {
+    constructor() {
+        const template = inject<TemplateRef<any>>(TemplateRef);
+        const _differs = inject(IterableDiffers);
+
         super(template, _differs);
     }
 
@@ -191,6 +175,8 @@ export class TableFooterRowDefDirective
     extends CdkFooterRowDef
     implements OnInit, OnDestroy
 {
+    private tableStateHandlerService = inject(TableStateHandlerService);
+
     @Input() set nuiFooterRowDef(value: any) {
         this.columns = value ?? [];
     }
@@ -201,11 +187,10 @@ export class TableFooterRowDefDirective
 
     public tableColumnsSubscription: Subscription;
 
-    constructor(
-        template: TemplateRef<any>,
-        _differs: IterableDiffers,
-        private tableStateHandlerService: TableStateHandlerService
-    ) {
+    constructor() {
+        const template = inject<TemplateRef<any>>(TemplateRef);
+        const _differs = inject(IterableDiffers);
+
         super(template, _differs);
     }
 
@@ -274,6 +259,9 @@ export class TableHeaderRowComponent
     extends CdkHeaderRow
     implements OnInit, OnDestroy, AfterViewInit
 {
+    private tableStateHandlerService = inject(TableStateHandlerService);
+    private changeDetectorRef = inject(ChangeDetectorRef);
+
     @Input() density: RowHeightOptions = "default";
 
     public selectorState: ISelectorState = {
@@ -307,10 +295,7 @@ export class TableHeaderRowComponent
 
     private onDestroy$ = new Subject<void>();
 
-    constructor(
-        private tableStateHandlerService: TableStateHandlerService,
-        private changeDetectorRef: ChangeDetectorRef
-    ) {
+    constructor() {
         super();
         this.selectable = this.tableStateHandlerService.selectable;
         this.selectionMode = this.tableStateHandlerService.selectionMode;
@@ -427,6 +412,10 @@ export class TableHeaderRowComponent
     standalone: false
 })
 export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
+    private elementRef = inject(ElementRef);
+    private tableStateHandlerService = inject(TableStateHandlerService);
+    private changeDetectorRef = inject(ChangeDetectorRef);
+
     @Input() density: RowHeightOptions = "default";
     @Input() rowObject: Object;
     @Input()
@@ -465,11 +454,7 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<void>();
 
-    constructor(
-        private elementRef: ElementRef,
-        private tableStateHandlerService: TableStateHandlerService,
-        private changeDetectorRef: ChangeDetectorRef
-    ) {
+    constructor() {
         super();
         this.selectable = this.tableStateHandlerService.selectable;
         this.selectionMode = this.tableStateHandlerService.selectionMode;

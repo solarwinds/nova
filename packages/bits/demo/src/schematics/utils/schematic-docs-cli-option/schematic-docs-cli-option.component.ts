@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject, Input, Optional } from "@angular/core";
+import { Component, InjectionToken, Input, inject } from "@angular/core";
 
 import { RepeatComponent } from "@nova-ui/bits";
 
@@ -27,12 +27,16 @@ export enum SchematicsDocsComponentType {
     "table" = "table",
 }
 
+export const SCHEMATICS_DOCS_COMPONENT_TYPE = new InjectionToken<SchematicsDocsComponentType>("SchematicsDocsComponentType");
+
 @Component({
     selector: "nui-schematic-cli-option",
     templateUrl: "./schematic-docs-cli-option.component.html",
     standalone: false,
 })
 export class SchematicsDocsCliOptionComponent {
+    public forComponent? = inject<SchematicsDocsComponentType>(SCHEMATICS_DOCS_COMPONENT_TYPE, { optional: true });
+
     @Input() name: string;
 
     public componentType = SchematicsDocsComponentType;
@@ -170,12 +174,6 @@ public ngOnInit(): void {
 ).subscribe();
         `,
     };
-
-    public constructor(
-        @Optional()
-        @Inject(SchematicsDocsComponentType)
-        public forComponent?: SchematicsDocsComponentType
-    ) {}
 
     public getRepeatPropKey(key: keyof RepeatComponent): string {
         return key;

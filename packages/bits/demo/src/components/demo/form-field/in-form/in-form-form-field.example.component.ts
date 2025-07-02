@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectorRef, Component } from "@angular/core";
+import { ChangeDetectorRef, Component, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import moment from "moment/moment";
 
@@ -28,6 +28,9 @@ import moment from "moment/moment";
     standalone: false,
 })
 export class FormFieldInFormExampleComponent {
+    private formBuilder = inject(FormBuilder);
+    private changeDetector = inject(ChangeDetectorRef);
+
     public vegetables = [
         $localize`Cabbage`,
         $localize`Potato`,
@@ -36,10 +39,7 @@ export class FormFieldInFormExampleComponent {
     ];
     public fancyForm;
 
-    constructor(
-        private formBuilder: FormBuilder,
-        private changeDetector: ChangeDetectorRef
-    ) {
+    constructor() {
         this.fancyForm = this.formBuilder.group({
             textbox: this.formBuilder.control("", [Validators.required]),
             textNumber: this.formBuilder.control(0, [Validators.required]),

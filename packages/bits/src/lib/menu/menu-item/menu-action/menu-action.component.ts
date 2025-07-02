@@ -18,16 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    forwardRef,
-    Input,
-    Optional,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { ChangeDetectorRef, Component, ElementRef, forwardRef, Input, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 
 import { MenuActionType } from "../../public-api";
 import { MenuGroupComponent } from "../menu-group/menu-group.component";
@@ -73,6 +64,8 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     standalone: false,
 })
 export class MenuActionComponent extends MenuItemBaseComponent {
+    readonly group: MenuGroupComponent;
+
     /**
      * Adds icon by specified icon name
      */
@@ -82,11 +75,13 @@ export class MenuActionComponent extends MenuItemBaseComponent {
 
     @ViewChild("menuAction") menuItem: ElementRef;
 
-    constructor(
-        @Optional() readonly group: MenuGroupComponent,
-        cd: ChangeDetectorRef
-    ) {
+    constructor() {
+        const group = inject(MenuGroupComponent, { optional: true })!;
+        const cd = inject(ChangeDetectorRef);
+
         super(group, cd);
+        this.group = group;
+
 
         this.disabled = false;
     }

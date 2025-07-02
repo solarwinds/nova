@@ -18,13 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    NgZone,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, Component, ElementRef, NgZone, ViewEncapsulation, inject } from "@angular/core";
 import { take } from "rxjs/operators";
 
 import { EdgeDetectionService } from "../../services/edge-detection.service";
@@ -49,16 +43,14 @@ import { PositionService } from "../../services/position.service";
     standalone: false,
 })
 export class PopupContainerComponent implements AfterViewInit {
+    private elRef = inject(ElementRef);
+    private zone = inject(NgZone);
+    private positionService = inject(PositionService);
+    private edgeDetector = inject(EdgeDetectionService);
+
     public hostElement: HTMLElement;
     public top: number;
     public left: number;
-
-    constructor(
-        private elRef: ElementRef,
-        private zone: NgZone,
-        private positionService: PositionService,
-        private edgeDetector: EdgeDetectionService
-    ) {}
 
     public ngAfterViewInit(): void {
         const position = this.setPosition(

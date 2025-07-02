@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
@@ -27,6 +27,8 @@ import { FormBuilder, Validators } from "@angular/forms";
     standalone: false,
 })
 export class TabContentSettingsExampleComponent {
+    private formBuilder = inject(FormBuilder);
+
     public content: string =
         "You can change your password using the form below:";
     public tabTitle: string = "Account Settings";
@@ -34,7 +36,7 @@ export class TabContentSettingsExampleComponent {
     public dynamicForm;
     public visibleRadio: boolean;
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor() {
         this.dynamicForm = this.formBuilder.group({
             password: this.formBuilder.control("", Validators.required),
             confirmPassword: this.formBuilder.control(

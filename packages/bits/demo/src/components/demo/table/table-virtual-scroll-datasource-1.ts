@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 
 import {
@@ -37,6 +37,8 @@ import {
 
 @Injectable()
 export class RandomuserTableDataSource1 extends DataSourceService<IRandomUserTableModel> {
+    private searchService = inject(SearchService);
+
     private readonly url = "https://randomuser.me/api";
     private readonly seed = "sw";
     private page: number = 1;
@@ -46,10 +48,6 @@ export class RandomuserTableDataSource1 extends DataSourceService<IRandomUserTab
     public step: BehaviorSubject<number> = new BehaviorSubject(100);
     public busy = new BehaviorSubject(false);
     public itemsToLoad: BehaviorSubject<number> = new BehaviorSubject(500);
-
-    constructor(private searchService: SearchService) {
-        super();
-    }
 
     public async getFilteredData(
         filters: INovaFilters

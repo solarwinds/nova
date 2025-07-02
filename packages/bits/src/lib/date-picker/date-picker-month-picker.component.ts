@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import moment from "moment/moment";
 import { Moment } from "moment/moment";
 
@@ -30,11 +30,15 @@ import { DatePickerInnerComponent } from "./date-picker-inner.component";
     standalone: false,
 })
 export class MonthPickerComponent implements OnInit {
+    datePicker = inject(DatePickerInnerComponent);
+
     title: string;
     rows: any[] = [];
     maxMode: string;
 
-    constructor(public datePicker: DatePickerInnerComponent) {
+    constructor() {
+        const datePicker = this.datePicker;
+
         this.datePicker = datePicker;
     }
 

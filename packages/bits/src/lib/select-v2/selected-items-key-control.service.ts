@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { ActiveDescendantKeyManager, LiveAnnouncer } from "@angular/cdk/a11y";
-import { Injectable, QueryList } from "@angular/core";
+import { Injectable, QueryList, inject } from "@angular/core";
 import isNil from "lodash/isNil";
 
 import { ComboboxV2Component } from "./combobox-v2/combobox-v2.component";
@@ -28,13 +28,13 @@ import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 
 @Injectable()
 export class SelectedItemsKeyControlService {
+    liveAnnouncer = inject(LiveAnnouncer);
+
     private selectedItems: QueryList<MarkAsSelectedItemDirective>;
     private selectedItemsKeyManager: ActiveDescendantKeyManager<any>;
     private activeSelectedItemIndex?: number;
     private combobox: ComboboxV2Component;
     private inputElement: HTMLInputElement;
-
-    constructor(public liveAnnouncer: LiveAnnouncer) {}
 
     public initSelectedItemsKeyManager(
         elems: QueryList<MarkAsSelectedItemDirective>,

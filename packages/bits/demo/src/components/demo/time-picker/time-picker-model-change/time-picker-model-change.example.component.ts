@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import moment, { Moment } from "moment/moment";
 
 import { ToastService } from "@nova-ui/bits";
@@ -29,8 +29,10 @@ import { ToastService } from "@nova-ui/bits";
     standalone: false,
 })
 export class TimePickerModelChangeExampleComponent {
+    private toastService = inject<ToastService>(ToastService);
+
     public time: Moment;
-    constructor(@Inject(ToastService) private toastService: ToastService) {
+    constructor() {
         this.time = moment("01:20 AM", "HH:mm a");
     }
     public valueChange(time: any): void {

@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { ListKeyManager, LiveAnnouncer } from "@angular/cdk/a11y";
-import { Injectable, QueryList } from "@angular/core";
+import { Injectable, QueryList, inject } from "@angular/core";
 import isNull from "lodash/isNull";
 
 import {
@@ -32,11 +32,11 @@ import { OverlayComponent } from "../overlay/overlay-component/overlay.component
 
 @Injectable()
 export class SorterKeyboardService {
+    private liveAnnouncer = inject(LiveAnnouncer);
+
     public overlay: OverlayComponent;
     public menuItems: QueryList<MenuItemBaseComponent>;
     private keyboardEventsManager: ListKeyManager<MenuItemBaseComponent>;
-
-    constructor(private liveAnnouncer: LiveAnnouncer) {}
 
     public initKeyboardManager(): void {
         this.keyboardEventsManager = new ListKeyManager(

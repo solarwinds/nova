@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { UntypedFormBuilder, Validators } from "@angular/forms";
 
 @Component({
@@ -27,9 +27,11 @@ import { UntypedFormBuilder, Validators } from "@angular/forms";
     standalone: false,
 })
 export class FormFieldBasicReactiveExampleComponent {
+    private formBuilder = inject(UntypedFormBuilder);
+
     public reactiveForm;
 
-    constructor(private formBuilder: UntypedFormBuilder) {
+    constructor() {
         this.reactiveForm = this.formBuilder.group({
             email: this.formBuilder.control("", [
                 Validators.required,

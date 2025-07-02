@@ -24,27 +24,7 @@ import {
     Overlay,
     OverlayConfig,
 } from "@angular/cdk/overlay";
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    ContentChild,
-    ElementRef,
-    EmbeddedViewRef,
-    EventEmitter,
-    HostListener,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    SimpleChanges,
-    TemplateRef,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation,
-} from "@angular/core";
+import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ContentChild, ElementRef, EmbeddedViewRef, EventEmitter, HostListener, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation, inject } from "@angular/core";
 import _includes from "lodash/includes";
 import _isNil from "lodash/isNil";
 import _isUndefined from "lodash/isUndefined";
@@ -96,6 +76,14 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         return (componentInstance.hostView as EmbeddedViewRef<any>)
             .rootNodes[0] as HTMLElement;
     }
+
+    public host = inject(ElementRef);
+    private componentFactoryResolver = inject(ComponentFactoryResolver);
+    private viewContainerRef = inject(ViewContainerRef);
+    private overlay = inject(Overlay);
+    private cdRef = inject(ChangeDetectorRef);
+    private eventBusService = inject(EventBusService);
+    private popoverPositionService = inject(PopoverPositionService);
 
     public displayed: boolean;
     /**
@@ -246,16 +234,6 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
             }
         }
     }
-
-    constructor(
-        public host: ElementRef,
-        private componentFactoryResolver: ComponentFactoryResolver,
-        private viewContainerRef: ViewContainerRef,
-        private overlay: Overlay,
-        private cdRef: ChangeDetectorRef,
-        private eventBusService: EventBusService,
-        private popoverPositionService: PopoverPositionService
-    ) {}
 
     public ngOnInit(): void {
         if (this.container) {

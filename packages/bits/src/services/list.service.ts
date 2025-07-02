@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 
 import { INovaFilteringOutputs } from "./data-source/public-api";
 import { SelectionModel } from "./public-api";
@@ -28,7 +28,8 @@ import { SelectorService } from "../lib/selector/selector.service";
 
 @Injectable({ providedIn: "root" })
 export class ListService {
-    constructor(private selectorService: SelectorService) {}
+    private selectorService = inject(SelectorService);
+
 
     /**
      * Updates the selector checkbox status, selector menu items, and the repeat selected items.

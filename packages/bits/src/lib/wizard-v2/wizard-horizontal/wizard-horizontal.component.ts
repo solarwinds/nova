@@ -21,21 +21,7 @@
 import { Directionality } from "@angular/cdk/bidi";
 import { BooleanInput } from "@angular/cdk/coercion";
 import { CdkStepper, StepperSelectionEvent } from "@angular/cdk/stepper";
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    Input,
-    NgZone,
-    OnDestroy,
-    OnInit,
-    QueryList,
-    ViewChild,
-    ViewChildren,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, NgZone, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, ViewEncapsulation, inject } from "@angular/core";
 import last from "lodash/last";
 import pull from "lodash/pull";
 import without from "lodash/without";
@@ -76,6 +62,12 @@ export class WizardHorizontalComponent
     static ngAcceptInputTypeCompleted: BooleanInput = undefined;
     static ngAcceptInputTypeHasError: BooleanInput = undefined;
 
+    private dir: Directionality;
+    private cdRef: ChangeDetectorRef;
+    private el: ElementRef;
+
+    private zone = inject(NgZone);
+
     public hasOverflow = false;
     public isInResponsiveMode = false;
     public allHeadersWidth: number = 0;
@@ -109,13 +101,16 @@ export class WizardHorizontalComponent
     @ViewChildren("overflowComponent")
     public overflowComponents: QueryList<WizardOverflowComponent>;
 
-    constructor(
-        private dir: Directionality,
-        private cdRef: ChangeDetectorRef,
-        private el: ElementRef,
-        private zone: NgZone
-    ) {
+    constructor() {
+        const dir = inject(Directionality);
+        const cdRef = inject(ChangeDetectorRef);
+        const el = inject(ElementRef);
+
         super(dir, cdRef, el);
+
+        this.dir = dir;
+        this.cdRef = cdRef;
+        this.el = el;
     }
 
     public ngOnInit(): void {

@@ -18,17 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    OnDestroy,
-    QueryList,
-    ViewChild,
-    ViewChildren,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, QueryList, ViewChild, ViewChildren, inject } from "@angular/core";
 import _pull from "lodash/pull";
 import { Subscription } from "rxjs";
 
@@ -65,6 +55,9 @@ import { IFilterable, IServer, ServerStatus } from "./types";
 export class FilteredViewWithTableComponent
     implements AfterViewInit, OnDestroy
 {
+    private dataSource = inject(DataSourceService) as LocalFilteringDataSource<IServer>;
+    private cd = inject(ChangeDetectorRef);
+
     public filterGroupItems: IFilterGroupItem[] = [
         {
             id: "status",
@@ -127,13 +120,7 @@ export class FilteredViewWithTableComponent
     @ViewChildren(FilterGroupComponent)
     private filterGroups: QueryList<FilterGroupComponent>;
 
-    constructor(
-        // inject dataSource providers only to share the same instance
-        // using DI descendants inheritance with child components
-        @Inject(DataSourceService)
-        private dataSource: LocalFilteringDataSource<IServer>,
-        private cd: ChangeDetectorRef
-    ) {
+    constructor() {
         // here we use ClientSideDataSource since the data we're working with is static (RANDOM_ARRAY)
         // if you have a dynamic data source, you need to extend DataSourceService for your custom filtering behavior
         this.dataSource.setData(LOCAL_DATA);

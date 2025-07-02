@@ -18,16 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    Component,
-    EventEmitter,
-    OnDestroy,
-    OnInit,
-    Output,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 import moment from "moment/moment";
 import { Subject, Subscription } from "rxjs";
 
@@ -54,10 +45,10 @@ import {
     standalone: false,
 })
 export class DataFilterIsolatedExampleComponent implements AfterViewInit {
+    private filterService = inject(DataFilterService);
+
     @ViewChild("timeFramePicker")
     timeFramePicker: FilteringTimeFramePickerComponent;
-
-    constructor(private filterService: DataFilterService) {}
 
     public ngAfterViewInit(): void {
         this.filterService.registerFilter({
@@ -123,16 +114,14 @@ export class DataFilterIsolatedExampleComponent implements AfterViewInit {
 export class NuiDataFilterIsolatedTableComponent
     implements AfterViewInit, OnDestroy
 {
+    private dataFilter = inject(DataFilterService);
+    private dataSourceService = inject(TableDatasource);
+
     public tableData?: any[] = [];
     public displayedColumns = ["position", "issue", "date"];
     @ViewChild("tableSearch") search: SearchComponent;
 
     private outputsSubscription: Subscription;
-
-    constructor(
-        private dataFilter: DataFilterService,
-        private dataSourceService: TableDatasource
-    ) {}
 
     public ngAfterViewInit(): void {
         this.dataFilter.registerFilter({
@@ -193,6 +182,9 @@ export class NuiDataFilterIsolatedTableComponent
 export class NuiDataFilterIsolatedListComponent
     implements AfterViewInit, OnDestroy
 {
+    private filterService = inject(DataFilterService);
+    private dataSourceService = inject(ListDatasource);
+
     public state: INovaFilteringOutputs = {
         repeat: {
             itemsSource: [],
@@ -200,11 +192,6 @@ export class NuiDataFilterIsolatedListComponent
     };
     @ViewChild("listSearch") search: SearchComponent;
     private outputsSubscription: Subscription;
-
-    constructor(
-        private filterService: DataFilterService,
-        private dataSourceService: ListDatasource
-    ) {}
 
     public ngAfterViewInit(): void {
         this.filterService.registerFilter({

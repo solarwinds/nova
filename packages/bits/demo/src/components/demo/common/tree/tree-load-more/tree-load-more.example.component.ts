@@ -24,12 +24,7 @@ import {
     CdkTree,
     NestedTreeControl,
 } from "@angular/cdk/tree";
-import {
-    Component,
-    IterableDiffer,
-    IterableDiffers,
-    ViewChild,
-} from "@angular/core";
+import { Component, IterableDiffer, IterableDiffers, ViewChild, inject } from "@angular/core";
 
 import { DOCUMENT_CLICK_EVENT, EventBusService, expand } from "@nova-ui/bits";
 
@@ -77,6 +72,10 @@ const TREE_DATA: FoodNode[] = [
     standalone: false,
 })
 export class TreeLoadMoreExampleComponent {
+    private http = inject(HttpMockService);
+    private differ = inject(IterableDiffers);
+    private eventBusService = inject(EventBusService);
+
     public pageSize = 10;
     public remainingItemsCount: { [key: string]: number } = {};
 
@@ -88,12 +87,6 @@ export class TreeLoadMoreExampleComponent {
     @ViewChild(CdkTree) private cdkTree: CdkTree<FoodNode>;
 
     hasChild = (_: number, node: FoodNode): boolean => !!node.children;
-
-    constructor(
-        private http: HttpMockService,
-        private differ: IterableDiffers,
-        private eventBusService: EventBusService
-    ) {}
 
     /** Load first page on first open */
     public onToggleClick(

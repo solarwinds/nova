@@ -18,17 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterContentInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    Output,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterContentInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 
 import { expandV2 } from "../../animations/expand";
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
@@ -45,6 +35,8 @@ import { KEYBOARD_CODE } from "../../constants/keycode.constants";
     standalone: false,
 })
 export class ExpanderComponent implements AfterContentInit {
+    private cdRef = inject(ChangeDetectorRef);
+
     /**
      * Adds "disabled" attribute to expander
      */
@@ -86,8 +78,6 @@ export class ExpanderComponent implements AfterContentInit {
     public isCustomHeaderContentEmpty: boolean = false;
 
     private actionKeys = [KEYBOARD_CODE.SPACE, KEYBOARD_CODE.ENTER].map(String);
-
-    constructor(private cdRef: ChangeDetectorRef) {}
 
     public ngAfterContentInit(): void {
         this.isCustomHeaderContentEmpty =

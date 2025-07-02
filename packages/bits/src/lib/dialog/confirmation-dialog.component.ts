@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectorRef, Component, Input } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, inject } from "@angular/core";
 
 import { NuiActiveDialog } from "./dialog-ref";
 import { ConfirmationDialogButtons, SeverityLevels } from "./public-api";
@@ -36,6 +36,9 @@ import { ConfirmationDialogButtons, SeverityLevels } from "./public-api";
     standalone: false,
 })
 export class ConfirmationDialogComponent {
+    private activeDialog = inject(NuiActiveDialog);
+    private changeDetector = inject(ChangeDetectorRef);
+
     @Input()
     public title: string = $localize`Confirmation`;
 
@@ -56,11 +59,6 @@ export class ConfirmationDialogComponent {
 
     @Input()
     public ariaLabel: string = "";
-
-    constructor(
-        private activeDialog: NuiActiveDialog,
-        private changeDetector: ChangeDetectorRef
-    ) {}
 
     public updateInputs(): void {
         this.changeDetector.detectChanges();

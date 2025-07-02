@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable, Injector, SecurityContext } from "@angular/core";
+import { Injectable, Injector, SecurityContext, inject } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import _assign from "lodash/assign";
 import _cloneDeep from "lodash/cloneDeep";
@@ -53,6 +53,11 @@ import { NotificationService } from "../../services/notification-service";
  */
 @Injectable({ providedIn: "root" })
 export class ToastService implements IToastService {
+    private notificationService = inject(NotificationService);
+    private toastContainerService = inject(ToastContainerService);
+    private _injector = inject(Injector);
+    private sanitizer = inject(DomSanitizer);
+
     private index = 0;
     private currentlyActive = 0;
     private toasts: IActiveToast[] = [];
@@ -75,12 +80,7 @@ export class ToastService implements IToastService {
     private toastConfig: IToastConfig;
     private itemIdentificator: string | undefined;
 
-    constructor(
-        private notificationService: NotificationService,
-        private toastContainerService: ToastContainerService,
-        private _injector: Injector,
-        private sanitizer: DomSanitizer
-    ) {
+    constructor() {
         this.toastConfig = _assign({}, this.defaultToastConfig);
     }
 

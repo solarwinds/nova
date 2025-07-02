@@ -18,18 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    forwardRef,
-    HostBinding,
-    HostListener,
-    Input,
-    Optional,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { ChangeDetectorRef, Component, ElementRef, forwardRef, HostBinding, HostListener, Input, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 
 import { MenuGroupComponent } from "../menu-group/menu-group.component";
 import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
@@ -69,6 +58,8 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     standalone: false,
 })
 export class MenuOptionComponent extends MenuItemBaseComponent {
+    readonly group: MenuGroupComponent;
+
     /**
      * Sets inner input "name" attribute
      */
@@ -99,11 +90,13 @@ export class MenuOptionComponent extends MenuItemBaseComponent {
         return this.checked;
     }
 
-    constructor(
-        @Optional() readonly group: MenuGroupComponent,
-        cd: ChangeDetectorRef
-    ) {
+    constructor() {
+        const group = inject(MenuGroupComponent, { optional: true })!;
+        const cd = inject(ChangeDetectorRef);
+
         super(group, cd);
+        this.group = group;
+
 
         this.name = "";
         this.value = "";

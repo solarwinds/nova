@@ -18,15 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    OnDestroy,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, ViewChild, inject } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 
@@ -56,6 +48,9 @@ import { IServer, IServerFilters } from "../types";
     standalone: false,
 })
 export class FilteredViewListComponent implements AfterViewInit, OnDestroy {
+    private dataSource = inject(DataSourceService) as LocalFilteringDataSource<IServer>;
+    private changeDetection = inject(ChangeDetectorRef);
+
     public readonly sorterItems: IMenuItem[] = [
         {
             title: $localize`Name`,
@@ -94,11 +89,7 @@ export class FilteredViewListComponent implements AfterViewInit, OnDestroy {
 
     private readonly destroy$ = new Subject<void>();
 
-    constructor(
-        @Inject(DataSourceService)
-        private dataSource: LocalFilteringDataSource<IServer>,
-        private changeDetection: ChangeDetectorRef
-    ) {
+    constructor() {
         this.dataSource.setData(LOCAL_DATA);
     }
 

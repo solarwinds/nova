@@ -22,7 +22,7 @@ import {
     FlexibleConnectedPositionStrategy,
     OverlayRef,
 } from "@angular/cdk/overlay";
-import { Component, Inject, OnDestroy, TemplateRef } from "@angular/core";
+import { Component, OnDestroy, TemplateRef, inject } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -41,17 +41,15 @@ import {
     standalone: false,
 })
 export class WizardDialogExampleComponent implements OnDestroy {
+    private dialogService = inject<DialogService>(DialogService);
+    private toastService = inject(ToastService);
+
     public onDestroy$ = new Subject<void>();
     public overlayTriggered$ = new Subject<void>();
 
     private overlayRef: OverlayRef;
     public busy: boolean = false;
     public activeDialog: NuiDialogRef;
-
-    constructor(
-        @Inject(DialogService) private dialogService: DialogService,
-        private toastService: ToastService
-    ) {}
 
     public vegetables = [
         $localize`Cabbage`,

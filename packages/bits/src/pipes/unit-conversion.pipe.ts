@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Pipe, PipeTransform } from "@angular/core";
+import { Pipe, PipeTransform, inject } from "@angular/core";
 
 import {
     unitConversionBases,
@@ -37,7 +37,8 @@ import { UnitConversionService } from "../services/unit-conversion.service";
     standalone: false,
 })
 export class UnitConversionPipe implements PipeTransform {
-    constructor(private unitConversionService: UnitConversionService) {}
+    private unitConversionService = inject(UnitConversionService);
+
 
     /**
      * Gets a string representation of the conversion of a large quantity of a small basic unit to a smaller quantity of a larger unit.

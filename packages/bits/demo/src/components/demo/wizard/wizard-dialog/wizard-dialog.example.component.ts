@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject, TemplateRef, ViewChild } from "@angular/core";
+import { Component, TemplateRef, ViewChild, inject } from "@angular/core";
 
 import {
     DialogService,
@@ -33,14 +33,12 @@ import {
     standalone: false,
 })
 export class WizardDialogExampleComponent {
+    private dialogService = inject<DialogService>(DialogService);
+    private toastService = inject<ToastService>(ToastService);
+
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;
 
     public activeDialog: NuiDialogRef;
-
-    constructor(
-        @Inject(DialogService) private dialogService: DialogService,
-        @Inject(ToastService) private toastService: ToastService
-    ) {}
 
     public vegetables = [
         $localize`Cabbage`,

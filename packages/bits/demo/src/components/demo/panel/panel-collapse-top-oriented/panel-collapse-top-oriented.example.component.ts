@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject, Input } from "@angular/core";
+import { Component, Input, inject } from "@angular/core";
 
 import { IMenuGroup, ToastService } from "@nova-ui/bits";
 
@@ -28,9 +28,9 @@ import { IMenuGroup, ToastService } from "@nova-ui/bits";
     standalone: false,
 })
 export class PanelCollapseTopOrientedExampleComponent {
-    @Input() isOn = true;
+    private toastService = inject<ToastService>(ToastService);
 
-    constructor(@Inject(ToastService) private toastService: ToastService) {}
+    @Input() isOn = true;
 
     public itemsSource: IMenuGroup[] = [
         {

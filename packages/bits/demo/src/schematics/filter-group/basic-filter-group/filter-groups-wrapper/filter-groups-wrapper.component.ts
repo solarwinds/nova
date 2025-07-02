@@ -18,13 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    Component,
-    ContentChildren,
-    Inject,
-    QueryList,
-} from "@angular/core";
+import { AfterViewInit, Component, ContentChildren, QueryList, inject } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
 
 import { DataSourceService, IFilteringParticipants } from "@nova-ui/bits";
@@ -38,6 +32,8 @@ import { BasicFilterGroupCompositeComponent } from "../basic-filter-group.compon
     standalone: false,
 })
 export class BasicFilterGroupsWrapperComponent implements AfterViewInit {
+    dataSourceService = inject(DataSourceService) as DataSourceService<any>;
+
     @ContentChildren(BasicFilterGroupCompositeComponent)
     filterGroups: QueryList<BasicFilterGroupCompositeComponent>;
 
@@ -45,11 +41,6 @@ export class BasicFilterGroupsWrapperComponent implements AfterViewInit {
         "=1": $localize`1 hidden filter.`,
         other: $localize`# hidden filters.`,
     };
-
-    constructor(
-        @Inject(DataSourceService)
-        public dataSourceService: DataSourceService<any>
-    ) {}
 
     public ngAfterViewInit(): void {
         this.dataSourceService.registerComponent(this.getFilterComponents());

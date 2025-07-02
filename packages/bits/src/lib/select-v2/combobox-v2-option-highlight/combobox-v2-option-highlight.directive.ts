@@ -18,16 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    Directive,
-    ElementRef,
-    Inject,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    SimpleChanges,
-} from "@angular/core";
+import { Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, inject } from "@angular/core";
 import escape from "lodash/escape";
 import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
@@ -50,17 +41,14 @@ import { InputValueTypes } from "../types";
 export class ComboboxV2OptionHighlightDirective
     implements OnChanges, OnInit, OnDestroy
 {
+    private el = inject<ElementRef<HTMLElement>>(ElementRef);
+    private combobox = inject<ComboboxV2Component>(NUI_SELECT_V2_OPTION_PARENT_COMPONENT);
+    private highlightPipe = inject(HighlightPipe);
+
     /** Part of the text to be highlighted */
     @Input("nuiComboboxV2OptionHighlight") public value: string;
 
     private readonly destroy$ = new Subject<void>();
-
-    constructor(
-        private el: ElementRef<HTMLElement>,
-        @Inject(NUI_SELECT_V2_OPTION_PARENT_COMPONENT)
-        private combobox: ComboboxV2Component,
-        private highlightPipe: HighlightPipe
-    ) {}
 
     public ngOnInit(): void {
         this.updateHTML(this.combobox.inputValue);

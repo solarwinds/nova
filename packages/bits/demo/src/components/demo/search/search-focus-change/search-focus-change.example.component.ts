@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 
 import { ToastService } from "@nova-ui/bits";
 
@@ -28,9 +28,9 @@ import { ToastService } from "@nova-ui/bits";
     standalone: false,
 })
 export class SearchFocusChangeExampleComponent {
-    public isFocused: boolean = false;
+    toastService = inject<ToastService>(ToastService);
 
-    constructor(@Inject(ToastService) public toastService: ToastService) {}
+    public isFocused: boolean = false;
 
     public onFocusChange(focused: boolean): void {
         this.isFocused = focused;

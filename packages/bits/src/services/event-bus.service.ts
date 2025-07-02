@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable, OnDestroy, Renderer2, RendererFactory2 } from "@angular/core";
+import { Injectable, OnDestroy, Renderer2, RendererFactory2, inject } from "@angular/core";
 
 import { EventBus } from "./event-bus";
 import { DOCUMENT_CLICK_EVENT } from "../constants/event.constants";
@@ -32,7 +32,9 @@ export class EventBusService extends EventBus<Event> implements OnDestroy {
     private renderer: Renderer2;
     private listenerUnsubscriber?: () => void;
 
-    constructor(rendererFactory: RendererFactory2) {
+    constructor() {
+        const rendererFactory = inject(RendererFactory2);
+
         super();
         // Angular does not allow to easily use renderer in services. This is a workaround
         this.renderer = rendererFactory.createRenderer(null, null);

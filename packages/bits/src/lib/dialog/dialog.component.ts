@@ -20,20 +20,7 @@
 
 import { CdkScrollable, ScrollDispatcher } from "@angular/cdk/scrolling";
 import { DOCUMENT } from "@angular/common";
-import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    EventEmitter,
-    HostListener,
-    Inject,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    Renderer2,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, Renderer2, ViewEncapsulation, inject } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
 import { filter, take } from "rxjs/operators";
 
@@ -62,6 +49,11 @@ const FOCUSABLE_SELECTOR =
     standalone: false,
 })
 export class DialogComponent implements OnInit, AfterViewInit, OnDestroy  {
+    private document = inject<Document>(DOCUMENT);
+    private elRef = inject(ElementRef);
+    private renderer = inject(Renderer2);
+    private router = inject(Router);
+
     private elWithFocus: any;
     /**
      * Whether a backdrop element should be created for a given dialog (true by default).
@@ -91,13 +83,6 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy  {
 
     private scrollableElement: CdkScrollable;
     private mouseDownOrigin: MouseEvent;
-
-    constructor(
-        @Inject(DOCUMENT) private document: Document,
-        private elRef: ElementRef,
-        private renderer: Renderer2,
-        private router: Router
-    ) {}
 
     @HostListener("window:keydown.shift.tab", ["$event"])
     onShiftTab(event: KeyboardEvent): void {

@@ -18,18 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ApplicationRef,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    TemplateRef,
-    ViewChild,
-    ViewContainerRef,
-} from "@angular/core";
+import { AfterViewInit, ApplicationRef, ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef, inject } from "@angular/core";
 import { NonNullableFormBuilder, Validators } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
@@ -59,6 +48,15 @@ import { TableStateHandlerService } from "../../../../../../src/lib/table/table-
     standalone: false,
 })
 export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
+    private toastService = inject<IToastService>(ToastService);
+    private dialogService = inject<DialogService>(DialogService);
+    private tableStateHandlerService = inject<TableStateHandlerService>(TableStateHandlerService);
+    private formBuilder = inject(NonNullableFormBuilder);
+    changeDetection = inject(ChangeDetectorRef);
+    viewContainerRef = inject(ViewContainerRef);
+    applicationRef = inject(ApplicationRef);
+    dataSourceService = inject<ClientSideDataSource<ITestTableModel>>(ClientSideDataSource);
+
     public dataSource?: ITestTableModel[] = ELEMENT_DATA;
     public newColumn: string;
     public availableColumns = [
@@ -109,17 +107,9 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
     private outputsSubscription: Subscription;
     private searchSubscription: Subscription;
 
-    constructor(
-        @Inject(ToastService) private toastService: IToastService,
-        @Inject(DialogService) private dialogService: DialogService,
-        @Inject(TableStateHandlerService)
-        private tableStateHandlerService: TableStateHandlerService,
-        private formBuilder: NonNullableFormBuilder,
-        public changeDetection: ChangeDetectorRef,
-        public viewContainerRef: ViewContainerRef,
-        public applicationRef: ApplicationRef,
-        public dataSourceService: ClientSideDataSource<ITestTableModel>
-    ) {
+    constructor() {
+        const dataSourceService = this.dataSourceService;
+
         dataSourceService.setData(ELEMENT_DATA);
         this.myForm = this.formBuilder.group({
             checkboxGroup: this.formBuilder.control(this.displayedColumnsCopy, [

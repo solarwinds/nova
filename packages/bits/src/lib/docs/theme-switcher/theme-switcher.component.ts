@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 
 import { ThemeSwitchService } from "../../../services/theme-switch.service";
 
@@ -31,7 +31,8 @@ import { ThemeSwitchService } from "../../../services/theme-switch.service";
     standalone: false,
 })
 export class ThemeSwitcherComponent {
-    constructor(public themeSwitcherService: ThemeSwitchService) {}
+    themeSwitcherService = inject(ThemeSwitchService);
+
 
     onThemeChange(isDarkThemeEnabled: boolean): void {
         this.themeSwitcherService.setDarkTheme(isDarkThemeEnabled);

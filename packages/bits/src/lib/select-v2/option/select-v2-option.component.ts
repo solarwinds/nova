@@ -19,17 +19,7 @@
 //  THE SOFTWARE.
 
 import { Highlightable } from "@angular/cdk/a11y";
-import {
-    ChangeDetectionStrategy,
-    Component,
-    ElementRef,
-    forwardRef,
-    HostBinding,
-    HostListener,
-    Inject,
-    Input,
-    Optional,
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, HostBinding, HostListener, Input, inject } from "@angular/core";
 
 import { OVERLAY_ITEM } from "../../overlay/constants";
 import { OverlayItemComponent } from "../../overlay/overlay-item/overlay-item.component";
@@ -62,6 +52,8 @@ export class SelectV2OptionComponent
     extends OverlayItemComponent
     implements Highlightable, IOption
 {
+    element: ElementRef<HTMLElement>;
+
     /** Sets value */
     @Input() public value: OptionValueType;
 
@@ -88,13 +80,13 @@ export class SelectV2OptionComponent
 
     private select: IOptionedComponent;
 
-    constructor(
-        @Optional()
-        @Inject(NUI_SELECT_V2_OPTION_PARENT_COMPONENT)
-        parent: IOptionedComponent,
-        public element: ElementRef<HTMLElement>
-    ) {
-        super(element);
+    constructor() {
+        const parent = inject<IOptionedComponent>(NUI_SELECT_V2_OPTION_PARENT_COMPONENT, { optional: true })!;
+        const element = inject<ElementRef<HTMLElement>>(ElementRef);
+
+        super();
+        this.element = element;
+
         this.select = parent;
     }
 

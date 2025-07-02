@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AfterViewInit, Component, Inject, OnDestroy } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, inject } from "@angular/core";
 import _get from "lodash/get";
 import _isEmpty from "lodash/isEmpty";
 import { Subscription } from "rxjs";
@@ -72,6 +72,8 @@ const RANDOM_ARRAY = [
 export class CustomTemplateFilterGroupExampleComponent
     implements AfterViewInit, OnDestroy
 {
+    dataSourceService = inject<DataSourceService<ExampleItem>>(DataSourceService);
+
     public filterGroupItems: CustomTemplateFilterGroupItem[] = [
         {
             id: "color",
@@ -136,10 +138,7 @@ export class CustomTemplateFilterGroupExampleComponent
 
     private outputsSubscription: Subscription;
 
-    constructor(
-        @Inject(DataSourceService)
-        public dataSourceService: DataSourceService<ExampleItem>
-    ) {
+    constructor() {
         (
             this.dataSourceService as LocalFilteringDataSource<ExampleItem>
         ).setData(RANDOM_ARRAY);
