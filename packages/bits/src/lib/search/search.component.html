@@ -23,7 +23,7 @@
         <input
             class="nui-search__input-control form-control"
             type="text"
-            [attr.name]="name"
+            [attr.name]="name()()()()"
             [nuiSetFocus]="captureFocus"
             (focusChange)="onFocusChange($event)"
             autocomplete="off"

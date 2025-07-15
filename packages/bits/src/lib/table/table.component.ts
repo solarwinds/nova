@@ -39,26 +39,27 @@ import {
 } from "@angular/cdk/table";
 import { DOCUMENT } from "@angular/common";
 import {
-    AfterContentInit,
-    AfterViewInit,
-    Attribute,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Inject,
-    Input,
-    IterableDiffers,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Optional,
-    Output,
-    SkipSelf,
-    ViewEncapsulation,
+  AfterContentInit,
+  AfterViewInit,
+  Attribute,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  Inject,
+  Input,
+  IterableDiffers,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Output,
+  SkipSelf,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import _isEqual from "lodash/isEqual";
 import _keys from "lodash/keys";
@@ -104,19 +105,35 @@ export class TableComponent<T>
     extends CdkTable<T>
     implements OnInit, AfterViewInit, AfterContentInit, OnDestroy, OnChanges
 {
-    @Input() reorderable = false;
-    @Input() sortable = false;
-    @Input() resizable = false;
+    readonly reorderable = input(false);
+    readonly sortable = input(false);
+    readonly resizable = input(false);
     /**
      * @deprecated Use selectionConfig instead.
      */
-    @Input() selectable = false;
+    readonly selectable = input(false);
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() selectionConfig: TableSelectionConfig = {
         enabled: false,
         selectionMode: TableSelectionMode.None,
     };
-    @Input() totalItems: number;
+    readonly totalItems = input<number>(undefined!);
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     get dataSource(): T[] {
         return super.dataSource as any;
@@ -126,9 +143,9 @@ export class TableComponent<T>
         super.dataSource = value as any;
     }
 
-    @Input() selection: ISelection;
-    @Input() sortedColumn: ISortedItem;
-    @Input() paginatorUsed: boolean = false;
+    readonly selection = input<ISelection>(undefined!);
+    readonly sortedColumn = input<ISortedItem>(undefined!);
+    readonly paginatorUsed = input<boolean>(false);
 
     @Output() columnsOrderChange: EventEmitter<Array<any>> = new EventEmitter();
     @Output() sortOrderChanged: EventEmitter<ISortedItem> = new EventEmitter();
@@ -182,7 +199,7 @@ export class TableComponent<T>
     }
 
     public getFilterComponents(): IFilteringParticipants {
-        return !this.sortable
+        return !this.sortable()()()()
             ? {}
             : {
                   sorter: {
@@ -254,7 +271,7 @@ export class TableComponent<T>
             this.tableStateHandlerService.setAlignment(column, alignment);
         });
 
-        if (this.resizable) {
+        if (this.resizable()()()()) {
             this.tableColumnsWidthSubscription =
                 this.tableStateHandlerService.columnWidthSubject.subscribe(
                     () => {
@@ -270,7 +287,7 @@ export class TableComponent<T>
             this.tableStateHandlerService.tableParentWidth = parentWidth;
         }
 
-        if (this.sortable) {
+        if (this.sortable()()()()) {
             this.tableSortingSubscription =
                 this.tableStateHandlerService.sortingState.subscribe(
                     (sortedColumn: ISortedItem) => {
@@ -278,18 +295,22 @@ export class TableComponent<T>
                         this.sortBy = sortedColumn.sortBy;
 
                         // emit only if the data is really changed
-                        if (!_isEqual(sortedColumn, this.sortedColumn)) {
+                        if (!_isEqual(sortedColumn, this.sortedColumn()()()())) {
                             this.sortOrderChanged.emit(sortedColumn);
                         }
                     }
                 );
 
-            if (this.sortedColumn) {
-                this.handleSortedColumn(this.sortedColumn);
+            const sortedColumn = this.sortedColumn();
+            const sortedColumn = this.sortedColumn();
+            const sortedColumn = this.sortedColumn();
+            const sortedColumn = this.sortedColumn();
+            if (sortedColumn) {
+                this.handleSortedColumn(sortedColumn);
             }
         }
 
-        if (this.reorderable) {
+        if (this.reorderable()()()()) {
             this.tableColumnsSubscription =
                 this.tableStateHandlerService.columnsState.subscribe(
                     (tableColumns: string[]) => {
@@ -298,7 +319,7 @@ export class TableComponent<T>
                 );
         }
 
-        if (this.selectable || this.selectionConfig?.enabled) {
+        if (this.selectable()()()() || this.selectionConfig?.enabled) {
             this.stickyChangedSubscription =
                 this.tableStateHandlerService.stickyHeaderChangedSubject.subscribe(
                     () => {
@@ -313,7 +334,7 @@ export class TableComponent<T>
         // moved this from ngOnInit since we might emit the selectionChange event
         // before our component is actually ready and it might cause problems
         // if we try to manually trigger change detection in a parent component
-        if (this.selectable || this.selectionConfig?.enabled) {
+        if (this.selectable()()()() || this.selectionConfig?.enabled) {
             this.selectionChangedSubscription =
                 this.tableStateHandlerService.selectionChanged.subscribe(
                     (selection: ISelection) => {
@@ -321,8 +342,12 @@ export class TableComponent<T>
                     }
                 );
 
-            if (this.selection) {
-                this.changeSelection(this.selection);
+            const selectionValue = this.selection();
+            const selectionValue = this.selection();
+            const selectionValue = this.selection();
+            const selectionValue = this.selection();
+            if (selectionValue) {
+                this.changeSelection(selectionValue);
             }
         }
     }
@@ -368,7 +393,7 @@ export class TableComponent<T>
         const changedDataSource = ds ? ds : [];
         // if no totalItems specified, we assume that there is only one page
         this.tableStateHandlerService.totalItems =
-            this.totalItems || changedDataSource.length;
+            this.totalItems()()()() || changedDataSource.length;
         this.tableStateHandlerService.changeDataSource(changedDataSource);
     }
 
@@ -398,6 +423,6 @@ export class TableComponent<T>
         // @ts-ignore: Call parent method in case cdk adds it later
         super.ngAfterContentInit?.();
         // Note: Identifying if table is using virtual scroll.
-        this.tableStateHandlerService.hasVirtualScroll = !!this.virtualFor && !this.paginatorUsed;
+        this.tableStateHandlerService.hasVirtualScroll = !!this.virtualFor && !this.paginatorUsed()()()();
     }
 }

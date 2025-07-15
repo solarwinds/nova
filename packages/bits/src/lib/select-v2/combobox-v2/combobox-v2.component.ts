@@ -20,22 +20,23 @@
 
 import { LiveAnnouncer } from "@angular/cdk/a11y";
 import {
-    AfterContentInit,
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    QueryList,
-    SimpleChanges,
-    ViewEncapsulation,
+  AfterContentInit,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChildren,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  QueryList,
+  SimpleChanges,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 import includes from "lodash/includes";
@@ -93,13 +94,29 @@ export class ComboboxV2Component
     implements AfterContentInit, OnDestroy, OnChanges, AfterViewInit
 {
     /** Function that maps an Option's control value to its display value */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public displayWith: ((value: any) => string) | null = null;
 
     /** Whether the control for removing value enabled */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public isRemoveValueEnabled: boolean = true;
 
     /** Whether to populate the remainder of the text being typed */
-    @Input() public isTypeaheadEnabled: boolean = true;
+    public readonly isTypeaheadEnabled = input<boolean>(true);
 
     /** Emits event whether options are presented after filtering */
     @Output() public searchEmpty = new EventEmitter<boolean>(false);
@@ -142,7 +159,7 @@ export class ComboboxV2Component
             super.ngAfterContentInit();
 
             if (!this.multiselect) {
-                this.setInputValue(this.getLastSelectedOption()?.value);
+                this.setInputValue(this.getLastSelectedOption()?.value()()()());
             }
 
             this.cdRef.markForCheck();
@@ -167,7 +184,7 @@ export class ComboboxV2Component
             this.dropdown.hide$.subscribe(() => {
                 const lastSelectedOption = this.getLastSelectedOption();
                 if (lastSelectedOption) {
-                    this.setInputValue(lastSelectedOption.value);
+                    this.setInputValue(lastSelectedOption.value()()()());
                     this.filterItems(this.inputValue.toString());
                     this.cdRef.markForCheck();
                 }
@@ -220,7 +237,7 @@ export class ComboboxV2Component
 
         super.selectOption(option);
 
-        this.setInputValue(option.value);
+        this.setInputValue(option.value()()()());
         this.filterItems();
 
         if (this.multiselect) {
@@ -334,7 +351,7 @@ export class ComboboxV2Component
     }
 
     private filterItems(searchValue?: InputValueTypes) {
-        if (this.isTypeaheadEnabled) {
+        if (this.isTypeaheadEnabled()()()()) {
             let filterValue = searchValue?.toString().toLowerCase() || "";
 
             if (!this.multiselect) {

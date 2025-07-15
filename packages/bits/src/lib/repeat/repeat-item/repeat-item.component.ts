@@ -19,11 +19,11 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    EventEmitter,
-    Input,
-    Output,
-    ViewEncapsulation,
+  Component,
+  EventEmitter,
+  Output,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 
 /**
@@ -39,17 +39,17 @@ import {
     standalone: false,
 })
 export class RepeatItemComponent {
-    @Input() public clickable = false;
+    public readonly clickable = input(false);
 
-    @Input() public nowrap = false;
+    public readonly nowrap = input(false);
 
-    @Input() public selected = false;
+    public readonly selected = input(false);
 
-    @Input() public selectable = false;
+    public readonly selectable = input(false);
 
     @Output() public rowClicked = new EventEmitter<MouseEvent>();
 
     get role(): string {
-        return this.selectable ? "option" : "listitem";
+        return this.selectable()()()() ? "option" : "listitem";
     }
 }

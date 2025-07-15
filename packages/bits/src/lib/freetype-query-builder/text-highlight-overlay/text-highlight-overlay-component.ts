@@ -19,14 +19,14 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    ElementRef,
-    Inject,
-    Input,
-    OnChanges,
-    OnInit,
-    SimpleChanges,
-    ViewChild,
+  Component,
+  ElementRef,
+  Inject,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+  input
 } from "@angular/core";
 
 import { WindowToken } from "../helpers/window";
@@ -51,10 +51,11 @@ export class TextHighlightOverlayComponent<T extends QueryToken>
     readonly BOTH_SIDES_STROKE_WIDTH = 2;
     readonly BOX_SUM_PADDING = 8;
 
-    @Input()
-    model: { value: string; tokens: T[] };
-    @Input()
-    renderConfigurator: RenderConfigurator<T>;
+    readonly model = input<{
+    value: string;
+    tokens: T[];
+}>(undefined!);
+    readonly renderConfigurator = input<RenderConfigurator<T>>(undefined!);
 
     @ViewChild("parentContainer", { static: true })
     parentContainer: ElementRef;
@@ -84,17 +85,17 @@ export class TextHighlightOverlayComponent<T extends QueryToken>
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.model && changes.model.previousValue) {
-            setTimeout(() => this.highlightTokens(this.model.tokens));
+            setTimeout(() => this.highlightTokens(this.model()()()().tokens));
         }
     }
 
     ngOnInit(): void {
         // @ts-ignore
         const resizeObserver = new ResizeObserver(() => {
-            this.highlightTokens(this.model.tokens);
+            this.highlightTokens(this.model()()()().tokens);
         });
         resizeObserver.observe(this.textHolder);
-        setTimeout(() => this.highlightTokens(this.model.tokens));
+        setTimeout(() => this.highlightTokens(this.model()()()().tokens));
     }
 
     private getBorderWidths(element: HTMLTextAreaElement): ElementPadding {
@@ -139,7 +140,11 @@ export class TextHighlightOverlayComponent<T extends QueryToken>
     private highlightTokens(tokens: T[]): void {
         const canvas: HTMLCanvasElement = this.highlightCanvas
             .nativeElement as HTMLCanvasElement;
-        if (!this.renderConfigurator || !canvas) {
+        const renderConfigurator = this.renderConfigurator();
+        const renderConfigurator = this.renderConfigurator();
+        const renderConfigurator = this.renderConfigurator();
+        const renderConfigurator = this.renderConfigurator();
+        if (!renderConfigurator || !canvas) {
             return;
         }
         const context = canvas.getContext("2d") as CanvasRenderingContext2D;
@@ -151,8 +156,8 @@ export class TextHighlightOverlayComponent<T extends QueryToken>
         const textHolderPaddings = this.getPaddings(this.textHolder);
         const baseLeft: number = containerRect.left + textHolderPaddings.left;
         const baseTop: number = containerRect.top + textHolderPaddings.top;
-        if (this.renderConfigurator.enhanceTokens) {
-            tokens = this.renderConfigurator.enhanceTokens(tokens);
+        if (renderConfigurator.enhanceTokens) {
+            tokens = renderConfigurator.enhanceTokens(tokens);
         }
         this.processTokens(tokens, context, baseLeft, baseTop);
     }
@@ -165,8 +170,8 @@ export class TextHighlightOverlayComponent<T extends QueryToken>
     ): void {
         for (let i = 0; i < tokens.length; i++) {
             const token = tokens[i];
-            const color = this.renderConfigurator.getHighlightColor(token);
-            const notifColor = this.renderConfigurator.getNotifColor(token);
+            const color = this.renderConfigurator()()()().getHighlightColor(token);
+            const notifColor = this.renderConfigurator()()()().getNotifColor(token);
             if (!color && !notifColor) {
                 continue;
             }

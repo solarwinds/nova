@@ -30,6 +30,14 @@ export class TabHeadingCustomTemplateRefDirective {
     protected _viewRef: ViewContainerRef;
     protected _tabHeadingCustomTemplateRef: TemplateRef<any>;
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set nuiTabHeadingCustomTemplateRef(templateRef: TemplateRef<any>) {
         this._tabHeadingCustomTemplateRef = templateRef;

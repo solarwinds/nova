@@ -19,16 +19,17 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentChecked,
-    AfterContentInit,
-    Component,
-    ContentChild,
-    ContentChildren,
-    forwardRef,
-    Input,
-    QueryList,
-    TemplateRef,
-    ViewEncapsulation,
+  AfterContentChecked,
+  AfterContentInit,
+  Component,
+  ContentChild,
+  ContentChildren,
+  forwardRef,
+  Input,
+  QueryList,
+  TemplateRef,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import { AbstractControl, FormGroup } from "@angular/forms";
 import _forOwn from "lodash/forOwn";
@@ -53,36 +54,84 @@ export class FormFieldComponent
     /**
      * Form control obtained from the parent reactive form
      */
-    @Input() control: AbstractControl;
+    readonly control = input<AbstractControl>();
     /**
      * Text for a Form Field label
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() caption: string;
     /**
      * Text to be passed to a popover for info icon
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() info: string;
     /**
      * Template to use in info's popover
      */
-    @Input() infoTemplate: TemplateRef<any>;
+    readonly infoTemplate = input<TemplateRef<any>>();
     /**
      * Text for a Form Field hint
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() hint: string;
     /**
      * Template for a Form Field hint
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() hintTemplate: TemplateRef<unknown>;
     /**
      * Value for width css property for the form field
      */
-    @Input() customBoxWidth: string;
+    readonly customBoxWidth = input<string>(undefined!);
     /**
      * Ability to hide optional text (optional) near label if needed
      * @type {boolean}
      */
-    @Input() showOptionalText = true;
+    readonly showOptionalText = input(true);
 
     @ContentChildren(ValidationMessageComponent)
     validationMessages: QueryList<ValidationMessageComponent>;
@@ -94,26 +143,34 @@ export class FormFieldComponent
 
     public ngAfterContentChecked(): void {
         this.controlIsOptional =
-            this.showOptionalText && !this.hasRequiredField(this.control);
+            this.showOptionalText()()()() && !this.hasRequiredField(this.control()()()());
     }
 
     public ngAfterContentInit(): void {
-        if (this.control) {
+        const control = this.control();
+        const control = this.control();
+        const control = this.control();
+        const control = this.control();
+        if (control) {
             merge(
-                this.control.valueChanges,
-                this.control.statusChanges,
-                extractTouchedChanges(this.control)
+                control.valueChanges,
+                control.statusChanges,
+                extractTouchedChanges(control)
             ).subscribe(() => {
                 this.validationMessages.forEach((message) => {
-                    if (_isNull(this.control.errors)) {
+                    const controlValue = this.control();
+                    const controlValue = this.control();
+                    const controlValue = this.control();
+                    const controlValue = this.control();
+                    if (_isNull(controlValue.errors)) {
                         message.show = false;
                     } else {
-                        message.show = !!this.control.errors[message.for];
+                        message.show = !!controlValue.errors[message.for];
                     }
                 });
 
                 if (this.nuiFormControl) {
-                    this.nuiFormControl.isInErrorState = this.control.invalid;
+                    this.nuiFormControl.isInErrorState = this.control()()()().invalid;
                 }
             });
         }
@@ -126,7 +183,7 @@ export class FormFieldComponent
     }
 
     public getWidth(): string {
-        return this.customBoxWidth || "100%";
+        return this.customBoxWidth()()()() || "100%";
     }
 
     private hasRequiredField(abstractControl: AbstractControl): boolean {

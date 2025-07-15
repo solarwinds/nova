@@ -20,16 +20,16 @@
 
 import { CdkCell } from "@angular/cdk/table";
 import {
-    ChangeDetectorRef,
-    Directive,
-    ElementRef,
-    HostBinding,
-    HostListener,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    SimpleChanges,
+  ChangeDetectorRef,
+  Directive,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  input
 } from "@angular/core";
 import { Subscription } from "rxjs";
 import { filter } from "rxjs/operators";
@@ -54,15 +54,15 @@ export class TableCellDirective
     extends CdkCell
     implements OnInit, OnDestroy, OnChanges
 {
-    @Input() tooltipText: string;
-    @Input() alignment: TableAlignmentOptions;
+    readonly tooltipText = input<string>(undefined!);
+    readonly alignment = input<TableAlignmentOptions>(undefined!);
     public currentCellIndex: number;
     private subscribeToDraggedOverCell: Subscription;
     private resizeSubscription: Subscription;
 
     @HostBinding("attr.title")
     get tooltip(): string {
-        return this.tooltipText;
+        return this.tooltipText()()()();
     }
 
     @HostBinding("class.nui-table__table-cell--left-edge-action")
@@ -89,8 +89,12 @@ export class TableCellDirective
     }
 
     public ngOnInit(): void {
-        const alignment = this.alignment
-            ? `align-${this.alignment}`
+        const alignmentValue = this.alignment();
+        const alignmentValue = this.alignment();
+        const alignmentValue = this.alignment();
+        const alignmentValue = this.alignment();
+        const alignment = alignmentValue
+            ? `align-${alignmentValue}`
             : this.tableStateHandlerService.getAlignment(this.columnDef.name);
 
         this.elementRef.nativeElement.classList.add(alignment);

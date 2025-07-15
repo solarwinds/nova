@@ -1,7 +1,7 @@
 <div
     class="nui-select__layout-block"
     [class.placeholder-displayed]="displayPlaceholder()"
-    [class.custom-template]="customTemplate"
+    [class.custom-template]="customTemplate()()()()"
     [class.disabled]="isDisabled"
 >
     <ng-container *ngIf="itemsSource; else transclusionContent">
@@ -10,7 +10,7 @@
             [class.has-error]="isInErrorState"
             [title]="displayedValue()"
             [isDisabled]="isDisabled"
-            [appendToBody]="appendToBody"
+            [appendToBody]="appendToBody()()()()"
             [widthOfPopup]="getWidth()"
             [contextClass]="
                 (justified ? 'nui-select--justified ' : '') +
@@ -22,7 +22,7 @@
                 *ngIf="isRemoveValueEnabled"
                 (actionDone)="select(null)"
             >
-                {{ removeValueText }}
+                {()()()(){ removeValueText }}
             </nui-menu-action>
             <ng-container *ngFor="let item of itemsSource">
                 <nui-menu-action
@@ -30,11 +30,11 @@
                     [class.item-selected]="isItemSelected(item)"
                     (actionDone)="select(item)"
                 >
-                    <ng-container *ngIf="!customTemplate">{{
+                    <ng-container *ngIf="!customTemplate()()()()">{{
                         getItemDisplay(item)
                     }}</ng-container>
                     <ng-container
-                        [ngTemplateOutlet]="customTemplate"
+                        [ngTemplateOutlet]="customTemplate()()()()"
                         [ngTemplateOutletContext]="{ context: item }"
                     >
                     </ng-container>

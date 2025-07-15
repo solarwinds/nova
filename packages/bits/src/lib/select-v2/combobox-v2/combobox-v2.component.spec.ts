@@ -464,7 +464,7 @@ describe("components >", () => {
                 wrapperComponent.comboboxControl.setValue(itemToSet);
 
                 expect(
-                    wrapperComponent.combobox.getLastSelectedOption()?.value
+                    wrapperComponent.combobox.getLastSelectedOption()?.value()
                 ).toEqual(itemToSet);
             });
 

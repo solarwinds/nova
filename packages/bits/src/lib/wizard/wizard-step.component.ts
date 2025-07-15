@@ -46,38 +46,130 @@ export class WizardStepComponent
     /**
      * Template for step.
      */
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @Input() public stepTemplate: TemplateRef<any>;
     /**
      * Check is form inside step valid.
      */
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @Input() public stepControl?: boolean;
 
     /**
      * The title of the step.
      */
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @Input() public title: string;
 
     /**
      * A more compact form of the title (ex: "EULA").
      */
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @Input() public shortTitle?: string;
 
     /**
      * The description of the step.
      */
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @Input() public description?: string;
 
     /**
      * Default:'Next'. Text for the Next button.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public nextText: string;
     /**
      * Hide step
      */
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @Input() public hidden = false;
     /**
      * Disables step
      */
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @Input() public disabled?: boolean;
     /**
      * Evaluated when the step is entered.

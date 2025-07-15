@@ -20,17 +20,18 @@
 
 import { animate, style, transition, trigger } from "@angular/animations";
 import {
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    HostBinding,
-    Input,
-    NgZone,
-    OnChanges,
-    OnDestroy,
-    Output,
-    SimpleChanges,
-    ViewEncapsulation,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  HostBinding,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  Output,
+  SimpleChanges,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 
 import { ButtonIcon, SpinnerSize } from "./public-api";
@@ -58,7 +59,7 @@ import { LoggerService } from "../../services/log-service";
         role: "progressbar",
         "aria-valuemin": "0",
         "aria-valuemax": "100",
-        "[attr.aria-label]": "ariaLabel",
+        "[attr.aria-label]": "ariaLabel()()()()",
     },
     standalone: false,
 })
@@ -73,20 +74,72 @@ export class SpinnerComponent implements OnChanges, OnDestroy {
 
     @HostBinding("attr.aria-valuenow") ariaValueNow: string | undefined;
 
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public percent?: number;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public show = false;
-    @Input() public delay = 250;
+    public readonly delay = input(250);
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public allowCancel?: boolean;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public message?: string;
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() public helpText?: string;
 
     /**
      * Input to set aria label text
      */
-    @Input() public ariaLabel: string = "Spinner";
+    public readonly ariaLabel = input<string>("Spinner");
 
     @Output() public cancel = new EventEmitter();
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() public set size(val: SpinnerSize) {
         const sizes = Object.values(SpinnerSize);
 
@@ -134,14 +187,14 @@ export class SpinnerComponent implements OnChanges, OnDestroy {
 
         this.cancelShowTimer();
 
-        if (this.delay && this.show) {
+        if (this.delay()()()() && this.show) {
             this.ngZone.runOutsideAngular(() => {
                 this.showTimer = setTimeout(() => {
                     this.ngZone.run(() => {
                         this.showSpinner = this.show;
                         this.changeDetector.detectChanges();
                     });
-                }, this.delay);
+                }, this.delay()()()());
             });
         } else {
             this.showSpinner = this.show;

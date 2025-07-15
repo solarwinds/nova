@@ -19,16 +19,17 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    Input,
-    NgZone,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Renderer2,
-    ViewChild,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  ViewChild,
+  input
 } from "@angular/core";
 
 import { ResizerDirective } from "../../../common/directives";
@@ -58,10 +59,42 @@ export class LayoutResizerComponent
     extends ResizerDirective
     implements OnInit, AfterViewInit, OnChanges, OnDestroy
 {
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() resizeDirection: ResizeDirection;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() resizeElement: any;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() resizeUnit: ResizeUnit;
-    @Input() disabled = false;
+    readonly disabled = input(false);
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() enableSeparateOffsetSize: boolean;
     @ViewChild("resizerSplit") resizerSplitEl: ElementRef;
 
@@ -95,7 +128,7 @@ export class LayoutResizerComponent
 
     public ngOnInit(): void {
         this.resizerDirection = this.resizeDirection;
-        this.resizerDisabled = this.disabled;
+        this.resizerDisabled = this.disabled()()()();
         this.resizerValue = this.resizeUnit;
         this.isMultiple = true;
         this.offsetSize = this.enableSeparateOffsetSize ? 0 : this._size / 2;

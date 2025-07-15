@@ -19,20 +19,20 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    HostBinding,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    Renderer2,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  HostBinding,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  Renderer2,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 import _debounce from "lodash/debounce";
@@ -77,12 +77,12 @@ export class SelectComponent
     /**
      * A value that tells popup to be attached right after it's parent declaration or in <body>
      */
-    @Input() appendToBody: boolean;
+    readonly appendToBody = input<boolean>(undefined!);
 
     /**
      * Input that indicates text which is displayed if "isRemoveValueEnabled" set to true
      */
-    @Input() removeValueText: string = "Unspecified";
+    readonly removeValueText = input<string>("Unspecified");
 
     /**
      * Callback event that provides split-button behavior and interaction.
@@ -151,7 +151,7 @@ export class SelectComponent
 
     public getWidth(): string {
         // when appendToBody=true popup goes to body, so it's out of nui-select and it's width needs to be set explicitly
-        return this.appendToBody || this.isJustified
+        return this.appendToBody()()()() || this.isJustified
             ? this.elRef.nativeElement.getBoundingClientRect().width + "px"
             : "";
     }

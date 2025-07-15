@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectorRef, Component, Input } from "@angular/core";
+import { ChangeDetectorRef, Component, input } from "@angular/core";
 
 @Component({
     selector: "nui-tab-heading-group-with-content-example",
@@ -27,7 +27,7 @@ import { ChangeDetectorRef, Component, Input } from "@angular/core";
     standalone: false,
 })
 export class TabHeadingGroupWithContentExampleComponent {
-    @Input() public icon: boolean = false;
+    public readonly icon = input<boolean>(false);
 
     public currentTabId: string;
 

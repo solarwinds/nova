@@ -55,7 +55,7 @@
                 type="button"
                 displayStyle="action"
                 icon="undo"
-                *ngIf="historyIndex > 1"
+                *ngIf="historyIndex()()()() > 1"
                 (click)="onUndo()"
                 nuiTooltip="Undo"
                 i18n-nuiTooltip
@@ -66,7 +66,7 @@
                 type="button"
                 displayStyle="action"
                 icon="reset"
-                *ngIf="historyIndex > 0"
+                *ngIf="historyIndex()()()() > 0"
                 (click)="onClear()"
                 nuiTooltip="Reset to default"
                 i18n-nuiTooltip

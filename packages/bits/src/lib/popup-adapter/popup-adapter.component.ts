@@ -25,22 +25,23 @@ import {
 } from "@angular/cdk/overlay";
 import { DOCUMENT } from "@angular/common";
 import {
-    AfterContentInit,
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    ElementRef,
-    EventEmitter,
-    Inject,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  AfterContentInit,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  ElementRef,
+  EventEmitter,
+  Inject,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -67,7 +68,7 @@ const ADAPTER_OVERLAY_CONFIG: OverlayConfig = {
     host: {
         class: "nui-popup",
         role: "dialog",
-        "[attr.aria-label]": "ariaLabel",
+        "[attr.aria-label]": "ariaLabel()()()()",
     },
     standalone: false,
 })
@@ -77,7 +78,15 @@ export class PopupComponent
     @ContentChild(PopupToggleDirective)
     public popupToggle: PopupToggleDirective;
 
-    @Input() public width: string = "auto";
+    public readonly width = input<string>("auto");
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() public get overlayConfig(): OverlayConfig {
         return this._overlayConfig;
     }
@@ -87,15 +96,23 @@ export class PopupComponent
             ...value,
         };
     }
-    @Input() public contextClass: string;
-    @Input() public directionTop: boolean;
-    @Input() public directionRight: boolean;
-    @Input() public manualOpenControl: Subject<MouseEvent>;
-    @Input() public appendToBody: boolean = false;
-    @Input() public baseElementSelector: string;
-    @Input() public isHostToggleRef: boolean;
-    @Input() public ariaLabel: string = "Popup";
+    public readonly contextClass = input<string>(undefined!);
+    public readonly directionTop = input<boolean>(undefined!);
+    public readonly directionRight = input<boolean>(undefined!);
+    public readonly manualOpenControl = input<Subject<MouseEvent>>();
+    public readonly appendToBody = input<boolean>(false);
+    public readonly baseElementSelector = input<string>(undefined!);
+    public readonly isHostToggleRef = input<boolean>(undefined!);
+    public readonly ariaLabel = input<string>("Popup");
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() set isOpen(open: boolean) {
         if (this.isContentInitialized) {
             this.isOpenHandler(open);
@@ -118,6 +135,14 @@ export class PopupComponent
     public toggleReference: HTMLElement;
     public customContainer?: ElementRef;
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     public set visible(value: boolean) {
         this._visible = value;
@@ -155,7 +180,7 @@ export class PopupComponent
         }
 
         if (changes.width) {
-            this.overlayConfig = { ...this.overlayConfig, width: this.width };
+            this.overlayConfig = { ...this.overlayConfig, width: this.width()()()() };
         }
 
         if (changes.directionTop || changes.directionRight) {
@@ -183,15 +208,19 @@ export class PopupComponent
     }
 
     public ngAfterViewInit(): void {
-        this.overlayConfig = { ...this.overlayConfig, width: this.width };
+        this.overlayConfig = { ...this.overlayConfig, width: this.width()()()() };
 
-        if (this.manualOpenControl) {
-            this.manualOpenControl.subscribe((e: Event) =>
+        const manualOpenControl = this.manualOpenControl();
+        const manualOpenControl = this.manualOpenControl();
+        const manualOpenControl = this.manualOpenControl();
+        const manualOpenControl = this.manualOpenControl();
+        if (manualOpenControl) {
+            manualOpenControl.subscribe((e: Event) =>
                 this.toggleOpened(e)
             );
         }
 
-        if (!this.appendToBody) {
+        if (!this.appendToBody()()()()) {
             this.customContainer = this.popupArea;
         }
 
@@ -289,15 +318,23 @@ export class PopupComponent
             overlayY: "bottom",
         };
 
-        if (this.directionTop && this.directionRight) {
+        const directionTop = this.directionTop();
+        const directionRight = this.directionRight();
+        const directionTop = this.directionTop();
+        const directionRight = this.directionRight();
+        const directionTop = this.directionTop();
+        const directionRight = this.directionRight();
+        const directionTop = this.directionTop();
+        const directionRight = this.directionRight();
+        if (directionTop && directionRight) {
             return [rightTop];
         }
 
-        if (this.directionTop) {
+        if (directionTop) {
             return [topRight, topLeft];
         }
 
-        if (this.directionRight) {
+        if (directionRight) {
             return [bottomRight, bottomLeft];
         }
 
@@ -341,8 +378,12 @@ export class PopupComponent
             overlayContainer.querySelector(`.${POPUP_V2}`)
         );
 
-        if (this.contextClass) {
-            this.contextClass.split(" ").forEach((contextClass) => {
+        const contextClassValue = this.contextClass();
+        const contextClassValue = this.contextClass();
+        const contextClassValue = this.contextClass();
+        const contextClassValue = this.contextClass();
+        if (contextClassValue) {
+            contextClassValue.split(" ").forEach((contextClass) => {
                 this.popupAreaContainer.nativeElement.classList.add(
                     contextClass
                 );
@@ -367,12 +408,12 @@ export class PopupComponent
     }
 
     private initToggleRef(): void {
-        if (this.isHostToggleRef) {
+        if (this.isHostToggleRef()()()()) {
             this.toggleReference = this.host.nativeElement;
             return;
         }
         this.toggleReference = this.popupToggle
             ? this.popupToggle.host.nativeElement
-            : this.document.querySelector(this.baseElementSelector);
+            : this.document.querySelector(this.baseElementSelector()()()());
     }
 }

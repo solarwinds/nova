@@ -10,7 +10,7 @@
             <span>{{ displayText || "\u00A0" }}</span>
         </div>
         <span class="nui-select-v2__placeholder" *ngIf="isEmpty">{{
-            placeholder || "\u00A0"
+          ()()()()  placeholder || "\u00A0"
         }}</span>
 
         <nui-icon
@@ -31,7 +31,7 @@
 <nui-overlay
     roleAttr="listbox"
     [toggleReference]="elRef.nativeElement"
-    [viewportMargin]="popupViewportMargin"
+    [viewportMargin]="popupViewportMargin()()()()"
     [overlayConfig]="overlayConfig"
 >
     <ng-content></ng-content>

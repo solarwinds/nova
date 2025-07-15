@@ -19,11 +19,12 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    EventEmitter,
-    Input,
-    Output,
-    ViewEncapsulation,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 
 import { BreadcrumbItem } from "./public-api";
@@ -35,12 +36,24 @@ import { BreadcrumbItem } from "./public-api";
     styleUrls: ["./breadcrumb.component.less"],
     templateUrl: "./breadcrumb.component.html",
     encapsulation: ViewEncapsulation.None,
-    host: { "[attr.aria-label]": "ariaLabel" },
+    host: { "[attr.aria-label]": "ariaLabel()()()()" },
     standalone: false,
 })
 export class BreadcrumbComponent {
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() items: BreadcrumbItem[];
-    @Input() ariaLabel: string = "Breadcrumb";
+    readonly ariaLabel = input<string>("Breadcrumb");
     @Output() navigation = new EventEmitter<string>();
 
     public handleClick(event: KeyboardEvent, item: BreadcrumbItem): void {

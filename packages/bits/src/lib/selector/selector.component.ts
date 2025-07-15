@@ -20,17 +20,17 @@
 
 import { OverlayConfig } from "@angular/cdk/overlay";
 import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnChanges,
+  OnDestroy,
+  Output,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { debounceTime, takeUntil } from "rxjs/operators";
@@ -69,7 +69,7 @@ import { OverlayComponent } from "../overlay/overlay-component/overlay.component
     host: {
         class: "nui-selector",
         tabindex: "-1",
-        "[attr.aria-label]": "ariaLabel",
+        "[attr.aria-label]": "ariaLabel()()()()",
     },
     templateUrl: "./selector.component.html",
     styleUrls: ["./selector.component.less"],
@@ -82,17 +82,13 @@ export class SelectorComponent
     /**
      * resets selection, makes component appearance indeterminate
      */
-    @Input()
-    public checkboxStatus: CheckboxStatus;
+    public readonly checkboxStatus = input<CheckboxStatus>(undefined!);
 
-    @Input()
-    public items: IMenuGroup[];
+    public readonly items = input<IMenuGroup[]>(undefined!);
 
-    @Input()
-    public appendToBody: boolean;
+    public readonly appendToBody = input<boolean>(undefined!);
 
-    @Input()
-    public ariaLabel: string = "Selector";
+    public readonly ariaLabel = input<string>("Selector");
 
     @Output()
     public selectionChange = new EventEmitter<SelectionType>();
@@ -157,8 +153,8 @@ export class SelectorComponent
             type: "selector",
             value: {
                 selectorState: {
-                    checkboxStatus: this.checkboxStatus,
-                    selectorItems: this.items,
+                    checkboxStatus: this.checkboxStatus()()()(),
+                    selectorItems: this.items()()()(),
                 },
                 status: this.status,
                 selectionHasChanged: this.selectionHasChanged,

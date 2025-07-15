@@ -19,14 +19,14 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    EventEmitter,
-    HostBinding,
-    Input,
-    Output,
-    QueryList,
-    ViewChildren,
-    ViewEncapsulation,
+  Component,
+  EventEmitter,
+  HostBinding,
+  Output,
+  QueryList,
+  ViewChildren,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import _isFunction from "lodash/isFunction";
 import moment from "moment/moment";
@@ -55,19 +55,19 @@ import { IMenuGroup, IMenuItem } from "../public-api";
     standalone: false,
 })
 export class MenuPopupComponent {
-    @Input() public itemsSource: IMenuGroup[];
-    @Input() public size?: string;
+    public readonly itemsSource = input<IMenuGroup[]>(undefined!);
+    public readonly size = input<string>();
     @ViewChildren(MenuItemBaseComponent)
     menuItems: QueryList<MenuItemBaseComponent>;
 
     @HostBinding("class.nui-menu-popup--sm")
     public get smCssClass(): boolean {
-        return this.size === "small";
+        return this.size()()()() === "small";
     }
 
     @HostBinding("class.nui-menu-popup--lg")
     public get lgCssClass(): boolean {
-        return this.size === "large";
+        return this.size()()()() === "large";
     }
 
     @Output() public menuItemClicked? = new EventEmitter<IMenuItem>();

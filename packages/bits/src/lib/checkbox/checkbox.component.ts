@@ -19,20 +19,21 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnDestroy,
-    Output,
-    Renderer2,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnDestroy,
+  Output,
+  Renderer2,
+  ViewChild,
+  ViewContainerRef,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { Subscription } from "rxjs";
@@ -90,6 +91,14 @@ export class CheckboxComponent
     /**
      * Input to set aria label text
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() public get ariaLabel(): string {
         return this._ariaLabel;
     }
@@ -104,24 +113,60 @@ export class CheckboxComponent
     }
 
     /** Users ca specify the 'aria-labelledby' which will be set to the input element */
-    @Input() ariaLabelledby: string | null = null;
+    readonly ariaLabelledby = input<string | null>(null);
 
     /** The 'aria-describedby' attribute is read after the element's label and field type. */
-    @Input() ariaDescribedby: string;
+    readonly ariaDescribedby = input<string>(undefined!);
 
     /**
      * Sets "name" attribute for inner input element of nui-checkbox
      */
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @Input() public name: string;
 
     /**
      * Sets "title" attribute for nui-checkbox label
      */
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @Input() public title = "";
 
     /**
      * Sets "value" attribute for inner input element of nui-checkbox
      */
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @Input() public value: any;
 
     /**
@@ -132,11 +177,27 @@ export class CheckboxComponent
     /**
      * Used for changing nui-checkbox component styles when component is hovered
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public hovered: boolean;
 
     /**
      * Sets "checked" attribute for inner input element of nui-checkbox
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     public get checked(): boolean {
         return this._checked;
@@ -151,16 +212,44 @@ export class CheckboxComponent
     /**
      * Sets "required" attribute for inner input element of nui-checkbox
      */
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @Input() public required: boolean;
 
     /**
      * Sets nui-checkbox hint that is displayed below label
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public hint: string;
 
     /**
      * Used for disabling of nui-checkbox
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     public get disabled(): boolean {
         return this._disabled;
@@ -175,6 +264,14 @@ export class CheckboxComponent
     /**
      * Used for setting of nui-checkbox indeterminate state
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public indeterminate: boolean;
 
     /**

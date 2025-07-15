@@ -44,6 +44,14 @@ import { TabComponent } from "../tab/tab.component";
 })
 export class TabGroupComponent implements OnDestroy, AfterViewInit {
     /** If true tabs will be placed vertically */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     get vertical(): boolean {
         return Boolean(this._vertical);
@@ -88,7 +96,7 @@ export class TabGroupComponent implements OnDestroy, AfterViewInit {
     }
 
     public selectTab(selectedTab: TabComponent): void {
-        if (!selectedTab.disabled) {
+        if (!selectedTab.disabled()()()()) {
             selectedTab.active = true;
             this.tabs.forEach((tab: TabComponent) => {
                 if (tab !== selectedTab) {

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, input } from "@angular/core";
 import hljs from "highlight.js";
 import javascript from "highlight.js/lib/languages/javascript";
 import json from "highlight.js/lib/languages/json";
@@ -41,12 +41,20 @@ import { FileMetadata, SourcesService } from "../services/sources.service";
 })
 export class ExampleWrapperComponent implements OnInit {
     // Prefix of the example component's filenames
-    @Input() filenamePrefix: string = "";
+    readonly filenamePrefix = input<string>("");
 
     // Title to be displayed at the top of the example
-    @Input() exampleTitle: string = "";
+    readonly exampleTitle = input<string>("");
 
     // Indicates whether the source code is being displayed
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() showSource = false;
 
     public componentSources: FileMetadata[];
@@ -68,7 +76,7 @@ export class ExampleWrapperComponent implements OnInit {
 
     public async openCodeSandboxExample(): Promise<void> {
         await this.codeSandboxService.open(
-            this.filenamePrefix,
+            this.filenamePrefix()()()(),
             this.componentSources
         );
     }
@@ -76,7 +84,7 @@ export class ExampleWrapperComponent implements OnInit {
     public async ngOnInit(): Promise<void> {
         this.componentSources =
             await this.sourcesService.getSourcesByFilenamePrefix(
-                this.filenamePrefix
+                this.filenamePrefix()()()()
             ) ?? [];
     }
 
@@ -84,7 +92,7 @@ export class ExampleWrapperComponent implements OnInit {
         return (
             this.componentSources?.find(
                 (component) =>
-                    component.fileName.includes(this.filenamePrefix) &&
+                    component.fileName.includes(this.filenamePrefix()()()()) &&
                     component.fileType === fileType
             )?.fileContent ?? ""
         );

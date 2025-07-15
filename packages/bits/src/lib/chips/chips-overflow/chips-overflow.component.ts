@@ -19,11 +19,12 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    EventEmitter,
-    Input,
-    Output,
-    ViewEncapsulation,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 
 import { IChipsGroup, IChipsItem, IChipsItemsSource } from "../public-api";
@@ -37,7 +38,15 @@ import { IChipsGroup, IChipsItem, IChipsItemsSource } from "../public-api";
     standalone: false,
 })
 export class ChipsOverflowComponent {
-    @Input() overflowSource: IChipsItemsSource;
+    readonly overflowSource = input<IChipsItemsSource>(undefined!);
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() itemsSource: IChipsItemsSource;
 
     @Output() public chipRemoved = new EventEmitter<{

@@ -1,7 +1,7 @@
 <div class="nui-wizard">
     <div
         class="nui-wizard__header"
-        [class.nui-wizard__header--lines-stretched]="stretchStepLines"
+        [class.nui-wizard__header--lines-stretched]="stretchStepLines()()()()"
     >
         <ul class="nui-wizard__header-steps" *ngIf="steps">
             <li
@@ -117,14 +117,14 @@
             <span>{{ currentStep?.nextText }}</span>
         </button>
         <button
-            *ngIf="canFinish || steps.last.active"
+            *ngIf="canFinish()()()() || steps.last.active"
             nui-button
             type="button"
             class="nui-wizard__finish-button"
             [displayStyle]="'primary'"
             (click)="onFinishClick()"
         >
-            <span>{{ finishText }}</span>
+            <span>{{ finishText()()()() }}</span>
         </button>
     </div>
 </div>

@@ -30,6 +30,14 @@ import { ILayoutElementDirection } from "../public-api";
     standalone: false,
 })
 export class CardGroupComponent implements OnInit {
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() direction: ILayoutElementDirection = "row";
     @HostBinding("class.card-group-direction-column") directionColumn = false;
     @HostBinding("class.card-group-direction-row") directionRow = true;

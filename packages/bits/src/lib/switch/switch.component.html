@@ -13,7 +13,7 @@
             tabindex="{{ disabled ? -1 : 0 }}"
             role="checkbox"
             [attr.aria-checked]="value"
-            [attr.aria-label]="ariaLabel"
+            [attr.aria-label]="ariaLabel()()()()"
         >
             <div class="nui-switch__on">
                 <svg

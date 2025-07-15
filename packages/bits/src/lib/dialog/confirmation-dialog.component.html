@@ -1,11 +1,11 @@
 <nui-dialog-header
-    [title]="title"
-    [severity]="severity"
+    [title]="title()()()()"
+    [severity]="severity()()()()"
     (closed)="dismiss()"
 ></nui-dialog-header>
 
 <div class="dialog-body">
-    <p>{{ message }}</p>
+    <p>{{ message()()()() }}</p>
 </div>
 <nui-dialog-footer>
     <button
@@ -15,7 +15,7 @@
         preventScroll="true"
         (click)="close(false)"
     >
-        {{ dismissText }}
+        {{ di()()()()smissText }}
     </button>
     <button
         nui-button
@@ -25,6 +25,6 @@
         displayStyle="primary"
         (click)="close(true)"
     >
-        {{ confirmText }}
+        {{ co()()()()nfirmText }}
     </button>
 </nui-dialog-footer>

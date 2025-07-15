@@ -19,24 +19,25 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentInit,
-    ChangeDetectorRef,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnDestroy,
-    OnInit,
-    Optional,
-    Output,
-    QueryList,
-    Renderer2,
-    TemplateRef,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation,
+  AfterContentInit,
+  ChangeDetectorRef,
+  Component,
+  ContentChildren,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Output,
+  QueryList,
+  Renderer2,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import _isNil from "lodash/isNil";
@@ -52,7 +53,7 @@ import { NuiFormFieldControl } from "../form-field/public-api";
  */
 @Component({
     selector: "nui-radio-group",
-    template: `<div class="nui-radio-group" [attr.aria-label]="ariaLabel">
+    template: `<div class="nui-radio-group" [attr.aria-label]="ariaLabel()()()()">
         <ng-content></ng-content>
     </div>`,
     providers: [
@@ -76,16 +77,24 @@ export class RadioGroupComponent
     /**
      * Input to set aria label text
      */
-    @Input() public ariaLabel: string = "";
+    public readonly ariaLabel = input<string>("");
 
     /**
      * Sets the "name" attribute for each radio button in the group
      */
-    @Input() public name: string;
+    public readonly name = input<string>(undefined!);
 
     /**
      * Stores the value from selected radio
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     get value(): any {
         return this._value;
@@ -103,6 +112,14 @@ export class RadioGroupComponent
     /**
      * Sets whether the group is disabled
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public disabled?: boolean;
 
     /**
@@ -121,7 +138,7 @@ export class RadioGroupComponent
         this.renderer.setAttribute(
             child.inputViewContainer.element.nativeElement,
             "name",
-            this.name
+            this.name()()()()
         );
         this.subscriptions.push(this.subscribeToRadioEvent(child));
         // timeout to prevent "expression changed after it has been checked" error
@@ -185,7 +202,7 @@ export class RadioGroupComponent
         // If the value already matches the selected radio, do nothing.
         const isAlreadySelected =
             this.selectedRadio !== null &&
-            this.selectedRadio.value === this._value;
+            this.selectedRadio.value()()()() === this._value;
         if (this.children && !isAlreadySelected) {
             this.children.forEach((radio) => {
                 radio.checked = this.value === radio.value;
@@ -229,28 +246,64 @@ export class RadioComponent implements OnInit, OnDestroy {
     /**
      * Sets the radio instance value
      */
-    @Input() public value: any;
+    public readonly value = input<any>();
 
     /**
      * Emits an event when the value changes
      */
     @Output() public valueChange = new EventEmitter<any>();
 
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public hovered: boolean;
 
     /**
      * Sets whether the radio button is selected
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public checked = false;
 
     /**
      * Adds hint text under the radio button
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() public hint?: string;
 
     /**
      * Sets whether the radio button is disabled
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     public get disabled(): boolean {
         return this._disabled;
@@ -265,7 +318,7 @@ export class RadioComponent implements OnInit, OnDestroy {
     /**
      * Input to set aria label text
      */
-    @Input() public ariaLabel: string = "";
+    public readonly ariaLabel = input<string>("");
 
     @ViewChild("inputViewContainer", { static: true, read: ViewContainerRef })
     public inputViewContainer: ViewContainerRef;
@@ -294,7 +347,7 @@ export class RadioComponent implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         if (this.radioGroup !== null) {
-            if (this.radioGroup.value === this.value) {
+            if (this.radioGroup.value === this.value()()()()) {
                 this.checked = true;
             }
         }
@@ -303,7 +356,7 @@ export class RadioComponent implements OnInit, OnDestroy {
             // TODO: remove timeout in v10 NUI-4843
             // nui-radio-group should subscribe before event is emitted
             this.timeoutId = (<any>setTimeout(() => {
-                this.valueChange.emit(this.value);
+                this.valueChange.emit(this.value()()()());
             }, 0)) as number;
         }
 
@@ -323,7 +376,7 @@ export class RadioComponent implements OnInit, OnDestroy {
 
     public changeHandler(): void {
         this.keepFormPristine = false;
-        this.valueChange.emit(this.value);
+        this.valueChange.emit(this.value()()()());
     }
 
     public onInputClick(event: MouseEvent): void {

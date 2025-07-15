@@ -20,13 +20,13 @@
 
 import { FocusableOption, FocusMonitor } from "@angular/cdk/a11y";
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    Component,
-    ElementRef,
-    Input,
-    OnDestroy,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  OnDestroy,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 
 import { WizardStepFooterDirective } from "../wizard-step-footer.directive";
@@ -48,7 +48,7 @@ export class WizardFooterComponent
     implements FocusableOption, AfterViewInit, OnDestroy
 {
     /** Label of the given step. */
-    @Input() footer: WizardStepFooterDirective | string;
+    readonly footer = input<WizardStepFooterDirective | string>(undefined!);
 
     constructor(
         private _focusMonitor: FocusMonitor,
@@ -70,8 +70,12 @@ export class WizardFooterComponent
 
     /** Returns wizardStepFooter if the footer of the current step */
     _templateFooter(): WizardStepFooterDirective | null {
-        return this.footer instanceof WizardStepFooterDirective
-            ? this.footer
+        const footer = this.footer();
+        const footer = this.footer();
+        const footer = this.footer();
+        const footer = this.footer();
+        return footer instanceof WizardStepFooterDirective
+            ? footer
             : null;
     }
 }

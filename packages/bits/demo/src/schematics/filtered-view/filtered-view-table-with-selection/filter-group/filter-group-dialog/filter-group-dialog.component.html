@@ -1,11 +1,11 @@
 <div class="filter-group-dialog">
     <nui-dialog-header
-        [title]="title"
+        [title]="title()"
         (closed)="closeDialog()"
     ></nui-dialog-header>
     <div class="filter-group-dialog__body">
         <app-item-picker-table-selection
-            [itemPickerOptions]="itemPickerOptions"
+            [itemPickerOptions]="itemPickerOptions()"
             [selectedValues]="selectedValues"
             (selectionChanged)="onSelectionChanged($event)"
         ></app-item-picker-table-selection>

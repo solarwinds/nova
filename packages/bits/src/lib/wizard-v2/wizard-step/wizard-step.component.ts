@@ -25,19 +25,20 @@ import {
     STEPPER_GLOBAL_OPTIONS,
 } from "@angular/cdk/stepper";
 import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    forwardRef,
-    Inject,
-    Input,
-    OnDestroy,
-    OnInit,
-    Optional,
-    SkipSelf,
-    TemplateRef,
-    ViewEncapsulation,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  forwardRef,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  SkipSelf,
+  TemplateRef,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import { FormControl, FormGroupDirective, NgForm } from "@angular/forms";
 import { Subject } from "rxjs";
@@ -72,11 +73,23 @@ export class WizardStepV2Component
     extends CdkStep
     implements OnInit, OnDestroy, ErrorStateMatcher
 {
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() template?: TemplateRef<any>;
 
-    @Input() stepStateConfig: Partial<WizardStepStateConfig>;
+    readonly stepStateConfig = input<Partial<WizardStepStateConfig>>();
 
-    @Input() stepIndex: number;
+    readonly stepIndex = input<number>(undefined!);
 
     /** Content for step label given by `<ng-template wizardStepLabel>`. */
     @ContentChild(WizardStepLabelDirective)

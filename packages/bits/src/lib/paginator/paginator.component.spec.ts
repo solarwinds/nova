@@ -77,7 +77,7 @@ describe("components >", () => {
         });
 
         it("should have items count in paginator equal to 7", () => {
-            expect(subject.adjacent).toEqual(1);
+            expect(subject.adjacent()).toEqual(1);
             const changes: SimpleChanges = {
                 page: new SimpleChange(3, 1, true),
             };

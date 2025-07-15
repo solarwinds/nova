@@ -1,11 +1,11 @@
 <div class="nui-filter-group-composite-dialog">
     <nui-dialog-header
-        [title]="title"
+        [title]="title()"
         (closed)="closeDialog()"
     ></nui-dialog-header>
     <div class="nui-filter-group-composite-dialog__body">
         <nui-item-picker-composite
-            [itemPickerOptions]="itemPickerOptions"
+            [itemPickerOptions]="itemPickerOptions()"
             [selectedValues]="selectedValues"
             (selectionChanged)="onSelectionChanged($event)"
         ></nui-item-picker-composite>

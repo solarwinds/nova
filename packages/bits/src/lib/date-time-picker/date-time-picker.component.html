@@ -9,25 +9,25 @@
             [value]="date"
             (valueChange)="onDateChanged($event)"
             (inputBlurred)="onInputBlurred()"
-            [maxDate]="maxDate"
-            [minDate]="minDate"
+            [maxDate]="maxDate()()()()"
+            [minDate]="minDate()()()()"
             [isDisabled]="isDisabled"
             [isInErrorState]="isInErrorStateDate"
-            [handleTimezone]="handleTimezone"
-            [appendToBody]="appendToBody"
+            [handleTimezone]="handleTimezone()()()()"
+            [appendToBody]="appendToBody()()()()"
             [ariaLabel]="ariaLabel + ' date'"
         ></nui-date-picker>
     </div>
     <div class="nui-datetime-picker__group nui-datetime-picker__group--last">
         <nui-time-picker
             class="nui-dropdown--justified"
-            [initEmpty]="initEmpty"
+            [initEmpty]="initEmpty()()()()"
             [model]="time"
             (timeChanged)="onTimeChanged($event)"
             (inputBlurred)="onInputBlurred()"
             [isDisabled]="isDisabled"
             [isInErrorState]="isInErrorStateTime"
-            [appendToBody]="appendToBody"
+            [appendToBody]="appendToBody()()()()"
             [ariaLabel]="ariaLabel + ' time'"
         ></nui-time-picker>
     </div>

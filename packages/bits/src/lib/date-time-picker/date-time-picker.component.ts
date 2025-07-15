@@ -19,19 +19,20 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnInit,
-    Output,
-    Renderer2,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnInit,
+  Output,
+  Renderer2,
+  ViewChild,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import moment from "moment/moment";
@@ -65,23 +66,47 @@ export class DateTimePickerComponent
     implements AfterViewInit, OnInit, ControlValueAccessor
 {
     /** latest available date */
-    @Input() maxDate: Moment;
+    readonly maxDate = input<Moment>();
     /** earliest available date */
-    @Input() minDate: Moment;
+    readonly minDate = input<Moment>();
     /** sets mode of showing date-time-picker */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() displayMode: string;
 
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() isDisabled: boolean;
 
-    @Input() initEmpty: boolean;
+    readonly initEmpty = input<boolean>(undefined!);
     /** Is used to handle timezone of date value, passed to DatePickerComponent */
-    @Input() handleTimezone: boolean;
+    readonly handleTimezone = input<boolean>(undefined!);
     /** Allows popup box to be attached to document.body */
-    @Input() appendToBody: boolean;
+    readonly appendToBody = input<boolean>(undefined!);
 
     /**
      * Input to set aria label text
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() public get ariaLabel(): string {
         return this._ariaLabel;
     }
@@ -102,6 +127,14 @@ export class DateTimePickerComponent
     modelChanged: EventEmitter<Moment> = new EventEmitter<Moment>();
 
     /** model of picker */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     get model(): Moment | undefined {
         return this._model;
@@ -128,7 +161,7 @@ export class DateTimePickerComponent
     constructor(private renderer: Renderer2, private cd: ChangeDetectorRef) {}
 
     public ngOnInit(): void {
-        if (!this.initEmpty && !this.model) {
+        if (!this.initEmpty()()()() && !this.model) {
             this.model = moment();
             this.onChange(this.model);
             this.cd.markForCheck();
@@ -201,7 +234,7 @@ export class DateTimePickerComponent
         if (this.model) {
             this.date = this.model.clone();
             this.time = this.model.clone();
-        } else if (!this.model && this.initEmpty) {
+        } else if (!this.model && this.initEmpty()()()()) {
             // TODO: Replace with undefined
             // @ts-ignore
             this.date = null;

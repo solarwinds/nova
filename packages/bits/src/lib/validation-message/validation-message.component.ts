@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Input, ViewEncapsulation } from "@angular/core";
+import { Component, ViewEncapsulation, input } from "@angular/core";
 /** @ignore */
 @Component({
     selector: "nui-validation-message",
@@ -35,11 +35,11 @@ export class ValidationMessageComponent {
      * Typically, visibility is determined automatically by the validator specified in the "for" input.
      * @type {boolean}
      */
-    @Input() public show = false;
+    public readonly show = input(false);
     /**
      * Pass the validator name to this input to allow the validator to control the visibility
      * of the message based on the validation state of the associated form field.
      * @type {string}
      */
-    @Input() public for: string;
+    public readonly for = input<string>(undefined!);
 }

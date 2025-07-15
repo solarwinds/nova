@@ -26,6 +26,8 @@ import { Component, Input } from "@angular/core";
     standalone: false,
 })
 export class SwitchDisableExampleComponent {
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() isOn = true;
     isDisabled = true;
 }

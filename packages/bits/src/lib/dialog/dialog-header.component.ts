@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, input } from "@angular/core";
 
 import { SeverityLevels } from "./public-api";
 
@@ -35,10 +35,18 @@ export class DialogHeaderComponent implements OnInit {
     /**
      * Title of the dialog.
      */
-    @Input() title: string;
+    readonly title = input<string>(undefined!);
     /**
      * Severity of the dialog. Possible values: 'critical', 'warning', 'info'.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() severity: SeverityLevels;
     /**
      * Closes dialog on cross click.

@@ -13,10 +13,10 @@
                 #inputViewContainer
                 class="nui-radio__input"
                 type="radio"
-                [value]="value"
+                [value]="value()()()()"
                 [checked]="checked"
                 [disabled]="disabled"
-                [attr.aria-label]="ariaLabel"
+                [attr.aria-label]="ariaLabel()()()()"
                 (change)="changeHandler()"
                 (click)="onInputClick($event)"
             />

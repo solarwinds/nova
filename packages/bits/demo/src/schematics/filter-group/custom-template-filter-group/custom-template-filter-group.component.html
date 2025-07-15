@@ -11,7 +11,7 @@
             </ng-template>
             <ng-container
                 *ngTemplateOutlet="
-                    expanderTemplateRef || defaultExpander;
+                    expanderTemplateRef() || defaultExpander;
                     context: { expander: filterGroupItem }
                 "
             ></ng-container>
@@ -45,7 +45,7 @@
                 </ng-template>
                 <ng-container
                     *ngTemplateOutlet="
-                        checkboxTemplateRef || defaultCheckboxes;
+                        checkboxTemplateRef() || defaultCheckboxes;
                         context: { checkbox: filterOption }
                     "
                 ></ng-container>

@@ -20,20 +20,21 @@
 
 import { FocusMonitor, FocusOrigin } from "@angular/cdk/a11y";
 import {
-    AfterViewInit,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    QueryList,
-    Renderer2,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  Component,
+  ContentChildren,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  QueryList,
+  Renderer2,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
 import { Subject, Subscription } from "rxjs";
@@ -55,7 +56,7 @@ import { IMenuGroup } from "../public-api";
     selector: "nui-menu",
     host: {
         class: "nui-menu",
-        "[attr.aria-label]": "title || ariaLabel",
+        "[attr.aria-label]": "title()()()() || ariaLabel()()()()",
     },
     templateUrl: "./menu.component.html",
     styleUrls: ["./menu.component.less"],
@@ -66,42 +67,54 @@ import { IMenuGroup } from "../public-api";
 export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     public iconSize = "";
     public iconColor = "";
-    @Input() public widthOfPopup: string;
-    @Input() public contextClass: string;
+    public readonly widthOfPopup = input<string>(undefined!);
+    public readonly contextClass = input<string>(undefined!);
     /**
      * Should dropdown be appended to body or not
      */
-    @Input() public appendToBody: boolean;
+    public readonly appendToBody = input<boolean>(undefined!);
     /**
      * sets aria-label for menu button
      */
-    @Input() public ariaLabel: string;
+    public readonly ariaLabel = input<string>(undefined!);
     /**
      * sets title/name for menu button
      */
-    @Input() public title: string;
+    public readonly title = input<string>(undefined!);
     /**
      * sets size of menu button and caret icon
      * (take a look on nui-button possible sizes)
      */
-    @Input() public size?: ButtonSizeType;
+    public readonly size = input<ButtonSizeType>();
     /**
      * sets styles for menu button
      * (take a look on nui-button possible styles)
      */
-    @Input() public displayStyle?: string;
+    public readonly displayStyle = input<string>();
     /**
      * Disables menu and prevents it from opening
      */
-    @Input() public isDisabled: boolean;
+    public readonly isDisabled = input<boolean>(undefined!);
     /**
      * adds additional icon at the left of menu button
      * (take a look on nui-icon possible values)
      */
-    @Input() public icon = "caret-down";
+    public readonly icon = input("caret-down");
     /**
      *Value to be used as menu items data.
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() public itemsSource?: IMenuGroup[];
     /**
      * Event emitted when menu is blurred.
@@ -129,11 +142,11 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes["size"]) {
             // Empty string sets the default size of an icon 16x16 defined by .nui-icon class
-            this.iconSize = this.size === ButtonSizeType.compact ? "small" : "";
+            this.iconSize = this.size()()()() === ButtonSizeType.compact ? "small" : "";
         }
 
         if (changes["displayStyle"]) {
-            this.iconColor = this.displayStyle === "primary" ? "white" : "";
+            this.iconColor = this.displayStyle()()()() === "primary" ? "white" : "";
         }
     }
 
@@ -148,7 +161,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
                 this.menuToggle.nativeElement,
                 "keydown",
                 (event: KeyboardEvent) => {
-                    if (!this.popup.popupToggle.disabled) {
+                    if (!this.popup.popupToggle.disabled()()()()) {
                         this.keyControlService.handleKeydown(event);
                     }
                 }
@@ -162,7 +175,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
             .monitor(this.menuToggle)
             .subscribe((origin: FocusOrigin) => {
                 if (origin === "keyboard") {
-                    if (!this.popup.popupToggle.disabled) {
+                    if (!this.popup.popupToggle.disabled()()()()) {
                         this.popup.toggleOpened(new FocusEvent("focusin"));
                     }
                 }
@@ -170,11 +183,11 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     public isMenuCompact(): boolean {
-        return this.size === "compact";
+        return this.size()()()() === "compact";
     }
 
     public isTitlePresent(): boolean {
-        return !_isEmpty(this.title);
+        return !_isEmpty(this.title()()()());
     }
 
     public onBlur(event: any): void {
@@ -186,7 +199,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     public isJustified(): boolean {
-        return this.contextClass?.includes("nui-select--justified");
+        return this.contextClass()()()()?.includes("nui-select--justified");
     }
 
     private setKeyboardManagerServiceData(): void {

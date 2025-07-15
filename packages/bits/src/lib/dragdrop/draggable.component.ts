@@ -41,9 +41,57 @@ import { DroppableComponent } from "./droppable.component";
     standalone: false,
 })
 export class DraggableComponent implements OnInit {
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() payload: any;
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() dropTarget: DroppableComponent;
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() dragHandle: boolean = false;
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() dragPreview: TemplateRef<any>;
     @Output() dragStart = new EventEmitter();
     @Output() dragEnd = new EventEmitter();

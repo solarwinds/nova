@@ -19,14 +19,14 @@
 //  THE SOFTWARE.
 
 import {
-    Directive,
-    ElementRef,
-    Inject,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    SimpleChanges,
+  Directive,
+  ElementRef,
+  Inject,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  input
 } from "@angular/core";
 import escape from "lodash/escape";
 import isUndefined from "lodash/isUndefined";
@@ -51,7 +51,7 @@ export class ComboboxV2OptionHighlightDirective
     implements OnChanges, OnInit, OnDestroy
 {
     /** Part of the text to be highlighted */
-    @Input("nuiComboboxV2OptionHighlight") public value: string;
+    public readonly value = input<string>(undefined!, { alias: "nuiComboboxV2OptionHighlight" });
 
     private readonly destroy$ = new Subject<void>();
 
@@ -93,10 +93,10 @@ export class ComboboxV2OptionHighlightDirective
         this.el.nativeElement.innerHTML = (
             isHighlightNecessary && !isUndefined(highlighted)
                 ? this.highlightPipe.transform(
-                      this.value,
+                      this.value()()()(),
                       highlighted.toString()
                   )
-                : escape(this.value)
+                : escape(this.value()()()())
         ) as string;
     }
 }

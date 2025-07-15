@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Input, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, input } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
 
 @Component({
@@ -30,7 +30,7 @@ import { NavigationEnd, Router } from "@angular/router";
 export class TabHeadingGroupWithRouterExampleComponent implements OnDestroy {
     public currentTabRoute: string;
 
-    @Input() public icon: boolean = false;
+    public readonly icon = input<boolean>(false);
     public tabsetContent = [
         {
             id: "tab-settings",

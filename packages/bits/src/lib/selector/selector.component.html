@@ -19,7 +19,7 @@
     </button>
     <button
         nui-button
-        *ngIf="items?.length"
+        *ngIf="items()()()()?.length"
         type="button"
         class="nui-selector__toggle"
         ariaLabel="Open Selector Menu"
@@ -38,7 +38,7 @@
     [customContainer]="customContainer"
 >
     <nui-menu-popup
-        [itemsSource]="items"
+        [itemsSource]="items()()()()"
         (menuItemClicked)="handleItemClick($event)"
     ></nui-menu-popup>
 </nui-overlay>

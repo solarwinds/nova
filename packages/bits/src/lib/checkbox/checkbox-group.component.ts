@@ -19,17 +19,18 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    Component,
-    ContentChildren,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnDestroy,
-    Output,
-    QueryList,
-    Renderer2,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ContentChildren,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnDestroy,
+  Output,
+  QueryList,
+  Renderer2,
+  input
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import _remove from "lodash/remove";
@@ -68,11 +69,19 @@ export class CheckboxGroupComponent
     /**
      * Sets "name" attribute for inner input element of nui-checkbox
      */
-    @Input() public name: string;
+    public readonly name = input<string>(undefined!);
 
     /**
      * Stores values from selected nui-checkboxes children components
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public values: any[];
 
     /**
@@ -89,12 +98,12 @@ export class CheckboxGroupComponent
     /**
      * Input to set aria label text
      */
-    @Input() public ariaLabel = "Checkbox Group";
+    public readonly ariaLabel = input("Checkbox Group");
 
     /**
      * Input to set aria label text
      */
-    @Input() public ariaLabeledby = "";
+    public readonly ariaLabeledby = input("");
 
     private subscriptionsArray = new Array<Subscription>();
     private disabled: boolean = false;
@@ -109,7 +118,7 @@ export class CheckboxGroupComponent
             this.renderer.setAttribute(
                 child.inputViewContainer.element.nativeElement,
                 "name",
-                this.name
+                this.name()()()()
             );
             this.subscriptionsArray.push(this.subscribeToCheckboxEvent(child));
             setTimeout(() => {
@@ -128,7 +137,7 @@ export class CheckboxGroupComponent
                         this.renderer.setAttribute(
                             checkbox.inputViewContainer.element.nativeElement,
                             "name",
-                            this.name
+                            this.name()()()()
                         );
                         this.subscriptionsArray.push(
                             this.subscribeToCheckboxEvent(checkbox)

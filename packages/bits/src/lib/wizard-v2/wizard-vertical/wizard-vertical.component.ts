@@ -62,6 +62,14 @@ export class WizardVerticalComponent extends WizardDirective {
     public get selectedIndex(): number {
         return super.selectedIndex;
     }
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     public set selectedIndex(value: number) {
         super.selectedIndex = value;

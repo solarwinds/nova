@@ -19,13 +19,14 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnInit,
-    Output,
-    ViewEncapsulation,
+  Component,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnInit,
+  Output,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
@@ -54,13 +55,29 @@ import { NuiFormFieldControl } from "../form-field/public-api";
     standalone: false,
 })
 export class SwitchComponent implements OnInit, ControlValueAccessor {
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public value: boolean;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public disabled: boolean;
 
     /**
      * Input to set aria label text
      */
-    @Input() public ariaLabel: string = "Switch";
+    public readonly ariaLabel = input<string>("Switch");
 
     @Output() valueChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 

@@ -6,7 +6,7 @@
     <div
         class="nui-popover-container"
         [ngClass]="['nui-popover-container--' + placement]"
-        [class.unlimited]="unlimited"
+        [class.unlimited]="unlimited()()()()"
     >
         <div class="nui-popover-container__arrow arrow"></div>
         <div class="nui-popover-container__frame">
@@ -33,9 +33,9 @@
             </div>
             <div
                 class="nui-popover-container__content"
-                [class.noPadding]="!hasPadding"
+                [class.noPadding]="!hasPadding()()()()"
             >
-                <ng-container [ngTemplateOutlet]="template"></ng-container>
+                <ng-container [ngTemplateOutlet]="template()()()()"></ng-container>
             </div>
         </div>
     </div>

@@ -26,21 +26,22 @@ import {
     style,
 } from "@angular/animations";
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    Renderer2,
-    SimpleChanges,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  Renderer2,
+  SimpleChanges,
+  ViewChild,
+  ViewContainerRef,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import isUndefined from "lodash/isUndefined";
 import { Subject, Subscription } from "rxjs";
@@ -119,16 +120,24 @@ export class PanelComponent
      * 'closable' allows to close panel by click.
      */
 
-    @Input() panelMode = PanelModes.static;
+    readonly panelMode = input(PanelModes.static);
 
     /**
      * Use this attribute to set the text for the header if transclusion of custom header content is not being used.
      */
-    @Input() heading: string;
+    readonly heading = input<string>(undefined!);
 
     /**
      * Set this to true in order to set the collapsed state of the side pane
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() set isCollapsed(value: boolean) {
         // used to catch first ngOnChanges
         if (!isUndefined(this._isCollapsed)) {
@@ -145,12 +154,20 @@ export class PanelComponent
     /**
      * Show sidebar over content if displacePrimaryContent = false, show sidebar near content if displacePrimaryContent = true
      */
-    @Input() displacePrimaryContent = true;
+    readonly displacePrimaryContent = input(true);
 
     /**
      * Set this to true in order to hide the side pane. This may be useful if you want to use nui-panel but want to
      * show the left pane conditionally.
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() set isHidden(value: boolean) {
         if (this.isClosable && this._isHidden !== value) {
             this.toggleHideOrCollapsed();
@@ -164,38 +181,77 @@ export class PanelComponent
     /**
      * Define orientation of a panel. Possible values are: "right", "left", "top", "bottom"
      */
-    @Input() orientation: string = "left";
+    readonly orientation = input<string>("left");
 
     /**
      * Use this attribute to make side pane resizable.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() isResizable = false;
 
     /**
      * Use this attribute to remove default padding from header.
      */
-    @Input() headerPadding = true;
+    readonly headerPadding = input(true);
 
     /**
      * Use this attribute to remove default padding from side pane body.
      */
-    @Input() sidePaneBodyPadding = true;
+    readonly sidePaneBodyPadding = input(true);
 
     /**
      * Use this attribute to set pane right border dark color.
      */
-    @Input() darkBorder = false;
+    readonly darkBorder = input(false);
 
     /**
      * Use this attribute to set the desired size for the side pane in pixels. The default is 250px.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() paneSize: string;
 
-    @Input() panelBackgroundColor: PanelBackgroundColor =
-        PanelBackgroundColor.colorBgLight;
+    readonly panelBackgroundColor = input<PanelBackgroundColor>(PanelBackgroundColor.colorBgLight);
 
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() paneCollapsedSize: string;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() paneMinSize: string;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() paneMaxSize: string;
 
     @Output() collapsed: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -258,7 +314,7 @@ export class PanelComponent
     }
 
     public ngAfterViewInit(): void {
-        if (this.orientation === panelMap.bottom.orientation) {
+        if (this.orientation()()()() === panelMap.bottom.orientation) {
             this.isResizable = false;
         }
         this.displayFooter = !this.paneDirectionHorizontal;
@@ -280,18 +336,22 @@ export class PanelComponent
     }
 
     public get panelClass(): string {
-        return panelMap[this.orientation].class;
+        return panelMap[this.orientation()()()()].class;
     }
 
     public get paneDirectionHorizontal(): boolean {
+        const orientation = this.orientation();
+        const orientation = this.orientation();
+        const orientation = this.orientation();
+        const orientation = this.orientation();
         return (
-            this.orientation === panelMap.top.orientation ||
-            this.orientation === panelMap.bottom.orientation
+            orientation === panelMap.top.orientation ||
+            orientation === panelMap.bottom.orientation
         );
     }
 
     public get mainIcon(): string {
-        return panelMap[this.orientation].icon[this.panelState];
+        return panelMap[this.orientation()()()()].icon[this.panelState];
     }
 
     public toggleEnter(): void {
@@ -358,7 +418,7 @@ export class PanelComponent
     }
 
     public getResizeDirection(): string | undefined {
-        switch (this.orientation) {
+        switch (this.orientation()()()()) {
             case "left":
                 return "right";
             case "right":
@@ -386,10 +446,10 @@ export class PanelComponent
     }
 
     public handleContentMargin(): void {
-        if (!this.displacePrimaryContent && !this.isClosable) {
+        if (!this.displacePrimaryContent()()()() && !this.isClosable) {
             this.renderer.setStyle(
                 this.getPanelMainContentElement(),
-                "margin-" + this.orientation,
+                "margin-" + this.orientation()()()(),
                 this.paneCollapsedSize
             );
         }
@@ -437,9 +497,9 @@ export class PanelComponent
     }
 
     private defineState() {
-        this.isCollapsible = this.panelMode === PanelModes.collapsible;
-        this.isClosable = this.panelMode === PanelModes.closable;
-        this.isHoverable = this.panelMode === PanelModes.hoverable;
+        this.isCollapsible = this.panelMode()()()() === PanelModes.collapsible;
+        this.isClosable = this.panelMode()()()() === PanelModes.closable;
+        this.isHoverable = this.panelMode()()()() === PanelModes.hoverable;
         if (this.isHoverable) {
             this._isCollapsed = true;
             this.isCollapsible = true;

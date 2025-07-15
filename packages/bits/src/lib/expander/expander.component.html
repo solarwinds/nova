@@ -54,7 +54,7 @@
     >
         <div
             class="nui-expander__body"
-            [class.hide-left-border]="hideLeftBorder"
+            [class.hide-left-border]="hideLeftBorder()()()()"
             *ngIf="open"
             @expandContent
         >

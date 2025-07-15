@@ -10,7 +10,7 @@
                 [selectionMode]="selectionMode"
                 [repeatItemTemplateRef]="listRepeatDefaultItemTemplate"
                 [selection]="selectedOptions"
-                [itemsSource]="itemPickerOptions"
+                [itemsSource]="itemPickerOptions()"
                 (selectionChange)="onSelection($event)"
             >
             </nui-repeat>

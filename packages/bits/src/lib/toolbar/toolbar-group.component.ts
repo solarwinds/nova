@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, ContentChildren, Input, QueryList } from "@angular/core";
+import { Component, ContentChildren, QueryList, input } from "@angular/core";
 
 import { ToolbarItemComponent } from "./toolbar-item.component";
 /**
@@ -30,7 +30,7 @@ import { ToolbarItemComponent } from "./toolbar-item.component";
     standalone: false,
 })
 export class ToolbarGroupComponent {
-    @Input() title: string;
+    readonly title = input<string>(undefined!);
 
     @ContentChildren(ToolbarItemComponent)
     public items: QueryList<ToolbarItemComponent>;

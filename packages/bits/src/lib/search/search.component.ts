@@ -19,12 +19,13 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    EventEmitter,
-    Input,
-    OnDestroy,
-    Output,
-    ViewEncapsulation,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
 import { Subject } from "rxjs";
@@ -67,22 +68,54 @@ export class SearchComponent implements IFilterPub, OnDestroy {
     /**
      * Controls focus of input field (true means focused).
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() captureFocus: boolean;
     /**
      * Name of input the element.
      */
-    @Input() name: string;
+    readonly name = input<string>(undefined!);
     /**
      * Input to apply error state styles
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public isInErrorState: boolean = false;
     /**
      * A string that will be placed as a watermark inside of the search when it's empty.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() placeholder: string;
     /**
      * Initial value of input field.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() value: string;
     /**
      * Event fired on each 'cancel' button click. Emits empty string.

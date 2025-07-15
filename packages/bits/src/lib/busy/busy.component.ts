@@ -19,14 +19,15 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentInit,
-    Component,
-    ContentChild,
-    ElementRef,
-    Input,
-    OnChanges,
-    SimpleChanges,
-    ViewEncapsulation,
+  AfterContentInit,
+  Component,
+  ContentChild,
+  ElementRef,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 
 import { TabNavigationService } from "../../services/tab-navigation.service";
@@ -51,12 +52,20 @@ export class BusyComponent implements AfterContentInit, OnChanges {
     public isSpinnerTemplate = false;
     public isProgressTemplate = false;
 
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() busy: boolean;
 
     /**
      * When busy is true, by default we disable keyboard tab navigation for all underlying elements
      */
-    @Input() disableTabNavigation: boolean = true;
+    readonly disableTabNavigation = input<boolean>(true);
 
     @ContentChild(SpinnerComponent) spinnerComponent: SpinnerComponent;
     @ContentChild(ProgressComponent) progressComponent: ProgressComponent;
@@ -83,7 +92,7 @@ export class BusyComponent implements AfterContentInit, OnChanges {
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (
-            this.disableTabNavigation &&
+            this.disableTabNavigation()()()() &&
             changes.busy?.currentValue !== undefined
         ) {
             if (this.busy) {

@@ -46,29 +46,269 @@ import { IDatePickerDisabledDate } from "./public-api";
 export class DatePickerInnerComponent
     implements AfterContentInit, OnInit, OnChanges, OnDestroy
 {
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() locale: string;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() datepickerMode: string;
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() startingDay: number;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() yearRange: number;
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() minDate: Moment;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() maxDate: Moment;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() minMode: string;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() maxMode: string;
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() showWeeks: boolean;
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() dateFormat: string;
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() formatDay: string;
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() formatMonth: string;
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() formatYear: string;
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() formatDayHeader: string;
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() formatDayTitle: string;
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() formatMonthTitle: string;
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() onlyCurrentMonth: boolean;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() preserveInsignificant: boolean;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() disabledDates: IDatePickerDisabledDate[];
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() initDate: Moment;
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() inline: boolean;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() selectedDate: Moment;
     /** Is used to handle timezone of date value */
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() handleTimezone: boolean;
 
     @Output()
@@ -102,6 +342,14 @@ export class DatePickerInnerComponent
         return this.inline ? "application" : "dialog";
     }
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     get value(): Moment | undefined {
         return this._value;

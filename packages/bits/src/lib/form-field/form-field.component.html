@@ -1,5 +1,5 @@
 <ng-template #showOptional>
-    <span *ngIf="showOptionalText" class="nui-form-field__state-text" i18n
+    <span *ngIf="showOptionalText()()()()" class="nui-form-field__state-text" i18n
         >(optional)</span
     >
 </ng-template>
@@ -16,7 +16,7 @@
             >
         </div>
         <div
-            *ngIf="info || infoTemplate"
+            *ngIf="info || infoTemplate()()()()"
             class="nui-form-field__control-label-container-info"
         >
             <nui-popover
@@ -46,7 +46,7 @@
 </div>
 
 <ng-template #infoTemplatePlain>
-    <ng-container *ngIf="info; else infoTemplate">
+    <ng-container *ngIf="info; else infoTemplate()()()()">
         {{ info }}
     </ng-container>
 </ng-template>

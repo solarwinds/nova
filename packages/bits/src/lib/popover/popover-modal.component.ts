@@ -20,16 +20,17 @@
 
 import { AnimationEvent } from "@angular/animations";
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    HostListener,
-    Input,
-    NgZone,
-    OnDestroy,
-    OnInit,
-    TemplateRef,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  input
 } from "@angular/core";
 import _isBoolean from "lodash/isBoolean";
 import { Subject, Subscription } from "rxjs";
@@ -62,37 +63,53 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
     /**
      * Is backdrop used
      */
-    @Input() backdrop: boolean;
+    readonly backdrop = input<boolean>(undefined!);
 
     /**
      * Defines settings for popover
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() context: IPopoverModalContext;
 
     /**
      * Defines popover content
      */
-    @Input() template: TemplateRef<string>;
+    readonly template = input<TemplateRef<string>>();
 
     /**
      * Updates fadeIn property
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() displayChange: Subject<boolean>;
 
     /**
      * Popover hostElement
      */
-    @Input() hostElement: any;
+    readonly hostElement = input<any>();
 
     /**
      * Defines if container has padding.
      */
-    @Input() hasPadding: boolean;
+    readonly hasPadding = input<boolean>(undefined!);
 
     /**
      * Specifies whether the default width and height constraints are in effect for the popover
      */
-    @Input() unlimited: boolean;
+    readonly unlimited = input<boolean>(undefined!);
 
     public placement: PopoverPlacement = "right";
     public fadeIn = false;

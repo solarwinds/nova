@@ -28,6 +28,8 @@ import { IMenuGroup, ToastService } from "@nova-ui/bits";
     standalone: false,
 })
 export class PanelCollapseTopOrientedExampleComponent {
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() isOn = true;
 
     constructor(@Inject(ToastService) private toastService: ToastService) {}

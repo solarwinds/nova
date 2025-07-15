@@ -21,17 +21,18 @@
 import { FocusMonitor } from "@angular/cdk/a11y";
 import { CdkStepHeader, StepState, STEP_STATE } from "@angular/cdk/stepper";
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    Component,
-    ElementRef,
-    Inject,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Optional,
-    SimpleChanges,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Inject,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Optional,
+  SimpleChanges,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import assign from "lodash/assign";
 
@@ -67,26 +68,50 @@ export class WizardStepHeaderComponent
     public stepState: StepState;
 
     /** Custom icon config received from the wizard step. Allows to customize state icons for a particular wizard step */
-    @Input() stepStateConfig: Partial<WizardStepStateConfig>;
+    readonly stepStateConfig = input<Partial<WizardStepStateConfig>>();
 
     /** Label of the given step. */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() label: WizardStepLabelDirective | string;
 
     /** Label that is rendered below optional steps. */
-    @Input() optionalLabel: string = $localize`Optional`;
+    readonly optionalLabel = input<string>($localize `Optional`);
 
     /** Error message to display when there's an error. */
-    @Input() errorMessage: string;
+    readonly errorMessage = input<string>(undefined!);
 
     /** Index of the given step. */
-    @Input() index: number;
+    readonly index = input<number>(undefined!);
 
     /** Whether the given step is selected. */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() selected: boolean;
 
     /** Whether the given step label is active. */
-    @Input() active: boolean;
+    readonly active = input<boolean>(undefined!);
 
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() step: WizardStepV2Component;
 
     public stepStateConfigMap: WizardStepStateConfig;

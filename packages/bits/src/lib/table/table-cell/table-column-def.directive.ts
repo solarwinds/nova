@@ -20,11 +20,12 @@
 
 import { CdkColumnDef } from "@angular/cdk/table";
 import {
-    Directive,
-    Input,
-    OnChanges,
-    OnInit,
-    SimpleChanges,
+  Directive,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  input
 } from "@angular/core";
 
 import { TableStateHandlerService } from "../table-state-handler.service";
@@ -48,26 +49,38 @@ export class TableColumnDefDirective
     public get name(): string {
         return super.name;
     }
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input("nuiColumnDef")
     public set name(value: string) {
         super.name = value;
     }
-    @Input() type: ColumnTypes;
-    @Input() columnWidth: number;
+    readonly type = input<ColumnTypes>(undefined!);
+    readonly columnWidth = input<number>(undefined!);
 
     constructor(private tableStateHandlerService: TableStateHandlerService) {
         super();
     }
 
     public ngOnInit(): void {
-        if (this.columnWidth) {
+        const columnWidth = this.columnWidth();
+        const columnWidth = this.columnWidth();
+        const columnWidth = this.columnWidth();
+        const columnWidth = this.columnWidth();
+        if (columnWidth) {
             this.tableStateHandlerService.setColumnWidth(
                 this.name,
-                this.columnWidth
+                columnWidth
             );
         }
 
-        if (this.type === "icon") {
+        if (this.type()()()() === "icon") {
             this.tableStateHandlerService.setAlignment(
                 this.name,
                 "align-center"

@@ -19,14 +19,15 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Input,
-    Output,
-    TemplateRef,
-    ViewEncapsulation,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  Input,
+  Output,
+  TemplateRef,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 
 import { TabGroupComponent } from "../tab-group/tab-group.component";
@@ -35,7 +36,7 @@ import { TabGroupComponent } from "../tab-group/tab-group.component";
     selector: "nui-tab",
     template: `
         <div [hidden]="!active"><ng-content></ng-content></div>
-        <ng-template *ngIf="active" [ngTemplateOutlet]="templateRef">
+        <ng-template *ngIf="active" [ngTemplateOutlet]="templateRef()()()()">
         </ng-template>
     `,
     encapsulation: ViewEncapsulation.None,
@@ -43,13 +44,21 @@ import { TabGroupComponent } from "../tab-group/tab-group.component";
 })
 export class TabComponent {
     /** Tab header text */
-    @Input() heading: string;
+    readonly heading = input<string>(undefined!);
     /** If true tab can not be activated  */
-    @Input() disabled: boolean;
+    readonly disabled = input<boolean>(undefined!);
 
-    @Input() templateRef: TemplateRef<ElementRef>;
+    readonly templateRef = input<TemplateRef<ElementRef>>();
 
     /** Tab active state toggle */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     get active(): boolean {
         return this._active;
@@ -60,7 +69,7 @@ export class TabComponent {
             return;
         }
 
-        if ((this.disabled && active) || !active) {
+        if ((this.disabled()()()() && active) || !active) {
             if (this._active && !active) {
                 this.deselected.emit(this);
                 this._active = active;

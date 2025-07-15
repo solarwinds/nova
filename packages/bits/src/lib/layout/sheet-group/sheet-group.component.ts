@@ -19,20 +19,21 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    ContentChildren,
-    ElementRef,
-    HostBinding,
-    Input,
-    OnDestroy,
-    OnInit,
-    QueryList,
-    Renderer2,
-    ViewChild,
-    ViewContainerRef,
+  AfterViewInit,
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  ContentChildren,
+  ElementRef,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  Renderer2,
+  ViewChild,
+  ViewContainerRef,
+  input
 } from "@angular/core";
 
 import {
@@ -61,6 +62,18 @@ export class SheetGroupComponent implements OnInit, AfterViewInit, OnDestroy {
     /**
      * Set whether the child elements can be resizable.
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in combination with `@HostBinding` and migrating would
+    //  break.
+    // TODO: Skipped for migration because:
+    //  This input is used in combination with `@HostBinding` and migrating would
+    //  break.
+    // TODO: Skipped for migration because:
+    //  This input is used in combination with `@HostBinding` and migrating would
+    //  break.
+    // TODO: Skipped for migration because:
+    //  This input is used in combination with `@HostBinding` and migrating would
+    //  break.
     @HostBinding("class.nui-sheet-group--resizable")
     @Input()
     isResizable: boolean;
@@ -68,22 +81,38 @@ export class SheetGroupComponent implements OnInit, AfterViewInit, OnDestroy {
     /**
      * Set resize unit of child elements(pixel, percent). By default pixels are used.
      */
-    @Input() resizeUnit = ResizeUnit.pixel;
+    readonly resizeUnit = input(ResizeUnit.pixel);
 
     /**
      * Determines the way sheets links each other. Can be 'joined' or 'separate'.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() sheetsType: ISheetType = "joined";
 
     /**
      * Direction of layout elements. Can be 'row' or 'column'.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() direction: ILayoutElementDirection = "row";
     /**
      * Value for flexBasis of SheetComponent or SheetGroupComponent.
      * Can be in 'px' or '%'
      */
-    @Input() initialSizeValue: string;
+    readonly initialSizeValue = input<string>(undefined!);
 
     @HostBinding("class.nui-sheet-group--joined-sheets")
     applyJoinedSheetsClass: boolean;
@@ -131,7 +160,7 @@ export class SheetGroupComponent implements OnInit, AfterViewInit, OnDestroy {
         (<LayoutResizerComponent>ref.instance).resizeElement = resizeEl;
         (<LayoutResizerComponent>ref.instance).resizeDirection =
             this.resizeDirection;
-        (<LayoutResizerComponent>ref.instance).resizeUnit = this.resizeUnit;
+        (<LayoutResizerComponent>ref.instance).resizeUnit = this.resizeUnit()()()();
         (<LayoutResizerComponent>ref.instance).enableSeparateOffsetSize =
             this.sheetsType === "separate";
         ref.changeDetectorRef.detectChanges();

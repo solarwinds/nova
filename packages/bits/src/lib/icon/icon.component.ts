@@ -19,12 +19,13 @@
 //  THE SOFTWARE.
 
 import {
-    ChangeDetectionStrategy,
-    Component,
-    Input,
-    OnChanges,
-    SimpleChanges,
-    ViewEncapsulation,
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import _isInteger from "lodash/isInteger";
@@ -56,23 +57,77 @@ export class IconComponent implements OnChanges {
         small: "nui-icon-size-sm",
     };
 
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input()
     iconColor: string;
-    @Input()
-    brushType: string = "filled";
+    readonly brushType = input<string>("filled");
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input()
     iconHoverColor: string;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input()
     iconSize: string;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input()
     cssClass: string;
-    @Input()
-    fillContainer = false;
+    readonly fillContainer = input(false);
     private _counter?: number;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input()
     status: IconStatus;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input()
     childStatus: IconStatus;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input()
     icon: string;
 
@@ -99,8 +154,12 @@ export class IconComponent implements OnChanges {
         if (!this.iconFound) {
             iconClass.push("nui-icon-not-found");
         } else {
-            if (this.brushType) {
-                iconClass.push(this.brushType);
+            const brushType = this.brushType();
+            const brushType = this.brushType();
+            const brushType = this.brushType();
+            const brushType = this.brushType();
+            if (brushType) {
+                iconClass.push(brushType);
             }
 
             if (this.iconColor) {
@@ -120,7 +179,7 @@ export class IconComponent implements OnChanges {
                 iconClass.push(this.cssClass);
             }
 
-            if (this.fillContainer) {
+            if (this.fillContainer()()()()) {
                 iconClass.push("nui-icon--fill-container");
             }
         }
@@ -128,6 +187,14 @@ export class IconComponent implements OnChanges {
         return iconClass.join(" ");
     }
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set counter(value: string | number | undefined) {
         // eslint-disable-next-line no-undef-init

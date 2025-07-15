@@ -19,22 +19,23 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentInit,
-    AfterViewChecked,
-    ChangeDetectorRef,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    QueryList,
-    ViewChild,
-    ViewChildren,
-    ViewContainerRef,
-    ViewEncapsulation,
+  AfterContentInit,
+  AfterViewChecked,
+  ChangeDetectorRef,
+  Component,
+  ContentChildren,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+  ViewContainerRef,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import _find from "lodash/find";
 import _findIndex from "lodash/findIndex";
@@ -74,25 +75,41 @@ export class WizardComponent
      * Set to true to show the "Finish" button at any point during the wizard process.
      *(default: false)
      */
-    @Input() public canFinish = false;
+    public readonly canFinish = input(false);
     /**
      * Set to true to enable overflow in wizard body container.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public enableScroll: boolean = false;
     /**
      * Use this to set wizard body container height.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public bodyContainerHeight: string;
     /**
      * Overrides the default text on the finish step button.
      *(default: 'Action')
      */
-    @Input() public finishText = WizardComponent.placeholderFinishText;
+    public readonly finishText = input(WizardComponent.placeholderFinishText);
     /**
      * Use this to stretch lines between step labels according to largest label width.
      *(default: false)
      */
-    @Input() public stretchStepLines: boolean = false;
+    public readonly stretchStepLines = input<boolean>(false);
     /**
      * Evaluated when a step is selected.
      */
@@ -138,7 +155,7 @@ export class WizardComponent
     ) {}
 
     public ngOnInit(): void {
-        if (this.finishText === WizardComponent.placeholderFinishText) {
+        if (this.finishText()()()() === WizardComponent.placeholderFinishText) {
             this.logger
                 .warn(`WizardComponent input "finishText" is using placeholder text
 "${WizardComponent.placeholderFinishText}". A value should be specified.`);
@@ -176,7 +193,7 @@ export class WizardComponent
     }
 
     public ngAfterViewChecked(): void {
-        if (this.stretchStepLines) {
+        if (this.stretchStepLines()()()()) {
             this.stepLineWidth = Math.round(this.getLargestLabelWidth() / 2);
             this.changeDetector.detectChanges();
         }

@@ -1,11 +1,11 @@
 <div class="nui-combobox__layout-block" [class.disabled]="isDisabled">
     <nui-popup
-        [class.custom-template]="customTemplate"
+        [class.custom-template]="customTemplate()()()()"
         (opened)="openChange($event)"
         [manualOpenControl]="openControl"
         [width]="getWidth()"
         [contextClass]="getPopupContextClass()"
-        [appendToBody]="appendToBody"
+        [appendToBody]="appendToBody()()()()"
     >
         <div class="nui-combobox__icon" *ngIf="!!icon">
             <nui-icon
@@ -75,7 +75,7 @@
                     >
                         <span
                             tabindex="-1"
-                            *ngIf="!customTemplate"
+                            *ngIf="!customTemplate()()()()"
                             [innerHTML]="
                                 getItemDisplay(item)
                                     | nuiHighlight
@@ -85,7 +85,7 @@
                             "
                         ></span>
                         <ng-container
-                            [ngTemplateOutlet]="customTemplate"
+                            [ngTemplateOutlet]="customTemplate()()()()"
                             [ngTemplateOutletContext]="{ context: item }"
                         >
                         </ng-container>

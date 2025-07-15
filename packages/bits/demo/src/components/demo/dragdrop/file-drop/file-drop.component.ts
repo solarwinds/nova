@@ -19,12 +19,12 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    EventEmitter,
-    HostBinding,
-    HostListener,
-    Input,
-    Output,
+  Component,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Output,
+  input
 } from "@angular/core";
 
 import { FileDropState } from "./public-api";
@@ -48,7 +48,7 @@ export class FileDropExampleComponent {
 
     private counterToHackDragLeave = 0;
 
-    @Input() public state: FileDropState = FileDropState.default;
+    public readonly state = input<FileDropState>(FileDropState.default);
 
     @Output() public enter = new EventEmitter<DragEvent>();
     @Output() public leave = new EventEmitter<DragEvent>();
@@ -57,12 +57,12 @@ export class FileDropExampleComponent {
 
     @HostBinding("class.nui-file-drop--active")
     get hasActiveClass(): boolean {
-        return this.state === FileDropState.active;
+        return this.state() === FileDropState.active;
     }
 
     @HostBinding("class.nui-file-drop--error")
     get hasErrorClass(): boolean {
-        return this.state === FileDropState.error;
+        return this.state() === FileDropState.error;
     }
 
     // this solves problem with opening the file since browser fires dragover by default

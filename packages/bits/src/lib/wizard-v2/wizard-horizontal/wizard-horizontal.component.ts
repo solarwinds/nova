@@ -22,19 +22,20 @@ import { Directionality } from "@angular/cdk/bidi";
 import { BooleanInput } from "@angular/cdk/coercion";
 import { CdkStepper, StepperSelectionEvent } from "@angular/cdk/stepper";
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    Input,
-    NgZone,
-    OnDestroy,
-    OnInit,
-    QueryList,
-    ViewChild,
-    ViewChildren,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import last from "lodash/last";
 import pull from "lodash/pull";
@@ -54,8 +55,8 @@ import { WizardDirective } from "../wizard.directive";
     styleUrls: ["../wizard.component.less"],
     host: {
         class: "nui-wizard-horizontal-layout",
-        "[class.nui-wizard-step-header__label-position--end]": "labelPosition == 'end'",
-        "[class.nui-wizard-step-header__label-position--top]": "labelPosition == 'top'",
+        "[class.nui-wizard-step-header__label-position--end]": "labelPosition()()()() == 'end'",
+        "[class.nui-wizard-step-header__label-position--top]": "labelPosition()()()() == 'top'",
         "aria-orientation": "horizontal",
         role: "tablist",
     },
@@ -95,13 +96,21 @@ export class WizardHorizontalComponent
     public get selectedIndex(): number {
         return super.selectedIndex;
     }
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     public set selectedIndex(value: number) {
         super.selectedIndex = value;
     }
 
     /** Whether the label should display in bottom or end position. */
-    @Input() labelPosition: "top" | "end" = "top";
+    readonly labelPosition = input<"top" | "end">("top");
 
     @ViewChild("headerContainer") public headerContainer: ElementRef;
     @ViewChildren("stepHeaders")

@@ -16,10 +16,26 @@ export class ClickFilterDirective {
     private _cancelBubble: IEventFilter = makePredicate(true);
     private _preventDefault: IEventFilter = isTargetNotAnAnchor;
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() public set cancelBubble(value: IEventFilter | boolean | null) {
         this._cancelBubble = makePredicate(value ?? true);
     }
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() public set preventDefault(value: IEventFilter | boolean | null) {
         this._preventDefault = makePredicate(value ?? isTargetNotAnAnchor);
     }

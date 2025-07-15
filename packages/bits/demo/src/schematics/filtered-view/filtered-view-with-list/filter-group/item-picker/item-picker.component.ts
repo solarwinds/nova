@@ -19,15 +19,15 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Inject,
-    Input,
-    OnInit,
-    Output,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Inject,
+  OnInit,
+  Output,
+  input
 } from "@angular/core";
 
 import {
@@ -58,8 +58,8 @@ export interface IItemPickerOption {
     standalone: false,
 })
 export class ItemPickerComponent implements OnInit, AfterViewInit {
-    @Input() itemPickerOptions: IItemPickerOption[];
-    @Input() selectedValues: string[] = [];
+    readonly itemPickerOptions = input<IItemPickerOption[]>(undefined!);
+    readonly selectedValues = input<string[]>([]);
 
     @Output() selectionChanged: EventEmitter<ISelection> = new EventEmitter();
 
@@ -84,7 +84,7 @@ export class ItemPickerComponent implements OnInit, AfterViewInit {
 
     public ngOnInit(): void {
         (this.dataSource as ClientSideDataSource<IFilterGroupOption>).setData(
-            this.itemPickerOptions
+            this.itemPickerOptions()
         );
         this.selection = {
             isAllPages: false,
@@ -109,8 +109,8 @@ export class ItemPickerComponent implements OnInit, AfterViewInit {
     }
 
     public getSelectedOptions(): IFilterGroupOption[] {
-        return this.itemPickerOptions.filter(
-            (item) => this.selectedValues.indexOf(item.value) !== -1
+        return this.itemPickerOptions().filter(
+            (item) => this.selectedValues().indexOf(item.value) !== -1
         );
     }
 }

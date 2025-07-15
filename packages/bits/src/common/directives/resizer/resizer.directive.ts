@@ -64,6 +64,14 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
      */
     private _direction: ResizeDirection;
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() set resizerDirection(direction: ResizeDirection) {
         this._direction = direction;
         this.refreshStyle();
@@ -83,6 +91,14 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
      */
     private _disabled: boolean = false;
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() set resizerDisabled(isDisabled: boolean) {
         this._disabled = isDisabled;
         if (this.resizeGutter) {
@@ -99,11 +115,27 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
     /**
      * Choose resize value of your element(pixel, percent). By default pixels are used.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public resizerValue: ResizeUnit = ResizeUnit.pixel;
 
     /**
      * Switch to mode in which resizer change parent's and sibling's flex-basis (layout-specific)
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public isMultiple: boolean;
 
     /**

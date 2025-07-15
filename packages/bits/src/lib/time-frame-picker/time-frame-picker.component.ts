@@ -19,15 +19,16 @@
 //  THE SOFTWARE.
 
 import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    ViewEncapsulation,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import _cloneDeep from "lodash/cloneDeep";
 import { Moment } from "moment/moment";
@@ -48,13 +49,37 @@ import { TimeframeService } from "./services/timeframe.service";
 })
 export class TimeFramePickerComponent implements OnChanges, OnInit {
     /**  earliest selectable date */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() minDate: Moment;
     /**  latest selectable date */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() maxDate: Moment;
     /** model of timepicker */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() startModel: ITimeframe;
     /** Allows popup box to be attached to document.body */
-    @Input() appendToBody: boolean;
+    readonly appendToBody = input<boolean>(undefined!);
 
     public model: ITimeframe;
 

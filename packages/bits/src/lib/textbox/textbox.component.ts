@@ -19,14 +19,15 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    Output,
-    ViewChild,
-    ViewEncapsulation,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  Output,
+  ViewChild,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
@@ -68,20 +69,20 @@ export class TextboxComponent
     /**
      * Value used as a label for the text box.
      */
-    @Input() public caption: string;
+    public readonly caption = input<string>(undefined!);
     /**
      * Use to enable or disable input autocomplete from browser. Default value is "on".
      */
-    @Input() public autocomplete: "on" | "off" = "on";
+    public readonly autocomplete = input<"on" | "off">("on");
     /**
      * Value used as a info in popover for the text box.
      */
-    @Input() public info: string;
+    public readonly info = input<string>(undefined!);
 
     /**
      * Use to set a custom width for the input field.
      */
-    @Input() public customBoxWidth: string;
+    public readonly customBoxWidth = input<string>(undefined!);
     /**
      * Event fired when input text is changed.
      */
@@ -89,52 +90,104 @@ export class TextboxComponent
     /**
      * The option to disable the text box.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public disabled = false;
     /**
      * Help content provided below the text box.
      */
-    @Input() public hint = "";
+    public readonly hint = input("");
     /**
      * Name of the element.
      */
-    @Input() public name: string;
+    public readonly name = input<string>(undefined!);
     /**
      * Value used as a placeholder for the text box.
      */
-    @Input() public placeholder = "";
+    public readonly placeholder = input("");
     /**
      * The option to make the text box read only.
      */
-    @Input() public readonly = false;
+    public readonly readonly = input(false);
     /**
      * Makes textbox multiline (textarea), specifies rows count
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() public rows = 1;
 
     /**
      * Use to set type of input (number, password etc.).
      */
-    @Input() public type = "text";
+    public readonly type = input("text");
 
     /**
      * Input initial value
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public value: string;
 
     /**
      * Input to apply error state styles
      */
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @Input() public isInErrorState: boolean = false;
 
     /**
      * Input to set aria label text
      */
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @Input() public ariaLabel: string = "Textbox input";
 
     /**
      * Input to apply busy state and show spinner
      */
-    @Input() public isBusy: boolean;
+    public readonly isBusy = input<boolean>(undefined!);
 
     /**
      * Event fired when textbox is focused out.

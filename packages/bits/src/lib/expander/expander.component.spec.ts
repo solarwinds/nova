@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, DebugElement, Input } from "@angular/core";
+import { Component, DebugElement, Input, input } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
@@ -34,6 +34,8 @@ const customBodyHtml = `<div><span>Covfefe</span></div>`;
     standalone: false,
 })
 class ExpanderUsageWithContentComponent {
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() open = false;
 }
 
@@ -43,8 +45,8 @@ class ExpanderUsageWithContentComponent {
     standalone: false,
 })
 class MockIconComponent {
-    @Input() icon: string;
-    @Input() iconColor: string;
+    readonly icon = input<string>(undefined!);
+    readonly iconColor = input<string>(undefined!);
 }
 
 describe("components >", () => {
@@ -79,19 +81,19 @@ describe("components >", () => {
                 it("when open", () => {
                     subject.open = true;
                     fixture.detectChanges();
-                    expect(headerIcon.icon).toBe("triangle-down");
+                    expect(headerIcon.icon()).toBe("triangle-down");
                 });
 
                 it("when closed", () => {
                     subject.open = false;
                     fixture.detectChanges();
-                    expect(headerIcon.icon).toBe("triangle-right");
+                    expect(headerIcon.icon()).toBe("triangle-right");
                 });
 
                 it("when disabled", () => {
                     subject.disabled = true;
                     fixture.detectChanges();
-                    expect(headerIcon.iconColor).toBe("gray");
+                    expect(headerIcon.iconColor()).toBe("gray");
                 });
             });
 

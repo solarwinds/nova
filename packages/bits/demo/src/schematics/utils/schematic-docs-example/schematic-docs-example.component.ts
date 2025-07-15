@@ -19,13 +19,13 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    Inject,
-    Input,
-    OnInit,
-    Optional,
-    SkipSelf,
-    ViewEncapsulation,
+  Component,
+  Inject,
+  OnInit,
+  Optional,
+  SkipSelf,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import _set from "lodash/set";
 
@@ -39,7 +39,7 @@ import {CodeSourceFiles, DEMO_PATH_TOKEN} from "@nova-ui/bits";
     standalone: false,
 })
 export class SchematicDocsExampleComponent implements OnInit {
-    @Input() exampleFolderName: string;
+    readonly exampleFolderName = input<string>(undefined!);
     public componentSources: string[];
     public shouldCodeRender: boolean;
 
@@ -68,7 +68,7 @@ export class SchematicDocsExampleComponent implements OnInit {
 
     public ngOnInit(): void {
         this.componentSources = this.getSourcesByFilenamePrefix(
-            this.exampleFolderName
+            this.exampleFolderName()
         );
     }
 

@@ -9,7 +9,7 @@
             <div class="d-flex align-content-center">
                 <div class="d-inline-flex align-items-center">
                     <nui-icon
-                        *ngIf="icon && tab !== tabsetContent[2]"
+                        *ngIf="icon() && tab !== tabsetContent[2]"
                         [icon]="tab.icon.name"
                         [iconColor]="
                             currentTabRoute === tab.id

@@ -39,7 +39,7 @@ import { ValidationMessageComponent } from "../validation-message.component";
 @Component({
     selector: "nui-custom-validation-message",
     template: `
-        <ng-container *ngIf="show">
+        <ng-container *ngIf="show()()()()">
             <ng-content></ng-content>
         </ng-container>
     `,

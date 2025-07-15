@@ -4,9 +4,9 @@
         #checkboxLabel
         role="checkbox"
         [attr.aria-label]="ariaLabel || null"
-        [attr.aria-labelledby]="ariaLabelledby"
+        [attr.aria-labelledby]="ariaLabelledby()()()()"
         [attr.aria-checked]="getAriaChecked()"
-        [attr.aria-describedby]="ariaDescribedby"
+        [attr.aria-describedby]="ariaDescribedby()()()()"
         [attr.tabindex]="!disabled ? 0 : -1"
         [title]="title"
         [class.nui-checkbox__translucent]="disabled"

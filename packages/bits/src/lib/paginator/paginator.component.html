@@ -25,7 +25,7 @@
                 <button
                     nui-button
                     type="button"
-                    *ngIf="item.value !== dots && !item.iconName"
+                    *ngIf="item.value !== dots()()()() && !item.iconName"
                     displayStyle="action"
                     (click)="item.action($event)"
                     [isEmpty]="false"
@@ -33,9 +33,9 @@
                     {{ item.value }}
                 </button>
                 <nui-popup
-                    *ngIf="item.value === dots"
-                    [appendToBody]="appendToBody"
-                    [baseElementSelector]="popupBaseElementSelector"
+                    *ngIf="item.value === dots()()()()"
+                    [appendToBody]="appendToBody()()()()"
+                    [baseElementSelector]="popupBaseElementSelector()()()()"
                 >
                     <button
                         nui-button

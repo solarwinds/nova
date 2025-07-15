@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
+import { ChangeDetectionStrategy, Component, input } from "@angular/core";
 
 interface IExampleTableModel {
     position: number;
@@ -50,7 +50,7 @@ export class TableRowHeightSetExampleComponent {
         "checks",
     ];
     public dataSource = getData();
-    @Input() density: string = "tiny";
+    readonly density = input<string>("tiny");
 }
 
 /** Table data */

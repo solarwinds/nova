@@ -20,12 +20,12 @@
 
 import { Overlay } from "@angular/cdk/overlay";
 import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    Input,
-    NO_ERRORS_SCHEMA,
-    ViewChild,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  NO_ERRORS_SCHEMA,
+  ViewChild,
+  input
 } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { first } from "rxjs/operators";
@@ -38,7 +38,7 @@ import { NuiOverlayModule } from "../overlay.module";
 
 @Component({
     template: `
-        <nui-overlay [toggleReference]="elRef.nativeElement" *ngIf="!destroyed">
+        <nui-overlay [toggleReference]="elRef.nativeElement" *ngIf="!destroyed()">
             <nui-select-v2-option *ngFor="let item of items" [value]="item">
                 <span class="mr-3">{{ item }}</span>
             </nui-select-v2-option>
@@ -49,7 +49,7 @@ import { NuiOverlayModule } from "../overlay.module";
 class PopupWrapperComponent implements AfterViewInit {
     public items = Array.from({ length: 50 }).map((_, i) => `Item ${i}`);
     public selectedOptions = this.items[0];
-    @Input() destroyed: boolean = false;
+    readonly destroyed = input<boolean>(false);
 
     @ViewChild(OverlayComponent) dropdown: OverlayComponent;
 

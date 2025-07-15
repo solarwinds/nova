@@ -64,36 +64,120 @@ export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
     /**
      * Image name from nui image preset or external source
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public image: any;
 
     /**
      * Sets aria-label text or alt for image from external source
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public description: string;
 
     /**
      * Available values are: 'left' and 'right'
      */
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() public float: string;
     /**
      * Available values are: 'centered', 'small', 'large'
      */
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() public margin: string;
     /**
      * 'True' will apply 30% opacity to the image
      */
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() public isWatermark: boolean;
     /**
      * Sets the width of the container parent image
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public width: string = "auto";
     /**
      * Sets the height of the container parent image
      */
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() public height: string = "auto";
     /**
      * When set to true sets the hardcoded width and height of the svg to 100% to fill the parent container
      */
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() public autoFill: boolean;
 
     public imageTemplate: SafeHtml;

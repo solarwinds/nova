@@ -19,13 +19,14 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    Output,
-    TemplateRef,
-    ViewEncapsulation,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  TemplateRef,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 
 /**
@@ -39,23 +40,55 @@ import {
     standalone: false,
 })
 export class ProgressComponent implements OnChanges {
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public show: boolean;
-    @Input() public showProgress = true;
+    public readonly showProgress = input(true);
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() public message: string;
-    @Input() public showNumber: boolean;
-    @Input() public percent: number;
-    @Input() public allowCancel: boolean;
-    @Input() public cancelText: string;
-    @Input() public helpText?: string;
-    @Input() public stacked: boolean;
-    @Input() public compactMode: boolean;
-    @Input() public ariaLabel: string = "Progress bar";
+    public readonly showNumber = input<boolean>(undefined!);
+    public readonly percent = input<number>(undefined!);
+    public readonly allowCancel = input<boolean>(undefined!);
+    public readonly cancelText = input<string>(undefined!);
+    public readonly helpText = input<string>();
+    public readonly stacked = input<boolean>(undefined!);
+    public readonly compactMode = input<boolean>(undefined!);
+    public readonly ariaLabel = input<string>("Progress bar");
 
     /**
      * Help template content displayed under the progress bar.
      * This can be used instead of the helpText string input for custom
      * help text styling.
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() helpTemplateRef: TemplateRef<any>;
 
     @Output() public cancel = new EventEmitter();
@@ -64,7 +97,7 @@ export class ProgressComponent implements OnChanges {
     public ariaValueNow: string | undefined;
 
     public ngOnChanges(): void {
-        this.isIndeterminate = this.percent === undefined;
+        this.isIndeterminate = this.percent()()()() === undefined;
     }
 
     public cancelProgress(): void {

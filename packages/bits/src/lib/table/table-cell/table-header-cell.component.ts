@@ -20,18 +20,18 @@
 
 import { CdkHeaderCell } from "@angular/cdk/table";
 import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    HostBinding,
-    HostListener,
-    Input,
-    NgZone,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Renderer2,
-    SimpleChanges,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  SimpleChanges,
+  input
 } from "@angular/core";
 import _isNil from "lodash/isNil";
 import _isUndefined from "lodash/isUndefined";
@@ -80,9 +80,9 @@ export class TableHeaderCellComponent
     extends CdkHeaderCell
     implements OnInit, OnChanges, AfterViewInit, OnDestroy
 {
-    @Input() alignment: TableAlignmentOptions;
-    @Input() tooltipText: string;
-    @Input() isColumnSortingDisabled: boolean = false;
+    readonly alignment = input<TableAlignmentOptions>(undefined!);
+    readonly tooltipText = input<string>(undefined!);
+    readonly isColumnSortingDisabled = input<boolean>(false);
     public currentCellIndex: number;
     private resizeInProgress: boolean;
     // Helps to show/hide edge highlight when cursor is outside of the resizable header cell
@@ -95,7 +95,7 @@ export class TableHeaderCellComponent
     // binding classes
     @HostBinding("class.nui-table__icon-cell")
     get isIconCell(): boolean {
-        return this.columnDef.type === "icon";
+        return this.columnDef.type()()()() === "icon";
     }
 
     /**
@@ -121,7 +121,7 @@ export class TableHeaderCellComponent
     get isSortable(): boolean {
         return (
             this.tableStateHandlerService.sortable &&
-            !this.isColumnSortingDisabled
+            !this.isColumnSortingDisabled()()()()
         );
     }
 
@@ -138,7 +138,7 @@ export class TableHeaderCellComponent
 
     @HostBinding("attr.title")
     get tooltip(): string {
-        return this.tooltipText;
+        return this.tooltipText()()()();
     }
 
     @HostBinding("class.nui-table__table-cell--left-edge-action")
@@ -166,7 +166,7 @@ export class TableHeaderCellComponent
     clicked(): void {
         if (
             this.tableStateHandlerService.sortable &&
-            !this.isColumnSortingDisabled &&
+            !this.isColumnSortingDisabled()()()() &&
             this.resizeEventPhase !== TableResizePhase.start
         ) {
             const cellIndex =
@@ -250,13 +250,17 @@ export class TableHeaderCellComponent
 
         this.tableStateHandlerService.columnType = <ColumnType>{
             columnName: this.columnDef.name,
-            columnType: this.columnDef.type || "default",
+            columnType: this.columnDef.type()()()() || "default",
         };
     }
 
     public ngOnInit(): void {
-        const alignment = this.alignment
-            ? `align-${this.alignment}`
+        const alignmentValue = this.alignment();
+        const alignmentValue = this.alignment();
+        const alignmentValue = this.alignment();
+        const alignmentValue = this.alignment();
+        const alignment = alignmentValue
+            ? `align-${alignmentValue}`
             : this.tableStateHandlerService.getAlignment(this.columnDef.name);
 
         this.resizable = this.tableStateHandlerService.resizable;
@@ -362,7 +366,7 @@ export class TableHeaderCellComponent
 
     public isColumnResizable(): boolean {
         const isColumnTypeResizable = _isUndefined(
-            <NonResizableColumnTypes>this.columnDef.type
+            <NonResizableColumnTypes>this.columnDef.type()()()()
         );
         return this.tableStateHandlerService.resizable && isColumnTypeResizable;
     }

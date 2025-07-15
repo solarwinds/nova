@@ -32,7 +32,13 @@ export class TabContentStatisticsExampleComponent {
     velit elementum ultricies vitae vel mauris. Nam egestas fermentum ex id interdum.
     In in dignissim libero. Suspendisse commodo pellentesque purus, sit amet tempor enim`;
 
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public isFirstOn: boolean = false;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public isSecondOn: boolean = true;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public isThirdOn: boolean = false;
 }

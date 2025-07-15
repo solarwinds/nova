@@ -11,7 +11,7 @@
         [class.has-error]="isInErrorState"
         [disabled]="isDisabled"
         [(ngModel)]="inputValue"
-        [placeholder]="placeholder"
+        [placeholder]="placeholder()()()()"
         (input)="handleInput(input.value)"
         (keydown)="onKeyDown($event)"
         (click)="selectTextInInput()"
@@ -46,7 +46,7 @@
 <nui-overlay
     roleAttr="listbox"
     [toggleReference]="elRef.nativeElement"
-    [viewportMargin]="popupViewportMargin"
+    [viewportMargin]="popupViewportMargin()()()()"
     [overlayConfig]="overlayConfig"
 >
     <ng-content></ng-content>

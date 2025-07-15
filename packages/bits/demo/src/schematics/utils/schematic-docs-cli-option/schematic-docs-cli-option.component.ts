@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject, Input, Optional } from "@angular/core";
+import { Component, Inject, Optional, input } from "@angular/core";
 
 import { RepeatComponent } from "@nova-ui/bits";
 
@@ -33,7 +33,7 @@ export enum SchematicsDocsComponentType {
     standalone: false,
 })
 export class SchematicsDocsCliOptionComponent {
-    @Input() name: string;
+    readonly name = input<string>(undefined!);
 
     public componentType = SchematicsDocsComponentType;
 

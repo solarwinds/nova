@@ -19,20 +19,21 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ContentChildren,
-    ElementRef,
-    HostBinding,
-    HostListener,
-    Input,
-    NgZone,
-    OnDestroy,
-    QueryList,
-    ViewChild,
-    ViewChildren,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ContentChildren,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  Input,
+  NgZone,
+  OnDestroy,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
 import { merge, Subject, Subscription } from "rxjs";
@@ -78,6 +79,14 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     @ContentChildren(ToolbarItemComponent, { descendants: true })
     public items: QueryList<ToolbarItemComponent>;
 
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input()
     /**
      * selectionEnabled: boolean which allows to show selected section
@@ -87,8 +96,28 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     /**
      * In selection mode allows to show current selected item and total of selected items
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public selectedItems: IToolbarSelectionState;
 
+    // TODO: Skipped for migration because:
+    //  This input is used in combination with `@HostBinding` and migrating would
+    //  break.
+    // TODO: Skipped for migration because:
+    //  This input is used in combination with `@HostBinding` and migrating would
+    //  break.
+    // TODO: Skipped for migration because:
+    //  This input is used in combination with `@HostBinding` and migrating would
+    //  break.
+    // TODO: Skipped for migration because:
+    //  This input is used in combination with `@HostBinding` and migrating would
+    //  break.
     @Input()
     @HostBinding("class.nui-toolbar--shadowed")
     public boxShadow: boolean = true;
@@ -96,14 +125,12 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     @ViewChild("toolbarContainer")
     public toolbarContainer: ElementRef;
 
-    @Input()
-    public noEmptyMessage: boolean = false;
+    public readonly noEmptyMessage = input<boolean>(false);
 
     /**
      * Passed to the toolbar menu
      */
-    @Input()
-    public appendToBody: boolean = false;
+    public readonly appendToBody = input<boolean>(false);
 
     @ViewChild("menuComponent") public menu: MenuComponent;
 
@@ -159,7 +186,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
         this.groups.forEach((group: ToolbarGroupComponent) => {
             const isDestructiveItem = group.items.filter(
                 (item: ToolbarItemComponent) =>
-                    item.displayStyle === ToolbarItemDisplayStyle.destructive
+                    item.displayStyle()()()() === ToolbarItemDisplayStyle.destructive
             );
             if (isDestructiveItem.length) {
                 this.destructiveItems.push(isDestructiveItem);
@@ -253,7 +280,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
             if (menuGroupItems.length) {
                 this.menuGroups.push({
                     items: menuGroupItems,
-                    title: group.title,
+                    title: group.title()()()(),
                 });
             }
         });

@@ -21,18 +21,19 @@
 import { CdkScrollable, ScrollDispatcher } from "@angular/cdk/scrolling";
 import { DOCUMENT } from "@angular/common";
 import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    EventEmitter,
-    HostListener,
-    Inject,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    Renderer2,
-    ViewEncapsulation,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  Renderer2,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
 import { filter, take } from "rxjs/operators";
@@ -48,7 +49,7 @@ const FOCUSABLE_SELECTOR =
 @Component({
     selector: "nui-dialog-window",
     host: {
-        "[class]": `"nui-dialog fade in show" + (windowClass ? " " + windowClass : "")`,
+        "[class]": `"nui-dialog fade in show" + (windowClass()()()() ? " " + windowClass()()()() : "")`,
         role: "dialog",
         "aria-modal": "true",
         tabindex: "-1",
@@ -67,22 +68,34 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy  {
      * Whether a backdrop element should be created for a given dialog (true by default).
      * Alternatively, specify 'static' for a backdrop which doesn't close the dialog on click.
      */
-    @Input() backdrop: boolean | string = true;
+    readonly backdrop = input<boolean | string>(true);
 
     /**
      * Whether to close the dialog when escape key is pressed (true by default).
      */
-    @Input() keyboard = true;
+    readonly keyboard = input(true);
 
     /**
      * Size of a new dialog window.
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() size: string;
 
     /**
      * Custom class to append to the dialog window
      */
-    @Input() windowClass: string;
+    readonly windowClass = input<string>(undefined!);
 
     /**
      * Event fired on dismiss of the dialog window
@@ -121,7 +134,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy  {
     }
 
     backdropMouseUp($event: any): void {
-        if (this.backdrop === true) {
+        if (this.backdrop()()()() === true) {
             if (this.mouseDownOrigin !== this.elRef.nativeElement) {
                 return;
             } else if (this.elRef.nativeElement === $event.target) {
@@ -131,7 +144,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy  {
     }
 
     escKey($event: any): void {
-        if (this.keyboard && !$event.defaultPrevented) {
+        if (this.keyboard()()()() && !$event.defaultPrevented) {
             this.dismiss("ESC");
         }
     }

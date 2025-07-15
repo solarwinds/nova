@@ -46,6 +46,14 @@ import { Component, Input, ViewEncapsulation } from "@angular/core";
     standalone: false,
 })
 export class MenuGroupComponent {
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() header?: string;
 
     public stopClickPropagation(event: MouseEvent): void {

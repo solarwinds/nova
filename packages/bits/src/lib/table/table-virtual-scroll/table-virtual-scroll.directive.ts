@@ -22,7 +22,7 @@ import {
     VirtualScrollStrategy,
     VIRTUAL_SCROLL_STRATEGY,
 } from "@angular/cdk/scrolling";
-import { Directive, forwardRef, Input, OnChanges } from "@angular/core";
+import { Directive, forwardRef, OnChanges, input } from "@angular/core";
 
 import {
     TableVirtualScrollLinearStrategy,
@@ -53,24 +53,24 @@ export function complexScrollStrategyFactory(
 })
 export class TableVirtualScrollLinearDirective implements OnChanges {
     /** Height of table row. */
-    @Input() rowHeight: number = TABLE_ROW_HEIGHT;
+    readonly rowHeight = input<number>(TABLE_ROW_HEIGHT);
 
     /** Number of rows loaded into memory */
-    @Input() rowCount: number;
+    readonly rowCount = input<number>(undefined!);
 
     // Converting parameters to numbers here to avoid inputs become strings in case user sets rowHeight and offset
     // without square brackets in the template
     public scrollStrategy = new TableVirtualScrollLinearStrategy(
-        +this.rowHeight
+        +this.rowHeight()()()()
     );
 
     public ngOnChanges(
         changes: ComponentChanges<TableVirtualScrollLinearDirective>
     ): void {
-        this.scrollStrategy.setRowHeight(+this.rowHeight);
+        this.scrollStrategy.setRowHeight(+this.rowHeight()()()());
 
         if (changes.rowCount) {
-            this.updateDataLength(this.rowCount);
+            this.updateDataLength(this.rowCount()()()());
         }
     }
 
@@ -99,21 +99,21 @@ export class TableVirtualScrollLinearDirective implements OnChanges {
 })
 export class TableVirtualScrollDirective implements OnChanges {
     /** Height of table row. */
-    @Input() rowHeight: number = TABLE_ROW_HEIGHT;
+    readonly rowHeight = input<number>(TABLE_ROW_HEIGHT);
 
     /**  Space to be saved for the header. Will be assigned to headerOffset value inside custom strategy */
-    @Input() offset: number = DEFAULT_TABLE_HEADER_OFFSET;
+    readonly offset = input<number>(DEFAULT_TABLE_HEADER_OFFSET);
 
     // Converting parameters to numbers here to avoid inputs become strings in case user sets rowHeight and offset
     // without square brackets in the template
     // eslint-disable-next-line import/no-deprecated
     public scrollStrategy = new TableVirtualScrollStrategy(
-        +this.rowHeight,
-        +this.offset
+        +this.rowHeight()()()(),
+        +this.offset()()()()
     );
 
     public ngOnChanges(): void {
-        this.scrollStrategy.setScrollHeight(+this.rowHeight, +this.offset);
+        this.scrollStrategy.setScrollHeight(+this.rowHeight()()()(), +this.offset()()()());
     }
 
     /**

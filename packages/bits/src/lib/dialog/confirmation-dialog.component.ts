@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectorRef, Component, Input } from "@angular/core";
+import { ChangeDetectorRef, Component, input } from "@angular/core";
 
 import { NuiActiveDialog } from "./dialog-ref";
 import { ConfirmationDialogButtons, SeverityLevels } from "./public-api";
@@ -36,26 +36,19 @@ import { ConfirmationDialogButtons, SeverityLevels } from "./public-api";
     standalone: false,
 })
 export class ConfirmationDialogComponent {
-    @Input()
-    public title: string = $localize`Confirmation`;
+    public readonly title = input<string>($localize `Confirmation`);
 
-    @Input()
-    public message: string;
+    public readonly message = input<string>(undefined!);
 
-    @Input()
-    public confirmText: string = $localize`Yes`;
+    public readonly confirmText = input<string>($localize `Yes`);
 
-    @Input()
-    public dismissText: string = $localize`No`;
+    public readonly dismissText = input<string>($localize `No`);
 
-    @Input()
-    public setFocus: ConfirmationDialogButtons = "confirm";
+    public readonly setFocus = input<ConfirmationDialogButtons>("confirm");
 
-    @Input()
-    public severity: SeverityLevels;
+    public readonly severity = input<SeverityLevels>(undefined!);
 
-    @Input()
-    public ariaLabel: string = "";
+    public readonly ariaLabel = input<string>("");
 
     constructor(
         private activeDialog: NuiActiveDialog,
@@ -75,13 +68,17 @@ export class ConfirmationDialogComponent {
     }
 
     public focusButton(buttonType: ConfirmationDialogButtons): boolean {
-        return this.setFocus === buttonType ? true : false;
+        return this.setFocus()()()() === buttonType ? true : false;
     }
 
     public getAriaLabel(): string {
+        const severity = this.severity();
+        const severity = this.severity();
+        const severity = this.severity();
+        const severity = this.severity();
         return (
-            (this.severity ? `${this.severity} ${this.title}` : this.title) ||
-            this.ariaLabel
+            (severity ? `${severity} ${this.title()()()()}` : this.title()()()()) ||
+            this.ariaLabel()()()()
         );
     }
 }

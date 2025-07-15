@@ -58,6 +58,14 @@ export class DndDropTargetDirective implements AfterContentInit, OnDestroy {
     @ContentChildren(CdkDrag, { descendants: true })
     draggables: QueryList<CdkDrag>;
 
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() canBeDropped: (item: any, dropListRef?: CdkDropList) => boolean;
 
     public showDropZone$: Observable<boolean>;

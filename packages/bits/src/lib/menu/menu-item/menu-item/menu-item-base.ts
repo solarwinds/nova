@@ -48,6 +48,14 @@ export abstract class MenuItemBaseComponent
     /**
      * Disables action, link and option components
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public disabled?: boolean;
 
     @HostBinding("class.nui-menu-item") public setDefaultClass = true;

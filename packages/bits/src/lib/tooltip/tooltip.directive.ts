@@ -63,6 +63,14 @@ export class TooltipDirective implements OnDestroy {
     private _ellipsis: boolean = false;
 
     /** Allows the user to define the position of the tooltip relative to the parent element */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input("tooltipPlacement")
     get position(): TooltipPosition {
         return this._position;
@@ -75,6 +83,14 @@ export class TooltipDirective implements OnDestroy {
     }
 
     /** Disables the display of the tooltip. */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input("nuiTooltipDisabled")
     get disabled(): boolean {
         return this._disabled;
@@ -89,6 +105,14 @@ export class TooltipDirective implements OnDestroy {
     }
 
     /** Determines whether the tooltip should be displayed when the content is overflowing. By default is `false`. */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input("nuiTooltipEllipsis")
     get ellipsis(): boolean {
         return this._ellipsis;
@@ -100,6 +124,14 @@ export class TooltipDirective implements OnDestroy {
     private _message = "";
 
     /** The message to be displayed in the tooltip */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input("nuiTooltip")
     get message(): string {
         return this._message;

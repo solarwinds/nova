@@ -39,15 +39,59 @@ import { IQuickPickPresetDictionary } from "../public-api";
     standalone: false,
 })
 export class QuickPickerComponent {
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() presets: IQuickPickPresetDictionary;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() pickerTitle: string;
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input() presetsTitle: string = $localize`Quick picks`;
 
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() selectedPreset?: string;
 
     /**
      * To control an order of presetKeys
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public presetKeysOrder: string[];
 
     /** callback to invoke on selecting specific preset */

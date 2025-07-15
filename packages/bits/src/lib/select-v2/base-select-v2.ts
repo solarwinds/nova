@@ -22,24 +22,25 @@ import { LiveAnnouncer } from "@angular/cdk/a11y";
 import { OverlayConfig } from "@angular/cdk/overlay";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
-    AfterContentInit,
-    AfterViewInit,
-    ChangeDetectorRef,
-    ContentChild,
-    ContentChildren,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    HostBinding,
-    HostListener,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    QueryList,
-    SimpleChanges,
-    ViewChild,
+  AfterContentInit,
+  AfterViewInit,
+  ChangeDetectorRef,
+  ContentChild,
+  ContentChildren,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  HostBinding,
+  HostListener,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  QueryList,
+  SimpleChanges,
+  ViewChild,
+  input
 } from "@angular/core";
 import { ControlValueAccessor } from "@angular/forms";
 import includes from "lodash/includes";
@@ -88,12 +89,20 @@ export abstract class BaseSelectV2
         OnChanges
 {
     /** Value used as a placeholder for the select. */
-    @Input() public placeholder: string = "";
+    public readonly placeholder = input<string>("");
 
     /** Sets margin in px for the Dropdown relatively the container where the Dropdown appended to */
-    @Input() public popupViewportMargin: number;
+    public readonly popupViewportMargin = input<number>(undefined!);
 
     /** Sets the Overlay Config in accordance with [Material CDK]{@link https://material.angular.io/cdk/overlay/api#OverlayConfig} */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     public get overlayConfig(): OverlayConfig {
         return this._overlayConfig;
@@ -107,26 +116,70 @@ export abstract class BaseSelectV2
     private _overlayConfig: OverlayConfig = DEFAULT_SELECT_OVERLAY_CONFIG;
 
     /** Whether the multi-select mode */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public multiselect: boolean;
 
     /** Whether the Dropdown controls manually */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public manualDropdownControl: boolean = false;
 
     /** Sets value of the Select/Combobox */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public value: OptionValueType | OptionValueType[] | null;
 
     /** Sets custom container for CDK Overlay. Selector OR ElementRef */
-    @Input() public dropdownCustomContainer: OverlayContainerType;
+    public readonly dropdownCustomContainer = input<OverlayContainerType>();
 
     /** Sets whether an overlay must sync it's width with the width of the toggle reference */
-    @Input() public syncWidth: boolean = true;
+    public readonly syncWidth = input<boolean>(true);
 
     /** Whether the Select/Combobox disabled */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @HostBinding("class.disabled")
     @Input()
     public isDisabled = false;
 
     /** Input to apply error state styles */
+    // TODO: Skipped for migration because:
+    //  This input is used in combination with `@HostBinding` and migrating would
+    //  break.
+    // TODO: Skipped for migration because:
+    //  This input is used in combination with `@HostBinding` and migrating would
+    //  break.
+    // TODO: Skipped for migration because:
+    //  This input is used in combination with `@HostBinding` and migrating would
+    //  break.
+    // TODO: Skipped for migration because:
+    //  This input is used in combination with `@HostBinding` and migrating would
+    //  break.
     @HostBinding("class.has-error")
     @Input()
     public isInErrorState: boolean;
@@ -138,6 +191,14 @@ export abstract class BaseSelectV2
     ].map(String);
 
     /** Input to set aria label text */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() public get ariaLabel(): string {
         return this._ariaLabel;
     }
@@ -229,7 +290,7 @@ export abstract class BaseSelectV2
     public ngAfterViewInit(): void {
         this.initClosingOnClicksOutside();
         this.initOnTouch();
-        if (this.syncWidth) {
+        if (this.syncWidth()()()()) {
             this.initPopupUtilities();
         }
         this.initKeyboardManager();
@@ -540,7 +601,7 @@ export abstract class BaseSelectV2
     }
 
     private defineDropdownContainer(): void {
-        this.dropdown.customContainer = this.dropdownCustomContainer;
+        this.dropdown.customContainer = this.dropdownCustomContainer()()()();
     }
 
     private initPopupUtilities() {

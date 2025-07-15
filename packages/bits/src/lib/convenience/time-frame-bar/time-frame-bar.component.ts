@@ -19,17 +19,18 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    SimpleChanges,
+  AfterContentInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  SimpleChanges,
+  input
 } from "@angular/core";
 import moment, { Moment } from "moment/moment";
 import { Subject } from "rxjs";
@@ -68,11 +69,19 @@ export class TimeFrameBarComponent
     implements AfterContentInit, OnChanges, OnDestroy
 {
     /** Earliest selectable date */
-    @Input() minDate: Moment;
+    readonly minDate = input<Moment>();
     /** Latest selectable date */
-    @Input() maxDate: Moment;
+    readonly maxDate = input<Moment>();
 
     /** Current time frame value */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() timeFrame: ITimeframe = {
         startDatetime: moment(undefined),
         endDatetime: moment(undefined),
@@ -80,7 +89,7 @@ export class TimeFrameBarComponent
     @Output() timeFrameChange = new EventEmitter<ITimeframe>();
 
     /** Current index in zoom history */
-    @Input() historyIndex = 0;
+    readonly historyIndex = input(0);
 
     /** Emits an event when "Zoom Out" is clicked */
     @Output() undo = new EventEmitter();
@@ -128,8 +137,8 @@ maxDate, and timeFrame inputs on the TimeFrameBarComponent instead.`);
         }
 
         this.timeFramePicker.model = this.pickerTimeframe;
-        this.timeFramePicker.minDate = this.minDate;
-        this.timeFramePicker.maxDate = this.maxDate;
+        this.timeFramePicker.minDate = this.minDate()()()();
+        this.timeFramePicker.maxDate = this.maxDate()()()();
         this.timeFramePicker.changed
             .pipe(takeUntil(this.destroy$))
             .subscribe((tf: ITimeframe) => this.updatePickerTf(tf));
@@ -153,10 +162,18 @@ maxDate, and timeFrame inputs on the TimeFrameBarComponent instead.`);
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes["timeFrame"]) {
             const value = changes["timeFrame"].currentValue;
+            const minDate = this.minDate();
+            const minDate = this.minDate();
+            const minDate = this.minDate();
+            const minDate = this.minDate();
             this.isLeftmostRange =
-                this.minDate && this.minDate.diff(value.startDatetime) >= 0;
+                minDate && minDate.diff(value.startDatetime) >= 0;
+            const maxDate = this.maxDate();
+            const maxDate = this.maxDate();
+            const maxDate = this.maxDate();
+            const maxDate = this.maxDate();
             this.isRightmostRange =
-                this.maxDate && this.maxDate.diff(value.endDatetime) <= 0;
+                maxDate && maxDate.diff(value.endDatetime) <= 0;
             this.pickerTimeframe = TimeframeService.cloneTimeFrame(value);
             this.humanizedTimeframe = this.timeframeService
                 .getDuration(this.timeFrame)

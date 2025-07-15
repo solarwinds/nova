@@ -20,21 +20,22 @@
 
 import { OverlayConfig } from "@angular/cdk/overlay";
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    HostListener,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  HostListener,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import _isEmpty from "lodash/isEmpty";
@@ -92,22 +93,58 @@ export class TimePickerComponent
     @ViewChild("menuTrigger", { read: ElementRef })
     public menuTrigger: ElementRef;
     /** sets a step (difference between item in picker) */
-    @Input() timeStep = 30;
+    readonly timeStep = input(30);
     /** sets disable state of the timepicker */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() isDisabled: boolean;
     /** sets custom formatting for time */
-    @Input() timeFormat = "LT";
+    readonly timeFormat = input("LT");
     /** tells timepicker whether to save year, month, day and seconds of the date */
-    @Input() preserveInsignificant = false;
+    readonly preserveInsignificant = input(false);
     /** to apply error state styles */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() isInErrorState = false;
     /** Input to set aria label text */
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @Input() public ariaLabel: string = "Time Picker";
     /** to allow the empty values for init state */
-    @Input() initEmpty: boolean;
+    readonly initEmpty = input<boolean>(undefined!);
     /** Allows popup box to be attached to document.body */
-    @Input() appendToBody: boolean = false;
+    readonly appendToBody = input<boolean>(false);
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     get model(): Moment | undefined {
         return this.innerModel;
@@ -118,12 +155,12 @@ export class TimePickerComponent
             return;
         }
 
-        if (value && !this.preserveInsignificant) {
+        if (value && !this.preserveInsignificant()()()()) {
             value.year(0).month(0).date(0);
         }
         this.innerModel = value;
         this.textbox.writeValue(
-            moment(this.innerModel).format(this.timeFormat)
+            moment(this.innerModel).format(this.timeFormat()()()())
         );
     }
 
@@ -156,18 +193,18 @@ export class TimePickerComponent
     ) {}
 
     public ngOnInit(): void {
-        this.times = this.generateTimeItems(this.timeStep);
+        this.times = this.generateTimeItems(this.timeStep()()()());
         this.times.map((value: Moment) => {
             this.itemsSource[0].itemsSource.push({
                 title: value,
-                displayFormat: this.timeFormat,
+                displayFormat: this.timeFormat()()()(),
                 isSelected: false,
             });
         });
-        if (!this.initEmpty) {
+        if (!this.initEmpty()()()()) {
             this.innerModel = moment(this.model).clone() || moment();
             this.textbox.writeValue(
-                moment(this.innerModel).format(this.timeFormat)
+                moment(this.innerModel).format(this.timeFormat()()()())
             );
         }
 
@@ -179,7 +216,7 @@ export class TimePickerComponent
             this.onChange(this.innerModel);
             this.setErrorState(value);
         });
-        this.onAppendToBodyChange(this.appendToBody);
+        this.onAppendToBodyChange(this.appendToBody()()()());
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -236,7 +273,7 @@ export class TimePickerComponent
 
     updateInnerModel(value: any): void {
         setTimeout(() => this.inputBlurred.emit(), 100);
-        if (value instanceof moment && !this.preserveInsignificant) {
+        if (value instanceof moment && !this.preserveInsignificant()()()()) {
             (value as Moment).year(0);
             (value as Moment).date(1);
             (value as Moment).month(0);
@@ -245,7 +282,7 @@ export class TimePickerComponent
         this.innerModel =
             _isEmpty(value) || value.length === 0
                 ? undefined
-                : moment(value, this.timeFormat);
+                : moment(value, this.timeFormat()()()());
         if (!moment(this.innerModel).isValid()) {
             this.innerModel = value;
         }
@@ -257,7 +294,7 @@ export class TimePickerComponent
         ) {
             const index = this.getItemIndexToSelect(
                 this.innerModel,
-                this.timeStep,
+                this.timeStep()()()(),
                 this.times
             );
             this.unselectAllItems();
@@ -275,7 +312,7 @@ export class TimePickerComponent
     }
 
     setErrorState(value: string): void {
-        this.isInErrorState = !moment(value, this.timeFormat, true).isValid();
+        this.isInErrorState = !moment(value, this.timeFormat()()()(), true).isValid();
     }
 
     registerOnChange(fn: (value: any) => void): void {
@@ -318,7 +355,7 @@ export class TimePickerComponent
     }
 
     public generateTimeItems(timeStep: number): Moment[] {
-        const time = this.preserveInsignificant
+        const time = this.preserveInsignificant()()()()
             ? moment().hour(0).startOf("hour")
             : moment().year(0).startOf("year");
 
@@ -354,7 +391,7 @@ export class TimePickerComponent
 
         const index = this.getItemIndexToSelect(
             this.innerModel,
-            this.timeStep,
+            this.timeStep()()()(),
             this.times
         );
         this.unselectAllItems();
@@ -372,7 +409,7 @@ export class TimePickerComponent
 
     public formatValue(value: any = this.innerModel): string {
         return moment(value).isValid()
-            ? moment(value).format(this.timeFormat)
+            ? moment(value).format(this.timeFormat()()()())
             : value;
     }
 

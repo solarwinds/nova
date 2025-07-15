@@ -19,16 +19,16 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Inject,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Inject,
+  OnDestroy,
+  OnInit,
+  Output,
+  input
 } from "@angular/core";
 import { Subscription } from "rxjs";
 
@@ -64,8 +64,8 @@ export interface IItemPickerOption {
 export class ItemPickerCompositeComponent
     implements AfterViewInit, OnInit, OnDestroy
 {
-    @Input() itemPickerOptions: IItemPickerOption[];
-    @Input() selectedValues: string[] = [];
+    readonly itemPickerOptions = input<IItemPickerOption[]>(undefined!);
+    readonly selectedValues = input<string[]>([]);
 
     @Output() selectionChanged: EventEmitter<ISelection> = new EventEmitter();
 
@@ -106,7 +106,7 @@ export class ItemPickerCompositeComponent
     public ngOnInit(): void {
         (
             this.dataSource as LocalFilteringDataSource<IFilterGroupOption>
-        ).setData(this.itemPickerOptions);
+        ).setData(this.itemPickerOptions());
         this.selection = {
             isAllPages: false,
             include: this.getSelectedOptions(),
@@ -144,8 +144,8 @@ export class ItemPickerCompositeComponent
     }
 
     public getSelectedOptions(): IFilterGroupOption[] {
-        return this.itemPickerOptions.filter(
-            (item) => this.selectedValues.indexOf(item.value) !== -1
+        return this.itemPickerOptions().filter(
+            (item) => this.selectedValues().indexOf(item.value) !== -1
         );
     }
 }

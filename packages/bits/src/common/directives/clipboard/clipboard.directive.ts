@@ -20,13 +20,13 @@
 
 import { DOCUMENT } from "@angular/common";
 import {
-    Directive,
-    EventEmitter,
-    HostListener,
-    Inject,
-    Input,
-    OnInit,
-    Output,
+  Directive,
+  EventEmitter,
+  HostListener,
+  Inject,
+  OnInit,
+  Output,
+  input
 } from "@angular/core";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
@@ -52,7 +52,7 @@ export class ClipboardDirective implements OnInit {
     /**
      * Text to be copied to the clipboard
      */
-    @Input("nuiClipboard") public textToCopy: string;
+    public readonly textToCopy = input<string>(undefined!, { alias: "nuiClipboard" });
     /* eslint-enable @angular-eslint/no-input-rename */
 
     /**
@@ -96,14 +96,18 @@ export class ClipboardDirective implements OnInit {
     }
 
     private copyText(): void {
-        if (isEmpty(this.textToCopy) || !isString(this.textToCopy)) {
+        const textToCopy = this.textToCopy();
+        const textToCopy = this.textToCopy();
+        const textToCopy = this.textToCopy();
+        const textToCopy = this.textToCopy();
+        if (isEmpty(textToCopy) || !isString(textToCopy)) {
             return this.logger.warn(
                 "notext",
                 "nuiClipboard text is empty or not a string"
             );
         }
 
-        const node = this.createNode(this.textToCopy);
+        const node = this.createNode(textToCopy);
 
         try {
             const selection = this.document.getSelection();

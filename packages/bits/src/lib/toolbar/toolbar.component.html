@@ -48,7 +48,7 @@
         <nui-menu
             displayStyle="action"
             #menuComponent
-            [appendToBody]="appendToBody"
+            [appendToBody]="appendToBody()()()()"
             [title]="menuTitle"
             *ngIf="showMenu"
         >
@@ -71,7 +71,7 @@
         </nui-menu>
         <ng-container>
             <nui-toolbar-message
-                *ngIf="allItemsHidden && !showMenu && !noEmptyMessage"
+                *ngIf="allItemsHidden && !showMenu && !noEmptyMessage()()()()"
             >
                 <ng-container *ngIf="selectionEnabled" i18n
                     >No actions available for this selection</ng-container

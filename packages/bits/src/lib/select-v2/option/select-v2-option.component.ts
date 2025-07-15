@@ -20,15 +20,16 @@
 
 import { Highlightable } from "@angular/cdk/a11y";
 import {
-    ChangeDetectionStrategy,
-    Component,
-    ElementRef,
-    forwardRef,
-    HostBinding,
-    HostListener,
-    Inject,
-    Input,
-    Optional,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  forwardRef,
+  HostBinding,
+  HostListener,
+  Inject,
+  Input,
+  Optional,
+  input
 } from "@angular/core";
 
 import { OVERLAY_ITEM } from "../../overlay/constants";
@@ -63,15 +64,31 @@ export class SelectV2OptionComponent
     implements Highlightable, IOption
 {
     /** Sets value */
-    @Input() public value: OptionValueType;
+    public readonly value = input<OptionValueType>(undefined!);
 
     /** Datasource index. Used to track correct items for virtual scroll */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public index: number;
 
     /** Used to pass context for the custom template */
-    @Input() public displayValueContext: any;
+    public readonly displayValueContext = input<any>();
 
     /** Whether the Option outfiltered */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @HostBinding("class.hidden")
     @Input()
     public outfiltered: boolean = false;

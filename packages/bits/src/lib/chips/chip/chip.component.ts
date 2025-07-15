@@ -19,16 +19,16 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    Output,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Output,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 
 import { IChipsItem } from "../public-api";
@@ -51,18 +51,16 @@ export class ChipComponent implements AfterViewInit {
     /**
      * Value passed to display as a chip.
      */
-    @Input() public item: IChipsItem;
+    public readonly item = input<IChipsItem>(undefined!);
     /**
      * Value passed to display a tooltip for the 'close' button
      */
-    @Input() public closeButtonTooltip: string;
+    public readonly closeButtonTooltip = input<string>(undefined!);
 
     /** Custom css class to be added to the chip element */
-    @Input() public customClass:
-        | string
-        | string[]
-        | Set<string>
-        | { [klass: string]: any };
+    public readonly customClass = input<string | string[] | Set<string> | {
+    [klass: string]: any;
+}>();
 
     /**
      * Event that is fired when single item is cleared (by clicking on remove icon).

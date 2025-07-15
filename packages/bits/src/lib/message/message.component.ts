@@ -27,16 +27,17 @@ import {
     trigger,
 } from "@angular/animations";
 import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    Renderer2,
-    ViewEncapsulation,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  Renderer2,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import { Subject, Subscription } from "rxjs";
 
@@ -69,8 +70,24 @@ export class MessageComponent implements OnInit, OnDestroy {
 
     @HostBinding("class.d-none") isHidden: boolean = false;
 
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public type: null | "ok" | "info" | "critical" | "warning";
-    @Input() public allowDismiss: boolean = true;
+    public readonly allowDismiss = input<boolean>(true);
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public manualControl: Subject<boolean>;
 
     /**

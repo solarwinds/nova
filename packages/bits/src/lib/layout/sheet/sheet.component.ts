@@ -19,11 +19,12 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    ElementRef,
-    HostBinding,
-    Input,
-    OnInit,
+  Component,
+  ElementRef,
+  HostBinding,
+  Input,
+  OnInit,
+  input
 } from "@angular/core";
 
 import { ResizeDirection } from "../../../common/directives/resizer/public-api";
@@ -38,11 +39,31 @@ import { ILayoutElementDirection } from "../public-api";
     standalone: false,
 })
 export class SheetComponent implements OnInit {
+    // TODO: Skipped for migration because:
+    //  This input is used in combination with `@HostBinding` and migrating would
+    //  break.
+    // TODO: Skipped for migration because:
+    //  This input is used in combination with `@HostBinding` and migrating would
+    //  break.
+    // TODO: Skipped for migration because:
+    //  This input is used in combination with `@HostBinding` and migrating would
+    //  break.
+    // TODO: Skipped for migration because:
+    //  This input is used in combination with `@HostBinding` and migrating would
+    //  break.
     @HostBinding("class.sheet-fit-content")
     @Input()
     fitContent: boolean;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() direction: ILayoutElementDirection = "row";
-    @Input() initialSizeValue: string;
+    readonly initialSizeValue = input<string>(undefined!);
     @HostBinding("class.sheet-direction-column") directionColumn = false;
     @HostBinding("class.sheet-direction-row") directionRow = true;
 

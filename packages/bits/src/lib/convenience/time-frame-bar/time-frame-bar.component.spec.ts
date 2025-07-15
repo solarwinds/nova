@@ -115,7 +115,7 @@ describe("convenience components >", () => {
             });
 
             it("should log a warning if the user has set the minDate property on the time frame picker", () => {
-                component.timeFramePicker.minDate = component.minDate;
+                component.timeFramePicker.minDate = component.minDate();
                 // @ts-ignore: Suppressing error for testing purposes
                 component.timeFramePicker.maxDate = undefined;
                 // @ts-ignore: Suppressing error for testing purposes
@@ -127,7 +127,7 @@ describe("convenience components >", () => {
             it("should log a warning if the user has set the maxDate property on the time frame picker", () => {
                 // @ts-ignore: Suppressing error for testing purposes
                 component.timeFramePicker.minDate = undefined;
-                component.timeFramePicker.maxDate = component.maxDate;
+                component.timeFramePicker.maxDate = component.maxDate();
                 // @ts-ignore: Suppressing error for testing purposes
                 component.timeFramePicker.startModel = undefined;
                 component.ngAfterContentInit();
@@ -149,10 +149,10 @@ describe("convenience components >", () => {
                     component.pickerTimeframe
                 ); // check for same instance
                 expect(component.timeFramePicker.minDate).toBe(
-                    component.minDate
+                    component.minDate()
                 );
                 expect(component.timeFramePicker.maxDate).toBe(
-                    component.maxDate
+                    component.maxDate()
                 );
             });
 
@@ -237,7 +237,7 @@ describe("convenience components >", () => {
             it("should set isLeftMostRange to true when the minDate is reached", () => {
                 expect(component.isLeftmostRange).toEqual(false);
                 component.timeFrame = {
-                    startDatetime: component.minDate,
+                    startDatetime: component.minDate(),
                     endDatetime: fixture.componentInstance.baseDate.clone(),
                 };
                 component.ngOnChanges({
@@ -254,7 +254,7 @@ describe("convenience components >", () => {
                 expect(component.isRightmostRange).toEqual(false);
                 component.timeFrame = {
                     startDatetime: fixture.componentInstance.baseDate.clone(),
-                    endDatetime: component.maxDate,
+                    endDatetime: component.maxDate(),
                 };
                 component.ngOnChanges({
                     timeFrame: new SimpleChange(
@@ -269,7 +269,7 @@ describe("convenience components >", () => {
             it("should update the picker time frame", () => {
                 component.timeFrame = {
                     startDatetime: fixture.componentInstance.baseDate.clone(),
-                    endDatetime: component.maxDate,
+                    endDatetime: component.maxDate(),
                 };
                 component.ngOnChanges({
                     timeFrame: new SimpleChange(
@@ -286,7 +286,7 @@ describe("convenience components >", () => {
                 expect(component.humanizedTimeframe).toEqual("7 days");
                 component.timeFrame = {
                     startDatetime: fixture.componentInstance.baseDate.clone(),
-                    endDatetime: component.maxDate,
+                    endDatetime: component.maxDate(),
                 };
                 component.ngOnChanges({
                     timeFrame: new SimpleChange(
@@ -354,7 +354,7 @@ describe("convenience components >", () => {
         it("updatePickerTf should set the picker time frame and update the changed boolean", () => {
             const testTf: ITimeframe = {
                 startDatetime: fixture.componentInstance.baseDate.clone(),
-                endDatetime: component.maxDate,
+                endDatetime: component.maxDate(),
             };
             component.changed = false;
             spyOn(component.timeframeService, "isEqual").and.returnValue(false);
@@ -378,7 +378,7 @@ describe("convenience components >", () => {
             it("should set the picker time frame and invoke closePopover", () => {
                 const testTf: ITimeframe = {
                     startDatetime: fixture.componentInstance.baseDate.clone(),
-                    endDatetime: component.maxDate,
+                    endDatetime: component.maxDate(),
                 };
                 getTimeframeByPresetIdSpy.and.returnValue(testTf);
                 component.handlePresetSelection("");
@@ -418,7 +418,7 @@ describe("convenience components >", () => {
             it("should change the time frame if confirmed", () => {
                 component.pickerTimeframe = {
                     startDatetime: fixture.componentInstance.baseDate.clone(),
-                    endDatetime: component.maxDate,
+                    endDatetime: component.maxDate(),
                 };
                 spyOn(<any>component, "changeTimeFrame").and.callThrough();
                 component.closePopover(true);

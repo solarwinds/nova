@@ -20,22 +20,23 @@
 
 import { FocusMonitor, FocusOrigin } from "@angular/cdk/a11y";
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    forwardRef,
-    HostBinding,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    QueryList,
-    Renderer2,
-    SimpleChanges,
-    ViewChild,
-    ViewChildren,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  forwardRef,
+  HostBinding,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  Renderer2,
+  SimpleChanges,
+  ViewChild,
+  ViewChildren,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 import _debounce from "lodash/debounce";
@@ -95,11 +96,19 @@ export class ComboboxComponent
     /**
      * The option to clear the combobox if the value entered is not in array.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() clearOnBlur: boolean;
     /**
      * A value that tells popup to be attached right after it's parent declaration or in <body>
      */
-    @Input() appendToBody: boolean;
+    readonly appendToBody = input<boolean>(undefined!);
 
     public isOpened: boolean;
     public openControl: Subject<Event> = new Subject<Event>();
@@ -211,7 +220,7 @@ export class ComboboxComponent
             .monitor(this.comboboxToggle.nativeElement, true)
             .subscribe((origin: FocusOrigin) => {
                 if (origin === "keyboard") {
-                    if (!this.popup.popupToggle.disabled) {
+                    if (!this.popup.popupToggle.disabled()()()()) {
                         if (!this.isOpened) {
                             this.openControl.next(new FocusEvent("focusin"));
                         }
@@ -328,7 +337,7 @@ export class ComboboxComponent
     }
 
     public getWidth(): string {
-        return this.customTemplate
+        return this.customTemplate()()()()
             ? "auto"
             : this.popupRef.nativeElement.getBoundingClientRect().width;
     }

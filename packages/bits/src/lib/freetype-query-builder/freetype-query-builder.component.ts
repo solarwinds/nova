@@ -93,20 +93,108 @@ export class FreetypeQueryBuilderComponent<T extends QueryToken>
     private readonly KEY_ENTER_CODE = "Enter";
     private readonly KEY_ESC_CODE = "Escape";
 
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input()
     maxLength: number = 10_000;
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input()
     readonly: boolean = false;
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input()
     placeholder: string;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input()
     value: string;
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input()
     renderer: RenderConfigurator<T>;
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input()
     tokenizer: Tokenizer<T>;
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input()
     currentHelp: HelpEntry[] = [];
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this input is manually instantiated. This is discouraged and prevents
+    //  migration.
     @Input()
     cursorSetter$: Observable<any>;
     @Output()

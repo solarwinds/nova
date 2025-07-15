@@ -20,21 +20,22 @@
 
 import { OverlayConfig } from "@angular/cdk/overlay";
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    HostBinding,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  HostBinding,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import {
     ControlValueAccessor,
@@ -98,70 +99,146 @@ export class DatePickerComponent
         OnDestroy
 {
     /** sets date-picker inline mode */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @HostBinding("class.nui-datepicker--inline")
     @Input()
     inline: boolean;
     /** checks if value in datepicker is required */
-    @Input() isRequired: boolean;
+    readonly isRequired = input<boolean>(undefined!);
     /** Option to disabled datepicker. */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() isDisabled: boolean;
     /** to apply error state styles */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() isInErrorState: boolean;
     /** Input to set aria label text */
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @Input() public ariaLabel: string = "Date Picker";
 
     // TODO: Consider injecting locale through LOCALE_ID Injection Token
     /** to date format locale */
-    @Input() locale: string;
+    readonly locale = input<string>(undefined!);
     /** sets date-picker mode, supports: `day`, `month`, `year` */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() datepickerMode = "day";
     /**  earliest selectable date */
-    @Input() minDate: Moment;
+    readonly minDate = input<Moment>();
     /** latest selectable date */
-    @Input() maxDate: Moment;
+    readonly maxDate = input<Moment>();
     /** set lower date-picker mode, supports: `day`, `month`, `year` */
-    @Input() minMode: string;
+    readonly minMode = input<string>(undefined!);
     /** sets upper date-picker mode, supports: `day`, `month`, `year` */
-    @Input() maxMode: string;
+    readonly maxMode = input<string>(undefined!);
     /** if false week numbers will be hidden */
-    @Input() showWeeks = false;
+    readonly showWeeks = input(false);
     /** date format, used to format selected date */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() dateFormat: string;
     /** format of day in month */
-    @Input() formatDay: string;
+    readonly formatDay = input<string>(undefined!);
     /** format of month in year */
-    @Input() formatMonth: string;
+    readonly formatMonth = input<string>(undefined!);
     /** format of year in year range */
-    @Input() formatYear: string;
+    readonly formatYear = input<string>(undefined!);
     /** format of day in week header */
-    @Input() formatDayHeader: string;
+    readonly formatDayHeader = input<string>(undefined!);
     /** format of title when selecting day */
-    @Input() formatDayTitle: string;
+    readonly formatDayTitle = input<string>(undefined!);
     /** format of title when selecting month */
-    @Input() formatMonthTitle: string;
+    readonly formatMonthTitle = input<string>(undefined!);
     /** starting day of the week from 0-6 (0=Sunday, ..., 6=Saturday) */
-    @Input() startingDay: number;
+    readonly startingDay = input<number>(undefined!);
     /** number of years displayed in year selection */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() yearRange: number;
     /** if true only dates from the currently displayed month will be shown */
-    @Input() onlyCurrentMonth: boolean;
+    readonly onlyCurrentMonth = input<boolean>(undefined!);
     /** number of months displayed in a single row of month picker */
-    @Input() preserveInsignificant = false;
+    readonly preserveInsignificant = input(false);
     /** array of custom css classes to be applied to targeted dates */
-    @Input() disabledDates: IDatePickerDisabledDate[];
+    readonly disabledDates = input<IDatePickerDisabledDate[]>(undefined!);
     /** Is used to handle timezone of date value */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() handleTimezone: boolean;
     /** Allows popup box to be attached to document.body */
-    @Input() appendToBody: boolean;
+    readonly appendToBody = input<boolean>(undefined!);
 
     /** currently active date */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     get value(): Moment {
         return this._value;
     }
 
     set value(value: Moment) {
-        if (!this.preserveInsignificant && value) {
+        if (!this.preserveInsignificant()()()() && value) {
             value.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
         }
         if (!value || (value && value.isSame(this._value))) {
@@ -242,7 +319,7 @@ export class DatePickerComponent
                 this.updateTextboxValue();
             }
         });
-        this.onAppendToBodyChange(this.appendToBody);
+        this.onAppendToBodyChange(this.appendToBody()()()());
     }
 
     public ngOnChanges(changes: SimpleChanges): void {

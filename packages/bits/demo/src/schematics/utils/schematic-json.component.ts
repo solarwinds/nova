@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, OnInit, input } from "@angular/core";
 
 @Component({
     selector: "nui-schematic-json",
@@ -49,7 +49,7 @@ import { Component, Input, OnInit } from "@angular/core";
 })
 export class SchematicJsonComponent implements OnInit {
     // Folder from where schema.json should be taken
-    @Input() schematicFolderName: string;
+    readonly schematicFolderName = input<string>(undefined!);
 
     public schemaViewData: any = {};
     public fieldsToDisplay: Array<string> = [
@@ -61,7 +61,7 @@ export class SchematicJsonComponent implements OnInit {
     ];
 
     public async ngOnInit(): Promise<void> {
-        const schemaJson = await import(`../../../../schematics/src/${this.schematicFolderName}/schema.json`);
+        const schemaJson = await import(`../../../../schematics/src/${this.schematicFolderName()}/schema.json`);
         this.fillViewData(schemaJson.properties);
     }
 

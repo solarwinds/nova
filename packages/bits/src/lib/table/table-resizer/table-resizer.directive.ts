@@ -19,12 +19,12 @@
 //  THE SOFTWARE.
 
 import {
-    Directive,
-    EventEmitter,
-    HostBinding,
-    HostListener,
-    Input,
-    Output,
+  Directive,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Output,
+  input
 } from "@angular/core";
 
 import { TableStateHandlerService } from "../table-state-handler.service";
@@ -41,7 +41,7 @@ export enum TableResizePhase {
 export class TableResizerDirective {
     @HostBinding("class") hostClasses = "nui-table__resizer";
 
-    @Input() columnIndex: number;
+    readonly columnIndex = input<number>(undefined!);
 
     @Output() resizerMovement = new EventEmitter<any>();
 
@@ -58,7 +58,7 @@ export class TableResizerDirective {
         // This needs to be after the sort click handler which is why it needs a setTimeout
         setTimeout(() => {
             this.tableStateHandlerService.emitResizeEvent(
-                this.columnIndex,
+                this.columnIndex()()()(),
                 TableResizePhase.end
             );
         });
@@ -68,7 +68,7 @@ export class TableResizerDirective {
     onMouseDown(ev: MouseEvent): void {
         // Event should be emitted to highlight all cells
         this.tableStateHandlerService.emitResizeEvent(
-            this.columnIndex,
+            this.columnIndex()()()(),
             TableResizePhase.start
         );
         ev.preventDefault();

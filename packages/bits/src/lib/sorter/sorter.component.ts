@@ -20,19 +20,20 @@
 
 import { OverlayConfig } from "@angular/cdk/overlay";
 import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    Renderer2,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  Renderer2,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import _assign from "lodash/assign";
 import _isEqual from "lodash/isEqual";
@@ -69,16 +70,52 @@ import { OverlayComponent } from "../overlay/overlay-component/overlay.component
 export class SorterComponent
     implements OnChanges, OnInit, OnDestroy, AfterViewInit, IFilterPub
 {
-    @Input() appendToBody: boolean = false;
+    readonly appendToBody = input<boolean>(false);
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() caption: string;
 
     /**
      * The string[] type for itemsSource is the legacy non-i18n-friendly type
      * and it should be removed as an option in scope of NUI-5801
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() itemsSource: string[] | IMenuItem[];
 
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() selectedItem: string;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() sortDirection: any;
 
     @Output() sorterAction = new EventEmitter<ISorterChanges>();
@@ -118,7 +155,7 @@ export class SorterComponent
     ) {}
 
     public ngOnInit(): void {
-        this.onAppendToBodyChange(this.appendToBody);
+        this.onAppendToBodyChange(this.appendToBody()()()());
     }
 
     public ngOnChanges(changes: SimpleChanges): void {

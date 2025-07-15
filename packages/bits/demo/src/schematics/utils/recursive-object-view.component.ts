@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Input, OnInit, TemplateRef } from "@angular/core";
+import { Component, OnInit, TemplateRef, input } from "@angular/core";
 import _isObject from "lodash/isObject";
 import _sortBy from "lodash/sortBy";
 
@@ -29,20 +29,20 @@ import _sortBy from "lodash/sortBy";
             <div *ngIf="checkInstance(key); else notObject">
                 <nui-expander [header]="key" icon="group">
                     <nui-recursive-object-view
-                        [object]="object[key]"
-                        [objectTemplate]="objectTemplate"
-                        [notObjectTemplate]="notObjectTemplate"
+                        [object]="object()[key]"
+                        [objectTemplate]="objectTemplate()"
+                        [notObjectTemplate]="notObjectTemplate()"
                     >
                         <ng-container
-                            [ngTemplateOutlet]="objectTemplate"
-                            [ngTemplateOutletContext]="{ item: object[key] }"
+                            [ngTemplateOutlet]="objectTemplate()"
+                            [ngTemplateOutletContext]="{ item: object()[key] }"
                         ></ng-container>
                     </nui-recursive-object-view>
                 </nui-expander>
             </div>
             <ng-template #notObject>
                 <ng-container
-                    [ngTemplateOutlet]="notObjectTemplate"
+                    [ngTemplateOutlet]="notObjectTemplate()"
                     [ngTemplateOutletContext]="{ item: key }"
                 ></ng-container>
             </ng-template>
@@ -51,20 +51,20 @@ import _sortBy from "lodash/sortBy";
     standalone: false,
 })
 export class RecursiveObjectViewComponent implements OnInit {
-    @Input() object: any;
-    @Input() objectTemplate: TemplateRef<string>;
-    @Input() notObjectTemplate: TemplateRef<string>;
+    readonly object = input<any>();
+    readonly objectTemplate = input<TemplateRef<string>>();
+    readonly notObjectTemplate = input<TemplateRef<string>>();
 
     public orderOfKeys: Array<string>;
 
     public ngOnInit(): void {
         this.orderOfKeys = _sortBy(
-            Object.keys(this.object),
+            Object.keys(this.object()),
             (key: string) => key.length
         );
     }
 
     public checkInstance(key: string): boolean {
-        return _isObject(this.object[key]);
+        return _isObject(this.object()[key]);
     }
 }

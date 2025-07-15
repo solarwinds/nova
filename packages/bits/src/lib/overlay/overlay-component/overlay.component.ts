@@ -27,18 +27,19 @@ import {
 } from "@angular/cdk/overlay";
 import { CdkPortal } from "@angular/cdk/portal";
 import {
-    AfterContentChecked,
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  AfterContentChecked,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import set from "lodash/set";
 import some from "lodash/some";
@@ -66,7 +67,7 @@ const isMouseEvent = (event: Event): event is MouseEvent =>
         <div
             id="nui-overlay"
             class="nui-overlay"
-            [attr.role]="roleAttr || null"
+            [attr.role]="roleAttr()()()() || null"
             [ngClass]="{ empty: empty$ | async }"
         >
             <ng-content></ng-content>
@@ -92,19 +93,43 @@ export class OverlayComponent
         OnChanges
 {
     /** Sets overlay config in accordance with [Material CDK]{@link https://material.angular.io/cdk/overlay/api#OverlayConfig} */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public overlayConfig: OverlayConfig;
 
     /** Element to which the Popup is attached */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public toggleReference: HTMLElement;
 
     /** Popup viewport margins */
-    @Input() viewportMargin: number;
+    readonly viewportMargin = input<number>(undefined!);
 
     /** Sets custom container for CDK Overlay. Selector OR ElementRef */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() customContainer: OverlayContainerType;
 
     /** Sets the role attribute */
-    @Input() roleAttr: string;
+    readonly roleAttr = input<string>(undefined!);
 
     /** Emits MouseEvent when click occurs outside Select/Combobox */
     @Output() public readonly clickOutside = new EventEmitter<MouseEvent>();
@@ -229,7 +254,7 @@ export class OverlayComponent
             .flexibleConnectedTo(this.toggleReference)
             .withPush(false)
             .withViewportMargin(
-                this.viewportMargin || POPUP_V2_VIEWPORT_MARGINS_DEFAULT
+                this.viewportMargin()()()() || POPUP_V2_VIEWPORT_MARGINS_DEFAULT
             )
             .withPositions([
                 {

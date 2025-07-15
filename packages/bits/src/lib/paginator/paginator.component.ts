@@ -20,18 +20,19 @@
 
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import _chunk from "lodash/chunk";
 import _clone from "lodash/clone";
@@ -75,67 +76,107 @@ const containerPaddingsWithScroll = 37;
 export class PaginatorComponent
     implements OnInit, OnChanges, OnDestroy, IFilterPub
 {
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public itemsList: Array<IPaginatorItem> = [];
     /**
      * Current page number
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public page = 1;
     /**
      * Size of the page. For example: 10, 25, 50, 100;
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public pageSize: number;
     /**
      * Array of page numbers
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public pageSizeSet: number[] = [];
     /**
      * Total number of items
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public total = 0;
     /**
      * Paginator separator symbol.
      */
-    @Input() public dots = "...";
+    public readonly dots = input("...");
     /**
      * Hide paginator if all items of data can be displayed on one page
      */
-    @Input() public hideIfEmpty = false;
+    public readonly hideIfEmpty = input(false);
     /**
      * Make paginator hidden
      */
-    @Input() public hide: boolean;
+    public readonly hide = input<boolean>(undefined!);
     /**
      * Paginator active item class
      */
-    @Input() public activeClass = "active";
+    public readonly activeClass = input("active");
     /**
      * Paginator disabled item class
      */
-    @Input() public disabledClass = "disabled";
+    public readonly disabledClass = input("disabled");
     /**
      * Number of items displayed before separator
      */
-    @Input() public adjacent = 1;
+    public readonly adjacent = input(1);
     /**
      * Maximum number of items in paginator
      */
-    @Input() public maxElements = this.adjacent * 2 + 5;
+    public readonly maxElements = input(this.adjacent * 2 + 5);
     /**
      * Show previous and next buttons
      */
-    @Input() public showPrevNext = true;
+    public readonly showPrevNext = input(true);
     /**
      * Display popup above paginator if equals to 'true'
      */
-    @Input() public popupDirectionTop = false;
+    public readonly popupDirectionTop = input(false);
     /**
      * Popup parent element css class used determining of popup direction
      */
-    @Input() public popupBaseElementSelector: string;
+    public readonly popupBaseElementSelector = input<string>(undefined!);
     /**
      * inner nui-select appendToBody input
      */
-    @Input() public appendToBody: boolean;
+    public readonly appendToBody = input<boolean>(undefined!);
     /**
      * Action occurs on page change
      */
@@ -304,7 +345,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
      */
     public showPaginator(): boolean {
         const count: number = this.getPageCount();
-        return isFinite(count) && (this.hideIfEmpty === false || count > 1);
+        return isFinite(count) && (this.hideIfEmpty()()()() === false || count > 1);
     }
 
     /**
@@ -383,10 +424,10 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         //  < 1  ... 100  101  102  103  104 >
         const pageCount = this.getPageCount();
         const page = +this.page;
-        const adjacent = +this.adjacent;
+        const adjacent = +this.adjacent()()()();
 
         // case when there are few items
-        if (pageCount <= this.maxElements) {
+        if (pageCount <= this.maxElements()()()()) {
             this.mainRangeStart = 1;
             this.mainRangeEnd = pageCount;
             return;
@@ -420,19 +461,19 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         // case where we have one of the first pages selected and the ending separator
         if (
             this.mainRangeEnd !== pageCount &&
-            page < this.maxElements - 2 - adjacent
+            page < this.maxElements()()()() - 2 - adjacent
         ) {
             this.mainRangeStart = 1;
-            this.mainRangeEnd = this.mainRangeStart + this.maxElements - 3;
+            this.mainRangeEnd = this.mainRangeStart + this.maxElements()()()() - 3;
         }
 
         // case where we have one of the last pages selected and the starting separator
         if (
             this.mainRangeStart !== 1 &&
-            page > pageCount - this.maxElements + 2 + adjacent
+            page > pageCount - this.maxElements()()()() + 2 + adjacent
         ) {
             this.mainRangeEnd = pageCount;
-            this.mainRangeStart = this.mainRangeEnd - this.maxElements + 3;
+            this.mainRangeStart = this.mainRangeEnd - this.maxElements()()()() + 3;
         }
     }
 
@@ -440,7 +481,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         const pageRows = _chunk(_range(from, to + 1), this._dotsPagesPerRow);
         this.itemsList.push({
             title: $localize`Pages ${from} - ${to}`,
-            value: this.dots,
+            value: this.dots()()()(),
             pageRows: pageRows,
             popupWidth:
                 (to.toString().length * singleSymbolWidth +
@@ -453,7 +494,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
 
     private addPrev() {
         const pageCount = this.getPageCount();
-        if (!this.showPrevNext || pageCount < 1) {
+        if (!this.showPrevNext()()()() || pageCount < 1) {
             return;
         }
 
@@ -468,7 +509,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
 
     private addNext() {
         const pageCount = this.getPageCount();
-        if (!this.showPrevNext || pageCount < 1) {
+        if (!this.showPrevNext()()()() || pageCount < 1) {
             return;
         }
 
@@ -486,7 +527,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
             iconName: item.iconName,
             value: item.value,
             title: item.title,
-            style: isDisabled ? this.disabledClass : "",
+            style: isDisabled ? this.disabledClass()()()() : "",
             action: () => {
                 if (item.page) {
                     this.goToPage(item.page);
@@ -501,7 +542,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         this.itemsList.push({
             value: page,
             title: $localize`Page ${page}`,
-            style: this.page === page ? this.activeClass : "",
+            style: this.page === page ? this.activeClass()()()() : "",
             action: function () {
                 inst.goToPage(this.value);
                 return false;

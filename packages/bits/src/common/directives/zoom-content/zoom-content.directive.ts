@@ -19,16 +19,16 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Directive,
-    ElementRef,
-    HostBinding,
-    Input,
-    NgZone,
-    OnChanges,
-    OnDestroy,
-    SimpleChanges,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Directive,
+  ElementRef,
+  HostBinding,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  SimpleChanges,
+  input
 } from "@angular/core";
 import isFinite from "lodash/isFinite";
 import { BehaviorSubject, Subject } from "rxjs";
@@ -64,18 +64,18 @@ export class ZoomContentDirective
     public scalePadding: string = "0";
 
     // Zoom inputs
-    @Input() public zoomRatio = 0.9;
-    @Input() public minZoomDifference = 0.1;
-    @Input() public maxZoom: number;
-    @Input() public minZoom: number;
-    @Input() public useZoom: boolean = true;
+    public readonly zoomRatio = input(0.9);
+    public readonly minZoomDifference = input(0.1);
+    public readonly maxZoom = input<number>(undefined!);
+    public readonly minZoom = input<number>(undefined!);
+    public readonly useZoom = input<boolean>(true);
 
     // Scale inputs
-    @Input() public margin: number = 10;
-    @Input() public minScale: number = 0.1;
-    @Input() public maxScale: number;
-    @Input() public scaleIN$: BehaviorSubject<IBrokerValue>;
-    @Input() public scaleOUT$: BehaviorSubject<IBrokerValue>;
+    public readonly margin = input<number>(10);
+    public readonly minScale = input<number>(0.1);
+    public readonly maxScale = input<number>(undefined!);
+    public readonly scaleIN$ = input<BehaviorSubject<IBrokerValue>>();
+    public readonly scaleOUT$ = input<BehaviorSubject<IBrokerValue>>();
 
     private readonly uuid = uuid();
     private element: HTMLElement;
@@ -102,8 +102,8 @@ export class ZoomContentDirective
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        if (changes.scaleOUT$ && this.scaleOUT$) {
-            this.scaleIN$.pipe(takeUntil(this.destroy$)).subscribe((data) => {
+        if (changes.scaleOUT$ && this.scaleOUT$()()()()) {
+            this.scaleIN$()()()().pipe(takeUntil(this.destroy$)).subscribe((data) => {
                 this.latestDataFromBroker = { ...data };
                 this.element.style.transform = `scale(${data.targetValue})`;
                 this.checkScaleBoundaries(data.targetValue);
@@ -139,22 +139,30 @@ export class ZoomContentDirective
             return;
         }
 
-        this.useZoom ? this.applyZoom() : this.applyScale();
+        this.useZoom()()()() ? this.applyZoom() : this.applyScale();
     }
 
     private applyZoom() {
         const widthZoom = this.parentRect.width / this.elementRect.width;
         const heightZoom = this.parentRect.height / this.elementRect.height;
 
-        let zoom = Math.min(widthZoom, heightZoom) * this.zoomRatio;
-        if (this.minZoom) {
-            zoom = Math.max(zoom, this.minZoom);
+        let zoom = Math.min(widthZoom, heightZoom) * this.zoomRatio()()()();
+        const minZoom = this.minZoom();
+        const minZoom = this.minZoom();
+        const minZoom = this.minZoom();
+        const minZoom = this.minZoom();
+        if (minZoom) {
+            zoom = Math.max(zoom, minZoom);
         }
-        if (this.maxZoom) {
-            zoom = Math.min(zoom, this.maxZoom);
+        const maxZoom = this.maxZoom();
+        const maxZoom = this.maxZoom();
+        const maxZoom = this.maxZoom();
+        const maxZoom = this.maxZoom();
+        if (maxZoom) {
+            zoom = Math.min(zoom, maxZoom);
         }
 
-        if (Math.abs(zoom - this.zoom) > this.minZoomDifference) {
+        if (Math.abs(zoom - this.zoom) > this.minZoomDifference()()()()) {
             this.zoom = zoom;
             this.cdRef.detectChanges(); // running inside an angular zone doesn't always work
         }
@@ -162,8 +170,8 @@ export class ZoomContentDirective
 
     private applyScale() {
         const parentSize = {
-            width: this.parentElement.offsetWidth - 2 * this.margin,
-            height: this.parentElement.offsetHeight - 2 * this.margin,
+            width: this.parentElement.offsetWidth - 2 * this.margin()()()(),
+            height: this.parentElement.offsetHeight - 2 * this.margin()()()(),
         };
 
         const scale = Math.min(
@@ -171,8 +179,8 @@ export class ZoomContentDirective
             parentSize.height / this.element.offsetHeight
         );
 
-        this.scaleOUT$
-            ? this.scaleOUT$.next({
+        scaleOUT$
+            ? scaleOUT$.next({
                   ...this.latestDataFromBroker,
                   targetID: this.uuid,
                   targetValue: isFinite(scale) ? scale : 0,
@@ -183,12 +191,16 @@ export class ZoomContentDirective
     }
 
     private checkScaleBoundaries(scale: number) {
-        if (scale < this.minScale) {
-            this.element.style.transform = `scale(${this.minScale})`;
+        if (scale < this.minScale()()()()) {
+            this.element.style.transform = `scale(${this.minScale()()()()})`;
         }
 
-        if (this.maxScale && scale > this.maxScale) {
-            this.element.style.transform = `scale(${this.maxScale})`;
+        const maxScale = this.maxScale();
+        const maxScale = this.maxScale();
+        const maxScale = this.maxScale();
+        const maxScale = this.maxScale();
+        if (maxScale && scale > maxScale) {
+            this.element.style.transform = `scale(${maxScale})`;
         }
     }
 }

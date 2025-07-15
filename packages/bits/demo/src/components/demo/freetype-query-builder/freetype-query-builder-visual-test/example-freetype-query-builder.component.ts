@@ -19,11 +19,12 @@
 //  THE SOFTWARE.s
 
 import {
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Input,
-    Output,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  input
 } from "@angular/core";
 import { Subject } from "rxjs";
 
@@ -40,18 +41,17 @@ import { ExampleAppRenderer } from "../freetype-query-builder-test/renderer";
     standalone: false,
 })
 export class ExampleFreetypeQueryBuilderComponent {
-    @Input() exampleId: string;
+    readonly exampleId = input<string>(undefined!);
     /**
      * Inputs and outputs here are example of how the api for such a component can look. But This is going to be very specific based on required use-cases.
      */
-    @Input()
-    readonly: boolean = false;
-    @Input()
-    placeholder: string = "default placeholder";
+    readonly readonly = input<boolean>(false);
+    readonly placeholder = input<string>("default placeholder");
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input()
     value: string = "";
-    @Input()
-    draggingInProgress = false;
+    readonly draggingInProgress = input(false);
     @Output()
     focusedTokenChange = new EventEmitter();
     @Output()

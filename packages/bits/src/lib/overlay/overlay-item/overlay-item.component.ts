@@ -53,6 +53,14 @@ export class OverlayItemComponent implements Highlightable, IOption {
     public active: boolean = false;
 
     /** Whether the Item is disabled */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input()
     @HostBinding("class.disabled")
     public isDisabled: boolean = false;

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, EventEmitter, Inject, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Inject, Input, Output, input } from "@angular/core";
 
 import { NuiActiveDialog, SelectorService } from "@nova-ui/bits";
 
@@ -31,8 +31,10 @@ import { IFilterGroupOption } from "../public-api";
     standalone: false,
 })
 export class FilterGroupCompositeDialogComponent {
-    @Input() title: string;
-    @Input() itemPickerOptions: IFilterGroupOption[] = [];
+    readonly title = input<string>(undefined!);
+    readonly itemPickerOptions = input<IFilterGroupOption[]>([]);
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() selectedValues: string[] = [];
 
     @Output() dialogClosed: EventEmitter<string[]> = new EventEmitter();

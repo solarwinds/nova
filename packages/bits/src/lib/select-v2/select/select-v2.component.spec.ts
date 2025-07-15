@@ -760,7 +760,7 @@ describe("components >", () => {
 
                 expect(
                     wrapperWithFormControlComponent.select.getLastSelectedOption()
-                        ?.value
+                        ?.value()
                 ).toEqual(itemToSet);
             });
 

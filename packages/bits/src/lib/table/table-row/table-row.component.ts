@@ -27,23 +27,24 @@ import {
     CdkRowDef,
 } from "@angular/cdk/table";
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Directive,
-    ElementRef,
-    HostBinding,
-    HostListener,
-    Input,
-    IterableDiffers,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    SimpleChanges,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Directive,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  Input,
+  IterableDiffers,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import _includes from "lodash/includes";
 import { Subject, Subscription } from "rxjs";
@@ -77,10 +78,26 @@ export class TableHeaderRowDefDirective
     extends CdkHeaderRowDef
     implements OnInit, OnDestroy, OnChanges
 {
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() set nuiHeaderRowDef(value: any) {
         this.columns = value ?? [];
     }
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() set nuiHeaderRowDefSticky(value: boolean) {
         this.sticky = value;
     }
@@ -137,10 +154,26 @@ export class TableRowDefDirective<T>
     extends CdkRowDef<T>
     implements OnInit, OnDestroy
 {
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() set nuiRowDefColumns(value: any) {
         this.columns = value ?? [];
     }
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() set nuiRowDefWhen(value: (index: number, rowData: T) => boolean) {
         this.when = value;
     }
@@ -191,10 +224,26 @@ export class TableFooterRowDefDirective
     extends CdkFooterRowDef
     implements OnInit, OnDestroy
 {
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() set nuiFooterRowDef(value: any) {
         this.columns = value ?? [];
     }
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() set nuiFooterRowDefSticky(value: boolean) {
         this.sticky = value;
     }
@@ -274,7 +323,7 @@ export class TableHeaderRowComponent
     extends CdkHeaderRow
     implements OnInit, OnDestroy, AfterViewInit
 {
-    @Input() density: RowHeightOptions = "default";
+    readonly density = input<RowHeightOptions>("default");
 
     public selectorState: ISelectorState = {
         checkboxStatus: CheckboxStatus.Unchecked,
@@ -288,17 +337,17 @@ export class TableHeaderRowComponent
 
     @HostBinding("class.nui-table__table-header-row_height_default")
     get isDensityDefault() {
-        return this.density.toLowerCase() === "default";
+        return this.density()()()().toLowerCase() === "default";
     }
 
     @HostBinding("class.nui-table__table-header-row_height_compact")
     get isDensityCompact() {
-        return this.density.toLowerCase() === "compact";
+        return this.density()()()().toLowerCase() === "compact";
     }
 
     @HostBinding("class.nui-table__table-header-row_height_tiny")
     get isDensityTiny() {
-        return this.density.toLowerCase() === "tiny";
+        return this.density()()()().toLowerCase() === "tiny";
     }
 
     public get hasOptions(): boolean {
@@ -427,15 +476,27 @@ export class TableHeaderRowComponent
     standalone: false
 })
 export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
-    @Input() density: RowHeightOptions = "default";
-    @Input() rowObject: Object;
+    readonly density = input<RowHeightOptions>("default");
+    readonly rowObject = input<Object>();
+    // TODO: Skipped for migration because:
+    //  This input is used in combination with `@HostBinding` and migrating would
+    //  break.
+    // TODO: Skipped for migration because:
+    //  This input is used in combination with `@HostBinding` and migrating would
+    //  break.
+    // TODO: Skipped for migration because:
+    //  This input is used in combination with `@HostBinding` and migrating would
+    //  break.
+    // TODO: Skipped for migration because:
+    //  This input is used in combination with `@HostBinding` and migrating would
+    //  break.
     @Input()
     @HostBinding("class.nui-table__table-row--clickable")
     clickableRow = false;
-    @Input() clickableRowConfig: ClickableRowOptions = {
-        clickableSelectors: ["nui-row", "tr[nui-row]"],
-        ignoredSelectors: DEFAULT_INTERACTIVE_ELEMENTS,
-    };
+    readonly clickableRowConfig = input<ClickableRowOptions>({
+    clickableSelectors: ["nui-row", "tr[nui-row]"],
+    ignoredSelectors: DEFAULT_INTERACTIVE_ELEMENTS,
+});
     public selectable;
     public selectionMode: TableSelectionMode;
     public selectionChangeSubscription: Subscription;
@@ -447,17 +508,17 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
 
     @HostBinding("class.nui-table__table-row_height_default")
     get isDensityDefault() {
-        return this.density.toLowerCase() === "default";
+        return this.density()()()().toLowerCase() === "default";
     }
 
     @HostBinding("class.nui-table__table-row_height_compact")
     get isDensityCompact() {
-        return this.density.toLowerCase() === "compact";
+        return this.density()()()().toLowerCase() === "compact";
     }
 
     @HostBinding("class.nui-table__table-row_height_tiny")
     get isDensityTiny() {
-        return this.density.toLowerCase() === "tiny";
+        return this.density()()()().toLowerCase() === "tiny";
     }
 
     @ViewChild("rowSelectionElement", { read: ElementRef, static: false })
@@ -476,7 +537,7 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
     }
 
     public ngOnInit(): void {
-        const rowHeightClass = `nui-table__table-row_height_${this.density.toLowerCase()}`;
+        const rowHeightClass = `nui-table__table-row_height_${this.density()()()().toLowerCase()}`;
         this.elementRef.nativeElement.classList.add(rowHeightClass);
 
         // when selection changes we need to detect changes to check check-boxes
@@ -504,22 +565,26 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
 
     @HostListener("click", ["$event.target"])
     public rowClickHandler(target: HTMLElement): void {
+        const clickableRowConfig = this.clickableRowConfig();
+        const clickableRowConfig = this.clickableRowConfig();
+        const clickableRowConfig = this.clickableRowConfig();
+        const clickableRowConfig = this.clickableRowConfig();
         if (
             !this.tableStateHandlerService.selectionEnabled ||
             !this.clickableRow ||
-            !this.clickableRowConfig.clickableSelectors.length
+            !clickableRowConfig.clickableSelectors.length
         ) {
             return;
         }
         const closestTableRow = target.closest(
-            this.clickableRowConfig.clickableSelectors.join(",")
+            clickableRowConfig.clickableSelectors.join(",")
         );
         if (!closestTableRow) {
             return;
         }
         if (
-            this.clickableRowConfig.ignoredSelectors.length &&
-            target.closest(this.clickableRowConfig.ignoredSelectors.join(","))
+            clickableRowConfig.ignoredSelectors.length &&
+            target.closest(clickableRowConfig.ignoredSelectors.join(","))
         ) {
             return;
         }
@@ -538,7 +603,7 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
     }
 
     public rowSelected(): void {
-        this.tableStateHandlerService.handleRowSelect(this.rowObject);
+        this.tableStateHandlerService.handleRowSelect(this.rowObject()()()());
     }
 
     /**
@@ -551,7 +616,7 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
     public isRowSelected(): boolean {
         const rowObjectTrackBy = this.tableStateHandlerService.trackBy(
             0,
-            this.rowObject
+            this.rowObject()()()()
         );
 
         const includedRows = this.tableStateHandlerService.selection.include;

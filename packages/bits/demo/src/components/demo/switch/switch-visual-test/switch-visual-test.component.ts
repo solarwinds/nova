@@ -26,7 +26,11 @@ import { Component, Input } from "@angular/core";
     standalone: false,
 })
 export class SwitchVisualTestComponent {
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() isOn = true;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() isEnabled = false;
     public isDisabled = true;
 }

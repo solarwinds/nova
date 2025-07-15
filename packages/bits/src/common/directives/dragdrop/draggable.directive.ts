@@ -20,16 +20,16 @@
 
 import { DOCUMENT } from "@angular/common";
 import {
-    Directive,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    HostListener,
-    Inject,
-    Input,
-    NgZone,
-    OnInit,
-    Output,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Inject,
+  NgZone,
+  OnInit,
+  Output,
+  input
 } from "@angular/core";
 import throttle from "lodash/throttle";
 
@@ -84,8 +84,8 @@ export class DraggableDirective implements OnInit {
     private static adornerHaloClass = "nui-drag__drag-halo";
     private static dragsourceOverlayClass = "nui-drag__drag-source--overlay";
 
-    @Input() adornerDragClass: string;
-    @Input() payload: any;
+    readonly adornerDragClass = input<string>(undefined!);
+    readonly payload = input<any>();
     @Output() dragStart = new EventEmitter();
     @Output() dragEnd = new EventEmitter();
 
@@ -172,8 +172,12 @@ export class DraggableDirective implements OnInit {
         this.adorner.style.left = event.clientX + "px";
         this.adorner.style.top = event.clientY + "px";
         this.adorner.classList.add(DraggableDirective.adornerClass);
-        if (this.adornerDragClass) {
-            this.adorner.classList.add(this.adornerDragClass);
+        const adornerDragClass = this.adornerDragClass();
+        const adornerDragClass = this.adornerDragClass();
+        const adornerDragClass = this.adornerDragClass();
+        const adornerDragClass = this.adornerDragClass();
+        if (adornerDragClass) {
+            this.adorner.classList.add(adornerDragClass);
         }
         const adornerHalo = this.document.createElement("div");
         adornerHalo.classList.add(DraggableDirective.adornerHaloClass);
@@ -238,7 +242,7 @@ export class DraggableDirective implements OnInit {
             }
             event.dataTransfer.dropEffect = "copy";
 
-            this.dragAndDropService.setDragPayload(this.payload, event);
+            this.dragAndDropService.setDragPayload(this.payload()()()(), event);
         }
     }
 

@@ -136,8 +136,12 @@ export class ChipsOverflowService {
     private updateOverflowChips(item: ElementRef | ChipComponent): void {
         const chip = this.findChipItem(item);
 
+        const itemValue = (item as ChipComponent).item();
+        const itemValue = (item as ChipComponent).item();
+        const itemValue = (item as ChipComponent).item();
+        const itemValue = (item as ChipComponent).item();
         if (chip?.inFlat) {
-            this.overflowedChips.flatItems?.push((item as ChipComponent).item);
+            this.overflowedChips.flatItems?.push(itemValue);
         }
 
         if (chip?.inGroup) {
@@ -149,13 +153,13 @@ export class ChipsOverflowService {
             );
 
             if (existingGroup) {
-                existingGroup.items.push((item as ChipComponent).item);
+                existingGroup.items.push(itemValue);
                 return;
             }
 
             this.overflowedChips.groupedItems?.push({
                 id: `group${groupId}`,
-                items: [(item as ChipComponent).item],
+                items: [itemValue],
                 label: chip.inGroup.label,
             });
         }
@@ -167,9 +171,9 @@ export class ChipsOverflowService {
         if (!(item instanceof ChipComponent)) {
             return;
         }
-        const inFlat = this.itemsSource.flatItems?.find((i) => i === item.item);
+        const inFlat = this.itemsSource.flatItems?.find((i) => i === item.item()()()());
         const inGroup = this.itemsSource.groupedItems?.find((group) =>
-            group.items.find((i) => i === item.item)
+            group.items.find((i) => i === item.item()()()())
         );
         return { inFlat, inGroup };
     }

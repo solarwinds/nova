@@ -1,5 +1,5 @@
 <nui-freetype-query-builder
-    [id]="exampleId"
+    [id]="exampleId()"
     [value]="value"
     (currentValue)="onValueChange($event)"
     (cursorPos)="onCursorPosChange($event)"
@@ -7,9 +7,9 @@
     [tokenizer]="tokenizer"
     [renderer]="renderer"
     (submitQuery)="onSubmit()"
-    [placeholder]="placeholder"
+    [placeholder]="placeholder()"
     (helpItemSelected)="updateTextAfterHelpSelection($event)"
     [cursorSetter$]="cursorSetter$$"
-    [readonly]="readonly"
+    [readonly]="readonly()"
 >
 </nui-freetype-query-builder>

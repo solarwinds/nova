@@ -29,25 +29,26 @@ import {
 } from "@angular/cdk/drag-drop";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    DoCheck,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Input,
-    IterableDiffer,
-    IterableDiffers,
-    OnDestroy,
-    OnInit,
-    Output,
-    QueryList,
-    TemplateRef,
-    ViewChild,
-    ViewChildren,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DoCheck,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  Input,
+  IterableDiffer,
+  IterableDiffers,
+  OnDestroy,
+  OnInit,
+  Output,
+  QueryList,
+  TemplateRef,
+  ViewChild,
+  ViewChildren,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import _isEqual from "lodash/isEqual";
 import { Subject } from "rxjs";
@@ -103,6 +104,14 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
     /**
      * Turns on/off dragging functionality
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     public set draggable(value: boolean) {
         this._draggable = value;
@@ -127,6 +136,14 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
     /**
      * Turns on/off item reorder functionality
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     public set reorderable(value: boolean) {
         if (this._draggable === false) {
@@ -168,16 +185,28 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
     /**
      * Prevent item bodies from capturing clicks
      */
-    @Input() preventRowClick: boolean = false;
+    readonly preventRowClick = input<boolean>(false);
 
     /**
      * repeat item template
      */
-    @Input() repeatItemTemplateRef: TemplateRef<any>;
+    readonly repeatItemTemplateRef = input<TemplateRef<any>>();
 
     /**
      * Drag handle template that is applied on each item
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() dragHandleTemplateRef: TemplateRef<any>;
 
     /**
@@ -186,21 +215,53 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
      * This input is required since CDK adds the preview DOM element as the last child on the body;
      * without it all drag previews within a project would have the same style
      */
-    @Input() dragPreviewClass: string = "nui-dnd-preview";
+    readonly dragPreviewClass = input<string>("nui-dnd-preview");
 
     /**
      * Drag preview template that is applied on each item
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() dragPreviewTemplateRef: TemplateRef<any>;
 
     /**
      * Actions-container content.
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() actionsTemplateRef: TemplateRef<any>;
 
     /**
      * Possible values are 'single', 'radio', 'multi' and 'none'
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public selectionMode: RepeatSelectionMode =
         RepeatSelectionMode.none;
 
@@ -209,11 +270,27 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
      * 'normal', 'compact'.
      * Default value is 'compact'.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public paddingSize: PaddingOptions;
 
     /**
      * Enables virtual scroll feature. Requires @itemSize input to have a correct item size set.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public virtualScroll: boolean = false;
 
     /**
@@ -221,11 +298,31 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
      * The input accepts values in px only
      * @returns {number}
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() public itemSize: number;
 
     /**
      * Selected repeat objects
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public selection: T[] = [];
 
     /**
@@ -238,17 +335,33 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
     /**
      * item config object containing callbacks
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public itemConfig: IRepeatItemConfig<T>;
 
     /**
      * repeat view objects array
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public itemsSource: T[];
 
     /**
      * Is selected item should be highlighted
      */
-    @Input() public highlightSelectedItem = true;
+    public readonly highlightSelectedItem = input(true);
 
     /**
      * Is emitted when another item in the repeat is selected
@@ -399,7 +512,7 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
      * @param item selected repeat item in repeat
      */
     public isItemSelected(item: T): boolean {
-        if (!this.highlightSelectedItem) {
+        if (!this.highlightSelectedItem()()()()) {
             return false;
         }
 
@@ -497,7 +610,7 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
 
     /* START - ITEM BEHAVIOUR DECIDERS */
     public isItemClickable(item: T): boolean {
-        return !this.preventRowClick && !this.isItemDisabled(item);
+        return !this.preventRowClick()()()() && !this.isItemDisabled(item);
     }
 
     public isItemSelectable(item: T): boolean {

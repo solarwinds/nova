@@ -472,7 +472,11 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
     standalone: false,
 })
 export class TreeDialogContentExampleComponent implements AfterViewInit {
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() items: IServerNode[] = [];
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() isLoading: boolean = false;
 
     public itemConfig: IRepeatItemConfig = {

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation, input } from "@angular/core";
 
 @Component({
     selector: "nui-schematic-docs-page",
@@ -28,7 +28,7 @@ import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
     standalone: false,
 })
 export class SchematicDocsPageComponent implements OnInit {
-    @Input() schematicFolderName: string;
+    readonly schematicFolderName = input<string>(undefined!);
     public schematicHeading: string;
     public angularJsonStylePreprocOptions: string = `
 "stylePreprocessorOptions": {
@@ -38,6 +38,6 @@ export class SchematicDocsPageComponent implements OnInit {
 }`;
 
     public ngOnInit(): void {
-        this.schematicHeading = this.schematicFolderName.replace(/-/g, " ");
+        this.schematicHeading = this.schematicFolderName().replace(/-/g, " ");
     }
 }

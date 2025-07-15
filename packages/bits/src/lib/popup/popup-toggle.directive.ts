@@ -19,12 +19,12 @@
 //  THE SOFTWARE.
 
 import {
-    Directive,
-    ElementRef,
-    EventEmitter,
-    HostListener,
-    Input,
-    Output,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Output,
+  input
 } from "@angular/core";
 
 /** @ignore */
@@ -34,9 +34,9 @@ import {
 })
 export class PopupToggleDirective {
     /** sets disable state and which prevents emitting toggle */
-    @Input() isDisabled: boolean;
+    readonly isDisabled = input<boolean>(undefined!);
     /** sets disable state and which prevents emitting toggle (for using it on textbox component) */
-    @Input() disabled: boolean;
+    readonly disabled = input<boolean>(undefined!);
 
     @Output() toggle = new EventEmitter();
 
@@ -44,7 +44,7 @@ export class PopupToggleDirective {
 
     @HostListener("click", ["$event"])
     public handleElementFocus(event: Event): void {
-        if (!this.isDisabled && !this.disabled) {
+        if (!this.isDisabled()()()() && !this.disabled()()()()) {
             this.toggle.emit(event);
         }
     }

@@ -19,15 +19,16 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    Output,
-    ViewChild,
-    ViewEncapsulation,
+  AfterContentInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 
 import { expandV2 } from "../../animations/expand";
@@ -48,22 +49,54 @@ export class ExpanderComponent implements AfterContentInit {
     /**
      * Adds "disabled" attribute to expander
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() disabled: boolean = false;
     /**
      * Adds icon to expander's header
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() icon: string = "";
     /**
      * Adds title to expander's header
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() header: string = "";
     /**
      * Hides left dotted border of expander.
      */
-    @Input() hideLeftBorder: boolean = false;
+    readonly hideLeftBorder = input<boolean>(false);
     /**
      * Use this to have expander opened by default.
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() set open(value: boolean) {
         const previousValue: boolean = this.state === "expanded";
         if (previousValue !== value) {

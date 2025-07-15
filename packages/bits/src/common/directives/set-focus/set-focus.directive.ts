@@ -20,15 +20,16 @@
 
 import { DOCUMENT } from "@angular/common";
 import {
-    AfterViewInit,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    Inject,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges,
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  Inject,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  input
 } from "@angular/core";
 
 /**
@@ -55,9 +56,17 @@ export class SetFocusDirective implements AfterViewInit, OnChanges {
     /**
      * This property controls whether element is focused (true) or not (false).
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public nuiSetFocus: boolean;
 
-    @Input() public preventScroll: boolean = false;
+    public readonly preventScroll = input<boolean>(false);
     /**
      * Event fired on extarnal focus changes (initiated from UI by user).
      * Passed value indicates whether element gets focus (true) of lose it (false).
@@ -77,7 +86,7 @@ export class SetFocusDirective implements AfterViewInit, OnChanges {
             return;
         }
         if (changes["nuiSetFocus"].currentValue) {
-            this.focusableElement.focus({ preventScroll: this.preventScroll });
+            this.focusableElement.focus({ preventScroll: this.preventScroll()()()() });
         } else {
             this.focusableElement.blur();
         }
@@ -88,7 +97,7 @@ export class SetFocusDirective implements AfterViewInit, OnChanges {
         this.focusableElement.addEventListener("focus", this.onFocus);
         this.focusableElement.addEventListener("blur", this.onBlur);
         if (this.nuiSetFocus) {
-            this.focusableElement.focus({ preventScroll: this.preventScroll });
+            this.focusableElement.focus({ preventScroll: this.preventScroll()()()() });
         }
     }
 

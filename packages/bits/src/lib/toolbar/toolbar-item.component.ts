@@ -19,11 +19,12 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentInit,
-    Component,
-    EventEmitter,
-    Input,
-    Output,
+  AfterContentInit,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  input
 } from "@angular/core";
 
 import { ToolbarItemDisplayStyle, ToolbarItemType } from "./public-api";
@@ -38,22 +39,30 @@ import { ToolbarItemDisplayStyle, ToolbarItemType } from "./public-api";
     standalone: false,
 })
 export class ToolbarItemComponent implements AfterContentInit {
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public type = ToolbarItemType.primary;
-    @Input() public icon: string;
-    @Input() public title: string;
+    public readonly icon = input<string>(undefined!);
+    public readonly title = input<string>(undefined!);
 
     /**
      * Property for add destructive style to toolbar item.
      * Destructive item should be added always last by user.
      */
-    @Input() public displayStyle = ToolbarItemDisplayStyle.action;
+    public readonly displayStyle = input(ToolbarItemDisplayStyle.action);
 
     public menuHidden: boolean;
 
     @Output() public actionDone = new EventEmitter();
 
     public get isDestructive(): boolean {
-        return this.displayStyle === ToolbarItemDisplayStyle.destructive;
+        return this.displayStyle()()()() === ToolbarItemDisplayStyle.destructive;
     }
 
     public ngAfterContentInit(): void {

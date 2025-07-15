@@ -19,14 +19,15 @@
 //  THE SOFTWARE.
 
 import {
-    Directive,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    TemplateRef,
+  Directive,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  TemplateRef,
+  input
 } from "@angular/core";
 import { ControlValueAccessor } from "@angular/forms";
 import _includes from "lodash/includes";
@@ -52,62 +53,154 @@ export abstract class BaseSelect
     /**
      * The option to disable the select.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() isDisabled: boolean;
     /**
      * The option to make select inline.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() inline: boolean;
     /**
      * The option to fill width of a container.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() justified: boolean;
     /**
      * Array of values that are bound to the repeat of dropdown items. If you want to have grouped data you need to pass
      * data as ISelectGroup[].
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() itemsSource: any[] | ISelectGroup[];
     /**
      * Receives item that will be selected before user starts to communicate with select component
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() value: any;
     /**
      * The icon to be rendered.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() icon: string;
     /**
      * Template for formatting selected item on the dropdown button. Used only with nui-select.
      */
-    @Input() displayFormat: string;
+    readonly displayFormat = input<string>(undefined!);
     /**
      * Name of the item property that will be shown in the dropdown menu.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() displayValue: string;
     /**
      * Name of the item property that will be used as the model.
      */
-    @Input() modelValue: string;
+    readonly modelValue = input<string>(undefined!);
     /**
      * Value used as a placeholder for the select.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() placeholder: string;
     /**
      * Needed to provide own template for every item in select you need to link `customTemplate` input with `TemplateRef`
      * that represents custom template
      */
-    @Input() customTemplate: TemplateRef<string>;
+    readonly customTemplate = input<TemplateRef<string>>();
     /**
      * Input to apply error state styles
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() isInErrorState: boolean;
 
     /**
      * Input to set aria label text
      */
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @Input() public ariaLabel: string = "";
 
     /**
      * Value for enabling remove value feature
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() isRemoveValueEnabled: boolean = false;
     /**
      *
@@ -142,14 +235,14 @@ export abstract class BaseSelect
             }
         }
 
-        if (changes.itemsSource && this.selectedItem && this.modelValue) {
+        if (changes.itemsSource && this.selectedItem && this.modelValue()()()()) {
             if (_isString(this.selectedItem)) {
                 const newItemsSource = changes.itemsSource.currentValue as
                     | any[]
                     | ISelectGroup[];
 
                 const itemToSelect = newItemsSource.find(
-                    (i) => i[this.modelValue] === this.selectedItem
+                    (i) => i[this.modelValue()()()()] === this.selectedItem
                 );
                 if (itemToSelect) {
                     this.select(itemToSelect);
@@ -185,7 +278,11 @@ export abstract class BaseSelect
             return "";
         }
 
-        if (this.displayFormat) {
+        const displayFormat = this.displayFormat();
+        const displayFormat = this.displayFormat();
+        const displayFormat = this.displayFormat();
+        const displayFormat = this.displayFormat();
+        if (displayFormat) {
             const displayedItem = this.getItemDisplay(item);
 
             // handle the case where item isn"t empty
@@ -195,7 +292,7 @@ export abstract class BaseSelect
             }
 
             return this.utilService.formatString(
-                this.displayFormat,
+                displayFormat,
                 displayedItem
             );
         }
@@ -239,7 +336,11 @@ export abstract class BaseSelect
     }
 
     public getItemModel(item: any): any {
-        return item && this.modelValue ? item[this.modelValue] : item;
+        const modelValue = this.modelValue();
+        const modelValue = this.modelValue();
+        const modelValue = this.modelValue();
+        const modelValue = this.modelValue();
+        return item && modelValue ? item[modelValue] : item;
     }
 
     public onChange(value: any): void {}
@@ -248,7 +349,7 @@ export abstract class BaseSelect
 
     public writeValue(value: any): void {
         let selectedItem: any;
-        if (this.modelValue && this.itemsSource && this.itemsSource.length) {
+        if (this.modelValue()()()() && this.itemsSource && this.itemsSource.length) {
             selectedItem = this.itemsSource.find(
                 (item) => this.getItemModel(item) === value
             );

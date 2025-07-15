@@ -65,6 +65,14 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
     @ContentChild(TableComponent) public table: TableComponent<unknown>;
     @ContentChild(CdkVirtualForOf) public virtualFor: CdkVirtualForOf<unknown>;
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     public set tableStickyHeader(isSticky: boolean) {
         if (!isBoolean(isSticky)) {
@@ -219,7 +227,7 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
 
     public handleColumnsUpdate$: () => Observable<unknown> =
         (): Observable<unknown> => {
-            if (this.table.resizable) {
+            if (this.table.resizable()()()()) {
                 return EMPTY;
             }
 
@@ -273,7 +281,7 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             this.viewportEl.getElementsByTagName("thead").item(0) || undefined;
         this.userProvidedHeight = this.viewportEl.style.height;
         // Disable animation for resizable sticky header cells to prevent a lagging effect during width changes.
-        if (!this.table.resizable) {
+        if (!this.table.resizable()()()()) {
             Array.from(this.headRef?.getElementsByTagName("th") || []).forEach(
                 (th) => th.classList.add("virtual-sticky")
             );

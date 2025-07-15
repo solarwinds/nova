@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Directive, ElementRef, Input, OnDestroy, OnInit } from "@angular/core";
+import { Directive, ElementRef, OnDestroy, OnInit, input } from "@angular/core";
 import find from "lodash/find";
 import isNil from "lodash/isNil";
 import { Subscription } from "rxjs";
@@ -45,7 +45,7 @@ export class ToastDirective implements OnInit, OnDestroy {
     /**
      * sets model for directive to check whether corresponding element should be highlighted or not
      */
-    @Input() public nuiToast: any;
+    public readonly nuiToast = input<any>();
 
     private notificationSubscription: Subscription;
     private get highlightOnClass() {
@@ -79,7 +79,7 @@ export class ToastDirective implements OnInit, OnDestroy {
             highlightArgs.items,
             (item) =>
                 item[highlightArgs.itemIdentificator] ===
-                this.nuiToast[highlightArgs.itemIdentificator]
+                this.nuiToast()()()()[highlightArgs.itemIdentificator]
         );
         if (!isNil(currentItem)) {
             if (highlightArgs.highlightState === SwitchState.on) {

@@ -5,7 +5,7 @@
 >
     <div
         class="has-feedback"
-        [ngStyle]="{ maxWidth: customBoxWidth, minWidth: customBoxWidth }"
+        [ngStyle]="{ maxWidth: customBoxWidth()()()(), minWidth: customBoxWidth()()()() }"
     >
         <input
             class="form-control input-control nui-textbox__input"
@@ -18,12 +18,12 @@
             [ngModelOptions]="{ standalone: true }"
             [min]="minValue"
             [max]="maxValue"
-            [attr.name]="name"
+            [attr.name]="name()()()()"
             (blur)="onBlurEventEmit()"
             (keydown)="preventNonNumericalInput($event)"
             (paste)="preventNonNumericalPaste($event)"
-            [placeholder]="placeholder"
-            [readonly]="readonly"
+            [placeholder]="placeholder()()()()"
+            [readonly]="readonly()()()()"
             aria-label="Textbox number input"
         />
     </div>
@@ -35,8 +35,8 @@
                 displayStyle="action"
                 icon="caret-up"
                 [isRepeat]="isRepeatable"
-                [disabled]="readonly || disabled || compareMax()"
-                (click)="addNumber(+step)"
+                [disabled]="readonly()()()() || disabled || compareMax()"
+                (click)="addNumber(+step()()()())"
                 aria-label="Up"
             ></button>
         </span>
@@ -52,8 +52,8 @@
                 displayStyle="action"
                 icon="caret-down"
                 [isRepeat]="isRepeatable"
-                [disabled]="readonly || disabled || compareMin()"
-                (click)="addNumber(-step)"
+                [disabled]="readonly()()()() || disabled || compareMin()"
+                (click)="addNumber(-step()()()())"
                 aria-label="Down"
             ></button>
         </span>

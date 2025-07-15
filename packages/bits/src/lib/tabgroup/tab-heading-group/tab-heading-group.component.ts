@@ -19,20 +19,20 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Input,
-    NgZone,
-    OnDestroy,
-    Output,
-    QueryList,
-    ViewChild,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChildren,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  NgZone,
+  OnDestroy,
+  Output,
+  QueryList,
+  ViewChild,
+  input
 } from "@angular/core";
 import { Subscription } from "rxjs";
 
@@ -53,7 +53,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
     @ViewChild("resizableArea") resizableArea: ElementRef;
 
     /** If true tabs will be placed vertically */
-    @Input() public vertical: boolean;
+    public readonly vertical = input<boolean>(undefined!);
 
     /**
      * Emits id of selected tab
@@ -61,7 +61,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
     @Output() selected: EventEmitter<string> = new EventEmitter();
 
     @HostBinding("class.vertical") get isVertical(): boolean {
-        return this.vertical;
+        return this.vertical()()()();
     }
 
     public leftTraverseEnabled = true;
@@ -128,7 +128,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
     public allowTraverse(): boolean {
         const holderSize = this.getElementSize("nui-tab-headings__holder");
         const contentSize = this.getElementSize("nui-tab-headings__container");
-        if (this.vertical) {
+        if (this.vertical()()()()) {
             return false;
         }
         return holderSize + this._traverseButtonsWidth <= contentSize;
@@ -182,7 +182,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
         this._tabs.forEach((tab: TabHeadingComponent) => {
             this._tabSelectedSubscriptions.push(
                 tab.selected.subscribe((currentTab: TabHeadingComponent) => {
-                    if (!currentTab.active && !currentTab.disabled) {
+                    if (!currentTab.active && !currentTab.disabled()()()()) {
                         // Making all elements in array inactive to make than current one active
                         this._tabs.forEach(
                             (tabHeading: TabHeadingComponent) => {
@@ -192,7 +192,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
                         currentTab.active = true;
                         this.changeDetectorRef.markForCheck();
                         this.changeDetectorRef.detectChanges();
-                        this.selected.emit(currentTab.tabId);
+                        this.selected.emit(currentTab.tabId()()()());
                     }
                 })
             );

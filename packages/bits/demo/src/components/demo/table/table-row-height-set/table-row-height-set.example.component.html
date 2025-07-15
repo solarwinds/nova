@@ -63,12 +63,12 @@
         <tr
             nui-header-row
             *nuiHeaderRowDef="displayedColumns"
-            [density]="density"
+            [density]="density()"
         ></tr>
         <tr
             nui-row
             *nuiRowDef="let row; columns: displayedColumns"
-            [density]="density"
+            [density]="density()"
         ></tr>
     </table>
 </div>

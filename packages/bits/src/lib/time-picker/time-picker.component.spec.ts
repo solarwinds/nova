@@ -127,7 +127,7 @@ describe("components >", () => {
                 componentInstance.times,
                 (time) =>
                     moment(time)
-                        .format(componentInstance.timeFormat)
+                        .format(componentInstance.timeFormat())
                         .toUpperCase() === initialState
             );
             const movedTime =
@@ -135,7 +135,7 @@ describe("components >", () => {
                     ? componentInstance.times[index + 1]
                     : componentInstance.times[index - 1];
             const movedTimeFormatted = moment(movedTime).format(
-                componentInstance.timeFormat
+                componentInstance.timeFormat()
             );
             expect(movedTimeFormatted).not.toBe(initialState);
             componentInstance.writeValue(movedTime);

@@ -19,24 +19,25 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentInit,
-    ApplicationRef,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    ContentChild,
-    ElementRef,
-    EmbeddedViewRef,
-    EventEmitter,
-    Injector,
-    Input,
-    OnDestroy,
-    OnInit,
-    Optional,
-    Output,
-    ViewChild,
-    ViewEncapsulation,
+  AfterContentInit,
+  ApplicationRef,
+  ChangeDetectorRef,
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  ContentChild,
+  ElementRef,
+  EmbeddedViewRef,
+  EventEmitter,
+  Injector,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Output,
+  ViewChild,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import _isUndefined from "lodash/isUndefined";
 import { filter, Subject, Subscription } from "rxjs";
@@ -72,7 +73,7 @@ const isMouseEvent = (event: Event): event is MouseEvent =>
     host: {
         class: "nui-popup",
         role: "dialog",
-        "[attr.aria-label]": "ariaLabel",
+        "[attr.aria-label]": "ariaLabel()()()()",
     },
     template: `
         <div
@@ -85,14 +86,14 @@ const isMouseEvent = (event: Event): event is MouseEvent =>
             </div>
             <div
                 #popupArea
-                class="nui-popup__area {{ contextClass }}"
-                [style.width]="width"
+                class="nui-popup__area {{ contextClass()()()() }}"
+                [style.width]="width()()()()"
                 [class.nui-popup__area--visible]="visible"
-                [class.nui-popup__area--top]="_directionTop && !appendToBody"
+                [class.nui-popup__area--top]="_directionTop && !appendToBody()()()()"
                 [class.nui-popup__area--right]="
                     _directionRight && !appendToBody
                 "
-            >
+()()()()            >
                 <div
                     #popupAreaContainer
                     tabindex="-1"
@@ -110,38 +111,40 @@ const isMouseEvent = (event: Event): event is MouseEvent =>
 export class PopupDeprecatedComponent
     implements AfterContentInit, OnDestroy, OnInit
 {
-    @Input() width: string;
+    readonly width = input<string>(undefined!);
     /**
      * If additional styles should be applied to popup
      */
-    @Input() contextClass: string;
+    readonly contextClass = input<string>(undefined!);
     /**
      * Allows popup box to be attached to document.body
      */
-    @Input()
-    public appendToBody: boolean;
+    public readonly appendToBody = input<boolean>(undefined!);
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input()
     public isOpen = false;
-    @Input()
-    public manualOpenControl: Subject<MouseEvent>;
+    public readonly manualOpenControl = input<Subject<MouseEvent>>();
     /**
      * Defines in which direction popup area will be opened.
      */
-    @Input()
-    public directionTop: boolean;
+    public readonly directionTop = input<boolean>(undefined!);
     /**
      * Parent css element class used determining of popup direction to top.
      */
-    @Input()
-    public directionRight: boolean;
+    public readonly directionRight = input<boolean>(undefined!);
     /**
      * Parent css element class used determining of popup direction to right.
      */
-    @Input()
-    public baseElementSelector: string;
+    public readonly baseElementSelector = input<string>(undefined!);
 
-    @Input()
-    public ariaLabel: string = "Popup";
+    public readonly ariaLabel = input<string>("Popup");
 
     @Output()
     public opened = new EventEmitter<boolean>();
@@ -189,9 +192,13 @@ export class PopupDeprecatedComponent
     }
 
     public ngOnInit(): void {
-        if (this.manualOpenControl) {
+        const manualOpenControl = this.manualOpenControl();
+        const manualOpenControl = this.manualOpenControl();
+        const manualOpenControl = this.manualOpenControl();
+        const manualOpenControl = this.manualOpenControl();
+        if (manualOpenControl) {
             this.popupSubscriptions.push(
-                this.manualOpenControl.subscribe((event) => {
+                manualOpenControl.subscribe((event) => {
                     this.toggleOpened(event);
                 })
             );
@@ -247,7 +254,7 @@ export class PopupDeprecatedComponent
             this.changeDetectorRef.detectChanges();
             this.changeDetectorRef.detach();
             if (this.isOpen) {
-                if (!this._popupInstance && this.appendToBody) {
+                if (!this._popupInstance && this.appendToBody()()()()) {
                     const popupContainerFactory =
                         this.componentFactoryResolver.resolveComponentFactory(
                             PopupContainerComponent
@@ -277,7 +284,7 @@ export class PopupDeprecatedComponent
                 this.changeDetectorRef.detectChanges();
                 this.changeDetectorRef.detach();
                 // If closed, remove popup instance from DOM if there's one
-            } else if (this._popupInstance && this.appendToBody) {
+            } else if (this._popupInstance && this.appendToBody()()()()) {
                 this.deletePopupInstance();
             }
 
@@ -305,7 +312,11 @@ export class PopupDeprecatedComponent
 
     private setPopupPosition() {
         let parentEl: HTMLElement | undefined;
-        if (!this.baseElementSelector && !this.popupToggle) {
+        const baseElementSelector = this.baseElementSelector();
+        const baseElementSelector = this.baseElementSelector();
+        const baseElementSelector = this.baseElementSelector();
+        const baseElementSelector = this.baseElementSelector();
+        if (!baseElementSelector && !this.popupToggle) {
             return;
         }
 
@@ -313,7 +324,7 @@ export class PopupDeprecatedComponent
             parentEl = this.popupToggle.host.nativeElement;
         } else {
             parentEl =
-                document.querySelector<HTMLElement>(this.baseElementSelector) ??
+                document.querySelector<HTMLElement>(baseElementSelector) ??
                 undefined;
         }
 
@@ -325,12 +336,20 @@ export class PopupDeprecatedComponent
             <HTMLElement>parentEl,
             this.popupAreaContent.nativeElement
         );
-        this._directionTop = _isUndefined(this.directionTop)
+        const directionTop = this.directionTop();
+        const directionTop = this.directionTop();
+        const directionTop = this.directionTop();
+        const directionTop = this.directionTop();
+        this._directionTop = _isUndefined(directionTop)
             ? !canBe?.placed.bottom
-            : this.directionTop;
-        this._directionRight = _isUndefined(this.directionRight)
+            : directionTop;
+        const directionRight = this.directionRight();
+        const directionRight = this.directionRight();
+        const directionRight = this.directionRight();
+        const directionRight = this.directionRight();
+        this._directionRight = _isUndefined(directionRight)
             ? !canBe?.aligned.left
-            : this.directionRight;
+            : directionRight;
     }
 
     private deletePopupInstance() {

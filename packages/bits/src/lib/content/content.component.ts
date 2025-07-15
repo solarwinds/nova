@@ -34,6 +34,14 @@ import { Component, Input, ViewEncapsulation } from "@angular/core";
     standalone: false,
 })
 export class ContentComponent {
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() size: "small" | "normal" | "large" = "normal";
 
     public getMessageClass(): string {

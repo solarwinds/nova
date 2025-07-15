@@ -25,25 +25,26 @@ import {
     OverlayConfig,
 } from "@angular/cdk/overlay";
 import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    ContentChild,
-    ElementRef,
-    EmbeddedViewRef,
-    EventEmitter,
-    HostListener,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    SimpleChanges,
-    TemplateRef,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation,
+  ChangeDetectorRef,
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  ContentChild,
+  ElementRef,
+  EmbeddedViewRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import _includes from "lodash/includes";
 import _isNil from "lodash/isNil";
@@ -101,69 +102,101 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
     /**
      * Popover listens to this stream and closes when the stream emits
      */
-    @Input() closePopover: Subject<void>;
+    readonly closePopover = input<Subject<void>>();
     /**
      * Popover listens to this stream and opens when the stream emits
      */
-    @Input() openPopover: Subject<void>;
+    readonly openPopover = input<Subject<void>>();
     /**
      * Should popover be disabled, which prevents it from showing
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() disabled: boolean = false;
     /**
      * Events that trigger the popover: 'click' | 'mouseenter' | 'mouseleave' | 'focus' | 'openPopoverSubject'
      */
-    @Input() trigger: PopoverTrigger = "mouseenter";
+    readonly trigger = input<PopoverTrigger>("mouseenter");
     /**
      * TemplateRef instance that represents content of popover
      */
-    @Input() template: TemplateRef<string>;
+    readonly template = input<TemplateRef<string>>();
     /**
      * Placement of the popover: 'left' | 'right' | 'top' | 'bottom'
      */
-    @Input() placement: PopoverPlacement = "right";
+    readonly placement = input<PopoverPlacement>("right");
     /**
      * Title text of the popover. To prevent rendering of the popover's title section,
      * simply leave this attribute unspecified.
      */
-    @Input() popoverTitle: string;
+    readonly popoverTitle = input<string>(undefined!);
     /**
      * Name of icon to display
      */
-    @Input() icon: string;
+    readonly icon = input<string>(undefined!);
     /**
      * Enable modal mode (dark background)
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() modal = false;
     /**
      * Container for the popover
      */
-    @Input() container: HTMLElement;
+    readonly container = input<HTMLElement>();
     /**
      * Specify whether the popover body has any padding.
      * Setting this to false will remove all padding from the popover body.
      */
-    @Input() hasPadding = true;
+    readonly hasPadding = input(true);
     /**
      * Prevent closing popover when clicking itself.
      */
-    @Input() preventClosing = false;
+    readonly preventClosing = input(false);
     /**
      * Specifies whether the default width and height constraints are in effect for the popover
      */
-    @Input() unlimited = false;
+    readonly unlimited = input(false);
 
     /**
      * Specifies the timeout in ms after which the tooltip is displayed
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() delay: number = 0;
 
     /**
      * Sets whether the overlay can grow after the initial open via flexible width/height.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() withGrowAfterOpen: boolean = false;
 
-    @Input() popoverOverlayPosition: PopoverOverlayPosition[];
+    readonly popoverOverlayPosition = input<PopoverOverlayPosition[]>(undefined!);
 
     /**
      * Emits an event upon display of the popover
@@ -240,8 +273,8 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
 
     @HostListener("focusout")
     public onFocusOut(): void {
-        if (!this.closePopover) {
-            if (this.isTriggerPresent("focus") && !this.preventClosing) {
+        if (!this.closePopover()()()()) {
+            if (this.isTriggerPresent("focus") && !this.preventClosing()()()()) {
                 this.hidePopover();
             }
         }
@@ -258,8 +291,12 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
     ) {}
 
     public ngOnInit(): void {
-        if (this.container) {
-            this.containerElementRef = new ElementRef(this.container);
+        const container = this.container();
+        const container = this.container();
+        const container = this.container();
+        const container = this.container();
+        if (container) {
+            this.containerElementRef = new ElementRef(container);
         }
         if (this.modal) {
             this.overlayConfig = {
@@ -269,10 +306,14 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
             };
         }
         if (!this.overlayConfig?.positionStrategy) {
-            this.setPositionStrategy(this.placement);
+            this.setPositionStrategy(this.placement()()()());
         }
-        if (this.openPopover && this.isTriggerPresent("openPopoverSubject")) {
-            this.openPopoverSubscription = this.openPopover.subscribe(() => {
+        const openPopover = this.openPopover();
+        const openPopover = this.openPopover();
+        const openPopover = this.openPopover();
+        const openPopover = this.openPopover();
+        if (openPopover && this.isTriggerPresent("openPopoverSubject")) {
+            this.openPopoverSubscription = openPopover.subscribe(() => {
                 this.popoverOpenedProgrammatically = true;
                 this.showPopover();
             });
@@ -331,7 +372,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         );
         this.popover = this.modalContainer.createComponent(factory);
         this.initializePopover();
-        this.setPositionStrategy(this.placement);
+        this.setPositionStrategy(this.placement()()()());
         this.overlayComponent.show();
         this.initializeResizeObserver();
         this.shown.emit();
@@ -385,10 +426,10 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
     private initializePopover() {
         this.popoverModalSubscriptions = [];
         const closePopoverSubscription = merge(
-            (!this.preventClosing
+            (!this.preventClosing()()()()
                 ? this.eventBusService.getStream(CLOSE_POPOVER_EVENT)
                 : EMPTY) as Observable<void>,
-            this.closePopover || EMPTY
+            this.closePopover()()()() || EMPTY
         ).subscribe(() => {
             this.hidePopover();
         });
@@ -398,11 +439,11 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         }
 
         this.popover.instance.context = this.getContext();
-        this.popover.instance.template = this.template;
+        this.popover.instance.template = this.template()()()();
         this.popover.instance.hostElement =
             this.viewContainerRef.element.nativeElement;
-        this.popover.instance.unlimited = this.unlimited;
-        this.popover.instance.placement = this.placement;
+        this.popover.instance.unlimited = this.unlimited()()()();
+        this.popover.instance.placement = this.placement()()()();
         this.popoverDisplaySubject = new BehaviorSubject<boolean>(true);
         this.popoverBeforeHiddenSubject = new Subject<void>();
         this.popoverAfterHiddenSubject = new Subject<void>();
@@ -425,7 +466,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
                 }
             });
 
-        if (this.isTriggerPresent("click") && !this.preventClosing) {
+        if (this.isTriggerPresent("click") && !this.preventClosing()()()()) {
             const documentClickSubscription = this.eventBusService
                 .getStream(DOCUMENT_CLICK_EVENT)
                 .subscribe((event: any) => {
@@ -450,7 +491,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
                     switch (reason) {
                         case "backdrop-click":
                         case "outside-click":
-                            if (!this.preventClosing) {
+                            if (!this.preventClosing()()()()) {
                                 this.hidePopover();
                             }
                             break;
@@ -471,9 +512,13 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         );
         this.popover.instance.displayChange = this.popoverDisplaySubject;
         this.popover.instance.backdrop = this.modal;
-        this.popover.instance.hasPadding = _isUndefined(this.hasPadding)
+        const hasPadding = this.hasPadding();
+        const hasPadding = this.hasPadding();
+        const hasPadding = this.hasPadding();
+        const hasPadding = this.hasPadding();
+        this.popover.instance.hasPadding = _isUndefined(hasPadding)
             ? true
-            : this.hasPadding;
+            : hasPadding;
     }
 
     private cleanUp() {
@@ -497,11 +542,11 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
 
     private getContext(): IPopoverModalContext {
         return {
-            placement: this.placement,
+            placement: this.placement()()()(),
             arrowMarginTop: this.arrowMarginTop,
             popoverPosition: this.position,
             icon: this.getIcon(),
-            title: this.popoverTitle,
+            title: this.popoverTitle()()()(),
         };
     }
 
@@ -532,11 +577,11 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
     }
 
     private isTriggerPresent(valueToCompare: string): boolean {
-        return this.trigger.split(" ").indexOf(valueToCompare) !== -1;
+        return this.trigger()()()().split(" ").indexOf(valueToCompare) !== -1;
     }
 
     private getIcon(): string {
-        return this.icon;
+        return this.icon()()()();
     }
 
     private setPositionStrategy(position: PopoverPlacement): void {
@@ -576,9 +621,13 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
     ): ConnectedPosition[] {
         this.popoverPositionService = new PopoverPositionService();
 
-        if (this.popoverOverlayPosition) {
+        const popoverOverlayPosition = this.popoverOverlayPosition();
+        const popoverOverlayPosition = this.popoverOverlayPosition();
+        const popoverOverlayPosition = this.popoverOverlayPosition();
+        const popoverOverlayPosition = this.popoverOverlayPosition();
+        if (popoverOverlayPosition) {
             return this.popoverPositionService.getConnectedPositions(
-                this.popoverOverlayPosition
+                popoverOverlayPosition
             );
         }
 

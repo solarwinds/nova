@@ -80,6 +80,14 @@ export class WizardDirective
         new EventEmitter<StepperSelectionEvent>();
 
     /** The state of the wizard */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() state: IWizardState;
 
     /** Emits the completed wizard state on component destroy */
@@ -98,6 +106,14 @@ export class WizardDirective
     declare _steps: QueryList<WizardStepV2Component>;
 
     /** The step that is selected. */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     get selected(): WizardStepV2Component {
         return this.steps.toArray()[

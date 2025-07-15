@@ -19,18 +19,18 @@
 //  THE SOFTWARE.
 
 import { CdkStepperNext, CdkStepperPrevious } from "@angular/cdk/stepper";
-import { Directive, Input } from "@angular/core";
+import { Directive, input } from "@angular/core";
 
 /** Button that moves to the next step in a stepper workflow.
  * @ignore
  */
 @Directive({
     selector: "button[nuiWizardNext]",
-    host: { "[type]": "type" },
+    host: { "[type]": "type()()()()" },
     standalone: false,
 })
 export class WizardStepperNextDirective extends CdkStepperNext {
-    @Input() declare type: string;
+    declare readonly type = input<string>(undefined!);
 }
 
 /** Button that moves to the previous step in a stepper workflow.
@@ -38,9 +38,9 @@ export class WizardStepperNextDirective extends CdkStepperNext {
  */
 @Directive({
     selector: "button[nuiWizardPrevious]",
-    host: { "[type]": "type" },
+    host: { "[type]": "type()()()()" },
     standalone: false,
 })
 export class WizardStepperPreviousDirective extends CdkStepperPrevious {
-    @Input() declare type: string;
+    declare readonly type = input<string>(undefined!);
 }

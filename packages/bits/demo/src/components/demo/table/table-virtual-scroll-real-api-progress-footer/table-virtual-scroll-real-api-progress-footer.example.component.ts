@@ -122,7 +122,7 @@ export class TableVirtualScrollRealApiProgressFooterExampleComponent
                         this.users.length <
                         Math.round(
                             this.viewport.getViewportSize() /
-                                this.virtualDirective.rowHeight
+                                this.virtualDirective.rowHeight()
                         )
                     ) {
                         this.prefetchedDsPageNumber++;

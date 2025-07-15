@@ -19,10 +19,10 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    HostBinding,
-    Input,
-    ViewEncapsulation,
+  Component,
+  HostBinding,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 
 import { DividerSize } from "./public-api";
@@ -45,37 +45,37 @@ export class DividerComponent {
     /**
      * Defines if divider is vertical.
      */
-    @Input() isVertical: boolean;
+    readonly isVertical = input<boolean>(undefined!);
 
     /**
      * Defines divider's margins.
      */
-    @Input() size: DividerSize;
+    readonly size = input<DividerSize>(undefined!);
 
     @HostBinding("class.nui-divider--vertical")
     public get isVerticalDivider(): boolean {
-        return this.isVertical;
+        return this.isVertical()()()();
     }
 
     @HostBinding("class.nui-divider--horizontal")
     public get isHorizontalDivider(): boolean {
-        return !this.isVertical;
+        return !this.isVertical()()()();
     }
 
     @HostBinding("class.nui-divider--no-margin")
     public get isNoMargins(): boolean {
-        return this.size === "no-margin";
+        return this.size()()()() === "no-margin";
     }
 
     @HostBinding("class.xs") public get isExtraSmall(): boolean {
-        return this.size === "extra-small";
+        return this.size()()()() === "extra-small";
     }
 
     @HostBinding("class.sm") public get isSmall(): boolean {
-        return this.size === "small";
+        return this.size()()()() === "small";
     }
 
     @HostBinding("class.md") public get isMedium(): boolean {
-        return this.size === "medium";
+        return this.size()()()() === "medium";
     }
 }

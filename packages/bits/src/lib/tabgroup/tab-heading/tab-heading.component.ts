@@ -19,12 +19,13 @@
 //  THE SOFTWARE.
 
 import {
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    HostBinding,
-    Input,
-    Output,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  HostBinding,
+  Input,
+  Output,
+  input
 } from "@angular/core";
 
 /** @ignore */
@@ -40,13 +41,21 @@ export class TabHeadingComponent {
     /** This adds 'disabled' class to the host component depending on the 'disabled' @Input to properly style disabled tabs */
     @HostBinding("class.disabled")
     get isDisabled(): boolean {
-        return this.disabled;
+        return this.disabled()()()();
     }
 
     /** If true tab can not be activated  */
-    @Input() disabled: boolean;
+    readonly disabled = input<boolean>(undefined!);
 
     /** Tab active state toggle */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set active(isActive: boolean) {
         this._active = isActive;
@@ -57,7 +66,7 @@ export class TabHeadingComponent {
     }
 
     /** Tab id */
-    @Input() tabId: string;
+    readonly tabId = input<string>(undefined!);
 
     /** Event is fired when tab became active, $event:Tab equals to selected instance of Tab component */
     @Output() selected: EventEmitter<TabHeadingComponent> = new EventEmitter();

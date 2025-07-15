@@ -19,18 +19,19 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentChecked,
-    Attribute,
-    ChangeDetectionStrategy,
-    Component,
-    ElementRef,
-    HostBinding,
-    Input,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation,
+  AfterContentChecked,
+  Attribute,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import { fromEvent, merge, Subject, timer } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
@@ -45,7 +46,7 @@ import { LoggerService } from "../../services/log-service";
     selector: "[nui-button]",
     templateUrl: "./button.component.html",
     host: {
-        "[attr.aria-busy]": "isBusy || null",
+        "[attr.aria-busy]": "isBusy()()()() || null",
         class: "nui-button btn",
     },
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -57,14 +58,34 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
     /**
      * Optionally, specify the display style. Supported values are "default", "primary", "action", and "destructive".
      */
-    @Input() public displayStyle: string;
+    public readonly displayStyle = input<string>(undefined!);
     /**
      * Optionally, specify an icon to be displayed within the button.
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() public icon: string;
     /**
      * Optionally, specify an icon color. Note: The icon color for displayStyle "primary" is "white" and is not configurable.
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() public get iconColor(): string {
         return this._iconColor ? this._iconColor : "";
     }
@@ -75,29 +96,45 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
      * Optionally, modify the placement of the icon. If true, the icon is placed to the right of the button's text; otherwise, it's
      * placed to the left.
      */
-    @Input() public iconRight: boolean;
+    public readonly iconRight = input<boolean>(undefined!);
     /**
      * Optionally, set the current busy state of the button.
      */
-    @Input() public isBusy: boolean;
+    public readonly isBusy = input<boolean>(undefined!);
     /**
      * Optionally, set whether to apply special styling for a button consisting of an icon by itself with no accompanying text
      * (the special styling reduces min-width, adjusts padding, etc.). Note: If no value is provided for this input and
      * the button has no inner content, the empty button styling will still be applied.
      */
-    @Input() public isEmpty: boolean;
+    public readonly isEmpty = input<boolean>(undefined!);
 
     /** Sets aria-label for the component */
-    @Input() public ariaLabel: string = "";
+    public readonly ariaLabel = input<string>("");
 
     /**
      * Optionally, set whether to fire a "click" event repeatedly while the button is pressed.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public isRepeat = false;
     /**
      * Optionally, set the size of the button. Supported values are "compact", "default", and "large".
      */
     // TODO: Remove this setter/getter logic in scope of NUI-3475
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() public get size(): ButtonSizeType {
         return this._size;
     }
@@ -118,43 +155,43 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
 
     @HostBinding("class.icon-right")
     public get iconRightClass(): boolean {
-        return this.iconRight;
+        return this.iconRight()()()();
     }
 
     @HostBinding("class.icon-left")
     public get iconleftClass(): boolean {
-        return !this.iconRight;
+        return !this.iconRight()()()();
     }
 
     @HostBinding("class.is-busy")
     public get isBusyClass(): boolean {
-        return this.isBusy;
+        return this.isBusy()()()();
     }
 
     @HostBinding("class.is-empty")
     public get isEmptyClass(): boolean {
-        return this.isEmpty ?? this._isContentEmpty;
+        return this.isEmpty()()()() ?? this._isContentEmpty;
     }
 
     @HostBinding("class.btn-primary")
     public get dispStylePrimClass(): boolean {
-        return this.displayStyle === "primary";
+        return this.displayStyle()()()() === "primary";
     }
 
     @HostBinding("class.btn-action")
     public get dispStyleActionClass(): boolean {
-        return this.displayStyle === "action";
+        return this.displayStyle()()()() === "action";
     }
 
     @HostBinding("class.btn-destructive")
     public get displayStyleDestructiveClass(): boolean {
-        return this.displayStyle === "destructive";
+        return this.displayStyle()()()() === "destructive";
     }
 
     @HostBinding("class.btn-default")
     public get dispStyleDefaultClass(): boolean {
         return (
-            this.displayStyle === "default" ||
+            this.displayStyle()()()() === "default" ||
             !(
                 this.dispStylePrimClass ||
                 this.dispStyleActionClass ||
@@ -165,7 +202,7 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
 
     @HostBinding("attr.aria-label")
     public get ariaIconLabel(): string {
-        return this.ariaLabel || this.getAriaLabel();
+        return this.ariaLabel()()()() || this.getAriaLabel();
     }
 
     @ViewChild("contentContainer", { static: true, read: ViewContainerRef })
@@ -195,7 +232,7 @@ should be set explicitly: `,
     }
 
     public ngAfterContentChecked(): void {
-        if (this.isEmpty === undefined) {
+        if (this.isEmpty()()()() === undefined) {
             this.setIsContentEmptyValue();
         }
     }

@@ -19,13 +19,13 @@
 //  THE SOFTWARE.
 
 import {
-    ChangeDetectionStrategy,
-    Component,
-    EventEmitter,
-    Inject,
-    Input,
-    OnInit,
-    Output,
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Inject,
+  OnInit,
+  Output,
+  input
 } from "@angular/core";
 
 import {
@@ -55,8 +55,8 @@ export interface IItemPickerOption {
     standalone: false,
 })
 export class ItemPickerCompositeComponent implements OnInit {
-    @Input() itemPickerOptions: IFilterGroupOption[];
-    @Input() selectedValues: string[] = [];
+    readonly itemPickerOptions = input<IFilterGroupOption[]>(undefined!);
+    readonly selectedValues = input<string[]>([]);
 
     @Output() selectionChanged: EventEmitter<IFilterGroupOption[]> =
         new EventEmitter();
@@ -72,7 +72,7 @@ export class ItemPickerCompositeComponent implements OnInit {
     public ngOnInit(): void {
         (
             this.dataSource as LocalFilteringDataSource<IFilterGroupOption>
-        ).setData(this.itemPickerOptions);
+        ).setData(this.itemPickerOptions());
         this.selectedOptions = this.getSelectedOptions();
     }
 
@@ -82,8 +82,8 @@ export class ItemPickerCompositeComponent implements OnInit {
     }
 
     public getSelectedOptions(): IFilterGroupOption[] {
-        return this.itemPickerOptions.filter(
-            (item) => this.selectedValues.indexOf(item.value) !== -1
+        return this.itemPickerOptions().filter(
+            (item) => this.selectedValues().indexOf(item.value) !== -1
         );
     }
 }

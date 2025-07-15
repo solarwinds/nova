@@ -8,7 +8,7 @@
             {{ schematicHeading | titlecase }}:
             <code
                 >ng g &#64;nova-ui/bits:{{
-                    schematicFolderName
+                  ()  schematicFolderName
                 }}
                 --name=%name_of_component%
                 --p=%prefix_for_component_selector%</code
@@ -25,7 +25,7 @@
             <nui-example-code [code]="angularJsonStylePreprocOptions" />
         </p>
         <nui-schematic-json
-            [schematicFolderName]="schematicFolderName"
+            [schematicFolderName]="schematicFolderName()"
         ></nui-schematic-json>
     </div>
 

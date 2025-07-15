@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 @Component({
     selector: "nui-repeat-radio-selection-mode-example",
@@ -26,16 +26,16 @@ import { Component, Input } from "@angular/core";
     standalone: false,
 })
 export class RepeatRadioSelectionModeExampleComponent {
-    @Input() public colors = [
-        { color: $localize`blue` },
-        { color: $localize`green` },
-        { color: $localize`yellow` },
-        { color: $localize`cyan` },
-        { color: $localize`magenta` },
-        { color: $localize`black` },
-    ];
+    public readonly colors = input([
+    { color: $localize `blue` },
+    { color: $localize `green` },
+    { color: $localize `yellow` },
+    { color: $localize `cyan` },
+    { color: $localize `magenta` },
+    { color: $localize `black` },
+]);
 
     public preventRowClick = false;
 
-    public selectedColors = [this.colors[1]];
+    public selectedColors = [this.colors()[1]];
 }

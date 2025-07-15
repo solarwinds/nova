@@ -19,13 +19,14 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    EventEmitter,
-    Inject,
-    Input,
-    OnInit,
-    Output,
-    TemplateRef,
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+  TemplateRef,
+  input
 } from "@angular/core";
 import _orderBy from "lodash/orderBy";
 
@@ -46,9 +47,12 @@ import {
 export class CustomDataSourceFilterGroupCompositeComponent
     implements IFilterPub, OnInit
 {
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() filterGroupItem: IFilterGroupItem;
-    @Input() checkboxTemplateRef: TemplateRef<string>;
-    @Input() expanderTemplateRef: TemplateRef<string>;
+    readonly checkboxTemplateRef = input<TemplateRef<string>>();
+    readonly expanderTemplateRef = input<TemplateRef<string>>();
 
     @Output() filterChanged: EventEmitter<IFilterGroupItem> =
         new EventEmitter();

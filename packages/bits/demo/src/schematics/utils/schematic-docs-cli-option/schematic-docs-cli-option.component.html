@@ -1,5 +1,5 @@
-<h5>{{ name }}</h5>
-<div [ngSwitch]="name">
+<h5>{{ name() }}</h5>
+<div [ngSwitch]="name()">
     <ng-container *ngSwitchCase="'selectionMode'">
         <p>
             This string option allows you to select whether to enable selection

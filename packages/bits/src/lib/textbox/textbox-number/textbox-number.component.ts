@@ -19,16 +19,17 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  input
 } from "@angular/core";
 import {
     ControlValueAccessor,
@@ -112,58 +113,114 @@ export class TextboxNumberComponent
     /**
      * Value that is exposed through ControlValueAccessor
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public value: any = null;
 
     /**
      * Use to set a custom width for the input field.
      */
-    @Input() public customBoxWidth: string;
+    public readonly customBoxWidth = input<string>(undefined!);
     /**
      * The option to disable the textboxNumber.
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public disabled = false;
     /**
      * Name of the element.
      */
-    @Input() public name: string;
+    public readonly name = input<string>(undefined!);
     /**
      * Value used as a placeholder for the text box.
      */
-    @Input() public placeholder = "";
+    public readonly placeholder = input("");
     /**
      * The option to make the textboxNumber read only.
      */
-    @Input() public readonly = false;
+    public readonly readonly = input(false);
 
     /**
      * Step by which the value are increased/decreased
      * when clicking on up/down buttons
      */
-    @Input() step: number = 1;
+    readonly step = input<number>(1);
 
     /**
      * The decimal precision to use for rounding each step increase/decrease
      * when clicking the up/down buttons
      */
-    @Input() stepPrecision: number = 10;
+    readonly stepPrecision = input<number>(10);
 
     /**
      * Input to apply error state styles
      */
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @Input() public isInErrorState: boolean = false; // TODO: do we need to hook this up?
 
     /**
      * Input to set aria label text
      */
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This input overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @Input() public ariaLabel: string = "Textbox number input";
 
     /**
      * Minimum value of textBoxNumber component
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public minValue: number;
     /**
      * Maximum value of textBoxNumber component
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() public maxValue: number;
     /**
      * Event fired when textBoxNumber is focused out.
@@ -202,7 +259,7 @@ export class TextboxNumberComponent
         // Explicitly converting current value to number because it can also be a string, and cause issues, like NUI-5599
         const newValue = this.clampToRange(Number(this.value) + valueChange);
 
-        this.onValueChange(round(newValue, this.stepPrecision));
+        this.onValueChange(round(newValue, this.stepPrecision()()()()));
     }
 
     public onValueChange(value: any): void {

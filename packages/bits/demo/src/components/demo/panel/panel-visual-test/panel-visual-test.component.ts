@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 import { IMenuGroup, PanelBackgroundColor } from "@nova-ui/bits";
 
@@ -28,7 +28,7 @@ import { IMenuGroup, PanelBackgroundColor } from "@nova-ui/bits";
     standalone: false,
 })
 export class PanelVisualTestComponent {
-    @Input() isOn = true;
+    readonly isOn = input(true);
     public isCollapsible = true;
     public isCollapsed = false;
     public headerIcon = "filter";
