@@ -20,14 +20,14 @@
 
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { debounceTime, takeUntil, tap } from "rxjs/operators";
@@ -89,9 +89,9 @@ export class TableWithCustomVirtualScrollComponent
     public columnsToApplySearch = ["name"];
     public pageSize: number = RESULTS_PER_PAGE;
 
-    @ViewChild(TableComponent) table: TableComponent<IServer>;
-    @ViewChild(SearchComponent) search: SearchComponent;
-    @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
+    readonly table = viewChild.required(TableComponent);
+    readonly search = viewChild.required(SearchComponent);
+    readonly viewport = viewChild(CdkVirtualScrollViewport);
 
     // the height in px of a single row from the table
     public rowHeight = 40;
@@ -122,16 +122,17 @@ export class TableWithCustomVirtualScrollComponent
 
     public async ngAfterViewInit(): Promise<void> {
         // register filter to be able to sort
-        this.dataSource.registerComponent(this.table.getFilterComponents());
+        this.dataSource.registerComponent(this.table().getFilterComponents());
+        const search = this.search();
         this.dataSource.registerComponent({
-            search: { componentInstance: this.search },
+            search: { componentInstance: search },
             virtualScroll: {
                 componentInstance: this.customVirtualScrollStrategyService,
             },
         });
         this.viewportManager
             // Note: Initializing viewportManager with the repeat's CDK Viewport Ref
-            .setViewport(this.viewport);
+            .setViewport(this.viewport());
 
         this.dataSource.outputsSubject
             .pipe(
@@ -167,7 +168,7 @@ export class TableWithCustomVirtualScrollComponent
             .subscribe();
 
         // listen for input change in order to perform the search
-        this.search.inputChange
+        search.inputChange
             .pipe(
                 debounceTime(500),
                 // perform actual search

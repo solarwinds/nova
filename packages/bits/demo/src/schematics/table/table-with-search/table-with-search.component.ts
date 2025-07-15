@@ -19,14 +19,14 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { debounceTime, takeUntil, tap } from "rxjs/operators";
@@ -75,9 +75,9 @@ export class TableWithSearchComponent
     public page: number = 1;
     public pageSize: number = RESULTS_PER_PAGE;
 
-    @ViewChild(TableComponent) table: TableComponent<IServer>;
-    @ViewChild(SearchComponent) search: SearchComponent;
-    @ViewChild(PaginatorComponent) paginator: PaginatorComponent;
+    readonly table = viewChild.required(TableComponent);
+    readonly search = viewChild.required(SearchComponent);
+    readonly paginator = viewChild.required(PaginatorComponent);
 
     private readonly destroy$ = new Subject<void>();
 
@@ -100,9 +100,10 @@ export class TableWithSearchComponent
     }
 
     public async ngAfterViewInit(): Promise<void> {
+        const search = this.search();
         this.dataSource.registerComponent({
-            search: { componentInstance: this.search },
-            paginator: { componentInstance: this.paginator },
+            search: { componentInstance: search },
+            paginator: { componentInstance: this.paginator() },
         });
 
         this.dataSource.outputsSubject
@@ -117,7 +118,7 @@ export class TableWithSearchComponent
             .subscribe();
 
         // listen for input change in order to perform the search
-        this.search.inputChange
+        search.inputChange
             .pipe(
                 debounceTime(500),
                 // perform actual search

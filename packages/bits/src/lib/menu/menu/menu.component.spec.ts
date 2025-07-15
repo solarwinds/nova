@@ -19,10 +19,10 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    CUSTOM_ELEMENTS_SCHEMA,
-    DebugElement,
-    ViewChild,
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  DebugElement,
+  viewChild
 } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
@@ -69,7 +69,7 @@ import { IMenuGroup } from "../public-api";
     standalone: false,
 })
 class TestAppComponent {
-    @ViewChild(MenuComponent) menu: MenuComponent;
+    readonly menu = viewChild.required(MenuComponent);
     public size = "small";
     public icon = "add";
     public title = "menu filled by json data";
@@ -137,21 +137,21 @@ describe("components >", () => {
         });
 
         it("should contain menu-link in menu filled by json data", () => {
-            testComponent.menu.popup.toggleOpened(new FocusEvent("focusin"));
+            testComponent.menu().popup().toggleOpened(new FocusEvent("focusin"));
             fixture.detectChanges();
             const linkMenu = el.querySelectorAll("nui-menu-link");
             expect(linkMenu.length).toBe(1);
         });
 
         it("should contain menu-header in menu filled by json data", () => {
-            testComponent.menu.popup.toggleOpened(new FocusEvent("focusin"));
+            testComponent.menu().popup().toggleOpened(new FocusEvent("focusin"));
             fixture.detectChanges();
             const headerMenu = el.querySelectorAll(".nui-menu-item--header");
             expect(headerMenu.length).toBe(1);
         });
 
         it("should contain menu-action in menu filled by json data", () => {
-            testComponent.menu.popup.toggleOpened(new FocusEvent("focusin"));
+            testComponent.menu().popup().toggleOpened(new FocusEvent("focusin"));
             fixture.detectChanges();
             const actionMenu = el.querySelectorAll("nui-menu-action");
             expect(actionMenu.length).toBe(1);

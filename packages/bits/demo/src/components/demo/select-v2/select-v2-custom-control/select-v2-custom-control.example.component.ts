@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AfterViewInit, Component, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, viewChild } from "@angular/core";
 
 import { SelectV2Component } from "@nova-ui/bits";
 
@@ -34,30 +34,30 @@ export class SelectV2CustomControlExampleComponent implements AfterViewInit {
     );
     public handleClicksOutside: boolean = false;
 
-    @ViewChild(SelectV2Component) private select: SelectV2Component;
+    private readonly select = viewChild.required(SelectV2Component);
 
     public ngAfterViewInit(): void {
-        this.select.clickOutsideDropdown.subscribe(() => {
+        this.select().clickOutsideDropdown.subscribe(() => {
             if (this.handleClicksOutside) {
-                this.select.hideDropdown();
+                this.select().hideDropdown();
             }
         });
     }
 
     public showList(event: Event): void {
         event.stopPropagation();
-        this.select.showDropdown();
-        this.select.inputElement.nativeElement.focus();
+        this.select().showDropdown();
+        this.select().inputElement().nativeElement.focus();
     }
 
     public hideList(event: Event): void {
         event.stopPropagation();
-        this.select.hideDropdown();
+        this.select().hideDropdown();
     }
 
     public toggleList(event: Event): void {
         event.stopPropagation();
-        this.select.toggleDropdown();
-        this.select.inputElement.nativeElement.focus();
+        this.select().toggleDropdown();
+        this.select().inputElement().nativeElement.focus();
     }
 }

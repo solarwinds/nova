@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, ViewChild } from "@angular/core";
+import { Component, viewChild } from "@angular/core";
 import { AbstractControl, FormBuilder, Validators } from "@angular/forms";
 import { of } from "rxjs";
 import { delay, take } from "rxjs/operators";
@@ -40,7 +40,7 @@ export class WizardAsyncFormValidationExampleComponent {
     public busy: boolean;
     public form;
 
-    @ViewChild("wizard") wizard: WizardHorizontalComponent;
+    readonly wizard = viewChild.required<WizardHorizontalComponent>("wizard");
 
     constructor(
         private formBuilder: FormBuilder,
@@ -73,7 +73,7 @@ export class WizardAsyncFormValidationExampleComponent {
         this.busy = true;
         stepControl.statusChanges.pipe(take(1)).subscribe((status) => {
             if (status === "VALID") {
-                this.wizard.next();
+                this.wizard().next();
                 this.busy = false;
             }
         });
@@ -90,6 +90,6 @@ export class WizardAsyncFormValidationExampleComponent {
     }
 
     public resetWizard(): void {
-        this.wizard.reset();
+        this.wizard().reset();
     }
 }

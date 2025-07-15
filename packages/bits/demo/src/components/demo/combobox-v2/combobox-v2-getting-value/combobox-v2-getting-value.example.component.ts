@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AfterViewInit, Component, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, viewChild } from "@angular/core";
 import { Subject } from "rxjs";
 // eslint-disable-next-line import/no-deprecated
 import { takeUntil, tap } from "rxjs/operators";
@@ -38,14 +38,12 @@ export class ComboboxV2GettingValueExampleComponent implements AfterViewInit {
     public comboboxValueSelectedValue: string;
     public comboboxValueChangedValue: string;
 
-    @ViewChild("comboboxValueSelectedExample")
-    private comboboxValueSelectedExample: ComboboxV2Component;
-    @ViewChild("comboboxValueChangedExample")
-    private comboboxValueChangedExample: ComboboxV2Component;
+    private readonly comboboxValueSelectedExample = viewChild.required<ComboboxV2Component>("comboboxValueSelectedExample");
+    private readonly comboboxValueChangedExample = viewChild.required<ComboboxV2Component>("comboboxValueChangedExample");
     private destroy$: Subject<any> = new Subject<any>();
 
     public ngAfterViewInit(): void {
-        this.comboboxValueSelectedExample.valueSelected
+        this.comboboxValueSelectedExample().valueSelected
             .pipe(
                 // eslint-disable-next-line import/no-deprecated
                 tap(
@@ -56,7 +54,7 @@ export class ComboboxV2GettingValueExampleComponent implements AfterViewInit {
             )
             .subscribe();
 
-        this.comboboxValueChangedExample.valueChanged
+        this.comboboxValueChangedExample().valueChanged
             .pipe(
                 // eslint-disable-next-line import/no-deprecated
                 tap(

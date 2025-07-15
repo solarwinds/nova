@@ -19,14 +19,14 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentInit,
-    Component,
-    ContentChild,
-    ElementRef,
-    Input,
-    OnChanges,
-    SimpleChanges,
-    ViewEncapsulation,
+  AfterContentInit,
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  ViewEncapsulation,
+  contentChild
 } from "@angular/core";
 
 import { TabNavigationService } from "../../services/tab-navigation.service";
@@ -58,8 +58,8 @@ export class BusyComponent implements AfterContentInit, OnChanges {
      */
     @Input() disableTabNavigation: boolean = true;
 
-    @ContentChild(SpinnerComponent) spinnerComponent: SpinnerComponent;
-    @ContentChild(ProgressComponent) progressComponent: ProgressComponent;
+    readonly spinnerComponent = contentChild.required(SpinnerComponent);
+    readonly progressComponent = contentChild.required(ProgressComponent);
 
     constructor(
         private tabNavigationService: TabNavigationService,
@@ -69,14 +69,22 @@ export class BusyComponent implements AfterContentInit, OnChanges {
     public ngAfterContentInit(): void {
         this.setBusyStateForContentComponents();
 
-        this.isSpinnerTemplate = Boolean(this.spinnerComponent);
-        this.isProgressTemplate = Boolean(this.progressComponent);
-        if (this.spinnerComponent && this.progressComponent) {
+        this.isSpinnerTemplate = Boolean(this.spinnerComponent()()()());
+        this.isProgressTemplate = Boolean(this.progressComponent()()()());
+        const spinnerComponent = this.spinnerComponent();
+        const progressComponent = this.progressComponent();
+        const spinnerComponent = this.spinnerComponent();
+        const progressComponent = this.progressComponent();
+        const spinnerComponent = this.spinnerComponent();
+        const progressComponent = this.progressComponent();
+        const spinnerComponent = this.spinnerComponent();
+        const progressComponent = this.progressComponent();
+        if (spinnerComponent && progressComponent) {
             this.isSpinnerTemplate = false;
             this.isProgressTemplate = false;
             this.isDefaultTemplate = true;
         }
-        if (!this.spinnerComponent && !this.progressComponent) {
+        if (!spinnerComponent && !progressComponent) {
             this.isDefaultTemplate = true;
         }
     }
@@ -97,11 +105,19 @@ export class BusyComponent implements AfterContentInit, OnChanges {
     }
 
     private setBusyStateForContentComponents() {
-        if (this.spinnerComponent) {
-            this.spinnerComponent.showSpinner = this.busy;
+        const spinnerComponent = this.spinnerComponent();
+        const spinnerComponent = this.spinnerComponent();
+        const spinnerComponent = this.spinnerComponent();
+        const spinnerComponent = this.spinnerComponent();
+        if (spinnerComponent) {
+            spinnerComponent.showSpinner = this.busy;
         }
-        if (this.progressComponent) {
-            this.progressComponent.show = this.busy;
+        const progressComponent = this.progressComponent();
+        const progressComponent = this.progressComponent();
+        const progressComponent = this.progressComponent();
+        const progressComponent = this.progressComponent();
+        if (progressComponent) {
+            progressComponent.show = this.busy;
         }
     }
 }

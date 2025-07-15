@@ -136,7 +136,7 @@ describe("components >", () => {
 
         it("should contain proper number of items", () => {
             fixture.detectChanges();
-            componentInstance.popup.toggleOpened(new FocusEvent("focusin"));
+            componentInstance.popup().toggleOpened(new FocusEvent("focusin"));
             const listItems = debugElement.queryAll(By.css("nui-menu-action"));
             expect(listItems.length).toEqual(3);
         });
@@ -145,7 +145,7 @@ describe("components >", () => {
             spyOn(componentInstance, "isItemSelected").and.callThrough();
             componentInstance.value = itemsSource[1];
             fixture.detectChanges();
-            componentInstance.popup.toggleOpened(new FocusEvent("focusin"));
+            componentInstance.popup().toggleOpened(new FocusEvent("focusin"));
             const selected = debugElement.query(
                 By.css(".nui-menu-item.item-selected")
             );
@@ -168,7 +168,7 @@ describe("components >", () => {
             componentInstance.displayValue = "value";
             componentInstance.value = itemsSourceComplex[1];
             fixture.detectChanges();
-            componentInstance.popup.toggleOpened(new FocusEvent("focusin"));
+            componentInstance.popup().toggleOpened(new FocusEvent("focusin"));
             const selected = debugElement.query(
                 By.css(".nui-menu-item.item-selected")
             );
@@ -345,7 +345,7 @@ describe("components >", () => {
 
         it("should clear value if isRemoveValueEnabled", () => {
             fixture.detectChanges();
-            componentInstance.popup.toggleOpened(new FocusEvent("focusin"));
+            componentInstance.popup().toggleOpened(new FocusEvent("focusin"));
             componentInstance.select("Item 2");
             componentInstance.isRemoveValueEnabled = true;
 

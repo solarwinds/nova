@@ -19,16 +19,16 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import {
     ControlValueAccessor,
@@ -172,8 +172,7 @@ export class TextboxNumberComponent
 
     @Output() valueChange: EventEmitter<number> = new EventEmitter<number>();
 
-    @ViewChild("numberInput", { static: true })
-    private input: ElementRef<HTMLFieldSetElement>;
+    private readonly input = viewChild<ElementRef<HTMLFieldSetElement>>("numberInput");
 
     public formControl: FormControl;
 
@@ -260,7 +259,7 @@ export class TextboxNumberComponent
     }
 
     private nativeValidator(): ValidationErrors | null {
-        if (this.input.nativeElement.validity.valid) {
+        if (this.input()()()().nativeElement.validity.valid) {
             return null;
         }
 

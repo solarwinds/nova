@@ -20,18 +20,18 @@
 
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import _chunk from "lodash/chunk";
 import _clone from "lodash/clone";
@@ -145,11 +145,9 @@ export class PaginatorComponent
 
     public onDestroy$ = new Subject<void>();
 
-    @ViewChild("select")
-    private selectComponent: SelectComponent;
+    private readonly selectComponent = viewChild.required<SelectComponent>("select");
 
-    @ViewChild(CdkVirtualScrollViewport)
-    private virtualScrollViewport: CdkVirtualScrollViewport;
+    private readonly virtualScrollViewport = viewChild(CdkVirtualScrollViewport);
 
     private _dotsPagesPerRow = 5;
 
@@ -334,8 +332,12 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
      * Re-renders the virtual scroll viewport to properly display items within the virtual scroll viewport
      */
     public handleDotsClick(): void {
-        if (this.virtualScrollViewport) {
-            this.virtualScrollViewport.checkViewportSize();
+        const virtualScrollViewport = this.virtualScrollViewport();
+        const virtualScrollViewport = this.virtualScrollViewport();
+        const virtualScrollViewport = this.virtualScrollViewport();
+        const virtualScrollViewport = this.virtualScrollViewport();
+        if (virtualScrollViewport) {
+            virtualScrollViewport.checkViewportSize();
         }
     }
 

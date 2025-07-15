@@ -26,14 +26,14 @@ import {
     ScrollDispatcher,
 } from "@angular/cdk/overlay";
 import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    NgZone,
-    OnDestroy,
-    OnInit,
-    ViewChild,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  viewChild
 } from "@angular/core";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { skip, take, takeUntil } from "rxjs/operators";
@@ -89,7 +89,7 @@ export class TooltipComponent implements OnDestroy, OnInit {
             .asObservable()
             .pipe(take(1), takeUntil(this.destroy$))
             .subscribe(() => {
-                this.overlayComponent?.getOverlayRef()?.updatePosition();
+                this.overlayComponent()()()()?.getOverlayRef()?.updatePosition();
             });
     }
 
@@ -102,8 +102,7 @@ export class TooltipComponent implements OnDestroy, OnInit {
     public overlayConfig: OverlayConfig;
     public toggleReference: ElementRef<HTMLElement>;
 
-    @ViewChild(OverlayComponent, { static: true })
-    private overlayComponent: OverlayComponent;
+    private readonly overlayComponent = viewChild.required(OverlayComponent);
 
     /** Whether interactions on the page should close the tooltip */
     private _closeOnInteraction: boolean = false;
@@ -126,7 +125,7 @@ export class TooltipComponent implements OnDestroy, OnInit {
 
     public updatePossiblePositions(positions: ConnectedPosition[]): void {
         this.possiblePositions = positions;
-        const positionStrategy = this.overlayComponent
+        const positionStrategy = this.overlayComponent()()()()
             .getOverlayRef()
             .getConfig().positionStrategy as FlexibleConnectedPositionStrategy;
         positionStrategy.withPositions(this.possiblePositions);
@@ -150,7 +149,7 @@ export class TooltipComponent implements OnDestroy, OnInit {
     }
 
     private _show() {
-        this.overlayComponent.show();
+        this.overlayComponent()()()().show();
         // Body interactions should cancel the tooltip if there is a delay in showing.
         this._closeOnInteraction = true;
         this._visibility = true;
@@ -167,7 +166,7 @@ export class TooltipComponent implements OnDestroy, OnInit {
         this._markForCheck();
         this.hiding$.next(true);
         setTimeout(() => {
-            this.overlayComponent.hide();
+            this.overlayComponent()()()().hide();
             this.hiding$.next(false);
         }, ANIMATION_DELAY);
     }
@@ -183,7 +182,7 @@ export class TooltipComponent implements OnDestroy, OnInit {
     }
 
     public ngOnDestroy(): void {
-        this.overlayComponent.hide();
+        this.overlayComponent()()()().hide();
         this._onHide.complete();
         this.destroy$.next();
         this.destroy$.complete();

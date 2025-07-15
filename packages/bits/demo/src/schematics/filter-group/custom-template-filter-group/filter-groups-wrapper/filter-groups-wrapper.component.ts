@@ -40,6 +40,8 @@ import { CustomTemplateFilterGroupCompositeComponent } from "../custom-template-
 export class CustomTemplateFilterGroupsWrapperComponent
     implements AfterViewInit
 {
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
     @ContentChildren(CustomTemplateFilterGroupCompositeComponent)
     filterGroups: QueryList<CustomTemplateFilterGroupCompositeComponent>;
 

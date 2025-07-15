@@ -19,20 +19,20 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Input,
-    NgZone,
-    OnDestroy,
-    Output,
-    QueryList,
-    ViewChild,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChildren,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  Input,
+  NgZone,
+  OnDestroy,
+  Output,
+  QueryList,
+  viewChild
 } from "@angular/core";
 import { Subscription } from "rxjs";
 
@@ -48,9 +48,17 @@ import { TabHeadingComponent } from "../tab-heading/tab-heading.component";
     standalone: false,
 })
 export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
     @ContentChildren(TabHeadingComponent) _tabs: QueryList<TabHeadingComponent>;
 
-    @ViewChild("resizableArea") resizableArea: ElementRef;
+    readonly resizableArea = viewChild<ElementRef>("resizableArea");
 
     /** If true tabs will be placed vertically */
     @Input() public vertical: boolean;
@@ -86,7 +94,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
             entries.forEach(() => this.checkTraverse())
         );
         this.ngZone.runOutsideAngular(() => {
-            this._ro.observe(this.resizableArea.nativeElement);
+            this._ro.observe(this.resizableArea()()()().nativeElement);
             this._ro.observe(this.el.nativeElement);
         });
 

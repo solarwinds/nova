@@ -19,11 +19,11 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    OnDestroy,
-    ViewChild,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  viewChild
 } from "@angular/core";
 import { Subject, Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
@@ -88,9 +88,9 @@ export class DataSourceClientSideDelayedExampleComponent
     private delayActionSubject = new Subject<void>();
     private outputsSubscription: Subscription;
 
-    @ViewChild("filteringPaginator") filteringPaginator: PaginatorComponent;
-    @ViewChild("filteringSearch") filteringSearch: SearchComponent;
-    @ViewChild("filteringSorter") filteringSorter: SorterComponent;
+    readonly filteringPaginator = viewChild.required<PaginatorComponent>("filteringPaginator");
+    readonly filteringSearch = viewChild.required<SearchComponent>("filteringSearch");
+    readonly filteringSorter = viewChild.required<SorterComponent>("filteringSorter");
 
     constructor(
         public dataSourceService: ClientSideDataSource<any>,
@@ -105,10 +105,10 @@ export class DataSourceClientSideDelayedExampleComponent
     async ngAfterViewInit(): Promise<void> {
         this.dataSourceService.componentTree = {
             search: {
-                componentInstance: this.filteringSearch,
+                componentInstance: this.filteringSearch(),
             },
             paginator: {
-                componentInstance: this.filteringPaginator,
+                componentInstance: this.filteringPaginator(),
             },
         };
         this.outputsSubscription =

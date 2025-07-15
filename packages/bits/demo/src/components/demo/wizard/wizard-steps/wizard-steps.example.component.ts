@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnDestroy, ViewChild } from "@angular/core";
+import { Component, OnDestroy, viewChild } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -35,8 +35,8 @@ import {
     standalone: false,
 })
 export class WizardStepsExampleComponent implements OnDestroy {
-    @ViewChild("wizardComponent") wizardComponent: WizardComponent;
-    @ViewChild("dynamicStep") dynamicStep: WizardStepComponent;
+    readonly wizardComponent = viewChild.required<WizardComponent>("wizardComponent");
+    readonly dynamicStep = viewChild.required<WizardStepComponent>("dynamicStep");
 
     public selectedIndex: number;
     public myForm;
@@ -63,8 +63,8 @@ export class WizardStepsExampleComponent implements OnDestroy {
 
     public addStep(): void {
         // addStepDynamic returns an instance of WizardStepComponent that was dynamically added
-        const step = this.wizardComponent.addStepDynamic(
-            this.dynamicStep,
+        const step = this.wizardComponent().addStepDynamic(
+            this.dynamicStep(),
             this.selectedIndex + 1
         );
 

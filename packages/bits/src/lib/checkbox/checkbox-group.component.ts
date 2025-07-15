@@ -83,6 +83,14 @@ export class CheckboxGroupComponent
     /**
      * CheckboxGroupComponent children array from CheckboxComponent items
      */
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
     @ContentChildren(CheckboxComponent, { descendants: true })
     private children: QueryList<CheckboxComponent>;
 

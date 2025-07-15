@@ -20,11 +20,11 @@
 
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    Component,
-    TrackByFunction,
-    ViewChild,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  TrackByFunction,
+  viewChild
 } from "@angular/core";
 import sample from "lodash/sample";
 import { Observable } from "rxjs";
@@ -55,11 +55,9 @@ interface IRandomUserTableModel {
 export class TableVirtualScrollStickyHeaderExampleComponent
     implements AfterViewInit
 {
-    @ViewChild(CdkVirtualScrollViewport)
-    public viewport: CdkVirtualScrollViewport;
+    public readonly viewport = viewChild(CdkVirtualScrollViewport);
     // Note: Used only for demo purposes
-    @ViewChild(TableStickyHeaderDirective)
-    public stickyHeaderDirective: TableStickyHeaderDirective;
+    public readonly stickyHeaderDirective = viewChild.required(TableStickyHeaderDirective);
 
     // Note: Mock items list is used to fake that the data is already loaded
     // and let CDK Viewport perform the scrolling on a known number of items
@@ -96,14 +94,14 @@ export class TableVirtualScrollStickyHeaderExampleComponent
             paginator: {
                 componentInstance: {
                     getFilters: () => ({
-                        value: this.viewport.getRenderedRange(),
+                        value: this.viewport().getRenderedRange(),
                     }),
                 },
             },
         };
 
         // Note: Creating a stream of visible items to be bound to the table and increase the performance
-        this.visibleItems$ = this.viewport.renderedRangeStream.pipe(
+        this.visibleItems$ = this.viewport().renderedRangeStream.pipe(
             // eslint-disable-next-line import/no-deprecated
             startWith({ start: 0, end: 10 }),
             // Note: On range change applying filters
@@ -132,7 +130,7 @@ export class TableVirtualScrollStickyHeaderExampleComponent
 
     // Note: Used only for demo purposes
     public updateStickyState(state: boolean): void {
-        this.stickyHeaderDirective.tableStickyHeader = state;
+        this.stickyHeaderDirective().tableStickyHeader = state;
         this.makeSticky = state;
     }
 }

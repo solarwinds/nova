@@ -54,6 +54,8 @@ import { ICustomDSFilteredData, IFilterGroupItem } from "./public-api";
 export class CustomDataSourceFilterGroupExampleComponent
     implements AfterViewInit, OnDestroy
 {
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
     @ViewChildren(CustomDataSourceFilterGroupCompositeComponent)
     filterGroups: QueryList<CustomDataSourceFilterGroupCompositeComponent>;
 

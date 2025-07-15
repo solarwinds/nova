@@ -63,6 +63,18 @@ import { MenuGroupComponent } from "../menu-group/menu-group.component";
     standalone: false,
 })
 export class MenuItemComponent extends MenuItemBaseComponent {
+    // TODO: Skipped for migration because:
+    //  This query overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This query overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This query overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This query overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @ViewChild("menuItemDefault") menuItem: ElementRef;
 
     constructor(

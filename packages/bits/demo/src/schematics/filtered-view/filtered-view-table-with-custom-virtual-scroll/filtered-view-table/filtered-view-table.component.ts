@@ -20,14 +20,14 @@
 
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
@@ -72,8 +72,8 @@ export class FilteredViewTableComponent
     public displayedColumns = ["name", "location", "status"];
     public pageSize: number = RESULTS_PER_PAGE;
 
-    @ViewChild(TableComponent) table: TableComponent<IServer>;
-    @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
+    readonly table = viewChild.required(TableComponent);
+    readonly viewport = viewChild(CdkVirtualScrollViewport);
 
     // the height in px of a single row from the table
     public rowHeight = 40;
@@ -110,7 +110,7 @@ export class FilteredViewTableComponent
         });
         this.viewportManager
             // Note: Initializing viewportManager with the repeat's CDK Viewport Ref
-            .setViewport(this.viewport);
+            .setViewport(this.viewport());
 
         this.dataSource.outputsSubject
             .pipe(

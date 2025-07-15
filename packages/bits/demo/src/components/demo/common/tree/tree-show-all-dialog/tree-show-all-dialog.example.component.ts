@@ -26,17 +26,17 @@ import {
 } from "@angular/cdk/tree";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    Injectable,
-    Input,
-    IterableDiffer,
-    IterableDiffers,
-    OnDestroy,
-    ViewChild,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  Injectable,
+  Input,
+  IterableDiffer,
+  IterableDiffers,
+  OnDestroy,
+  viewChild
 } from "@angular/core";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
@@ -271,7 +271,7 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
         return this.activeDialogRef.componentInstance;
     }
     private destroy$ = new Subject<void>();
-    @ViewChild(CdkTree) private cdkTree: CdkTree<IServerNode>;
+    private readonly cdkTree = viewChild(CdkTree);
 
     public nodesTotalItems: { [key: string]: number } = {};
 
@@ -395,7 +395,7 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
 
         // clear previously rendered leaf nodes
         nestedNodeDirective.nodeOutlet.first.viewContainer.clear();
-        this.cdkTree.renderNodeChanges(
+        this.cdkTree().renderNodeChanges(
             node.children,
             differ,
             nestedNodeDirective.nodeOutlet.first.viewContainer,
@@ -480,8 +480,7 @@ export class TreeDialogContentExampleComponent implements AfterViewInit {
             item?.name,
     };
 
-    @ViewChild(RepeatComponent)
-    public repeat: RepeatComponent;
+    public readonly repeat = viewChild.required(RepeatComponent);
 
     constructor(
         public cdRef: ChangeDetectorRef,
@@ -490,7 +489,7 @@ export class TreeDialogContentExampleComponent implements AfterViewInit {
     ) {}
 
     public ngAfterViewInit(): void {
-        this.viewPortManager.setViewport(this.repeat.viewportRef);
+        this.viewPortManager.setViewport(this.repeat().viewportRef);
     }
 
     close(): void {

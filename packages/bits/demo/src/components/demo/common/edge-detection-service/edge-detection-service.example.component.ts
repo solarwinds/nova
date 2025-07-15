@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, viewChild } from "@angular/core";
 import _set from "lodash/set";
 
 import { EdgeDetectionService, IEdgeDetectionResult } from "@nova-ui/bits";
@@ -30,8 +30,8 @@ import { EdgeDetectionService, IEdgeDetectionResult } from "@nova-ui/bits";
     standalone: false,
 })
 export class EdgeDetectionServiceExampleComponent implements AfterViewInit {
-    @ViewChild("parent") private parentElement: ElementRef;
-    @ViewChild("placementElement") private toBePlacedElement: ElementRef;
+    private readonly parentElement = viewChild<ElementRef>("parent");
+    private readonly toBePlacedElement = viewChild<ElementRef>("placementElement");
 
     public showPlaced: any = {};
     public showAligned: any = {};
@@ -68,7 +68,7 @@ export class EdgeDetectionServiceExampleComponent implements AfterViewInit {
 
     public update(): void {
         setTimeout(() => {
-            const parent = this.parentElement.nativeElement;
+            const parent = this.parentElement().nativeElement;
             const basePointElement = parent.querySelector(
                 ".base-point-element"
             );
@@ -89,7 +89,7 @@ export class EdgeDetectionServiceExampleComponent implements AfterViewInit {
 
             this.canBe = this.edgeDetectionService.canBe(
                 basePointElement,
-                this.toBePlacedElement.nativeElement
+                this.toBePlacedElement().nativeElement
             );
         });
     }

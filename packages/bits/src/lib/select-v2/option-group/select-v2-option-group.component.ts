@@ -19,16 +19,15 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentInit,
-    ChangeDetectionStrategy,
-    Component,
-    ContentChildren,
-    forwardRef,
-    HostBinding,
-    Inject,
-    OnDestroy,
-    Optional,
-    QueryList,
+  AfterContentInit,
+  ChangeDetectionStrategy,
+  Component,
+  forwardRef,
+  HostBinding,
+  Inject,
+  OnDestroy,
+  Optional,
+  contentChildren
 } from "@angular/core";
 import every from "lodash/every";
 import { merge, Subject } from "rxjs";
@@ -57,8 +56,7 @@ export class SelectV2OptionGroupComponent
     @HostBinding("class.hidden")
     public outfiltered: boolean = false;
 
-    @ContentChildren(forwardRef(() => SelectV2OptionComponent))
-    private options: QueryList<SelectV2OptionComponent>;
+    private readonly options = contentChildren(forwardRef(() => SelectV2OptionComponent));
     private select: IOptionedComponent;
     private onDestroy$ = new Subject<void>();
 
@@ -76,7 +74,7 @@ export class SelectV2OptionGroupComponent
                 .pipe(takeUntil(this.onDestroy$))
                 .subscribe(() => {
                     this.outfiltered = every(
-                        this.options.toArray(),
+                        this.options,
                         (option: SelectV2OptionComponent) => option.outfiltered
                     );
                 });

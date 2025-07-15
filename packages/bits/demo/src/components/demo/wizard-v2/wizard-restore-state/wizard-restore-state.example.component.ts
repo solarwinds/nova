@@ -19,12 +19,12 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    TemplateRef,
-    ViewChild,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  viewChild
 } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import isEqual from "lodash/isEqual";
@@ -56,8 +56,8 @@ export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
     public state: IWizardState;
     public dynamicSteps: IWizardStepData[] = [];
     public awesome: boolean = false;
-    @ViewChild("dynamicTemplate1") public template1: TemplateRef<string>;
-    @ViewChild("dynamicTemplate2") public template2: TemplateRef<string>;
+    public readonly template1 = viewChild<TemplateRef<string>>("dynamicTemplate1");
+    public readonly template2 = viewChild<TemplateRef<string>>("dynamicTemplate2");
     private readonly destroy$ = new Subject<void>();
 
     constructor(
@@ -90,7 +90,7 @@ export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
             .subscribe((changes) => {
                 this.handleDynamicSteps(
                     "I was created dynamically!",
-                    this.template1,
+                    this.template1(),
                     changes
                 );
             });
@@ -101,7 +101,7 @@ export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
             .subscribe((changes) => {
                 this.handleDynamicSteps(
                     "Another dynamic step",
-                    this.template2,
+                    this.template2(),
                     changes
                 );
             });

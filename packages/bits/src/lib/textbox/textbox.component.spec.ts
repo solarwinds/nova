@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { CommonModule } from "@angular/common";
-import { Component, NO_ERRORS_SCHEMA, ViewChild } from "@angular/core";
+import { Component, NO_ERRORS_SCHEMA, viewChild } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 
@@ -38,7 +38,7 @@ import { SpinnerComponent } from "../spinner/spinner.component";
     standalone: false,
 })
 class TextboxFormComponent {
-    @ViewChild(TextboxComponent) input: TextboxComponent;
+    readonly input = viewChild.required(TextboxComponent);
 
     public form = this.fb.group({
         input: this.fb.control(""),
@@ -65,12 +65,12 @@ describe("components >", () => {
 
         describe("general > ", () => {
             it("should set focus on textbox programmatically", () => {
-                expect(testComponent.textboxInput.nativeElement).not.toBe(
+                expect(testComponent.textboxInput().nativeElement).not.toBe(
                     document.activeElement
                 );
 
                 testComponent.focus();
-                expect(testComponent.textboxInput.nativeElement).toBe(
+                expect(testComponent.textboxInput().nativeElement).toBe(
                     document.activeElement
                 );
             });
@@ -110,7 +110,7 @@ describe("components >", () => {
                 const spy = jasmine
                     .createSpy("valueChangesSpy", callback)
                     .and.callThrough();
-                const textbox = testComponent.input.textboxInput
+                const textbox = testComponent.input().textboxInput()
                     .nativeElement as HTMLInputElement;
 
                 testComponent.form.valueChanges.subscribe(spy);

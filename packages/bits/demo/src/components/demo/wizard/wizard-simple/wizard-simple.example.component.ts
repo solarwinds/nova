@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject, TemplateRef, ViewChild } from "@angular/core";
+import { Component, Inject, TemplateRef, viewChild } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
 import {
@@ -37,10 +37,10 @@ import {
     standalone: false,
 })
 export class WizardSimpleExampleComponent {
-    @ViewChild("wizardComponent") wizardComponent: WizardComponent;
-    @ViewChild("wizardStep2") wizardStep2Component: WizardStepComponent;
-    @ViewChild("wizardStep3") wizardStep3Component: WizardStepComponent;
-    @ViewChild("dynamicStep") dynamicStep: WizardStepComponent;
+    readonly wizardComponent = viewChild.required<WizardComponent>("wizardComponent");
+    readonly wizardStep2Component = viewChild.required<WizardStepComponent>("wizardStep2");
+    readonly wizardStep3Component = viewChild.required<WizardStepComponent>("wizardStep3");
+    readonly dynamicStep = viewChild.required<WizardStepComponent>("dynamicStep");
     public myForm;
     public hint = $localize`example-hint`;
     public caption = $localize`example-caption`;
@@ -91,33 +91,33 @@ export class WizardSimpleExampleComponent {
     }
 
     public addStep(): void {
-        this.wizardComponent.addStepDynamic(
-            this.dynamicStep,
+        this.wizardComponent().addStepDynamic(
+            this.dynamicStep(),
             this.selectedIndex + 1
         );
     }
 
     public disableSecondStep(): void {
-        this.wizardComponent.disableStep(this.wizardStep2Component);
+        this.wizardComponent().disableStep(this.wizardStep2Component());
     }
 
     public hideThirdStep(): void {
-        this.wizardComponent.hideStep(this.wizardStep3Component);
+        this.wizardComponent().hideStep(this.wizardStep3Component());
     }
 
     public visibleThirdStep(): void {
-        this.wizardComponent.showStep(this.wizardStep3Component);
+        this.wizardComponent().showStep(this.wizardStep3Component());
     }
 
     public makeSecondStepBusy(): void {
         this.secondStepBusyConfig.busy = true;
-        this.wizardComponent.navigationControl.next({
+        this.wizardComponent().navigationControl.next({
             busyState: this.secondStepBusyConfig,
             allowStepChange: false,
         });
         setTimeout(() => {
             this.secondStepBusyConfig.busy = false;
-            this.wizardComponent.navigationControl.next({
+            this.wizardComponent().navigationControl.next({
                 busyState: this.secondStepBusyConfig,
                 allowStepChange: true,
             });
@@ -132,7 +132,7 @@ export class WizardSimpleExampleComponent {
     }
 
     public onCancelClick(content: TemplateRef<string>): void {
-        const completeSteps = this.wizardComponent.steps
+        const completeSteps = this.wizardComponent().steps
             .toArray()
             .filter((step: WizardStepComponent) => step.complete);
         if (!completeSteps.length) {
@@ -172,13 +172,13 @@ export class WizardSimpleExampleComponent {
 
     public preventGoingNext(): void {
         this.busyConfig.busy = true;
-        this.wizardComponent.navigationControl.next({
+        this.wizardComponent().navigationControl.next({
             busyState: this.busyConfig,
             allowStepChange: false,
         });
         setTimeout(() => {
             this.busyConfig.busy = false;
-            this.wizardComponent.navigationControl.next({
+            this.wizardComponent().navigationControl.next({
                 busyState: this.busyConfig,
                 allowStepChange: true,
             });

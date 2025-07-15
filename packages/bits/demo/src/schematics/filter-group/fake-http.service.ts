@@ -19,11 +19,11 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    Inject,
-    Injectable,
-    OnDestroy,
-    ViewChild,
+  Component,
+  Inject,
+  Injectable,
+  OnDestroy,
+  viewChild
 } from "@angular/core";
 import _get from "lodash/get";
 import _isEmpty from "lodash/isEmpty";
@@ -167,7 +167,7 @@ export class FakeServer implements OnDestroy {
 
     private filterGroupSubscriptions: Array<Subscription> = [];
 
-    @ViewChild(RepeatComponent) filteringRepeat: RepeatComponent;
+    readonly filteringRepeat = viewChild.required(RepeatComponent);
 
     constructor(
         @Inject(DataSourceService)

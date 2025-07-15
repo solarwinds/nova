@@ -80,6 +80,18 @@ export class MenuActionComponent extends MenuItemBaseComponent {
 
     @Input() public type: MenuActionType;
 
+    // TODO: Skipped for migration because:
+    //  This query overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This query overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This query overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This query overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @ViewChild("menuAction") menuItem: ElementRef;
 
     constructor(

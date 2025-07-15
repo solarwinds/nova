@@ -21,11 +21,12 @@
 import { OverlayConfig } from "@angular/cdk/overlay";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
-    AfterViewInit,
-    Component,
-    OnInit,
-    TemplateRef,
-    ViewChild,
+  AfterViewInit,
+  Component,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  viewChild
 } from "@angular/core";
 import { FormBuilder, FormControl, Validators } from "@angular/forms";
 import { Observable, of, Subject } from "rxjs";
@@ -125,15 +126,20 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
     >(null);
     public fancyForm;
     public closePopoverSubject: Subject<void> = new Subject<void>();
+    // TODO: Skipped for migration because:
+    //  This query is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @ViewChild("comboboxSingle") public comboboxSingle: ComboboxV2Component;
+    // TODO: Skipped for migration because:
+    //  This query is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @ViewChild("comboboxMultiDimensions")
     public comboboxMultiDimensions: ComboboxV2Component;
     private activeDialog: NuiDialogRef;
     private destroy$: Subject<any> = new Subject<any>();
     private scrollOffset: number = 0;
-    @ViewChild(CdkVirtualScrollViewport)
-    private viewport: CdkVirtualScrollViewport;
-    @ViewChild("virtual") private virtualCombobox: ComboboxV2Component;
+    private readonly viewport = viewChild(CdkVirtualScrollViewport);
+    private readonly virtualCombobox = viewChild.required<ComboboxV2Component>("virtual");
 
     constructor(
         private formBuilder: FormBuilder,
@@ -203,7 +209,7 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
     public showList(event: Event): void {
         event.stopPropagation();
         this.comboboxMultiDimensions.showDropdown();
-        this.comboboxMultiDimensions.inputElement.nativeElement.focus();
+        this.comboboxMultiDimensions.inputElement().nativeElement.focus();
     }
 
     public hideList(event: Event): void {
@@ -214,7 +220,7 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
     public toggleList(event: Event): void {
         event.stopPropagation();
         this.comboboxMultiDimensions.toggleDropdown();
-        this.comboboxMultiDimensions.inputElement.nativeElement.focus();
+        this.comboboxMultiDimensions.inputElement().nativeElement.focus();
     }
 
     public ngOnInit(): void {
@@ -231,13 +237,13 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
     }
 
     public ngAfterViewInit(): void {
-        this.virtualCombobox.valueSelected
+        this.virtualCombobox().valueSelected
             .pipe(takeUntil(this.destroy$))
             .subscribe(() => {
-                this.scrollOffset = this.viewport.measureScrollOffset();
+                this.scrollOffset = this.viewport().measureScrollOffset();
             });
 
-        this.virtualCombobox.valueChanged
+        this.virtualCombobox().valueChanged
             .pipe(
                 filter((v) => v !== undefined),
                 // eslint-disable-next-line import/no-deprecated
@@ -310,10 +316,10 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
 
     private calculateContainerHeight = (): void => {
         if (
-            this.virtualCombobox.inputValue &&
-            this.viewport.measureRenderedContentSize() < defaultContainerHeight
+            this.virtualCombobox().inputValue &&
+            this.viewport().measureRenderedContentSize() < defaultContainerHeight
         ) {
-            this.containerHeight = this.viewport.measureRenderedContentSize();
+            this.containerHeight = this.viewport().measureRenderedContentSize();
             return;
         }
         this.containerHeight = defaultContainerHeight;

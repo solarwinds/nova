@@ -19,17 +19,18 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    SimpleChanges,
+  AfterContentInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  SimpleChanges,
+  contentChild
 } from "@angular/core";
 import moment, { Moment } from "moment/moment";
 import { Subject } from "rxjs";
@@ -87,9 +88,17 @@ export class TimeFrameBarComponent
     /** Emits an event when "Clear" is clicked */
     @Output() clear = new EventEmitter();
 
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
     @ContentChild(TimeFramePickerComponent)
     timeFramePicker: TimeFramePickerComponent;
-    @ContentChild(QuickPickerComponent) quickPicker: QuickPickerComponent;
+    readonly quickPicker = contentChild.required(QuickPickerComponent);
 
     public presets;
     public pickerTimeframe: ITimeframe;
@@ -134,15 +143,19 @@ maxDate, and timeFrame inputs on the TimeFrameBarComponent instead.`);
             .pipe(takeUntil(this.destroy$))
             .subscribe((tf: ITimeframe) => this.updatePickerTf(tf));
 
-        if (this.quickPicker) {
-            this.quickPicker.presets =
-                this.quickPicker.presets ||
+        const quickPicker = this.quickPicker();
+        const quickPicker = this.quickPicker();
+        const quickPicker = this.quickPicker();
+        const quickPicker = this.quickPicker();
+        if (quickPicker) {
+            quickPicker.presets =
+                quickPicker.presets ||
                 this.timeframeService.getDefaultPresets();
-            this.quickPicker.pickerTitle =
-                undefined === this.quickPicker.pickerTitle
+            quickPicker.pickerTitle =
+                undefined === quickPicker.pickerTitle
                     ? this.defaultPickerTitle
-                    : this.quickPicker.pickerTitle;
-            this.quickPicker.presetSelected
+                    : quickPicker.pickerTitle;
+            quickPicker.presetSelected
                 .pipe(takeUntil(this.destroy$))
                 .subscribe((presetKey: string) =>
                     this.handlePresetSelection(presetKey)
@@ -168,9 +181,13 @@ maxDate, and timeFrame inputs on the TimeFrameBarComponent instead.`);
         this.timeFramePicker.model = this.pickerTimeframe;
         this.timeFramePicker.changeDetector.markForCheck();
 
-        if (this.quickPicker) {
-            this.quickPicker.selectedPreset = this.timeFrame.selectedPresetId;
-            this.quickPicker.changeDetector.markForCheck();
+        const quickPicker = this.quickPicker();
+        const quickPicker = this.quickPicker();
+        const quickPicker = this.quickPicker();
+        const quickPicker = this.quickPicker();
+        if (quickPicker) {
+            quickPicker.selectedPreset = this.timeFrame.selectedPresetId;
+            quickPicker.changeDetector.markForCheck();
         }
     }
 
@@ -195,8 +212,8 @@ maxDate, and timeFrame inputs on the TimeFrameBarComponent instead.`);
         this.pickerTimeframe =
             this.timeframeService.getTimeframeByPresetId(presetKey);
 
-        this.quickPicker.selectedPreset = presetKey;
-        this.quickPicker.changeDetector.markForCheck();
+        quickPicker.selectedPreset = presetKey;
+        quickPicker.changeDetector.markForCheck();
 
         this.closePopover(true);
     }

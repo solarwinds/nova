@@ -38,6 +38,8 @@ import { DialogFilterGroupCompositeComponent } from "../dialog-filter-group.comp
     standalone: false,
 })
 export class FilterGroupsWrapperComponent implements AfterViewInit {
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
     @ContentChildren(DialogFilterGroupCompositeComponent)
     filterGroups: QueryList<DialogFilterGroupCompositeComponent>;
 

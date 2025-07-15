@@ -27,18 +27,18 @@ import {
 } from "@angular/cdk/overlay";
 import { CdkPortal } from "@angular/cdk/portal";
 import {
-    AfterContentChecked,
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  AfterContentChecked,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  SimpleChanges,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import set from "lodash/set";
 import some from "lodash/some";
@@ -110,8 +110,7 @@ export class OverlayComponent
     @Output() public readonly clickOutside = new EventEmitter<MouseEvent>();
 
     /** The place where the Popup will be attached */
-    @ViewChild(CdkPortal)
-    public contentTemplate: CdkPortal;
+    public readonly contentTemplate = viewChild(CdkPortal);
 
     /** Emits on the Popup show */
     public readonly show$: Subject<void>;
@@ -152,7 +151,7 @@ export class OverlayComponent
     }
 
     public ngAfterViewInit(): void {
-        this.overlayService.contentTemplate = this.contentTemplate;
+        this.overlayService.contentTemplate = this.contentTemplate()()()();
     }
 
     public ngAfterContentChecked(): void {

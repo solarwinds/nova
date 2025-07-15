@@ -38,6 +38,8 @@ import { FilterGroupComponent } from "../filter-group.component";
     standalone: false,
 })
 export class FilterGroupsWrapperComponent implements AfterViewInit {
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
     @ContentChildren(FilterGroupComponent)
     filterGroups: QueryList<FilterGroupComponent>;
 

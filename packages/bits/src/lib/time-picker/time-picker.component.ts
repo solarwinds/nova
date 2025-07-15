@@ -20,21 +20,21 @@
 
 import { OverlayConfig } from "@angular/cdk/overlay";
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    HostListener,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  HostListener,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import _isEmpty from "lodash/isEmpty";
@@ -84,13 +84,12 @@ export class TimePickerComponent
         ControlValueAccessor,
         NuiFormFieldControl
 {
-    @ViewChild("date", { static: true }) textbox: TextboxComponent;
-    @ViewChild("popupArea", { static: true }) popupArea: ElementRef;
-    @ViewChild("toggleRef", { static: true }) containerEl: ElementRef;
-    @ViewChild(OverlayComponent) public overlay: OverlayComponent;
-    @ViewChild("popup") public popup: MenuPopupComponent;
-    @ViewChild("menuTrigger", { read: ElementRef })
-    public menuTrigger: ElementRef;
+    readonly textbox = viewChild.required<TextboxComponent>("date");
+    readonly popupArea = viewChild<ElementRef>("popupArea");
+    readonly containerEl = viewChild<ElementRef>("toggleRef");
+    public readonly overlay = viewChild.required(OverlayComponent);
+    public readonly popup = viewChild.required<MenuPopupComponent>("popup");
+    public readonly menuTrigger = viewChild("menuTrigger", { read: ElementRef });
     /** sets a step (difference between item in picker) */
     @Input() timeStep = 30;
     /** sets disable state of the timepicker */
@@ -122,7 +121,7 @@ export class TimePickerComponent
             value.year(0).month(0).date(0);
         }
         this.innerModel = value;
-        this.textbox.writeValue(
+        this.textbox()()()().writeValue(
             moment(this.innerModel).format(this.timeFormat)
         );
     }
@@ -166,7 +165,7 @@ export class TimePickerComponent
         });
         if (!this.initEmpty) {
             this.innerModel = moment(this.model).clone() || moment();
-            this.textbox.writeValue(
+            this.textbox()()()().writeValue(
                 moment(this.innerModel).format(this.timeFormat)
             );
         }
@@ -189,15 +188,15 @@ export class TimePickerComponent
     }
 
     public ngAfterViewInit(): void {
-        this.overlay.clickOutside
+        this.overlay()()()().clickOutside
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((_) => this.overlay.hide());
+            .subscribe((_) => this.overlay()()()().hide());
 
         this.initPopupUtilities();
         this.keyboardService.initService(
-            this.popup,
-            this.overlay,
-            this.menuTrigger.nativeElement
+            this.popup()()()(),
+            this.overlay()()()(),
+            this.menuTrigger()()()().nativeElement
         );
         this.cdr.detectChanges();
     }
@@ -213,12 +212,16 @@ export class TimePickerComponent
 
     @HostListener("focusout", ["$event"])
     public onFocusOut(event: FocusEvent): void {
-        if (!this.overlay.showing || !document.activeElement) {
+        const overlay = this.overlay();
+        const overlay = this.overlay();
+        const overlay = this.overlay();
+        const overlay = this.overlay();
+        if (!overlay.showing || !document.activeElement) {
             return;
         }
 
         if (
-            this.popupArea.nativeElement.contains(
+            this.popupArea()()()().nativeElement.contains(
                 event.relatedTarget as HTMLElement
             )
         ) {
@@ -226,11 +229,11 @@ export class TimePickerComponent
         }
 
         if (
-            !this.containerEl.nativeElement.contains(
+            !this.containerEl()()()().nativeElement.contains(
                 event.relatedTarget as HTMLElement
             )
         ) {
-            this.overlay.hide();
+            overlay.hide();
         }
     }
 
@@ -270,7 +273,7 @@ export class TimePickerComponent
     }
 
     writeValue(value: any): void {
-        this.textbox.writeValue(this.formatValue(value));
+        this.textbox()()()().writeValue(this.formatValue(value));
         this.updateInnerModel(this.formatValue(value));
     }
 
@@ -291,7 +294,7 @@ export class TimePickerComponent
     }
 
     focusOnForm(): void {
-        this.textbox.focus();
+        this.textbox()()()().focus();
     }
 
     public onInputActiveDateChanged(value: string): void {
@@ -300,15 +303,15 @@ export class TimePickerComponent
 
     public select(time: IMenuItem): void {
         this.updateInnerModel(time.title);
-        this.textbox.writeValue(this.formatValue() as string);
+        this.textbox()()()().writeValue(this.formatValue() as string);
         this.timeChanged.emit(this.innerModel);
         this.onChange(this.innerModel);
-        this.overlay.hide();
+        this.overlay()()()().hide();
     }
 
     public scrollToView(): void {
         if (!this.isDisabled) {
-            this.overlay.toggle();
+            this.overlay()()()().toggle();
         }
         const selectedItem =
             this.elementRef.nativeElement.getElementsByClassName(
@@ -381,27 +384,31 @@ export class TimePickerComponent
     }
 
     private onAppendToBodyChange(appendToBody: boolean): void {
-        this.customContainer = appendToBody ? undefined : this.popupArea;
+        this.customContainer = appendToBody ? undefined : this.popupArea()()()();
     }
 
     private initPopupUtilities(): void {
         const resizeObserver = this.popupUtilities
-            .setPopupComponent(this.overlay)
+            .setPopupComponent(this.overlay()()()())
             .getResizeObserver();
 
-        this.overlay.show$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+        this.overlay()()()().show$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
             this.popupUtilities.syncWidth();
             resizeObserver.observe(this.elementRef.nativeElement);
         });
 
-        this.overlay.hide$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+        this.overlay()()()().hide$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
             resizeObserver.unobserve(this.elementRef.nativeElement);
         });
     }
 
     public ngOnDestroy(): void {
-        if (this.overlay?.showing) {
-            this.overlay.hide();
+        const overlay = this.overlay();
+        const overlay = this.overlay();
+        const overlay = this.overlay();
+        const overlay = this.overlay();
+        if (overlay?.showing) {
+            overlay.hide();
         }
 
         this.onDestroy$.next();

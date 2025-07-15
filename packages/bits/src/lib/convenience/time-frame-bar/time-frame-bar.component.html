@@ -77,7 +77,7 @@
 </div>
 
 <ng-template #popoverTimeFramePicker>
-    <div [ngClass]="{ 'px-3 py-2': !quickPicker }">
+    <div [ngClass]="{ 'px-3 py-2': !quickPicker()()()() }">
         <ng-content select="[timeFrameSelection]"></ng-content>
     </div>
     <nui-dialog-footer *ngIf="changed">

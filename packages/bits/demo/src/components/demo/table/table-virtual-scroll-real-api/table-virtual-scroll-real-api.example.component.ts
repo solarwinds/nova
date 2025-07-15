@@ -20,14 +20,14 @@
 
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Injectable,
-    OnDestroy,
-    OnInit,
-    ViewChild,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Injectable,
+  OnDestroy,
+  OnInit,
+  viewChild
 } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
 // eslint-disable-next-line import/no-deprecated
@@ -52,8 +52,7 @@ import {
 export class TableVirtualScrollRealApiExampleComponent
     implements AfterViewInit, OnDestroy, OnInit
 {
-    @ViewChild(CdkVirtualScrollViewport, { static: false })
-    viewport: CdkVirtualScrollViewport;
+    readonly viewport = viewChild(CdkVirtualScrollViewport);
     // This value is obtained from the server and used to evaluate the total number of pages to display
     private _totalItems: number = 0;
     private _isBusy: boolean = false;
@@ -106,7 +105,7 @@ export class TableVirtualScrollRealApiExampleComponent
         this.registerVirtualScroll();
         this.viewportManager
             // Note: Initializing viewportManager with the repeat's CDK Viewport Ref
-            .setViewport(this.viewport)
+            .setViewport(this.viewport())
             // Note: Initializing the stream with the desired page size, based on which
             // VirtualViewportManager will perform the observations and will emit
             // distinct ranges with step equal to provided pageSize

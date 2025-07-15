@@ -22,24 +22,24 @@ import { LiveAnnouncer } from "@angular/cdk/a11y";
 import { OverlayConfig } from "@angular/cdk/overlay";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
-    AfterContentInit,
-    AfterViewInit,
-    ChangeDetectorRef,
-    ContentChild,
-    ContentChildren,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    HostBinding,
-    HostListener,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    QueryList,
-    SimpleChanges,
-    ViewChild,
+  AfterContentInit,
+  AfterViewInit,
+  ChangeDetectorRef,
+  ContentChildren,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  HostBinding,
+  HostListener,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  QueryList,
+  SimpleChanges,
+  viewChild,
+  contentChild
 } from "@angular/core";
 import { ControlValueAccessor } from "@angular/forms";
 import includes from "lodash/includes";
@@ -152,18 +152,33 @@ export abstract class BaseSelectV2
     }
 
     /** Corresponds to the Textbox of the Combobox */
-    @ViewChild("input", { static: false }) inputElement: ElementRef;
+    readonly inputElement = viewChild<ElementRef>("input");
 
-    @ContentChild(CdkVirtualScrollViewport)
-    cdkVirtualScroll: CdkVirtualScrollViewport;
+    readonly cdkVirtualScroll = contentChild(CdkVirtualScrollViewport);
 
     /** Corresponds to the Options listed in the Dropdown */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
     @ContentChildren(forwardRef(() => SelectV2OptionComponent), {
         descendants: true,
     })
     public options: QueryList<SelectV2OptionComponent>;
 
     /** Corresponds to the All Items listed in the Dropdown */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
     @ContentChildren(forwardRef(() => OVERLAY_ITEM), { descendants: true })
     public allPopupItems: QueryList<IOption>;
 
@@ -183,8 +198,7 @@ export abstract class BaseSelectV2
     /** Name of the icon which indicates open/close state of the Dropdown */
     public caretIcon = "caret-down";
 
-    @ViewChild(OverlayComponent)
-    public dropdown: OverlayComponent;
+    public readonly dropdown = viewChild.required(OverlayComponent);
     protected popupUtilities: OverlayUtilitiesService =
         new OverlayUtilitiesService();
     protected destroy$: Subject<void> = new Subject<void>();
@@ -217,7 +231,7 @@ export abstract class BaseSelectV2
             this.handleValueChange(changes.value?.currentValue);
         }
 
-        if (changes.dropdownCustomContainer && this.dropdown) {
+        if (changes.dropdownCustomContainer && this.dropdown()()()()) {
             this.defineDropdownContainer();
         }
     }
@@ -283,7 +297,7 @@ export abstract class BaseSelectV2
 
         if (
             this.manualDropdownControl &&
-            this.dropdown.showing &&
+            this.dropdown()()()().showing &&
             this.isAllowedKeyOnManualDropdown(event)
         ) {
             this.optionKeyControlService.handleKeydown(event);
@@ -296,7 +310,7 @@ export abstract class BaseSelectV2
             return;
         }
 
-        this.dropdown.show();
+        this.dropdown()()()().show();
         this.setActiveItemOnDropdown();
         this.scrollToOption();
         this.announceDropdown(true);
@@ -305,7 +319,7 @@ export abstract class BaseSelectV2
     /** Hides dropdown */
     public hideDropdown(): void {
         if (!this.isDisabled) {
-            this.dropdown.hide();
+            this.dropdown()()()().hide();
             this.announceDropdown(false);
         }
     }
@@ -316,14 +330,18 @@ export abstract class BaseSelectV2
             return;
         }
 
-        this.dropdown.toggle();
-        this.announceDropdown(this.dropdown.showing);
+        this.dropdown()()()().toggle();
+        this.announceDropdown(this.dropdown()()()().showing);
 
         this.setActiveItemOnDropdown();
         this.scrollToOption();
 
-        if (this.cdkVirtualScroll) {
-            this.cdkVirtualScroll.checkViewportSize();
+        const cdkVirtualScroll = this.cdkVirtualScroll();
+        const cdkVirtualScroll = this.cdkVirtualScroll();
+        const cdkVirtualScroll = this.cdkVirtualScroll();
+        const cdkVirtualScroll = this.cdkVirtualScroll();
+        if (cdkVirtualScroll) {
+            cdkVirtualScroll.checkViewportSize();
         }
     }
 
@@ -381,7 +399,7 @@ export abstract class BaseSelectV2
 
     /** Returns state of the Dropdown */
     public get isDropdownOpen(): boolean {
-        return this.dropdown?.showing;
+        return this.dropdown()()()()?.showing;
     }
 
     /**
@@ -390,15 +408,19 @@ export abstract class BaseSelectV2
      * This is a safe guard for preventing memory leaks in derived classes.
      */
     public ngOnDestroy(): void {
-        if (this.dropdown?.showing) {
-            this.dropdown.hide();
+        const dropdown = this.dropdown();
+        const dropdown = this.dropdown();
+        const dropdown = this.dropdown();
+        const dropdown = this.dropdown();
+        if (dropdown?.showing) {
+            dropdown.hide();
         }
         this.destroy$.next();
         this.destroy$.complete();
 
         if (this.virtualScrollResizeObserver) {
             this.virtualScrollResizeObserver.unobserve(
-                this.cdkVirtualScroll.elementRef.nativeElement
+                this.cdkVirtualScroll()()()().elementRef.nativeElement
             );
         }
     }
@@ -496,7 +518,7 @@ export abstract class BaseSelectV2
 
     private initKeyboardManager() {
         this.optionKeyControlService.optionItems = this.allPopupItems;
-        this.optionKeyControlService.popup = this.dropdown;
+        this.optionKeyControlService.popup = this.dropdown()()()();
         this.optionKeyControlService.initKeyboardManager();
         this.optionKeyControlService.setSkipPredicate(
             (option: IOption) => !!(option.outfiltered || option.isDisabled)
@@ -518,7 +540,7 @@ export abstract class BaseSelectV2
     }
 
     private initClosingOnClicksOutside() {
-        this.dropdown.clickOutside
+        this.dropdown()()()().clickOutside
             .pipe(takeUntil(this.destroy$))
             .subscribe((v) => {
                 if (!this.manualDropdownControl) {
@@ -529,7 +551,7 @@ export abstract class BaseSelectV2
     }
 
     private initOnTouch() {
-        this.dropdown.hide$.pipe(takeUntil(this.destroy$)).subscribe(() => {
+        this.dropdown()()()().hide$.pipe(takeUntil(this.destroy$)).subscribe(() => {
             this.onTouched();
             this.cdRef.markForCheck(); // so caret icon will update properly
         });
@@ -540,20 +562,20 @@ export abstract class BaseSelectV2
     }
 
     private defineDropdownContainer(): void {
-        this.dropdown.customContainer = this.dropdownCustomContainer;
+        this.dropdown()()()().customContainer = this.dropdownCustomContainer;
     }
 
     private initPopupUtilities() {
         const resizeObserver = this.popupUtilities
-            .setPopupComponent(this.dropdown)
+            .setPopupComponent(this.dropdown()()()())
             .getResizeObserver();
 
-        this.dropdown.show$.pipe(takeUntil(this.destroy$)).subscribe(() => {
+        this.dropdown()()()().show$.pipe(takeUntil(this.destroy$)).subscribe(() => {
             this.popupUtilities.syncWidth();
             resizeObserver.observe(this.elRef.nativeElement);
         });
 
-        this.dropdown.hide$.pipe(takeUntil(this.destroy$)).subscribe(() => {
+        this.dropdown()()()().hide$.pipe(takeUntil(this.destroy$)).subscribe(() => {
             resizeObserver.unobserve(this.elRef.nativeElement);
         });
     }
@@ -563,17 +585,21 @@ export abstract class BaseSelectV2
      * scroll. Overlay minHeight should be bigger than cdkVirtualScroll container.
      */
     private adjustDropdownOnVScrollResize(): void {
-        if (!this.cdkVirtualScroll) {
+        const cdkVirtualScroll = this.cdkVirtualScroll();
+        const cdkVirtualScroll = this.cdkVirtualScroll();
+        const cdkVirtualScroll = this.cdkVirtualScroll();
+        const cdkVirtualScroll = this.cdkVirtualScroll();
+        if (!cdkVirtualScroll) {
             return;
         }
 
-        const element = this.cdkVirtualScroll.elementRef.nativeElement;
+        const element = cdkVirtualScroll.elementRef.nativeElement;
         const height = parseInt(element.style.height, 10);
         const minHeight = Number.isNaN(height)
             ? 0
             : height + V_SCROLL_HEIGHT_BUFFER;
 
-        this.dropdown.overlayConfig = {
+        this.dropdown()()()().overlayConfig = {
             ...this.overlayConfig,
             ...{ minHeight },
         };
@@ -584,7 +610,7 @@ export abstract class BaseSelectV2
                     ? content.height + V_SCROLL_HEIGHT_BUFFER
                     : 0;
 
-                this.dropdown.updateSize({ minHeight });
+                this.dropdown()()()().updateSize({ minHeight });
             }
         });
 
@@ -595,7 +621,7 @@ export abstract class BaseSelectV2
         return (
             !this.mouseDown &&
             !this.manualDropdownControl &&
-            document.activeElement === this.inputElement.nativeElement
+            document.activeElement === this.inputElement()()()().nativeElement
         );
     }
 

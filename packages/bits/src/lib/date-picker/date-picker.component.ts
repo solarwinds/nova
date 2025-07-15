@@ -20,21 +20,21 @@
 
 import { OverlayConfig } from "@angular/cdk/overlay";
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    HostBinding,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  HostBinding,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import {
     ControlValueAccessor,
@@ -184,13 +184,12 @@ export class DatePickerComponent
     @Output()
     inputBlurred: EventEmitter<any> = new EventEmitter<Moment>();
 
-    @ViewChild(DatePickerInnerComponent)
-    _datePicker: DatePickerInnerComponent;
+    readonly _datePicker = viewChild.required(DatePickerInnerComponent);
 
-    @ViewChild("date") textbox: TextboxComponent;
+    readonly textbox = viewChild.required<TextboxComponent>("date");
 
-    @ViewChild("popupArea", { static: true }) popupArea: ElementRef;
-    @ViewChild(OverlayComponent) public overlay: OverlayComponent;
+    readonly popupArea = viewChild<ElementRef>("popupArea");
+    public readonly overlay = viewChild.required(OverlayComponent);
 
     public onDestroy$ = new Subject<void>();
     public customContainer: ElementRef | undefined;
@@ -252,30 +251,34 @@ export class DatePickerComponent
     }
 
     public ngAfterViewInit(): void {
-        this.calendarChanged = this._datePicker.calendarMoved.subscribe(
+        this.calendarChanged = this._datePicker()()()().calendarMoved.subscribe(
             (value: Moment) => this.calendarNavigated.emit(value)
         );
         this.updateTextboxValue();
         this.cd.detectChanges();
-        if (this.overlay) {
-            this.overlay.clickOutside
+        const overlay = this.overlay();
+        const overlay = this.overlay();
+        const overlay = this.overlay();
+        const overlay = this.overlay();
+        if (overlay) {
+            overlay.clickOutside
                 .pipe(takeUntil(this.onDestroy$))
-                .subscribe((_) => this.overlay.hide());
+                .subscribe((_) => this.overlay()()()().hide());
 
             // Sets innerDatePicker 'value' to 'null' on popup close and refreshView() on popup open,
             // so in case datePicker.value is invalid it will build the calendar from the scratch
             // and not keep its previous state.
 
-            this.overlay.show$
+            overlay.show$
                 .pipe(takeUntil(this.onDestroy$))
-                .subscribe((_) => this._datePicker.refreshView());
-            this.overlay.hide$
+                .subscribe((_) => this._datePicker()()()().refreshView());
+            overlay.hide$
                 .pipe(takeUntil(this.onDestroy$))
                 .subscribe((_) => {
                     const currentDateValid = this.value?.isValid();
                     if (!currentDateValid) {
-                        this._datePicker.value = undefined;
-                        this._datePicker.datepickerMode = "day";
+                        _datePicker.value = undefined;
+                        _datePicker.datepickerMode = "day";
                     }
                 });
         }
@@ -338,18 +341,22 @@ export class DatePickerComponent
 
     public onSelectionDone(value: Moment): void {
         this.value = value;
-        this.overlay?.hide();
+        this.overlay()()()()?.hide();
     }
 
     private updateTextboxValue(value: any = this._value) {
-        if (!this.textbox || !value) {
+        const textbox = this.textbox();
+        const textbox = this.textbox();
+        const textbox = this.textbox();
+        const textbox = this.textbox();
+        if (!textbox || !value) {
             return;
         }
-        this.textbox.writeValue(moment(value).format(this.momentDateFormat));
+        textbox.writeValue(moment(value).format(this.momentDateFormat));
     }
 
     private isDateDisabled(value: Moment): boolean {
-        return this._datePicker.isDisabled(value);
+        return this._datePicker()()()().isDisabled(value);
     }
 
     private setDateFormat(): void {
@@ -372,8 +379,12 @@ export class DatePickerComponent
             this.calendarChanged.unsubscribe();
         }
 
-        if (this.overlay?.showing) {
-            this.overlay.hide();
+        const overlay = this.overlay();
+        const overlay = this.overlay();
+        const overlay = this.overlay();
+        const overlay = this.overlay();
+        if (overlay?.showing) {
+            overlay.hide();
         }
 
         this.onDestroy$.next();
@@ -381,6 +392,6 @@ export class DatePickerComponent
     }
 
     private onAppendToBodyChange(appendToBody: boolean): void {
-        this.customContainer = appendToBody ? undefined : this.popupArea;
+        this.customContainer = appendToBody ? undefined : this.popupArea()()()();
     }
 }

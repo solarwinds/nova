@@ -38,7 +38,7 @@
                 [stepControl]="form.get(['contactDetails'])"
             >
                 <ng-template nuiWizardStepLabel>
-                    <span (click)="onNextClick(wizard.selected)"
+                    <span (click)="onNextClick(wizard().selected)"
                         >Contact Details</span
                     >
                 </ng-template>
@@ -125,7 +125,7 @@
                     displayStyle="primary"
                     icon="caret-right"
                     iconRight="true"
-                    (click)="onNextClick(wizard.selected)"
+                    (click)="onNextClick(wizard().selected)"
                 >
                     Next
                 </button>

@@ -23,12 +23,12 @@ import {
     OverlayRef,
 } from "@angular/cdk/overlay";
 import {
-    AfterViewInit,
-    Component,
-    Inject,
-    OnDestroy,
-    TemplateRef,
-    ViewChild,
+  AfterViewInit,
+  Component,
+  Inject,
+  OnDestroy,
+  TemplateRef,
+  viewChild
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -74,10 +74,10 @@ export class WizardV2TestComponent implements AfterViewInit, OnDestroy {
     public state: IWizardState;
     public steps: IWizardStepData[] = [];
 
-    @ViewChild("normalStep") normalStep: TemplateRef<string>;
+    readonly normalStep = viewChild<TemplateRef<string>>("normalStep");
 
     public ngAfterViewInit(): void {
-        this.addStep(this.normalStep);
+        this.addStep(this.normalStep());
     }
 
     public isChecked(vegetable: string): boolean {

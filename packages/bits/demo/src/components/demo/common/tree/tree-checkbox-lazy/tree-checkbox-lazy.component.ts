@@ -25,11 +25,11 @@ import {
     NestedTreeControl,
 } from "@angular/cdk/tree";
 import {
-    Component,
-    Injectable,
-    IterableDiffer,
-    IterableDiffers,
-    ViewChild,
+  Component,
+  Injectable,
+  IterableDiffer,
+  IterableDiffers,
+  viewChild
 } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { delay } from "rxjs/operators";
@@ -108,7 +108,7 @@ export class TreeCheckboxLazyComponent {
     treeControl = new NestedTreeControl<ServerNode>((node) => node.children);
     dataSource = new ArrayDataSource(TREE_DATA);
 
-    @ViewChild(CdkTree) private cdkTree: CdkTree<ServerNode>;
+    private readonly cdkTree = viewChild(CdkTree);
 
     hasChild = (_: number, node: ServerNode): boolean => !!node.length;
 
@@ -130,7 +130,7 @@ export class TreeCheckboxLazyComponent {
             node?.load
                 ? (node.children = res[node?.load])
                 : (node.children = res.servers);
-            this.cdkTree.renderNodeChanges(
+            this.cdkTree().renderNodeChanges(
                 node.children,
                 differ,
                 nestedNode.nodeOutlet.first.viewContainer,

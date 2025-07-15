@@ -19,16 +19,15 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentChecked,
-    AfterContentInit,
-    Component,
-    ContentChild,
-    ContentChildren,
-    forwardRef,
-    Input,
-    QueryList,
-    TemplateRef,
-    ViewEncapsulation,
+  AfterContentChecked,
+  AfterContentInit,
+  Component,
+  forwardRef,
+  Input,
+  TemplateRef,
+  ViewEncapsulation,
+  contentChildren,
+  contentChild
 } from "@angular/core";
 import { AbstractControl, FormGroup } from "@angular/forms";
 import _forOwn from "lodash/forOwn";
@@ -84,11 +83,9 @@ export class FormFieldComponent
      */
     @Input() showOptionalText = true;
 
-    @ContentChildren(ValidationMessageComponent)
-    validationMessages: QueryList<ValidationMessageComponent>;
+    readonly validationMessages = contentChildren(ValidationMessageComponent);
 
-    @ContentChild(forwardRef(() => NuiFormFieldControl))
-    nuiFormControl: NuiFormFieldControl;
+    readonly nuiFormControl = contentChild.required(forwardRef(() => NuiFormFieldControl));
 
     public controlIsOptional: boolean = false;
 
@@ -104,7 +101,7 @@ export class FormFieldComponent
                 this.control.statusChanges,
                 extractTouchedChanges(this.control)
             ).subscribe(() => {
-                this.validationMessages.forEach((message) => {
+                this.validationMessages()()()().forEach((message) => {
                     if (_isNull(this.control.errors)) {
                         message.show = false;
                     } else {
@@ -112,15 +109,19 @@ export class FormFieldComponent
                     }
                 });
 
-                if (this.nuiFormControl) {
-                    this.nuiFormControl.isInErrorState = this.control.invalid;
+                const nuiFormControl = this.nuiFormControl();
+                const nuiFormControl = this.nuiFormControl();
+                const nuiFormControl = this.nuiFormControl();
+                const nuiFormControl = this.nuiFormControl();
+                if (nuiFormControl) {
+                    nuiFormControl.isInErrorState = this.control.invalid;
                 }
             });
         }
-        if (this.nuiFormControl) {
+        if (this.nuiFormControl()()()()) {
             // using setTimeout to prevent "expression changed after it has been checked" error
             setTimeout(() => {
-                this.nuiFormControl.ariaLabel = this.caption;
+                this.nuiFormControl()()()().ariaLabel = this.caption;
             });
         }
     }

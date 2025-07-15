@@ -19,14 +19,14 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    Output,
-    ViewChild,
-    ViewEncapsulation,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  Output,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
@@ -64,7 +64,7 @@ export class TextboxComponent
     /**
      * Used to access input and textarea native elements
      */
-    @ViewChild("textboxInput") public textboxInput: ElementRef;
+    public readonly textboxInput = viewChild<ElementRef>("textboxInput");
     /**
      * Value used as a label for the text box.
      */
@@ -145,7 +145,7 @@ export class TextboxComponent
     private optionalText = "Optional";
 
     public focus(): void {
-        this.textboxInput.nativeElement.focus();
+        this.textboxInput()()()().nativeElement.focus();
     }
 
     public onBlurEventEmit(): void {

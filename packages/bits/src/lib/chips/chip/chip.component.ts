@@ -19,16 +19,16 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    Output,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  TemplateRef,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 
 import { IChipsItem } from "../public-api";
@@ -71,13 +71,13 @@ export class ChipComponent implements AfterViewInit {
 
     public isContentProjected: boolean;
 
-    @ViewChild("projection") private contentTemplate: TemplateRef<any>;
+    private readonly contentTemplate = viewChild<TemplateRef<any>>("projection");
 
     constructor(public host: ElementRef, private cdRef: ChangeDetectorRef) {}
 
     public ngAfterViewInit(): void {
         this.isContentProjected = Boolean(
-            this.contentTemplate.createEmbeddedView(undefined).rootNodes.length
+            this.contentTemplate()()()().createEmbeddedView(undefined).rootNodes.length
         );
         this.cdRef.detectChanges();
     }

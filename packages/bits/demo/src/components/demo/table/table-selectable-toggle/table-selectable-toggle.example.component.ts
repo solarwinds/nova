@@ -19,12 +19,12 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    OnDestroy,
-    ViewChild,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  viewChild
 } from "@angular/core";
 import { Subscription } from "rxjs";
 
@@ -77,7 +77,7 @@ export class TableSelectableToggleExampleComponent
         selectionMode: TableSelectionMode.Multi,
     };
 
-    @ViewChild("filteringPaginator") filteringPaginator: PaginatorComponent;
+    readonly filteringPaginator = viewChild.required<PaginatorComponent>("filteringPaginator");
 
     private outputsSubscription: Subscription;
 
@@ -90,7 +90,7 @@ export class TableSelectableToggleExampleComponent
     public ngAfterViewInit(): void {
         this.dataSourceService.componentTree = {
             paginator: {
-                componentInstance: this.filteringPaginator,
+                componentInstance: this.filteringPaginator(),
             },
         };
         this.outputsSubscription =

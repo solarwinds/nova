@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnDestroy, ViewChild } from "@angular/core";
+import { Component, OnDestroy, viewChild } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -34,8 +34,8 @@ import {
     standalone: false,
 })
 export class WizardDynamicRemoveExampleComponent implements OnDestroy {
-    @ViewChild("wizardComponent") wizardComponent: WizardComponent;
-    @ViewChild("dynamicStep") dynamicStep: WizardStepComponent;
+    readonly wizardComponent = viewChild.required<WizardComponent>("wizardComponent");
+    readonly dynamicStep = viewChild.required<WizardStepComponent>("dynamicStep");
 
     public selectedIndex: number;
 
@@ -47,8 +47,8 @@ export class WizardDynamicRemoveExampleComponent implements OnDestroy {
 
     public addStep(): void {
         const index = this.selectedIndex + 1;
-        const step = this.wizardComponent.addStepDynamic(
-            this.dynamicStep,
+        const step = this.wizardComponent().addStepDynamic(
+            this.dynamicStep(),
             index
         );
 
@@ -70,7 +70,7 @@ export class WizardDynamicRemoveExampleComponent implements OnDestroy {
     }
 
     public removeStep(index: number): void {
-        this.wizardComponent.removeStep(index);
+        this.wizardComponent().removeStep(index);
     }
 
     public ngOnDestroy(): void {

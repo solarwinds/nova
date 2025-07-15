@@ -19,16 +19,16 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    Input,
-    NgZone,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Renderer2,
-    ViewChild,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  viewChild
 } from "@angular/core";
 
 import { ResizerDirective } from "../../../common/directives";
@@ -63,7 +63,7 @@ export class LayoutResizerComponent
     @Input() resizeUnit: ResizeUnit;
     @Input() disabled = false;
     @Input() enableSeparateOffsetSize: boolean;
-    @ViewChild("resizerSplit") resizerSplitEl: ElementRef;
+    readonly resizerSplitEl = viewChild<ElementRef>("resizerSplit");
 
     constructor(
         private _elRef: ElementRef,
@@ -108,7 +108,7 @@ export class LayoutResizerComponent
         this.parentContainerNode =
             this.targetElement.nativeElement.parentElement;
         this.resizeGutter = this._elRef.nativeElement;
-        this.resizerSplit = this.resizerSplitEl.nativeElement;
+        this.resizerSplit = this.resizerSplitEl()()()().nativeElement;
         this.addSubscription();
         this.addResizeObserver();
         this.appendEvents();

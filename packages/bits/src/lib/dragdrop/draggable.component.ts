@@ -48,12 +48,36 @@ export class DraggableComponent implements OnInit {
     @Output() dragStart = new EventEmitter();
     @Output() dragEnd = new EventEmitter();
 
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
     @ViewChild(CdkDropList, { static: true }) dropList: CdkDropList;
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
     @ViewChild(CdkDrag, { static: true }) dragElement: CdkDrag;
 
     constructor() {}
 
     public ngOnInit(): void {
-        this.dragElement.dropContainer = this.dropTarget.dropList;
+        this.dragElement.dropContainer = this.dropTarget.dropList()()()();
     }
 }

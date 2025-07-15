@@ -19,16 +19,15 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    EventEmitter,
-    Inject,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    QueryList,
-    TemplateRef,
-    ViewChildren,
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  TemplateRef,
+  viewChildren
 } from "@angular/core";
 import _orderBy from "lodash/orderBy";
 import { Subject } from "rxjs";
@@ -65,7 +64,7 @@ export class FilterGroupComponent implements IFilterPub, OnInit, OnDestroy {
         new EventEmitter();
     @Output() showAllButtonClicked: EventEmitter<any> = new EventEmitter();
 
-    @ViewChildren(CheckboxComponent) filterItems: QueryList<CheckboxComponent>;
+    readonly filterItems = viewChildren(CheckboxComponent);
 
     public onDestroy$ = new Subject<void>();
 
@@ -120,14 +119,14 @@ export class FilterGroupComponent implements IFilterPub, OnInit, OnDestroy {
     }
 
     public deselectFilterItemByValue(value: any): void {
-        const checkbox = this.filterItems.find((i) => i.value === value);
+        const checkbox = this.filterItems().find((i) => i.value === value);
         if (checkbox) {
             this.deselectFilterItem(checkbox);
         }
     }
 
     public deselectAllFilterItems(): void {
-        this.filterItems
+        this.filterItems()
             .filter((i) => i.checked)
             .forEach((i) => this.deselectFilterItem(i));
     }

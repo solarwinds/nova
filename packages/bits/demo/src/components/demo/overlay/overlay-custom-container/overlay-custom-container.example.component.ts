@@ -20,11 +20,11 @@
 
 import { OverlayConfig } from "@angular/cdk/overlay";
 import {
-    ChangeDetectionStrategy,
-    Component,
-    ElementRef,
-    ViewChild,
-    ViewEncapsulation,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 
 import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "@nova-ui/bits";
@@ -44,8 +44,7 @@ export class OverlayCustomContainerExampleComponent {
         $localize`Item 4`,
     ];
 
-    @ViewChild("customContainerId", { static: true })
-    customContainer: ElementRef;
+    readonly customContainer = viewChild<ElementRef>("customContainerId");
 
     public overlayConfig: OverlayConfig = {
         panelClass: OVERLAY_WITH_POPUP_STYLES_CLASS,

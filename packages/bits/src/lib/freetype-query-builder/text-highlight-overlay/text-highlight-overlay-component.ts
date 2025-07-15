@@ -19,14 +19,14 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    ElementRef,
-    Inject,
-    Input,
-    OnChanges,
-    OnInit,
-    SimpleChanges,
-    ViewChild,
+  Component,
+  ElementRef,
+  Inject,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  viewChild
 } from "@angular/core";
 
 import { WindowToken } from "../helpers/window";
@@ -56,25 +56,21 @@ export class TextHighlightOverlayComponent<T extends QueryToken>
     @Input()
     renderConfigurator: RenderConfigurator<T>;
 
-    @ViewChild("parentContainer", { static: true })
-    parentContainer: ElementRef;
-    @ViewChild("textContainer", { static: true })
-    textContainer: ElementRef;
-    @ViewChild("text", { static: true })
-    text: ElementRef;
-    @ViewChild("highlightCanvas", { static: true })
-    highlightCanvas: ElementRef;
+    readonly parentContainer = viewChild<ElementRef>("parentContainer");
+    readonly textContainer = viewChild<ElementRef>("textContainer");
+    readonly text = viewChild<ElementRef>("text");
+    readonly highlightCanvas = viewChild<ElementRef>("highlightCanvas");
 
     private get container(): HTMLElement {
-        return this.parentContainer.nativeElement;
+        return this.parentContainer()()()().nativeElement;
     }
 
     private get textHolder(): HTMLTextAreaElement {
-        return this.textContainer.nativeElement;
+        return this.textContainer()()()().nativeElement;
     }
 
     private get span(): HTMLElement {
-        return this.text.nativeElement;
+        return this.text()()()().nativeElement;
     }
 
     private window: Window;
@@ -137,7 +133,7 @@ export class TextHighlightOverlayComponent<T extends QueryToken>
     }
 
     private highlightTokens(tokens: T[]): void {
-        const canvas: HTMLCanvasElement = this.highlightCanvas
+        const canvas: HTMLCanvasElement = this.highlightCanvas()()()()
             .nativeElement as HTMLCanvasElement;
         if (!this.renderConfigurator || !canvas) {
             return;

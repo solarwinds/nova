@@ -25,22 +25,22 @@ import {
 } from "@angular/cdk/overlay";
 import { DOCUMENT } from "@angular/common";
 import {
-    AfterContentInit,
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    ElementRef,
-    EventEmitter,
-    Inject,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  AfterContentInit,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Inject,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  SimpleChanges,
+  ViewEncapsulation,
+  contentChild,
+  viewChild
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -74,8 +74,7 @@ const ADAPTER_OVERLAY_CONFIG: OverlayConfig = {
 export class PopupComponent
     implements AfterContentInit, AfterViewInit, OnChanges, OnDestroy
 {
-    @ContentChild(PopupToggleDirective)
-    public popupToggle: PopupToggleDirective;
+    public readonly popupToggle = contentChild.required(PopupToggleDirective);
 
     @Input() public width: string = "auto";
     @Input() public get overlayConfig(): OverlayConfig {
@@ -104,14 +103,14 @@ export class PopupComponent
         setTimeout(() => this.isOpenHandler(open));
     }
     get isOpen(): boolean {
-        return !!this.popup?.showing;
+        return !!this.popup()()()()?.showing;
     }
 
     @Output()
     public opened = new EventEmitter<boolean>();
 
-    @ViewChild("popupArea", { static: true }) popupArea: ElementRef;
-    @ViewChild(OverlayComponent) popup: OverlayComponent;
+    readonly popupArea = viewChild<ElementRef>("popupArea");
+    readonly popup = viewChild.required(OverlayComponent);
 
     public popupAreaContainer: ElementRef;
     public popupAreaContent: ElementRef;
@@ -122,10 +121,10 @@ export class PopupComponent
     public set visible(value: boolean) {
         this._visible = value;
         if (value) {
-            this.popup.getOverlayRef().addPanelClass(POPUP_VISIBLE);
+            this.popup()()()().getOverlayRef().addPanelClass(POPUP_VISIBLE);
             return;
         }
-        this.popup.getOverlayRef().removePanelClass(POPUP_VISIBLE);
+        this.popup()()()().getOverlayRef().removePanelClass(POPUP_VISIBLE);
     }
     public get visible(): boolean {
         return Boolean(this._visible);
@@ -148,7 +147,7 @@ export class PopupComponent
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.appendToBody) {
             if (changes.appendToBody?.currentValue === false) {
-                this.customContainer = this.popupArea;
+                this.customContainer = this.popupArea()()()();
             } else {
                 this.customContainer = undefined;
             }
@@ -175,8 +174,12 @@ export class PopupComponent
             positionStrategy: this.getPositionStrategy(),
         };
 
-        if (this.popupToggle) {
-            this.popupToggle.toggle.subscribe((e: Event) =>
+        const popupToggle = this.popupToggle();
+        const popupToggle = this.popupToggle();
+        const popupToggle = this.popupToggle();
+        const popupToggle = this.popupToggle();
+        if (popupToggle) {
+            popupToggle.toggle.subscribe((e: Event) =>
                 this.toggleOpened(e)
             );
         }
@@ -192,17 +195,21 @@ export class PopupComponent
         }
 
         if (!this.appendToBody) {
-            this.customContainer = this.popupArea;
+            this.customContainer = this.popupArea()()()();
         }
 
         this.eventBusService
             .getStream(DOCUMENT_CLICK_EVENT)
             .pipe(takeUntil(this.destroy$))
             .subscribe((event: Event) => {
+                const popupToggle = this.popupToggle();
+                const popupToggle = this.popupToggle();
+                const popupToggle = this.popupToggle();
+                const popupToggle = this.popupToggle();
                 const isToggle =
-                    this.popupToggle && event
+                    popupToggle && event
                         ? (
-                              this.popupToggle.host.nativeElement as HTMLElement
+                              popupToggle.host.nativeElement as HTMLElement
                           ).contains(event.target as HTMLElement)
                         : false;
                 if (this.isOpen && !isToggle) {
@@ -332,9 +339,9 @@ export class PopupComponent
         }
 
         this.initToggleRef();
-        this.popup.show();
+        this.popup()()()().show();
 
-        const overlayContainer = this.popup.getOverlayRef().overlayElement;
+        const overlayContainer = this.popup()()()().getOverlayRef().overlayElement;
 
         this.popupAreaContent = new ElementRef(overlayContainer);
         this.popupAreaContainer = new ElementRef(
@@ -350,20 +357,20 @@ export class PopupComponent
         }
 
         this.visible = true;
-        this.opened.emit(this.popup.showing);
+        this.opened.emit(this.popup()()()().showing);
     }
 
     private hide(): void {
         this.visible = false;
         setTimeout(() => {
-            this.popup.hide();
-            this.opened.emit(this.popup.showing);
+            this.popup()()()().hide();
+            this.opened.emit(this.popup()()()().showing);
         });
     }
 
     private toggle(): void {
-        this.popup.showing ? this.hide() : this.show();
-        this.popup.getOverlayRef().updatePosition();
+        this.popup()()()().showing ? this.hide() : this.show();
+        this.popup()()()().getOverlayRef().updatePosition();
     }
 
     private initToggleRef(): void {
@@ -371,8 +378,12 @@ export class PopupComponent
             this.toggleReference = this.host.nativeElement;
             return;
         }
-        this.toggleReference = this.popupToggle
-            ? this.popupToggle.host.nativeElement
+        const popupToggle = this.popupToggle();
+        const popupToggle = this.popupToggle();
+        const popupToggle = this.popupToggle();
+        const popupToggle = this.popupToggle();
+        this.toggleReference = popupToggle
+            ? popupToggle.host.nativeElement
             : this.document.querySelector(this.baseElementSelector);
     }
 }

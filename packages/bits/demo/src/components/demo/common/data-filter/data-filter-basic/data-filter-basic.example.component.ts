@@ -19,15 +19,15 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    Component,
-    EventEmitter,
-    Injectable,
-    OnDestroy,
-    OnInit,
-    Output,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Injectable,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import moment from "moment/moment";
 import { Subject, Subscription } from "rxjs";
@@ -160,8 +160,7 @@ export class TableDatasource
     standalone: false,
 })
 export class DataFilterBasicExampleComponent implements AfterViewInit {
-    @ViewChild("timeFramePicker")
-    timeFramePicker: FilteringTimeFramePickerComponent;
+    readonly timeFramePicker = viewChild.required<FilteringTimeFramePickerComponent>("timeFramePicker");
 
     constructor(private filterService: DataFilterService) {}
 
@@ -169,7 +168,7 @@ export class DataFilterBasicExampleComponent implements AfterViewInit {
         // registering top-level filter which will be applied to all children
         this.filterService.registerFilter({
             timeFramePicker: {
-                componentInstance: this.timeFramePicker,
+                componentInstance: this.timeFramePicker(),
             },
         });
         this.filterService.applyFilters();
@@ -249,7 +248,7 @@ export class NuiDataFilterTableComponent implements AfterViewInit, OnDestroy {
     public readonly initialSortDirection = SorterDirection.ascending;
     public sortBy = this.sorterItems[0].value;
 
-    @ViewChild(SorterComponent) sorterComponent: SorterComponent;
+    readonly sorterComponent = viewChild.required(SorterComponent);
 
     private outputsSubscription: Subscription;
 
@@ -262,7 +261,7 @@ export class NuiDataFilterTableComponent implements AfterViewInit, OnDestroy {
         // this filter will be applied in this component and NuiDataFilterListComponent
         this.dataFilter.registerFilter({
             sorter: {
-                componentInstance: this.sorterComponent,
+                componentInstance: this.sorterComponent(),
             },
         });
         this.applyFilters();
@@ -329,7 +328,7 @@ export class NuiDataFilterListComponent implements AfterViewInit, OnDestroy {
         },
     };
 
-    @ViewChild("listSearch") search: SearchComponent;
+    readonly search = viewChild.required<SearchComponent>("listSearch");
 
     private outputsSubscription: Subscription;
 
@@ -342,7 +341,7 @@ export class NuiDataFilterListComponent implements AfterViewInit, OnDestroy {
         // this filter will be applied only in this component
         this.filterService.registerFilter({
             search: {
-                componentInstance: this.search,
+                componentInstance: this.search(),
             },
         });
         this.filterService.applyFilters();

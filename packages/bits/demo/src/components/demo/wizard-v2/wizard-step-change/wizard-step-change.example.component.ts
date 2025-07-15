@@ -20,10 +20,10 @@
 
 import { StepperSelectionEvent } from "@angular/cdk/stepper";
 import {
-    AfterViewInit,
-    Component,
-    TemplateRef,
-    ViewChild,
+  AfterViewInit,
+  Component,
+  TemplateRef,
+  viewChild
 } from "@angular/core";
 
 import { ToastService, WizardHorizontalComponent } from "@nova-ui/bits";
@@ -41,13 +41,13 @@ interface IWizardStepData {
 export class WizardStepChangeExampleComponent implements AfterViewInit {
     public steps: IWizardStepData[] = [];
 
-    @ViewChild("normalStep") normalStep: TemplateRef<string>;
-    @ViewChild("wizard") wizard: WizardHorizontalComponent;
+    readonly normalStep = viewChild<TemplateRef<string>>("normalStep");
+    readonly wizard = viewChild.required<WizardHorizontalComponent>("wizard");
 
     constructor(private toastService: ToastService) {}
 
     public ngAfterViewInit(): void {
-        this.addStep(this.normalStep, $localize`Normal step`);
+        this.addStep(this.normalStep(), $localize`Normal step`);
     }
 
     public addStep(templateRef: TemplateRef<string>, title?: string): void {
@@ -69,7 +69,7 @@ export class WizardStepChangeExampleComponent implements AfterViewInit {
     }
 
     public resetWizard(): void {
-        this.wizard.reset();
+        this.wizard().reset();
     }
 
     public finishWizard(): void {

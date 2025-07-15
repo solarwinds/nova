@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AfterViewInit, Component, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, viewChild } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -32,11 +32,11 @@ import { OverlayComponent } from "@nova-ui/bits";
 export class OverlaySimpleExampleComponent implements AfterViewInit {
     private readonly destroy$ = new Subject<void>();
 
-    @ViewChild(OverlayComponent) public overlay: OverlayComponent;
+    public readonly overlay = viewChild.required(OverlayComponent);
 
     public ngAfterViewInit(): void {
-        this.overlay.clickOutside
+        this.overlay().clickOutside
             .pipe(takeUntil(this.destroy$))
-            .subscribe((_) => this.overlay.hide());
+            .subscribe((_) => this.overlay().hide());
     }
 }

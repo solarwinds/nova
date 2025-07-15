@@ -19,12 +19,12 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    Injectable,
-    OnDestroy,
-    ViewChild,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Injectable,
+  OnDestroy,
+  viewChild
 } from "@angular/core";
 import { Subscription } from "rxjs";
 
@@ -96,8 +96,8 @@ export class DataSourceClientSideCustomSearchExampleComponent
     public filters: any[];
     public selectedFilters: any[];
 
-    @ViewChild("filteringPaginator") filteringPaginator: PaginatorComponent;
-    @ViewChild("filteringSearch") filteringSearch: SearchComponent;
+    readonly filteringPaginator = viewChild.required<PaginatorComponent>("filteringPaginator");
+    readonly filteringSearch = viewChild.required<SearchComponent>("filteringSearch");
 
     private outputsSubscription: Subscription;
 
@@ -114,10 +114,10 @@ export class DataSourceClientSideCustomSearchExampleComponent
     async ngAfterViewInit(): Promise<void> {
         this.dataSourceService.componentTree = {
             search: {
-                componentInstance: this.filteringSearch,
+                componentInstance: this.filteringSearch(),
             },
             paginator: {
-                componentInstance: this.filteringPaginator,
+                componentInstance: this.filteringPaginator(),
             },
         };
         this.outputsSubscription =

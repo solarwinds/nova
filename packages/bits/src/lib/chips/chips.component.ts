@@ -137,14 +137,66 @@ export class ChipsComponent
 
     public isOverflowed: boolean;
 
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
     @ViewChild("chipsMainCell") private mainCell: ElementRef;
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
     @ViewChild("clearAll") private set clearAll(elem: ElementRef) {
         this.chipsOverflowService.clearAll = elem;
     }
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
     @ViewChild("nuiChips") private nuiChips: ElementRef;
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
     @ViewChildren("chipItem") private allChips: QueryList<
         ChipComponent | ElementRef<HTMLElement>
     >;
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
     @ContentChild("overflowCounterLabel") private set overflowCounter(
         el: ElementRef<HTMLElement>
     ) {

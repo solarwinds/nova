@@ -19,15 +19,14 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    OnDestroy,
-    QueryList,
-    ViewChild,
-    ViewChildren,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  OnDestroy,
+  viewChild,
+  viewChildren
 } from "@angular/core";
 import _pull from "lodash/pull";
 import { Subscription } from "rxjs";
@@ -125,10 +124,9 @@ export class FilteredViewTableWithVirtualScrollSelectionComponent
         PopoverOverlayPosition.topLeft,
     ];
     private outputsSubscription: Subscription;
-    @ViewChild(PopoverComponent) private popover: PopoverComponent;
-    @ViewChild("child") private child: IFilterable;
-    @ViewChildren(FilterGroupComponent)
-    private filterGroups: QueryList<FilterGroupComponent>;
+    private readonly popover = viewChild.required(PopoverComponent);
+    private readonly child = viewChild.required<IFilterable>("child");
+    private readonly filterGroups = viewChildren(FilterGroupComponent);
 
     constructor(
         // inject dataSource providers only to share the same instance
@@ -148,7 +146,7 @@ export class FilteredViewTableWithVirtualScrollSelectionComponent
     }
 
     public async applyFilters(): Promise<void> {
-        await this.child.applyFilters();
+        await this.child().applyFilters();
         this.updateChips();
     }
 
@@ -159,7 +157,7 @@ export class FilteredViewTableWithVirtualScrollSelectionComponent
         this.overflowCounter =
             (this.overflowSource.flatItems?.length || 0) +
             (this.overflowSource.groupedItems?.reduce(reducer, 0) || 0);
-        this.popover?.updatePosition();
+        this.popover()?.updatePosition();
     }
 
     public async onClear(event: {
@@ -171,7 +169,7 @@ export class FilteredViewTableWithVirtualScrollSelectionComponent
         } else {
             _pull(this.chipsDataSource.flatItems || [], event.item);
         }
-        const group = this.filterGroups.find(
+        const group = this.filterGroups().find(
             (i) => event.group?.id === i.filterGroupItem.id
         );
         group?.deselectFilterItemByValue(event.item.label);
@@ -179,8 +177,8 @@ export class FilteredViewTableWithVirtualScrollSelectionComponent
 
     public onClearAll(e: MouseEvent): void {
         this.chipsDataSource.groupedItems = [];
-        this.popover?.onClick(e);
-        this.filterGroups.forEach((i) => i.deselectAllFilterItems());
+        this.popover()?.onClick(e);
+        this.filterGroups().forEach((i) => i.deselectAllFilterItems());
     }
 
     private updateChips() {

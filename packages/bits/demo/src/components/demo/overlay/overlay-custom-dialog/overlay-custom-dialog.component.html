@@ -8,7 +8,7 @@
                 nui-button
                 type="button"
                 class="mt-3 mr-auto ml-auto d-flex"
-                (click)="triggerOverlay(child1, overlay1)"
+                (click)="triggerOverlay(child1, overlay1())"
             >
                 Toggle Overlay
             </button>
@@ -18,7 +18,7 @@
         nui-button
         type="button"
         class="mt-3 mr-auto ml-auto d-flex"
-        (click)="triggerOverlay(parent, overlay2)"
+        (click)="triggerOverlay(parent, overlay2())"
     >
         Toggle General Overlay
     </button>

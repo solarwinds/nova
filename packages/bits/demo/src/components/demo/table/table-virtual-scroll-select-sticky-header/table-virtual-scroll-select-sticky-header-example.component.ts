@@ -20,11 +20,11 @@
 
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    Component,
-    TrackByFunction,
-    ViewChild,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  TrackByFunction,
+  viewChild
 } from "@angular/core";
 import sample from "lodash/sample";
 import { Observable } from "rxjs";
@@ -58,8 +58,7 @@ interface IRandomUserTableModel {
 export class TableVirtualScrollSelectStickyHeaderExampleComponent
     implements AfterViewInit
 {
-    @ViewChild(CdkVirtualScrollViewport)
-    public viewport: CdkVirtualScrollViewport;
+    public readonly viewport = viewChild(CdkVirtualScrollViewport);
     // Note: Mock items list is used to fake that the data is already loaded
     // and let CDK Viewport perform the scrolling on a known number of items
     public placeholderItems: undefined[] = [];
@@ -100,14 +99,14 @@ export class TableVirtualScrollSelectStickyHeaderExampleComponent
             paginator: {
                 componentInstance: {
                     getFilters: () => ({
-                        value: this.viewport.getRenderedRange(),
+                        value: this.viewport().getRenderedRange(),
                     }),
                 },
             },
         };
 
         // Note: Creating a stream of visible items to be bound to the table and increase the performance
-        this.visibleItems$ = this.viewport.renderedRangeStream.pipe(
+        this.visibleItems$ = this.viewport().renderedRangeStream.pipe(
             // eslint-disable-next-line import/no-deprecated
             startWith({ start: 0, end: 10 }),
             // Note: On range change applying filters

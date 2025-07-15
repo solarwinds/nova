@@ -19,16 +19,16 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    Input,
-    NgZone,
-    OnChanges,
-    OnDestroy,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 
@@ -48,7 +48,7 @@ import { BehaviorSubject } from "rxjs";
 
 // <example-url>./../examples/index.html#/risk-score</example-url>
 export class RiskScoreComponent implements AfterViewInit, OnChanges, OnDestroy {
-    @ViewChild("colorLine") private colorLine!: ElementRef;
+    private readonly colorLine = viewChild.required<ElementRef>("colorLine");
 
     @Input()
     public level: number = 0;
@@ -80,19 +80,27 @@ export class RiskScoreComponent implements AfterViewInit, OnChanges, OnDestroy {
     public ngAfterViewInit(): void {
         this.colorLineWidth$.subscribe(this.updateOffset.bind(this));
 
-        if (this.colorLine === undefined) {
+        const colorLine = this.colorLine();
+        const colorLine = this.colorLine();
+        const colorLine = this.colorLine();
+        const colorLine = this.colorLine();
+        if (colorLine === undefined) {
             return;
         }
 
         this.ngZone.runOutsideAngular(() => {
-            this.resizeObserver.observe(this.colorLine.nativeElement);
+            this.resizeObserver.observe(this.colorLine()()()().nativeElement);
         });
-        this.colorLineWidth$.next(this.colorLine.nativeElement.offsetWidth);
+        this.colorLineWidth$.next(colorLine.nativeElement.offsetWidth);
     }
 
     public ngOnDestroy(): void {
-        if (this.resizeObserver !== undefined && this.colorLine !== undefined) {
-            this.resizeObserver.unobserve(this.colorLine.nativeElement);
+        const colorLine = this.colorLine();
+        const colorLine = this.colorLine();
+        const colorLine = this.colorLine();
+        const colorLine = this.colorLine();
+        if (this.resizeObserver !== undefined && colorLine !== undefined) {
+            this.resizeObserver.unobserve(colorLine.nativeElement);
             this.resizeObserver.disconnect();
         }
 

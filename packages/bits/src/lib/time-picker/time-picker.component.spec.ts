@@ -118,7 +118,7 @@ describe("components >", () => {
         });
 
         it("should change selected element", () => {
-            componentInstance.overlay.toggle();
+            componentInstance.overlay().toggle();
             fixture.detectChanges();
             const initialState = debugElement.query(
                 By.css(".nui-menu-item--selected")
@@ -261,7 +261,7 @@ describe("components >", () => {
                 fixture.detectChanges();
 
                 componentInstance.model = moment().hour(1).minute(0);
-                expect(componentInstance.textbox.value).toEqual("1:00 AM");
+                expect(componentInstance.textbox().value).toEqual("1:00 AM");
             });
 
             it("should format 24-hour locales correctly", () => {
@@ -270,7 +270,7 @@ describe("components >", () => {
                 const oldLocale = moment.locale();
                 moment.locale("en-gb");
                 componentInstance.model = moment().hour(1).minute(0);
-                expect(componentInstance.textbox.value).toEqual("01:00");
+                expect(componentInstance.textbox().value).toEqual("01:00");
 
                 // restore locale
                 moment.locale(oldLocale);

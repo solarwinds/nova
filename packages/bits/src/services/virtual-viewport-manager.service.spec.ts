@@ -21,11 +21,11 @@
 import { ListRange } from "@angular/cdk/collections";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import {
-    AfterViewInit,
-    Component,
-    NO_ERRORS_SCHEMA,
-    OnDestroy,
-    ViewChild,
+  AfterViewInit,
+  Component,
+  NO_ERRORS_SCHEMA,
+  OnDestroy,
+  viewChild
 } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
@@ -69,7 +69,7 @@ import { NuiRepeatModule } from "../lib/repeat/repeat.module";
     standalone: false,
 })
 class ViewportInRepeatComponent implements AfterViewInit, OnDestroy {
-    @ViewChild(RepeatComponent) public repeat: RepeatComponent;
+    public readonly repeat = viewChild.required(RepeatComponent);
     public pageSize: number = 20;
     public items$ = new BehaviorSubject<number[]>([]);
     public nextPage$: Observable<ListRange>;
@@ -80,7 +80,7 @@ class ViewportInRepeatComponent implements AfterViewInit, OnDestroy {
 
     public ngAfterViewInit(): void {
         this.nextPage$ = this.viewportManager
-            .setViewport(this.repeat.viewportRef)
+            .setViewport(this.repeat().viewportRef)
             .observeNextPage$({ pageSize: this.pageSize })
             .pipe(shareReplay(1));
 
@@ -145,7 +145,7 @@ describe("services >", () => {
         it("should throw when trying to reassign viewport", () => {
             expect(() =>
                 component.viewportManager.setViewport(
-                    component.repeat.viewportRef
+                    component.repeat().viewportRef
                 )
             ).toThrow();
         });
@@ -157,8 +157,8 @@ describe("services >", () => {
         it("should load second page", (done: any) => {
             fixture.detectChanges();
             // Scrolling to last rendered element to trigger next page event
-            component.repeat.viewportRef.scrollToIndex(
-                component.repeat.viewportRef.getDataLength()
+            component.repeat().viewportRef.scrollToIndex(
+                component.repeat().viewportRef.getDataLength()
             );
             component.items$.pipe(skip(1), take(1)).subscribe((r) => {
                 expect(component.items$.getValue().length).toEqual(
@@ -176,8 +176,8 @@ describe("services >", () => {
                     tap(() => {
                         fixture.detectChanges();
                         // Scrolling to last rendered element to trigger next page event
-                        component.repeat.viewportRef.scrollToIndex(
-                            component.repeat.viewportRef.getDataLength()
+                        component.repeat().viewportRef.scrollToIndex(
+                            component.repeat().viewportRef.getDataLength()
                         );
                     }),
                     // Taking last emission to perform check
@@ -206,8 +206,8 @@ describe("services >", () => {
                     tap(() => {
                         fixture.detectChanges();
                         // Scrolling to last rendered element to trigger next page event
-                        component.repeat.viewportRef.scrollToIndex(
-                            component.repeat.viewportRef.getDataLength()
+                        component.repeat().viewportRef.scrollToIndex(
+                            component.repeat().viewportRef.getDataLength()
                         );
                     }),
                     // While we're using behaviour subject we don't need to count first value
@@ -236,8 +236,8 @@ describe("services >", () => {
                     tap(() => {
                         fixture.detectChanges();
                         // Scrolling to last rendered element to trigger next page event
-                        component.repeat.viewportRef.scrollToIndex(
-                            component.repeat.viewportRef.getDataLength()
+                        component.repeat().viewportRef.scrollToIndex(
+                            component.repeat().viewportRef.getDataLength()
                         );
                     }),
                     skip(pagesToScroll - 1),
@@ -250,8 +250,8 @@ describe("services >", () => {
                         fixture.detectChanges();
                         // Now we are on page 1, we scrolling one more time to be able to check
                         // if the nextPage$ emission corresponds to second page
-                        component.repeat.viewportRef.scrollToIndex(
-                            component.repeat.viewportRef.getDataLength()
+                        component.repeat().viewportRef.scrollToIndex(
+                            component.repeat().viewportRef.getDataLength()
                         );
                         return component.nextPage$.pipe(
                             // Note: skipping previous cached value

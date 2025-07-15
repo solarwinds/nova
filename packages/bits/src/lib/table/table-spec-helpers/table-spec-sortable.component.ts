@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, ViewChild } from "@angular/core";
+import { Component, viewChild } from "@angular/core";
 
 import { TableSpecHelpers } from "./table-spec-helpers";
 import { TableComponent } from "../table.component";
@@ -55,6 +55,5 @@ import { TableComponent } from "../table.component";
 export class SortableTableComponent {
     public displayedColumns = ["position", "name", "asset", "location"];
     public dataSource = TableSpecHelpers.getTableInitialData();
-    @ViewChild(TableComponent, { static: true })
-    tableComponent: TableComponent<any>;
+    readonly tableComponent = viewChild.required(TableComponent);
 }

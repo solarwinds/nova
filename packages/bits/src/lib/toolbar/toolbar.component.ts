@@ -19,20 +19,20 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ContentChildren,
-    ElementRef,
-    HostBinding,
-    HostListener,
-    Input,
-    NgZone,
-    OnDestroy,
-    QueryList,
-    ViewChild,
-    ViewChildren,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ContentChildren,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  Input,
+  NgZone,
+  OnDestroy,
+  QueryList,
+  ViewChildren,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
 import { merge, Subject, Subscription } from "rxjs";
@@ -72,9 +72,25 @@ import { MenuComponent } from "../menu";
     standalone: false,
 })
 export class ToolbarComponent implements AfterViewInit, OnDestroy {
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
     @ContentChildren(ToolbarGroupComponent)
     public groups: QueryList<ToolbarGroupComponent>;
 
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
     @ContentChildren(ToolbarItemComponent, { descendants: true })
     public items: QueryList<ToolbarItemComponent>;
 
@@ -93,8 +109,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     @HostBinding("class.nui-toolbar--shadowed")
     public boxShadow: boolean = true;
 
-    @ViewChild("toolbarContainer")
-    public toolbarContainer: ElementRef;
+    public readonly toolbarContainer = viewChild<ElementRef>("toolbarContainer");
 
     @Input()
     public noEmptyMessage: boolean = false;
@@ -105,8 +120,16 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     @Input()
     public appendToBody: boolean = false;
 
-    @ViewChild("menuComponent") public menu: MenuComponent;
+    public readonly menu = viewChild.required<MenuComponent>("menuComponent");
 
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
     @ViewChildren("toolbarButtons")
     public toolbarButtons: QueryList<ButtonComponent>;
 
@@ -157,7 +180,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
             });
         this.destructiveItems = [];
         this.groups.forEach((group: ToolbarGroupComponent) => {
-            const isDestructiveItem = group.items.filter(
+            const isDestructiveItem = group.items()()()().filter(
                 (item: ToolbarItemComponent) =>
                     item.displayStyle === ToolbarItemDisplayStyle.destructive
             );
@@ -196,10 +219,10 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
         this.makeAllItemsVisible();
 
         const containerBorder = Math.floor(
-            this.toolbarContainer.nativeElement.getBoundingClientRect().right
+            this.toolbarContainer()()()().nativeElement.getBoundingClientRect().right
         );
         this.lastChildBorder = Math.floor(
-            this.toolbarContainer.nativeElement.lastElementChild.getBoundingClientRect()
+            this.toolbarContainer()()()().nativeElement.lastElementChild.getBoundingClientRect()
                 .right
         );
 
@@ -230,7 +253,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
             );
             this.splitToolbarItems();
             this.lastChildBorder = Math.floor(
-                this.toolbarContainer.nativeElement.lastElementChild.getBoundingClientRect()
+                this.toolbarContainer()()()().nativeElement.lastElementChild.getBoundingClientRect()
                     .right
             );
         }
@@ -240,10 +263,10 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
         this.commandGroups = [];
         this.menuGroups = [];
         this.groups.forEach((group: ToolbarGroupComponent) => {
-            const commandGroupItems = group.items.filter(
+            const commandGroupItems = group.items()()()().filter(
                 (item) => !item.menuHidden
             );
-            const menuGroupItems = group.items.filter(
+            const menuGroupItems = group.items()()()().filter(
                 (item) => !!item.menuHidden
             );
 
@@ -264,7 +287,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
 
     public makeAllItemsVisible(): void {
         this.groups.forEach((group: ToolbarGroupComponent) => {
-            group.items.forEach((item: ToolbarItemComponent) => {
+            group.items()()()().forEach((item: ToolbarItemComponent) => {
                 if (item.type === ToolbarItemType.primary) {
                     item.menuHidden = false;
                 }
@@ -312,21 +335,25 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
                     .map((b) => b["el"].nativeElement as HTMLElement)
                     .filter((el) => !!el);
 
-                if (this.menu) {
+                const menu = this.menu();
+                const menu = this.menu();
+                const menu = this.menu();
+                const menu = this.menu();
+                if (menu) {
                     // In case all buttons are hidden within the Commands menu we want this menu to receive the focus
                     // If at least one button is visible in the toolbar it should receive the focus first upon navigating onto the toolbar
                     const tabIndex = buttons.length ? "-1" : "0";
 
-                    this.menu.menuToggle.nativeElement.setAttribute(
+                    menu.menuToggle()()()().nativeElement.setAttribute(
                         "tabindex",
                         tabIndex
                     );
-                    this.toolbarItems.push(this.menu.menuToggle.nativeElement);
+                    this.toolbarItems.push(menu.menuToggle()()()().nativeElement);
                 }
 
                 this.keyboardService.setToolbarItems(
                     this.toolbarItems,
-                    this.menu
+                    menu
                 );
             });
     }

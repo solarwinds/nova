@@ -20,10 +20,10 @@
 
 import { CdkDropList, DragDropModule } from "@angular/cdk/drag-drop";
 import {
-    Component,
-    CUSTOM_ELEMENTS_SCHEMA,
-    DebugElement,
-    ViewChild,
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  DebugElement,
+  viewChild
 } from "@angular/core";
 import {
     ComponentFixture,
@@ -46,7 +46,7 @@ import { DndDropTargetDirective } from "./dnd-drop-target.directive";
     standalone: false,
 })
 class DropTargetTestingComponent {
-    @ViewChild(CdkDropList) dropListInstance: CdkDropList;
+    readonly dropListInstance = viewChild(CdkDropList);
 }
 
 describe("directives >", () => {
@@ -103,7 +103,7 @@ describe("directives >", () => {
                     dropTargetDirective.draggables.first.element.nativeElement
                 );
                 const dropListRect =
-                    subject.dropListInstance.element.nativeElement.getBoundingClientRect();
+                    subject.dropListInstance().element.nativeElement.getBoundingClientRect();
                 dispatchMouseEvent(
                     document,
                     "mousemove",
@@ -135,7 +135,7 @@ describe("directives >", () => {
                 expect(dropTargetDirective.isDropZoneActive).toBeFalsy();
 
                 const dropListRect =
-                    subject.dropListInstance.element.nativeElement.getBoundingClientRect();
+                    subject.dropListInstance().element.nativeElement.getBoundingClientRect();
                 dragElementViaMouse(
                     fixture,
                     dropTargetDirective.draggables.first.element.nativeElement,
@@ -186,7 +186,7 @@ describe("directives >", () => {
                     expect(spyItemCanBeDropped).toHaveBeenCalledTimes(1);
                     expect(spyItemCanBeDropped).toHaveBeenCalledWith(
                         "allowed",
-                        subject.dropListInstance
+                        subject.dropListInstance()
                     );
 
                     expect(
@@ -220,7 +220,7 @@ describe("directives >", () => {
                     expect(spyItemCanBeDropped).toHaveBeenCalledTimes(1);
                     expect(spyItemCanBeDropped).toHaveBeenCalledWith(
                         "not-allowed",
-                        subject.dropListInstance
+                        subject.dropListInstance()
                     );
 
                     expect(

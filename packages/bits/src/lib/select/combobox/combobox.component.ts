@@ -20,22 +20,23 @@
 
 import { FocusMonitor, FocusOrigin } from "@angular/cdk/a11y";
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    forwardRef,
-    HostBinding,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    QueryList,
-    Renderer2,
-    SimpleChanges,
-    ViewChild,
-    ViewChildren,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  forwardRef,
+  HostBinding,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  Renderer2,
+  SimpleChanges,
+  ViewChildren,
+  ViewEncapsulation,
+  viewChild,
+  viewChildren
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 import _debounce from "lodash/debounce";
@@ -104,17 +105,21 @@ export class ComboboxComponent
     public isOpened: boolean;
     public openControl: Subject<Event> = new Subject<Event>();
 
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
     @ViewChildren(MenuActionComponent)
     public menuItems: QueryList<MenuActionComponent>;
-    @ViewChild("comboboxToggle", { read: ElementRef })
-    comboboxToggle: ElementRef;
-    @ViewChild("scrollContainer", { read: ElementRef })
-    scrollContainer: ElementRef;
-    @ViewChildren(MenuGroupComponent)
-    public menuGroups: QueryList<MenuGroupComponent>;
-    @ViewChild(PopupComponent) popup: PopupComponent;
-    @ViewChild(PopupComponent, { read: ElementRef, static: true })
-    popupRef: ElementRef; // static: true because of getWidth
+    readonly comboboxToggle = viewChild("comboboxToggle", { read: ElementRef });
+    readonly scrollContainer = viewChild("scrollContainer", { read: ElementRef });
+    public readonly menuGroups = viewChildren(MenuGroupComponent);
+    readonly popup = viewChild.required(PopupComponent);
+    readonly popupRef = viewChild(PopupComponent, { read: ElementRef }); // static: true because of getWidth
 
     private debouncedBlur = _debounce(() => {
         this.handleBlur();
@@ -208,10 +213,10 @@ export class ComboboxComponent
         // It also allows listening for focus on descendant elements if desired as it is done below by passing second
         // argument with value true in the monitor method of FocusMonitor.
         this.focusMonitorSubscription = this.focusMonitor
-            .monitor(this.comboboxToggle.nativeElement, true)
+            .monitor(this.comboboxToggle()()()().nativeElement, true)
             .subscribe((origin: FocusOrigin) => {
                 if (origin === "keyboard") {
-                    if (!this.popup.popupToggle.disabled) {
+                    if (!this.popup()()()().popupToggle()()()().disabled) {
                         if (!this.isOpened) {
                             this.openControl.next(new FocusEvent("focusin"));
                         }
@@ -234,10 +239,10 @@ export class ComboboxComponent
     }
 
     private setKeyboardManagerServiceData(): void {
-        this.keyControlService.menuGroups = this.menuGroups;
+        this.keyControlService.menuGroups = this.menuGroups()()()();
         this.keyControlService.menuItems = this.menuItems;
-        this.keyControlService.popup = this.popup;
-        this.keyControlService.menuToggle = this.comboboxToggle;
+        this.keyControlService.popup = this.popup()()()();
+        this.keyControlService.menuToggle = this.comboboxToggle()()()();
     }
 
     public openChange(currentValue: boolean): void {
@@ -330,7 +335,7 @@ export class ComboboxComponent
     public getWidth(): string {
         return this.customTemplate
             ? "auto"
-            : this.popupRef.nativeElement.getBoundingClientRect().width;
+            : this.popupRef()()()().nativeElement.getBoundingClientRect().width;
     }
 
     public getPopupContextClass(): string {
@@ -343,7 +348,7 @@ export class ComboboxComponent
         if (this.isRemoveValueEnabled) {
             this.changeValue(null);
             event.stopPropagation(); // To avoid triggering dropdown open/close
-            this.popup.closePopup();
+            this.popup()()()().closePopup();
         }
     }
 }

@@ -108,6 +108,14 @@ export class ComboboxV2Component
     @Output() public canCreateOption = new EventEmitter<boolean>(false);
 
     /** Grabs and init keyboard navigation service for the "Selected Items" */
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
     @ContentChildren(MarkAsSelectedItemDirective, { descendants: true })
     set selectedItems(elems: QueryList<MarkAsSelectedItemDirective>) {
         this.selectedItemsKeyControlService.initSelectedItemsKeyManager(
@@ -164,7 +172,7 @@ export class ComboboxV2Component
     public ngAfterViewInit(): void {
         super.ngAfterViewInit();
         if (!this.multiselect) {
-            this.dropdown.hide$.subscribe(() => {
+            this.dropdown()()()().hide$.subscribe(() => {
                 const lastSelectedOption = this.getLastSelectedOption();
                 if (lastSelectedOption) {
                     this.setInputValue(lastSelectedOption.value);
@@ -183,11 +191,15 @@ export class ComboboxV2Component
     public onMouseUp(target: HTMLElement): void {
         this.mouseDown = false;
         if (!this.manualDropdownControl) {
+            const inputElement = this.inputElement();
+            const inputElement = this.inputElement();
+            const inputElement = this.inputElement();
+            const inputElement = this.inputElement();
             if (
-                target !== this.inputElement.nativeElement &&
-                !this.dropdown.showing
+                target !== inputElement.nativeElement &&
+                !this.dropdown()()()().showing
             ) {
-                this.inputElement.nativeElement.focus();
+                inputElement.nativeElement.focus();
                 return;
             }
             this.toggleDropdown();
@@ -275,7 +287,7 @@ export class ComboboxV2Component
         if (!this.isDropdownOpen) {
             return;
         }
-        setTimeout(() => this.inputElement.nativeElement.select());
+        setTimeout(() => this.inputElement()()()().nativeElement.select());
     }
 
     /** Sets value to the model */
@@ -297,7 +309,7 @@ export class ComboboxV2Component
             this.optionKeyControlService.setFirstItemActive();
 
             if (!keepDropdown && !this.manualDropdownControl) {
-                this.dropdown.hide();
+                this.dropdown()()()().hide();
             }
         }
     }

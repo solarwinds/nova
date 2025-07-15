@@ -29,25 +29,24 @@ import {
 } from "@angular/cdk/drag-drop";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    DoCheck,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Input,
-    IterableDiffer,
-    IterableDiffers,
-    OnDestroy,
-    OnInit,
-    Output,
-    QueryList,
-    TemplateRef,
-    ViewChild,
-    ViewChildren,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DoCheck,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  Input,
+  IterableDiffer,
+  IterableDiffers,
+  OnDestroy,
+  OnInit,
+  Output,
+  TemplateRef,
+  ViewEncapsulation,
+  viewChild,
+  viewChildren
 } from "@angular/core";
 import _isEqual from "lodash/isEqual";
 import { Subject } from "rxjs";
@@ -255,7 +254,7 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
      */
     @Output() public selectionChange = new EventEmitter<any[]>();
 
-    @ViewChild("dropListArea") dropListArea: ElementRef;
+    readonly dropListArea = viewChild<ElementRef>("dropListArea");
 
     /**
      * Reference to CdkVirtualScrollViewport exposed to give users control
@@ -263,16 +262,15 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
      *
      * @see https://material.angular.io/cdk/scrolling/api#CdkVirtualScrollViewport
      */
-    @ViewChild(CdkVirtualScrollViewport)
-    private _viewportRef: CdkVirtualScrollViewport;
+    private readonly _viewportRef = viewChild(CdkVirtualScrollViewport);
     public get viewportRef(): CdkVirtualScrollViewport {
         if (!this.virtualScroll) {
             throw new Error("VirtualScroll is not enabled");
         }
-        return this._viewportRef;
+        return this._viewportRef()()()();
     }
 
-    @ViewChildren(CdkDrag) draggableElements: QueryList<CdkDrag>;
+    readonly draggableElements = viewChildren(CdkDrag);
 
     public mousedOver: boolean[] = [];
 
@@ -530,14 +528,18 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
     /* END - ITEM BEHAVIOUR DECIDERS */
 
     private initializeCDKDropList() {
+        const dropListArea = this.dropListArea();
+        const dropListArea = this.dropListArea();
+        const dropListArea = this.dropListArea();
+        const dropListArea = this.dropListArea();
         if (
             !this.virtualScroll &&
-            this.dropListArea &&
+            dropListArea &&
             this._draggable &&
             !this.dropListRef
         ) {
             this.dropListRef = this.dragDropService.createDropList(
-                this.dropListArea
+                dropListArea
             );
             this.dropListRef.disabled = !this._draggable;
             this.dropListRef.data = this.itemsSource;
@@ -551,7 +553,7 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
                 .subscribe();
 
             this.dropListRef.withItems(
-                this.draggableElements.map((item) => item._dragRef)
+                this.draggableElements()()()().map((item) => item._dragRef)
             );
         }
     }

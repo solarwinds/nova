@@ -1,4 +1,4 @@
-import { Component, DebugElement, ViewChild } from "@angular/core";
+import { Component, DebugElement, viewChild } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
@@ -15,8 +15,7 @@ import { isTargetAnAnchor, makePredicate } from "./public-api";
     standalone: false,
 })
 class TestComponent {
-    @ViewChild(ClickFilterDirective, { static: true })
-    public cancelBubbleDirective!: ClickFilterDirective;
+    public readonly cancelBubbleDirective = viewChild.required(ClickFilterDirective);
 }
 
 describe(ClickFilterDirective.name, () => {

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, viewChild } from "@angular/core";
 import { Subscription } from "rxjs";
 
 import {
@@ -63,8 +63,7 @@ export class TableSortingExampleComponent implements AfterViewInit, OnDestroy {
         direction: SorterDirection.ascending,
     };
     public nameSortedDesc = false;
-    @ViewChild("sortableTable")
-    sortableTable: TableComponent<IExampleTableModel>;
+    readonly sortableTable = viewChild.required<TableComponent<IExampleTableModel>>("sortableTable");
     private outputsSubscription: Subscription;
 
     constructor(
@@ -90,7 +89,7 @@ export class TableSortingExampleComponent implements AfterViewInit, OnDestroy {
 
     public ngAfterViewInit(): void {
         this.dataSourceService.registerComponent(
-            this.sortableTable.getFilterComponents()
+            this.sortableTable().getFilterComponents()
         );
         this.outputsSubscription =
             this.dataSourceService.outputsSubject.subscribe(

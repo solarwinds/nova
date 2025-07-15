@@ -20,12 +20,12 @@
 
 import { Overlay } from "@angular/cdk/overlay";
 import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    Input,
-    NO_ERRORS_SCHEMA,
-    ViewChild,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  NO_ERRORS_SCHEMA,
+  viewChild
 } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { first } from "rxjs/operators";
@@ -51,7 +51,7 @@ class PopupWrapperComponent implements AfterViewInit {
     public selectedOptions = this.items[0];
     @Input() destroyed: boolean = false;
 
-    @ViewChild(OverlayComponent) dropdown: OverlayComponent;
+    readonly dropdown = viewChild.required(OverlayComponent);
 
     constructor(public elRef: ElementRef) {}
 
@@ -97,7 +97,7 @@ describe("components >", () => {
         });
 
         afterEach(() => {
-            wrapperComponent.dropdown.hide();
+            wrapperComponent.dropdown().hide();
             wrapperFixture.destroy();
             component.hide();
             fixture.destroy();
@@ -117,7 +117,7 @@ describe("components >", () => {
             });
 
             it("dropdown content should not be empty", () => {
-                wrapperComponent.dropdown.empty$.subscribe((isEmpty) => {
+                wrapperComponent.dropdown().empty$.subscribe((isEmpty) => {
                     expect(isEmpty).toBe(false);
                 });
                 component.ngAfterContentChecked();
@@ -126,32 +126,32 @@ describe("components >", () => {
 
         describe("show()", () => {
             it("should show dropdown", async () => {
-                wrapperComponent.dropdown.show();
+                wrapperComponent.dropdown().show();
 
-                expect(wrapperComponent.dropdown.getOverlayRef()).toBeTruthy();
-                expect(wrapperComponent.dropdown.showing).toBe(true);
-                const isEmpty = await wrapperComponent.dropdown.empty$
+                expect(wrapperComponent.dropdown().getOverlayRef()).toBeTruthy();
+                expect(wrapperComponent.dropdown().showing).toBe(true);
+                const isEmpty = await wrapperComponent.dropdown().empty$
                     .pipe(first())
                     .toPromise();
                 expect(isEmpty).toBe(false);
             });
 
             it("should set default config", () => {
-                wrapperComponent.dropdown.show();
+                wrapperComponent.dropdown().show();
                 expect(
-                    wrapperComponent.dropdown.getOverlayRef().getConfig()
+                    wrapperComponent.dropdown().getOverlayRef().getConfig()
                 ).toBeTruthy();
             });
 
             it("should extend overlay config by user", () => {
-                wrapperComponent.dropdown.overlayConfig = {
+                dropdown.overlayConfig = {
                     hasBackdrop: true,
                     backdropClass: "mock-class",
                     width: "300px",
                 };
-                wrapperComponent.dropdown.show();
+                dropdown.show();
 
-                const config = wrapperComponent.dropdown
+                const config = dropdown
                     .getOverlayRef()
                     .getConfig();
                 expect(config.hasBackdrop).toBe(true);
@@ -162,14 +162,14 @@ describe("components >", () => {
 
         describe("hide()", () => {
             it("should hide dropdown", () => {
-                wrapperComponent.dropdown.show();
-                wrapperComponent.dropdown.hide();
+                wrapperComponent.dropdown().show();
+                wrapperComponent.dropdown().hide();
 
                 expect(
-                    wrapperComponent.dropdown.getOverlayRef().overlayElement
+                    wrapperComponent.dropdown().getOverlayRef().overlayElement
                 ).toBeFalsy();
-                expect(wrapperComponent.dropdown.showing).toBe(false);
-                wrapperComponent.dropdown.clickOutside.subscribe(
+                expect(wrapperComponent.dropdown().showing).toBe(false);
+                wrapperComponent.dropdown().clickOutside.subscribe(
                     (e: MouseEvent) => {
                         expect(e).toBeTruthy();
                     }
@@ -179,17 +179,17 @@ describe("components >", () => {
 
         describe("toggle()", () => {
             it("should show dropdown", () => {
-                wrapperComponent.dropdown.hide();
-                wrapperComponent.dropdown.toggle();
+                wrapperComponent.dropdown().hide();
+                wrapperComponent.dropdown().toggle();
 
-                expect(wrapperComponent.dropdown.showing).toBe(true);
+                expect(wrapperComponent.dropdown().showing).toBe(true);
             });
 
             it("should hide dropdown", () => {
-                wrapperComponent.dropdown.show();
-                wrapperComponent.dropdown.toggle();
+                wrapperComponent.dropdown().show();
+                wrapperComponent.dropdown().toggle();
 
-                expect(wrapperComponent.dropdown.showing).toBe(false);
+                expect(wrapperComponent.dropdown().showing).toBe(false);
             });
         });
 
@@ -197,8 +197,8 @@ describe("components >", () => {
             it("should next and complete hide$", () => {
                 const spy = jasmine.createSpy();
 
-                wrapperComponent.dropdown.clickOutside.subscribe(() => spy());
-                wrapperComponent.dropdown.show();
+                wrapperComponent.dropdown().clickOutside.subscribe(() => spy());
+                wrapperComponent.dropdown().show();
                 document.body.click();
                 wrapperFixture.detectChanges();
 

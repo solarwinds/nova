@@ -20,20 +20,19 @@
 
 import { FocusMonitor, FocusOrigin } from "@angular/cdk/a11y";
 import {
-    AfterViewInit,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    QueryList,
-    Renderer2,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  Renderer2,
+  SimpleChanges,
+  ViewEncapsulation,
+  contentChildren,
+  viewChild
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
 import { Subject, Subscription } from "rxjs";
@@ -110,13 +109,11 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     public menuOpenStream = new Subject<void>();
     // Only menu that resolves *ngIf on <ng-content> with these menuItems can correctly get ContentChildren
-    @ContentChildren(MenuItemBaseComponent, { descendants: true })
-    public menuItems: QueryList<MenuItemBaseComponent>;
-    @ContentChildren(MenuGroupComponent)
-    public menuGroups: QueryList<MenuGroupComponent>;
-    @ViewChild(PopupComponent) public popup: PopupComponent;
-    @ViewChild(MenuPopupComponent) menuPopup: MenuPopupComponent;
-    @ViewChild("menuToggle", { read: ElementRef }) menuToggle: ElementRef;
+    public readonly menuItems = contentChildren(MenuItemBaseComponent, { descendants: true });
+    public readonly menuGroups = contentChildren(MenuGroupComponent);
+    public readonly popup = viewChild.required(PopupComponent);
+    readonly menuPopup = viewChild.required(MenuPopupComponent);
+    readonly menuToggle = viewChild("menuToggle", { read: ElementRef });
 
     private menuKeyControlListeners: Function[] = [];
     private focusMonitorSubscription: Subscription;
@@ -143,12 +140,16 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         // initializing key-control manager
         this.keyControlService.initKeyboardManager();
         // listening to events for key-control
+        const menuToggle = this.menuToggle();
+        const menuToggle = this.menuToggle();
+        const menuToggle = this.menuToggle();
+        const menuToggle = this.menuToggle();
         this.menuKeyControlListeners.push(
             this.renderer.listen(
-                this.menuToggle.nativeElement,
+                menuToggle.nativeElement,
                 "keydown",
                 (event: KeyboardEvent) => {
-                    if (!this.popup.popupToggle.disabled) {
+                    if (!this.popup()()()().popupToggle()()()().disabled) {
                         this.keyControlService.handleKeydown(event);
                     }
                 }
@@ -159,11 +160,15 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         // It's more powerful than just listening for focus or blur events because it tells you how the element was focused
         // (via mouse, keyboard, touch, or programmatically).
         this.focusMonitorSubscription = this.focusMonitor
-            .monitor(this.menuToggle)
+            .monitor(menuToggle)
             .subscribe((origin: FocusOrigin) => {
                 if (origin === "keyboard") {
-                    if (!this.popup.popupToggle.disabled) {
-                        this.popup.toggleOpened(new FocusEvent("focusin"));
+                    const popup = this.popup();
+                    const popup = this.popup();
+                    const popup = this.popup();
+                    const popup = this.popup();
+                    if (!popup.popupToggle()()()().disabled) {
+                        popup.toggleOpened(new FocusEvent("focusin"));
                     }
                 }
             });
@@ -190,18 +195,18 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     private setKeyboardManagerServiceData(): void {
-        this.keyControlService.menuGroups = this.menuGroups;
-        this.keyControlService.menuItems = this.menuItems;
-        this.keyControlService.popup = this.popup;
-        this.keyControlService.menuToggle = this.menuToggle;
+        this.keyControlService.menuGroups = this.menuGroups()()()();
+        this.keyControlService.menuItems = this.menuItems()()()();
+        this.keyControlService.popup = this.popup()()()();
+        this.keyControlService.menuToggle = this.menuToggle()()()();
         this.keyControlService.keyControlItemsSource = !!this.itemsSource;
-        this.keyControlService.menuPopup = this.menuPopup;
+        this.keyControlService.menuPopup = this.menuPopup()()()();
         this.keyControlService.menuOpenListener = this.menuOpenStream;
     }
 
     public ngOnDestroy(): void {
         this.menuKeyControlListeners.forEach((listener) => listener());
         this.focusMonitorSubscription.unsubscribe();
-        this.focusMonitor.stopMonitoring(this.menuToggle);
+        this.focusMonitor.stopMonitoring(this.menuToggle()()()());
     }
 }

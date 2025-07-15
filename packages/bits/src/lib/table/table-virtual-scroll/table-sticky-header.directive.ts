@@ -23,12 +23,12 @@ import {
     CdkVirtualScrollViewport,
 } from "@angular/cdk/scrolling";
 import {
-    AfterViewInit,
-    ContentChild,
-    Directive,
-    Input,
-    OnDestroy,
-    Renderer2,
+  AfterViewInit,
+  Directive,
+  Input,
+  OnDestroy,
+  Renderer2,
+  contentChild
 } from "@angular/core";
 import isBoolean from "lodash/isBoolean";
 import isEmpty from "lodash/isEmpty";
@@ -62,8 +62,8 @@ export enum TableVirtualScrollHeaderPosition {
     standalone: false,
 })
 export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
-    @ContentChild(TableComponent) public table: TableComponent<unknown>;
-    @ContentChild(CdkVirtualForOf) public virtualFor: CdkVirtualForOf<unknown>;
+    public readonly table = contentChild.required(TableComponent);
+    public readonly virtualFor = contentChild(CdkVirtualForOf);
 
     @Input()
     public set tableStickyHeader(isSticky: boolean) {
@@ -219,7 +219,7 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
 
     public handleColumnsUpdate$: () => Observable<unknown> =
         (): Observable<unknown> => {
-            if (this.table.resizable) {
+            if (this.table()()()().resizable) {
                 return EMPTY;
             }
 
@@ -273,7 +273,7 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             this.viewportEl.getElementsByTagName("thead").item(0) || undefined;
         this.userProvidedHeight = this.viewportEl.style.height;
         // Disable animation for resizable sticky header cells to prevent a lagging effect during width changes.
-        if (!this.table.resizable) {
+        if (!this.table()()()().resizable) {
             Array.from(this.headRef?.getElementsByTagName("th") || []).forEach(
                 (th) => th.classList.add("virtual-sticky")
             );
@@ -307,9 +307,9 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             throttleTime(50, asyncScheduler, { trailing: true })
         );
         const tableColumnsUpdate$ = merge(
-            this.table.columnsOrderChange,
-            this.table.columnsWidthChange,
-            this.table._contentColumnDefs.changes
+            this.table()()()().columnsOrderChange,
+            this.table()()()().columnsWidthChange,
+            this.table()()()()._contentColumnDefs.changes
         ).pipe(
             // Note: Using delay(0) to grant some time to the table
             // to update the rows and then proceed with the event
@@ -318,7 +318,11 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             tap(() => this.updateNativeHeaderPlaceholder())
         );
 
-        if (!this.virtualFor) {
+        const virtualFor = this.virtualFor();
+        const virtualFor = this.virtualFor();
+        const virtualFor = this.virtualFor();
+        const virtualFor = this.virtualFor();
+        if (!virtualFor) {
             throw new Error("Unable to find CdkVirtualForOf");
         }
 
@@ -326,7 +330,7 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             onScroll$,
             onResize$,
             tableColumnsUpdate$,
-            this.virtualFor.dataStream
+            virtualFor.dataStream
         )
             .pipe(
                 // Note: Preventing function to be invoked multiple times

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, ViewChild } from "@angular/core";
+import { Component, viewChild } from "@angular/core";
 
 import {
     IWizardConfig,
@@ -47,7 +47,7 @@ import {
     standalone: false,
 })
 export class WizardWithCustomIconsExampleComponent {
-    @ViewChild("wizard") wizard: WizardHorizontalComponent;
+    readonly wizard = viewChild.required<WizardHorizontalComponent>("wizard");
 
     constructor(private toastService: ToastService) {}
 
@@ -67,7 +67,7 @@ export class WizardWithCustomIconsExampleComponent {
     };
 
     public resetWizard(): void {
-        this.wizard.reset();
+        this.wizard().reset();
     }
 
     public finishWizard(): void {

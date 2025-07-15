@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, viewChild } from "@angular/core";
 import { Subscription } from "rxjs";
 
 import {
@@ -66,7 +66,7 @@ export class TableSelectExampleComponent implements AfterViewInit, OnDestroy {
         selectionMode: TableSelectionMode.Multi,
     };
 
-    @ViewChild("filteringPaginator") filteringPaginator: PaginatorComponent;
+    readonly filteringPaginator = viewChild.required<PaginatorComponent>("filteringPaginator");
 
     private outputsSubscription: Subscription;
 
@@ -78,7 +78,7 @@ export class TableSelectExampleComponent implements AfterViewInit, OnDestroy {
     public ngAfterViewInit(): void {
         this.dataSourceService.componentTree = {
             paginator: {
-                componentInstance: this.filteringPaginator,
+                componentInstance: this.filteringPaginator(),
             },
         };
         this.outputsSubscription =

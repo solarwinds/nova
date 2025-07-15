@@ -39,6 +39,9 @@ export class ComboboxV2CreateOptionExampleComponent {
     public options = Array.from({ length: 3 }).map(
         (_, i) => $localize`Item ${i}`
     );
+    // TODO: Skipped for migration because:
+    //  This query is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @ViewChild("combobox") public combobox: ComboboxV2Component;
 
     public comboboxControl = new FormControl<string | null>(null);

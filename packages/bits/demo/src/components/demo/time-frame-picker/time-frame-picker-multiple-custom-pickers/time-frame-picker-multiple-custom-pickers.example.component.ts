@@ -19,11 +19,10 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    QueryList,
-    ViewChildren,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  viewChildren
 } from "@angular/core";
 import { Subject } from "rxjs";
 
@@ -50,8 +49,7 @@ interface IPicker {
 export class TimeFramePickerMultipleCustomPickersExampleComponent
     implements AfterViewInit
 {
-    @ViewChildren("scoper")
-    private tfScopers: QueryList<TimeframeServiceScoperExampleComponent>;
+    private readonly tfScopers = viewChildren<TimeframeServiceScoperExampleComponent>("scoper");
 
     public pickers: IPicker[] = [
         {
@@ -138,7 +136,7 @@ export class TimeFramePickerMultipleCustomPickersExampleComponent
     }
 
     public ngAfterViewInit(): void {
-        this.tfScopers.forEach((scoper, i) => {
+        this.tfScopers().forEach((scoper, i) => {
             const picker = this.pickers[i];
             const timeframeService = scoper.timeframeService;
 

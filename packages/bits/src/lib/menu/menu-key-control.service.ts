@@ -59,7 +59,7 @@ export class MenuKeyControlService implements OnDestroy {
     public initKeyboardManager(): void {
         this.keyboardEventsManager = this.keyControlItemsSource
             ? new ActiveDescendantKeyManager(
-                  this.menuPopup.menuItems
+                  this.menuPopup.menuItems()()()()
               ).withVerticalOrientation()
             : new ActiveDescendantKeyManager(
                   this.menuItems
@@ -81,7 +81,7 @@ export class MenuKeyControlService implements OnDestroy {
                     this.live.announce(`
                     ${
                         this.keyControlItemsSource
-                            ? this.menuPopup.menuItems.length
+                            ? this.menuPopup.menuItems()()()().length
                             : this.menuItems.length
                     } menu items available.`);
 

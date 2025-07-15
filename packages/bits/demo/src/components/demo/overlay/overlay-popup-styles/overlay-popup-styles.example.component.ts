@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { OverlayConfig } from "@angular/cdk/overlay";
-import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, viewChild } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -42,17 +42,17 @@ export class OverlayPopupStylesExampleComponent
         panelClass: [OVERLAY_WITH_POPUP_STYLES_CLASS],
     };
 
-    @ViewChild("overlayWithStyles") public overlayWithStyles: OverlayComponent;
-    @ViewChild("overlayNoStyles") public overlayNoStyles: OverlayComponent;
+    public readonly overlayWithStyles = viewChild.required<OverlayComponent>("overlayWithStyles");
+    public readonly overlayNoStyles = viewChild.required<OverlayComponent>("overlayNoStyles");
 
     public ngAfterViewInit(): void {
-        this.overlayWithStyles.clickOutside
+        this.overlayWithStyles().clickOutside
             .pipe(takeUntil(this.destroy$))
-            .subscribe((_) => this.overlayWithStyles.hide());
+            .subscribe((_) => this.overlayWithStyles().hide());
 
-        this.overlayNoStyles.clickOutside
+        this.overlayNoStyles().clickOutside
             .pipe(takeUntil(this.destroy$))
-            .subscribe((_) => this.overlayNoStyles.hide());
+            .subscribe((_) => this.overlayNoStyles().hide());
     }
 
     public ngOnDestroy(): void {

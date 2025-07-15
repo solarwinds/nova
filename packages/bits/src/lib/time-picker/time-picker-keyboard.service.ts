@@ -42,7 +42,7 @@ export class TimePickerKeyboardService {
     ): void {
         this.overlay = overlay;
         this.popup = popup;
-        this.menuItems = popup.menuItems.toArray();
+        this.menuItems = popup.menuItems;
         this.keyboardEventsManager =
             new ActiveDescendantKeyManager<MenuItemBaseComponent>(
                 this.menuItems

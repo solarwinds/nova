@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, ViewChild } from "@angular/core";
+import { Component, viewChild } from "@angular/core";
 import _pull from "lodash/pull";
 
 import {
@@ -108,7 +108,7 @@ export class ChipsOverflowExampleComponent {
         PopoverOverlayPosition.topLeft,
     ];
 
-    @ViewChild(PopoverComponent) private popover: PopoverComponent;
+    private readonly popover = viewChild.required(PopoverComponent);
 
     public onClear(event: { item: IChipsItem; group?: IChipsGroup }): void {
         console.log(
@@ -127,7 +127,7 @@ export class ChipsOverflowExampleComponent {
     public onClearAll(e: MouseEvent): void {
         this.horizontalGroupedItemsSource.groupedItems = [];
         this.horizontalGroupedItemsSource.flatItems = [];
-        this.popover?.onClick(e);
+        this.popover()?.onClick(e);
     }
 
     onChipsOverflow(source: IChipsItemsSource): void {
@@ -137,6 +137,6 @@ export class ChipsOverflowExampleComponent {
         this.overflowCounter =
             (this.overflowSource.flatItems?.length || 0) +
             (this.overflowSource.groupedItems?.reduce(reducer, 0) || 0);
-        this.popover?.updatePosition();
+        this.popover()?.updatePosition();
     }
 }

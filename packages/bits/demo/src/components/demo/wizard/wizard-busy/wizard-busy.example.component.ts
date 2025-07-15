@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, ViewChild } from "@angular/core";
+import { Component, viewChild } from "@angular/core";
 
 import { IBusyConfig, WizardComponent } from "@nova-ui/bits";
 
@@ -28,7 +28,7 @@ import { IBusyConfig, WizardComponent } from "@nova-ui/bits";
     standalone: false,
 })
 export class WizardBusyExampleComponent {
-    @ViewChild("wizardComponent") wizardComponent: WizardComponent;
+    readonly wizardComponent = viewChild.required<WizardComponent>("wizardComponent");
 
     public isBusy = false;
 
@@ -43,7 +43,7 @@ export class WizardBusyExampleComponent {
         /* Switch off spinner of all content. Just to avoid two spinners */
         this.isBusy = false;
         this.busyConfig.busy = !this.busyConfig.busy;
-        this.wizardComponent.navigationControl.next({
+        this.wizardComponent().navigationControl.next({
             busyState: this.busyConfig,
             allowStepChange: !this.busyConfig.busy,
         });

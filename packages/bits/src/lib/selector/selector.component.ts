@@ -20,17 +20,17 @@
 
 import { OverlayConfig } from "@angular/cdk/overlay";
 import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  SimpleChanges,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { debounceTime, takeUntil } from "rxjs/operators";
@@ -97,12 +97,11 @@ export class SelectorComponent
     @Output()
     public selectionChange = new EventEmitter<SelectionType>();
 
-    @ViewChild("checkbox")
-    public checkbox: CheckboxComponent;
+    public readonly checkbox = viewChild.required<CheckboxComponent>("checkbox");
 
-    @ViewChild("popupArea", { static: true }) popupArea: ElementRef;
+    readonly popupArea = viewChild<ElementRef>("popupArea");
 
-    @ViewChild(OverlayComponent) public overlay: OverlayComponent;
+    public readonly overlay = viewChild.required(OverlayComponent);
 
     public customContainer: ElementRef | undefined;
     public checkboxChecked = false;
@@ -126,28 +125,28 @@ export class SelectorComponent
         if (changes.appendToBody) {
             this.customContainer = changes.appendToBody.currentValue
                 ? undefined
-                : this.popupArea;
+                : this.popupArea()()()();
         }
     }
 
     public ngAfterViewInit(): void {
         const debounceTimeValue = 10;
 
-        this.checkbox.valueChange
+        this.checkbox()()()().valueChange
             .pipe(debounceTime(debounceTimeValue))
             .subscribe(this.onCheckboxValueChange.bind(this));
-        this.overlay.clickOutside
+        this.overlay()()()().clickOutside
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((_) => this.overlay.hide());
+            .subscribe((_) => this.overlay()()()().hide());
         // TODO: should change programmatically in scope of NUI-5937
-        this.checkbox.checkboxLabel.nativeElement.setAttribute(
+        this.checkbox()()()().checkboxLabel()()()().nativeElement.setAttribute(
             "tabindex",
             "-1"
         );
     }
 
     public ngOnDestroy(): void {
-        this.checkbox.valueChange.unsubscribe();
+        this.checkbox()()()().valueChange.unsubscribe();
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }

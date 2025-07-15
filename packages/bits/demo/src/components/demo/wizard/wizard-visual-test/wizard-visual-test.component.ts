@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject, TemplateRef, ViewChild } from "@angular/core";
+import { Component, Inject, TemplateRef, viewChild } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
 import {
@@ -36,8 +36,8 @@ import {
     standalone: false,
 })
 export class WizardVisualTestComponent {
-    @ViewChild("wizardComponent") wizardComponent: WizardComponent;
-    @ViewChild("dialogWizardBusy") dialogWizardBusy: WizardComponent;
+    readonly wizardComponent = viewChild.required<WizardComponent>("wizardComponent");
+    readonly dialogWizardBusy = viewChild.required<WizardComponent>("dialogWizardBusy");
 
     public myForm;
     public hint = "example-hint";
@@ -74,13 +74,13 @@ export class WizardVisualTestComponent {
 
     public makeSecondStepBusy(): void {
         this.secondStepBusyConfig.busy = true;
-        this.wizardComponent.navigationControl.next({
+        this.wizardComponent().navigationControl.next({
             busyState: this.secondStepBusyConfig,
             allowStepChange: false,
         });
         setTimeout(() => {
             this.secondStepBusyConfig.busy = false;
-            this.wizardComponent.navigationControl.next({
+            this.wizardComponent().navigationControl.next({
                 busyState: this.secondStepBusyConfig,
                 allowStepChange: true,
             });
@@ -88,7 +88,7 @@ export class WizardVisualTestComponent {
     }
 
     public onCancelClick(content: TemplateRef<string>): void {
-        const completeSteps = this.wizardComponent.steps
+        const completeSteps = this.wizardComponent().steps
             .toArray()
             .filter((step: WizardStepComponent) => step.complete);
         if (completeSteps.length) {
@@ -104,13 +104,13 @@ export class WizardVisualTestComponent {
 
     public preventGoingNext(): void {
         this.busyConfig.busy = true;
-        this.wizardComponent.navigationControl.next({
+        this.wizardComponent().navigationControl.next({
             busyState: this.busyConfig,
             allowStepChange: false,
         });
         setTimeout(() => {
             this.busyConfig.busy = false;
-            this.wizardComponent.navigationControl.next({
+            this.wizardComponent().navigationControl.next({
                 busyState: this.busyConfig,
                 allowStepChange: true,
             });
@@ -127,7 +127,7 @@ export class WizardVisualTestComponent {
 
     public makeStepBusy(): void {
         this.busyConfig.busy = true;
-        this.dialogWizardBusy.navigationControl.next({
+        this.dialogWizardBusy().navigationControl.next({
             busyState: this.busyConfig,
             allowStepChange: false,
         });

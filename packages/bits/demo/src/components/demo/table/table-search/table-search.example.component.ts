@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, viewChild } from "@angular/core";
 import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 
@@ -61,9 +61,8 @@ export class TableSearchExampleComponent implements AfterViewInit, OnDestroy {
     public dataSource: any = [];
     public searchTerm: string;
     public columnsToApplySearch: any = [];
-    @ViewChild("filteringSearch") filteringSearch: SearchComponent;
-    @ViewChild("filteringTable")
-    filteringTable: TableComponent<IExampleTableModel>;
+    readonly filteringSearch = viewChild.required<SearchComponent>("filteringSearch");
+    readonly filteringTable = viewChild.required<TableComponent<IExampleTableModel>>("filteringTable");
 
     private outputsSubscription: Subscription;
     private searchSubscription: Subscription;
@@ -77,7 +76,7 @@ export class TableSearchExampleComponent implements AfterViewInit, OnDestroy {
     public ngAfterViewInit(): void {
         this.dataSourceService.componentTree = {
             search: {
-                componentInstance: this.filteringSearch,
+                componentInstance: this.filteringSearch(),
             },
         };
         this.outputsSubscription =
@@ -86,7 +85,7 @@ export class TableSearchExampleComponent implements AfterViewInit, OnDestroy {
                     this.dataSource = data.repeat?.itemsSource;
                 }
             );
-        this.searchSubscription = this.filteringSearch.inputChange
+        this.searchSubscription = this.filteringSearch().inputChange
             .pipe(debounceTime(500))
             .subscribe(() => {
                 this.onSearch(undefined);

@@ -38,6 +38,8 @@ import { BasicFilterGroupCompositeComponent } from "../basic-filter-group.compon
     standalone: false,
 })
 export class BasicFilterGroupsWrapperComponent implements AfterViewInit {
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
     @ContentChildren(BasicFilterGroupCompositeComponent)
     filterGroups: QueryList<BasicFilterGroupCompositeComponent>;
 

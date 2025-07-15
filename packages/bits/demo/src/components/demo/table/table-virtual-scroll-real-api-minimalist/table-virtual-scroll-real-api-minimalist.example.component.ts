@@ -21,14 +21,14 @@
 import { ListRange } from "@angular/cdk/collections";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    forwardRef,
-    OnDestroy,
-    OnInit,
-    ViewChild,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  forwardRef,
+  OnDestroy,
+  OnInit,
+  viewChild
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -102,12 +102,9 @@ export class TableVirtualScrollRealApiMinimalistExampleComponent
         this.dataSource = new RandomuserTableDataSource();
     }
 
-    @ViewChild(forwardRef(() => TableComponent), { static: false })
-    table: TableComponent<any>;
-    @ViewChild(forwardRef(() => TableVirtualScrollDirective), { static: false })
-    virtualDirective: TableVirtualScrollDirective;
-    @ViewChild(CdkVirtualScrollViewport, { static: false })
-    viewport: CdkVirtualScrollViewport;
+    readonly table = viewChild.required(forwardRef(() => TableComponent));
+    readonly virtualDirective = viewChild.required(forwardRef(() => TableVirtualScrollDirective));
+    readonly viewport = viewChild(CdkVirtualScrollViewport);
 
     public ngOnInit(): void {
         this.dataSource.outputsSubject.subscribe(
@@ -121,8 +118,8 @@ export class TableVirtualScrollRealApiMinimalistExampleComponent
                     if (
                         this.users.length <
                         Math.round(
-                            this.viewport.getViewportSize() /
-                                this.virtualDirective.rowHeight
+                            this.viewport().getViewportSize() /
+                                this.virtualDirective().rowHeight
                         )
                     ) {
                         this.prefetchedDsPageNumber++;
@@ -143,9 +140,9 @@ export class TableVirtualScrollRealApiMinimalistExampleComponent
         this.registerVirtualScroll();
 
         // Setting the items range to properly evaluate the virtual scroll viewport size
-        this.virtualDirective.setMaxItems(this.range);
+        this.virtualDirective().setMaxItems(this.range);
 
-        this.viewport.renderedRangeStream
+        this.viewport().renderedRangeStream
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((value) => {
                 // There is no use to proceed if we've already fetched all the items

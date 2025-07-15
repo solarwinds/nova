@@ -19,13 +19,13 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    CUSTOM_ELEMENTS_SCHEMA,
-    DebugElement,
-    ElementRef,
-    getDebugNode,
-    Injectable,
-    ViewChild,
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  DebugElement,
+  ElementRef,
+  getDebugNode,
+  Injectable,
+  viewChild
 } from "@angular/core";
 import { ComponentFixture, inject, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
@@ -51,7 +51,7 @@ import { TooltipDirective } from "../tooltip/tooltip.directive";
 })
 class TestBusyWithTabNavigatableChildrensComponent {
     public busy: boolean;
-    @ViewChild("ref", { read: ElementRef }) busyComponentElRef: ElementRef;
+    readonly busyComponentElRef = viewChild("ref", { read: ElementRef });
 }
 
 @Injectable()
@@ -191,7 +191,7 @@ describe("components >", () => {
 
                 expect(spy).toHaveBeenCalledTimes(1);
                 expect(spy).toHaveBeenCalledWith(
-                    hostComponent.busyComponentElRef
+                    hostComponent.busyComponentElRef()
                 );
             });
 

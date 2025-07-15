@@ -20,12 +20,12 @@
 
 import { LiveAnnouncer } from "@angular/cdk/a11y";
 import {
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    NO_ERRORS_SCHEMA,
-    QueryList,
-    ViewChild,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  NO_ERRORS_SCHEMA,
+  QueryList,
+  viewChild
 } from "@angular/core";
 import {
     ComponentFixture,
@@ -73,7 +73,7 @@ const nonExistentItem = { id: "item-101", name: "Item 101" };
 class ComboboxV2WrapperComponent {
     public items = Array.from({ length: 10 }).map((_, i) => `Item ${i}`);
     public comboboxControl = new FormControl();
-    @ViewChild(ComboboxV2Component) combobox: ComboboxV2Component;
+    readonly combobox = viewChild.required(ComboboxV2Component);
     constructor(public elRef: ElementRef<HTMLElement>) {}
 }
 
@@ -464,7 +464,7 @@ describe("components >", () => {
                 wrapperComponent.comboboxControl.setValue(itemToSet);
 
                 expect(
-                    wrapperComponent.combobox.getLastSelectedOption()?.value
+                    wrapperComponent.combobox().getLastSelectedOption()?.value
                 ).toEqual(itemToSet);
             });
 
@@ -509,19 +509,19 @@ describe("components >", () => {
                 wrapperComponent.comboboxControl.setValue(itemToSet);
 
                 expect(
-                    wrapperComponent.combobox.getLastSelectedOption()?.active
+                    wrapperComponent.combobox().getLastSelectedOption()?.active
                 ).toBeTruthy();
             });
 
             it("should items be correctly outfiltered if value sets using formControl", () => {
                 expect(
-                    wrapperComponent.combobox.options.toArray()[3].outfiltered
+                    wrapperComponent.combobox().options.toArray()[3].outfiltered
                 ).toBe(false);
                 expect(
-                    wrapperComponent.combobox.options.toArray()[4].outfiltered
+                    wrapperComponent.combobox().options.toArray()[4].outfiltered
                 ).toBe(false);
 
-                wrapperComponent.combobox.multiselect = true;
+                combobox.multiselect = true;
                 const itemsToSet = [
                     wrapperComponent.items[3],
                     wrapperComponent.items[4],
@@ -529,10 +529,10 @@ describe("components >", () => {
                 wrapperComponent.comboboxControl.setValue(itemsToSet);
 
                 expect(
-                    wrapperComponent.combobox.options.toArray()[3].outfiltered
+                    combobox.options.toArray()[3].outfiltered
                 ).toBe(true);
                 expect(
-                    wrapperComponent.combobox.options.toArray()[4].outfiltered
+                    combobox.options.toArray()[4].outfiltered
                 ).toBe(true);
             });
         });
@@ -568,11 +568,11 @@ describe("components >", () => {
                 expect(wrapperComponent.comboboxControl.value).toEqual(
                     undefined
                 );
-                expect(wrapperComponent.combobox.inputValue).toEqual(itemToSet);
+                expect(wrapperComponent.combobox().inputValue).toEqual(itemToSet);
             }));
 
             it("should filter selected options in case of multiselect", fakeAsync(() => {
-                wrapperComponent.combobox.multiselect = true;
+                wrapperComponent.combobox().multiselect = true;
                 wrapperComponent.comboboxControl.setValue([
                     "Item 3",
                     "Item 5",
@@ -597,12 +597,12 @@ describe("components >", () => {
         describe("LiveAnnouncer >", () => {
             it("should announce dropdown list on focusin", () => {
                 const spy = spyOn(
-                    wrapperComponent.combobox.liveAnnouncer,
+                    wrapperComponent.combobox().liveAnnouncer,
                     "announce"
                 );
                 expect(wrapperComponent.comboboxControl.touched).toBeFalsy();
 
-                const msg = `${wrapperComponent.combobox.options.length} ${ANNOUNCER_OPEN_MESSAGE_SUFFIX}`;
+                const msg = `${wrapperComponent.combobox().options.length} ${ANNOUNCER_OPEN_MESSAGE_SUFFIX}`;
                 const input = wrapperFixture.debugElement.query(
                     By.css(".nui-combobox-v2__input")
                 );
@@ -613,7 +613,7 @@ describe("components >", () => {
 
             it("should announce dropdown is closed on focusout", () => {
                 const spy = spyOn(
-                    wrapperComponent.combobox.liveAnnouncer,
+                    wrapperComponent.combobox().liveAnnouncer,
                     "announce"
                 );
                 expect(wrapperComponent.comboboxControl.touched).toBeFalsy();

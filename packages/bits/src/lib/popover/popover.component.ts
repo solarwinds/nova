@@ -25,25 +25,25 @@ import {
     OverlayConfig,
 } from "@angular/cdk/overlay";
 import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    ContentChild,
-    ElementRef,
-    EmbeddedViewRef,
-    EventEmitter,
-    HostListener,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    SimpleChanges,
-    TemplateRef,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation,
+  ChangeDetectorRef,
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  ElementRef,
+  EmbeddedViewRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  TemplateRef,
+  ViewContainerRef,
+  ViewEncapsulation,
+  contentChild,
+  viewChild
 } from "@angular/core";
 import _includes from "lodash/includes";
 import _isNil from "lodash/isNil";
@@ -174,14 +174,13 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
      */
     @Output() hidden = new EventEmitter<any>();
 
-    @ContentChild(TemplateRef) myTemplate: any;
+    readonly myTemplate = contentChild(TemplateRef);
 
-    @ViewChild("renderContainer") renderContainer: TemplateRef<ElementRef>;
+    readonly renderContainer = viewChild<TemplateRef<ElementRef>>("renderContainer");
 
-    @ViewChild("modalContainer", { read: ViewContainerRef })
-    modalContainer: ViewContainerRef;
+    readonly modalContainer = viewChild("modalContainer", { read: ViewContainerRef });
 
-    @ViewChild(OverlayComponent) overlayComponent: OverlayComponent;
+    readonly overlayComponent = viewChild.required(OverlayComponent);
 
     public overlayConfig: OverlayConfig = { width: "auto" };
     public containerElementRef: ElementRef;
@@ -329,10 +328,10 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         const factory = this.componentFactoryResolver.resolveComponentFactory(
             PopoverModalComponent
         );
-        this.popover = this.modalContainer.createComponent(factory);
+        this.popover = this.modalContainer()()()().createComponent(factory);
         this.initializePopover();
         this.setPositionStrategy(this.placement);
-        this.overlayComponent.show();
+        this.overlayComponent()()()().show();
         this.initializeResizeObserver();
         this.shown.emit();
         // Needs for proper initialization of content inside overlay
@@ -344,7 +343,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
      * This method is currently used in Charts by the ChartPopoverComponent.
      */
     public updatePosition(): void {
-        this.overlayComponent?.getOverlayRef()?.updatePosition();
+        this.overlayComponent()()()()?.getOverlayRef()?.updatePosition();
     }
 
     /**
@@ -352,7 +351,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
      */
     public resetSize(): void {
         // This is set to undefined so that angular cdk will set the height and width automatically
-        this.overlayComponent?.getOverlayRef()?.updateSize({
+        this.overlayComponent()()()()?.getOverlayRef()?.updateSize({
             height: undefined,
             width: undefined,
         });
@@ -484,7 +483,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
             }
         });
         this.popover?.destroy();
-        this.overlayComponent.hide();
+        this.overlayComponent()()()().hide();
         this.hidden.emit();
         this.popover = undefined;
     }
@@ -551,7 +550,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         const subscription = positionStrategy.positionChanges.subscribe(
             (connectedPosition: ConnectedOverlayPositionChange) => {
                 const overlayRefElement =
-                    this.overlayComponent.getOverlayRef().overlayElement;
+                    this.overlayComponent()()()().getOverlayRef().overlayElement;
                 const elRefHeight = (
                     this.host.nativeElement as HTMLElement
                 ).getBoundingClientRect().height;
@@ -595,10 +594,10 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
 
     private initializeResizeObserver(): void {
         this.resizeObserver = this.overlayUtilitiesService
-            .setPopupComponent(this.overlayComponent)
+            .setPopupComponent(this.overlayComponent()()()())
             .getResizeObserver();
         this.resizeObserver.observe(
-            this.overlayComponent.getOverlayRef().overlayElement
+            this.overlayComponent()()()().getOverlayRef().overlayElement
         );
     }
 }

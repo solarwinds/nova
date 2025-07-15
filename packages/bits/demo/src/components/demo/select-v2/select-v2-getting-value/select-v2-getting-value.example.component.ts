@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AfterViewInit, Component, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, viewChild } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 
@@ -36,12 +36,11 @@ export class SelectV2GettingValueExampleComponent implements AfterViewInit {
     );
     public selectValueSelectedValue: string;
 
-    @ViewChild("selectValueSelectedExample")
-    private selectValueSelectedExample: SelectV2Component;
+    private readonly selectValueSelectedExample = viewChild.required<SelectV2Component>("selectValueSelectedExample");
     private destroy$: Subject<any> = new Subject<any>();
 
     public ngAfterViewInit(): void {
-        this.selectValueSelectedExample.valueSelected
+        this.selectValueSelectedExample().valueSelected
             .pipe(
                 tap(
                     (value) => (this.selectValueSelectedValue = value as string)

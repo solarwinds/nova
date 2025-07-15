@@ -19,24 +19,24 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentInit,
-    ApplicationRef,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    ContentChild,
-    ElementRef,
-    EmbeddedViewRef,
-    EventEmitter,
-    Injector,
-    Input,
-    OnDestroy,
-    OnInit,
-    Optional,
-    Output,
-    ViewChild,
-    ViewEncapsulation,
+  AfterContentInit,
+  ApplicationRef,
+  ChangeDetectorRef,
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  ElementRef,
+  EmbeddedViewRef,
+  EventEmitter,
+  Injector,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Output,
+  ViewEncapsulation,
+  contentChild,
+  viewChild
 } from "@angular/core";
 import _isUndefined from "lodash/isUndefined";
 import { filter, Subject, Subscription } from "rxjs";
@@ -146,13 +146,10 @@ export class PopupDeprecatedComponent
     @Output()
     public opened = new EventEmitter<boolean>();
 
-    @ContentChild(PopupToggleDirective)
-    public popupToggle: PopupToggleDirective;
-    @ViewChild("popupAreaContainer")
-    public popupAreaContainer: ElementRef;
+    public readonly popupToggle = contentChild.required(PopupToggleDirective);
+    public readonly popupAreaContainer = viewChild<ElementRef>("popupAreaContainer");
 
-    @ViewChild("popupArea", { static: true })
-    public popupAreaContent: ElementRef;
+    public readonly popupAreaContent = viewChild<ElementRef>("popupArea");
 
     private popupSubscriptions: Subscription[] = [];
     private lastEventType: string;
@@ -214,12 +211,16 @@ export class PopupDeprecatedComponent
     public ngAfterContentInit(): void {
         this.setPopupPosition();
 
-        if (!this.popupToggle) {
+        const popupToggle = this.popupToggle();
+        const popupToggle = this.popupToggle();
+        const popupToggle = this.popupToggle();
+        const popupToggle = this.popupToggle();
+        if (!popupToggle) {
             return;
         }
 
         this.popupSubscriptions.push(
-            this.popupToggle.toggle.subscribe((event: Event) => {
+            popupToggle.toggle.subscribe((event: Event) => {
                 this.toggleOpened(event);
             })
         );
@@ -254,10 +255,10 @@ export class PopupDeprecatedComponent
                         );
                     this._popupInstance = popupContainerFactory.create(
                         this.injector,
-                        [[this.popupAreaContent.nativeElement]]
+                        [[this.popupAreaContent()()()().nativeElement]]
                     );
                     this._popupInstance.instance.hostElement =
-                        this.popupToggle.host.nativeElement;
+                        this.popupToggle()()()().host.nativeElement;
                     this.appRef.attachView(this._popupInstance.hostView);
                     const hostElement = (
                         this._popupInstance.hostView as EmbeddedViewRef<any>
@@ -286,9 +287,13 @@ export class PopupDeprecatedComponent
     }
 
     public closePopup(event?: MouseEvent): void {
+        const popupToggle = this.popupToggle();
+        const popupToggle = this.popupToggle();
+        const popupToggle = this.popupToggle();
+        const popupToggle = this.popupToggle();
         const isToggle =
-            this.popupToggle && event
-                ? (this.popupToggle.host.nativeElement as HTMLElement).contains(
+            popupToggle && event
+                ? (popupToggle.host.nativeElement as HTMLElement).contains(
                       event.target as HTMLElement
                   )
                 : false;
@@ -305,12 +310,16 @@ export class PopupDeprecatedComponent
 
     private setPopupPosition() {
         let parentEl: HTMLElement | undefined;
-        if (!this.baseElementSelector && !this.popupToggle) {
+        const popupToggle = this.popupToggle();
+        const popupToggle = this.popupToggle();
+        const popupToggle = this.popupToggle();
+        const popupToggle = this.popupToggle();
+        if (!this.baseElementSelector && !popupToggle) {
             return;
         }
 
-        if (this.popupToggle) {
-            parentEl = this.popupToggle.host.nativeElement;
+        if (popupToggle) {
+            parentEl = popupToggle.host.nativeElement;
         } else {
             parentEl =
                 document.querySelector<HTMLElement>(this.baseElementSelector) ??
@@ -323,7 +332,7 @@ export class PopupDeprecatedComponent
 
         const canBe = this.edgeDetector.canBe(
             <HTMLElement>parentEl,
-            this.popupAreaContent.nativeElement
+            this.popupAreaContent()()()().nativeElement
         );
         this._directionTop = _isUndefined(this.directionTop)
             ? !canBe?.placed.bottom

@@ -26,21 +26,21 @@ import {
     style,
 } from "@angular/animations";
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    Renderer2,
-    SimpleChanges,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  Renderer2,
+  SimpleChanges,
+  ViewContainerRef,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import isUndefined from "lodash/isUndefined";
 import { Subject, Subscription } from "rxjs";
@@ -201,14 +201,10 @@ export class PanelComponent
     @Output() collapsed: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() hidden: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    @ViewChild("mainContent", { read: ViewContainerRef })
-    private panelMainContent: ViewContainerRef;
-    @ViewChild("headerContent", { read: ViewContainerRef })
-    private headerContent: ViewContainerRef;
-    @ViewChild("footerContent", { read: ViewContainerRef })
-    private footerContent: ViewContainerRef;
-    @ViewChild("sidePaneContainer", { static: true, read: ViewContainerRef })
-    private sidePaneContainer: ViewContainerRef;
+    private readonly panelMainContent = viewChild("mainContent", { read: ViewContainerRef });
+    private readonly headerContent = viewChild("headerContent", { read: ViewContainerRef });
+    private readonly footerContent = viewChild("footerContent", { read: ViewContainerRef });
+    private readonly sidePaneContainer = viewChild("sidePaneContainer", { read: ViewContainerRef });
 
     public displayFooter = true;
     public displayPanelHeader = true;
@@ -467,7 +463,7 @@ export class PanelComponent
 
     private checkPanelEmbeddedContent(): void {
         this.displayPanelHeader =
-            this.headerContent.element.nativeElement.children.length !== 0;
+            this.headerContent()()()().element.nativeElement.children.length !== 0;
         this.changeDetectorRef.detectChanges();
     }
 
@@ -475,7 +471,7 @@ export class PanelComponent
         // Manually update width of left pane container only if it is expanded.
         if (
             (!this.isCollapsible || !this._isCollapsed) &&
-            this.sidePaneContainer
+            this.sidePaneContainer()()()()
         ) {
             this.applyBoundarySizes();
             this.destroyLastAnimationPlayer();
@@ -496,11 +492,11 @@ export class PanelComponent
     }
 
     private getPaneContainerElement(): ElementRef {
-        return this.sidePaneContainer.element.nativeElement;
+        return this.sidePaneContainer()()()().element.nativeElement;
     }
 
     private getPanelMainContentElement(): ElementRef {
-        return this.panelMainContent.element.nativeElement;
+        return this.panelMainContent()()()().element.nativeElement;
     }
 
     private get expandAnimationFactory(): AnimationFactory {

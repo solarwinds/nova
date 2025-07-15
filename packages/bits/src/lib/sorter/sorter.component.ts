@@ -20,19 +20,20 @@
 
 import { OverlayConfig } from "@angular/cdk/overlay";
 import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    Renderer2,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  Renderer2,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import _assign from "lodash/assign";
 import _isEqual from "lodash/isEqual";
@@ -83,8 +84,16 @@ export class SorterComponent
 
     @Output() sorterAction = new EventEmitter<ISorterChanges>();
 
-    @ViewChild("popupArea", { static: true }) popupArea: ElementRef;
-    @ViewChild(OverlayComponent) public overlay: OverlayComponent;
+    readonly popupArea = viewChild<ElementRef>("popupArea");
+    public readonly overlay = viewChild.required(OverlayComponent);
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
     @ViewChild("popup") public menuPopup: MenuPopupComponent;
 
     // mark this filter to be monitored by our datasource for any changes in order reset other filters(eg: pagination)
@@ -102,7 +111,7 @@ export class SorterComponent
         panelClass: [OVERLAY_WITH_POPUP_STYLES_CLASS],
     };
 
-    @ViewChild("toggleRef", { static: true }) private toggleRef: ElementRef;
+    private readonly toggleRef = viewChild<ElementRef>("toggleRef");
     private sortConfig: ISortedItem;
     private sortIcons: { [key: string]: string } = {
         [SorterDirection.ascending]: "arrow-up",
@@ -187,9 +196,9 @@ export class SorterComponent
             sortBy: this.selectedItem,
             direction: this.sortDirection,
         };
-        this.overlay.clickOutside
+        this.overlay()()()().clickOutside
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((_) => this.overlay.hide());
+            .subscribe((_) => this.overlay()()()().hide());
 
         this.updateOverlayWidth();
         this.initKeyboardService();
@@ -217,7 +226,7 @@ export class SorterComponent
             this.updateOverlayWidth();
             this.triggerSorterAction(oldValue);
             this.setPopupSelection();
-            this.overlay.hide();
+            this.overlay()()()().hide();
         }
     }
 
@@ -257,7 +266,7 @@ export class SorterComponent
 
     public updateOverlayWidth(): void {
         this.overlayConfig.minWidth = (
-            this.toggleRef.nativeElement as HTMLElement
+            this.toggleRef()()()().nativeElement as HTMLElement
         ).offsetWidth;
     }
 
@@ -274,7 +283,7 @@ export class SorterComponent
     }
 
     public toggleSorterMenu(): void {
-        this.overlay.toggle();
+        this.overlay()()()().toggle();
         this.sorterKeyboardService.announceDropdown();
     }
 
@@ -322,12 +331,12 @@ export class SorterComponent
     }
 
     private onAppendToBodyChange(appendToBody: boolean): void {
-        this.customContainer = appendToBody ? undefined : this.popupArea;
+        this.customContainer = appendToBody ? undefined : this.popupArea()()()();
     }
 
     private initKeyboardService(): void {
-        this.sorterKeyboardService.menuItems = this.menuPopup?.menuItems;
-        this.sorterKeyboardService.overlay = this.overlay;
+        this.sorterKeyboardService.menuItems = this.menuPopup?.menuItems()()()();
+        this.sorterKeyboardService.overlay = this.overlay()()()();
         this.sorterKeyboardService.initKeyboardManager();
     }
 }

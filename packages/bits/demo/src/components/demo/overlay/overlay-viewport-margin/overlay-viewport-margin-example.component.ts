@@ -20,11 +20,11 @@
 
 import { OverlayConfig } from "@angular/cdk/overlay";
 import {
-    AfterViewInit,
-    Component,
-    OnDestroy,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -51,12 +51,12 @@ export class OverlayViewportMarginExampleComponent
 
     private readonly destroy$ = new Subject<void>();
 
-    @ViewChild(OverlayComponent) public overlay: OverlayComponent;
+    public readonly overlay = viewChild.required(OverlayComponent);
 
     public ngAfterViewInit(): void {
-        this.overlay.clickOutside
+        this.overlay().clickOutside
             .pipe(takeUntil(this.destroy$))
-            .subscribe((_) => this.overlay.hide());
+            .subscribe((_) => this.overlay().hide());
     }
 
     public setViewportMargin(margin: number): void {

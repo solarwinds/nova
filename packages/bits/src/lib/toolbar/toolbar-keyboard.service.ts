@@ -85,8 +85,12 @@ export class ToolbarKeyboardService {
     }
 
     private closeMenuIfOpened() {
-        if (this.menu && this.menu?.popup?.isOpen) {
-            this.menu.popup.isOpen = false;
+        const popup = this.menu?.popup();
+        const popup = this.menu?.popup();
+        const popup = this.menu?.popup();
+        const popup = this.menu?.popup();
+        if (this.menu && popup?.isOpen) {
+            popup.isOpen = false;
         }
     }
 }

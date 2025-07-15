@@ -19,24 +19,25 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentInit,
-    ChangeDetectorRef,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnDestroy,
-    OnInit,
-    Optional,
-    Output,
-    QueryList,
-    Renderer2,
-    TemplateRef,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation,
+  AfterContentInit,
+  ChangeDetectorRef,
+  Component,
+  ContentChildren,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Output,
+  QueryList,
+  Renderer2,
+  TemplateRef,
+  ViewContainerRef,
+  ViewEncapsulation,
+  viewChild,
+  contentChildren
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import _isNil from "lodash/isNil";
@@ -110,6 +111,14 @@ export class RadioGroupComponent
      */
     @Output() public valueChange = new EventEmitter<any>();
 
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
     @ContentChildren(forwardRef(() => RadioComponent), { descendants: true })
     private children: QueryList<RadioComponent>;
     private _value: any = null;
@@ -119,7 +128,7 @@ export class RadioGroupComponent
 
     private registerChild(child: RadioComponent): void {
         this.renderer.setAttribute(
-            child.inputViewContainer.element.nativeElement,
+            child.inputViewContainer()()()().element.nativeElement,
             "name",
             this.name
         );
@@ -267,11 +276,9 @@ export class RadioComponent implements OnInit, OnDestroy {
      */
     @Input() public ariaLabel: string = "";
 
-    @ViewChild("inputViewContainer", { static: true, read: ViewContainerRef })
-    public inputViewContainer: ViewContainerRef;
+    public readonly inputViewContainer = viewChild("inputViewContainer", { read: ViewContainerRef });
 
-    @ViewChild("radioTransclude", { static: true })
-    public radioTransclude: ElementRef;
+    public readonly radioTransclude = viewChild<ElementRef>("radioTransclude");
 
     public radioTranscludeIsEmpty: boolean;
     public keepFormPristine: boolean = true;
@@ -281,8 +288,7 @@ export class RadioComponent implements OnInit, OnDestroy {
 
     readonly radioGroup: RadioGroupComponent | null;
 
-    @ContentChildren("[nui-radio-hint]")
-    protected contentHints: QueryList<TemplateRef<any>>;
+    protected readonly contentHints = contentChildren<TemplateRef<any>>("[nui-radio-hint]");
 
     constructor(
         @Optional() radioGroup: RadioGroupComponent,
@@ -309,7 +315,7 @@ export class RadioComponent implements OnInit, OnDestroy {
 
         // Checks if user supplied any content as a label for radio button to adjust styles for radio buttons without labels
         this.radioTranscludeIsEmpty = _isNil(
-            this.radioTransclude.nativeElement.firstChild
+            this.radioTransclude()()()().nativeElement.firstChild
         );
     }
 

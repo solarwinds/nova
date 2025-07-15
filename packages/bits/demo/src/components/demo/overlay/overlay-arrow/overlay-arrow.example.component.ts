@@ -23,11 +23,11 @@ import {
     OverlayConfig,
 } from "@angular/cdk/overlay";
 import {
-    AfterViewInit,
-    Component,
-    OnDestroy,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { Subject } from "rxjs";
@@ -66,29 +66,29 @@ export class OverlayArrowExampleComponent implements AfterViewInit, OnDestroy {
         nonNullable: true,
     });
     public arrowSelectControl = new FormControl(true);
-    @ViewChild(OverlayComponent) public overlay: OverlayComponent;
+    public readonly overlay = viewChild.required(OverlayComponent);
 
     public ngAfterViewInit(): void {
         this.handlePosition();
 
-        this.overlay.clickOutside
+        this.overlay().clickOutside
             .pipe(takeUntil(this.destroy$))
-            .subscribe((_) => this.overlay.hide());
+            .subscribe((_) => this.overlay().hide());
     }
 
     public handlePosition(): void {
         // set the positions when showing the popup
-        this.overlay.show$.subscribe(() => {
-            this.overlay.overlayPositionService.setOverlayPositionConfig(
+        this.overlay().show$.subscribe(() => {
+            this.overlay().overlayPositionService.setOverlayPositionConfig(
                 this.getPositionServiceConfig()
             );
             // get available positions for the overlay from overlay.overlayPositionService
             const availablePositions =
-                this.overlay.overlayPositionService.getPossiblePositionsForPlacement(
+                this.overlay().overlayPositionService.getPossiblePositionsForPlacement(
                     this.positionSelectControl.value
                 );
             // FlexibleConnectedPositionStrategy is default strategy of overlay component.
-            const positionStrategy = this.overlay.getOverlayRef().getConfig()
+            const positionStrategy = this.overlay().getOverlayRef().getConfig()
                 .positionStrategy as FlexibleConnectedPositionStrategy;
             positionStrategy
                 // !!! using default '30' value breaks the edges, when displaying overlay from right, for the sake of the example, it's set to '0'.

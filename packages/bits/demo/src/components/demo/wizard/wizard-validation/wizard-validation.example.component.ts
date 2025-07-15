@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, ViewChild } from "@angular/core";
+import { Component, viewChild } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
 import { WizardComponent } from "@nova-ui/bits";
@@ -29,7 +29,7 @@ import { WizardComponent } from "@nova-ui/bits";
     standalone: false,
 })
 export class WizardValidationExampleComponent {
-    @ViewChild("wizardComponent") wizardComponent: WizardComponent;
+    readonly wizardComponent = viewChild.required<WizardComponent>("wizardComponent");
     public myForm;
     public secondStepForm;
 

@@ -19,22 +19,22 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentInit,
-    AfterViewChecked,
-    ChangeDetectorRef,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    QueryList,
-    ViewChild,
-    ViewChildren,
-    ViewContainerRef,
-    ViewEncapsulation,
+  AfterContentInit,
+  AfterViewChecked,
+  ChangeDetectorRef,
+  Component,
+  ContentChildren,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  QueryList,
+  ViewContainerRef,
+  ViewEncapsulation,
+  viewChildren,
+  viewChild
 } from "@angular/core";
 import _find from "lodash/find";
 import _findIndex from "lodash/findIndex";
@@ -66,9 +66,17 @@ export class WizardComponent
 {
     private static placeholderFinishText = "Action"; // as a placeholder "Action" does not need to be i18n
 
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
     @ContentChildren(WizardStepComponent) steps: QueryList<WizardStepComponent>;
-    @ViewChildren("stepTitle") stepTitles: QueryList<ElementRef>;
-    @ViewChild("container", { read: ViewContainerRef }) dynamicStep: any;
+    readonly stepTitles = viewChildren<ElementRef>("stepTitle");
+    readonly dynamicStep = viewChild("container", { read: ViewContainerRef });
 
     /**
      * Set to true to show the "Finish" button at any point during the wizard process.
@@ -193,7 +201,7 @@ export class WizardComponent
         wizardStep: IWizardStepComponent,
         indexToInsert: number
     ): IWizardStepComponent {
-        const componentRef = this.dynamicStep.createComponent(WizardStepComponent);
+        const componentRef = this.dynamicStep()()()().createComponent(WizardStepComponent);
         const instance: IWizardStepComponent = componentRef.instance;
         const wizardStepInputs = this.getInputsAndOutputs(wizardStep);
 
@@ -411,7 +419,7 @@ export class WizardComponent
     }
 
     private getLargestLabelWidth() {
-        const widths = this.stepTitles.map(
+        const widths = this.stepTitles()()()().map(
             (title) => title.nativeElement.offsetWidth
         );
 

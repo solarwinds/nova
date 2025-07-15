@@ -19,10 +19,10 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    Component,
-    ViewChild,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  viewChild
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
@@ -39,10 +39,10 @@ export class TextboxGettingValueExampleComponent implements AfterViewInit {
     public textboxValueChangedValue: string | number;
     private destroy$: Subject<any> = new Subject<any>();
 
-    @ViewChild("textboxValueChangedExample") textbox: TextboxComponent;
+    readonly textbox = viewChild.required<TextboxComponent>("textboxValueChangedExample");
 
     public ngAfterViewInit(): void {
-        this.textbox.textChange
+        this.textbox().textChange
             .pipe(
                 tap(
                     (value) => (this.textboxValueChangedValue = value as string)

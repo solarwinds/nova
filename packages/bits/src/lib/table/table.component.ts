@@ -39,26 +39,26 @@ import {
 } from "@angular/cdk/table";
 import { DOCUMENT } from "@angular/common";
 import {
-    AfterContentInit,
-    AfterViewInit,
-    Attribute,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Inject,
-    Input,
-    IterableDiffers,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Optional,
-    Output,
-    SkipSelf,
-    ViewEncapsulation,
+  AfterContentInit,
+  AfterViewInit,
+  Attribute,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  Inject,
+  Input,
+  IterableDiffers,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Output,
+  SkipSelf,
+  ViewEncapsulation,
+  contentChild
 } from "@angular/core";
 import _isEqual from "lodash/isEqual";
 import _keys from "lodash/keys";
@@ -143,7 +143,7 @@ export class TableComponent<T>
     private stickyChangedSubscription: Subscription;
     private tableColumnsWidthSubscription: Subscription;
     @HostBinding("class.nui-table__table-fixed") layoutFixed = false;
-    @ContentChild(CdkVirtualForOf) public virtualFor?: CdkVirtualForOf<unknown>;
+    public readonly virtualFor = contentChild(CdkVirtualForOf);
 
     constructor(
         protected _differs: IterableDiffers,
@@ -398,6 +398,6 @@ export class TableComponent<T>
         // @ts-ignore: Call parent method in case cdk adds it later
         super.ngAfterContentInit?.();
         // Note: Identifying if table is using virtual scroll.
-        this.tableStateHandlerService.hasVirtualScroll = !!this.virtualFor && !this.paginatorUsed;
+        this.tableStateHandlerService.hasVirtualScroll = !!this.virtualFor()()()() && !this.paginatorUsed;
     }
 }

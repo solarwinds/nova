@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, viewChild } from "@angular/core";
 import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 
@@ -78,10 +78,9 @@ export class TableSearchWithSelectAndPaginationComponent
         enabled: true,
         selectionMode: TableSelectionMode.Multi,
     };
-    @ViewChild("filteringPaginator") filteringPaginator: PaginatorComponent;
-    @ViewChild("filteringSearch") filteringSearch: SearchComponent;
-    @ViewChild("filteringTable")
-    filteringTable: TableComponent<IExampleTableModel>;
+    readonly filteringPaginator = viewChild.required<PaginatorComponent>("filteringPaginator");
+    readonly filteringSearch = viewChild.required<SearchComponent>("filteringSearch");
+    readonly filteringTable = viewChild.required<TableComponent<IExampleTableModel>>("filteringTable");
 
     private outputsSubscription: Subscription;
     private searchSubscription: Subscription;
@@ -95,10 +94,10 @@ export class TableSearchWithSelectAndPaginationComponent
     public ngAfterViewInit(): void {
         this.dataSourceService.componentTree = {
             search: {
-                componentInstance: this.filteringSearch,
+                componentInstance: this.filteringSearch(),
             },
             paginator: {
-                componentInstance: this.filteringPaginator,
+                componentInstance: this.filteringPaginator(),
             },
         };
         this.outputsSubscription =
@@ -108,7 +107,7 @@ export class TableSearchWithSelectAndPaginationComponent
                     this.paginationTotal = data.paginator?.total;
                 }
             );
-        this.searchSubscription = this.filteringSearch.inputChange
+        this.searchSubscription = this.filteringSearch().inputChange
             .pipe(debounceTime(500))
             .subscribe(() => {
                 this.onSearch(undefined);

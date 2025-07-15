@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, viewChild } from "@angular/core";
 import _orderBy from "lodash/orderBy";
 import { BehaviorSubject } from "rxjs";
 
@@ -65,8 +65,7 @@ export class SorterTestExampleComponent implements OnInit {
 
     public columns: IMenuItem[] = this.dataColumns;
 
-    @ViewChild(SorterComponent)
-    private sorter: SorterComponent;
+    private readonly sorter = viewChild.required(SorterComponent);
 
     private readonly showSubject = new BehaviorSubject(true);
     public readonly show$ = this.showSubject.asObservable();
@@ -115,7 +114,7 @@ export class SorterTestExampleComponent implements OnInit {
 
     public updateSorterByMethod(): void {
         this.columns = this.dataColumns;
-        this.sorter.select(this.dataColumns[2]);
+        this.sorter().select(this.dataColumns[2]);
     }
 
     private sortItems(sortBy: string, direction: SorterDirection) {

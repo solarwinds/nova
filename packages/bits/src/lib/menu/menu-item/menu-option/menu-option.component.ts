@@ -82,6 +82,18 @@ export class MenuOptionComponent extends MenuItemBaseComponent {
      */
     @Input() public checked: boolean;
 
+    // TODO: Skipped for migration because:
+    //  This query overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This query overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This query overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This query overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @ViewChild("menuOption") menuItem: ElementRef;
 
     @HostListener("click", ["$event"])

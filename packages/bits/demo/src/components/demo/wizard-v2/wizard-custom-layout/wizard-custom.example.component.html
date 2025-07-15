@@ -200,7 +200,7 @@
             <span i18n>Thanks for your feedback and take care!</span>
             <ng-template nuiWizardStepFooter>
                 <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
-                <button type="button" nui-button (click)="wizard.reset()">
+                <button type="button" nui-button (click)="wizard().reset()">
                     Reset
                 </button>
             </ng-template>
@@ -225,7 +225,7 @@
                 displayStyle="primary"
                 icon="caret-right"
                 iconRight="true"
-                (click)="validate(wizard.selected)"
+                (click)="validate(wizard().selected)"
             >
                 Next
             </button>

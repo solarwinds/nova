@@ -20,14 +20,14 @@
 
 import { OverlayConfig } from "@angular/cdk/overlay";
 import {
-    AfterViewInit,
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import { FormBuilder, FormControl, Validators } from "@angular/forms";
 import { Subject } from "rxjs";
@@ -108,7 +108,7 @@ export class SelectV2TestExampleComponent
     };
     private destroy$ = new Subject<void>();
     private activeDialog: NuiDialogRef;
-    @ViewChild("custom_control") private select: SelectV2Component;
+    private readonly select = viewChild.required<SelectV2Component>("custom_control");
 
     constructor(
         @Inject(DialogService) private dialogService: DialogService,
@@ -130,19 +130,19 @@ export class SelectV2TestExampleComponent
 
     public showList(event: Event): void {
         event.stopPropagation();
-        this.select.showDropdown();
-        this.select.inputElement.nativeElement.focus();
+        this.select().showDropdown();
+        this.select().inputElement().nativeElement.focus();
     }
 
     public hideList(event: Event): void {
         event.stopPropagation();
-        this.select.hideDropdown();
+        this.select().hideDropdown();
     }
 
     public toggleList(event: Event): void {
         event.stopPropagation();
-        this.select.toggleDropdown();
-        this.select.inputElement.nativeElement.focus();
+        this.select().toggleDropdown();
+        this.select().inputElement().nativeElement.focus();
     }
 
     public ngOnInit(): void {
@@ -154,9 +154,9 @@ export class SelectV2TestExampleComponent
     }
 
     public ngAfterViewInit(): void {
-        this.select.clickOutsideDropdown.subscribe(() => {
+        this.select().clickOutsideDropdown.subscribe(() => {
             if (this.handleClicksOutside) {
-                this.select.hideDropdown();
+                this.select().hideDropdown();
             }
         });
     }

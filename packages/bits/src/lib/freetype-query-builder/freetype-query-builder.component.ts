@@ -120,14 +120,58 @@ export class FreetypeQueryBuilderComponent<T extends QueryToken>
     @Output()
     submitQuery = new EventEmitter();
 
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
     @ViewChild("queryselect", { static: true })
     querySelect: SelectV2Component;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
     @ViewChild("messageTextarea", { static: false })
     messageTextarea: ElementRef;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
     @ViewChild("messageTextareaHolder", { static: false })
     messageTextareaHolder: ElementRef;
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
+    // TODO: Skipped for migration because:
+    //  Class of this query is manually instantiated. This is discouraged and prevents
+    //  migration.
     @ViewChild("textHighlightOverlayHolder", { static: false })
     textHighlightOverlayHolder: ElementRef;
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the query. This prevents migration.
     @ViewChild(TextHighlightOverlayComponent, { static: false })
     textHighlightOverlay: ElementRef;
 
@@ -167,8 +211,12 @@ export class FreetypeQueryBuilderComponent<T extends QueryToken>
     }
 
     ngAfterViewInit(): void {
+        const inputElement = this.querySelect.inputElement();
+        const inputElement = this.querySelect.inputElement();
+        const inputElement = this.querySelect.inputElement();
+        const inputElement = this.querySelect.inputElement();
         this.renderer2.listen(
-            this.querySelect.inputElement.nativeElement,
+            inputElement.nativeElement,
             "focusin",
             () => {
                 this.openOptions();
@@ -204,11 +252,11 @@ export class FreetypeQueryBuilderComponent<T extends QueryToken>
         });
 
         this.renderer2.listen(
-            this.querySelect.inputElement.nativeElement,
+            inputElement.nativeElement,
             "focusout",
             ($event) => {
                 const selectedOption =
-                    this.querySelect.inputElement.nativeElement.parentElement.contains(
+                    this.querySelect.inputElement()()()().nativeElement.parentElement.contains(
                         $event.currentTarget.parentElement
                     );
                 if (!selectedOption) {

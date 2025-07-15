@@ -19,12 +19,12 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    Injectable,
-    OnDestroy,
-    ViewChild,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Injectable,
+  OnDestroy,
+  viewChild
 } from "@angular/core";
 import { Subscription } from "rxjs";
 
@@ -100,8 +100,8 @@ export class DepreacatedDataSourceClientSideCustomSearchExampleComponent
     public filters: any[];
     public selectedFilters: any[];
 
-    @ViewChild("filteringPaginator") filteringPaginator: PaginatorComponent;
-    @ViewChild("filteringSearch") filteringSearch: SearchComponent;
+    readonly filteringPaginator = viewChild.required<PaginatorComponent>("filteringPaginator");
+    readonly filteringSearch = viewChild.required<SearchComponent>("filteringSearch");
 
     private outputsSubscription: Subscription;
 
@@ -118,10 +118,10 @@ export class DepreacatedDataSourceClientSideCustomSearchExampleComponent
     public ngAfterViewInit(): void {
         this.dataSourceService.componentTree = {
             search: {
-                componentInstance: this.filteringSearch,
+                componentInstance: this.filteringSearch(),
             },
             paginator: {
-                componentInstance: this.filteringPaginator,
+                componentInstance: this.filteringPaginator(),
             },
         };
         this.dataSourceService.applyFilters();
@@ -130,7 +130,7 @@ export class DepreacatedDataSourceClientSideCustomSearchExampleComponent
                 (data: INovaFilteringOutputs) => {
                     this.state = data;
                     if (data && data.paginator && data.paginator.reset) {
-                        this.filteringPaginator.page = 1;
+                        this.filteringPaginator().page = 1;
                     }
                     this.changeDetection.detectChanges();
                 }

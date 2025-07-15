@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, viewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { Subject } from "rxjs";
 
@@ -46,14 +46,14 @@ export class ComboboxV2CustomControlExampleComponent
     public placeholder: string = $localize`Select Item`;
     public handleClicksOutside: boolean = false;
 
-    @ViewChild("combobox") public combobox: ComboboxV2Component;
+    public readonly combobox = viewChild.required<ComboboxV2Component>("combobox");
 
     private readonly destroy$ = new Subject<void>();
 
     public ngAfterViewInit(): void {
-        this.combobox.clickOutsideDropdown.subscribe(() => {
+        this.combobox().clickOutsideDropdown.subscribe(() => {
             if (this.handleClicksOutside) {
-                this.combobox.hideDropdown();
+                this.combobox().hideDropdown();
             }
         });
     }
@@ -64,7 +64,7 @@ export class ComboboxV2CustomControlExampleComponent
     }
 
     public onChipRemoved(item: IExampleItem): void {
-        this.combobox.deselectItem(item);
+        this.combobox().deselectItem(item);
     }
 
     public convertToChip(value: IExampleItem): { label: IExampleItem } {
@@ -73,18 +73,18 @@ export class ComboboxV2CustomControlExampleComponent
 
     public showList(event: Event): void {
         event.stopPropagation();
-        this.combobox.showDropdown();
-        this.combobox.inputElement.nativeElement.focus();
+        this.combobox().showDropdown();
+        this.combobox().inputElement().nativeElement.focus();
     }
 
     public hideList(event: Event): void {
         event.stopPropagation();
-        this.combobox.hideDropdown();
+        this.combobox().hideDropdown();
     }
 
     public toggleList(event: Event): void {
         event.stopPropagation();
-        this.combobox.toggleDropdown();
-        this.combobox.inputElement.nativeElement.focus();
+        this.combobox().toggleDropdown();
+        this.combobox().inputElement().nativeElement.focus();
     }
 }

@@ -19,12 +19,12 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    Component,
-    Inject,
-    OnDestroy,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  Component,
+  Inject,
+  OnDestroy,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
@@ -65,8 +65,8 @@ export class BasicTableComponent implements OnDestroy, AfterViewInit {
     public page: number = 1;
     public pageSize: number = RESULTS_PER_PAGE;
 
-    @ViewChild(TableComponent) table: TableComponent<IServer>;
-    @ViewChild(PaginatorComponent) paginator: PaginatorComponent;
+    readonly table = viewChild.required(TableComponent);
+    readonly paginator = viewChild.required(PaginatorComponent);
 
     private readonly destroy$ = new Subject<void>();
 
@@ -79,7 +79,7 @@ export class BasicTableComponent implements OnDestroy, AfterViewInit {
 
     public async ngAfterViewInit(): Promise<void> {
         this.dataSource.registerComponent({
-            paginator: { componentInstance: this.paginator },
+            paginator: { componentInstance: this.paginator() },
         });
 
         this.dataSource.outputsSubject

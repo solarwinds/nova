@@ -19,12 +19,12 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    OnDestroy,
-    ViewChild,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  viewChild
 } from "@angular/core";
 import { Subscription } from "rxjs";
 
@@ -58,9 +58,9 @@ export class DataSourceWithSelectionExampleComponent
 
     public state: INovaFilteringOutputs = {};
 
-    @ViewChild(PaginatorComponent) paginator: PaginatorComponent;
-    @ViewChild(SearchComponent) search: SearchComponent;
-    @ViewChild(RepeatComponent) repeat: RepeatComponent;
+    readonly paginator = viewChild.required(PaginatorComponent);
+    readonly search = viewChild.required(SearchComponent);
+    readonly repeat = viewChild.required(RepeatComponent);
 
     private outputsSubscription: Subscription;
 
@@ -75,13 +75,13 @@ export class DataSourceWithSelectionExampleComponent
     async ngAfterViewInit(): Promise<void> {
         this.dataSourceService.registerComponent({
             search: {
-                componentInstance: this.search,
+                componentInstance: this.search(),
             },
             paginator: {
-                componentInstance: this.paginator,
+                componentInstance: this.paginator(),
             },
             repeat: {
-                componentInstance: this.repeat,
+                componentInstance: this.repeat(),
             },
         });
 

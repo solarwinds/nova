@@ -20,11 +20,11 @@
 
 import { CdkStepper, STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    Component,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 // eslint-disable-next-line import/no-deprecated
@@ -69,7 +69,7 @@ export class WizardCustomExampleComponent implements AfterViewInit {
     public selectedIndex: number = 0;
     public progress: number;
 
-    @ViewChild("wizard") wizard: WizardCustomComponent;
+    readonly wizard = viewChild.required<WizardCustomComponent>("wizard");
 
     constructor(private formBuilder: FormBuilder) {
         this.form = this.formBuilder.group({
@@ -100,7 +100,7 @@ export class WizardCustomExampleComponent implements AfterViewInit {
             });
         };
 
-        this.wizard.selectionChange
+        this.wizard().selectionChange
             .pipe(
                 tap((i) => {
                     update(i.selectedIndex);
@@ -108,7 +108,7 @@ export class WizardCustomExampleComponent implements AfterViewInit {
             )
             .subscribe();
 
-        this.wizard.steps.changes
+        this.wizard().steps.changes
             .pipe(
                 tap((c) => {
                     update(undefined, c.length);
@@ -122,7 +122,7 @@ export class WizardCustomExampleComponent implements AfterViewInit {
         // in order to display the validation messages
         Object.keys((step.stepControl as FormGroup)?.controls || {}).forEach(
             (key) => {
-                const field = this.wizard.selected.stepControl.get(key);
+                const field = this.wizard().selected.stepControl.get(key);
                 field?.markAsTouched();
             }
         );

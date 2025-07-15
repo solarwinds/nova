@@ -119,7 +119,7 @@ describe("components >", () => {
             componentInstance.datepickerMode = "year";
             componentInstance.yearRange = 10;
             fixture.detectChanges();
-            componentInstance.overlay.toggle();
+            componentInstance.overlay().toggle();
             fixture.detectChanges();
             const numberOfYearTiles = debugElement.queryAll(
                 By.css("table .year")
@@ -130,7 +130,7 @@ describe("components >", () => {
         it("should load with selected date being today", () => {
             const activeDate = moment();
             componentInstance.writeValue(activeDate);
-            componentInstance.overlay.toggle();
+            componentInstance.overlay().toggle();
             fixture.detectChanges();
             const activeDateTile = debugElement.query(
                 By.css("table button.selected")
@@ -169,8 +169,8 @@ describe("components >", () => {
             componentInstance.ngOnInit();
             componentInstance.value = moment("");
             fixture.detectChanges();
-            componentInstance.overlay.hide$.next();
-            expect(componentInstance._datePicker.value).toBeUndefined();
+            componentInstance.overlay().hide$.next();
+            expect(componentInstance._datePicker().value).toBeUndefined();
         });
 
         it("should notify if calendar is moved", () => {
@@ -181,14 +181,14 @@ describe("components >", () => {
                 "emit"
             ).and.callThrough();
             spyOn(
-                componentInstance._datePicker.calendarMoved,
+                componentInstance._datePicker().calendarMoved,
                 "next"
             ).and.callThrough();
 
-            componentInstance._datePicker.calendarMoved.next(moment());
+            componentInstance._datePicker().calendarMoved.next(moment());
 
             expect(
-                componentInstance._datePicker.calendarMoved.next
+                componentInstance._datePicker().calendarMoved.next
             ).toHaveBeenCalled();
             expect(componentInstance.calendarNavigated.emit).toHaveBeenCalled();
         });
@@ -203,7 +203,7 @@ describe("components >", () => {
             ) as unknown as moment.Moment;
             fixture.detectChanges();
 
-            componentInstance._datePicker.select(marchDateISO, eventMock);
+            componentInstance._datePicker().select(marchDateISO, eventMock);
 
             expect(moment.isMoment(componentInstance.value)).toBeTruthy();
             expect(componentInstance.value.month()).toEqual(2);
@@ -216,7 +216,7 @@ describe("components >", () => {
             componentInstance.handleTimezone = true;
             fixture.detectChanges();
 
-            componentInstance._datePicker.select(dateISO, eventMock);
+            componentInstance._datePicker().select(dateISO, eventMock);
 
             expect(moment.isMoment(componentInstance.value)).toBeTruthy();
             expect(componentInstance.value.utcOffset()).toEqual(
@@ -235,7 +235,7 @@ describe("components >", () => {
             componentInstance.value = invalidMoment;
             fixture.detectChanges();
 
-            componentInstance._datePicker.selectionDone.next(dateISOMoment);
+            componentInstance._datePicker().selectionDone.next(dateISOMoment);
 
             expect(componentInstance.value.isValid()).toBeTruthy();
         });

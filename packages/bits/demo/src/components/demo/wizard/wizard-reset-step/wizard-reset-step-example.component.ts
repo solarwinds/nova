@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, ViewChild } from "@angular/core";
+import { Component, viewChild } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
 import { IWizardSelectionEvent, WizardComponent } from "@nova-ui/bits";
@@ -29,7 +29,7 @@ import { IWizardSelectionEvent, WizardComponent } from "@nova-ui/bits";
     standalone: false,
 })
 export class WizardResetStepExampleComponent {
-    @ViewChild("wizardComponent") wizardComponent: WizardComponent;
+    readonly wizardComponent = viewChild.required<WizardComponent>("wizardComponent");
     public myForm;
     public secondStepForm;
 
@@ -65,7 +65,7 @@ export class WizardResetStepExampleComponent {
         /* Example of reset statuses of second step */
         if (selectedIndex === 0 && previouslySelectedIndex === 1) {
             if (this.secondStepForm.invalid) {
-                this.wizardComponent.resetStep(previouslySelectedStep);
+                this.wizardComponent().resetStep(previouslySelectedStep);
             }
         }
     }

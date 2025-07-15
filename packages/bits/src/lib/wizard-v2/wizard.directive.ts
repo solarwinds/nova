@@ -26,18 +26,18 @@ import {
     StepperSelectionEvent,
 } from "@angular/cdk/stepper";
 import {
-    AfterContentInit,
-    AfterViewInit,
-    ContentChildren,
-    Directive,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    QueryList,
-    SimpleChanges,
-    ViewChildren,
+  AfterContentInit,
+  AfterViewInit,
+  ContentChildren,
+  Directive,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  QueryList,
+  SimpleChanges,
+  viewChildren
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { distinctUntilChanged, startWith, takeUntil } from "rxjs/operators";
@@ -87,13 +87,20 @@ export class WizardDirective
         new EventEmitter<IWizardState>();
 
     /** The list of step headers of the steps in the stepper. */
-    @ViewChildren(WizardStepHeaderComponent)
-    declare _stepHeader: QueryList<WizardStepHeaderComponent>;
+    readonly _stepHeader = viewChildren(WizardStepHeaderComponent);
 
     /** Stream of animation `done` events when the body expands/collapses. */
     _animationDone = new Subject<AnimationEvent>();
 
     /** Steps that the stepper holds. */
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
+    // TODO: Skipped for migration because:
+    //  There are references to this query that cannot be migrated automatically.
     @ContentChildren(WizardStepV2Component, { descendants: true })
     declare _steps: QueryList<WizardStepV2Component>;
 

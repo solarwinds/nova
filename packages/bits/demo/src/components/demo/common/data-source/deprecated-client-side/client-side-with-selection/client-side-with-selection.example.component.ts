@@ -19,12 +19,12 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    OnDestroy,
-    ViewChild,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  viewChild
 } from "@angular/core";
 import isUndefined from "lodash/isUndefined";
 import { Subscription } from "rxjs";
@@ -63,9 +63,9 @@ export class DepreacatedDataSourceWithSelectionExampleComponent
 
     public state: INovaFilteringOutputs = {};
 
-    @ViewChild(PaginatorComponent) paginator: PaginatorComponent;
-    @ViewChild(SearchComponent) search: SearchComponent;
-    @ViewChild(RepeatComponent) repeat: RepeatComponent;
+    readonly paginator = viewChild.required(PaginatorComponent);
+    readonly search = viewChild.required(SearchComponent);
+    readonly repeat = viewChild.required(RepeatComponent);
 
     private outputsSubscription: Subscription;
 
@@ -80,13 +80,13 @@ export class DepreacatedDataSourceWithSelectionExampleComponent
     public ngAfterViewInit(): void {
         this.dataSourceService.registerComponent({
             search: {
-                componentInstance: this.search,
+                componentInstance: this.search(),
             },
             paginator: {
-                componentInstance: this.paginator,
+                componentInstance: this.paginator(),
             },
             repeat: {
-                componentInstance: this.repeat,
+                componentInstance: this.repeat(),
             },
         });
 
@@ -98,8 +98,9 @@ export class DepreacatedDataSourceWithSelectionExampleComponent
                         this.state
                     );
 
+                    const paginator = this.paginator();
                     if (data && data.paginator && data.paginator.reset) {
-                        this.paginator.page = 1;
+                        paginator.page = 1;
                     }
 
                     const areItemsAvailable =
@@ -111,9 +112,9 @@ export class DepreacatedDataSourceWithSelectionExampleComponent
                         areItemsAvailable &&
                         data.repeat?.itemsSource.length === 0
                     ) {
-                        this.paginator.goToPage(
-                            this.paginator.page > 1
-                                ? this.paginator.page - 1
+                        paginator.goToPage(
+                            paginator.page > 1
+                                ? paginator.page - 1
                                 : 1
                         );
                     }

@@ -19,16 +19,16 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ApplicationRef,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    TemplateRef,
-    ViewChild,
-    ViewContainerRef,
+  AfterViewInit,
+  ApplicationRef,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewContainerRef,
+  viewChild
 } from "@angular/core";
 import { NonNullableFormBuilder, Validators } from "@angular/forms";
 import { Subscription } from "rxjs";
@@ -99,12 +99,11 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
         selectionMode: TableSelectionMode.Multi,
     };
 
-    @ViewChild("filteringPaginator") filteringPaginator: PaginatorComponent;
-    @ViewChild("filteringSearch") filteringSearch: SearchComponent;
-    @ViewChild("filteringTable")
-    filteringTable: TableComponent<ITestTableModel>;
-    @ViewChild("sortableTable") sortableTable: TableComponent<ITestTableModel>;
-    @ViewChild(TableComponent) testTable: TableComponent<ITestTableModel>;
+    readonly filteringPaginator = viewChild.required<PaginatorComponent>("filteringPaginator");
+    readonly filteringSearch = viewChild.required<SearchComponent>("filteringSearch");
+    readonly filteringTable = viewChild.required<TableComponent<ITestTableModel>>("filteringTable");
+    readonly sortableTable = viewChild.required<TableComponent<ITestTableModel>>("sortableTable");
+    readonly testTable = viewChild.required(TableComponent);
 
     private outputsSubscription: Subscription;
     private searchSubscription: Subscription;
@@ -153,15 +152,15 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
     async ngAfterViewInit(): Promise<void> {
         this.dataSourceService.componentTree = {
             paginator: {
-                componentInstance: this.filteringPaginator,
+                componentInstance: this.filteringPaginator(),
             },
             search: {
-                componentInstance: this.filteringSearch,
+                componentInstance: this.filteringSearch(),
             },
         };
 
         this.dataSourceService.registerComponent(
-            this.testTable.getFilterComponents()
+            this.testTable().getFilterComponents()
         );
         this.outputsSubscription =
             this.dataSourceService.outputsSubject.subscribe(
@@ -171,7 +170,7 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
                 }
             );
 
-        this.searchSubscription = this.filteringSearch.inputChange
+        this.searchSubscription = this.filteringSearch().inputChange
             .pipe(debounceTime(500))
             .subscribe(() => {
                 this.dataSourceService.applyFilters();

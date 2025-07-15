@@ -130,7 +130,7 @@ describe("components >", () => {
         });
 
         it("should contain proper number of items", () => {
-            componentInstance.menu.popup.toggleOpened(
+            componentInstance.menu().popup().toggleOpened(
                 new FocusEvent("focusin")
             );
             fixture.detectChanges();
@@ -141,7 +141,7 @@ describe("components >", () => {
         it("should highlight selected item", () => {
             spyOn(componentInstance, "isItemSelected").and.callThrough();
             componentInstance.value = itemsSource[1];
-            componentInstance.menu.popup.toggleOpened(
+            componentInstance.menu().popup().toggleOpened(
                 new FocusEvent("focusin")
             );
             componentInstance.ngOnInit();
@@ -167,7 +167,7 @@ describe("components >", () => {
             componentInstance.itemsSource = itemsSourceComplex;
             componentInstance.displayValue = "value";
             componentInstance.value = itemsSourceComplex[1];
-            componentInstance.menu.popup.toggleOpened(
+            componentInstance.menu().popup().toggleOpened(
                 new FocusEvent("focusin")
             );
             componentInstance.ngOnInit();

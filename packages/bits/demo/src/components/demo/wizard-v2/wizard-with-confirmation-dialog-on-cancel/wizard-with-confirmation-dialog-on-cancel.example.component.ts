@@ -19,12 +19,12 @@
 //  THE SOFTWARE.
 
 import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    TemplateRef,
-    ViewChild,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  TemplateRef,
+  viewChild
 } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
@@ -48,7 +48,7 @@ export class WizardWithConfirmationDialogOnCancelExampleComponent {
     public confirmationDialog: NuiDialogRef;
     public form;
 
-    @ViewChild("wizard") private wizard: WizardHorizontalComponent;
+    private readonly wizard = viewChild.required<WizardHorizontalComponent>("wizard");
 
     constructor(
         @Inject(DialogService) private dialogService: DialogService,
@@ -73,7 +73,7 @@ export class WizardWithConfirmationDialogOnCancelExampleComponent {
 
     // Open confirmation dialog
     public openConfirmationDialog(content: TemplateRef<string>): void {
-        if (this.wizard.selectedIndex === 0) {
+        if (this.wizard().selectedIndex === 0) {
             this.resetWizard();
             return;
         }
@@ -85,7 +85,7 @@ export class WizardWithConfirmationDialogOnCancelExampleComponent {
     }
 
     public resetWizard(): void {
-        this.wizard.reset();
+        this.wizard().reset();
     }
 
     // Validate form before changing selected step
@@ -107,6 +107,6 @@ export class WizardWithConfirmationDialogOnCancelExampleComponent {
                 extendedTimeOut: 2000,
             },
         });
-        this.wizard.reset();
+        this.wizard().reset();
     }
 }

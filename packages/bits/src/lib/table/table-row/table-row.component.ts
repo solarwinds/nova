@@ -27,23 +27,23 @@ import {
     CdkRowDef,
 } from "@angular/cdk/table";
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Directive,
-    ElementRef,
-    HostBinding,
-    HostListener,
-    Input,
-    IterableDiffers,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    SimpleChanges,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Directive,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  Input,
+  IterableDiffers,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  TemplateRef,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import _includes from "lodash/includes";
 import { Subject, Subscription } from "rxjs";
@@ -460,8 +460,7 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
         return this.density.toLowerCase() === "tiny";
     }
 
-    @ViewChild("rowSelectionElement", { read: ElementRef, static: false })
-    private rowSelectionElement: ElementRef;
+    private readonly rowSelectionElement = viewChild("rowSelectionElement", { read: ElementRef });
 
     private onDestroy$ = new Subject<void>();
 
@@ -532,7 +531,7 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
         const rowSelector: Element | null = closestTableRow.querySelector(
             ".nui-table__table-cell__checkbox"
         );
-        if (rowSelector === this.rowSelectionElement?.nativeElement) {
+        if (rowSelector === this.rowSelectionElement()()()()?.nativeElement) {
             this.rowSelected();
         }
     }

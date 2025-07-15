@@ -22,19 +22,18 @@ import { Directionality } from "@angular/cdk/bidi";
 import { BooleanInput } from "@angular/cdk/coercion";
 import { CdkStepper, StepperSelectionEvent } from "@angular/cdk/stepper";
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    Input,
-    NgZone,
-    OnDestroy,
-    OnInit,
-    QueryList,
-    ViewChild,
-    ViewChildren,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  ViewEncapsulation,
+  viewChild,
+  viewChildren
 } from "@angular/core";
 import last from "lodash/last";
 import pull from "lodash/pull";
@@ -103,11 +102,9 @@ export class WizardHorizontalComponent
     /** Whether the label should display in bottom or end position. */
     @Input() labelPosition: "top" | "end" = "top";
 
-    @ViewChild("headerContainer") public headerContainer: ElementRef;
-    @ViewChildren("stepHeaders")
-    public stepHeaders: QueryList<WizardStepHeaderComponent>;
-    @ViewChildren("overflowComponent")
-    public overflowComponents: QueryList<WizardOverflowComponent>;
+    public readonly headerContainer = viewChild<ElementRef>("headerContainer");
+    public readonly stepHeaders = viewChildren<WizardStepHeaderComponent>("stepHeaders");
+    public readonly overflowComponents = viewChildren<WizardOverflowComponent>("overflowComponent");
 
     constructor(
         private dir: Directionality,
@@ -133,7 +130,7 @@ export class WizardHorizontalComponent
         this.cdRef.detectChanges();
 
         this.overflowComponentWidth =
-            this.overflowComponents?.first?.el?.nativeElement?.getBoundingClientRect()
+            this.overflowComponents()()()()?.at(0)!?.el?.nativeElement?.getBoundingClientRect()
                 ?.width || 0;
 
         // This handles how headers are processed during the resize process
@@ -225,7 +222,7 @@ export class WizardHorizontalComponent
                 }
             });
 
-        this.headerResizeObserver.observe(this.headerContainer.nativeElement);
+        this.headerResizeObserver.observe(this.headerContainer()()()().nativeElement);
     }
 
     public ngOnDestroy(): void {
@@ -349,7 +346,7 @@ export class WizardHorizontalComponent
     private checkHeaderPaddings(): void {
         if (!this.headerPaddings) {
             this.headerPaddings = +getComputedStyle(
-                this.headerContainer.nativeElement
+                this.headerContainer()()()().nativeElement
             ).paddingLeft.slice(0, -2);
         }
     }
@@ -357,14 +354,14 @@ export class WizardHorizontalComponent
     private checkHeaderWidth(): void {
         if (!this.stepHeaderWidth) {
             this.stepHeaderWidth =
-                this.stepHeaders.first?._elementRef?.nativeElement?.getBoundingClientRect()
+                this.stepHeaders()()()().at(0)!?._elementRef?.nativeElement?.getBoundingClientRect()
                     .width || 0;
         }
     }
 
     private getWidthsForCalculations(): void {
         this.headerContainerWidth =
-            this.headerContainer.nativeElement?.getBoundingClientRect().width;
+            this.headerContainer()()()().nativeElement?.getBoundingClientRect().width;
         this.allHeadersWidth = this.stepHeaderWidth * this.steps.length;
     }
 

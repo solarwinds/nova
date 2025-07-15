@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, ViewChild } from "@angular/core";
+import { Component, viewChild } from "@angular/core";
 
 import { WizardComponent, WizardStepComponent } from "@nova-ui/bits";
 
@@ -28,15 +28,14 @@ import { WizardComponent, WizardStepComponent } from "@nova-ui/bits";
     standalone: false,
 })
 export class WizardDisabledExampleComponent {
-    @ViewChild("wizardComponent") wizardComponent: WizardComponent;
-    @ViewChild("wizardStepDisable")
-    wizardStepDisabledComponent: WizardStepComponent;
+    readonly wizardComponent = viewChild.required<WizardComponent>("wizardComponent");
+    readonly wizardStepDisabledComponent = viewChild.required<WizardStepComponent>("wizardStepDisable");
 
     public disableStep(): void {
-        this.wizardComponent.disableStep(this.wizardStepDisabledComponent);
+        this.wizardComponent().disableStep(this.wizardStepDisabledComponent());
     }
 
     public enableStep(): void {
-        this.wizardComponent.enableStep(this.wizardStepDisabledComponent);
+        this.wizardComponent().enableStep(this.wizardStepDisabledComponent());
     }
 }

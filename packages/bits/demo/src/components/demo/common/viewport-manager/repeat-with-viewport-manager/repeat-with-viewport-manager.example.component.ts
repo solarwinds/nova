@@ -20,13 +20,13 @@
 
 import { HttpClient, HttpParams } from "@angular/common/http";
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    Injectable,
-    OnDestroy,
-    OnInit,
-    ViewChild,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Injectable,
+  OnDestroy,
+  OnInit,
+  viewChild
 } from "@angular/core";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
@@ -252,8 +252,8 @@ export class RepeatWithViewportManagerExampleComponent
     public books$ = new BehaviorSubject<IGBookBackendDTO[]>([]);
     public busy: boolean = false;
 
-    @ViewChild(RepeatComponent) private repeat: RepeatComponent;
-    @ViewChild(SearchComponent) private search: SearchComponent;
+    private readonly repeat = viewChild.required(RepeatComponent);
+    private readonly search = viewChild.required(SearchComponent);
 
     private readonly destroy$ = new Subject<void>();
 
@@ -282,7 +282,7 @@ export class RepeatWithViewportManagerExampleComponent
 
         this.viewportManager
             // Note: Initializing viewportManager with the repeat's CDK Viewport Ref
-            .setViewport(this.repeat.viewportRef)
+            .setViewport(this.repeat().viewportRef)
             // Note: Initializing the stream with the desired page size, based on which
             // ViewportManager will perform the observations and will emit
             // distinct ranges with step equal to provided pageSize
@@ -334,7 +334,7 @@ export class RepeatWithViewportManagerExampleComponent
     private registerFilters() {
         this.dataSource.registerComponent({
             virtualScroll: { componentInstance: this.viewportManager },
-            search: { componentInstance: this.search },
+            search: { componentInstance: this.search() },
         });
     }
 }

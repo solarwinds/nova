@@ -19,18 +19,18 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentChecked,
-    Attribute,
-    ChangeDetectionStrategy,
-    Component,
-    ElementRef,
-    HostBinding,
-    Input,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation,
+  AfterContentChecked,
+  Attribute,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewContainerRef,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import { fromEvent, merge, Subject, timer } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
@@ -168,8 +168,7 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
         return this.ariaLabel || this.getAriaLabel();
     }
 
-    @ViewChild("contentContainer", { static: true, read: ViewContainerRef })
-    private contentContainer: ViewContainerRef;
+    private readonly contentContainer = viewChild("contentContainer", { read: ViewContainerRef });
 
     private ngUnsubscribe: Subject<void> = new Subject<void>();
     private _iconColor: string;
@@ -235,11 +234,11 @@ should be set explicitly: `,
         // In chrome once innerText gets touched in a native element this caused issues in table-sticky-header NUI-6033
         return this._isContentEmpty
             ? this.icon
-            : this.contentContainer.element.nativeElement.textContent.trim();
+            : this.contentContainer()()()().element.nativeElement.textContent.trim();
     }
 
     private setIsContentEmptyValue() {
-        const innerHTML = this.contentContainer.element.nativeElement.innerHTML;
+        const innerHTML = this.contentContainer()()()().element.nativeElement.innerHTML;
         this._isContentEmpty = !innerHTML || !innerHTML.trim();
     }
 

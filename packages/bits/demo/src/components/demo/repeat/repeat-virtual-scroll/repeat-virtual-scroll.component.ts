@@ -19,14 +19,14 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    ViewChild,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  viewChild
 } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
 // eslint-disable-next-line import/no-deprecated
@@ -73,7 +73,7 @@ export class RepeatVirtualScrollComponent
         trackBy: (_, item): string | undefined => item?.name,
     };
 
-    @ViewChild(RepeatComponent) repeat: RepeatComponent;
+    readonly repeat = viewChild.required(RepeatComponent);
 
     private readonly destroy$ = new Subject<void>();
 
@@ -97,14 +97,15 @@ export class RepeatVirtualScrollComponent
     }
 
     public async ngAfterViewInit(): Promise<void> {
+        const repeat = this.repeat();
         this.dataSource.registerComponent({
             virtualScroll: { componentInstance: this.viewportManager },
-            repeat: { componentInstance: this.repeat },
+            repeat: { componentInstance: repeat },
         });
 
         this.viewportManager
             // Note: Initializing viewportManager with the repeat's CDK Viewport Ref
-            .setViewport(this.repeat.viewportRef)
+            .setViewport(repeat.viewportRef)
 
             // Note: Initializing the stream with the desired page size, based on which
             // ViewportManager will perform the observations and will emit

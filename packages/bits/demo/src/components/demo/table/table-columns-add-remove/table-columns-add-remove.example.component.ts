@@ -19,11 +19,11 @@
 //  THE SOFTWARE.
 
 import {
-    ChangeDetectionStrategy,
-    Component,
-    Inject,
-    TemplateRef,
-    ViewChild,
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  TemplateRef,
+  viewChild
 } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
@@ -71,7 +71,7 @@ export class TableColumnsAddRemoveExampleComponent {
     public myForm;
     public newColumn: string;
     public dataSource = getData();
-    @ViewChild(TableComponent) table: TableComponent<IExampleTableModel>;
+    readonly table = viewChild.required(TableComponent);
 
     constructor(
         @Inject(DialogService) private dialogService: DialogService,
@@ -119,17 +119,17 @@ export class TableColumnsAddRemoveExampleComponent {
 
     public deleteRow(row: IExampleTableModel): void {
         this.dataSource.splice(this.dataSource.indexOf(row, 0), 1);
-        this.table.renderRows();
+        this.table().renderRows();
     }
 
     public appendRow(): void {
         this.dataSource.splice(this.dataSource.length, 0, getRowDataToAppend());
-        this.table.renderRows();
+        this.table().renderRows();
     }
 
     public prependRow(): void {
         this.dataSource.splice(0, 0, getRowDataToPrepend());
-        this.table.renderRows();
+        this.table().renderRows();
     }
 }
 

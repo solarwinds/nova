@@ -19,20 +19,20 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    ContentChildren,
-    ElementRef,
-    HostBinding,
-    Input,
-    OnDestroy,
-    OnInit,
-    QueryList,
-    Renderer2,
-    ViewChild,
-    ViewContainerRef,
+  AfterViewInit,
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  ElementRef,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  Renderer2,
+  ViewContainerRef,
+  viewChild,
+  contentChildren
 } from "@angular/core";
 
 import {
@@ -95,11 +95,9 @@ export class SheetGroupComponent implements OnInit, AfterViewInit, OnDestroy {
     @HostBinding("class.sheet-group-direction-row") applyDirectionRowClass =
         true;
 
-    @ViewChild("resizerPlaceholder", { read: ViewContainerRef })
-    public resizerPlaceholder: ViewContainerRef;
-    @ContentChildren(SheetComponent) sheetList: QueryList<SheetComponent>;
-    @ContentChildren(SheetGroupComponent, { descendants: false })
-    sheetGroupList: QueryList<SheetGroupComponent>;
+    public readonly resizerPlaceholder = viewChild("resizerPlaceholder", { read: ViewContainerRef });
+    readonly sheetList = contentChildren(SheetComponent);
+    readonly sheetGroupList = contentChildren(SheetGroupComponent);
 
     public resizersList: ComponentRef<any>[] = [];
     public resizeDirection: ResizeDirection;
@@ -127,7 +125,7 @@ export class SheetGroupComponent implements OnInit, AfterViewInit, OnDestroy {
         const componentRef =
             this.componentFactoryResolver.resolveComponentFactory(factory);
 
-        const ref = this.resizerPlaceholder.createComponent(componentRef);
+        const ref = this.resizerPlaceholder()()()().createComponent(componentRef);
         (<LayoutResizerComponent>ref.instance).resizeElement = resizeEl;
         (<LayoutResizerComponent>ref.instance).resizeDirection =
             this.resizeDirection;
@@ -223,13 +221,13 @@ export class SheetGroupComponent implements OnInit, AfterViewInit, OnDestroy {
         // 2 addResizers needed for correct handling sheetGroups and sheets elements,
         // f.e. flex basis calculation or detection last element of correspondent type
         if (this.isResizable) {
-            this.addResizers(this.sheetList);
-            this.addResizers(this.filterGroups(this.sheetGroupList));
+            this.addResizers(this.sheetList()()()());
+            this.addResizers(this.filterGroups(this.sheetGroupList()()()()));
         } else {
-            this.calculateFlexBasis(this.sheetList, this.sheetList.length);
+            this.calculateFlexBasis(this.sheetList()()()(), this.sheetList()()()().length);
             this.calculateFlexBasis(
-                this.filterGroups(this.sheetGroupList),
-                this.filterGroups(this.sheetGroupList).length
+                this.filterGroups(this.sheetGroupList()()()()),
+                this.filterGroups(this.sheetGroupList()()()()).length
             );
         }
     }

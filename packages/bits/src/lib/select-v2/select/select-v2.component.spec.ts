@@ -20,13 +20,13 @@
 
 import { LiveAnnouncer } from "@angular/cdk/a11y";
 import {
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    NO_ERRORS_SCHEMA,
-    QueryList,
-    SimpleChange,
-    ViewChild,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  NO_ERRORS_SCHEMA,
+  QueryList,
+  SimpleChange,
+  viewChild
 } from "@angular/core";
 import {
     ComponentFixture,
@@ -59,7 +59,7 @@ import { InputValueTypes } from "../types";
 class SelectV2WrapperWithFormControlComponent {
     public items = Array.from({ length: 10 }).map((_, i) => `Item ${i}`);
     public selectControl = new FormControl();
-    @ViewChild(SelectV2Component) select: SelectV2Component;
+    readonly select = viewChild.required(SelectV2Component);
     constructor(public elRef: ElementRef<HTMLElement>) {}
 }
 
@@ -76,7 +76,7 @@ class SelectV2WrapperWithFormControlComponent {
 class SelectV2WrapperWithValueComponent {
     public items = Array.from({ length: 10 }).map((_, i) => `Item ${i}`);
     public value: InputValueTypes = this.items[0];
-    @ViewChild(SelectV2Component) select: SelectV2Component;
+    readonly select = viewChild.required(SelectV2Component);
     constructor(public elRef: ElementRef<HTMLElement>) {}
 }
 
@@ -95,7 +95,7 @@ class SelectV2WrapperWithValueComponent {
 class SelectV2WrapperAsyncComponent {
     public items: any[];
     public selectControl = new FormControl();
-    @ViewChild(SelectV2Component) select: SelectV2Component;
+    readonly select = viewChild.required(SelectV2Component);
     constructor(public elRef: ElementRef<HTMLElement>) {}
 
     public setItems() {
@@ -759,21 +759,21 @@ describe("components >", () => {
                 );
 
                 expect(
-                    wrapperWithFormControlComponent.select.getLastSelectedOption()
+                    wrapperWithFormControlComponent.select().getLastSelectedOption()
                         ?.value
                 ).toEqual(itemToSet);
             });
 
             it("should make form control touched on focusout", () => {
                 spyOn(
-                    wrapperWithFormControlComponent.select,
+                    wrapperWithFormControlComponent.select(),
                     "isOpenOnFocus" as never
                 ).and.returnValue(true as never);
                 expect(
                     wrapperWithFormControlComponent.selectControl.touched
                 ).toBeFalsy();
 
-                wrapperWithFormControlComponent.select.elRef.nativeElement.dispatchEvent(
+                wrapperWithFormControlComponent.select().elRef.nativeElement.dispatchEvent(
                     new Event("focusin")
                 );
                 document.body.click();
@@ -800,14 +800,14 @@ describe("components >", () => {
 
             it("should set the control to dirty when the value changes in DOM", () => {
                 spyOn(
-                    wrapperWithFormControlComponent.select,
+                    wrapperWithFormControlComponent.select(),
                     "isOpenOnFocus" as never
                 ).and.returnValue(true as never);
                 expect(
                     wrapperWithFormControlComponent.selectControl.dirty
                 ).toBeFalsy();
 
-                wrapperWithFormControlComponent.select.elRef.nativeElement.dispatchEvent(
+                wrapperWithFormControlComponent.select().elRef.nativeElement.dispatchEvent(
                     new Event("focusin")
                 );
                 const option = wrapperWithFormControlFixture.debugElement.query(
@@ -828,7 +828,7 @@ describe("components >", () => {
                 tick(200); // wrapperComponentAsync.setItems setTimeout
                 wrapperFixtureAsync.detectChanges();
                 tick(0); // selectV2.optionsChanged delay
-                expect(wrapperComponentAsync.select.displayText).toEqual(
+                expect(wrapperComponentAsync.select().displayText).toEqual(
                     "Item 3"
                 );
             }));
@@ -837,7 +837,7 @@ describe("components >", () => {
                 wrapperComponentAsync.selectControl.setValue(null);
                 wrapperFixtureAsync.detectChanges();
 
-                expect(wrapperComponentAsync.select.isEmpty).toEqual(true);
+                expect(wrapperComponentAsync.select().isEmpty).toEqual(true);
             });
         });
 
@@ -885,7 +885,7 @@ describe("components >", () => {
             expect(wrapperWithValueComponent.value).toEqual(itemToSet);
             wrapperWithValueFixture.detectChanges();
             tick(0);
-            expect(wrapperWithValueComponent.select.displayText).toEqual(
+            expect(wrapperWithValueComponent.select().displayText).toEqual(
                 itemToSet
             );
         }));

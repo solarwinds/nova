@@ -20,12 +20,12 @@
 
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
-    AfterViewInit,
-    Component,
-    HostListener,
-    OnDestroy,
-    OnInit,
-    ViewChild,
+  AfterViewInit,
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  viewChild
 } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { Subject } from "rxjs";
@@ -53,14 +53,14 @@ export class SelectV2VirtualScrollExampleComponent
     private readonly destroy$ = new Subject<void>();
     private scrollOffset: number = 0;
 
-    @ViewChild(CdkVirtualScrollViewport)
-    private viewport: CdkVirtualScrollViewport;
-    @ViewChild(SelectV2Component) private select: SelectV2Component;
+    private readonly viewport = viewChild(CdkVirtualScrollViewport);
+    private readonly select = viewChild.required(SelectV2Component);
 
     @HostListener("click", ["$event"])
     public handleClick(event: MouseEvent): void {
-        if (this.viewport) {
-            this.viewport.scrollToOffset(this.scrollOffset);
+        const viewport = this.viewport();
+        if (viewport) {
+            viewport.scrollToOffset(this.scrollOffset);
         }
     }
 
@@ -73,10 +73,10 @@ export class SelectV2VirtualScrollExampleComponent
     }
 
     public ngAfterViewInit(): void {
-        this.select.valueSelected
+        this.select().valueSelected
             .pipe(takeUntil(this.destroy$))
             .subscribe((selectionText) => {
-                this.scrollOffset = this.viewport.measureScrollOffset();
+                this.scrollOffset = this.viewport().measureScrollOffset();
             });
     }
 

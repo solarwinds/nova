@@ -22,7 +22,7 @@ import {
     FlexibleConnectedPositionStrategy,
     OverlayRef,
 } from "@angular/cdk/overlay";
-import { Component, ViewChild, ViewEncapsulation } from "@angular/core";
+import { Component, ViewEncapsulation, viewChild } from "@angular/core";
 
 import { DialogService, NuiDialogRef, OverlayComponent } from "@nova-ui/bits";
 
@@ -37,8 +37,8 @@ export class OverlayCustomDialogComponent {
     private overlayRef: OverlayRef;
     private activeDialog: NuiDialogRef;
 
-    @ViewChild("overlay1") overlay1: OverlayComponent;
-    @ViewChild("overlay2") overlay2: OverlayComponent;
+    readonly overlay1 = viewChild.required<OverlayComponent>("overlay1");
+    readonly overlay2 = viewChild.required<OverlayComponent>("overlay2");
 
     constructor(private dialogService: DialogService) {}
 

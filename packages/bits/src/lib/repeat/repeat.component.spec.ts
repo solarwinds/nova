@@ -292,12 +292,12 @@ describe("components >", () => {
                     // make sure there's no virtual scroll
                     component.virtualScroll = false;
 
-                    expect(component.dropListArea).toBeUndefined();
+                    expect(component.dropListArea()).toBeUndefined();
                     expect(component.dropListRef).toBeUndefined();
 
                     fixture.detectChanges();
 
-                    expect(component.dropListArea).toBeDefined();
+                    expect(component.dropListArea()).toBeDefined();
                     expect(component.dropListRef).toBeDefined();
 
                     expect(createDropListSpy).toHaveBeenCalledTimes(1);

@@ -19,15 +19,15 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    Output,
-    ViewChild,
-    ViewEncapsulation,
+  AfterContentInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 
 import { expandV2 } from "../../animations/expand";
@@ -79,8 +79,7 @@ export class ExpanderComponent implements AfterContentInit {
      */
     @Output() openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    @ViewChild("customHeaderContent", { static: true })
-    public customHeaderContent: ElementRef;
+    public readonly customHeaderContent = viewChild<ElementRef>("customHeaderContent");
 
     public state: "expanded" | "collapsed" = "collapsed";
     public isCustomHeaderContentEmpty: boolean = false;
@@ -91,7 +90,7 @@ export class ExpanderComponent implements AfterContentInit {
 
     public ngAfterContentInit(): void {
         this.isCustomHeaderContentEmpty =
-            this.customHeaderContent.nativeElement.childNodes.length === 0;
+            this.customHeaderContent()()()().nativeElement.childNodes.length === 0;
     }
 
     public toggle(): void {

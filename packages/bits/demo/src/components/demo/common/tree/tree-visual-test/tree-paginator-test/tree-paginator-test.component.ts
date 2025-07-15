@@ -25,10 +25,10 @@ import {
     NestedTreeControl,
 } from "@angular/cdk/tree";
 import {
-    Component,
-    IterableDiffer,
-    IterableDiffers,
-    ViewChild,
+  Component,
+  IterableDiffer,
+  IterableDiffers,
+  viewChild
 } from "@angular/core";
 
 import { DOCUMENT_CLICK_EVENT, EventBusService, expand } from "@nova-ui/bits";
@@ -53,7 +53,7 @@ export class TreePaginatorTestComponent {
     );
     public dataSource = new ArrayDataSource(TREE_DATA_PAGINATOR);
 
-    @ViewChild(CdkTree) private cdkTree: CdkTree<FoodNode>;
+    private readonly cdkTree = viewChild(CdkTree);
 
     hasChild = (_: number, node: FoodNode): boolean => !!node.children;
 
@@ -123,7 +123,7 @@ export class TreePaginatorTestComponent {
 
         // clear previously rendered leaf nodes
         nestedNodeDirective.nodeOutlet.first.viewContainer.clear();
-        this.cdkTree.renderNodeChanges(
+        this.cdkTree().renderNodeChanges(
             node.children,
             differ,
             nestedNodeDirective.nodeOutlet.first.viewContainer,

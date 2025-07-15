@@ -19,11 +19,11 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    OnDestroy,
-    ViewChild,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  viewChild
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { Subscription } from "rxjs";
@@ -93,9 +93,9 @@ export class DepreacatedDataSourceClientSideDelayedExampleComponent
     private delayActionSubject = new Subject<void>();
     private outputsSubscription: Subscription;
 
-    @ViewChild("filteringPaginator") filteringPaginator: PaginatorComponent;
-    @ViewChild("filteringSearch") filteringSearch: SearchComponent;
-    @ViewChild("filteringSorter") filteringSorter: SorterComponent;
+    readonly filteringPaginator = viewChild.required<PaginatorComponent>("filteringPaginator");
+    readonly filteringSearch = viewChild.required<SearchComponent>("filteringSearch");
+    readonly filteringSorter = viewChild.required<SorterComponent>("filteringSorter");
 
     constructor(
         public dataSourceService: LocalFilteringDataSource<any>,
@@ -110,10 +110,10 @@ export class DepreacatedDataSourceClientSideDelayedExampleComponent
     public ngAfterViewInit(): void {
         this.dataSourceService.componentTree = {
             search: {
-                componentInstance: this.filteringSearch,
+                componentInstance: this.filteringSearch(),
             },
             paginator: {
-                componentInstance: this.filteringPaginator,
+                componentInstance: this.filteringPaginator(),
             },
         };
         this.dataSourceService.applyFilters();
@@ -122,7 +122,7 @@ export class DepreacatedDataSourceClientSideDelayedExampleComponent
                 (data: INovaFilteringOutputs) => {
                     this.state = data;
                     if (data.paginator?.reset) {
-                        this.filteringPaginator.page = 1;
+                        this.filteringPaginator().page = 1;
                     }
                     this.changeDetection.detectChanges();
                 }

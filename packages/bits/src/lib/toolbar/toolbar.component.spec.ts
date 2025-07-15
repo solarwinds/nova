@@ -150,7 +150,7 @@ describe("components >", () => {
                 component.makeAllItemsVisible();
                 let isAllVisible: boolean = true;
                 component.groups.forEach((group: ToolbarGroupComponent) => {
-                    group.items.forEach((item: ToolbarItemComponent) => {
+                    group.items().forEach((item: ToolbarItemComponent) => {
                         if (item.type === ToolbarItemType.primary) {
                             isAllVisible = item.menuHidden === false;
                         }

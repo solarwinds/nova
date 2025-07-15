@@ -19,10 +19,10 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    Component,
-    TemplateRef,
-    ViewChild,
+  AfterViewInit,
+  Component,
+  TemplateRef,
+  viewChild
 } from "@angular/core";
 
 import { ToastService, WizardHorizontalComponent } from "@nova-ui/bits";
@@ -41,13 +41,13 @@ export class WizardDynamicExampleComponent implements AfterViewInit {
     public enableDynamicStepWithButton = false;
     public steps: IWizardStepData[] = [];
 
-    @ViewChild("dynamicTemplate1") dynamicTemplate1: TemplateRef<string>;
-    @ViewChild("wizardComponent") private wizard: WizardHorizontalComponent;
+    readonly dynamicTemplate1 = viewChild<TemplateRef<string>>("dynamicTemplate1");
+    private readonly wizard = viewChild.required<WizardHorizontalComponent>("wizardComponent");
 
     constructor(private toastService: ToastService) {}
 
     public ngAfterViewInit(): void {
-        this.addStep(this.dynamicTemplate1, $localize`My first dynamic step`);
+        this.addStep(this.dynamicTemplate1(), $localize`My first dynamic step`);
     }
 
     public toggleStep(): void {
@@ -62,7 +62,7 @@ export class WizardDynamicExampleComponent implements AfterViewInit {
     }
 
     public resetWizard(): void {
-        this.wizard.reset();
+        this.wizard().reset();
     }
 
     public finishWizard(): void {

@@ -128,7 +128,7 @@ describe("components >", () => {
             datetimePicker.displayMode = "inline";
             datetimePicker.ngAfterViewInit();
             const isInline =
-                datetimePicker.codeElement.nativeElement.classList.contains(
+                datetimePicker.codeElement().nativeElement.classList.contains(
                     "nui-datetime-picker--inline"
                 );
             expect(isInline).toBeTruthy();

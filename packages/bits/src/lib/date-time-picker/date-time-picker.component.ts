@@ -19,19 +19,19 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnInit,
-    Output,
-    Renderer2,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnInit,
+  Output,
+  Renderer2,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import moment from "moment/moment";
@@ -95,8 +95,7 @@ export class DateTimePickerComponent
         }
     }
 
-    @ViewChild("nuiDatetimePicker", { static: true })
-    public codeElement: ElementRef;
+    public readonly codeElement = viewChild<ElementRef>("nuiDatetimePicker");
     /** Callback to invoke on model change */
     @Output()
     modelChanged: EventEmitter<Moment> = new EventEmitter<Moment>();
@@ -137,12 +136,16 @@ export class DateTimePickerComponent
 
     public ngAfterViewInit(): void {
         if (this.displayMode === "inline") {
+            const codeElement = this.codeElement();
+            const codeElement = this.codeElement();
+            const codeElement = this.codeElement();
+            const codeElement = this.codeElement();
             this.renderer.addClass(
-                this.codeElement.nativeElement,
+                codeElement.nativeElement,
                 "nui-datetime-picker--inline"
             );
             this.renderer.addClass(
-                this.codeElement.nativeElement.querySelector(".nui-timepicker"),
+                codeElement.nativeElement.querySelector(".nui-timepicker"),
                 "nui-dropdown--inline"
             );
         }

@@ -79,6 +79,18 @@ export class MenuLinkComponent extends MenuItemBaseComponent {
      * Adds icon by specified icon name
      */
     @Input() public icon: string;
+    // TODO: Skipped for migration because:
+    //  This query overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This query overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This query overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This query overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @ViewChild("menuLink") menuItem: ElementRef;
 
     constructor(

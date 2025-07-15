@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, viewChild } from "@angular/core";
 import { Subscription } from "rxjs";
 
 import {
@@ -59,7 +59,7 @@ export class TablePaginationExampleComponent
     ];
     public dataSource?: IExampleTableModel[] = [];
     public paginationTotal?: number;
-    @ViewChild("filteringPaginator") filteringPaginator: PaginatorComponent;
+    readonly filteringPaginator = viewChild.required<PaginatorComponent>("filteringPaginator");
 
     private outputsSubscription: Subscription;
 
@@ -72,7 +72,7 @@ export class TablePaginationExampleComponent
     public ngAfterViewInit(): void {
         this.dataSourceService.componentTree = {
             paginator: {
-                componentInstance: this.filteringPaginator,
+                componentInstance: this.filteringPaginator(),
             },
         };
         this.outputsSubscription =

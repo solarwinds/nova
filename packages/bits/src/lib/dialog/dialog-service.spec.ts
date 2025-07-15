@@ -22,14 +22,14 @@
 
 import { CommonModule } from "@angular/common";
 import {
-    Component,
-    DebugElement,
-    getDebugNode,
-    Injectable,
-    Injector,
-    NgModule,
-    OnDestroy,
-    ViewChild,
+  Component,
+  DebugElement,
+  getDebugNode,
+  Injectable,
+  Injector,
+  NgModule,
+  OnDestroy,
+  viewChild
 } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { Router } from "@angular/router";
@@ -120,13 +120,11 @@ class TestComponent {
     name = "World";
     openedDialog: NuiDialogRef;
     show = true;
-    @ViewChild("content", { static: true }) tplContent: any;
-    @ViewChild("destroyableContent", { static: true })
-    tplDestroyableContent: any;
-    @ViewChild("contentWithClose", { static: true }) tplContentWithClose: any;
-    @ViewChild("contentWithDismiss", { static: true })
-    tplContentWithDismiss: any;
-    @ViewChild("contentWithIf", { static: true }) tplContentWithIf: any;
+    readonly tplContent = viewChild<any>("content");
+    readonly tplDestroyableContent = viewChild<any>("destroyableContent");
+    readonly tplContentWithClose = viewChild<any>("contentWithClose");
+    readonly tplContentWithDismiss = viewChild<any>("contentWithDismiss");
+    readonly tplContentWithIf = viewChild<any>("contentWithIf");
 
     constructor(public dialogService: DialogService) {}
 
@@ -144,22 +142,22 @@ class TestComponent {
         return this.openedDialog;
     }
     openTpl(options?: object) {
-        return this.dialogService.open(this.tplContent, options);
+        return this.dialogService.open(this.tplContent(), options);
     }
     openCmpt(cmptType: any, options?: object) {
         return this.dialogService.open(cmptType, options);
     }
     openDestroyableTpl(options?: object) {
-        return this.dialogService.open(this.tplDestroyableContent, options);
+        return this.dialogService.open(this.tplDestroyableContent(), options);
     }
     openTplClose(options?: object) {
-        return this.dialogService.open(this.tplContentWithClose, options);
+        return this.dialogService.open(this.tplContentWithClose(), options);
     }
     openTplDismiss(options?: object) {
-        return this.dialogService.open(this.tplContentWithDismiss, options);
+        return this.dialogService.open(this.tplContentWithDismiss(), options);
     }
     openTplIf(options?: object) {
-        return this.dialogService.open(this.tplContentWithIf, options);
+        return this.dialogService.open(this.tplContentWithIf(), options);
     }
 }
 

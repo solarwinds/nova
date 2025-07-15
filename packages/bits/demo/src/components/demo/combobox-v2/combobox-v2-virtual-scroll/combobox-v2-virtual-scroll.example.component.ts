@@ -20,11 +20,11 @@
 
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
-    AfterViewInit,
-    Component,
-    HostListener,
-    OnDestroy,
-    ViewChild,
+  AfterViewInit,
+  Component,
+  HostListener,
+  OnDestroy,
+  viewChild
 } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { Observable, of, Subject } from "rxjs";
@@ -54,25 +54,25 @@ export class ComboboxV2VirtualScrollExampleComponent
     private readonly destroy$ = new Subject<void>();
     private scrollOffset: number = 0;
 
-    @ViewChild(CdkVirtualScrollViewport)
-    private viewport: CdkVirtualScrollViewport;
-    @ViewChild(ComboboxV2Component) private combobox: ComboboxV2Component;
+    private readonly viewport = viewChild(CdkVirtualScrollViewport);
+    private readonly combobox = viewChild.required(ComboboxV2Component);
 
     @HostListener("click")
     public handleClick(): void {
-        if (this.viewport) {
-            this.viewport.scrollToOffset(this.scrollOffset);
+        const viewport = this.viewport();
+        if (viewport) {
+            viewport.scrollToOffset(this.scrollOffset);
         }
     }
 
     public ngAfterViewInit(): void {
-        this.combobox.valueSelected
+        this.combobox().valueSelected
             .pipe(takeUntil(this.destroy$))
             .subscribe(() => {
-                this.scrollOffset = this.viewport.measureScrollOffset();
+                this.scrollOffset = this.viewport().measureScrollOffset();
             });
 
-        this.combobox.valueChanged
+        this.combobox().valueChanged
             .pipe(
                 filter((v) => v !== undefined),
                 // eslint-disable-next-line import/no-deprecated
@@ -106,10 +106,10 @@ export class ComboboxV2VirtualScrollExampleComponent
 
     private calculateContainerHeight = (): void => {
         if (
-            this.combobox.inputValue &&
-            this.viewport.measureRenderedContentSize() < defaultContainerHeight
+            this.combobox().inputValue &&
+            this.viewport().measureRenderedContentSize() < defaultContainerHeight
         ) {
-            this.containerHeight = this.viewport.measureRenderedContentSize();
+            this.containerHeight = this.viewport().measureRenderedContentSize();
             return;
         }
         this.containerHeight = defaultContainerHeight;

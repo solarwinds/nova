@@ -79,10 +79,34 @@ export class WizardStepV2Component
     @Input() stepIndex: number;
 
     /** Content for step label given by `<ng-template wizardStepLabel>`. */
+    // TODO: Skipped for migration because:
+    //  This query is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This query is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This query is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This query is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @ContentChild(WizardStepLabelDirective)
     declare stepLabel: WizardStepLabelDirective;
 
     /** Content for footer given by `<ng-template wizardStepFooter>`. */
+    // TODO: Skipped for migration because:
+    //  This query is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This query is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This query is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
+    // TODO: Skipped for migration because:
+    //  This query is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @ContentChild(WizardStepFooterDirective)
     stepFooter: WizardStepFooterDirective;
 

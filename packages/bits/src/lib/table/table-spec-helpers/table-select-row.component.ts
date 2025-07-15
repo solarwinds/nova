@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectorRef, Component, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, viewChild } from "@angular/core";
 
 import { TableSelectionConfig } from "@nova-ui/bits";
 
@@ -168,8 +168,7 @@ export class TableSelectTestComponent {
     public selectable = true;
     public selectionConfig: TableSelectionConfig | null = null;
 
-    @ViewChild(TableComponent, { static: true })
-    tableComponent: TableComponent<any>;
+    readonly tableComponent = viewChild.required(TableComponent);
     positionWidth = 100;
     constructor(public changeDetection: ChangeDetectorRef) {}
 

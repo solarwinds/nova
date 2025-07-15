@@ -19,10 +19,10 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    ElementRef,
-    ViewChild,
-    ViewEncapsulation,
+  Component,
+  ElementRef,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 
 import { TableSpecHelpers } from "./table-spec-helpers";
@@ -79,5 +79,5 @@ import { TableSpecHelpers } from "./table-spec-helpers";
 export class ResizeTableComponent {
     public displayedColumns = ["position", "name", "asset", "location"];
     public dataSource = TableSpecHelpers.getTableInitialData();
-    @ViewChild("tableContainer") tableContainer: ElementRef;
+    readonly tableContainer = viewChild<ElementRef>("tableContainer");
 }

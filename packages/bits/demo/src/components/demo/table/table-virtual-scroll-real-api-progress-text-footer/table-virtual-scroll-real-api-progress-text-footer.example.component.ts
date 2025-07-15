@@ -20,13 +20,13 @@
 
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    OnDestroy,
-    OnInit,
-    ViewChild,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  viewChild
 } from "@angular/core";
 import { Subject } from "rxjs";
 // eslint-disable-next-line import/no-deprecated
@@ -95,8 +95,7 @@ export class TableVirtualScrollRealApiProgressTextFooterExampleComponent
         this.dataSource = new RandomuserTableDataSource();
     }
 
-    @ViewChild(CdkVirtualScrollViewport, { static: false })
-    viewport: CdkVirtualScrollViewport;
+    readonly viewport = viewChild(CdkVirtualScrollViewport);
 
     public ngOnInit(): void {
         this.dataSource.busy
@@ -110,7 +109,7 @@ export class TableVirtualScrollRealApiProgressTextFooterExampleComponent
         this.registerVirtualScroll();
         this.viewportManager
             // Note: Initializing viewportManager with the repeat's CDK Viewport Ref
-            .setViewport(this.viewport)
+            .setViewport(this.viewport())
             // Note: Initializing the stream with the desired page size, based on which
             // VirtualViewportManager will perform the observations and will emit
             // distinct ranges with step equal to provided pageSize

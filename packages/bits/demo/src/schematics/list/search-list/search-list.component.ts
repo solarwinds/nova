@@ -19,14 +19,14 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    ViewChild,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  viewChild
 } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
@@ -75,9 +75,9 @@ export class SearchListComponent implements OnInit, AfterViewInit, OnDestroy {
         trackBy: (index, item): string | undefined => item?.name,
     };
 
-    @ViewChild(RepeatComponent) repeat: RepeatComponent;
-    @ViewChild(PaginatorComponent) paginator: PaginatorComponent;
-    @ViewChild(SearchComponent) search: SearchComponent;
+    readonly repeat = viewChild.required(RepeatComponent);
+    readonly paginator = viewChild.required(PaginatorComponent);
+    readonly search = viewChild.required(SearchComponent);
 
     private readonly destroy$ = new Subject<void>();
 
@@ -100,13 +100,14 @@ export class SearchListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     public async ngAfterViewInit(): Promise<void> {
+        const search = this.search();
         this.dataSource.registerComponent({
-            paginator: { componentInstance: this.paginator },
-            search: { componentInstance: this.search },
-            repeat: { componentInstance: this.repeat },
+            paginator: { componentInstance: this.paginator() },
+            search: { componentInstance: search },
+            repeat: { componentInstance: this.repeat() },
         });
 
-        this.search.focusChange
+        search.focusChange
             .pipe(
                 tap(async (focused: boolean) => {
                     // we want to perform a new search on blur event

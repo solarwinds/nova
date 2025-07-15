@@ -19,11 +19,11 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    Component,
-    Inject,
-    OnDestroy,
-    ViewChild,
+  AfterViewInit,
+  Component,
+  Inject,
+  OnDestroy,
+  viewChild
 } from "@angular/core";
 import _get from "lodash/get";
 import _isEmpty from "lodash/isEmpty";
@@ -198,10 +198,10 @@ export class DepreacatedDataSourceClientSideFilteringExampleComponent
     public chosenColors: string[] = [];
     public chosenStatuses: string[] = [];
 
-    @ViewChild("filteringSearch") filteringSearch: SearchComponent;
-    @ViewChild("filteringSorter") filteringSorter: SorterComponent;
-    @ViewChild("filteringRepeat") filteringRepeat: RepeatComponent;
-    @ViewChild("filteringPaginator") filteringPaginator: PaginatorComponent;
+    readonly filteringSearch = viewChild.required<SearchComponent>("filteringSearch");
+    readonly filteringSorter = viewChild.required<SorterComponent>("filteringSorter");
+    readonly filteringRepeat = viewChild.required<RepeatComponent>("filteringRepeat");
+    readonly filteringPaginator = viewChild.required<PaginatorComponent>("filteringPaginator");
 
     private outputsSubscription: Subscription;
 
@@ -228,7 +228,7 @@ export class DepreacatedDataSourceClientSideFilteringExampleComponent
                     this.filteringState = data;
                     if (data && data.paginator && data.paginator.reset) {
                         // This allows to go back to first page after filtering/search/sorting has changed
-                        this.filteringPaginator.goToPage(1);
+                        this.filteringPaginator().goToPage(1);
                     }
                 }
             );
@@ -267,13 +267,13 @@ export class DepreacatedDataSourceClientSideFilteringExampleComponent
             },
         },
         search: {
-            componentInstance: this.filteringSearch,
+            componentInstance: this.filteringSearch(),
         },
         sorter: {
-            componentInstance: this.filteringSorter,
+            componentInstance: this.filteringSorter(),
         },
         paginator: {
-            componentInstance: this.filteringPaginator,
+            componentInstance: this.filteringPaginator(),
         },
     });
 

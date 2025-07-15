@@ -19,20 +19,21 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnDestroy,
-    Output,
-    Renderer2,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnDestroy,
+  Output,
+  Renderer2,
+  ViewChild,
+  ViewContainerRef,
+  ViewEncapsulation,
+  viewChild
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { Subscription } from "rxjs";
@@ -180,13 +181,23 @@ export class CheckboxComponent
     /**
      * Reference to the inner input checkbox html element
      */
+    // TODO: Skipped for migration because:
+    //  This query overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This query overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This query overrides a field from a superclass, while the superclass field
+    //  is not migrated.
+    // TODO: Skipped for migration because:
+    //  This query overrides a field from a superclass, while the superclass field
+    //  is not migrated.
     @ViewChild("inputViewContainer", { read: ViewContainerRef })
     public inputViewContainer: ViewContainerRef;
 
-    @ViewChild("checkboxContent")
-    public checkboxContent: ElementRef;
-    @ViewChild("checkboxLabel")
-    public checkboxLabel: ElementRef;
+    public readonly checkboxContent = viewChild<ElementRef>("checkboxContent");
+    public readonly checkboxLabel = viewChild<ElementRef>("checkboxLabel");
 
     private rendererListener: Function;
     private sub: Subscription;
@@ -203,7 +214,7 @@ export class CheckboxComponent
 
     public ngAfterViewInit(): void {
         this.rendererListener = this.renderer.listen(
-            this.checkboxLabel.nativeElement,
+            this.checkboxLabel()()()().nativeElement,
             "keydown",
             (event: KeyboardEvent) => {
                 this.eventBusService
@@ -215,7 +226,7 @@ export class CheckboxComponent
         this.sub = this.eventBusService
             .getStream(CHECKBOX_KEYDOWN_EVENT)
             .subscribe((event) => {
-                if (event.target === this.checkboxLabel.nativeElement) {
+                if (event.target === this.checkboxLabel()()()().nativeElement) {
                     if (this.keysAction.includes(event.code)) {
                         event.stopPropagation();
                         event.preventDefault();

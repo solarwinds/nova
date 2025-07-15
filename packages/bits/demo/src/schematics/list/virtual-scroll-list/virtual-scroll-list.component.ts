@@ -19,14 +19,14 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    ViewChild,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  viewChild
 } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
 import {
@@ -102,9 +102,9 @@ export class VirtualScrollListComponent
         trackBy: (index, item): string | undefined => item?.name,
     };
 
-    @ViewChild(RepeatComponent) repeat: RepeatComponent;
-    @ViewChild(SearchComponent) search: SearchComponent;
-    @ViewChild(SorterComponent) sorter: SorterComponent;
+    readonly repeat = viewChild.required(RepeatComponent);
+    readonly search = viewChild.required(SearchComponent);
+    readonly sorter = viewChild.required(SorterComponent);
 
     private readonly destroy$ = new Subject<void>();
 
@@ -128,16 +128,18 @@ export class VirtualScrollListComponent
     }
 
     public async ngAfterViewInit(): Promise<void> {
+        const search = this.search();
+        const repeat = this.repeat();
         this.dataSource.registerComponent({
             virtualScroll: { componentInstance: this.viewportManager },
-            search: { componentInstance: this.search },
-            sorter: { componentInstance: this.sorter },
-            repeat: { componentInstance: this.repeat },
+            search: { componentInstance: search },
+            sorter: { componentInstance: this.sorter() },
+            repeat: { componentInstance: repeat },
         });
 
         this.viewportManager
             // Note: Initializing viewportManager with the repeat's CDK Viewport Ref
-            .setViewport(this.repeat.viewportRef)
+            .setViewport(repeat.viewportRef)
 
             // Note: Initializing the stream with the desired page size, based on which
             // ViewportManager will perform the observations and will emit
@@ -174,7 +176,7 @@ export class VirtualScrollListComponent
             )
             .subscribe();
 
-        this.search.focusChange
+        search.focusChange
             .pipe(
                 tap(async (focused: boolean) => {
                     // we want to perform a new search on blur event

@@ -41,7 +41,7 @@ export class SelectedItemsKeyControlService {
         combobox: ComboboxV2Component
     ): void {
         this.combobox = combobox;
-        this.inputElement = combobox.inputElement?.nativeElement;
+        this.inputElement = combobox.inputElement()()()()?.nativeElement;
         this.selectedItems = elems;
 
         this.selectedItemsKeyManager = new ActiveDescendantKeyManager(elems)

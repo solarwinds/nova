@@ -19,11 +19,10 @@
 //  THE SOFTWARE.
 
 import {
-    ChangeDetectorRef,
-    Component,
-    QueryList,
-    ViewChild,
-    ViewChildren,
+  ChangeDetectorRef,
+  Component,
+  viewChild,
+  viewChildren
 } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
@@ -55,10 +54,8 @@ class TestTabHeadingComponent {
     public currentTabId: string;
     public tabsetContent: any[] = [];
 
-    @ViewChild(TabHeadingGroupComponent, { static: true })
-    tabHeadingGroup: TabHeadingGroupComponent;
-    @ViewChildren(TabHeadingComponent)
-    tabHeadings: QueryList<TabHeadingComponent>;
+    readonly tabHeadingGroup = viewChild.required(TabHeadingGroupComponent);
+    readonly tabHeadings = viewChildren(TabHeadingComponent);
 
     constructor(private changeDetector: ChangeDetectorRef) {
         this.addTab();
@@ -107,35 +104,36 @@ describe("components >", () => {
 
         it("should add tabs initially", () => {
             componentFixture.detectChanges();
-            expect(subject.tabHeadings.toArray().length).toEqual(2);
+            expect(subject.tabHeadings.length).toEqual(2);
         });
 
         it("should subscribe and unsubscribe from child tabs", () => {
             componentFixture.detectChanges();
             expect(
-                (subject.tabHeadingGroup as any)._tabSelectedSubscriptions
+                (subject.tabHeadingGroup() as any)._tabSelectedSubscriptions
                     .length
             ).toEqual(2);
             subject.addTab();
             componentFixture.detectChanges();
             expect(
-                (subject.tabHeadingGroup as any)._tabSelectedSubscriptions
+                (subject.tabHeadingGroup() as any)._tabSelectedSubscriptions
                     .length
             ).toEqual(3);
             subject.popTab();
             subject.popTab();
             componentFixture.detectChanges();
             expect(
-                (subject.tabHeadingGroup as any)._tabSelectedSubscriptions
+                (subject.tabHeadingGroup() as any)._tabSelectedSubscriptions
                     .length
             ).toEqual(1);
+            const tabHeadingGroup = subject.tabHeadingGroup();
             spyOn(
-                (subject.tabHeadingGroup as any)._tabSelectedSubscriptions[0],
+                (tabHeadingGroup as any)._tabSelectedSubscriptions[0],
                 "unsubscribe"
             );
-            subject.tabHeadingGroup.ngOnDestroy();
+            tabHeadingGroup.ngOnDestroy();
             expect(
-                (subject.tabHeadingGroup as any)._tabSelectedSubscriptions[0]
+                (tabHeadingGroup as any)._tabSelectedSubscriptions[0]
                     .unsubscribe
             ).toHaveBeenCalled();
         });
@@ -143,12 +141,12 @@ describe("components >", () => {
         it("should publish tabId of new tab", () => {
             componentFixture.detectChanges();
             expect(subject.currentTabId).toBe("1");
-            subject.tabHeadings.toArray()[1].selectTab();
+            subject.tabHeadings[1].selectTab();
             componentFixture.detectChanges();
             expect(subject.currentTabId).toBe("2");
             subject.addTab();
             componentFixture.detectChanges();
-            subject.tabHeadings.toArray()[2].selectTab();
+            subject.tabHeadings[2].selectTab();
             componentFixture.detectChanges();
             expect(subject.currentTabId).toBe("3");
         });

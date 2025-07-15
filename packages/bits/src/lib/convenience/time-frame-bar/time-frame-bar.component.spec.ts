@@ -180,7 +180,7 @@ describe("convenience components >", () => {
 
         describe("QuickPicker initialization", () => {
             it("should set the quick picker's presets to the default time frame service presets if not specified", () => {
-                expect(component.quickPicker.presets).toEqual(
+                expect(component.quickPicker().presets).toEqual(
                     component.timeframeService.getDefaultPresets()
                 );
             });
@@ -193,29 +193,29 @@ describe("convenience components >", () => {
                         endDatetimePattern: {},
                     },
                 };
-                component.quickPicker.presets = cloneDeep(testPresets);
+                quickPicker.presets = cloneDeep(testPresets);
                 component.ngAfterContentInit();
-                expect(component.quickPicker.presets).toEqual(testPresets);
+                expect(quickPicker.presets).toEqual(testPresets);
             });
 
             it("should set the quick picker's picker title to the default picker title if not specified", () => {
-                expect(component.quickPicker.pickerTitle).toEqual(
+                expect(component.quickPicker().pickerTitle).toEqual(
                     component.defaultPickerTitle
                 );
             });
 
             it("should use the quick picker's specified picker title", () => {
                 const testTitle = "test title";
-                component.quickPicker.pickerTitle = testTitle;
+                quickPicker.pickerTitle = testTitle;
                 component.ngAfterContentInit();
-                expect(component.quickPicker.pickerTitle).toEqual(testTitle);
+                expect(quickPicker.pickerTitle).toEqual(testTitle);
             });
 
             it("should invoke handlePresetSelection on quick picker presetSelected event", () => {
                 spyOn(component, "handlePresetSelection");
-                component.quickPicker.presetSelected.emit("samplePreset");
+                component.quickPicker().presetSelected.emit("samplePreset");
                 expect(
-                    component.quickPicker.presetSelected.observers.length
+                    component.quickPicker().presetSelected.observers.length
                 ).toEqual(1);
                 expect(component.handlePresetSelection).toHaveBeenCalledWith(
                     "samplePreset"
@@ -224,11 +224,11 @@ describe("convenience components >", () => {
 
             it("should unsubscribe from quick picker presetSelected event on time frame bar destroy", () => {
                 expect(
-                    component.quickPicker.presetSelected.observers.length
+                    component.quickPicker().presetSelected.observers.length
                 ).toEqual(1);
                 component.ngOnDestroy();
                 expect(
-                    component.quickPicker.presetSelected.observers.length
+                    component.quickPicker().presetSelected.observers.length
                 ).toEqual(0);
             });
         });
@@ -320,10 +320,10 @@ describe("convenience components >", () => {
             });
 
             it("should update the quick picker's selected preset", () => {
-                component.quickPicker.selectedPreset = undefined;
+                quickPicker.selectedPreset = undefined;
                 component.onPopoverShown();
-                expect(component.quickPicker.selectedPreset).toBeDefined();
-                expect(component.quickPicker.selectedPreset).toEqual(
+                expect(quickPicker.selectedPreset).toBeDefined();
+                expect(quickPicker.selectedPreset).toEqual(
                     // @ts-ignore: Suppressing error for testing purposes
                     component.timeFrame.selectedPresetId
                 );
@@ -331,7 +331,7 @@ describe("convenience components >", () => {
 
             it("should invoke markForCheck on the quick picker's change detector", () => {
                 const markForCheckSpy = spyOn(
-                    component.quickPicker.changeDetector,
+                    component.quickPicker().changeDetector,
                     "markForCheck"
                 );
                 component.onPopoverShown();
@@ -386,16 +386,16 @@ describe("convenience components >", () => {
             });
 
             it("should set the quick picker's preset to the specified value", () => {
-                component.quickPicker.selectedPreset = "";
+                quickPicker.selectedPreset = "";
                 component.handlePresetSelection("test_preset_key");
-                expect(component.quickPicker.selectedPreset).toEqual(
+                expect(quickPicker.selectedPreset).toEqual(
                     "test_preset_key"
                 );
             });
 
             it("should invoke markForCheck on the quick picker's change detector", () => {
                 const markForCheckSpy = spyOn(
-                    component.quickPicker.changeDetector,
+                    component.quickPicker().changeDetector,
                     "markForCheck"
                 );
                 component.handlePresetSelection("");

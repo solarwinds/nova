@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject, TemplateRef, ViewChild } from "@angular/core";
+import { Component, Inject, TemplateRef, viewChild } from "@angular/core";
 
 import {
     DialogService,
@@ -33,7 +33,7 @@ import {
     standalone: false,
 })
 export class WizardDialogExampleComponent {
-    @ViewChild("wizardComponent") wizardComponent: WizardComponent;
+    readonly wizardComponent = viewChild.required<WizardComponent>("wizardComponent");
 
     public activeDialog: NuiDialogRef;
 

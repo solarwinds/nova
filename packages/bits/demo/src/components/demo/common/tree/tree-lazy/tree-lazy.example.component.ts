@@ -25,11 +25,11 @@ import {
     NestedTreeControl,
 } from "@angular/cdk/tree";
 import {
-    Component,
-    Injectable,
-    IterableDiffer,
-    IterableDiffers,
-    ViewChild,
+  Component,
+  Injectable,
+  IterableDiffer,
+  IterableDiffers,
+  viewChild
 } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { delay } from "rxjs/operators";
@@ -81,7 +81,7 @@ export class TreeLazyExampleComponent {
     treeControl = new NestedTreeControl<FoodNode>((node) => node.children);
     dataSource = new ArrayDataSource(TREE_DATA);
 
-    @ViewChild(CdkTree) private cdkTree: CdkTree<FoodNode>;
+    private readonly cdkTree = viewChild(CdkTree);
 
     hasChild = (_: number, node: FoodNode): boolean => !!node.length;
 
@@ -101,7 +101,7 @@ export class TreeLazyExampleComponent {
         this.http.get().subscribe((res: FoodNode[]) => {
             node.isLoading = false;
             node.children = res;
-            this.cdkTree.renderNodeChanges(
+            this.cdkTree().renderNodeChanges(
                 node.children,
                 differ,
                 nestedNode.nodeOutlet.first.viewContainer,
