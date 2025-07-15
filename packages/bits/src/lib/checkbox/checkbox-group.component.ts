@@ -19,17 +19,16 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    Component,
-    ContentChildren,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnDestroy,
-    Output,
-    QueryList,
-    Renderer2,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ContentChildren,
+  forwardRef,
+  Input,
+  OnDestroy,
+  QueryList,
+  Renderer2,
+  output
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import _remove from "lodash/remove";
@@ -78,7 +77,7 @@ export class CheckboxGroupComponent
     /**
      * Is emitted when nui-checkbox is selected
      */
-    @Output() public valuesChange = new EventEmitter<any[]>();
+    public readonly valuesChange = output<any[]>();
 
     /**
      * CheckboxGroupComponent children array from CheckboxComponent items

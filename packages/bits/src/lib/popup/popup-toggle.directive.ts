@@ -19,12 +19,11 @@
 //  THE SOFTWARE.
 
 import {
-    Directive,
-    ElementRef,
-    EventEmitter,
-    HostListener,
-    Input,
-    Output,
+  Directive,
+  ElementRef,
+  HostListener,
+  Input,
+  output
 } from "@angular/core";
 
 /** @ignore */
@@ -38,7 +37,7 @@ export class PopupToggleDirective {
     /** sets disable state and which prevents emitting toggle (for using it on textbox component) */
     @Input() disabled: boolean;
 
-    @Output() toggle = new EventEmitter();
+    readonly toggle = output();
 
     constructor(public host: ElementRef) {}
 

@@ -1,9 +1,8 @@
 import {
-    Directive,
-    EventEmitter,
-    HostListener,
-    Input,
-    Output,
+  Directive,
+  HostListener,
+  Input,
+  output
 } from "@angular/core";
 
 import { IEventFilter, isTargetNotAnAnchor, makePredicate } from "./public-api";
@@ -24,9 +23,9 @@ export class ClickFilterDirective {
         this._preventDefault = makePredicate(value ?? isTargetNotAnAnchor);
     }
 
-    @Output() public passed$ = new EventEmitter<Event>();
-    @Output() public canceled$ = new EventEmitter<Event>();
-    @Output() public prevented$ = new EventEmitter<Event>();
+    public readonly passed$ = output<Event>();
+    public readonly canceled$ = output<Event>();
+    public readonly prevented$ = output<Event>();
 
     @HostListener("click", ["$event"])
     public handleEvent(event: Event): void {

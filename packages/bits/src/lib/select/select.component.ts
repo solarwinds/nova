@@ -19,20 +19,19 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    HostBinding,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    Renderer2,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  Component,
+  ElementRef,
+  forwardRef,
+  HostBinding,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 import _debounce from "lodash/debounce";
@@ -87,7 +86,7 @@ export class SelectComponent
     /**
      * Callback event that provides split-button behavior and interaction.
      */
-    @Output() secondaryAction = new EventEmitter<any>();
+    readonly secondaryAction = output<any>();
 
     private debouncedBlur = _debounce(() => {
         this.handleBlur();

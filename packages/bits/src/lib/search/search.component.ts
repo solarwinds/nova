@@ -19,12 +19,13 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    EventEmitter,
-    Input,
-    OnDestroy,
-    Output,
-    ViewEncapsulation,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
 import { Subject } from "rxjs";
@@ -87,7 +88,7 @@ export class SearchComponent implements IFilterPub, OnDestroy {
     /**
      * Event fired on each 'cancel' button click. Emits empty string.
      */
-    @Output() public cancel = new EventEmitter<string>();
+    public readonly cancel = output<string>();
     /**
      * Event fired on external focus changes (e.g. initiated by user via UI).
      * Use it if you bind an external input to 'captureFocus' property for matching them both.
@@ -103,7 +104,7 @@ export class SearchComponent implements IFilterPub, OnDestroy {
     /**
      * Event fired on 'search' button click or 'ENTER' key pressed
      */
-    @Output() public search = new EventEmitter<string>();
+    public readonly search = output<string>();
 
     public searchIconColor: string = "gray";
 

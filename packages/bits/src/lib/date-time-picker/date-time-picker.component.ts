@@ -19,19 +19,18 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnInit,
-    Output,
-    Renderer2,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  forwardRef,
+  Input,
+  OnInit,
+  Renderer2,
+  ViewChild,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import moment from "moment/moment";
@@ -98,8 +97,7 @@ export class DateTimePickerComponent
     @ViewChild("nuiDatetimePicker", { static: true })
     public codeElement: ElementRef;
     /** Callback to invoke on model change */
-    @Output()
-    modelChanged: EventEmitter<Moment> = new EventEmitter<Moment>();
+    readonly modelChanged = output<Moment>();
 
     /** model of picker */
     @Input()

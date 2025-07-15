@@ -20,17 +20,16 @@
 
 import { animate, style, transition, trigger } from "@angular/animations";
 import {
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    HostBinding,
-    Input,
-    NgZone,
-    OnChanges,
-    OnDestroy,
-    Output,
-    SimpleChanges,
-    ViewEncapsulation,
+  ChangeDetectorRef,
+  Component,
+  HostBinding,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  SimpleChanges,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 
 import { ButtonIcon, SpinnerSize } from "./public-api";
@@ -85,7 +84,7 @@ export class SpinnerComponent implements OnChanges, OnDestroy {
      */
     @Input() public ariaLabel: string = "Spinner";
 
-    @Output() public cancel = new EventEmitter();
+    public readonly cancel = output();
 
     @Input() public set size(val: SpinnerSize) {
         const sizes = Object.values(SpinnerSize);

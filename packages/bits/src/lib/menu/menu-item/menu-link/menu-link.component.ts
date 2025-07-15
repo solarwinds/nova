@@ -95,11 +95,13 @@ export class MenuLinkComponent extends MenuItemBaseComponent {
             event.preventDefault();
             event.stopPropagation();
         }
+        // TODO: The 'emit' function requires a mandatory boolean | undefined argument
         this.actionDone.emit();
     }
 
     public doAction(): void {
         this.menuItem.nativeElement.click();
+        // TODO: The 'emit' function requires a mandatory boolean | undefined argument
         this.actionDone.emit();
     }
 }

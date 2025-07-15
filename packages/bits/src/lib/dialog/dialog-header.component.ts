@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, Input, OnInit, output } from "@angular/core";
 
 import { SeverityLevels } from "./public-api";
 
@@ -43,7 +43,7 @@ export class DialogHeaderComponent implements OnInit {
     /**
      * Closes dialog on cross click.
      */
-    @Output() closed = new EventEmitter();
+    readonly closed = output();
 
     public severityClass = "";
     public severityIcon = "";

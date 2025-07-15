@@ -20,21 +20,20 @@
 
 import { OverlayConfig } from "@angular/cdk/overlay";
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    HostBinding,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  forwardRef,
+  HostBinding,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import {
     ControlValueAccessor,
@@ -171,18 +170,14 @@ export class DatePickerComponent
         this.updateTextboxValue();
     }
 
-    @Output()
-    selectionDone: EventEmitter<Moment> = new EventEmitter<Moment>();
+    readonly selectionDone = output<Moment>();
 
     /** callback to invoke when the value is changed. */
-    @Output()
-    valueChange: EventEmitter<Moment> = new EventEmitter<Moment>();
+    readonly valueChange = output<Moment>();
 
-    @Output()
-    calendarNavigated: EventEmitter<Moment> = new EventEmitter<Moment>();
+    readonly calendarNavigated = output<Moment>();
 
-    @Output()
-    inputBlurred: EventEmitter<any> = new EventEmitter<Moment>();
+    readonly inputBlurred = output<Moment>();
 
     @ViewChild(DatePickerInnerComponent)
     _datePicker: DatePickerInnerComponent;
@@ -282,6 +277,7 @@ export class DatePickerComponent
     }
 
     public updateTouchedState(): void {
+        setTimeout(() => // TODO: The 'emit' function requires a mandatory Moment argument
         setTimeout(() => this.inputBlurred.emit(), 100);
         this.onTouched();
     }

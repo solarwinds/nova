@@ -25,22 +25,21 @@ import {
 } from "@angular/cdk/overlay";
 import { DOCUMENT } from "@angular/common";
 import {
-    AfterContentInit,
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    ElementRef,
-    EventEmitter,
-    Inject,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  AfterContentInit,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  ElementRef,
+  Inject,
+  Input,
+  OnChanges,
+  OnDestroy,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -107,8 +106,7 @@ export class PopupComponent
         return !!this.popup?.showing;
     }
 
-    @Output()
-    public opened = new EventEmitter<boolean>();
+    public readonly opened = output<boolean>();
 
     @ViewChild("popupArea", { static: true }) popupArea: ElementRef;
     @ViewChild(OverlayComponent) popup: OverlayComponent;

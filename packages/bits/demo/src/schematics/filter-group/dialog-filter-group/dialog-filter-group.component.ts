@@ -19,13 +19,12 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    EventEmitter,
-    Inject,
-    Input,
-    OnInit,
-    Output,
-    TemplateRef,
+  Component,
+  Inject,
+  Input,
+  OnInit,
+  TemplateRef,
+  output
 } from "@angular/core";
 import _orderBy from "lodash/orderBy";
 
@@ -48,9 +47,8 @@ export class DialogFilterGroupCompositeComponent implements IFilterPub, OnInit {
     @Input() checkboxTemplateRef: TemplateRef<string>;
     @Input() expanderTemplateRef: TemplateRef<string>;
 
-    @Output() filterChanged: EventEmitter<IFilterGroupItem> =
-        new EventEmitter();
-    @Output() showAllButtonClicked: EventEmitter<any> = new EventEmitter();
+    readonly filterChanged = output<IFilterGroupItem>();
+    readonly showAllButtonClicked = output<any>();
 
     constructor(@Inject(DialogService) private dialogService: DialogService) {}
 

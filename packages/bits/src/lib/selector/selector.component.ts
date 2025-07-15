@@ -20,17 +20,16 @@
 
 import { OverlayConfig } from "@angular/cdk/overlay";
 import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { debounceTime, takeUntil } from "rxjs/operators";
@@ -94,8 +93,7 @@ export class SelectorComponent
     @Input()
     public ariaLabel: string = "Selector";
 
-    @Output()
-    public selectionChange = new EventEmitter<SelectionType>();
+    public readonly selectionChange = output<SelectionType>();
 
     @ViewChild("checkbox")
     public checkbox: CheckboxComponent;

@@ -19,12 +19,11 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    EventEmitter,
-    HostBinding,
-    HostListener,
-    Input,
-    Output,
+  Component,
+  HostBinding,
+  HostListener,
+  Input,
+  output
 } from "@angular/core";
 
 import { FileDropState } from "./public-api";
@@ -50,8 +49,8 @@ export class FileDropExampleComponent {
 
     @Input() public state: FileDropState = FileDropState.default;
 
-    @Output() public enter = new EventEmitter<DragEvent>();
-    @Output() public leave = new EventEmitter<DragEvent>();
+    public readonly enter = output<DragEvent>();
+    public readonly leave = output<DragEvent>();
     // Drop is handled as regular JS event in parent component.
     // enter and leave can't be since dragenter and dragleave for parent component are different
 

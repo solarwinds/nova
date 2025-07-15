@@ -75,6 +75,7 @@ describe("directives >", () => {
 
         it("should emit resize event and call containerResizeHandler function", async () => {
             const spy = spyOn(component, "containerResizeHandler");
+            // TODO: The 'emit' function requires a mandatory string argument
             subject.resizerSizeChanged.emit();
             await fixture.whenStable().then(() => {
                 expect(spy).toHaveBeenCalled();

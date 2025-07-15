@@ -26,21 +26,20 @@ import {
     style,
 } from "@angular/animations";
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    Renderer2,
-    SimpleChanges,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  SimpleChanges,
+  ViewChild,
+  ViewContainerRef,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import isUndefined from "lodash/isUndefined";
 import { Subject, Subscription } from "rxjs";
@@ -198,8 +197,8 @@ export class PanelComponent
     @Input() paneMinSize: string;
     @Input() paneMaxSize: string;
 
-    @Output() collapsed: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() hidden: EventEmitter<boolean> = new EventEmitter<boolean>();
+    readonly collapsed = output<boolean>();
+    readonly hidden = output<boolean>();
 
     @ViewChild("mainContent", { read: ViewContainerRef })
     private panelMainContent: ViewContainerRef;

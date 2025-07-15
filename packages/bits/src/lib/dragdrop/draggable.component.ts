@@ -20,13 +20,12 @@
 
 import { CdkDrag, CdkDropList } from "@angular/cdk/drag-drop";
 import {
-    Component,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    TemplateRef,
-    ViewChild,
+  Component,
+  Input,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  output
 } from "@angular/core";
 
 import { DroppableComponent } from "./droppable.component";
@@ -45,8 +44,8 @@ export class DraggableComponent implements OnInit {
     @Input() dropTarget: DroppableComponent;
     @Input() dragHandle: boolean = false;
     @Input() dragPreview: TemplateRef<any>;
-    @Output() dragStart = new EventEmitter();
-    @Output() dragEnd = new EventEmitter();
+    readonly dragStart = output();
+    readonly dragEnd = output();
 
     @ViewChild(CdkDropList, { static: true }) dropList: CdkDropList;
     @ViewChild(CdkDrag, { static: true }) dragElement: CdkDrag;

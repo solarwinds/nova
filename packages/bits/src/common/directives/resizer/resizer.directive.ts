@@ -19,17 +19,16 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    Input,
-    NgZone,
-    OnChanges,
-    OnDestroy,
-    Output,
-    Renderer2,
-    SimpleChanges,
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  Renderer2,
+  SimpleChanges,
+  output
 } from "@angular/core";
 import debounce from "lodash/debounce";
 import isFunction from "lodash/isFunction";
@@ -109,7 +108,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
     /**
      * Emits new size of element on which directive was applied
      */
-    @Output() public resizerSizeChanged = new EventEmitter<string>();
+    public readonly resizerSizeChanged = output<string>();
 
     protected resizePropObj: IResizeProperties;
     protected parentContainerNode: HTMLElement;

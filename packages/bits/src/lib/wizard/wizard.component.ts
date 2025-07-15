@@ -19,22 +19,21 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentInit,
-    AfterViewChecked,
-    ChangeDetectorRef,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    QueryList,
-    ViewChild,
-    ViewChildren,
-    ViewContainerRef,
-    ViewEncapsulation,
+  AfterContentInit,
+  AfterViewChecked,
+  ChangeDetectorRef,
+  Component,
+  ContentChildren,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+  ViewContainerRef,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import _find from "lodash/find";
 import _findIndex from "lodash/findIndex";
@@ -96,24 +95,23 @@ export class WizardComponent
     /**
      * Evaluated when a step is selected.
      */
-    @Output() public selectionChange =
-        new EventEmitter<IWizardSelectionEvent>();
+    public readonly selectionChange = output<IWizardSelectionEvent>();
     /**
      * Evaluated when the user attempts to cancel the wizard.
      */
-    @Output() public cancel = new EventEmitter<boolean>();
+    public readonly cancel = output<boolean>();
     /**
      * Evaluated when the user completes the wizard.
      */
-    @Output() public finish = new EventEmitter();
+    public readonly finish = output();
     /**
      * Emits when next button is clicked.
      */
-    @Output() public next = new EventEmitter();
+    public readonly next = output();
     /**
      * Emits when Back button is clicked.
      */
-    @Output() public back = new EventEmitter();
+    public readonly back = output();
 
     public currentStep?: WizardStepComponent;
     public stepLineWidth: number = 65;

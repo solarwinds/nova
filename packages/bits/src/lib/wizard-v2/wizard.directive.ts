@@ -26,18 +26,19 @@ import {
     StepperSelectionEvent,
 } from "@angular/cdk/stepper";
 import {
-    AfterContentInit,
-    AfterViewInit,
-    ContentChildren,
-    Directive,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    QueryList,
-    SimpleChanges,
-    ViewChildren,
+  AfterContentInit,
+  AfterViewInit,
+  ContentChildren,
+  Directive,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  QueryList,
+  SimpleChanges,
+  ViewChildren,
+  output
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { distinctUntilChanged, startWith, takeUntil } from "rxjs/operators";
@@ -73,8 +74,7 @@ export class WizardDirective
     public stepContentIds: string[];
 
     /** Event emitted when the current step is done transitioning in. */
-    @Output() readonly animationDone: EventEmitter<void> =
-        new EventEmitter<void>();
+    readonly animationDone = output<void>();
     /** Event emitted when the selected step has changed. */
     @Output() readonly selectionChange =
         new EventEmitter<StepperSelectionEvent>();
@@ -83,8 +83,7 @@ export class WizardDirective
     @Input() state: IWizardState;
 
     /** Emits the completed wizard state on component destroy */
-    @Output() readonly finished: EventEmitter<IWizardState> =
-        new EventEmitter<IWizardState>();
+    readonly finished = output<IWizardState>();
 
     /** The list of step headers of the steps in the stepper. */
     @ViewChildren(WizardStepHeaderComponent)
@@ -146,6 +145,7 @@ export class WizardDirective
             )
             .subscribe((event) => {
                 if ((event.toState as StepContentPositionState) === "current") {
+                    // TODO: The 'emit' function requires a mandatory void argument
                     this.animationDone.emit();
                 }
             });

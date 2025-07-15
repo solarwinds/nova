@@ -19,11 +19,10 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentInit,
-    Component,
-    EventEmitter,
-    Input,
-    Output,
+  AfterContentInit,
+  Component,
+  Input,
+  output
 } from "@angular/core";
 
 import { ToolbarItemDisplayStyle, ToolbarItemType } from "./public-api";
@@ -50,7 +49,7 @@ export class ToolbarItemComponent implements AfterContentInit {
 
     public menuHidden: boolean;
 
-    @Output() public actionDone = new EventEmitter();
+    public readonly actionDone = output();
 
     public get isDestructive(): boolean {
         return this.displayStyle === ToolbarItemDisplayStyle.destructive;

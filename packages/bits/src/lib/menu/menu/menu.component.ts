@@ -20,20 +20,19 @@
 
 import { FocusMonitor, FocusOrigin } from "@angular/cdk/a11y";
 import {
-    AfterViewInit,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    QueryList,
-    Renderer2,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  Component,
+  ContentChildren,
+  ElementRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  QueryList,
+  Renderer2,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
 import { Subject, Subscription } from "rxjs";
@@ -106,7 +105,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     /**
      * Event emitted when menu is blurred.
      */
-    @Output() public blurred = new EventEmitter();
+    public readonly blurred = output();
 
     public menuOpenStream = new Subject<void>();
     // Only menu that resolves *ngIf on <ng-content> with these menuItems can correctly get ContentChildren

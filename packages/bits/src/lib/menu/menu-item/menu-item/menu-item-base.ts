@@ -20,16 +20,15 @@
 
 import { Highlightable } from "@angular/cdk/a11y";
 import {
-    ChangeDetectorRef,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Input,
-    OnChanges,
-    Optional,
-    Output,
-    SimpleChanges,
+  ChangeDetectorRef,
+  Directive,
+  ElementRef,
+  HostBinding,
+  Input,
+  OnChanges,
+  Optional,
+  SimpleChanges,
+  output
 } from "@angular/core";
 
 import { MenuGroupComponent } from "../menu-group/menu-group.component";
@@ -59,7 +58,7 @@ export abstract class MenuItemBaseComponent
         return this.isActive;
     }
 
-    @Output() public actionDone = new EventEmitter<boolean | undefined>();
+    public readonly actionDone = output<boolean | undefined>();
 
     public isActive: boolean;
 

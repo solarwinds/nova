@@ -19,23 +19,22 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    Component,
-    ContentChild,
-    ElementRef,
-    EventEmitter,
-    HostListener,
-    Input,
-    NgZone,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    QueryList,
-    SimpleChanges,
-    ViewChild,
-    ViewChildren,
-    ViewEncapsulation,
+  AfterViewInit,
+  Component,
+  ContentChild,
+  ElementRef,
+  HostListener,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  SimpleChanges,
+  ViewChild,
+  ViewChildren,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
 import _size from "lodash/size";
@@ -123,17 +122,16 @@ export class ChipsComponent
      * Event that is fired when single item is cleared (by clicking on item or its remove icon).
      * Event data passed contains object with item clicked and its parent group.
      */
-    @Output() public chipRemoved = new EventEmitter<IChipRemoved>();
+    public readonly chipRemoved = output<IChipRemoved>();
     /**
      * Event that is fired when 'Clear All' is clicked.
      */
-    @Output() public removeAll = new EventEmitter<MouseEvent>();
+    public readonly removeAll = output<MouseEvent>();
 
     /**
      * Emits overflowed chips if chips overflow
      */
-    @Output() public chipsOverflowed: EventEmitter<IChipsItemsSource> =
-        new EventEmitter<IChipsItemsSource>();
+    public readonly chipsOverflowed = output<IChipsItemsSource>();
 
     public isOverflowed: boolean;
 

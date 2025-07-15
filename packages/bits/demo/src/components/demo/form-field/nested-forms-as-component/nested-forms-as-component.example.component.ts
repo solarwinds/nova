@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, EventEmitter, Inject, OnInit, Output } from "@angular/core";
+import { Component, Inject, OnInit, output } from "@angular/core";
 import {
     FormBuilder,
     FormControl,
@@ -113,7 +113,7 @@ export class NestedFormsAsComponentExampleComponent implements OnInit {
     standalone: false,
 })
 export class FirstCustomFormExampleComponent implements OnInit {
-    @Output() formReady = new EventEmitter<FirstFormGroup>();
+    readonly formReady = output<FirstFormGroup>();
     public firstForm = this.fb.group({
         firstName: this.fb.control("", Validators.required),
         lastName: this.fb.control("", Validators.required),
@@ -158,7 +158,7 @@ export class FirstCustomFormExampleComponent implements OnInit {
     standalone: false,
 })
 export class SecondCustomFormExampleComponent implements OnInit {
-    @Output() formReady = new EventEmitter<SecondFormGroup>();
+    readonly formReady = output<SecondFormGroup>();
     public secondForm = this.fb.group({
         city: null,
         address: null,

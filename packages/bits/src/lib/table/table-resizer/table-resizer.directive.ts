@@ -19,12 +19,11 @@
 //  THE SOFTWARE.
 
 import {
-    Directive,
-    EventEmitter,
-    HostBinding,
-    HostListener,
-    Input,
-    Output,
+  Directive,
+  HostBinding,
+  HostListener,
+  Input,
+  output
 } from "@angular/core";
 
 import { TableStateHandlerService } from "../table-state-handler.service";
@@ -43,7 +42,7 @@ export class TableResizerDirective {
 
     @Input() columnIndex: number;
 
-    @Output() resizerMovement = new EventEmitter<any>();
+    readonly resizerMovement = output<any>();
 
     constructor(private tableStateHandlerService: TableStateHandlerService) {}
 

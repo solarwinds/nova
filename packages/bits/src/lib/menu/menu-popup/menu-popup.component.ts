@@ -19,14 +19,13 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    EventEmitter,
-    HostBinding,
-    Input,
-    Output,
-    QueryList,
-    ViewChildren,
-    ViewEncapsulation,
+  Component,
+  HostBinding,
+  Input,
+  QueryList,
+  ViewChildren,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import _isFunction from "lodash/isFunction";
 import moment from "moment/moment";
@@ -70,7 +69,7 @@ export class MenuPopupComponent {
         return this.size === "large";
     }
 
-    @Output() public menuItemClicked? = new EventEmitter<IMenuItem>();
+    public readonly menuItemClicked = output<IMenuItem>();
 
     public handleClick(item: IMenuItem): void {
         if (!item.disabled) {

@@ -20,21 +20,20 @@
 
 import { OverlayConfig } from "@angular/cdk/overlay";
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    HostListener,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  forwardRef,
+  HostListener,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import _isEmpty from "lodash/isEmpty";
@@ -127,8 +126,8 @@ export class TimePickerComponent
         );
     }
 
-    @Output() public timeChanged = new EventEmitter();
-    @Output() inputBlurred: EventEmitter<any> = new EventEmitter<Moment>();
+    public readonly timeChanged = output();
+    readonly inputBlurred = output<Moment>();
 
     public times: Moment[];
     public itemsSource: IMenuGroup[] = [
@@ -235,6 +234,7 @@ export class TimePickerComponent
     }
 
     updateInnerModel(value: any): void {
+        setTimeout(() => // TODO: The 'emit' function requires a mandatory Moment argument
         setTimeout(() => this.inputBlurred.emit(), 100);
         if (value instanceof moment && !this.preserveInsignificant) {
             (value as Moment).year(0);

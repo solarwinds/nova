@@ -19,14 +19,15 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    Output,
-    ViewChild,
-    ViewEncapsulation,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  Output,
+  ViewChild,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
@@ -139,7 +140,7 @@ export class TextboxComponent
     /**
      * Event fired when textbox is focused out.
      */
-    @Output() blurred: EventEmitter<any> = new EventEmitter<any>();
+    readonly blurred = output<any>();
 
     // i18n nui_textbox_optional
     private optionalText = "Optional";

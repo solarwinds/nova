@@ -79,6 +79,7 @@ export class MenuItemComponent extends MenuItemBaseComponent {
         if (this.disabled) {
             event.stopPropagation();
         }
+        // TODO: The 'emit' function requires a mandatory boolean | undefined argument
         this.actionDone.emit();
     }
 

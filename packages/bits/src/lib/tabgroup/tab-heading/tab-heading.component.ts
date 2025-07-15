@@ -19,12 +19,11 @@
 //  THE SOFTWARE.
 
 import {
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    HostBinding,
-    Input,
-    Output,
+  ChangeDetectorRef,
+  Component,
+  HostBinding,
+  Input,
+  output
 } from "@angular/core";
 
 /** @ignore */
@@ -60,7 +59,7 @@ export class TabHeadingComponent {
     @Input() tabId: string;
 
     /** Event is fired when tab became active, $event:Tab equals to selected instance of Tab component */
-    @Output() selected: EventEmitter<TabHeadingComponent> = new EventEmitter();
+    readonly selected = output<TabHeadingComponent>();
 
     protected _active: boolean;
 

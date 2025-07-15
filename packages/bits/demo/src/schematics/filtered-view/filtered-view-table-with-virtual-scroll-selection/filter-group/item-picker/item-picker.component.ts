@@ -19,15 +19,14 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Inject,
-    Input,
-    OnInit,
-    Output,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  Input,
+  OnInit,
+  output
 } from "@angular/core";
 
 import {
@@ -61,7 +60,7 @@ export class ItemPickerComponent implements OnInit, AfterViewInit {
     @Input() itemPickerOptions: IItemPickerOption[];
     @Input() selectedValues: string[] = [];
 
-    @Output() selectionChanged: EventEmitter<ISelection> = new EventEmitter();
+    readonly selectionChanged = output<ISelection>();
 
     public sorter = {
         items: ["value"],

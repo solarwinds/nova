@@ -20,15 +20,14 @@
 
 import { DOCUMENT } from "@angular/common";
 import {
-    AfterViewInit,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    Inject,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges,
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  Inject,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  output
 } from "@angular/core";
 
 /**
@@ -63,7 +62,7 @@ export class SetFocusDirective implements AfterViewInit, OnChanges {
      * Passed value indicates whether element gets focus (true) of lose it (false).
      * Use it when you need to synchronize inner state of directive's 'nuiSetFocus' property and bound input property.
      */
-    @Output() public focusChange = new EventEmitter<boolean>();
+    public readonly focusChange = output<boolean>();
 
     private focusableElement: HTMLElement;
 

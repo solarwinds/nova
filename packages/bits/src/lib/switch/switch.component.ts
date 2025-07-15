@@ -19,13 +19,12 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnInit,
-    Output,
-    ViewEncapsulation,
+  Component,
+  forwardRef,
+  Input,
+  OnInit,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
@@ -62,7 +61,7 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
      */
     @Input() public ariaLabel: string = "Switch";
 
-    @Output() valueChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    readonly valueChange = output<boolean>();
 
     toggle(): void {
         if (this.disabled) {

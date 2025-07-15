@@ -20,13 +20,12 @@
 
 import { DOCUMENT } from "@angular/common";
 import {
-    Directive,
-    EventEmitter,
-    HostListener,
-    Inject,
-    Input,
-    OnInit,
-    Output,
+  Directive,
+  HostListener,
+  Inject,
+  Input,
+  OnInit,
+  output
 } from "@angular/core";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
@@ -58,11 +57,11 @@ export class ClipboardDirective implements OnInit {
     /**
      * Event that is fired when text was copied to the clipboard successfully
      */
-    @Output() public clipboardSuccess = new EventEmitter<void>();
+    public readonly clipboardSuccess = output<void>();
     /**
      * Event that is fired when copy text was failed
      */
-    @Output() public clipboardError = new EventEmitter<void>();
+    public readonly clipboardError = output<void>();
 
     private hasCopySupport = false;
 
@@ -75,6 +74,7 @@ export class ClipboardDirective implements OnInit {
             e.preventDefault();
             return this.copyText();
         } else {
+            // TODO: The 'emit' function requires a mandatory void argument
             this.clipboardError.emit();
             return this.logger.error(
                 "document copy operation is not supported"
@@ -111,9 +111,11 @@ export class ClipboardDirective implements OnInit {
             node.select();
             this.document.execCommand("copy");
             selection?.removeAllRanges();
+            // TODO: The 'emit' function requires a mandatory void argument
             this.clipboardSuccess.emit();
         } catch (ex) {
             this.logger.error(ex.message);
+            // TODO: The 'emit' function requires a mandatory void argument
             this.clipboardError.emit();
         } finally {
             this.document.body.removeChild(node);

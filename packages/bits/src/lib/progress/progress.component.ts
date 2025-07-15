@@ -19,13 +19,12 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    Output,
-    TemplateRef,
-    ViewEncapsulation,
+  Component,
+  Input,
+  OnChanges,
+  TemplateRef,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 
 /**
@@ -58,7 +57,7 @@ export class ProgressComponent implements OnChanges {
      */
     @Input() helpTemplateRef: TemplateRef<any>;
 
-    @Output() public cancel = new EventEmitter();
+    public readonly cancel = output();
 
     public isIndeterminate = false;
     public ariaValueNow: string | undefined;

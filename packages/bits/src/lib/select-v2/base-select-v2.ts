@@ -22,24 +22,25 @@ import { LiveAnnouncer } from "@angular/cdk/a11y";
 import { OverlayConfig } from "@angular/cdk/overlay";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
-    AfterContentInit,
-    AfterViewInit,
-    ChangeDetectorRef,
-    ContentChild,
-    ContentChildren,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    HostBinding,
-    HostListener,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    QueryList,
-    SimpleChanges,
-    ViewChild,
+  AfterContentInit,
+  AfterViewInit,
+  ChangeDetectorRef,
+  ContentChild,
+  ContentChildren,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  HostBinding,
+  HostListener,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  QueryList,
+  SimpleChanges,
+  ViewChild,
+  output
 } from "@angular/core";
 import { ControlValueAccessor } from "@angular/forms";
 import includes from "lodash/includes";
@@ -203,7 +204,7 @@ export abstract class BaseSelectV2
     @Output() public valueChanged = new EventEmitter<InputValueTypes>();
 
     /** Emits MouseEvent when click occurs outside Select/Combobox */
-    @Output() public clickOutsideDropdown = new EventEmitter<MouseEvent>();
+    public readonly clickOutsideDropdown = output<MouseEvent>();
 
     protected constructor(
         protected optionKeyControlService: OptionKeyControlService<IOption>,

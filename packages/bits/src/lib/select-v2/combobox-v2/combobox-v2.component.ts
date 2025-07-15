@@ -20,22 +20,21 @@
 
 import { LiveAnnouncer } from "@angular/cdk/a11y";
 import {
-    AfterContentInit,
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    QueryList,
-    SimpleChanges,
-    ViewEncapsulation,
+  AfterContentInit,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChildren,
+  ElementRef,
+  forwardRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  QueryList,
+  SimpleChanges,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 import includes from "lodash/includes";
@@ -102,10 +101,10 @@ export class ComboboxV2Component
     @Input() public isTypeaheadEnabled: boolean = true;
 
     /** Emits event whether options are presented after filtering */
-    @Output() public searchEmpty = new EventEmitter<boolean>(false);
+    public readonly searchEmpty = output<boolean>();
 
     /** Emits event whether the typed text is unique among presented options */
-    @Output() public canCreateOption = new EventEmitter<boolean>(false);
+    public readonly canCreateOption = output<boolean>();
 
     /** Grabs and init keyboard navigation service for the "Selected Items" */
     @ContentChildren(MarkAsSelectedItemDirective, { descendants: true })

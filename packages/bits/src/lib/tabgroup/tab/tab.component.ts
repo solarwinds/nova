@@ -19,14 +19,13 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Input,
-    Output,
-    TemplateRef,
-    ViewEncapsulation,
+  Component,
+  ElementRef,
+  HostBinding,
+  Input,
+  TemplateRef,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 
 import { TabGroupComponent } from "../tab-group/tab-group.component";
@@ -74,9 +73,9 @@ export class TabComponent {
     }
 
     /** Event is fired when tab became active, $event:Tab equals to selected instance of Tab component */
-    @Output() selected: EventEmitter<TabComponent> = new EventEmitter();
+    readonly selected = output<TabComponent>();
     /** Event is fired when tab became inactive, $event:Tab equals to deselected instance of Tab component */
-    @Output() deselected: EventEmitter<TabComponent> = new EventEmitter();
+    readonly deselected = output<TabComponent>();
 
     @HostBinding("class.tab-pane") addClass = true;
 

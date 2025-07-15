@@ -20,18 +20,17 @@
 
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import _chunk from "lodash/chunk";
 import _clone from "lodash/clone";
@@ -139,9 +138,9 @@ export class PaginatorComponent
     /**
      * Action occurs on page change
      */
-    @Output() public pagerAction = new EventEmitter<any>();
+    public readonly pagerAction = output<any>();
 
-    @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
+    readonly pageChange = output<number>();
 
     public onDestroy$ = new Subject<void>();
 

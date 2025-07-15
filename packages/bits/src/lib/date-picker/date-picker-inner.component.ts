@@ -19,15 +19,14 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentInit,
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    SimpleChanges,
+  AfterContentInit,
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  output
 } from "@angular/core";
 import _each from "lodash/each";
 import _isNil from "lodash/isNil";
@@ -71,11 +70,9 @@ export class DatePickerInnerComponent
     /** Is used to handle timezone of date value */
     @Input() handleTimezone: boolean;
 
-    @Output()
-    selectionDone: EventEmitter<Moment> = new EventEmitter<Moment>();
+    readonly selectionDone = output<Moment>();
 
-    @Output()
-    update: EventEmitter<Moment> = new EventEmitter<Moment>();
+    readonly update = output<Moment>();
 
     public stepDay: any = {};
     public stepMonth: any = {};

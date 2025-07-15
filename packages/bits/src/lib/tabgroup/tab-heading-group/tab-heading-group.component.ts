@@ -19,20 +19,19 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Input,
-    NgZone,
-    OnDestroy,
-    Output,
-    QueryList,
-    ViewChild,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChildren,
+  ElementRef,
+  HostBinding,
+  Input,
+  NgZone,
+  OnDestroy,
+  QueryList,
+  ViewChild,
+  output
 } from "@angular/core";
 import { Subscription } from "rxjs";
 
@@ -58,7 +57,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
     /**
      * Emits id of selected tab
      */
-    @Output() selected: EventEmitter<string> = new EventEmitter();
+    readonly selected = output<string>();
 
     @HostBinding("class.vertical") get isVertical(): boolean {
         return this.vertical;

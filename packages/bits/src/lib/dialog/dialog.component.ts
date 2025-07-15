@@ -21,18 +21,17 @@
 import { CdkScrollable, ScrollDispatcher } from "@angular/cdk/scrolling";
 import { DOCUMENT } from "@angular/common";
 import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    EventEmitter,
-    HostListener,
-    Inject,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    Renderer2,
-    ViewEncapsulation,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
 import { filter, take } from "rxjs/operators";
@@ -87,7 +86,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy  {
     /**
      * Event fired on dismiss of the dialog window
      */
-    @Output() dismissEvent = new EventEmitter();
+    readonly dismissEvent = output();
 
     private scrollableElement: CdkScrollable;
     private mouseDownOrigin: MouseEvent;

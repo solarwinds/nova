@@ -19,11 +19,10 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    EventEmitter,
-    Input,
-    Output,
-    ViewEncapsulation,
+  Component,
+  Input,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 
 import { IChipsGroup, IChipsItem, IChipsItemsSource } from "../public-api";
@@ -40,10 +39,10 @@ export class ChipsOverflowComponent {
     @Input() overflowSource: IChipsItemsSource;
     @Input() itemsSource: IChipsItemsSource;
 
-    @Output() public chipRemoved = new EventEmitter<{
-        item: IChipsItem;
-        group?: IChipsGroup;
-    }>();
+    public readonly chipRemoved = output<{
+    item: IChipsItem;
+    group?: IChipsGroup;
+}>();
 
     public onClear(data: { item: IChipsItem; group?: IChipsGroup }): void {
         if (data.group) {

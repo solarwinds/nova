@@ -19,15 +19,14 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    Output,
-    ViewChild,
-    ViewEncapsulation,
+  AfterContentInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  ViewChild,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 
 import { expandV2 } from "../../animations/expand";
@@ -77,7 +76,7 @@ export class ExpanderComponent implements AfterContentInit {
     /**
      * Is emitted when expander is expanded/collapsed
      */
-    @Output() openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    readonly openChange = output<boolean>();
 
     @ViewChild("customHeaderContent", { static: true })
     public customHeaderContent: ElementRef;

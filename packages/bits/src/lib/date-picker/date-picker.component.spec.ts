@@ -235,7 +235,7 @@ describe("components >", () => {
             componentInstance.value = invalidMoment;
             fixture.detectChanges();
 
-            componentInstance._datePicker.selectionDone.next(dateISOMoment);
+            componentInstance._datePicker.selectionDone.emit(dateISOMoment);
 
             expect(componentInstance.value.isValid()).toBeTruthy();
         });

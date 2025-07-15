@@ -19,11 +19,10 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    EventEmitter,
-    Input,
-    Output,
-    ViewEncapsulation,
+  Component,
+  Input,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 
 import { BreadcrumbItem } from "./public-api";
@@ -41,7 +40,7 @@ import { BreadcrumbItem } from "./public-api";
 export class BreadcrumbComponent {
     @Input() items: BreadcrumbItem[];
     @Input() ariaLabel: string = "Breadcrumb";
-    @Output() navigation = new EventEmitter<string>();
+    readonly navigation = output<string>();
 
     public handleClick(event: KeyboardEvent, item: BreadcrumbItem): void {
         event.preventDefault();

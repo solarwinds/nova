@@ -19,24 +19,23 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentInit,
-    ChangeDetectorRef,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnDestroy,
-    OnInit,
-    Optional,
-    Output,
-    QueryList,
-    Renderer2,
-    TemplateRef,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation,
+  AfterContentInit,
+  ChangeDetectorRef,
+  Component,
+  ContentChildren,
+  ElementRef,
+  forwardRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  QueryList,
+  Renderer2,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import _isNil from "lodash/isNil";
@@ -108,7 +107,7 @@ export class RadioGroupComponent
     /**
      * Emits an event when the radio selection changes
      */
-    @Output() public valueChange = new EventEmitter<any>();
+    public readonly valueChange = output<any>();
 
     @ContentChildren(forwardRef(() => RadioComponent), { descendants: true })
     private children: QueryList<RadioComponent>;
@@ -234,7 +233,7 @@ export class RadioComponent implements OnInit, OnDestroy {
     /**
      * Emits an event when the value changes
      */
-    @Output() public valueChange = new EventEmitter<any>();
+    public readonly valueChange = output<any>();
 
     @Input() public hovered: boolean;
 

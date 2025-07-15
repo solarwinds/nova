@@ -19,11 +19,10 @@
 //  THE SOFTWARE.
 
 import {
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Input,
-    Output,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  output
 } from "@angular/core";
 import { Subject } from "rxjs";
 
@@ -52,14 +51,11 @@ export class FreetypeQueryBuilderTestComponent {
     value: string = "";
     @Input()
     draggingInProgress = false;
-    @Output()
-    focusedTokenChange = new EventEmitter();
-    @Output()
-    tokensChange = new EventEmitter();
-    @Output()
-    cursorPosChange = new EventEmitter();
-    @Output() valueChange = new EventEmitter<string>();
-    @Output() submitQuery = new EventEmitter();
+    readonly focusedTokenChange = output();
+    readonly tokensChange = output();
+    readonly cursorPosChange = output();
+    readonly valueChange = output<string>();
+    readonly submitQuery = output();
 
     tokens: ExampleAppToken[] = [];
     cursorSetter$$ = new Subject();

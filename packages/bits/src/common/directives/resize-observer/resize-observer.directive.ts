@@ -19,13 +19,12 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    NgZone,
-    OnDestroy,
-    Output,
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  NgZone,
+  OnDestroy,
+  output
 } from "@angular/core";
 import debounce from "lodash/debounce";
 
@@ -39,8 +38,7 @@ import { RESIZE_DEBOUNCE_TIME } from "../../../constants/resize.constants";
     standalone: false,
 })
 export class ResizeObserverDirective implements OnDestroy, AfterViewInit {
-    @Output()
-    public containerResize = new EventEmitter();
+    public readonly containerResize = output();
     public resizeHandler: Function;
     private _debounceTime = RESIZE_DEBOUNCE_TIME;
     private resizeObserver?: ResizeObserver;

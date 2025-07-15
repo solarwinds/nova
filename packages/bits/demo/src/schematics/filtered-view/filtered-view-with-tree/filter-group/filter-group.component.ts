@@ -19,16 +19,15 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    EventEmitter,
-    Inject,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    QueryList,
-    TemplateRef,
-    ViewChildren,
+  Component,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  TemplateRef,
+  ViewChildren,
+  output
 } from "@angular/core";
 import _orderBy from "lodash/orderBy";
 import { Subject } from "rxjs";
@@ -57,9 +56,8 @@ export class FilterGroupComponent implements IFilterPub, OnInit, OnDestroy {
     @Input() checkboxTemplateRef: TemplateRef<string>;
     @Input() expanderTemplateRef: TemplateRef<string>;
 
-    @Output() filterChanged: EventEmitter<IFilterGroupItem> =
-        new EventEmitter();
-    @Output() showAllButtonClicked: EventEmitter<any> = new EventEmitter();
+    readonly filterChanged = output<IFilterGroupItem>();
+    readonly showAllButtonClicked = output<any>();
 
     @ViewChildren(CheckboxComponent) filterItems: QueryList<CheckboxComponent>;
 

@@ -29,25 +29,24 @@ import {
 } from "@angular/cdk/drag-drop";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    DoCheck,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Input,
-    IterableDiffer,
-    IterableDiffers,
-    OnDestroy,
-    OnInit,
-    Output,
-    QueryList,
-    TemplateRef,
-    ViewChild,
-    ViewChildren,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DoCheck,
+  ElementRef,
+  HostBinding,
+  Input,
+  IterableDiffer,
+  IterableDiffers,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  TemplateRef,
+  ViewChild,
+  ViewChildren,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import _isEqual from "lodash/isEqual";
 import { Subject } from "rxjs";
@@ -154,11 +153,9 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
     }
 
     // made event async to avoid ExpressionChangedAfterItHasBeenCheckedError
-    @Output() draggableChange: EventEmitter<boolean> =
-        new EventEmitter<boolean>(true);
+    readonly draggableChange = output<boolean>();
 
-    @Output() reorderableChange: EventEmitter<boolean> =
-        new EventEmitter<boolean>(true);
+    readonly reorderableChange = output<boolean>();
 
     /**
      * This will stretch repeat items full width
@@ -231,9 +228,7 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
     /**
      * Is emitted when on items order has changed
      */
-    @Output() public itemsReordered = new EventEmitter<
-        IItemsReorderedEvent<T>
-    >();
+    public readonly itemsReordered = output<IItemsReorderedEvent<T>>();
 
     /**
      * item config object containing callbacks
@@ -253,7 +248,7 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
     /**
      * Is emitted when another item in the repeat is selected
      */
-    @Output() public selectionChange = new EventEmitter<any[]>();
+    public readonly selectionChange = output<any[]>();
 
     @ViewChild("dropListArea") dropListArea: ElementRef;
 

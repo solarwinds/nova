@@ -27,16 +27,15 @@ import {
     trigger,
 } from "@angular/animations";
 import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    Renderer2,
-    ViewEncapsulation,
+  Component,
+  ElementRef,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import { Subject, Subscription } from "rxjs";
 
@@ -76,7 +75,7 @@ export class MessageComponent implements OnInit, OnDestroy {
     /**
      * emits value when user closed message by clicking (x) button
      */
-    @Output() public dismiss = new EventEmitter();
+    public readonly dismiss = output();
 
     public dismissState: "initial" | "dismissed" = "initial";
     private dismissSubscription: Subscription;
@@ -98,7 +97,6 @@ export class MessageComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        this.dismiss.complete();
         if (this.dismissSubscription) {
             this.dismissSubscription.unsubscribe();
         }

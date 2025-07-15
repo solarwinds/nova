@@ -39,26 +39,25 @@ import {
 } from "@angular/cdk/table";
 import { DOCUMENT } from "@angular/common";
 import {
-    AfterContentInit,
-    AfterViewInit,
-    Attribute,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Inject,
-    Input,
-    IterableDiffers,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Optional,
-    Output,
-    SkipSelf,
-    ViewEncapsulation,
+  AfterContentInit,
+  AfterViewInit,
+  Attribute,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  ElementRef,
+  HostBinding,
+  Inject,
+  Input,
+  IterableDiffers,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Optional,
+  SkipSelf,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import _isEqual from "lodash/isEqual";
 import _keys from "lodash/keys";
@@ -130,10 +129,10 @@ export class TableComponent<T>
     @Input() sortedColumn: ISortedItem;
     @Input() paginatorUsed: boolean = false;
 
-    @Output() columnsOrderChange: EventEmitter<Array<any>> = new EventEmitter();
-    @Output() sortOrderChanged: EventEmitter<ISortedItem> = new EventEmitter();
-    @Output() selectionChange: EventEmitter<ISelection> = new EventEmitter();
-    @Output() columnsWidthChange: EventEmitter<void> = new EventEmitter();
+    readonly columnsOrderChange = output<Array<any>>();
+    readonly sortOrderChanged = output<ISortedItem>();
+    readonly selectionChange = output<ISelection>();
+    readonly columnsWidthChange = output<void>();
 
     public sortDirection: SorterDirection;
     public sortBy: string;

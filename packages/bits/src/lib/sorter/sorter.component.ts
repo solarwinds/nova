@@ -20,19 +20,18 @@
 
 import { OverlayConfig } from "@angular/cdk/overlay";
 import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    Renderer2,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import _assign from "lodash/assign";
 import _isEqual from "lodash/isEqual";
@@ -81,7 +80,7 @@ export class SorterComponent
     @Input() selectedItem: string;
     @Input() sortDirection: any;
 
-    @Output() sorterAction = new EventEmitter<ISorterChanges>();
+    readonly sorterAction = output<ISorterChanges>();
 
     @ViewChild("popupArea", { static: true }) popupArea: ElementRef;
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;

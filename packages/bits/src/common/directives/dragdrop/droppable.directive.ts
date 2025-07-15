@@ -19,14 +19,13 @@
 //  THE SOFTWARE.
 
 import {
-    Directive,
-    ElementRef,
-    EventEmitter,
-    HostListener,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
+  Directive,
+  ElementRef,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  output
 } from "@angular/core";
 import _isNil from "lodash/isNil";
 import throttle from "lodash/throttle";
@@ -104,10 +103,10 @@ export class DroppableDirective implements OnInit, OnDestroy {
     @Input() dropIndicatorClass: string;
     @Input() dropValidator: IDropValidator;
 
-    @Output() dragOver = new EventEmitter<DragEvent>();
-    @Output() dragEnter = new EventEmitter<DragEvent>();
-    @Output() dragLeave = new EventEmitter<DragEvent>();
-    @Output() dropSuccess = new EventEmitter<IDropEvent>();
+    readonly dragOver = output<DragEvent>();
+    readonly dragEnter = output<DragEvent>();
+    readonly dragLeave = output<DragEvent>();
+    readonly dropSuccess = output<IDropEvent>();
 
     private dragElements: Array<HTMLElement> = [];
 

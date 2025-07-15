@@ -20,16 +20,15 @@
 
 import { DOCUMENT } from "@angular/common";
 import {
-    Directive,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    HostListener,
-    Inject,
-    Input,
-    NgZone,
-    OnInit,
-    Output,
+  Directive,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  Inject,
+  Input,
+  NgZone,
+  OnInit,
+  output
 } from "@angular/core";
 import throttle from "lodash/throttle";
 
@@ -86,8 +85,8 @@ export class DraggableDirective implements OnInit {
 
     @Input() adornerDragClass: string;
     @Input() payload: any;
-    @Output() dragStart = new EventEmitter();
-    @Output() dragEnd = new EventEmitter();
+    readonly dragStart = output();
+    readonly dragEnd = output();
 
     private adorner?: HTMLElement;
     private dragsourceOverlay?: HTMLElement;

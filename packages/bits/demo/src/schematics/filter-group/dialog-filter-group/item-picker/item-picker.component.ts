@@ -19,13 +19,12 @@
 //  THE SOFTWARE.
 
 import {
-    ChangeDetectionStrategy,
-    Component,
-    EventEmitter,
-    Inject,
-    Input,
-    OnInit,
-    Output,
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  Input,
+  OnInit,
+  output
 } from "@angular/core";
 
 import {
@@ -58,8 +57,7 @@ export class ItemPickerCompositeComponent implements OnInit {
     @Input() itemPickerOptions: IFilterGroupOption[];
     @Input() selectedValues: string[] = [];
 
-    @Output() selectionChanged: EventEmitter<IFilterGroupOption[]> =
-        new EventEmitter();
+    readonly selectionChanged = output<IFilterGroupOption[]>();
 
     public selectionMode = RepeatSelectionMode.multi;
     public selectedOptions: IFilterGroupOption[] = [];

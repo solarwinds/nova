@@ -19,14 +19,13 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    TemplateRef,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  TemplateRef,
+  output
 } from "@angular/core";
 
 import { IWizardSelectionEvent, IWizardStepComponent } from "./public-api";
@@ -82,20 +81,20 @@ export class WizardStepComponent
     /**
      * Evaluated when the step is entered.
      */
-    @Output() public enter = new EventEmitter<IWizardSelectionEvent | void>();
+    public readonly enter = output<IWizardSelectionEvent | void>();
     /**
      * Evaluated when validity of the step is changed.
      */
-    @Output() public valid = new EventEmitter<boolean>();
+    public readonly valid = output<boolean>();
 
     /**
      * Evaluated when the step is exited.
      */
-    @Output() public exit = new EventEmitter<IWizardSelectionEvent | void>();
+    public readonly exit = output<IWizardSelectionEvent | void>();
     /**
      * Evaluated when trying to go to the next step.
      */
-    @Output() public next = new EventEmitter<IWizardSelectionEvent | void>();
+    public readonly next = output<IWizardSelectionEvent | void>();
 
     /**
      *

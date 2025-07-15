@@ -25,25 +25,24 @@ import {
     OverlayConfig,
 } from "@angular/cdk/overlay";
 import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    ContentChild,
-    ElementRef,
-    EmbeddedViewRef,
-    EventEmitter,
-    HostListener,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    SimpleChanges,
-    TemplateRef,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation,
+  ChangeDetectorRef,
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  ContentChild,
+  ElementRef,
+  EmbeddedViewRef,
+  HostListener,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import _includes from "lodash/includes";
 import _isNil from "lodash/isNil";
@@ -168,11 +167,11 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
     /**
      * Emits an event upon display of the popover
      */
-    @Output() shown = new EventEmitter<any>();
+    readonly shown = output<any>();
     /**
      * Emits an event upon disappearance of the popover
      */
-    @Output() hidden = new EventEmitter<any>();
+    readonly hidden = output<any>();
 
     @ContentChild(TemplateRef) myTemplate: any;
 
@@ -334,6 +333,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         this.setPositionStrategy(this.placement);
         this.overlayComponent.show();
         this.initializeResizeObserver();
+        // TODO: The 'emit' function requires a mandatory any argument
         this.shown.emit();
         // Needs for proper initialization of content inside overlay
         this.cdRef.detectChanges();
@@ -485,6 +485,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         });
         this.popover?.destroy();
         this.overlayComponent.hide();
+        // TODO: The 'emit' function requires a mandatory any argument
         this.hidden.emit();
         this.popover = undefined;
     }

@@ -19,15 +19,14 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    Component,
-    EventEmitter,
-    Injectable,
-    OnDestroy,
-    OnInit,
-    Output,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  Component,
+  Injectable,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import moment from "moment/moment";
 import { Subject, Subscription } from "rxjs";
@@ -417,7 +416,7 @@ export class NuiDataFilterListComponent implements AfterViewInit, OnDestroy {
     standalone: false,
 })
 export class FilteringTimeFramePickerComponent implements IFilterPub, OnInit {
-    @Output() timeFrameChanged: EventEmitter<any> = new EventEmitter();
+    readonly timeFrameChanged = output<any>();
     public acceptedTimeframe: ITimeframe;
     public tf: ITimeframe = {
         startDatetime: moment("01/01/2019", "L"),

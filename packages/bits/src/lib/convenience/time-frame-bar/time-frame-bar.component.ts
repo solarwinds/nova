@@ -19,17 +19,16 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    SimpleChanges,
+  AfterContentInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  Input,
+  OnChanges,
+  OnDestroy,
+  SimpleChanges,
+  output
 } from "@angular/core";
 import moment, { Moment } from "moment/moment";
 import { Subject } from "rxjs";
@@ -77,15 +76,15 @@ export class TimeFrameBarComponent
         startDatetime: moment(undefined),
         endDatetime: moment(undefined),
     };
-    @Output() timeFrameChange = new EventEmitter<ITimeframe>();
+    readonly timeFrameChange = output<ITimeframe>();
 
     /** Current index in zoom history */
     @Input() historyIndex = 0;
 
     /** Emits an event when "Zoom Out" is clicked */
-    @Output() undo = new EventEmitter();
+    readonly undo = output();
     /** Emits an event when "Clear" is clicked */
-    @Output() clear = new EventEmitter();
+    readonly clear = output();
 
     @ContentChild(TimeFramePickerComponent)
     timeFramePicker: TimeFramePickerComponent;

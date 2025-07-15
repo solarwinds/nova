@@ -19,16 +19,15 @@
 //  THE SOFTWARE.
 
 import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  Component,
+  ElementRef,
+  forwardRef,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import {
     ControlValueAccessor,
@@ -168,9 +167,9 @@ export class TextboxNumberComponent
     /**
      * Event fired when textBoxNumber is focused out.
      */
-    @Output() blurred: EventEmitter<any> = new EventEmitter<any>();
+    readonly blurred = output<any>();
 
-    @Output() valueChange: EventEmitter<number> = new EventEmitter<number>();
+    readonly valueChange = output<number>();
 
     @ViewChild("numberInput", { static: true })
     private input: ElementRef<HTMLFieldSetElement>;

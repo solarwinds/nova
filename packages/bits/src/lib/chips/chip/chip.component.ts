@@ -19,16 +19,15 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    Output,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 
 import { IChipsItem } from "../public-api";
@@ -67,7 +66,7 @@ export class ChipComponent implements AfterViewInit {
     /**
      * Event that is fired when single item is cleared (by clicking on remove icon).
      */
-    @Output() public remove = new EventEmitter<any>();
+    public readonly remove = output<any>();
 
     public isContentProjected: boolean;
 
@@ -83,6 +82,7 @@ export class ChipComponent implements AfterViewInit {
     }
 
     public onRemove(): void {
+        // TODO: The 'emit' function requires a mandatory any argument
         this.remove.emit();
     }
 }

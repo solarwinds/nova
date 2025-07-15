@@ -19,24 +19,23 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentInit,
-    ApplicationRef,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    ContentChild,
-    ElementRef,
-    EmbeddedViewRef,
-    EventEmitter,
-    Injector,
-    Input,
-    OnDestroy,
-    OnInit,
-    Optional,
-    Output,
-    ViewChild,
-    ViewEncapsulation,
+  AfterContentInit,
+  ApplicationRef,
+  ChangeDetectorRef,
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  ContentChild,
+  ElementRef,
+  EmbeddedViewRef,
+  Injector,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  ViewChild,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import _isUndefined from "lodash/isUndefined";
 import { filter, Subject, Subscription } from "rxjs";
@@ -143,8 +142,7 @@ export class PopupDeprecatedComponent
     @Input()
     public ariaLabel: string = "Popup";
 
-    @Output()
-    public opened = new EventEmitter<boolean>();
+    public readonly opened = output<boolean>();
 
     @ContentChild(PopupToggleDirective)
     public popupToggle: PopupToggleDirective;

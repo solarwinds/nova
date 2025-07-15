@@ -19,12 +19,11 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    OnDestroy,
-    Output,
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  OnDestroy,
+  output
 } from "@angular/core";
 import filter from "lodash/filter";
 import forEach from "lodash/forEach";
@@ -78,7 +77,7 @@ export class ResizeDirective implements AfterViewInit, OnDestroy {
     /**
      * Event to be triggered on element resize
      */
-    @Output() public elementResize = new EventEmitter<boolean>();
+    public readonly elementResize = output<boolean>();
 
     /**
      * Class for dimension change detection

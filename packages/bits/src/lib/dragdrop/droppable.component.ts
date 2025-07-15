@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { CdkDropList } from "@angular/cdk/drag-drop";
-import { Component, EventEmitter, Output, ViewChild } from "@angular/core";
+import { Component, ViewChild, output } from "@angular/core";
 
 // import {DraggableComponent} from "./draggable.component";
 
@@ -35,10 +35,10 @@ import { Component, EventEmitter, Output, ViewChild } from "@angular/core";
 export class DroppableComponent {
     // @Input() dragSource: DraggableComponent;
 
-    @Output() dragOver = new EventEmitter<DragEvent>();
-    @Output() dragEnter = new EventEmitter<DragEvent>();
-    @Output() dragLeave = new EventEmitter<DragEvent>();
-    @Output() dropSuccess = new EventEmitter<any>();
+    readonly dragOver = output<DragEvent>();
+    readonly dragEnter = output<DragEvent>();
+    readonly dragLeave = output<DragEvent>();
+    readonly dropSuccess = output<any>();
 
     @ViewChild(CdkDropList, { static: true }) dropList: CdkDropList;
 

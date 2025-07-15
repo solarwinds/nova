@@ -19,20 +19,21 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    Renderer2,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  Renderer2,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  output
 } from "@angular/core";
 import {
     FormBuilder,
@@ -109,16 +110,17 @@ export class FreetypeQueryBuilderComponent<T extends QueryToken>
     currentHelp: HelpEntry[] = [];
     @Input()
     cursorSetter$: Observable<any>;
-    @Output()
-    helpItemSelected = new EventEmitter<{ value: string }>();
-    @Output()
-    currentValue = new EventEmitter<{ value: string; tokens: T[] }>();
+    readonly helpItemSelected = output<{
+    value: string;
+}>();
+    readonly currentValue = output<{
+    value: string;
+    tokens: T[];
+}>();
     @Output()
     cursorPos = new EventEmitter<number>();
-    @Output()
-    cursorCoords = new EventEmitter<CaretCoordinates>();
-    @Output()
-    submitQuery = new EventEmitter();
+    readonly cursorCoords = output<CaretCoordinates>();
+    readonly submitQuery = output();
 
     @ViewChild("queryselect", { static: true })
     querySelect: SelectV2Component;
