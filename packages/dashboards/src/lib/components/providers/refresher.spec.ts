@@ -40,9 +40,11 @@ describe("Refresher > ", () => {
     });
 
     beforeEach(() => {
-        eventBus = new EventBus();
+        eventBus = new EventBus<IEvent>();
         refresherSettings = new RefresherSettingsService();
-        refresher = new Refresher(eventBus, ngZone, refresherSettings);
+        TestBed.runInInjectionContext(() => {
+            refresher = new Refresher(eventBus, ngZone, refresherSettings);
+        });
     });
 
     describe("updateConfiguration > ", () => {
@@ -64,16 +66,20 @@ describe("Refresher > ", () => {
 
     describe("ngOnDestroy > ", () => {
         it("should clear the interval", fakeAsync(() => {
-            refresher = new Refresher(eventBus, ngZone, refresherSettings);
-            refresher.ngOnDestroy();
             const spy = spyOn(eventBus.getStream(REFRESH), "next");
-            tick(DEFAULT_REFRESH_INTERVAL * 2);
-            expect(spy).toHaveBeenCalledTimes(0);
+            refresher.updateConfiguration({});
+            // Sanity check
+            tick(DEFAULT_REFRESH_INTERVAL * 1000);
+            expect(spy).toHaveBeenCalledTimes(1);
+            // Verify
+            refresher.ngOnDestroy();
+            tick(DEFAULT_REFRESH_INTERVAL * 1000 * 2);
+            expect(spy).toHaveBeenCalledTimes(1);
         }));
     });
 
     describe("refresherSettings", () => {
-        it("updates interval when global settings change", fakeAsync(() => {
+        it("updates interval when global settings interval changes", fakeAsync(() => {
             refresherSettings.refreshRateSeconds = 1;
             refresher.updateConfiguration({ overrideDefaultSettings: false });
             const spy = spyOn(eventBus.getStream(REFRESH), "next");
@@ -86,6 +92,26 @@ describe("Refresher > ", () => {
             expect(spy).toHaveBeenCalledTimes(1);
             tick(1999);
             expect(spy).toHaveBeenCalledTimes(2);
+            refresher.ngOnDestroy();
+        }));
+
+        it("disables interval when global disabled settings changes", fakeAsync(() => {
+            refresher.updateConfiguration({});
+            const spy = spyOn(eventBus.getStream(REFRESH), "next");
+            // Sanity check
+            tick(DEFAULT_REFRESH_INTERVAL * 1000);
+            expect(spy).toHaveBeenCalledTimes(1);
+
+            // Verify disabling
+            refresherSettings.disabled$.next(true);
+            tick(DEFAULT_REFRESH_INTERVAL * 1000 * 10);
+            expect(spy).toHaveBeenCalledTimes(1);
+
+            // Verify enabling
+            refresherSettings.disabled$.next(false);
+            tick(DEFAULT_REFRESH_INTERVAL * 1000);
+            expect(spy).toHaveBeenCalledTimes(2);
+
             refresher.ngOnDestroy();
         }));
     });
