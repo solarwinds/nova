@@ -30,19 +30,22 @@ import { DEFAULT_REFRESH_INTERVAL } from "./types";
     providedIn: "root",
 })
 export class RefresherSettingsService {
-    private _refreshRateSeconds: number = DEFAULT_REFRESH_INTERVAL;
-    public refreshRateSeconds$ = new BehaviorSubject(this.refreshRateSeconds);
+    /**
+     * This is a system wide definition for disabling all refreshers.
+     */
+    public readonly disabled$ = new BehaviorSubject(false);
+
+    public readonly refreshRateSeconds$ = new BehaviorSubject(DEFAULT_REFRESH_INTERVAL);
 
     /**
      * This is a system wide definition of refresh rate. Widgets have to be configured to use
      * the system settings to leverage this value.
      */
     public get refreshRateSeconds(): number {
-        return this._refreshRateSeconds;
+        return this.refreshRateSeconds$.value;
     }
 
     public set refreshRateSeconds(value: number) {
-        this._refreshRateSeconds = value;
-        this.refreshRateSeconds$.next(this._refreshRateSeconds);
+        this.refreshRateSeconds$.next(value);
     }
 }
