@@ -1,18 +1,22 @@
 # Changelog
 
+## [17.0.1] 📅 2025-07-31
+
+### Added
+
+- `@nova-ui/dashboards` | Added ability to globaly disable refreshers
+
 ## [17.0.0] 📅 2025-04-20
 ### Angular upgrade 17
 
 ## [16.0.9] 📅 2025-04-02
 ### Fixes
--
 - `@nova-ui/dashboards` | Fix kpi scale for values
 - `@nova-ui/dashboards` | Fix editor preview component
 - `@nova-ui/dashboards` | Fix search addon listening chagnes
 
 ## [16.0.8] 📅 2025-04-02
 ### Fixes
--
 - `@nova-ui/dashboards` | Fix selection config
 - `@nova-ui/dashboards` | Added ability to listen preview component through the cloner
 
