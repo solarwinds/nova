@@ -18,12 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    ChangeDetectionStrategy,
-    Component,
-    SecurityContext,
-    ViewChild,
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, SecurityContext, ViewChild, inject } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { DomSanitizer } from "@angular/platform-browser";
 
@@ -36,14 +31,14 @@ import { ComboboxV2Component } from "@nova-ui/bits";
     standalone: false,
 })
 export class ComboboxV2CreateOptionExampleComponent {
+    private domSanitizer = inject(DomSanitizer);
+
     public options = Array.from({ length: 3 }).map(
         (_, i) => $localize`Item ${i}`
     );
     @ViewChild("combobox") public combobox: ComboboxV2Component;
 
     public comboboxControl = new FormControl<string | null>(null);
-
-    constructor(private domSanitizer: DomSanitizer) {}
 
     public createOption(option: string): void {
         const sanitizedOption = this.domSanitizer

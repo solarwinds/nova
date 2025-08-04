@@ -18,14 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    HostBinding,
-    Input,
-    Output,
-} from "@angular/core";
+import { ChangeDetectorRef, Component, EventEmitter, HostBinding, Input, Output, inject } from "@angular/core";
 
 /** @ignore */
 
@@ -37,6 +30,8 @@ import {
     standalone: false,
 })
 export class TabHeadingComponent {
+    private changeDetector = inject(ChangeDetectorRef);
+
     /** This adds 'disabled' class to the host component depending on the 'disabled' @Input to properly style disabled tabs */
     @HostBinding("class.disabled")
     get isDisabled(): boolean {
@@ -63,8 +58,6 @@ export class TabHeadingComponent {
     @Output() selected: EventEmitter<TabHeadingComponent> = new EventEmitter();
 
     protected _active: boolean;
-
-    constructor(private changeDetector: ChangeDetectorRef) {}
 
     public selectTab(): void {
         this.selected.emit(this);

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AfterViewInit, Component, Inject, OnDestroy } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, inject } from "@angular/core";
 import _get from "lodash/get";
 import _isEmpty from "lodash/isEmpty";
 import { Subscription } from "rxjs";
@@ -71,6 +71,10 @@ const RANDOM_ARRAY = [
 export class DialogFilterGroupExampleComponent
     implements AfterViewInit, OnDestroy
 {
+    dataSourceService = inject<DataSourceService<ExampleItem>>(DataSourceService);
+    private dialogService = inject<DialogService>(DialogService);
+    private filterGroupService = inject(FilterGroupService);
+
     public filterGroupItems: IFilterGroupItem[] = [
         {
             id: "color",
@@ -253,12 +257,7 @@ export class DialogFilterGroupExampleComponent
     private outputsSubscription: Subscription;
     private dialogSubscription: Subscription;
 
-    constructor(
-        @Inject(DataSourceService)
-        public dataSourceService: DataSourceService<ExampleItem>,
-        @Inject(DialogService) private dialogService: DialogService,
-        private filterGroupService: FilterGroupService
-    ) {
+    constructor() {
         (
             this.dataSourceService as LocalFilteringDataSource<ExampleItem>
         ).setData(RANDOM_ARRAY);

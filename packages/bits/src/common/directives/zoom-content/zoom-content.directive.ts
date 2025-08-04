@@ -18,18 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Directive,
-    ElementRef,
-    HostBinding,
-    Input,
-    NgZone,
-    OnChanges,
-    OnDestroy,
-    SimpleChanges,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Directive, ElementRef, HostBinding, Input, NgZone, OnChanges, OnDestroy, SimpleChanges, inject } from "@angular/core";
 import isFinite from "lodash/isFinite";
 import { BehaviorSubject, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -55,6 +44,9 @@ export interface IBrokerValue {
 export class ZoomContentDirective
     implements OnDestroy, AfterViewInit, OnChanges
 {
+    private ngZone = inject(NgZone);
+    private cdRef = inject(ChangeDetectorRef);
+
     private readonly destroy$ = new Subject<void>();
 
     @HostBinding("style.zoom")
@@ -86,11 +78,9 @@ export class ZoomContentDirective
 
     private resizeObserver: ResizeObserver;
 
-    constructor(
-        element: ElementRef,
-        private ngZone: NgZone,
-        private cdRef: ChangeDetectorRef
-    ) {
+    constructor() {
+        const element = inject(ElementRef);
+
         this.element = element.nativeElement;
 
         if (!this.element.parentElement) {

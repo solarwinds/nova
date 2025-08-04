@@ -20,19 +20,7 @@
 
 import { FocusMonitor } from "@angular/cdk/a11y";
 import { CdkStepHeader, StepState, STEP_STATE } from "@angular/cdk/stepper";
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    Component,
-    ElementRef,
-    Inject,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Optional,
-    SimpleChanges,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnDestroy, SimpleChanges, ViewEncapsulation, inject } from "@angular/core";
 import assign from "lodash/assign";
 
 import {
@@ -63,6 +51,9 @@ export class WizardStepHeaderComponent
     extends CdkStepHeader
     implements AfterViewInit, OnDestroy, OnChanges
 {
+    private _focusMonitor = inject(FocusMonitor);
+    readonly config? = inject<IWizardConfig>(WIZARD_CONFIG, { optional: true });
+
     /** State of the given step. */
     public stepState: StepState;
 
@@ -93,13 +84,9 @@ export class WizardStepHeaderComponent
 
     private wizardConfig: IWizardConfig = { ...WIZARD_CONFIG_DEFAULT };
 
-    constructor(
-        private _focusMonitor: FocusMonitor,
-        _elementRef: ElementRef<HTMLElement>,
-        @Optional()
-        @Inject(WIZARD_CONFIG)
-        public readonly config?: IWizardConfig
-    ) {
+    constructor() {
+        const _elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
         super(_elementRef);
 
         if (this.config) {

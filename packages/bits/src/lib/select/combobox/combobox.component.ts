@@ -19,24 +19,7 @@
 //  THE SOFTWARE.
 
 import { FocusMonitor, FocusOrigin } from "@angular/cdk/a11y";
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    forwardRef,
-    HostBinding,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    QueryList,
-    Renderer2,
-    SimpleChanges,
-    ViewChild,
-    ViewChildren,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, forwardRef, HostBinding, Input, OnChanges, OnDestroy, OnInit, QueryList, Renderer2, SimpleChanges, ViewChild, ViewChildren, ViewEncapsulation, inject } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 import _debounce from "lodash/debounce";
 import _escape from "lodash/escape";
@@ -92,6 +75,13 @@ export class ComboboxComponent
     extends BaseSelect
     implements OnInit, OnChanges, OnDestroy, AfterViewInit
 {
+    private elRef = inject(ElementRef);
+    private renderer = inject(Renderer2);
+    private changeDetector = inject(ChangeDetectorRef);
+    private keyControlService = inject(MenuKeyControlService);
+    private focusMonitor = inject(FocusMonitor);
+    private logger = inject(LoggerService);
+
     /**
      * The option to clear the combobox if the value entered is not in array.
      */
@@ -134,15 +124,9 @@ export class ComboboxComponent
         return this.inline;
     }
 
-    constructor(
-        utilService: UtilService,
-        private elRef: ElementRef,
-        private renderer: Renderer2,
-        private changeDetector: ChangeDetectorRef,
-        private keyControlService: MenuKeyControlService,
-        private focusMonitor: FocusMonitor,
-        private logger: LoggerService
-    ) {
+    constructor() {
+        const utilService = inject(UtilService);
+
         super(utilService);
         // Blur is debounced cause when you click on menu item blur is triggered twice: from textbox and when popup is closed.
         this.comboboxEventListeners.push(

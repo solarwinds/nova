@@ -18,13 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    OnDestroy,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, ViewChild, inject } from "@angular/core";
 import { Subject, Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 
@@ -64,6 +58,9 @@ const INITIAL_ARRAY = [
 export class DataSourceClientSideDelayedExampleComponent
     implements AfterViewInit, OnDestroy
 {
+    dataSourceService = inject<ClientSideDataSource<any>>(ClientSideDataSource);
+    changeDetection = inject(ChangeDetectorRef);
+
     public searchTerm = "";
     public page = 1;
     public sorter = {
@@ -92,10 +89,9 @@ export class DataSourceClientSideDelayedExampleComponent
     @ViewChild("filteringSearch") filteringSearch: SearchComponent;
     @ViewChild("filteringSorter") filteringSorter: SorterComponent;
 
-    constructor(
-        public dataSourceService: ClientSideDataSource<any>,
-        public changeDetection: ChangeDetectorRef
-    ) {
+    constructor() {
+        const dataSourceService = this.dataSourceService;
+
         dataSourceService.setData(INITIAL_ARRAY);
 
         this.filters = ["regular", "dark", "light"];

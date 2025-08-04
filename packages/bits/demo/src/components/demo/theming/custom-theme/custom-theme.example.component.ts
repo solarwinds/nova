@@ -19,14 +19,7 @@
 //  THE SOFTWARE.
 
 import { DOCUMENT } from "@angular/common";
-import {
-    Component,
-    Inject,
-    OnDestroy,
-    Renderer2,
-    RendererFactory2,
-    ViewEncapsulation,
-} from "@angular/core";
+import { Component, OnDestroy, Renderer2, RendererFactory2, ViewEncapsulation, inject } from "@angular/core";
 
 @Component({
     selector: "custom-theme-example",
@@ -41,10 +34,10 @@ export class CustomThemeExampleComponent implements OnDestroy {
     private readonly customClassName = "clown-party-theme";
 
     // Inject the RendererFactory2 for manipulating the DOM and inject the document for manipulation
-    constructor(
-        rendererFactory: RendererFactory2,
-        @Inject(DOCUMENT) document: Document
-    ) {
+    constructor() {
+        const rendererFactory = inject(RendererFactory2);
+        const document = inject<Document>(DOCUMENT);
+
         // Get the root html element
         this.containerElement = document.children[0];
         // Create a renderer instance

@@ -18,26 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterContentInit,
-    ApplicationRef,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    ContentChild,
-    ElementRef,
-    EmbeddedViewRef,
-    EventEmitter,
-    Injector,
-    Input,
-    OnDestroy,
-    OnInit,
-    Optional,
-    Output,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterContentInit, ApplicationRef, ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ContentChild, ElementRef, EmbeddedViewRef, EventEmitter, Injector, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 import _isUndefined from "lodash/isUndefined";
 import { filter, Subject, Subscription } from "rxjs";
 
@@ -110,6 +91,16 @@ const isMouseEvent = (event: Event): event is MouseEvent =>
 export class PopupDeprecatedComponent
     implements AfterContentInit, OnDestroy, OnInit
 {
+    private elementRef = inject(ElementRef);
+    private edgeDetector = inject(EdgeDetectionService);
+    private changeDetectorRef = inject(ChangeDetectorRef);
+    private eventBusService = inject(EventBusService);
+    private componentFactoryResolver = inject(ComponentFactoryResolver);
+    private injector = inject(Injector);
+    private appRef = inject(ApplicationRef);
+    private logger = inject(LoggerService);
+    private popupContainer = inject(PopupContainerService, { optional: true });
+
     @Input() width: string;
     /**
      * If additional styles should be applied to popup
@@ -172,17 +163,7 @@ export class PopupDeprecatedComponent
      */
     public visible = false;
 
-    constructor(
-        private elementRef: ElementRef,
-        private edgeDetector: EdgeDetectionService,
-        private changeDetectorRef: ChangeDetectorRef,
-        private eventBusService: EventBusService,
-        private componentFactoryResolver: ComponentFactoryResolver,
-        private injector: Injector,
-        private appRef: ApplicationRef,
-        private logger: LoggerService,
-        @Optional() private popupContainer: PopupContainerService
-    ) {
+    constructor() {
         this.logger.warn(
             "<nui-popup-deprecated> is deprecated as of Nova v11. Please use <nui-popup> instead."
         );

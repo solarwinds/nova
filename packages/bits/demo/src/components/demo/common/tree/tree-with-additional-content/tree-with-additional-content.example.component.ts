@@ -20,7 +20,7 @@
 
 import { ArrayDataSource } from "@angular/cdk/collections";
 import { NestedTreeControl } from "@angular/cdk/tree";
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 
 import { DOCUMENT_CLICK_EVENT, EventBusService, expand } from "@nova-ui/bits";
 
@@ -68,6 +68,8 @@ const TREE_DATA: FoodNode[] = [
     standalone: false,
 })
 export class TreeWithAdditionalContentExampleComponent {
+    private eventBusService = inject(EventBusService);
+
     treeControl = new NestedTreeControl<FoodNode>((node) => node.children);
     dataSource = new ArrayDataSource(TREE_DATA);
 
@@ -75,8 +77,6 @@ export class TreeWithAdditionalContentExampleComponent {
 
     public hasChild = (_: number, node: FoodNode): boolean =>
         !!node.children?.length;
-
-    constructor(private eventBusService: EventBusService) {}
 
     public onToggleClick(): void {
         this.eventBusService

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { timer } from "rxjs";
 import { map } from "rxjs/operators";
 
@@ -32,9 +32,9 @@ interface ICache {
 /** @ignore */
 @Injectable({ providedIn: "root" })
 export class TransientCacheService implements ITransientCache {
-    private cache: ICache = {};
+    private utilService = inject(UtilService);
 
-    constructor(private utilService: UtilService) {}
+    private cache: ICache = {};
 
     public put = async (
         key: string,

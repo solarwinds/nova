@@ -19,15 +19,7 @@
 //  THE SOFTWARE.
 
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, inject } from "@angular/core";
 import { Subject } from "rxjs";
 // eslint-disable-next-line import/no-deprecated
 import { filter, switchMap, takeUntil, tap } from "rxjs/operators";
@@ -54,6 +46,10 @@ import { RandomuserTableDataSource } from "../table-virtual-scroll-datasource";
 export class TableVirtualScrollRealApiProgressTextFooterExampleComponent
     implements AfterViewInit, OnDestroy, OnInit
 {
+    selectorService = inject(SelectorService);
+    private cd = inject(ChangeDetectorRef);
+    private viewportManager = inject(VirtualViewportManager);
+
     // The range of items to fetch from the server and display within the viewport.
     public range: number = 40;
 
@@ -87,11 +83,7 @@ export class TableVirtualScrollRealApiProgressTextFooterExampleComponent
     public gridHeight = 400;
     private dataSource: RandomuserTableDataSource;
 
-    constructor(
-        public selectorService: SelectorService,
-        private cd: ChangeDetectorRef,
-        private viewportManager: VirtualViewportManager
-    ) {
+    constructor() {
         this.dataSource = new RandomuserTableDataSource();
     }
 

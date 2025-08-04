@@ -18,15 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Input,
-    Output,
-    ViewEncapsulation,
-} from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewEncapsulation, inject } from "@angular/core";
 
 import { IQuickPickPresetDictionary } from "../public-api";
 
@@ -39,6 +31,8 @@ import { IQuickPickPresetDictionary } from "../public-api";
     standalone: false,
 })
 export class QuickPickerComponent {
+    changeDetector = inject(ChangeDetectorRef);
+
     @Input() presets: IQuickPickPresetDictionary;
     @Input() pickerTitle: string;
     @Input() presetsTitle: string = $localize`Quick picks`;
@@ -56,8 +50,6 @@ export class QuickPickerComponent {
     public get presetKeys(): string[] {
         return this.presetKeysOrder || Object.keys(this.presets);
     }
-
-    constructor(public changeDetector: ChangeDetectorRef) {}
 
     public selectPreset(key: string): void {
         this.presetSelected.emit(key);

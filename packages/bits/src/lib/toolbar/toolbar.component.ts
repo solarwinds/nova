@@ -18,22 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ContentChildren,
-    ElementRef,
-    HostBinding,
-    HostListener,
-    Input,
-    NgZone,
-    OnDestroy,
-    QueryList,
-    ViewChild,
-    ViewChildren,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, ContentChildren, ElementRef, HostBinding, HostListener, Input, NgZone, OnDestroy, QueryList, ViewChild, ViewChildren, ViewEncapsulation, inject } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
 import { merge, Subject, Subscription } from "rxjs";
 import { debounceTime, take, takeUntil } from "rxjs/operators";
@@ -72,6 +57,12 @@ import { MenuComponent } from "../menu";
     standalone: false,
 })
 export class ToolbarComponent implements AfterViewInit, OnDestroy {
+    element = inject(ElementRef);
+    private changeDetector = inject(ChangeDetectorRef);
+    private logger = inject(LoggerService);
+    private ngZone = inject(NgZone);
+    private keyboardService = inject(ToolbarKeyboardService);
+
     @ContentChildren(ToolbarGroupComponent)
     public groups: QueryList<ToolbarGroupComponent>;
 
@@ -122,14 +113,6 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     private childrenSubscription: Subscription;
     private destructiveItems: any[];
     private destroy$: Subject<void> = new Subject<void>();
-
-    constructor(
-        public element: ElementRef,
-        private changeDetector: ChangeDetectorRef,
-        private logger: LoggerService,
-        private ngZone: NgZone,
-        private keyboardService: ToolbarKeyboardService
-    ) {}
 
     @HostListener("keydown", ["$event"])
     onKeyDown(event: KeyboardEvent): void {

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -31,6 +31,9 @@ import { ToastService } from "@nova-ui/bits";
     standalone: false,
 })
 export class ComboboxReactiveFormExampleComponent implements OnInit, OnDestroy {
+    private formBuilder = inject(FormBuilder);
+    private toastService = inject<ToastService>(ToastService);
+
     public dataset = {
         items: ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"],
         selectedItem: "Item 2",
@@ -38,10 +41,7 @@ export class ComboboxReactiveFormExampleComponent implements OnInit, OnDestroy {
     public myForm;
     destroy$$ = new Subject<void>();
 
-    constructor(
-        private formBuilder: FormBuilder,
-        @Inject(ToastService) private toastService: ToastService
-    ) {
+    constructor() {
         this.myForm = this.formBuilder.group({
             item: this.formBuilder.control(this.dataset.selectedItem, [
                 Validators.required,

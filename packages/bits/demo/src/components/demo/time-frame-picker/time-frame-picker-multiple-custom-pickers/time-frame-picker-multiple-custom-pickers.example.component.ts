@@ -18,13 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    QueryList,
-    ViewChildren,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, QueryList, ViewChildren, inject } from "@angular/core";
 import { Subject } from "rxjs";
 
 import {
@@ -50,6 +44,8 @@ interface IPicker {
 export class TimeFramePickerMultipleCustomPickersExampleComponent
     implements AfterViewInit
 {
+    private cdRef = inject(ChangeDetectorRef);
+
     @ViewChildren("scoper")
     private tfScopers: QueryList<TimeframeServiceScoperExampleComponent>;
 
@@ -117,8 +113,6 @@ export class TimeFramePickerMultipleCustomPickersExampleComponent
     public closePopoverSubject = new Subject<void>();
     public openPopoverSubject = new Subject<void>();
 
-    constructor(private cdRef: ChangeDetectorRef) {}
-
     public updateTf(value: ITimeframe, index: number): void {
         const picker = this.pickers[index];
         picker.tf = value;
@@ -181,6 +175,6 @@ export class TimeFramePickerMultipleCustomPickersExampleComponent
     template: `<ng-content></ng-content>`,
     standalone: false,
 })
-export class TimeframeServiceScoperExampleComponent {
-    constructor(public timeframeService: TimeframeService) {}
+export class TimeframeServiceScoperExampleComponent {    timeframeService = inject(TimeframeService);
+
 }

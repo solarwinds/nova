@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import _includes from "lodash/includes";
 
 import { ISearchService, SearchService } from "@nova-ui/bits";
@@ -29,6 +29,8 @@ import { ISearchService, SearchService } from "@nova-ui/bits";
     standalone: false,
 })
 export class SearchServiceExampleComponent {
+    private searchService = inject<ISearchService>(SearchService);
+
     private now = new Date().getTime();
     private week = 7 * 24 * 60 * 60 * 1000; // milliseconds 7 * 24 * 60 * 60 * 1000
     public items = [
@@ -53,8 +55,6 @@ export class SearchServiceExampleComponent {
     public searchResultFormatted: any;
     public searchValue: any;
     public props = ["stringContainer", "numberContainer", "dateContainer"];
-
-    constructor(@Inject(SearchService) private searchService: ISearchService) {}
 
     public valuesChanged(values: any[]): void {
         this.props = [...values];

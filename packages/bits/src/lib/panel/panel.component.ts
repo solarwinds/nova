@@ -25,23 +25,7 @@ import {
     AnimationPlayer,
     style,
 } from "@angular/animations";
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    Renderer2,
-    SimpleChanges,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, SimpleChanges, ViewChild, ViewContainerRef, ViewEncapsulation, inject } from "@angular/core";
 import isUndefined from "lodash/isUndefined";
 import { Subject, Subscription } from "rxjs";
 import { debounceTime, distinctUntilChanged, filter } from "rxjs/operators";
@@ -112,6 +96,10 @@ export class PanelComponent
             MAX_VALUE: "90%",
         },
     };
+
+    private renderer = inject(Renderer2);
+    private builder = inject(AnimationBuilder);
+    private changeDetectorRef = inject(ChangeDetectorRef);
 
     /**
      * Use this attribute to set the mode of the panel, by default is set to 'static',
@@ -224,12 +212,6 @@ export class PanelComponent
     private _expandAnimationFactory?: AnimationFactory;
     private _collapseAnimationFactory?: AnimationFactory;
     private lastAnimationPlayer?: AnimationPlayer;
-
-    constructor(
-        private renderer: Renderer2,
-        private builder: AnimationBuilder,
-        private changeDetectorRef: ChangeDetectorRef
-    ) {}
 
     public ngOnInit(): void {
         this.defineSizes();

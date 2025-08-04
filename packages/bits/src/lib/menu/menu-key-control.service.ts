@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { ActiveDescendantKeyManager, LiveAnnouncer } from "@angular/cdk/a11y";
-import { ElementRef, Injectable, OnDestroy, QueryList } from "@angular/core";
+import { ElementRef, Injectable, OnDestroy, QueryList, inject } from "@angular/core";
 import isNull from "lodash/isNull";
 import { Subject, Subscription } from "rxjs";
 
@@ -34,6 +34,8 @@ import { IPopupActiveOptions } from "../public-api";
 
 @Injectable()
 export class MenuKeyControlService implements OnDestroy {
+    private live = inject(LiveAnnouncer);
+
     public popup: PopupComponent;
     public menuGroups: QueryList<MenuGroupComponent>;
     public menuItems: QueryList<MenuItemBaseComponent>;
@@ -53,8 +55,6 @@ export class MenuKeyControlService implements OnDestroy {
     public get scrollContainer(): ElementRef<any> {
         return this._scrollContainer || this.popup?.popupAreaContainer;
     }
-
-    constructor(private live: LiveAnnouncer) {}
 
     public initKeyboardManager(): void {
         this.keyboardEventsManager = this.keyControlItemsSource

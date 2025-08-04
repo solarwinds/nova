@@ -18,18 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    Input,
-    NgZone,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Renderer2,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, Component, ElementRef, Input, NgZone, OnChanges, OnDestroy, OnInit, Renderer2, ViewChild, inject } from "@angular/core";
 
 import { ResizerDirective } from "../../../common/directives";
 import {
@@ -58,6 +47,13 @@ export class LayoutResizerComponent
     extends ResizerDirective
     implements OnInit, AfterViewInit, OnChanges, OnDestroy
 {
+    private _elRef: ElementRef;
+    private _renderer: Renderer2;
+    private _utilService: UtilService;
+    private _targetElement: ElementRef;
+    private _ngZone: NgZone;
+    private _eventBusService: EventBusService;
+
     @Input() resizeDirection: ResizeDirection;
     @Input() resizeElement: any;
     @Input() resizeUnit: ResizeUnit;
@@ -65,22 +61,22 @@ export class LayoutResizerComponent
     @Input() enableSeparateOffsetSize: boolean;
     @ViewChild("resizerSplit") resizerSplitEl: ElementRef;
 
-    constructor(
-        private _elRef: ElementRef,
-        private _renderer: Renderer2,
-        private _utilService: UtilService,
-        private _targetElement: ElementRef,
-        private _ngZone: NgZone,
-        private _eventBusService: EventBusService
-    ) {
-        super(
-            _elRef,
-            _renderer,
-            _utilService,
-            _targetElement,
-            _ngZone,
-            _eventBusService
-        );
+    constructor() {
+        const _elRef = inject(ElementRef);
+        const _renderer = inject(Renderer2);
+        const _utilService = inject(UtilService);
+        const _targetElement = inject(ElementRef);
+        const _ngZone = inject(NgZone);
+        const _eventBusService = inject(EventBusService);
+
+        super();
+
+        this._elRef = _elRef;
+        this._renderer = _renderer;
+        this._utilService = _utilService;
+        this._targetElement = _targetElement;
+        this._ngZone = _ngZone;
+        this._eventBusService = _eventBusService;
     }
 
     public resizeClass = "nui-layout-resizer";

@@ -18,14 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    Component,
-    Inject,
-    OnDestroy,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 
@@ -54,6 +47,8 @@ import { IServer } from "./types";
     standalone: false,
 })
 export class BasicTableComponent implements OnDestroy, AfterViewInit {
+    private dataSource = inject(DataSourceService) as ClientSideDataSource<IServer>;
+
     public items: IServer[] = [];
     // This value is obtained from the server and used to evaluate the total number of pages to display
     public totalItems: number = 0;
@@ -70,10 +65,7 @@ export class BasicTableComponent implements OnDestroy, AfterViewInit {
 
     private readonly destroy$ = new Subject<void>();
 
-    constructor(
-        @Inject(DataSourceService)
-        private dataSource: ClientSideDataSource<IServer>
-    ) {
+    constructor() {
         this.dataSource.setData(LOCAL_DATA);
     }
 

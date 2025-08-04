@@ -18,13 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    Component,
-    Inject,
-    Injectable,
-    OnDestroy,
-    ViewChild,
-} from "@angular/core";
+import { Component, Injectable, OnDestroy, ViewChild, inject } from "@angular/core";
 import _get from "lodash/get";
 import _isEmpty from "lodash/isEmpty";
 import { Subject, Subscription } from "rxjs";
@@ -156,6 +150,9 @@ export class FakeHTTPService {
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
 export class FakeServer implements OnDestroy {
+    private dataSourceService = inject(DataSourceService) as DataSourceService<ExampleItem>;
+    private httpService = inject<FakeHTTPService>(FakeHTTPService);
+
     public filterGroupItems: IFilterGroupItem[] = filterGroupItems;
     public filteringState: IFilteringOutputs = {
         repeat: {
@@ -169,11 +166,7 @@ export class FakeServer implements OnDestroy {
 
     @ViewChild(RepeatComponent) filteringRepeat: RepeatComponent;
 
-    constructor(
-        @Inject(DataSourceService)
-        private dataSourceService: DataSourceService<ExampleItem>,
-        @Inject(FakeHTTPService) private httpService: FakeHTTPService
-    ) {
+    constructor() {
         (
             this.dataSourceService as LocalFilteringDataSource<ExampleItem>
         ).setData(RANDOM_ARRAY);
