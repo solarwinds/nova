@@ -1,5 +1,11 @@
 # Changelog
 
+## [17.0.3] 📅 2025-08-05
+
+### Fixes
+
+- `@nova-ui/dashboards` | `RefresherSettingsService` is now truly a singleton and can be used to configure refreshers in dashboard module
+
 ## [17.0.2] 📅 2025-07-31
 
 ### Added
