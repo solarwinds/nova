@@ -65,7 +65,6 @@ import { ListWidgetComponent } from "./components/list-widget/list-widget.compon
 import { LoadingComponent } from "./components/loading/loading.component";
 import { ProportionalDonutContentComponent } from "./components/proportional-widget/proportional-donut-content/proportional-donut-content.component";
 import { ProportionalWidgetComponent } from "./components/proportional-widget/proportional-widget.component";
-import { RefresherSettingsService } from "./components/providers/refresher-settings.service";
 import { RiskScoreTileComponent } from "./components/risk-score-tile/risk-score-tile.component";
 import { DelayedMousePresenceDetectionDirective } from "./components/table-widget/delayed-mouse-presence-detection.directive";
 import { TableWidgetComponent } from "./components/table-widget/table-widget.component";
@@ -221,7 +220,6 @@ const entryComponents: IComponentWithLateLoadKey[] = [
         ComponentPortalService,
         WidgetTypesService,
         DecimalPipe,
-        RefresherSettingsService,
     ],
     exports: dashboardComponents,
 })
