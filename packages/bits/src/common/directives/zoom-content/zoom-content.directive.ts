@@ -108,6 +108,7 @@ export class ZoomContentDirective
                 this.checkScaleBoundaries(data.targetValue);
             });
         }
+        this.applyTransform();
     }
 
     public ngAfterViewInit(): void {
@@ -138,7 +139,15 @@ export class ZoomContentDirective
             return;
         }
 
-        this.useZoom ? this.applyZoom() : this.applyScale();
+        this.applyTransform();
+    }
+
+    private applyTransform(): void {
+        if (this.useZoom) {
+            this.applyZoom();
+        } else {
+            this.applyScale();
+        }
     }
 
     private applyZoom() {
