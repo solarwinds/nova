@@ -22,7 +22,9 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    DestroyRef,
     HostBinding,
+    inject,
     Inject,
     Input,
     OnChanges,
@@ -49,6 +51,8 @@ import {
     WellKnownDataSourceFeatures,
 } from "../../types";
 import { IBroker } from "../providers/types";
+import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: "nui-kpi",
@@ -59,6 +63,15 @@ import { IBroker } from "../providers/types";
 })
 export class KpiComponent implements IHasChangeDetector, OnChanges {
     public static lateLoadKey = "KpiComponent";
+
+    public readonly changeDetector = inject(ChangeDetectorRef);
+    public readonly dataSource = inject<IDataSource>(DATA_SOURCE, {
+        optional: true,
+    });
+    public readonly eventBus = inject<EventBus<IEvent>>(PIZZAGNA_EVENT_BUS);
+    public readonly pizzagnaService = inject(PizzagnaService);
+
+    private readonly destroyRef = inject(DestroyRef);
 
     @Input()
     public widgetData: IKpiData;
@@ -92,11 +105,11 @@ export class KpiComponent implements IHasChangeDetector, OnChanges {
         );
     }
 
-    constructor(
-        public changeDetector: ChangeDetectorRef,
-        @Optional() @Inject(DATA_SOURCE) public dataSource: IDataSource,
-        @Inject(PIZZAGNA_EVENT_BUS) public eventBus: EventBus<IEvent>
-    ) {}
+    constructor() {
+        this.pizzagnaService.pizzaChanged
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => this.changeDetector.markForCheck());
+    }
 
     public onInteraction(): void {
         if (!this.interactive) {
