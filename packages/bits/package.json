@@ -126,6 +126,6 @@
     "xliff:lib": "ng extract-i18n lib && ngx-extractor -i \"src/**/*.ts\" -f xlf -o .tmp-i18n/messages.xlf && xliffmerge --profile xliffmerge.json"
   },
   "typings": "public_api.d.ts",
-  "version": "17.0.2",
+  "version": "17.0.3",
   "packageManager": "yarn@1.22.18"
 }
