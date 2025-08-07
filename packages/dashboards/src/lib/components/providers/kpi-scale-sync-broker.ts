@@ -66,7 +66,7 @@ export class KpiScaleSyncBroker implements IConfigurable {
     }
 
     public getBrokers(): readonly IBroker[] {
-        return this.brokers;
+        return [...this.brokers];
     }
 
     public subscribeToBrokers(): void {
