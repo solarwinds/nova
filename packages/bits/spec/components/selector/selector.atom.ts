@@ -20,12 +20,18 @@
 
 import { browser, by, ElementFinder, ExpectedConditions } from "protractor";
 
-import { SelectionType } from "./selector.e2e";
 import { Atom } from "../../atom";
 import { ButtonAtom } from "../button/button.atom";
 import { CheckboxAtom } from "../checkbox/checkbox.atom";
 import { MenuPopupAtom } from "../menu-popup/menu-popup.atom";
 import { PopupAtom } from "../popup/popup.atom";
+
+export enum SelectionType {
+    All = "Select all items on this page",
+    UnselectAll = "Unselect all items on this page",
+    None = "Unselect all items",
+    AllPages = "Select all items on all pages",
+}
 
 export class SelectorAtom extends Atom {
     public static CSS_CLASS = "nui-selector";

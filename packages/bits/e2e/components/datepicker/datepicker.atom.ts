@@ -62,7 +62,9 @@ export class DatepickerAtom extends Atom {
         return Atom.findIn<OverlayAtom>(OverlayAtom, this.getLocator());
     }
 
-    public textbox = Atom.findIn<TextboxAtom>(TextboxAtom, this.getLocator());
+    public get textbox(): TextboxAtom {
+        return Atom.findIn<TextboxAtom>(TextboxAtom, this.getLocator());
+    }
 
     public selectDate = async (day: number): Promise<void> =>
         this.clickCalendarItem(day.toString());
@@ -75,13 +77,6 @@ export class DatepickerAtom extends Atom {
 
     public get getInput(): Locator {
         return this.getLocator().locator(`input.form-control`);
-    }
-
-    public isDisabled = async (): Promise<boolean> =>
-        this.textbox.toBeVisible();
-
-    public get getTextbox() {
-        return this.getLocator().locator(`.nui-textbox`);
     }
 
     public formatDate(date: Moment, localeDateStringFormat: string): string {
@@ -124,13 +119,11 @@ export class DatepickerAtom extends Atom {
         let newTitle: string = "";
         const currentTitle = await this.getTitleText.textContent();
         if (currentTitle && currentTitle.length === 4) {
-            const currentYear: number = Math.floor(
-                parseInt(currentTitle, 10)
-            );
+            const currentYear: number = Math.floor(parseInt(currentTitle, 10));
             const rangeStart: number = currentYear;
             const rangeEnd: number = currentYear + 19;
             newTitle = `${rangeStart} - ${rangeEnd}`;
-        } else if(currentTitle) {
+        } else if (currentTitle) {
             newTitle = currentTitle.substring(currentTitle.length - 4);
         }
 
@@ -192,7 +185,7 @@ export class DatepickerAtom extends Atom {
     }
 
     public getMonthFromTitle = async (): Promise<string> =>
-        ((await this.getTitleText.textContent()) ?? "").spltest(" ")[0];
+        ((await this.getTitleText.textContent()) ?? "").split(" ")[0];
 
     public getPreviousMonthTitle(
         currentMonth: string,

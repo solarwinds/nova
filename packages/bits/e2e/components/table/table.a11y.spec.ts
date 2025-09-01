@@ -17,30 +17,21 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
+import { TableAtom } from "./table.atom";
+import { Helpers, test } from "../../setup";
 
-import { browser, by, element, ElementFinder } from "protractor";
-
-import { assertA11y, Helpers } from "../../helpers";
-import { BreadcrumbAtom } from "../public_api";
-
-describe("a11y: breadcrumb", () => {
-    let showSecondViewButton: ElementFinder;
-    let showThirdViewButton: ElementFinder;
-
-    beforeAll(async () => {
-        showSecondViewButton = element(
-            by.id("nui-demo-breadcrumb-show-second-view")
-        );
-        showThirdViewButton = element(
-            by.id("nui-demo-breadcrumb-show-third-view")
-        );
-        await Helpers.prepareBrowser("breadcrumb/breadcrumb-visual-test");
-
-        await showSecondViewButton.click();
-        await showThirdViewButton.click();
+const rulesToDisable: string[] = [
+    "duplicate-id", // we don't care for the testing pages
+    "aria-allowed-role", // NUI-6015
+    "aria-required-parent", // NUI-6133
+    "nested-interactive",
+];
+test.describe("a11y: table", () => {
+    test.beforeEach(async ({ page }): Promise<void> => {
+        await Helpers.prepareBrowser("table/visual-test", page);
     });
 
-    it("should check a11y of breadcrumb", async () => {
-        await assertA11y(browser, BreadcrumbAtom);
+    test("should check a11y of table", async ({ runA11yScan }) => {
+        await runA11yScan(TableAtom, rulesToDisable);
     });
 });

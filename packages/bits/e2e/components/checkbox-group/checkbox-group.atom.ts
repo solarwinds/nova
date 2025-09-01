@@ -21,33 +21,39 @@
 import { Locator } from "playwright-core";
 
 import { Atom } from "../../atom";
+import { CheckboxAtom } from "../checkbox/checkbox.atom";
 
-export class MenuPopupAtom extends Atom {
-    public static CSS_CLASS = "nui-menu-popup";
+export class CheckboxGroupAtom extends Atom {
+    public static CSS_CLASS = "nui-checkbox-group";
 
-    public itemByIndex = (idx: number): Locator => this.items.nth(idx);
-
-    public get items(): Locator {
-        return super.getLocator().locator(".nui-menu-item");
+    public get checkboxes(): CheckboxAtom {
+        return Atom.findIn<CheckboxAtom>(CheckboxAtom, this.getLocator());
     }
 
-    public get selectedItems(): Locator {
-        return super.getLocator().locator(".nui-menu-item--selected");
+    // Used to return specific checkbox element from the group
+    public getCheckbox(title: string): CheckboxAtom {
+        return this.checkboxes.filter<CheckboxAtom>(CheckboxAtom, {
+            hasText: title,
+        });
     }
 
-    public get selectedItem(): Locator {
-        return super.getLocator().locator(".nui-menu-item--selected").first();
-    }
+    public getCheckboxByIndex = (index: number): CheckboxAtom =>
+        this.checkboxes.nth<CheckboxAtom>(CheckboxAtom, index);
 
-    public async clickItemByText(title: string): Promise<void> {
-        const items = this.items;
-        if ((await items.count()) === 0) {
-            return;
+    public getFirst = (): Locator => this.checkboxes.getLocator().first();
+
+    public async isDisabled(): Promise<boolean> {
+        const childCount = await this.checkboxes.getLocator().count();
+        if (childCount === 0) {
+            return false;
         }
-        await items.filter({hasText: title}).click();
-    }
-    public itemByText(title: string): Locator {
-        const items = this.items;
-        return items.filter({hasText: title});
+        for (let i = 0; i < childCount; i++) {
+            const checkbox = this.getCheckboxByIndex(i);
+            if (!(await checkbox.isDisabled())) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

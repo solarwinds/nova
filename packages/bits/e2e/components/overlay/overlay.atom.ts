@@ -21,7 +21,7 @@
 import { Locator } from "playwright-core";
 
 import { Atom } from "../../atom";
-import { Helpers } from "../../setup";
+import { Helpers, expect } from "../../setup";
 
 export class OverlayAtom extends Atom {
     get cdkContainerPane(): Locator {
@@ -40,8 +40,12 @@ export class OverlayAtom extends Atom {
         "cdk-overlay-connected-position-bounding-box";
     public static CDK_CONTAINER_PANE = "cdk-overlay-pane";
 
-    public async toBeOpened(): Promise<boolean> {
+    public async isOpened(): Promise<boolean> {
         return this.cdkContainerPane.isVisible();
+    }
+
+    public async toBeOpened(): Promise<void> {
+        await expect(this.cdkContainerPane).toBeVisible();
     }
     public async toNotBeOpened(): Promise<boolean> {
         return this.cdkContainerPane.isHidden();

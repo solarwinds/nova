@@ -1,6 +1,7 @@
+import { Locator } from "playwright-core";
+
 import { Atom, IAtomClass } from "../../atom";
 import { Helpers } from "../../setup";
-import { Locator } from "playwright-core";
 
 export class ButtonAtom extends Atom {
     public static CSS_CLASS = "nui-button";

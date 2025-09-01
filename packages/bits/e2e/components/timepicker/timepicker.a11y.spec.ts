@@ -18,18 +18,30 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser } from "protractor";
+import { TimepickerAtom } from "./timepicker.atom";
+import { Atom } from "../../atom";
+import { Helpers, test } from "../../setup";
 
-import { assertA11y, Helpers } from "../../helpers";
-import { DatepickerAtom } from "../public_api";
+test.describe("a11y: timepicker", () => {
+    const rulesToDisable: string[] = [
+        "scrollable-region-focusable", // NUI-6001
+    ];
+    let basicTimepicker: TimepickerAtom;
 
-// Disabled until NUI-6014 is fixed
-xdescribe("a11y: datepicker", () => {
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("date-picker/date-picker-visual-test");
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser(
+            "time-picker/time-picker-visual-test",
+            page
+        );
+
+        basicTimepicker = Atom.find<TimepickerAtom>(
+            TimepickerAtom,
+            "nui-visual-test-timepicker-basic"
+        );
     });
 
-    it("should verify a11y of datepicker", async () => {
-        await assertA11y(browser, DatepickerAtom);
+    test("should check a11y of timepicker", async ({ runA11yScan }) => {
+        await basicTimepicker.toggle();
+        await runA11yScan(TimepickerAtom, rulesToDisable);
     });
 });

@@ -39,7 +39,7 @@ describe(`Visual tests: ${name}`, () => {
     let selectPinnedHeaderTable: TableAtom;
     let expanders: { [key: string]: Locator };
 
-    test.beforeAll(async () => {
+    test.test.beforeEach(async () => {
         await Helpers.prepareBrowser("table/visual-test");
 
         sortableTable = Atom.find<TableAtom>(TableAtom, "table-sorting");

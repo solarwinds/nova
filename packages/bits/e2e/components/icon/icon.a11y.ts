@@ -26,7 +26,7 @@ describe("a11y: icon", () => {
         "duplicate-id", // has nothing to do with the icons
     ];
 
-    test.beforeAll(async ({ page }) => {
+    test.test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("icon/icon-visual-test", page);
     });
 

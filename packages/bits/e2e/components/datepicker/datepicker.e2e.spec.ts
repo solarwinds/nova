@@ -20,13 +20,12 @@
 
 import { Moment } from "moment/moment";
 import moment from "moment/moment";
-import { browser, by } from "protractor";
 
 import { DatepickerAtom } from "./datepicker.atom";
 import { Atom } from "../../atom";
-import { Animations, Helpers } from "../../helpers";
+import { Animations, Helpers, test, expect } from "../../setup";
 
-xdescribe("USERCONTROL datepicker", () => {
+test.describe("USERCONTROL datepicker", () => {
     const activeDateValueId = "nui-demo-datepicker-active-date-value";
     const activeDateValueIdPreserved =
         "nui-demo-datepicker-active-date-value-preserve";
@@ -43,76 +42,74 @@ xdescribe("USERCONTROL datepicker", () => {
     let datepickerWithCustomFirstDayOfTheWeek: DatepickerAtom;
     let datepickerWithCustomDateFormat: DatepickerAtom;
 
-    beforeEach(async () => {
-        await Helpers.prepareBrowser("date-picker/date-picker-test");
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("date-picker/date-picker-test", page);
         await Helpers.disableCSSAnimations(Animations.ALL);
 
-        datepickerBasic = Atom.find(
+        datepickerBasic = Atom.find<DatepickerAtom>(
             DatepickerAtom,
             "nui-demo-datepicker-basic"
         );
-        datepickerInline = Atom.find(
+        datepickerInline = Atom.find<DatepickerAtom>(
             DatepickerAtom,
             "nui-demo-datepicker-inline"
         );
-        datepickerWithPreserve = Atom.find(
+        datepickerWithPreserve = Atom.find<DatepickerAtom>(
             DatepickerAtom,
             "nui-demo-datepicker-preserve"
         );
-        datepickerMinMax = Atom.find(
+        datepickerMinMax = Atom.find<DatepickerAtom>(
             DatepickerAtom,
             "nui-demo-datepicker-min-max"
         );
-        datepickerDisabledDates = Atom.find(
+        datepickerDisabledDates = Atom.find<DatepickerAtom>(
             DatepickerAtom,
             "nui-demo-datepicker-disabled-dates"
         );
-        datepickerDisabledTodayButton = Atom.find(
+        datepickerDisabledTodayButton = Atom.find<DatepickerAtom>(
             DatepickerAtom,
             "nui-demo-datepicker-disabled-today"
         );
-        datepickerWithInitAndPreserve = Atom.find(
+        datepickerWithInitAndPreserve = Atom.find<DatepickerAtom>(
             DatepickerAtom,
             "nui-demo-datepicker-init-date-preserve"
         );
-        datepickerWithCustomFirstDayOfTheWeek = Atom.find(
+        datepickerWithCustomFirstDayOfTheWeek = Atom.find<DatepickerAtom>(
             DatepickerAtom,
             "nui-demo-datepicker-custom-first-day-of-the-week"
         );
-        datepickerWithCustomDateFormat = Atom.find(
+        datepickerWithCustomDateFormat = Atom.find<DatepickerAtom>(
             DatepickerAtom,
             "nui-demo-datepicker-custom-date-format"
         );
     });
 
-    xit("should show year in title and months in body upon click on title", async () => {
+    test("should show year in title and months in body upon click on title", async () => {
         const currentYear: string = moment().year().toString();
         // Get random month
         const randomMonth = () =>
             DatepickerAtom.MONTHNAMES_SHORT[Math.floor(Math.random() * 12)];
-        await datepickerInline.waitElementVisible();
+        await datepickerInline.toBeVisible();
         // Go upper level in title
         await datepickerInline.clickTitle();
 
-        expect(await datepickerInline.getTitleText()).toEqual(currentYear);
-        expect(
-            await datepickerInline.getMonthElement(randomMonth()).isPresent()
-        ).toBe(true);
+        await expect(datepickerInline.getTitleText).toHaveText(currentYear);
+        await expect(
+            datepickerInline.getMonthElement(randomMonth())
+        ).toBeVisible();
     });
 
-    xit("should have empty input if no value provided", async () => {
-        await datepickerDisabledTodayButton.waitElementVisible();
-        expect(await datepickerDisabledTodayButton.getInputValue()).toEqual("");
+    test("should have empty input if no value provided", async () => {
+        await datepickerDisabledTodayButton.toBeVisible();
+        await expect(datepickerDisabledTodayButton.getInput).toHaveValue("");
     });
 
-    xit("should not have today selected by default", async () => {
+    test("should not have today selected by default", async () => {
         await datepickerDisabledTodayButton.toggle();
-        expect(
-            await datepickerDisabledTodayButton.getActiveDay().isPresent()
-        ).toBe(false);
+        await expect(datepickerDisabledTodayButton.getActiveDay).toBeHidden();
     });
 
-    it("should change title upon click on next/previous buttons", async () => {
+    test("should change title upon click on next/previous buttons", async () => {
         // define current title and title which should appear upon click on Next button
         const date = moment();
         const currentMonthNumber = date.month();
@@ -129,26 +126,26 @@ xdescribe("USERCONTROL datepicker", () => {
         } ${previousYear}`;
 
         // initial title
-        expect(await datepickerInline.getTitleText()).toEqual(currentTitle);
+        await expect(datepickerInline.getTitleText).toContainText(currentTitle);
         // go next
         await datepickerInline.goNext();
         // title after click on Next button
-        expect(await datepickerInline.getTitleText()).toEqual(nextTitle);
+        await expect(datepickerInline.getTitleText).toContainText(nextTitle);
         // go back to initial title
         await datepickerInline.goBack();
         // initial title
-        expect(await datepickerInline.getTitleText()).toEqual(currentTitle);
+        await expect(datepickerInline.getTitleText).toContainText(currentTitle);
         // go back to a previous title
         await datepickerInline.goBack();
         // title before the initial one
-        await expect(datepickerInline.getTitleText()).toEqual(previousTitle);
+        await expect(datepickerInline.getTitleText).toContainText(previousTitle);
         // going back to initial state
         await datepickerInline.goNext();
         // verifying we're where we stated and initial title is displayed
-        expect(await datepickerInline.getTitleText()).toEqual(currentTitle);
+        await expect(datepickerInline.getTitleText).toContainText(currentTitle);
     });
 
-    it("should show years in body upon click on title (in state of year)", async () => {
+    test("should show years in body upon click on title (in state of year)", async () => {
         // go to month picker
         await datepickerInline.clickTitle();
         const nextTitle: any = await datepickerInline.getLargerPeriodTitle();
@@ -156,80 +153,85 @@ xdescribe("USERCONTROL datepicker", () => {
         // go to year picker
         await datepickerInline.clickTitle();
 
-        expect(await datepickerInline.getTitleText()).toEqual(nextTitle);
-        expect(
-            await datepickerInline.getYearElement(currentYear).isPresent()
-        ).toBe(true);
+        await expect( datepickerInline.getTitleText).toContainText(nextTitle);
+        await expect(
+             datepickerInline.getYearElement(currentYear)
+        ).toBeVisible();
     });
 
-    it("should open popup upon click on icon", async () => {
+    test("should open popup upon click on icon", async () => {
         await datepickerWithPreserve.toggle();
-        expect(await datepickerWithPreserve.overlay.isOpened()).toBe(true);
+        await datepickerWithPreserve.getOverlay.toBeOpened();
     });
 
-    it("should show datepicker popup upon click on input", async () => {
+    test("should show datepicker popup upon click on input", async () => {
         await datepickerWithPreserve.clickInput();
-        expect(await datepickerWithPreserve.overlay.isOpened()).toBe(true);
+        await datepickerWithPreserve.getOverlay.toBeOpened();
     });
 
-    xit("should have the same date both on input form and popped up window upon the click on input", async () => {
+    test("should have the same date both on input form and popped up window upon the click on input", async () => {
         const expectedDate: string = "01 Jan 2020";
-        const input = datepickerWithPreserve.getInput();
+        const input = datepickerWithPreserve.getInput;
         await datepickerWithPreserve.clearText();
         await datepickerWithPreserve.acceptText(expectedDate);
         // check if value on input is correct
-        expect(await input.getAttribute("value")).toEqual(expectedDate);
+        await expect(input).toHaveValue(expectedDate);
 
         // click on it
         await datepickerWithPreserve.clickInput();
 
-        expect(await datepickerWithPreserve.getTitleText()).toEqual(
+        await expect(datepickerWithPreserve.getTitleText).toContainText(
             "January 2020"
         );
         // check that correct day is selected
-        expect(await datepickerWithPreserve.getActiveDayText()).toEqual("1");
+        await expect(datepickerWithPreserve.getActiveDayText).toContainText(
+            "1"
+        );
     });
 
-    xit("should select current date upon click on 'Today'", async () => {
+    test("should select current date upon click on 'Today'", async () => {
         await datepickerWithPreserve.toggle();
         await datepickerWithPreserve.clickTodayButton();
-        expect(await datepickerWithPreserve.getInputValue()).toEqual(
+        await expect(datepickerWithPreserve.getInput).toHaveValue(
             datepickerInline.formatDate(moment(), "en-US")
         );
     });
 
-    it("should correctly change to the selected date", async () => {
+    test("should correctly change to the selected date", async () => {
         const day: number = 20;
         const date: Moment = moment();
         date.date(day);
         await datepickerWithPreserve.clickInput();
-        expect(await datepickerWithPreserve.overlay.isOpened()).toBe(true);
+        await datepickerWithPreserve.getOverlay.toBeOpened();
 
         await datepickerWithPreserve.selectDate(day);
-        expect(await datepickerWithPreserve.getInputValue()).toEqual(
+        await expect(datepickerWithPreserve.getInput).toHaveValue(
             datepickerWithPreserve.formatDate(date, "en-US")
         );
 
         await datepickerWithPreserve.toggle();
-        expect(await datepickerWithPreserve.getActiveDayText()).toEqual("20");
+        await expect(datepickerWithPreserve.getActiveDayText).toContainText("20");
     });
 
-    it("should close datepicker popup upon click on a date", async () => {
+    test("should close datepicker popup upon click on a date", async () => {
         // open popup by clicking on popup
         await datepickerWithPreserve.clickInput();
-        expect(await datepickerWithPreserve.overlay.isOpened()).toBe(true);
-        await datepickerWithPreserve.getActiveDay().click();
-        expect(await datepickerWithPreserve.overlay.isOpened()).toBe(false);
+        await datepickerWithPreserve.getOverlay.toBeOpened();
+        await datepickerWithPreserve.getActiveDay.click();
+        await datepickerWithPreserve.getOverlay.toNotBeOpened();
     });
 
-    xdescribe("when minDate, maxDate or dateDisabled is set", () => {
+    test.describe("when minDate, maxDate or dateDisabled is set", () => {
         const getMinDate = async () =>
-            browser.element(by.id("nui-demo-datepicker-min-date")).getText();
+            Atom.find<Atom>(Atom, "nui-demo-datepicker-min-date")
+                .getLocator()
+                .textContent();
+        const getMaxDate = async () =>
+            Atom.find<Atom>(Atom, "nui-demo-datepicker-max-date")
+                .getLocator()
+                .textContent();
 
-        const getMaxDate = async (): Promise<string> =>
-            browser.element(by.id("nui-demo-datepicker-max-date")).getText();
-
-        it("should forbid selection of date via text input, less than minDate", async () => {
+        test("should forbid selection of date via text input, less than minDate", async () => {
             const minDate: Moment = moment(await getMinDate());
             let date: Moment = moment(minDate);
 
@@ -246,14 +248,14 @@ xdescribe("USERCONTROL datepicker", () => {
             await datepickerMinMax.acceptText(
                 datepickerMinMax.formatDate(date, "en-US")
             );
-            expect(await datepickerMinMax.isInputValid()).toEqual(true);
+            await datepickerMinMax.isInputValid();
 
             date.date(date.date() + 1);
             await datepickerMinMax.clearText();
             await datepickerMinMax.acceptText(
                 datepickerMinMax.formatDate(date, "en-US")
             );
-            expect(await datepickerMinMax.isInputValid()).toEqual(true);
+            await datepickerMinMax.isInputValid();
 
             // smaller dates can't be selected
             date = moment(minDate);
@@ -262,10 +264,10 @@ xdescribe("USERCONTROL datepicker", () => {
             await datepickerMinMax.acceptText(
                 datepickerMinMax.formatDate(date, "en-US")
             );
-            expect(await datepickerMinMax.isInputValid()).toEqual(false);
+            await datepickerMinMax.isNotInputValid();
         });
 
-        it("should forbid selection of date via text input, greater than maxDate", async () => {
+        test("should forbid selection of date via text input, greater than maxDate", async () => {
             const maxDate: Moment = moment(await getMaxDate());
             let date: Moment = moment(maxDate);
 
@@ -282,14 +284,14 @@ xdescribe("USERCONTROL datepicker", () => {
             await datepickerMinMax.acceptText(
                 datepickerMinMax.formatDate(date, "en-US")
             );
-            expect(await datepickerMinMax.isInputValid()).toEqual(true);
+            await datepickerMinMax.isInputValid();
 
             date.date(date.date() - 1);
             await datepickerMinMax.clearText();
             await datepickerMinMax.acceptText(
                 datepickerMinMax.formatDate(date, "en-US")
             );
-            expect(await datepickerMinMax.isInputValid()).toEqual(true);
+            await datepickerMinMax.isInputValid();
 
             // larger dates can't be selected
             date = moment(maxDate);
@@ -298,10 +300,10 @@ xdescribe("USERCONTROL datepicker", () => {
             await datepickerMinMax.acceptText(
                 datepickerMinMax.formatDate(date, "en-US")
             );
-            expect(await datepickerMinMax.isInputValid()).toEqual(false);
+            await datepickerMinMax.isNotInputValid();
         });
 
-        it("should forbid selection via text input of disabled date", async () => {
+        test("should forbid selection via text input of disabled date", async () => {
             const firstInvalidDate = moment().date(10);
             const secondInvalidDate = moment().add(1, "month");
             const thirdInvalidDate = moment().add(1, "year");
@@ -312,123 +314,124 @@ xdescribe("USERCONTROL datepicker", () => {
             await datepickerDisabledDates.acceptText(
                 datepickerDisabledDates.formatDate(firstInvalidDate, "en-US")
             );
-            expect(await datepickerDisabledDates.isInputValid()).toEqual(false);
+            await datepickerDisabledDates.isNotInputValid();
 
             await datepickerDisabledDates.clearText();
             await datepickerDisabledDates.acceptText(
                 datepickerDisabledDates.formatDate(secondInvalidDate, "en-US")
             );
-            expect(await datepickerDisabledDates.isInputValid()).toEqual(false);
+            await datepickerDisabledDates.isNotInputValid();
 
             await datepickerDisabledDates.clearText();
             await datepickerDisabledDates.acceptText(
                 datepickerDisabledDates.formatDate(thirdInvalidDate, "en-US")
             );
-            expect(await datepickerDisabledDates.isInputValid()).toEqual(false);
+            await datepickerDisabledDates.isNotInputValid();
         });
 
-        it("should disable Today button if today date is disabled", async () => {
+        test("should disable Today button if today date is disabled", async () => {
             await datepickerDisabledTodayButton.toggle();
-            expect(
-                await datepickerDisabledTodayButton.isTodayButtonEnabled()
-            ).toEqual(false);
+            await expect(
+                datepickerDisabledTodayButton.todayButton
+            ).toBeDisabled();
         });
     });
 
-    xdescribe("after date selection >", () => {
-        it("should change date (saving hours, minutes, seconds)", async () => {
+    test.describe("after date selection >", () => {
+        test("should change date (saving hours, minutes, seconds)", async () => {
             await datepickerWithPreserve.clickInput();
             await datepickerWithPreserve.selectDate(11);
             await datepickerWithPreserve.toggle();
-            const oldValue = await browser
-                .element(by.id(activeDateValueIdPreserved))
-                .getText();
+            const oldValue = await Atom.find<Atom>(Atom, activeDateValueIdPreserved)
+                .getLocator()
+                .textContent();
             await datepickerWithPreserve.selectDate(10);
-            const newValue = await browser
-                .element(by.id(activeDateValueIdPreserved))
-                .getText();
+            const newValue = await Atom.find<Atom>(Atom, activeDateValueIdPreserved)
+                .getLocator()
+                .textContent();
 
             expect(newValue).not.toBe(oldValue);
+
             expect(moment(newValue).hour()).toBe(moment(oldValue).hour());
         });
 
-        it("should change date (NOT saving hours, minutes, seconds)", async () => {
+        test("should change date (NOT saving hours, minutes, seconds)", async () => {
             await datepickerInline.selectDate(11);
-            const oldValue = await browser
-                .element(by.id(activeDateValueId))
-                .getText();
+            const oldValue = await Atom.find<Atom>(Atom, activeDateValueId)
+                .getLocator()
+                .textContent();
             await datepickerInline.selectDate(10);
-            const newValue = await browser
-                .element(by.id(activeDateValueId))
-                .getText();
+            const newValue = await Atom.find<Atom>(Atom, activeDateValueId)
+                .getLocator()
+                .textContent();
 
             expect(newValue).not.toBe(oldValue);
             expect(moment(newValue).hour()).toBe(0);
         });
     });
 
-    xdescribe("after changing mode >", () => {
-        it("should select date and change date (saving hours, minutes, seconds)", async () => {
+    test.describe("after changing mode >", () => {
+        test("should select date and change date (saving hours, minutes, seconds)", async () => {
             await datepickerWithPreserve.clickInput();
             await datepickerWithPreserve.selectDate(5);
             const month = moment().month();
             const monthName = DatepickerAtom.MONTHNAMES_SHORT[month];
-            const oldValue = await browser
-                .element(by.id(activeDateValueIdPreserved))
-                .getText();
+            const oldValue = await Atom.find<Atom>(Atom, activeDateValueIdPreserved)
+                .getLocator()
+                .textContent();
             await datepickerWithPreserve.clickInput();
             await datepickerWithPreserve.clickTitle();
             await datepickerWithPreserve.selectMonth(monthName);
             await datepickerWithPreserve.selectDate(
                 moment().date() > 15 ? 10 : 20
             );
-            const newValue = await browser
-                .element(by.id(activeDateValueIdPreserved))
-                .getText();
+            const newValue = await Atom.find<Atom>(Atom, activeDateValueIdPreserved)
+                .getLocator()
+                .textContent();
 
             expect(newValue).not.toBe(oldValue);
             expect(moment(newValue).hour()).toBe(moment(oldValue).hour());
         });
 
-        it("should select date and change date (NOT saving hours, minutes, seconds)", async () => {
+        test("should select date and change date (NOT saving hours, minutes, seconds)", async () => {
             await datepickerInline.selectDate(5);
             const month = moment().month();
             const monthName = DatepickerAtom.MONTHNAMES_SHORT[month];
-            const oldValue = await browser
-                .element(by.id(activeDateValueId))
-                .getText();
+            const oldValue = await Atom.find<Atom>(Atom, activeDateValueId)
+                .getLocator()
+                .textContent();
             await datepickerInline.clickTitle();
             await datepickerInline.selectMonth(monthName);
             await datepickerInline.selectDate(moment().date() > 15 ? 10 : 20);
-            const newValue = await browser
-                .element(by.id(activeDateValueId))
-                .getText();
+            const newValue = await Atom.find<Atom>(Atom, activeDateValueId)
+                .getLocator()
+                .textContent();
 
             expect(newValue).not.toBe(oldValue);
             expect(moment(newValue).hour()).toBe(0);
         });
 
-        it("should save hour correctly when triggered at 23:00 - 0:00", async () => {
+        test("should save hour correctly when triggered at 23:00 - 0:00", async () => {
             await datepickerWithInitAndPreserve.clickInput();
             await datepickerWithInitAndPreserve.selectDate(5);
-            const oldValue = await browser
-                .element(by.id(initDateValueIdPreserved))
-                .getText();
+            const oldValue = await Atom.find<Atom>(Atom, initDateValueIdPreserved)
+                .getLocator()
+                .textContent();
             await datepickerWithInitAndPreserve.clickInput();
             await datepickerWithInitAndPreserve.selectDate(
                 moment().date() > 15 ? 10 : 20
             );
-            const newValue = await browser
-                .element(by.id(initDateValueIdPreserved))
-                .getText();
+            const newValue = await Atom.find<Atom>(Atom, initDateValueIdPreserved)
+                .getLocator()
+                .textContent();
 
             expect(newValue).not.toBe(oldValue);
             expect(moment(newValue).hour()).toBe(moment(oldValue).hour());
         });
     });
 
-    xdescribe("after clicking next/previous >", () => {
-        it("changes month title appropriately after clicking next/previous", async () => {
+    test.describe("after clicking next/previous >", () => {
+        test("changes month title appropriately after clicking next/previous", async () => {
             const currentMonth = await datepickerInline.getMonthFromTitle();
             const previousMonth =
                 datepickerInline.getPreviousMonthTitle(currentMonth);
@@ -449,13 +452,14 @@ xdescribe("USERCONTROL datepicker", () => {
         });
     });
 
-    xdescribe("empty value >", () => {
-        it("should build day calendar from the scratch after clicking next and re-open in case of empty value", async () => {
+    test.describe("empty value >", () => {
+        test("should build day calendar from the scratch after clicking next and re-open in case of empty value", async ({ page }) => {
             await datepickerBasic.clickInput();
             await datepickerBasic.selectDate(2);
             await datepickerBasic.clickInput();
             await datepickerBasic.deleteTextManually();
-            await browser.sleep(501); // 'inputChanged' Observable debounceTime
+            await page.waitForTimeout(501); // mimic debounceTime from inputChanged Observable
+
             await datepickerBasic.goNext();
 
             await datepickerBasic.clickInput();
@@ -467,12 +471,12 @@ xdescribe("USERCONTROL datepicker", () => {
             expect(momentMonthInTitle.month()).toEqual(moment().month());
         });
 
-        it("should show days calendar after chosing month and re-open", async () => {
+        test("should show days calendar after chosing month and re-open", async ({ page }) => {
             await datepickerBasic.clickInput();
             await datepickerBasic.selectDate(2);
             await datepickerBasic.clickInput();
             await datepickerBasic.deleteTextManually();
-            await browser.sleep(501); // 'inputChanged' Observable debounceTime
+            await page.waitForTimeout(501); // mimic debounceTime from inputChanged Observable
             await datepickerBasic.clickTitle();
 
             await datepickerBasic.clickInput();
@@ -485,10 +489,10 @@ xdescribe("USERCONTROL datepicker", () => {
         });
     });
 
-    xit("should preserve initial first day of the week in day-picker", async () => {
+    test("should preserve initial first day of the week in day-picker", async () => {
         await datepickerWithPreserve.clickInput();
         await datepickerWithPreserve.clickFirstCalendarDate();
-        let selectedDate = await datepickerWithPreserve.getInputValue();
+        let selectedDate = await datepickerWithPreserve.getInput.inputValue();
         let firstDayOfTheWeek = moment(
             moment(selectedDate, "DD MMM YYYY")
         ).day();
@@ -505,16 +509,16 @@ xdescribe("USERCONTROL datepicker", () => {
                 : moment().subtract(1, "month").format("MMM");
         await datepickerWithPreserve.selectMonth(newMonth.toString());
         await datepickerWithPreserve.clickFirstCalendarDate();
-        selectedDate = await datepickerWithPreserve.getInputValue();
+        selectedDate = await datepickerWithPreserve.getInput.inputValue();
         firstDayOfTheWeek = moment(moment(selectedDate, "DD MMM YYYY")).day();
         expect(firstDayOfTheWeek).toEqual(0);
     });
 
-    xit("should correctly set and preserve first day of the week in day-picker", async () => {
+    test("should correctly set and preserve first day of the week in day-picker", async () => {
         await datepickerWithCustomFirstDayOfTheWeek.clickInput();
         await datepickerWithCustomFirstDayOfTheWeek.clickFirstCalendarDate();
         let selectedDate =
-            await datepickerWithCustomFirstDayOfTheWeek.getInputValue();
+            await datepickerWithCustomFirstDayOfTheWeek.getInput.inputValue();
         let firstDayOfTheWeek = moment(
             moment(selectedDate, "DD MMM YYYY")
         ).day();
@@ -534,13 +538,13 @@ xdescribe("USERCONTROL datepicker", () => {
         );
         await datepickerWithCustomFirstDayOfTheWeek.clickFirstCalendarDate();
         selectedDate =
-            await datepickerWithCustomFirstDayOfTheWeek.getInputValue();
+            await datepickerWithCustomFirstDayOfTheWeek.getInput.inputValue();
         firstDayOfTheWeek = moment(moment(selectedDate, "DD MMM YYYY")).day();
         expect(firstDayOfTheWeek).toEqual(5);
     });
 
-    xit("should apply appropriate styles to selected day/month/year on day selection in day-picker", async () => {
-        await datepickerInline.waitElementVisible();
+    test("should apply appropriate styles to selected day/month/year on day selection in day-picker", async () => {
+        await datepickerInline.toBeVisible();
         await datepickerInline.clickChangeModeButton();
         await datepickerInline.clickChangeModeButton();
         const newYear = moment().add(1, "year").year();
@@ -552,18 +556,18 @@ xdescribe("USERCONTROL datepicker", () => {
         await datepickerInline.selectMonth(newMonth.toString());
         const newDate = 10;
         await datepickerInline.selectDate(newDate);
-        expect(await datepickerInline.getActiveDayText()).toEqual(
+        await expect(datepickerInline.getActiveDay).toHaveText(
             newDate.toString()
         );
         await datepickerInline.clickChangeModeButton();
-        expect(await datepickerInline.getActiveDayText()).toEqual(newMonth);
+        await expect(datepickerInline.getActiveDay).toHaveText(newMonth);
         await datepickerInline.clickChangeModeButton();
-        expect(await datepickerInline.getActiveDayText()).toEqual(
+        await expect(datepickerInline.getActiveDay).toHaveText(
             newYear.toString()
         );
     });
 
-    xdescribe("datepicker textbox date formatting > ", () => {
+    test.describe("datepicker textbox date formatting > ", () => {
         const todayDate: Moment = moment();
         const defaultFormat: string = "DD MMM YYYY";
         const customFormat: string = "MM/DD/YY";
@@ -577,71 +581,56 @@ xdescribe("USERCONTROL datepicker", () => {
         const newDateDefaultFormat = newDate.format(defaultFormat);
         const newDateCustomFormat = newDate.format(customFormat);
 
-        it("should display date in textbox in accordance with default dateFormat", async () => {
+        test("should display date in textbox in accordance with default dateFormat", async () => {
             await datepickerBasic.toggle();
             await datepickerBasic.clickTodayButton();
-            expect(await datepickerBasic.getInputValue()).toEqual(
+            await expect(datepickerBasic.getInput).toHaveValue(
                 todayDateDefaultFormat
             );
         });
 
-        it("should display date in textbox in accordance with custom user's dateFormat", async () => {
+        test("should display date in textbox in accordance with custom user's dateFormat", async () => {
             await datepickerWithCustomDateFormat.toggle();
             await datepickerWithCustomDateFormat.clickTodayButton();
-            expect(
-                await datepickerWithCustomDateFormat.getInputValue()
-            ).toEqual(todayDateCustomFormat);
+            await expect(datepickerWithCustomDateFormat.getInput).toHaveValue(
+                todayDateCustomFormat
+            );
         });
 
-        it("should display selected date in accordance with dateFormat", async () => {
+        test("should display selected date in accordance with dateFormat", async () => {
             const newDateDay: number = newDate.date();
 
             await datepickerBasic.clickInput();
             await datepickerBasic.selectDate(newDateDay);
-            let selectedDate: string = await datepickerBasic.getInputValue();
-            expect(selectedDate).toEqual(newDateDefaultFormat);
+            await expect(datepickerBasic.getInput).toHaveValue(newDateDefaultFormat);
 
             await datepickerWithCustomDateFormat.clickInput();
             await datepickerWithCustomDateFormat.selectDate(newDateDay);
-            selectedDate = await datepickerWithCustomDateFormat.getInputValue();
-            expect(selectedDate).toEqual(newDateCustomFormat);
+            await expect(datepickerWithCustomDateFormat.getInput).toHaveValue(newDateCustomFormat);
         });
 
-        it("should validate typed in date and change it's format in accordance with dateFormat", async () => {
+        test("should validate typed in date and change it's format in accordance with dateFormat", async () => {
             await datepickerBasic.clearText();
             await datepickerBasic.acceptText(newDateCustomFormat);
-            let selectedDate = await datepickerBasic.getInputValue();
-            expect(selectedDate).toEqual(newDateDefaultFormat);
-            expect(await datepickerBasic.isInputValid()).toEqual(true);
-
+            await expect(datepickerBasic.getInput).toHaveValue(newDateDefaultFormat);
+            await datepickerBasic.isInputValid();
             await datepickerWithCustomDateFormat.clearText();
-            await datepickerWithCustomDateFormat.acceptText(
-                newDateDefaultFormat
-            );
-            selectedDate = await datepickerWithCustomDateFormat.getInputValue();
-            expect(selectedDate).toEqual(newDateCustomFormat);
-            expect(await datepickerWithCustomDateFormat.isInputValid()).toEqual(
-                true
-            );
+            await datepickerWithCustomDateFormat.acceptText(newDateDefaultFormat);
+            await expect(datepickerWithCustomDateFormat.getInput).toHaveValue(newDateCustomFormat);
+            await datepickerWithCustomDateFormat.isInputValid();
         });
 
-        it("should not validate invalid typed in date and should not change it's format to dateFormat", async () => {
+        test("should not validate invalid typed in date and should not change it's format to dateFormat", async () => {
             const invalidDate: string = "20189-50.Nov2";
-
-            await datepickerBasic.waitElementVisible();
+            await datepickerBasic.toBeVisible();
             await datepickerBasic.clearText();
             await datepickerBasic.acceptText(invalidDate);
-            let selectedDate = await datepickerBasic.getInputValue();
-            expect(selectedDate).toEqual(invalidDate);
-            expect(await datepickerBasic.isInputValid()).toEqual(false);
-
+            await expect(datepickerBasic.getInput).toHaveValue(invalidDate);
+            await datepickerBasic.isInputValid();
             await datepickerWithCustomDateFormat.clearText();
             await datepickerWithCustomDateFormat.acceptText(invalidDate);
-            selectedDate = await datepickerWithCustomDateFormat.getInputValue();
-            expect(selectedDate).toEqual(invalidDate);
-            expect(await datepickerWithCustomDateFormat.isInputValid()).toEqual(
-                false
-            );
+            await expect(datepickerWithCustomDateFormat.getInput).toHaveValue(invalidDate);
+            await datepickerWithCustomDateFormat.isNotInputValid();
         });
     });
 });

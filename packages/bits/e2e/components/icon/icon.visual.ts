@@ -30,7 +30,7 @@ const name: string = "Icon";
 describe(`Visual tests: ${name}`, () => {
     let camera: Camera, iconBasic: IconAtom;
 
-    test.beforeAll(async () => {
+    test.test.beforeEach(async () => {
         await Helpers.prepareBrowser("icon/icon-visual-test");
         iconBasic = Atom.find<IconAtom>(IconAtom, "nui-icon-test-basic-usage");
 

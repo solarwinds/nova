@@ -64,6 +64,9 @@ export class Helpers {
         await Helpers.page.click("body", { position: { y: 0, x: 0 } });
     }
 
+    static async setLocation(url: string): Promise<void>{
+        await this.page.goto(url);
+    }
 
     static async disableCSSAnimations(type: Animations): Promise<any> {
         let disableTransitions =

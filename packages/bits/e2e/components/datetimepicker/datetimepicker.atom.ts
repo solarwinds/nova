@@ -18,20 +18,23 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser } from "protractor";
+import { Atom } from "../../atom";
+import { DatepickerAtom } from "../datepicker/datepicker.atom";
+import { TimepickerAtom } from "../timepicker/timepicker.atom";
 
-import { assertA11y, Helpers } from "../../helpers";
-import { ButtonAtom } from "../public_api";
+export class DateTimepickerAtom extends Atom {
+    public static CSS_CLASS = "nui-datetime-picker";
 
-describe("a11y: button", () => {
-    const rulesToDisable: string[] = ["duplicate-id-active"];
+    public get datePicker(): DatepickerAtom {
+        return DatepickerAtom.findIn<DatepickerAtom>(DatepickerAtom, this.getLocator());
+    }
 
-    beforeAll(async () => {
-        await browser.waitForAngularEnabled(false);
-        await Helpers.prepareBrowser("button/button-visual-test");
-    });
+    public get timePicker(): TimepickerAtom {
+        return TimepickerAtom.findIn<TimepickerAtom>(TimepickerAtom, this.getLocator());
+    }
 
-    it("should verify a11y of button", async () => {
-        await assertA11y(browser, ButtonAtom, rulesToDisable);
-    });
-});
+    public async isDisabled(): Promise<void> {
+        await this.datePicker.textbox.toBeDisabled();
+        await this.timePicker.textbox.toBeDisabled();
+    }
+}

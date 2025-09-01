@@ -11,7 +11,7 @@ This document tracks the migration of component tests from Protractor to Playwri
 | busy                   | ⬜ Not Started   |       |
 | button                 | ✅ Completed     |       |
 | checkbox               | ✅ Completed     |       |
-| checkbox-group         | ⬜ Not Started   |       |
+| checkbox-group         | ✅ Completed     |       |
 | chips                  | ✅ Completed     |       |
 | combobox               | ⬜ Not Started   |       |
 | combobox-v2            | ⬜ Not Started   |       |
@@ -19,8 +19,8 @@ This document tracks the migration of component tests from Protractor to Playwri
 | convenience            | ⬜ Not Started   |       |
 | data-filter            | ⬜ Not Started   |       |
 | datepicker             | ✅ Completed     |       |
-| datetimepicker         | ⬜ Not Started   |       |
-| dialog                 | ⬜ Not Started   |       |
+| datetimepicker         | ✅ Completed   |       |
+| dialog                 | 🔄 In Progress   |       |
 | divider                | ⬜ Not Started   |       |
 | drag-and-drop          | ⬜ Not Started   |       |
 | expander               | ⬜ Not Started   |       |
@@ -33,7 +33,7 @@ This document tracks the migration of component tests from Protractor to Playwri
 | menu-popup             | ⬜ Not Started   |       |
 | message                | ⬜ Not Started   |       |
 | overlay                | ⬜ Not Started   |       |
-| paginator              | ⬜ Not Started   |       |
+| paginator              | 🔄 In Progress   |       |
 | panel                  | ⬜ Not Started   |       |
 | popover                | ⬜ Not Started   |       |
 | popup                  | ✅ Completed     |       |
@@ -42,30 +42,30 @@ This document tracks the migration of component tests from Protractor to Playwri
 | repeat                 | ⬜ Not Started   |       |
 | search                 | ⬜ Not Started   |       |
 | select                 | ⬜ Not Started   |       |
-| select-v2              | ⬜ Not Started   |       |
+| select-v2              | 🔄 In Progress   |       |
 | selector               | ✅ Completed     |       |
 | sorter                 | ⬜ Not Started   |       |
 | spinner                | ⬜ Not Started   |       |
-| switch                 | ⬜ Not Started   |       |
+| switch                 | ✅ Completed     |       |
 | tab-heading-group      | ⬜ Not Started   |       |
 | table                  | 🔄 In Progress   |       |
 | textbox                | ✅ Completed     |       |
 | textbox-number         | ⬜ Not Started   |       |
 | time-frame-picker      | ⬜ Not Started   |       |
-| timepicker             | ⬜ Not Started   |       |
+| timepicker             | ✅ Completed     |       |
 | toolbar                | ⬜ Not Started   |       |
 | tree                   | ⬜ Not Started   |       |
 | wizard                 | ⬜ Not Started   |       |
 | wizard-v2              | ⬜ Not Started   |       |
 
-📊 Progress:
-Completed: 10 / 47 → ~21.3%
+📊 Component Progress:
+Completed: 12 / 49 → ~24.5%
 
 ## 📁 Directives
 
 | Directive Name | Migration Status | Notes |
 | -------------- | ---------------- | ----- |
-| clipboard      | ✅ Completed    |       |
+| clipboard      | ✅ Completed     |       |
 | dragdrop       | ⬜ Not Started   |       |
 | resizer        | ⬜ Not Started   |       |
 | set-focuc      | ✅ Completed     |       |

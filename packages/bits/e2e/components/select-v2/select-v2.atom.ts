@@ -18,21 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser } from "protractor";
+import { BaseSelectV2Atom } from "./base-select-v2.atom";
 
-import { assertA11y, Helpers } from "../../helpers";
-import { SwitchAtom } from "../public_api";
-
-describe("a11y: switch", () => {
-    const rulesToDisable: string[] = [
-        "color-contrast", // NUI-6014
-    ];
-
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("switch/switch-visual-test");
-    });
-
-    it("should check a11y of switch", async () => {
-        await assertA11y(browser, SwitchAtom, rulesToDisable);
-    });
-});
+export class SelectV2Atom extends BaseSelectV2Atom {
+    public static CSS_CLASS = "nui-select-v2";
+}

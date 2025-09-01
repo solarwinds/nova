@@ -18,24 +18,25 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser } from "protractor";
+import { CheckboxGroupAtom } from "./checkbox-group.atom";
+import { Helpers, test } from "../../setup";
 
-import { assertA11y, Helpers } from "../../helpers";
-import { CheckboxAtom } from "../public_api";
-
-describe("a11y: checkbox", () => {
+test.describe("a11y: checkbox-group", () => {
     // disabling the rule until NUI-6015 is addressed
     const rulesToDisable: string[] = [
         "aria-allowed-role",
-        "nested-interactive",
+        "aria-toggle-field-name",
+        "aria-required-attr",
     ];
 
-    beforeAll(async () => {
-        await browser.waitForAngularEnabled(false);
-        await Helpers.prepareBrowser("checkbox/checkbox-visual-test");
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser(
+            "checkbox-group/checkbox-group-visual-test",
+            page
+        );
     });
 
-    it("should verify a11y of checkbox", async () => {
-        await assertA11y(browser, CheckboxAtom, rulesToDisable);
+    test("should verify a11y of checkbox group", async ({ runA11yScan }) => {
+        await runA11yScan(CheckboxGroupAtom, rulesToDisable);
     });
 });

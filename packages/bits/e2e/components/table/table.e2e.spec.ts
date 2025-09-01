@@ -28,6 +28,7 @@ import { CheckboxAtom } from "../checkbox/checkbox.atom";
 // import { SearchAtom } from "../search/search.atom";
 import { SelectorAtom, SelectionType } from "../selector/selector.atom";
 import { TextboxAtom } from "../textbox/textbox.atom";
+import { CheckboxGroupAtom } from "../checkbox-group/checkbox-group.atom";
 
 test.describe("USERCONTROL table >", () => {
     let table: TableAtom;
@@ -46,7 +47,7 @@ test.describe("USERCONTROL table >", () => {
     let sortByNameButton: ButtonAtom;
     let searchByLocationCheckbox: CheckboxAtom;
 
-    async function prepareTablePage(page, route) {
+    async function prepareTablePage(page: any, route: any) {
         await Helpers.prepareBrowser(route, page);
         table = Atom.find<TableAtom>(TableAtom, "nui-demo-basic-table");
         paginatedTable = Atom.find<TableAtom>(
@@ -219,8 +220,8 @@ test.describe("USERCONTROL table >", () => {
     //
     test.describe("Height set table >", () => {
         test.beforeEach(async ({ page }) => {
-           await prepareTablePage(page, "table/height", heightSetTable);
-            await expect(heightSetTable.getLocator()).toBeVisible();
+           await prepareTablePage(page, "table/height");
+           await expect(heightSetTable.getLocator()).toBeVisible();
         });
 
         test("should have nui-row element with density=tiny height equal to 24px", async () => {
@@ -228,94 +229,94 @@ test.describe("USERCONTROL table >", () => {
         });
     });
 
-    // test.describe("Adding and removing table columns >", () => {
-    //     let editColumnsButton: ButtonAtom;
-    //     let submitColumnsButton: ButtonAtom;
-    //     let newColumnButton: ButtonAtom;
-    //     let newColumnInput: TextboxAtom;
-    //     let columnsCheckboxGroup: CheckboxGroupAtom;
-    //     const tableColumnsAddRemoveTestCases = [
-    //         {
-    //             checkboxName: "Reporter",
-    //             testName: "should add 'Reporter' column",
-    //             expectedResult: [
-    //                 "Issue",
-    //                 "Project",
-    //                 "Description",
-    //                 "Status",
-    //                 "Epic",
-    //                 "Actions",
-    //                 "Reporter",
-    //             ],
-    //         },
-    //         {
-    //             checkboxName: "Issue",
-    //             testName: "should remove 'Issue' column",
-    //             expectedResult: [
-    //                 "Project",
-    //                 "Description",
-    //                 "Status",
-    //                 "Epic",
-    //                 "Actions",
-    //             ],
-    //         },
-    //     ];
-    //
-    //     test.beforeEach(async ({ page }) => {
-    //         await prepareTablePage(page, "table/custom-actions");
-    //         await expect(customActionsTable.getLocator()).toBeVisible();
-    //         editColumnsButton = Atom.find(
-    //             ButtonAtom,
-    //             "nui-demo-table-columns-add-remove-edit-btn"
-    //         );
-    //         submitColumnsButton = Atom.find(
-    //             ButtonAtom,
-    //             "nui-demo-table-columns-add-remove-submit-btn"
-    //         );
-    //         newColumnButton = Atom.find(
-    //             ButtonAtom,
-    //             "nui-demo-table-add-remove-new-column-btn"
-    //         );
-    //         newColumnInput = Atom.find(
-    //             TextboxAtom,
-    //             "nui-demo-table-add-remove-new-column-textbox"
-    //         );
-    //         columnsCheckboxGroup = Atom.find(
-    //             CheckboxGroupAtom,
-    //             "nui-demo-table-add-remove-checkboxes"
-    //         );
-    //
-    //     });
-    //     tableColumnsAddRemoveTestCases.forEach((testCase: any) => {
-    //         test(testCase.testName, async () => {
-    //             await editColumnsButton.click();
-    //             const checkbox = await columnsCheckboxGroup.getCheckbox(
-    //                 testCase.checkboxName
-    //             );
-    //             await checkbox?.toggle();
-    //             await submitColumnsButton.click();
-    //             await expect(tableColumnsAddRemove.getRowContent(0)).toHaveText(
-    //                 testCase.expectedResult
-    //             );
-    //         });
-    //     });
-    //
-    //     test("should add new empty column", async () => {
-    //         await editColumnsButton.click();
-    //         await newColumnInput.acceptText("New Column");
-    //         await newColumnButton.click();
-    //         await submitColumnsButton.click();
-    //         await expect(tableColumnsAddRemove.getRowContent(0)).toHaveText([
-    //             "Issue",
-    //             "Project",
-    //             "Description",
-    //             "Status",
-    //             "Epic",
-    //             "Actions",
-    //             "New Column",
-    //         ]);
-    //     });
-    // });
+    test.describe("Adding and removing table columns >", () => {
+        let editColumnsButton: ButtonAtom;
+        let submitColumnsButton: ButtonAtom;
+        let newColumnButton: ButtonAtom;
+        let newColumnInput: TextboxAtom;
+        let columnsCheckboxGroup: CheckboxGroupAtom;
+        const tableColumnsAddRemoveTestCases = [
+            {
+                checkboxName: "Reporter",
+                testName: "should add 'Reporter' column",
+                expectedResult: [
+                    " issue ",
+                    " project ",
+                    " description ",
+                    " status ",
+                    " epic ",
+                    " actions ",
+                    " reporter ",
+                ],
+            },
+            {
+                checkboxName: "Issue",
+                testName: "should remove 'Issue' column",
+                expectedResult: [
+                    " project ",
+                    " description ",
+                    " status ",
+                    " epic ",
+                    " actions ",
+                ],
+            },
+        ];
+
+        test.beforeEach(async ({ page }) => {
+            await prepareTablePage(page, "table/custom-actions");
+            await expect(customActionsTable.getLocator()).toBeVisible();
+            editColumnsButton = Atom.find<ButtonAtom>(
+                ButtonAtom,
+                "nui-demo-table-columns-add-remove-edit-btn"
+            );
+            submitColumnsButton = Atom.find<ButtonAtom>(
+                ButtonAtom,
+                "nui-demo-table-columns-add-remove-submit-btn"
+            );
+            newColumnButton = Atom.find<ButtonAtom>(
+                ButtonAtom,
+                "nui-demo-table-add-remove-new-column-btn"
+            );
+            newColumnInput = Atom.find<TextboxAtom>(
+                TextboxAtom,
+                "nui-demo-table-add-remove-new-column-textbox"
+            );
+            columnsCheckboxGroup = Atom.find<CheckboxGroupAtom>(
+                CheckboxGroupAtom,
+                "nui-demo-table-add-remove-checkboxes"
+            );
+
+        });
+        tableColumnsAddRemoveTestCases.forEach((testCase: any) => {
+            test(testCase.testName, async () => {
+                await editColumnsButton.click();
+                const checkbox = columnsCheckboxGroup.getCheckbox(
+                    testCase.checkboxName
+                );
+                await checkbox?.toggle();
+                await submitColumnsButton.click();
+                await expect(tableColumnsAddRemove.getRowContent(0)).toHaveText(
+                    testCase.expectedResult
+                );
+            });
+        });
+
+        test("should add new empty column", async () => {
+            await editColumnsButton.click();
+            await newColumnInput.acceptText("New Column");
+            await newColumnButton.click();
+            await submitColumnsButton.click();
+            await expect(tableColumnsAddRemove.getRowContent(0)).toHaveText([
+                " issue ",
+                " project ",
+                " description ",
+                " status ",
+                " epic ",
+                " actions ",
+                " new Column ",
+            ]);
+        });
+    });
     //
     // test.describe("Sortable table >", () => {
     //     test.beforeEach(async () => {
@@ -551,10 +552,10 @@ test.describe("USERCONTROL table >", () => {
     //         expect(rowTdScrolled).toBeGreaterThan(rowTd);
     //     });
     // });
-    //
+
     // test.describe("Row selection >", () => {
-    //     test.beforeEach(async () => {
-    //         await Helpers.prepareBrowser("table/select");
+    //     test.beforeEach(async ({ page }) => {
+    //         await Helpers.prepareBrowser("table/select", page);
     //         paginator = Atom.find(
     //             PaginatorAtom,
     //             "nui-demo-table-select-paginator"
@@ -693,7 +694,7 @@ test.describe("USERCONTROL table >", () => {
     //         "demo-table-selectable-toggle-btn"
     //     );
     //
-    //     test.beforeAll(async () => {
+    //     test.test.beforeEach(async () => {
     //         await Helpers.prepareBrowser("table/selectable-toggle");
     //         selectableToggleTable.waitElementVisible();
     //     });

@@ -18,27 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser } from "protractor";
+import { Atom } from "../../atom";
 
-import { assertA11y, Helpers } from "../../helpers";
-import { CheckboxGroupAtom } from "../public_api";
+export class SelectV2OptionAtom extends Atom {
+    public static CSS_CLASS = "nui-select-v2-option";
 
-describe("a11y: checkbox-group", () => {
-    // disabling the rule until NUI-6015 is addressed
-    const rulesToDisable: string[] = [
-        "aria-allowed-role",
-        "aria-toggle-field-name",
-        "aria-required-attr",
-    ];
-
-    beforeAll(async () => {
-        await browser.waitForAngularEnabled(false);
-        await Helpers.prepareBrowser(
-            "checkbox-group/checkbox-group-visual-test"
-        );
-    });
-
-    it("should verify a11y of checkbox group", async () => {
-        await assertA11y(browser, CheckboxGroupAtom, rulesToDisable);
-    });
-});
+    public async isActive(): Promise<boolean> {
+        return this.toContainClass("active");
+    }
+}

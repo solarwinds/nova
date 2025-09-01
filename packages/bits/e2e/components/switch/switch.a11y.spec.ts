@@ -17,21 +17,20 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-import { TableAtom } from "./table.atom";
+
+import { SwitchAtom } from "./switch.atom";
 import { Helpers, test } from "../../setup";
 
-const rulesToDisable: string[] = [
-    "duplicate-id", // we don't care for the testing pages
-    "aria-allowed-role", // NUI-6015
-    "aria-required-parent", // NUI-6133
-    "nested-interactive",
-];
-test.describe("a11y: table", () => {
-    test.beforeEach(async ({ page }): Promise<void> => {
-        await Helpers.prepareBrowser("chips/chips-visual-test", page);
+test.describe("a11y: switch", () => {
+    const rulesToDisable: string[] = [
+        "color-contrast", // NUI-6014
+    ];
+
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("switch/switch-visual-test", page);
     });
 
-    test("should check a11y of table", async ({ runA11yScan }) => {
-        await runA11yScan(TableAtom, rulesToDisable);
+    test("should check a11y of switch", async ({ runA11yScan }) => {
+        await runA11yScan(SwitchAtom, rulesToDisable);
     });
 });

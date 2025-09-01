@@ -18,19 +18,18 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser } from "protractor";
+import { CheckboxAtom } from "./checkbox.atom";
+import { test, Helpers } from "../../setup";
 
-import { assertA11y, Helpers } from "../../helpers";
-import { ChipsAtom } from "../public_api";
+// disabling the rule until NUI-6015 is addressed
+const rulesToDisable: string[] = ["aria-allowed-role", "nested-interactive"];
 
-describe("a11y: chips", () => {
-    const rulesToDisable: string[] = ["color-contrast"];
-
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("chips/chips-visual-test");
+test.describe("a11y: checkbox", () => {
+    test.test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("checkbox/checkbox-visual-test", page);
     });
 
-    it("should verify a11y of chips", async () => {
-        await assertA11y(browser, ChipsAtom, rulesToDisable);
+    test("should verify a11y of checkbox", async ({ runA11yScan }) => {
+        await runA11yScan(CheckboxAtom, rulesToDisable);
     });
 });

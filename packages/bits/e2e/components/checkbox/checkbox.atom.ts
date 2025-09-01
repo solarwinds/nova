@@ -21,6 +21,7 @@
 import { Locator } from "@playwright/test";
 
 import { Atom } from "../../atom";
+import { expect } from "../../setup";
 
 export class CheckboxAtom extends Atom {
     public static CSS_CLASS = "nui-checkbox";
@@ -56,6 +57,14 @@ export class CheckboxAtom extends Atom {
 
     public isChecked = async (): Promise<boolean> =>
         (await this.getInputElement.getAttribute("checked")) === "true";
+
+    public toBeChecked = async (): Promise<void> => {
+        await expect(this.getInputElement).toBeChecked();
+    };
+
+    public toNotBeChecked = async (): Promise<void> => {
+        await expect(this.getInputElement).not.toBeChecked();
+    };
 
     /**
      * Toggle the checkbox value

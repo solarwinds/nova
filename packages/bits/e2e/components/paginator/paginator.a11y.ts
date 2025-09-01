@@ -18,18 +18,19 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { CheckboxAtom } from "./checkbox.atom";
-import { test, Helpers } from "../../setup";
+import { browser } from "protractor";
 
-// disabling the rule until NUI-6015 is addressed
-const rulesToDisable: string[] = ["aria-allowed-role", "nested-interactive"];
+import { runA11yScan, Helpers } from "../../helpers";
+import { PaginatorAtom } from "../public_api";
 
-test.describe("a11y: checkbox", () => {
-    test.beforeAll(async ({ page }) => {
-        await Helpers.prepareBrowser("checkbox/checkbox-visual-test", page);
+describe("a11y: paginator", () => {
+    const rulesToDisable: string[] = ["nested-interactive"];
+
+    test.beforeEach(async () => {
+        await Helpers.prepareBrowser("paginator/paginator-visual-test");
     });
 
-    test("should verify a11y of checkbox", async ({ runA11yScan }) => {
-        await runA11yScan(CheckboxAtom, rulesToDisable);
+    test("should check a11y of paginator", async () => {
+        await runA11yScan(browser, PaginatorAtom, rulesToDisable);
     });
 });

@@ -99,4 +99,32 @@ export class Atom {
     public getLocator(): Locator {
         return this.locator;
     }
+
+    public nth<T extends Atom>(atomClass: IAtomClass<T>, index: number): T {
+        // it should take existing class and return the class which will be limited to the index
+        // this.limit it and for example the click will be perfomed agains the only on insance
+        // this.getLocator(); // all of them
+        const locator = this.getLocator().nth(index); // the locator of the only one item
+        return new atomClass(locator);
+        // how to return the atom
+    }
+
+    // function spawnWrapper (...params: [
+    //     Parameters<typeof spawn>[0],
+    //     Parameters<typeof spawn>[1],
+    // ]) {
+    //     return spawn(...params);
+    // }
+    public filter<T extends Atom>(atomClass: IAtomClass<T>, ...filter: Parameters<Locator["filter"]> ): T {
+        // it should take existing class and return the class which will be limited to the index
+        // this.limit it and for example the click will be perfomed agains the only on insance
+        // this.getLocator(); // all of them
+        const locator = this.getLocator().filter(...filter); // the locator of the only one item
+        return new atomClass(locator);
+        // how to return the atom
+    }
+
+    public async click(): Promise<void> {
+        await this.locator.click();
+    }
 }
