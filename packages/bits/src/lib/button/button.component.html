@@ -2,6 +2,9 @@
     *ngIf="isBusy"
     [ngStyle]="getRippleContainerStyle()"
     class="nui-button-ripple-container"
+    aria-live="polite"
+    aria-atomic="true"
+    aria-label="Loading"
 >
     <div class="ripple ripple-1"></div>
     <div class="ripple ripple-2"></div>

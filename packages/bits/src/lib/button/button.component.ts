@@ -168,6 +168,12 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
         return this.ariaLabel || this.getAriaLabel();
     }
 
+    @HostBinding("attr.aria-disabled")
+    public get ariaDisabled(): string | null {
+        const hostElement = this.getHostElement();
+        return (hostElement as any).disabled ? "true" : null;
+    }
+
     @ViewChild("contentContainer", { static: true, read: ViewContainerRef })
     private contentContainer: ViewContainerRef;
 
@@ -192,6 +198,7 @@ should be set explicitly: `,
 
     public ngOnInit(): void {
         this.setupRepeatEvent();
+        this.validateAccessibility();
     }
 
     public ngAfterContentChecked(): void {
@@ -245,6 +252,8 @@ should be set explicitly: `,
 
     private setupRepeatEvent() {
         const hostElement = this.getHostElement();
+        
+        // Mouse events
         const mouseUp$ = fromEvent(hostElement, "mouseup").pipe(
             takeUntil(this.ngUnsubscribe)
         );
@@ -257,23 +266,53 @@ should be set explicitly: `,
                 filter(() => this.isRepeat)
             )
             .subscribe(() => {
-                const repeatSubscription = timer(
-                    buttonConstants.repeatDelay,
-                    buttonConstants.repeatInterval
-                )
-                    .pipe(
-                        takeUntil(
-                            merge(mouseUp$, mouseLeave$, this.ngUnsubscribe)
-                        )
-                    )
-                    .subscribe(() => {
-                        if (hostElement.disabled) {
-                            repeatSubscription.unsubscribe();
-                        } else {
-                            hostElement.click();
-                        }
-                    });
+                this.startRepeatTimer(hostElement, merge(mouseUp$, mouseLeave$, this.ngUnsubscribe));
             });
+
+        // Keyboard events
+        const keyUp$ = fromEvent<KeyboardEvent>(hostElement, "keyup").pipe(
+            takeUntil(this.ngUnsubscribe),
+            filter((event: KeyboardEvent) => event.code === "Space" || event.code === "Enter")
+        );
+        fromEvent<KeyboardEvent>(hostElement, "keydown")
+            .pipe(
+                takeUntil(this.ngUnsubscribe),
+                filter((event: KeyboardEvent) => this.isRepeat && (event.code === "Space" || event.code === "Enter"))
+            )
+            .subscribe((event: KeyboardEvent) => {
+                // Prevent default behavior for space to avoid page scrolling
+                if (event.code === "Space") {
+                    event.preventDefault();
+                }
+                this.startRepeatTimer(hostElement, merge(keyUp$, this.ngUnsubscribe));
+            });
+    }
+
+    private startRepeatTimer(hostElement: HTMLElement, stopEvents$: any) {
+        const repeatSubscription = timer(
+            buttonConstants.repeatDelay,
+            buttonConstants.repeatInterval
+        )
+            .pipe(takeUntil(stopEvents$))
+            .subscribe(() => {
+                if ((hostElement as any).disabled) {
+                    repeatSubscription.unsubscribe();
+                } else {
+                    hostElement.click();
+                }
+            });
+    }
+
+    private validateAccessibility(): void {
+        // Check for icon-only buttons without proper aria-label
+        setTimeout(() => {
+            if (this.isEmptyClass && this.icon && !this.ariaLabel) {
+                this.logger.warn(
+                    "Icon-only button detected without aria-label. Please provide a meaningful aria-label for accessibility.",
+                    this.el.nativeElement
+                );
+            }
+        });
     }
 
     private getHostElement() {

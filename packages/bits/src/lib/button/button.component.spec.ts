@@ -76,6 +76,45 @@ class TestAppButtonInRepeaterComponent implements OnInit {
     }
 }
 
+@Component({
+    selector: "nui-button-icon-only",
+    template: ` <button nui-button type="button" icon="add"></button> `,
+    standalone: false,
+})
+class TestAppIconOnlyButtonComponent {}
+
+@Component({
+    selector: "nui-button-icon-only-with-aria",
+    template: ` <button nui-button type="button" icon="add" ariaLabel="Add item"></button> `,
+    standalone: false,
+})
+class TestAppIconOnlyButtonWithAriaComponent {}
+
+@Component({
+    selector: "nui-button-busy",
+    template: ` <button nui-button type="button" [isBusy]="isBusy">Loading</button> `,
+    standalone: false,
+})
+class TestAppBusyButtonComponent {
+    public isBusy = false;
+}
+
+@Component({
+    selector: "nui-button-disabled",
+    template: ` <button nui-button type="button" [disabled]="disabled">Click me</button> `,
+    standalone: false,
+})
+class TestAppDisabledButtonComponent {
+    public disabled = false;
+}
+
+@Component({
+    selector: "nui-button-repeat-keyboard",
+    template: ` <button nui-button type="button" [isRepeat]="true">Repeat button</button> `,
+    standalone: false,
+})
+class TestAppRepeatKeyboardButtonComponent {}
+
 describe("components >", () => {
     describe("button >", () => {
         const SIZE_LARGE = ButtonSizeType.large;
@@ -93,6 +132,11 @@ describe("components >", () => {
                     TestAppButtonOnDivNoTypeComponent,
                     TestAppButtonInRepeaterComponent,
                     TestAppButtonComponent,
+                    TestAppIconOnlyButtonComponent,
+                    TestAppIconOnlyButtonWithAriaComponent,
+                    TestAppBusyButtonComponent,
+                    TestAppDisabledButtonComponent,
+                    TestAppRepeatKeyboardButtonComponent,
                 ],
                 schemas: [CUSTOM_ELEMENTS_SCHEMA],
                 providers: [LoggerService],
@@ -208,6 +252,205 @@ describe("components >", () => {
                 tick(buttonConstants.repeatInterval);
                 expect(click).toHaveBeenCalledTimes(2);
             }));
+        });
+
+        describe("accessibility >", () => {
+            describe("icon-only buttons >", () => {
+                it("should warn when icon-only button lacks aria-label", () => {
+                    const warnSpy = spyOnProperty(logger, "warn", "get").and.callThrough();
+                    fixture = TestBed.createComponent(TestAppIconOnlyButtonComponent);
+                    de = fixture.debugElement;
+                    subject = de.children[0].componentInstance;
+                    subject.icon = "add";
+                    subject.isEmpty = true;
+                    fixture.detectChanges();
+
+                    expect(warnSpy).toHaveBeenCalledWith(
+                        "Icon-only button detected without aria-label. Please provide a meaningful aria-label for accessibility.",
+                        jasmine.any(Object)
+                    );
+                });
+
+                it("should not warn when icon-only button has aria-label", () => {
+                    const warnSpy = spyOnProperty(logger, "warn", "get").and.callThrough();
+                    fixture = TestBed.createComponent(TestAppIconOnlyButtonWithAriaComponent);
+                    de = fixture.debugElement;
+                    subject = de.children[0].componentInstance;
+                    fixture.detectChanges();
+
+                    expect(warnSpy).not.toHaveBeenCalled();
+                });
+
+                it("should use provided aria-label for icon-only buttons", () => {
+                    fixture = TestBed.createComponent(TestAppIconOnlyButtonWithAriaComponent);
+                    de = fixture.debugElement;
+                    subject = de.children[0].componentInstance;
+                    fixture.detectChanges();
+
+                    expect(subject.ariaIconLabel).toBe("Add item");
+                });
+            });
+
+            describe("busy state >", () => {
+                let busyFixture: ComponentFixture<TestAppBusyButtonComponent>;
+                let busyComponent: TestAppBusyButtonComponent;
+
+                beforeEach(() => {
+                    busyFixture = TestBed.createComponent(TestAppBusyButtonComponent);
+                    busyComponent = busyFixture.componentInstance;
+                    busyFixture.detectChanges();
+                });
+
+                it("should add aria-live and aria-atomic to busy container", () => {
+                    busyComponent.isBusy = true;
+                    busyFixture.detectChanges();
+
+                    const rippleContainer = busyFixture.debugElement.query(
+                        By.css(".nui-button-ripple-container")
+                    );
+                    expect(rippleContainer).toBeTruthy();
+                    expect(rippleContainer.nativeElement.getAttribute("aria-live")).toBe("polite");
+                    expect(rippleContainer.nativeElement.getAttribute("aria-atomic")).toBe("true");
+                    expect(rippleContainer.nativeElement.getAttribute("aria-label")).toBe("Loading");
+                });
+
+                it("should not show ripple container when not busy", () => {
+                    busyComponent.isBusy = false;
+                    busyFixture.detectChanges();
+
+                    const rippleContainer = busyFixture.debugElement.query(
+                        By.css(".nui-button-ripple-container")
+                    );
+                    expect(rippleContainer).toBeFalsy();
+                });
+
+                it("should set aria-busy attribute based on isBusy state", () => {
+                    const buttonElement = busyFixture.debugElement.query(By.css("button"));
+                    
+                    // Test busy state
+                    busyComponent.isBusy = true;
+                    busyFixture.detectChanges();
+                    expect(buttonElement.nativeElement.getAttribute("aria-busy")).toBe("true");
+                    
+                    // Test non-busy state  
+                    busyComponent.isBusy = false;
+                    busyFixture.detectChanges();
+                    expect(buttonElement.nativeElement.hasAttribute("aria-busy")).toBeFalsy();
+                });
+            });
+
+            describe("disabled state >", () => {
+                let disabledFixture: ComponentFixture<TestAppDisabledButtonComponent>;
+                let disabledComponent: TestAppDisabledButtonComponent;
+                let disabledSubject: ButtonComponent;
+
+                beforeEach(() => {
+                    disabledFixture = TestBed.createComponent(TestAppDisabledButtonComponent);
+                    disabledComponent = disabledFixture.componentInstance;
+                    disabledSubject = disabledFixture.debugElement.children[0].componentInstance;
+                    disabledFixture.detectChanges();
+                });
+
+                it("should set aria-disabled to true when button is disabled", () => {
+                    disabledComponent.disabled = true;
+                    disabledFixture.detectChanges();
+                    
+                    const buttonElement = disabledFixture.debugElement.query(By.css("button")).nativeElement;
+                    buttonElement.disabled = true; // Simulate disabled state
+                    
+                    expect(disabledSubject.ariaDisabled).toBe("true");
+                });
+
+                it("should not set aria-disabled when button is enabled", () => {
+                    disabledComponent.disabled = false;
+                    disabledFixture.detectChanges();
+                    
+                    expect(disabledSubject.ariaDisabled).toBeNull();
+                });
+            });
+
+            describe("keyboard repeat functionality >", () => {
+                let keyboardFixture: ComponentFixture<TestAppRepeatKeyboardButtonComponent>;
+                let keyboardSubject: ButtonComponent;
+                let element: HTMLButtonElement;
+
+                beforeEach(() => {
+                    keyboardFixture = TestBed.createComponent(TestAppRepeatKeyboardButtonComponent);
+                    keyboardSubject = keyboardFixture.debugElement.children[0].componentInstance;
+                    keyboardFixture.detectChanges();
+                    element = (<any>keyboardSubject).el.nativeElement;
+                });
+
+                it("should trigger repeat functionality with Space key", fakeAsync(() => {
+                    const click = spyOn(element, "click").and.callThrough();
+                    
+                    // Simulate keydown event
+                    const keydownEvent = new KeyboardEvent("keydown", { code: "Space" });
+                    Object.defineProperty(keydownEvent, 'preventDefault', { value: jasmine.createSpy() });
+                    element.dispatchEvent(keydownEvent);
+
+                    expect(click).toHaveBeenCalledTimes(0);
+
+                    tick(buttonConstants.repeatDelay);
+                    expect(click).toHaveBeenCalledTimes(1);
+
+                    tick(buttonConstants.repeatInterval);
+                    expect(click).toHaveBeenCalledTimes(2);
+
+                    // Stop repeat with keyup
+                    element.dispatchEvent(new KeyboardEvent("keyup", { code: "Space" }));
+                    tick(buttonConstants.repeatInterval);
+                    expect(click).toHaveBeenCalledTimes(2); // Should not increase
+                }));
+
+                it("should trigger repeat functionality with Enter key", fakeAsync(() => {
+                    const click = spyOn(element, "click").and.callThrough();
+                    
+                    // Simulate keydown event
+                    element.dispatchEvent(new KeyboardEvent("keydown", { code: "Enter" }));
+
+                    expect(click).toHaveBeenCalledTimes(0);
+
+                    tick(buttonConstants.repeatDelay);
+                    expect(click).toHaveBeenCalledTimes(1);
+
+                    tick(buttonConstants.repeatInterval);
+                    expect(click).toHaveBeenCalledTimes(2);
+
+                    // Stop repeat with keyup
+                    element.dispatchEvent(new KeyboardEvent("keyup", { code: "Enter" }));
+                    tick(buttonConstants.repeatInterval);
+                    expect(click).toHaveBeenCalledTimes(2); // Should not increase
+                }));
+
+                it("should prevent default behavior for Space key", () => {
+                    const keydownEvent = new KeyboardEvent("keydown", { code: "Space" });
+                    const preventDefaultSpy = spyOn(keydownEvent, 'preventDefault');
+                    
+                    element.dispatchEvent(keydownEvent);
+                    
+                    expect(preventDefaultSpy).toHaveBeenCalled();
+                });
+
+                it("should not prevent default behavior for Enter key", () => {
+                    const keydownEvent = new KeyboardEvent("keydown", { code: "Enter" });
+                    const preventDefaultSpy = spyOn(keydownEvent, 'preventDefault');
+                    
+                    element.dispatchEvent(keydownEvent);
+                    
+                    expect(preventDefaultSpy).not.toHaveBeenCalled();
+                });
+
+                it("should ignore non-Space/Enter keys", fakeAsync(() => {
+                    const click = spyOn(element, "click").and.callThrough();
+                    
+                    // Simulate keydown event with different key
+                    element.dispatchEvent(new KeyboardEvent("keydown", { code: "KeyA" }));
+
+                    tick(buttonConstants.repeatDelay + buttonConstants.repeatInterval);
+                    expect(click).not.toHaveBeenCalled();
+                }));
+            });
         });
     });
 });
