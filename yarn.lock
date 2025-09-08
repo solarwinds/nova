@@ -4094,9 +4094,9 @@ ajv@^6.12.3, ajv@^6.12.4, ajv@^6.12.5:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-angular-gridster2@19.0.0:
+angular-gridster2@^19.0.0:
   version "19.0.0"
-  resolved "https://registry.yarnpkg.com/angular-gridster2/-/angular-gridster2-19.0.0.tgz#39aaad9ed1cb5f480cdd6adedfa9e73bf64c59b6"
+  resolved "https://registry.npmjs.org/angular-gridster2/-/angular-gridster2-19.0.0.tgz#39aaad9ed1cb5f480cdd6adedfa9e73bf64c59b6"
   integrity sha512-82SHZzwOmGRvR77VtbpV5Eh7CoTtxLslwOVzTYB3qNQIGGFaOsS8nRAuYpZOlZpVc+n6fBz1HU0yP0icnQ9ppg==
   dependencies:
     tslib "^2.4.0"

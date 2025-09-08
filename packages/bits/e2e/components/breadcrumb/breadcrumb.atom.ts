@@ -18,6 +18,6 @@ export class BreadcrumbAtom extends Atom {
 
     public getUrlState(): string {
         const fullUrl = Helpers.page.url();
-        return fullUrl.spltest("#")[1];
+        return fullUrl.split("#")[1];
     }
 }
