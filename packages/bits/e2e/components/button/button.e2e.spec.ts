@@ -2,17 +2,17 @@ import { ButtonAtom } from "./button.atom";
 import { Atom } from "../../atom";
 import { Helpers, test, expect } from "../../setup";
 
-let primaryCompactBtn: ButtonAtom;
-let defaultLargeBtn: ButtonAtom;
-let actionCompactBtn: ButtonAtom;
-let defaultBtnWithIcon: ButtonAtom;
-let primaryLargePlusIconDisabledBtn: ButtonAtom;
-let primaryLargePlusIconBtn: ButtonAtom;
-let primaryLargePlusIconBusyBtn: ButtonAtom;
-let upBtn: ButtonAtom;
-let unlimitedWidthBtn: ButtonAtom;
 
 test.describe("USERCONTROL Button >", () => {
+    let primaryCompactBtn: ButtonAtom;
+    let defaultLargeBtn: ButtonAtom;
+    let actionCompactBtn: ButtonAtom;
+    let defaultBtnWithIcon: ButtonAtom;
+    let primaryLargePlusIconDisabledBtn: ButtonAtom;
+    let primaryLargePlusIconBtn: ButtonAtom;
+    let primaryLargePlusIconBusyBtn: ButtonAtom;
+    let upBtn: ButtonAtom;
+    let unlimitedWidthBtn: ButtonAtom;
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("button/button-test", page);
         primaryCompactBtn = Atom.find<ButtonAtom>(
