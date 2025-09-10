@@ -21,6 +21,7 @@
 import {
     ChangeDetectorRef,
     Component,
+    ElementRef,
     EventEmitter,
     HostBinding,
     Input,
@@ -63,9 +64,19 @@ export class TabHeadingComponent {
 
     protected _active: boolean;
 
-    constructor(private changeDetector: ChangeDetectorRef) {}
+    constructor(private changeDetector: ChangeDetectorRef, private elementRef: ElementRef) {}
 
     public selectTab(): void {
-        this.selected.emit(this);
+        if (!this.disabled) {
+            this.selected.emit(this);
+        }
+    }
+
+    public onKeyDown(event: KeyboardEvent): void {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            this.elementRef.nativeElement.click();
+        }
     }
 }
+
