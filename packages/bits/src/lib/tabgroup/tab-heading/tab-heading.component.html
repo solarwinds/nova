@@ -1,11 +1,11 @@
 <div class="nui-tab-heading" 
-     [class.active]="active"
-     role="tab"
-     [attr.aria-selected]="active"
-     [attr.aria-disabled]="disabled"
-     [tabindex]="disabled ? -1 : 0"
-     (click)="selectTab()" 
-     (keydown)="onKeyDown($event)">
+    [class.active]="active"
+    role="tab"
+    [attr.aria-selected]="active"
+    [attr.aria-disabled]="disabled ? 'true' : null"
+    [tabindex]="disabled ? -1 : 0"
+    (click)="!disabled && selectTab()" 
+    (keydown)="onKeyDown($event)">
     <span class="tab-link">
         <ng-content></ng-content>
     </span>
