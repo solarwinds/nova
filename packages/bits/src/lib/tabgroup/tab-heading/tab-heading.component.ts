@@ -42,6 +42,11 @@ export class TabHeadingComponent {
     get isDisabled(): boolean {
         return this.disabled;
     }
+    
+    @HostBinding("attr.aria-selected")
+    get ariaSelected(): string | null {
+        return this.active ? "true" : null;
+    }
 
     /** If true tab can not be activated  */
     @Input() disabled: boolean;
