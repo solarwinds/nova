@@ -80,6 +80,7 @@ export class TabHeadingComponent {
     public onKeyDown(event: KeyboardEvent): void {
         if (event.key === "Enter" || event.key === " ") {
             this.elementRef.nativeElement.click();
+            console.log("click");
         }
     }
 }
