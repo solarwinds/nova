@@ -27,6 +27,7 @@ import {
     Input,
     Output,
 } from "@angular/core";
+import { KEYBOARD_CODE } from "../../../constants/keycode.constants";
 
 /** @ignore */
 
@@ -72,13 +73,13 @@ export class TabHeadingComponent {
     constructor(private changeDetector: ChangeDetectorRef, private elementRef: ElementRef) {}
 
     public selectTab(): void {
-        if (!this.disabled) {
+        if (!this.disabled) {           
             this.selected.emit(this);
         }
     }
 
     public onKeyDown(event: KeyboardEvent): void {
-        if (event.key === "Enter" || event.key === " ") {
+        if (event.key === KEYBOARD_CODE.ENTER) {
             this.elementRef.nativeElement.click();
         }
     }

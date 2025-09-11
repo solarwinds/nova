@@ -1,7 +1,7 @@
 <div class="nui-tab-heading" 
     [class.active]="active"
     [tabindex]="disabled ? -1 : 0"
-    (click)="!disabled && selectTab()" 
+    (click)="selectTab()" 
     (keydown)="onKeyDown($event)">
     <span class="tab-link">
         <ng-content></ng-content>
