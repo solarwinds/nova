@@ -79,7 +79,6 @@ export class TabHeadingComponent {
 
     public onKeyDown(event: KeyboardEvent): void {
         if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
             this.elementRef.nativeElement.click();
         }
     }
