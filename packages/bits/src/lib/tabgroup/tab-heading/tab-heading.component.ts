@@ -27,6 +27,7 @@ import {
     Input,
     Output,
 } from "@angular/core";
+
 import { KEYBOARD_CODE } from "../../../constants/keycode.constants";
 
 /** @ignore */
@@ -43,7 +44,7 @@ export class TabHeadingComponent {
     get isDisabled(): boolean {
         return this.disabled;
     }
-    
+
     @HostBinding("attr.aria-selected")
     get ariaSelected(): string | null {
         return this.active ? "true" : null;
@@ -70,10 +71,13 @@ export class TabHeadingComponent {
 
     protected _active: boolean;
 
-    constructor(private changeDetector: ChangeDetectorRef, private elementRef: ElementRef) {}
+    constructor(
+        private changeDetector: ChangeDetectorRef,
+        private elementRef: ElementRef
+    ) {}
 
     public selectTab(): void {
-        if (!this.disabled) {           
+        if (!this.disabled) {
             this.selected.emit(this);
         }
     }
