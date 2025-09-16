@@ -1,0 +1,53 @@
+<nui-select-v2
+    class="color-picker-select"
+    [overlayConfig]="overlayConfig"
+    [syncWidth]="false"
+    [displayValueTemplate]="colorSelectTemplate"
+>
+    <div class="color-picker-container">
+        <div class="d-inline-flex flex-wrap box" *ngFor="let item of palette">
+            <nui-select-v2-option
+                [value]="item?.color"
+                [displayValueContext]="item"
+                class="w-100 h-100 reset-box-sizes"
+                #option
+            >
+                <div
+                    class="color-picker-option"
+                    [attr.title]="item?.label"
+                    [class.color-picker-option--selected]="option?.selected"
+                >
+                    <div
+                        class="color-picker-option__color-box"
+                        [ngStyle]="setStyles(item?.color)"
+                    >
+                        <div
+                            class="color-picker-option__glyph"
+                            [class.black-tick]="
+                                isBlackTick || item?.color === defaultColor
+                            "
+                            *ngIf="option?.selected"
+                        ></div>
+                    </div>
+                </div>
+            </nui-select-v2-option>
+        </div>
+    </div>
+</nui-select-v2>
+
+<ng-template #colorSelectTemplate let-item let-open="open">
+    <div class="color-picker-input">
+        <div class="color-picker-input__box" [attr.title]="item?.label">
+            <div
+                class="color-picker-input__color-box"
+                [ngStyle]="setStyles(item?.color)"
+            ></div>
+        </div>
+        <div class="color-picker-input__toggle">
+            <nui-icon
+                [style.transform]="open ? 'rotate(180deg)' : ''"
+                icon="caret-down"
+            ></nui-icon>
+        </div>
+    </div>
+</ng-template>
