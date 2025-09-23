@@ -1,8 +1,25 @@
+@if (isSelect) {
+<nui-select-v2 [displayValueTemplate]="colorPickerTemplate">
+    <div *ngFor="let item of palette">
+        <!-- [ngStyle]="{ 'background-color': item?.color }" -->
+        <nui-select-v2-option class="color-picker-select-option nui-text-default" [value]="item"
+            >
+            <div class="color-picker-input__box color-picker-select-option__label" [attr.title]="item?.label">
+                <div
+                    class="color-picker-input__color-box"
+                    [ngStyle]="setStyles(item?.color)"
+                ></div>
+            </div>
+            <div >{{ item?.label }}</div>
+        </nui-select-v2-option>
+    </div>
+</nui-select-v2>
+} @else {
 <nui-select-v2
     class="color-picker-select"
     [overlayConfig]="overlayConfig"
     [syncWidth]="false"
-    [displayValueTemplate]="colorSelectTemplate"
+    [displayValueTemplate]="colorPickerTemplate"
 >
     <div class="color-picker-container">
         <div class="d-inline-flex flex-wrap box" *ngFor="let item of palette">
@@ -34,9 +51,15 @@
         </div>
     </div>
 </nui-select-v2>
+}
 
-<ng-template #colorSelectTemplate let-item let-open="open">
+<ng-template #colorPickerTemplate let-item let-open="open">
     <div class="color-picker-input">
+        @if (isSelect){
+        <div class="color-picker-input__label nui-text-default">
+            {{ item?.label }}
+        </div>
+        }
         <div class="color-picker-input__box" [attr.title]="item?.label">
             <div
                 class="color-picker-input__color-box"
@@ -51,3 +74,27 @@
         </div>
     </div>
 </ng-template>
+
+<!-- <ng-template #colorSelectTemplate let-item let-open="open">
+    <div class="color-picker-input">
+        <div class="color-picker-input__label nui-text-default">
+            {{item?.label}}
+        </div>
+        <div class="color-picker-input__box" [attr.title]="item?.label">
+            <div
+                class="color-picker-input__color-box"
+                [ngStyle]="setStyles(item?.color)"
+            ></div>
+        </div>
+        <div class="color-picker-input__toggle">
+            <nui-icon
+                [style.transform]="open ? 'rotate(180deg)' : ''"
+                icon="caret-down"
+            ></nui-icon>
+        </div>
+        
+    </div> -->
+<!-- <div [attr.title]="item?.label" [ngStyle]="{ 'background-color': item?.color }">
+        {{item?.label}}
+    </div> -->
+<!-- </ng-template> -->

@@ -50,6 +50,7 @@ const BOX_WIDTH_PX: number = 30;
     templateUrl: "./color-picker.component.html",
     styleUrls: ["./color-picker.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
     providers: [
         {
             provide: NuiFormFieldControl,
@@ -72,9 +73,22 @@ export class ColorPickerComponent
         AfterViewInit,
         OnDestroy
 {
+    /**
+     * Colors to be displayed as array of strings
+     */
     @Input() colors: string[];
+    /**
+     * Color pallete which should be displayed
+     */
     @Input() colorPalette: IPaletteColor[];
+    /**
+     * Number of columns in the color picker
+     */
     @Input() cols: number | undefined;
+    /**
+     * Determine if the color picket should be displayed as select
+     */
+    @Input() isSelect: boolean | undefined;
 
     @ViewChild(forwardRef(() => SelectV2Component))
     public select: SelectV2Component;
@@ -174,7 +188,8 @@ export class ColorPickerComponent
     public registerOnChange(fn: () => void): void {
         this.onChange = fn;
     }
-
+    
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     public registerOnTouched(fn: () => {}): void {
         this._onTouched = fn;
     }
@@ -227,4 +242,16 @@ export class ColorPickerComponent
             ? "#fff"
             : "#000";
     }
+
+//     public getRgbaColor(color: string, alpha: number): string {
+//   // Example: convert hex (#RRGGBB) to rgba
+//   if (color.startsWith('#')) {
+//     const bigint = parseInt(color.slice(1), 16);
+//     const r = (bigint >> 16) & 255;
+//     const g = (bigint >> 8) & 255;
+//     const b = bigint & 255;
+//     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+//   }
+//   return color; // fallback if already rgb/rgba
+// }
 }

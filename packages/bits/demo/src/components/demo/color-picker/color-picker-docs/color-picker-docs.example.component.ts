@@ -18,46 +18,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, ViewChild } from "@angular/core";
-import _pull from "lodash/pull";
-import {
-    FormBuilder,
-    FormControl,
-    FormGroup,
-    Validators,
-} from "@angular/forms";
-
-const CHART_PALETTE_CS1: string[] = [
-    "var(--nui-color-bg-secondary)",
-    "var(--nui-color-chart-one)",
-    "var(--nui-color-chart-two)",
-    "var(--nui-color-chart-three)",
-    "var(--nui-color-chart-four)",
-    "var(--nui-color-chart-five)",
-    "var(--nui-color-chart-six)",
-    "var(--nui-color-chart-seven)",
-    "var(--nui-color-chart-eight)",
-    "var(--nui-color-chart-nine)",
-    "var(--nui-color-chart-ten)",
-];
+import { Component } from "@angular/core";
 
 @Component({
-    selector: "nui-color-picker-basic-example",
-    templateUrl: "./color-picker-basic.example.component.html",
-    styles: [],
+    selector: "nui-color-picker-docs-example",
+    templateUrl: "./color-picker-docs.example.component.html",
     standalone: false,
 })
-export class ColorPickerBasicExampleComponent {
-    public myForm: FormGroup<{ backgroundColor: FormControl<string | null> }>;
-    public colors: string[] = CHART_PALETTE_CS1;
-    
-    constructor(
-        private formBuilder: FormBuilder,
-    ) {}
-
-    public ngOnInit(): void {
-        this.myForm = this.formBuilder.group({
-            backgroundColor: [this.colors[0]],
-        });
-    }
-}
+export class ColorPickerExampleComponent {}

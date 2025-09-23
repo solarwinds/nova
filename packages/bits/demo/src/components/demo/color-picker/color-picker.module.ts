@@ -20,6 +20,7 @@
 
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import {
     DEMO_PATH_TOKEN,
@@ -32,10 +33,23 @@ import {
 } from "@nova-ui/bits";
 import { getDemoFiles } from "../../../static/demo-files-factory";
 import { ColorPickerBasicExampleComponent } from "./color-picker-basic/color-picker-basic.example.component";
+import { ColorPickerPaletteExampleComponent } from "./color-picker-palette/color-picker-palette.example.component";
+import { ColorPickerExampleComponent } from "./color-picker-docs/color-picker-docs.example.component";
+import { ColorPickerSelectExampleComponent } from "./color-picker-select/color-picker-select.example.component";
 
 const routes = [
     {
         path: "",
+        component: ColorPickerExampleComponent,
+        data: {
+            srlc: {
+                stage: SrlcStage.beta,
+            },
+            showThemeSwitcher: true,
+        },
+    },
+    {
+        path: "color-picker-basic",
         component: ColorPickerBasicExampleComponent,
         data: {
             srlc: {
@@ -53,9 +67,14 @@ const routes = [
         NuiDocsModule,
         RouterModule.forChild(routes),
         NuiIconModule,
+        FormsModule,
+        ReactiveFormsModule,
     ],
     declarations: [
-        ColorPickerBasicExampleComponent
+        ColorPickerExampleComponent,
+        ColorPickerBasicExampleComponent,
+        ColorPickerPaletteExampleComponent,
+        ColorPickerSelectExampleComponent,
     ],
     providers: [
         {
