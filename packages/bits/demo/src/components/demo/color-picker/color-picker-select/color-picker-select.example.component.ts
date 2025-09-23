@@ -26,30 +26,20 @@ import {
     FormGroup,
     Validators,
 } from "@angular/forms";
+import { HTML_COLORS, IPaletteColor } from "../../../../../../src/constants/color-picker.constants";
 
-const CHART_PALETTE_CS1: string[] = [
-    "var(--nui-color-bg-secondary)",
-    "var(--nui-color-chart-one)",
-    "var(--nui-color-chart-two)",
-    "var(--nui-color-chart-three)",
-    "var(--nui-color-chart-four)",
-    "var(--nui-color-chart-five)",
-    "var(--nui-color-chart-six)",
-    "var(--nui-color-chart-seven)",
-    "var(--nui-color-chart-eight)",
-    "var(--nui-color-chart-nine)",
-    "var(--nui-color-chart-ten)",
-];
 
 @Component({
-    selector: "nui-color-picker-basic-example",
-    templateUrl: "./color-picker-basic.example.component.html",
+    selector: "nui-color-picker-select-example",
+    templateUrl: "./color-picker-select.example.component.html",
     styles: [],
     standalone: false,
 })
-export class ColorPickerBasicExampleComponent {
+export class ColorPickerSelectExampleComponent {
     public myForm: FormGroup<{ backgroundColor: FormControl<string | null> }>;
-    public colors: string[] = CHART_PALETTE_CS1;
+    public colorPalette: IPaletteColor[] = Array.from(HTML_COLORS.entries())
+    .map(([label, color]) => ({label,color}));
+  
     
     constructor(
         private formBuilder: FormBuilder,
@@ -57,7 +47,7 @@ export class ColorPickerBasicExampleComponent {
 
     public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
-            backgroundColor: [this.colors[0]],
+            backgroundColor: [""],
         });
     }
 }

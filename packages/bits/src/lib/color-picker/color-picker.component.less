@@ -38,6 +38,10 @@
     &-input {
         display: flex;
 
+        &__label {
+            margin: 5px 0 0 10px;
+        }
+
         &__box {
             display: flex;
             align-items: center;
@@ -86,5 +90,17 @@
                 filter: invert(1) grayscale(1) contrast(100);
             }
         }
+    }
+}
+
+.color-picker-select__input-container {
+    display: flex;
+}
+
+.color-picker-select-option {
+    display: flex;
+
+    &__label {
+        max-width: 37px;
     }
 }

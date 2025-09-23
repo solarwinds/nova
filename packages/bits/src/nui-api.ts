@@ -43,7 +43,7 @@ export { NuiOverlayAdditionsModule } from "./lib/overlay/overlay-additions.modul
 export { NuiBreadcrumbModule } from "./lib/breadcrumb/breadcrumb.module";
 export { NuiBusyModule } from "./lib/busy/busy.module";
 export { NuiChipsModule } from "./lib/chips/chips.module";
-export { NuiColorPickerModule } from "./lib/color-picker/color-picker.module"
+export { NuiColorPickerModule } from "./lib/color-picker/color-picker.module";
 export { NuiContentModule } from "./lib/content/content.module";
 export { NuiDatePickerModule } from "./lib/date-picker/date-picker.module";
 export { NuiDateTimePickerModule } from "./lib/date-time-picker/date-time-picker.module";
