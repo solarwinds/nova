@@ -1,5 +1,9 @@
 # Changelog
 
+## [17.0.2] 📅 2025-08-19
+### Bugfix
+- `@nova-ui/bits` | fix accessibility for button
+
 ## [17.0.1] 📅 2025-07-31
 
 ### Added

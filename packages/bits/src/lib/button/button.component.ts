@@ -90,6 +90,12 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
     /** Sets aria-label for the component */
     @Input() public ariaLabel: string = "";
 
+    /** Sets aria-disabled for disabled state programmatic indication */
+    @HostBinding("attr.aria-disabled")
+    public get ariaDisabled(): string | null {
+        return this.getHostElement().disabled ? "true" : null;
+    }
+
     /**
      * Optionally, set whether to fire a "click" event repeatedly while the button is pressed.
      */
@@ -188,6 +194,9 @@ should be set explicitly: `,
                 el.nativeElement
             );
         }
+        
+        // Validate accessibility for icon-only buttons
+        this.validateIconOnlyButtonAccessibility();
     }
 
     public ngOnInit(): void {
@@ -251,6 +260,12 @@ should be set explicitly: `,
         const mouseLeave$ = fromEvent(hostElement, "mouseleave").pipe(
             takeUntil(this.ngUnsubscribe)
         );
+        const keyUp$ = fromEvent(hostElement, "keyup").pipe(
+            takeUntil(this.ngUnsubscribe),
+            filter((event: KeyboardEvent) => event.key === " " || event.key === "Enter")
+        );
+        
+        // Handle mouse-based repeat events
         fromEvent(hostElement, "mousedown")
             .pipe(
                 takeUntil(this.ngUnsubscribe),
@@ -274,9 +289,49 @@ should be set explicitly: `,
                         }
                     });
             });
+        
+        // Handle keyboard-based repeat events for accessibility
+        fromEvent(hostElement, "keydown")
+            .pipe(
+                takeUntil(this.ngUnsubscribe),
+                filter((event: KeyboardEvent) => {
+                    return this.isRepeat && (event.key === " " || event.key === "Enter");
+                })
+            )
+            .subscribe((event: KeyboardEvent) => {
+                event.preventDefault(); // Prevent default space/enter behavior
+                const repeatSubscription = timer(
+                    buttonConstants.repeatDelay,
+                    buttonConstants.repeatInterval
+                )
+                    .pipe(
+                        takeUntil(
+                            merge(keyUp$, this.ngUnsubscribe)
+                        )
+                    )
+                    .subscribe(() => {
+                        if (hostElement.disabled) {
+                            repeatSubscription.unsubscribe();
+                        } else {
+                            hostElement.click();
+                        }
+                    });
+            });
     }
 
     private getHostElement() {
         return this.el.nativeElement;
+    }
+
+    private validateIconOnlyButtonAccessibility(): void {
+        // Check if button will be icon-only and validate accessibility
+        setTimeout(() => {
+            if (this._isContentEmpty && this.icon && !this.ariaLabel) {
+                this.logger.warn(
+                    "Icon-only button detected without aria-label. Consider providing a meaningful aria-label for screen readers: ",
+                    this.el.nativeElement
+                );
+            }
+        });
     }
 }
