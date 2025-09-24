@@ -19,7 +19,8 @@
 //  THE SOFTWARE.
 
 import { Inject, Injectable, NgZone, OnDestroy } from "@angular/core";
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 import { EventBus, EventDefinition } from "@nova-ui/bits";
 
@@ -49,23 +50,19 @@ export class Refresher implements OnDestroy, IConfigurable {
     protected interval = DEFAULT_REFRESH_INTERVAL;
     protected eventDef = REFRESH;
 
+    public readonly destroy$ = new Subject<void>();
+
     constructor(
-        @Inject(PIZZAGNA_EVENT_BUS) protected readonly eventBus: EventBus<IWidgetEvent>,
-        protected readonly ngZone: NgZone,
-        protected readonly refresherSettings: RefresherSettingsService
+        @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IWidgetEvent>,
+        protected ngZone: NgZone,
+        protected refresherSettings: RefresherSettingsService
     ) {
         this.refresherSettings.refreshRateSeconds$
-            .pipe(takeUntilDestroyed())
-            .subscribe(() => {
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((systemRefreshRate) => {
                 if (!this.overrideDefaultSettings) {
                     this.initializeInterval();
                 }
-            });
-
-        this.refresherSettings.disabled$
-            .pipe(takeUntilDestroyed())
-            .subscribe(() => {
-                this.initializeInterval();
             });
     }
 
@@ -81,6 +78,8 @@ export class Refresher implements OnDestroy, IConfigurable {
 
     public ngOnDestroy(): void {
         this.clearInterval();
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     private initializeInterval() {
@@ -89,8 +88,7 @@ export class Refresher implements OnDestroy, IConfigurable {
         if (
             typeof this.interval === "undefined" ||
             this.getInterval() <= 0 ||
-            this.enabled === false ||
-            this.refresherSettings.disabled$.value === true
+            this.enabled === false
         ) {
             return;
         }

@@ -1,11 +1,5 @@
 # Changelog
 
-## [17.0.1] 📅 2025-07-31
-
-### Added
-
-- `@nova-ui/dashboards` | Added ability to globaly disable refreshers
-
 ## [17.0.0] 📅 2025-04-20
 ### Angular upgrade 17
 
