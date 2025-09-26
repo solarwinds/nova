@@ -1,5 +1,9 @@
 # Changelog
 
+## [19.0.0] 📅 2025-09-26
+### Added
+- `@nova-ui/bits` | Added colorpicker
+
 ## [17.0.1] 📅 2025-07-31
 
 ### Added

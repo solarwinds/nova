@@ -30,6 +30,7 @@ export { RadioComponent } from "./lib/radio/radio-group.component";
 export { RadioGroupComponent } from "./lib/radio/radio-group.component";
 export { CheckboxComponent } from "./lib/checkbox/checkbox.component";
 export { CheckboxGroupComponent } from "./lib/checkbox/checkbox-group.component";
+export { ColorPickerComponent } from "./lib/color-picker/color-picker.component";
 export { ChipComponent } from "./lib/chips/chip/chip.component";
 export { ChipsComponent } from "./lib/chips/chips.component";
 export { ChipsOverflowComponent } from "./lib/chips/chips-overflow/chips-overflow.component";
@@ -200,6 +201,8 @@ export { VirtualViewportManager } from "./services/virtual-viewport-manager.serv
 export { OverlayContainerService } from "./lib/overlay/overlay-container.service";
 export { OverlayPositionService } from "./lib/overlay/overlay-position.service";
 export { OverlayService } from "./lib/overlay/overlay.service";
+export { ColorService } from "./lib/color-picker/color.service";
+
 
 // External tokens also should be exposed here
 export { DEMO_PATH_TOKEN } from "./constants/path.constants";

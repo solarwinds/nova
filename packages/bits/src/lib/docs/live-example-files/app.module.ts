@@ -39,6 +39,7 @@ export const APP_MODULE = (
     "    NuiBreadcrumbModule,\n" +
     "    NuiBusyModule,\n" +
     "    NuiChipsModule,\n" +
+    "    NuiColorPickerModule,\n" +
     "    NuiContentModule,\n" +
     "    NuiDatePickerModule,\n" +
     "    NuiDateTimePickerModule,\n" +
@@ -109,6 +110,7 @@ export const APP_MODULE = (
     "        NuiBreadcrumbModule,\n" +
     "        NuiBusyModule,\n" +
     "        NuiChipsModule,\n" +
+    "        NuiColorPickerModule,\n" +
     "        NuiContentModule,\n" +
     "        NuiDatePickerModule,\n" +
     "        NuiDateTimePickerModule,\n" +

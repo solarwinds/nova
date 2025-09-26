@@ -30,6 +30,7 @@ import {
     NuiBusyModule,
     NuiButtonModule,
     NuiCheckboxModule,
+    NuiColorPickerModule,
     NuiDialogModule,
     NuiDividerModule,
     NuiExpanderModule,
@@ -61,7 +62,6 @@ import {
     ComponentRegistryService,
     IComponentWithLateLoadKey,
 } from "../pizzagna/services/component-registry.service";
-import { ColorPickerComponent } from "./components/color-picker/color-picker.component";
 import { ConfiguratorComponent } from "./components/configurator/configurator.component";
 import { DropAreaComponent } from "./components/drop-area/drop-area.component";
 import { FormStackComponent } from "./components/form-stack/form-stack.component";
@@ -200,7 +200,6 @@ const exportedDeclarations = [
     WidgetEditorAccordionComponent,
     WidgetEditorAccordionHeaderComponent,
     ItemsDynamicComponent,
-    ColorPickerComponent,
     ConfiguratorHeadingComponent,
     RefreshRateConfiguratorComponent,
     AddDataPipe,
@@ -244,6 +243,7 @@ const exportedDeclarations = [
         NuiSearchModule,
         NuiRepeatModule,
         NuiImageModule,
+        NuiColorPickerModule,
     ],
     declarations: [...exportedDeclarations],
     providers: [

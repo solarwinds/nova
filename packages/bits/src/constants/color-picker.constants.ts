@@ -161,3 +161,8 @@ export const HTML_COLORS: Map<string, string> = new Map([
     ["yellow", "#ffff00"],
     ["yellowgreen", "#9acd32"],
 ]);
+
+export interface IPaletteColor {
+    color: string;
+    label: string;
+}
