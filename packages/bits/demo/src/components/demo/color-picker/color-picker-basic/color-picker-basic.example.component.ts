@@ -52,7 +52,7 @@ export class ColorPickerBasicExampleComponent {
     public colors: string[] = CHART_PALETTE_CS1;
     
     constructor(
-        private formBuilder: FormBuilder,
+        private formBuilder: FormBuilder
     ) {}
 
     public ngOnInit(): void {

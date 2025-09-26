@@ -45,6 +45,8 @@ const CONTAINER_SIDE_PADDINGS_PX: number = 20;
 // Width of the .box element
 const BOX_WIDTH_PX: number = 30;
 
+// <example-url>./../examples/index.html#/color-picker</example-url><br />
+
 @Component({
     selector: "nui-color-picker",
     templateUrl: "./color-picker.component.html",
@@ -125,6 +127,10 @@ export class ColorPickerComponent
     }
 
     public ngAfterViewInit(): void {
+        if (!this.select) {
+            return;
+        }
+
         if (this.value) {
             this.select?.writeValue(this.value);
             this.isBlackTick = this.determineBlackTick(this.value.toString());
