@@ -248,16 +248,4 @@ export class ColorPickerComponent
             ? "#fff"
             : "#000";
     }
-
-//     public getRgbaColor(color: string, alpha: number): string {
-//   // Example: convert hex (#RRGGBB) to rgba
-//   if (color.startsWith('#')) {
-//     const bigint = parseInt(color.slice(1), 16);
-//     const r = (bigint >> 16) & 255;
-//     const g = (bigint >> 8) & 255;
-//     const b = bigint & 255;
-//     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-//   }
-//   return color; // fallback if already rgb/rgba
-// }
 }
