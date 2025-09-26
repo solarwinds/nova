@@ -42,7 +42,7 @@ export class ColorPickerSelectExampleComponent {
   
     
     constructor(
-        private formBuilder: FormBuilder,
+        private formBuilder: FormBuilder
     ) {}
 
     public ngOnInit(): void {

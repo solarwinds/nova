@@ -37,17 +37,20 @@
 
     &-input {
         display: flex;
+        justify-content: space-between;
 
         &__label {
-            margin: 5px 0 0 10px;
+            margin: 5px 0 0 0;
         }
 
         &__box {
             display: flex;
             align-items: center;
-            flex-grow: 1;
+            // flex-grow: 1;
+            
+            // max-width: 37px;
         }
-
+        
         &__color-box {
             .color-box-input();
             flex-grow: 1;
@@ -102,5 +105,15 @@
 
     &__label {
         max-width: 37px;
+
+        .color-picker-input__color-box {
+            margin: 0 10px 0 0;
+        }
     }
+}
+
+.color-picker-select-v2 {
+    width: fit-content;
+    min-width: min(200px,100%);
+    cursor: pointer;
 }

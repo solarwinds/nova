@@ -19,3 +19,6 @@
 //  THE SOFTWARE.
 
 export * from "./color-picker-basic/color-picker-basic.example.component";
+export * from "./color-picker-docs/color-picker-docs.example.component";
+export * from "./color-picker-palette/color-picker-palette.example.component";
+export * from "./color-picker-select/color-picker-select.example.component";

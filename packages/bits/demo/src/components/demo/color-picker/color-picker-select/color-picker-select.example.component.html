@@ -7,4 +7,4 @@
 </nui-color-picker>
 </form>
 
-<p class="my-3">You selected: {{ myForm.get('backgroundColor')?.value | json}}</p>
+<p class="my-3">You selected: {{ myForm.get('backgroundColor')?.value.label}} -> {{ myForm.get('backgroundColor')?.value.color}}</p>
