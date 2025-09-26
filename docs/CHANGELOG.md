@@ -1,8 +1,16 @@
 # Changelog
 
+## [19.0.0] 📅 2025-09-26
+### Added
+- `@nova-ui/bits` | Added colorpicker
+
 ## [17.0.3] 📅 2025-08-06
 ### Fixes
 - `@nova-ui/dashboards` | Fix kpi scale brokers duplication on config change
+
+## [17.0.1] 📅 2025-07-31
+### Added
+- `@nova-ui/dashboards` | Added ability to globaly disable refreshers
 
 ## [17.0.0] 📅 2025-04-20
 ### Angular upgrade 17
