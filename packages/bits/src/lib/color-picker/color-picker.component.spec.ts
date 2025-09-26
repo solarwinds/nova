@@ -55,7 +55,7 @@ class MockSelectV2Component {
 }
 
 describe("components >", () => {
-    fdescribe("color-picker >", () => {
+    describe("color-picker >", () => {
         let fixture: ComponentFixture<ColorPickerComponent>;
         let subject: ColorPickerComponent;
 

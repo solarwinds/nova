@@ -40,21 +40,18 @@
         justify-content: space-between;
 
         &__label {
-            margin: 5px 0 0 0;
+            margin: @nui-space-xs 0;
         }
 
         &__box {
             display: flex;
             align-items: center;
-            // flex-grow: 1;
-            
-            // max-width: 37px;
         }
         
         &__color-box {
             .color-box-input();
             flex-grow: 1;
-            margin: 0 10px;
+            margin: 0 @nui-space-sm;
         }
 
         &__toggle {
@@ -96,24 +93,17 @@
     }
 }
 
-.color-picker-select__input-container {
-    display: flex;
-}
-
-.color-picker-select-option {
-    display: flex;
-
-    &__label {
-        max-width: 37px;
-
-        .color-picker-input__color-box {
-            margin: 0 10px 0 0;
-        }
-    }
-}
-
-.color-picker-select-v2 {
+.color-picker-select-label {
     width: fit-content;
     min-width: min(200px,100%);
     cursor: pointer;
+
+    &__option {
+        display: flex;
+    }
+
+    &__color-box {
+        .color-box();
+        margin: 0 @nui-space-sm 0 0;
+    }
 }
