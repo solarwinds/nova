@@ -196,7 +196,7 @@ export class ColorPickerComponent
     }
     
     // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-    public registerOnTouched(fn: () => {}): void {
+    public registerOnTouched(fn: () => void): void {
         this._onTouched = fn;
     }
 

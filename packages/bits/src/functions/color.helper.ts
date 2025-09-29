@@ -18,15 +18,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import startsWith from "lodash/startsWith";
-import trim from "lodash/trim";
-import trimEnd from "lodash/trimEnd";
-import trimStart from "lodash/trimStart";
-
 export function getColorValueByName(colorVariable: string): string {
-    if (!startsWith(colorVariable, "var(")) {
+    if (!colorVariable.startsWith("var(")) {
         return colorVariable;
     }
-    const colorName = trim(trimEnd(trimStart(colorVariable, "var("), ")"));
+
+    const colorName = colorVariable
+    .replace(/^var\(/, "")
+    .replace(/\)$/, "")
+    .trim();
+
     return getComputedStyle(document.body).getPropertyValue(colorName);
 }

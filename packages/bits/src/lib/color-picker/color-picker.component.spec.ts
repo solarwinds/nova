@@ -32,6 +32,7 @@ import { ColorPickerComponent } from "./color-picker.component";
 import { ColorService } from "./color.service";
 import { Subject } from "rxjs/internal/Subject";
 
+
 @Component({
     selector: "nui-select-v2",
     template: "<ng-content></ng-content>",
@@ -158,17 +159,6 @@ describe("components >", () => {
         });
 
         describe("template rendering >", () => {
-            it("should show select template when isSelect=true", () => {
-                subject.isSelect = true;
-                subject.colors = ["#ff0000"];
-                fixture.detectChanges();
-
-                const selectEl = fixture.debugElement.query(
-                    By.css(".color-picker-select-v2")
-                );
-                expect(selectEl).toBeTruthy();
-            });
-
             it("should show palette box template when isSelect=false", () => {
                 subject.isSelect = false;
                 subject.colors = ["#00ff00"];

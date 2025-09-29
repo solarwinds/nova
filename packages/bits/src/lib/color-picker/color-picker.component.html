@@ -8,10 +8,7 @@
             class="color-picker-select-label__option nui-text-default"
             [value]="item"
         >
-            <div
-                class="color-picker-input__box"
-                [attr.title]="item?.label"
-            >
+            <div class="color-picker-input__box" [attr.title]="item?.label">
                 <div
                     class="color-picker-select-label__color-box"
                     [ngStyle]="setStyles(item?.color)"
@@ -29,7 +26,8 @@
     [displayValueTemplate]="colorPickerTemplate"
 >
     <div class="color-picker-container">
-        <div class="d-inline-flex flex-wrap box" *ngFor="let item of palette">
+        @for (item of palette; track item) {
+        <div class="d-inline-flex flex-wrap box">
             <nui-select-v2-option
                 [value]="item?.color"
                 [displayValueContext]="item"
@@ -56,6 +54,7 @@
                 </div>
             </nui-select-v2-option>
         </div>
+        }
     </div>
 </nui-select-v2>
 }

@@ -28,7 +28,6 @@ import {
     CHART_MARKERS,
     CHART_PALETTE_CS1,
     CHART_PALETTE_CS_S_EXTENDED,
-    getColorValueByName,
     IChartSeries,
     ILineAccessors,
     LineAccessors,
@@ -42,6 +41,7 @@ import {
     ThresholdsService,
     TimeScale,
 } from "@nova-ui/charts";
+import { getColorValueByName } from "@nova-ui/bits";
 
 enum Status {
     Error = "error",
