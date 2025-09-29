@@ -18,13 +18,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, ViewChild } from "@angular/core";
-import _pull from "lodash/pull";
+import { Component } from "@angular/core";
 import {
     FormBuilder,
     FormControl,
     FormGroup,
-    Validators,
 } from "@angular/forms";
 import { HTML_COLORS, IPaletteColor } from "../../../../../../src/constants/color-picker.constants";
 

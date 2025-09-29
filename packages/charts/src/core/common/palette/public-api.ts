@@ -29,4 +29,3 @@ export * from "./text-color-provider";
 export * from "./markers/path-marker";
 export * from "./markers/svg-marker";
 export * from "./default-providers";
-export * from "./color.helper";
