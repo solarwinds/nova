@@ -3,20 +3,20 @@
     class="color-picker-select-label"
     [displayValueTemplate]="colorPickerTemplate"
 >
-    <div *ngFor="let item of palette">
-        <nui-select-v2-option
-            class="color-picker-select-label__option nui-text-default"
-            [value]="item"
-        >
-            <div class="color-picker-input__box" [attr.title]="item?.label">
-                <div
-                    class="color-picker-select-label__color-box"
-                    [ngStyle]="setStyles(item?.color)"
-                ></div>
-            </div>
-            <div>{{ item?.label }}</div>
-        </nui-select-v2-option>
-    </div>
+    @for (item of palette; track item) {
+    <nui-select-v2-option
+        class="color-picker-select-label__option nui-text-default"
+        [value]="item"
+    >
+        <div class="color-picker-input__box" [attr.title]="item?.label">
+            <div
+                class="color-picker-select-label__color-box"
+                [ngStyle]="setStyles(item?.color)"
+            ></div>
+        </div>
+        <div>{{ item?.label }}</div>
+    </nui-select-v2-option>
+    }
 </nui-select-v2>
 } @else {
 <nui-select-v2
