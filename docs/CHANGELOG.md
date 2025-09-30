@@ -1,8 +1,9 @@
 # Changelog
 
-## [19.0.0] 📅 2025-09-26
+## [19.0.0] 📅 2025-09-30
 ### Added
 - `@nova-ui/bits` | Added colorpicker
+- `@nova-ui/bits` | Added nui-tab heading is accessible with keyboard 
 
 ## [17.0.3] 📅 2025-08-06
 ### Fixes
