@@ -21,8 +21,8 @@
 import { rgb, RGBColor } from "d3-color";
 
 import { IValueProvider } from "../types";
-import { getColorValueByName } from "./color.helper";
 import { ProcessedColorProvider } from "./processed-color-provider";
+import { getColorValueByName } from "@nova-ui/bits";
 
 /** @ignore */
 const rc = 0.2126;

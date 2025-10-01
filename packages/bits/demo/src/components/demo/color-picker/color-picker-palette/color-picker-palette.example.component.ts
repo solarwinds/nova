@@ -18,14 +18,34 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./chart-palette";
-export * from "./mapped-value-provider";
-export * from "./palettes";
-export * from "./processed-color-provider";
-export * from "./sequential-chart-marker-provider";
-export * from "./sequential-color-provider";
-export * from "./sequential-value-provider";
-export * from "./text-color-provider";
-export * from "./markers/path-marker";
-export * from "./markers/svg-marker";
-export * from "./default-providers";
+import { Component } from "@angular/core";
+import {
+    FormBuilder,
+    FormControl,
+    FormGroup,
+} from "@angular/forms";
+import { HTML_COLORS, IPaletteColor } from "../../../../../../src/constants/color-picker.constants";
+
+
+@Component({
+    selector: "nui-color-picker-palette-example",
+    templateUrl: "./color-picker-palette.example.component.html",
+    styles: [],
+    standalone: false,
+})
+export class ColorPickerPaletteExampleComponent {
+    public myForm: FormGroup<{ backgroundColor: FormControl<string | null> }>;
+    public colorPalette: IPaletteColor[] = Array.from(HTML_COLORS.entries())
+    .map(([label, color]) => ({label,color}));
+  
+    
+    constructor(
+        private formBuilder: FormBuilder
+    ) {}
+
+    public ngOnInit(): void {
+        this.myForm = this.formBuilder.group({
+            backgroundColor: [""],
+        });
+    }
+}
