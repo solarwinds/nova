@@ -1,0 +1,9 @@
+<form [formGroup]="myForm">
+<nui-color-picker
+    formControlName="backgroundColor"
+    [colors]="colors"
+>
+</nui-color-picker>
+</form>
+
+<p class="my-3">You selected: {{ myForm.get('backgroundColor')?.value }}</p>
