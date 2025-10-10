@@ -68,6 +68,12 @@ export class Helpers {
         await this.page.goto(url);
     }
 
+    static async pressKey(key: string, times = 1): Promise<void> {
+        for (let i = 0; i < times; i++) {
+            await Helpers.page.keyboard.press(key);
+        }
+    }
+
     static async disableCSSAnimations(type: Animations): Promise<any> {
         let disableTransitions =
             "-o-transition-property: none !important;" +

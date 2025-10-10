@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 
+import { Locator, Page } from "@playwright/test";
 import { Atom } from "../../atom";
 import { Helpers, test, expect } from "../../setup";
 import { ButtonAtom  } from "../button/button.atom";
@@ -71,7 +72,7 @@ test.describe("USERCONTROL Dialog", () => {
             ButtonAtom,
             "nui-demo-static-backdrop-ESC-dialog-btn"
         );
-        // selectToOpenDialog = Atom.find<SelectV2Atom>(SelectV2Atom, "select-to-open-dialog");
+        selectToOpenDialog = Atom.find<SelectV2Atom>(SelectV2Atom, "select-to-open-dialog");
         insideOverlayWithDateTimePickerBtn = Atom.find<ButtonAtom>(
             ButtonAtom,
             "nui-dialog-inside-overlay-with-date-time-picker-btn"
@@ -153,113 +154,107 @@ test.describe("USERCONTROL Dialog", () => {
             await dialog.toBeVisible();
 
             await Helpers.setLocation("dialog");
-            expect(await dialog.isDialogDisplayed()).toBe(false);
+            await dialog.toBeHidden();
         });
     });
-    //
-    // test.describe("Tab navigation inside the dialog", async () => {
-    //     let initiallyFocusedCloseButtonElement: string;
-    //     const assert = async () =>
-    //         expect(initiallyFocusedCloseButtonElement).toEqual(
-    //             await (await browser.switchTo().activeElement()).getId()
-    //         );
-    //
-    //     test.beforeEach(async () => {
-    //         await defaultDialogBtn.scrollTo({ block: "center" });
-    //         await defaultDialogBtn.click();
-    //         initiallyFocusedCloseButtonElement = await (
-    //             await dialog.getCloseButton().getWebElement()
-    //         ).getId();
-    //     });
-    //
-    //
-    //     test("should Close button in header have focus by default", async () => {
-    //         assert();
-    //     });
-    //
-    //     test("should focus stay inside dialog on TAB navigation", async () => {
-    //         await Helpers.pressKey(Key.TAB, 3);
-    //         assert();
-    //     });
-    //
-    //     test("should not slip back to the page on SHIFT+TAB keys input", async () => {
-    //         await Helpers.pressKey(Key.chord(Key.SHIFT, Key.TAB), 3);
-    //         assert();
-    //     });
-    // });
-    //
-    // test.describe("Tab navigation outside the dialog", async () => {
-    //     test.beforeEach(async () => {
-    //         await defaultDialogBtn.scrollTo({ block: "center" });
-    //         await defaultDialogBtn.click();
-    //     });
-    //
-    //     test("should focus element inside dialog on TAB when focus outside the dialog", async () => {
-    //         await themeSwitcher.click();
-    //         const actionButtonId = await dialog.getActionButton().getId();
-    //         await Helpers.pressKey(Key.TAB);
-    //         const focusedElementId = await (
-    //             await browser.switchTo().activeElement()
-    //         ).getId();
-    //
-    //         expect(actionButtonId).toBe(focusedElementId);
-    //     });
-    //
-    //     test("should focus element inside dialog on SHIFT+TAB when focus outside the dialog", async () => {
-    //         await themeSwitcher.click();
-    //         const actionButtonId = await dialog.getActionButton().getId();
-    //         await Helpers.pressKey(Key.chord(Key.SHIFT, Key.TAB));
-    //         const focusedElementId = await (
-    //             await browser.switchTo().activeElement()
-    //         ).getId();
-    //
-    //         expect(actionButtonId).toBe(focusedElementId);
-    //     });
-    // });
-    //
-    // test.describe("regression >", async () => {
-    //     test("should dialog be dismissed on mouseup event outside the dialog body (NUI-3292)", async () => {
-    //         await defaultDialogBtn.scrollTo({ block: "center" });
-    //         await defaultDialogBtn.click();
-    //         await browser.actions().mouseMove(dialog.getDialog()).perform();
-    //         await browser.actions().mouseDown().perform();
-    //         await browser.actions().mouseMove({ x: -500, y: 0 }).perform();
-    //         await browser.actions().mouseUp().perform();
-    //         expect(await dialog.isDialogDisplayed()).toBe(true);
-    //     });
-    //
-    //     test.describe("dialog with overlay >", () => {
-    //         test.beforeEach(async () => {
-    //             await (await selectToOpenDialog.getFirstOption()).click();
-    //             await browser.watest(
-    //                 ExpectedConditions.visibilityOf(dialog.getElement()),
-    //                 3000,
-    //                 "Could not find the dialog!"
-    //             );
-    //         });
-    //
-    //         test("should append to cdk overlay custom container (NUI-5169)", async () => {
-    //             expect(
-    //                 await overlayContainer
-    //                     ?.$(Atom.getSelector(DialogAtom))
-    //                     .isPresent()
-    //             ).toBeTruthy();
-    //         });
-    //
-    //         test("should append to cdk overlay custom container (NUI-5169)", async () => {
-    //             expect(
-    //                 await overlayContainer
-    //                     ?.$(`.${DialogAtom.DIALOG_WINDOW_CSS_CLASS}`)
-    //                     .getCssValue("z-index")
-    //             ).toEqual("1000");
-    //             expect(
-    //                 await overlayContainer
-    //                     ?.$(`.${DialogAtom.BACKDROP_CSS_CLASS}`)
-    //                     .getCssValue("z-index")
-    //             ).toEqual("1000");
-    //         });
-    //     });
-    // });
+    
+    test.describe("Tab navigation inside the dialog", async () => {
+        let initiallyFocusedCloseButtonElement: Locator;
+        
+        const assert = async (page: Page) =>
+            await expect(initiallyFocusedCloseButtonElement).toBeFocused();
+    
+        test.beforeEach(async ({page}) => {
+            await defaultDialogBtn.getLocator().scrollIntoViewIfNeeded();
+            await defaultDialogBtn.click();
+            initiallyFocusedCloseButtonElement = await dialog.getCloseButton();
+        });
+    
+    
+        test("should Close button in header have focus by default", async ({page}) => {
+            assert(page);
+        });
+    
+        test("should focus stay inside dialog on TAB navigation", async ({page}) => {
+            await Helpers.pressKey("Tab", 3);
+            assert(page);
+        });
+    
+        test("should not slip back to the page on SHIFT+TAB keys input", async ({page}) => {
+            await Helpers.pressKey("Shift+Tab", 3);
+            assert(page);
+        });
+    });
+    
+    test.describe("Tab navigation outside the dialog", async () => {
+        test.beforeEach(async () => {
+            await defaultDialogBtn.getLocator().scrollIntoViewIfNeeded();
+            await defaultDialogBtn.click();
+        });
+    
+        test("should focus element inside dialog on TAB when focus outside the dialog", async () => {
+            await themeSwitcher.click();
+            await Helpers.pressKey('Tab');
+            await expect(dialog.getActionButton()).toBeFocused();
+        });
+    
+        test("should focus element inside dialog on SHIFT+TAB when focus outside the dialog", async () => {
+            await themeSwitcher.click();
+            await Helpers.pressKey('Shift+Tab');
+            expect(dialog.getActionButton()).toBeFocused();
+        });
+    });
+    
+    test.describe("regression >", async () => {
+        test("should dialog be dismissed on mouseup event outside the dialog body (NUI-3292)", async ({ page }) => {
+            await defaultDialogBtn.getLocator().scrollIntoViewIfNeeded();
+            await defaultDialogBtn.click();
+            
+            const box = await dialog.getLocator().boundingBox();
+            if (!box) {
+                throw new Error("The dialog box is not defined");
+            }
+            await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+            await page.mouse.down();
+            await page.mouse.move(box.x - 500, box.y + box.height / 2);
+            await page.mouse.up();
+            await dialog.toBeVisible();
+        });
+    
+        test.describe("dialog with overlay >", () => {
+            test.beforeEach(async () => {
+                await defaultDialogBtn.getLocator().scrollIntoViewIfNeeded();
+                await defaultDialogBtn.click();
+            
+                await selectToOpenDialog.getFirstOption().click();
+
+                // Wait for the dialog to become visible (max 3s)
+                await expect(dialog.getLocator()).toBeVisible({ timeout: 3000 });
+            });
+    
+            test("should append to cdk overlay custom container (NUI-5169)", async () => {
+                const selector = Atom.getSelector(DialogAtom) as string;
+                const overlay = overlayContainer?.locator(selector);
+                await expect(overlay).toBeVisible();
+            });
+    
+            test("should append to cdk overlay custom container (NUI-5169) v2", async ({ page }) => {
+                const selector = `.${DialogAtom.DIALOG_WINDOW_CSS_CLASS}`;
+                const overlay = await overlayContainer?.locator(selector).elementHandle();
+                if(!overlay){
+                    throw new Error("The overlay is not defined");
+                }
+                await page.waitForFunction(  (el) => window.getComputedStyle(el).zIndex === '1000', overlay);
+
+                const selectorB = `.${DialogAtom.BACKDROP_CSS_CLASS}`;
+                const overlayB = await overlayContainer?.locator(selector).elementHandle();
+                if(!overlayB){
+                    throw new Error("The overlayB is not defined");
+                }
+                await page.waitForFunction(  (el) => window.getComputedStyle(el).zIndex === '1000', overlayB);
+            });
+        });
+    });
     //
     // test.describe("dialog with date-time-picker in overlay >", () => {
     //     test.beforeEach(async () => {
