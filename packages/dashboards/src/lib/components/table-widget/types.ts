@@ -81,6 +81,7 @@ export interface ITableWidgetConfig {
         enabled: boolean;
         searchTerm?: string;
         searchDebounce?: number;
+        maxSearchLength?: number;
     };
 
     paginatorConfiguration?: ITableWidgetPaginatorConfig;

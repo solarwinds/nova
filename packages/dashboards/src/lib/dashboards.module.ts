@@ -48,6 +48,7 @@ import {
     NuiTimeFrameBarModule,
     NuiTimeFramePickerModule,
     NuiTooltipModule,
+    NuiMessageModule,
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
@@ -215,6 +216,7 @@ const entryComponents: IComponentWithLateLoadKey[] = [
         NuiSelectModule,
         NuiPopoverModule,
         NuiPaginatorModule,
+        NuiMessageModule,
     ],
     declarations: dashboardComponents,
     providers: [

@@ -23,6 +23,7 @@ import { DatePipe } from "@angular/common";
 import { Xliff } from "@angular/compiler";
 import { SimpleChange, TRANSLATIONS, TRANSLATIONS_FORMAT } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { By } from "@angular/platform-browser";
 import { BehaviorSubject } from "rxjs";
 // eslint-disable-next-line import/no-deprecated
 import { skip, take, tap } from "rxjs/operators";
@@ -825,6 +826,84 @@ describe("TableWidgetComponent", () => {
             component.widgetData = tableData;
             component.columns = [];
             expect(component.shouldDisplayTable()).toBeFalse();
+        });
+    });
+
+    describe("search max length", () => {
+        const getSearchQueryLimitWarningElement = () =>
+            fixture.debugElement.query(By.css(".nui-table-search-limit-warning"))?.nativeElement;
+
+        beforeEach(() => {
+            spyOn(component.searchTerm$, "next");
+            component.isSearchEnabled = true;
+            component.ngOnChanges(
+                createSimpleChanges(
+                    configuration,
+                    tableData,
+                    dataFields
+                )
+            );
+            fixture.detectChanges();
+        });
+
+        it("should display warning message and do not emit search term if search query exceeds default limit", () => {
+            component.isSearchEnabled = true;
+            const searchTerm = "a".repeat(2001); // 2000 - default limit
+            component.onSearchInputChanged(searchTerm);
+            fixture.detectChanges();
+
+            expect(getSearchQueryLimitWarningElement()).toBeTruthy();
+            expect(component.isSearchLimitWarningDisplayed()).toBeTrue();
+            expect(component.searchTerm$.next).not.toHaveBeenCalled();
+        });
+
+        it("should not display warning message and emit search term if search query does not exceed default limit", () => {
+            component.isSearchEnabled = true;
+            const searchTerm = "a".repeat(2000); // 2000 - default limit
+            component.onSearchInputChanged(searchTerm);
+            fixture.detectChanges();
+
+            expect(getSearchQueryLimitWarningElement()).toBeUndefined();
+            expect(component.isSearchLimitWarningDisplayed()).toBeFalse();
+            expect(component.searchTerm$.next).toHaveBeenCalled();
+        });
+
+        it("should display warning message and do not emit search term if search query exceeds configured limit", () => {
+            component.isSearchEnabled = true;
+            const configuredMaxSearchLength = 10;
+            component.configuration = {
+                ...component.configuration,
+                searchConfiguration: {
+                    enabled: true,
+                    maxSearchLength: configuredMaxSearchLength,
+                },
+            };
+            const searchTerm = "a".repeat(configuredMaxSearchLength + 1);
+            component.onSearchInputChanged(searchTerm);
+            fixture.detectChanges();
+
+            expect(getSearchQueryLimitWarningElement()).toBeTruthy();
+            expect(component.isSearchLimitWarningDisplayed()).toBeTrue();
+            expect(component.searchTerm$.next).not.toHaveBeenCalled();
+        });
+
+        it("should not display warning message and not emit search term if search query does not exceed configured limit", () => {
+            component.isSearchEnabled = true;
+            const configuredMaxSearchLength = 10;
+            component.configuration = {
+                ...component.configuration,
+                searchConfiguration: {
+                    enabled: true,
+                    maxSearchLength: configuredMaxSearchLength,
+                },
+            };
+            const searchTerm = "a".repeat(configuredMaxSearchLength);
+            component.onSearchInputChanged(searchTerm);
+            fixture.detectChanges();
+
+            expect(getSearchQueryLimitWarningElement()).toBeUndefined();
+            expect(component.isSearchLimitWarningDisplayed()).toBeFalse();
+            expect(component.searchTerm$.next).toHaveBeenCalled();
         });
     });
 });
