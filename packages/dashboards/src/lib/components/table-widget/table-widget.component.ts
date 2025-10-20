@@ -34,6 +34,7 @@ import {
     OnInit,
     Optional,
     QueryList,
+    signal,
     SimpleChange,
     SimpleChanges,
     ViewChild,
@@ -171,6 +172,8 @@ export class TableWidgetComponent
     private tableWidgetHeight: number;
     private readonly defaultColumnAlignment: TableAlignmentOptions = "left";
     private idle: boolean = false;
+    public isSearchLimitWarningDisplayed = signal(false);
+    private readonly defaultMaxSearchLength: number = 2000;
 
     constructor(
         @Inject(PIZZAGNA_EVENT_BUS) public eventBus: EventBus<IEvent>,
@@ -242,6 +245,10 @@ export class TableWidgetComponent
 
     public get hasPaginator(): boolean {
         return this.scrollType === ScrollType.paginator;
+    }
+
+    public get searchLimitMaxLength(): number {
+        return this.configuration?.searchConfiguration?.maxSearchLength ?? this.defaultMaxSearchLength;
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -601,6 +608,12 @@ export class TableWidgetComponent
     }
 
     public onSearchInputChanged(searchTerm: string): void {
+        if (searchTerm?.length > this.searchLimitMaxLength) {
+            this.isSearchLimitWarningDisplayed.set(true);
+            return;
+        }
+
+        this.isSearchLimitWarningDisplayed.set(false);
         this.searchValue = searchTerm;
         this.searchTerm$.next("");
         this.selection = {
