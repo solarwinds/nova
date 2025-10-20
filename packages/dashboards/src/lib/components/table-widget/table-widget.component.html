@@ -18,6 +18,15 @@
             (cancel)="onSearchInputChanged($event)"
         >
         </nui-search>
+        @if (isSearchLimitWarningDisplayed()) {
+            <nui-message
+                class="nui-table-search-limit-warning"
+                type="warning"
+                [allowDismiss]="false"
+                i18n>
+                Search query limit is {{ searchLimitMaxLength }} characters.
+            </nui-message>
+        }
     </div>
     <div
         class="flex-row h-100 nui-table-widget-container"
