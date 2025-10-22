@@ -36,7 +36,6 @@ import { KEYBOARD_CODE } from "../../../constants/keycode.constants";
     selector: "nui-tab-heading",
     templateUrl: "./tab-heading.component.html",
     styleUrls: ["./tab-heading.component.less"],
-    host: { role: "tab" },
     standalone: false,
 })
 export class TabHeadingComponent {
@@ -44,11 +43,6 @@ export class TabHeadingComponent {
     @HostBinding("class.disabled")
     get isDisabled(): boolean {
         return this.disabled;
-    }
-
-    @HostBinding("attr.aria-selected")
-    get ariaSelected(): string | null {
-        return this.active ? "true" : null;
     }
 
     /** If true tab can not be activated  */
