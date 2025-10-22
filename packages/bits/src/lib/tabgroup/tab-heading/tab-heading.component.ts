@@ -36,7 +36,6 @@ import { KEYBOARD_CODE } from "../../../constants/keycode.constants";
     selector: "nui-tab-heading",
     templateUrl: "./tab-heading.component.html",
     styleUrls: ["./tab-heading.component.less"],
-    host: { role: "tab" },
 })
 export class TabHeadingComponent {
     /** This adds 'disabled' class to the host component depending on the 'disabled' @Input to properly style disabled tabs */
