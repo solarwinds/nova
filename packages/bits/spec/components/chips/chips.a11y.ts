@@ -24,7 +24,7 @@ import { assertA11y, Helpers } from "../../helpers";
 import { ChipsAtom } from "../public_api";
 
 describe("a11y: chips", () => {
-    const rulesToDisable: string[] = ["color-contrast"];
+    const rulesToDisable: string[] = [];
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("chips/chips-visual-test");

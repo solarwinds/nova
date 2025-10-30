@@ -24,7 +24,7 @@ import { assertA11y, Helpers } from "../../helpers";
 import { CdkDropListAtom, CdkDraggableItemAtom } from "../public_api";
 
 describe("a11y: drag-and-drop", () => {
-    const rulesToDisable: string[] = ["color-contrast"];
+    const rulesToDisable: string[] = [];
 
     beforeAll(async () => {
         await Helpers.prepareBrowser(

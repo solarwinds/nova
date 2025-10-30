@@ -25,10 +25,7 @@ import { Animations, assertA11y, Helpers } from "../../helpers";
 import { SelectV2Atom } from "../public_api";
 
 describe("a11y: select-v2", () => {
-    const rulesToDisable: string[] = [
-        "color-contrast", // NUI-6014
-        "nested-interactive",
-    ];
+    const rulesToDisable: string[] = ["nested-interactive"];
     let selectBasic: SelectV2Atom;
     let selectErrorState: SelectV2Atom;
     let selectDisplayValueSmall: SelectV2Atom;

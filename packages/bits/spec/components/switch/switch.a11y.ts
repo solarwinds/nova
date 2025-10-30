@@ -24,9 +24,7 @@ import { assertA11y, Helpers } from "../../helpers";
 import { SwitchAtom } from "../public_api";
 
 describe("a11y: switch", () => {
-    const rulesToDisable: string[] = [
-        "color-contrast", // NUI-6014
-    ];
+    const rulesToDisable: string[] = [];
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("switch/switch-visual-test");

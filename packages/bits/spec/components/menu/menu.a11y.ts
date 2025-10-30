@@ -26,7 +26,6 @@ import { MenuAtom } from "../public_api";
 describe("a11y: menu", () => {
     let menuBasic: MenuAtom;
     const rulesToDisable: string[] = [
-        "color-contrast", // NUI-6014
         "scrollable-region-focusable", // NUI-5935, NUI-6007
         "aria-required-children",
     ];

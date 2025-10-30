@@ -29,7 +29,6 @@ describe("a11y: form-field", () => {
     const rulesToDisable: string[] = [
         "aria-allowed-role", // disabling because checkboxes are on the page
         "bypass", // because we're not on a real app's page
-        "color-contrast",
         "landmark-one-main", // not applicable in the test context
         "region", // not applicable in the test context
         "page-has-heading-one", // not applicable for the tests

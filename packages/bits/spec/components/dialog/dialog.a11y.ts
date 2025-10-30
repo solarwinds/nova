@@ -32,7 +32,6 @@ import { DialogAtom } from "../public_api";
 describe("a11y: dialog", () => {
     // disabling the rule until NUI-6014 is addressed
     const rulesToDisable: string[] = [
-        "color-contrast",
         "scrollable-region-focusable", // consumers are responsible for taking care of their own content
     ];
 

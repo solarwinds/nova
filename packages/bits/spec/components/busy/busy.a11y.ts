@@ -24,11 +24,7 @@ import { assertA11y, Helpers } from "../../helpers";
 import { BusyAtom } from "../public_api";
 
 describe("a11y: busy", () => {
-    const rulesToDisable: string[] = [
-        "color-contrast",
-        "aria-progressbar-name",
-        "duplicate-id",
-    ];
+    const rulesToDisable: string[] = ["aria-progressbar-name", "duplicate-id"];
 
     let switchBusyState: ElementFinder;
 
