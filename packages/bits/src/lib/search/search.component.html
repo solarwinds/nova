@@ -1,5 +1,18 @@
 <div class="nui-search__group input-group" [class.has-error]="isInErrorState">
     <div class="nui-search__input">
+        <input
+            class="nui-search__input-control form-control"
+            type="text"
+            [attr.name]="name"
+            [nuiSetFocus]="captureFocus"
+            (focusChange)="onFocusChange($event)"
+            autocomplete="off"
+            (input)="onInputChange()"
+            [(ngModel)]="value"
+            [placeholder]="getPlaceholder()"
+            (keyup)="onKeyup($event)"
+            [attr.aria-invalid]="isInErrorState"
+        />
         <div class="nui-search__button input-group-btn">
             <button
                 nui-button
@@ -20,18 +33,5 @@
                 (click)="onSearch()"
             ></button>
         </div>
-        <input
-            class="nui-search__input-control form-control"
-            type="text"
-            [attr.name]="name"
-            [nuiSetFocus]="captureFocus"
-            (focusChange)="onFocusChange($event)"
-            autocomplete="off"
-            (input)="onInputChange()"
-            [(ngModel)]="value"
-            [placeholder]="getPlaceholder()"
-            (keyup)="onKeyup($event)"
-            [attr.aria-invalid]="isInErrorState"
-        />
     </div>
 </div>
