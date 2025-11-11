@@ -48,4 +48,15 @@ export class PopupToggleDirective {
             this.toggle.emit(event);
         }
     }
+
+    @HostListener("keydown", ["$event"])
+    public handleKeydown(event: KeyboardEvent): void {
+        if (this.isDisabled || this.disabled) {
+            return;
+        }
+        if (event.key === " " || event.key === "Enter") {
+            event.preventDefault();
+            this.toggle.emit(event);
+        }
+    }
 }
