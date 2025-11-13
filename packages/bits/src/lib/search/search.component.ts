@@ -140,6 +140,8 @@ export class SearchComponent implements IFilterPub, OnDestroy {
     public onKeyup(event: KeyboardEvent): void {
         if (event.key === "Enter") {
             this.onSearch();
+        } else if (event.key === "Escape" || event.key === "Esc") {
+            this.onCancel();
         }
     }
 
