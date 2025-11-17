@@ -42,6 +42,7 @@
                 displayStyle="action"
                 icon="search"
                 [disabled]="isButtonDisabled()"
+                [attr.aria-hidden]="isButtonDisabled() ? 'true' : null"
                 (click)="onSearch()"
             ></button>
         </div>
