@@ -1,23 +1,33 @@
 <div class="nui-search__group input-group" [class.has-error]="isInErrorState">
     <div class="nui-search__input">
+        <label
+            class="sr-only"
+            [attr.id]="resolvedInputId + '-label'"
+            [attr.for]="resolvedInputId"
+            >{{ inputAriaLabel }}</label
+        >
         <input
             class="nui-search__input-control form-control"
-            type="text"
+            [attr.id]="resolvedInputId"
             [attr.name]="name"
+            type="text"
+            autocomplete="off"
+            [(ngModel)]="value"
+            placeholder="{{ getPlaceholder() }}"
+            [attr.aria-labelledby]="resolvedInputId + '-label'"
+            [attr.aria-invalid]="isInErrorState"
             [nuiSetFocus]="captureFocus"
             (focusChange)="onFocusChange($event)"
-            autocomplete="off"
             (input)="onInputChange()"
-            [(ngModel)]="value"
-            [placeholder]="getPlaceholder()"
             (keyup)="onKeyup($event)"
-            [attr.aria-invalid]="isInErrorState"
         />
         <div class="nui-search__button input-group-btn">
             <button
                 nui-button
-                type="button"
+                type="reset"
                 *ngIf="!!value"
+                [ariaLabel]="cancelAriaLabel"
+                [attr.aria-controls]="resolvedInputId"
                 class="nui-search__button-cancel"
                 displayStyle="action"
                 icon="close"
@@ -25,7 +35,9 @@
             ></button>
             <button
                 nui-button
-                type="button"
+                type="submit"
+                [ariaLabel]="submitAriaLabel"
+                [attr.aria-controls]="resolvedInputId"
                 class="nui-search__button-search"
                 displayStyle="action"
                 icon="search"
