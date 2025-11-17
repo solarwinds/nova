@@ -14,12 +14,14 @@ body > nui-repeat-item.cdk-drag-preview .nui-repeat-item {
 
 .nui .nui-repeat-item {
     &:active,
-    &:focus {
+    &:focus,
+    &:focus-within {
         outline: none;
+        .setCssVariable(background-color, nui-color-bg-transparent-hover);
     }
 
     &:hover {
-        .setCssVariable(background-color, nui-color-bg-secondary);
+        .setCssVariable(background-color, nui-color-bg-transparent-hover);
     }
 
     &__content {
@@ -77,8 +79,9 @@ body > nui-repeat-item.cdk-drag-preview .nui-repeat-item {
 
     &.nui-repeat-item--clickable {
         &:not(.nui-repeat-item--selected) {
-            &:hover {
-                .setCssVariable(background-color, nui-color-bg-secondary);
+            &:hover,
+            &:focus {
+                .setCssVariable(background-color, nui-color-bg-transparent-hover);
             }
         }
     }
@@ -88,7 +91,8 @@ body > nui-repeat-item.cdk-drag-preview .nui-repeat-item {
         .setCssVariable(color, nui-color-text-default);
 
         &.nui-repeat-item--clickable {
-            &:hover {
+            &:hover,
+            &:focus {
                 .setCssVariable(background-color, nui-color-selected-hover);
             }
         }
