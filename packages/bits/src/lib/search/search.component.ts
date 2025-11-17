@@ -23,6 +23,7 @@ import {
     EventEmitter,
     Input,
     OnDestroy,
+    OnInit,
     Output,
     ViewEncapsulation,
 } from "@angular/core";
@@ -50,42 +51,32 @@ import { IFilter, IFilterPub } from "../../services/data-source/public-api";
  * Fires 'search', 'cancel', 'inputChanged' and 'focusChange' events.
  * Indicates spinner to the left of input text depending on 'busy' property.
  */
-export class SearchComponent implements IFilterPub, OnDestroy {
-    // mark this filter to be monitored by our datasource for any changes in order reset other filters(eg: pagination)
-    // before any new search is performed
-    public detectFilterChanges = true;
+export class SearchComponent implements IFilterPub, OnDestroy, OnInit {
+    /* --------------------------------------------------
+       Static / internal constants
+    -------------------------------------------------- */
+    private static nextUniqueId = 0; // counter for generated input ids
 
-    /**
-     * default text of placeholder if no custom ones is provided
-     */
-    public defaultPlaceholder: string;
-
-    /** @ignore */
-    public onDestroy$ = new Subject<void>();
-
-    /**
-     * Controls focus of input field (true means focused).
-     */
+    /* --------------------------------------------------
+       Public configuration Inputs (external API)
+    -------------------------------------------------- */
+    /** Focus control (true means input should receive focus). */
     @Input() captureFocus: boolean;
-    /**
-     * Name of input the element.
-     */
+    /** Input name attribute (useful for forms). */
     @Input() name: string;
-    /**
-     * Input to apply error state styles
-     */
-    @Input() public isInErrorState: boolean = false;
-    /**
-     * A string that will be placed as a watermark inside of the search when it's empty.
-     */
+    /** Applies error state styles when true. */
+    @Input() isInErrorState: boolean = false;
+    /** Watermark text (placeholder) displayed when empty. */
     @Input() placeholder: string;
-    /**
-     * Initial value of input field.
-     */
+    /** Custom id for the input. */
+    @Input() inputId: string = "search input";
+    /** Initial value of the input field. */
     @Input() value: string;
-    /**
-     * Event fired on each 'cancel' button click. Emits empty string.
-     */
+
+    /* --------------------------------------------------
+       Public Outputs (events)
+    -------------------------------------------------- */
+    /** Emits empty string on cancel action. */
     @Output() public cancel = new EventEmitter<string>();
     /**
      * Event fired on external focus changes (e.g. initiated by user via UI).
@@ -99,15 +90,47 @@ export class SearchComponent implements IFilterPub, OnDestroy {
      * to clear it on inputChange - handle it in host component
      */
     @Output() public inputChange = new EventEmitter<string>();
-    /**
-     * Event fired on 'search' button click or 'ENTER' key pressed
-     */
+    /** Emits current value when search triggered (button or Enter). */
     @Output() public search = new EventEmitter<string>();
 
+    /* --------------------------------------------------
+       Internal state / derived values
+    -------------------------------------------------- */
+    /**
+     * Flag indicating whether to detect filter changes.
+     * Mark this filter to be monitored by our datasource for any changes in order reset other filters(eg: pagination)
+     * before any new search is performed
+     */
+    public detectFilterChanges = true;
+    /** Default placeholder text fallback. */
+    public defaultPlaceholder: string;
+    /** Teardown subject for subscriptions. */
+    /** @ignore */
+    public onDestroy$ = new Subject<void>();
+    /** Styling hook for icon color. */
     public searchIconColor: string = "gray";
+    /** Resolved input id (provided or generated). */
+    public resolvedInputId: string;
+    /** Accessible label text for the input (used by hidden label). */
+    public inputAriaLabel: string;
+    /** Accessible label for the cancel (clear) button. */
+    public cancelAriaLabel: string;
+    /** Accessible label for the submit (search) button. */
+    public submitAriaLabel: string;
 
+    /* --------------------------------------------------
+       Constructor & lifecycle hooks
+    -------------------------------------------------- */
     constructor() {
         this.defaultPlaceholder = $localize`Search`;
+        this.inputAriaLabel = $localize`Search`;
+        this.cancelAriaLabel = $localize`Cancel search`;
+        this.submitAriaLabel = $localize`Submit search`;
+    }
+    public ngOnInit(): void {
+        this.resolvedInputId =
+            `nui-search-input-${SearchComponent.nextUniqueId++}` ||
+            this.inputId;
     }
 
     public getFilters(): IFilter<string> {
@@ -153,6 +176,9 @@ export class SearchComponent implements IFilterPub, OnDestroy {
         this.search.emit(this.value);
     }
 
+    /* --------------------------------------------------
+       Lifecycle teardown
+    -------------------------------------------------- */
     public ngOnDestroy(): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();
