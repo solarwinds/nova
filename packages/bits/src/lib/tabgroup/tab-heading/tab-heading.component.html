@@ -1,5 +1,11 @@
-<div class="nui-tab-heading" [class.active]="active">
-    <span class="tab-link" (click)="selectTab()">
+<div class="nui-tab-heading" 
+    [class.active]="active"
+    [tabindex]="disabled ? -1 : 0"
+    [attr.aria-selected]="active ? 'true' : 'false'"
+    role="tab"
+    (click)="selectTab()" 
+    (keydown)="onKeyDown($event)">
+    <span class="tab-link">
         <ng-content></ng-content>
     </span>
 </div>

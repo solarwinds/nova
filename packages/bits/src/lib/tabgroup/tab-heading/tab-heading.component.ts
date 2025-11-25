@@ -21,11 +21,14 @@
 import {
     ChangeDetectorRef,
     Component,
+    ElementRef,
     EventEmitter,
     HostBinding,
     Input,
     Output,
 } from "@angular/core";
+
+import { KEYBOARD_CODE } from "../../../constants/keycode.constants";
 
 /** @ignore */
 
@@ -33,7 +36,6 @@ import {
     selector: "nui-tab-heading",
     templateUrl: "./tab-heading.component.html",
     styleUrls: ["./tab-heading.component.less"],
-    host: { role: "tab" },
     standalone: false,
 })
 export class TabHeadingComponent {
@@ -64,9 +66,22 @@ export class TabHeadingComponent {
 
     protected _active: boolean;
 
-    constructor(private changeDetector: ChangeDetectorRef) {}
+    constructor(
+        private changeDetector: ChangeDetectorRef,
+        private elementRef: ElementRef
+    ) {}
 
     public selectTab(): void {
-        this.selected.emit(this);
+        if (!this.disabled) {
+            this.selected.emit(this);
+        }
+    }
+
+    public onKeyDown(event: KeyboardEvent): void {
+        if (event.code === KEYBOARD_CODE.ENTER || event.code === KEYBOARD_CODE.SPACE) {
+            event.preventDefault();
+            this.elementRef.nativeElement.click();
+        }
     }
 }
+

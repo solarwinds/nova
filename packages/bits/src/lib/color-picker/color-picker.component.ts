@@ -34,30 +34,25 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
-
-import {
-    getOverlayPositions,
-    IOptionValueObject,
-    IResizeConfig,
-    NuiFormFieldControl,
-    OverlayUtilitiesService,
-    SelectV2Component,
-} from "@nova-ui/bits";
-import { getColorValueByName } from "@nova-ui/charts";
-
 import { ColorService } from "./color.service";
-import { IPaletteColor } from "../../../types";
+import { getColorValueByName } from "./../../functions/color.helper";
+import { IPaletteColor } from "./../../constants/color-picker.constants";
+import { getOverlayPositions, IOptionValueObject, IResizeConfig, NuiFormFieldControl, OverlayUtilitiesService } from "../public-api";
+import { SelectV2Component } from "../select-v2/select/select-v2.component";
 
 // Left and right paddings of .color-picker-container element
 const CONTAINER_SIDE_PADDINGS_PX: number = 20;
 // Width of the .box element
 const BOX_WIDTH_PX: number = 30;
 
+// <example-url>./../examples/index.html#/color-picker</example-url><br />
+
 @Component({
     selector: "nui-color-picker",
     templateUrl: "./color-picker.component.html",
     styleUrls: ["./color-picker.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
     providers: [
         {
             provide: NuiFormFieldControl,
@@ -71,7 +66,6 @@ const BOX_WIDTH_PX: number = 30;
         },
         ColorService,
     ],
-    standalone: false,
 })
 export class ColorPickerComponent
     implements
@@ -81,9 +75,22 @@ export class ColorPickerComponent
         AfterViewInit,
         OnDestroy
 {
+    /**
+     * Colors to be displayed as array of strings
+     */
     @Input() colors: string[];
+    /**
+     * Color pallete which should be displayed
+     */
     @Input() colorPalette: IPaletteColor[];
+    /**
+     * Number of columns in the color picker
+     */
     @Input() cols: number | undefined;
+    /**
+     * Determine if the color picket should be displayed as select
+     */
+    @Input() isSelect: boolean | undefined;
 
     @ViewChild(forwardRef(() => SelectV2Component))
     public select: SelectV2Component;
@@ -120,6 +127,10 @@ export class ColorPickerComponent
     }
 
     public ngAfterViewInit(): void {
+        if (!this.select) {
+            return;
+        }
+
         if (this.value) {
             this.select?.writeValue(this.value);
             this.isBlackTick = this.determineBlackTick(this.value.toString());
@@ -183,7 +194,7 @@ export class ColorPickerComponent
     public registerOnChange(fn: () => void): void {
         this.onChange = fn;
     }
-
+    
     public registerOnTouched(fn: () => void): void {
         this._onTouched = fn;
     }
