@@ -43,8 +43,9 @@ import { IconData, IconStatus } from "./types";
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
         class: "nui-icon-wrapper",
-        role: "img",
-        "[attr.aria-label]": "icon + ' icon'",
+        "[attr.role]": "computedRole",
+        "[attr.aria-hidden]": "computedAriaHidden",
+        "[attr.aria-label]": "computedAriaLabel",
     },
     styleUrls: ["./icon.component.less"],
     encapsulation: ViewEncapsulation.None,
@@ -74,6 +75,19 @@ export class IconComponent implements OnChanges {
     childStatus: IconStatus;
     @Input()
     icon: string;
+    /**
+     * Marks the icon as purely decorative. Decorative icons are hidden from assistive technologies.
+     */
+    @Input() decorative?: boolean;
+    /**
+     * Accessible name for a meaningful icon. Ignored if `decorative` is true or empty.
+     */
+    @Input() ariaLabel?: string;
+    /**
+     * Optional explicit role override. Constrained to 'img' | 'presentation' | null.
+     * If omitted, role is inferred from `decorative` and `ariaLabel`.
+     */
+    @Input() explicitRole?: "img" | "presentation" | null;
 
     public resultingSvg: SafeHtml;
 
@@ -152,6 +166,59 @@ export class IconComponent implements OnChanges {
         if (changes["status"] || changes["childStatus"] || changes["icon"]) {
             this.generateIcon();
         }
+    }
+
+    // --- Accessibility computed properties ---
+    private get isDecorative(): boolean {
+        // Treat undefined as true for backward-compatible default decorative behavior
+        return this.decorative !== false;
+    }
+
+    get computedRole(): string | null {
+        if (this.isDecorative) {
+            return "presentation";
+        }
+        const label = this.normalizedAriaLabel;
+        if (this.explicitRole) {
+            if (this.explicitRole === "img") {
+                return label ? "img" : null; // avoid img without name
+            }
+            if (this.explicitRole === "presentation") {
+                return "presentation";
+            }
+        }
+        return label ? "img" : null;
+    }
+
+    get computedAriaHidden(): string | null {
+        // Hide if decorative or no semantic role (no label) to keep DOM clean for AT
+        return this.isDecorative || this.computedRole !== "img" ? "true" : null;
+    }
+
+    get computedAriaLabel(): string | null {
+        if (this.computedRole !== "img") {
+            return null;
+        }
+        const base = this.normalizedAriaLabel;
+        if (!base) {
+            return null;
+        }
+        const statusParts: string[] = [];
+        if (this.status) {
+            statusParts.push(this.status.toLowerCase());
+        }
+        if (this.childStatus) {
+            statusParts.push(this.childStatus.toLowerCase());
+        }
+        return statusParts.length ? `${base} ${statusParts.join(" ")}` : base;
+    }
+
+    private get normalizedAriaLabel(): string | null {
+        if (this.isDecorative) {
+            return null;
+        }
+        const trimmed = (this.ariaLabel || "").trim();
+        return trimmed.length ? trimmed : null;
     }
 
     private generateIcon() {
