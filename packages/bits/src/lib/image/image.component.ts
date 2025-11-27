@@ -55,8 +55,9 @@ import { UtilService } from "../../services/util.service";
     styleUrls: ["./image.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: {
-        role: "img",
-        "[attr.aria-label]": "hasAlt ? null : description || imageName",
+        "[attr.role]": "computedRole",
+        "[attr.aria-hidden]": "computedAriaHidden",
+        "[attr.aria-label]": "computedAriaLabel",
     },
     standalone: false,
 })
@@ -100,6 +101,12 @@ export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
     public imageName: string | null;
     public hasAlt: boolean;
 
+    /**
+     * Optional ARIA role override. Constrained to 'img' | 'presentation' | null.
+     * If omitted, role is inferred from presence of alt/label.
+     */
+    @Input() public role?: "img" | "presentation" | null;
+
     constructor(
         private logger: LoggerService,
         private utilService: UtilService,
@@ -129,13 +136,49 @@ export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
         }
     }
 
+    // --- Accessibility computed properties ---
+    public get computedRole(): string | null {
+        // If explicit role provided, honor it with safeguards
+        if (this.role) {
+            if (this.role === "img") {
+                return this.normalizedLabel ? "img" : null; // avoid img without name
+            }
+            if (this.role === "presentation") {
+                return "presentation";
+            }
+        }
+        // Infer role: if we have alt (hasAlt) or a label, expose as img; otherwise presentation
+        if (this.hasAlt || this.normalizedLabel) {
+            return "img";
+        }
+        return "presentation";
+    }
+
+    public get computedAriaHidden(): string | null {
+        // Hide when not exposed as img
+        return this.computedRole !== "img" ? "true" : null;
+    }
+
+    public get computedAriaLabel(): string | null {
+        // Only provide aria-label when role is img and there's no native alt
+        if (this.computedRole !== "img" || this.hasAlt) {
+            return null;
+        }
+        return this.normalizedLabel;
+    }
+
+    private get normalizedLabel(): string | null {
+        const candidate = (this.description || this.imageName || "").trim();
+        return candidate.length ? candidate : null;
+    }
+
     public ngAfterViewInit(): void {
         if (this.autoFill) {
             try {
                 const svg = this.el.nativeElement.querySelector("svg");
                 svg.setAttribute("width", "100%");
                 svg.setAttribute("height", "100%");
-            } catch (e) {
+            } catch {
                 console.warn(
                     "Can't apply 'autoFill' to nui-image, because it is only applicable to SVG type of images"
                 );
