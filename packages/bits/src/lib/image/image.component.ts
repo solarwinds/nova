@@ -44,6 +44,7 @@ import { IImagesPresetItem } from "./public-api";
 import { imagesPresetToken } from "../../constants/images.constants";
 import { LoggerService } from "../../services/log-service";
 import { UtilService } from "../../services/util.service";
+import { computeA11yForGraphic } from "../../functions/a11y-graphics.util";
 
 /**
  * <example-url>./../examples/index.html#/image</example-url>
@@ -136,39 +137,24 @@ export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     // --- Accessibility computed properties ---
+    private get a11y() {
+        return computeA11yForGraphic({
+            decorative: false, // images default to semantic unless lacking label/alt
+            explicitRole: this.role,
+            label: this.description || this.imageName || null,
+            hasAlt: this.hasAlt,
+            statusParts: undefined,
+        });
+    }
+
     public get computedRole(): string | null {
-        // If explicit role provided, honor it with safeguards
-        if (this.role) {
-            if (this.role === "img") {
-                return this.normalizedLabel ? "img" : null; // avoid img without name
-            }
-            if (this.role === "presentation") {
-                return "presentation";
-            }
-        }
-        // Infer role: if we have alt (hasAlt) or a label, expose as img; otherwise presentation
-        if (this.hasAlt || this.normalizedLabel) {
-            return "img";
-        }
-        return "presentation";
+        return this.a11y.role;
     }
-
     public get computedAriaHidden(): string | null {
-        // Hide when not exposed as img
-        return this.computedRole !== "img" ? "true" : null;
+        return this.a11y.ariaHidden;
     }
-
     public get computedAriaLabel(): string | null {
-        // Only provide aria-label when role is img and there's no native alt
-        if (this.computedRole !== "img" || this.hasAlt) {
-            return null;
-        }
-        return this.normalizedLabel;
-    }
-
-    private get normalizedLabel(): string | null {
-        const candidate = (this.description || this.imageName || "").trim();
-        return candidate.length ? candidate : null;
+        return this.a11y.ariaLabel;
     }
 
     public ngAfterViewInit(): void {
