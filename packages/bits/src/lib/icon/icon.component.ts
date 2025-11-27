@@ -32,6 +32,7 @@ import isNil from "lodash/isNil";
 
 import { IconService } from "./icon.service";
 import { IconData, IconStatus } from "./types";
+import { computeA11yForGraphic } from "../../functions/a11y-graphics.util";
 
 /**
  * <example-url>./../examples/index.html#/icon</example-url>
@@ -169,41 +170,8 @@ export class IconComponent implements OnChanges {
         }
     }
 
-    // --- Accessibility computed properties ---
-    private get isDecorative(): boolean {
-        // Treat undefined as true for backward-compatible default decorative behavior
-        return this.decorative !== false;
-    }
-
-    get computedRole(): string | null {
-        if (this.isDecorative) {
-            return "presentation";
-        }
-        const label = this.normalizedAriaLabel;
-        if (this.explicitRole) {
-            if (this.explicitRole === "img") {
-                return label ? "img" : null; // avoid img without name
-            }
-            if (this.explicitRole === "presentation") {
-                return "presentation";
-            }
-        }
-        return label ? "img" : null;
-    }
-
-    get computedAriaHidden(): string | null {
-        // Hide if decorative or no semantic role (no label) to keep DOM clean for AT
-        return this.isDecorative || this.computedRole !== "img" ? "true" : null;
-    }
-
-    get computedAriaLabel(): string | null {
-        if (this.computedRole !== "img") {
-            return null;
-        }
-        const base = this.normalizedAriaLabel;
-        if (!base) {
-            return null;
-        }
+    // --- Accessibility via shared util ---
+    private get a11y() {
         const statusParts: string[] = [];
         if (this.status) {
             statusParts.push(this.status.toLowerCase());
@@ -211,15 +179,23 @@ export class IconComponent implements OnChanges {
         if (this.childStatus) {
             statusParts.push(this.childStatus.toLowerCase());
         }
-        return statusParts.length ? `${base} ${statusParts.join(" ")}` : base;
+        return computeA11yForGraphic({
+            decorative: this.decorative,
+            explicitRole: this.explicitRole,
+            label: this.ariaLabel || this.icon || null,
+            hasAlt: false,
+            statusParts,
+        });
     }
 
-    private get normalizedAriaLabel(): string | null {
-        if (this.isDecorative) {
-            return null;
-        }
-        const trimmed = (this.ariaLabel || "").trim();
-        return trimmed.length ? trimmed : null;
+    get computedRole(): string | null {
+        return this.a11y.role;
+    }
+    get computedAriaHidden(): string | null {
+        return this.a11y.ariaHidden;
+    }
+    get computedAriaLabel(): string | null {
+        return this.a11y.ariaLabel;
     }
 
     private generateIcon() {
