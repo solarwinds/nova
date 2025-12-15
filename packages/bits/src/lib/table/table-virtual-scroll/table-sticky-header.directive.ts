@@ -313,7 +313,7 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
         ).pipe(
             // Note: Using delay(0) to grant some time to the table
             // to update the rows and then proceed with the event
-            delay(0),
+            delay(0, asyncScheduler),
             // Note: Reattaching native header on every columns changes
             tap(() => this.updateNativeHeaderPlaceholder())
         );
@@ -322,11 +322,17 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             throw new Error("Unable to find CdkVirtualForOf");
         }
 
+        const dataStream$ = this.virtualFor.dataStream.pipe(
+          // give CDK some time to render rows after a change
+          delay(0, asyncScheduler),
+          tap(() => this.updateNativeHeaderPlaceholder())
+        );
+
         merge(
             onScroll$,
             onResize$,
             tableColumnsUpdate$,
-            this.virtualFor.dataStream
+            dataStream$
         )
             .pipe(
                 // Note: Preventing function to be invoked multiple times
