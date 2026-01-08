@@ -18,11 +18,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import AxeBuilder from "@axe-core/webdriverjs";
 import { browser } from "protractor";
 
 import { Helpers } from "../../helpers";
 
-import AxeBuilder from "@axe-core/webdriverjs";
 
 describe("a11y: badge", () => {
     beforeAll(async () => {
