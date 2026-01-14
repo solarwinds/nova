@@ -36,7 +36,7 @@ import { ColorService } from "./color.service";
 @Component({
     selector: "nui-select-v2",
     template: "<ng-content></ng-content>",
-    standalone: false,
+    
 })
 class MockSelectV2Component {
     @Input() overlayConfig: any;

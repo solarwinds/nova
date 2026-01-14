@@ -23,6 +23,6 @@ import { Component } from "@angular/core";
 @Component({
     selector: "nui-color-picker-docs-example",
     templateUrl: "./color-picker-docs.example.component.html",
-    standalone: false,
+    
 })
 export class ColorPickerExampleComponent {}

@@ -32,7 +32,7 @@ import { HTML_COLORS, IPaletteColor } from "../../../../../../src/constants/colo
     selector: "nui-color-picker-select-example",
     templateUrl: "./color-picker-select.example.component.html",
     styles: [],
-    standalone: false,
+    
 })
 export class ColorPickerSelectExampleComponent implements OnInit {
     public myForm: FormGroup<{ backgroundColor: FormControl<string | null> }>;

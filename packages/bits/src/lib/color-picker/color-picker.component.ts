@@ -53,7 +53,7 @@ const BOX_WIDTH_PX: number = 30;
     templateUrl: "./color-picker.component.html",
     styleUrls: ["./color-picker.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
+    
     providers: [
         {
             provide: NuiFormFieldControl,

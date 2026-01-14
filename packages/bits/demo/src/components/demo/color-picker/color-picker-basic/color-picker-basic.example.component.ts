@@ -43,7 +43,7 @@ const CHART_PALETTE_CS1: string[] = [
     selector: "nui-color-picker-basic-example",
     templateUrl: "./color-picker-basic.example.component.html",
     styles: [],
-    standalone: false,
+    
 })
 export class ColorPickerBasicExampleComponent implements OnInit {
     public myForm: FormGroup<{ backgroundColor: FormControl<string | null> }>;

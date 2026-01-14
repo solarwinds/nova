@@ -77,6 +77,7 @@ export class SearchComponent implements IFilterPub, OnDestroy, OnInit {
        Public Outputs (events)
     -------------------------------------------------- */
     /** Emits empty string on cancel action. */
+    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output() public cancel = new EventEmitter<string>();
     /**
      * Event fired on external focus changes (e.g. initiated by user via UI).
@@ -91,6 +92,7 @@ export class SearchComponent implements IFilterPub, OnDestroy, OnInit {
      */
     @Output() public inputChange = new EventEmitter<string>();
     /** Emits current value when search triggered (button or Enter). */
+    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output() public search = new EventEmitter<string>();
 
     /* --------------------------------------------------
@@ -129,8 +131,7 @@ export class SearchComponent implements IFilterPub, OnDestroy, OnInit {
     }
     public ngOnInit(): void {
         this.resolvedInputId =
-            `nui-search-input-${SearchComponent.nextUniqueId++}` ||
-            this.inputId;
+            this.inputId || `nui-search-input-${SearchComponent.nextUniqueId++}`;
     }
 
     public getFilters(): IFilter<string> {
