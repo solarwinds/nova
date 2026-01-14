@@ -130,8 +130,7 @@ export class SearchComponent implements IFilterPub, OnDestroy, OnInit {
     }
     public ngOnInit(): void {
         this.resolvedInputId =
-            `nui-search-input-${SearchComponent.nextUniqueId++}` ||
-            this.inputId;
+            this.inputId || `nui-search-input-${SearchComponent.nextUniqueId++}`;
     }
 
     public getFilters(): IFilter<string> {

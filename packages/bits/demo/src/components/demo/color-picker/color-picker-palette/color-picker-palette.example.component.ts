@@ -18,12 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import {
     FormBuilder,
     FormControl,
     FormGroup,
 } from "@angular/forms";
+
 import { HTML_COLORS, IPaletteColor } from "../../../../../../src/constants/color-picker.constants";
 
 
@@ -33,7 +34,7 @@ import { HTML_COLORS, IPaletteColor } from "../../../../../../src/constants/colo
     styles: [],
     standalone: false,
 })
-export class ColorPickerPaletteExampleComponent {
+export class ColorPickerPaletteExampleComponent implements OnInit {
     public myForm: FormGroup<{ backgroundColor: FormControl<string | null> }>;
     public colorPalette: IPaletteColor[] = Array.from(HTML_COLORS.entries())
     .map(([label, color]) => ({label,color}));
