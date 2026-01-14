@@ -42,9 +42,9 @@ import _isUndefined from "lodash/isUndefined";
 
 import { IImagesPresetItem } from "./public-api";
 import { imagesPresetToken } from "../../constants/images.constants";
+import { computeA11yForGraphic } from "../../functions/a11y-graphics.util";
 import { LoggerService } from "../../services/log-service";
 import { UtilService } from "../../services/util.service";
-import { computeA11yForGraphic } from "../../functions/a11y-graphics.util";
 
 /**
  * <example-url>./../examples/index.html#/image</example-url>

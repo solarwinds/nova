@@ -20,6 +20,7 @@
 
 import { Injectable } from "@angular/core";
 import isNil from "lodash/isNil";
+
 import { HTML_COLORS } from "./../../constants/color-picker.constants";
 
 
