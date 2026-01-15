@@ -13,7 +13,7 @@
             type="text"
             autocomplete="off"
             [(ngModel)]="value"
-            placeholder="{{ getPlaceholder() }}"
+            [placeholder]="resolvedPlaceholder()"
             [attr.aria-labelledby]="resolvedInputId() + '-label'"
             [attr.aria-invalid]="isInErrorState()"
             [nuiSetFocus]="captureFocus()"

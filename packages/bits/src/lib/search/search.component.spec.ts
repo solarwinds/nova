@@ -44,18 +44,18 @@ describe("components >", () => {
             const customPlaceholder = "custom";
             fixture.componentRef.setInput("placeholder", customPlaceholder);
             fixture.detectChanges();
-            expect(subject.getPlaceholder()).toEqual(customPlaceholder);
+            expect(subject.resolvedPlaceholder()).toEqual(customPlaceholder);
         });
 
         it("should provide default placeholder if no custom one is provided", () => {
             fixture.componentRef.setInput("placeholder", "");
             fixture.detectChanges();
-            expect(subject.getPlaceholder()).toEqual(
+            expect(subject.resolvedPlaceholder()).toEqual(
                 subject.defaultPlaceholder + "..."
             );
             fixture.componentRef.setInput("placeholder", undefined);
             fixture.detectChanges();
-            expect(subject.getPlaceholder()).toEqual(
+            expect(subject.resolvedPlaceholder()).toEqual(
                 subject.defaultPlaceholder + "..."
             );
         });

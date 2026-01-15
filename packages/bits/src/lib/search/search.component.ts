@@ -28,7 +28,6 @@ import {
     model,
 } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import _isEmpty from "lodash/isEmpty";
 
 import { NuiCommonModule } from "../../common/common.module";
 import { IFilter, IFilterPub } from "../../services/data-source/public-api";
@@ -116,6 +115,12 @@ export class SearchComponent implements IFilterPub {
     public resolvedInputId = computed(() =>
         this.inputId() || this.generatedInputId
     );
+    /** Resolved placeholder text. */
+    public resolvedPlaceholder = computed(() =>
+        this.placeholder() || `${this.defaultPlaceholder}...`
+    );
+    /** Whether the search button should be disabled (empty value). */
+    public isButtonDisabled = computed(() => !this.value()?.trim());
     /** Accessible label text for the input (used by hidden label). */
     public inputAriaLabel = $localize`Search`;
     /** Accessible label for the cancel (clear) button. */
@@ -128,10 +133,6 @@ export class SearchComponent implements IFilterPub {
             type: "string",
             value: this.value(),
         };
-    }
-
-    public getPlaceholder(): string {
-        return this.placeholder() || this.defaultPlaceholder + "...";
     }
 
     public onCancel(): void {
@@ -156,10 +157,6 @@ export class SearchComponent implements IFilterPub {
         } else if (event.key === "Escape" || event.key === "Esc") {
             this.onCancel();
         }
-    }
-
-    public isButtonDisabled(): boolean {
-        return _isEmpty(this.value());
     }
 
     public onSearch(): void {
