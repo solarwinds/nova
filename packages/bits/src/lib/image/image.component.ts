@@ -19,23 +19,18 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ElementRef,
-    Inject,
     ViewEncapsulation,
+    afterNextRender,
     computed,
     effect,
+    inject,
     input,
 } from "@angular/core";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
-import _find from "lodash/find";
-import _includes from "lodash/includes";
-import _isEqual from "lodash/isEqual";
-import _isNumber from "lodash/isNumber";
-import _isUndefined from "lodash/isUndefined";
 
 import { IImagesPresetItem } from "./public-api";
 import { imagesPresetToken } from "../../constants/images.constants";
@@ -48,17 +43,18 @@ import { UtilService } from "../../services/util.service";
  */
 @Component({
     selector: "nui-image",
+    standalone: true,
     templateUrl: "./image.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["./image.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: {
-        "[attr.role]": "computedRole",
-        "[attr.aria-hidden]": "computedAriaHidden",
-        "[attr.aria-label]": "computedAriaLabel",
+        "[attr.role]": "computedRole()",
+        "[attr.aria-hidden]": "computedAriaHidden()",
+        "[attr.aria-label]": "computedAriaLabel()",
     },
 })
-export class ImageComponent implements AfterViewInit {
+export class ImageComponent {
     /**
      * Image name from nui image preset or external source
      */
@@ -93,8 +89,13 @@ export class ImageComponent implements AfterViewInit {
      * When set to true sets the hardcoded width and height of the svg to 100% to fill the parent container
      */
     public autoFill = input<boolean>();
+    /**
+     * Optional ARIA role override. Constrained to 'img' | 'presentation' | null.
+     * If omitted, role is inferred from presence of alt/label.
+     */
+    public role = input<"img" | "presentation" | null>();
 
-    private imageNameSignal = computed<string | null>(() => {
+    public imageName = computed<string | null>(() => {
         const img = this.image();
         if (img && typeof img === "object" && "name" in img) {
             return (img as any).name ?? null;
@@ -103,23 +104,13 @@ export class ImageComponent implements AfterViewInit {
         return fromPreset?.name ?? null;
     });
 
-    private hasAltSignal = computed<boolean>(() => {
+    public hasAlt = computed<boolean>(() => {
         const img = this.image();
         const hasCode = !!(img && typeof img === "object" && typeof (img as any).code === "string");
         return !hasCode;
     });
 
-    private a11y = computed(() =>
-        computeA11yForGraphic({
-            decorative: false,
-            explicitRole: this.role(),
-            label: this.description() || this.imageNameSignal() || null,
-            hasAlt: this.hasAltSignal(),
-            statusParts: undefined,
-        })
-    );
-
-    private imageTemplateSignal = computed<SafeHtml>(() => {
+    public imageTemplate = computed<SafeHtml>(() => {
         const img = this.image();
         let html = "";
         if (img && typeof img === "object" && typeof (img as any).code === "string") {
@@ -135,97 +126,71 @@ export class ImageComponent implements AfterViewInit {
         return this.domSanitizer.bypassSecurityTrustHtml(html);
     });
 
-    public get imageTemplate(): SafeHtml {
-        return this.imageTemplateSignal();
-    }
+    private a11y = computed(() =>
+        computeA11yForGraphic({
+            decorative: false,
+            explicitRole: this.role(),
+            label: this.description() || this.imageName() || null,
+            hasAlt: this.hasAlt(),
+            statusParts: undefined,
+        })
+    );
 
-    public get imageName(): string | null {
-        return this.imageNameSignal();
-    }
+    private logger = inject(LoggerService);
+    private utilService = inject(UtilService);
+    private changeDetector = inject(ChangeDetectorRef);
+    private images = inject<Array<IImagesPresetItem>>(imagesPresetToken);
+    private domSanitizer = inject(DomSanitizer);
+    private el = inject(ElementRef);
 
-    public get hasAlt(): boolean {
-        return this.hasAltSignal();
-    }
+    public computedRole = computed(() => this.a11y().role);
+    public computedAriaHidden = computed(() => this.a11y().ariaHidden);
+    public computedAriaLabel = computed(() => this.a11y().ariaLabel);
 
-    /**
-     * Optional ARIA role override. Constrained to 'img' | 'presentation' | null.
-     * If omitted, role is inferred from presence of alt/label.
-     */
-    public role = input<"img" | "presentation" | null>();
-
-    constructor(
-        private logger: LoggerService,
-        private utilService: UtilService,
-        private changeDetector: ChangeDetectorRef,
-        @Inject(imagesPresetToken) private images: Array<IImagesPresetItem>,
-        private domSanitizer: DomSanitizer,
-        private el: ElementRef
-    ) {
+    constructor() {
         effect(() => {
             const h = this.height();
             const w = this.width();
-            const dimensionInputs: Array<string | undefined> = [h, w];
-            dimensionInputs.forEach((item) => {
-                if (!_isUndefined(item) && !this.isImageSizeValid(item as string)) {
+            [h, w].forEach((item) => {
+                if (item !== undefined && !this.isImageSizeValid(item)) {
                     this.logger.error(
                         "Image size should be specified in 'px', '%', or 'auto"
                     );
                 }
             });
         });
-    }
 
-    public get computedRole(): string | null {
-        return this.a11y().role;
-    }
-    public get computedAriaHidden(): string | null {
-        return this.a11y().ariaHidden;
-    }
-    public get computedAriaLabel(): string | null {
-        return this.a11y().ariaLabel;
-    }
-
-    public ngAfterViewInit(): void {
-        if (this.autoFill()) {
-            try {
+        afterNextRender(() => {
+            if (this.autoFill()) {
                 const svg = this.el.nativeElement.querySelector("svg");
-                svg.setAttribute("width", "100%");
-                svg.setAttribute("height", "100%");
-            } catch {
-                console.warn(
-                    "Can't apply 'autoFill' to nui-image, because it is only applicable to SVG type of images"
-                );
-                return;
-            }
-        }
-
-        /**
-         * Fix bug for Safari with wrong alignment of floated SVG images
-         */
-        if (this.float() && !this.width() && this.utilService.browser?.isSafari()) {
-            const svg = this.el.nativeElement.querySelector("svg");
-
-            if (!svg) {
-                return;
+                if (svg) {
+                    svg.setAttribute("width", "100%");
+                    svg.setAttribute("height", "100%");
+                } else {
+                    console.warn(
+                        "Can't apply 'autoFill' to nui-image, because it is only applicable to SVG type of images"
+                    );
+                }
             }
 
-            // update width input binding via DOM to avoid mutating signal directly here
-            (this.el.nativeElement as HTMLElement).style.width = svg.width.baseVal.value + "px";
-            this.changeDetector.detectChanges();
-        }
+            // Fix bug for Safari with wrong alignment of floated SVG images
+            if (this.float() && !this.width() && this.utilService.browser?.isSafari()) {
+                const svg = this.el.nativeElement.querySelector("svg");
+                if (svg) {
+                    (this.el.nativeElement as HTMLElement).style.width = svg.width.baseVal.value + "px";
+                    this.changeDetector.detectChanges();
+                }
+            }
+        });
     }
 
     private getImage = (imageName: string): IImagesPresetItem | undefined =>
-        _find(this.images, (img: IImagesPresetItem) =>
-            _isEqual(img.name, imageName)
-        );
+        this.images.find((img) => img.name === imageName);
 
-    private isImageSizeValid(input: string): boolean {
+    private isImageSizeValid(value: string): boolean {
         return (
-            _isNumber(parseFloat(input)) &&
-            (_includes(input, "px") ||
-                _includes(input, "%") ||
-                _includes(input, "auto"))
+            !isNaN(parseFloat(value)) &&
+            (value.includes("px") || value.includes("%") || value.includes("auto"))
         );
     }
 }

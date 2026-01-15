@@ -53,7 +53,7 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [ImageComponent],
+                imports: [ImageComponent],
                 providers: [
                     UtilService,
                     LoggerService,
@@ -74,7 +74,7 @@ describe("components >", () => {
                 fixture.componentRef.setInput("image", imageName);
                 fixture.detectChanges();
 
-                const result = unwrapSafeHtml(subject.imageTemplate);
+                const result = unwrapSafeHtml(subject.imageTemplate());
                 expect(result).toContain(expectedImageCode);
             });
 
@@ -87,7 +87,7 @@ describe("components >", () => {
                 fixture.componentRef.setInput("description", description);
                 fixture.detectChanges();
 
-                const result = unwrapSafeHtml(subject.imageTemplate);
+                const result = unwrapSafeHtml(subject.imageTemplate());
                 expect(result).toContain(expectedImageTemplate);
             });
         });
