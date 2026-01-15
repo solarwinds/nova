@@ -53,7 +53,6 @@ import { UtilService } from "../../services/util.service";
         "[attr.aria-hidden]": "computedAriaHidden()",
         "[attr.aria-label]": "computedAriaLabel()",
     },
-    standalone: false,
 })
 export class ImageComponent {
     /**
