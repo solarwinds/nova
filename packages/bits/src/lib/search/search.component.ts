@@ -20,10 +20,11 @@
 
 import {
     Component,
+    EventEmitter,
+    Output,
     ViewEncapsulation,
     computed,
     input,
-    output,
     signal,
     model,
 } from "@angular/core";
@@ -80,21 +81,21 @@ export class SearchComponent implements IFilterPub {
        Public Outputs (events)
     -------------------------------------------------- */
     /** Emits empty string on cancel action. */
-    public cancel = output<string>();
+    @Output() public cancel = new EventEmitter<string>();
     /**
      * Event fired on external focus changes (e.g. initiated by user via UI).
      * Use it if you bind an external input to 'captureFocus' property for matching them both.
      */
-    public focusChange = output<boolean>();
+    @Output() public focusChange = new EventEmitter<boolean>();
     /**
      * Event fired when input field value is changed (via either keyboard or typeahead select item).
      * Pay attention, that host property bound to 'value' is not being changed by component on this event,
      * it is the responsibility of host component. The same with clearing of 'busy' status - if you want
      * to clear it on inputChange - handle it in host component
      */
-    public inputChange = output<string>();
+    @Output() public inputChange = new EventEmitter<string>();
     /** Emits current value when search triggered (button or Enter). */
-    public search = output<string>();
+    @Output() public search = new EventEmitter<string>();
 
     /* --------------------------------------------------
        Internal state / derived values
