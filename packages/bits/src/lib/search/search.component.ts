@@ -176,9 +176,6 @@ export class SearchComponent implements IFilterPub, OnDestroy, OnInit {
         this.search.emit(this.value);
     }
 
-    /* --------------------------------------------------
-       Lifecycle teardown
-    -------------------------------------------------- */
     public ngOnDestroy(): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();
