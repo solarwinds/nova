@@ -18,17 +18,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { CommonModule } from "@angular/common";
 import {
     ChangeDetectionStrategy,
     Component,
-    Input,
-    OnChanges,
-    SimpleChanges,
     ViewEncapsulation,
+    computed,
+    inject,
+    input,
 } from "@angular/core";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
-import _isInteger from "lodash/isInteger";
-import isNil from "lodash/isNil";
 
 import { IconService } from "./icon.service";
 import { IconData, IconStatus } from "./types";
@@ -40,183 +39,155 @@ import { computeA11yForGraphic } from "../../functions/a11y-graphics.util";
 
 @Component({
     selector: "nui-icon",
+    standalone: true,
+    imports: [CommonModule],
     templateUrl: "./icon.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
         class: "nui-icon-wrapper",
-        "[attr.role]": "computedRole",
-        "[attr.aria-hidden]": "computedAriaHidden",
-        "[attr.aria-label]": "computedAriaLabel",
+        "[attr.role]": "computedRole()",
+        "[attr.aria-hidden]": "computedAriaHidden()",
+        "[attr.aria-label]": "computedAriaLabel()",
     },
     styleUrls: ["./icon.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false,
 })
-export class IconComponent implements OnChanges {
+export class IconComponent {
     public static SIZE_MAP: { [key: string]: string } = {
         medium: "nui-icon-size-md",
         small: "nui-icon-size-sm",
     };
 
-    @Input()
-    iconColor: string;
-    @Input()
-    brushType: string = "filled";
-    @Input()
-    iconHoverColor: string;
-    @Input()
-    iconSize: string;
-    @Input()
-    cssClass: string;
-    @Input()
-    fillContainer = false;
-    private _counter?: number;
-    @Input()
-    status: IconStatus;
-    @Input()
-    childStatus: IconStatus;
-    @Input()
-    icon: string;
+    private iconService = inject(IconService);
+    private sanitizer = inject(DomSanitizer);
+
+    public iconColor = input<string>();
+    public brushType = input<string>("filled");
+    public iconHoverColor = input<string>();
+    public iconSize = input<string>();
+    public cssClass = input<string>();
+    public fillContainer = input<boolean>(false);
+    public status = input<IconStatus>();
+    public childStatus = input<IconStatus>();
+    public icon = input<string>();
+    public counter = input<string | number | undefined, string | number | undefined>(undefined, {
+        transform: (value) => {
+            if (value == null) {
+                return undefined;
+            }
+            const counterAttrValue = +value;
+            return Number.isInteger(counterAttrValue) ? counterAttrValue.toString() : undefined;
+        },
+    });
+
     /**
      * Marks the icon as purely decorative. Decorative icons are hidden from assistive technologies.
      */
-    @Input() decorative?: boolean;
+    public decorative = input<boolean>();
     /**
      * Accessible name for a meaningful icon. Ignored if `decorative` is true or empty.
      */
-    @Input() ariaLabel?: string;
+    public ariaLabel = input<string>();
     /**
      * Optional explicit role override. Constrained to 'img' | 'presentation' | null.
      * If omitted, role is inferred from `decorative` and `ariaLabel`.
      */
-    @Input() explicitRole?: "img" | "presentation" | null;
+    public explicitRole = input<"img" | "presentation" | null>();
 
-    public resultingSvg: SafeHtml;
+    private iconData = computed<IconData | undefined>(() => {
+        const iconName = this.icon();
+        return iconName ? this.iconService.getIconData(iconName) : undefined;
+    });
 
-    private iconFound: boolean;
-    private iconData: IconData;
+    private iconFound = computed(() => !!this.iconData());
 
-    constructor(
-        private iconService: IconService,
-        private sanitizer: DomSanitizer
-    ) {}
+    public iconClass = computed(() => {
+        const classes: string[] = ["nui-icon"];
 
-    getIconByStatus(status: string): string {
+        if (!this.iconFound()) {
+            classes.push("nui-icon-not-found");
+        } else {
+            const brushType = this.brushType();
+            if (brushType) {
+                classes.push(brushType);
+            }
+
+            const iconColor = this.iconColor();
+            if (iconColor) {
+                classes.push("custom-icon-color", `${iconColor}-icon`);
+            }
+
+            const iconHoverColor = this.iconHoverColor();
+            if (iconHoverColor) {
+                classes.push(`${iconHoverColor}-hover-icon`);
+            }
+
+            const iconSize = this.iconSize();
+            const sizeClass = iconSize ? IconComponent.SIZE_MAP[iconSize] : undefined;
+            if (sizeClass) {
+                classes.push(sizeClass);
+            }
+
+            const cssClass = this.cssClass();
+            if (cssClass) {
+                classes.push(cssClass);
+            }
+
+            if (this.fillContainer()) {
+                classes.push("nui-icon--fill-container");
+            }
+        }
+
+        return classes.join(" ");
+    });
+
+    public resultingSvg = computed<SafeHtml>(() => {
+        const iconData = this.iconData();
+        const status = this.status();
+        const childStatus = this.childStatus();
+
+        let svg = `<div class='nui-icon-item'>${iconData?.code ?? ""}</div>`;
+
+        if (status) {
+            svg += `<div class="nui-icon-item nui-icon-item__child">${this.getIconByStatus(status)}</div>`;
+        }
+
+        if (childStatus) {
+            svg += `<div class="nui-icon-item nui-icon-item__grand-child">${this.getIconByStatus(childStatus)}</div>`;
+        }
+
+        return this.sanitizer.bypassSecurityTrustHtml(svg);
+    });
+
+    private a11y = computed(() => {
+        const statusParts: string[] = [];
+        const status = this.status();
+        const childStatus = this.childStatus();
+
+        if (status) {
+            statusParts.push(status.toLowerCase());
+        }
+        if (childStatus) {
+            statusParts.push(childStatus.toLowerCase());
+        }
+
+        return computeA11yForGraphic({
+            decorative: this.decorative(),
+            explicitRole: this.explicitRole(),
+            label: this.ariaLabel() || this.icon() || null,
+            hasAlt: false,
+            statusParts,
+        });
+    });
+
+    public computedRole = computed(() => this.a11y().role);
+    public computedAriaHidden = computed(() => this.a11y().ariaHidden);
+    public computedAriaLabel = computed(() => this.a11y().ariaLabel);
+
+    public getIconByStatus(status: string): string {
         if (!status) {
             return "";
         }
         return this.iconService.getStatusIcon(status);
-    }
-
-    get iconClass(): string {
-        const iconClass: string[] = ["nui-icon"];
-
-        if (!this.iconFound) {
-            iconClass.push("nui-icon-not-found");
-        } else {
-            if (this.brushType) {
-                iconClass.push(this.brushType);
-            }
-
-            if (this.iconColor) {
-                iconClass.push("custom-icon-color", `${this.iconColor}-icon`);
-            }
-
-            if (this.iconHoverColor) {
-                iconClass.push(`${this.iconHoverColor}-hover-icon`);
-            }
-
-            const sizeClass = IconComponent.SIZE_MAP[this.iconSize];
-            if (sizeClass) {
-                iconClass.push(sizeClass);
-            }
-
-            if (this.cssClass) {
-                iconClass.push(this.cssClass);
-            }
-
-            if (this.fillContainer) {
-                iconClass.push("nui-icon--fill-container");
-            }
-        }
-
-        return iconClass.join(" ");
-    }
-
-    @Input()
-    set counter(value: string | number | undefined) {
-        // eslint-disable-next-line no-undef-init
-        let counterAttrValue = undefined;
-
-        if (!isNil(value)) {
-            counterAttrValue = +value;
-        }
-
-        if (_isInteger(counterAttrValue)) {
-            this._counter = counterAttrValue;
-        } else {
-            this._counter = undefined;
-        }
-    }
-
-    get counter(): string | number | undefined {
-        // Using isNil to prevent toString of undefined error
-        return isNil(this._counter) ? this._counter : this._counter.toString();
-    }
-
-    public ngOnChanges(changes: SimpleChanges): void {
-        if (changes["status"] || changes["childStatus"] || changes["icon"]) {
-            this.generateIcon();
-        }
-    }
-
-    // --- Accessibility via shared util ---
-    private get a11y() {
-        const statusParts: string[] = [];
-        if (this.status) {
-            statusParts.push(this.status.toLowerCase());
-        }
-        if (this.childStatus) {
-            statusParts.push(this.childStatus.toLowerCase());
-        }
-        return computeA11yForGraphic({
-            decorative: this.decorative,
-            explicitRole: this.explicitRole,
-            label: this.ariaLabel || this.icon || null,
-            hasAlt: false,
-            statusParts,
-        });
-    }
-
-    get computedRole(): string | null {
-        return this.a11y.role;
-    }
-    get computedAriaHidden(): string | null {
-        return this.a11y.ariaHidden;
-    }
-    get computedAriaLabel(): string | null {
-        return this.a11y.ariaLabel;
-    }
-
-    private generateIcon() {
-        this.iconData = this.iconService.getIconData(this.icon);
-        this.iconFound = !!this.iconData;
-        let resultingSvg = `<div class='nui-icon-item'>${
-            (this.iconData && this.iconData.code) ?? ""
-        }</div>`;
-        if (this.status) {
-            resultingSvg += `<div class="nui-icon-item nui-icon-item__child">
-                                    ${this.getIconByStatus(this.status)}
-                                </div>`;
-        }
-        if (this.childStatus) {
-            resultingSvg += `<div class="nui-icon-item nui-icon-item__grand-child">
-                                        ${this.getIconByStatus(
-                                            this.childStatus
-                                        )}
-                                 </div>`;
-        }
-        this.resultingSvg =
-            this.sanitizer.bypassSecurityTrustHtml(resultingSvg);
     }
 }
