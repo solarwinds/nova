@@ -1,43 +1,44 @@
-<div class="nui-search__group input-group" [class.has-error]="isInErrorState">
+<div class="nui-search__group input-group" [class.has-error]="isInErrorState()">
     <div class="nui-search__input">
         <label
             class="sr-only"
-            [attr.id]="resolvedInputId + '-label'"
-            [attr.for]="resolvedInputId"
+            [attr.id]="resolvedInputId() + '-label'"
+            [attr.for]="resolvedInputId()"
             >{{ inputAriaLabel }}</label
         >
         <input
             class="nui-search__input-control form-control"
-            [attr.id]="resolvedInputId"
-            [attr.name]="name"
+            [attr.id]="resolvedInputId()"
+            [attr.name]="name()"
             type="text"
             autocomplete="off"
             [(ngModel)]="value"
             placeholder="{{ getPlaceholder() }}"
-            [attr.aria-labelledby]="resolvedInputId + '-label'"
-            [attr.aria-invalid]="isInErrorState"
-            [nuiSetFocus]="captureFocus"
+            [attr.aria-labelledby]="resolvedInputId() + '-label'"
+            [attr.aria-invalid]="isInErrorState()"
+            [nuiSetFocus]="captureFocus()"
             (focusChange)="onFocusChange($event)"
             (input)="onInputChange()"
             (keyup)="onKeyup($event)"
         />
         <div class="nui-search__button input-group-btn">
-            <button
-                nui-button
-                type="reset"
-                *ngIf="!!value"
-                [ariaLabel]="cancelAriaLabel"
-                [attr.aria-controls]="resolvedInputId"
-                class="nui-search__button-cancel"
-                displayStyle="action"
-                icon="close"
-                (click)="onCancel()"
-            ></button>
+            @if (value()) {
+                <button
+                    nui-button
+                    type="reset"
+                    [ariaLabel]="cancelAriaLabel"
+                    [attr.aria-controls]="resolvedInputId()"
+                    class="nui-search__button-cancel"
+                    displayStyle="action"
+                    icon="close"
+                    (click)="onCancel()"
+                ></button>
+            }
             <button
                 nui-button
                 type="submit"
                 [ariaLabel]="submitAriaLabel"
-                [attr.aria-controls]="resolvedInputId"
+                [attr.aria-controls]="resolvedInputId()"
                 class="nui-search__button-search"
                 displayStyle="action"
                 icon="search"
