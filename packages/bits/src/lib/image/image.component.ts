@@ -25,19 +25,16 @@ import {
     Component,
     ElementRef,
     Inject,
-    Input,
-    OnChanges,
-    OnInit,
-    SimpleChanges,
     ViewEncapsulation,
+    computed,
+    effect,
+    input,
 } from "@angular/core";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import _find from "lodash/find";
-import _has from "lodash/has";
 import _includes from "lodash/includes";
 import _isEqual from "lodash/isEqual";
 import _isNumber from "lodash/isNumber";
-import _isString from "lodash/isString";
 import _isUndefined from "lodash/isUndefined";
 
 import { IImagesPresetItem } from "./public-api";
@@ -61,51 +58,100 @@ import { UtilService } from "../../services/util.service";
         "[attr.aria-label]": "computedAriaLabel",
     },
 })
-export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
+export class ImageComponent implements AfterViewInit {
     /**
      * Image name from nui image preset or external source
      */
-    @Input() public image: any;
+    public image = input<any>();
 
     /**
      * Sets aria-label text or alt for image from external source
      */
-    @Input() public description: string;
+    public description = input<string>();
 
     /**
      * Available values are: 'left' and 'right'
      */
-    @Input() public float: string;
+    public float = input<string>();
     /**
      * Available values are: 'centered', 'small', 'large'
      */
-    @Input() public margin: string;
+    public margin = input<string>();
     /**
      * 'True' will apply 30% opacity to the image
      */
-    @Input() public isWatermark: boolean;
+    public isWatermark = input<boolean>();
     /**
      * Sets the width of the container parent image
      */
-    @Input() public width: string = "auto";
+    public width = input<string>("auto");
     /**
      * Sets the height of the container parent image
      */
-    @Input() public height: string = "auto";
+    public height = input<string>("auto");
     /**
      * When set to true sets the hardcoded width and height of the svg to 100% to fill the parent container
      */
-    @Input() public autoFill: boolean;
+    public autoFill = input<boolean>();
 
-    public imageTemplate: SafeHtml;
-    public imageName: string | null;
-    public hasAlt: boolean;
+    private imageNameSignal = computed<string | null>(() => {
+        const img = this.image();
+        if (img && typeof img === "object" && "name" in img) {
+            return (img as any).name ?? null;
+        }
+        const fromPreset = this.getImage(img as string);
+        return fromPreset?.name ?? null;
+    });
+
+    private hasAltSignal = computed<boolean>(() => {
+        const img = this.image();
+        const hasCode = !!(img && typeof img === "object" && typeof (img as any).code === "string");
+        return !hasCode;
+    });
+
+    private a11y = computed(() =>
+        computeA11yForGraphic({
+            decorative: false,
+            explicitRole: this.role(),
+            label: this.description() || this.imageNameSignal() || null,
+            hasAlt: this.hasAltSignal(),
+            statusParts: undefined,
+        })
+    );
+
+    private imageTemplateSignal = computed<SafeHtml>(() => {
+        const img = this.image();
+        let html = "";
+        if (img && typeof img === "object" && typeof (img as any).code === "string") {
+            html = (img as any).code;
+        } else if (typeof img === "string") {
+            const fromPreset = this.getImage(img);
+            if (fromPreset?.code) {
+                html = fromPreset.code;
+            } else {
+                html = `<img src="${img}" alt="${this.description()}">`;
+            }
+        }
+        return this.domSanitizer.bypassSecurityTrustHtml(html);
+    });
+
+    public get imageTemplate(): SafeHtml {
+        return this.imageTemplateSignal();
+    }
+
+    public get imageName(): string | null {
+        return this.imageNameSignal();
+    }
+
+    public get hasAlt(): boolean {
+        return this.hasAltSignal();
+    }
 
     /**
      * Optional ARIA role override. Constrained to 'img' | 'presentation' | null.
      * If omitted, role is inferred from presence of alt/label.
      */
-    @Input() public role?: "img" | "presentation" | null;
+    public role = input<"img" | "presentation" | null>();
 
     constructor(
         private logger: LoggerService,
@@ -114,51 +160,33 @@ export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
         @Inject(imagesPresetToken) private images: Array<IImagesPresetItem>,
         private domSanitizer: DomSanitizer,
         private el: ElementRef
-    ) {}
-
-    public ngOnInit(): void {
-        const dimensionImputs: string[] = [this.height, this.width];
-
-        dimensionImputs.forEach((item) => {
-            if (!_isUndefined(item) && !this.isImageSizeValid(item)) {
-                this.logger.error(
-                    "Image size should be specified in 'px', '%', or 'auto"
-                );
-            }
-        });
-    }
-
-    public ngOnChanges(changes: SimpleChanges): void {
-        if (changes.image || changes.description) {
-            this.imageName =
-                this.image.name || this.getImage(this.image)?.name || null;
-            this.imageTemplate = this.getImageTemplate();
-        }
-    }
-
-    // --- Accessibility computed properties ---
-    private get a11y() {
-        return computeA11yForGraphic({
-            decorative: false, // images default to semantic unless lacking label/alt
-            explicitRole: this.role,
-            label: this.description || this.imageName || null,
-            hasAlt: this.hasAlt,
-            statusParts: undefined,
+    ) {
+        effect(() => {
+            const h = this.height();
+            const w = this.width();
+            const dimensionInputs: Array<string | undefined> = [h, w];
+            dimensionInputs.forEach((item) => {
+                if (!_isUndefined(item) && !this.isImageSizeValid(item as string)) {
+                    this.logger.error(
+                        "Image size should be specified in 'px', '%', or 'auto"
+                    );
+                }
+            });
         });
     }
 
     public get computedRole(): string | null {
-        return this.a11y.role;
+        return this.a11y().role;
     }
     public get computedAriaHidden(): string | null {
-        return this.a11y.ariaHidden;
+        return this.a11y().ariaHidden;
     }
     public get computedAriaLabel(): string | null {
-        return this.a11y.ariaLabel;
+        return this.a11y().ariaLabel;
     }
 
     public ngAfterViewInit(): void {
-        if (this.autoFill) {
+        if (this.autoFill()) {
             try {
                 const svg = this.el.nativeElement.querySelector("svg");
                 svg.setAttribute("width", "100%");
@@ -174,30 +202,17 @@ export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
         /**
          * Fix bug for Safari with wrong alignment of floated SVG images
          */
-        if (this.float && !this.width && this.utilService.browser?.isSafari()) {
+        if (this.float() && !this.width() && this.utilService.browser?.isSafari()) {
             const svg = this.el.nativeElement.querySelector("svg");
 
             if (!svg) {
                 return;
             }
 
-            this.width = svg.width.baseVal.value + "px";
+            // update width input binding via DOM to avoid mutating signal directly here
+            (this.el.nativeElement as HTMLElement).style.width = svg.width.baseVal.value + "px";
             this.changeDetector.detectChanges();
         }
-    }
-
-    public getImageTemplate(): SafeHtml {
-        const image = this.image.code ? this.image : this.getImage(this.image);
-        let imageHtml: string = "";
-        if (_has(image, "code") && _isString(image.code)) {
-            imageHtml = image.code;
-            this.hasAlt = false;
-        } else {
-            imageHtml = `<img src="${this.image}" alt="${this.description}">`;
-            this.hasAlt = true;
-        }
-
-        return this.domSanitizer.bypassSecurityTrustHtml(imageHtml);
     }
 
     private getImage = (imageName: string): IImagesPresetItem | undefined =>
