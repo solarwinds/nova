@@ -59,10 +59,9 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [FormsModule],
+                imports: [FormsModule, IconComponent],
                 declarations: [
                     TextboxNumberComponent,
-                    IconComponent,
                     SpinnerComponent,
                     ButtonComponent,
                     TooltipDirective,

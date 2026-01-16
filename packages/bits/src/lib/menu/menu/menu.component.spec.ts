@@ -100,7 +100,7 @@ describe("components >", () => {
     describe("menu >", () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [NuiOverlayModule],
+                imports: [NuiOverlayModule, IconComponent],
                 declarations: [
                     TestAppComponent,
                     MenuComponent,
@@ -115,7 +115,6 @@ describe("components >", () => {
                     PopupComponent,
                     PopupToggleDirective,
                     CheckboxComponent,
-                    IconComponent,
                     DividerComponent,
                     SwitchComponent,
                     ButtonComponent,
