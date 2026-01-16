@@ -55,14 +55,13 @@ describe("components >", () => {
         let fixture: ComponentFixture<TestWrapperComponent>;
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [PortalModule],
+                imports: [PortalModule, IconComponent],
                 declarations: [
                     TestWrapperComponent,
                     ButtonComponent,
                     DashwizComponent,
                     DashwizButtonsComponent,
                     DashwizStepComponent,
-                    IconComponent,
                     ComponentPortalDirective,
                     TemplateLoadErrorComponent,
                 ],

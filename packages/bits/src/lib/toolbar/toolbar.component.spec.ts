@@ -72,6 +72,7 @@ describe("components >", () => {
         let fixture: ComponentFixture<TestWrapperComponent>;
         beforeEach(() => {
             TestBed.configureTestingModule({
+                imports: [IconComponent],
                 declarations: [
                     TestWrapperComponent,
                     ButtonComponent,
@@ -79,7 +80,6 @@ describe("components >", () => {
                     ToolbarItemComponent,
                     ToolbarGroupComponent,
                     ToolbarSplitterComponent,
-                    IconComponent,
                     MenuComponent,
                 ],
                 schemas: [NO_ERRORS_SCHEMA],
