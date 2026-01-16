@@ -41,9 +41,9 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
+                imports: [IconComponent],
                 declarations: [
                     PopoverModalComponent,
-                    IconComponent,
                     OverlayArrowComponent,
                 ],
                 providers: [

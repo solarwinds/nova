@@ -105,9 +105,8 @@ describe("components >", () => {
     describe("panel >", () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [NoopAnimationsModule],
+                imports: [NoopAnimationsModule, IconComponent],
                 declarations: [
-                    IconComponent,
                     ButtonComponent,
                     PanelComponent,
                     TestAppComponent,
@@ -367,7 +366,7 @@ describe("components >", () => {
                 By.css(".nui-panel__header-embedded-icon nui-icon")
             );
             expect(embeddedIconDebugElement).not.toBeNull();
-            expect(embeddedIconDebugElement.context.icon).toBe("filter");
+            expect(embeddedIconDebugElement.context.icon()).toBe("filter");
         });
         describe("position >", () => {
             it("should have correct classes when position is right", () => {
