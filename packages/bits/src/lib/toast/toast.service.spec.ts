@@ -34,7 +34,8 @@ describe("services >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [ToastComponent, IconComponent],
+                declarations: [ToastComponent],
+                imports: [IconComponent],
                 providers: [
                     NotificationService,
                     ToastContainerService,
