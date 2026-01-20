@@ -21,7 +21,7 @@ body > nui-repeat-item.cdk-drag-preview .nui-repeat-item {
     }
 
     &:hover {
-        .setCssVariable(background-color, nui-color-bg-transparent-hover);
+        .setCssVariable(background-color, nui-color-bg-secondary);
     }
 
     &__content {
@@ -79,9 +79,11 @@ body > nui-repeat-item.cdk-drag-preview .nui-repeat-item {
 
     &.nui-repeat-item--clickable {
         &:not(.nui-repeat-item--selected) {
-            &:hover,
             &:focus {
                 .setCssVariable(background-color, nui-color-bg-transparent-hover);
+            }
+            &:hover {
+                .setCssVariable(background-color, nui-color-bg-secondary);
             }
         }
     }
