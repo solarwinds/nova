@@ -45,6 +45,9 @@ module.exports = {
                 "@angular-eslint/prefer-standalone": "off",
                 // todo breaking change to clients output native
                 "@angular-eslint/no-output-native": "off",
+                // todo migrate all components to use inject instead of constructor
+                // migrating script is not working - https://github.com/angular/angular/issues/66074
+                "@angular-eslint/prefer-inject": "off",
                 /******************************
                  * Typescript-specific rules
                  *******************************/
