@@ -1,11 +1,33 @@
+@if (isSelect) {
+<nui-select-v2
+    class="color-picker-select-label"
+    [displayValueTemplate]="colorPickerTemplate"
+>
+    @for (item of palette; track item) {
+    <nui-select-v2-option
+        class="color-picker-select-label__option nui-text-default"
+        [value]="item"
+    >
+        <div class="color-picker-input__box" [attr.title]="item?.label">
+            <div
+                class="color-picker-select-label__color-box"
+                [ngStyle]="setStyles(item?.color)"
+            ></div>
+        </div>
+        <div>{{ item?.label }}</div>
+    </nui-select-v2-option>
+    }
+</nui-select-v2>
+} @else {
 <nui-select-v2
     class="color-picker-select"
     [overlayConfig]="overlayConfig"
     [syncWidth]="false"
-    [displayValueTemplate]="colorSelectTemplate"
+    [displayValueTemplate]="colorPickerTemplate"
 >
     <div class="color-picker-container">
-        <div class="d-inline-flex flex-wrap box" *ngFor="let item of palette">
+        @for (item of palette; track item) {
+        <div class="d-inline-flex flex-wrap box">
             <nui-select-v2-option
                 [value]="item?.color"
                 [displayValueContext]="item"
@@ -32,17 +54,25 @@
                 </div>
             </nui-select-v2-option>
         </div>
+        }
     </div>
 </nui-select-v2>
+}
 
-<ng-template #colorSelectTemplate let-item let-open="open">
+<ng-template #colorPickerTemplate let-item let-open="open">
     <div class="color-picker-input">
         <div class="color-picker-input__box" [attr.title]="item?.label">
             <div
                 class="color-picker-input__color-box"
                 [ngStyle]="setStyles(item?.color)"
             ></div>
+            @if (isSelect){
+            <div class="color-picker-input__label nui-text-default">
+                {{ item?.label }}
+            </div>
+            }
         </div>
+
         <div class="color-picker-input__toggle">
             <nui-icon
                 [style.transform]="open ? 'rotate(180deg)' : ''"

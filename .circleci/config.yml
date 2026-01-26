@@ -12,12 +12,12 @@ commands:
 executors:
     node:
         docker:
-            - image: cimg/node:20.18.1
+            - image: cimg/node:20.19.0
         working_directory: ~/nova
 
     node-browsers:
         docker:
-            - image: cimg/node:20.18.1
+            - image: cimg/node:20.19.0
         working_directory: ~/nova
     ubuntu:
         machine:
@@ -638,9 +638,9 @@ jobs:
         working_directory: ~/nova
         environment:
             SOURCE_BRANCH: main
-            CREATE_RELEASE_BRANCH: "true"
+            CREATE_RELEASE_BRANCH: "false"
             RELEASE_BRANCH: release/v19.0.x
-            INCREMENT_TYPE: major
+            INCREMENT_TYPE: minor
         steps:
             - add_ssh_keys
             - checkout:

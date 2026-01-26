@@ -18,14 +18,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./chart-palette";
-export * from "./mapped-value-provider";
-export * from "./palettes";
-export * from "./processed-color-provider";
-export * from "./sequential-chart-marker-provider";
-export * from "./sequential-color-provider";
-export * from "./sequential-value-provider";
-export * from "./text-color-provider";
-export * from "./markers/path-marker";
-export * from "./markers/svg-marker";
-export * from "./default-providers";
+import { Component } from "@angular/core";
+
+@Component({
+    selector: "nui-color-picker-docs-example",
+    templateUrl: "./color-picker-docs.example.component.html",
+    standalone: false,
+})
+export class ColorPickerExampleComponent {}

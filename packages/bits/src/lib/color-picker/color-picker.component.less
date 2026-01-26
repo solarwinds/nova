@@ -1,5 +1,6 @@
-@import (reference) "@nova-ui/bits/sdk/less/nui-framework-variables";
-@import (reference) "@nova-ui/bits/sdk/less/mixins";
+@import (reference) "../../styles/mixins.less";
+@import (reference) "../../styles/nui-framework-variables.less";
+
 
 .picker-tile-size() {
     width: 30px;
@@ -36,17 +37,21 @@
 
     &-input {
         display: flex;
+        justify-content: space-between;
+
+        &__label {
+            margin: @nui-space-xs 0;
+        }
 
         &__box {
             display: flex;
             align-items: center;
-            flex-grow: 1;
         }
-
+        
         &__color-box {
             .color-box-input();
             flex-grow: 1;
-            margin: 0 10px;
+            margin: 0 @nui-space-sm;
         }
 
         &__toggle {
@@ -85,5 +90,20 @@
                 filter: invert(1) grayscale(1) contrast(100);
             }
         }
+    }
+}
+
+.color-picker-select-label {
+    width: fit-content;
+    min-width: min(200px,100%);
+    cursor: pointer;
+
+    &__option {
+        display: flex;
+    }
+
+    &__color-box {
+        .color-box();
+        margin: 0 @nui-space-sm 0 0;
     }
 }

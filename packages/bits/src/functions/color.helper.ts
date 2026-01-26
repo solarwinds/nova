@@ -18,14 +18,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./chart-palette";
-export * from "./mapped-value-provider";
-export * from "./palettes";
-export * from "./processed-color-provider";
-export * from "./sequential-chart-marker-provider";
-export * from "./sequential-color-provider";
-export * from "./sequential-value-provider";
-export * from "./text-color-provider";
-export * from "./markers/path-marker";
-export * from "./markers/svg-marker";
-export * from "./default-providers";
+export function getColorValueByName(colorVariable: string): string {
+    if (!colorVariable.startsWith("var(")) {
+        return colorVariable;
+    }
+
+    const colorName = colorVariable
+    .replace(/^var\(/, "")
+    .replace(/\)$/, "")
+    .trim();
+
+    return getComputedStyle(document.body).getPropertyValue(colorName);
+}
