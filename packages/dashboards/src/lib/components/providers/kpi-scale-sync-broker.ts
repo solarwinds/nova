@@ -20,7 +20,7 @@
 
 import { Inject, Injectable } from "@angular/core";
 import isArray from "lodash/isArray";
-import { BehaviorSubject, Subject } from "rxjs";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { distinctUntilChanged, filter, takeUntil, tap } from "rxjs/operators";
 
 import { EventBus, IEvent } from "@nova-ui/bits";
@@ -66,7 +66,7 @@ export class KpiScaleSyncBroker implements IConfigurable {
     }
 
     public getBrokers(): readonly IBroker[] {
-        return this.brokers;
+        return [...this.brokers];
     }
 
     public subscribeToBrokers(): void {
@@ -133,23 +133,33 @@ export class KpiScaleSyncBroker implements IConfigurable {
         ).properties?.nodes;
         const { scaleSyncConfig } = this.properties;
 
-        if (this.tileNodes?.length) {
-            this.tileNodes.forEach((node, i) => {
-                const property: IPizzagnaProperty = {
-                    componentId: node,
-                    pizzagnaKey: PizzagnaLayer.Data,
-                    propertyPath: [`syncValuesBroker`],
-                };
-                this.pizzagnaService.setProperty(property, this.getBrokers());
-            });
-
-            if (scaleSyncConfig && isArray(scaleSyncConfig)) {
-                scaleSyncConfig.forEach((s: IBrokerUserConfig) =>
-                    this.configure().addBroker({ id: s.id, type: s?.type })
-                );
-                this.subscribeToBrokers();
-            }
+        if (!this.tileNodes?.length) {
+            return;
         }
+
+        if (scaleSyncConfig && isArray(scaleSyncConfig)) {
+            // remove brokers that are not in the scaleSyncConfig
+            this.brokers
+                .filter(
+                    (broker) => !scaleSyncConfig.find((s) => s.id === broker.id)
+                )
+                .forEach(({ id }) => this.builder.removeBroker(id));
+
+            // add new brokers from scaleSyncConfig
+            scaleSyncConfig.forEach((s: IBrokerUserConfig) =>
+                this.configure().addBroker({ id: s.id, type: s?.type })
+            );
+            this.subscribeToBrokers();
+        }
+
+        this.tileNodes.forEach((node, i) => {
+            const property: IPizzagnaProperty = {
+                componentId: node,
+                pizzagnaKey: PizzagnaLayer.Data,
+                propertyPath: [`syncValuesBroker`],
+            };
+            this.pizzagnaService.setProperty(property, this.getBrokers());
+        });
     }
 
     private getMin = (n: number[]) => Math.min(...n);
@@ -163,6 +173,15 @@ class KpiScaleSyncBrokerBuilder {
     constructor(private brokers: IBroker[]) {}
 
     public addBroker(broker: IBrokerUserConfig): KpiScaleSyncBrokerBuilder {
+        if (
+            this.brokers.find(
+                (existingBroker) => existingBroker.id === broker.id
+            )
+        ) {
+            // Prevent adding the same broker multiple times
+            return this;
+        }
+
         const newBrokerSetting: IBrokerValue = {
             id: broker.id,
             targetID: "",
@@ -174,6 +193,14 @@ class KpiScaleSyncBrokerBuilder {
             ...this.getDefaultBrokerObject(newBrokerSetting, newBrokerSetting),
         });
         return this;
+    }
+
+    public removeBroker(brokerId: string): void {
+        const brokerIndex = this.brokers.findIndex((b) => b.id === brokerId);
+        if (brokerIndex !== -1) {
+            this.brokers.splice(brokerIndex, 1);
+            delete this.valuesObject[brokerId];
+        }
     }
 
     private getDefaultBrokerObject(input: IBrokerValue, output: IBrokerValue) {
