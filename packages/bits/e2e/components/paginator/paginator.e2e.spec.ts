@@ -18,11 +18,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { PaginatorAtom } from "./paginator.atom";
 import { Atom } from "../../atom";
-import { Helpers } from "../../helpers";
-import { PaginatorAtom } from "../public_api";
+import {test, expect, Helpers} from "../../setup";
 
-describe("USERCONTROL paginator", () => {
+test.describe("USERCONTROL paginator", () => {
     let basicPaginator: PaginatorAtom;
     let adjacentPaginator: PaginatorAtom;
     const adjacent = 2;
@@ -40,19 +40,17 @@ describe("USERCONTROL paginator", () => {
         return `${startItem}-${endItem} of ${totalItems}`;
     };
 
-    test.beforeEach(async () => {
-        await Helpers.prepareBrowser("paginator/paginator-test");
-        basicPaginator = Atom.find(PaginatorAtom, "nui-demo-basic-paginator");
-        adjacentPaginator = Atom.find(
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("paginator/paginator-test", page);
+        basicPaginator = Atom.find<PaginatorAtom>(PaginatorAtom, "nui-demo-basic-paginator");
+        adjacentPaginator = Atom.find<PaginatorAtom>(
             PaginatorAtom,
             "nui-demo-adjacent-paginator"
         );
     });
 
     test("should be " + itemCount + " items in paginator component", async () => {
-        expect(await basicPaginator.getStatusText()).toContain(
-            itemCount.toString()
-        );
+        await expect(basicPaginator.status).toContainText(itemCount.toString());
     });
 
     test("should correctly report items per page", async () => {
@@ -77,39 +75,24 @@ describe("USERCONTROL paginator", () => {
     test("should honor 'Items per Page'", async () => {
         await basicPaginator.setItemsPerPage(10);
         expect(await basicPaginator.pageCount()).toEqual(102);
-        expect(await basicPaginator.getStatusText()).toBe(
-            getDisplayingText(10, 1, itemCount)
-        );
+        await expect(basicPaginator.status).toHaveText(getDisplayingText(10, 1, itemCount));
 
-        await basicPaginator.popup.open();
         await basicPaginator.pageLinkClick(5);
-        expect(await basicPaginator.getStatusText()).toBe(
-            getDisplayingText(10, 5, itemCount)
-        );
+        await expect(basicPaginator.status).toHaveText(getDisplayingText(10, 5, itemCount));
 
-        await basicPaginator.popup.open();
-        await basicPaginator.pageLinkClick(6);
-        expect(await basicPaginator.getStatusText()).toBe(
-            getDisplayingText(10, 6, itemCount)
-        );
+        await basicPaginator.pageLinkClick(5);
+        await expect(basicPaginator.status).toHaveText(getDisplayingText(10, 6, itemCount));
 
         await basicPaginator.setItemsPerPage(25);
         expect(await basicPaginator.pageCount()).toEqual(41);
-        expect(await basicPaginator.getStatusText()).toBe(
-            getDisplayingText(25, 1, itemCount)
-        );
+        await expect(basicPaginator.status).toHaveText(getDisplayingText(25, 1, itemCount));
 
-        await basicPaginator.popup.open();
         await basicPaginator.pageLinkClick(5);
-        expect(await basicPaginator.getStatusText()).toBe(
-            getDisplayingText(25, 5, itemCount)
-        );
+        await expect(basicPaginator.status).toHaveText(getDisplayingText(25, 5, itemCount));
 
         // Return to initial state
         await basicPaginator.pageLinkClick(1);
-        expect(await basicPaginator.getStatusText()).toBe(
-            getDisplayingText(25, 1, itemCount)
-        );
+        await expect(basicPaginator.status).toHaveText(getDisplayingText(25, 1, itemCount));
     });
 
     test("should display ellipsed page links on ellipsis click", async () => {
@@ -194,15 +177,12 @@ describe("USERCONTROL paginator", () => {
         await basicPaginator.setItemsPerPage(10);
         await basicPaginator.ellipsisLink(0).click();
         await basicPaginator.ellipsedPageLinkClick(15);
-        expect(await basicPaginator.getStatusText()).toBe(
-            getDisplayingText(10, 15, itemCount)
-        );
+        // Use status locator for text assertion
+        await expect(basicPaginator.status).toHaveText(getDisplayingText(10, 15, itemCount));
 
         // Return to initial state
         await basicPaginator.setItemsPerPage(25);
-        expect(await basicPaginator.getStatusText()).toBe(
-            getDisplayingText(25, 1, itemCount)
-        );
+        await expect(basicPaginator.status).toHaveText(getDisplayingText(25, 1, itemCount));
     });
 
     test("should set the correct page on prev/next click", async () => {
@@ -220,8 +200,6 @@ describe("USERCONTROL paginator", () => {
 
         // Return to initial state
         await basicPaginator.setItemsPerPage(25);
-        expect(await basicPaginator.getStatusText()).toBe(
-            getDisplayingText(25, 1, itemCount)
-        );
+        await expect(basicPaginator.status).toHaveText(getDisplayingText(25, 1, itemCount));
     });
 });

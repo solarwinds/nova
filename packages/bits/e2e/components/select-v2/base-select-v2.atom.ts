@@ -131,8 +131,10 @@ export class BaseSelectV2Atom extends Atom {
         if (!(await this.popup.isOpened())) {
             await this.toggle();
         }
-        const byText = (await this.options()).filter<SelectV2OptionAtom>(SelectV2OptionAtom, { hasText: title });
-        await byText.click();
+        // Use Playwright's getByText for exact text match
+        const optionsLocator = (await this.options()).getLocator();
+        const exactOption = optionsLocator.getByText(title, { exact: true });
+        await exactOption.first().click();
     }
 
     private async waitForPopup() {

@@ -18,11 +18,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { Locator } from "@playwright/test";
+
 import { Atom } from "../../atom";
-import { Helpers, expect } from "../../setup";
-import { PopupAtom } from "../popup/popup.atom";
-import { SelectV2Atom } from "../select-v2/select-v2.atom";
 import { OverlayAtom } from "../overlay/overlay.atom";
+import { SelectV2Atom } from "../select-v2/select-v2.atom";
 
 export class PaginatorAtom extends Atom {
     public static CSS_CLASS = "nui-paginator";
@@ -35,7 +35,6 @@ export class PaginatorAtom extends Atom {
         return Atom.findIn<SelectV2Atom>(SelectV2Atom, this.getLocator());
     }
 
-    private prevNextClass = "move-icon";
     public get total(): Locator {
         return this.getLocator().locator(".nui-paginator__total");
     }
@@ -45,35 +44,31 @@ export class PaginatorAtom extends Atom {
     }
 
     public async setItemsPerPage(itemsPerPage: number): Promise<void> {
-        return this.select.select(`${itemsPerPage}`);
+        await this.select.select(`${itemsPerPage}`);
     }
 
-    public getItemsRange = async (): Promise<string> =>
-        this.status().then((test) => {
-            const pages = test.spltest(" ")[0].spltest("-");
-            const start = parseInt(pages[0], 10);
-            const end = parseInt(pages[1], 10);
-            return (end - start + 1).toString();
-        });
+    public async getItemsRange(): Promise<string> {
+        const statusText = await this.status.textContent();
+        if (!statusText) { return ""; }
+        const match = statusText.match(/(\d+)-(\d+) of \d+/);
+        if (!match) { return ""; }
+        const start = parseInt(match[1], 10);
+        const end = parseInt(match[2], 10);
+        return (end - start + 1).toString();
+    }
 
     public async pageLinkClick(pageNumber: number): Promise<void> {
-        const li = this.getLocator()
-            .locator(".nui-paginator__list li")
-            .nth(pageNumber);
+        const li = this.getLocator().locator(".nui-paginator__list li").nth(pageNumber);
         await li.click();
     }
 
     public async pageLinkVisible(pageNumber: number): Promise<boolean> {
-        const li = this.getLocator().locator(
-            ".nui-paginator__list li[value='" + pageNumber + "']"
-        );
-        await expect(li).toBeVisible();
+        const li = this.getLocator().locator(`.nui-paginator__list li[value='${pageNumber}']`);
+        return await li.isVisible();
     }
 
     public async ellipsedPageLinkClick(pageNumber: number): Promise<void> {
-        const page = this.getLocator()
-            .locator(".nui-paginator__page-cell")
-            .filter({ hasText: pageNumber });
+        const page = this.getLocator().locator(".nui-paginator__page-cell").filter({ hasText: String(pageNumber) });
         await page.click();
     }
 
@@ -81,90 +76,73 @@ export class PaginatorAtom extends Atom {
         return this.getLocator().locator(".nui-paginator__dots").nth(index);
     }
 
-    public ellipsisLinkClick = async (index: number): Promise<void> =>
-        this.ellipsisLink(index).click();
+    public async ellipsisLinkClick(index: number): Promise<void> {
+        await this.ellipsisLink(index).click();
+    }
 
     public async ellipsisLinkDisplayed(index: number): Promise<boolean> {
-        return super
-            .getElement()
-            .all(by.className("nui-paginator__dots"))
-            .count()
-            .then((count: number) => count > index);
+        const dots = this.getLocator().locator(".nui-paginator__dots");
+        return (await dots.count()) > index;
     }
 
-    public prevLink(): ElementFinder {
-        return super.getElement().all(by.className(this.prevNextClass)).get(0);
+    public prevLink(): Locator {
+        return this.getLocator().locator(".move-icon").first();
     }
 
-    public nextLink(): ElementFinder {
-        return super.getElement().all(by.className(this.prevNextClass)).get(1);
+    public nextLink(): Locator {
+        return this.getLocator().locator(".move-icon").last();
     }
 
     public async arePrevNextLinksDisplayed(): Promise<boolean> {
-        return super
-            .getElement()
-            .all(by.css(".nui-paginator__list li .move-icon"))
-            .then((elements: ElementFinder[]) => elements.length === 2);
+        const icons = this.getLocator().locator(".nui-paginator__list li .move-icon");
+        return (await icons.count()) === 2;
     }
 
     public async activePage(): Promise<number> {
-        return super
-            .getElement()
-            .all(by.css(".nui-paginator__list li.active"))
-            .get(0)
-            .getText()
-            .then((text: string) => parseInt(text, 10));
+        const activeLi = this.getLocator().locator(".nui-paginator__list li.active").first();
+        const text = await activeLi.textContent();
+        return text ? parseInt(text, 10) : -1;
     }
 
-    public isActivePage = async (page: number): Promise<boolean> =>
-        this.activePage().then((activePage: number) => activePage === page);
+    public async isActivePage(page: number): Promise<boolean> {
+        return (await this.activePage()) === page;
+    }
 
     public async pageCount(): Promise<number> {
-        return super
-            .getElement()
-            .all(by.css(".nui-paginator__list li"))
-            .getAttribute("value")
-            .then(async (arrVal: any) => {
-                const resultArr: number[] = await arrVal.map((value: string) =>
-                    parseInt(value, 10)
-                );
-                return Math.max(...resultArr);
-            });
+        const lis = this.getLocator().locator(".nui-paginator__list li");
+        const count = await lis.count();
+        let max = 0;
+        for (let i = 0; i < count; i++) {
+            const value = await lis.nth(i).getAttribute("value");
+            if (value) {
+                const num = parseInt(value, 10);
+                if (num > max) { max = num; }
+            }
+        }
+        return max;
     }
 
     public async ellipsisHasTopClass(): Promise<boolean> {
         await this.ellipsisLinkClick(0);
-        const dropdownElement = super
-            .getElement()
-            .all(by.css(".nui-popup__area"))
-            .get(0);
-
-        return await Atom.hasClass(dropdownElement, "nui-popup__area--top");
+        const dropdown = this.getLocator().locator(".nui-popup__area").first();
+        const classList = await dropdown.getAttribute("class");
+        return classList?.includes("nui-popup__area--top") ?? false;
     }
 
     public async itemsDispHasTopClass(): Promise<boolean> {
-        const itemsShownElem = super
-            .getElement()
-            .all(by.css(".nui-paginator__items-shown"))
-            .get(0);
+        const itemsShownElem = this.getLocator().locator(".nui-paginator__items-shown").first();
         await itemsShownElem.click();
-
-        const dropdownElement = super
-            .getElement()
-            .all(by.css(".nui-popup__area"))
-            .get(0);
-        return await Atom.hasClass(dropdownElement, "nui-popup__area--top");
+        const dropdown = this.getLocator().locator(".nui-popup__area").first();
+        const classList = await dropdown.getAttribute("class");
+        return classList?.includes("nui-popup__area--top") ?? false;
     }
 
     public async getTotal(): Promise<number> {
-        const totalText = await this.total.getText();
-
-        return Number.parseInt(totalText, 10);
+        const totalText = await this.total.textContent();
+        return totalText ? parseInt(totalText, 10) : 0;
     }
 
-    public getPageNumberButton(pageNumber: string): ElementFinder {
-        return this.getElement().element(
-            by.cssContainingText("button.nui-button", pageNumber)
-        );
+    public getPageNumberButton(pageNumber: string): Locator {
+        return this.getLocator().locator(`button.nui-button:has-text('${pageNumber}')`);
     }
 }
