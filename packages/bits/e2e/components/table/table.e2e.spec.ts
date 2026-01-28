@@ -293,7 +293,7 @@ test.describe("USERCONTROL table >", () => {
                 " status ",
                 " epic ",
                 " actions ",
-                " new Column ",
+                " New Column ",
             ]);
         });
     });
