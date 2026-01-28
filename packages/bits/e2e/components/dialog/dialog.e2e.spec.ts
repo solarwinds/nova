@@ -157,59 +157,59 @@ test.describe("USERCONTROL Dialog", () => {
             await dialog.toBeHidden();
         });
     });
-    
+
     test.describe("Tab navigation inside the dialog", async () => {
         let initiallyFocusedCloseButtonElement: Locator;
-        
+
         const assert = async (page: Page) =>
             await expect(initiallyFocusedCloseButtonElement).toBeFocused();
-    
+
         test.beforeEach(async ({page}) => {
             await defaultDialogBtn.getLocator().scrollIntoViewIfNeeded();
             await defaultDialogBtn.click();
             initiallyFocusedCloseButtonElement = await dialog.getCloseButton();
         });
-    
-    
+
+
         test("should Close button in header have focus by default", async ({page}) => {
-            assert(page);
+            await assert(page);
         });
-    
+
         test("should focus stay inside dialog on TAB navigation", async ({page}) => {
             await Helpers.pressKey("Tab", 3);
-            assert(page);
+            await assert(page);
         });
-    
+
         test("should not slip back to the page on SHIFT+TAB keys input", async ({page}) => {
             await Helpers.pressKey("Shift+Tab", 3);
-            assert(page);
+            await assert(page);
         });
     });
-    
+
     test.describe("Tab navigation outside the dialog", async () => {
         test.beforeEach(async () => {
             await defaultDialogBtn.getLocator().scrollIntoViewIfNeeded();
             await defaultDialogBtn.click();
         });
-    
+
         test("should focus element inside dialog on TAB when focus outside the dialog", async () => {
             await themeSwitcher.click();
-            await Helpers.pressKey('Tab');
+            await Helpers.pressKey("Tab");
             await expect(dialog.getActionButton()).toBeFocused();
         });
-    
+
         test("should focus element inside dialog on SHIFT+TAB when focus outside the dialog", async () => {
             await themeSwitcher.click();
-            await Helpers.pressKey('Shift+Tab');
+            await Helpers.pressKey("Shift+Tab");
             expect(dialog.getActionButton()).toBeFocused();
         });
     });
-    
+
     test.describe("regression >", async () => {
         test("should dialog be dismissed on mouseup event outside the dialog body (NUI-3292)", async ({ page }) => {
             await defaultDialogBtn.getLocator().scrollIntoViewIfNeeded();
             await defaultDialogBtn.click();
-            
+
             const box = await dialog.getLocator().boundingBox();
             if (!box) {
                 throw new Error("The dialog box is not defined");
@@ -220,24 +220,23 @@ test.describe("USERCONTROL Dialog", () => {
             await page.mouse.up();
             await dialog.toBeVisible();
         });
-    
+
         test.describe("dialog with overlay >", () => {
             test.beforeEach(async () => {
-                await defaultDialogBtn.getLocator().scrollIntoViewIfNeeded();
-                await defaultDialogBtn.click();
-            
-                await selectToOpenDialog.getFirstOption().click();
+                const op = await selectToOpenDialog.getFirstOption();
+
+                await op.click();
 
                 // Wait for the dialog to become visible (max 3s)
                 await expect(dialog.getLocator()).toBeVisible({ timeout: 3000 });
             });
-    
+
             test("should append to cdk overlay custom container (NUI-5169)", async () => {
                 const selector = Atom.getSelector(DialogAtom) as string;
                 const overlay = overlayContainer?.locator(selector);
                 await expect(overlay).toBeVisible();
             });
-    
+
             test("should append to cdk overlay custom container (NUI-5169) v2", async ({ page }) => {
                 const selector = `.${DialogAtom.DIALOG_WINDOW_CSS_CLASS}`;
                 const overlay = await overlayContainer?.locator(selector).elementHandle();

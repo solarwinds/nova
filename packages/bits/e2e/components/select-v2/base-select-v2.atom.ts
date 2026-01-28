@@ -21,22 +21,39 @@
 import { Locator } from "playwright-core";
 
 import { SelectV2OptionAtom } from "./select-v2-option.atom";
-import { Atom } from "../../atom";
+import { Atom, IAtomClass } from "../../atom";
+import { Helpers } from "../../setup";
 import { OverlayAtom } from "../overlay/overlay.atom";
 
 export class BaseSelectV2Atom extends Atom {
+    public static findIn<T extends Atom>(
+        atomClass: IAtomClass<T>,
+        parentLocator: Locator,
+        root = true
+    ): T {
+        return Atom.findIn(atomClass, parentLocator, root);
+    }
+
     public get popup(): OverlayAtom {
         return Atom.findIn<OverlayAtom>(OverlayAtom);
     }
-    public get options(): SelectV2OptionAtom {
+
+    public async options(): Promise<SelectV2OptionAtom> {
+        let parentLocator: Locator;
+        if (await this.popup.isOpened()) {
+            parentLocator = Helpers.page.locator("body > .cdk-overlay-container .cdk-overlay-pane");
+        } else {
+            parentLocator = this.getLocator();
+        }
+
         return Atom.findIn<SelectV2OptionAtom>(
             SelectV2OptionAtom,
-            this.getLocator()
+            parentLocator
         );
     }
 
     public get input(): Locator {
-        return this.getLocator().locator(".nui-combobox-v2__input");
+        return this.getLocator().locator(".nui-select-v2__value");
     }
 
     public get getPopupElement(): Locator {
@@ -52,20 +69,20 @@ export class BaseSelectV2Atom extends Atom {
         await this.waitForPopup();
     }
 
-    public async getOption(index: number): SelectV2OptionAtom {
+    public async getOption(index: number): Promise<SelectV2OptionAtom> {
         if (!(await this.popup.isOpened())) {
             await this.toggle();
         }
 
-        return this.options.nth<SelectV2OptionAtom>(SelectV2OptionAtom, index);
+        return (await this.options()).nth<SelectV2OptionAtom>(SelectV2OptionAtom, index);
     }
 
-    public getFirstOption(): SelectV2OptionAtom {
+    public async getFirstOption(): Promise<SelectV2OptionAtom> {
         return this.getOption(0);
     }
 
     public async getLastOption(): Promise<SelectV2OptionAtom> {
-        const count = await this.options.getLocator().count();
+        const count = await (await this.options()).getLocator().count();
 
         return this.getOption(count - 1);
     }
@@ -75,7 +92,7 @@ export class BaseSelectV2Atom extends Atom {
             await this.toggle();
         }
 
-        return await this.options.getLocator().count();
+        return await (await this.options()).getLocator().count();
     }
 
     /**
@@ -86,6 +103,15 @@ export class BaseSelectV2Atom extends Atom {
     public async isOpened(): Promise<boolean> {
         await this.waitForPopup();
         return this.popup.isOpened();
+    }
+
+    public async toBeOpened(): Promise<void> {
+        await this.waitForPopup();
+        await this.popup.toBeOpened();
+    }
+
+    public async toBeHidden(): Promise<void> {
+        await this.popup.toBeHidden();
     }
 
     public async getActiveItemsCount(): Promise<number> {
@@ -105,7 +131,7 @@ export class BaseSelectV2Atom extends Atom {
         if (!(await this.popup.isOpened())) {
             await this.toggle();
         }
-        const byText = this.options.filter<SelectV2OptionAtom>(SelectV2OptionAtom, { hasText: title });
+        const byText = (await this.options()).filter<SelectV2OptionAtom>(SelectV2OptionAtom, { hasText: title });
         await byText.click();
     }
 

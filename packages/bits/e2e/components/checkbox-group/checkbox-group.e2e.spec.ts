@@ -76,7 +76,7 @@ test.describe("USERCONTROL Checkbox Group", () => {
         const parentElement = checkboxGroupJustified.getLocator();
         const componentBox = await component.boundingBox();
         // the round math can be used
-        await expect(parentElement).toHaveCSS("width", `${((componentBox?.width || 0) - 0.000025)}px`);
+        await expect(parentElement).toHaveCSS("width", `${Math.round((componentBox?.width || 0))}px`);
     });
 
     test("should not change the value if clicked on disabled checkbox inside the checkbox group", async () => {
