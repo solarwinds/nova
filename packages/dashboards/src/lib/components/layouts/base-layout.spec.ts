@@ -33,6 +33,7 @@ import { NuiDashboardsModule } from "../../dashboards.module";
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { IPizza, PIZZAGNA_EVENT_BUS } from "../../types";
+import {VERSION} from "@angular/cdk";
 
 @Component({
     selector: "test-layout",
@@ -182,44 +183,3 @@ describe("BaseLayout", () => {
         });
     });
 });
-
-@Component({
-    selector: 'my-app',
-    template: `
-    <h1>Hello {{name}}</h1>
-    <a-comp [o]="o"></a-comp>
-  `,
-})
-export class App {
-    name = `Angular! v${VERSION.full}`;
-    o = {id: 1, name: 'John'};
-
-    ngOnInit() {
-        setTimeout(() => {
-            this.o.id = 2;
-            this.o.name = 'Jane';
-        }, 2000);
-    }
-}
-
-export class AComponent {
-    @Input() o;
-
-    // store previous value of `id`
-    id;
-
-    constructor(private cd: ChangeDetectorRef) {}
-
-    ngOnChanges() {
-        // every time the object changes
-        // store the new `id`
-        this.id = this.o.id;
-    }
-
-    ngDoCheck() {
-        // check for object mutation
-        if (this.id !== this.o.id) {
-            this.cd.markForCheck();
-        }
-    }
-}
