@@ -1,6 +1,6 @@
 import { BreadcrumbAtom } from "./breadcrumb.atom";
 import { Atom } from "../../atom";
-import { Helpers, test, expect } from "../../setup";
+import { expect, Helpers, test } from "../../setup";
 import { ButtonAtom } from "../button/button.atom";
 
 test.describe("USERCONTROL Breadcrumb >", () => {
@@ -8,9 +8,12 @@ test.describe("USERCONTROL Breadcrumb >", () => {
     let showCountriesButton: ButtonAtom;
     let showFirstCountryButton: ButtonAtom;
 
-    test.beforeEach(async ({page}) => {
+    test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("breadcrumb", page);
-        breadcrumb = Atom.find<BreadcrumbAtom>(BreadcrumbAtom, "nui-demo-breadcrumb-basic");
+        breadcrumb = Atom.find<BreadcrumbAtom>(
+            BreadcrumbAtom,
+            "nui-demo-breadcrumb-basic"
+        );
         showCountriesButton = Atom.find<ButtonAtom>(
             ButtonAtom,
             "nui-demo-breadcrumb-show-countries",
@@ -48,9 +51,7 @@ test.describe("USERCONTROL Breadcrumb >", () => {
         await showCountriesButton.click();
         expect(breadcrumb.getUrlState()).toEqual("/breadcrumb/countries");
         await showFirstCountryButton.click();
-        expect( breadcrumb.getUrlState()).toEqual(
-            "/breadcrumb/countries/usa"
-        );
+        expect(breadcrumb.getUrlState()).toEqual("/breadcrumb/countries/usa");
         const firstItem = breadcrumb.getLink(breadcrumb.getAllItems().first());
         await firstItem.click();
         expect(breadcrumb.getUrlState()).toBe("/breadcrumb");

@@ -94,8 +94,8 @@ test.describe("USERCONTROL table >", () => {
     }
     test.describe("Basic table >", () => {
         test.beforeEach(async ({ page }) => {
-           await prepareTablePage(page, "table/basic");
-           await expect(table.getLocator()).toBeVisible();
+            await prepareTablePage(page, "table/basic");
+            await expect(table.getLocator()).toBeVisible();
         });
 
         test("should have column with right alignment", async () => {
@@ -200,8 +200,8 @@ test.describe("USERCONTROL table >", () => {
     //
     test.describe("Height set table >", () => {
         test.beforeEach(async ({ page }) => {
-           await prepareTablePage(page, "table/height");
-           await expect(heightSetTable.getLocator()).toBeVisible();
+            await prepareTablePage(page, "table/height");
+            await expect(heightSetTable.getLocator()).toBeVisible();
         });
 
         test("should have nui-row element with density=tiny height equal to 24px", async () => {
@@ -265,7 +265,6 @@ test.describe("USERCONTROL table >", () => {
                 CheckboxGroupAtom,
                 "nui-demo-table-add-remove-checkboxes"
             );
-
         });
         tableColumnsAddRemoveTestCases.forEach((testCase: any) => {
             test(testCase.testName, async () => {

@@ -18,11 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-
 import { Locator, Page } from "@playwright/test";
 import { Atom } from "../../atom";
 import { Helpers, test, expect } from "../../setup";
-import { ButtonAtom  } from "../button/button.atom";
+import { ButtonAtom } from "../button/button.atom";
 import { DateTimepickerAtom } from "../datetimepicker/datetimepicker.atom";
 import { SelectV2Atom } from "../select-v2/select-v2.atom";
 import { DialogAtom } from "./dialog.atom";
@@ -46,9 +45,12 @@ test.describe("USERCONTROL Dialog", () => {
     let header: Locator;
     let themeSwitcher: Locator;
 
-    test.beforeEach(async ({page}) => {
+    test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("dialog/dialog-test", page);
-        defaultDialogBtn = Atom.find<ButtonAtom>(ButtonAtom, "nui-demo-default-dialog-btn");
+        defaultDialogBtn = Atom.find<ButtonAtom>(
+            ButtonAtom,
+            "nui-demo-default-dialog-btn"
+        );
         closableDialogBtn = Atom.find<ButtonAtom>(
             ButtonAtom,
             "nui-demo-with-keyboard-dialog-btn"
@@ -61,9 +63,18 @@ test.describe("USERCONTROL Dialog", () => {
             ButtonAtom,
             "nui-demo-critical-dialog-btn"
         );
-        warningDialogBtn = Atom.find<ButtonAtom>(ButtonAtom, "nui-demo-warning-dialog-btn");
-        infoDialogBtn = Atom.find<ButtonAtom>(ButtonAtom, "nui-demo-info-dialog-btn");
-        customClassButton = Atom.find<ButtonAtom>(ButtonAtom, "nui-demo-custom-class-btn");
+        warningDialogBtn = Atom.find<ButtonAtom>(
+            ButtonAtom,
+            "nui-demo-warning-dialog-btn"
+        );
+        infoDialogBtn = Atom.find<ButtonAtom>(
+            ButtonAtom,
+            "nui-demo-info-dialog-btn"
+        );
+        customClassButton = Atom.find<ButtonAtom>(
+            ButtonAtom,
+            "nui-demo-custom-class-btn"
+        );
         staticBackdropButton = Atom.find<ButtonAtom>(
             ButtonAtom,
             "nui-demo-static-backdrop-dialog-btn"
@@ -72,14 +83,20 @@ test.describe("USERCONTROL Dialog", () => {
             ButtonAtom,
             "nui-demo-static-backdrop-ESC-dialog-btn"
         );
-        selectToOpenDialog = Atom.find<SelectV2Atom>(SelectV2Atom, "select-to-open-dialog");
+        selectToOpenDialog = Atom.find<SelectV2Atom>(
+            SelectV2Atom,
+            "select-to-open-dialog"
+        );
         insideOverlayWithDateTimePickerBtn = Atom.find<ButtonAtom>(
             ButtonAtom,
             "nui-dialog-inside-overlay-with-date-time-picker-btn"
         );
-        dateTimePicker = Atom.find<DateTimepickerAtom>(DateTimepickerAtom, "date-time-picker");
-        themeSwitcher =  Helpers.page.locator(".nui-switch__bar");
-        overlayContainer =  Helpers.page.locator(".overlay-container-priority");
+        dateTimePicker = Atom.find<DateTimepickerAtom>(
+            DateTimepickerAtom,
+            "date-time-picker"
+        );
+        themeSwitcher = Helpers.page.locator(".nui-switch__bar");
+        overlayContainer = Helpers.page.locator(".overlay-container-priority");
         dialog = new DialogAtom(Helpers.page.locator(".nui-dialog"));
         closeButton = dialog.getCloseButton();
         header = dialog.getHeader();
@@ -164,23 +181,28 @@ test.describe("USERCONTROL Dialog", () => {
         const assert = async (page: Page) =>
             await expect(initiallyFocusedCloseButtonElement).toBeFocused();
 
-        test.beforeEach(async ({page}) => {
+        test.beforeEach(async ({ page }) => {
             await defaultDialogBtn.getLocator().scrollIntoViewIfNeeded();
             await defaultDialogBtn.click();
             initiallyFocusedCloseButtonElement = await dialog.getCloseButton();
         });
 
-
-        test("should Close button in header have focus by default", async ({page}) => {
+        test("should Close button in header have focus by default", async ({
+            page,
+        }) => {
             await assert(page);
         });
 
-        test("should focus stay inside dialog on TAB navigation", async ({page}) => {
+        test("should focus stay inside dialog on TAB navigation", async ({
+            page,
+        }) => {
             await Helpers.pressKey("Tab", 3);
             await assert(page);
         });
 
-        test("should not slip back to the page on SHIFT+TAB keys input", async ({page}) => {
+        test("should not slip back to the page on SHIFT+TAB keys input", async ({
+            page,
+        }) => {
             await Helpers.pressKey("Shift+Tab", 3);
             await assert(page);
         });
@@ -206,7 +228,9 @@ test.describe("USERCONTROL Dialog", () => {
     });
 
     test.describe("regression >", async () => {
-        test("should dialog be dismissed on mouseup event outside the dialog body (NUI-3292)", async ({ page }) => {
+        test("should dialog be dismissed on mouseup event outside the dialog body (NUI-3292)", async ({
+            page,
+        }) => {
             await defaultDialogBtn.getLocator().scrollIntoViewIfNeeded();
             await defaultDialogBtn.click();
 
@@ -214,7 +238,10 @@ test.describe("USERCONTROL Dialog", () => {
             if (!box) {
                 throw new Error("The dialog box is not defined");
             }
-            await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+            await page.mouse.move(
+                box.x + box.width / 2,
+                box.y + box.height / 2
+            );
             await page.mouse.down();
             await page.mouse.move(box.x - 500, box.y + box.height / 2);
             await page.mouse.up();
@@ -228,7 +255,9 @@ test.describe("USERCONTROL Dialog", () => {
                 await op.click();
 
                 // Wait for the dialog to become visible (max 3s)
-                await expect(dialog.getLocator()).toBeVisible({ timeout: 3000 });
+                await expect(dialog.getLocator()).toBeVisible({
+                    timeout: 3000,
+                });
             });
 
             test("should append to cdk overlay custom container (NUI-5169)", async () => {
@@ -237,20 +266,32 @@ test.describe("USERCONTROL Dialog", () => {
                 await expect(overlay).toBeVisible();
             });
 
-            test("should append to cdk overlay custom container (NUI-5169) v2", async ({ page }) => {
+            test("should append to cdk overlay custom container (NUI-5169) v2", async ({
+                page,
+            }) => {
                 const selector = `.${DialogAtom.DIALOG_WINDOW_CSS_CLASS}`;
-                const overlay = await overlayContainer?.locator(selector).elementHandle();
-                if(!overlay){
+                const overlay = await overlayContainer
+                    ?.locator(selector)
+                    .elementHandle();
+                if (!overlay) {
                     throw new Error("The overlay is not defined");
                 }
-                await page.waitForFunction(  (el) => window.getComputedStyle(el).zIndex === '1000', overlay);
+                await page.waitForFunction(
+                    (el) => window.getComputedStyle(el).zIndex === "1000",
+                    overlay
+                );
 
                 const selectorB = `.${DialogAtom.BACKDROP_CSS_CLASS}`;
-                const overlayB = await overlayContainer?.locator(selector).elementHandle();
-                if(!overlayB){
+                const overlayB = await overlayContainer
+                    ?.locator(selector)
+                    .elementHandle();
+                if (!overlayB) {
                     throw new Error("The overlayB is not defined");
                 }
-                await page.waitForFunction(  (el) => window.getComputedStyle(el).zIndex === '1000', overlayB);
+                await page.waitForFunction(
+                    (el) => window.getComputedStyle(el).zIndex === "1000",
+                    overlayB
+                );
             });
         });
     });

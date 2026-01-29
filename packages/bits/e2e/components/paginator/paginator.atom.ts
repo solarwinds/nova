@@ -49,26 +49,36 @@ export class PaginatorAtom extends Atom {
 
     public async getItemsRange(): Promise<string> {
         const statusText = await this.status.textContent();
-        if (!statusText) { return ""; }
+        if (!statusText) {
+            return "";
+        }
         const match = statusText.match(/(\d+)-(\d+) of \d+/);
-        if (!match) { return ""; }
+        if (!match) {
+            return "";
+        }
         const start = parseInt(match[1], 10);
         const end = parseInt(match[2], 10);
         return (end - start + 1).toString();
     }
 
     public async pageLinkClick(pageNumber: number): Promise<void> {
-        const li = this.getLocator().locator(".nui-paginator__list li").nth(pageNumber);
+        const li = this.getLocator()
+            .locator(".nui-paginator__list li")
+            .nth(pageNumber);
         await li.click();
     }
 
     public async pageLinkVisible(pageNumber: number): Promise<boolean> {
-        const li = this.getLocator().locator(`.nui-paginator__list li[value='${pageNumber}']`);
+        const li = this.getLocator().locator(
+            `.nui-paginator__list li[value='${pageNumber}']`
+        );
         return await li.isVisible();
     }
 
     public async ellipsedPageLinkClick(pageNumber: number): Promise<void> {
-        const page = this.getLocator().locator(".nui-paginator__page-cell").filter({ hasText: String(pageNumber) });
+        const page = this.getLocator()
+            .locator(".nui-paginator__page-cell")
+            .filter({ hasText: String(pageNumber) });
         await page.click();
     }
 
@@ -94,12 +104,16 @@ export class PaginatorAtom extends Atom {
     }
 
     public async arePrevNextLinksDisplayed(): Promise<boolean> {
-        const icons = this.getLocator().locator(".nui-paginator__list li .move-icon");
+        const icons = this.getLocator().locator(
+            ".nui-paginator__list li .move-icon"
+        );
         return (await icons.count()) === 2;
     }
 
     public async activePage(): Promise<number> {
-        const activeLi = this.getLocator().locator(".nui-paginator__list li.active").first();
+        const activeLi = this.getLocator()
+            .locator(".nui-paginator__list li.active")
+            .first();
         const text = await activeLi.textContent();
         return text ? parseInt(text, 10) : -1;
     }
@@ -116,7 +130,9 @@ export class PaginatorAtom extends Atom {
             const value = await lis.nth(i).getAttribute("value");
             if (value) {
                 const num = parseInt(value, 10);
-                if (num > max) { max = num; }
+                if (num > max) {
+                    max = num;
+                }
             }
         }
         return max;
@@ -130,7 +146,9 @@ export class PaginatorAtom extends Atom {
     }
 
     public async itemsDispHasTopClass(): Promise<boolean> {
-        const itemsShownElem = this.getLocator().locator(".nui-paginator__items-shown").first();
+        const itemsShownElem = this.getLocator()
+            .locator(".nui-paginator__items-shown")
+            .first();
         await itemsShownElem.click();
         const dropdown = this.getLocator().locator(".nui-popup__area").first();
         const classList = await dropdown.getAttribute("class");
@@ -143,6 +161,8 @@ export class PaginatorAtom extends Atom {
     }
 
     public getPageNumberButton(pageNumber: string): Locator {
-        return this.getLocator().locator(`button.nui-button:has-text('${pageNumber}')`);
+        return this.getLocator().locator(
+            `button.nui-button:has-text('${pageNumber}')`
+        );
     }
 }

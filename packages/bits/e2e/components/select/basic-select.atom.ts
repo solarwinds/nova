@@ -18,11 +18,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {Locator} from "@playwright/test";
+import { Locator } from "@playwright/test";
 
-import {Atom} from "../../atom";
-import {MenuItemAtom} from "../menu/menu-item.atom";
-import {MenuAtom} from "../menu/menu.atom";
+import { Atom } from "../../atom";
+import { MenuItemAtom } from "../menu/menu-item.atom";
+import { MenuAtom } from "../menu/menu.atom";
 
 export class BasicSelectAtom extends Atom {
     public async toggleMenu(): Promise<void> {
@@ -48,7 +48,10 @@ export class BasicSelectAtom extends Atom {
         return this.getLocator().locator(".item-selected");
     }
 
-    public async elementHasClass(selector: string, className: string): Promise<boolean> {
+    public async elementHasClass(
+        selector: string,
+        className: string
+    ): Promise<boolean> {
         const element = this.getElementByClass(selector);
         const classList = await element.getAttribute("class");
         return classList?.includes(className) ?? false;

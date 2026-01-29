@@ -29,8 +29,11 @@ test.describe("USERCONTROL date-time-picker", () => {
 
     let getModelValue: Locator;
 
-    test.beforeEach(async ({page}) => {
-        await Helpers.prepareBrowser("date-time-picker/date-time-picker-test", page);
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser(
+            "date-time-picker/date-time-picker-test",
+            page
+        );
         dateTimePicker = Atom.find<DateTimepickerAtom>(
             DateTimepickerAtom,
             "nui-demo-date-time-picker"
@@ -40,8 +43,12 @@ test.describe("USERCONTROL date-time-picker", () => {
 
     test.describe("when the datetime picker is displayed, it", () => {
         test("contains initial value", async () => {
-            await expect(dateTimePicker.datePicker.textbox.input).toHaveValue("15 Mar 1970");
-            await expect(dateTimePicker.timePicker.textbox.input).toHaveValue("3:30 PM");
+            await expect(dateTimePicker.datePicker.textbox.input).toHaveValue(
+                "15 Mar 1970"
+            );
+            await expect(dateTimePicker.timePicker.textbox.input).toHaveValue(
+                "3:30 PM"
+            );
         });
     });
 

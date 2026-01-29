@@ -46,7 +46,9 @@ describe(`Visual tests: ${name}`, () => {
             DateTimepickerAtom,
             "nui-date-time-picker-ranged"
         );
-        dialogButtonElem =Helpers.page.locator(by.id("nui-visual-test-dialog-btn"));
+        dialogButtonElem = Helpers.page.locator(
+            by.id("nui-visual-test-dialog-btn")
+        );
 
         camera = new Camera().loadFilm(browser, name);
     });

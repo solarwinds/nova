@@ -31,7 +31,9 @@ export class SelectAtom extends BasicSelectAtom {
 
     public async isSelectDisabled(): Promise<boolean> {
         // Check if the layout block has the 'disabled' class
-        const classList = await this.getElementByCss(".nui-select__layout-block").getAttribute("class");
+        const classList = await this.getElementByCss(
+            ".nui-select__layout-block"
+        ).getAttribute("class");
         return classList?.includes("disabled") ?? false;
     }
 
@@ -40,7 +42,9 @@ export class SelectAtom extends BasicSelectAtom {
     }
 
     public getItemsWithNestedClass(): Locator {
-        return this.getElementsByCss(".nui-overlay .select-examples-custom-template");
+        return this.getElementsByCss(
+            ".nui-overlay .select-examples-custom-template"
+        );
     }
 
     public async isRequiredStyleDisplayed(): Promise<boolean> {

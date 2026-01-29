@@ -29,8 +29,16 @@ test.describe("USERCONTROL Menu", () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("menu/menu-test", page);
-        menu = Atom.find<MenuAtom>(MenuAtom, "nui-demo-e2e-menu-variants", true) as MenuAtom;
-        appendToBody = Atom.find<MenuAtom>(MenuAtom, "nui-demo-e2e-menu-append-to-body", true) as MenuAtom;
+        menu = Atom.find<MenuAtom>(
+            MenuAtom,
+            "nui-demo-e2e-menu-variants",
+            true
+        ) as MenuAtom;
+        appendToBody = Atom.find<MenuAtom>(
+            MenuAtom,
+            "nui-demo-e2e-menu-append-to-body",
+            true
+        ) as MenuAtom;
         appendToBody.menuContentId = "nui-demo-e2e-menu-append-to-body-content";
         await menu.toBeVisible();
     });
@@ -111,11 +119,7 @@ test.describe("USERCONTROL Menu", () => {
                     "Meta+ArrowDown",
                 ];
 
-                const moveUpKeyboardInputs = [
-                    "PageUp",
-                    "Home",
-                    "Meta+ArrowUp",
-                ];
+                const moveUpKeyboardInputs = ["PageUp", "Home", "Meta+ArrowUp"];
 
                 test.beforeEach(async () => {
                     await menu.toggleMenu();
@@ -188,7 +192,10 @@ test.describe("USERCONTROL Menu", () => {
                 const checkboxes = menuLocator.locator("nui-checkbox");
                 const firstCheckbox = checkboxes.first();
                 // Check class for checked state
-                const isChecked = async () => (await firstCheckbox.getAttribute("class")).includes("nui-checkbox--checked");
+                const isChecked = async () =>
+                    (await firstCheckbox.getAttribute("class")).includes(
+                        "nui-checkbox--checked"
+                    );
                 expect(await isChecked()).toBe(false);
                 await Helpers.pressKey("Enter");
                 expect(await isChecked()).toBe(true);

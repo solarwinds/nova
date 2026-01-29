@@ -1,7 +1,26 @@
+// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to
+//  deal in the Software without restriction, including without limitation the
+//  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+
 import { ButtonAtom } from "./button.atom";
 import { Atom } from "../../atom";
 import { Helpers, test, expect } from "../../setup";
-
 
 test.describe("USERCONTROL Button >", () => {
     let primaryCompactBtn: ButtonAtom;
@@ -84,7 +103,7 @@ test.describe("USERCONTROL Button >", () => {
         await primaryLargePlusIconDisabledBtn.toBeDisabled();
     });
 
-    test("should show icon with \"icon\" prop", async () => {
+    test('should show icon with "icon" prop', async () => {
         await primaryLargePlusIconBtn.isIconShown();
         await primaryLargePlusIconDisabledBtn.isIconShown();
     });
@@ -103,7 +122,7 @@ test.describe("USERCONTROL Button >", () => {
         await expect(resultSpan).toHaveText(String(count + 2));
     });
 
-    test("should have left/right icon css class depending on \"iconRight\" prop", async () => {
+    test('should have left/right icon css class depending on "iconRight" prop', async () => {
         await defaultLargeBtn.toContainClass("icon-left");
         await defaultLargeBtn.toNotContainClass("icon-right");
 

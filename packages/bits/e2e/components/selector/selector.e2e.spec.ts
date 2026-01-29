@@ -4,7 +4,6 @@ import { SelectorAtom, SelectionType } from "./selector.atom";
 import { Atom } from "../../atom";
 import { Helpers, test, expect } from "../../setup";
 
-
 test.describe("USERCONTROL Selector", () => {
     const demoElementId = "nui-demo-selector";
 
@@ -36,15 +35,11 @@ test.describe("USERCONTROL Selector", () => {
         await expect(selectionElement).toContainText(SelectionType.All);
 
         await subject.select(SelectionType.None);
-        await expect(selectionElement).toContainText(
-            SelectionType.None
-        );
+        await expect(selectionElement).toContainText(SelectionType.None);
 
         await subject.select(SelectionType.All);
         await subject.select(SelectionType.AllPages);
-        await expect(selectionElement).toContainText(
-            SelectionType.AllPages
-        );
+        await expect(selectionElement).toContainText(SelectionType.AllPages);
     });
 
     test("should get 'SelectionType' (All, None) by changing checkbox state", async () => {
@@ -54,9 +49,7 @@ test.describe("USERCONTROL Selector", () => {
         await expect(selectionElement).toContainText(SelectionType.All);
 
         await selectorCheckbox.toggle();
-        await expect(selectionElement).toContainText(
-            SelectionType.UnselectAll
-        );
+        await expect(selectionElement).toContainText(SelectionType.UnselectAll);
     });
 
     test("should set 'Indeterminate'", async () => {
@@ -74,28 +67,20 @@ test.describe("USERCONTROL Selector", () => {
         await expect(selectionElement).toContainText(SelectionType.All);
 
         await selectorButton.click();
-        await expect(selectionElement).toContainText(
-            SelectionType.UnselectAll
-        );
+        await expect(selectionElement).toContainText(SelectionType.UnselectAll);
     });
 
     test.describe("appended to body >", () => {
         test("should get appropriate 'SelectionType' state by clicking repeat item", async () => {
             await makeAppendedToBody();
             await subject.selectAppendedToBodyItem(SelectionType.All);
-            await expect(selectionElement).toHaveText(
-                SelectionType.All
-            );
+            await expect(selectionElement).toHaveText(SelectionType.All);
 
             await subject.selectAppendedToBodyItem(SelectionType.None);
-            await expect(selectionElement).toHaveText(
-                SelectionType.None
-            );
+            await expect(selectionElement).toHaveText(SelectionType.None);
 
             await subject.selectAppendedToBodyItem(SelectionType.AllPages);
-            await expect(selectionElement).toHaveText(
-                SelectionType.AllPages
-            );
+            await expect(selectionElement).toHaveText(SelectionType.AllPages);
         });
     });
 });

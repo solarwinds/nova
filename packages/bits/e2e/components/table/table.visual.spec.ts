@@ -43,8 +43,14 @@ test.describe(`Visual tests: ${name}`, () => {
         await Helpers.prepareBrowser("table/visual-test");
 
         sortableTable = Atom.find<TableAtom>(TableAtom, "table-sorting");
-        customActionTable = Atom.find<TableAtom>(TableAtom, "table-custom-action");
-        selectedRowsTable = Atom.find<TableAtom>(TableAtom, "table-selected-row");
+        customActionTable = Atom.find<TableAtom>(
+            TableAtom,
+            "table-custom-action"
+        );
+        selectedRowsTable = Atom.find<TableAtom>(
+            TableAtom,
+            "table-selected-row"
+        );
         resizeTable = Atom.find<TableAtom>(TableAtom, "table-resizing");
         selectPinnedHeaderTable = Atom.find(
             TableAtom,
@@ -56,8 +62,12 @@ test.describe(`Visual tests: ${name}`, () => {
             .nth(0);
 
         expanders = {
-            basicSummary: Helpers.page.locator("#nui-visual-table-basic-summary"),
-            pinnedHeader: Helpers.page.locator("#nui-visual-table-pinned-summary"),
+            basicSummary: Helpers.page.locator(
+                "#nui-visual-table-basic-summary"
+            ),
+            pinnedHeader: Helpers.page.locator(
+                "#nui-visual-table-pinned-summary"
+            ),
             columnAlignment: Helpers.page.locator(
                 "#nui-visual-table-alignment-summary"
             ),

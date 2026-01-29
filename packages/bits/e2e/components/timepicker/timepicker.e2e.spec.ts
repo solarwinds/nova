@@ -27,7 +27,7 @@ test.describe("USERCONTROL timepicker", () => {
     let disabledTimePicker: TimepickerAtom;
     let customFormatTimePicker: TimepickerAtom;
 
-    test.beforeEach(async ({page}) => {
+    test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("time-picker", page);
 
         basicTimePicker = Atom.find<TimepickerAtom>(
@@ -63,10 +63,10 @@ test.describe("USERCONTROL timepicker", () => {
         test.describe("select time in menu >", () => {
             test("should select last item", async () => {
                 await basicTimePicker.toggle();
-                const lastItem = await basicTimePicker.menuPopup
-                    .items
-                    .last()
-                    .textContent() || "";
+                const lastItem =
+                    (await basicTimePicker.menuPopup.items
+                        .last()
+                        .textContent()) || "";
 
                 await basicTimePicker.menuPopup.clickItemByText(lastItem);
                 await basicTimePicker.textbox.toHaveValue(lastItem.trim());
@@ -74,10 +74,10 @@ test.describe("USERCONTROL timepicker", () => {
 
             test("should select first item", async () => {
                 await basicTimePicker.toggle();
-                const firstItem = await basicTimePicker.menuPopup
-                    .items
-                    .first()
-                    .textContent() || "";
+                const firstItem =
+                    (await basicTimePicker.menuPopup.items
+                        .first()
+                        .textContent()) || "";
                 await basicTimePicker.menuPopup.clickItemByText(firstItem);
                 await basicTimePicker.textbox.toHaveValue(firstItem.trim());
             });
@@ -169,7 +169,7 @@ test.describe("USERCONTROL timepicker", () => {
 
     test.describe(" disabled >", () => {
         test("input should have disabled attribute", async () => {
-            await disabledTimePicker.textbox.toBeDisabled()
+            await disabledTimePicker.textbox.toBeDisabled();
         });
 
         test("should not display menu after timepicker toggle", async () => {
@@ -180,7 +180,8 @@ test.describe("USERCONTROL timepicker", () => {
 
     test.describe(" custom date format >", () => {
         test("time picker should have 'h:mm:ss' format on init", async () => {
-            const timepickerValue = await customFormatTimePicker.textbox.input.inputValue();
+            const timepickerValue =
+                await customFormatTimePicker.textbox.input.inputValue();
             expect(
                 TimepickerAtom.isCorrectTimeFormat(timepickerValue, "h:mm:ss")
             ).toBeTruthy();

@@ -6,7 +6,7 @@ import { Helpers } from "../../setup";
 export class BreadcrumbAtom extends Atom {
     public static CSS_CLASS = "nui-breadcrumb";
 
-    public  getAllItems(): Locator {
+    public getAllItems(): Locator {
         return super
             .getLocator()
             .locator(Helpers.page.locator(".nui-breadcrumb__wrapper"));

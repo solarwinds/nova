@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {expect, Locator} from "@playwright/test";
+import { expect, Locator } from "@playwright/test";
 
 import { Atom } from "../../atom";
 import { ButtonAtom } from "../button/button.atom";
@@ -31,12 +31,16 @@ export class ProgressAtom extends Atom {
     }
 
     public getCancelButton(): ButtonAtom {
-        return Atom.findIn<ButtonAtom>(ButtonAtom, this.root.locator(".nui-progress__cancel"), true);
+        return Atom.findIn<ButtonAtom>(
+            ButtonAtom,
+            this.root.locator(".nui-progress__cancel"),
+            true
+        );
     }
 
     public async canCancel(): Promise<boolean> {
         const cancelBtn = this.root.locator(".nui-progress__cancel");
-        return await cancelBtn.count() > 0 && (await cancelBtn.isVisible());
+        return (await cancelBtn.count()) > 0 && (await cancelBtn.isVisible());
     }
 
     public async cancelProgress(): Promise<void> {

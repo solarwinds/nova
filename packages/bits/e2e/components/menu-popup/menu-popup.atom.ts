@@ -24,10 +24,10 @@ export class MenuPopupAtom extends Atom {
         if ((await items.count()) === 0) {
             return;
         }
-        await items.filter({hasText: title}).click();
+        await items.filter({ hasText: title }).click();
     }
     public itemByText(title: string): Locator {
         const items = this.items;
-        return items.filter({hasText: title});
+        return items.filter({ hasText: title });
     }
 }

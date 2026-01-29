@@ -142,7 +142,9 @@ export class MenuAtom extends Atom {
         const count = await items.count();
         const selected: MenuItemAtom[] = [];
         for (let i = 0; i < count; i++) {
-            selected.push(Atom.findIn<MenuItemAtom>(MenuItemAtom, items.nth(i)));
+            selected.push(
+                Atom.findIn<MenuItemAtom>(MenuItemAtom, items.nth(i))
+            );
         }
         return selected;
     }
@@ -156,7 +158,9 @@ export class MenuAtom extends Atom {
         const count = await items.count();
         const selected: MenuItemAtom[] = [];
         for (let i = 0; i < count; i++) {
-            selected.push(Atom.findIn<MenuItemAtom>(MenuItemAtom, items.nth(i)));
+            selected.push(
+                Atom.findIn<MenuItemAtom>(MenuItemAtom, items.nth(i))
+            );
         }
         return selected;
     }

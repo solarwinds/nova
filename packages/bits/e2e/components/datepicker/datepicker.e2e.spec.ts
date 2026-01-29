@@ -118,7 +118,9 @@ test.describe("USERCONTROL datepicker", () => {
         // go back to a previous title
         await datepickerInline.goBack();
         // title before the initial one
-        await expect(datepickerInline.getTitleText).toContainText(previousTitle);
+        await expect(datepickerInline.getTitleText).toContainText(
+            previousTitle
+        );
         // going back to initial state
         await datepickerInline.goNext();
         // verifying we're where we stated and initial title is displayed
@@ -133,9 +135,9 @@ test.describe("USERCONTROL datepicker", () => {
         // go to year picker
         await datepickerInline.clickTitle();
 
-        await expect( datepickerInline.getTitleText).toContainText(nextTitle);
+        await expect(datepickerInline.getTitleText).toContainText(nextTitle);
         await expect(
-             datepickerInline.getYearElement(currentYear)
+            datepickerInline.getYearElement(currentYear)
         ).toBeVisible();
     });
 
@@ -190,7 +192,9 @@ test.describe("USERCONTROL datepicker", () => {
         );
 
         await datepickerWithPreserve.toggle();
-        await expect(datepickerWithPreserve.getActiveDayText).toContainText("20");
+        await expect(datepickerWithPreserve.getActiveDayText).toContainText(
+            "20"
+        );
     });
 
     test("should close datepicker popup upon click on a date", async () => {
@@ -322,11 +326,17 @@ test.describe("USERCONTROL datepicker", () => {
             await datepickerWithPreserve.clickInput();
             await datepickerWithPreserve.selectDate(11);
             await datepickerWithPreserve.toggle();
-            const oldValue = await Atom.find<Atom>(Atom, activeDateValueIdPreserved)
+            const oldValue = await Atom.find<Atom>(
+                Atom,
+                activeDateValueIdPreserved
+            )
                 .getLocator()
                 .textContent();
             await datepickerWithPreserve.selectDate(10);
-            const newValue = await Atom.find<Atom>(Atom, activeDateValueIdPreserved)
+            const newValue = await Atom.find<Atom>(
+                Atom,
+                activeDateValueIdPreserved
+            )
                 .getLocator()
                 .textContent();
 
@@ -356,7 +366,10 @@ test.describe("USERCONTROL datepicker", () => {
             await datepickerWithPreserve.selectDate(5);
             const month = moment().month();
             const monthName = DatepickerAtom.MONTHNAMES_SHORT[month];
-            const oldValue = await Atom.find<Atom>(Atom, activeDateValueIdPreserved)
+            const oldValue = await Atom.find<Atom>(
+                Atom,
+                activeDateValueIdPreserved
+            )
                 .getLocator()
                 .textContent();
             await datepickerWithPreserve.clickInput();
@@ -365,7 +378,10 @@ test.describe("USERCONTROL datepicker", () => {
             await datepickerWithPreserve.selectDate(
                 moment().date() > 15 ? 10 : 20
             );
-            const newValue = await Atom.find<Atom>(Atom, activeDateValueIdPreserved)
+            const newValue = await Atom.find<Atom>(
+                Atom,
+                activeDateValueIdPreserved
+            )
                 .getLocator()
                 .textContent();
 
@@ -394,14 +410,20 @@ test.describe("USERCONTROL datepicker", () => {
         test("should save hour correctly when triggered at 23:00 - 0:00", async () => {
             await datepickerWithInitAndPreserve.clickInput();
             await datepickerWithInitAndPreserve.selectDate(5);
-            const oldValue = await Atom.find<Atom>(Atom, initDateValueIdPreserved)
+            const oldValue = await Atom.find<Atom>(
+                Atom,
+                initDateValueIdPreserved
+            )
                 .getLocator()
                 .textContent();
             await datepickerWithInitAndPreserve.clickInput();
             await datepickerWithInitAndPreserve.selectDate(
                 moment().date() > 15 ? 10 : 20
             );
-            const newValue = await Atom.find<Atom>(Atom, initDateValueIdPreserved)
+            const newValue = await Atom.find<Atom>(
+                Atom,
+                initDateValueIdPreserved
+            )
                 .getLocator()
                 .textContent();
 
@@ -433,7 +455,9 @@ test.describe("USERCONTROL datepicker", () => {
     });
 
     test.describe("empty value >", () => {
-        test("should build day calendar from the scratch after clicking next and re-open in case of empty value", async ({ page }) => {
+        test("should build day calendar from the scratch after clicking next and re-open in case of empty value", async ({
+            page,
+        }) => {
             await datepickerBasic.clickInput();
             await datepickerBasic.selectDate(2);
             await datepickerBasic.clickInput();
@@ -451,7 +475,9 @@ test.describe("USERCONTROL datepicker", () => {
             expect(momentMonthInTitle.month()).toEqual(moment().month());
         });
 
-        test("should show days calendar after chosing month and re-open", async ({ page }) => {
+        test("should show days calendar after chosing month and re-open", async ({
+            page,
+        }) => {
             await datepickerBasic.clickInput();
             await datepickerBasic.selectDate(2);
             await datepickerBasic.clickInput();
@@ -582,21 +608,31 @@ test.describe("USERCONTROL datepicker", () => {
 
             await datepickerBasic.clickInput();
             await datepickerBasic.selectDate(newDateDay);
-            await expect(datepickerBasic.getInput).toHaveValue(newDateDefaultFormat);
+            await expect(datepickerBasic.getInput).toHaveValue(
+                newDateDefaultFormat
+            );
 
             await datepickerWithCustomDateFormat.clickInput();
             await datepickerWithCustomDateFormat.selectDate(newDateDay);
-            await expect(datepickerWithCustomDateFormat.getInput).toHaveValue(newDateCustomFormat);
+            await expect(datepickerWithCustomDateFormat.getInput).toHaveValue(
+                newDateCustomFormat
+            );
         });
 
         test("should validate typed in date and change it's format in accordance with dateFormat", async () => {
             await datepickerBasic.clearText();
             await datepickerBasic.acceptText(newDateCustomFormat);
-            await expect(datepickerBasic.getInput).toHaveValue(newDateDefaultFormat);
+            await expect(datepickerBasic.getInput).toHaveValue(
+                newDateDefaultFormat
+            );
             await datepickerBasic.isInputValid();
             await datepickerWithCustomDateFormat.clearText();
-            await datepickerWithCustomDateFormat.acceptText(newDateDefaultFormat);
-            await expect(datepickerWithCustomDateFormat.getInput).toHaveValue(newDateCustomFormat);
+            await datepickerWithCustomDateFormat.acceptText(
+                newDateDefaultFormat
+            );
+            await expect(datepickerWithCustomDateFormat.getInput).toHaveValue(
+                newDateCustomFormat
+            );
             await datepickerWithCustomDateFormat.isInputValid();
         });
 
@@ -609,7 +645,9 @@ test.describe("USERCONTROL datepicker", () => {
             await datepickerBasic.isInputValid();
             await datepickerWithCustomDateFormat.clearText();
             await datepickerWithCustomDateFormat.acceptText(invalidDate);
-            await expect(datepickerWithCustomDateFormat.getInput).toHaveValue(invalidDate);
+            await expect(datepickerWithCustomDateFormat.getInput).toHaveValue(
+                invalidDate
+            );
             await datepickerWithCustomDateFormat.isNotInputValid();
         });
     });

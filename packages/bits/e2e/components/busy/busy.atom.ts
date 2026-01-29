@@ -32,7 +32,9 @@ export class BusyAtom extends Atom {
     }
 
     public async isAppended(): Promise<boolean> {
-        return await this.root.locator(".nui-nova-busy__container").count() > 0;
+        return (
+            (await this.root.locator(".nui-nova-busy__container").count()) > 0
+        );
     }
 
     public async isDisplayed(): Promise<boolean> {
@@ -41,7 +43,7 @@ export class BusyAtom extends Atom {
     }
 
     public async isBusy(): Promise<boolean> {
-        return await this.root.locator(".nui-nova-busy__overlay").count() > 0;
+        return (await this.root.locator(".nui-nova-busy__overlay").count()) > 0;
     }
 
     public getProgress(): ProgressAtom {

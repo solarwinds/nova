@@ -29,5 +29,6 @@ export class ButtonAtom extends Atom {
         const disabled = await this.getLocator().getAttribute("disabled");
         return disabled !== null;
     }
-    public getIcon = (): IconAtom => Atom.findIn<IconAtom>(IconAtom, this.getLocator());
+    public getIcon = (): IconAtom =>
+        Atom.findIn<IconAtom>(IconAtom, this.getLocator());
 }

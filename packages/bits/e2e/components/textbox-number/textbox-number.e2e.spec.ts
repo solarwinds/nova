@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {test, expect, Helpers} from "../../setup";
+import { test, expect, Helpers } from "../../setup";
 
 import { Page } from "@playwright/test";
 import each from "lodash/each";
@@ -28,7 +28,9 @@ import { Atom } from "../../atom";
 
 // Helper to get the active element's tag name
 async function getActiveElementTag(page: Page) {
-    return await page.evaluate(() => document.activeElement?.tagName.toLowerCase());
+    return await page.evaluate(() =>
+        document.activeElement?.tagName.toLowerCase()
+    );
 }
 
 test.describe("USERCONTROL textbox-number >", () => {
@@ -43,11 +45,26 @@ test.describe("USERCONTROL textbox-number >", () => {
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("textbox/textbox-number-test", page);
 
-        basic = Atom.find<TextboxNumberAtom>(TextboxNumberAtom, "test-textbox-number");
-        minMax = Atom.find<TextboxNumberAtom>(TextboxNumberAtom, "test-textbox-number-min-max");
-        disabled = Atom.find<TextboxNumberAtom>(TextboxNumberAtom, "test-textbox-number-disabled");
-        validation = Atom.find<TextboxNumberAtom>(TextboxNumberAtom, "test-textbox-number-validation");
-        reactive = Atom.find<TextboxNumberAtom>(TextboxNumberAtom, "test-textbox-number-reactive");
+        basic = Atom.find<TextboxNumberAtom>(
+            TextboxNumberAtom,
+            "test-textbox-number"
+        );
+        minMax = Atom.find<TextboxNumberAtom>(
+            TextboxNumberAtom,
+            "test-textbox-number-min-max"
+        );
+        disabled = Atom.find<TextboxNumberAtom>(
+            TextboxNumberAtom,
+            "test-textbox-number-disabled"
+        );
+        validation = Atom.find<TextboxNumberAtom>(
+            TextboxNumberAtom,
+            "test-textbox-number-validation"
+        );
+        reactive = Atom.find<TextboxNumberAtom>(
+            TextboxNumberAtom,
+            "test-textbox-number-reactive"
+        );
     });
 
     test.describe("basic behavior >", () => {
@@ -84,7 +101,9 @@ test.describe("USERCONTROL textbox-number >", () => {
         });
 
         test("should have proper text", async () => {
-            expect(await component.getPlaceholder()).toBe("Enter value between 1 and 10");
+            expect(await component.getPlaceholder()).toBe(
+                "Enter value between 1 and 10"
+            );
         });
     });
 
@@ -196,7 +215,7 @@ test.describe("USERCONTROL textbox-number >", () => {
     });
 
     test.describe("keyboard navigation", () => {
-        test.beforeEach(async ({page}) => {
+        test.beforeEach(async ({ page }) => {
             await page.reload();
             Helpers.setPage(page);
 
@@ -207,20 +226,32 @@ test.describe("USERCONTROL textbox-number >", () => {
         test("should navigate between elements using TAB", async ({ page }) => {
             expect(await getActiveElementTag(page)).toEqual("body");
             await Helpers.pressKey("Tab");
-            expect(await component.input.innerHTML()).toEqual(await Helpers.evaluateActiveElementHtml());
+            expect(await component.input.innerHTML()).toEqual(
+                await Helpers.evaluateActiveElementHtml()
+            );
 
             await Helpers.pressKey("Tab");
-            expect(await component.upButton.getLocator().innerHTML()).toEqual(await Helpers.evaluateActiveElementHtml());
+            expect(await component.upButton.getLocator().innerHTML()).toEqual(
+                await Helpers.evaluateActiveElementHtml()
+            );
 
             await Helpers.pressKey("Tab");
-            expect(await component.downButton.getLocator().innerHTML()).toEqual(await Helpers.evaluateActiveElementHtml());
+            expect(await component.downButton.getLocator().innerHTML()).toEqual(
+                await Helpers.evaluateActiveElementHtml()
+            );
         });
 
-        test("should switch focus from input to button on click", async ({ page }) => {
+        test("should switch focus from input to button on click", async ({
+            page,
+        }) => {
             await Helpers.pressKey("Tab");
             await component.downButton.click();
-            expect(await component.input.innerHTML()).not.toEqual(await Helpers.evaluateActiveElementHtml());
-            expect(await component.downButton.getLocator().innerHTML()).toEqual(await Helpers.evaluateActiveElementHtml());
+            expect(await component.input.innerHTML()).not.toEqual(
+                await Helpers.evaluateActiveElementHtml()
+            );
+            expect(await component.downButton.getLocator().innerHTML()).toEqual(
+                await Helpers.evaluateActiveElementHtml()
+            );
         });
     });
 });

@@ -110,27 +110,26 @@ export class TableAtom extends Atom {
         expectedCellWithIconIndex: number
     ): Promise<void> {
         const tableHeaderRow = this.getRow(0);
-        const row = await tableHeaderRow
-            .locator("th").all();
+        const row = await tableHeaderRow.locator("th").all();
 
-            for (const headerCell of row) {
-                const headerCellIndex = row.indexOf(headerCell);
-                if (!headerCell) {
-                    throw new Error("headerCell is not defined");
-                }
-                if(headerCellIndex === expectedCellWithIconIndex){
-                    await this.isSortingIconDisplayed(
-                        headerCell,
-                        `Expected cell with index = ${headerCellIndex} to contain sorting icon`
-                    );
-                }
-                if(headerCellIndex !== expectedCellWithIconIndex) {
-                    await this.isNotSortingIconDisplayed(
-                        headerCell,
-                        `Expected cell with index = ${headerCellIndex} to not contain sorting icon`
-                    );
-                }
+        for (const headerCell of row) {
+            const headerCellIndex = row.indexOf(headerCell);
+            if (!headerCell) {
+                throw new Error("headerCell is not defined");
             }
+            if (headerCellIndex === expectedCellWithIconIndex) {
+                await this.isSortingIconDisplayed(
+                    headerCell,
+                    `Expected cell with index = ${headerCellIndex} to contain sorting icon`
+                );
+            }
+            if (headerCellIndex !== expectedCellWithIconIndex) {
+                await this.isNotSortingIconDisplayed(
+                    headerCell,
+                    `Expected cell with index = ${headerCellIndex} to not contain sorting icon`
+                );
+            }
+        }
     }
 
     public getCheckbox = (element: Locator): CheckboxAtom =>
@@ -150,9 +149,7 @@ export class TableAtom extends Atom {
     public async checkSelectability(enabled: boolean): Promise<boolean> {
         let rowsWithCheckboxes = 0;
         const rowCount = await this.getLocator().locator("tr").count();
-        const rows = await this.getLocator()
-            .locator("tr")
-            .all();
+        const rows = await this.getLocator().locator("tr").all();
         for (const row of rows) {
             const rowIndex: number | undefined = rows.indexOf(row);
             if (!row || isNil(rowIndex)) {
@@ -178,20 +175,20 @@ export class TableAtom extends Atom {
      *
      * @returns The aggregate clickability status for all body rows
      */
-    public async checkRow(checker: (index: number) => Promise<void> = this.isRowClickable): Promise<void> {
-        const rows = await this.getLocator()
-            .locator("tr")
-            .all();
+    public async checkRow(
+        checker: (index: number) => Promise<void> = this.isRowClickable
+    ): Promise<void> {
+        const rows = await this.getLocator().locator("tr").all();
         for (const row of rows) {
             const index: number | undefined = rows.indexOf(row);
-                if (!row || isNil(index)) {
-                    throw new Error("row is not defined");
-                }
-                // index >= 1 to skip header row
-                if (index >= 1) {
-                    await checker(index);
-                }
+            if (!row || isNil(index)) {
+                throw new Error("row is not defined");
             }
+            // index >= 1 to skip header row
+            if (index >= 1) {
+                await checker(index);
+            }
+        }
     }
 
     public async checkRowClickability(all: boolean): Promise<void> {
@@ -203,25 +200,21 @@ export class TableAtom extends Atom {
      */
     public async isAllRowsSelected(): Promise<boolean> {
         let failedTestsCount = 0;
-        const rows = await this.getLocator()
-            .locator("tr")
-            .all();
-            for (const row of rows) {
-                const index: number | undefined = rows.indexOf(row);
-                if (!row || isNil(index)) {
-                    throw new Error("row is not defined");
-                }
-                // index >= 1 to skip header row
-                if (index >= 1) {
-                    const checkBox = this.getCheckbox(
-                        this.getCell(index, 0)
-                    );
-                    const isChecked = await checkBox.isChecked();
-                    if (!isChecked) {
-                        failedTestsCount++;
-                    }
+        const rows = await this.getLocator().locator("tr").all();
+        for (const row of rows) {
+            const index: number | undefined = rows.indexOf(row);
+            if (!row || isNil(index)) {
+                throw new Error("row is not defined");
+            }
+            // index >= 1 to skip header row
+            if (index >= 1) {
+                const checkBox = this.getCheckbox(this.getCell(index, 0));
+                const isChecked = await checkBox.isChecked();
+                if (!isChecked) {
+                    failedTestsCount++;
                 }
             }
+        }
         return failedTestsCount === 0;
     }
 

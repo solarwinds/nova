@@ -32,10 +32,24 @@ test.describe("USERCONTROL progress", () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("progress/progress-test", page);
-        indeterminateProgress = Atom.find<ProgressAtom>(ProgressAtom, "nui-demo-indeterminate-progress");
-        compactProgress = Atom.find<ProgressAtom>(ProgressAtom, "nui-demo-compact-progress");
-        compactProgressBtn = Atom.find<ButtonAtom>(ButtonAtom, "nui-demo-compact-progress", false);
-        startBtn = Atom.find<ButtonAtom>(ButtonAtom, "nui-demo-indeterminate-progress-btn", false);
+        indeterminateProgress = Atom.find<ProgressAtom>(
+            ProgressAtom,
+            "nui-demo-indeterminate-progress"
+        );
+        compactProgress = Atom.find<ProgressAtom>(
+            ProgressAtom,
+            "nui-demo-compact-progress"
+        );
+        compactProgressBtn = Atom.find<ButtonAtom>(
+            ButtonAtom,
+            "nui-demo-compact-progress",
+            false
+        );
+        startBtn = Atom.find<ButtonAtom>(
+            ButtonAtom,
+            "nui-demo-indeterminate-progress-btn",
+            false
+        );
     });
 
     test.describe("stacked header progress", () => {
@@ -50,9 +64,14 @@ test.describe("USERCONTROL progress", () => {
             expect(await indeterminateProgress.canCancel()).toBe(false);
         });
 
-        test("should be possible to display tooltip on close button", async ({ page }) => {
+        test("should be possible to display tooltip on close button", async ({
+            page,
+        }) => {
             await indeterminateProgress.getCancelButton().getLocator().hover();
-            const buttonTooltip = Atom.findIn<TooltipAtom>(TooltipAtom, page.locator(".cdk-overlay-container"));
+            const buttonTooltip = Atom.findIn<TooltipAtom>(
+                TooltipAtom,
+                page.locator(".cdk-overlay-container")
+            );
             await buttonTooltip.waitToBeDisplayed();
             expect(await buttonTooltip.isTooltipDisplayed()).toBeTruthy();
             expect(await buttonTooltip.getTooltipText()).toContain("Cancel");

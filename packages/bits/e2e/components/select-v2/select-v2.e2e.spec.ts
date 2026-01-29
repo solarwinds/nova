@@ -23,7 +23,7 @@ import { Locator } from "playwright-core";
 import { SelectV2Atom } from "./select-v2.atom";
 import { Atom } from "../../atom";
 import { Helpers, test, expect } from "../../setup";
-import {ButtonAtom} from "../button/button.atom";
+import { ButtonAtom } from "../button/button.atom";
 import { DialogAtom } from "../dialog/dialog.atom";
 import { OverlayAtom } from "../overlay/overlay.atom";
 import { SwitchAtom } from "../switch/switch.atom";
@@ -43,7 +43,7 @@ test.describe("USERCONTROL Select V2 >", () => {
 
     let focusdrop: Locator;
 
-    test.beforeEach(async ({page}) => {
+    test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("select-v2/test", page);
     });
 
@@ -84,7 +84,7 @@ test.describe("USERCONTROL Select V2 >", () => {
 
             test("should not close on outside click is toggled", async () => {
                 await buttonShow.click();
-                await focusdrop.click({force: true});
+                await focusdrop.click({ force: true });
                 await selectCustomControl.popup.toBeOpened();
             });
 
@@ -99,7 +99,7 @@ test.describe("USERCONTROL Select V2 >", () => {
             test("should toggle and close on outside click", async () => {
                 await switchToOutsideClicksEnabled.toggle();
                 await buttonToggle.click();
-                await focusdrop.click({force: true});
+                await focusdrop.click({ force: true });
 
                 await selectCustomControl.popup.toBeHidden();
             });
@@ -114,7 +114,10 @@ test.describe("USERCONTROL Select V2 >", () => {
                 const containerBox = await container.boundingBox();
                 const optionBox = await option.getLocator().boundingBox();
                 const isOptionVisibleInScrollBox =
-                    optionBox && containerBox && optionBox.y > containerBox.y && optionBox.y < containerBox.y + containerBox.height;
+                    optionBox &&
+                    containerBox &&
+                    optionBox.y > containerBox.y &&
+                    optionBox.y < containerBox.y + containerBox.height;
                 expect(isOptionVisibleInScrollBox).toBeTruthy();
             });
         });
@@ -126,7 +129,7 @@ test.describe("USERCONTROL Select V2 >", () => {
             });
 
             test.afterEach(async () => {
-                await focusdrop.click({force: true});
+                await focusdrop.click({ force: true });
             });
 
             test("should toggle", async () => {
@@ -179,15 +182,21 @@ test.describe("USERCONTROL Select V2 >", () => {
                 const lastItemText = await lastItem.getLocator().textContent();
                 await Helpers.page.keyboard.press("PageDown");
                 await Helpers.page.keyboard.press("Enter");
-                await expect(selectErrorState.input).toHaveText(lastItemText || "");
+                await expect(selectErrorState.input).toHaveText(
+                    lastItemText || ""
+                );
             });
             test("should reach the top of the list on PAGE_UP button pressed", async () => {
                 const firstItem = await selectErrorState.getFirstOption();
-                const firstItemText = await firstItem.getLocator().textContent();
+                const firstItemText = await firstItem
+                    .getLocator()
+                    .textContent();
                 await Helpers.page.keyboard.press("PageDown");
                 await Helpers.page.keyboard.press("PageUp");
                 await Helpers.page.keyboard.press("Enter");
-                await expect(selectErrorState.input).toHaveText(firstItemText || "");
+                await expect(selectErrorState.input).toHaveText(
+                    firstItemText || ""
+                );
             });
         });
 
@@ -196,7 +205,9 @@ test.describe("USERCONTROL Select V2 >", () => {
                 await buttonDialog.click();
                 await selectInsideDialog.toggle();
                 await DialogAtom.dismissDialog();
-                const overlay = Helpers.page.locator(OverlayAtom.CDK_CONTAINER_PANE);
+                const overlay = Helpers.page.locator(
+                    OverlayAtom.CDK_CONTAINER_PANE
+                );
                 await expect(overlay).toHaveCount(0);
             });
         });

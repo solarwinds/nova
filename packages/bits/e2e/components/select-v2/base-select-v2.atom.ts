@@ -41,7 +41,9 @@ export class BaseSelectV2Atom extends Atom {
     public async options(): Promise<SelectV2OptionAtom> {
         let parentLocator: Locator;
         if (await this.popup.isOpened()) {
-            parentLocator = Helpers.page.locator("body > .cdk-overlay-container .cdk-overlay-pane");
+            parentLocator = Helpers.page.locator(
+                "body > .cdk-overlay-container .cdk-overlay-pane"
+            );
         } else {
             parentLocator = this.getLocator();
         }
@@ -74,7 +76,10 @@ export class BaseSelectV2Atom extends Atom {
             await this.toggle();
         }
 
-        return (await this.options()).nth<SelectV2OptionAtom>(SelectV2OptionAtom, index);
+        return (await this.options()).nth<SelectV2OptionAtom>(
+            SelectV2OptionAtom,
+            index
+        );
     }
 
     public async getFirstOption(): Promise<SelectV2OptionAtom> {

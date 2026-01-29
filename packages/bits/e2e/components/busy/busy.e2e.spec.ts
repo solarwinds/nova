@@ -20,7 +20,7 @@
 
 import { BusyAtom } from "./busy.atom";
 import { Atom } from "../../atom";
-import { Helpers, test, expect } from "../../setup";
+import { expect, Helpers, test } from "../../setup";
 import { ButtonAtom } from "../button/button.atom";
 import { SelectAtom } from "../select/select.atom";
 
@@ -30,13 +30,18 @@ test.describe("USERCONTROL Busy", () => {
     let select: SelectAtom;
 
     // Ensure correct type for busyById
-    const busyById = (id: string): BusyAtom => Atom.findIn(BusyAtom, Helpers.page.locator(`#${id}`)) as BusyAtom;
+    const busyById = (id: string): BusyAtom =>
+        Atom.findIn(BusyAtom, Helpers.page.locator(`#${id}`)) as BusyAtom;
 
-    test.beforeEach(async ({page}) => {
+    test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("busy/busy-test", page);
         busyBtn = Atom.find<ButtonAtom>(ButtonAtom, "nui-busy-test-button");
         busy = busyById("nui-busy-test-basic");
-        select = Atom.findIn<SelectAtom>(SelectAtom, Helpers.page.locator("#nui-busy-select-overlay"), true);
+        select = Atom.findIn<SelectAtom>(
+            SelectAtom,
+            Helpers.page.locator("#nui-busy-select-overlay"),
+            true
+        );
         await busyBtn.toBeVisible();
     });
 
@@ -71,7 +76,10 @@ test.describe("USERCONTROL Busy", () => {
 
         test("any appended to body popup (select) should not be overlapped by busy", async () => {
             await select.toggleMenu();
-            const item = Helpers.page.locator(".nui-select-popup-host .nui-menu-item", { hasText: "Item 2" });
+            const item = Helpers.page.locator(
+                ".nui-select-popup-host .nui-menu-item",
+                { hasText: "Item 2" }
+            );
             await item.click();
             expect(await select.input.innerText()).toBe("Item 2");
         });
@@ -80,11 +88,15 @@ test.describe("USERCONTROL Busy", () => {
             await select.getLocator().click();
             // Focus should not be on the last button
             const busyBtnId = await busyBtn.getLocator().getAttribute("id");
-            const activeId = await Helpers.page.evaluate(() => document.activeElement?.id);
+            const activeId = await Helpers.page.evaluate(
+                () => document.activeElement?.id
+            );
             expect(activeId).not.toEqual(busyBtnId);
             await Helpers.page.keyboard.press("Tab");
             // Now focus should be on the last button
-            const activeIdAfter = await Helpers.page.evaluate(() => document.activeElement?.id);
+            const activeIdAfter = await Helpers.page.evaluate(
+                () => document.activeElement?.id
+            );
             expect(activeIdAfter).toEqual(busyBtnId);
         });
 
@@ -92,7 +104,9 @@ test.describe("USERCONTROL Busy", () => {
             await busyBtn.click(); // deactivate busy
             await select.getLocator().click();
             await Helpers.page.keyboard.press("Tab");
-            const activeId = await Helpers.page.evaluate(() => document.activeElement?.id);
+            const activeId = await Helpers.page.evaluate(
+                () => document.activeElement?.id
+            );
             expect(activeId).toEqual("focusable-button-inside-busy-component");
         });
     });

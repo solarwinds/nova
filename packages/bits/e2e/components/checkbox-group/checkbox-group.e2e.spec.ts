@@ -35,8 +35,11 @@ test.describe("USERCONTROL Checkbox Group", () => {
     let checkboxGroupPartOfForm: CheckboxGroupAtom;
     let submitBtn: ButtonAtom;
 
-    test.beforeEach(async ({page}) => {
-        await Helpers.prepareBrowser("checkbox-group/checkbox-group-test", page);
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser(
+            "checkbox-group/checkbox-group-test",
+            page
+        );
         checkboxGroup = Atom.find<CheckboxGroupAtom>(
             CheckboxGroupAtom,
             "nui-demo-checkbox-group-basic"
@@ -53,11 +56,14 @@ test.describe("USERCONTROL Checkbox Group", () => {
             CheckboxGroupAtom,
             "nui-demo-checkbox-group-part-of-form"
         );
-        submitBtn = Atom.findIn<ButtonAtom>(ButtonAtom).filter<ButtonAtom>(ButtonAtom, {hasText: "Submit"});
+        submitBtn = Atom.findIn<ButtonAtom>(ButtonAtom).filter<ButtonAtom>(
+            ButtonAtom,
+            { hasText: "Submit" }
+        );
 
         checkbox1 = checkboxGroup.getCheckbox("Cabbage");
-        checkbox2 =  checkboxGroup.getCheckbox("Potato");
-        checkbox3 =  checkboxGroup.getCheckbox("Tomato");
+        checkbox2 = checkboxGroup.getCheckbox("Potato");
+        checkbox3 = checkboxGroup.getCheckbox("Tomato");
         checkbox4 = checkboxGroup.getCheckbox("Carrot");
     });
 
@@ -76,7 +82,9 @@ test.describe("USERCONTROL Checkbox Group", () => {
         const parentElement = checkboxGroupJustified.getLocator();
         const componentBox = await component.boundingBox();
         // Get the computed width from CSS
-        const cssWidth = await parentElement.evaluate((el) => window.getComputedStyle(el).width);
+        const cssWidth = await parentElement.evaluate(
+            (el) => window.getComputedStyle(el).width
+        );
         const widthValue = parseFloat(cssWidth);
         expect(widthValue).toBeGreaterThanOrEqual(componentBox!.width - 5);
         expect(widthValue).toBeLessThanOrEqual(componentBox!.width + 5);

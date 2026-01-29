@@ -57,18 +57,26 @@ export class MenuItemAtom extends Atom {
     }
 
     public async isActionItem(): Promise<boolean> {
-        return await this.getLocator().locator(MENU_ACTION_SELECTOR).count() > 0;
+        return (
+            (await this.getLocator().locator(MENU_ACTION_SELECTOR).count()) > 0
+        );
     }
 
     public async isLinkItem(): Promise<boolean> {
-        return await this.getLocator().locator(MENU_LINK_SELECTOR).count() > 0;
+        return (
+            (await this.getLocator().locator(MENU_LINK_SELECTOR).count()) > 0
+        );
     }
 
     public async isOptionItem(): Promise<boolean> {
-        return await this.getLocator().locator(MENU_OPTION_SELECTOR).count() > 0;
+        return (
+            (await this.getLocator().locator(MENU_OPTION_SELECTOR).count()) > 0
+        );
     }
 
     public async isSwitchItem(): Promise<boolean> {
-        return await this.getLocator().locator(MENU_SWITCH_SELECTOR).count() > 0;
+        return (
+            (await this.getLocator().locator(MENU_SWITCH_SELECTOR).count()) > 0
+        );
     }
 }

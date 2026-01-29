@@ -26,11 +26,17 @@ export class DateTimepickerAtom extends Atom {
     public static CSS_CLASS = "nui-datetime-picker";
 
     public get datePicker(): DatepickerAtom {
-        return DatepickerAtom.findIn<DatepickerAtom>(DatepickerAtom, this.getLocator());
+        return DatepickerAtom.findIn<DatepickerAtom>(
+            DatepickerAtom,
+            this.getLocator()
+        );
     }
 
     public get timePicker(): TimepickerAtom {
-        return TimepickerAtom.findIn<TimepickerAtom>(TimepickerAtom, this.getLocator());
+        return TimepickerAtom.findIn<TimepickerAtom>(
+            TimepickerAtom,
+            this.getLocator()
+        );
     }
 
     public async isDisabled(): Promise<void> {

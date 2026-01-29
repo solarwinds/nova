@@ -35,7 +35,7 @@ export class SelectorAtom extends Atom {
         }
         await this.itemByText(selectionType).isVisible();
         // https://playwright.dev/docs/actionability#receives-events
-        await this.itemByText(selectionType).click({force: true});
+        await this.itemByText(selectionType).click({ force: true });
     }
 
     public async selectAppendedToBodyItem(
@@ -46,7 +46,9 @@ export class SelectorAtom extends Atom {
         }
         await this.appendedToBodyItemByText(selectionType).isVisible();
         // https://playwright.dev/docs/actionability#receives-events
-        await this.appendedToBodyItemByText(selectionType).click({force: true});
+        await this.appendedToBodyItemByText(selectionType).click({
+            force: true,
+        });
     }
 
     public get getCheckbox(): CheckboxAtom {

@@ -63,7 +63,7 @@ describe("a11y: dialog", () => {
     test.beforeEach(async () => {
         await Helpers.prepareBrowser("dialog/dialog-visual-test");
 
-        buttonResponsiveDialog =Helpers.page.locator(
+        buttonResponsiveDialog = Helpers.page.locator(
             by.id("nui-visual-test-responsive-dialog-btn")
         );
 

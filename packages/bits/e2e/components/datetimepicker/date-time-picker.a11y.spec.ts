@@ -28,7 +28,7 @@ test.describe("a11y: date time picker", () => {
     let dateTimePickerRanged: DateTimepickerAtom;
     let dialogButtonElem: Locator;
 
-    test.beforeEach(async ({page}) => {
+    test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser(
             "date-time-picker/date-time-picker-visual-test",
             page
@@ -38,11 +38,14 @@ test.describe("a11y: date time picker", () => {
             DateTimepickerAtom,
             "nui-basic-date-time-picker"
         );
-        dateTimePickerRanged = Atom.find<DateTimepickerAtom>(DateTimepickerAtom, "nui-date-time-picker-ranged");
+        dateTimePickerRanged = Atom.find<DateTimepickerAtom>(
+            DateTimepickerAtom,
+            "nui-date-time-picker-ranged"
+        );
         dialogButtonElem = Helpers.page.locator("#nui-visual-test-dialog-btn");
     });
 
-    test("should verify a11y of date time picker", async ({runA11yScan}) => {
+    test("should verify a11y of date time picker", async ({ runA11yScan }) => {
         await runA11yScan(DateTimepickerAtom);
     });
 

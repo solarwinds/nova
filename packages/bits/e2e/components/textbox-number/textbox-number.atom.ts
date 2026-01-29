@@ -71,7 +71,7 @@ export class TextboxNumberAtom extends Atom {
         const readonly = await this.input.getAttribute("readonly");
         const upDisabled = await this.upButton.isDisabled();
         const downDisabled = await this.downButton.isDisabled();
-        return (readonly !== null) && upDisabled && downDisabled;
+        return readonly !== null && upDisabled && downDisabled;
     }
 
     public async isValid(): Promise<boolean> {

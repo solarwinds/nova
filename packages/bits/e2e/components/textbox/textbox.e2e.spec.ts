@@ -11,7 +11,10 @@ test.describe("USERCONTROL textbox >", () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("textbox", page);
-        textBox = Atom.find<TextboxAtom>(TextboxAtom, "demo-options-textbox-item");
+        textBox = Atom.find<TextboxAtom>(
+            TextboxAtom,
+            "demo-options-textbox-item"
+        );
         disabledTextbox = Atom.find<TextboxAtom>(
             TextboxAtom,
             "demo-options-disabled-textbox-item"
@@ -134,5 +137,4 @@ test.describe("USERCONTROL textbox >", () => {
     //         }
     //     });
     // });
-
 });

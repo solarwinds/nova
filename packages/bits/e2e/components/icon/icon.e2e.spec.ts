@@ -3,7 +3,7 @@ import { Atom } from "../../atom";
 import { test, Helpers, expect } from "../../setup";
 
 test.describe("USERCONTROL icon", () => {
-    test.beforeEach(async ({page}) => {
+    test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("icon", page);
     });
 

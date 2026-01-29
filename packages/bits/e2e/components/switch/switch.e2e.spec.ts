@@ -68,7 +68,9 @@ test.describe("USERCONTROL switch", () => {
         await disabledSwitchComponent.isDisabled();
 
         // webdriver does not allow clicking on disabled elements, so we have to use browser action
-        await disabledSwitchComponent.getLocator().evaluate((el: HTMLElement) => el.click());
+        await disabledSwitchComponent
+            .getLocator()
+            .evaluate((el: HTMLElement) => el.click());
 
         await expect(switchComponent.labelElement).toContainText("On");
     });
