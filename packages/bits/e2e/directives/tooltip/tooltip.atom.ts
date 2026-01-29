@@ -21,41 +21,26 @@
 import { Locator, expect } from "@playwright/test";
 
 import { Atom } from "../../atom";
-import { ButtonAtom } from "../button/button.atom";
 
-export class SpinnerAtom extends Atom {
-    public static CSS_CLASS = "nui-spinner";
-    public static defaultDelay = 250;
+export class TooltipAtom extends Atom {
+    public static CSS_CLASS = "nui-tooltip-body";
+    public static animationDuration = 200; // ms
 
     private get root(): Locator {
         return this.getLocator();
     }
 
-    public async getSize(): Promise<{ width: number; height: number }> {
-        const box = await this.root.boundingBox();
-        return { width: box?.width ?? 0, height: box?.height ?? 0 };
-    }
-
-    public async waitForDisplayed(
-        timeout: number = SpinnerAtom.defaultDelay * 1.5
+    public async waitToBeDisplayed(
+        timeout: number = TooltipAtom.animationDuration * 1.5
     ): Promise<void> {
         await expect(this.root).toBeVisible({ timeout });
     }
 
-    public async waitForHidden(
-        timeout: number = SpinnerAtom.defaultDelay * 1.5
-    ): Promise<void> {
-        await expect(this.root).toBeHidden({ timeout });
+    public async isTooltipDisplayed(): Promise<boolean> {
+        return await this.root.isVisible();
     }
 
-    public async getLabel(): Promise<string> {
-        return await this.root.locator(".nui-spinner__message").innerText();
-    }
-
-    public async cancel(): Promise<void> {
-        const cancelButton = this.root.locator("button");
-        if (await cancelButton.isVisible()) {
-            await cancelButton.click();
-        }
+    public async getTooltipText(): Promise<string> {
+        return await this.root.innerText();
     }
 }

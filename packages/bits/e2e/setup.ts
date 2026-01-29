@@ -73,6 +73,12 @@ export class Helpers {
             await Helpers.page.keyboard.press(key);
         }
     }
+    static async evaluateActiveElementHtml(): Promise<string | null> {
+        return Helpers.page.evaluate(() => {
+            const el = document.activeElement;
+            return el ? el.innerHTML : null;
+        });
+    }
 
     static async disableCSSAnimations(type: Animations): Promise<any> {
         let disableTransitions =

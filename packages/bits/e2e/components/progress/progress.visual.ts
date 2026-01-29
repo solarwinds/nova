@@ -18,44 +18,42 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Locator, expect } from "@playwright/test";
+import { $, browser, by, element, ExpectedConditions } from "protractor";
 
+import { ProgressAtom } from "./progress.atom";
 import { Atom } from "../../atom";
+import { Animations, Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
 import { ButtonAtom } from "../button/button.atom";
 
-export class SpinnerAtom extends Atom {
-    public static CSS_CLASS = "nui-spinner";
-    public static defaultDelay = 250;
+const name: string = "Progress";
 
-    private get root(): Locator {
-        return this.getLocator();
-    }
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera, startProgressBasic: ButtonAtom;
 
-    public async getSize(): Promise<{ width: number; height: number }> {
-        const box = await this.root.boundingBox();
-        return { width: box?.width ?? 0, height: box?.height ?? 0 };
-    }
+    beforeAll(async () => {
+        await Helpers.prepareBrowser("progress/progress-visual-test");
+        await Helpers.disableCSSAnimations(Animations.ALL);
 
-    public async waitForDisplayed(
-        timeout: number = SpinnerAtom.defaultDelay * 1.5
-    ): Promise<void> {
-        await expect(this.root).toBeVisible({ timeout });
-    }
+        startProgressBasic = new ButtonAtom(
+            element(by.id("nui-demo-start-basic-progress"))
+        );
 
-    public async waitForHidden(
-        timeout: number = SpinnerAtom.defaultDelay * 1.5
-    ): Promise<void> {
-        await expect(this.root).toBeHidden({ timeout });
-    }
+        camera = new Camera().loadFilm(browser, name);
+    });
 
-    public async getLabel(): Promise<string> {
-        return await this.root.locator(".nui-spinner__message").innerText();
-    }
+    it(`${name} visual test`, async () => {
+        await camera.turn.on();
 
-    public async cancel(): Promise<void> {
-        const cancelButton = this.root.locator("button");
-        if (await cancelButton.isVisible()) {
-            await cancelButton.click();
-        }
-    }
-}
+        await startProgressBasic.click();
+        await browser.wait(
+            ExpectedConditions.visibilityOf($(Atom.getSelector(ProgressAtom)))
+        );
+        await camera.say.cheese(`Default`);
+
+        await Helpers.switchDarkTheme("on");
+        await camera.say.cheese(`Dark theme`);
+
+        await camera.turn.off();
+    }, 100000);
+});

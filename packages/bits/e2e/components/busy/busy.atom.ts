@@ -18,44 +18,37 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Locator, expect } from "@playwright/test";
+import { Locator } from "@playwright/test";
 
 import { Atom } from "../../atom";
-import { ButtonAtom } from "../button/button.atom";
+import { ProgressAtom } from "../progress/progress.atom";
+import { SpinnerAtom } from "../spinner/spinner.atom";
 
-export class SpinnerAtom extends Atom {
-    public static CSS_CLASS = "nui-spinner";
-    public static defaultDelay = 250;
+export class BusyAtom extends Atom {
+    public static CSS_CLASS = "nui-nova-busy";
 
     private get root(): Locator {
         return this.getLocator();
     }
 
-    public async getSize(): Promise<{ width: number; height: number }> {
-        const box = await this.root.boundingBox();
-        return { width: box?.width ?? 0, height: box?.height ?? 0 };
+    public async isAppended(): Promise<boolean> {
+        return await this.root.locator(".nui-nova-busy__container").count() > 0;
     }
 
-    public async waitForDisplayed(
-        timeout: number = SpinnerAtom.defaultDelay * 1.5
-    ): Promise<void> {
-        await expect(this.root).toBeVisible({ timeout });
+    public async isDisplayed(): Promise<boolean> {
+        const container = this.root.locator(".nui-nova-busy__container");
+        return await container.isVisible();
     }
 
-    public async waitForHidden(
-        timeout: number = SpinnerAtom.defaultDelay * 1.5
-    ): Promise<void> {
-        await expect(this.root).toBeHidden({ timeout });
+    public async isBusy(): Promise<boolean> {
+        return await this.root.locator(".nui-nova-busy__overlay").count() > 0;
     }
 
-    public async getLabel(): Promise<string> {
-        return await this.root.locator(".nui-spinner__message").innerText();
+    public getProgress(): ProgressAtom {
+        return Atom.findIn<ProgressAtom>(ProgressAtom, this.root);
     }
 
-    public async cancel(): Promise<void> {
-        const cancelButton = this.root.locator("button");
-        if (await cancelButton.isVisible()) {
-            await cancelButton.click();
-        }
+    public getSpinner(): SpinnerAtom {
+        return Atom.findIn<SpinnerAtom>(SpinnerAtom, this.root);
     }
 }

@@ -8,7 +8,7 @@ This document tracks the migration of component tests from Protractor to Playwri
 | ---------------------- | ---------------- | ----- |
 | badge                  | ⬜ Not Started   |       |
 | breadcrumb             | ✅ Completed     |       |
-| busy                   | ⬜ Not Started   |       |
+| busy                   | ✅ Completed     |       |
 | button                 | ✅ Completed     |       |
 | checkbox               | ✅ Completed     |       |
 | checkbox-group         | ✅ Completed     |       |
@@ -19,8 +19,8 @@ This document tracks the migration of component tests from Protractor to Playwri
 | convenience            | ⬜ Not Started   |       |
 | data-filter            | ⬜ Not Started   |       |
 | datepicker             | ✅ Completed     |       |
-| datetimepicker         | ✅ Completed   |       |
-| dialog                 | 🔄 In Progress   |       |
+| datetimepicker         | ✅ Completed     |       |
+| dialog                 | ✅ Completed     |       |
 | divider                | ⬜ Not Started   |       |
 | drag-and-drop          | ⬜ Not Started   |       |
 | expander               | ⬜ Not Started   |       |
@@ -29,28 +29,28 @@ This document tracks the migration of component tests from Protractor to Playwri
 | icon                   | ✅ Completed     |       |
 | image                  | ⬜ Not Started   |       |
 | layout                 | ⬜ Not Started   |       |
-| menu                   | ⬜ Not Started   |       |
+| menu                   | ✅ Completed     |       |
 | menu-popup             | ⬜ Not Started   |       |
 | message                | ⬜ Not Started   |       |
 | overlay                | ⬜ Not Started   |       |
-| paginator              | 🔄 In Progress   |       |
+| paginator              | ✅ Completed     |       |
 | panel                  | ⬜ Not Started   |       |
 | popover                | ⬜ Not Started   |       |
 | popup                  | ✅ Completed     |       |
-| progress               | ⬜ Not Started   |       |
+| progress               | ✅ Completed  |       |
 | radio-group            | ⬜ Not Started   |       |
 | repeat                 | ⬜ Not Started   |       |
 | search                 | ⬜ Not Started   |       |
-| select                 | ⬜ Not Started   |       |
-| select-v2              | 🔄 In Progress   |       |
+| select                 | ✅ Completed   |       |
+| select-v2              | ✅ Completed   |       |
 | selector               | ✅ Completed     |       |
 | sorter                 | ⬜ Not Started   |       |
-| spinner                | ⬜ Not Started   |       |
+| spinner                | ✅ Completed     |       |
 | switch                 | ✅ Completed     |       |
 | tab-heading-group      | ⬜ Not Started   |       |
 | table                  | 🔄 In Progress   |       |
 | textbox                | ✅ Completed     |       |
-| textbox-number         | ⬜ Not Started   |       |
+| textbox-number         | ✅ Completed   |       |
 | time-frame-picker      | ⬜ Not Started   |       |
 | timepicker             | ✅ Completed     |       |
 | toolbar                | ⬜ Not Started   |       |
@@ -59,7 +59,7 @@ This document tracks the migration of component tests from Protractor to Playwri
 | wizard-v2              | ⬜ Not Started   |       |
 
 📊 Component Progress:
-Completed: 12 / 49 → ~24.5%
+Completed: 22 / 49 → ~44.9%
 
 ## 📁 Directives
 

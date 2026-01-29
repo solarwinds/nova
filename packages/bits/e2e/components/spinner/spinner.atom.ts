@@ -21,7 +21,6 @@
 import { Locator, expect } from "@playwright/test";
 
 import { Atom } from "../../atom";
-import { ButtonAtom } from "../button/button.atom";
 
 export class SpinnerAtom extends Atom {
     public static CSS_CLASS = "nui-spinner";

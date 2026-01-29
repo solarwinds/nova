@@ -33,7 +33,6 @@ import { NuiDashboardsModule } from "../../dashboards.module";
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { IPizza, PIZZAGNA_EVENT_BUS } from "../../types";
-import {VERSION} from "@angular/cdk";
 
 @Component({
     selector: "test-layout",
