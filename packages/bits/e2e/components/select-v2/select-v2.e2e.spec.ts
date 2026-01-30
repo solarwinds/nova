@@ -23,7 +23,6 @@ import { Locator } from "playwright-core";
 import { SelectV2Atom } from "./select-v2.atom";
 import { Atom } from "../../atom";
 import { Helpers, test, expect } from "../../setup";
-import { ButtonAtom } from "../button/button.atom";
 import { DialogAtom } from "../dialog/dialog.atom";
 import { OverlayAtom } from "../overlay/overlay.atom";
 import { SwitchAtom } from "../switch/switch.atom";

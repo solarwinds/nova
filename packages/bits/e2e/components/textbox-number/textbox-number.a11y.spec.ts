@@ -18,21 +18,17 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser } from "protractor";
+import { TextboxNumberAtom } from "./textbox-number.atom";
+import { test, Helpers } from "../../setup";
 
-import { Atom, SpinnerAtom } from "../../";
-import { Animations, assertA11y, Helpers } from "../../helpers";
-
-describe("a11y: spinner", () => {
+describe("a11y: textbox-number", () => {
     const rulesToDisable: string[] = [];
 
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("spinner/spinner-visual-test");
-        await Helpers.disableCSSAnimations(Animations.ALL);
-        await Atom.wait(async () => (await Atom.findCount(SpinnerAtom)) === 9);
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("textbox/textbox-number-visual-test", page);
     });
 
-    it("should check a11y of spinner", async () => {
-        await assertA11y(browser, SpinnerAtom, rulesToDisable);
+    test("should check a11y of textbox-number", async ({ runA11yScan }) => {
+        await runA11yScan(TextboxNumberAtom, rulesToDisable);
     });
 });

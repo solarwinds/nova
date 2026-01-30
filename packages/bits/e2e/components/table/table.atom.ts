@@ -1,4 +1,5 @@
 import { Locator } from "@playwright/test";
+// eslint-disable-next-line no-restricted-imports
 import { isNil } from "lodash";
 
 import { Atom } from "../../atom";
@@ -28,10 +29,10 @@ export class TableAtom extends Atom {
         return tableRow.locator("td").nth(cellIndex);
     }
 
-    public getRowContent(rowIndex: number): Locator {
+    public async getRowContent(rowIndex: number): Promise<Array<string>> {
         const tableRow = this.getRow(rowIndex);
         const tableCellTag = rowIndex === 0 ? "th" : "td";
-        return tableRow.locator(tableCellTag);
+        return tableRow.locator(tableCellTag).allTextContents();
     }
 
     public getRow = (rowIndex: number): Locator =>
@@ -51,7 +52,7 @@ export class TableAtom extends Atom {
      * Check whether a row is selected
      */
     public isRowSelected = async (rowIndex: number): Promise<void> => {
-        await expect(this.getRow(rowIndex)).toHaveClass(
+        await expect(this.getRow(rowIndex)).toContainClass(
             "nui-table__table-row--selected"
         );
     };
@@ -60,16 +61,16 @@ export class TableAtom extends Atom {
      * Check whether any part of a row can be clicked to make a selection (not just the checkbox)
      */
     public isRowClickable = async (rowIndex: number): Promise<void> => {
-        await expect(this.getRow(rowIndex)).toHaveClass(
-            "nui-table__table-row--selected"
+        await expect(this.getRow(rowIndex)).toContainClass(
+            "nui-table__table-row--clickable"
         );
     };
     /**
      * Check whether any part of a row can be clicked to make a selection (not just the checkbox)
      */
     public isNotRowClickable = async (rowIndex: number): Promise<void> => {
-        await expect(this.getRow(rowIndex)).not.toHaveClass(
-            "nui-table__table-row--selected"
+        await expect(this.getRow(rowIndex)).not.toContainClass(
+            "nui-table__table-row--clickable"
         );
     };
 
@@ -110,26 +111,13 @@ export class TableAtom extends Atom {
         expectedCellWithIconIndex: number
     ): Promise<void> {
         const tableHeaderRow = this.getRow(0);
-        const row = await tableHeaderRow.locator("th").all();
-
-        for (const headerCell of row) {
-            const headerCellIndex = row.indexOf(headerCell);
-            if (!headerCell) {
-                throw new Error("headerCell is not defined");
-            }
-            if (headerCellIndex === expectedCellWithIconIndex) {
-                await this.isSortingIconDisplayed(
-                    headerCell,
-                    `Expected cell with index = ${headerCellIndex} to contain sorting icon`
-                );
-            }
-            if (headerCellIndex !== expectedCellWithIconIndex) {
-                await this.isNotSortingIconDisplayed(
-                    headerCell,
-                    `Expected cell with index = ${headerCellIndex} to not contain sorting icon`
-                );
-            }
-        }
+        const cell = tableHeaderRow
+            .locator("th")
+            .nth(expectedCellWithIconIndex);
+        await this.isSortingIconDisplayed(
+            cell,
+            `Expected cell with index = ${expectedCellWithIconIndex} to contain sorting icon`
+        );
     }
 
     public getCheckbox = (element: Locator): CheckboxAtom =>
@@ -147,7 +135,7 @@ export class TableAtom extends Atom {
      * @returns The aggregate selectability status for all rows
      */
     public async checkSelectability(enabled: boolean): Promise<boolean> {
-        let rowsWithCheckboxes = 0;
+        let selectionValidationPassed = 0;
         const rowCount = await this.getLocator().locator("tr").count();
         const rows = await this.getLocator().locator("tr").all();
         for (const row of rows) {
@@ -155,15 +143,22 @@ export class TableAtom extends Atom {
             if (!row || isNil(rowIndex)) {
                 throw new Error("row is not defined");
             }
-            const checkBoxPresent = await Atom.findIn<CheckboxAtom>(
-                CheckboxAtom,
-                this.getCell(rowIndex, 0)
-            ).getInputElement.isVisible();
-            if (checkBoxPresent) {
-                rowsWithCheckboxes++;
+            const cell = this.getCell(rowIndex, 0);
+            if(enabled){
+                await Atom.findIn<CheckboxAtom>(
+                    CheckboxAtom,
+                    cell
+                ).toBeVisible();
+            } else {
+                await Atom.findIn<CheckboxAtom>(
+                    CheckboxAtom,
+                    cell
+                ).toBeHidden();
             }
+
+            selectionValidationPassed++;
         }
-        return rowsWithCheckboxes === (enabled ? rowCount : 0);
+        return selectionValidationPassed === rowCount;
     }
 
     /**
@@ -199,7 +194,6 @@ export class TableAtom extends Atom {
      * Checks if all checkboxes in all rows selected
      */
     public async isAllRowsSelected(): Promise<boolean> {
-        let failedTestsCount = 0;
         const rows = await this.getLocator().locator("tr").all();
         for (const row of rows) {
             const index: number | undefined = rows.indexOf(row);
@@ -209,13 +203,28 @@ export class TableAtom extends Atom {
             // index >= 1 to skip header row
             if (index >= 1) {
                 const checkBox = this.getCheckbox(this.getCell(index, 0));
-                const isChecked = await checkBox.isChecked();
-                if (!isChecked) {
-                    failedTestsCount++;
-                }
+                await checkBox.toBeChecked();
             }
         }
-        return failedTestsCount === 0;
+        return true;
+    }
+    /**
+     * Checks if all checkboxes in all rows selected
+     */
+    public async isAllRowsNotSelected(): Promise<boolean> {
+        const rows = await this.getLocator().locator("tr").all();
+        for (const row of rows) {
+            const index: number | undefined = rows.indexOf(row);
+            if (!row || isNil(index)) {
+                throw new Error("row is not defined");
+            }
+            // index >= 1 to skip header row
+            if (index >= 1) {
+                const checkBox = this.getCheckbox(this.getCell(index, 0));
+                await checkBox.toNotBeChecked();
+            }
+        }
+        return true;
     }
 
     private isSortingIconDisplayed = async (

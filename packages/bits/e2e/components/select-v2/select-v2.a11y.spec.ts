@@ -18,11 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser, Key } from "protractor";
-
-import { Atom } from "../../atom";
-import { Animations, runA11yScan, Helpers } from "../../helpers";
-import { SelectV2Atom } from "../public_api";
+import { SelectV2Atom } from "./select-v2.atom";
+import { test, Helpers, Animations } from "../../setup";
 
 describe("a11y: select-v2", () => {
     const rulesToDisable: string[] = [
@@ -37,33 +34,30 @@ describe("a11y: select-v2", () => {
     let selectInForm: SelectV2Atom;
     let selectOverlayStyles: SelectV2Atom;
 
-    test.beforeEach(async () => {
-        await Helpers.prepareBrowser("select-v2/test");
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("select-v2/test", page);
         await Helpers.disableCSSAnimations(Animations.ALL);
-
-        selectBasic = Atom.find(SelectV2Atom, "basic");
-        selectErrorState = Atom.find(SelectV2Atom, "error-state");
-        selectDisplayValueSmall = Atom.find(
-            SelectV2Atom,
-            "display-value-mw200"
-        );
-        selectDisplayValue = Atom.find(SelectV2Atom, "display-value");
-        selectGrouped = Atom.find(SelectV2Atom, "grouped");
-        selectInForm = Atom.find(SelectV2Atom, "reactive-form");
-        selectOverlayStyles = Atom.find(SelectV2Atom, "overlay-styles");
+        selectBasic = SelectV2Atom.find<SelectV2Atom>(SelectV2Atom,"basic");
+        selectErrorState = SelectV2Atom.find<SelectV2Atom>(SelectV2Atom,"error-state");
+        selectDisplayValueSmall = SelectV2Atom.find<SelectV2Atom>(SelectV2Atom,"display-value-mw200");
+        selectDisplayValue = SelectV2Atom.find<SelectV2Atom>(SelectV2Atom,"display-value");
+        selectGrouped = SelectV2Atom.find<SelectV2Atom>(SelectV2Atom,"grouped");
+        selectInForm = SelectV2Atom.find<SelectV2Atom>(SelectV2Atom,"reactive-form");
+        selectOverlayStyles = SelectV2Atom.find<SelectV2Atom>(SelectV2Atom,"overlay-styles");
     });
 
-    test("should check a11y of select-v2", async () => {
-        await runA11yScan(browser, SelectV2Atom, rulesToDisable);
+    test("should check a11y of select-v2", async ({ runA11yScan }) => {
+        await runA11yScan(SelectV2Atom, rulesToDisable);
     });
 
-    test("should check a11y of select-v2", async () => {
-        await Helpers.pressKey(Key.TAB, 3);
-        await (await selectBasic.getOption(3)).hover();
-        await runA11yScan(browser, SelectV2Atom, rulesToDisable);
+    test("should check a11y of select-v2 after keyboard and hover", async ({ runA11yScan }) => {
+        await Helpers.pressKey("Tab", 3);
+        const option = await selectBasic.getOption(3);
+        await option.hover();
+        await runA11yScan(SelectV2Atom, rulesToDisable);
     });
 
-    test("should check a11y of select-v2", async () => {
+    test("should check a11y of select-v2 in dark theme and with interactions", async ({ runA11yScan }) => {
         await Helpers.switchDarkTheme("on");
         await selectErrorState.toggle();
         await (await selectErrorState.getFirstOption()).click();
@@ -71,19 +65,22 @@ describe("a11y: select-v2", () => {
         await (await selectDisplayValue.getFirstOption()).click();
         await (await selectGrouped.getLastOption()).click();
         await (await selectDisplayValueSmall.getOption(6)).click();
-        await (await selectDisplayValueSmall.getOption(3)).hover();
-        await runA11yScan(browser, SelectV2Atom, rulesToDisable);
+        const hoverOption = await selectDisplayValueSmall.getOption(3);
+        await hoverOption.hover();
+        await runA11yScan(SelectV2Atom, rulesToDisable);
+        await Helpers.switchDarkTheme("off");
     });
 
-    test("should check a11y of select-v2", async () => {
+    test("should check a11y of select-v2 after grouped hover", async ({ runA11yScan }) => {
         await Helpers.switchDarkTheme("off");
         await selectGrouped.toggle();
-        await (await selectGrouped.getLastOption()).hover();
-        await runA11yScan(browser, SelectV2Atom, rulesToDisable);
+        const lastOption = await selectGrouped.getLastOption();
+        await lastOption.hover();
+        await runA11yScan(SelectV2Atom, rulesToDisable);
     });
 
-    test("should check a11y of select-v2", async () => {
+    test("should check a11y of select-v2 overlay styles", async ({ runA11yScan }) => {
         await selectOverlayStyles.toggle();
-        await runA11yScan(browser, SelectV2Atom, rulesToDisable);
+        await runA11yScan(SelectV2Atom, rulesToDisable);
     });
 });

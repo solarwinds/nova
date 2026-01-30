@@ -18,7 +18,11 @@ export class Atom {
         id: string,
         root?: boolean
     ): T {
-        return atomClass.findIn(atomClass, Helpers.page.locator(`#${id}`), root);
+        return atomClass.findIn(
+            atomClass,
+            Helpers.page.locator(`#${id}`),
+            root
+        );
     }
 
     /**
@@ -31,7 +35,7 @@ export class Atom {
     ): T {
         const create = (locator: Locator) => new atomClass(locator);
         const selector = Atom.getSelector(atomClass);
-        if(!selector){
+        if (!selector) {
             return create(parentLocator ?? Atom.getFromRoot("body"));
         }
         if (!parentLocator) {
@@ -39,7 +43,7 @@ export class Atom {
         }
         const sibling = Helpers.page.locator(selector);
 
-        const operation =   root ? "and" : "locator";
+        const operation = root ? "and" : "locator";
 
         return create(parentLocator[operation](sibling));
     }
@@ -50,7 +54,7 @@ export class Atom {
 
     public static getSelector<T extends Atom>(
         atomClass: IAtomClass<T>
-    ): string | null     {
+    ): string | null {
         if (atomClass.CSS_CLASS) {
             return `.${atomClass.CSS_CLASS}`;
         }
@@ -115,7 +119,10 @@ export class Atom {
     // ]) {
     //     return spawn(...params);
     // }
-    public filter<T extends Atom>(atomClass: IAtomClass<T>, ...filter: Parameters<Locator["filter"]> ): T {
+    public filter<T extends Atom>(
+        atomClass: IAtomClass<T>,
+        ...filter: Parameters<Locator["filter"]>
+    ): T {
         // it should take existing class and return the class which will be limited to the index
         // this.limit it and for example the click will be perfomed agains the only on insance
         // this.getLocator(); // all of them
@@ -126,5 +133,9 @@ export class Atom {
 
     public async click(): Promise<void> {
         await this.locator.click();
+    }
+
+    public async hover(): Promise<void> {
+        await this.locator.hover();
     }
 }

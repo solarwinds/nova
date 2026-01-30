@@ -17,30 +17,17 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
+import { PaginatorAtom } from "./paginator.atom";
+import { test, Helpers } from "../../setup";
 
-import { browser, by, element } from "protractor";
+describe("a11y: paginator", () => {
+    const rulesToDisable: string[] = ["nested-interactive"];
 
-import { assertA11y, Helpers } from "../../helpers";
-import { MenuAtom } from "../public_api";
-
-describe("a11y: menu", () => {
-    let menuBasic: MenuAtom;
-    const rulesToDisable: string[] = [
-        "color-contrast", // NUI-6014
-        "scrollable-region-focusable", // NUI-5935, NUI-6007
-        "aria-required-children",
-    ];
-
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("menu/menu-visual-test");
-
-        menuBasic = new MenuAtom(
-            element(by.id("nui-demo-basic-menu-with-icon"))
-        );
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("paginator/paginator-visual-test", page);
     });
 
-    it("should check a11y of menu", async () => {
-        await menuBasic.toggleMenu();
-        await assertA11y(browser, MenuAtom, rulesToDisable);
+    test("should check a11y of paginator", async ({ runA11yScan }) => {
+        await runA11yScan(PaginatorAtom, rulesToDisable);
     });
 });

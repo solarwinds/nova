@@ -18,19 +18,20 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser } from "protractor";
+import { SearchAtom } from "./search.atom";
+import { test, Helpers } from "../../setup";
 
-import { assertA11y, Helpers } from "../../helpers";
-import { TextboxNumberAtom } from "../public_api";
+test.describe("a11y: search", () => {
+    const rulesToDisable: string[] = [
+        "landmark-unique", // we don't care about it on test pages
+    ];
 
-describe("a11y: textbox-number", () => {
-    const rulesToDisable: string[] = [];
-
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("textbox/textbox-number-visual-test");
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("search/search-visual-test", page);
     });
 
-    it("should check a11y of textbox-number", async () => {
-        await assertA11y(browser, TextboxNumberAtom, rulesToDisable);
+    test("should check a11y of search", async ({ runA11yScan }) => {
+        await runA11yScan(SearchAtom, rulesToDisable);
     });
 });
+

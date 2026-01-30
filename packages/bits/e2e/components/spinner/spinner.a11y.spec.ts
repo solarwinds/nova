@@ -18,19 +18,23 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser } from "protractor";
+import { SpinnerAtom } from "./spinner.atom";
+import { test, Helpers, Animations } from "../../setup";
 
-import { runA11yScan, Helpers } from "../../helpers";
-import { PaginatorAtom } from "../public_api";
+describe("a11y: spinner", () => {
+    const rulesToDisable: string[] = [];
 
-describe("a11y: paginator", () => {
-    const rulesToDisable: string[] = ["nested-interactive"];
-
-    test.beforeEach(async () => {
-        await Helpers.prepareBrowser("paginator/paginator-visual-test");
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("spinner/spinner-visual-test", page);
+        await Helpers.disableCSSAnimations(Animations.ALL);
+        // Wait until there are 9 SpinnerAtom instances on the page
+        await Helpers.page.waitForFunction(async () => {
+            const count = await SpinnerAtom.findIn(SpinnerAtom, Helpers.page.locator("body"), true).getLocator().count();
+            return count === 9;
+        });
     });
 
-    test("should check a11y of paginator", async () => {
-        await runA11yScan(browser, PaginatorAtom, rulesToDisable);
+    test("should check a11y of spinner", async ({ runA11yScan }) => {
+        await runA11yScan(SpinnerAtom, rulesToDisable);
     });
 });

@@ -144,4 +144,14 @@ export class Helpers {
         `);
     }
 
+    static async switchDarkTheme(mode: "on" | "off"): Promise<void> {
+        await Helpers.page.evaluate((themeMode) => {
+            const html = document.getElementsByTagName("html")[0];
+            if (themeMode === "on") {
+                html.classList.add("dark-nova-theme");
+            } else {
+                html.classList.remove("dark-nova-theme");
+            }
+        }, mode);
+    }
 }

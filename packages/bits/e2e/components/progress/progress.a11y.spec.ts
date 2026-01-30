@@ -18,25 +18,21 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser, by, element } from "protractor";
-
-import { assertA11y, Helpers } from "../../helpers";
-import { ProgressAtom, ButtonAtom } from "../public_api";
+import { ProgressAtom } from "./progress.atom";
+import { test, Helpers } from "../../setup";
+import { ButtonAtom } from "../button/button.atom";
 
 describe("a11y: progress", () => {
     const rulesToDisable: string[] = ["nested-interactive"];
     let startProgressBasic: ButtonAtom;
 
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("progress/progress-visual-test");
-
-        startProgressBasic = new ButtonAtom(
-            element(by.id("nui-demo-start-basic-progress"))
-        );
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("progress/progress-visual-test", page);
+        startProgressBasic = new ButtonAtom(page.locator("#nui-demo-start-basic-progress"));
     });
 
-    it("should check a11y of progress", async () => {
+    test("should check a11y of progress", async ({ runA11yScan }) => {
         await startProgressBasic.click();
-        await assertA11y(browser, ProgressAtom, rulesToDisable);
+        await runA11yScan(ProgressAtom, rulesToDisable);
     });
 });
