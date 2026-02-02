@@ -47,8 +47,7 @@ test.describe("USERCONTROL progress", () => {
         );
         startBtn = Atom.find<ButtonAtom>(
             ButtonAtom,
-            "nui-demo-indeterminate-progress-btn",
-            false
+            "nui-demo-indeterminate-progress-btn"
         );
     });
 

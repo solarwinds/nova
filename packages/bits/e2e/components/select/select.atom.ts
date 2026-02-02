@@ -21,6 +21,7 @@
 import { Locator } from "@playwright/test";
 
 import { BasicSelectAtom } from "./basic-select.atom";
+import { expect } from "../../setup";
 
 export class SelectAtom extends BasicSelectAtom {
     public static CSS_CLASS = "nui-select";
@@ -49,5 +50,11 @@ export class SelectAtom extends BasicSelectAtom {
 
     public async isRequiredStyleDisplayed(): Promise<boolean> {
         return this.elementHasClass("nui-menu", "has-error");
+    }
+
+    public async selectedToContainText(text: string): Promise<void> {
+       return await expect(
+           this.getMenu().getMenuButton().getLocator()
+       ).toContainText(text);
     }
 }

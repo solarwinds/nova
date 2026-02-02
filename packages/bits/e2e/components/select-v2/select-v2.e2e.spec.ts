@@ -140,9 +140,7 @@ test.describe("USERCONTROL Select V2 >", () => {
             });
 
             test("should navigate with UP and DOWN buttons", async () => {
-                for (let i = 0; i < 5; i++) {
-                    await Helpers.page.keyboard.press("ArrowDown");
-                }
+                await Helpers.pressKey("ArrowDown", 5);
                 const option5 = await selectErrorState.getOption(5);
                 await option5.isActive();
 

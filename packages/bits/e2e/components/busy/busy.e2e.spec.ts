@@ -81,7 +81,7 @@ test.describe("USERCONTROL Busy", () => {
                 { hasText: "Item 2" }
             );
             await item.click();
-            expect(await select.input.innerText()).toBe("Item 2");
+            await select.selectedToContainText("Item 2");
         });
 
         test("should NOT allow tab navigation when component is busy", async () => {
