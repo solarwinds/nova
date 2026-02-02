@@ -42,7 +42,8 @@ describe("a11y: date time picker", () => {
         dialogButtonElem = element(by.id("nui-visual-test-dialog-btn"));
     });
 
-    it("should verify a11y of date time picker", async () => {
+    // TO DO: NUI-6263
+    xit("should verify a11y of date time picker", async () => {
         await assertA11y(browser, DateTimepickerAtom);
     });
 

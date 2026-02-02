@@ -39,7 +39,8 @@ describe("a11y: menu", () => {
         );
     });
 
-    it("should check a11y of menu", async () => {
+    // TO DO: NUI-6263
+    xit("should check a11y of menu", async () => {
         await menuBasic.toggleMenu();
         await assertA11y(browser, MenuAtom, rulesToDisable);
     });

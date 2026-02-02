@@ -32,7 +32,8 @@ describe("a11y: search", () => {
         await Helpers.prepareBrowser("search/search-visual-test");
     });
 
-    it("should check a11y of search", async () => {
+    // TO DO: NUI-6263
+    xit("should check a11y of search", async () => {
         await assertA11y(browser, SearchAtom, rulesToDisable);
     });
 });

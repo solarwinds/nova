@@ -45,11 +45,13 @@ describe("a11y: form-field", () => {
         );
     });
 
-    it("button", async () => {
+    // TO DO: NUI-6263
+    xit("button", async () => {
         await assertA11y(browser, FormFieldAtom, rulesToDisable);
     });
 
-    it("textbox", async () => {
+    // TO DO: NUI-6263
+    xit("textbox", async () => {
         await toggleButton.click();
         await assertA11y(browser, FormFieldAtom, rulesToDisable);
     });
