@@ -1,6 +1,8 @@
 # 🎯 Assertion Best Practices in Playwright
 Playwright offers a powerful and expressive `expect()` API that allows writing reliable and readable assertions. This document outlines best practices for making the most of Playwright assertions in your UI tests.
 
+> Nova guidance: whenever you can, assert through **Atoms** (see `docs/E2E/ATOMS.md`) so tests stay insulated from DOM/selector changes.
+
 ## ✅ 1. Use `expect(locator)` Instead of `expect(await locator.textContent())`
 
 **Bad:**
@@ -25,7 +27,7 @@ Playwright provides smart matchers that understand DOM semantics and wait for th
 | `toHaveValue`     | Assert the value of an input field         |
 | `toHaveAttribute` | Assert an element has a specific attribute |
 | `toHaveClass`     | Assert the presence of specific CSS class  |
-| `ToHaveCount`     | Assert the number of nodes                 |
+| `toHaveCount`     | Assert the number of nodes                 |
 | `toBeVisible`     | Assert that the element is visible         |
 | `toBeHidden`      | Assert that the element is hidden          |
 | `toBeEnabled`     | Assert the element is enabled              |
@@ -54,8 +56,11 @@ When you need to assert values that aren't tied directly to a DOM element — su
 
 ### 📘 Syntax
 ```ts
-await expect.poll(() => /* function returning a value */).toBe(/* expected value */);
+await expect.poll(async () => {
+  return await page.title();
+}).toBe("Dashboard");
 ```
+
 ### ✅ Example 1: Check page title
 
 ```ts
@@ -85,6 +90,15 @@ expect(className.includes('primary')).toBe(true);
 **Good:**
 ```ts
 await expect(page.locator('button')).toHaveClass(/primary/);
+```
+
+### Atom-friendly equivalent
+
+If you already have an Atom, prefer using its retryable assertion helper instead of reading attributes yourself:
+
+```ts
+await buttonAtom.toContainClass("primary");
+await buttonAtom.toBeVisible();
 ```
 
 

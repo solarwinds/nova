@@ -11,6 +11,24 @@ The main goals of the migration are:
 - Integrate seamlessly with **CircleCI** for CI/CD workflows.
 
 ---
+
+## 💡 Tip: use Copilot prompts to speed up migration
+
+Copilot can help you convert repetitive Protractor patterns to Playwright and keep the team consistent.
+
+A couple prompt ideas that work well:
+
+- “Migrate this Protractor spec to Playwright. Keep the same assertions, but replace selectors with Nova **Atoms** where possible. Prefer `Atom.find` / `Atom.findIn` and Atom assertion helpers (e.g., `toBeVisible`, `toContainClass`). Don’t use fixed timeouts.”
+- “Refactor this Playwright test to avoid raw `page.locator(...)` usage. Create or reuse an Atom so the test is framework-agnostic.”
+
+If you’re migrating a file, it also helps to ask Copilot to do it in small steps:
+
+1) rewrite navigation + setup
+2) replace selectors
+3) replace assertions
+4) remove manual waits
+
+---
 ## Why Playwright?
 
 Below is a comparison of the leading modern E2E frameworks, evaluated against the criteria most relevant to migrating from Protractor in an Angular-based, component-driven library like NOVA.
@@ -32,14 +50,14 @@ Below is a comparison of the leading modern E2E frameworks, evaluated against th
 
 ## Migration Plan
 
-### Phase 1: Preparation
+### Phase 1: Preparation (DONE)
 
 - ✅ Audit existing Protractor test cases and group by priority.
 - ✅ Set up Playwright in the monorepo.
 - ✅ Configure initial Playwright test suite for a single package (e.g. `common`).
 - ✅ Add Playwright to **CircleCI** configuration for basic E2E validation.
 
-### Phase 2: Pilot
+### Phase 2: Pilot (DOING)
 
 - 🔄 Rewrite a small set of core Protractor tests using Playwright:
     - Buttons

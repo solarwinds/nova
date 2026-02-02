@@ -11,6 +11,20 @@ This document outlines the strategy and implementation for migrating existing UI
 
 ---
 
+## 🧱 Prefer Atoms over raw locators
+
+When migrating, don’t translate Protractor selectors 1:1 into Playwright selectors inside tests.
+
+Instead:
+
+- Keep selectors inside **Atoms**.
+- Keep Playwright APIs (`page`, `locator`, `expect(locator)`) mostly out of tests.
+- Expose semantic actions and retryable assertions on atoms.
+
+See `docs/E2E/ATOMS.md`.
+
+---
+
 ## 🔁 Protractor vs Playwright Equivalents
 
 | Protractor                                                  | Playwright                                      |
@@ -28,34 +42,45 @@ This document outlines the strategy and implementation for migrating existing UI
 
 ---
 
-## 🧱 Helpers Mapping
+## 🧰 Helpers mapping
 
 ### Protractor
 ```ts
 await Helpers.prepareBrowser("button/button-test");
 ```
-### Playwright Equivalent
+
+### Playwright equivalent
 ```ts
-await page.goto(`${BASE_URL}/#/button/button-test`);
+await Helpers.prepareBrowser("button/button-test", page);
 ```
-### 🧪 Protractor to Playwright Test Rewrites
-✅ hasClass() usage
-Protractor
-```ts
-expect(await btn.hasClass("btn")).toBe(true);
-```
-Playwright
-```ts
-await expect(btn.locator).toHaveClass(/btn/);
-```
-Or using a PO helper:
+
+---
+
+## ✅ Protractor → Playwright rewrites
+
+### Class checks
+
+Protractor:
 ```ts
 expect(await btn.hasClass("btn")).toBe(true);
 ```
 
-### 🔄 File Conversion Strategy
-- Convert `beforeAll` test setup to `test.beforeEach()` or `test.describe()` block.
-- Replace `Helpers.getElementByCSS` with `page.locator(...)`.
-- Replace `.hasClass()` with `toHaveClass()` assertions.
-- Replace `getText()` with `textContent()` and `toHaveText()` assertions.
-- Use `dispatchEvent('mousedown')/mouseup` for hold logic.
+Playwright (preferred):
+```ts
+await btn.toContainClass("btn");
+```
+
+If you’re not using Atoms yet:
+```ts
+await expect(page.locator(".btn")).toHaveClass(/btn/);
+```
+
+---
+
+## 🔄 File conversion strategy
+
+- Convert `beforeAll` setup into `test.beforeEach()` or `test.describe()` blocks.
+- Move selectors into Atoms (don’t inline locators in tests).
+- Replace `.hasClass()` with `toHaveClass()` (or Atom helpers like `toContainClass()`).
+- Replace `getText()` with `toHaveText()` / `textContent()`.
+- Remove manual waits/timeouts and rely on Playwright's auto-wait + assertions.
