@@ -2,12 +2,41 @@ version: 2.1
 orbs:
     browser-tools: circleci/browser-tools@1.4.0
 
+aliases:
+    - &cache_restore
+        restore_cache:
+            keys:
+                - dependencies-{{ checksum "yarn.lock" }}
+    - &cache_save
+        save_cache:
+            paths:
+                - ./node_modules
+            key: dependencies-{{ checksum "yarn.lock" }}
+
+    - &install_dependencies
+        run:
+            working_directory: ~/nova
+            name: Installing node dependencies (if necessary)
+            command: |
+                if [ -d "node_modules" ];
+                then
+                    echo "skipping npm install as it was restored from cache. Running only postinstall"
+                else
+                    yarn install --frozen-lockfile
+                fi
+
 commands:
+    install-deps:
+        description: "Install deps"
+        steps:
+            - *cache_restore
+            - *install_dependencies
+            - *cache_save
+
     reuse-cache:
         description: "Reuse cache among the builds"
         steps:
-            - restore_cache:
-                  key: deps-{{ checksum "yarn.lock" }}
+            - *cache_restore
 
 executors:
     node:
@@ -19,12 +48,19 @@ executors:
         docker:
             - image: cimg/node:20.19.0
         working_directory: ~/nova
+
+    playwright:
+        docker:
+            - image: mcr.microsoft.com/playwright:v1.52.0-noble
+        working_directory: ~/nova
+        environment:
+            NODE_ENV: development
     ubuntu:
         machine:
             image: ubuntu-2204:2022.10.2
         working_directory: ~/nova
         environment:
-          USE_CACHE: "true"
+            USE_CACHE: "true"
 
 jobs:
     prepare:
@@ -34,42 +70,14 @@ jobs:
             BUILD_COUNTER: << pipeline.number >>
         steps:
             - checkout
-            - restore_cache:
-                  key: deps-{{ checksum "yarn.lock" }}
-            - run:
-                  working_directory: ~/nova
-                  name: Installing node dependencies (if necessary)
-                  command: |
-                      if [ -d "node_modules" ];
-                      then
-                          echo "skipping npm install as it was restored from cache. Running only postinstall"
-                      else
-                          yarn install --frozen-lockfile
-                      fi
-            - save_cache:
-                  key: deps-{{ checksum "yarn.lock" }}
-                  paths:
-                      - ./node_modules
-            - run:
-                  working_directory: ~/nova
-                  name: Check styling
-                  command: |
-                      yarn prettier-check || true
-                      EXIT_CODE=$?
-                      echo "Exit Code: $EXIT_CODE"
-                      if [ $EXIT_CODE -ne 0 ]; then
-                        echo "Has styling issues but continuing..."
-                      fi
-                      # Exit with 0 to indicate success to CircleCI (override the failure)
-                      exit 0
-                  when: always
-
+            - install-deps
             - persist_to_workspace:
                   root: ~/nova
                   paths:
                       - .git
                       - packages
                       - scripts
+                      - test
                       - .editorconfig
                       - .eslintignore
                       - .eslintrc.js
@@ -148,17 +156,8 @@ jobs:
             - browser-tools/install-chrome
             - attach_workspace:
                   at: ~/nova
-            - run:
-                  name: Check git diff to see if builds should skip e2e
-                  command: |
-                      circleci-agent step halt
-                      if [ -f packages/bits/package-cached ] && [ "$USE_CACHE" == "true" ]; then
-                          echo "This package was restored from cache so we're skipping e2e tests"
-                          circleci-agent step halt
-                      fi
-                      echo "not skiped"
             - restore_cache:
-                key: bits-dist-{{ checksum "packages/bits/git-commit" }}
+                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
             - reuse-cache
             - run:
                   name: Start Selenium docker image
@@ -189,7 +188,7 @@ jobs:
                           circleci step halt
                       fi
             - restore_cache:
-                key: bits-dist-{{ checksum "packages/bits/git-commit" }}
+                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
             - reuse-cache
             - run:
                   name: Start Selenium docker image
@@ -220,7 +219,7 @@ jobs:
                           circleci step halt
                       fi
             - restore_cache:
-                key: bits-dist-{{ checksum "packages/bits/git-commit" }}
+                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
             - reuse-cache
             - run:
                   name: Start Selenium docker image
@@ -233,6 +232,29 @@ jobs:
             - run:
                   name: Cleanup
                   command: docker-compose down -v --rmi=local
+    bits-e2e-test-playwright:
+        executor: playwright
+        parallelism: 4
+        steps:
+            - attach_workspace:
+                  at: ~/nova
+            - install-deps
+            - restore_cache:
+                 key: bits-dist-{{ checksum "packages/bits/git-commit" }}
+            - run:
+                  working_directory: ~/nova/packages/bits
+                  name: Run tests
+                  command: |
+                    NODE_INDEX="$((${CIRCLE_NODE_INDEX}+1))";
+                    SHARD="${NODE_INDEX}/${CIRCLE_NODE_TOTAL}";
+                    yarn run e2e:playwright:ci --shard=${SHARD}
+            -  store_artifacts:
+                    path: ./packages/bits/playwright-report
+                    destination: playwright-report-first
+            -  store_artifacts:
+                    path: /tmp/artifacts
+            -  store_artifacts:
+                    path: ./packages/bits/test-results
     bits-pack:
         executor: node
         steps:
@@ -668,6 +690,9 @@ workflows:
                   requires:
                       - bits-build
             - bits-e2e-test:
+                  requires:
+                      - bits-build
+            - bits-e2e-test-playwright:
                   requires:
                       - bits-build
             - bits-visual-test:
