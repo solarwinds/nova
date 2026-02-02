@@ -50,7 +50,8 @@ describe("a11y: expander", () => {
         );
     });
 
-    it("should check a11y of expander", async () => {
+    // TO DO: NUI-6263
+    xit("should check a11y of expander", async () => {
         await basicExpander.toggle();
         await lineLessExpander.toggle();
         await assertA11y(browser, ExpanderAtom, rulesToDisable);

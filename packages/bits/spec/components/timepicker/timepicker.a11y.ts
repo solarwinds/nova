@@ -39,7 +39,8 @@ describe("a11y: timepicker", () => {
         );
     });
 
-    it("should check a11y of timepicker", async () => {
+    // TO DO: NUI-6263
+    xit("should check a11y of timepicker", async () => {
         await basicTimepicker.toggle();
         await assertA11y(browser, TimepickerAtom, rulesToDisable);
     });

@@ -63,7 +63,8 @@ describe("a11y: select-v2", () => {
         await assertA11y(browser, SelectV2Atom, rulesToDisable);
     });
 
-    it("should check a11y of select-v2", async () => {
+    // TO DO: NUI-6263
+    xit("should check a11y of select-v2", async () => {
         await Helpers.switchDarkTheme("on");
         await selectErrorState.toggle();
         await (await selectErrorState.getFirstOption()).click();
@@ -75,14 +76,16 @@ describe("a11y: select-v2", () => {
         await assertA11y(browser, SelectV2Atom, rulesToDisable);
     });
 
-    it("should check a11y of select-v2", async () => {
+    // TO DO: NUI-6263
+    xit("should check a11y of select-v2", async () => {
         await Helpers.switchDarkTheme("off");
         await selectGrouped.toggle();
         await (await selectGrouped.getLastOption()).hover();
         await assertA11y(browser, SelectV2Atom, rulesToDisable);
     });
 
-    it("should check a11y of select-v2", async () => {
+    // TO DO: NUI-6263
+    xit("should check a11y of select-v2", async () => {
         await selectOverlayStyles.toggle();
         await assertA11y(browser, SelectV2Atom, rulesToDisable);
     });

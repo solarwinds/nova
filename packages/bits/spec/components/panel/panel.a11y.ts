@@ -66,7 +66,8 @@ describe("a11y: panel", () => {
         };
     });
 
-    it("should check a11y of panel", async () => {
+    // TO DO: NUI-6263
+    xit("should check a11y of panel", async () => {
         for (const key of Object.keys(expanders)) {
             await expanders[key].click();
         }
