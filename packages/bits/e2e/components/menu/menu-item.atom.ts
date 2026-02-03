@@ -37,8 +37,12 @@ export class MenuItemAtom extends Atom {
         return this.getLocator().innerText();
     }
 
-    public async clickItem(): Promise<void> {
-        await this.getLocator().click();
+    public async clickItem(first: boolean = false): Promise<void> {
+        if (first) {
+            await this.getLocator().first().click();
+        } else {
+            await this.getLocator().click();
+        }
     }
 
     public async isDisabledItem(): Promise<boolean> {

@@ -97,7 +97,7 @@ export class PopoverAtom extends Atom {
 
     public waitForClosed = async (timeout: number = 1000): Promise<void> => {
         const body = this.getPopoverBody();
-        await expect(body, "Popover failed to close").toBeHidden({ timeout });
+        await expect(body, "Popover is closed").toBeHidden();
     };
 
     public isPopoverDisplayed = async (): Promise<boolean> =>

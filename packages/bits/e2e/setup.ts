@@ -193,4 +193,18 @@ export class Helpers {
             await Helpers.page.evaluate(() => (document.body.style.zoom = ``));
         });
     }
+
+    /**
+     * Set a custom width on an element by its id.
+     */
+    static async setCustomWidth(size: string, id: string): Promise<void> {
+        await test.step(`Set custom width "${size}" on #${id}`, async () => {
+            await Helpers.page.evaluate(
+                ([s, i]) => {
+                    document.getElementById(i)!.style.width = s;
+                },
+                [size, id] as [string, string]
+            );
+        });
+    }
 }

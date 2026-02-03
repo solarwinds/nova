@@ -87,4 +87,12 @@ export class TextboxNumberAtom extends Atom {
     public async toBeInvalid(): Promise<void> {
         await expect(this.getLocator()).toHaveClass(/has-error/);
     }
+
+    public async toBeDisabled(): Promise<void> {
+        await expect(this.input).toBeDisabled();
+    }
+
+    public async toBeEnabled(): Promise<void> {
+        await expect(this.input).toBeEnabled();
+    }
 }

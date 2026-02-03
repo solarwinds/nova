@@ -22,6 +22,7 @@
 import { Atom } from "../../atom";
 import { ButtonAtom } from "../../components/button/button.atom";
 import { Helpers , test, expect} from "../../setup";
+import { Locator } from "playwright-core";
 
 test.describe("USERCONTROL setFocus:", () => {
     let carrotRadio: Locator;
