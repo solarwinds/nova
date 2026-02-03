@@ -30,9 +30,7 @@
                             "sourceMap": false
                         },
                         "i18n": {
-                            "localize": [
-                                "en-us"
-                            ]
+                            "localize": ["en-us"]
                         },
                         "production": {
                             "budgets": [],
@@ -63,15 +61,11 @@
                             "base": "sdk/api-docs-ng2/examples",
                             "browser": ""
                         },
-                        "polyfills": [
-                          "./demo/src/polyfills.ts"
-                        ],
+                        "polyfills": ["./demo/src/polyfills.ts"],
                         "scripts": [],
                         "sourceMap": true,
                         "stylePreprocessorOptions": {
-                            "includePaths": [
-                                "./src/styles"
-                            ]
+                            "includePaths": ["./src/styles"]
                         },
                         "styles": [
                             "./src/styles.less",
@@ -120,9 +114,7 @@
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
                     "options": {
-                        "assets": [
-                            "./demo/src/assets"
-                        ],
+                        "assets": ["./demo/src/assets"],
                         "karmaConfig": "./karma.conf.js",
                         "main": "./demo/src/module.ts",
                         "polyfills": "./demo/src/polyfills.ts",
@@ -132,6 +124,24 @@
                             "./src/component-styles.less",
                             "./demo/src/demostyles.less"
                         ]
+                    }
+                },
+                "e2e": {
+                    "builder": "playwright-ng-schematics:playwright",
+                    "options": {
+                        "devServerTarget": "demo:serve"
+                    },
+                    "configurations": {
+                        "full": {
+                            "devServerTarget": "demo:serve:e2e",
+                            "protractorConfig": "./protractor-gui.conf.js"
+                        },
+                        "gui": {
+                            "protractorConfig": "./protractor-gui.conf.js"
+                        },
+                        "serve": {
+                            "devServerTarget": "demo:serve:e2e"
+                        }
                     }
                 }
             },
@@ -211,10 +221,7 @@
                 "lint": {
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
-                        "lintFilePatterns": [
-                            "./src/**/*.ts",
-                            "./src/**/*.html"
-                        ]
+                        "lintFilePatterns": ["./src/**/*.ts", "./src/**/*.html"]
                     }
                 },
                 "serve": {
