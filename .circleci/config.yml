@@ -38,6 +38,80 @@ commands:
         steps:
             - *cache_restore
 
+    run-playwright-shard:
+        description: "Run Playwright shard and export blob reports"
+        parameters:
+            project:
+                type: string
+                default: "e2e"
+            project_dir:
+                type: string
+                default: "~/nova/packages/bits"
+        steps:
+            -   run:
+                    working_directory: << parameters.project_dir >>
+                    name: Run Playwright shard
+                    command: |
+                        set +e
+                        NODE_INDEX="$((${CIRCLE_NODE_INDEX}+1))";
+                        SHARD="${NODE_INDEX}/${CIRCLE_NODE_TOTAL}";
+                        yarn run << parameters.project >>:playwright:ci --shard=${SHARD}
+                        TEST_EXIT_CODE=$?
+                        echo $TEST_EXIT_CODE > << parameters.project_dir >>/playwright_exit_code_${CIRCLE_NODE_INDEX}
+                        exit 0
+            -   run:
+                    working_directory: << parameters.project_dir >>
+                    name: Export blob reports per shard
+                    command: |
+                        if [ -d blob-report ] && [ "$(ls -A blob-report)" ]; then
+                          mkdir -p all-blob-reports
+                          mv -f blob-report/* "all-blob-reports/"
+                        else
+                          echo "No blob reports generated - likely test failure or misconfiguration"
+                          ls
+                        fi
+            -   store_artifacts:
+                    when: always
+                    path: << parameters.project_dir >>/all-blob-reports
+            -   store_artifacts:
+                    when: always
+                    path: << parameters.project_dir >>/test-results
+            -   persist_to_workspace:
+                    root: ~/nova
+                    paths:
+                        - << parameters.project_dir >>/all-blob-reports
+                        - << parameters.project_dir >>/playwright_exit_code_*
+
+    merge-playwright-reports:
+        description: "Merge Playwright blob reports and fail on shard errors"
+        parameters:
+            project_dir:
+                type: string
+                default: "~/nova/packages/bits"
+        steps:
+            -   run:
+                    working_directory: << parameters.project_dir >>
+                    name: Merge Playwright blob reports into HTML report
+                    command: |
+                        set -e
+                        npx playwright merge-reports --reporter html ./all-blob-reports
+            -   run:
+                    name: Check if any shard failed
+                    command: |
+                        for file in << parameters.project_dir >>/playwright_exit_code_*; do
+                          if [ -f "$file" ]; then
+                            exit_code=$(cat "$file")
+                            shard_index="${file##*_}"
+                            if [ "$exit_code" != "0" ]; then
+                              echo "Shard index ${shard_index} failed with exit code ${exit_code}"
+                              exit 1
+                            fi
+                          fi
+                        done
+            -   store_artifacts:
+                    when: always
+                    path: << parameters.project_dir >>/playwright-report
+                    destination: playwright-report
 executors:
     node:
         docker:
@@ -241,39 +315,9 @@ jobs:
             - install-deps
             -   restore_cache:
                     key: bits-dist-{{ checksum "packages/bits/git-commit" }}
-            -   run:
-                    working_directory: ~/nova/packages/bits
-                    name: Run tests
-                    command: |
-                        set +e
-                        NODE_INDEX="$((${CIRCLE_NODE_INDEX}+1))";
-                        SHARD="${NODE_INDEX}/${CIRCLE_NODE_TOTAL}";
-                        yarn run e2e:playwright:ci --shard=${SHARD}
-                        TEST_EXIT_CODE=$?
-                        echo $TEST_EXIT_CODE > ~/nova/playwright_exit_code_${CIRCLE_NODE_INDEX}
-                        exit 0
-            -   run:
-                    working_directory: ~/nova/packages/bits
-                    name: Rename playwright report folder
-                    command: |
-                        if [ -d blob-report ] && [ "$(ls -A blob-report)" ]; then
-                            mkdir -p all-blob-reports
-                            mv -f blob-report/* "all-blob-reports/"
-                        else
-                            echo "No blob reports generated - likely test failure or misconfiguration"
-                            ls
-                        fi
-            -   store_artifacts:
-                    when: always
-                    path: ./packages/bits/all-blob-reports
-            -   store_artifacts:
-                    when: always
-                    path: ./packages/bits/test-results
-            -   persist_to_workspace:
-                    root: ~/nova
-                    paths:
-                        - ./packages/bits/all-blob-reports
-                        - ./playwright_exit_code_*
+            -   run-playwright-shard:
+                    project: "e2e"
+                    project_dir: "~/nova/packages/bits"
 
     bits-e2e-test-playwright-merge:
         executor: playwright
@@ -281,29 +325,8 @@ jobs:
             -   attach_workspace:
                     at: ~/nova
             - install-deps
-            -   run:
-                    working_directory: ~/nova/packages/bits
-                    name: Merge Playwright playwright reports into HTML report
-                    command: |
-                        set -e
-                        npx playwright merge-reports --reporter html ./all-blob-reports
-            -   run:
-                    name: Check if any shard failed
-                    command: |
-                        for file in ~/nova/playwright_exit_code_*; do
-                        if [ -f "$file" ]; then
-                            exit_code=$(cat "$file")
-                            shard_index="${file##*_}"  # extracts the number after the last underscore
-                            if [ "$exit_code" != "0" ]; then
-                                echo "Shard index ${shard_index} failed with exit code ${exit_code}"
-                                exit 1
-                            fi
-                        fi
-                        done
-            -   store_artifacts:
-                    when: always
-                    path: ~/nova/packages/bits/playwright-report
-                    destination: playwright-report
+            -   merge-playwright-reports:
+                    project_dir: "~/nova/packages/bits"
 
 
     bits-pack:
