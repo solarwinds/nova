@@ -49,7 +49,7 @@ export default defineConfig({
     // Optional output for artifacts (traces, screenshots, etc.)
     outputDir: "test-results/",
 
-    reporter: process.env.CI ? "blob" : "html",
+    reporter: process.env.CI ? [["blob"]] : [["blob"]],
     webServer: {
         command: "yarn run serve-examples:prod",
         url: "http://localhost:4200",
