@@ -42,12 +42,12 @@ module.exports = {
                 "@angular-eslint/no-empty-lifecycle-method": "off",
                 "@angular-eslint/no-host-metadata-property": "off",
                 // todo migrate all components to standalone
-                "@angular-eslint/prefer-standalone": "off",
+                "@angular-eslint/prefer-standalone": "warn",
                 // todo breaking change to clients output native
-                "@angular-eslint/no-output-native": "off",
+                "@angular-eslint/no-output-native": "warn",
                 // todo migrate all components to use inject instead of constructor
                 // migrating script is not working - https://github.com/angular/angular/issues/66074
-                "@angular-eslint/prefer-inject": "off",
+                "@angular-eslint/prefer-inject": "warn",
                 /******************************
                  * Typescript-specific rules
                  *******************************/

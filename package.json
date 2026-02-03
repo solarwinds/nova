@@ -81,7 +81,8 @@
     "zone.js": "0.15.0"
   },
   "resolutions": {
-    "d3-color": "3.1.0"
+    "d3-color": "3.1.0",
+    "tablesort": "5.5.0"
   },
   "engines": {
     "node": ">=20"
