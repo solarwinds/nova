@@ -18,31 +18,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser, by, element, ElementFinder } from "protractor";
+import { Atom } from "@nova-ui/bits/sdk/atoms-playwright";
 
-import { assertA11y, Helpers } from "../../helpers";
-import { BusyAtom } from "../public_api";
+import { WidgetHeaderAtom } from "./widget-header.atom";
 
-describe("a11y: busy", () => {
-    const rulesToDisable: string[] = [
-        "color-contrast",
-        "aria-progressbar-name",
-        "duplicate-id",
-    ];
+export class WidgetAtom extends Atom {
+    public static CSS_CLASS = "nui-widget";
 
-    let switchBusyState: ElementFinder;
-
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("busy/busy-visual-test");
-        switchBusyState = element(by.id("nui-busy-test-button"));
-    });
-
-    it("should check a11y of busy - on", async () => {
-        await assertA11y(browser, BusyAtom, rulesToDisable);
-    });
-
-    it("should check a11y of busy - off", async () => {
-        await switchBusyState.click();
-        await assertA11y(browser, BusyAtom, rulesToDisable);
-    });
-});
+    public get header(): WidgetHeaderAtom {
+        return Atom.findIn<WidgetHeaderAtom>(WidgetHeaderAtom, this.getLocator());
+    }
+}

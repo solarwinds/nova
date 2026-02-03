@@ -18,15 +18,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser, by, element } from "protractor";
-
-import { MenuAtom } from "./menu.atom";
-import { Helpers } from "../../helpers";
+import { Atom } from "../../atom";
+import { test, Helpers, Animations } from "../../setup";
 import { Camera } from "../../virtual-camera/Camera";
+import { MenuAtom } from "./menu.atom";
 
 const name: string = "Menu";
 
-describe(`Visual tests: ${name}`, () => {
+test.describe(`Visual tests: ${name}`, () => {
     let camera: Camera;
     let menuBasic: MenuAtom;
     let menuBasicFooter: MenuAtom;
@@ -35,32 +34,21 @@ describe(`Visual tests: ${name}`, () => {
     let menuIconOnlyDestructive: MenuAtom;
     let menuMultiSelection: MenuAtom;
 
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("menu/menu-visual-test");
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("menu/menu-visual-test", page);
+        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
 
-        menuBasic = new MenuAtom(
-            element(by.id("nui-demo-basic-menu-with-icon"))
-        );
-        menuBasicDesctructive = new MenuAtom(
-            element(by.id("nui-demo-destructive-menu-with-icon"))
-        );
-        menuBasicFooter = new MenuAtom(
-            element(by.id("nui-demo-basic-menu-with-icon-footer"))
-        );
-        menuBasicFooterDestructive = new MenuAtom(
-            element(by.id("nui-demo-destructive-menu-with-icon-footer"))
-        );
-        menuIconOnlyDestructive = new MenuAtom(
-            element(by.id("nui-demo-menu-variants_run"))
-        );
-        menuMultiSelection = new MenuAtom(
-            element(by.id("nui-demo-multi-selection-menu"))
-        );
+        menuBasic = Atom.find<MenuAtom>(MenuAtom, "nui-demo-basic-menu-with-icon", true);
+        menuBasicDesctructive = Atom.find<MenuAtom>(MenuAtom, "nui-demo-destructive-menu-with-icon", true);
+        menuBasicFooter = Atom.find<MenuAtom>(MenuAtom, "nui-demo-basic-menu-with-icon-footer", true);
+        menuBasicFooterDestructive = Atom.find<MenuAtom>(MenuAtom, "nui-demo-destructive-menu-with-icon-footer", true);
+        menuIconOnlyDestructive = Atom.find<MenuAtom>(MenuAtom, "nui-demo-menu-variants_run", true);
+        menuMultiSelection = Atom.find<MenuAtom>(MenuAtom, "nui-demo-multi-selection-menu", true);
 
-        camera = new Camera().loadFilm(browser, name);
+        camera = new Camera().loadFilm(page, name, "Bits");
     });
 
-    it(`${name} visual test`, async () => {
+    test(`${name} visual test`, async () => {
         await camera.turn.on();
         await camera.say.cheese(`Default`);
 
@@ -73,7 +61,7 @@ describe(`Visual tests: ${name}`, () => {
             `Basic menu aligned top-left toggled. Edge detection worked fine`
         );
 
-        await menuBasic.getMenuItemByIndex(-1).scrollTo();
+        await menuBasic.getMenuItemByIndex(-1).getLocator().scrollIntoViewIfNeeded();
         await camera.say.cheese(
             `Scroll to bottom to capture the destructive item and verify it's last`
         );
@@ -97,7 +85,10 @@ describe(`Visual tests: ${name}`, () => {
         await menuBasicFooterDestructive.toggleMenu();
 
         await menuIconOnlyDestructive.toggleMenu();
-        await menuIconOnlyDestructive.getMenuItemByIndex(-1).scrollTo();
+        await menuIconOnlyDestructive
+            .getMenuItemByIndex(-1)
+            .getLocator()
+            .scrollIntoViewIfNeeded();
         await menuIconOnlyDestructive.getMenuItemByIndex(3).clickItem();
         await menuIconOnlyDestructive.getMenuItemByIndex(5).hover();
         await camera.say.cheese(
@@ -110,7 +101,10 @@ describe(`Visual tests: ${name}`, () => {
         await menuIconOnlyDestructive.toggleMenu();
 
         await menuMultiSelection.toggleMenu();
-        await menuMultiSelection.getMenuItemByIndex(-1).scrollTo();
+        await menuMultiSelection
+            .getMenuItemByIndex(-1)
+            .getLocator()
+            .scrollIntoViewIfNeeded();
         await menuMultiSelection.getMenuItemByIndex(3).clickItem();
         await menuMultiSelection.getMenuItemByIndex(4).clickItem();
         await menuMultiSelection.getMenuItemByIndex(5).hover();
@@ -122,5 +116,5 @@ describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese(`Dark theme`);
 
         await camera.turn.off();
-    }, 300000);
+    });
 });

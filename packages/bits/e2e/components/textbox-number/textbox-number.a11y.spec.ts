@@ -21,7 +21,7 @@
 import { TextboxNumberAtom } from "./textbox-number.atom";
 import { test, Helpers } from "../../setup";
 
-describe("a11y: textbox-number", () => {
+test.describe("a11y: textbox-number", () => {
     const rulesToDisable: string[] = [];
 
     test.beforeEach(async ({ page }) => {

@@ -24,7 +24,7 @@ import { browser } from "protractor";
 import { Helpers } from "../../helpers";
 
 
-describe("a11y: badge", () => {
+xdescribe("a11y: badge", () => {
     beforeAll(async () => {
         await Helpers.prepareBrowser("common/badge/badge-visual-test");
     });

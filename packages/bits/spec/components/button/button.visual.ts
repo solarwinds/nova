@@ -27,7 +27,7 @@ import { Camera } from "../../virtual-camera/Camera";
 
 const name: string = "Button";
 
-describe(`Visual tests: ${name}`, () => {
+xdescribe(`Visual tests: ${name}`, () => {
     let camera: Camera,
         basicButton: ButtonAtom,
         primaryButton: ButtonAtom,

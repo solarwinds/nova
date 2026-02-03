@@ -38,20 +38,127 @@ commands:
         steps:
             - *cache_restore
 
+    run-playwright-shard:
+        description: "Run Playwright shard and export blob reports"
+        parameters:
+            project_dir:
+                type: string
+                default: "packages/bits"
+            percy_token:
+                type: string
+                default: BITS_PERCY_TOKEN
+            merge_job:
+                type: boolean
+                default: true
+        steps:
+            -   run:
+                    working_directory: ~/nova/<< parameters.project_dir >>
+                    name: Run Playwright shard
+                    command: |
+                        set +e
+                        NODE_INDEX="$((${CIRCLE_NODE_INDEX}+1))";
+                        SHARD="${NODE_INDEX}/${CIRCLE_NODE_TOTAL}";
+                        yarn run playwright:ci --shard=${SHARD}
+                        TEST_EXIT_CODE=$?
+                        echo $TEST_EXIT_CODE > ~/nova/<< parameters.project_dir >>/playwright_exit_code_${CIRCLE_NODE_INDEX}
+                        if [ "<< parameters.merge_job >>" = "false" ] && [ $TEST_EXIT_CODE -ne 0 ]; then
+                          echo "One or more tests failed in this shard. Failing the job to prevent merge step.";
+                          exit $TEST_EXIT_CODE
+                        fi
+                        echo "Tests completed with exit code $TEST_EXIT_CODE"
+                        echo "Continuing to export reports."
+                        exit 0
+            -   run:
+                    working_directory: ~/nova/<< parameters.project_dir >>
+                    name: Export blob reports per shard
+                    command: |
+                        if [ -d blob-report ] && [ "$(ls -A blob-report)" ]; then
+                          mkdir -p all-blob-reports
+                          mv -f blob-report/* "all-blob-reports/"
+                        else
+                          echo "No blob reports generated - likely test failure or misconfiguration"
+                          ls
+                        fi
+            -   run:
+                    working_directory: ~/nova/<< parameters.project_dir >>
+                    name: Execute percy upload
+                    command: |
+                        set +e
+                        if [ -d _snapshots ] && [ "$(ls -A _snapshots)" ]; then
+                            export PERCY_TOKEN=${<< parameters.percy_token >>}
+                            yarn percy upload -v _snapshots
+                        else
+                          echo "No snapshots generated - likely test failure or misconfiguration"
+                          ls
+                        fi
+
+            -   store_artifacts:
+                    when: always
+                    path: << parameters.project_dir >>/all-blob-reports
+            -   store_artifacts:
+                    when: always
+                    path: << parameters.project_dir >>/test-results
+            -   store_artifacts:
+                    when: always
+                    path: << parameters.project_dir >>/_snapshots
+            -   store_test_results:
+                    when: always
+                    path: << parameters.project_dir >>/test-results
+            -   persist_to_workspace:
+                    root: ~/nova
+                    paths:
+                        - << parameters.project_dir >>/all-blob-reports
+                        - << parameters.project_dir >>/playwright_exit_code_*
+
+    merge-playwright-reports:
+        description: "Merge Playwright blob reports and fail on shard errors"
+        parameters:
+            project_dir:
+                type: string
+                default: "~/nova/packages/bits"
+        steps:
+            -   run:
+                    working_directory: ~/nova/<< parameters.project_dir >>
+                    name: Merge Playwright blob reports into HTML report
+                    command: |
+                        set -e
+                        yarn playwright merge-reports --reporter html ./all-blob-reports
+            -   run:
+                    name: Check if any shard failed
+                    command: |
+                        for file in ~/nova/<< parameters.project_dir >>/playwright_exit_code_*; do
+                          if [ -f "$file" ]; then
+                            exit_code=$(cat "$file")
+                            shard_index="${file##*_}"
+                            if [ "$exit_code" != "0" ]; then
+                                 echo "Playwright HTML report has been uploaded as a CircleCI Artifact."
+                                 echo "Navigate to the Artifacts tab and open: playwright-report/index.html"
+                                 echo "Failed tests are highlighted in the report with detailed traces (if available)."
+                                 echo "You can view failed tests in the Playwright HTML report via the CircleCI Artifacts tab:"
+                                 echo "open the artifact folder 'playwright-report' and click 'index.html'"
+                                 echo "Shard index ${shard_index} failed with exit code ${exit_code}"
+                              exit 1
+                            fi
+                          fi
+                        done
+            -   store_artifacts:
+                    when: always
+                    path: << parameters.project_dir >>/playwright-report
+                    destination: playwright-report
 executors:
     node:
         docker:
-            - image: cimg/node:20.19.0
+            -   image: cimg/node:20.19.0
         working_directory: ~/nova
 
     node-browsers:
         docker:
-            - image: cimg/node:20.19.0
+            -   image: cimg/node:20.19.0
         working_directory: ~/nova
 
     playwright:
         docker:
-            - image: mcr.microsoft.com/playwright:v1.52.0-noble
+            -   image: mcr.microsoft.com/playwright:v1.58.1-noble
         working_directory: ~/nova
         environment:
             NODE_ENV: development
@@ -71,24 +178,25 @@ jobs:
         steps:
             - checkout
             - install-deps
-            - persist_to_workspace:
-                  root: ~/nova
-                  paths:
-                      - .git
-                      - packages
-                      - scripts
-                      - test
-                      - .editorconfig
-                      - .eslintignore
-                      - .eslintrc.js
-                      - .prettierignore
-                      - .prettierrc.js
-                      - .prettierrc.json
-                      - docker-compose.yml
-                      - LICENSE.md
-                      - package.json
-                      - tsconfig.main.json
-                      - yarn.lock
+            -   persist_to_workspace:
+                    root: ~/nova
+                    paths:
+                        - .git
+                        - packages
+                        - scripts
+                        - test
+                        - .editorconfig
+                        - .eslintignore
+                        - .eslintrc.js
+                        - .prettierignore
+                        - .prettierrc.js
+                        - .prettierrc.json
+                        - docker-compose.yml
+                        - LICENSE.md
+                        - package.json
+                        - tsconfig.main.json
+                        - yarn.lock
+                        - playwright.config.base.ts
     bits-build:
         executor: node
         environment:
@@ -96,55 +204,55 @@ jobs:
             BUILD_COUNTER: << pipeline.number >>
         resource_class: medium+
         steps:
-            - attach_workspace:
-                  at: ~/nova
+            -   attach_workspace:
+                    at: ~/nova
             - reuse-cache
-            - run:
-                  name: Compute build version
-                  command: yarn run compute-version-ci
-            - run:
-                  name: Grab latest commit of package
-                  command: |
-                      export gitCommit=`git log --pretty=format:'%H' -n 1 $PROJECT_DIR`
-                      echo $gitCommit > $PROJECT_DIR/git-commit
-            - restore_cache:
-                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
-            - run:
-                  working_directory: ~/nova/packages/bits
-                  name: Assemble
-                  command: |
-                      if [ -d "dist" ];
-                      then
-                          echo "Skipping yarn assemble as it was restored from cache"
-                          # this 'package-cached' file indicates that the dist folder was restored from cache
-                          # we use it later to skip certain steps
-                          touch package-cached
-                      else
-                          yarn run assemble
-                      fi
-            - save_cache:
-                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
-                  paths:
-                      - ./packages/bits/dist
-                      - ./packages/bits/sdk
-            - persist_to_workspace:
-                  root: ~/nova
-                  paths:
-                      - packages/bits
+            -   run:
+                    name: Compute build version
+                    command: yarn run compute-version-ci
+            -   run:
+                    name: Grab latest commit of package
+                    command: |
+                        export gitCommit=`git log --pretty=format:'%H' -n 1 $PROJECT_DIR`
+                        echo $gitCommit > $PROJECT_DIR/git-commit
+            -   restore_cache:
+                    key: bits-dist-{{ checksum "packages/bits/git-commit" }}
+            -   run:
+                    working_directory: ~/nova/packages/bits
+                    name: Assemble
+                    command: |
+                        if [ -d "dist" ];
+                        then
+                            echo "Skipping yarn assemble as it was restored from cache"
+                            # this 'package-cached' file indicates that the dist folder was restored from cache
+                            # we use it later to skip certain steps
+                            touch package-cached
+                        else
+                            yarn run assemble
+                        fi
+            -   save_cache:
+                    key: bits-dist-{{ checksum "packages/bits/git-commit" }}
+                    paths:
+                        - ./packages/bits/dist
+                        - ./packages/bits/sdk
+            -   persist_to_workspace:
+                    root: ~/nova
+                    paths:
+                        - packages/bits
     bits-unit-test:
         executor: node-browsers
         working_directory: ~/nova
         steps:
             - browser-tools/install-chrome
-            - attach_workspace:
-                  at: ~/nova
+            -   attach_workspace:
+                    at: ~/nova
             - reuse-cache
-            - run:
-                  working_directory: ~/nova/packages/bits
-                  name: Unit tests
-                  command: yarn run test
-            - store_test_results:
-                  path: packages/bits/test-results
+            -   run:
+                    working_directory: ~/nova/packages/bits
+                    name: Unit tests
+                    command: yarn run test
+            -   store_test_results:
+                    path: packages/bits/test-results
     bits-e2e-test:
         executor: ubuntu
         resource_class: medium+
@@ -154,20 +262,20 @@ jobs:
         steps:
             - browser-tools/install-chromedriver
             - browser-tools/install-chrome
-            - attach_workspace:
-                  at: ~/nova
-            - restore_cache:
-                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
+            -   attach_workspace:
+                    at: ~/nova
+            -   restore_cache:
+                    key: bits-dist-{{ checksum "packages/bits/git-commit" }}
             - reuse-cache
-            - run:
-                  name: Start Selenium docker image
-                  command: docker-compose up -d --build selenium
-            - run:
-                  name: E2E tests
-                  command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/bits
-            - run:
-                  name: Cleanup
-                  command: docker-compose down -v --rmi=local
+            -   run:
+                    name: Start Selenium docker image
+                    command: docker-compose up -d --build selenium
+            -   run:
+                    name: E2E tests
+                    command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/bits
+            -   run:
+                    name: Cleanup
+                    command: docker-compose down -v --rmi=local
     bits-a11y-test:
         executor: ubuntu
         working_directory: ~/nova
@@ -177,28 +285,28 @@ jobs:
         steps:
             - browser-tools/install-chrome
             - browser-tools/install-chromedriver
-            - attach_workspace:
-                  at: ~/nova
-            - run:
-                  name: Check git diff to see if builds should skip e2e
-                  working_directory: ~/nova/packages/bits
-                  command: |
-                      if [ -f packages/bits/package-cached ] && [ "$USE_CACHE" == "true" ]; then
-                          echo "This package was restored from cache so we're skipping a11y tests"
-                          circleci step halt
-                      fi
-            - restore_cache:
-                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Check git diff to see if builds should skip e2e
+                    working_directory: ~/nova/packages/bits
+                    command: |
+                        if [ -f packages/bits/package-cached ] && [ "$USE_CACHE" == "true" ]; then
+                            echo "This package was restored from cache so we're skipping a11y tests"
+                            circleci step halt
+                        fi
+            -   restore_cache:
+                    key: bits-dist-{{ checksum "packages/bits/git-commit" }}
             - reuse-cache
-            - run:
-                  name: Start Selenium docker image
-                  command: docker-compose up -d --build selenium
-            - run:
-                  name: a11y tests
-                  command: docker-compose run --user="$UID" build npm run a11y:ci --prefix ./packages/bits
-            - run:
-                  name: Cleanup
-                  command: docker-compose down -v --rmi=local
+            -   run:
+                    name: Start Selenium docker image
+                    command: docker-compose up -d --build selenium
+            -   run:
+                    name: a11y tests
+                    command: docker-compose run --user="$UID" build npm run a11y:ci --prefix ./packages/bits
+            -   run:
+                    name: Cleanup
+                    command: docker-compose down -v --rmi=local
     bits-visual-test:
         executor: ubuntu
         resource_class: medium+
@@ -208,93 +316,91 @@ jobs:
         steps:
             - browser-tools/install-chrome
             - browser-tools/install-chromedriver
-            - attach_workspace:
-                  at: ~/nova
-            - run:
-                  name: Check git diff to see if builds should skip e2e
-                  working_directory: ~/nova/packages/bits
-                  command: |
-                      if [ -f $PROJECT_DIR/package-cached ] && [ "$USE_CACHE" == "true" ]; then
-                          echo "This package was restored from cache so we're skipping visual tests"
-                          circleci step halt
-                      fi
-            - restore_cache:
-                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Check git diff to see if builds should skip e2e
+                    working_directory: ~/nova/packages/bits
+                    command: |
+                        if [ -f $PROJECT_DIR/package-cached ] && [ "$USE_CACHE" == "true" ]; then
+                            echo "This package was restored from cache so we're skipping visual tests"
+                            circleci step halt
+                        fi
+            -   restore_cache:
+                    key: bits-dist-{{ checksum "packages/bits/git-commit" }}
             - reuse-cache
-            - run:
-                  name: Start Selenium docker image
-                  command: docker-compose up -d --build selenium
-            - run:
-                  name: Visual tests
-                  command: |
-                      export PERCY_TOKEN=${BITS_PERCY_TOKEN}
-                      docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/bits
-            - run:
-                  name: Cleanup
-                  command: docker-compose down -v --rmi=local
-    bits-e2e-test-playwright:
+            -   run:
+                    name: Start Selenium docker image
+                    command: docker-compose up -d --build selenium
+            -   run:
+                    name: Visual tests
+                    command: |
+                        export PERCY_TOKEN=${BITS_PERCY_TOKEN}
+                        docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/bits
+            -   run:
+                    name: Cleanup
+                    command: docker-compose down -v --rmi=local
+    bits-test-playwright:
         executor: playwright
-        parallelism: 4
+        parallelism: 6
         steps:
-            - attach_workspace:
-                  at: ~/nova
+            -   attach_workspace:
+                    at: ~/nova
             - install-deps
-            - restore_cache:
-                 key: bits-dist-{{ checksum "packages/bits/git-commit" }}
-            - run:
-                  working_directory: ~/nova/packages/bits
-                  name: Run tests
-                  command: |
-                    NODE_INDEX="$((${CIRCLE_NODE_INDEX}+1))";
-                    SHARD="${NODE_INDEX}/${CIRCLE_NODE_TOTAL}";
-                    yarn run e2e:playwright:ci --shard=${SHARD}
-            -  store_artifacts:
-                    path: ./packages/bits/playwright-report
-                    destination: playwright-report-first
-            -  store_artifacts:
-                    path: /tmp/artifacts
-            -  store_artifacts:
-                    path: ./packages/bits/test-results
+            -   run-playwright-shard:
+                    project_dir: "packages/bits"
+                    percy_token: BITS_PERCY_TOKEN
+
+    bits-test-playwright-merge:
+        executor: playwright
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            - install-deps
+            -   merge-playwright-reports:
+                    project_dir: "packages/bits"
+
+
     bits-pack:
         executor: node
         steps:
-            - attach_workspace:
-                  at: ~/nova
+            -   attach_workspace:
+                    at: ~/nova
             - reuse-cache
-            - run:
-                  working_directory: ~/nova/packages/bits
-                  name: Create bits package
-                  command: npm pack ./dist
-            - persist_to_workspace:
-                  root: ~/nova
-                  paths:
-                      - packages/bits/*.tgz
+            -   run:
+                    working_directory: ~/nova/packages/bits
+                    name: Create bits package
+                    command: npm pack ./dist
+            -   persist_to_workspace:
+                    root: ~/nova
+                    paths:
+                        - packages/bits/*.tgz
     bits-publish:
         executor: node
         working_directory: ~/nova
         environment:
             PROJECT_DIR: ./packages/bits
         steps:
-            - attach_workspace:
-                  at: ~/nova
+            -   attach_workspace:
+                    at: ~/nova
             - reuse-cache
-            - run:
-                  name: Publish bits
-                  command: |
-                      yarn run publish-ci
+            -   run:
+                    name: Publish bits
+                    command: |
+                        yarn run publish-ci
     bits-verify:
         executor: node
         working_directory: ~/nova
         environment:
             PROJECT_DIR: ./packages/bits
         steps:
-            - attach_workspace:
-                  at: ~/nova
+            -   attach_workspace:
+                    at: ~/nova
             - reuse-cache
-            - run:
-                  name: Verify published package
-                  command: |
-                      yarn run verify-ci
+            -   run:
+                    name: Verify published package
+                    command: |
+                        yarn run verify-ci
 
     charts-build:
         executor: node
@@ -303,47 +409,47 @@ jobs:
             PROJECT_DIR: ./packages/charts
             BUILD_COUNTER: << pipeline.number >>
         steps:
-            - attach_workspace:
-                  at: ~/nova
+            -   attach_workspace:
+                    at: ~/nova
             - reuse-cache
-            - run:
-                  name: Compute build version
-                  command: yarn run compute-version-ci
-            - run:
-                  working_directory: ~/nova/packages
-                  name: Grab latest commit of package
-                  command: |
-                      export bitsCommit=`git log --pretty=format:'%H' -n 1 ./bits`
-                      export chartsCommit=`git log --pretty=format:'%H' -n 1 ./charts`
-                      echo $bitsCommit $chartsCommit > ./charts/git-commit
-            - run:
-                  working_directory: ~/nova
-                  name: Install Bits
-                  command: |
-                      yarn run --cwd=packages/charts symlink
-            - restore_cache:
-                  working_directory: ~/nova
-                  key: charts-dist-{{ checksum "packages/charts/git-commit" }}
-            - run:
-                  working_directory: ~/nova/packages/charts
-                  name: Assemble
-                  command: |
-                      if [ -d "dist" ];
-                      then
-                          echo "skipping yarn assemble as it was restored from cache"
-                          touch package-cached
-                      else
-                          yarn run assemble
-                      fi
-            - save_cache:
-                  key: charts-dist-{{ checksum "packages/charts/git-commit" }}
-                  paths:
-                      - ./packages/charts/dist
-                      - ./packages/charts/sdk
-            - persist_to_workspace:
-                  root: ~/nova
-                  paths:
-                      - packages/charts
+            -   run:
+                    name: Compute build version
+                    command: yarn run compute-version-ci
+            -   run:
+                    working_directory: ~/nova/packages
+                    name: Grab latest commit of package
+                    command: |
+                        export bitsCommit=`git log --pretty=format:'%H' -n 1 ./bits`
+                        export chartsCommit=`git log --pretty=format:'%H' -n 1 ./charts`
+                        echo $bitsCommit $chartsCommit > ./charts/git-commit
+            -   run:
+                    working_directory: ~/nova
+                    name: Install Bits
+                    command: |
+                        yarn run --cwd=packages/charts symlink
+            -   restore_cache:
+                    working_directory: ~/nova
+                    key: charts-dist-{{ checksum "packages/charts/git-commit" }}
+            -   run:
+                    working_directory: ~/nova/packages/charts
+                    name: Assemble
+                    command: |
+                        if [ -d "dist" ];
+                        then
+                            echo "skipping yarn assemble as it was restored from cache"
+                            touch package-cached
+                        else
+                            yarn run assemble
+                        fi
+            -   save_cache:
+                    key: charts-dist-{{ checksum "packages/charts/git-commit" }}
+                    paths:
+                        - ./packages/charts/dist
+                        - ./packages/charts/sdk
+            -   persist_to_workspace:
+                    root: ~/nova
+                    paths:
+                        - packages/charts
     charts-unit-test:
         executor: node-browsers
         working_directory: ~/nova
@@ -352,15 +458,15 @@ jobs:
             TZ: "America/Chicago"
         steps:
             - browser-tools/install-chrome
-            - attach_workspace:
-                  at: ~/nova
+            -   attach_workspace:
+                    at: ~/nova
             - reuse-cache
-            - run:
-                  working_directory: ~/nova/packages/charts
-                  name: Unit tests
-                  command: yarn run test
-            - store_test_results:
-                  path: packages/charts/test-results
+            -   run:
+                    working_directory: ~/nova/packages/charts
+                    name: Unit tests
+                    command: yarn run test
+            -   store_test_results:
+                    path: packages/charts/test-results
     charts-e2e-test:
         executor: ubuntu
         working_directory: ~/nova
@@ -369,26 +475,53 @@ jobs:
         steps:
             - browser-tools/install-chrome
             - browser-tools/install-chromedriver
-            - attach_workspace:
-                  at: ~/nova
-            - run:
-                  name: Check git diff to see if builds should skip e2e
-                  working_directory: ~/nova/packages/charts
-                  command: |
-                      if [ -f $PROJECT_DIR/package-cached ] && [ "$USE_CACHE" == "true" ]; then
-                          echo "This package was restored from cache so we're skipping visual tests"
-                          circleci step halt
-                      fi
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Check git diff to see if builds should skip e2e
+                    working_directory: ~/nova/packages/charts
+                    command: |
+                        if [ -f $PROJECT_DIR/package-cached ] && [ "$USE_CACHE" == "true" ]; then
+                            echo "This package was restored from cache so we're skipping visual tests"
+                            circleci step halt
+                        fi
             - reuse-cache
-            - run:
-                  name: Start Selenium docker image
-                  command: docker-compose up -d --build selenium
-            - run:
-                  name: E2E tests
-                  command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/charts
-            - run:
-                  name: Cleanup
-                  command: docker-compose down -v --rmi=local
+            -   run:
+                    name: Start Selenium docker image
+                    command: docker-compose up -d --build selenium
+            -   run:
+                    name: E2E tests
+                    command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/charts
+            -   run:
+                    name: Cleanup
+                    command: docker-compose down -v --rmi=local
+    charts-test-playwright:
+        executor: playwright
+        parallelism: 2
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            - install-deps
+            -   restore_cache:
+                    working_directory: ~/nova
+                    key:
+                        bits-dist-{{ checksum "packages/bits/git-commit" }}
+            -   run:
+                    working_directory: ~/nova/packages/charts
+                    name: Install Bits
+                    command: |
+                        yarn run --cwd=packages/charts symlink
+            -   run-playwright-shard:
+                    project_dir: "packages/charts"
+                    percy_token: CHARTS_PERCY_TOKEN
+    charts-test-playwright-merge:
+        executor: playwright
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            - install-deps
+            -   merge-playwright-reports:
+                    project_dir: "packages/charts"
     charts-visual-test:
         executor: ubuntu
         working_directory: ~/nova
@@ -397,69 +530,69 @@ jobs:
         steps:
             - browser-tools/install-chrome
             - browser-tools/install-chromedriver
-            - attach_workspace:
-                  at: ~/nova
-            - run:
-                  name: Check git diff to see if builds should skip e2e
-                  working_directory: ~/nova/packages/charts
-                  command: |
-                      if [ -f $PROJECT_DIR/package-cached ] && [ "$USE_CACHE" == "true" ]; then
-                          echo "This package was restored from cache so we're skipping visual tests"
-                          circleci step halt
-                      fi
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Check git diff to see if builds should skip e2e
+                    working_directory: ~/nova/packages/charts
+                    command: |
+                        if [ -f $PROJECT_DIR/package-cached ] && [ "$USE_CACHE" == "true" ]; then
+                            echo "This package was restored from cache so we're skipping visual tests"
+                            circleci step halt
+                        fi
             - reuse-cache
-            - run:
-                  name: Start Selenium docker image
-                  command: docker-compose up -d --build selenium
-            - run:
-                  name: Visual tests
-                  command: |
-                      export PERCY_TOKEN=${CHARTS_PERCY_TOKEN}
-                      docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/charts
-            - run:
-                  name: Cleanup
-                  command: docker-compose down -v --rmi=local
+            -   run:
+                    name: Start Selenium docker image
+                    command: docker-compose up -d --build selenium
+            -   run:
+                    name: Visual tests
+                    command: |
+                        export PERCY_TOKEN=${CHARTS_PERCY_TOKEN}
+                        docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/charts
+            -   run:
+                    name: Cleanup
+                    command: docker-compose down -v --rmi=local
     charts-pack:
         executor: node
         working_directory: ~/nova
         steps:
-            - attach_workspace:
-                  at: ~/nova
+            -   attach_workspace:
+                    at: ~/nova
             - reuse-cache
-            - run:
-                  working_directory: ~/nova/packages/charts
-                  name: Create charts package
-                  command: npm pack ./dist
-            - persist_to_workspace:
-                  root: ~/nova
-                  paths:
-                      - packages/charts/*.tgz
+            -   run:
+                    working_directory: ~/nova/packages/charts
+                    name: Create charts package
+                    command: npm pack ./dist
+            -   persist_to_workspace:
+                    root: ~/nova
+                    paths:
+                        - packages/charts/*.tgz
     charts-publish:
         executor: node
         working_directory: ~/nova
         environment:
             PROJECT_DIR: ./packages/charts
         steps:
-            - attach_workspace:
-                  at: ~/nova
+            -   attach_workspace:
+                    at: ~/nova
             - reuse-cache
-            - run:
-                  name: Publish charts
-                  command: |
-                      yarn run publish-ci
+            -   run:
+                    name: Publish charts
+                    command: |
+                        yarn run publish-ci
     charts-verify:
         executor: node
         working_directory: ~/nova
         environment:
             PROJECT_DIR: ./packages/charts
         steps:
-            - attach_workspace:
-                  at: ~/nova
+            -   attach_workspace:
+                    at: ~/nova
             - reuse-cache
-            - run:
-                  name: Verify published package
-                  command: |
-                      yarn run verify-ci
+            -   run:
+                    name: Verify published package
+                    command: |
+                        yarn run verify-ci
 
     dashboards-build:
         executor: node
@@ -468,62 +601,88 @@ jobs:
             PROJECT_DIR: ./packages/dashboards
             BUILD_COUNTER: << pipeline.number >>
         steps:
-            - attach_workspace:
-                  at: ~/nova
+            -   attach_workspace:
+                    at: ~/nova
             - reuse-cache
-            - run:
-                  name: Compute build version
-                  command: yarn run compute-version-ci
-            - run:
-                  working_directory: ~/nova/packages
-                  name: Grab latest commit of package
-                  command: |
-                      export bitsCommit=`git log --pretty=format:'%H' -n 1 ./bits`
-                      export chartsCommit=`git log --pretty=format:'%H' -n 1 ./charts`
-                      export dashboardsCommit=`git log --pretty=format:'%H' -n 1 ./dashboards`
-                      echo $bitsCommit $chartsCommit $dashboardsCommit > ./dashboards/git-commit
-            - run:
-                  working_directory: ~/nova/packages/dashboards
-                  name: Install Bits and Charts
-                  command: |
-                      yarn run --cwd=packages/dashboards symlink
-            - restore_cache:
-                  working_directory: ~/nova
-                  key: dashboards-dist-{{ checksum "packages/dashboards/git-commit" }}
-            - run:
-                  working_directory: ~/nova/packages/dashboards
-                  name: Assemble
-                  command: |
-                      if [ -d "dist" ];
-                      then
-                          echo "skipping yarn assemble as it was restored from cache"
-                          touch package-cached
-                      else
-                          yarn run assemble
-                      fi
-            - save_cache:
-                  key: dashboards-dist-{{ checksum "packages/dashboards/git-commit" }}
-                  paths:
-                      - ./packages/dashboards/dist
-                      - ./packages/dashboards/sdk
-            - persist_to_workspace:
-                  root: .
-                  paths:
-                      - packages/dashboards
+            -   run:
+                    name: Compute build version
+                    command: yarn run compute-version-ci
+            -   run:
+                    working_directory: ~/nova/packages
+                    name: Grab latest commit of package
+                    command: |
+                        export bitsCommit=`git log --pretty=format:'%H' -n 1 ./bits`
+                        export chartsCommit=`git log --pretty=format:'%H' -n 1 ./charts`
+                        export dashboardsCommit=`git log --pretty=format:'%H' -n 1 ./dashboards`
+                        echo $bitsCommit $chartsCommit $dashboardsCommit > ./dashboards/git-commit
+            -   run:
+                    working_directory: ~/nova/packages/dashboards
+                    name: Install Bits and Charts
+                    command: |
+                        yarn run --cwd=packages/dashboards symlink
+            -   restore_cache:
+                    working_directory: ~/nova
+                    key: dashboards-dist-{{ checksum "packages/dashboards/git-commit" }}
+            -   run:
+                    working_directory: ~/nova/packages/dashboards
+                    name: Assemble
+                    command: |
+                        if [ -d "dist" ];
+                        then
+                            echo "skipping yarn assemble as it was restored from cache"
+                            touch package-cached
+                        else
+                            yarn run assemble
+                        fi
+            -   save_cache:
+                    key: dashboards-dist-{{ checksum "packages/dashboards/git-commit" }}
+                    paths:
+                        - ./packages/dashboards/dist
+                        - ./packages/dashboards/sdk
+            -   persist_to_workspace:
+                    root: .
+                    paths:
+                        - packages/dashboards
     dashboards-unit-test:
         executor: node-browsers
         working_directory: ~/nova
         steps:
             - browser-tools/install-chrome
-            - attach_workspace:
-                  at: ~/nova
+            -   attach_workspace:
+                    at: ~/nova
             - reuse-cache
-            - run:
-                  working_directory: ~/nova/packages/dashboards
-                  name: Unit tests
-                  command: yarn run test
-            - store_test_results:
-                  path: packages/dashboards/test-results
+            -   run:
+                    working_directory: ~/nova/packages/dashboards
+                    name: Unit tests
+                    command: yarn run test
+            -   store_test_results:
+                    path: packages/dashboards/test-results
+    dashboards-test-playwright:
+        executor: playwright
+        parallelism: 2
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            - install-deps
+            -   restore_cache:
+                    working_directory: ~/nova
+                    key: bits-dist-{{ checksum "packages/bits/git-commit" }}
+            -   run:
+                    working_directory: ~/nova/packages/dashboards
+                    name: Install Bits
+                    command: |
+                        yarn run --cwd=packages/dashboards symlink
+            -   run-playwright-shard:
+                    project_dir: "packages/dashboards"
+                    percy_token: DASHBOARDS_PERCY_TOKEN
+    dashboards-test-playwright-merge:
+        executor: playwright
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            - install-deps
+            -   merge-playwright-reports:
+                    project_dir: "packages/dashboards"
     dashboards-e2e-test:
         executor: ubuntu
         resource_class: medium+
@@ -533,26 +692,26 @@ jobs:
         steps:
             - browser-tools/install-chrome
             - browser-tools/install-chromedriver
-            - attach_workspace:
-                  at: ~/nova
+            -   attach_workspace:
+                    at: ~/nova
             - reuse-cache
-            - run:
-                  name: Check git diff to see if builds should skip e2e
-                  working_directory: ~/nova/packages/dashboards
-                  command: |
-                      if [ -f packages/dashboards/package-cached ] && [ "$USE_CACHE" == "true" ]; then
-                          echo "This package was restored from cache so we're skipping e2e tests"
-                          circleci step halt
-                      fi
-            - run:
-                  name: Start Selenium docker image
-                  command: docker-compose up -d --build selenium
-            - run:
-                  name: E2E tests
-                  command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/dashboards
-            - run:
-                  name: Cleanup
-                  command: docker-compose down -v --rmi=local
+            -   run:
+                    name: Check git diff to see if builds should skip e2e
+                    working_directory: ~/nova/packages/dashboards
+                    command: |
+                        if [ -f packages/dashboards/package-cached ] && [ "$USE_CACHE" == "true" ]; then
+                            echo "This package was restored from cache so we're skipping e2e tests"
+                            circleci step halt
+                        fi
+            -   run:
+                    name: Start Selenium docker image
+                    command: docker-compose up -d --build selenium
+            -   run:
+                    name: E2E tests
+                    command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/dashboards
+            -   run:
+                    name: Cleanup
+                    command: docker-compose down -v --rmi=local
     dashboards-visual-test:
         executor: ubuntu
         working_directory: ~/nova
@@ -561,83 +720,83 @@ jobs:
         steps:
             - browser-tools/install-chrome
             - browser-tools/install-chromedriver
-            - attach_workspace:
-                  at: ~/nova
+            -   attach_workspace:
+                    at: ~/nova
             - reuse-cache
-            - run:
-                  name: Start Selenium docker image
-                  command: docker-compose up -d --build selenium
-            - run:
-                  name: Visual tests
-                  command: |
-                      export PERCY_TOKEN=${DASHBOARDS_PERCY_TOKEN}
-                      docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/dashboards
-            - run:
-                  name: Cleanup
-                  command: docker-compose down -v --rmi=local
+            -   run:
+                    name: Start Selenium docker image
+                    command: docker-compose up -d --build selenium
+            -   run:
+                    name: Visual tests
+                    command: |
+                        export PERCY_TOKEN=${DASHBOARDS_PERCY_TOKEN}
+                        docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/dashboards
+            -   run:
+                    name: Cleanup
+                    command: docker-compose down -v --rmi=local
     dashboards-pack:
         executor: node
         working_directory: ~/nova
         steps:
-            - attach_workspace:
-                  at: ~/nova
+            -   attach_workspace:
+                    at: ~/nova
             - reuse-cache
-            - run:
-                  working_directory: ~/nova/packages/dashboards
-                  name: Create dashboards package
-                  command: npm pack ./dist
-            - persist_to_workspace:
-                  root: ~/nova
-                  paths:
-                      - packages/dashboards/*.tgz
+            -   run:
+                    working_directory: ~/nova/packages/dashboards
+                    name: Create dashboards package
+                    command: npm pack ./dist
+            -   persist_to_workspace:
+                    root: ~/nova
+                    paths:
+                        - packages/dashboards/*.tgz
     dashboards-publish:
         executor: node
         working_directory: ~/nova
         environment:
             PROJECT_DIR: ./packages/dashboards
         steps:
-            - attach_workspace:
-                  at: ~/nova
+            -   attach_workspace:
+                    at: ~/nova
             - reuse-cache
-            - run:
-                  name: Publish dashboards
-                  command: |
-                      yarn run publish-ci
+            -   run:
+                    name: Publish dashboards
+                    command: |
+                        yarn run publish-ci
     dashboards-verify:
         executor: node
         working_directory: ~/nova
         environment:
             PROJECT_DIR: ./packages/dashboards
         steps:
-            - attach_workspace:
-                  at: ~/nova
+            -   attach_workspace:
+                    at: ~/nova
             - reuse-cache
-            - run:
-                  name: Verify published package
-                  command: |
-                      yarn run verify-ci
+            -   run:
+                    name: Verify published package
+                    command: |
+                        yarn run verify-ci
     nova-docs:
         executor: node
         working_directory: ~/nova
         environment:
             NOVA_DIR: ~/nova
         steps:
-            - attach_workspace:
-                  at: ~/nova
+            -   attach_workspace:
+                    at: ~/nova
             - reuse-cache
             - add_ssh_keys
-            - checkout:
-                  path: ~/nova
-            - run:
-                  name: Configure Git
-                  command: |
-                      git config --global user.email circleci@circleci
-                      git config --global user.name $CIRCLE_PROJECT_USERNAME
-            - run:
-                  name: Publish nova docs & Prepare nova-docs artifact
-                  command: yarn run deploy-docs-ci
-            - store_artifacts:
-                  path: ./nova-docs.zip
+            -   checkout:
+                    path: ~/nova
+            -   run:
+                    name: Configure Git
+                    command: |
+                        git config --global user.email circleci@circleci
+                        git config --global user.name $CIRCLE_PROJECT_USERNAME
+            -   run:
+                    name: Publish nova docs & Prepare nova-docs artifact
+                    command: yarn run deploy-docs-ci
+            -   store_artifacts:
+                    path: ./nova-docs.zip
     nova-docs-cleanup:
         executor: node
         working_directory: ~/nova
@@ -645,16 +804,16 @@ jobs:
             NOVA_DIR: ~/nova
         steps:
             - add_ssh_keys
-            - checkout:
-                  path: ~/nova
-            - run:
-                  name: Configure Git
-                  command: |
-                      git config --global user.email circleci@circleci
-                      git config --global user.name $CIRCLE_PROJECT_USERNAME
-            - run:
-                  name: Docs Cleanup
-                  command: yarn run clean-docs-ci
+            -   checkout:
+                    path: ~/nova
+            -   run:
+                    name: Configure Git
+                    command: |
+                        git config --global user.email circleci@circleci
+                        git config --global user.name $CIRCLE_PROJECT_USERNAME
+            -   run:
+                    name: Docs Cleanup
+                    command: yarn run clean-docs-ci
     release-prep:
         executor: node
         working_directory: ~/nova
@@ -665,180 +824,189 @@ jobs:
             INCREMENT_TYPE: major
         steps:
             - add_ssh_keys
-            - checkout:
-                  path: ~/nova
+            -   checkout:
+                    path: ~/nova
             - reuse-cache
-            - run:
-                  name: Configure Git
-                  command: |
-                      git config --global user.email circleci@circleci
-                      git config --global user.name $CIRCLE_PROJECT_USERNAME
-            - run:
-                  name: Run release prep
-                  command: yarn run release-prep-ci
+            -   run:
+                    name: Configure Git
+                    command: |
+                        git config --global user.email circleci@circleci
+                        git config --global user.name $CIRCLE_PROJECT_USERNAME
+            -   run:
+                    name: Run release prep
+                    command: yarn run release-prep-ci
 workflows:
     nova:
         jobs:
             - prepare
-            - bits-build:
-                  requires:
-                      - prepare
-            - bits-pack:
-                  requires:
-                      - bits-build
-            - bits-unit-test:
-                  requires:
-                      - bits-build
-            - bits-e2e-test:
-                  requires:
-                      - bits-build
-            - bits-e2e-test-playwright:
-                  requires:
-                      - bits-build
-            - bits-visual-test:
-                  requires:
-                      - bits-build
-            - bits-a11y-test:
-                  requires:
-                      - bits-build
-            - bits-publish:
-                  requires:
-                      - bits-e2e-test
-                      - bits-unit-test
-                      - charts-e2e-test
-                      - charts-unit-test
-                      - dashboards-e2e-test
-                      - dashboards-unit-test
-                  filters:
-                      branches:
-                          only:
-                              - /^release\/.+/
-                              - /^cci\/.+/
-            - bits-verify:
-                  requires:
-                      - bits-publish
-                  filters:
-                      branches:
-                          only:
-                              - /^release\/.+/
-                              - /^cci\/.+/
-            - charts-build:
-                  requires:
-                      - bits-pack
-            - charts-pack:
-                  requires:
-                      - charts-build
-            - charts-unit-test:
-                  requires:
-                      - charts-build
-            - charts-e2e-test:
-                  requires:
-                      - charts-build
-            - charts-visual-test:
-                  requires:
-                      - charts-build
-            - charts-publish:
-                  requires:
-                      - bits-e2e-test
-                      - bits-unit-test
-                      - charts-e2e-test
-                      - charts-unit-test
-                      - dashboards-e2e-test
-                      - dashboards-unit-test
-                  filters:
-                      branches:
-                          only:
-                              - /^release\/.+/
-                              - /^cci\/.+/
-            - charts-verify:
-                  requires:
-                      - charts-publish
-                  filters:
-                      branches:
-                          only:
-                              - /^release\/.+/
-                              - /^cci\/.+/
-            - dashboards-build:
-                  requires:
-                      - charts-pack
-            - dashboards-pack:
-                  requires:
-                      - dashboards-build
-            - nova-docs:
-                  context:
-                      - common-build-creds
-                  filters:
-                      branches:
-                          only:
-                              - /^release\/.+/
-                              - /^cci\/.+/
-                  requires:
-                      - bits-pack
-                      - charts-pack
-                      - dashboards-pack
-            - nova-docs-cleanup:
-                  context: common-build-creds
-                  requires:
-                      - nova-docs
-                  filters:
-                      branches:
-                          only:
-                              - /^cci\/.+/
-            - dashboards-unit-test:
-                  requires:
-                      - dashboards-build
-            - dashboards-e2e-test:
-                  requires:
-                      - dashboards-build
-            - dashboards-visual-test:
-                  requires:
-                      - dashboards-build
-            - dashboards-publish:
-                  requires:
-                      - bits-e2e-test
-                      - bits-unit-test
-                      - charts-e2e-test
-                      - charts-unit-test
-                      - dashboards-e2e-test
-                      - dashboards-unit-test
-                  filters:
-                      branches:
-                          only:
-                              - /^release\/.+/
-                              - /^cci\/.+/
-            - dashboards-verify:
-                  requires:
-                      - dashboards-publish
-                  filters:
-                      branches:
-                          only:
-                              - /^release\/.+/
-                              - /^cci\/.+/
+            -   bits-build:
+                    requires:
+                        - prepare
+            -   bits-pack:
+                    requires:
+                        - bits-build
+            -   bits-unit-test:
+                    requires:
+                        - bits-build
+            -   bits-e2e-test:
+                    requires:
+                        - bits-build
+            -   bits-test-playwright:
+                    requires:
+                        - bits-build
+            -   bits-test-playwright-merge:
+                    requires:
+                        - bits-test-playwright
+            -   bits-visual-test:
+                    requires:
+                        - bits-build
+            -   bits-a11y-test:
+                    requires:
+                        - bits-build
+            -   bits-publish:
+                    requires:
+                        - bits-e2e-test
+                        - bits-unit-test
+                        - charts-e2e-test
+                        - charts-unit-test
+                        - dashboards-e2e-test
+                        - dashboards-unit-test
+                    filters:
+                        branches:
+                            only:
+                                - /^release\/.+/
+            -   bits-verify:
+                    requires:
+                        - bits-publish
+                    filters:
+                        branches:
+                            only:
+                                - /^release\/.+/
+            -   charts-build:
+                    requires:
+                        - bits-pack
+            -   charts-pack:
+                    requires:
+                        - charts-build
+            -   charts-unit-test:
+                    requires:
+                        - charts-build
+            -   charts-e2e-test:
+                    requires:
+                        - charts-build
+            -   charts-test-playwright:
+                    requires:
+                        - charts-build
+            -   charts-test-playwright-merge:
+                    requires:
+                        - charts-test-playwright
+            -   charts-visual-test:
+                    requires:
+                        - charts-build
+            -   charts-publish:
+                    requires:
+                        - bits-e2e-test
+                        - bits-unit-test
+                        - charts-e2e-test
+                        - charts-unit-test
+                        - dashboards-e2e-test
+                        - dashboards-unit-test
+                    filters:
+                        branches:
+                            only:
+                                - /^release\/.+/
+            -   charts-verify:
+                    requires:
+                        - charts-publish
+                    filters:
+                        branches:
+                            only:
+                                - /^release\/.+/
+            -   dashboards-build:
+                    requires:
+                        - charts-pack
+            -   dashboards-pack:
+                    requires:
+                        - dashboards-build
+            -   dashboards-unit-test:
+                    requires:
+                        - dashboards-build
+            -   dashboards-test-playwright:
+                    requires:
+                        - dashboards-build
+            -   dashboards-test-playwright-merge:
+                    requires:
+                        - dashboards-test-playwright
+            -   dashboards-e2e-test:
+                    requires:
+                        - dashboards-build
+            -   dashboards-visual-test:
+                    requires:
+                        - dashboards-build
+            -   dashboards-publish:
+                    requires:
+                        - bits-e2e-test
+                        - bits-unit-test
+                        - charts-e2e-test
+                        - charts-unit-test
+                        - dashboards-e2e-test
+                        - dashboards-unit-test
+                    filters:
+                        branches:
+                            only:
+                                - /^release\/.+/
+            -   dashboards-verify:
+                    requires:
+                        - dashboards-publish
+                    filters:
+                        branches:
+                            only:
+                                - /^release\/.+/
+            -   nova-docs:
+                    context:
+                        - common-build-creds
+                    filters:
+                        branches:
+                            only:
+                                - /^release\/.+/
+                                - /^cci\/.+/
+                    requires:
+                        - bits-pack
+                        - charts-pack
+                        - dashboards-pack
+            -   nova-docs-cleanup:
+                    context: common-build-creds
+                    requires:
+                        - nova-docs
+                    filters:
+                        branches:
+                            only:
+                                - /^cci\/.+/
 
     nova-release:
         jobs:
-            - release-approval:
-                  type: approval
-                  filters:
-                      branches:
-                          only:
-                              - main
-                              - /^hotfix\/v[\d.]+x/
-                              - /^cci-release\/.*/
-            - release-prep:
-                  context: github-write-access
-                  requires:
-                      - release-approval
+            -   release-approval:
+                    type: approval
+                    filters:
+                        branches:
+                            only:
+                                - main
+                                - /^hotfix\/v[\d.]+x/
+                                - /^cci-release\/.*/
+            -   release-prep:
+                    context: github-write-access
+                    requires:
+                        - release-approval
 
     nightly:
         triggers:
-            - schedule:
-                  cron: "0 0 * * *"
-                  filters:
-                      branches:
-                          only:
-                              - main
+            -   schedule:
+                    cron: "0 0 * * *"
+                    filters:
+                        branches:
+                            only:
+                                - main
         jobs:
-            - nova-docs-cleanup:
-                  context:
-                      - common-build-creds
+            -   nova-docs-cleanup:
+                    context:
+                        - common-build-creds

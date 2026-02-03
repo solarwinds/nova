@@ -23,7 +23,7 @@ import { browser, by, element, ElementFinder } from "protractor";
 import { assertA11y, Helpers } from "../../helpers";
 import { BusyAtom } from "../public_api";
 
-describe("a11y: busy", () => {
+xdescribe("a11y: busy", () => {
     const rulesToDisable: string[] = [
         "color-contrast",
         "aria-progressbar-name",

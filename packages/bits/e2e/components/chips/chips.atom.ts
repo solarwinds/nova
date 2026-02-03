@@ -22,12 +22,14 @@ export class ChipsAtom extends Atom {
         return this.getLocator().locator(`.${ChipsAtom.itemClass}`);
     }
 
-    public removeItem = async (index: number): Promise<void> => {
-        return this.getLocator()
+    public getChipElement(index: number): Locator {
+        return this.getLocator().locator(`.${ChipsAtom.itemClass}`).nth(index);
+    }
+
+    public removeItem = async (index: number): Promise<void> => this.getLocator()
             .locator(Helpers.page.locator(`.${ChipsAtom.itemRemoveIconClass}`))
             .nth(index)
             .click();
-    };
 
     public clearAll = async (): Promise<void> => {
         await this.getLocator()

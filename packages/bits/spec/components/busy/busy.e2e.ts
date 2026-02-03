@@ -24,7 +24,7 @@ import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { BusyAtom, ButtonAtom, SelectAtom } from "../public_api";
 
-describe("USERCONTROL Busy", () => {
+xdescribe("USERCONTROL Busy", () => {
     let busy: BusyAtom;
     let busyBtn: ButtonAtom;
     let select: SelectAtom;

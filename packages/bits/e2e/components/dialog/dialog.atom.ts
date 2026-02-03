@@ -34,6 +34,9 @@ export class DialogAtom extends Atom {
             .getCloseButton()
             .click();
     }
+    public static async toBeVisible(): Promise<void> {
+       return await expect(new DialogAtom(Helpers.page.locator(".modal-dialog")).getLocator()).toBeVisible();
+    }
 
     public static async clickCancelButton(): Promise<void> {
         return new DialogAtom(Helpers.page.locator(".modal-dialog"))

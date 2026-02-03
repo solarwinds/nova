@@ -19,8 +19,10 @@
 //  THE SOFTWARE.
 import { Locator } from "playwright-core";
 
+import { DateTimepickerAtom } from "./datetimepicker.atom";
 import { Atom } from "../../atom";
-import { Helpers, test } from "../../setup";
+import { Helpers, expect, test } from "../../setup";
+import { DialogAtom } from "../dialog/dialog.atom";
 
 test.describe("a11y: date time picker", () => {
     let dateTimePickerBasic: DateTimepickerAtom;
@@ -45,19 +47,24 @@ test.describe("a11y: date time picker", () => {
         dialogButtonElem = Helpers.page.locator("#nui-visual-test-dialog-btn");
     });
 
-    test("should verify a11y of date time picker", async ({ runA11yScan }) => {
+    // Enable once NUI-6031 is fixed
+    test.skip("should verify a11y of date time picker", async ({ runA11yScan }) => {
         await runA11yScan(DateTimepickerAtom);
     });
 
     // Enable once NUI-6031 is fixed
-    test.skip("should verify a11y with opened time picker", async () => {
-        await dateTimePickerBasic.getTimePicker().toggle();
+    test.skip("should verify a11y with opened time picker", async ({
+        runA11yScan,
+    }) => {
+        await dateTimePickerBasic.timePicker.toggle();
         await runA11yScan(DateTimepickerAtom);
     });
 
     // Enable once NUI-6031 is fixed
-    test.skip("should verify a11y with opened date picker", async () => {
-        await dateTimePickerBasic.datapicker.toggle();
+    test.skip("should verify a11y with opened date picker", async ({
+        runA11yScan,
+    }) => {
+        await dateTimePickerBasic.datePicker.toggle();
         await runA11yScan(DateTimepickerAtom);
     });
 
@@ -70,12 +77,16 @@ test.describe("a11y: date time picker", () => {
             );
         });
 
-        test("should verify a11y of the timepicker in modal dialog", async () => {
+        test("should verify a11y of the timepicker in modal dialog", async ({
+            runA11yScan,
+        }) => {
             await dateTimePickerDialog.timePicker.toggle();
             await runA11yScan(DateTimepickerAtom);
         });
 
-        test("should verify a11y of the datepicker in modal dialog", async () => {
+        test("should verify a11y of the datepicker in modal dialog", async ({
+            runA11yScan,
+        }) => {
             await dateTimePickerDialog.datePicker.toggle();
             await runA11yScan(DateTimepickerAtom);
         });

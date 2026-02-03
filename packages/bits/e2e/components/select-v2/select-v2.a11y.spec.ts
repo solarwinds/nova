@@ -18,10 +18,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { Atom } from "../../atom";
 import { SelectV2Atom } from "./select-v2.atom";
 import { test, Helpers, Animations } from "../../setup";
 
-describe("a11y: select-v2", () => {
+test.describe("a11y: select-v2", () => {
     const rulesToDisable: string[] = [
         "color-contrast", // NUI-6014
         "nested-interactive",
@@ -37,13 +38,16 @@ describe("a11y: select-v2", () => {
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("select-v2/test", page);
         await Helpers.disableCSSAnimations(Animations.ALL);
-        selectBasic = SelectV2Atom.find<SelectV2Atom>(SelectV2Atom,"basic");
-        selectErrorState = SelectV2Atom.find<SelectV2Atom>(SelectV2Atom,"error-state");
-        selectDisplayValueSmall = SelectV2Atom.find<SelectV2Atom>(SelectV2Atom,"display-value-mw200");
-        selectDisplayValue = SelectV2Atom.find<SelectV2Atom>(SelectV2Atom,"display-value");
-        selectGrouped = SelectV2Atom.find<SelectV2Atom>(SelectV2Atom,"grouped");
-        selectInForm = SelectV2Atom.find<SelectV2Atom>(SelectV2Atom,"reactive-form");
-        selectOverlayStyles = SelectV2Atom.find<SelectV2Atom>(SelectV2Atom,"overlay-styles");
+        selectBasic = Atom.find<SelectV2Atom>(SelectV2Atom, "basic");
+        selectErrorState = Atom.find<SelectV2Atom>(SelectV2Atom, "error-state");
+        selectDisplayValueSmall = Atom.find<SelectV2Atom>(
+            SelectV2Atom,
+            "display-value-mw200"
+        );
+        selectDisplayValue = Atom.find<SelectV2Atom>(SelectV2Atom, "display-value");
+        selectGrouped = Atom.find<SelectV2Atom>(SelectV2Atom, "grouped");
+        selectInForm = Atom.find<SelectV2Atom>(SelectV2Atom, "reactive-form");
+        selectOverlayStyles = Atom.find<SelectV2Atom>(SelectV2Atom, "overlay-styles");
     });
 
     test("should check a11y of select-v2", async ({ runA11yScan }) => {
