@@ -39,7 +39,8 @@ import { getAppModulePath } from "@schematics/angular/utility/ng-ast-utils";
 
 import {
     assembleDependencies,
-    getBrowserProjectTargets, getProjectSourceRoot,
+    getBrowserProjectTargets,
+    getProjectSourceRoot,
     installPackageJsonDependencies,
     readIntoSourceFile,
     updateJsonFile,
