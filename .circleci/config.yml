@@ -660,9 +660,9 @@ jobs:
         working_directory: ~/nova
         environment:
             SOURCE_BRANCH: main
-            CREATE_RELEASE_BRANCH: "false"
-            RELEASE_BRANCH: release/v19.0.x
-            INCREMENT_TYPE: minor
+            CREATE_RELEASE_BRANCH: "true"
+            RELEASE_BRANCH: release/v20.0.x
+            INCREMENT_TYPE: major
         steps:
             - add_ssh_keys
             - checkout:
