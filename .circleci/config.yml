@@ -22,7 +22,7 @@ aliases:
                 then
                     echo "skipping npm install as it was restored from cache. Running only postinstall"
                 else
-                    yarn install --frozen-lockfile --ignore-scripts
+                    yarn install --frozen-lockfile
                 fi
 
 commands:
