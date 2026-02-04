@@ -25,6 +25,27 @@ export class ButtonAtom extends Atom {
     public isBusy = async (): Promise<void> =>
         await this.toContainClass("is-busy");
     public click = async (): Promise<void> => this.getLocator().click();
+
+    // New interaction helpers for visual tests
+    public hover = async (): Promise<void> => {
+        await this.getLocator().hover();
+    };
+
+    public mouseDown = async (): Promise<void> => {
+        const box = await this.getLocator().boundingBox();
+        if (box) {
+            await Helpers.page.mouse.move(
+                box.x + box.width / 2,
+                box.y + box.height / 2
+            );
+            await Helpers.page.mouse.down();
+        }
+    };
+
+    public mouseUp = async (): Promise<void> => {
+        await Helpers.page.mouse.up();
+    };
+
     public async isDisabled(): Promise<boolean> {
         const disabled = await this.getLocator().getAttribute("disabled");
         return disabled !== null;

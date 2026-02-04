@@ -18,10 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser } from "protractor";
-
 import { Atom } from "../../atom";
-import { Helpers } from "../../helpers";
+import { test, Helpers, Animations } from "../../setup";
 import { Camera } from "../../virtual-camera/Camera";
 import { ButtonAtom } from "../button/button.atom";
 import { PaginatorAtom } from "../paginator/paginator.atom";
@@ -29,7 +27,7 @@ import { SelectV2Atom } from "../select-v2/select-v2.atom";
 
 const name: string = "Paginator";
 
-describe(`Visual tests: ${name}`, () => {
+test.describe(`Visual tests: ${name}`, () => {
     let camera: Camera;
     let basicPaginator: PaginatorAtom;
     let adjacentPaginator: PaginatorAtom;
@@ -42,8 +40,9 @@ describe(`Visual tests: ${name}`, () => {
     let dotsBasicButton: ButtonAtom;
     let dotsCustomStylingButton: ButtonAtom;
 
-    test.beforeEach(async () => {
-        await Helpers.prepareBrowser("paginator/paginator-visual-test");
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("paginator/paginator-visual-test", page);
+        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
         basicPaginator = Atom.find(
             PaginatorAtom,
             "nui-visual-test-basic-paginator"
@@ -85,7 +84,7 @@ describe(`Visual tests: ${name}`, () => {
             customStylingPaginator.ellipsisLink(1)
         );
 
-        camera = new Camera().loadFilm(browser, name);
+        camera = new Camera().loadFilm(page, name, "Bits");
     });
 
     test(`${name} visual test`, async () => {
@@ -116,5 +115,5 @@ describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese(`Dark theme`);
 
         await camera.turn.off();
-    }, 100000);
+    });
 });

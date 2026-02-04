@@ -18,31 +18,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser, by, element, ElementFinder } from "protractor";
+import { CameraEngine } from "./camera-engine";
 
-import { assertA11y, Helpers } from "../../helpers";
-import { BusyAtom } from "../public_api";
+export class CameraToggle {
+    constructor(private cameraEngine: CameraEngine) {}
 
-describe("a11y: busy", () => {
-    const rulesToDisable: string[] = [
-        "color-contrast",
-        "aria-progressbar-name",
-        "duplicate-id",
-    ];
+    public async on(): Promise<void> {
+        await this.cameraEngine.currentLensInstance.cameraON();
+    }
 
-    let switchBusyState: ElementFinder;
-
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("busy/busy-visual-test");
-        switchBusyState = element(by.id("nui-busy-test-button"));
-    });
-
-    it("should check a11y of busy - on", async () => {
-        await assertA11y(browser, BusyAtom, rulesToDisable);
-    });
-
-    it("should check a11y of busy - off", async () => {
-        await switchBusyState.click();
-        await assertA11y(browser, BusyAtom, rulesToDisable);
-    });
-});
+    public async off(): Promise<void> {
+        await this.cameraEngine.currentLensInstance.cameraOFF();
+    }
+}

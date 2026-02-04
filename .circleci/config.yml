@@ -44,6 +44,9 @@ commands:
             project_dir:
                 type: string
                 default: "packages/bits"
+            percy_token:
+                type: string
+                default: BITS_PERCY_TOKEN
             skip_merge_job:
                 type: boolean
                 default: true
@@ -53,6 +56,7 @@ commands:
                     name: Run Playwright shard
                     command: |
                         set +e
+                        export PERCY_TOKEN=${<< parameters.percy_token >>}
                         NODE_INDEX="$((${CIRCLE_NODE_INDEX}+1))";
                         SHARD="${NODE_INDEX}/${CIRCLE_NODE_TOTAL}";
                         yarn run playwright:ci --shard=${SHARD}
@@ -320,7 +324,6 @@ jobs:
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi=local
-#     this Job contains all projects
     bits-test-playwright:
         executor: playwright
         parallelism: 6
@@ -477,6 +480,26 @@ jobs:
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi=local
+#    charts-test-playwright:
+#        executor: playwright
+#        parallelism: 6
+#        steps:
+#            -   attach_workspace:
+#                    at: ~/nova
+#            - install-deps
+#            -   restore_cache:
+#                    key: bits-dist-{{ checksum "packages/charts/git-commit" }}
+#            -   run-playwright-shard:
+#                    project_dir: "packages/charts"
+#
+#    charts-test-playwright-merge:
+#        executor: playwright
+#        steps:
+#            -   attach_workspace:
+#                    at: ~/nova
+#            - install-deps
+#            -   merge-playwright-reports:
+#                    project_dir: "packages/charts"
     charts-visual-test:
         executor: ubuntu
         working_directory: ~/nova

@@ -18,39 +18,36 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser, by, element, ElementFinder } from "protractor";
+import { Locator } from "@playwright/test";
 
-import { DateTimepickerAtom } from "./datetimepicker.atom";
+import { test, Helpers, Animations } from "../../setup";
 import { Atom } from "../../atom";
-import { Helpers } from "../../helpers";
+import { DateTimepickerAtom } from "./datetimepicker.atom";
 import { Camera } from "../../virtual-camera/Camera";
 
 const name: string = "Date-time-picker";
 
-describe(`Visual tests: ${name}`, () => {
+test.describe(`Visual tests: ${name}`, () => {
     let camera: Camera;
     let dateTimePickerBasic: DateTimepickerAtom;
     let dateTimePickerRanged: DateTimepickerAtom;
     let dateTimePickerDialog: DateTimepickerAtom;
-    let dialogButtonElem: ElementFinder;
+    let dialogButton: Locator;
 
-    test.beforeEach(async () => {
-        await Helpers.prepareBrowser(
-            "date-time-picker/date-time-picker-visual-test"
-        );
-        dateTimePickerBasic = Atom.find(
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("date-time-picker/date-time-picker-visual-test", page);
+        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        dateTimePickerBasic = Atom.find<DateTimepickerAtom>(
             DateTimepickerAtom,
             "nui-basic-date-time-picker"
         );
-        dateTimePickerRanged = Atom.find(
+        dateTimePickerRanged = Atom.find<DateTimepickerAtom>(
             DateTimepickerAtom,
             "nui-date-time-picker-ranged"
         );
-        dialogButtonElem = Helpers.page.locator(
-            by.id("nui-visual-test-dialog-btn")
-        );
+        dialogButton = Helpers.page.locator("#nui-visual-test-dialog-btn");
 
-        camera = new Camera().loadFilm(browser, name);
+        camera = new Camera().loadFilm(page, name, "Bits");
     });
 
     test(`${name} visual test`, async () => {
@@ -58,33 +55,33 @@ describe(`Visual tests: ${name}`, () => {
 
         await camera.say.cheese(`Default`);
 
-        await dateTimePickerBasic.getTimePicker().toggle();
-        await dateTimePickerRanged.getDatePicker().hover();
+        await dateTimePickerBasic.timePicker.toggle();
+        await dateTimePickerRanged.datePicker.hover();
         await camera.say.cheese(`Focus time-picker, hover date-picker`);
-        await dateTimePickerBasic.getDatePicker().toggle();
-        await dateTimePickerRanged.getTimePicker().hover();
+        await dateTimePickerBasic.datePicker.toggle();
+        await dateTimePickerRanged.timePicker.hover();
         await camera.say.cheese(`Hover time-picker, focus date-picker`);
 
-        await dateTimePickerRanged.getDatePicker().toggle();
+        await dateTimePickerRanged.datePicker.toggle();
         await camera.say.cheese(`Ranged picker disables dates out of range`);
 
-        await dialogButtonElem.click();
-        dateTimePickerDialog = Atom.find(
+        await dialogButton.click();
+        dateTimePickerDialog = Atom.find<DateTimepickerAtom>(
             DateTimepickerAtom,
             "nui-date-time-picker-dialog"
         );
 
-        await dateTimePickerDialog.getDatePicker().toggle();
+        await dateTimePickerDialog.datePicker.toggle();
         await camera.say.cheese(`Date Time Picker Dialog Date`);
-        await dateTimePickerDialog.getTimePicker().toggle();
+        await dateTimePickerDialog.timePicker.toggle();
         await camera.say.cheese(`Date Time Picker Dialog Time`);
 
         await Helpers.switchDarkTheme("on");
-        await dateTimePickerDialog.getDatePicker().toggle();
+        await dateTimePickerDialog.datePicker.toggle();
         await camera.say.cheese(`Dark theme - Date Time Picker Dialog Date`);
-        await dateTimePickerDialog.getTimePicker().toggle();
+        await dateTimePickerDialog.timePicker.toggle();
         await camera.say.cheese(`Dark theme - Date Time Picker Dialog Time`);
 
         await camera.turn.off();
-    }, 200000);
+    });
 });
