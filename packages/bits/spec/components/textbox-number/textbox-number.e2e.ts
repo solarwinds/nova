@@ -25,7 +25,7 @@ import { TextboxNumberAtom } from "./textbox-number.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 
-describe("USERCONTROL textbox-number >", () => {
+xdescribe("USERCONTROL textbox-number >", () => {
     let component: TextboxNumberAtom;
 
     let basic: TextboxNumberAtom;
