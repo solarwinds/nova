@@ -57,7 +57,7 @@ commands:
                         SHARD="${NODE_INDEX}/${CIRCLE_NODE_TOTAL}";
                         yarn run << parameters.project >>:playwright:ci --shard=${SHARD}
                         TEST_EXIT_CODE=$?
-                        echo $TEST_EXIT_CODE > << parameters.project_dir >>/playwright_exit_code_${CIRCLE_NODE_INDEX}
+                        echo $TEST_EXIT_CODE > ~/nova/<< parameters.project_dir >>/playwright_exit_code_${CIRCLE_NODE_INDEX}
                         exit 0
             -   run:
                     working_directory: << parameters.project_dir >>
@@ -101,7 +101,7 @@ commands:
             -   run:
                     name: Check if any shard failed
                     command: |
-                        for file in << parameters.project_dir >>/playwright_exit_code_*; do
+                        for file in ~/nova/<< parameters.project_dir >>/playwright_exit_code_*; do
                           if [ -f "$file" ]; then
                             exit_code=$(cat "$file")
                             shard_index="${file##*_}"
