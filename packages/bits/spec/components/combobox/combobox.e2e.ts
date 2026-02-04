@@ -135,7 +135,7 @@ describe("USERCONTROL Combobox >", () => {
 
             it("should change the model after changing the text input", async () => {
                 const inputText = "Some text";
-                await comboboxBasic.acceptText(inputText);
+                await comboboxBasic.acceptInput(inputText);
                 expect(await comboboxBasic.getInputValue()).toEqual(inputText);
             });
 
@@ -165,10 +165,9 @@ describe("USERCONTROL Combobox >", () => {
                     await comboboxBasic.toggleMenu();
                     await comboboxBasic.clearText();
                     await comboboxBasic.acceptInput(newValue);
-                    const selectedItem = comboboxBasic.getSelectedItem();
-                    expect(
-                        (await selectedItem.getAttribute("innerText")).trim()
-                    ).toEqual(newValue);
+                    // Trigger BLUR (click outside or press TAB)
+                    await browser.actions().sendKeys(protractor.Key.TAB).perform();
+                    expect(await comboboxBasic.getInputValue()).toEqual(newValue);
                 });
             });
         });
@@ -184,15 +183,13 @@ describe("USERCONTROL Combobox >", () => {
         describe("clear on blur >", () => {
             it("should clear input on blur if it's value is not in source array", async () => {
                 await comboClearOnBlur.acceptInput("Not in a source array");
-                await comboboxBasic.toggleMenu();
-                expect(
-                    await comboClearOnBlur.getSelectedItems().count()
-                ).toEqual(0);
+                await browser.actions().sendKeys(protractor.Key.TAB).perform();
+                expect(await comboClearOnBlur.getInputValue()).toEqual("");
             });
 
             it("should keep input value in input on blur if it's value is in source array", async () => {
                 await comboClearOnBlur.acceptInput("Item 1");
-                await comboboxBasic.toggleMenu();
+                await browser.actions().sendKeys(protractor.Key.TAB).perform();
                 expect(await comboClearOnBlur.getInputValue()).toEqual(
                     "Item 1"
                 );
@@ -379,7 +376,7 @@ describe("USERCONTROL Combobox >", () => {
                 await comboboxSeparators.waitElementVisible();
                 await comboboxSeparators.toggleMenu();
                 expect(await comboboxSeparators.getItemsCount()).toEqual(9);
-                await comboboxSeparators.acceptText("Item 1");
+                await comboboxSeparators.acceptInput("Item 1");
                 expect(await comboboxSeparators.getItemsCount()).toEqual(3);
             });
         });
@@ -389,11 +386,13 @@ describe("USERCONTROL Combobox >", () => {
                 await comboboxBasic.waitElementVisible();
                 await comboboxBasic.toggleMenu();
                 await comboboxBasic.acceptInput("Item");
+                await comboboxBasic.toggleMenu();
                 expect(await comboboxBasic.getHighlightedItemsCount()).toEqual(
                     15
                 );
                 await comboboxBasic.clearText();
                 await comboboxBasic.acceptInput("Item 1");
+                await comboboxBasic.toggleMenu();
                 expect(await comboboxBasic.getHighlightedItemsCount()).toEqual(
                     6
                 );
@@ -403,11 +402,13 @@ describe("USERCONTROL Combobox >", () => {
                 await comboboxSeparators.waitElementVisible();
                 await comboboxSeparators.toggleMenu();
                 await comboboxSeparators.acceptInput("Item");
+                await comboboxSeparators.toggleMenu();
                 expect(
                     await comboboxSeparators.getHighlightedItemsCount()
                 ).toEqual(9);
                 await comboboxSeparators.clearText();
                 await comboboxSeparators.acceptInput("Item 1");
+                await comboboxSeparators.toggleMenu();
                 expect(
                     await comboboxSeparators.getHighlightedItemsCount()
                 ).toEqual(3);

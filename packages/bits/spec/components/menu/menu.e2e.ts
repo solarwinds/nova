@@ -29,7 +29,7 @@ describe("USERCONTROL Menu", () => {
     let menu: MenuAtom;
     let appendToBody: MenuAtom;
 
-    beforeAll(async () => {
+    beforeEach(async () => {
         await Helpers.prepareBrowser("menu/menu-test");
 
         menu = Atom.find(MenuAtom, "nui-demo-e2e-menu-variants");
@@ -222,7 +222,7 @@ describe("USERCONTROL Menu", () => {
 
         describe("> append-to-body", () => {
             it("should check and uncheck checkbox in menu item", async () => {
-                await Helpers.pressKey(Key.TAB);
+                await appendToBody.toggleMenu();
 
                 await Helpers.pressKey(Key.ARROW_DOWN);
                 const checkbox = appendToBody

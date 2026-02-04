@@ -106,6 +106,7 @@ describe("USERCONTROL timepicker", () => {
 
         describe("select time when typing into textbox >", () => {
             beforeEach(async () => {
+                await basicTimePicker.waitElementVisible();
                 await basicTimePicker.textbox.clearText();
             });
 
