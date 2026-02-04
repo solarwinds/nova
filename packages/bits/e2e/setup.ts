@@ -27,15 +27,19 @@ export const test = base.extend<AxeFixture>({
         await use(async (context?: any | string, disabledRules = []) => {
             const builder = new AxeBuilder({ page }).withTags([
                 "wcag2a",
-                "wcag2aa",
+                "wcag21a",
+                "wcag21aa",
+                "wcag22a",
+                "wcag22aa",
             ]);
-
             if (context) {
                 const locator =
                     typeof context === "string"
                         ? context
                         : Atom.getSelector(context);
-
+                if (locator != null) {
+                    await expect(page.locator(locator).first()).toBeVisible();
+                }
                 builder.include(locator ?? "");
             }
 

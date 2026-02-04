@@ -41,12 +41,13 @@ commands:
     run-playwright-shard:
         description: "Run Playwright shard and export blob reports"
         parameters:
-            project:
-                type: string
-                default: "e2e"
+
             project_dir:
                 type: string
                 default: "packages/bits"
+            skip_merge_job:
+                type: boolean
+                default: true
         steps:
             -   run:
                     working_directory: << parameters.project_dir >>
@@ -55,9 +56,15 @@ commands:
                         set +e
                         NODE_INDEX="$((${CIRCLE_NODE_INDEX}+1))";
                         SHARD="${NODE_INDEX}/${CIRCLE_NODE_TOTAL}";
-                        yarn run << parameters.project >>:playwright:ci --shard=${SHARD}
+                        yarn run playwright:ci --shard=${SHARD}
                         TEST_EXIT_CODE=$?
-                        echo $TEST_EXIT_CODE > ~/nova/<< parameters.project_dir >>/playwright_exit_code_${CIRCLE_NODE_INDEX}
+                        echo $TEST_EXIT_CODE > ~/nova/<< parameters.project_dir >>/<< parameters.project >>/playwright_exit_code_${CIRCLE_NODE_INDEX}
+                        if [ "<< parameters.skip_merge_job >>" = "false" ] && [ $TEST_EXIT_CODE -ne 0 ]; then
+                          echo "One or more tests failed in this shard. Failing the job to prevent merge step.";
+                          exit $TEST_EXIT_CODE
+                        fi
+                        echo "Tests completed with exit code $TEST_EXIT_CODE"
+                        echo "Continuing to export reports."
                         exit 0
             -   run:
                     working_directory: << parameters.project_dir >>
@@ -314,9 +321,10 @@ jobs:
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi=local
-    bits-e2e-test-playwright:
+#     this Job contains all projects
+    bits-test-playwright:
         executor: playwright
-        parallelism: 4
+        parallelism: 6
         steps:
             -   attach_workspace:
                     at: ~/nova
@@ -324,10 +332,9 @@ jobs:
             -   restore_cache:
                     key: bits-dist-{{ checksum "packages/bits/git-commit" }}
             -   run-playwright-shard:
-                    project: "e2e"
                     project_dir: "packages/bits"
 
-    bits-e2e-test-playwright-merge:
+    bits-test-playwright-merge:
         executor: playwright
         steps:
             -   attach_workspace:
@@ -774,12 +781,12 @@ workflows:
             -   bits-e2e-test:
                     requires:
                         - bits-build
-            -   bits-e2e-test-playwright:
+            -   bits-test-playwright:
                     requires:
                         - bits-build
-            -   bits-e2e-test-playwright-merge:
+            -   bits-test-playwright-merge:
                     requires:
-                        - bits-e2e-test-playwright
+                        - bits-test-playwright
             -   bits-visual-test:
                     requires:
                         - bits-build
