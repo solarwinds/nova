@@ -46,7 +46,7 @@ commands:
                 default: "e2e"
             project_dir:
                 type: string
-                default: "~/nova/packages/bits"
+                default: "packages/bits"
         steps:
             -   run:
                     working_directory: << parameters.project_dir >>
@@ -320,7 +320,7 @@ jobs:
                     key: bits-dist-{{ checksum "packages/bits/git-commit" }}
             -   run-playwright-shard:
                     project: "e2e"
-                    project_dir: "/packages/bits"
+                    project_dir: "packages/bits"
 
     bits-e2e-test-playwright-merge:
         executor: playwright
@@ -329,7 +329,7 @@ jobs:
                     at: ~/nova
             - install-deps
             -   merge-playwright-reports:
-                    project_dir: "/packages/bits"
+                    project_dir: "packages/bits"
 
 
     bits-pack:
