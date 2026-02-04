@@ -41,7 +41,6 @@ commands:
     run-playwright-shard:
         description: "Run Playwright shard and export blob reports"
         parameters:
-
             project_dir:
                 type: string
                 default: "packages/bits"
@@ -58,7 +57,7 @@ commands:
                         SHARD="${NODE_INDEX}/${CIRCLE_NODE_TOTAL}";
                         yarn run playwright:ci --shard=${SHARD}
                         TEST_EXIT_CODE=$?
-                        echo $TEST_EXIT_CODE > ~/nova/<< parameters.project_dir >>/<< parameters.project >>/playwright_exit_code_${CIRCLE_NODE_INDEX}
+                        echo $TEST_EXIT_CODE > ~/nova/<< parameters.project_dir >>/playwright_exit_code_${CIRCLE_NODE_INDEX}
                         if [ "<< parameters.skip_merge_job >>" = "false" ] && [ $TEST_EXIT_CODE -ne 0 ]; then
                           echo "One or more tests failed in this shard. Failing the job to prevent merge step.";
                           exit $TEST_EXIT_CODE
