@@ -106,7 +106,12 @@ commands:
                             exit_code=$(cat "$file")
                             shard_index="${file##*_}"
                             if [ "$exit_code" != "0" ]; then
-                              echo "Shard index ${shard_index} failed with exit code ${exit_code}"
+                                 echo "Playwright HTML report has been uploaded as a CircleCI Artifact."
+                                 echo "Navigate to the Artifacts tab and open: playwright-report/index.html"
+                                 echo "Failed tests are highlighted in the report with detailed traces (if available)."
+                                 echo "You can view failed tests in the Playwright HTML report via the CircleCI Artifacts tab:"
+                                 echo "open the artifact folder 'playwright-report' and click 'index.html'"
+                                 echo "Shard index ${shard_index} failed with exit code ${exit_code}"
                               exit 1
                             fi
                           fi
