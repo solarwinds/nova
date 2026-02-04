@@ -76,6 +76,9 @@ commands:
             -   store_artifacts:
                     when: always
                     path: << parameters.project_dir >>/test-results
+            -   store_test_results:
+                    when: always
+                    path: << parameters.project_dir >>/test-results
             -   persist_to_workspace:
                     root: ~/nova
                     paths:
