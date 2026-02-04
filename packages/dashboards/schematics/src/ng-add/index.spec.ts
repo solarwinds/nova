@@ -144,7 +144,7 @@ describe("ng-add", () => {
         );
     });
 
-    fit("adds imports to module", async () => {
+    it("adds imports to module", async () => {
         const afterTree = await runner
             .runSchematic(
                 "ng-add",
@@ -152,7 +152,7 @@ describe("ng-add", () => {
                 appTree
             );
         const moduleFile = (
-            afterTree.read(`/projects/bar/src/app/app.module.ts`) ?? ""
+            afterTree.read(`/projects/bar/src/app/app-module.ts`) ?? ""
         ).toString("utf-8");
         expect(moduleFile).toContain("BrowserAnimationsModule");
         expect(moduleFile).toContain("NuiDashboardsModule");
