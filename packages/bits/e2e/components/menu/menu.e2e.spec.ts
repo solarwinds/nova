@@ -130,9 +130,11 @@ test.describe("USERCONTROL Menu", () => {
                     expect(await menu.getSelectedSwitchesCount()).toEqual(1);
 
                     await Helpers.pressKey("Enter");
+                    await menu.isMenuOpened();
                     expect(await menu.getSelectedSwitchesCount()).toEqual(0);
 
                     await Helpers.pressKey("Enter");
+                    await menu.isMenuOpened();
                     await Helpers.pressKey("ArrowDown");
                     await Helpers.pressKey("Enter");
                     expect(await menu.getSelectedSwitchesCount()).toEqual(2);

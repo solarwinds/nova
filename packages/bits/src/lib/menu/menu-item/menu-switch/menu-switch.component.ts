@@ -107,4 +107,8 @@ export class MenuSwitchComponent extends MenuItemBaseComponent {
         this.checked = !this.checked;
         this.actionDone.emit(this.checked);
     }
+
+    public get shouldCloseMenuOnAction(): boolean {
+        return false;
+    }
 }
