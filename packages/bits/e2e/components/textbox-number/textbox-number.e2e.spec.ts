@@ -159,6 +159,7 @@ test.describe("USERCONTROL textbox-number >", () => {
     test.describe("validation >", () => {
         test.beforeEach(async () => {
             component = validation;
+            await component.toBeVisible();
             await component.clearText();
         });
 

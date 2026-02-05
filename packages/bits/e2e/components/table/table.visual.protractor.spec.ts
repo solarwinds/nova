@@ -28,7 +28,7 @@ import { SelectorAtom } from "../selector/selector.atom";
 
 const name: string = "Table";
 
-test.describe(`Visual tests: ${name}`, () => {
+describe(`Visual tests: ${name}`, () => {
     let camera: Camera;
     let sortableTable: TableAtom;
     let actionsMenu: Locator;
