@@ -39,11 +39,11 @@ test.describe(`Visual tests: ${name}`, () => {
         await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
 
         menuBasic = Atom.find<MenuAtom>(MenuAtom, "nui-demo-basic-menu-with-icon", true);
-        menuBasicDesctructive = Atom.find<MenuAtom>(MenuAtom, "nui-demo-destructive-menu-with-icon");
-        menuBasicFooter = Atom.find<MenuAtom>(MenuAtom, "nui-demo-basic-menu-with-icon-footer");
-        menuBasicFooterDestructive = Atom.find<MenuAtom>(MenuAtom, "nui-demo-destructive-menu-with-icon-footer");
-        menuIconOnlyDestructive = Atom.find<MenuAtom>(MenuAtom, "nui-demo-menu-variants_run");
-        menuMultiSelection = Atom.find<MenuAtom>(MenuAtom, "nui-demo-multi-selection-menu");
+        menuBasicDesctructive = Atom.find<MenuAtom>(MenuAtom, "nui-demo-destructive-menu-with-icon", true);
+        menuBasicFooter = Atom.find<MenuAtom>(MenuAtom, "nui-demo-basic-menu-with-icon-footer", true);
+        menuBasicFooterDestructive = Atom.find<MenuAtom>(MenuAtom, "nui-demo-destructive-menu-with-icon-footer", true);
+        menuIconOnlyDestructive = Atom.find<MenuAtom>(MenuAtom, "nui-demo-menu-variants_run", true);
+        menuMultiSelection = Atom.find<MenuAtom>(MenuAtom, "nui-demo-multi-selection-menu", true);
 
         camera = new Camera().loadFilm(page, name, "Bits");
     });

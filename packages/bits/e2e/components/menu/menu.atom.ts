@@ -74,7 +74,7 @@ export class MenuAtom extends Atom {
     }
 
     public async mouseDownOnMenuButton(): Promise<void> {
-        await this.getMenuButton().getLocator().dispatchEvent("mousedown");
+        await this.getMenuButton().mouseDown();
     }
 
     public async mouseUp(): Promise<void> {
@@ -83,7 +83,7 @@ export class MenuAtom extends Atom {
 
     public getMenuItemByIndex(idx: number): MenuItemAtom {
         const itemLocator = this.getAllMenuItems().nth(idx);
-        return Atom.findIn<MenuItemAtom>(MenuItemAtom, itemLocator);
+        return Atom.findIn<MenuItemAtom>(MenuItemAtom, itemLocator, true);
     }
 
     public async getMenuItems(): Promise<MenuItemAtom[]> {

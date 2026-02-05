@@ -18,40 +18,39 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser } from "protractor";
-
 import { Atom } from "../../atom";
-import { Helpers } from "../../helpers";
+import { test, Helpers, Animations } from "../../setup";
 import { Camera } from "../../virtual-camera/Camera";
 import { TextboxNumberAtom } from "../textbox-number/textbox-number.atom";
 
 const name: string = "Textbox Number";
 
-describe(`Visual tests: ${name}`, () => {
+test.describe(`Visual tests: ${name}`, () => {
     let camera: Camera;
     let basicTextboxNumber: TextboxNumberAtom;
     let customTextboxNumber: TextboxNumberAtom;
     let disabledTextboxNumber: TextboxNumberAtom;
 
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("textbox/textbox-number-visual-test");
-        basicTextboxNumber = Atom.find(
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("textbox/textbox-number-visual-test", page);
+        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        basicTextboxNumber = Atom.find<TextboxNumberAtom>(
             TextboxNumberAtom,
             "nui-visual-test-textbox-number"
         );
-        customTextboxNumber = Atom.find(
+        customTextboxNumber = Atom.find<TextboxNumberAtom>(
             TextboxNumberAtom,
             "nui-visual-test-textbox-number-min-max"
         );
-        disabledTextboxNumber = Atom.find(
+        disabledTextboxNumber = Atom.find<TextboxNumberAtom>(
             TextboxNumberAtom,
             "nui-visual-test-textbox-number-disabled"
         );
 
-        camera = new Camera().loadFilm(browser, name);
+        camera = new Camera().loadFilm(page, name, "Bits");
     });
 
-    it(`${name} visual test`, async () => {
+    test(`${name} visual test`, async () => {
         await camera.turn.on();
 
         await disabledTextboxNumber.hover();
@@ -75,5 +74,5 @@ describe(`Visual tests: ${name}`, () => {
         );
 
         await camera.turn.off();
-    }, 100000);
+    });
 });

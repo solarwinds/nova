@@ -407,21 +407,21 @@ test.describe("USERCONTROL table >", () => {
     test.describe("Resizable table >", () => {
         test.beforeEach(async ({page}) => {
             await Helpers.prepareBrowser("table/resize", page);
-            await resizableTable.waitElementVisible();
+            await resizableTable.toBeVisible();
         });
 
         test("should equally distribute width of non-specified columns", async () => {
-            const featuresColumnSize = await resizableTable
+            const featuresBox = await resizableTable
                 .getColumn("Features")
-                .getSize();
-            const locationColumnSize = await resizableTable
+                .boundingBox();
+            const locationBox = await resizableTable
                 .getColumn("Location")
-                .getSize();
-            const checksColumnSize = await resizableTable
+                .boundingBox();
+            const checksBox = await resizableTable
                 .getColumn("Checks")
-                .getSize();
-            expect(featuresColumnSize.width).toEqual(locationColumnSize.width);
-            expect(locationColumnSize.width).toEqual(checksColumnSize.width);
+                .boundingBox();
+            expect(featuresBox?.width).toEqual(locationBox?.width);
+            expect(locationBox?.width).toEqual(checksBox?.width);
         });
 
         test("should have resizer on each header cell, except for non-resizable columns", async () => {
@@ -438,33 +438,26 @@ test.describe("USERCONTROL table >", () => {
 
         test("cell should apply correct class on hover", async () => {
             const firstCell = resizableTable.getCell(0, 0);
-            await browser
-                .actions()
-                .mouseMove(await firstCell.getWebElement(), { x: 5, y: 5 })
-                .perform();
-            expect(
-                await Atom.hasClass(
-                    firstCell,
-                    "nui-table__table-header-cell--reorderable--dark"
-                )
-            ).toBeTruthy();
+            await firstCell.hover({ position: { x: 5, y: 5 } });
+            await expect(firstCell).toContainClass(
+                "nui-table__table-header-cell--reorderable--dark"
+            );
         });
 
         test("should preserve widths of columns of type 'icon' equal to 40px", async () => {
             const iconCell = resizableTable
                 .getLocator()
                 .locator("#nui-header-cell-icon");
-            expect((await iconCell.getSize()).width).toEqual(40);
+            const box = await iconCell.boundingBox();
+            expect(box?.width).toEqual(40);
         });
 
         test("shouldn't allow to resize non-resizable types of columns by not-rendering Resizer element", async () => {
             const iconCell = resizableTable
                 .getLocator()
                 .locator("#nui-header-cell-icon");
-            const iconCellResizer = iconCell.locator(
-                "..nui-table__resizer"
-            );
-            expect(await iconCellResizer.isPresent()).toBe(false);
+            const iconCellResizers = iconCell.locator(".nui-table__resizer");
+            await expect(iconCellResizers).toHaveCount(0);
         });
     });
 

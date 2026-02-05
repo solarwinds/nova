@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { Atom } from "../../atom";
-import { test, Helpers, Animations } from "../../setup";
+import { Animations, Helpers, test } from "../../setup";
 import { Camera } from "../../virtual-camera/Camera";
 import { ButtonAtom } from "../button/button.atom";
 import { PaginatorAtom } from "../paginator/paginator.atom";
@@ -40,46 +40,46 @@ test.describe(`Visual tests: ${name}`, () => {
     let dotsBasicButton: ButtonAtom;
     let dotsCustomStylingButton: ButtonAtom;
 
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async ({page}) => {
         await Helpers.prepareBrowser("paginator/paginator-visual-test", page);
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
-        basicPaginator = Atom.find(
+        await Helpers.disableCSSAnimations(Animations.ALL);
+        basicPaginator = Atom.find<PaginatorAtom>(
             PaginatorAtom,
             "nui-visual-test-basic-paginator"
         );
-        adjacentPaginator = Atom.find(
+        adjacentPaginator = Atom.find<PaginatorAtom>(
             PaginatorAtom,
             "nui-visual-test-adjacent-paginator"
         );
-        customPaginator = Atom.find(
+        customPaginator = Atom.find<PaginatorAtom>(
             PaginatorAtom,
             "nui-visual-test-custom-page-set-paginator"
         );
-        customStylingPaginator = Atom.find(
+        customStylingPaginator = Atom.find<PaginatorAtom>(
             PaginatorAtom,
             "nui-visual-test-paginator-styling"
         );
-        virtualScrollPaginator = Atom.find(
+        virtualScrollPaginator = Atom.find<PaginatorAtom>(
             PaginatorAtom,
             "nui-demo-custom-page-size-set-paginator"
         );
-        selectBasicPaginator = Atom.findIn(
+        selectBasicPaginator = Atom.findIn<SelectV2Atom>(
             SelectV2Atom,
-            basicPaginator.getElement()
+            basicPaginator.getLocator()
         );
-        selectCustomPaginator = Atom.findIn(
+        selectCustomPaginator = Atom.findIn<SelectV2Atom>(
             SelectV2Atom,
-            customPaginator.getElement()
+            customPaginator.getLocator()
         );
-        virtualScrollPaginatorSelect = Atom.findIn(
+        virtualScrollPaginatorSelect = Atom.findIn<SelectV2Atom>(
             SelectV2Atom,
-            virtualScrollPaginator.getElement()
+            virtualScrollPaginator.getLocator()
         );
-        dotsBasicButton = Atom.findIn(
+        dotsBasicButton = Atom.findIn<ButtonAtom>(
             ButtonAtom,
             customPaginator.ellipsisLink(0)
         );
-        dotsCustomStylingButton = Atom.findIn(
+        dotsCustomStylingButton = Atom.findIn<ButtonAtom>(
             ButtonAtom,
             customStylingPaginator.ellipsisLink(1)
         );

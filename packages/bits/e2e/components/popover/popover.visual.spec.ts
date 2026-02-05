@@ -48,15 +48,17 @@ test.describe(`Visual tests: ${name}`, () => {
         buttonPreventClosing = Helpers.page.locator("#nui-demo-button-prevent-onclick");
         placementCheckButtons = Helpers.page.locator(".placement-check-btn");
 
-        popoverPreventClosing = Atom.findIn<PopoverAtom>(PopoverAtom, Helpers.page.locator("#nui-demo-popover-prevent-closing"));
-        popoverBasic = Atom.findIn<PopoverAtom>(PopoverAtom, Helpers.page.locator("#nui-demo-popover-basic"));
-        popoverNoRestrictions = Atom.findIn<PopoverAtom>(PopoverAtom, Helpers.page.locator("#nui-demo-popover-no-limits"));
-        popoverNoPadding = Atom.findIn<PopoverAtom>(PopoverAtom, Helpers.page.locator("#nui-demo-popover-no-padding"));
-        popoverBasicMultiline = Atom.findIn<PopoverAtom>(PopoverAtom, Helpers.page.locator("#nui-demo-popover-limited-and-multiline"));
-        popoverModal = Atom.findIn<PopoverAtom>(PopoverAtom, Helpers.page.locator("#nui-demo-popover-modal"));
-        checkboxInPopover = Atom.findIn<CheckboxAtom>(CheckboxAtom, Helpers.page.locator("#nui-demo-checkbox-in-popover"));
-        // comboboxV2InPopover = Atom.findIn<ComboboxV2Atom>(ComboboxV2Atom, Helpers.page.locator("#nui-demo-combobox-v2-in-popover"));
-
+        popoverPreventClosing = Atom.find<PopoverAtom>(PopoverAtom, "nui-demo-popover-prevent-closing");
+        popoverBasic = Atom.find<PopoverAtom>(PopoverAtom, "nui-demo-popover-basic");
+        popoverNoRestrictions = Atom.find<PopoverAtom>(PopoverAtom, "nui-demo-popover-no-limits");
+        popoverNoPadding = Atom.find<PopoverAtom>(PopoverAtom, "nui-demo-popover-no-padding");
+        popoverBasicMultiline = Atom.find<PopoverAtom>(PopoverAtom, "nui-demo-popover-limited-and-multiline");
+        popoverModal = Atom.find<PopoverAtom>(PopoverAtom, "nui-demo-popover-modal");
+        checkboxInPopover = Atom.find<CheckboxAtom>(
+            CheckboxAtom,
+            "nui-demo-checkbox-in-popover"
+        );
+        // comboboxV2InPopover
         camera = new Camera().loadFilm(page, name, "Bits");
     });
 
