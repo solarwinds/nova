@@ -21,7 +21,7 @@
 import { SelectV2Atom } from "./select-v2.atom";
 import { test, Helpers, Animations } from "../../setup";
 
-describe("a11y: select-v2", () => {
+test.describe("a11y: select-v2", () => {
     const rulesToDisable: string[] = [
         "color-contrast", // NUI-6014
         "nested-interactive",

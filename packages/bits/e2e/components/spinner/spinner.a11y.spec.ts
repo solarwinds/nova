@@ -21,7 +21,7 @@
 import { SpinnerAtom } from "./spinner.atom";
 import { test, Helpers, Animations } from "../../setup";
 
-describe("a11y: spinner", () => {
+test.describe("a11y: spinner", () => {
     const rulesToDisable: string[] = [];
 
     test.beforeEach(async ({ page }) => {

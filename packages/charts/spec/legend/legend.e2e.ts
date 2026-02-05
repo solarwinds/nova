@@ -63,6 +63,7 @@ describe("Legend", () => {
             let series: LegendSeriesAtom;
 
             beforeAll(async () => {
+                await basicLegendDefault.waitElementVisible();
                 series = basicLegendDefault.getSeriesByIndex(0);
             });
 

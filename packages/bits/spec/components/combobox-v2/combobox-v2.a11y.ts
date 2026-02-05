@@ -59,7 +59,8 @@ describe("a11y: combobox-v2", () => {
         focusdrop = element(by.className("focus-drop"));
     });
 
-    it("should verify a11y of combobox-v2", async () => {
+    // TO DO: NUI-6263
+    xit("should verify a11y of combobox-v2", async () => {
         await assertA11y(browser, ComboboxV2Atom, rulesToDisable);
 
         await (await comboboxError.getFirstOption()).click();

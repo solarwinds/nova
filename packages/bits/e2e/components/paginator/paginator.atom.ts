@@ -70,9 +70,9 @@ export class PaginatorAtom extends Atom {
 
     public async pageLinkVisible(pageNumber: number): Promise<boolean> {
         const li = this.getLocator().locator(
-            `.nui-paginator__list li[value='${pageNumber}']`
+            `.nui-paginator__list li[value='${pageNumber}']:not([title*='Previous']):not([title*='Next']):not([title*='Pages'])`
         );
-        return await li.isVisible();
+        return (await li.count()) > 0 && (await li.first().isVisible());
     }
 
     public async ellipsedPageLinkClick(pageNumber: number): Promise<void> {

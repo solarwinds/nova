@@ -21,7 +21,7 @@
 import { MenuAtom } from "./menu.atom";
 import { test, Helpers } from "../../setup";
 
-describe("a11y: menu", () => {
+test.describe("a11y: menu", () => {
     const rulesToDisable: string[] = [
         "color-contrast", // NUI-6014
         "scrollable-region-focusable", // NUI-5935, NUI-6007

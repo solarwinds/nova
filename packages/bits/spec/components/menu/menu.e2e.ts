@@ -29,7 +29,7 @@ describe("USERCONTROL Menu", () => {
     let menu: MenuAtom;
     let appendToBody: MenuAtom;
 
-    beforeAll(async () => {
+    beforeEach(async () => {
         await Helpers.prepareBrowser("menu/menu-test");
 
         menu = Atom.find(MenuAtom, "nui-demo-e2e-menu-variants");
@@ -222,11 +222,18 @@ describe("USERCONTROL Menu", () => {
 
         describe("> append-to-body", () => {
             it("should check and uncheck checkbox in menu item", async () => {
-                await Helpers.pressKey(Key.TAB);
+                await appendToBody.toggleMenu();
+
+                // Wait for the append-to-body content to be present
+                const menuContent = appendToBody.getAppendToBodyMenu();
+                await browser.wait(
+                    protractor.ExpectedConditions.visibilityOf(menuContent),
+                    3000,
+                    "Menu content not visible"
+                );
 
                 await Helpers.pressKey(Key.ARROW_DOWN);
-                const checkbox = appendToBody
-                    .getAppendToBodyMenu()
+                const checkbox = menuContent
                     .all(by.tagName("nui-checkbox"))
                     .first();
                 expect(
@@ -237,7 +244,6 @@ describe("USERCONTROL Menu", () => {
                 expect(
                     await Atom.hasClass(checkbox, "nui-checkbox--checked")
                 ).toBe(true);
-
                 // Return to initial state
                 await Helpers.pressKey(Key.ENTER);
                 expect(

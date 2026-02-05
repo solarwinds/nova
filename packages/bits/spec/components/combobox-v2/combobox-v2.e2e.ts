@@ -182,7 +182,7 @@ describe("USERCONTROL Combobox v2 >", () => {
         });
 
         describe("basic actions", () => {
-            beforeAll(async () => {
+            beforeEach(async () => {
                 await browser.refresh();
             });
 

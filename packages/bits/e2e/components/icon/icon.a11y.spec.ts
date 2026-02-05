@@ -1,7 +1,7 @@
 import { IconAtom } from "./icon.atom";
 import { test, Helpers } from "../../setup";
 
-describe("a11y: icon", () => {
+test.describe("a11y: icon", () => {
     const rulesToDisable: string[] = [
         "duplicate-id", // has nothing to do with the icons
     ];

@@ -22,7 +22,7 @@ import { ProgressAtom } from "./progress.atom";
 import { test, Helpers } from "../../setup";
 import { ButtonAtom } from "../button/button.atom";
 
-describe("a11y: progress", () => {
+test.describe("a11y: progress", () => {
     const rulesToDisable: string[] = ["nested-interactive"];
     let startProgressBasic: ButtonAtom;
 

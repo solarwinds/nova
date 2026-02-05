@@ -5,7 +5,7 @@ import { test, Helpers } from "../../setup";
 const rulesToDisable: string[] = ["aria-allowed-role", "nested-interactive"];
 
 test.describe("a11y: checkbox", () => {
-    test.test.beforeEach(async ({ page }) => {
+    test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("checkbox/checkbox-visual-test", page);
     });
 
