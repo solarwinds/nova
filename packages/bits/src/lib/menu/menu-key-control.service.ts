@@ -27,8 +27,8 @@ import { MenuGroupComponent } from "./menu-item/menu-group/menu-group.component"
 import { MenuItemComponent } from "./menu-item/menu-item/menu-item.component";
 import { MenuPopupComponent } from "./menu-popup/menu-popup.component";
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
-import { MenuActionComponent } from "../menu/menu-item/menu-action/menu-action.component";
-import { MenuItemBaseComponent } from "../menu/menu-item/menu-item/menu-item-base";
+import { MenuActionComponent } from "./menu-item/menu-action/menu-action.component";
+import { MenuItemBaseComponent } from "./menu-item/menu-item/menu-item-base";
 import { PopupComponent } from "../popup-adapter/popup-adapter.component";
 import { IPopupActiveOptions } from "../public-api";
 
@@ -128,9 +128,8 @@ export class MenuKeyControlService implements OnDestroy {
 
     private shouldCloseOnEnter(): boolean {
         return (
-            this.keyboardEventsManager.activeItem instanceof
-                MenuActionComponent ||
-            this.keyboardEventsManager.activeItem instanceof MenuItemComponent
+            this.keyboardEventsManager.activeItem?.shouldCloseMenuOnAction ??
+            true
         );
     }
 
@@ -194,10 +193,11 @@ export class MenuKeyControlService implements OnDestroy {
             this.keyboardEventsManager.activeItem?.doAction(event);
             // closing items only if they are MenuAction or MenuItem, others should not close popup
             // also we should not close popup if item is disabled
-            if (
-                this.keyboardEventsManager.activeItem?.disabled ||
-                !this.shouldCloseOnEnter()
-            ) {
+            if (!this.shouldCloseOnEnter()) {
+                event.preventDefault();
+                return;
+            }
+            if (this.keyboardEventsManager.activeItem?.disabled) {
                 event.preventDefault();
                 return;
             }

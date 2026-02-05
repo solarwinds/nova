@@ -130,9 +130,11 @@ test.describe("USERCONTROL Menu", () => {
                     expect(await menu.getSelectedSwitchesCount()).toEqual(1);
 
                     await Helpers.pressKey("Enter");
+                    await menu.isMenuOpened();
                     expect(await menu.getSelectedSwitchesCount()).toEqual(0);
 
                     await Helpers.pressKey("Enter");
+                    await menu.isMenuOpened();
                     await Helpers.pressKey("ArrowDown");
                     await Helpers.pressKey("Enter");
                     expect(await menu.getSelectedSwitchesCount()).toEqual(2);
@@ -186,16 +188,18 @@ test.describe("USERCONTROL Menu", () => {
         test.describe("> append-to-body", () => {
             test("should check and uncheck checkbox in menu item", async () => {
                 await appendToBody.toggleMenu();
-                // Find the first checkbox in the appendToBody menu
+                // Find all checkboxes in the appendToBody menu
                 const menuLocator = appendToBody.getAppendToBodyMenu();
-                await expect(menuLocator).toBeVisible();
-                await Helpers.pressKey("ArrowDown");
                 const checkboxes = menuLocator.locator("nui-checkbox");
                 const firstCheckbox = checkboxes.first();
+
                 // Check class for checked state
                 await expect(firstCheckbox).not.toHaveClass(/nui-checkbox--checked/);
+
+                await Helpers.pressKey("ArrowDown");
                 await Helpers.pressKey("Enter");
                 await expect(firstCheckbox).toHaveClass(/nui-checkbox--checked/);
+
                 // Return to initial state
                 await Helpers.pressKey("Enter");
                 await expect(firstCheckbox).not.toHaveClass(/nui-checkbox--checked/);

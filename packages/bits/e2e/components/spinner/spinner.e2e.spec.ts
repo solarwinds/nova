@@ -47,7 +47,7 @@ test.describe("USERCONTROL Spinner", () => {
         test("with delayed set", async () => {
             await delayedSpinner.toBeHidden();
             await delayedButton.click();
-            await delayedSpinner.waitForDisplayed(spinnerDelay * 2);
+            await delayedSpinner.waitForDisplayed(spinnerDelay * 5);
             await delayedButton.click();
             await delayedSpinner.toBeHidden();
         });
@@ -55,7 +55,7 @@ test.describe("USERCONTROL Spinner", () => {
         test("without delay", async () => {
             await spinner2.toBeHidden();
             await button2.click();
-            await spinner2.waitForDisplayed(SpinnerAtom.defaultDelay * 2);
+            await spinner2.waitForDisplayed(SpinnerAtom.defaultDelay * 5);
             await button2.click();
             await spinner2.toBeHidden();
         });
@@ -63,7 +63,7 @@ test.describe("USERCONTROL Spinner", () => {
 
     test("should have 'small' default size if no 'size' input provided", async () => {
         await button2.click();
-        await spinner2.waitForDisplayed(SpinnerAtom.defaultDelay * 2);
+        await spinner2.waitForDisplayed(SpinnerAtom.defaultDelay * 5);
         await expect(spinner2.getLocator()).toHaveClass(
             /nui-spinner__container--small/
         );

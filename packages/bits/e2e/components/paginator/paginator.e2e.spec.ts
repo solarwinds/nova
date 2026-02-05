@@ -170,9 +170,9 @@ test.describe("USERCONTROL paginator", () => {
             expect(
                 await adjacentPaginator.pageLinkVisible(pageTwenty + adjacent)
             ).toBe(true);
-            expect(
-                await adjacentPaginator.pageLinkVisible(pageCountAdjacent)
-            ).toBe(true);
+            await expect(
+                adjacentPaginator.getPageLinkLocator(pageCountAdjacent)
+            ).toBeVisible();
             for (
                 let i = pageTwenty + adjacent + 1;
                 i < pageCountAdjacent;
