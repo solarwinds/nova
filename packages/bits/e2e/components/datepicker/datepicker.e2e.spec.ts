@@ -410,22 +410,20 @@ test.describe("USERCONTROL datepicker", () => {
         test("should save hour correctly when triggered at 23:00 - 0:00", async () => {
             await datepickerWithInitAndPreserve.clickInput();
             await datepickerWithInitAndPreserve.selectDate(5);
-            const oldValue = await Atom.find<Atom>(
-                Atom,
-                initDateValueIdPreserved
-            )
-                .getLocator()
-                .textContent();
+            const oldValue = (
+                await Atom.find<Atom>(Atom, initDateValueIdPreserved)
+                    .getLocator()
+                    .textContent()
+            )?.trim();
             await datepickerWithInitAndPreserve.clickInput();
             await datepickerWithInitAndPreserve.selectDate(
                 moment().date() > 15 ? 10 : 20
             );
-            const newValue = await Atom.find<Atom>(
-                Atom,
-                initDateValueIdPreserved
-            )
-                .getLocator()
-                .textContent();
+            const newValue = (
+                await Atom.find<Atom>(Atom, initDateValueIdPreserved)
+                    .getLocator()
+                    .textContent()
+            )?.trim();
 
             expect(newValue).not.toBe(oldValue);
             expect(moment(newValue).hour()).toBe(moment(oldValue).hour());
