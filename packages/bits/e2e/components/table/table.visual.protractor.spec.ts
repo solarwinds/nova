@@ -22,13 +22,13 @@ import { browser, by, element, Locator } from "protractor";
 
 import { TableAtom } from "./table.atom";
 import { Atom } from "../../atom";
-import { Helpers } from "../../helpers";
+import { Helpers } from "../../setup";
 import { Camera } from "../../virtual-camera/Camera";
 import { SelectorAtom } from "../selector/selector.atom";
 
 const name: string = "Table";
 
-test.describe(`Visual tests: ${name}`, () => {
+describe(`Visual tests: ${name}`, () => {
     let camera: Camera;
     let sortableTable: TableAtom;
     let actionsMenu: Locator;

@@ -129,7 +129,8 @@ export class MenuKeyControlService implements OnDestroy {
     private shouldCloseOnEnter(): boolean {
         return (
             this.keyboardEventsManager.activeItem instanceof
-            (MenuActionComponent || MenuItemComponent)
+                MenuActionComponent ||
+            this.keyboardEventsManager.activeItem instanceof MenuItemComponent
         );
     }
 
@@ -192,7 +193,11 @@ export class MenuKeyControlService implements OnDestroy {
             // perform action in menu item(select, switch, check etc).
             this.keyboardEventsManager.activeItem?.doAction(event);
             // closing items only if they are MenuAction or MenuItem, others should not close popup
-            if (!this.shouldCloseOnEnter()) {
+            // also we should not close popup if item is disabled
+            if (
+                this.keyboardEventsManager.activeItem?.disabled ||
+                !this.shouldCloseOnEnter()
+            ) {
                 event.preventDefault();
                 return;
             }

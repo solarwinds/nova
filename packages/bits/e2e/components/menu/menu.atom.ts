@@ -150,27 +150,15 @@ export class MenuAtom extends Atom {
     }
 
     public getSelectedSwitchElements(): Locator {
-        return this.getLocator().locator(".nui-switched");
+        return this.getLocator().locator("nui-switch .nui-switched");
     }
 
-    public async getSelectedMenuSwitches(): Promise<MenuItemAtom[]> {
-        const items = this.getSelectedSwitchElements();
-        const count = await items.count();
-        const selected: MenuItemAtom[] = [];
-        for (let i = 0; i < count; i++) {
-            selected.push(
-                Atom.findIn<MenuItemAtom>(MenuItemAtom, items.nth(i))
-            );
-        }
-        return selected;
+    public async getSelectedSwitchesCount(): Promise<number> {
+        return this.getSelectedSwitchElements().count();
     }
 
     public async getSelectedCheckboxesCount(): Promise<number> {
         return (await this.getSelectedMenuCheckboxes()).length;
-    }
-
-    public async getSelectedSwitchesCount(): Promise<number> {
-        return (await this.getSelectedMenuSwitches()).length;
     }
 
     public getAppendToBodyMenu(): Locator {
