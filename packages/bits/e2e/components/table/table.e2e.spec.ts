@@ -3,11 +3,11 @@ import { Atom } from "../../atom";
 import { Helpers, test, expect } from "../../setup";
 import { ButtonAtom } from "../button/button.atom";
 import { CheckboxAtom } from "../checkbox/checkbox.atom";
-import { SelectorAtom, SelectionType } from "../selector/selector.atom";
-import { TextboxAtom } from "../textbox/textbox.atom";
 import { CheckboxGroupAtom } from "../checkbox-group/checkbox-group.atom";
 import { PaginatorAtom } from "../paginator/paginator.atom";
 import { SearchAtom } from "../search/search.atom";
+import { SelectorAtom, SelectionType } from "../selector/selector.atom";
+import { TextboxAtom } from "../textbox/textbox.atom";
 
 test.describe("USERCONTROL table >", () => {
     let table: TableAtom;
@@ -22,6 +22,7 @@ test.describe("USERCONTROL table >", () => {
     let resizableTable: TableAtom;
     let rowSelectionTable: TableAtom;
     let reorderableTable: TableAtom;
+    let stickyTable: TableAtom;
     let selector: SelectorAtom;
     let sortByNameButton: ButtonAtom;
     let searchByLocationCheckbox: CheckboxAtom;
@@ -31,8 +32,6 @@ test.describe("USERCONTROL table >", () => {
     async function prepareTablePage(page: any, route: any) {
         await Helpers.prepareBrowser(route, page);
         table = Atom.find<TableAtom>(TableAtom, "nui-demo-basic-table");
-
-
         widthSetTable = Atom.find<TableAtom>(
             TableAtom,
             "nui-demo-table-cell-width-set"
@@ -51,21 +50,6 @@ test.describe("USERCONTROL table >", () => {
             "position-input"
         );
 
-
-        tableColumnsAddRemove = Atom.find<TableAtom>(
-            TableAtom,
-            "nui-demo-table-columns-add-remove"
-        );
-
-        resizableTable = Atom.find<TableAtom>(
-            TableAtom,
-            "nui-demo-resizable-table"
-        );
-
-        reorderableTable = Atom.find<TableAtom>(
-            TableAtom,
-            "nui-demo-table-cell-reorder"
-        );
     }
     test.describe("Basic table >", () => {
         test.beforeEach(async ({ page }) => {
@@ -240,6 +224,10 @@ test.describe("USERCONTROL table >", () => {
 
         test.beforeEach(async ({ page }) => {
             await prepareTablePage(page, "table/custom-actions");
+            tableColumnsAddRemove = Atom.find<TableAtom>(
+                TableAtom,
+                "nui-demo-table-columns-add-remove"
+            );
             await expect(customActionsTable.getLocator()).toBeVisible();
             editColumnsButton = Atom.find<ButtonAtom>(
                 ButtonAtom,
@@ -407,6 +395,10 @@ test.describe("USERCONTROL table >", () => {
     test.describe("Resizable table >", () => {
         test.beforeEach(async ({page}) => {
             await Helpers.prepareBrowser("table/resize", page);
+            resizableTable = Atom.find<TableAtom>(
+                TableAtom,
+                "nui-demo-resizable-table"
+            );
             await resizableTable.toBeVisible();
         });
 
@@ -491,10 +483,11 @@ test.describe("USERCONTROL table >", () => {
 
         test("should populate the last table row with a new row on scroll", async () => {
             const scrollDelay = 200;
-            const stickyTable: TableAtom = Atom.findIn<TableAtom>(
+            stickyTable = Atom.findIn<TableAtom>(
                 TableAtom,
                 Helpers.page.locator("#nui-demo-table-sticky-header")
-            ).nth(TableAtom, 1);
+            ).nth<TableAtom>(TableAtom, 1);
+
             await stickyTable.toBeVisible();
             const rowsCount = await stickyTable.getRowsCount();
             expect(rowsCount).toBeGreaterThan(1);
