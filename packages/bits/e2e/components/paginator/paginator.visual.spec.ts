@@ -75,11 +75,11 @@ test.describe(`Visual tests: ${name}`, () => {
             SelectV2Atom,
             virtualScrollPaginator.getLocator()
         );
-        dotsBasicButton = Atom.findIn<ButtonAtom>(
+        dotsBasicButton = ButtonAtom.findIn<ButtonAtom>(
             ButtonAtom,
             customPaginator.ellipsisLink(0)
         );
-        dotsCustomStylingButton = Atom.findIn<ButtonAtom>(
+        dotsCustomStylingButton = ButtonAtom.findIn<ButtonAtom>(
             ButtonAtom,
             customStylingPaginator.ellipsisLink(1)
         );

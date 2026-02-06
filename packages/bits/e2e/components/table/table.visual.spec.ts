@@ -18,12 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { Locator } from "playwright-core";
 import { TableAtom } from "./table.atom";
 import { Atom } from "../../atom";
 import { test, Helpers } from "../../setup";
 import { Camera } from "../../virtual-camera/Camera";
 import { SelectorAtom } from "../selector/selector.atom";
-import { Locator } from "playwright-core";
+
 
 const name: string = "Table";
 
@@ -131,7 +132,7 @@ test.describe(`Visual tests: ${name}`, () => {
 
         await expanders.customActions.click();
         await actionsMenu.click();
-        await customActionTable.hover(customActionTable.getCell(2, 4));
+        await customActionTable.hover(customActionTable.getCell(2, 3));
         await camera.say.cheese("Edit columns");
         await expanders.customActions.click();
 

@@ -74,7 +74,7 @@ test.describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese("Timepicker with validation is toggled");
 
         await basicTimepicker.toggle();
-        await basicTimepicker.menuPopup.clickItemByText("2");
+        await basicTimepicker.menuPopup.clickItemByText("2", false);
         await basicTimepicker.toggle();
         await basicTimepicker.menuPopup.hover(
             basicTimepicker.menuPopup.selectedItem
