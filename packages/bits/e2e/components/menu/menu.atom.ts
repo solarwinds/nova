@@ -83,7 +83,7 @@ export class MenuAtom extends Atom {
 
     public getMenuItemByIndex(idx: number): MenuItemAtom {
         const itemLocator = this.getAllMenuItems().nth(idx);
-        return Atom.findIn<MenuItemAtom>(MenuItemAtom, itemLocator);
+        return new MenuItemAtom(itemLocator);
     }
 
     public async getMenuItems(): Promise<MenuItemAtom[]> {

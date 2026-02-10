@@ -123,6 +123,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     private menuKeyControlListeners: Function[] = [];
     private focusMonitorSubscription: Subscription;
+    private justClosed = false;
     constructor(
         private keyControlService: MenuKeyControlService,
         private renderer: Renderer2,
@@ -152,6 +153,13 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
                 "keydown",
                 (event: KeyboardEvent) => {
                     if (!this.popup.popupToggle.disabled) {
+                        if (
+                            this.popup.isOpen &&
+                            (event.code === "Enter" || event.code === "Space")
+                        ) {
+                            this.justClosed = true;
+                            setTimeout(() => (this.justClosed = false), 200);
+                        }
                         this.keyControlService.handleKeydown(event);
                     }
                 }
@@ -164,7 +172,12 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.focusMonitorSubscription = this.focusMonitor
             .monitor(this.menuToggle)
             .subscribe((origin: FocusOrigin) => {
-                if (origin === "keyboard") {
+                if (origin === "keyboard" && !this.justClosed) {
+                    // Prevent reopening if we are in the middle of closing
+                    if (this.popup.isOpen && !this.popup.visible) {
+                        return;
+                    }
+
                     if (!this.popup.popupToggle.disabled) {
                         this.popup.toggleOpened(new FocusEvent("focusin"));
                     }

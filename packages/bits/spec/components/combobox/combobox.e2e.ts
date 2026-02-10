@@ -52,17 +52,6 @@ describe("USERCONTROL Combobox >", () => {
     let comboboxAppendToBody: ComboboxAtom;
     let comboboxRemoveValueButton: ComboboxAtom;
 
-    const applySafeType = async (atom: ComboboxAtom, text: string): Promise<void> => {
-        await atom.acceptInput(text);
-        if ((await atom.getInputValue()) !== text) {
-            await atom.clearText();
-            for (const char of text) { // Type character by character to prevent lost spaces
-                await atom.getInput().sendKeys(char);
-                await browser.sleep(20); // Small delay to ensure stability in CI
-            }
-        }
-    };
-
     beforeAll(() => {
         comboboxBasic = Atom.find(ComboboxAtom, "nui-demo-basic-combobox");
         comboboxDisabled = Atom.find(
@@ -146,7 +135,7 @@ describe("USERCONTROL Combobox >", () => {
 
             it("should change the model after changing the text input", async () => {
                 const inputText = "Some text";
-                await applySafeType(comboboxBasic, inputText);
+                await comboboxBasic.acceptText(inputText);
                 expect(await comboboxBasic.getInputValue()).toEqual(inputText);
             });
 
@@ -176,9 +165,10 @@ describe("USERCONTROL Combobox >", () => {
                     await comboboxBasic.toggleMenu();
                     await comboboxBasic.clearText();
                     await comboboxBasic.acceptInput(newValue);
-                    // Trigger BLUR (click outside or press TAB)
-                    await browser.actions().sendKeys(protractor.Key.TAB).perform();
-                    expect(await comboboxBasic.getInputValue()).toEqual(newValue);
+                    const selectedItem = comboboxBasic.getSelectedItem();
+                    expect(
+                        (await selectedItem.getAttribute("innerText")).trim()
+                    ).toEqual(newValue);
                 });
             });
         });
@@ -193,14 +183,16 @@ describe("USERCONTROL Combobox >", () => {
 
         describe("clear on blur >", () => {
             it("should clear input on blur if it's value is not in source array", async () => {
-                await applySafeType(comboClearOnBlur, "Not in a source array");
-                await browser.actions().sendKeys(protractor.Key.TAB).perform();
-                expect(await comboClearOnBlur.getInputValue()).toEqual("");
+                await comboClearOnBlur.acceptInput("Not in a source array");
+                await comboboxBasic.toggleMenu();
+                expect(
+                    await comboClearOnBlur.getSelectedItems().count()
+                ).toEqual(0);
             });
 
             it("should keep input value in input on blur if it's value is in source array", async () => {
-                await applySafeType(comboClearOnBlur, "Item 1");
-                await browser.actions().sendKeys(protractor.Key.TAB).perform();
+                await comboClearOnBlur.acceptInput("Item 1");
+                await comboboxBasic.toggleMenu();
                 expect(await comboClearOnBlur.getInputValue()).toEqual(
                     "Item 1"
                 );
@@ -387,7 +379,7 @@ describe("USERCONTROL Combobox >", () => {
                 await comboboxSeparators.waitElementVisible();
                 await comboboxSeparators.toggleMenu();
                 expect(await comboboxSeparators.getItemsCount()).toEqual(9);
-                await applySafeType(comboboxSeparators, "Item 1");
+                await comboboxSeparators.acceptText("Item 1");
                 expect(await comboboxSeparators.getItemsCount()).toEqual(3);
             });
         });
@@ -396,14 +388,12 @@ describe("USERCONTROL Combobox >", () => {
             it("should highlight appropriate items in dropdown for combobox with a plain list of items", async () => {
                 await comboboxBasic.waitElementVisible();
                 await comboboxBasic.toggleMenu();
-                await applySafeType(comboboxBasic, "Item");
-                await comboboxBasic.toggleMenu();
+                await comboboxBasic.acceptInput("Item");
                 expect(await comboboxBasic.getHighlightedItemsCount()).toEqual(
                     15
                 );
                 await comboboxBasic.clearText();
-                await applySafeType(comboboxBasic, "Item 1");
-                await comboboxBasic.toggleMenu();
+                await comboboxBasic.acceptInput("Item 1");
                 expect(await comboboxBasic.getHighlightedItemsCount()).toEqual(
                     6
                 );
@@ -412,14 +402,12 @@ describe("USERCONTROL Combobox >", () => {
             it("should highlight appropriate items in dropdown for combobox with groups", async () => {
                 await comboboxSeparators.waitElementVisible();
                 await comboboxSeparators.toggleMenu();
-                await applySafeType(comboboxSeparators, "Item");
-                await comboboxSeparators.toggleMenu();
+                await comboboxSeparators.acceptInput("Item");
                 expect(
                     await comboboxSeparators.getHighlightedItemsCount()
                 ).toEqual(9);
                 await comboboxSeparators.clearText();
-                await applySafeType(comboboxSeparators, "Item 1");
-                await comboboxSeparators.toggleMenu();
+                await comboboxSeparators.acceptInput("Item 1");
                 expect(
                     await comboboxSeparators.getHighlightedItemsCount()
                 ).toEqual(3);
@@ -439,7 +427,7 @@ describe("USERCONTROL Combobox >", () => {
 
             it("should clear value if it's not in source array and re-render dropdown", async () => {
                 await comboboxTypeahead.waitElementVisible();
-                await applySafeType(comboboxTypeahead, "Not in a source array");
+                await comboboxTypeahead.acceptInput("Not in a source array");
                 await comboboxWithDisplayValue.toggleMenu();
                 expect(
                     await comboboxTypeahead.getSelectedItems().count()

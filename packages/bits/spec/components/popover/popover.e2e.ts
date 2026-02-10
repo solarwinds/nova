@@ -133,6 +133,7 @@ describe("USERCONTROL popover", () => {
         });
 
         it("should not close popover after click on itself", async () => {
+            await popoverPreventClosing.waitElementVisible();
             await popoverPreventClosing.clickTarget();
             await expect(await popoverPreventClosing.isPopoverDisplayed()).toBe(
                 true

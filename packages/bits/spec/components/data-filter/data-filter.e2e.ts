@@ -167,6 +167,7 @@ describe("USERCONTROL data-filter-service >", () => {
         });
 
         it("search should be applied only to list", async () => {
+            await basicSearch.waitElementVisible();
             await basicSearch.acceptInput("Issue 1");
 
             for (

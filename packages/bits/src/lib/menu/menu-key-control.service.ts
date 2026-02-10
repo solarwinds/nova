@@ -187,9 +187,11 @@ export class MenuKeyControlService implements OnDestroy {
             event.code === KEYBOARD_CODE.ENTER ||
             event.code === KEYBOARD_CODE.SPACE;
 
-        // prevent closing on enter
+        // Toggle menu on Enter/Space if no item is active (effectively closing it)
         if (!this.hasActiveItem() && isActionKey) {
             event.preventDefault();
+            this.popup.toggleOpened(event);
+            return;
         }
 
         if (this.hasActiveItem() && isActionKey) {
