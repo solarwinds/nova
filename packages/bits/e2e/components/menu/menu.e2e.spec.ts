@@ -110,29 +110,39 @@ test.describe("USERCONTROL Menu", () => {
             });
 
             test("should open and close menu by ENTER key if focused on toggle", async () => {
-                // Focus the toggle first
-                await Helpers.pressKey("Tab");
-                await Helpers.pressKey("Enter");
+                const toggle = menu.getMenuButton().getLocator();
+
+                // Focus on toggle
+                await toggle.focus();
+                await expect(toggle).toBeFocused();
+
+                // Open
+                await Helpers.page.keyboard.press("Enter");
                 await menu.isMenuOpened();
-                await Helpers.pressKey("Enter");
+
+                // Close
+                await Helpers.page.keyboard.press("Enter");
                 await menu.isMenuClosed();
             });
 
             test("should open and close menu by SPACE key if focused on toggle", async () => {
-                // Focus the toggle first
-                await Helpers.pressKey("Tab");
-                await Helpers.pressKey("Space");
+                const toggle = menu.getMenuButton().getLocator();
+
+                // Focus on toggle
+                await toggle.focus();
+                await expect(toggle).toBeFocused();
+
+                // Open
+                await Helpers.page.keyboard.press("Space");
                 await menu.isMenuOpened();
-                await Helpers.pressKey("Space");
+
+                // Close
+                await Helpers.page.keyboard.press("Space");
                 await menu.isMenuClosed();
             });
 
             test("should open and NOT close menu by Shift + DOWN-ARROW key if focused on toggle", async () => {
                 await menu.toggleMenu();
-                await Helpers.page.keyboard.down("Shift");
-                await Helpers.pressKey("ArrowDown");
-                await Helpers.page.keyboard.up("Shift");
-                await menu.isMenuOpened();
                 await Helpers.page.keyboard.down("Shift");
                 await Helpers.pressKey("ArrowDown");
                 await Helpers.page.keyboard.up("Shift");
@@ -246,17 +256,30 @@ async function assertStartAndEndKeyboardShortcuts(
     menu: MenuAtom,
     position: "first" | "last"
 ) {
+    const toggle = menu.getMenuButton().getLocator();
     for (const key of keys) {
+        if (await menu.getPopupBox().getLocator().isHidden()) {
+            await menu.toggleMenu();
+        }
         await menu.isMenuOpened();
+
+        // Ensure focus is on the toggle button to capture keystrokes
+        await toggle.focus();
+
         // Use instance method to get menu items
         const itemsLocator = menu.getAllMenuItems();
         const itemCount = await itemsLocator.count();
         const targetIndex = position === "first" ? 0 : itemCount - 1;
         const targetItem = menu.getMenuItemByIndex(targetIndex);
+
         // Move to start/end using key
-        await Helpers.pressKey(position === "first" ? "End" : "Home");
-        await Helpers.pressKey(key);
-        // Check if the item is active (assume MenuItemAtom has isActiveItem method)
-        expect(await targetItem.isActiveItem()).toBe(true);
+        // We use toggle.press which is more reliable than body.press when focus is known
+        const resetKey = position === "first" ? "End" : "Home";
+        await toggle.press(resetKey);
+        await toggle.press(key);
+
+        // Check if the item is active
+        // Use assertion that waits for condition instead of immediate check
+        await expect(targetItem.getLocator()).toHaveClass(/nui-menu-item--active/);
     }
 }

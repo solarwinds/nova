@@ -501,12 +501,13 @@ test.describe("USERCONTROL table >", () => {
             // special timeout is needed here to wait for the scroll event to be processed and new row to be rendered
             await Helpers.page.waitForTimeout(scrollDelay);
 
-            const rowsCountScrolled = await stickyTable.getRowsCount();
-            const rowContentScrolled = await stickyTable.getRowContent(
-                rowsCountScrolled - 1
-            );
-            const rowTdScrolled = Number(rowContentScrolled[0]);
-            expect(rowTdScrolled).toBeGreaterThan(rowId);
+            await expect.poll(async () => {
+                const rowsCountScrolled = await stickyTable.getRowsCount();
+                const rowContentScrolled = await stickyTable.getRowContent(
+                    rowsCountScrolled - 1
+                );
+                return Number(rowContentScrolled[0]);
+            }).toBeGreaterThan(rowId);
         });
     });
 

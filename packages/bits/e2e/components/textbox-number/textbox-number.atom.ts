@@ -53,8 +53,10 @@ export class TextboxNumberAtom extends Atom {
     }
 
     public async acceptText(text: string): Promise<void> {
+        await this.input.click();
         await this.input.fill("");
         await this.input.type(text);
+        await this.input.blur();
     }
 
     public async clearText(): Promise<void> {
