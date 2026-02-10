@@ -183,12 +183,16 @@ export class MenuKeyControlService implements OnDestroy {
             { block: "nearest" }
         );
 
+        const isActionKey =
+            event.code === KEYBOARD_CODE.ENTER ||
+            event.code === KEYBOARD_CODE.SPACE;
+
         // prevent closing on enter
-        if (!this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER) {
+        if (!this.hasActiveItem() && isActionKey) {
             event.preventDefault();
         }
 
-        if (this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER) {
+        if (this.hasActiveItem() && isActionKey) {
             // perform action in menu item(select, switch, check etc).
             this.keyboardEventsManager.activeItem?.doAction(event);
             // closing items only if they are MenuAction or MenuItem, others should not close popup
@@ -212,12 +216,16 @@ export class MenuKeyControlService implements OnDestroy {
     }
 
     private handleClosedKeyDown(event: KeyboardEvent): void {
-        // prevent opening on enter and prevent scrolling page on key down/key up when focused
+        // prevent scrolling page on key down/key up when focused
         if (this.shouldBePrevented(event)) {
             event.preventDefault();
         }
 
-        if (event.code === KEYBOARD_CODE.ARROW_DOWN) {
+        if (
+            event.code === KEYBOARD_CODE.ARROW_DOWN ||
+            event.code === KEYBOARD_CODE.ENTER ||
+            event.code === KEYBOARD_CODE.SPACE
+        ) {
             this.popup.toggleOpened(event);
         }
     }
@@ -226,7 +234,8 @@ export class MenuKeyControlService implements OnDestroy {
         return (
             event.code === KEYBOARD_CODE.ARROW_DOWN ||
             event.code === KEYBOARD_CODE.ARROW_UP ||
-            event.code === KEYBOARD_CODE.ENTER
+            event.code === KEYBOARD_CODE.ENTER ||
+            event.code === KEYBOARD_CODE.SPACE
         );
     }
 

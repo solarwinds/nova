@@ -72,6 +72,28 @@ test.describe("USERCONTROL Menu", () => {
         });
     });
 
+    test.describe("accessibility", () => {
+        test("should have correct aria attributes", async () => {
+            const button = menu.getMenuButton().getLocator();
+            await expect(button).toHaveAttribute("aria-haspopup", "true");
+            await expect(button).toHaveAttribute("aria-expanded", "false");
+
+            await menu.toggleMenu();
+            await expect(button).toHaveAttribute("aria-expanded", "true");
+
+            // Check aria-controls
+            const ariaControlsId = await button.getAttribute("aria-controls");
+            expect(ariaControlsId).toBeTruthy();
+
+            // Verify the content exists
+            const content = Helpers.page.locator(`#${ariaControlsId}`);
+            await expect(content).toBeVisible();
+
+            await menu.toggleMenu();
+            await expect(button).toHaveAttribute("aria-expanded", "false");
+        });
+    });
+
     test.describe("> key navigation", () => {
         test.describe("> basic", () => {
             test("should open menu immediately if focused by TAB key", async () => {
@@ -87,10 +109,21 @@ test.describe("USERCONTROL Menu", () => {
                 await menu.isMenuClosed();
             });
 
-            test("should NOT open and close menu by ENTER key if focused on toggle", async () => {
+            test("should open and close menu by ENTER key if focused on toggle", async () => {
+                // Focus the toggle first
+                await Helpers.pressKey("Tab");
+                await Helpers.pressKey("Enter");
+                await menu.isMenuOpened();
                 await Helpers.pressKey("Enter");
                 await menu.isMenuClosed();
-                await Helpers.pressKey("Enter");
+            });
+
+            test("should open and close menu by SPACE key if focused on toggle", async () => {
+                // Focus the toggle first
+                await Helpers.pressKey("Tab");
+                await Helpers.pressKey("Space");
+                await menu.isMenuOpened();
+                await Helpers.pressKey("Space");
                 await menu.isMenuClosed();
             });
 
@@ -167,7 +200,7 @@ test.describe("USERCONTROL Menu", () => {
                     await menu.isMenuClosed();
                 });
 
-                test.skip("should jump to the last item on END, PAGE_DOWN, or Command + ARROW_DOWN key chords", async () => {
+                test("should jump to the last item on END, PAGE_DOWN, or Command + ARROW_DOWN key chords", async () => {
                     await assertStartAndEndKeyboardShortcuts(
                         moveDownKeyboardInputs,
                         menu,
@@ -175,7 +208,7 @@ test.describe("USERCONTROL Menu", () => {
                     );
                 });
 
-                test.skip("should jump to the last item on HOME, PAGE_UP, or Command + ARROW_UP key chords", async () => {
+                test("should jump to the last item on HOME, PAGE_UP, or Command + ARROW_UP key chords", async () => {
                     await assertStartAndEndKeyboardShortcuts(
                         moveUpKeyboardInputs,
                         menu,
@@ -215,7 +248,6 @@ async function assertStartAndEndKeyboardShortcuts(
 ) {
     for (const key of keys) {
         await menu.isMenuOpened();
-        await menu.toggleMenu();
         // Use instance method to get menu items
         const itemsLocator = menu.getAllMenuItems();
         const itemCount = await itemsLocator.count();
@@ -226,6 +258,5 @@ async function assertStartAndEndKeyboardShortcuts(
         await Helpers.pressKey(key);
         // Check if the item is active (assume MenuItemAtom has isActiveItem method)
         expect(await targetItem.isActiveItem()).toBe(true);
-        await menu.toggleMenu();
     }
 }
