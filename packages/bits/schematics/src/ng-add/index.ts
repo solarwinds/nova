@@ -40,6 +40,7 @@ import { getAppModulePath } from "@schematics/angular/utility/ng-ast-utils";
 import {
     assembleDependencies,
     getBrowserProjectTargets,
+    getProjectSourceRoot,
     installPackageJsonDependencies,
     readIntoSourceFile,
     updateJsonFile,
@@ -179,13 +180,12 @@ function addRootCssClass(options: any) {
     return (host: Tree, context: SchematicContext) => {
         try {
             const projectTargets = getBrowserProjectTargets(host, options);
-
-            const filePath = projectTargets.options.index;
+            const projectSourceRoot = getProjectSourceRoot(host, options);
+            const filePath = projectTargets.options.index ?? `${projectSourceRoot}/index.html`;
             const rootHtmlFile = host.read(filePath ?? "");
 
             if (rootHtmlFile) {
                 let rootHtml = rootHtmlFile.toString("utf-8");
-
                 if (!rootHtml.match(/<html.*(class=".*nui.*").*>/)) {
                     // TODO need a proper html parser here
                     rootHtml = rootHtml.replace("<html", '<html class="nui"');

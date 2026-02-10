@@ -8,9 +8,9 @@
   ],
   "description": "SolarWinds Nova Framework",
   "devDependencies": {
-    "@apollo/client": "3.7.3",
+    "@apollo/client": "3.13.9",
     "animate.css": "4.1.1",
-    "apollo-angular": "10.0.3",
+    "apollo-angular": "11.0.0",
     "bootstrap-less-port": "0.3.0",
     "graphql": "16.8.1",
     "modernizr": "3.12.0",

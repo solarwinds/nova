@@ -27,10 +27,7 @@ import {
 import { Platform } from "@angular/cdk/platform";
 import { CdkVirtualForOf, ViewportRuler } from "@angular/cdk/scrolling";
 import {
-    _COALESCED_STYLE_SCHEDULER,
-    _CoalescedStyleScheduler,
     CDK_TABLE,
-    CDK_TABLE_TEMPLATE,
     CdkTable,
     RenderRow,
     RowContext,
@@ -77,7 +74,33 @@ import { ISortedItem, SorterDirection } from "../sorter/public-api";
     selector: "nui-table, table[nui-table]",
     // We used to have our own template for the table but it broke with Angular release 10 so we are now using this even though it is intended to be private
     // so we can be up to date with the CDK table template.
-    template: CDK_TABLE_TEMPLATE,
+    // CDK_TABLE_TEMPLATE export was removed in angular CDK 20 so we had to copy the template here - https://github.com/angular/components/pull/30956/files.
+    template: `
+        <ng-content select="caption"/>
+        <ng-content select="colgroup, col"/>
+
+        @if (_isServer) {
+          <ng-content/>
+        }
+
+        @if (_isNativeHtmlTable) {
+          <thead role="rowgroup">
+            <ng-container headerRowOutlet/>
+          </thead>
+          <tbody role="rowgroup">
+            <ng-container rowOutlet/>
+            <ng-container noDataRowOutlet/>
+          </tbody>
+          <tfoot role="rowgroup">
+            <ng-container footerRowOutlet/>
+          </tfoot>
+        } @else {
+          <ng-container headerRowOutlet/>
+          <ng-container rowOutlet/>
+          <ng-container noDataRowOutlet/>
+          <ng-container footerRowOutlet/>
+        }
+  `,
     exportAs: "nuiTable",
     host: {
         class: "nui-table__table",
@@ -88,10 +111,6 @@ import { ISortedItem, SorterDirection } from "../sorter/public-api";
         {
             provide: _VIEW_REPEATER_STRATEGY,
             useClass: _DisposeViewRepeaterStrategy,
-        },
-        {
-            provide: _COALESCED_STYLE_SCHEDULER,
-            useClass: _CoalescedStyleScheduler,
         },
         { provide: CdkTable, useExisting: TableComponent },
         { provide: CDK_TABLE, useExisting: TableComponent },
@@ -156,8 +175,6 @@ export class TableComponent<T>
         private platform: Platform,
         @Inject(_VIEW_REPEATER_STRATEGY)
         viewRepeater: _ViewRepeater<T, RenderRow<T>, RowContext<T>>,
-        @Inject(_COALESCED_STYLE_SCHEDULER)
-        coalescedStyleScheduler: _CoalescedStyleScheduler,
         viewportRuler: ViewportRuler,
         @Optional()
         @SkipSelf()
@@ -175,7 +192,6 @@ export class TableComponent<T>
             document,
             platform,
             viewRepeater,
-            coalescedStyleScheduler,
             viewportRuler,
             stickyPositioningListener
         );

@@ -68,9 +68,9 @@ const PANE_HEADER = "DEFAULT HEADER";
                 </nui-icon>
             </div>
             <div nuiPanelEmbeddedBody class="nui-panel__header-embedded-body">
-                ${LEFT_PANE_CONTENT}
+                Left Pane Content
             </div>
-            <div>${CENTER_PANE_CONTENT}</div>
+            <div>Center Pane Content</div>
         </nui-panel>
     `,
     standalone: false,

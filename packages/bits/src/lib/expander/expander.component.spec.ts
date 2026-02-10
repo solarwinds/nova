@@ -24,12 +24,9 @@ import { By } from "@angular/platform-browser";
 
 import { ExpanderComponent } from "./expander.component";
 
-const customHeaderHtml = `<div nuiExpanderHeader=""><p>Custom Projected Header</p></div>`;
-const customBodyHtml = `<div><span>Covfefe</span></div>`;
-
 @Component({
     template: `<nui-expander [open]="open"
-        >${customHeaderHtml}${customBodyHtml}</nui-expander
+        ><div nuiExpanderHeader=""><p>Custom Projected Header</p></div><div><span>Covfefe</span></div></nui-expander
     >`,
     standalone: false,
 })
@@ -219,7 +216,7 @@ describe("components >", () => {
                     usageFixture.detectChanges();
                     expect(
                         getBodyContentEl().nativeElement.innerHTML
-                    ).not.toContain(customBodyHtml);
+                    ).not.toContain("Covfefe");
                 });
             });
 

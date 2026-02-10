@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { NgZone } from "@angular/core";
-import { fakeAsync, TestBed, tick } from "@angular/core/testing";
+import { fakeAsync, flush, TestBed, tick } from "@angular/core/testing";
 
 import { EventBus, IEvent } from "@nova-ui/bits";
 import { RefresherSettingsService } from "@nova-ui/dashboards";
@@ -34,36 +34,43 @@ describe("Refresher > ", () => {
     let ngZone: NgZone;
     let refresherSettings: RefresherSettingsService;
 
-    beforeAll(() => {
-        ngZone = TestBed.inject(NgZone);
-        spyOn(ngZone, "runOutsideAngular").and.callFake((fn: Function) => fn());
-    });
-
     beforeEach(() => {
         eventBus = new EventBus();
         refresherSettings = new RefresherSettingsService();
-        refresher = new Refresher(eventBus, ngZone, refresherSettings);
     });
 
     describe("updateConfiguration > ", () => {
         it("should change the interval", fakeAsync(() => {
-            refresher.updateConfiguration({ interval: 1, enabled: true });
+            ngZone = TestBed.inject(NgZone);
+            spyOn(ngZone, "runOutsideAngular").and.callFake((fn: any) => fn());
+            spyOn(ngZone, "run").and.callFake((fn: any) => fn());
+
+            refresher = new Refresher(eventBus, ngZone, refresherSettings);
             const spy = spyOn(eventBus.getStream(REFRESH), "next");
+
+            refresher.updateConfiguration({ interval: 1, enabled: true });
             tick(1);
             expect(spy).toHaveBeenCalledTimes(0);
             tick(999);
             expect(spy).toHaveBeenCalledTimes(1);
+
             refresher.updateConfiguration({ interval: 2, enabled: true });
             tick(1);
             expect(spy).toHaveBeenCalledTimes(1);
             tick(1999);
             expect(spy).toHaveBeenCalledTimes(2);
+
             refresher.ngOnDestroy();
+            flush();
         }));
     });
 
     describe("ngOnDestroy > ", () => {
         it("should clear the interval", fakeAsync(() => {
+            ngZone = TestBed.inject(NgZone);
+            spyOn(ngZone, "runOutsideAngular").and.callFake((fn: any) => fn());
+            spyOn(ngZone, "run").and.callFake((fn: any) => fn());
+
             refresher = new Refresher(eventBus, ngZone, refresherSettings);
             refresher.ngOnDestroy();
             const spy = spyOn(eventBus.getStream(REFRESH), "next");
@@ -74,19 +81,30 @@ describe("Refresher > ", () => {
 
     describe("refresherSettings", () => {
         it("updates interval when global settings change", fakeAsync(() => {
+            ngZone = TestBed.inject(NgZone);
+            spyOn(ngZone, "runOutsideAngular").and.callFake((fn: any) => fn());
+            spyOn(ngZone, "run").and.callFake((fn: any) => fn());
+
             refresherSettings.refreshRateSeconds = 1;
+            refresher = new Refresher(eventBus, ngZone, refresherSettings);
             refresher.updateConfiguration({ overrideDefaultSettings: false });
+
             const spy = spyOn(eventBus.getStream(REFRESH), "next");
+
             tick(1);
             expect(spy).toHaveBeenCalledTimes(0);
             tick(999);
             expect(spy).toHaveBeenCalledTimes(1);
+
             refresherSettings.refreshRateSeconds = 2;
             tick(1);
             expect(spy).toHaveBeenCalledTimes(1);
+
             tick(1999);
             expect(spy).toHaveBeenCalledTimes(2);
+
             refresher.ngOnDestroy();
+            flush();
         }));
     });
 });
