@@ -36,6 +36,7 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
+import _uniqueId from "lodash/uniqueId";
 import { Subject, Subscription } from "rxjs";
 
 import { ButtonSizeType } from "../../../lib/button/public-api";
@@ -117,6 +118,8 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     @ViewChild(PopupComponent) public popup: PopupComponent;
     @ViewChild(MenuPopupComponent) menuPopup: MenuPopupComponent;
     @ViewChild("menuToggle", { read: ElementRef }) menuToggle: ElementRef;
+
+    public readonly menuTriggerId = _uniqueId("nui-menu-trigger-");
 
     private menuKeyControlListeners: Function[] = [];
     private focusMonitorSubscription: Subscription;

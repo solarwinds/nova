@@ -155,5 +155,42 @@ describe("components >", () => {
             const actionMenu = el.querySelectorAll("nui-menu-action");
             expect(actionMenu.length).toBe(1);
         });
+
+        describe("accessibility >", () => {
+            it("should have correct aria attributes on toggle button", () => {
+                const button = fixture.debugElement.query(By.css(".menu-button"));
+                expect(button.attributes["aria-haspopup"]).toBe("true");
+                expect(button.attributes["aria-expanded"]).toBe("false");
+                expect(button.attributes["aria-controls"]).toBeFalsy();
+
+                // Open menu
+                testComponent.menu.popup.toggleOpened(new FocusEvent("focusin"));
+                fixture.detectChanges();
+
+                expect(button.attributes["aria-expanded"]).toBe("true");
+                expect(button.attributes["aria-controls"]).toBeTruthy();
+                const menuContentId = button.attributes["aria-controls"];
+                const content = fixture.debugElement.query(By.css("#" + menuContentId));
+                expect(content).toBeTruthy();
+            });
+
+            it("should have correct roles on menu-link", () => {
+                // Ensure menu items are rendered
+                testComponent.menu.popup.toggleOpened(new FocusEvent("focusin"));
+                fixture.detectChanges();
+
+                const menuLinks = fixture.debugElement.queryAll(By.directive(MenuLinkComponent));
+                expect(menuLinks.length).toBeGreaterThan(0);
+
+                menuLinks.forEach(linkDebugEl => {
+                    // Host element should have role="none"
+                    expect(linkDebugEl.attributes["role"]).toBe("none");
+
+                    // Anchor inside should have role="menuitem"
+                    const anchor = linkDebugEl.query(By.css("a"));
+                    expect(anchor.attributes["role"]).toBe("menuitem");
+                });
+            });
+        });
     });
 });
