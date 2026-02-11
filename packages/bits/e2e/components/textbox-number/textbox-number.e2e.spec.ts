@@ -161,6 +161,7 @@ test.describe("USERCONTROL textbox-number >", () => {
     test.describe("validation >", () => {
         test.beforeEach(async () => {
             component = validation;
+            await component.toBeVisible();
             await component.clearText();
         });
 
@@ -200,6 +201,7 @@ test.describe("USERCONTROL textbox-number >", () => {
             each(["-", "+", "1e", "eee", "1-1", "1+1"], (invalidValue) => {
                 test(`should reject incorrect string input: '${invalidValue}'`, async () => {
                     await component.acceptText(invalidValue);
+                    await component.input.blur();
                     expect(await component.isValid()).toBe(false);
                 });
             });

@@ -21,7 +21,7 @@
 import { DialogAtom } from "./dialog.atom";
 import { test, Helpers } from "../../setup";
 
-describe("a11y: dialog", () => {
+test.describe("a11y: dialog", () => {
     // disabling the rule until NUI-6014 is addressed
     const rulesToDisable: string[] = [
         "color-contrast",

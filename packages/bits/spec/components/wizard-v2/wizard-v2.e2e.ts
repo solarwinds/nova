@@ -52,6 +52,10 @@ describe("USERCONTROL Wizard V2: ", () => {
     });
 
     describe("wizard v2 > ", () => {
+        beforeEach(async () => {
+             await wizard.waitElementVisible();
+        });
+
         it("should have 3 steps", async () => {
             const steps = await wizard.steps;
 

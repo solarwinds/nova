@@ -19,29 +19,22 @@
 //  THE SOFTWARE.
 
 import {
-    AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ElementRef,
-    Inject,
-    Input,
-    OnChanges,
-    OnInit,
-    SimpleChanges,
     ViewEncapsulation,
+    afterNextRender,
+    computed,
+    effect,
+    inject,
+    input,
 } from "@angular/core";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
-import _find from "lodash/find";
-import _has from "lodash/has";
-import _includes from "lodash/includes";
-import _isEqual from "lodash/isEqual";
-import _isNumber from "lodash/isNumber";
-import _isString from "lodash/isString";
-import _isUndefined from "lodash/isUndefined";
 
 import { IImagesPresetItem } from "./public-api";
 import { imagesPresetToken } from "../../constants/images.constants";
+import { computeA11yForGraphic } from "../../functions/a11y-graphics.util";
 import { LoggerService } from "../../services/log-service";
 import { UtilService } from "../../services/util.service";
 
@@ -50,139 +43,154 @@ import { UtilService } from "../../services/util.service";
  */
 @Component({
     selector: "nui-image",
+    standalone: true,
     templateUrl: "./image.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["./image.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: {
-        role: "img",
-        "[attr.aria-label]": "hasAlt ? null : description || imageName",
+        "[attr.role]": "computedRole()",
+        "[attr.aria-hidden]": "computedAriaHidden()",
+        "[attr.aria-label]": "computedAriaLabel()",
     },
-    standalone: false,
 })
-export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
+export class ImageComponent {
     /**
      * Image name from nui image preset or external source
      */
-    @Input() public image: any;
+    public image = input<any>();
 
     /**
      * Sets aria-label text or alt for image from external source
      */
-    @Input() public description: string;
+    public description = input<string>();
 
     /**
      * Available values are: 'left' and 'right'
      */
-    @Input() public float: string;
+    public float = input<string>();
     /**
      * Available values are: 'centered', 'small', 'large'
      */
-    @Input() public margin: string;
+    public margin = input<string>();
     /**
      * 'True' will apply 30% opacity to the image
      */
-    @Input() public isWatermark: boolean;
+    public isWatermark = input<boolean>();
     /**
      * Sets the width of the container parent image
      */
-    @Input() public width: string = "auto";
+    public width = input<string>("auto");
     /**
      * Sets the height of the container parent image
      */
-    @Input() public height: string = "auto";
+    public height = input<string>("auto");
     /**
      * When set to true sets the hardcoded width and height of the svg to 100% to fill the parent container
      */
-    @Input() public autoFill: boolean;
+    public autoFill = input<boolean>();
+    /**
+     * Optional ARIA role override. Constrained to 'img' | 'presentation' | null.
+     * If omitted, role is inferred from presence of alt/label.
+     */
+    public role = input<"img" | "presentation" | null>();
 
-    public imageTemplate: SafeHtml;
-    public imageName: string | null;
-    public hasAlt: boolean;
+    public imageName = computed<string | null>(() => {
+        const img = this.image();
+        if (img && typeof img === "object" && "name" in img) {
+            return (img as any).name ?? null;
+        }
+        const fromPreset = this.getImage(img as string);
+        return fromPreset?.name ?? null;
+    });
 
-    constructor(
-        private logger: LoggerService,
-        private utilService: UtilService,
-        private changeDetector: ChangeDetectorRef,
-        @Inject(imagesPresetToken) private images: Array<IImagesPresetItem>,
-        private domSanitizer: DomSanitizer,
-        private el: ElementRef
-    ) {}
+    public hasAlt = computed<boolean>(() => {
+        const img = this.image();
+        const hasCode = !!(img && typeof img === "object" && typeof (img as any).code === "string");
+        return !hasCode;
+    });
 
-    public ngOnInit(): void {
-        const dimensionImputs: string[] = [this.height, this.width];
+    public imageTemplate = computed<SafeHtml>(() => {
+        const img = this.image();
+        let html = "";
+        if (img && typeof img === "object" && typeof (img as any).code === "string") {
+            html = (img as any).code;
+        } else if (typeof img === "string") {
+            const fromPreset = this.getImage(img);
+            if (fromPreset?.code) {
+                html = fromPreset.code;
+            } else {
+                html = `<img src="${img}" alt="${this.description()}">`;
+            }
+        }
+        return this.domSanitizer.bypassSecurityTrustHtml(html);
+    });
 
-        dimensionImputs.forEach((item) => {
-            if (!_isUndefined(item) && !this.isImageSizeValid(item)) {
-                this.logger.error(
-                    "Image size should be specified in 'px', '%', or 'auto"
-                );
+    private a11y = computed(() =>
+        computeA11yForGraphic({
+            decorative: false,
+            explicitRole: this.role(),
+            label: this.description() || this.imageName() || null,
+            hasAlt: this.hasAlt(),
+            statusParts: undefined,
+        })
+    );
+
+    private logger = inject(LoggerService);
+    private utilService = inject(UtilService);
+    private changeDetector = inject(ChangeDetectorRef);
+    private images = inject<Array<IImagesPresetItem>>(imagesPresetToken);
+    private domSanitizer = inject(DomSanitizer);
+    private el = inject(ElementRef);
+
+    public computedRole = computed(() => this.a11y().role);
+    public computedAriaHidden = computed(() => this.a11y().ariaHidden);
+    public computedAriaLabel = computed(() => this.a11y().ariaLabel);
+
+    constructor() {
+        effect(() => {
+            const h = this.height();
+            const w = this.width();
+            [h, w].forEach((item) => {
+                if (item !== undefined && !this.isImageSizeValid(item)) {
+                    this.logger.error(
+                        "Image size should be specified in 'px', '%', or 'auto"
+                    );
+                }
+            });
+        });
+
+        afterNextRender(() => {
+            if (this.autoFill()) {
+                const svg = this.el.nativeElement.querySelector("svg");
+                if (svg) {
+                    svg.setAttribute("width", "100%");
+                    svg.setAttribute("height", "100%");
+                } else {
+                    console.warn(
+                        "Can't apply 'autoFill' to nui-image, because it is only applicable to SVG type of images"
+                    );
+                }
+            }
+
+            // Fix bug for Safari with wrong alignment of floated SVG images
+            if (this.float() && !this.width() && this.utilService.browser?.isSafari()) {
+                const svg = this.el.nativeElement.querySelector("svg");
+                if (svg) {
+                    (this.el.nativeElement as HTMLElement).style.width = svg.width.baseVal.value + "px";
+                    this.changeDetector.detectChanges();
+                }
             }
         });
     }
 
-    public ngOnChanges(changes: SimpleChanges): void {
-        if (changes.image || changes.description) {
-            this.imageName =
-                this.image.name || this.getImage(this.image)?.name || null;
-            this.imageTemplate = this.getImageTemplate();
-        }
-    }
-
-    public ngAfterViewInit(): void {
-        if (this.autoFill) {
-            try {
-                const svg = this.el.nativeElement.querySelector("svg");
-                svg.setAttribute("width", "100%");
-                svg.setAttribute("height", "100%");
-            } catch (e) {
-                console.warn(
-                    "Can't apply 'autoFill' to nui-image, because it is only applicable to SVG type of images"
-                );
-                return;
-            }
-        }
-
-        /**
-         * Fix bug for Safari with wrong alignment of floated SVG images
-         */
-        if (this.float && !this.width && this.utilService.browser?.isSafari()) {
-            const svg = this.el.nativeElement.querySelector("svg");
-
-            if (!svg) {
-                return;
-            }
-
-            this.width = svg.width.baseVal.value + "px";
-            this.changeDetector.detectChanges();
-        }
-    }
-
-    public getImageTemplate(): SafeHtml {
-        const image = this.image.code ? this.image : this.getImage(this.image);
-        let imageHtml: string = "";
-        if (_has(image, "code") && _isString(image.code)) {
-            imageHtml = image.code;
-            this.hasAlt = false;
-        } else {
-            imageHtml = `<img src="${this.image}" alt="${this.description}">`;
-            this.hasAlt = true;
-        }
-
-        return this.domSanitizer.bypassSecurityTrustHtml(imageHtml);
-    }
-
     private getImage = (imageName: string): IImagesPresetItem | undefined =>
-        _find(this.images, (img: IImagesPresetItem) =>
-            _isEqual(img.name, imageName)
-        );
+        this.images.find((img) => img.name === imageName);
 
-    private isImageSizeValid(input: string): boolean {
+    private isImageSizeValid(value: string): boolean {
         return (
-            _isNumber(parseFloat(input)) &&
-            (_includes(input, "px") ||
-                _includes(input, "%") ||
-                _includes(input, "auto"))
+            !isNaN(parseFloat(value)) &&
+            (value.includes("px") || value.includes("%") || value.includes("auto"))
         );
     }
 }

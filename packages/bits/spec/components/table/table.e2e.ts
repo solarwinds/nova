@@ -219,7 +219,7 @@ describe("USERCONTROL table >", () => {
     describe("Adding and removing table columns >", () => {
         beforeEach(async () => {
             await Helpers.prepareBrowser("table/custom-actions");
-            customActionsTable.waitElementVisible();
+            await tableColumnsAddRemove.waitElementVisible();
         });
 
         const editColumnsButton: ButtonAtom = Atom.find(
@@ -482,6 +482,7 @@ describe("USERCONTROL table >", () => {
     describe("Sticky header >", () => {
         beforeEach(async () => {
             await Helpers.prepareBrowser("table/sticky");
+            await Helpers.waitElementVisible(element(by.id("nui-demo-table-sticky-header")));
         });
 
         it("adjust the virtual scroll viewport height to accommodate the header height", async () => {
@@ -753,6 +754,7 @@ describe("USERCONTROL table >", () => {
 
         beforeEach(async () => {
             await Helpers.prepareBrowser("table/custom-actions");
+            await tableColumnsAddRemove.waitElementVisible();
         });
 
         it("should add new row to the beginning", async () => {

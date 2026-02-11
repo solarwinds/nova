@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { by, ElementFinder, Key } from "protractor";
+import { browser, by, ElementFinder, Key } from "protractor";
 
 import { Atom } from "../../atom";
 
@@ -41,8 +41,11 @@ export class TextboxAtom extends Atom {
     public getValue = async (): Promise<string> =>
         this.input.getAttribute("value");
 
-    public acceptText = async (text: string): Promise<void> =>
-        this.input.sendKeys(text);
+    public acceptText = async (text: string): Promise<void> => {
+        await browser.actions().mouseMove(this.input).click().perform();
+        await browser.actions().sendKeys(text).perform();
+    };
+
 
     public clearText = async (): Promise<void> => this.input.clear();
 

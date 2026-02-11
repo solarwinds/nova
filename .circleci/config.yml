@@ -30,6 +30,9 @@ commands:
         description: "Install deps"
         steps:
             - *cache_restore
+            - run:
+                name: Add GitHub to known hosts
+                command: mkdir -p ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
             - *install_dependencies
             - *cache_save
 
@@ -51,7 +54,7 @@ executors:
 
     playwright:
         docker:
-            - image: mcr.microsoft.com/playwright:v1.52.0-noble
+            - image: mcr.microsoft.com/playwright:v1.58.1-noble
         working_directory: ~/nova
         environment:
             NODE_ENV: development

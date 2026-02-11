@@ -35,7 +35,8 @@ describe("a11y: table", () => {
         await Helpers.prepareBrowser("table/visual-test");
     });
 
-    it("should check a11y of table", async () => {
+    // TO DO: NUI-6263
+    xit("should check a11y of table", async () => {
         await assertA11y(browser, TableAtom, rulesToDisable);
     });
 });

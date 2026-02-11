@@ -133,6 +133,7 @@ describe("USERCONTROL popover", () => {
         });
 
         it("should not close popover after click on itself", async () => {
+            await popoverPreventClosing.waitElementVisible();
             await popoverPreventClosing.clickTarget();
             await expect(await popoverPreventClosing.isPopoverDisplayed()).toBe(
                 true
@@ -165,6 +166,7 @@ describe("USERCONTROL popover", () => {
         });
 
         it("should close when clicked outside", async () => {
+            await popoverClickTrigger.waitElementVisible();
             await popoverClickTrigger.open();
             await expect(await popoverClickTrigger.isPopoverDisplayed()).toBe(
                 true

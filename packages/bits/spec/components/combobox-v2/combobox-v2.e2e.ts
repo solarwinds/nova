@@ -182,8 +182,9 @@ describe("USERCONTROL Combobox v2 >", () => {
         });
 
         describe("basic actions", () => {
-            beforeAll(async () => {
+            beforeEach(async () => {
                 await browser.refresh();
+                await comboboxBasic.waitElementVisible();
             });
 
             it("should select input text if clicked on toggle button", async () => {

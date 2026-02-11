@@ -7,3 +7,4 @@ node_modules
 response.txt
 .yarn
 .yarnrc.yml
+test-results/.last-run.json
