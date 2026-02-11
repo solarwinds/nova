@@ -40,6 +40,9 @@
                 <div
                     class="nui-text-widget nui-widget__header__content-title"
                     [title]="title"
+                    *ngIf="!url || editMode"
+                    role="heading"
+                    aria-level="2"
                 >
                     {{ title }}
                 </div>
@@ -57,6 +60,8 @@
                         "
                         class="nui-text-widget nui-widget__header__content-title"
                         [nuiTooltip]="linkTooltip"
+                        role="heading"
+                        aria-level="2"
                         >{{ title }}</a
                     >
                 </div>

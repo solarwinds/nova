@@ -27,7 +27,7 @@
     >
         <span>{{ title }}</span>
     </button>
-    <div popupAreaContent [id]="popupContentId">
+    <div popupAreaContent [id]="popupContentId" role="menu">
         @if (itemsSource) {
         <nui-menu-popup
             [itemsSource]="itemsSource"
