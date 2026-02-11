@@ -24,7 +24,7 @@
         [ariaLabel]="title || ariaLabel || 'Menu'">
         <span>{{ title }}</span>
     </button>
-    <div popupAreaContent [id]="popupContentId">
+    <div popupAreaContent role="menu">
         <nui-menu-popup
             *ngIf="itemsSource"
             [itemsSource]="itemsSource"

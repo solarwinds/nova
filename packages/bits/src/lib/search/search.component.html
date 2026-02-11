@@ -44,5 +44,19 @@
                 [attr.aria-hidden]="isButtonDisabled() ? 'true' : null"
                 (click)="onSearch()"></button>
         </div>
+        <input
+            class="nui-search__input-control form-control"
+            type="text"
+            [attr.name]="name"
+            [nuiSetFocus]="captureFocus"
+            (focusChange)="onFocusChange($event)"
+            autocomplete="off"
+            (input)="onInputChange()"
+            [(ngModel)]="value"
+            [placeholder]="getPlaceholder()"
+            (keyup)="onKeyup($event)"
+            [attr.aria-invalid]="isInErrorState"
+            aria-label="Search"
+        />
     </div>
 </div>
