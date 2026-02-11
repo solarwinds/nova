@@ -383,6 +383,8 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             this.renderer.addClass(this.stickyHeadContainer, cssClass)
         );
 
+        this.renderer.setAttribute(this.stickyHeadContainer, "role", "table");
+
         this.renderer.insertBefore(
             this.viewportEl.parentElement,
             wrapper,
