@@ -79,6 +79,7 @@ commands:
                           echo "No blob reports generated - likely test failure or misconfiguration"
                           ls
                         fi
+            - add_ssh_keys
             -   run:
                     working_directory: ~/nova/<< parameters.project_dir >>
                     name: Execute percy upload
