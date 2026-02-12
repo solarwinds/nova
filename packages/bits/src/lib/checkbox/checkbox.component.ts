@@ -188,7 +188,7 @@ export class CheckboxComponent
     @ViewChild("checkboxLabel")
     public checkboxLabel: ElementRef;
 
-    private rendererListener: Function;
+    private rendererListener: () => void;
     private sub: Subscription;
 
     private _ariaLabel: string = "Checkbox";
