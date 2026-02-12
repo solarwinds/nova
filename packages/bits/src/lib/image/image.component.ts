@@ -135,7 +135,7 @@ export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
                 const svg = this.el.nativeElement.querySelector("svg");
                 svg.setAttribute("width", "100%");
                 svg.setAttribute("height", "100%");
-            } catch (_e) {
+            } catch {
                 console.warn(
                     "Can't apply 'autoFill' to nui-image, because it is only applicable to SVG type of images"
                 );

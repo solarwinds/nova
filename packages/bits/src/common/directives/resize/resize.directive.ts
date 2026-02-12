@@ -134,7 +134,7 @@ export class ResizeDirective implements AfterViewInit, OnDestroy {
      */
     private attachResizeEvent(
         targetElement: IResizeElement,
-        resizeCallback: Function
+        resizeCallback: () => void
     ): void {
         if (targetElement.resizedAttached) {
             targetElement.resizedAttached.add(resizeCallback);
@@ -234,7 +234,7 @@ export class ResizeDirective implements AfterViewInit, OnDestroy {
      */
     private detachResizeEvent = (
         targetElement: IResizeElement,
-        event: Function
+        event: () => void
     ) => {
         if (targetElement.resizedAttached && typeof event === "function") {
             targetElement.resizedAttached.remove(event);

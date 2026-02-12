@@ -90,11 +90,11 @@ export class DatePickerInnerComponent
     protected _todayDate: Moment = moment();
 
     protected refreshViewHandlerDay: () => void;
-    protected compareHandlerDay: (d1: Moment, d2?: Moment) => number | undefined;
+    protected compareHandlerDay: (d1: Moment, d2: Moment) => number | undefined;
     protected refreshViewHandlerMonth: () => void;
-    protected compareHandlerMonth: (d1: Moment, d2?: Moment) => number | undefined;
+    protected compareHandlerMonth: (d1: Moment, d2: Moment) => number | undefined;
     protected refreshViewHandlerYear: () => void;
-    protected compareHandlerYear: (d1: Moment, d2?: Moment) => number | undefined;
+    protected compareHandlerYear: (d1: Moment, d2: Moment) => number | undefined;
 
     private modes: string[] = ["day", "month", "year"];
 
@@ -180,7 +180,7 @@ export class DatePickerInnerComponent
     }
 
     public setCompareHandler(
-        handler: (d1: Moment, d2?: Moment) => number | undefined,
+        handler: (d1: Moment, d2: Moment) => number | undefined,
         type: string
     ): void {
         if (type === "day") {
@@ -213,10 +213,10 @@ export class DatePickerInnerComponent
             return this.compareHandlerYear(date1, date2);
         }
 
-        return void 0;() => void
+        return void 0;
     }
 
-    public setRefreshViewHandler(handler: Function, type: string): void {
+    public setRefreshViewHandler(handler: () => void, type: string): void {
         if (type === "day") {
             this.refreshViewHandlerDay = handler;
         }
