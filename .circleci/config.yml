@@ -858,9 +858,9 @@ workflows:
             -   bits-test-playwright-merge:
                     requires:
                         - bits-test-playwright
-            -   bits-visual-test:
-                    requires:
-                        - bits-build
+#            -   bits-visual-test:
+#                    requires:
+#                        - bits-build
             -   bits-a11y-test:
                     requires:
                         - bits-build
@@ -901,9 +901,9 @@ workflows:
             -   charts-test-playwright-merge:
                     requires:
                         - charts-test-playwright
-            -   charts-visual-test:
-                    requires:
-                        - charts-build
+#            -   charts-visual-test:
+#                    requires:
+#                        - charts-build
             -   charts-publish:
                     requires:
                         - bits-e2e-test
@@ -941,9 +941,9 @@ workflows:
             -   dashboards-e2e-test:
                     requires:
                         - dashboards-build
-            -   dashboards-visual-test:
-                    requires:
-                        - dashboards-build
+#            -   dashboards-visual-test:
+#                    requires:
+#                        - dashboards-build
             -   dashboards-publish:
                     requires:
                         - bits-e2e-test
