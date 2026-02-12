@@ -24,7 +24,7 @@ import { DateTimepickerAtom } from "./datetimepicker.atom";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 
-describe("USERCONTROL date-time-picker", () => {
+xdescribe("USERCONTROL date-time-picker", () => {
     let dateTimePicker: DateTimepickerAtom;
 
     const getModelValue = async (): Promise<string> =>

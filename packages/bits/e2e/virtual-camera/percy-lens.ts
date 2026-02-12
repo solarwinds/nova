@@ -40,7 +40,6 @@ export class PercyLens extends EyesLens implements ILens {
 
     public async takeSnapshot(label: string): Promise<void> {
         await super.takeSnapshot(label);
-
         this.checkSettings();
 
         await this.percySnapshot(
