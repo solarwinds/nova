@@ -37,7 +37,7 @@ import { BreadcrumbItem } from "./public-api";
     encapsulation: ViewEncapsulation.None,
     host: {
         "[attr.aria-label]": "ariaLabel",
-        "[attr.role]": "'navigation'"
+        "[attr.role]": "'navigation'",
     },
     standalone: false,
 })

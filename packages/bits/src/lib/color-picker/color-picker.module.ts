@@ -1,9 +1,9 @@
 import { NgModule } from "@angular/core";
 
+import { NuiIconModule } from "../icon/icon.module";
+import { NuiSelectV2Module } from "../select-v2/select-v2.module";
 import { NuiCommonModule } from "../../common/common.module";
 import { ColorPickerComponent } from "./color-picker.component";
-import { NuiSelectV2Module } from "../select-v2/select-v2.module";
-import { NuiIconModule } from "../icon/icon.module";
 
 /**
  * @ignore

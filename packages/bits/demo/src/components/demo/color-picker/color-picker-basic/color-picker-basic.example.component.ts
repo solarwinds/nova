@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import {
     FormBuilder,
     FormControl,
@@ -45,10 +45,10 @@ const CHART_PALETTE_CS1: string[] = [
     styles: [],
     standalone: false,
 })
-export class ColorPickerBasicExampleComponent {
+export class ColorPickerBasicExampleComponent implements OnInit {
     public myForm: FormGroup<{ backgroundColor: FormControl<string | null> }>;
     public colors: string[] = CHART_PALETTE_CS1;
-    
+
     constructor(
         private formBuilder: FormBuilder
     ) {}
