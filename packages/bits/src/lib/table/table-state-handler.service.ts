@@ -20,7 +20,7 @@
 
 import {
     forwardRef,
-    Inject,
+    inject,
     Injectable,
     NgZone,
     TrackByFunction,
@@ -144,11 +144,10 @@ export class TableStateHandlerService {
         desc: "triangle-down",
     };
 
-    constructor(
-        protected zone: NgZone,
-        @Inject(forwardRef(() => SelectorService))
-        protected selectorService: SelectorService
-    ) {}
+    protected zone = inject(NgZone);
+    protected selectorService = inject(SelectorService);
+
+    constructor() {}
 
     /**
      * Used to sync directives and components in table to apply additional styles and logic
