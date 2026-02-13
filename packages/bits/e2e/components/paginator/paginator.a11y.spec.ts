@@ -20,7 +20,7 @@
 import { PaginatorAtom } from "./paginator.atom";
 import { test, Helpers } from "../../setup";
 
-describe("a11y: paginator", () => {
+test.describe("a11y: paginator", () => {
     const rulesToDisable: string[] = ["nested-interactive"];
 
     test.beforeEach(async ({ page }) => {

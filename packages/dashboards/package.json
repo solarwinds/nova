@@ -14,6 +14,14 @@
       "types": "./sdk/atoms/*.d.ts",
       "default": "./sdk/atoms/*.js"
     },
+    "./sdk/atoms-playwright": {
+      "types": "./sdk/atmos-playwright/index.d.ts",
+      "default": "./sdk/atoms-playwright/index.js"
+    },
+    "./sdk/atoms-playwright/*": {
+      "types": "./sdk/atoms-playwright/*.d.ts",
+      "default": "./sdk/atoms-playwright/*.js"
+    },
     "./sdk/schematics": {
       "types": "./sdk/schematics/index.d.ts",
       "default": "./sdk/schematics/index.js"
@@ -79,9 +87,12 @@
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
     "ng": "ng",
-    "percy": "percy exec -- npm run visual",
     "percy:ci": "npm run visual:ci && percy upload -v _snapshots",
     "percy:gui": "percy exec -- npm run visual:gui",
+    "playwright:base": "yarn playwright test",
+    "playwright:ci": "yarn playwright:base",
+    "playwright:ui": "yarn playwright:base --ui",
+    "playwright:report": "yarn playwright show-report",
     "prebuild-examples": "yarn run compile-demo-paths",
     "pree2e:base": "webdriver-manager update --gecko=false --standalone=false",
     "prettier": "prettier --config ./.prettierrc.js",

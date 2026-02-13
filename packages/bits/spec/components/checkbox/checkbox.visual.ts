@@ -27,7 +27,7 @@ import { CheckboxAtom } from "../public_api";
 
 const name: string = "Checkbox";
 
-describe(`Visual tests: ${name}`, () => {
+xdescribe(`Visual tests: ${name}`, () => {
     let camera: Camera,
         checkboxBasic: CheckboxAtom,
         checkboxSpecial: CheckboxAtom;

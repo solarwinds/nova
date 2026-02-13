@@ -18,36 +18,18 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser, by, element, ElementFinder } from "protractor";
 
-import { Animations, Helpers } from "../../helpers";
-import { Camera } from "../../virtual-camera/Camera";
+import { Atom } from "@nova-ui/bits/sdk/atoms-playwright";
 
-const name: string = "Busy";
+import { LegendSeriesAtom } from "./legend-series.atom";
 
-describe(`Visual tests: ${name}`, () => {
-    let camera: Camera;
-    let switchBusyState: ElementFinder;
+export class LegendAtom extends Atom {
+    public static CSS_CLASS = "nui-legend";
 
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("busy/busy-visual-test");
-        await Helpers.disableCSSAnimations(
-            Animations.TRANSITIONS_AND_ANIMATIONS
-        );
-
-        camera = new Camera().loadFilm(browser, name);
-        switchBusyState = element(by.id("nui-busy-test-button"));
-    });
-
-    it(`${name} visual test`, async () => {
-        await camera.turn.on();
-
-        await switchBusyState.click();
-        await camera.say.cheese(`States of Busy component`);
-
-        await Helpers.switchDarkTheme("on");
-        await camera.say.cheese(`Dark theme`);
-
-        await camera.turn.off();
-    }, 100000);
-});
+    public getSeriesByIndex(index: number): LegendSeriesAtom {
+        const seriesLocator = this.getLocator()
+            .locator(`.${LegendSeriesAtom.CSS_CLASS}`)
+            .nth(index);
+        return new LegendSeriesAtom(seriesLocator);
+    }
+}

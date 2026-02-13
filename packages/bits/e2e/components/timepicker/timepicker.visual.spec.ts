@@ -18,42 +18,41 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser } from "protractor";
-
 import { Atom } from "../../atom";
-import { Helpers } from "../../helpers";
+import { test, Helpers, Animations } from "../../setup";
 import { Camera } from "../../virtual-camera/Camera";
-import { TimepickerAtom } from "../timepicker/timepicker.atom";
+import { TimepickerAtom } from "./timepicker.atom";
 
 const name: string = "Timepicker";
 
-describe(`Visual tests: ${name}`, () => {
+test.describe(`Visual tests: ${name}`, () => {
     let camera: Camera;
     let basicTimepicker: TimepickerAtom;
     let customFormatTimepicker: TimepickerAtom;
     let customStepTimepicker: TimepickerAtom;
     let requiredTimepicker: TimepickerAtom;
 
-    test.beforeEach(async () => {
-        await Helpers.prepareBrowser("time-picker/time-picker-visual-test");
-        basicTimepicker = Atom.find(
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("time-picker/time-picker-visual-test", page);
+        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        basicTimepicker = Atom.find<TimepickerAtom>(
             TimepickerAtom,
             "nui-visual-test-timepicker-basic"
         );
-        customFormatTimepicker = Atom.find(
+        customFormatTimepicker = Atom.find<TimepickerAtom>(
             TimepickerAtom,
             "nui-visual-test-custom-format-timepicker"
         );
-        customStepTimepicker = Atom.find(
+        customStepTimepicker = Atom.find<TimepickerAtom>(
             TimepickerAtom,
             "nui-visual-test-custom-step-timepicker"
         );
-        requiredTimepicker = Atom.find(
+        requiredTimepicker = Atom.find<TimepickerAtom>(
             TimepickerAtom,
             "nui-visual-test-required-timepicker"
         );
 
-        camera = new Camera().loadFilm(browser, name);
+        camera = new Camera().loadFilm(page, name, "Bits");
     });
 
     test(`${name} visual test`, async () => {
@@ -75,10 +74,10 @@ describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese("Timepicker with validation is toggled");
 
         await basicTimepicker.toggle();
-        await basicTimepicker.menuPopup.clickItemByText("2");
+        await basicTimepicker.menuPopup.clickItemByText("2", false);
         await basicTimepicker.toggle();
         await basicTimepicker.menuPopup.hover(
-            basicTimepicker.menuPopup.selectedItem()
+            basicTimepicker.menuPopup.selectedItem
         );
         await camera.say.cheese(
             "Selected menuitem in Basic Timepicker is focused"
@@ -99,5 +98,5 @@ describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese(`Dark theme with focus`);
 
         await camera.turn.off();
-    }, 200000);
+    });
 });

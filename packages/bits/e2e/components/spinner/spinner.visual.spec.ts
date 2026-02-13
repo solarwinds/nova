@@ -18,28 +18,26 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser, by, element } from "protractor";
-
+import { Atom } from "../../atom";
 import { SpinnerAtom } from "./spinner.atom";
-import { Animations, Helpers } from "../../helpers";
+import { test, Helpers, Animations } from "../../setup";
 import { Camera } from "../../virtual-camera/Camera";
 
 const name: string = "Spinner";
 
-describe(`Visual tests: ${name}`, () => {
-    let camera: Camera, spinnerLargeWithCancel: SpinnerAtom;
+test.describe(`Visual tests: ${name}`, () => {
+    let camera: Camera;
+    let spinnerLargeWithCancel: SpinnerAtom;
 
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("spinner/spinner-visual-test");
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("spinner/spinner-visual-test", page);
         await Helpers.disableCSSAnimations(Animations.ALL);
-        spinnerLargeWithCancel = new SpinnerAtom(
-            element(by.id("nui-spinner-large-cancel"))
-        );
+        spinnerLargeWithCancel = Atom.find<SpinnerAtom>(SpinnerAtom, "nui-spinner-large-cancel");
 
-        camera = new Camera().loadFilm(browser, name);
+        camera = new Camera().loadFilm(page, name, "Bits");
     });
 
-    it(`${name} visual test`, async () => {
+    test(`${name} visual test`, async () => {
         await camera.turn.on();
         await camera.say.cheese(`Default`);
 
@@ -52,5 +50,5 @@ describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese("Spinners with cancel buttons are cancelled");
 
         await camera.turn.off();
-    }, 100000);
+    });
 });

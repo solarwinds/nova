@@ -23,6 +23,14 @@
       "types": "./sdk/atoms/*.d.ts",
       "default": "./sdk/atoms/*.js"
     },
+    "./sdk/atoms-playwright": {
+      "types": "./sdk/atmos/index.d.ts",
+      "default": "./sdk/atoms-playwright/index.js"
+    },
+    "./sdk/atoms-playwright/*": {
+      "types": "./sdk/atoms-playwright/*.d.ts",
+      "default": "./sdk/atoms-playwright/*.js"
+    },
     "./sdk/*": {
       "default": "./sdk/*"
     },
@@ -66,6 +74,7 @@
     "compodoc:serve": "yarn run compodoc-custom-theme -s -w --port 8070 --includes ./docs/development",
     "dist-copy": "run-s dist-copy:*",
     "dist-copy:atoms": "tsc -p spec/tsconfig.atom.json",
+    "dist-copy:atoms:playwright": "tsc -p e2e/tsconfig.json",
     "dist-copy:css": "ng build --project=generate-css && npx copyfiles -f \"./.tmp-css/*.{css,svg,woff,woff2}\" dist/bundles/css/",
     "dist-copy:less": "npx copyfiles -f \"src/styles/{nui-charts,nui-charts-*}.less\" dist/sdk/less",
     "dist-copy:locl": "npx copyfiles -f sdk/locale/* dist/sdk/locale",
@@ -79,7 +88,10 @@
     "e2e:watch": "npx watch \"yarn run e2e:base\" src examples spec --watch=1",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
-    "percy": "percy exec -- yarn run visual",
+    "playwright:base": "yarn playwright test",
+    "playwright:ci": "yarn playwright:base",
+    "playwright:ui": "yarn playwright:base --ui",
+    "playwright:report": "yarn playwright show-report",
     "percy:ci": "yarn run visual:ci && percy upload -v _snapshots",
     "prebuild-examples": "yarn run compile-demo-paths",
     "pree2e:base": "webdriver-manager update --gecko=false --standalone=false",

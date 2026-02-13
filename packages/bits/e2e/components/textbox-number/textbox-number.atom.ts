@@ -21,6 +21,7 @@
 import { Locator } from "@playwright/test";
 
 import { Atom } from "../../atom";
+import { expect } from "../../setup";
 import { ButtonAtom } from "../button/button.atom";
 
 export class TextboxNumberAtom extends Atom {
@@ -77,5 +78,13 @@ export class TextboxNumberAtom extends Atom {
     public async isValid(): Promise<boolean> {
         const classList = await this.getLocator().getAttribute("class");
         return !classList?.includes("has-error");
+    }
+
+    public async toBeValid(): Promise<void> {
+        await expect(this.getLocator()).not.toHaveClass(/has-error/);
+    }
+
+    public async toBeInvalid(): Promise<void> {
+        await expect(this.getLocator()).toHaveClass(/has-error/);
     }
 }

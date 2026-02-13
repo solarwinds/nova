@@ -3,14 +3,11 @@ import { Atom } from "../../atom";
 import { Helpers, test, expect } from "../../setup";
 import { ButtonAtom } from "../button/button.atom";
 import { CheckboxAtom } from "../checkbox/checkbox.atom";
-// import { CheckboxGroupAtom } from "../checkbox-group/checkbox-group.atom";
-// import { PaginatorAtom } from "../paginator/paginator.atom";
-// import { SearchAtom } from "../search/search.atom";
-import { SelectorAtom, SelectionType } from "../selector/selector.atom";
-import { TextboxAtom } from "../textbox/textbox.atom";
 import { CheckboxGroupAtom } from "../checkbox-group/checkbox-group.atom";
 import { PaginatorAtom } from "../paginator/paginator.atom";
 import { SearchAtom } from "../search/search.atom";
+import { SelectorAtom, SelectionType } from "../selector/selector.atom";
+import { TextboxAtom } from "../textbox/textbox.atom";
 
 test.describe("USERCONTROL table >", () => {
     let table: TableAtom;
@@ -25,6 +22,7 @@ test.describe("USERCONTROL table >", () => {
     let resizableTable: TableAtom;
     let rowSelectionTable: TableAtom;
     let reorderableTable: TableAtom;
+    let stickyTable: TableAtom;
     let selector: SelectorAtom;
     let sortByNameButton: ButtonAtom;
     let searchByLocationCheckbox: CheckboxAtom;
@@ -34,8 +32,6 @@ test.describe("USERCONTROL table >", () => {
     async function prepareTablePage(page: any, route: any) {
         await Helpers.prepareBrowser(route, page);
         table = Atom.find<TableAtom>(TableAtom, "nui-demo-basic-table");
-
-
         widthSetTable = Atom.find<TableAtom>(
             TableAtom,
             "nui-demo-table-cell-width-set"
@@ -54,21 +50,6 @@ test.describe("USERCONTROL table >", () => {
             "position-input"
         );
 
-
-        tableColumnsAddRemove = Atom.find<TableAtom>(
-            TableAtom,
-            "nui-demo-table-columns-add-remove"
-        );
-
-        resizableTable = Atom.find<TableAtom>(
-            TableAtom,
-            "nui-demo-resizable-table"
-        );
-
-        reorderableTable = Atom.find<TableAtom>(
-            TableAtom,
-            "nui-demo-table-cell-reorder"
-        );
     }
     test.describe("Basic table >", () => {
         test.beforeEach(async ({ page }) => {
@@ -243,6 +224,10 @@ test.describe("USERCONTROL table >", () => {
 
         test.beforeEach(async ({ page }) => {
             await prepareTablePage(page, "table/custom-actions");
+            tableColumnsAddRemove = Atom.find<TableAtom>(
+                TableAtom,
+                "nui-demo-table-columns-add-remove"
+            );
             await expect(customActionsTable.getLocator()).toBeVisible();
             editColumnsButton = Atom.find<ButtonAtom>(
                 ButtonAtom,
@@ -406,71 +391,68 @@ test.describe("USERCONTROL table >", () => {
             );
         });
     });
-    //
-    // test.describe("Resizable table >", () => {
-    //     test.beforeEach(async () => {
-    //         await Helpers.prepareBrowser("table/resize");
-    //         await resizableTable.waitElementVisible();
-    //     });
-    //
-    //     test("should equally distribute width of non-specified columns", async () => {
-    //         const featuresColumnSize = await resizableTable
-    //             .getColumn("Features")
-    //             .getSize();
-    //         const locationColumnSize = await resizableTable
-    //             .getColumn("Location")
-    //             .getSize();
-    //         const checksColumnSize = await resizableTable
-    //             .getColumn("Checks")
-    //             .getSize();
-    //         expect(featuresColumnSize.width).toEqual(locationColumnSize.width);
-    //         expect(locationColumnSize.width).toEqual(checksColumnSize.width);
-    //     });
-    //
-    //     test("should have resizer on each header cell, except for non-resizable columns", async () => {
-    //         const resizersCount = await resizableTable.getResizers().count();
-    //         const headerCellsCount = await resizableTable
-    //             .getHeaderCells()
-    //             .count();
-    //         const iconsCellsCount = await resizableTable
-    //             .getHeaderCellsWithIcon()
-    //             .count();
-    //         const resizableCellsCount = headerCellsCount - iconsCellsCount;
-    //         expect(resizableCellsCount).toEqual(resizersCount);
-    //     });
-    //
-    //     test("cell should apply correct class on hover", async () => {
-    //         const firstCell = resizableTable.getCell(0, 0);
-    //         await browser
-    //             .actions()
-    //             .mouseMove(await firstCell.getWebElement(), { x: 5, y: 5 })
-    //             .perform();
-    //         expect(
-    //             await Atom.hasClass(
-    //                 firstCell,
-    //                 "nui-table__table-header-cell--reorderable--dark"
-    //             )
-    //         ).toBeTruthy();
-    //     });
-    //
-    //     test("should preserve widths of columns of type 'icon' equal to 40px", async () => {
-    //         const iconCell = resizableTable
-    //             .getLocator()
-    //             .locator("#nui-header-cell-icon");
-    //         expect((await iconCell.getSize()).width).toEqual(40);
-    //     });
-    //
-    //     test("shouldn't allow to resize non-resizable types of columns by not-rendering Resizer element", async () => {
-    //         const iconCell = resizableTable
-    //             .getLocator()
-    //             .locator("#nui-header-cell-icon");
-    //         const iconCellResizer = iconCell.locator(
-    //             "..nui-table__resizer"
-    //         );
-    //         expect(await iconCellResizer.isPresent()).toBe(false);
-    //     });
-    // });
-    //
+
+    test.describe("Resizable table >", () => {
+        test.beforeEach(async ({page}) => {
+            await Helpers.prepareBrowser("table/resize", page);
+            resizableTable = Atom.find<TableAtom>(
+                TableAtom,
+                "nui-demo-resizable-table"
+            );
+            await resizableTable.toBeVisible();
+        });
+
+        test("should equally distribute width of non-specified columns", async () => {
+            const featuresBox = await resizableTable
+                .getColumn("Features")
+                .boundingBox();
+            const locationBox = await resizableTable
+                .getColumn("Location")
+                .boundingBox();
+            const checksBox = await resizableTable
+                .getColumn("Checks")
+                .boundingBox();
+            expect(featuresBox?.width).toEqual(locationBox?.width);
+            expect(locationBox?.width).toEqual(checksBox?.width);
+        });
+
+        test("should have resizer on each header cell, except for non-resizable columns", async () => {
+            const resizersCount = await resizableTable.getResizers().count();
+            const headerCellsCount = await resizableTable
+                .getHeaderCells()
+                .count();
+            const iconsCellsCount = await resizableTable
+                .getHeaderCellsWithIcon()
+                .count();
+            const resizableCellsCount = headerCellsCount - iconsCellsCount;
+            expect(resizableCellsCount).toEqual(resizersCount);
+        });
+
+        test("cell should apply correct class on hover", async () => {
+            const firstCell = resizableTable.getCell(0, 0);
+            await firstCell.hover({ position: { x: 5, y: 5 } });
+            await expect(firstCell).toContainClass(
+                "nui-table__table-header-cell--reorderable--dark"
+            );
+        });
+
+        test("should preserve widths of columns of type 'icon' equal to 40px", async () => {
+            const iconCell = resizableTable
+                .getLocator()
+                .locator("#nui-header-cell-icon");
+            const box = await iconCell.boundingBox();
+            expect(box?.width).toEqual(40);
+        });
+
+        test("shouldn't allow to resize non-resizable types of columns by not-rendering Resizer element", async () => {
+            const iconCell = resizableTable
+                .getLocator()
+                .locator("#nui-header-cell-icon");
+            const iconCellResizers = iconCell.locator(".nui-table__resizer");
+            await expect(iconCellResizers).toHaveCount(0);
+        });
+    });
+
     test.describe("Sticky header >", () => {
         test.beforeEach(async ({ page }) => {
             await Helpers.prepareBrowser("table/sticky", page);
@@ -500,10 +482,12 @@ test.describe("USERCONTROL table >", () => {
         });
 
         test("should populate the last table row with a new row on scroll", async () => {
-            const stickyTable: TableAtom = Atom.findIn<TableAtom>(
+            const scrollDelay = 200;
+            stickyTable = Atom.findIn<TableAtom>(
                 TableAtom,
                 Helpers.page.locator("#nui-demo-table-sticky-header")
-            ).nth(TableAtom, 1);
+            ).nth<TableAtom>(TableAtom, 1);
+
             await stickyTable.toBeVisible();
             const rowsCount = await stickyTable.getRowsCount();
             expect(rowsCount).toBeGreaterThan(1);
@@ -514,6 +498,8 @@ test.describe("USERCONTROL table >", () => {
 
             // // Scroll the last row into view
             await rowElement.scrollIntoViewIfNeeded();
+            // special timeout is needed here to wait for the scroll event to be processed and new row to be rendered
+            await Helpers.page.waitForTimeout(scrollDelay);
 
             const rowsCountScrolled = await stickyTable.getRowsCount();
             const rowContentScrolled = await stickyTable.getRowContent(

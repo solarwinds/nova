@@ -25,7 +25,7 @@ import { Camera } from "../../virtual-camera/Camera";
 
 const name: string = "Breadcrumb";
 
-describe(`Visual tests: ${name}`, () => {
+xdescribe(`Visual tests: ${name}`, () => {
     let camera: Camera;
     let showSecondViewButton: ElementFinder;
     let showThirdViewButton: ElementFinder;
