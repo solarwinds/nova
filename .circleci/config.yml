@@ -530,7 +530,7 @@ jobs:
             - install-deps
             -   merge-playwright-reports:
                     project_dir: "packages/charts"
-                    percy_token: BITS_PERCY_TOKEN
+                    percy_token: CHARTS_PERCY_TOKEN
     charts-visual-test:
         executor: ubuntu
         working_directory: ~/nova
@@ -692,7 +692,7 @@ jobs:
             - install-deps
             -   merge-playwright-reports:
                     project_dir: "packages/dashboards"
-                    percy_token: BITS_PERCY_TOKEN
+                    percy_token: DASHBOARDS_PERCY_TOKEN
     dashboards-e2e-test:
         executor: ubuntu
         resource_class: medium+
