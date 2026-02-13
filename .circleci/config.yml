@@ -115,6 +115,9 @@ commands:
     merge-playwright-reports:
         description: "Merge Playwright blob reports and fail on shard errors"
         parameters:
+            percy_token:
+                type: string
+                default: BITS_PERCY_TOKEN
             project_dir:
                 type: string
                 default: "~/nova/packages/bits"
@@ -124,6 +127,7 @@ commands:
                     name: Merge Playwright blob reports into HTML report
                     command: |
                         set -e
+                        export PERCY_TOKEN=${<< parameters.percy_token >>}
                         yarn percy build:finalize
                         yarn playwright merge-reports --reporter html ./all-blob-reports
             -   run:
@@ -362,6 +366,7 @@ jobs:
             - install-deps
             -   merge-playwright-reports:
                     project_dir: "packages/bits"
+                    percy_token: BITS_PERCY_TOKEN
 
 
     bits-pack:
@@ -525,6 +530,7 @@ jobs:
             - install-deps
             -   merge-playwright-reports:
                     project_dir: "packages/charts"
+                    percy_token: BITS_PERCY_TOKEN
     charts-visual-test:
         executor: ubuntu
         working_directory: ~/nova
@@ -686,6 +692,7 @@ jobs:
             - install-deps
             -   merge-playwright-reports:
                     project_dir: "packages/dashboards"
+                    percy_token: BITS_PERCY_TOKEN
     dashboards-e2e-test:
         executor: ubuntu
         resource_class: medium+
