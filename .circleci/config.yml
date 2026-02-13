@@ -87,6 +87,7 @@ commands:
                         set +e
                         if [ -d _snapshots ] && [ "$(ls -A _snapshots)" ]; then
                             export PERCY_TOKEN=${<< parameters.percy_token >>}
+                            export PERCY_PARALLEL_TOTAL="-1" # we don't know total number of shards at this point, so we finalize the build in merge job
                             yarn percy upload -v _snapshots
                         else
                           echo "No snapshots generated - likely test failure or misconfiguration"
