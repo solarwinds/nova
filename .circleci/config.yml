@@ -123,6 +123,7 @@ commands:
                     name: Merge Playwright blob reports into HTML report
                     command: |
                         set -e
+                        yarn percy build:finalize
                         yarn playwright merge-reports --reporter html ./all-blob-reports
             -   run:
                     name: Check if any shard failed
