@@ -20,7 +20,7 @@
 
 import { Locator } from "@playwright/test";
 
-import { Atom } from "@nova-ui/bits/sdk/atoms-playwright";
+import { Atom, expect } from "@nova-ui/bits/sdk/atoms-playwright";
 
 export class BarDataPointAtom extends Atom {
     public static CSS_CLASS = "bar-container";
@@ -35,6 +35,16 @@ export class BarDataPointAtom extends Atom {
     public async getOpacity(): Promise<number> {
         const opacity = await this.getLocator().evaluate((el) => getComputedStyle(el).opacity);
         return parseFloat(opacity);
+    }
+
+    /** Retryable assertion: opacity equals the expected value. */
+    public async toHaveOpacity(expected: number): Promise<void> {
+        await expect.poll(() => this.getOpacity()).toBe(expected);
+    }
+
+    /** Retryable assertion: opacity is strictly less than the given value. */
+    public async toHaveOpacityLessThan(value: number): Promise<void> {
+        await expect.poll(() => this.getOpacity()).toBeLessThan(value);
     }
 
     public async getColor(): Promise<string> {

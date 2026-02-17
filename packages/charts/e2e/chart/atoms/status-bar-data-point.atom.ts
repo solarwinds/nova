@@ -18,16 +18,29 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { expect } from "@nova-ui/bits/sdk/atoms-playwright";
+
 import { BarDataPointAtom } from "./bar-data-point.atom";
 
 export class StatusBarDataPointAtom extends BarDataPointAtom {
     private barIconClass = "bar-icon";
 
+    private get iconLocator() {
+        return this.getLocator().locator(`.${this.barIconClass} g`);
+    }
+
+    /** @deprecated Use {@link toHaveIcon} / {@link toNotHaveIcon} for auto-retry. */
     public async hasIcon(): Promise<boolean> {
-        return (
-            await this.getLocator()
-                .locator(`.${this.barIconClass} g`)
-                .count()
-        ) > 0;
+        return (await this.iconLocator.count()) > 0;
+    }
+
+    /** Retryable assertion: icon is present. */
+    public async toHaveIcon(): Promise<void> {
+        await expect(this.iconLocator).toHaveCount(1);
+    }
+
+    /** Retryable assertion: icon is absent. */
+    public async toNotHaveIcon(): Promise<void> {
+        await expect(this.iconLocator).toHaveCount(0);
     }
 }

@@ -25,6 +25,7 @@ import {
     Animations,
 } from "@nova-ui/bits/sdk/atoms-playwright";
 
+import { StatusBarDataPointAtom } from "./atoms/status-bar-data-point.atom";
 import { StatusChartAtom } from "./status-chart.atom";
 
 test.describe("Status chart", () => {
@@ -45,19 +46,20 @@ test.describe("Status chart", () => {
 
     test.describe("basic", () => {
         test("should display status bar series", async () => {
-            // Basic presence check: status series container exists
-            const seriesLocator = statusChartWithIcons
-                .getLocator()
-                .locator(`#data-${statusSeriesID}`);
-            await expect(seriesLocator).toHaveCount(1);
+            await expect(
+                statusChartWithIcons
+                    .getLocator()
+                    .locator(`#data-${statusSeriesID}`)
+            ).toHaveCount(1);
         });
 
         test("should have expected number of data points", async () => {
-            const allStatusBars =
-                await statusChartWithIcons.getAllBarDataPointsBySeriesID(
-                    statusSeriesID
-                );
-            expect(allStatusBars.length).toBe(8);
+            const barsLocator = statusChartWithIcons
+                .getLocator()
+                .locator(`#data-${statusSeriesID}`)
+                .locator(`.${StatusBarDataPointAtom.CSS_CLASS}`);
+
+            await expect(barsLocator).toHaveCount(8);
         });
 
         test("should display status bar data points", async () => {
@@ -66,7 +68,7 @@ test.describe("Status chart", () => {
                     statusSeriesID
                 );
             for (const bar of allStatusBars) {
-                await expect(bar.getLocator()).toBeVisible();
+                await bar.toBeVisible();
             }
         });
 
@@ -76,7 +78,7 @@ test.describe("Status chart", () => {
                     statusSeriesID
                 );
             for (const bar of allStatusBars) {
-                expect(await bar.getOpacity()).toBe(1);
+                await bar.toHaveOpacity(1);
             }
         });
     });
@@ -97,9 +99,9 @@ test.describe("Status chart", () => {
             for (let idx = 0; idx < allStatusBars.length; idx++) {
                 const b = allStatusBars[idx];
                 if (idx !== 5) {
-                    expect(await b.getOpacity()).toBeLessThan(1);
+                    await b.toHaveOpacityLessThan(1);
                 } else {
-                    expect(await b.getOpacity()).toBe(1);
+                    await b.toHaveOpacity(1);
                 }
             }
         });
@@ -112,7 +114,7 @@ test.describe("Status chart", () => {
                 -2
             );
 
-            expect(await bar.hasIcon()).toBe(true);
+            await bar.toHaveIcon();
         });
 
         test("should not display icon if one of its sizes is less than the icon's", async () => {
@@ -121,19 +123,15 @@ test.describe("Status chart", () => {
                 0
             );
 
-            const box = await bar.getLocator().boundingBox();
-            const height = box?.height ?? 0;
+            await expect.poll(() => bar.getLocator().boundingBox().then(b => b?.height ?? 0))
+                .toBeLessThan(minIconSize);
 
-            expect(height).toBeLessThan(minIconSize);
-            expect(await bar.hasIcon()).toBe(
-                false
-            );
+            await bar.toNotHaveIcon();
         });
     });
 
     test.describe("resize", () => {
         test("should hide icons on page or container resize", async ({ page }) => {
-            // capture current viewport size (fallback to a sensible default if not set)
             const originalViewport = page.viewportSize() ?? { width: 1280, height: 720 };
 
             const bars = [
@@ -149,8 +147,8 @@ test.describe("Status chart", () => {
 
             await page.setViewportSize({ width: 340, height: 800 });
 
-            expect(await bars[0].hasIcon()).toBe(false);
-            expect(await bars[1].hasIcon()).toBe(false);
+            await bars[0].toNotHaveIcon();
+            await bars[1].toNotHaveIcon();
 
             await page.setViewportSize(originalViewport);
         });
