@@ -18,42 +18,43 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { $, browser, by, element, ExpectedConditions } from "protractor";
-
-import { ProgressAtom } from "./progress.atom";
+import { test, Helpers, Animations } from "../../setup";
 import { Atom } from "../../atom";
-import { Animations, Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
+import { ProgressAtom } from "./progress.atom";
 import { ButtonAtom } from "../button/button.atom";
 
 const name: string = "Progress";
 
-describe(`Visual tests: ${name}`, () => {
-    let camera: Camera, startProgressBasic: ButtonAtom;
+test.describe(`Visual tests: ${name}`, () => {
+    let startProgressBasic: ButtonAtom;
 
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("progress/progress-visual-test");
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("progress/progress-visual-test", page);
         await Helpers.disableCSSAnimations(Animations.ALL);
 
-        startProgressBasic = new ButtonAtom(
-            element(by.id("nui-demo-start-basic-progress"))
+        startProgressBasic = Atom.find<ButtonAtom>(
+            ButtonAtom,
+            "nui-demo-start-basic-progress",
+            true
         );
-
-        camera = new Camera().loadFilm(browser, name);
     });
 
-    it(`${name} visual test`, async () => {
+    test(`${name} visual test`, async ({ page }) => {
+        const camera = new Camera().loadFilm(page, name, "Bits");
         await camera.turn.on();
 
         await startProgressBasic.click();
-        await browser.wait(
-            ExpectedConditions.visibilityOf($(Atom.getSelector(ProgressAtom)))
+        const progressLocator = page.locator(
+            Atom.getSelector(ProgressAtom) ?? `.${ProgressAtom.CSS_CLASS}`
         );
+        await progressLocator.first().waitFor({ state: "visible" });
         await camera.say.cheese(`Default`);
 
         await Helpers.switchDarkTheme("on");
         await camera.say.cheese(`Dark theme`);
+        await Helpers.switchDarkTheme("off");
 
         await camera.turn.off();
-    }, 100000);
+    });
 });

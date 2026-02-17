@@ -18,41 +18,38 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser, protractor } from "protractor";
-
-import { SearchAtom } from "./search.atom";
+import { test, Helpers } from "../../setup";
 import { Atom } from "../../atom";
-import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
+import { SearchAtom } from "./search.atom";
 
 const name: string = "Search";
 
-describe(`Visual tests: ${name}`, () => {
-    let camera: Camera;
+test.describe(`Visual tests: ${name}`, () => {
     let searchWithInput: SearchAtom;
 
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("search/search-visual-test");
-        searchWithInput = Atom.find(
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("search/search-visual-test", page);
+        searchWithInput = Atom.find<SearchAtom>(
             SearchAtom,
-            "nui-visual-test-search-with-input-text"
+            "nui-visual-test-search-with-input-text",
+            true
         );
-        camera = new Camera().loadFilm(browser, name);
     });
 
-    it(`${name} visual test`, async () => {
+    test(`${name} visual test`, async ({ page }) => {
+        const camera = new Camera().loadFilm(page, name, "Bits");
         await camera.turn.on();
         await camera.say.cheese(`Default`);
 
         await searchWithInput.getSearchButton().click();
-        await browser.actions().sendKeys(protractor.Key.TAB).perform();
+        await page.keyboard.press("Tab");
         await searchWithInput.getSearchButton().hover();
         await camera.say.cheese(
             `Search with input text is focused and Search button is hovered`
         );
 
-        await browser.actions().mouseMove({ x: 50, y: 0 }).perform();
-        await browser.actions().click().perform();
+        await page.mouse.click(0, 0);
         await searchWithInput.getCancelButton().hover();
         await camera.say.cheese(
             `Cancel button in Search with input text is hovered`
@@ -60,7 +57,8 @@ describe(`Visual tests: ${name}`, () => {
 
         await Helpers.switchDarkTheme("on");
         await camera.say.cheese(`Dark theme`);
+        await Helpers.switchDarkTheme("off");
 
         await camera.turn.off();
-    }, 100000);
+    });
 });

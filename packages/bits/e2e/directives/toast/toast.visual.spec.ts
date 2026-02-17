@@ -70,7 +70,7 @@ test.describe(`Visual tests: ${name}`, () => {
 
         await buttonNoHeader.click();
         await camera.say.cheese(
-            "Checking the markup is correct if no header is selected"
+            "Checking the markup uis correct if no header is selected"
         );
         await buttonClearAllToasts.click();
 
@@ -79,7 +79,7 @@ test.describe(`Visual tests: ${name}`, () => {
         await buttonClearAllToasts.click();
 
         await buttonToastsWithProgressBar.click();
-        await camera.say.cheese("Check progress bar in scope of toast");
+        await camera.say.cheese("Check progress by in scope of toast");
         await buttonClearAllToasts.click();
 
         await camera.turn.off();
