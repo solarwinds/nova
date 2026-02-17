@@ -14,10 +14,6 @@ export default defineConfig({
         screenshot: "only-on-failure",
         video: "retain-on-failure",
     },
-    timeout: 10_000,
-    expect: {
-        timeout: 10_000,
-    },
     workers: process.env["CI"] ? 1 : undefined,
     fullyParallel: true,
     forbidOnly: !!process.env["CI"],
