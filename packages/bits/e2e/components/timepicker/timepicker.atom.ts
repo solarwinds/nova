@@ -74,7 +74,7 @@ export class TimepickerAtom extends Atom {
     public selectTime = async (time: string): Promise<void> => {
         await this.textbox.clearText();
         await this.textbox.acceptText(`${time}\n`);
-        // await this.menuPopup.clickItemByText(time);
+        await Helpers.page.waitForTimeout(1000); // Wait for buttons to update their state
     };
 
     public getHighlightedMenuValue = async (): Promise<Locator> => {

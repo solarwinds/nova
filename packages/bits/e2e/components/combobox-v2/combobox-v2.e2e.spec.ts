@@ -69,7 +69,7 @@ test.describe("USERCONTROL Combobox v2 >", () => {
 
             test("should navigate with UP and DOWN buttons", async () => {
                 await Helpers.pressKey("ArrowDown", 5);
-               
+
                 await (await comboboxError.getOption(5)).toBeActive()
 
                 await Helpers.pressKey("ArrowUp");
@@ -92,7 +92,7 @@ test.describe("USERCONTROL Combobox v2 >", () => {
                 await Helpers.pressKey("ArrowDown",5);
                 await (await comboboxError.getOption(5)).toBeActive();
             });
-            
+
             test("should select on ENTER", async () => {
                 await Helpers.pressKey("ArrowDown", 4);
                 await (await comboboxError.getOption(4)).toBeActive();
@@ -252,14 +252,17 @@ test.describe("USERCONTROL Combobox v2 >", () => {
             test("should delete selected item on backspace", async () => {
                 await comboboxMulti.selectAll();
 
-                await expect(async () => await comboboxMulti.chips.count()).toPass();
+                await expect(
+                    async () => await comboboxMulti.chips.count()
+                ).toPass();
                 await expect(comboboxMulti.chips).toHaveCount(3);
 
                 await comboboxMulti.toggleButton.click();
 
                 await Helpers.pressKey("ArrowLeft");
-                await Helpers.pressKey("Backspace", 2);
-
+                await Helpers.pressKey("Backspace");
+                await Helpers.page.waitForTimeout(100); // small delay to ensure the chip is removed before the next assertion
+                await Helpers.pressKey("Backspace");
                 await expect(comboboxMulti.chips).toHaveCount(1);
             });
 

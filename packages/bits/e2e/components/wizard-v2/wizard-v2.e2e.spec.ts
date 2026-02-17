@@ -33,14 +33,16 @@ test.describe("USERCONTROL Wizard V2: ", () => {
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("wizard-v2/test", page);
 
-        wizard = Atom.find<WizardV2Atom>(WizardV2Atom, "nui-wizard-v2-horizontal");
+        wizard = Atom.find<WizardV2Atom>(WizardV2Atom, "nui-wizard-v2-horizontal", true);
         wizardDialog = Atom.find<WizardV2Atom>(
             WizardV2Atom,
-            "nui-wizard-v2-horizontal-dialog"
+            "nui-wizard-v2-horizontal-dialog",
+            true
         );
         wizardDynamic = Atom.find<WizardV2Atom>(
             WizardV2Atom,
-            "nui-wizard-horizontal-dynamic"
+            "nui-wizard-horizontal-dynamic",
+            true
         );
         openWizardDialogBtn = Atom.find<ButtonAtom>(
             ButtonAtom,
@@ -121,28 +123,31 @@ test.describe("USERCONTROL Wizard V2: ", () => {
 
     test.describe("wizard with dynamic steps > ", () => {
         let addButton: ButtonAtom;
+        
 
         test.beforeEach(async () => {
+            await wizardDynamic.toBeVisible();
             addButton = new ButtonAtom(
                 wizardDynamic.getStep(0).getLocator().locator(".nui-button.add")
             );
         });
 
         test("should add a step dynamically", async () => {
-            const stepCount = await wizardDynamic.steps.count();
-
+            const stepCount = await wizardDynamic.headers.count();
             await addButton.click();
-            await expect(wizardDynamic.steps).toHaveCount(stepCount + 1);
+            await expect(wizardDynamic.headers.nth(0)).toBeVisible();
+            await expect(wizardDynamic.headers.nth(1)).toBeVisible();
+            await expect(wizardDynamic.headers).toHaveCount(stepCount + 1);
         });
 
         test("should remove a dynamically added step", async () => {
-            const stepCount = await wizardDynamic.steps.count();
+            const stepCount = await wizardDynamic.headers.count();
 
             await addButton.click();
-            await expect(wizardDynamic.steps).toHaveCount(stepCount + 1);
+            await expect(wizardDynamic.headers).toHaveCount(stepCount + 1);
 
             await removeStepBtn.click();
-            await expect(wizardDynamic.steps).toHaveCount(stepCount);
+            await expect(wizardDynamic.headers).toHaveCount(stepCount);
         });
     });
 });

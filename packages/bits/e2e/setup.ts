@@ -82,6 +82,7 @@ export class Helpers {
         await test.step(`Press key ${key} x${times}`, async () => {
             for (let i = 0; i < times; i++) {
                 await Helpers.page.keyboard.press(key);
+                await Helpers.page.waitForTimeout(40); // Small delay to simulate real user interaction
             }
         });
     }

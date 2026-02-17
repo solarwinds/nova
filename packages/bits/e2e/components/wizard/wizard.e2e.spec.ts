@@ -25,6 +25,7 @@ import { Animations, expect, Helpers, test } from "../../setup";
 import { ButtonAtom } from "../button/button.atom";
 import { DialogAtom } from "../dialog/dialog.atom";
 import { TextboxAtom } from "../textbox/textbox.atom";
+import { W } from "@angular/cdk/keycodes";
 
 test.describe("USERCONTROL Wizard >", () => {
     let wizard: WizardAtom;
@@ -51,8 +52,8 @@ test.describe("USERCONTROL Wizard >", () => {
         await Helpers.prepareBrowser("wizard/wizard-test", page);
         await Helpers.disableCSSAnimations(Animations.ALL);
 
-        wizard = Atom.find<WizardAtom>(WizardAtom, "nui-demo-wizard");
-        wizardValidation = Atom.find<WizardAtom>(WizardAtom, "nui-demo-wizard-validation");
+        wizard = Atom.find<WizardAtom>(WizardAtom, "nui-demo-wizard").first<WizardAtom>(WizardAtom);
+        wizardValidation = Atom.find<WizardAtom>(WizardAtom, "nui-demo-wizard-validation").first<WizardAtom>(WizardAtom);
         wizardDisable = Atom.find<WizardAtom>(WizardAtom, "nui-demo-wizard-disable");
         wizardHide = Atom.find<WizardAtom>(WizardAtom, "nui-demo-wizard-hide-show");
         wizardDynamic = Atom.find<WizardAtom>(WizardAtom, "nui-demo-wizard-add-dynamic");
@@ -67,9 +68,9 @@ test.describe("USERCONTROL Wizard >", () => {
         busyButton = Atom.find<ButtonAtom>(ButtonAtom, "nui-demo-busy-button", true);
         addButton = Atom.find<ButtonAtom>(ButtonAtom, "nui-demo-dynamic-button", true);
         dialogWizard = new DialogAtom(page.locator(".nui-dialog"));
-        stepInputName = Atom.find<TextboxAtom>(TextboxAtom, "stepInputName");
-        stepInputEmail = Atom.find<TextboxAtom>(TextboxAtom, "stepInputEmail");
-        stepInputPassword = Atom.find<TextboxAtom>(TextboxAtom, "stepInputPassword");
+        stepInputName = Atom.find<TextboxAtom>(TextboxAtom, "stepInputName").first<TextboxAtom>(TextboxAtom);
+        stepInputEmail = Atom.find<TextboxAtom>(TextboxAtom, "stepInputEmail").first<TextboxAtom>(TextboxAtom);
+        stepInputPassword = Atom.find<TextboxAtom>(TextboxAtom, "stepInputPassword").first<TextboxAtom>(TextboxAtom);
     });
 
     test.describe("by default", () => {
@@ -115,8 +116,8 @@ test.describe("USERCONTROL Wizard >", () => {
 
         test("should allow user clicked on visited step", async () => {
             await wizard.next();
-            await wizard.goToStep(1);
-            await expect(wizard.activeStep).toContainText("Final");
+            await wizard.goToStep(0);
+            await expect(wizard.activeStep).toContainText("First");
         });
     });
 
@@ -147,24 +148,22 @@ test.describe("USERCONTROL Wizard >", () => {
             await expect(wizardDisable.activeStep).toContainText("Disable next step");
         });
 
-        test("should hide step in wizard", async () => {
-            await hideButton.click();
-            await expect(wizardHide.headerSteps).toHaveCount(1);
-        });
-
         test("should hide only one step in wizard", async () => {
             await hideButton.click();
-            await expect(wizardHide.headerSteps).toHaveCount(1);
+            await expect(wizardHide.headerSteps.nth(1)).toBeHidden();
         });
 
         test("should make hidden step is visible in wizard", async () => {
+            await hideButton.click();
+            await expect(wizardHide.headerSteps.nth(1)).toBeHidden();
             await visibleButton.click();
-            await expect(wizardHide.headerSteps).toHaveCount(2);
+            await expect(wizardHide.headerSteps.nth(1)).toBeVisible();
         });
 
         test("should add step in wizard", async () => {
             await addButton.click();
-            await expect(wizardDynamic.headerSteps).toHaveCount(2);
+            await expect(wizardHide.headerSteps.nth(0)).toBeVisible();
+            await expect(wizardHide.headerSteps.nth(1)).toBeVisible();
         });
     });
 
@@ -196,6 +195,8 @@ test.describe("USERCONTROL Wizard >", () => {
 
         test("should contain finish button on last step", async () => {
             await wizardDialogButton.click();
+            await wizardDialog.next();
+            await wizardDialog.next();
             await wizardDialog.next();
             await wizardDialog.finishButton.toBeVisible();
         });

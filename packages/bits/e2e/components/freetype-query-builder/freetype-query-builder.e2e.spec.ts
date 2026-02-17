@@ -37,7 +37,7 @@ test.describe("USERCONTROL freetype-query-builder >", () => {
     test("Should correctly select an option", async () => {
         await example1.type(threeTypeInput);
         const firstOption = await example1.getFirstOption();
-        expect(await firstOption.isActive()).toBeTruthy();
+        await firstOption.toBeActive();
     });
 
     test.describe("correctly show options", () => {

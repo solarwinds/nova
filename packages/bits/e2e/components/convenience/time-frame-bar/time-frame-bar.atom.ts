@@ -46,8 +46,8 @@ export class TimeFrameBarAtom extends Atom {
         // ButtonAtom/PopoverAtom have their own CSS selectors, so we pass the button element itself
         this.prevButton = new ButtonAtom(rootElement.locator(".prev button"));
         this.nextButton = new ButtonAtom(rootElement.locator(".next button"));
-        this.undoButton = new ButtonAtom(rootElement.locator(".undo button"));
-        this.clearButton = new ButtonAtom(rootElement.locator(".clear button"));
+        this.undoButton = new ButtonAtom(rootElement.locator("button.undo"));
+        this.clearButton = new ButtonAtom(rootElement.locator("button.clear"));
 
         // `PopoverAtom` root should be the trigger element
         this.popover = new PopoverAtom(rootElement.locator(".picker-label"));

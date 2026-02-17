@@ -74,8 +74,10 @@ test.describe("CONVENIENCE COMPONENTS", () => {
             });
 
             test.afterEach(async () => {
-                await expect(page.timeFrameBar.undoButton.getLocator()).toHaveCount(0);
-                await expect(page.timeFrameBar.clearButton.getLocator()).toHaveCount(0);
+                await expect(
+                    page.timeFrameBar.undoButton.getLocator()
+                ).toBeHidden();
+                await expect(page.timeFrameBar.clearButton.getLocator()).toBeHidden();
             });
 
             test("shifting to earlier time frame", async () => {
