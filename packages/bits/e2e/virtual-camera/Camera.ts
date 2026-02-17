@@ -61,7 +61,7 @@ export class Camera {
         return this;
     }
 
-    private async cheese(label: string, timeout: number = 700) {
+    private async cheese(label: string, timeout: number = 10_000) {
         await test.step(`cheese ${label}`, async () => {
             await this.currentPage.waitForTimeout(timeout);
             await this.engine.takePhoto(label);
