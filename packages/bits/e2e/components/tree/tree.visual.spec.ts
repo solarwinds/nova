@@ -53,10 +53,10 @@ test.describe(`Visual tests: ${name}`, () => {
     test(`${name} visual test`, async ({ page }) => {
         const camera = new Camera().loadFilm(page, name, "Bits");
         await camera.turn.on();
-
+        await paginatorTree.toBeVisible();
         await paginatorTree.expandAll();
-        await expect(paginator1.getLocator()).toBeVisible();
-        await expect(paginator2.getLocator()).toBeVisible();
+        await paginator1.toBeVisible();
+        await paginator2.toBeVisible();
         await paginator2.ellipsisLink(0).click();
         await camera.say.cheese("Default");
 

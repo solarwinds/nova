@@ -21,78 +21,75 @@
 import { Locator } from "playwright-core";
 
 import { Atom } from "../../atom";
-import { expect } from "../../setup";
+import { expect, test, Helpers } from "../../setup";
 
 export class TreeAtom extends Atom {
     public static CSS_CLASS = "cdk-tree";
     private static NESTED_NODE_TAG = "cdk-nested-tree-node";
 
-    // --- Locator getters ---
-
-    /** All nested tree nodes within a context (default: root). */
-    public getNestedNodes(context?: Locator): Locator {
-        return (context ?? this.getLocator()).locator(
+    public getNestedNodes(context?: Locator, onlyBranches: boolean = false): Locator {
+        if (onlyBranches) {
+            return (context ?? this.getLocator()).locator(
+                `${TreeAtom.NESTED_NODE_TAG}:not(.nui-tree__leaf)`
+            );
+        } else{
+            return (context ?? this.getLocator()).locator(
             TreeAtom.NESTED_NODE_TAG
         );
+        }
     }
 
-    /** Visible nested tree nodes. */
     public get visibleNodes(): Locator {
         return this.getLocator().locator(
             `${TreeAtom.NESTED_NODE_TAG}:visible`
         );
     }
 
-    /** Branch checkbox nodes. */
     public get branchCheckboxNodes(): Locator {
         return this.getLocator().locator(".branch-control");
     }
 
-    /** Leaf checkbox nodes. */
     public get leafCheckboxNodes(): Locator {
         return this.getLocator().locator(".leaf-control");
     }
 
-    /** All header toggles in a context. */
     public getAllHeaders(context?: Locator): Locator {
         return (context ?? this.getLocator()).locator(
             "[cdkTreeNodeToggle]"
         );
     }
 
-    /** Nodes filtered by text content. */
     public getNodesByName(name: string): Locator {
         return this.getNestedNodes().filter({ hasText: name });
     }
 
-    /** Collapsed expander headers. */
     private get collapsedExpanders(): Locator {
         return this.getLocator().locator(
             "cdk-nested-tree-node[aria-expanded=false] .nui-tree__header"
         );
     }
 
-    // --- Actions ---
-
-    /** Expand all nodes recursively starting from a context. */
     public async expandAll(context?: Locator): Promise<void> {
-        const nodes = this.getNestedNodes(context);
-        const count = await nodes.count();
-        for (let i = 0; i < count; i++) {
-            const node = nodes.nth(i);
-            if (!(await node.isVisible())) {
-                continue;
+        await test.step("Expand all tree nodes", async () => {
+            const nodes = this.getNestedNodes(context, true);
+            const count = await nodes.count();
+            for (let i = 0; i < count; i++) {
+                const node = nodes.nth(i);
+                const visible = await node.isVisible();
+                if (!visible) {
+                    continue;
+                }
+                const ariaExpanded = await node.getAttribute("aria-expanded");
+                const expanded = ariaExpanded === "true";
+                if (!expanded) {
+                    await node.click();
+                    await this.getNestedNodes(node).first().waitFor({ state: "visible" });
+                    await this.expandAll(node);
+                }
             }
-            const expanded =
-                (await node.getAttribute("aria-expanded")) === "true";
-            if (!expanded) {
-                await node.click();
-                await this.expandAll(node);
-            }
-        }
+        });
     }
 
-    /** Expand one level of currently collapsed nodes. */
     public async expandLevel(): Promise<void> {
         const count = await this.collapsedExpanders.count();
         for (let i = 0; i < count; i++) {
@@ -103,9 +100,6 @@ export class TreeAtom extends Atom {
         }
     }
 
-    // --- Retryable assertions ---
-
-    /** Assert the number of visible nested nodes. */
     public async toHaveVisibleNodesCount(expected: number): Promise<void> {
         await expect(
             this.getLocator().locator(
@@ -114,22 +108,18 @@ export class TreeAtom extends Atom {
         ).toHaveCount(expected);
     }
 
-    /** Assert a node is expanded. */
     public async toBeExpanded(node: Locator): Promise<void> {
         await expect(node).toHaveAttribute("aria-expanded", "true");
     }
 
-    /** Assert a node is collapsed. */
     public async toBeCollapsed(node: Locator): Promise<void> {
         await expect(node).toHaveAttribute("aria-expanded", "false");
     }
 
-    /** Assert branch checkbox count. */
     public async toHaveBranchCheckboxCount(expected: number): Promise<void> {
         await expect(this.branchCheckboxNodes).toHaveCount(expected);
     }
 
-    /** Assert leaf checkbox count. */
     public async toHaveLeafCheckboxCount(expected: number): Promise<void> {
         await expect(this.leafCheckboxNodes).toHaveCount(expected);
     }
