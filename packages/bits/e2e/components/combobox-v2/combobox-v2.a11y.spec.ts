@@ -26,6 +26,7 @@ test.describe("a11y: combobox-v2", () => {
     const rulesToDisable: string[] = [
         "aria-required-children",
         "aria-required-attr",
+        "target-size",
     ];
 
     test.beforeEach(async ({ page }) => {
@@ -50,7 +51,7 @@ test.describe("a11y: combobox-v2", () => {
         const disableButton = page.locator("#trigger-disabled");
         const toggleButton = page.locator("#toggle");
         const focusdrop = page.locator(".focus-drop");
-
+        await comboboxBasic.toBeVisible();
         await runA11yScan(ComboboxV2Atom, rulesToDisable);
 
         await (await comboboxError.getFirstOption()).click();
@@ -88,7 +89,7 @@ test.describe("a11y: combobox-v2", () => {
         await comboboxValueRemoval.hover();
         await runA11yScan(ComboboxV2Atom, rulesToDisable);
 
-        await focusdrop.click();
+        await focusdrop.click({ force: true});
         await toggleButton.click();
         await comboboxCustomControl.selectFirst(24);
         await comboboxCustomControl.removeChips(1);

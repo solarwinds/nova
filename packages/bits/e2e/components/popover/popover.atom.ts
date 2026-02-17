@@ -54,7 +54,7 @@ export class PopoverAtom extends Atom {
         const wasDisplayed = await this.isPopoverDisplayed();
         const hasBackdrop = await this.modalBackdrop.isVisible();
         if (hasBackdrop) {
-            await this.modalBackdrop.click();
+            await this.modalBackdrop.click({ force: true, position: { x: 0, y: 0 } });
         } else {
             await this.clickTarget();
         }

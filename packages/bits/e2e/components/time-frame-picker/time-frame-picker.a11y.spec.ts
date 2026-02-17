@@ -48,7 +48,7 @@ test.describe("a11y: time-frame-picker", () => {
         async ({ runA11yScan }) => {
             const popoverWithDatePicker = Atom.find<PopoverAtom>(
                 PopoverAtom,
-                "nui-demo-visual-datepicker-popover"
+                "nui-demo-visual-complex-popover"
             );
 
             await popoverWithDatePicker.open();
