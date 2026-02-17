@@ -60,6 +60,9 @@ test.describe("Donut chart", () => {
         content = DonutChartContentBooster.getContentElement(pageObject.chart);
         textPage = content.locator(".nui-text-page");
         textSecondary = content.locator(".nui-text-secondary");
+        await blueArc.getLocator().waitFor({ state: "visible" });
+        await pinkArc.getLocator().waitFor({ state: "visible" });
+        await lilacArc.getLocator().waitFor({ state: "visible" });
     });
 
     test("should be displayed", async () => {
