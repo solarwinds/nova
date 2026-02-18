@@ -38,6 +38,30 @@ commands:
         steps:
             - *cache_restore
 
+    check-playwright-skip:
+        description: "Check if playwright tests should be skipped based on cache and e2e folder changes"
+        parameters:
+            project_dir:
+                type: string
+                default: "packages/bits"
+        steps:
+            - run:
+                  name: Check if playwright tests should be skipped
+                  working_directory: ~/nova
+                  command: |
+                      # Check if build was cached (package-cached file exists)
+                      if [ -f << parameters.project_dir >>/package-cached ]; then
+                          # Check if e2e folder has changes since last commit
+                          if git diff --quiet HEAD~1 HEAD -- << parameters.project_dir >>/e2e/; then
+                              echo "Package was restored from cache and no changes in e2e folder - skipping playwright tests"
+                              circleci step halt
+                          else
+                              echo "Package was cached but e2e folder has changes - running playwright tests"
+                          fi
+                      else
+                          echo "Package was not cached - running playwright tests"
+                      fi
+
     run-playwright-shard:
         description: "Run Playwright shard and export blob reports"
         parameters:
@@ -331,23 +355,9 @@ jobs:
         steps:
             - attach_workspace:
                   at: ~/nova
+            - check-playwright-skip:
+                  project_dir: "packages/bits"
             - install-deps
-            - run:
-                  name: Check if playwright tests should be skipped
-                  working_directory: ~/nova
-                  command: |
-                      # Check if build was cached (package-cached file exists)
-                      if [ -f packages/bits/package-cached ]; then
-                          # Check if e2e folder has changes since last commit
-                          if git diff --quiet HEAD~1 HEAD -- packages/bits/e2e/; then
-                              echo "Package was restored from cache and no changes in e2e folder - skipping playwright tests"
-                              circleci step halt
-                          else
-                              echo "Package was cached but e2e folder has changes - running playwright tests"
-                          fi
-                      else
-                          echo "Package was not cached - running playwright tests"
-                      fi
             - run-playwright-shard:
                   project_dir: "packages/bits"
                   percy_token: BITS_PERCY_TOKEN
@@ -357,6 +367,8 @@ jobs:
         steps:
             - attach_workspace:
                   at: ~/nova
+            - check-playwright-skip:
+                  project_dir: "packages/bits"
             - install-deps
             - merge-playwright-reports:
                   project_dir: "packages/bits"
@@ -474,6 +486,8 @@ jobs:
         steps:
             - attach_workspace:
                   at: ~/nova
+            - check-playwright-skip:
+                  project_dir: "packages/charts"
             - install-deps
             - restore_cache:
                   working_directory: ~/nova
@@ -491,6 +505,8 @@ jobs:
         steps:
             - attach_workspace:
                   at: ~/nova
+            - check-playwright-skip:
+                  project_dir: "packages/charts"
             - install-deps
             - merge-playwright-reports:
                   project_dir: "packages/charts"
@@ -606,6 +622,8 @@ jobs:
         steps:
             - attach_workspace:
                   at: ~/nova
+            - check-playwright-skip:
+                  project_dir: "packages/dashboards"
             - install-deps
             - restore_cache:
                   working_directory: ~/nova
@@ -623,6 +641,8 @@ jobs:
         steps:
             - attach_workspace:
                   at: ~/nova
+            - check-playwright-skip:
+                  project_dir: "packages/dashboards"
             - install-deps
             - merge-playwright-reports:
                   project_dir: "packages/dashboards"
