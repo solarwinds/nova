@@ -129,7 +129,7 @@
     "trigger-pipeline-build-ci": "bash scripts/trigger-pipeline-build",
     "verify-ci": "bash scripts/verify-published"
   },
-  "version": "20.0.0",
+  "version": "20.0.3",
   "workspaces": [
     "packages/*"
   ]
