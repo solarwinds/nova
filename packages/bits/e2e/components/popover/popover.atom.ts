@@ -54,7 +54,7 @@ export class PopoverAtom extends Atom {
         const wasDisplayed = await this.isPopoverDisplayed();
         const hasBackdrop = await this.modalBackdrop.isVisible();
         if (hasBackdrop) {
-            await this.modalBackdrop.click();
+            await this.modalBackdrop.click({ force: true, position: { x: 0, y: 0 } });
         } else {
             await this.clickTarget();
         }
@@ -97,7 +97,7 @@ export class PopoverAtom extends Atom {
 
     public waitForClosed = async (timeout: number = 1000): Promise<void> => {
         const body = this.getPopoverBody();
-        await expect(body, "Popover failed to close").toBeHidden({ timeout });
+        await expect(body, "Popover is closed").toBeHidden();
     };
 
     public isPopoverDisplayed = async (): Promise<boolean> =>

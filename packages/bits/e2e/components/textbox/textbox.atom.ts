@@ -13,6 +13,13 @@ export class TextboxAtom extends Atom {
     public toHaveValue = async (text: string): Promise<void> =>
         await expect(this.input).toHaveValue(text);
     public clearText = async (): Promise<void> => this.input.clear();
+
+    /** Clear using keyboard (Ctrl+A then Delete) */
+    public deleteTextManually = async (): Promise<void> => {
+        await this.input.press("Control+a");
+        await this.input.press("Delete");
+    };
+
     public toBeDisabled = async (): Promise<void> =>
         await expect(this.input).toBeDisabled();
     public toNotBeDisabled = async (): Promise<void> =>

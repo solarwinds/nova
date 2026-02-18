@@ -35,9 +35,13 @@ export class BasicSelectAtom extends Atom {
     /**
      * Toggle select and select a new item from the options.
      */
-    public async select(title: string): Promise<void> {
+    public async select(title: string|RegExp, first: boolean = false): Promise<void> {
         await this.toggleMenu();
-        await this.getMenu().getMenuItemByContainingText(title).clickItem();
+        const matcher =
+            typeof title === "string"
+                ? new RegExp(`^${this.escapeRegExp(title)}$`)
+                : title;
+        await this.getMenu().getMenuItemByContainingText(matcher).clickItem(first);
     }
 
     public getSelectedItem(): Locator {
@@ -87,5 +91,9 @@ export class BasicSelectAtom extends Atom {
 
     private getMenuItem(idx: number): MenuItemAtom {
         return this.getMenu().getMenuItemByIndex(idx);
+    }
+
+    private escapeRegExp(value: string): string {
+        return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
 }

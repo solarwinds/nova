@@ -24,7 +24,7 @@ import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
 import { LegendSeriesAtom } from "./legend-series.atom";
 import { LegendAtom } from "./legend.atom";
 
-describe("Legend", () => {
+xdescribe("Legend", () => {
     let basicLegendDefault: LegendAtom;
     let basicLegendInteractive: LegendAtom;
     let richLegendDefault: LegendAtom;

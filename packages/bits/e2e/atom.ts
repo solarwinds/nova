@@ -113,6 +113,10 @@ export class Atom {
         // how to return the atom
     }
 
+    public first<T extends Atom>(atomClass: IAtomClass<T>): T {
+        return this.nth(atomClass, 0);
+    }
+
     // function spawnWrapper (...params: [
     //     Parameters<typeof spawn>[0],
     //     Parameters<typeof spawn>[1],

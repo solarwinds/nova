@@ -31,6 +31,10 @@ export class SearchAtom extends Atom {
             .fill(input);
     }
 
+    public async waitElementVisible(): Promise<void> {
+        await this.getLocator().first().waitFor({ state: "visible" });
+    }
+
     public async click(): Promise<void> {
         await this.getLocator().click();
     }

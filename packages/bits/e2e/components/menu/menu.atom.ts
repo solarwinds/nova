@@ -55,7 +55,7 @@ export class MenuAtom extends Atom {
         await this.getMenuButton().click();
     }
 
-    public getMenuItemByContainingText(text: string): MenuItemAtom {
+    public getMenuItemByContainingText(text: string|RegExp): MenuItemAtom {
         const itemLocator = this.getLocator().locator(".nui-menu-item", {
             hasText: text,
         });

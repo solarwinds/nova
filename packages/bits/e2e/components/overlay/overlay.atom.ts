@@ -21,7 +21,7 @@ export class OverlayAtom extends Atom {
     public static CDK_CONTAINER_PANE = "cdk-overlay-pane";
 
     public async isOpened(): Promise<boolean> {
-        return this.cdkContainerPane.isVisible();
+        return this.cdkContainerPane.first().isVisible();
     }
 
     public async toBeOpened(): Promise<void> {

@@ -21,6 +21,7 @@
 import { Locator } from "playwright-core";
 
 import { Atom } from "../../atom";
+import { expect } from "../../setup";
 import { CheckboxAtom } from "../checkbox/checkbox.atom";
 
 export class CheckboxGroupAtom extends Atom {
@@ -55,5 +56,21 @@ export class CheckboxGroupAtom extends Atom {
         }
 
         return true;
+    }
+
+    public async toBeDisabled(): Promise<void> {
+        const inputs = this.getLocator().locator(".nui-checkbox__input");
+        const count = await inputs.count();
+        for (let i = 0; i < count; i++) {
+            await expect(inputs.nth(i)).toBeDisabled();
+        }
+    }
+
+    public async toBeEnabled(): Promise<void> {
+        const inputs = this.getLocator().locator(".nui-checkbox__input");
+        const count = await inputs.count();
+        for (let i = 0; i < count; i++) {
+            await expect(inputs.nth(i)).toBeEnabled();
+        }
     }
 }

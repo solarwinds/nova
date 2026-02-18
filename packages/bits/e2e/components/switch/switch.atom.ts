@@ -44,11 +44,11 @@ export class SwitchAtom extends Atom {
     }
 
     public async isOn(): Promise<boolean> {
-        return await this.toContainClass(SwitchAtom.ON_CSS);
+        return this.hasClass(SwitchAtom.ON_CSS);
     }
 
     public async isOff(): Promise<boolean> {
-        return await this.toNotContainClass(SwitchAtom.ON_CSS);
+        return !(await this.isOn());
     }
 
     public async isDisabled(): Promise<boolean> {

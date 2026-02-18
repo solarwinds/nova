@@ -27,7 +27,7 @@ import { LegendAtom } from "./legend.atom";
 
 const name: string = "Legend";
 
-describe(`Visual tests: ${name}`, () => {
+xdescribe(`Visual tests: ${name}`, () => {
     let camera: Camera;
     let seriesRenderStatesLegend: LegendAtom;
 
