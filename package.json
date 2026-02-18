@@ -29,7 +29,6 @@
     "@compodoc/compodoc": "1.1.26",
     "@percy/cli": "1.31.8",
     "@percy/playwright": "1.0.10",
-    "@percy/protractor": "2.0.1",
     "@playwright/test": "1.58.1",
     "@schematics/angular": "20.3.15",
     "@stackblitz/sdk": "1.11.0",
@@ -50,6 +49,7 @@
     "eslint-plugin-jsdoc": "50.6.9",
     "eslint-plugin-prefer-arrow": "1.2.3",
     "highlight.js": "11.10.0",
+    "jasmine": "6.0.0",
     "jasmine-core": "5.4.0",
     "jasmine-reporters": "2.5.2",
     "jasmine-spec-reporter": "7.0.0",
@@ -71,7 +71,6 @@
     "playwright-ng-schematics": "2.0.3",
     "prettier": "2.8.8",
     "prettier-plugin-sort-json": "0.0.3",
-    "protractor": "7.0.0",
     "raw-loader": "4.0.2",
     "rimraf": "3.0.2",
     "rxjs": "7.4.0",
@@ -81,7 +80,7 @@
     "ts-node": "10.9.2",
     "tslib": "2.8.1",
     "typescript": "5.8",
-    "webpack": "5.96.1",
+    "webpack": "5.104.1",
     "zone.js": "0.15.0"
   },
   "resolutions": {
@@ -123,9 +122,6 @@
     "set-dependency-versions-ci": "bash scripts/set-dependency-versions",
     "set-release-versions-ci": "bash scripts/set-release-versions",
     "set-source-versions-ci": "bash scripts/set-source-versions",
-    "snyk-auth": "snyk auth $SNYK_TOKEN",
-    "snyk-monitor": "snyk monitor --dev --all-projects --exclude=dist --strict-out-of-sync=false --org=solarwinds",
-    "snyk-test": "snyk test --dev --all-projects --exclude=dist --strict-out-of-sync=false --org=solarwinds || true",
     "trigger-pipeline-build-ci": "bash scripts/trigger-pipeline-build",
     "verify-ci": "bash scripts/verify-published"
   },

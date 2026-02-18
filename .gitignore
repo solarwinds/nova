@@ -7,3 +7,8 @@ node_modules
 response.txt
 .yarn
 .yarnrc.yml
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/

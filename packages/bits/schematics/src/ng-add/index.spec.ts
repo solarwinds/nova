@@ -95,7 +95,7 @@ describe("ng-add", () => {
             "./node_modules/@nova-ui/bits/bundles/css/styles.css"
         );
     });
-    it("adds style to angular.json without property", async () => {
+    it("adds style to angular.json without property 2", async () => {
         appTree.overwrite(
             "angular.json",
             JSON.stringify({

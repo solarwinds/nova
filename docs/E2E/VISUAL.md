@@ -1,4 +1,8 @@
 # Visual Testing with Playwright and Virtual Camera
+- [![This project is using Percy.io for visual regression testing.](https://percy.io/static/images/percy-badge.svg)](https://percy.io/356638da/web/nova-bits) - bits
+- [![This project is using Percy.io for visual regression testing.](https://percy.io/static/images/percy-badge.svg)](https://percy.io/356638da/web/nova-charts) - charts
+- [![This project is using Percy.io for visual regression testing.](https://percy.io/static/images/percy-badge.svg)](https://percy.io/356638da/web/nova-dashboards) - dashboards
+
 
 This project uses Playwright for visual tests and a thin Virtual Camera API to keep tests clean and portable.
 

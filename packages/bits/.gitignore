@@ -8,8 +8,3 @@
 /schematics/dist
 /sdk
 /src/styles/data
-
-# Playwright
-/test-results/
-/playwright-report/
-/playwright/.cache/

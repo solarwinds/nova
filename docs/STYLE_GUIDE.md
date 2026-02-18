@@ -85,12 +85,12 @@ Basic summary:
 
 ### `setTimeout`, `setInterval` and `requestAnimationFrame`'s testability
 
-When you are using timeouts or intervals for animations or countdowns, protractor tests can fail with a timeout.
-Protractor has a built-in feature in which it waits for Angular events to finish before proceeding. The methods listed above will hold the process, and protractor will not continue the test flow until they finish.
+When you are using timeouts or intervals for animations or countdowns, Playwright tests can become flaky.
+Playwright has built-in auto-waiting capabilities and doesn't rely on Angular's change detection like Protractor did. However, the methods listed above can still cause timing issues in tests.
 
 To avoid this situation, replace code like:
 `setTimeout(() => callback(), timeOut);`
-with the following solution which allows protractor to run asserts and continue testing while a timeout is in progress:
+with the following solution which allows Playwright to run assertions and continue testing while a timeout is in progress:
 
 ```js
 ngZone.runOutsideAngular(() => {​​​​
