@@ -332,6 +332,22 @@ jobs:
             - attach_workspace:
                   at: ~/nova
             - install-deps
+            - run:
+                  name: Check if playwright tests should be skipped
+                  working_directory: ~/nova
+                  command: |
+                      # Check if build was cached (package-cached file exists)
+                      if [ -f packages/bits/package-cached ]; then
+                          # Check if e2e folder has changes since last commit
+                          if git diff --quiet HEAD~1 HEAD -- packages/bits/e2e/; then
+                              echo "Package was restored from cache and no changes in e2e folder - skipping playwright tests"
+                              circleci step halt
+                          else
+                              echo "Package was cached but e2e folder has changes - running playwright tests"
+                          fi
+                      else
+                          echo "Package was not cached - running playwright tests"
+                      fi
             - run-playwright-shard:
                   project_dir: "packages/bits"
                   percy_token: BITS_PERCY_TOKEN
