@@ -22,7 +22,7 @@
         [iconRight]="isTitlePresent()"
         class="menu-button no-shadow"
         [isEmpty]="!isTitlePresent()"
-        [attr.aria-label]="title || ariaLabel"
+        [ariaLabel]="title || ariaLabel || 'Menu'"
     >
         <span>{{ title }}</span>
     </button>
