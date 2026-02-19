@@ -18,17 +18,17 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser, by, element, Locator } from "protractor";
-
+import { Locator } from "playwright-core";
 import { TableAtom } from "./table.atom";
 import { Atom } from "../../atom";
-import { Helpers } from "../../setup";
+import { test, Helpers } from "../../setup";
 import { Camera } from "../../virtual-camera/Camera";
 import { SelectorAtom } from "../selector/selector.atom";
 
+
 const name: string = "Table";
 
-describe(`Visual tests: ${name}`, () => {
+test.describe(`Visual tests: ${name}`, () => {
     let camera: Camera;
     let sortableTable: TableAtom;
     let actionsMenu: Locator;
@@ -39,8 +39,8 @@ describe(`Visual tests: ${name}`, () => {
     let selectPinnedHeaderTable: TableAtom;
     let expanders: { [key: string]: Locator };
 
-    test.beforeEach(async () => {
-        await Helpers.prepareBrowser("table/visual-test");
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("table/visual-test", page);
 
         sortableTable = Atom.find<TableAtom>(TableAtom, "table-sorting");
         customActionTable = Atom.find<TableAtom>(
@@ -52,7 +52,7 @@ describe(`Visual tests: ${name}`, () => {
             "table-selected-row"
         );
         resizeTable = Atom.find<TableAtom>(TableAtom, "table-resizing");
-        selectPinnedHeaderTable = Atom.find(
+        selectPinnedHeaderTable = Atom.find<TableAtom>(
             TableAtom,
             "table-select-pinned-header"
         );
@@ -97,8 +97,7 @@ describe(`Visual tests: ${name}`, () => {
 
         const firstHeaderCell = selectedRowsTable.getCell(0, 0);
         selector = selectedRowsTable.getSelector(firstHeaderCell);
-
-        camera = new Camera().loadFilm(browser, name);
+        camera = new Camera().loadFilm(page, name, "Bits");
     });
 
     test(`${name} visual test`, async () => {
@@ -116,13 +115,13 @@ describe(`Visual tests: ${name}`, () => {
 
         await expanders.sorting.click();
         await sortableTable.getCell(0, 4).click();
-        await browser.actions().mouseMove({ x: 0, y: 300 }).perform();
+        await Helpers.page.mouse.move(0, 300);
         await camera.say.cheese("Sorting table");
         await expanders.sorting.click();
 
         await expanders.rowSelection.click();
-        await selector.getCheckbox().toggle();
-        await browser.actions().mouseMove({ x: 0, y: 300 }).perform();
+        await selector.getCheckbox.toggle();
+        await Helpers.page.mouse.move(0, 300);
         await camera.say.cheese("Selected rows in table");
         await expanders.rowSelection.click();
 
@@ -133,15 +132,19 @@ describe(`Visual tests: ${name}`, () => {
 
         await expanders.customActions.click();
         await actionsMenu.click();
-        await customActionTable.hover(customActionTable.getCell(2, 4));
+        await customActionTable.hover(customActionTable.getCell(2, 3));
         await camera.say.cheese("Edit columns");
         await expanders.customActions.click();
 
         await expanders.selectPinnedHeader.click();
         await selectPinnedHeaderTable.getCell(1, 0).click();
-        await browser.executeScript(
-            "document.getLocatorById('table-select-pinned-header').getLocatorsByClassName('nui-table__container')[0].scrollTop = '20'"
-        );
+        await Helpers.page.evaluate(()=>{
+            const tableContainer = document.getElementById("table-select-pinned-header")?.getElementsByClassName("nui-table__container")[0];
+            if(tableContainer){
+                tableContainer.scrollTop = 20;
+            }
+        });
+
         await camera.say.cheese("Active checkbox under pinned header");
         await expanders.selectPinnedHeader.click();
 
@@ -150,5 +153,5 @@ describe(`Visual tests: ${name}`, () => {
         await expanders.virtualScrollStickyHeader.click();
 
         await camera.turn.off();
-    }, 300000);
+    });
 });

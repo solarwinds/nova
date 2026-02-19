@@ -6,13 +6,13 @@
     }
   ],
   "exports": {
-    "./sdk/atoms": {
-      "types": "./sdk/atmos/index.d.ts",
-      "default": "./sdk/atoms/index.js"
+    "./sdk/atoms-playwright": {
+      "types": "./sdk/atmos-playwright/index.d.ts",
+      "default": "./sdk/atoms-playwright/index.js"
     },
-    "./sdk/atoms/*": {
-      "types": "./sdk/atoms/*.d.ts",
-      "default": "./sdk/atoms/*.js"
+    "./sdk/atoms-playwright/*": {
+      "types": "./sdk/atoms-playwright/*.d.ts",
+      "default": "./sdk/atoms-playwright/*.js"
     },
     "./sdk/schematics": {
       "types": "./sdk/schematics/index.d.ts",
@@ -33,8 +33,8 @@
   "license": "Apache-2.0",
   "name": "@nova-ui/dashboards",
   "dependencies": {
-    "@nova-ui/bits": "~19.0.2-0",
-    "@nova-ui/charts": "~19.0.2-0"
+    "@nova-ui/bits": "~20.0.0",
+    "@nova-ui/charts": "~20.0.0"
   },
   "devDependencies": {
     "@apollo/client": "3.13.9",
@@ -66,24 +66,16 @@
     "compodoc": "compodoc --extTheme src/docs/styles/",
     "compodoc:serve": "yarn run compodoc -s -w --port 8090 --includes ./src/docs/development",
     "dist-copy": "run-s dist-copy:*",
-    "dist-copy:atoms": "tsc -p spec/tsconfig.atom.json",
+    "dist-copy:atoms-playwright": "tsc -p e2e/tsconfig.json",
     "dist-copy:locl": "npx copyfiles -f sdk/locale/* dist/sdk/locale",
-    "e2e": "start-server-and-test serve-examples:prod 4200 e2e:base",
-    "e2e:base": "node ../../node_modules/protractor/bin/protractor ./protractor.conf.js",
-    "e2e:ci": "node ../../node_modules/protractor/bin/protractor ./protractor.conf.js",
-    "e2e:debug": "yarn run pree2e:base && node --inspect-brk ./node_modules/protractor/bin/protractor",
-    "e2e:full": "run-s \"e2e:base -c full\"",
-    "e2e:gui": "run-s \"e2e:base -c gui\"",
-    "e2e:serve": "run-s \"e2e:base -c serve\"",
-    "e2e:watch": "npx watch \"npm run e2e:base\" src examples spec --watch=1",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
     "ng": "ng",
-    "percy": "percy exec -- npm run visual",
-    "percy:ci": "npm run visual:ci && percy upload -v _snapshots",
-    "percy:gui": "percy exec -- npm run visual:gui",
+    "playwright:base": "yarn playwright test",
+    "playwright:ci": "yarn playwright:base",
+    "playwright:ui": "yarn playwright:base --ui",
+    "playwright:report": "yarn playwright show-report",
     "prebuild-examples": "yarn run compile-demo-paths",
-    "pree2e:base": "webdriver-manager update --gecko=false --standalone=false",
     "prettier": "prettier --config ./.prettierrc.js",
     "prettier-check": "yarn run prettier --check .",
     "prettier-fix": "yarn run prettier --write .",
@@ -97,13 +89,7 @@
     "symunlink:bits": "yarn rimraf node_modules/@nova-ui/bits && yarn --check",
     "symunlink:charts": "yarn rimraf node_modules/@nova-ui/charts && yarn --check",
     "test": "ng t lib -c coverage",
-    "test:dev": "ng t lib -c dev",
-    "visual": "npx start-server-and-test serve-examples:prod 4200 visual:base",
-    "visual:base": "yarn run e2e:base --suite visual",
-    "visual:ci": "yarn run e2e:ci --suite visual",
-    "visual:full": "yarn run visual:base -c full",
-    "visual:gui": "yarn run visual:base -c gui",
-    "visual:serve": "yarn run visual:base -c serve"
+    "test:dev": "ng t lib -c dev"
   },
-  "version": "19.0.2-0"
+  "version": "20.0.0"
 }

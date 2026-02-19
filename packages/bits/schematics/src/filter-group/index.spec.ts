@@ -26,7 +26,7 @@ import * as path from "path";
 
 const collectionPath = path.join(__dirname, "../collection.json");
 
-xdescribe("ng-generate filtered-view", () => {
+xdescribe("ng-generate filtered-view 2", () => {
     const runner = new SchematicTestRunner("schematics", collectionPath);
 
     let beforeTree: UnitTestTree; // tslint:disable-line

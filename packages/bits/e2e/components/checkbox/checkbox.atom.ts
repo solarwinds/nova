@@ -76,4 +76,12 @@ export class CheckboxAtom extends Atom {
     private getLink(): Locator {
         return super.getLocator().locator(".link-in-checkbox");
     }
+
+    public async toBeDisabled(): Promise<void> {
+        await expect(this.getInputElement).toBeDisabled();
+    }
+
+    public async toBeEnabled(): Promise<void> {
+        await expect(this.getInputElement).toBeEnabled();
+    }
 }

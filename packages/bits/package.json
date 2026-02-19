@@ -17,13 +17,13 @@
     "proxyquire": "2.1.3"
   },
   "exports": {
-    "./sdk/atoms": {
-      "types": "./sdk/atmos/index.d.ts",
-      "default": "./sdk/atoms/index.js"
+    "./sdk/atoms-playwright": {
+      "types": "./sdk/atoms-playwright/index.d.ts",
+      "default": "./sdk/atoms-playwright/index.js"
     },
-    "./sdk/atoms/*": {
-      "types": "./sdk/atoms/*.d.ts",
-      "default": "./sdk/atoms/*.js"
+    "./sdk/atoms-playwright/*": {
+      "types": "./sdk/atoms-playwright/*.d.ts",
+      "default": "./sdk/atoms-playwright/*.js"
     },
     "./sdk/schematics": {
       "types": "./sdk/schematics/index.d.ts",
@@ -60,14 +60,6 @@
   },
   "schematics": "./sdk/schematics/collection.json",
   "scripts": {
-    "a11y:playwright": "start-server-and-test serve-examples:prod 4200 a11y:base",
-    "a11y:playwright:base": "yarn run e2e:playwright:base --project=a11y",
-    "a11y:playwright:ci": "yarn run e2e:playwright:ci --project=a11y",
-
-    "a11y": "start-server-and-test serve-examples:prod 4200 a11y:base",
-    "a11y:base": "yarn run e2e:base --suite a11y",
-    "a11y:ci": "yarn run e2e:ci --suite a11y",
-
     "assemble": "run-s lint build-lib:prod compodoc-custom-theme build-examples:prod build-schematics",
     "assemble-dev": "run-s build-lib:prod",
     "build-examples": "ng build demo",
@@ -84,38 +76,20 @@
     "compodoc-custom-theme": "compodoc --extTheme src/docs/styles/",
     "compodoc:serve": "yarn run compodoc-custom-theme -s -w --includes ./src/docs/development",
     "dist-copy": "run-s dist-copy:*",
-    "dist-copy:atoms": "tsc -p spec/tsconfig.atom.json",
-    "dist-copy:atoms:playwright": "tsc -p e2e/tsconfig.json",
+    "dist-copy:atoms-playwright": "tsc -p e2e/tsconfig.json",
     "dist-copy:less": "npx copyfiles -u 3 \"src/styles/mixins/**/*\" dist/sdk/less/mixins/ && npx copyfiles -f \"src/styles/{mixins,nui-framework-*}.less\" dist/sdk/less",
     "dist-copy:tslint": "npx copyfiles \"tslint.*\" dist/sdk/",
     "dist-copy:xliff": "npx copyfiles -f \"src/locale/*\" dist/sdk/locale",
     "dist-copy-css": "npx copyfiles -f \".tmp-css/*.{css,svg,woff,woff2}\" dist/bundles/css/",
-
-    "e2e": "start-server-and-test serve-examples:prod 4200 e2e:base",
-    "e2e:base": "node ../../node_modules/protractor/bin/protractor ./protractor.conf.js",
-    "e2e:ci": "node ../../node_modules/protractor/bin/protractor ./protractor.conf.js",
-
-    "e2e:debug": "yarn run pree2e:base && node --inspect-brk ../../node_modules/protractor/bin/protractor ./protractor-gui.conf.js",
-    "e2e:full": "yarn run e2e:base -c full",
-    "e2e:gui": "yarn run e2e:base -c gui",
-    "e2e:serve": "yarn run e2e:base -c serve",
-    "e2e:watch": "npx watch \"yarn run e2e:base\" src demo spec --watch=1",
-
-    "e2e:playwright": "start-server-and-test serve-examples:prod 4200 e2e:playwright:base",
-    "e2e:playwright:base": "yarn playwright test --project=e2e",
-    "e2e:playwright:ci": "yarn e2e:playwright:base",
-    "e2e:playwright:ui": "yarn run e2e:playwright:base --ui",
-    "e2e:playwright:report": "yarn playwright show-report",
-
     "extract-i18n": "ng extract-i18n demo --output-path demo/src/locale",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
-    "percy": "percy exec -- yarn run visual",
-    "percy:ci": "yarn run visual:ci && percy upload -v _snapshots",
-    "percy:gui": "percy exec -- yarn run visual:gui",
+    "playwright:base": "yarn playwright test",
+    "playwright:ci": "yarn playwright:base",
+    "playwright:ui": "yarn playwright:base --ui",
+    "playwright:report": "yarn playwright show-report",
     "prebuild-examples": "run-s compile-colors compile-demo-paths",
     "precompodoc": "node scripts/compile-global-less-styles.js",
-    "pree2e:base": "webdriver-manager update --gecko=false --standalone=false",
     "prepublish": "modernizr -c ./src/vendor/modernizr.config.json -d /node_modules/modernizr/",
     "preserve-examples": "yarn run compile-colors",
     "prettier": "prettier --config ./.prettierrc.js",
@@ -126,16 +100,9 @@
     "serve-examples:prod": "npx local-web-server -p 4200 -d sdk/api-docs-ng2/examples --spa index.html",
     "start": "run-p -lr compodoc:serve build-examples:watch",
     "test": "ng test lib -c coverage",
-    "test:dev": "ng test lib -c dev",
-    "visual": "start-server-and-test serve-examples:prod 4200 visual:base",
-    "visual:base": "yarn run e2e:base --suite visual",
-    "visual:ci": "yarn run e2e:ci --suite visual",
-    "visual:full": "yarn run visual:base -c full",
-    "visual:gui": "yarn run visual:base -c gui",
-    "visual:serve": "yarn run visual:base -c serve",
-    "visual:watch": "npx watch \"yarn run visual:base\" src demo spec --watch=1"
+    "test:dev": "ng test lib -c dev"
   },
   "typings": "public_api.d.ts",
-  "version": "19.0.2-0",
+  "version": "20.0.0",
   "packageManager": "yarn@1.22.18"
 }

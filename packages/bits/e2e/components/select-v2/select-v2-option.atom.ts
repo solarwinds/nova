@@ -23,7 +23,11 @@ import { Atom } from "../../atom";
 export class SelectV2OptionAtom extends Atom {
     public static CSS_CLASS = "nui-select-v2-option";
 
-    public async isActive(): Promise<boolean> {
+    public async toBeActive(): Promise<void> {
         return this.toContainClass("active");
+    }
+
+    public async getText(): Promise<string> {
+        return (await this.getLocator().innerText()) ?? "";
     }
 }

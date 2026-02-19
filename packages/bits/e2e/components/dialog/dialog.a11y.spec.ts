@@ -19,7 +19,9 @@
 //  THE SOFTWARE.
 
 import { DialogAtom } from "./dialog.atom";
+import { Atom } from "../../atom";
 import { test, Helpers } from "../../setup";
+import { ButtonAtom } from "../button/button.atom";
 
 test.describe("a11y: dialog", () => {
     // disabling the rule until NUI-6014 is addressed
@@ -45,17 +47,20 @@ test.describe("a11y: dialog", () => {
     });
 
     for (const btnId of dialogButtons) {
-        test(`should verify a11y of dialog: ${btnId}`, async ({ runA11yScan, page }) => {
-            const btn = page.locator(`#${btnId}`);
+        test(`should verify a11y of dialog: ${btnId}`, async ({ runA11yScan }) => {
+            const btn = Helpers.page.locator("#" + btnId);
             await btn.click();
+            await DialogAtom.toBeVisible();
             await runA11yScan(DialogAtom, rulesToDisable);
             await DialogAtom.dismissDialog();
         });
     }
 
-    test("should verify a11y of confirmation dialog in dark theme", async ({ runA11yScan, page }) => {
+    test("should verify a11y of confirmation dialog in dark theme", async ({ runA11yScan }) => {
         await Helpers.switchDarkTheme("on");
-        const btn = page.locator("#nui-visual-test-confirmation-dialog-overrides-btn");
+        const btn = Helpers.page.locator(
+            "#nui-visual-test-confirmation-dialog-overrides-btn"
+        );
         await btn.click();
         await runA11yScan(DialogAtom, rulesToDisable);
         await DialogAtom.dismissDialog();

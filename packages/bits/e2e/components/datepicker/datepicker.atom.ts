@@ -2,7 +2,7 @@ import moment, { Moment } from "moment/moment";
 import { Locator } from "playwright-core";
 
 import { Atom } from "../../atom";
-import { expect } from "../../setup";
+import { expect, Helpers } from "../../setup";
 import { OverlayAtom } from "../overlay/overlay.atom";
 import { TextboxAtom } from "../textbox/textbox.atom";
 
@@ -73,6 +73,7 @@ export class DatepickerAtom extends Atom {
 
     public acceptText = async (text: string): Promise<void> => {
         await this.getInput.fill(text);
+        await Helpers.page.waitForTimeout(1000); // Wait for time frame picker to process the change and update min date of end date picker
         await this.getInput.press("Enter");
     };
 
@@ -208,5 +209,13 @@ export class DatepickerAtom extends Atom {
     private getLocatorByCss(identifier: string): Locator {
         // if deep is passed then look in shadow DOM
         return super.getLocator().locator(identifier);
+    }
+
+    public async toBeDisabled(): Promise<void> {
+        await expect(this.getInput).toBeDisabled();
+    }
+
+    public async toBeEnabled(): Promise<void> {
+        await expect(this.getInput).toBeEnabled();
     }
 }

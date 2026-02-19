@@ -18,15 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { test, expect, Helpers } from "../../setup";
-
 import { Page } from "@playwright/test";
 import each from "lodash/each";
 
 import { TextboxNumberAtom } from "./textbox-number.atom";
 import { Atom } from "../../atom";
+import { test, expect, Helpers } from "../../setup";
 
-// Helper to get the active element's tag name
 async function getActiveElementTag(page: Page) {
     return await page.evaluate(() =>
         document.activeElement?.tagName.toLowerCase()
@@ -161,57 +159,55 @@ test.describe("USERCONTROL textbox-number >", () => {
     test.describe("validation >", () => {
         test.beforeEach(async () => {
             component = validation;
-            await component.toBeVisible();
             await component.clearText();
         });
 
         test.describe("valid values >", () => {
             test("should accept min value", async () => {
                 await component.acceptText("1");
-                expect(await component.isValid()).toBe(true);
+                await component.toBeValid();
             });
 
             test("should accept max value", async () => {
                 await component.acceptText("10");
-                expect(await component.isValid()).toBe(true);
+                await component.toBeValid();
             });
 
             test("should accept decimal value", async () => {
                 await component.acceptText("5.5");
-                expect(await component.isValid()).toBe(true);
+                await component.toBeValid();
             });
 
             test("should accept scientific notation", async () => {
                 await component.acceptText("1e1");
-                expect(await component.isValid()).toBe(true);
+                await component.toBeValid();
             });
         });
 
         test.describe("invalid values >", () => {
             test("should reject less than min value", async () => {
                 await component.acceptText("0");
-                expect(await component.isValid()).toBe(false);
+                await component.toBeInvalid();
             });
 
             test("should reject more than max value", async () => {
                 await component.acceptText("11");
-                expect(await component.isValid()).toBe(false);
+                await component.toBeInvalid();
             });
 
             each(["-", "+", "1e", "eee", "1-1", "1+1"], (invalidValue) => {
                 test(`should reject incorrect string input: '${invalidValue}'`, async () => {
                     await component.acceptText(invalidValue);
-                    await component.input.blur();
-                    expect(await component.isValid()).toBe(false);
+                    await component.toBeInvalid();
                 });
             });
         });
 
         test("should update validity after button click", async () => {
             await component.acceptText("-");
-            expect(await component.isValid()).toBe(false);
+            await component.toBeInvalid();
             await component.upButton.click();
-            expect(await component.isValid()).toBe(true);
+            await component.toBeValid();
             expect(await component.getValue()).toBe("1");
         });
     });
@@ -243,9 +239,7 @@ test.describe("USERCONTROL textbox-number >", () => {
             );
         });
 
-        test("should switch focus from input to button on click", async ({
-            page,
-        }) => {
+        test("should switch focus from input to button on click", async () => {
             await Helpers.pressKey("Tab");
             await component.downButton.click();
             expect(await component.input.innerHTML()).not.toEqual(

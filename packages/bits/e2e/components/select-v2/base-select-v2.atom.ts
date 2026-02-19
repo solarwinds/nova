@@ -22,7 +22,7 @@ import { Locator } from "playwright-core";
 
 import { SelectV2OptionAtom } from "./select-v2-option.atom";
 import { Atom, IAtomClass } from "../../atom";
-import { Helpers } from "../../setup";
+import { expect, Helpers } from "../../setup";
 import { OverlayAtom } from "../overlay/overlay.atom";
 
 export class BaseSelectV2Atom extends Atom {
@@ -104,15 +104,19 @@ export class BaseSelectV2Atom extends Atom {
      * Note: This method checks whether ANY 'cdk-overlay-pane' on the document body is present
      * (not just this dropdown instance). Close any other cdk-overlay-pane instances before invoking this
      * method to ensure an accurate return value.
+     *
+     * Important: this is a pure state check (no auto-waits). Prefer toBeOpened/toBeClosed in tests.
      */
     public async isOpened(): Promise<boolean> {
-        await this.waitForPopup();
         return this.popup.isOpened();
     }
 
     public async toBeOpened(): Promise<void> {
-        await this.waitForPopup();
         await this.popup.toBeOpened();
+    }
+
+    public async toBeClosed(): Promise<void> {
+        await this.popup.toNotBeOpened();
     }
 
     public async toBeHidden(): Promise<void> {
@@ -125,7 +129,7 @@ export class BaseSelectV2Atom extends Atom {
 
     public async type(text: string): Promise<void> {
         await this.click();
-        return await this.input.press(text);
+        return await this.input.fill(text);
     }
 
     public async isSelectDisabled(): Promise<void> {
@@ -144,5 +148,13 @@ export class BaseSelectV2Atom extends Atom {
 
     private async waitForPopup() {
         await this.popup.toBeVisible();
+    }
+
+    public async toBeDisabled(): Promise<void> {
+        await expect(this.getLocator()).toContainClass("disabled");
+    }
+
+    public async toBeEnabled(): Promise<void> {
+        await expect(this.getLocator()).not.toContainClass("disabled");
     }
 }

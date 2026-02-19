@@ -640,7 +640,7 @@ test.describe("USERCONTROL datepicker", () => {
             await datepickerBasic.clearText();
             await datepickerBasic.acceptText(invalidDate);
             await expect(datepickerBasic.getInput).toHaveValue(invalidDate);
-            await datepickerBasic.isInputValid();
+            await datepickerBasic.isNotInputValid();
             await datepickerWithCustomDateFormat.clearText();
             await datepickerWithCustomDateFormat.acceptText(invalidDate);
             await expect(datepickerWithCustomDateFormat.getInput).toHaveValue(

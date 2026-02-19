@@ -113,6 +113,10 @@ export class Atom {
         // how to return the atom
     }
 
+    public first<T extends Atom>(atomClass: IAtomClass<T>): T {
+        return this.nth(atomClass, 0);
+    }
+
     // function spawnWrapper (...params: [
     //     Parameters<typeof spawn>[0],
     //     Parameters<typeof spawn>[1],
@@ -135,7 +139,11 @@ export class Atom {
         await this.locator.click();
     }
 
-    public async hover(): Promise<void> {
-        await this.locator.hover();
+    public async hover(target?: Locator, force: boolean = false): Promise<void> {
+        if (target) {
+            await target.hover( { force });
+            return;
+        }
+        await this.locator.hover({ force });
     }
 }

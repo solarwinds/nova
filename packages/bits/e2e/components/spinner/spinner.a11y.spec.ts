@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { SpinnerAtom } from "./spinner.atom";
-import { test, Helpers, Animations } from "../../setup";
+import { test, expect, Helpers, Animations } from "../../setup";
 
 test.describe("a11y: spinner", () => {
     const rulesToDisable: string[] = [];
@@ -27,11 +27,16 @@ test.describe("a11y: spinner", () => {
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("spinner/spinner-visual-test", page);
         await Helpers.disableCSSAnimations(Animations.ALL);
-        // Wait until there are 9 SpinnerAtom instances on the page
-        await Helpers.page.waitForFunction(async () => {
-            const count = await SpinnerAtom.findIn(SpinnerAtom, Helpers.page.locator("body"), true).getLocator().count();
-            return count === 9;
-        });
+        // Ensure there are 9 SpinnerAtom instances on the page and all are visible
+        const spinnerList = SpinnerAtom.findIn<SpinnerAtom>(
+            SpinnerAtom,
+            Helpers.page.locator("body")
+        );
+        const count = await spinnerList.getLocator().count();
+        await expect(spinnerList.getLocator()).toHaveCount(9);
+        for (let i = 0; i < count; i++) {
+            await expect(spinnerList.getLocator().nth(i)).toBeVisible();
+        }
     });
 
     test("should check a11y of spinner", async ({ runA11yScan }) => {

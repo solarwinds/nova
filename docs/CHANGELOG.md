@@ -1,4 +1,11 @@
 # Changelog
+## [20.0.3] 📅 2026-02-18
+### Internal improvements
+- Test rewrite playwright to use new test setup and helpers
+
+## [20.0.0] 📅 2025-10-01
+### Angular upgrade 20
+
 
 ## [19.0.3] 📅 2025-05-26
 ### Initial playwrite e2e tests migration

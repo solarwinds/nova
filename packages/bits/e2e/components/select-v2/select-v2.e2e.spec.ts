@@ -142,11 +142,11 @@ test.describe("USERCONTROL Select V2 >", () => {
             test("should navigate with UP and DOWN buttons", async () => {
                 await Helpers.pressKey("ArrowDown", 5);
                 const option5 = await selectErrorState.getOption(5);
-                await option5.isActive();
+                await option5.toBeActive();
 
                 await Helpers.page.keyboard.press("ArrowUp");
                 const option4 = await selectErrorState.getOption(4);
-                await option4.isActive();
+                await option4.toBeActive();
             });
 
             test("should close on focus out", async () => {

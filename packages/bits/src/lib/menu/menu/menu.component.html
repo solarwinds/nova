@@ -22,6 +22,7 @@
         [iconRight]="isTitlePresent()"
         class="menu-button no-shadow"
         [isEmpty]="!isTitlePresent()"
+        [attr.aria-label]="title || ariaLabel"
     >
         <span>{{ title }}</span>
     </button>
@@ -31,6 +32,8 @@
             [itemsSource]="itemsSource"
             [size]="size"
         ></nui-menu-popup>
-        <ng-content *ngIf="!itemsSource"></ng-content>
+        <ng-container *ngIf="!itemsSource">
+            <ng-content></ng-content>
+        </ng-container>
     </div>
 </nui-popup>

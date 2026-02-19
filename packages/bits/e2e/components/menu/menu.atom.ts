@@ -55,7 +55,7 @@ export class MenuAtom extends Atom {
         await this.getMenuButton().click();
     }
 
-    public getMenuItemByContainingText(text: string): MenuItemAtom {
+    public getMenuItemByContainingText(text: string|RegExp): MenuItemAtom {
         const itemLocator = this.getLocator().locator(".nui-menu-item", {
             hasText: text,
         });
@@ -74,7 +74,7 @@ export class MenuAtom extends Atom {
     }
 
     public async mouseDownOnMenuButton(): Promise<void> {
-        await this.getMenuButton().getLocator().dispatchEvent("mousedown");
+        await this.getMenuButton().mouseDown();
     }
 
     public async mouseUp(): Promise<void> {
@@ -83,7 +83,7 @@ export class MenuAtom extends Atom {
 
     public getMenuItemByIndex(idx: number): MenuItemAtom {
         const itemLocator = this.getAllMenuItems().nth(idx);
-        return new MenuItemAtom(itemLocator);
+        return Atom.findIn<MenuItemAtom>(MenuItemAtom, itemLocator, true);
     }
 
     public async getMenuItems(): Promise<MenuItemAtom[]> {
@@ -150,15 +150,27 @@ export class MenuAtom extends Atom {
     }
 
     public getSelectedSwitchElements(): Locator {
-        return this.getLocator().locator("nui-switch .nui-switched");
+        return this.getLocator().locator(".nui-switched");
     }
 
-    public async getSelectedSwitchesCount(): Promise<number> {
-        return this.getSelectedSwitchElements().count();
+    public async getSelectedMenuSwitches(): Promise<MenuItemAtom[]> {
+        const items = this.getSelectedSwitchElements();
+        const count = await items.count();
+        const selected: MenuItemAtom[] = [];
+        for (let i = 0; i < count; i++) {
+            selected.push(
+                Atom.findIn<MenuItemAtom>(MenuItemAtom, items.nth(i))
+            );
+        }
+        return selected;
     }
 
     public async getSelectedCheckboxesCount(): Promise<number> {
         return (await this.getSelectedMenuCheckboxes()).length;
+    }
+
+    public async getSelectedSwitchesCount(): Promise<number> {
+        return (await this.getSelectedMenuSwitches()).length;
     }
 
     public getAppendToBodyMenu(): Locator {

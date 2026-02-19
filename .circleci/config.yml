@@ -4,26 +4,26 @@ orbs:
 
 aliases:
     - &cache_restore
-        restore_cache:
-            keys:
-                - dependencies-{{ checksum "yarn.lock" }}
+      restore_cache:
+          keys:
+              - dependencies-{{ checksum "yarn.lock" }}
     - &cache_save
-        save_cache:
-            paths:
-                - ./node_modules
-            key: dependencies-{{ checksum "yarn.lock" }}
+      save_cache:
+          paths:
+              - ./node_modules
+          key: dependencies-{{ checksum "yarn.lock" }}
 
     - &install_dependencies
-        run:
-            working_directory: ~/nova
-            name: Installing node dependencies (if necessary)
-            command: |
-                if [ -d "node_modules" ];
-                then
-                    echo "skipping npm install as it was restored from cache. Running only postinstall"
-                else
-                    yarn install --frozen-lockfile --ignore-scripts
-                fi
+      run:
+          working_directory: ~/nova
+          name: Installing node dependencies (if necessary)
+          command: |
+              if [ -d "node_modules" ];
+              then
+                  echo "skipping npm install as it was restored from cache. Running only postinstall"
+              else
+                  yarn install --frozen-lockfile --ignore-scripts
+              fi
 
 commands:
     install-deps:
@@ -41,6 +41,131 @@ commands:
         steps:
             - *cache_restore
 
+    run-playwright-shard:
+        description: "Run Playwright shard and export blob reports"
+        parameters:
+            project_dir:
+                type: string
+                default: "packages/bits"
+            percy_token:
+                type: string
+                default: BITS_PERCY_TOKEN
+            merge_job:
+                type: boolean
+                default: true
+        steps:
+            - run:
+                  working_directory: ~/nova/<< parameters.project_dir >>
+                  name: Run Playwright shard
+                  command: |
+                      set +e
+                      NODE_INDEX="$((${CIRCLE_NODE_INDEX}+1))";
+                      SHARD="${NODE_INDEX}/${CIRCLE_NODE_TOTAL}";
+                      yarn run playwright:ci --shard=${SHARD}
+                      TEST_EXIT_CODE=$?
+                      echo $TEST_EXIT_CODE > ~/nova/<< parameters.project_dir >>/playwright_exit_code_${CIRCLE_NODE_INDEX}
+                      if [ "<< parameters.merge_job >>" = "false" ] && [ $TEST_EXIT_CODE -ne 0 ]; then
+                        echo "One or more tests failed in this shard. Failing the job to prevent merge step.";
+                        exit $TEST_EXIT_CODE
+                      fi
+                      echo "Tests completed with exit code $TEST_EXIT_CODE"
+                      echo "Continuing to export reports."
+                      exit 0
+            - run:
+                  working_directory: ~/nova/<< parameters.project_dir >>
+                  name: Export blob reports per shard
+                  command: |
+                      if [ -d blob-report ] && [ "$(ls -A blob-report)" ]; then
+                        mkdir -p all-blob-reports
+                        mv -f blob-report/* "all-blob-reports/"
+                      else
+                        echo "No blob reports generated - likely test failure or misconfiguration"
+                        ls
+                      fi
+            - add_ssh_keys
+            - run:
+                  name: Add GitHub to known_hosts
+                  command: |
+                      mkdir -p ~/.ssh
+                      ssh-keyscan github.com >> ~/.ssh/known_hosts
+            - run:
+                  working_directory: ~/nova/<< parameters.project_dir >>
+                  name: Execute percy upload
+                  command: |
+                      set +e
+                      if [ -d _snapshots ] && [ "$(ls -A _snapshots)" ]; then
+                          export PERCY_TOKEN=${<< parameters.percy_token >>}
+                          export PERCY_PARALLEL_TOTAL="-1" # we don't know total number of shards at this point, so we finalize the build in merge job
+                          yarn percy upload -v _snapshots
+                      else
+                        echo "No snapshots generated - likely test failure or misconfiguration"
+                        ls
+                      fi
+
+            - store_artifacts:
+                  when: always
+                  path: << parameters.project_dir >>/all-blob-reports
+            - store_artifacts:
+                  when: always
+                  path: << parameters.project_dir >>/test-results
+            - store_artifacts:
+                  when: always
+                  path: << parameters.project_dir >>/_snapshots
+            - store_test_results:
+                  when: always
+                  path: << parameters.project_dir >>/test-results
+            - persist_to_workspace:
+                  root: ~/nova
+                  paths:
+                      - << parameters.project_dir >>/all-blob-reports
+                      - << parameters.project_dir >>/playwright_exit_code_*
+
+    merge-playwright-reports:
+        description: "Merge Playwright blob reports and fail on shard errors"
+        parameters:
+            percy_token:
+                type: string
+                default: BITS_PERCY_TOKEN
+            project_dir:
+                type: string
+                default: "~/nova/packages/bits"
+        steps:
+            - add_ssh_keys
+            - run:
+                  name: Add GitHub to known_hosts
+                  command: |
+                      mkdir -p ~/.ssh
+                      ssh-keyscan github.com >> ~/.ssh/known_hosts
+            - run:
+                  working_directory: ~/nova/<< parameters.project_dir >>
+                  name: Merge Playwright blob reports into HTML report
+                  command: |
+                      set -e
+                      export PERCY_TOKEN=${<< parameters.percy_token >>}
+                      yarn percy build:finalize
+                      yarn playwright merge-reports --reporter html ./all-blob-reports
+            - run:
+                  name: Check if any shard failed
+                  command: |
+                      for file in ~/nova/<< parameters.project_dir >>/playwright_exit_code_*; do
+                        if [ -f "$file" ]; then
+                          exit_code=$(cat "$file")
+                          shard_index="${file##*_}"
+                          if [ "$exit_code" != "0" ]; then
+                               echo "Playwright HTML report has been uploaded as a CircleCI Artifact."
+                               echo "Navigate to the Artifacts tab and open: playwright-report/index.html"
+                               echo "Failed tests are highlighted in the report with detailed traces (if available)."
+                               echo "You can view failed tests in the Playwright HTML report via the CircleCI Artifacts tab:"
+                               echo "open the artifact folder 'playwright-report' and click 'index.html'"
+                               echo "Shard index ${shard_index} failed with exit code ${exit_code}"
+                            exit 1
+                          fi
+                        fi
+                      done
+            - store_artifacts:
+                  when: always
+                  path: << parameters.project_dir >>/playwright-report
+                  destination: playwright-report
 executors:
     node:
         docker:
@@ -92,6 +217,7 @@ jobs:
                       - package.json
                       - tsconfig.main.json
                       - yarn.lock
+                      - playwright.config.base.ts
     bits-build:
         executor: node
         environment:
@@ -148,116 +274,25 @@ jobs:
                   command: yarn run test
             - store_test_results:
                   path: packages/bits/test-results
-    bits-e2e-test:
-        executor: ubuntu
-        resource_class: medium+
-        working_directory: ~/nova
-        environment:
-            PROJECT_DIR: ~/nova/packages/bits
-        steps:
-            - browser-tools/install-chromedriver
-            - browser-tools/install-chrome
-            - attach_workspace:
-                  at: ~/nova
-            - restore_cache:
-                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
-            - reuse-cache
-            - run:
-                  name: Start Selenium docker image
-                  command: docker-compose up -d --build selenium
-            - run:
-                  name: E2E tests
-                  command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/bits
-            - run:
-                  name: Cleanup
-                  command: docker-compose down -v --rmi=local
-    bits-a11y-test:
-        executor: ubuntu
-        working_directory: ~/nova
-        resource_class: medium+
-        environment:
-            PROJECT_DIR: ~/nova/packages/bits
-        steps:
-            - browser-tools/install-chrome
-            - browser-tools/install-chromedriver
-            - attach_workspace:
-                  at: ~/nova
-            - run:
-                  name: Check git diff to see if builds should skip e2e
-                  working_directory: ~/nova/packages/bits
-                  command: |
-                      if [ -f packages/bits/package-cached ] && [ "$USE_CACHE" == "true" ]; then
-                          echo "This package was restored from cache so we're skipping a11y tests"
-                          circleci step halt
-                      fi
-            - restore_cache:
-                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
-            - reuse-cache
-            - run:
-                  name: Start Selenium docker image
-                  command: docker-compose up -d --build selenium
-            - run:
-                  name: a11y tests
-                  command: docker-compose run --user="$UID" build npm run a11y:ci --prefix ./packages/bits
-            - run:
-                  name: Cleanup
-                  command: docker-compose down -v --rmi=local
-    bits-visual-test:
-        executor: ubuntu
-        resource_class: medium+
-        working_directory: ~/nova
-        environment:
-            PROJECT_DIR: ~/nova/packages/bits
-        steps:
-            - browser-tools/install-chrome
-            - browser-tools/install-chromedriver
-            - attach_workspace:
-                  at: ~/nova
-            - run:
-                  name: Check git diff to see if builds should skip e2e
-                  working_directory: ~/nova/packages/bits
-                  command: |
-                      if [ -f $PROJECT_DIR/package-cached ] && [ "$USE_CACHE" == "true" ]; then
-                          echo "This package was restored from cache so we're skipping visual tests"
-                          circleci step halt
-                      fi
-            - restore_cache:
-                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
-            - reuse-cache
-            - run:
-                  name: Start Selenium docker image
-                  command: docker-compose up -d --build selenium
-            - run:
-                  name: Visual tests
-                  command: |
-                      export PERCY_TOKEN=${BITS_PERCY_TOKEN}
-                      docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/bits
-            - run:
-                  name: Cleanup
-                  command: docker-compose down -v --rmi=local
-    bits-e2e-test-playwright:
+    bits-ui-test:
         executor: playwright
-        parallelism: 4
+        parallelism: 7
         steps:
             - attach_workspace:
                   at: ~/nova
             - install-deps
-            - restore_cache:
-                 key: bits-dist-{{ checksum "packages/bits/git-commit" }}
-            - run:
-                  working_directory: ~/nova/packages/bits
-                  name: Run tests
-                  command: |
-                    NODE_INDEX="$((${CIRCLE_NODE_INDEX}+1))";
-                    SHARD="${NODE_INDEX}/${CIRCLE_NODE_TOTAL}";
-                    yarn run e2e:playwright:ci --shard=${SHARD}
-            -  store_artifacts:
-                    path: ./packages/bits/playwright-report
-                    destination: playwright-report-first
-            -  store_artifacts:
-                    path: /tmp/artifacts
-            -  store_artifacts:
-                    path: ./packages/bits/test-results
+            - run-playwright-shard:
+                  project_dir: "packages/bits"
+                  percy_token: BITS_PERCY_TOKEN
+    bits-ui-test-report:
+        executor: playwright
+        steps:
+            - attach_workspace:
+                  at: ~/nova
+            - install-deps
+            - merge-playwright-reports:
+                  project_dir: "packages/bits"
+                  percy_token: BITS_PERCY_TOKEN
     bits-pack:
         executor: node
         steps:
@@ -298,7 +333,6 @@ jobs:
                   name: Verify published package
                   command: |
                       yarn run verify-ci
-
     charts-build:
         executor: node
         working_directory: ~/nova
@@ -364,64 +398,33 @@ jobs:
                   command: yarn run test
             - store_test_results:
                   path: packages/charts/test-results
-    charts-e2e-test:
-        executor: ubuntu
-        working_directory: ~/nova
-        environment:
-            PROJECT_DIR: ~/nova/packages/charts
+    charts-ui-test:
+        executor: playwright
+        parallelism: 2
         steps:
-            - browser-tools/install-chrome
-            - browser-tools/install-chromedriver
             - attach_workspace:
                   at: ~/nova
+            - install-deps
+            - restore_cache:
+                  working_directory: ~/nova
+                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
             - run:
-                  name: Check git diff to see if builds should skip e2e
                   working_directory: ~/nova/packages/charts
+                  name: Install Bits
                   command: |
-                      if [ -f $PROJECT_DIR/package-cached ] && [ "$USE_CACHE" == "true" ]; then
-                          echo "This package was restored from cache so we're skipping visual tests"
-                          circleci step halt
-                      fi
-            - reuse-cache
-            - run:
-                  name: Start Selenium docker image
-                  command: docker-compose up -d --build selenium
-            - run:
-                  name: E2E tests
-                  command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/charts
-            - run:
-                  name: Cleanup
-                  command: docker-compose down -v --rmi=local
-    charts-visual-test:
-        executor: ubuntu
-        working_directory: ~/nova
-        environment:
-            PROJECT_DIR: ~/nova/packages/charts
+                      yarn run --cwd=packages/charts symlink
+            - run-playwright-shard:
+                  project_dir: "packages/charts"
+                  percy_token: CHARTS_PERCY_TOKEN
+    charts-ui-test-report:
+        executor: playwright
         steps:
-            - browser-tools/install-chrome
-            - browser-tools/install-chromedriver
             - attach_workspace:
                   at: ~/nova
-            - run:
-                  name: Check git diff to see if builds should skip e2e
-                  working_directory: ~/nova/packages/charts
-                  command: |
-                      if [ -f $PROJECT_DIR/package-cached ] && [ "$USE_CACHE" == "true" ]; then
-                          echo "This package was restored from cache so we're skipping visual tests"
-                          circleci step halt
-                      fi
-            - reuse-cache
-            - run:
-                  name: Start Selenium docker image
-                  command: docker-compose up -d --build selenium
-            - run:
-                  name: Visual tests
-                  command: |
-                      export PERCY_TOKEN=${CHARTS_PERCY_TOKEN}
-                      docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/charts
-            - run:
-                  name: Cleanup
-                  command: docker-compose down -v --rmi=local
+            - install-deps
+            - merge-playwright-reports:
+                  project_dir: "packages/charts"
+                  percy_token: CHARTS_PERCY_TOKEN
     charts-pack:
         executor: node
         working_directory: ~/nova
@@ -527,57 +530,33 @@ jobs:
                   command: yarn run test
             - store_test_results:
                   path: packages/dashboards/test-results
-    dashboards-e2e-test:
-        executor: ubuntu
-        resource_class: medium+
-        working_directory: ~/nova
-        environment:
-            PROJECT_DIR: ~/nova/packages/dashboards
+    dashboards-ui-test:
+        executor: playwright
+        parallelism: 2
         steps:
-            - browser-tools/install-chrome
-            - browser-tools/install-chromedriver
             - attach_workspace:
                   at: ~/nova
-            - reuse-cache
+            - install-deps
+            - restore_cache:
+                  working_directory: ~/nova
+                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
             - run:
-                  name: Check git diff to see if builds should skip e2e
                   working_directory: ~/nova/packages/dashboards
+                  name: Install Bits
                   command: |
-                      if [ -f packages/dashboards/package-cached ] && [ "$USE_CACHE" == "true" ]; then
-                          echo "This package was restored from cache so we're skipping e2e tests"
-                          circleci step halt
-                      fi
-            - run:
-                  name: Start Selenium docker image
-                  command: docker-compose up -d --build selenium
-            - run:
-                  name: E2E tests
-                  command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/dashboards
-            - run:
-                  name: Cleanup
-                  command: docker-compose down -v --rmi=local
-    dashboards-visual-test:
-        executor: ubuntu
-        working_directory: ~/nova
-        environment:
-            PROJECT_DIR: ~/nova/packages/dashboards
+                      yarn run --cwd=packages/dashboards symlink
+            - run-playwright-shard:
+                  project_dir: "packages/dashboards"
+                  percy_token: DASHBOARDS_PERCY_TOKEN
+    dashboards-ui-test-report:
+        executor: playwright
         steps:
-            - browser-tools/install-chrome
-            - browser-tools/install-chromedriver
             - attach_workspace:
                   at: ~/nova
-            - reuse-cache
-            - run:
-                  name: Start Selenium docker image
-                  command: docker-compose up -d --build selenium
-            - run:
-                  name: Visual tests
-                  command: |
-                      export PERCY_TOKEN=${DASHBOARDS_PERCY_TOKEN}
-                      docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/dashboards
-            - run:
-                  name: Cleanup
-                  command: docker-compose down -v --rmi=local
+            - install-deps
+            - merge-playwright-reports:
+                  project_dir: "packages/dashboards"
+                  percy_token: DASHBOARDS_PERCY_TOKEN
     dashboards-pack:
         executor: node
         working_directory: ~/nova
@@ -629,6 +608,11 @@ jobs:
                   at: ~/nova
             - reuse-cache
             - add_ssh_keys
+            - run:
+                  name: Add GitHub to known_hosts
+                  command: |
+                      mkdir -p ~/.ssh
+                      ssh-keyscan github.com >> ~/.ssh/known_hosts
             - checkout:
                   path: ~/nova
             - run:
@@ -648,6 +632,11 @@ jobs:
             NOVA_DIR: ~/nova
         steps:
             - add_ssh_keys
+            - run:
+                  name: Add GitHub to known_hosts
+                  command: |
+                      mkdir -p ~/.ssh
+                      ssh-keyscan github.com >> ~/.ssh/known_hosts
             - checkout:
                   path: ~/nova
             - run:
@@ -663,11 +652,16 @@ jobs:
         working_directory: ~/nova
         environment:
             SOURCE_BRANCH: main
-            CREATE_RELEASE_BRANCH: "false"
-            RELEASE_BRANCH: release/v19.0.x
-            INCREMENT_TYPE: minor
+            CREATE_RELEASE_BRANCH: "true"
+            RELEASE_BRANCH: release/v20.0.x
+            INCREMENT_TYPE: major
         steps:
             - add_ssh_keys
+            - run:
+                  name: Add GitHub to known_hosts
+                  command: |
+                      mkdir -p ~/.ssh
+                      ssh-keyscan github.com >> ~/.ssh/known_hosts
             - checkout:
                   path: ~/nova
             - reuse-cache
@@ -692,31 +686,24 @@ workflows:
             - bits-unit-test:
                   requires:
                       - bits-build
-            - bits-e2e-test:
+            - bits-ui-test:
                   requires:
                       - bits-build
-            - bits-e2e-test-playwright:
+            - bits-ui-test-report:
                   requires:
-                      - bits-build
-            - bits-visual-test:
-                  requires:
-                      - bits-build
-            - bits-a11y-test:
-                  requires:
-                      - bits-build
+                      - bits-ui-test
             - bits-publish:
                   requires:
-                      - bits-e2e-test
                       - bits-unit-test
-                      - charts-e2e-test
+                      - bits-ui-test-report
                       - charts-unit-test
-                      - dashboards-e2e-test
+                      - charts-ui-test-report
                       - dashboards-unit-test
+                      - dashboards-ui-test-report
                   filters:
                       branches:
                           only:
                               - /^release\/.+/
-                              - /^cci\/.+/
             - bits-verify:
                   requires:
                       - bits-publish
@@ -724,7 +711,6 @@ workflows:
                       branches:
                           only:
                               - /^release\/.+/
-                              - /^cci\/.+/
             - charts-build:
                   requires:
                       - bits-pack
@@ -734,25 +720,24 @@ workflows:
             - charts-unit-test:
                   requires:
                       - charts-build
-            - charts-e2e-test:
+            - charts-ui-test:
                   requires:
                       - charts-build
-            - charts-visual-test:
+            - charts-ui-test-report:
                   requires:
-                      - charts-build
+                      - charts-ui-test
             - charts-publish:
                   requires:
-                      - bits-e2e-test
                       - bits-unit-test
-                      - charts-e2e-test
+                      - bits-ui-test-report
                       - charts-unit-test
-                      - dashboards-e2e-test
+                      - charts-ui-test-report
                       - dashboards-unit-test
+                      - dashboards-ui-test-report
                   filters:
                       branches:
                           only:
                               - /^release\/.+/
-                              - /^cci\/.+/
             - charts-verify:
                   requires:
                       - charts-publish
@@ -760,13 +745,40 @@ workflows:
                       branches:
                           only:
                               - /^release\/.+/
-                              - /^cci\/.+/
             - dashboards-build:
                   requires:
                       - charts-pack
             - dashboards-pack:
                   requires:
                       - dashboards-build
+            - dashboards-unit-test:
+                  requires:
+                      - dashboards-build
+            - dashboards-ui-test:
+                  requires:
+                      - dashboards-build
+            - dashboards-ui-test-report:
+                  requires:
+                      - dashboards-ui-test
+            - dashboards-publish:
+                  requires:
+                      - bits-unit-test
+                      - bits-ui-test-report
+                      - charts-unit-test
+                      - charts-ui-test-report
+                      - dashboards-unit-test
+                      - dashboards-ui-test-report
+                  filters:
+                      branches:
+                          only:
+                              - /^release\/.+/
+            - dashboards-verify:
+                  requires:
+                      - dashboards-publish
+                  filters:
+                      branches:
+                          only:
+                              - /^release\/.+/
             - nova-docs:
                   context:
                       - common-build-creds
@@ -786,36 +798,6 @@ workflows:
                   filters:
                       branches:
                           only:
-                              - /^cci\/.+/
-            - dashboards-unit-test:
-                  requires:
-                      - dashboards-build
-            - dashboards-e2e-test:
-                  requires:
-                      - dashboards-build
-            - dashboards-visual-test:
-                  requires:
-                      - dashboards-build
-            - dashboards-publish:
-                  requires:
-                      - bits-e2e-test
-                      - bits-unit-test
-                      - charts-e2e-test
-                      - charts-unit-test
-                      - dashboards-e2e-test
-                      - dashboards-unit-test
-                  filters:
-                      branches:
-                          only:
-                              - /^release\/.+/
-                              - /^cci\/.+/
-            - dashboards-verify:
-                  requires:
-                      - dashboards-publish
-                  filters:
-                      branches:
-                          only:
-                              - /^release\/.+/
                               - /^cci\/.+/
 
     nova-release:
