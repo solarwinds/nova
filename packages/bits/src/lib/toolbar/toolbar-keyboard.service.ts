@@ -34,6 +34,13 @@ export class ToolbarKeyboardService {
     }
 
     public onKeyDown(event: KeyboardEvent): void {
+        // Allow native keyboard handling inside search inputs (e.g. arrow keys move caret)
+        // instead of hijacking navigation for the whole toolbar.
+        const target = event.target as HTMLElement | null;
+        if (this.isSearchTarget(target)) {
+            return;
+        }
+
         const { code } = event;
 
         if (
@@ -47,6 +54,22 @@ export class ToolbarKeyboardService {
         if (code === KEYBOARD_CODE.TAB) {
             this.closeMenuIfOpened();
         }
+    }
+
+    private isSearchTarget(target: HTMLElement | null): boolean {
+        if (!target) {
+            return false;
+        }
+
+        // Common ways a search input can be marked in DOM.
+        // - <input type="search">
+        // - role="searchbox"
+        // - a class/data attribute containing "search"
+        const el = target.closest?.(
+            "input[type=\"search\"], [role=\"searchbox\"], .search, [class*=\"search\"], [data-testid*=\"search\"], [data-automation-id*=\"search\"]"
+        ) as HTMLElement | null;
+
+        return !!el;
     }
 
     private navigateByArrow(code: KEYBOARD_CODE): void {
