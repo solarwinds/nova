@@ -2,7 +2,7 @@
 
 Atoms are small, user-focused wrappers around UI components used in Nova UI tests.
 
-The goal is that **tests don’t talk to the test framework** (Playwright/Protractor/etc.) and don’t depend on:
+The goal is that **tests don't talk to the test framework** (Playwright) and don't depend on:
 
 - the internal DOM structure of a component
 - implementation-specific CSS classes

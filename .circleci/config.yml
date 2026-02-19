@@ -271,63 +271,9 @@ jobs:
                   command: yarn run test
             - store_test_results:
                   path: packages/bits/test-results
-    bits-e2e-test:
-        executor: ubuntu
-        resource_class: medium+
-        working_directory: ~/nova
-        environment:
-            PROJECT_DIR: ~/nova/packages/bits
-        steps:
-            - browser-tools/install-chromedriver
-            - browser-tools/install-chrome
-            - attach_workspace:
-                  at: ~/nova
-            - restore_cache:
-                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
-            - reuse-cache
-            - run:
-                  name: Start Selenium docker image
-                  command: docker-compose up -d --build selenium
-            - run:
-                  name: E2E tests
-                  command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/bits
-            - run:
-                  name: Cleanup
-                  command: docker-compose down -v --rmi=local
-    bits-a11y-test:
-        executor: ubuntu
-        working_directory: ~/nova
-        resource_class: medium+
-        environment:
-            PROJECT_DIR: ~/nova/packages/bits
-        steps:
-            - browser-tools/install-chrome
-            - browser-tools/install-chromedriver
-            - attach_workspace:
-                  at: ~/nova
-            - run:
-                  name: Check git diff to see if builds should skip e2e
-                  working_directory: ~/nova/packages/bits
-                  command: |
-                      if [ -f packages/bits/package-cached ] && [ "$USE_CACHE" == "true" ]; then
-                          echo "This package was restored from cache so we're skipping a11y tests"
-                          circleci step halt
-                      fi
-            - restore_cache:
-                  key: bits-dist-{{ checksum "packages/bits/git-commit" }}
-            - reuse-cache
-            - run:
-                  name: Start Selenium docker image
-                  command: docker-compose up -d --build selenium
-            - run:
-                  name: a11y tests
-                  command: docker-compose run --user="$UID" build npm run a11y:ci --prefix ./packages/bits
-            - run:
-                  name: Cleanup
-                  command: docker-compose down -v --rmi=local
-    bits-test-playwright:
+    bits-ui-test:
         executor: playwright
-        parallelism: 6
+        parallelism: 7
         steps:
             - attach_workspace:
                   at: ~/nova
@@ -335,8 +281,7 @@ jobs:
             - run-playwright-shard:
                   project_dir: "packages/bits"
                   percy_token: BITS_PERCY_TOKEN
-
-    bits-test-playwright-merge:
+    bits-ui-test-report:
         executor: playwright
         steps:
             - attach_workspace:
@@ -345,7 +290,6 @@ jobs:
             - merge-playwright-reports:
                   project_dir: "packages/bits"
                   percy_token: BITS_PERCY_TOKEN
-
     bits-pack:
         executor: node
         steps:
@@ -386,7 +330,6 @@ jobs:
                   name: Verify published package
                   command: |
                       yarn run verify-ci
-
     charts-build:
         executor: node
         working_directory: ~/nova
@@ -452,7 +395,7 @@ jobs:
                   command: yarn run test
             - store_test_results:
                   path: packages/charts/test-results
-    charts-test-playwright:
+    charts-ui-test:
         executor: playwright
         parallelism: 2
         steps:
@@ -470,7 +413,7 @@ jobs:
             - run-playwright-shard:
                   project_dir: "packages/charts"
                   percy_token: CHARTS_PERCY_TOKEN
-    charts-test-playwright-merge:
+    charts-ui-test-report:
         executor: playwright
         steps:
             - attach_workspace:
@@ -584,7 +527,7 @@ jobs:
                   command: yarn run test
             - store_test_results:
                   path: packages/dashboards/test-results
-    dashboards-test-playwright:
+    dashboards-ui-test:
         executor: playwright
         parallelism: 2
         steps:
@@ -602,7 +545,7 @@ jobs:
             - run-playwright-shard:
                   project_dir: "packages/dashboards"
                   percy_token: DASHBOARDS_PERCY_TOKEN
-    dashboards-test-playwright-merge:
+    dashboards-ui-test-report:
         executor: playwright
         steps:
             - attach_workspace:
@@ -611,35 +554,6 @@ jobs:
             - merge-playwright-reports:
                   project_dir: "packages/dashboards"
                   percy_token: DASHBOARDS_PERCY_TOKEN
-    dashboards-e2e-test:
-        executor: ubuntu
-        resource_class: medium+
-        working_directory: ~/nova
-        environment:
-            PROJECT_DIR: ~/nova/packages/dashboards
-        steps:
-            - browser-tools/install-chrome
-            - browser-tools/install-chromedriver
-            - attach_workspace:
-                  at: ~/nova
-            - reuse-cache
-            - run:
-                  name: Check git diff to see if builds should skip e2e
-                  working_directory: ~/nova/packages/dashboards
-                  command: |
-                      if [ -f packages/dashboards/package-cached ] && [ "$USE_CACHE" == "true" ]; then
-                          echo "This package was restored from cache so we're skipping e2e tests"
-                          circleci step halt
-                      fi
-            - run:
-                  name: Start Selenium docker image
-                  command: docker-compose up -d --build selenium
-            - run:
-                  name: E2E tests
-                  command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/dashboards
-            - run:
-                  name: Cleanup
-                  command: docker-compose down -v --rmi=local
     dashboards-pack:
         executor: node
         working_directory: ~/nova
@@ -769,26 +683,20 @@ workflows:
             - bits-unit-test:
                   requires:
                       - bits-build
-            - bits-e2e-test:
+            - bits-ui-test:
                   requires:
                       - bits-build
-            - bits-test-playwright:
+            - bits-ui-test-report:
                   requires:
-                      - bits-build
-            - bits-test-playwright-merge:
-                  requires:
-                      - bits-test-playwright
-            - bits-a11y-test:
-                  requires:
-                      - bits-build
+                      - bits-ui-test
             - bits-publish:
                   requires:
-                      - bits-e2e-test
                       - bits-unit-test
-                      - charts-test-playwright-merge
+                      - bits-ui-test-report
                       - charts-unit-test
-                      - dashboards-e2e-test
+                      - charts-ui-test-report
                       - dashboards-unit-test
+                      - dashboards-ui-test-report
                   filters:
                       branches:
                           only:
@@ -809,20 +717,20 @@ workflows:
             - charts-unit-test:
                   requires:
                       - charts-build
-            - charts-test-playwright:
+            - charts-ui-test:
                   requires:
                       - charts-build
-            - charts-test-playwright-merge:
+            - charts-ui-test-report:
                   requires:
-                      - charts-test-playwright
+                      - charts-ui-test
             - charts-publish:
                   requires:
-                      - bits-e2e-test
                       - bits-unit-test
+                      - bits-ui-test-report
                       - charts-unit-test
-                      - charts-test-playwright-merge
-                      - dashboards-e2e-test
+                      - charts-ui-test-report
                       - dashboards-unit-test
+                      - dashboards-ui-test-report
                   filters:
                       branches:
                           only:
@@ -843,23 +751,20 @@ workflows:
             - dashboards-unit-test:
                   requires:
                       - dashboards-build
-            - dashboards-test-playwright:
+            - dashboards-ui-test:
                   requires:
                       - dashboards-build
-            - dashboards-test-playwright-merge:
+            - dashboards-ui-test-report:
                   requires:
-                      - dashboards-test-playwright
-            - dashboards-e2e-test:
-                  requires:
-                      - dashboards-build
+                      - dashboards-ui-test
             - dashboards-publish:
                   requires:
-                      - bits-e2e-test
                       - bits-unit-test
+                      - bits-ui-test-report
                       - charts-unit-test
-                      - charts-test-playwright-merge
-                      - dashboards-e2e-test
+                      - charts-ui-test-report
                       - dashboards-unit-test
+                      - dashboards-ui-test-report
                   filters:
                       branches:
                           only:
