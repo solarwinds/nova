@@ -18,7 +18,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { SimpleChange } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { DomSanitizer } from "@angular/platform-browser";
 
@@ -53,7 +52,7 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [IconComponent],
+                imports: [IconComponent],
                 providers: [
                     IconService,
                     {
@@ -67,17 +66,15 @@ describe("components >", () => {
             });
             fixture = TestBed.createComponent(IconComponent);
             subject = fixture.componentInstance;
-            fixture.detectChanges();
-            subject.icon = "printer";
-            subject.ngOnChanges({
-                icon: new SimpleChange(undefined, "printer", false),
-            });
         });
 
         it("should find icon data", () => {
-            expect(subject.icon).toBe("printer");
+            fixture.componentRef.setInput("icon", "printer");
+            fixture.detectChanges();
 
-            const iconClass = subject.iconClass;
+            expect(subject.icon()).toBe("printer");
+
+            const iconClass = subject.iconClass();
             expect(iconClass).toContain("nui-icon");
             expect(iconClass).toContain(BRUSH_TYPE);
             expect(iconClass).not.toContain("nui-icon-not-found");
@@ -85,46 +82,51 @@ describe("components >", () => {
 
         it("should not find icon data", () => {
             const icon = "unknown";
-            subject.icon = icon;
-            subject.ngOnChanges({
-                icon: new SimpleChange(undefined, "unknown", false),
-            });
+            fixture.componentRef.setInput("icon", icon);
+            fixture.detectChanges();
 
-            expect(subject.icon).toBe(icon);
+            expect(subject.icon()).toBe(icon);
 
-            const iconClass = subject.iconClass;
+            const iconClass = subject.iconClass();
             expect(iconClass).toContain("nui-icon");
             expect(iconClass).not.toContain(CSS_CLASS);
             expect(iconClass).toContain("nui-icon-not-found");
 
-            expect(subject.resultingSvg).not.toContain("svg");
+            expect(subject.resultingSvg().toString()).not.toContain("svg");
         });
 
         it("should have iconColor, iconHoverColor, cssClass classes", () => {
-            subject.iconColor = ICON_COLOR;
-            subject.iconHoverColor = ICON_HOVER_COLOR;
-            subject.cssClass = CSS_CLASS;
+            fixture.componentRef.setInput("icon", "printer");
+            fixture.componentRef.setInput("iconColor", ICON_COLOR);
+            fixture.componentRef.setInput("iconHoverColor", ICON_HOVER_COLOR);
+            fixture.componentRef.setInput("cssClass", CSS_CLASS);
+            fixture.detectChanges();
 
-            expect(subject.iconClass).toContain(`${ICON_COLOR}-icon`);
-            expect(subject.iconClass).toContain(
+            expect(subject.iconClass()).toContain(`${ICON_COLOR}-icon`);
+            expect(subject.iconClass()).toContain(
                 `${ICON_HOVER_COLOR}-hover-icon`
             );
-            expect(subject.iconClass).toContain(CSS_CLASS);
+            expect(subject.iconClass()).toContain(CSS_CLASS);
         });
 
         it("should not have iconColor, iconHoverColor, cssClass classes", () => {
-            expect(subject.iconClass).not.toContain(`${ICON_COLOR}-icon`);
-            expect(subject.iconClass).not.toContain(
+            fixture.componentRef.setInput("icon", "printer");
+            fixture.detectChanges();
+
+            expect(subject.iconClass()).not.toContain(`${ICON_COLOR}-icon`);
+            expect(subject.iconClass()).not.toContain(
                 `${ICON_HOVER_COLOR}-hover-icon`
             );
-            expect(subject.iconClass).not.toContain(CSS_CLASS);
+            expect(subject.iconClass()).not.toContain(CSS_CLASS);
         });
 
         it("should have valid iconSize class", () => {
+            fixture.componentRef.setInput("icon", "printer");
             for (const key in IconComponent.SIZE_MAP) {
                 if (IconComponent.SIZE_MAP.hasOwnProperty(key)) {
-                    subject.iconSize = key;
-                    expect(subject.iconClass).toContain(
+                    fixture.componentRef.setInput("iconSize", key);
+                    fixture.detectChanges();
+                    expect(subject.iconClass()).toContain(
                         IconComponent.SIZE_MAP[key]
                     );
                 }
@@ -132,34 +134,41 @@ describe("components >", () => {
         });
 
         it("should not have iconSize class", () => {
-            subject.iconSize = "unknown";
-            expect(subject.iconClass).not.toContain("nui-icon-size");
+            fixture.componentRef.setInput("icon", "printer");
+            fixture.componentRef.setInput("iconSize", "unknown");
+            fixture.detectChanges();
+
+            expect(subject.iconClass()).not.toContain("nui-icon-size");
         });
 
         it("should have valid counter", () => {
-            subject.counter = COUNTER;
-            expect(subject.counter).toBe(COUNTER);
+            fixture.componentRef.setInput("icon", "printer");
+            fixture.componentRef.setInput("counter", COUNTER);
+            fixture.detectChanges();
+
+            expect(subject.counter()).toBe(COUNTER);
         });
 
         it("should have undefined counter", () => {
-            subject.counter = "a";
-            expect(subject.counter).toBeUndefined();
+            fixture.componentRef.setInput("icon", "printer");
+            fixture.componentRef.setInput("counter", "a");
+            fixture.detectChanges();
 
-            subject.counter = undefined;
-            expect(subject.counter).toBeUndefined();
+            expect(subject.counter()).toBeUndefined();
+
+            fixture.componentRef.setInput("counter", undefined);
+            fixture.detectChanges();
+
+            expect(subject.counter()).toBeUndefined();
         });
+
         it("should change status and childStatus", () => {
-            subject.status = IconStatus.Critical;
-            subject.childStatus = IconStatus.Unmanaged;
-            subject.ngOnChanges({
-                status: new SimpleChange(undefined, IconStatus.Critical, false),
-                childStatus: new SimpleChange(
-                    undefined,
-                    IconStatus.Unmanaged,
-                    false
-                ),
-            });
-            const result = subject.resultingSvg.toString();
+            fixture.componentRef.setInput("icon", "printer");
+            fixture.componentRef.setInput("status", IconStatus.Critical);
+            fixture.componentRef.setInput("childStatus", IconStatus.Unmanaged);
+            fixture.detectChanges();
+
+            const result = subject.resultingSvg().toString();
             expect(result.includes("nui-icon-item__child")).toBeTruthy();
             expect(result.includes("nui-icon-item__grand-child")).toBeTruthy();
         });
