@@ -41,7 +41,7 @@ export default defineConfig({
         ? [["blob"], ["junit", { outputFile: "test-results/results.xml" }]]
         : [["html"]],
     webServer: {
-        command: "yarn run serve-examples",
+        command: "yarn run serve-examples:prod",
         url: "http://localhost:4200",
         reuseExistingServer: !process.env["CI"],
     },
