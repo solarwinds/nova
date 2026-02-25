@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
 import { ISelectChangedEvent } from "@nova-ui/bits";
@@ -32,6 +32,8 @@ import { ISelectChangedEvent } from "@nova-ui/bits";
     standalone: false,
 })
 export class SelectVisualTestComponent {
+    private formBuilder = inject(FormBuilder);
+
     public isRequired = true;
     public datasetBasic = {
         items: [
@@ -120,7 +122,7 @@ export class SelectVisualTestComponent {
         ],
     };
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor() {
         this.myForm = this.formBuilder.group({
             item: this.formBuilder.control(this.datasetBasic.selectedItem, [
                 Validators.required,

@@ -18,13 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    Component,
-    ElementRef,
-    HostBinding,
-    Input,
-    OnInit,
-} from "@angular/core";
+import { Component, ElementRef, HostBinding, Input, OnInit, inject } from "@angular/core";
 
 import { ResizeDirection } from "../../../common/directives/resizer/public-api";
 import { ILayoutElementDirection } from "../public-api";
@@ -38,6 +32,8 @@ import { ILayoutElementDirection } from "../public-api";
     standalone: false,
 })
 export class SheetComponent implements OnInit {
+    elRef = inject(ElementRef);
+
     @HostBinding("class.sheet-fit-content")
     @Input()
     fitContent: boolean;
@@ -47,8 +43,6 @@ export class SheetComponent implements OnInit {
     @HostBinding("class.sheet-direction-row") directionRow = true;
 
     public resizeDirection: ResizeDirection;
-
-    constructor(public elRef: ElementRef) {}
 
     public ngOnInit(): void {
         this.directionColumn =

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, inject } from "@angular/core";
 
 import { ThemeSwitchService } from "@nova-ui/bits";
 
@@ -28,8 +28,8 @@ import { ThemeSwitchService } from "@nova-ui/bits";
     standalone: false,
 })
 export class ThemeSwitchServiceExampleComponent implements OnInit, OnDestroy {
-    // Inject the service
-    constructor(public themeSwitchService: ThemeSwitchService) {}
+    themeSwitchService = inject(ThemeSwitchService);
+
 
     public ngOnInit(): void {
         // Configure the service to listen for changes to the system color scheme preference.

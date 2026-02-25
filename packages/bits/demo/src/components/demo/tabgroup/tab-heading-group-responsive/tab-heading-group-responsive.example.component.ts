@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectorRef, Component, Input } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, inject } from "@angular/core";
 
 @Component({
     selector: "nui-tab-heading-group-responsive-example",
@@ -33,12 +33,14 @@ import { ChangeDetectorRef, Component, Input } from "@angular/core";
     standalone: false,
 })
 export class TabHeadingGroupResponsiveExampleComponent {
+    private changeDetector = inject(ChangeDetectorRef);
+
     @Input() public icon: boolean = false;
 
     public currentTabId: string;
     public tabsetContent: object[] = [];
 
-    constructor(private changeDetector: ChangeDetectorRef) {
+    constructor() {
         this.setTabs();
     }
 

@@ -19,16 +19,7 @@
 //  THE SOFTWARE.
 
 import { DOCUMENT } from "@angular/common";
-import {
-    ApplicationRef,
-    ComponentFactory,
-    ComponentFactoryResolver,
-    ComponentRef,
-    Inject,
-    Injectable,
-    Injector,
-    TemplateRef,
-} from "@angular/core";
+import { ApplicationRef, ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, Injector, TemplateRef, inject } from "@angular/core";
 import isNil from "lodash/isNil";
 
 import { DialogBackdropComponent } from "./dialog-backdrop.component";
@@ -43,15 +34,13 @@ import { OverlayContainerService } from "../overlay/public-api";
  */
 @Injectable({ providedIn: "root" })
 export class DialogStackService {
-    private windowAttributes = ["backdrop", "keyboard", "size", "windowClass"];
+    private applicationRef = inject(ApplicationRef);
+    private injector = inject(Injector);
+    private factoryResolver = inject(ComponentFactoryResolver);
+    private overlayContainerService = inject(OverlayContainerService);
+    private document = inject<Document>(DOCUMENT);
 
-    constructor(
-        private applicationRef: ApplicationRef,
-        private injector: Injector,
-        private factoryResolver: ComponentFactoryResolver,
-        private overlayContainerService: OverlayContainerService,
-        @Inject(DOCUMENT) private document: Document
-    ) {}
+    private windowAttributes = ["backdrop", "keyboard", "size", "windowClass"];
 
     open(
         moduleCFR: ComponentFactoryResolver,

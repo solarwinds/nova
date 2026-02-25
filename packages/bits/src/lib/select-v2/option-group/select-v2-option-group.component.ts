@@ -18,18 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterContentInit,
-    ChangeDetectionStrategy,
-    Component,
-    ContentChildren,
-    forwardRef,
-    HostBinding,
-    Inject,
-    OnDestroy,
-    Optional,
-    QueryList,
-} from "@angular/core";
+import { AfterContentInit, ChangeDetectionStrategy, Component, ContentChildren, forwardRef, HostBinding, OnDestroy, QueryList, inject } from "@angular/core";
 import every from "lodash/every";
 import { merge, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -62,11 +51,9 @@ export class SelectV2OptionGroupComponent
     private select: IOptionedComponent;
     private onDestroy$ = new Subject<void>();
 
-    constructor(
-        @Optional()
-        @Inject(NUI_SELECT_V2_OPTION_PARENT_COMPONENT)
-        parent: IOptionedComponent
-    ) {
+    constructor() {
+        const parent = inject<IOptionedComponent>(NUI_SELECT_V2_OPTION_PARENT_COMPONENT, { optional: true })!;
+
         this.select = parent;
     }
 

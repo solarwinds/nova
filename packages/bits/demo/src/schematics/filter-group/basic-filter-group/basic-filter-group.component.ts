@@ -18,15 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    Component,
-    EventEmitter,
-    Inject,
-    Input,
-    OnInit,
-    Output,
-    TemplateRef,
-} from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, inject } from "@angular/core";
 import _orderBy from "lodash/orderBy";
 
 import { DialogService, IFilter, IFilterPub } from "@nova-ui/bits";
@@ -44,6 +36,8 @@ import {
     standalone: false,
 })
 export class BasicFilterGroupCompositeComponent implements IFilterPub, OnInit {
+    private dialogService = inject<DialogService>(DialogService);
+
     @Input() filterGroupItem: IFilterGroupItem;
     @Input() checkboxTemplateRef: TemplateRef<string>;
     @Input() expanderTemplateRef: TemplateRef<string>;
@@ -51,8 +45,6 @@ export class BasicFilterGroupCompositeComponent implements IFilterPub, OnInit {
     @Output() filterChanged: EventEmitter<IFilterGroupItem> =
         new EventEmitter();
     @Output() showAllButtonClicked: EventEmitter<any> = new EventEmitter();
-
-    constructor(@Inject(DialogService) private dialogService: DialogService) {}
 
     public ngOnInit(): void {
         this.filterGroupItem.allFilterOptions = _orderBy(

@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { ActiveDescendantKeyManager, LiveAnnouncer } from "@angular/cdk/a11y";
-import { Injectable, QueryList } from "@angular/core";
+import { Injectable, QueryList, inject } from "@angular/core";
 import isNil from "lodash/isNil";
 
 import {
@@ -31,12 +31,12 @@ import { IOption, IOverlayComponent } from "../overlay/types";
 
 @Injectable()
 export class OptionKeyControlService<T extends IOption> {
+    liveAnnouncer = inject(LiveAnnouncer);
+
     public popup: IOverlayComponent;
     public optionItems: QueryList<T>;
 
     private keyboardEventsManager: ActiveDescendantKeyManager<T>;
-
-    constructor(public liveAnnouncer: LiveAnnouncer) {}
 
     public initKeyboardManager(): void {
         this.keyboardEventsManager = new ActiveDescendantKeyManager(

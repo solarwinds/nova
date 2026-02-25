@@ -35,28 +35,7 @@ import {
     StickyPositioningListener,
 } from "@angular/cdk/table";
 import { DOCUMENT } from "@angular/common";
-import {
-    AfterContentInit,
-    AfterViewInit,
-    Attribute,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Inject,
-    Input,
-    IterableDiffers,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Optional,
-    Output,
-    SkipSelf,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterContentInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ElementRef, EventEmitter, HostBinding, Input, IterableDiffers, OnChanges, OnDestroy, OnInit, Output, ViewEncapsulation, inject, HostAttributeToken } from "@angular/core";
 import _isEqual from "lodash/isEqual";
 import _keys from "lodash/keys";
 import { Subscription } from "rxjs";
@@ -123,6 +102,14 @@ export class TableComponent<T>
     extends CdkTable<T>
     implements OnInit, AfterViewInit, AfterContentInit, OnDestroy, OnChanges
 {
+    protected _differs: IterableDiffers;
+    protected _changeDetectorRef: ChangeDetectorRef;
+    protected _elementRef: ElementRef<any>;
+    protected _dir: Directionality;
+    private tableStateHandlerService = inject(TableStateHandlerService);
+    private document: Document;
+    private platform: Platform;
+
     @Input() reorderable = false;
     @Input() sortable = false;
     @Input() resizable = false;
@@ -164,23 +151,18 @@ export class TableComponent<T>
     @HostBinding("class.nui-table__table-fixed") layoutFixed = false;
     @ContentChild(CdkVirtualForOf) public virtualFor?: CdkVirtualForOf<unknown>;
 
-    constructor(
-        protected _differs: IterableDiffers,
-        protected _changeDetectorRef: ChangeDetectorRef,
-        protected _elementRef: ElementRef<any>,
-        @Attribute("role") role: string,
-        protected _dir: Directionality,
-        private tableStateHandlerService: TableStateHandlerService,
-        @Inject(DOCUMENT) private document: Document,
-        private platform: Platform,
-        @Inject(_VIEW_REPEATER_STRATEGY)
-        viewRepeater: _ViewRepeater<T, RenderRow<T>, RowContext<T>>,
-        viewportRuler: ViewportRuler,
-        @Optional()
-        @SkipSelf()
-        @Inject(STICKY_POSITIONING_LISTENER)
-        stickyPositioningListener: StickyPositioningListener
-    ) {
+    constructor() {
+        const _differs = inject(IterableDiffers);
+        const _changeDetectorRef = inject(ChangeDetectorRef);
+        const _elementRef = inject<ElementRef<any>>(ElementRef);
+        const role = inject(new HostAttributeToken("role"));
+        const _dir = inject(Directionality);
+        const document = inject<Document>(DOCUMENT);
+        const platform = inject(Platform);
+        const viewRepeater = inject<_ViewRepeater<T, RenderRow<T>, RowContext<T>>>(_VIEW_REPEATER_STRATEGY);
+        const viewportRuler = inject(ViewportRuler);
+        const stickyPositioningListener = inject<StickyPositioningListener>(STICKY_POSITIONING_LISTENER, { optional: true, skipSelf: true });
+
         // The _ViewRepeater and _CoalescedStyleScheduler parameters were optional before Angular v12.
         // They're included here for compatibility with Angular v12 and later.
         super(
@@ -195,6 +177,13 @@ export class TableComponent<T>
             viewportRuler,
             stickyPositioningListener
         );
+
+        this._differs = _differs;
+        this._changeDetectorRef = _changeDetectorRef;
+        this._elementRef = _elementRef;
+        this._dir = _dir;
+        this.document = document;
+        this.platform = platform;
     }
 
     public getFilterComponents(): IFilteringParticipants {

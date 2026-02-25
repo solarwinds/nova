@@ -20,16 +20,7 @@
 
 import { ListRange } from "@angular/cdk/collections";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    forwardRef,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, OnDestroy, OnInit, ViewChild, inject } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -56,6 +47,9 @@ import { RandomuserTableDataSource } from "../table-virtual-scroll-datasource";
 export class TableVirtualScrollRealApiMinimalistExampleComponent
     implements AfterViewInit, OnDestroy, OnInit
 {
+    selectorService = inject(SelectorService);
+    private cd = inject(ChangeDetectorRef);
+
     // This value is obtained from the server and used to evaluate the total number of pages to display
     private _totalItems: number = 0;
     // This value is being depending to obtain the total number of pages available depending on the range of the fatched items selected
@@ -95,10 +89,7 @@ export class TableVirtualScrollRealApiMinimalistExampleComponent
     public makeSticky: boolean = true;
     private dataSource: RandomuserTableDataSource;
 
-    constructor(
-        public selectorService: SelectorService,
-        private cd: ChangeDetectorRef
-    ) {
+    constructor() {
         this.dataSource = new RandomuserTableDataSource();
     }
 

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, ViewChild, inject } from "@angular/core";
 import { Subscription } from "rxjs";
 
 import {
@@ -46,6 +46,9 @@ interface IExampleTableModel {
     standalone: false,
 })
 export class TableSelectExampleComponent implements AfterViewInit, OnDestroy {
+    dataSourceService = inject<ClientSideDataSource<IExampleTableModel>>(ClientSideDataSource);
+    selectorService = inject(SelectorService);
+
     public displayedColumns = [
         "position",
         "item",
@@ -69,11 +72,6 @@ export class TableSelectExampleComponent implements AfterViewInit, OnDestroy {
     @ViewChild("filteringPaginator") filteringPaginator: PaginatorComponent;
 
     private outputsSubscription: Subscription;
-
-    constructor(
-        public dataSourceService: ClientSideDataSource<IExampleTableModel>,
-        public selectorService: SelectorService
-    ) {}
 
     public ngAfterViewInit(): void {
         this.dataSourceService.componentTree = {

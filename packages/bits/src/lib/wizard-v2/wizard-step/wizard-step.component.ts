@@ -24,21 +24,7 @@ import {
     StepperOptions,
     STEPPER_GLOBAL_OPTIONS,
 } from "@angular/cdk/stepper";
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    forwardRef,
-    Inject,
-    Input,
-    OnDestroy,
-    OnInit,
-    Optional,
-    SkipSelf,
-    TemplateRef,
-    ViewEncapsulation,
-} from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, Input, OnDestroy, OnInit, TemplateRef, ViewEncapsulation, inject } from "@angular/core";
 import { FormControl, FormGroupDirective, NgForm } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -72,6 +58,9 @@ export class WizardStepV2Component
     extends CdkStep
     implements OnInit, OnDestroy, ErrorStateMatcher
 {
+    private changeDetectorRef = inject(ChangeDetectorRef);
+    private _errorStateMatcher = inject(ErrorStateMatcher, { skipSelf: true });
+
     @Input() template?: TemplateRef<any>;
 
     @Input() stepStateConfig: Partial<WizardStepStateConfig>;
@@ -88,14 +77,10 @@ export class WizardStepV2Component
 
     private readonly destroy$ = new Subject<void>();
 
-    constructor(
-        private changeDetectorRef: ChangeDetectorRef,
-        @Inject(forwardRef(() => CdkStepper)) stepper: any,
-        @SkipSelf() private _errorStateMatcher: ErrorStateMatcher,
-        @Optional()
-        @Inject(STEPPER_GLOBAL_OPTIONS)
-        stepperOptions?: StepperOptions
-    ) {
+    constructor() {
+        const stepper = inject(CdkStepper);
+        const stepperOptions = inject<StepperOptions>(STEPPER_GLOBAL_OPTIONS, { optional: true });
+
         super(stepper, stepperOptions);
     }
 

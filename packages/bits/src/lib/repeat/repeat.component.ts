@@ -28,27 +28,7 @@ import {
     transferArrayItem,
 } from "@angular/cdk/drag-drop";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    DoCheck,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Input,
-    IterableDiffer,
-    IterableDiffers,
-    OnDestroy,
-    OnInit,
-    Output,
-    QueryList,
-    TemplateRef,
-    ViewChild,
-    ViewChildren,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, ElementRef, EventEmitter, HostBinding, Input, IterableDiffer, IterableDiffers, OnDestroy, OnInit, Output, QueryList, TemplateRef, ViewChild, ViewChildren, ViewEncapsulation, inject } from "@angular/core";
 import _isEqual from "lodash/isEqual";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
@@ -100,6 +80,12 @@ interface IDndItemDropped<T = unknown> {
 export class RepeatComponent<T extends IRepeatItem = unknown>
     implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub
 {
+    changeDetector = inject(ChangeDetectorRef);
+    logger = inject(LoggerService);
+    private iterableDiffers = inject(IterableDiffers);
+    dragDropService = inject(DragDrop);
+    private elRef = inject(ElementRef);
+
     /**
      * Turns on/off dragging functionality
      */
@@ -311,14 +297,6 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
     get ariaMultiselectable(): true | null {
         return this.isModeMulti() || null;
     }
-
-    constructor(
-        public changeDetector: ChangeDetectorRef,
-        public logger: LoggerService,
-        private iterableDiffers: IterableDiffers,
-        public dragDropService: DragDrop,
-        private elRef: ElementRef
-    ) {}
 
     public ngOnInit(): void {
         this.intersectionObserver = new IntersectionObserver(

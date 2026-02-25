@@ -18,13 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    OnDestroy,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, ViewChild, inject } from "@angular/core";
 import { Subscription } from "rxjs";
 
 import {
@@ -72,6 +66,9 @@ interface ExampleItem {
 export class DepreacatedDataSourceClientSideBasicExampleComponent
     implements AfterViewInit, OnDestroy
 {
+    dataSourceService = inject<LocalFilteringDataSource<ExampleItem>>(LocalFilteringDataSource);
+    changeDetection = inject(ChangeDetectorRef);
+
     public searchTerm = "";
     public page = 1;
 
@@ -93,10 +90,9 @@ export class DepreacatedDataSourceClientSideBasicExampleComponent
 
     private outputsSubscription: Subscription;
 
-    constructor(
-        public dataSourceService: LocalFilteringDataSource<ExampleItem>,
-        public changeDetection: ChangeDetectorRef
-    ) {
+    constructor() {
+        const dataSourceService = this.dataSourceService;
+
         dataSourceService.setData(RANDOM_ARRAY);
 
         this.filters = ["regular", "dark", "light"];

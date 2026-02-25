@@ -21,14 +21,7 @@
 import { AriaDescriber, FocusMonitor } from "@angular/cdk/a11y";
 import { coerceBooleanProperty } from "@angular/cdk/coercion";
 import { hasModifierKey } from "@angular/cdk/keycodes";
-import {
-    Directive,
-    ElementRef,
-    Input,
-    NgZone,
-    OnDestroy,
-    ViewContainerRef,
-} from "@angular/core";
+import { Directive, ElementRef, Input, NgZone, OnDestroy, ViewContainerRef, inject } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -56,6 +49,13 @@ import { OverlayPlacement } from "../overlay/types";
     standalone: false,
 })
 export class TooltipDirective implements OnDestroy {
+    private _elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+    private _viewContainerRef = inject(ViewContainerRef);
+    private _ngZone = inject(NgZone);
+    private _ariaDescriber = inject(AriaDescriber);
+    private _focusMonitor = inject(FocusMonitor);
+    private overlayPositionService = inject(OverlayPositionService);
+
     _tooltipInstance?: TooltipComponent;
 
     private _position: TooltipPosition = "top";
@@ -132,14 +132,11 @@ export class TooltipDirective implements OnDestroy {
     /** Emits when the component is destroyed. */
     private readonly _destroyed = new Subject<void>();
 
-    constructor(
-        private _elementRef: ElementRef<HTMLElement>,
-        private _viewContainerRef: ViewContainerRef,
-        private _ngZone: NgZone,
-        private _ariaDescriber: AriaDescriber,
-        private _focusMonitor: FocusMonitor,
-        private overlayPositionService: OverlayPositionService
-    ) {
+    constructor() {
+        const _elementRef = this._elementRef;
+        const _ngZone = this._ngZone;
+        const _focusMonitor = this._focusMonitor;
+
         this.overlayPositionService.setOverlayPositionConfig({
             arrowSize: 10,
             arrowPadding: 0,

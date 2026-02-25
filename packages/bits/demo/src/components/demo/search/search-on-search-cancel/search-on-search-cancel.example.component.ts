@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 
 import { ToastService } from "@nova-ui/bits";
 
@@ -28,7 +28,8 @@ import { ToastService } from "@nova-ui/bits";
     standalone: false,
 })
 export class SearchOnSearchCancelExampleComponent {
-    constructor(@Inject(ToastService) public toastService: ToastService) {}
+    toastService = inject<ToastService>(ToastService);
+
 
     public onSearch(value: string): void {
         this.toastService.success({

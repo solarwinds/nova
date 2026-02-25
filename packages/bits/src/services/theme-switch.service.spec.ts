@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, NgZone } from "@angular/core";
+import { Component, NgZone, inject as inject_1 } from "@angular/core";
 import { fakeAsync, TestBed, tick } from "@angular/core/testing";
 import {Router, RouterModule, Routes} from "@angular/router";
 
@@ -29,7 +29,9 @@ import { ThemeSwitchService } from "./theme-switch.service";
     standalone: false,
 })
 class FakeComponent {
-    constructor(private zone: NgZone, private router: Router) {}
+    private zone = inject_1(NgZone);
+    private router = inject_1(Router);
+
 
     public navigate(commands: any[]) {
         this.zone.run(async () => this.router.navigate(commands));

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 
 @Component({
@@ -27,6 +27,8 @@ import { FormBuilder } from "@angular/forms";
     standalone: false,
 })
 export class RadioGroupVisualTestComponent {
+    private formBuilder = inject(FormBuilder);
+
     public disabledForm;
     public colors = ["Red", "Green", "Blue"];
     public colorHints = {
@@ -38,7 +40,7 @@ export class RadioGroupVisualTestComponent {
     public selectedFruit: string;
     public selectedColor: string;
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor() {
         this.disabledForm = this.formBuilder.group({
             radioGroup: this.formBuilder.control({ value: "", disabled: true }),
         });

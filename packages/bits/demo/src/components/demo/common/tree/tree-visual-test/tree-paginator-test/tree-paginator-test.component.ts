@@ -24,12 +24,7 @@ import {
     CdkTree,
     NestedTreeControl,
 } from "@angular/cdk/tree";
-import {
-    Component,
-    IterableDiffer,
-    IterableDiffers,
-    ViewChild,
-} from "@angular/core";
+import { Component, IterableDiffer, IterableDiffers, ViewChild, inject } from "@angular/core";
 
 import { DOCUMENT_CLICK_EVENT, EventBusService, expand } from "@nova-ui/bits";
 
@@ -45,6 +40,10 @@ import { FoodNode, HttpMock, IApiResponse, TREE_DATA_PAGINATOR } from "../data";
     standalone: false,
 })
 export class TreePaginatorTestComponent {
+    private http = inject(HttpMock);
+    private differ = inject(IterableDiffers);
+    private eventBusService = inject(EventBusService);
+
     public pageSize = 10; // used for 'nui-paginator'
     public nodesTotalItems: { [key: string]: number } = {};
 
@@ -56,12 +55,6 @@ export class TreePaginatorTestComponent {
     @ViewChild(CdkTree) private cdkTree: CdkTree<FoodNode>;
 
     hasChild = (_: number, node: FoodNode): boolean => !!node.children;
-
-    constructor(
-        private http: HttpMock,
-        private differ: IterableDiffers,
-        private eventBusService: EventBusService
-    ) {}
 
     /** Load first page on first open */
     public onToggleClick(

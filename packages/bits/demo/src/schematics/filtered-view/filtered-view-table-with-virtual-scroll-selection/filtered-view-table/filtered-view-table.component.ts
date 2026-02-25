@@ -19,16 +19,7 @@
 //  THE SOFTWARE.
 
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 import { Subject } from "rxjs";
 import {
     filter,
@@ -60,6 +51,10 @@ import { IServer } from "../types";
 export class FilteredViewTableComponent
     implements OnInit, OnDestroy, AfterViewInit
 {
+    private dataSource = inject(DataSourceService) as FilteredViewTableWithVirtualScrollSelectionDataSource<IServer>;
+    private viewportManager = inject(VirtualViewportManager);
+    private changeDetection = inject(ChangeDetectorRef);
+
     public items: IServer[] = [];
     public isBusy: boolean = false;
     // This value is obtained from the server and used to evaluate the total number of pages to display
@@ -84,13 +79,6 @@ export class FilteredViewTableComponent
     public rowHeight = 40;
 
     private readonly destroy$ = new Subject<void>();
-
-    constructor(
-        @Inject(DataSourceService)
-        private dataSource: FilteredViewTableWithVirtualScrollSelectionDataSource<IServer>,
-        private viewportManager: VirtualViewportManager,
-        private changeDetection: ChangeDetectorRef
-    ) {}
 
     public ngOnInit(): void {
         this.dataSource.busy

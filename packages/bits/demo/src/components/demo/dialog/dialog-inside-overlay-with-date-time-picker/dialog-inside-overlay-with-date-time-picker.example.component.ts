@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, TemplateRef } from "@angular/core";
+import { Component, TemplateRef, inject } from "@angular/core";
 import moment, { Moment } from "moment/moment";
 
 import { DialogService, NuiDialogRef } from "@nova-ui/bits";
@@ -29,12 +29,14 @@ import { DialogService, NuiDialogRef } from "@nova-ui/bits";
     standalone: false,
 })
 export class DialogInsideOverlayWithDateTimePickerExampleComponent {
+    private dialogService = inject(DialogService);
+
     public dt: Moment;
     public selectedDate: Date;
 
     private activeDialog: NuiDialogRef;
 
-    constructor(private dialogService: DialogService) {
+    constructor() {
         this.dt = moment();
         this.selectedDate = new Date(this.dt.valueOf());
     }

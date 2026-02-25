@@ -19,18 +19,7 @@
 //  THE SOFTWARE.
 
 import { DOCUMENT } from "@angular/common";
-import {
-    Directive,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    HostListener,
-    Inject,
-    Input,
-    NgZone,
-    OnInit,
-    Output,
-} from "@angular/core";
+import { Directive, ElementRef, EventEmitter, HostBinding, HostListener, Input, NgZone, OnInit, Output, inject } from "@angular/core";
 import throttle from "lodash/throttle";
 
 import { DragAndDropService } from "./drag-and-drop.service";
@@ -83,6 +72,12 @@ export class DraggableDirective implements OnInit {
     private static adornerClass = "nui-drag__drag-container";
     private static adornerHaloClass = "nui-drag__drag-halo";
     private static dragsourceOverlayClass = "nui-drag__drag-source--overlay";
+
+    private elRef = inject(ElementRef);
+    private zone = inject(NgZone);
+    private utilService = inject(UtilService);
+    private dragAndDropService = inject(DragAndDropService);
+    private document = inject<Document>(DOCUMENT);
 
     @Input() adornerDragClass: string;
     @Input() payload: any;
@@ -147,14 +142,6 @@ export class DraggableDirective implements OnInit {
             this.document.removeEventListener("dragover", this.mouseHook);
         });
     }
-
-    constructor(
-        private elRef: ElementRef,
-        private zone: NgZone,
-        private utilService: UtilService,
-        private dragAndDropService: DragAndDropService,
-        @Inject(DOCUMENT) private document: Document
-    ) {}
 
     public ngOnInit(): void {
         this.draggable = true;

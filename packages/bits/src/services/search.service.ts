@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { DatePipe } from "@angular/common";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import has from "lodash/has";
 import isArray from "lodash/isArray";
 import isDate from "lodash/isDate";
@@ -49,27 +49,9 @@ import { ISearchService } from "./public-api";
  */
 @Injectable({ providedIn: "root" })
 export class SearchService implements ISearchService {
-    /**
-     *  __Description :__
-     * Search the value on the items within the given properties.
-     *
-     * __Parameters :__
-     *
-     * {any[]} items Items to search within.
-     *
-     *  {string[]} properties Properties where the search is applied. If no property specified, search is
-     *  applied on all fields.
-     *
-     *  {string|number|date} searchValue The searched value that is used as a string or string fragment. Empty
-     *  string returns the whole array.
-     *
-     *  {string} [dateFormat="mediumDate"] The Angular date format that is used for searching on Date type
-     *  properties.
-     *
-     *  return {any[]} Items resulted after the search.
-     *
-     */
-    constructor(private logger: LoggerService, private datePipe: DatePipe) {}
+    private logger = inject(LoggerService);
+    private datePipe = inject(DatePipe);
+
 
     public search = <T>(
         items: T[],

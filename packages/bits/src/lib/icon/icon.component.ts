@@ -18,14 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    ChangeDetectionStrategy,
-    Component,
-    Input,
-    OnChanges,
-    SimpleChanges,
-    ViewEncapsulation,
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges, ViewEncapsulation, inject } from "@angular/core";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import _isInteger from "lodash/isInteger";
 import isNil from "lodash/isNil";
@@ -56,6 +49,9 @@ export class IconComponent implements OnChanges {
         small: "nui-icon-size-sm",
     };
 
+    private iconService = inject(IconService);
+    private sanitizer = inject(DomSanitizer);
+
     @Input()
     iconColor: string;
     @Input()
@@ -80,11 +76,6 @@ export class IconComponent implements OnChanges {
 
     private iconFound: boolean;
     private iconData: IconData;
-
-    constructor(
-        private iconService: IconService,
-        private sanitizer: DomSanitizer
-    ) {}
 
     getIconByStatus(status: string): string {
         if (!status) {

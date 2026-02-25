@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { DOCUMENT } from "@angular/common";
-import { Inject, Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import _isNull from "lodash/isNull";
 
 import { OVERLAY_CONTAINER_CLASS, OVERLAY_DEFAULT_PRIORITY } from "./types";
@@ -29,7 +29,8 @@ const PRIORITY_ATTRIBUTE = "priority";
 /** @dynamic */
 @Injectable({ providedIn: "root" })
 export class OverlayContainerService {
-    constructor(@Inject(DOCUMENT) private document: Document) {}
+    private document = inject<Document>(DOCUMENT);
+
 
     /**
      * Create a shared container to be used by all overlays if needed

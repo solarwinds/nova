@@ -24,24 +24,7 @@ import {
     OverlayConfig,
 } from "@angular/cdk/overlay";
 import { DOCUMENT } from "@angular/common";
-import {
-    AfterContentInit,
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    ElementRef,
-    EventEmitter,
-    Inject,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterContentInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -74,6 +57,12 @@ const ADAPTER_OVERLAY_CONFIG: OverlayConfig = {
 export class PopupComponent
     implements AfterContentInit, AfterViewInit, OnChanges, OnDestroy
 {
+    private overlay = inject(Overlay);
+    private cdRef = inject(ChangeDetectorRef);
+    private eventBusService = inject(EventBusService);
+    private host = inject(ElementRef);
+    private document = inject<Document>(DOCUMENT);
+
     @ContentChild(PopupToggleDirective)
     public popupToggle: PopupToggleDirective;
 
@@ -136,14 +125,6 @@ export class PopupComponent
     private isContentInitialized: boolean;
     private readonly destroy$ = new Subject<void>();
     private lastEventType: string;
-
-    constructor(
-        private overlay: Overlay,
-        private cdRef: ChangeDetectorRef,
-        private eventBusService: EventBusService,
-        private host: ElementRef,
-        @Inject(DOCUMENT) private document: Document
-    ) {}
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.appendToBody) {

@@ -18,15 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    NgZone,
-    OnDestroy,
-    Output,
-} from "@angular/core";
+import { AfterViewInit, Directive, ElementRef, EventEmitter, NgZone, OnDestroy, Output, inject } from "@angular/core";
 import debounce from "lodash/debounce";
 
 import { RESIZE_DEBOUNCE_TIME } from "../../../constants/resize.constants";
@@ -39,13 +31,14 @@ import { RESIZE_DEBOUNCE_TIME } from "../../../constants/resize.constants";
     standalone: false,
 })
 export class ResizeObserverDirective implements OnDestroy, AfterViewInit {
+    private _element = inject(ElementRef);
+    private ngZone = inject(NgZone);
+
     @Output()
     public containerResize = new EventEmitter();
     public resizeHandler: Function;
     private _debounceTime = RESIZE_DEBOUNCE_TIME;
     private resizeObserver?: ResizeObserver;
-
-    constructor(private _element: ElementRef, private ngZone: NgZone) {}
 
     public set debounceTime(debounceTime: number) {
         this._debounceTime = debounceTime;

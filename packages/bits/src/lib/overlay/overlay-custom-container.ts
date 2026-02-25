@@ -26,7 +26,7 @@
 import { OverlayContainer } from "@angular/cdk/overlay";
 import { Platform } from "@angular/cdk/platform";
 import { DOCUMENT } from "@angular/common";
-import { Inject, Injectable, OnDestroy } from "@angular/core";
+import { Injectable, OnDestroy, inject } from "@angular/core";
 
 import { OverlayContainerService } from "./overlay-container.service";
 
@@ -36,11 +36,12 @@ export class OverlayCustomContainer
     extends OverlayContainer
     implements OnDestroy
 {
-    constructor(
-        @Inject(DOCUMENT) document: Document,
-        platform: Platform,
-        private overlayService: OverlayContainerService
-    ) {
+    private overlayService = inject(OverlayContainerService);
+
+    constructor() {
+        const document = inject<Document>(DOCUMENT);
+        const platform = inject(Platform);
+
         super(document, platform);
     }
 

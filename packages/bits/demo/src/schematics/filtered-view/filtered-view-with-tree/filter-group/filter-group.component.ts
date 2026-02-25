@@ -18,18 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    Component,
-    EventEmitter,
-    Inject,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    QueryList,
-    TemplateRef,
-    ViewChildren,
-} from "@angular/core";
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, TemplateRef, ViewChildren, inject } from "@angular/core";
 import _orderBy from "lodash/orderBy";
 import { Subject } from "rxjs";
 
@@ -53,6 +42,8 @@ import {
     standalone: false,
 })
 export class FilterGroupComponent implements IFilterPub, OnInit, OnDestroy {
+    private dialogService = inject<DialogService>(DialogService);
+
     @Input() filterGroupItem: IFilterGroupItem;
     @Input() checkboxTemplateRef: TemplateRef<string>;
     @Input() expanderTemplateRef: TemplateRef<string>;
@@ -64,8 +55,6 @@ export class FilterGroupComponent implements IFilterPub, OnInit, OnDestroy {
     @ViewChildren(CheckboxComponent) filterItems: QueryList<CheckboxComponent>;
 
     public onDestroy$ = new Subject<void>();
-
-    constructor(@Inject(DialogService) private dialogService: DialogService) {}
 
     public ngOnInit(): void {
         this.filterGroupItem.allFilterOptions = _orderBy(

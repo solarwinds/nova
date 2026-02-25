@@ -18,22 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Input,
-    NgZone,
-    OnDestroy,
-    Output,
-    QueryList,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, ElementRef, EventEmitter, HostBinding, Input, NgZone, OnDestroy, Output, QueryList, ViewChild, inject } from "@angular/core";
 import { Subscription } from "rxjs";
 
 import { TabHeadingComponent } from "../tab-heading/tab-heading.component";
@@ -48,6 +33,10 @@ import { TabHeadingComponent } from "../tab-heading/tab-heading.component";
     standalone: false,
 })
 export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
+    private el = inject(ElementRef);
+    private changeDetectorRef = inject(ChangeDetectorRef);
+    private ngZone = inject(NgZone);
+
     @ContentChildren(TabHeadingComponent) _tabs: QueryList<TabHeadingComponent>;
 
     @ViewChild("resizableArea") resizableArea: ElementRef;
@@ -73,12 +62,6 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
     private _ro: ResizeObserver;
     private _tabSelectedSubscriptions: Subscription[] = [];
     private _changesSubscription: Subscription;
-
-    constructor(
-        private el: ElementRef,
-        private changeDetectorRef: ChangeDetectorRef,
-        private ngZone: NgZone
-    ) {}
 
     public ngAfterViewInit(): void {
         // Observing the size of the component to check traverse

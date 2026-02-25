@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 
 import { IMenuGroup, LoggerService } from "@nova-ui/bits";
 
@@ -28,6 +28,8 @@ import { IMenuGroup, LoggerService } from "@nova-ui/bits";
     standalone: false,
 })
 export class ToolbarEmbeddedContentExampleComponent {
+    private logger = inject<LoggerService>(LoggerService);
+
     public itemsSource: IMenuGroup[] = [
         {
             header: $localize`section title`,
@@ -82,8 +84,6 @@ export class ToolbarEmbeddedContentExampleComponent {
 
     public value: string;
     private timerHandler: number;
-
-    public constructor(@Inject(LoggerService) private logger: LoggerService) {}
 
     public onCancel(value: string): void {
         this.logger.warn("Example onCancel fired. Value passed: " + value);

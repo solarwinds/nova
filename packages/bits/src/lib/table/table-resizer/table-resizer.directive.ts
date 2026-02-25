@@ -18,14 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    Directive,
-    EventEmitter,
-    HostBinding,
-    HostListener,
-    Input,
-    Output,
-} from "@angular/core";
+import { Directive, EventEmitter, HostBinding, HostListener, Input, Output, inject } from "@angular/core";
 
 import { TableStateHandlerService } from "../table-state-handler.service";
 /** @ignore */
@@ -39,13 +32,13 @@ export enum TableResizePhase {
     standalone: false,
 })
 export class TableResizerDirective {
+    private tableStateHandlerService = inject(TableStateHandlerService);
+
     @HostBinding("class") hostClasses = "nui-table__resizer";
 
     @Input() columnIndex: number;
 
     @Output() resizerMovement = new EventEmitter<any>();
-
-    constructor(private tableStateHandlerService: TableStateHandlerService) {}
 
     private mouseMoveHandler = (event: MouseEvent) => {
         this.resizerMovement.emit(event.movementX);

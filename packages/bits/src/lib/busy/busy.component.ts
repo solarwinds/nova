@@ -18,16 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterContentInit,
-    Component,
-    ContentChild,
-    ElementRef,
-    Input,
-    OnChanges,
-    SimpleChanges,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterContentInit, Component, ContentChild, ElementRef, Input, OnChanges, SimpleChanges, ViewEncapsulation, inject } from "@angular/core";
 
 import { TabNavigationService } from "../../services/tab-navigation.service";
 import { ProgressComponent } from "../progress/progress.component";
@@ -47,6 +38,9 @@ import { SpinnerComponent } from "../spinner/spinner.component";
 })
 /* eslint-enable @angular-eslint/component-selector */
 export class BusyComponent implements AfterContentInit, OnChanges {
+    private tabNavigationService = inject(TabNavigationService);
+    private elRef = inject(ElementRef);
+
     public isDefaultTemplate = false;
     public isSpinnerTemplate = false;
     public isProgressTemplate = false;
@@ -60,11 +54,6 @@ export class BusyComponent implements AfterContentInit, OnChanges {
 
     @ContentChild(SpinnerComponent) spinnerComponent: SpinnerComponent;
     @ContentChild(ProgressComponent) progressComponent: ProgressComponent;
-
-    constructor(
-        private tabNavigationService: TabNavigationService,
-        private elRef: ElementRef
-    ) {}
 
     public ngAfterContentInit(): void {
         this.setBusyStateForContentComponents();

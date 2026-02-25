@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, ViewChild, inject } from "@angular/core";
 import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 
@@ -48,6 +48,8 @@ interface IExampleTableModel {
     standalone: false,
 })
 export class TableSearchExampleComponent implements AfterViewInit, OnDestroy {
+    dataSourceService = inject<ClientSideDataSource<IExampleTableModel>>(ClientSideDataSource);
+
     public displayedColumns = [
         "position",
         "name",
@@ -68,9 +70,9 @@ export class TableSearchExampleComponent implements AfterViewInit, OnDestroy {
     private outputsSubscription: Subscription;
     private searchSubscription: Subscription;
 
-    constructor(
-        public dataSourceService: ClientSideDataSource<IExampleTableModel>
-    ) {
+    constructor() {
+        const dataSourceService = this.dataSourceService;
+
         dataSourceService.setData(getData());
     }
 

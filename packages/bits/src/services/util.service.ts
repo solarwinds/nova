@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { DOCUMENT, isPlatformBrowser } from "@angular/common";
-import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
+import { Injectable, PLATFORM_ID, inject } from "@angular/core";
 import forOwn from "lodash/forOwn";
 import includes from "lodash/includes";
 import isBoolean from "lodash/isBoolean";
@@ -113,6 +113,9 @@ export class UtilService {
         return [];
     }
 
+    private document = inject<Document>(DOCUMENT);
+    private platformId = inject(PLATFORM_ID);
+
     private nextUniqueId = ["0", "0", "0"];
     private browserName?: string;
 
@@ -162,10 +165,7 @@ export class UtilService {
         }
     }
 
-    constructor(
-        @Inject(DOCUMENT) private document: Document,
-        @Inject(PLATFORM_ID) private platformId: object
-    ) {
+    constructor() {
         this.browserName = this.getBrowser();
     }
 

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import moment from "moment/moment";
 
 import { HistoryStorage, ITimeframe } from "@nova-ui/bits";
@@ -30,12 +30,14 @@ import { HistoryStorage, ITimeframe } from "@nova-ui/bits";
     standalone: false,
 })
 export class TimeFrameBarTestComponent {
+    history = inject<HistoryStorage<ITimeframe>>(HistoryStorage);
+
     private baseDate = moment([2018, 5, 1, 15, 0, 0]);
     public fromDate = this.baseDate.clone().subtract(1, "month");
     public toDate = moment([2050]);
     public timeFrame: ITimeframe;
 
-    constructor(public history: HistoryStorage<ITimeframe>) {
+    constructor() {
         this.resetDefault();
     }
 

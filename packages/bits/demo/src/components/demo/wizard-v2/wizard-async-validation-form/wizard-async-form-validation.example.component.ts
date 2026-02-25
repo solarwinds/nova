@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild, inject } from "@angular/core";
 import { AbstractControl, FormBuilder, Validators } from "@angular/forms";
 import { of } from "rxjs";
 import { delay, take } from "rxjs/operators";
@@ -37,15 +37,15 @@ const fakeAsyncValidator = (c: AbstractControl) => of(null).pipe(delay(4000));
     standalone: false,
 })
 export class WizardAsyncFormValidationExampleComponent {
+    private formBuilder = inject(FormBuilder);
+    private toastService = inject(ToastService);
+
     public busy: boolean;
     public form;
 
     @ViewChild("wizard") wizard: WizardHorizontalComponent;
 
-    constructor(
-        private formBuilder: FormBuilder,
-        private toastService: ToastService
-    ) {
+    constructor() {
         this.form = this.formBuilder.group({
             personDetails: this.formBuilder.group({
                 name: [

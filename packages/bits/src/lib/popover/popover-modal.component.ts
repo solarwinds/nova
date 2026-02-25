@@ -19,18 +19,7 @@
 //  THE SOFTWARE.
 
 import { AnimationEvent } from "@angular/animations";
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    HostListener,
-    Input,
-    NgZone,
-    OnDestroy,
-    OnInit,
-    TemplateRef,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, Input, NgZone, OnDestroy, OnInit, TemplateRef, inject } from "@angular/core";
 import _isBoolean from "lodash/isBoolean";
 import { Subject, Subscription } from "rxjs";
 import { take } from "rxjs/operators";
@@ -59,6 +48,10 @@ export type PopoverModalEvents =
     standalone: false,
 })
 export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
+    elRef = inject(ElementRef);
+    private zone = inject(NgZone);
+    private cdRef = inject(ChangeDetectorRef);
+
     /**
      * Is backdrop used
      */
@@ -116,12 +109,6 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
     onMouseLeave(): void {
         this.popoverModalEventSubject.next("mouse-leave");
     }
-
-    constructor(
-        public elRef: ElementRef,
-        private zone: NgZone,
-        private cdRef: ChangeDetectorRef
-    ) {}
 
     public ngOnInit(): void {
         const displayChangeSubscription = this.displayChange.subscribe(

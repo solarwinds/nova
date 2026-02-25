@@ -19,16 +19,7 @@
 //  THE SOFTWARE.
 
 import { CdkDrag, CdkDragStart, CdkDropList } from "@angular/cdk/drag-drop";
-import {
-    AfterContentInit,
-    ContentChildren,
-    Directive,
-    ElementRef,
-    Input,
-    OnDestroy,
-    QueryList,
-    Renderer2,
-} from "@angular/core";
+import { AfterContentInit, ContentChildren, Directive, ElementRef, Input, OnDestroy, QueryList, Renderer2, inject } from "@angular/core";
 import { combineLatest, fromEvent, merge, Observable, of, Subject } from "rxjs";
 import {
     distinctUntilChanged,
@@ -55,6 +46,9 @@ import {
     standalone: false,
 })
 export class DndDropTargetDirective implements AfterContentInit, OnDestroy {
+    private targetDropList = inject(CdkDropList);
+    private renderer = inject(Renderer2);
+
     @ContentChildren(CdkDrag, { descendants: true })
     draggables: QueryList<CdkDrag>;
 
@@ -84,11 +78,9 @@ export class DndDropTargetDirective implements AfterContentInit, OnDestroy {
     }
 
     // canDrop primitive value is used for the host element class binding
-    constructor(
-        private targetDropList: CdkDropList,
-        private renderer: Renderer2,
-        hostElement: ElementRef
-    ) {
+    constructor() {
+        const hostElement = inject(ElementRef);
+
         const mouseEnter$: Observable<unknown> = fromEvent(
             hostElement.nativeElement,
             "mouseenter"

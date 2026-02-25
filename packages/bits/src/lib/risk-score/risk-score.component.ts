@@ -18,18 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    Input,
-    NgZone,
-    OnChanges,
-    OnDestroy,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, NgZone, OnChanges, OnDestroy, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 
 /**
@@ -48,6 +37,9 @@ import { BehaviorSubject } from "rxjs";
 
 // <example-url>./../examples/index.html#/risk-score</example-url>
 export class RiskScoreComponent implements AfterViewInit, OnChanges, OnDestroy {
+    private changeDetectorRef = inject(ChangeDetectorRef);
+    private ngZone = inject(NgZone);
+
     @ViewChild("colorLine") private colorLine!: ElementRef;
 
     @Input()
@@ -67,10 +59,7 @@ export class RiskScoreComponent implements AfterViewInit, OnChanges, OnDestroy {
     private resizeObserver: ResizeObserver;
     private colorLineWidth$: BehaviorSubject<number>;
 
-    constructor(
-        private changeDetectorRef: ChangeDetectorRef,
-        private ngZone: NgZone
-    ) {
+    constructor() {
         this.colorLineWidth$ = new BehaviorSubject<number>(0);
         this.resizeObserver = new ResizeObserver((entries) =>
             this.colorLineWidth$.next(entries[0].contentRect.width)

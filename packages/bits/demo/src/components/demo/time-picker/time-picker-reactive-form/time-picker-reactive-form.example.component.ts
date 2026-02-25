@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import {
     FormBuilder,
     FormControl,
@@ -35,15 +35,13 @@ import { ToastService } from "@nova-ui/bits";
     standalone: false,
 })
 export class TimePickerReactiveFormExampleComponent implements OnInit {
+    private formBuilder = inject(FormBuilder);
+    private toastService = inject<ToastService>(ToastService);
+
     public time: Moment;
     public myForm: FormGroup<{
         timePickerFormControl: FormControl<Moment | null>;
     }>;
-
-    constructor(
-        private formBuilder: FormBuilder,
-        @Inject(ToastService) private toastService: ToastService
-    ) {}
 
     public ngOnInit(): void {
         this.myForm = this.formBuilder.group({

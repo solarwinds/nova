@@ -19,15 +19,7 @@
 //  THE SOFTWARE.
 
 import { DOCUMENT } from "@angular/common";
-import {
-    Directive,
-    EventEmitter,
-    HostListener,
-    Inject,
-    Input,
-    OnInit,
-    Output,
-} from "@angular/core";
+import { Directive, EventEmitter, HostListener, Input, OnInit, Output, inject } from "@angular/core";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import isString from "lodash/isString";
@@ -48,6 +40,9 @@ import { LoggerService } from "../../../services/log-service";
     standalone: false,
 })
 export class ClipboardDirective implements OnInit {
+    private logger = inject(LoggerService);
+    private document = inject<Document>(DOCUMENT);
+
     /* eslint-disable @angular-eslint/no-input-rename */
     /**
      * Text to be copied to the clipboard
@@ -81,11 +76,6 @@ export class ClipboardDirective implements OnInit {
             );
         }
     }
-
-    constructor(
-        private logger: LoggerService,
-        @Inject(DOCUMENT) private document: Document
-    ) {}
 
     public ngOnInit(): void {
         try {

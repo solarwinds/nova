@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation, inject } from "@angular/core";
 import moment, { Moment } from "moment/moment";
 
 import { DatePickerInnerComponent } from "./date-picker-inner.component";
@@ -31,6 +31,8 @@ import { DatePickerInnerComponent } from "./date-picker-inner.component";
     standalone: false,
 })
 export class DayPickerComponent implements OnInit {
+    datePicker = inject(DatePickerInnerComponent);
+
     public labels: any[] = [];
     public title: string;
     public rows: any[] = [];
@@ -42,7 +44,9 @@ export class DayPickerComponent implements OnInit {
      */
     public todayDate: string = moment().toString();
 
-    constructor(public datePicker: DatePickerInnerComponent) {
+    constructor() {
+        const datePicker = this.datePicker;
+
         this.datePicker = datePicker;
     }
 

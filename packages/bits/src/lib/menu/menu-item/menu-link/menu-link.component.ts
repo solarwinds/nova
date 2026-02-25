@@ -18,16 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    forwardRef,
-    Input,
-    Optional,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { ChangeDetectorRef, Component, ElementRef, forwardRef, Input, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 
 import { MenuGroupComponent } from "../menu-group/menu-group.component";
 import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
@@ -67,6 +58,8 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     standalone: false,
 })
 export class MenuLinkComponent extends MenuItemBaseComponent {
+    readonly group: MenuGroupComponent;
+
     /**
      * Sets inner "href" attribute of anchor tag
      */
@@ -81,11 +74,13 @@ export class MenuLinkComponent extends MenuItemBaseComponent {
     @Input() public icon: string;
     @ViewChild("menuLink") menuItem: ElementRef;
 
-    constructor(
-        @Optional() readonly group: MenuGroupComponent,
-        cd: ChangeDetectorRef
-    ) {
+    constructor() {
+        const group = inject(MenuGroupComponent, { optional: true })!;
+        const cd = inject(ChangeDetectorRef);
+
         super(group, cd);
+        this.group = group;
+
 
         this.disabled = false;
     }

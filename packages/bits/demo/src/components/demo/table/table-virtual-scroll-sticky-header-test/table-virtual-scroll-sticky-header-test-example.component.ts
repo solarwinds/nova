@@ -19,13 +19,7 @@
 //  THE SOFTWARE.
 
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    Component,
-    TrackByFunction,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, Component, TrackByFunction, ViewChild, inject } from "@angular/core";
 import { Observable } from "rxjs";
 // eslint-disable-next-line import/no-deprecated
 import { map, startWith, switchMap, tap } from "rxjs/operators";
@@ -55,6 +49,8 @@ interface IRandomUserTableModel {
 export class TableVirtualScrollStickyHeaderTestExampleComponent
     implements AfterViewInit
 {
+    dataSourceService = inject<ClientSideDataSource<IRandomUserTableModel>>(ClientSideDataSource);
+
     @ViewChild(CdkVirtualScrollViewport)
     public viewport: CdkVirtualScrollViewport;
     // Note: Used only for demo purposes
@@ -84,9 +80,7 @@ export class TableVirtualScrollStickyHeaderTestExampleComponent
         item: IRandomUserTableModel
     ): number => item?.no;
 
-    constructor(
-        public dataSourceService: ClientSideDataSource<IRandomUserTableModel>
-    ) {
+    constructor() {
         // Note: Initiating data source with data to be displayed
         this.dataSourceService.setData(generateUsers(100000));
     }

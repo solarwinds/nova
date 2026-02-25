@@ -20,13 +20,7 @@
 
 import { Overlay, OverlayRef } from "@angular/cdk/overlay";
 import { TemplatePortal } from "@angular/cdk/portal";
-import {
-    Component,
-    OnInit,
-    TemplateRef,
-    ViewContainerRef,
-    ViewEncapsulation,
-} from "@angular/core";
+import { Component, OnInit, TemplateRef, ViewContainerRef, ViewEncapsulation, inject } from "@angular/core";
 import moment from "moment/moment";
 
 import {
@@ -44,6 +38,11 @@ import {
     standalone: false,
 })
 export class DialogZIndexTestComponent implements OnInit {
+    private dialogService = inject(DialogService);
+    private toastService = inject(ToastService);
+    private overlay = inject(Overlay);
+    private viewContainerRef = inject(ViewContainerRef);
+
     public busy: boolean = false;
     public appendToBody: boolean = false;
 
@@ -71,13 +70,6 @@ export class DialogZIndexTestComponent implements OnInit {
     private activeDialogs: NuiDialogRef[] = [];
     private overlayRef: OverlayRef;
     private baseDate = moment([2018, 5, 1, 15, 0, 0]);
-
-    constructor(
-        private dialogService: DialogService,
-        private toastService: ToastService,
-        private overlay: Overlay,
-        private viewContainerRef: ViewContainerRef
-    ) {}
 
     public ngOnInit(): void {
         this.timeFrame = {

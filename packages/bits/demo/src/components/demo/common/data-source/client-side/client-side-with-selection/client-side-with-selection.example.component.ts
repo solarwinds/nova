@@ -18,14 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    OnDestroy,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, ViewChild, inject } from "@angular/core";
 import { Subscription } from "rxjs";
 
 import {
@@ -53,6 +46,10 @@ interface IExampleItem {
 export class DataSourceWithSelectionExampleComponent
     implements AfterViewInit, OnDestroy
 {
+    dataSourceService = inject<ClientSideDataSource<IExampleItem>>(ClientSideDataSource);
+    changeDetection = inject(ChangeDetectorRef);
+    private listService = inject(ListService);
+
     public searchTerm = "";
     public page = 1;
 
@@ -64,11 +61,9 @@ export class DataSourceWithSelectionExampleComponent
 
     private outputsSubscription: Subscription;
 
-    constructor(
-        public dataSourceService: ClientSideDataSource<IExampleItem>,
-        public changeDetection: ChangeDetectorRef,
-        private listService: ListService
-    ) {
+    constructor() {
+        const dataSourceService = this.dataSourceService;
+
         dataSourceService.setData(getData());
     }
 
