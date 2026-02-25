@@ -21,26 +21,30 @@
 import {
     Component,
     EventEmitter,
-    Input,
-    OnDestroy,
     Output,
     ViewEncapsulation,
+    computed,
+    input,
+    signal,
+    model,
 } from "@angular/core";
-import _isEmpty from "lodash/isEmpty";
-import { Subject } from "rxjs";
+import { FormsModule } from "@angular/forms";
 
+import { NuiCommonModule } from "../../common/common.module";
 import { IFilter, IFilterPub } from "../../services/data-source/public-api";
+import { NuiButtonModule } from "../button/button.module";
 
 @Component({
     selector: "nui-search",
+    standalone: true,
+    imports: [FormsModule, NuiCommonModule, NuiButtonModule],
     host: {
         class: "nui-search",
-        role: "search",
+        role: "searchbox",
     },
     templateUrl: "./search.component.html",
     styleUrls: ["./search.component.less"],
     encapsulation: ViewEncapsulation.None,
-    standalone: false,
 })
 
 // <example-url>./../examples/index.html#/search</example-url>
@@ -51,42 +55,32 @@ import { IFilter, IFilterPub } from "../../services/data-source/public-api";
  * Fires 'search', 'cancel', 'inputChanged' and 'focusChange' events.
  * Indicates spinner to the left of input text depending on 'busy' property.
  */
-export class SearchComponent implements IFilterPub, OnDestroy {
-    // mark this filter to be monitored by our datasource for any changes in order reset other filters(eg: pagination)
-    // before any new search is performed
-    public detectFilterChanges = true;
+export class SearchComponent implements IFilterPub {
+    /* --------------------------------------------------
+       Static / internal constants
+    -------------------------------------------------- */
+    private static nextUniqueId = 0;
 
-    /**
-     * default text of placeholder if no custom ones is provided
-     */
-    public defaultPlaceholder: string;
+    /* --------------------------------------------------
+       Public configuration Inputs (external API)
+    -------------------------------------------------- */
+    /** Focus control (true means input should receive focus). */
+    public captureFocus = model<boolean>(false);
+    /** Input name attribute (useful for forms). */
+    public name = input<string>();
+    /** Applies error state styles when true. */
+    public isInErrorState = input<boolean>(false);
+    /** Watermark text (placeholder) displayed when empty. */
+    public placeholder = input<string>();
+    /** Custom id for the input. */
+    public inputId = input<string>("search input");
+    /** Value of the input field. */
+    public value = model<string>("");
 
-    /** @ignore */
-    public onDestroy$ = new Subject<void>();
-
-    /**
-     * Controls focus of input field (true means focused).
-     */
-    @Input() captureFocus: boolean;
-    /**
-     * Name of input the element.
-     */
-    @Input() name: string;
-    /**
-     * Input to apply error state styles
-     */
-    @Input() public isInErrorState: boolean = false;
-    /**
-     * A string that will be placed as a watermark inside of the search when it's empty.
-     */
-    @Input() placeholder: string;
-    /**
-     * Initial value of input field.
-     */
-    @Input() value: string;
-    /**
-     * Event fired on each 'cancel' button click. Emits empty string.
-     */
+    /* --------------------------------------------------
+       Public Outputs (events)
+    -------------------------------------------------- */
+    /** Emits empty string on cancel action. */
     @Output() public cancel = new EventEmitter<string>();
     /**
      * Event fired on external focus changes (e.g. initiated by user via UI).
@@ -100,60 +94,73 @@ export class SearchComponent implements IFilterPub, OnDestroy {
      * to clear it on inputChange - handle it in host component
      */
     @Output() public inputChange = new EventEmitter<string>();
-    /**
-     * Event fired on 'search' button click or 'ENTER' key pressed
-     */
+    /** Emits current value when search triggered (button or Enter). */
     @Output() public search = new EventEmitter<string>();
 
-    public searchIconColor: string = "gray";
-
-    constructor() {
-        this.defaultPlaceholder = $localize`Search`;
-    }
+    /* --------------------------------------------------
+       Internal state / derived values
+    -------------------------------------------------- */
+    /**
+     * Flag indicating whether to detect filter changes.
+     * Mark this filter to be monitored by our datasource for any changes in order reset other filters(eg: pagination)
+     * before any new search is performed
+     */
+    public detectFilterChanges = true;
+    /** Default placeholder text fallback. */
+    public defaultPlaceholder = $localize`Search`;
+    /** Styling hook for icon color. */
+    public searchIconColor = signal<string>("gray");
+    /** Unique generated ID for fallback. */
+    private generatedInputId = `nui-search-input-${SearchComponent.nextUniqueId++}`;
+    /** Resolved input id (provided or generated). */
+    public resolvedInputId = computed(() =>
+        this.inputId() || this.generatedInputId
+    );
+    /** Resolved placeholder text. */
+    public resolvedPlaceholder = computed(() =>
+        this.placeholder() || `${this.defaultPlaceholder}...`
+    );
+    /** Whether the search button should be disabled (empty value). */
+    public isButtonDisabled = computed(() => !this.value()?.trim());
+    /** Accessible label text for the input (used by hidden label). */
+    public inputAriaLabel = $localize`Search`;
+    /** Accessible label for the cancel (clear) button. */
+    public cancelAriaLabel = $localize`Cancel search`;
+    /** Accessible label for the submit (search) button. */
+    public submitAriaLabel = $localize`Submit search`;
 
     public getFilters(): IFilter<string> {
         return {
             type: "string",
-            value: this.value,
+            value: this.value(),
         };
     }
 
-    public getPlaceholder(): string {
-        return this.placeholder || this.defaultPlaceholder + "...";
-    }
-
     public onCancel(): void {
-        this.value = "";
-        this.cancel.emit(this.value);
-        this.captureFocus = true;
+        this.value.set("");
+        this.cancel.emit(this.value());
+        this.captureFocus.set(true);
         this.focusChange.emit(true);
     }
 
     public onFocusChange(event: boolean): void {
-        this.captureFocus = event;
+        this.captureFocus.set(event);
         this.focusChange.emit(event);
     }
 
     public onInputChange(): void {
-        this.inputChange.emit(this.value);
+        this.inputChange.emit(this.value());
     }
 
     public onKeyup(event: KeyboardEvent): void {
         if (event.key === "Enter") {
             this.onSearch();
+        } else if (event.key === "Escape" || event.key === "Esc") {
+            this.onCancel();
         }
     }
 
-    public isButtonDisabled(): boolean {
-        return _isEmpty(this.value);
-    }
-
     public onSearch(): void {
-        this.search.emit(this.value);
-    }
-
-    public ngOnDestroy(): void {
-        this.onDestroy$.next();
-        this.onDestroy$.complete();
+        this.search.emit(this.value());
     }
 }

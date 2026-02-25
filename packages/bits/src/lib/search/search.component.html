@@ -1,37 +1,51 @@
-<div class="nui-search__group input-group" [class.has-error]="isInErrorState">
+<div class="nui-search__group input-group" [class.has-error]="isInErrorState()">
     <div class="nui-search__input">
+        <label
+            class="sr-only"
+            [attr.id]="resolvedInputId() + '-label'"
+            [attr.for]="resolvedInputId()"
+            >{{ inputAriaLabel }}</label
+        >
+        <input
+            class="nui-search__input-control form-control"
+            [attr.id]="resolvedInputId()"
+            [attr.name]="name()"
+            type="text"
+            autocomplete="off"
+            [(ngModel)]="value"
+            [placeholder]="resolvedPlaceholder()"
+            [attr.aria-labelledby]="resolvedInputId() + '-label'"
+            [attr.aria-invalid]="isInErrorState()"
+            [nuiSetFocus]="captureFocus()"
+            (focusChange)="onFocusChange($event)"
+            (input)="onInputChange()"
+            (keyup)="onKeyup($event)"
+        />
         <div class="nui-search__button input-group-btn">
+            @if (value()) {
+                <button
+                    nui-button
+                    type="reset"
+                    [ariaLabel]="cancelAriaLabel"
+                    [attr.aria-controls]="resolvedInputId()"
+                    class="nui-search__button-cancel"
+                    displayStyle="action"
+                    icon="close"
+                    (click)="onCancel()"
+                ></button>
+            }
             <button
                 nui-button
-                type="button"
-                *ngIf="!!value"
-                class="nui-search__button-cancel"
-                displayStyle="action"
-                icon="close"
-                (click)="onCancel()"
-            ></button>
-            <button
-                nui-button
-                type="button"
+                type="submit"
+                [ariaLabel]="submitAriaLabel"
+                [attr.aria-controls]="resolvedInputId()"
                 class="nui-search__button-search"
                 displayStyle="action"
                 icon="search"
                 [disabled]="isButtonDisabled()"
+                [attr.aria-hidden]="isButtonDisabled() ? 'true' : null"
                 (click)="onSearch()"
             ></button>
         </div>
-        <input
-            class="nui-search__input-control form-control"
-            type="text"
-            [attr.name]="name"
-            [nuiSetFocus]="captureFocus"
-            (focusChange)="onFocusChange($event)"
-            autocomplete="off"
-            (input)="onInputChange()"
-            [(ngModel)]="value"
-            [placeholder]="getPlaceholder()"
-            (keyup)="onKeyup($event)"
-            [attr.aria-invalid]="isInErrorState"
-        />
     </div>
 </div>

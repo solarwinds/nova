@@ -19,20 +19,14 @@
 //  THE SOFTWARE.
 
 import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
 
 import { SearchComponent } from "./search.component";
-import { NuiCommonModule } from "../../common/common.module";
-import { NuiButtonModule } from "../button/button.module";
-import { NuiSpinnerModule } from "../spinner/spinner.module";
 
 /**
  * @ignore
  */
 @NgModule({
-    imports: [NuiCommonModule, NuiSpinnerModule, FormsModule, NuiButtonModule],
-    declarations: [SearchComponent],
+    imports: [SearchComponent],
     exports: [SearchComponent],
-    providers: [],
 })
 export class NuiSearchModule {}

@@ -27,8 +27,8 @@ import { MenuGroupComponent } from "./menu-item/menu-group/menu-group.component"
 import { MenuItemComponent } from "./menu-item/menu-item/menu-item.component";
 import { MenuPopupComponent } from "./menu-popup/menu-popup.component";
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
-import { MenuActionComponent } from "../menu/menu-item/menu-action/menu-action.component";
-import { MenuItemBaseComponent } from "../menu/menu-item/menu-item/menu-item-base";
+import { MenuActionComponent } from "./menu-item/menu-action/menu-action.component";
+import { MenuItemBaseComponent } from "./menu-item/menu-item/menu-item-base";
 import { PopupComponent } from "../popup-adapter/popup-adapter.component";
 import { IPopupActiveOptions } from "../public-api";
 
@@ -128,8 +128,8 @@ export class MenuKeyControlService implements OnDestroy {
 
     private shouldCloseOnEnter(): boolean {
         return (
-            this.keyboardEventsManager.activeItem instanceof
-            (MenuActionComponent || MenuItemComponent)
+            this.keyboardEventsManager.activeItem?.shouldCloseMenuOnAction ??
+            true
         );
     }
 
@@ -183,16 +183,27 @@ export class MenuKeyControlService implements OnDestroy {
             { block: "nearest" }
         );
 
-        // prevent closing on enter
-        if (!this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER) {
+        const isActionKey =
+            event.code === KEYBOARD_CODE.ENTER ||
+            event.code === KEYBOARD_CODE.SPACE;
+
+        // Toggle menu on Enter/Space if no item is active (effectively closing it)
+        if (!this.hasActiveItem() && isActionKey) {
             event.preventDefault();
+            this.popup.toggleOpened(event);
+            return;
         }
 
-        if (this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER) {
+        if (this.hasActiveItem() && isActionKey) {
             // perform action in menu item(select, switch, check etc).
             this.keyboardEventsManager.activeItem?.doAction(event);
             // closing items only if they are MenuAction or MenuItem, others should not close popup
+            // also we should not close popup if item is disabled
             if (!this.shouldCloseOnEnter()) {
+                event.preventDefault();
+                return;
+            }
+            if (this.keyboardEventsManager.activeItem?.disabled) {
                 event.preventDefault();
                 return;
             }
@@ -207,12 +218,16 @@ export class MenuKeyControlService implements OnDestroy {
     }
 
     private handleClosedKeyDown(event: KeyboardEvent): void {
-        // prevent opening on enter and prevent scrolling page on key down/key up when focused
+        // prevent scrolling page on key down/key up when focused
         if (this.shouldBePrevented(event)) {
             event.preventDefault();
         }
 
-        if (event.code === KEYBOARD_CODE.ARROW_DOWN) {
+        if (
+            event.code === KEYBOARD_CODE.ARROW_DOWN ||
+            event.code === KEYBOARD_CODE.ENTER ||
+            event.code === KEYBOARD_CODE.SPACE
+        ) {
             this.popup.toggleOpened(event);
         }
     }
@@ -221,7 +236,8 @@ export class MenuKeyControlService implements OnDestroy {
         return (
             event.code === KEYBOARD_CODE.ARROW_DOWN ||
             event.code === KEYBOARD_CODE.ARROW_UP ||
-            event.code === KEYBOARD_CODE.ENTER
+            event.code === KEYBOARD_CODE.ENTER ||
+            event.code === KEYBOARD_CODE.SPACE
         );
     }
 

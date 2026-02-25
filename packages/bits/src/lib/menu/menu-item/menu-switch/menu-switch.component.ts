@@ -103,8 +103,20 @@ export class MenuSwitchComponent extends MenuItemBaseComponent {
         this.disabled = false;
     }
 
-    public doAction(): void {
+    public doAction(event?: KeyboardEvent): void {
+        if (this.disabled) {
+            return;
+        }
+
+        if (event) {
+            event.preventDefault();
+        }
+
         this.checked = !this.checked;
         this.actionDone.emit(this.checked);
+    }
+
+    public get shouldCloseMenuOnAction(): boolean {
+        return false;
     }
 }

@@ -29,6 +29,7 @@ test.describe("USERCONTROL icon", () => {
 
     test("should show each available icon size on the page", async () => {
         const smallIcon = Atom.find<IconAtom>(IconAtom, "nui-demo-icon-small");
+        await smallIcon.toBeVisible();
         expect(await smallIcon.getSize()).toEqual(IconAtom.iconSize.small);
 
         const defaultIcon = Atom.find<IconAtom>(
@@ -72,11 +73,15 @@ test.describe("USERCONTROL icon", () => {
 
     test("should recolor icon to orange color", async () => {
         const iconColor = Atom.find<IconAtom>(IconAtom, "nui-demo-icon-color");
-        expect(iconColor.getIconByCssClass("orange-icon")).toBeTruthy();
+        await iconColor.toBeVisible();
+        await iconColor.toContainClass("orange-icon");
     });
 
     test("should recolor icon on hover effect to gray color", async () => {
         const iconHover = Atom.find<IconAtom>(IconAtom, "nui-demo-icon-hover");
-        expect(iconHover.getIconByCssClass("gray-hover-icon")).toBeTruthy();
+        await iconHover.toBeVisible();
+        await iconHover.toContainClass("gray-hover-icon");
+        await iconHover.hover();
+        await iconHover.toContainClass("gray-hover-icon");
     });
 });

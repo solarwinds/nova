@@ -28,8 +28,7 @@ import { NuiCommonModule } from "../../common/common.module";
  * @ignore
  */
 @NgModule({
-    declarations: [IconComponent],
-    imports: [NuiCommonModule],
+    imports: [NuiCommonModule, IconComponent],
     exports: [IconComponent],
     providers: [IconService],
 })
