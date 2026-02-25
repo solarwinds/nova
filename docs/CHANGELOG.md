@@ -1,5 +1,9 @@
 # Changelog
 
+## [19.0.3] 📅 2026-02-25
+### Fixes
+- `@nova-ui/bits` | Fix the search in toolbar
+
 ## [19.0.0] 📅 2025-09-30
 ### Added
 - `@nova-ui/bits` | Added colorpicker
@@ -16,7 +20,7 @@
 ### Fixes
 - `@nova-ui/dashboards` | Fix kpi scale for values
 - `@nova-ui/dashboards` | Fix editor preview component
-- `@nova-ui/dashboards` | Fix search addon listening chagnes
+- `@nova-ui/dashboards` | Fix search addon listening changes
 
 ## [16.0.8] 📅 2025-04-02
 ### Fixes

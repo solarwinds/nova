@@ -122,6 +122,27 @@ describe("Services > ", () => {
                 service.onKeyDown(rightButtonPressEvent);
                 expect(spy).toHaveBeenCalled();
             });
+
+            it("should not hijack keyboard events coming from a search input", () => {
+                const searchInput = document.createElement("input");
+                searchInput.type = "search";
+                document.body.appendChild(searchInput);
+
+                const event = {
+                    ...keyboardEventMock,
+                    target: searchInput,
+                } as KeyboardEvent;
+
+                const preventSpy = spyOn(event, "preventDefault");
+                const navSpy = spyOn(service as any, "navigateByArrow");
+
+                service.onKeyDown(event);
+
+                expect(preventSpy).not.toHaveBeenCalled();
+                expect(navSpy).not.toHaveBeenCalled();
+
+                searchInput.remove();
+            });
         });
     });
 });
