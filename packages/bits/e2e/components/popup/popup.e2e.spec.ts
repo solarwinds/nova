@@ -72,10 +72,10 @@ test.describe("USERCONTROL Popup", () => {
 
     test("should remove the appended to body popup container on close", async () => {
         await popupAppendToBody.getPopupToggle.click();
-        await popupAppendToBody.getPopupBoxDetached.isVisible();
+        await expect(popupAppendToBody.getPopupBoxDetached).toBeVisible();
 
         await popupAppendToBody.getPopupToggle.click();
-        await popupAppendToBody.getPopupBoxDetached.isHidden();
+        await expect(popupAppendToBody.getPopupBoxDetached).toBeHidden();
     });
 
     test("should accept custom width", async () => {
