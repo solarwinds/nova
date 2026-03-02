@@ -78,12 +78,12 @@ export class MenuKeyControlService implements OnDestroy {
 
                     // Remove this in the scope of NUI-6104 in favor of the line above
                     this.keyboardEventsManager.setActiveItem(-1);
-                    this.live.announce(`
-                    ${
-                        this.keyControlItemsSource
-                            ? this.menuPopup.menuItems.length
-                            : this.menuItems.length
-                    } menu items available.`);
+                    const itemCount = this.keyControlItemsSource
+                        ? this.menuPopup.menuItems.length
+                        : this.menuItems.length;
+                    this.live.announce(
+                        $localize`:@@nuiMenuItemsAvailable:${itemCount}:itemCount: menu items available.`
+                    );
 
                     // Uncomment in the scope of NUI-6104 and adjust this to be the part of the announcer's string above
                     // Active item ${this.keyboardEventsManager?.activeItem?.menuItem.nativeElement.innerText}.`);
@@ -129,7 +129,8 @@ export class MenuKeyControlService implements OnDestroy {
     private shouldCloseOnEnter(): boolean {
         return (
             this.keyboardEventsManager.activeItem instanceof
-            (MenuActionComponent || MenuItemComponent)
+                MenuActionComponent ||
+            this.keyboardEventsManager.activeItem instanceof MenuItemComponent
         );
     }
 
@@ -287,8 +288,11 @@ export class MenuKeyControlService implements OnDestroy {
     }
 
     private announceCurrentItem() {
+        const activeItemText =
+            this.keyboardEventsManager?.activeItem?.menuItem?.nativeElement
+                ?.innerText || "";
         this.live.announce(
-            `Active item ${this.keyboardEventsManager?.activeItem?.menuItem.nativeElement.innerText}.`
+            $localize`:@@nuiMenuActiveItem:Active item ${activeItemText}:activeItemText:.`
         );
     }
 
