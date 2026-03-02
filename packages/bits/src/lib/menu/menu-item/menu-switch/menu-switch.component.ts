@@ -49,7 +49,6 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
             class="nui-menu-item__switch"
             #menuSwitch
             tabIndex="-1"
-            title
         >
             <nui-switch [value]="checked" [disabled]="disabled">
                 <ng-content></ng-content>

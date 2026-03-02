@@ -46,7 +46,6 @@ import { MenuGroupComponent } from "../menu-group/menu-group.component";
             (click)="handleClick($event)"
             #menuItemDefault
             tabIndex="-1"
-            title
         >
             <ng-content></ng-content>
         </span>
