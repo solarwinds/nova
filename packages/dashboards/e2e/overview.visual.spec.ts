@@ -18,46 +18,50 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser } from "protractor";
+import { Atom, Camera, Helpers, test } from "@nova-ui/bits/sdk/atoms-playwright";
 
-import { Camera } from "@nova-ui/bits/sdk/atoms";
-import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
-
-import { TestPage } from "./test.po";
+import { DashboardAtom } from "./dashboard.atom";
 
 const name: string = "Dashboards - Overview";
 
-describe(`Visual tests: ${name}`, () => {
+test.describe(`Visual tests: ${name}`, () => {
     let camera: Camera;
-    const page = new TestPage();
+    let dashboard: DashboardAtom;
 
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("test/overview");
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("test/overview", page);
 
-        camera = new Camera().loadFilm(browser, name);
+        dashboard = Atom.findIn<DashboardAtom>(DashboardAtom);
+
+        camera = new Camera().loadFilm(page, name, "Dashboards");
     });
 
-    it(`${name} - Default look`, async () => {
+    test(`${name} - Default look`, async ({ page }) => {
         await camera.turn.on();
 
-        await page.dashboard.getWidgetByIndex(0).hover();
+        await dashboard.getWidgetByIndex(0).hover();
         await camera.say.cheese(`${name} - Default`);
 
-        await page.enableEditMode();
+        // Enable edit mode
+        await page.locator("#edit-mode").click();
         await camera.say.cheese(`${name} - Edit Mode Default`);
 
-        const widget = page.dashboard.getWidgetByIndex(2);
+        const widget = dashboard.getWidgetByIndex(2);
         await widget.hover();
         await camera.say.cheese(`${name} - Widget Hovered in Edit Mode`);
 
-        await page.disableEditMode();
-        await page.resetMousePosition();
+        // Disable edit mode
+        await page.locator("#edit-mode").click();
+        // Reset mouse position
+        await page.mouse.move(0, 0);
 
-        await page.enableDarkTheme();
+        // Enable dark theme
+        await page.locator("#dark-theme").click();
         await camera.say.cheese(`${name} - Dark Theme`);
 
-        await page.disableDarkTheme();
+        // Disable dark theme
+        await page.locator("#dark-theme").click();
 
         await camera.turn.off();
-    }, 100000);
+    });
 });

@@ -18,27 +18,36 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser } from "protractor";
+import { Atom } from "@nova-ui/bits/sdk/atoms-playwright";
 
-import { Camera } from "@nova-ui/bits/sdk/atoms";
-import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
+import { AccordionAtom } from "./accordion.atom";
 
-const name: string = "Kpi Widget";
+export class ConfiguratorSectionAtom extends Atom {
+    public static CSS_CLASS = "nui-widget-configurator-section";
 
-describe(`Visual tests: Dashboards - ${name}`, () => {
-    let camera: Camera;
+    public getAccordionByIndex(index: number): AccordionAtom {
+        return Atom.findIn<AccordionAtom>(AccordionAtom, this.getLocator()).nth<AccordionAtom>(
+            AccordionAtom,
+            index
+        );
+    }
 
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("test/kpi");
+    public async getAccordionByLabel(
+        label: string
+    ): Promise<AccordionAtom | undefined> {
+        const accordions = this.getLocator().locator(
+            ".nui-widget-editor-accordion"
+        );
+        const count = await accordions.count();
 
-        camera = new Camera().loadFilm(browser, name);
-    });
-
-    it(`${name} - Default look`, async () => {
-        await camera.turn.on();
-
-        await camera.say.cheese(`${name} - Default`);
-
-        await camera.turn.off();
-    }, 100000);
-});
+        for (let i = 0; i < count; i++) {
+            const accordion = accordions.nth(i);
+            const text = await accordion
+                .locator(".nui-text-label")
+                .innerText();
+            if (text === label) {
+                return new AccordionAtom(accordion);
+            }
+        }
+    }
+}

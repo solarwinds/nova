@@ -18,18 +18,24 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Atom, ButtonAtom, MenuAtom } from "@nova-ui/bits/sdk/atoms-playwright";
+import { Camera, Helpers, test } from "@nova-ui/bits/sdk/atoms-playwright";
 
-export class WidgetHeaderAtom extends Atom {
-    public static CSS_CLASS = "nui-widget-header";
+const name: string = "Kpi Widget";
 
-    public get menu(): MenuAtom {
-        return Atom.findIn<MenuAtom>(MenuAtom, this.getLocator());
-    }
+test.describe(`Visual tests: Dashboards - ${name}`, () => {
+    let camera: Camera;
 
-    public async clickEdit(): Promise<void> {
-        await this.getLocator()
-            .locator(".nui-widget-header__action-edit")
-            .click();
-    }
-}
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("test/kpi", page);
+
+        camera = new Camera().loadFilm(page, name, "Dashboards");
+    });
+
+    test(`${name} - Default look`, async () => {
+        await camera.turn.on();
+
+        await camera.say.cheese(`${name} - Default`);
+
+        await camera.turn.off();
+    });
+});

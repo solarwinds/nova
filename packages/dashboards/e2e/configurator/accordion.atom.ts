@@ -18,18 +18,38 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Atom, ButtonAtom, MenuAtom } from "@nova-ui/bits/sdk/atoms-playwright";
+import {
+    Atom,
+    SelectV2Atom,
+    TextboxNumberAtom,
+} from "@nova-ui/bits/sdk/atoms-playwright";
 
-export class WidgetHeaderAtom extends Atom {
-    public static CSS_CLASS = "nui-widget-header";
+export class AccordionAtom extends Atom {
+    public static CSS_CLASS = "nui-widget-editor-accordion";
 
-    public get menu(): MenuAtom {
-        return Atom.findIn<MenuAtom>(MenuAtom, this.getLocator());
+    public async toggle(): Promise<void> {
+        await this.getLocator()
+            .locator(".nui-expander__header")
+            .first()
+            .click();
     }
 
-    public async clickEdit(): Promise<void> {
-        await this.getLocator()
-            .locator(".nui-widget-header__action-edit")
-            .click();
+    public getSelectByIndex(index: number): SelectV2Atom {
+        return Atom.findIn<SelectV2Atom>(SelectV2Atom, this.getLocator()).nth<SelectV2Atom>(
+            SelectV2Atom,
+            index
+        );
+    }
+
+    public getSelect(className: string): SelectV2Atom {
+        return new SelectV2Atom(
+            this.getLocator().locator(`.${className}.nui-select-v2`)
+        );
+    }
+
+    public getTextBoxNumberInput(className: string): TextboxNumberAtom {
+        return new TextboxNumberAtom(
+            this.getLocator().locator(`.${className}`).locator(`.nui-textbox-number`)
+        );
     }
 }

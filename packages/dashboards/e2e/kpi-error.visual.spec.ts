@@ -18,40 +18,47 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser, by, element } from "protractor";
-
-import { Atom, Camera } from "@nova-ui/bits/sdk/atoms";
-import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
+import { Atom, Camera, Helpers, test } from "@nova-ui/bits/sdk/atoms-playwright";
 
 import { ConfiguratorAtom } from "./configurator/configurator.atom";
-import { TestPage } from "./test.po";
+import { DashboardAtom } from "./dashboard.atom";
 
 const name: string = "Kpi Error";
 
-describe(`Visual tests: Dashboards - ${name}`, () => {
+test.describe(`Visual tests: Dashboards - ${name}`, () => {
     let camera: Camera;
     let configurator: ConfiguratorAtom;
-    const page = new TestPage();
+    let dashboard: DashboardAtom;
 
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("test/kpi/error");
-        configurator = Atom.findIn(
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("test/kpi/error", page);
+
+        configurator = Atom.findIn<ConfiguratorAtom>(
             ConfiguratorAtom,
-            element(by.className(ConfiguratorAtom.CSS_CLASS))
+            page.locator(`.${ConfiguratorAtom.CSS_CLASS}`)
         );
 
-        camera = new Camera().loadFilm(browser, name);
+        dashboard = Atom.findIn<DashboardAtom>(
+            DashboardAtom,
+            page.locator(`.${DashboardAtom.CSS_CLASS}`)
+        );
+
+        camera = new Camera().loadFilm(page, name, "Dashboards");
     });
 
-    it(`${name} - Configurator error message types`, async () => {
+    test(`${name} - Configurator error message types`, async ({ page }) => {
         await camera.turn.on();
 
         await camera.say.cheese(`${name} - Default`);
 
-        await page.enableEditMode();
-        await page.editWidget("Error Widget");
+        // Enable edit mode
+        await page.locator("#edit-mode").click();
 
-        const dsAccordion = await configurator?.getAccordion(
+        // Edit the "Error Widget"
+        const errorWidget = await dashboard.getWidgetByHeaderTitleText("Error Widget");
+        await errorWidget?.header.clickEdit();
+
+        const dsAccordion = await configurator.getAccordion(
             "Value 1 - Average Rating",
             "Data Source"
         );
@@ -72,5 +79,5 @@ describe(`Visual tests: Dashboards - ${name}`, () => {
         await camera.say.cheese(`${name} - No Error`);
 
         await camera.turn.off();
-    }, 100000);
+    });
 });
