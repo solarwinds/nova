@@ -64,9 +64,12 @@ import { MenuGroupComponent } from "../menu-group/menu-group.component";
 export class MenuItemComponent extends MenuItemBaseComponent {
     @ViewChild("menuItemDefault") menuItem: ElementRef;
 
+    public propagateClose = true;
+
     constructor(
         @Optional() readonly group: MenuGroupComponent,
-        cd: ChangeDetectorRef
+        cd: ChangeDetectorRef,
+        private el: ElementRef
     ) {
         super(group, cd);
 
@@ -82,6 +85,26 @@ export class MenuItemComponent extends MenuItemBaseComponent {
     }
 
     public doAction(event: any): void {
-        this.handleClick(event);
+        const clickEvent = new MouseEvent("click", {
+            bubbles: true,
+            cancelable: true,
+            view: window,
+        });
+
+        // We use a global listener to detect if propagation was stopped by a user's handler
+        let propagated = false;
+        const listener = () => { propagated = true; };
+
+        // Listen on window to catch bubbling
+        window.addEventListener("click", listener);
+
+        // Try to find the inner interactive element to click
+        const targetElement = this.menuItem.nativeElement.querySelector("a, button") || this.menuItem.nativeElement;
+        targetElement.dispatchEvent(clickEvent);
+
+        window.removeEventListener("click", listener);
+
+        // If propagation did NOT reach window, it means it was stopped (likely by user wanting to keep menu open)
+        this.propagateClose = propagated;
     }
 }

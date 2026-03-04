@@ -24,6 +24,7 @@ import { MenuActionComponent } from "./menu-item/menu-action/menu-action.compone
 import { MenuGroupComponent } from "./menu-item/menu-group/menu-group.component";
 import { MenuItemComponent } from "./menu-item/menu-item/menu-item.component";
 import { MenuSwitchComponent } from "./menu-item/menu-switch/menu-switch.component";
+import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 
 describe("components >", () => {
     describe("menu-key-control-service >", () => {
@@ -34,6 +35,32 @@ describe("components >", () => {
                 jasmine.createSpyObj("liveAnnouncer", ["announce"])
             );
             subject.keyboardEventsManager = {} as any;
+        });
+
+        describe("handleOpenKeyDown >", () => {
+            beforeEach(() => {
+                (subject as any).popup = jasmine.createSpyObj("popup", ["toggleOpened"]);
+                subject.keyboardEventsManager = jasmine.createSpyObj("keyboardEventsManager", ["onKeydown"]);
+            });
+
+            it("should prevent default and perform action on SPACE", () => {
+                const event = {
+                    code: KEYBOARD_CODE.SPACE,
+                    preventDefault: jasmine.createSpy("preventDefault"),
+                } as any;
+
+                const activeItemSpy = jasmine.createSpyObj("activeItem", ["doAction"]);
+                (subject.keyboardEventsManager as any).activeItem = activeItemSpy;
+                (subject.keyboardEventsManager as any).activeItemIndex = 0;
+
+                // Mock shouldCloseOnEnter to return false (like a switch)
+                spyOn<any>(subject, "shouldCloseOnEnter").and.returnValue(false);
+
+                (subject as any).handleOpenKeyDown(event);
+
+                expect(event.preventDefault).toHaveBeenCalled();
+                expect(activeItemSpy.doAction).toHaveBeenCalledWith(event);
+            });
         });
 
         it("should return true for menu action active item", () => {
@@ -48,10 +75,23 @@ describe("components >", () => {
         it("should return true for default menu item active item", () => {
             (subject.keyboardEventsManager as any).activeItem = new MenuItemComponent(
                 new MenuGroupComponent(),
-                new MockedChangeDetectorRef()
+                new MockedChangeDetectorRef(),
+                { nativeElement: {} } as any
             );
 
             expect((subject as any).shouldCloseOnEnter()).toBe(true);
+        });
+
+        it("should return false for default menu item active item with propagateClose=false", () => {
+            const menuItem = new MenuItemComponent(
+                new MenuGroupComponent(),
+                new MockedChangeDetectorRef(),
+                { nativeElement: {} } as any
+            );
+            menuItem.propagateClose = false;
+            (subject.keyboardEventsManager as any).activeItem = menuItem;
+
+            expect((subject as any).shouldCloseOnEnter()).toBe(false);
         });
 
         it("should return false for menu switch active item", () => {

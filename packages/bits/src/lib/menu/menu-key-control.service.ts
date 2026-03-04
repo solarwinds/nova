@@ -127,6 +127,15 @@ export class MenuKeyControlService implements OnDestroy {
     }
 
     private shouldCloseOnEnter(): boolean {
+        // if the item is a MenuItemComponent, we check if it wants to propagate the close action
+        if (
+            this.keyboardEventsManager.activeItem instanceof MenuItemComponent &&
+            !(this.keyboardEventsManager.activeItem as MenuItemComponent)
+                .propagateClose
+        ) {
+            return false;
+        }
+
         return (
             this.keyboardEventsManager.activeItem instanceof
                 MenuActionComponent ||
@@ -184,12 +193,17 @@ export class MenuKeyControlService implements OnDestroy {
             { block: "nearest" }
         );
 
-        // prevent closing on enter
-        if (!this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER) {
+        // prevent page scrolling on space
+        if (event.code === KEYBOARD_CODE.SPACE) {
             event.preventDefault();
         }
 
-        if (this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER) {
+        // prevent closing on enter
+        if (!this.hasActiveItem() && (event.code === KEYBOARD_CODE.ENTER || event.code === KEYBOARD_CODE.SPACE)) {
+            event.preventDefault();
+        }
+
+        if (this.hasActiveItem() && (event.code === KEYBOARD_CODE.ENTER || event.code === KEYBOARD_CODE.SPACE)) {
             // perform action in menu item(select, switch, check etc).
             this.keyboardEventsManager.activeItem?.doAction(event);
             // closing items only if they are MenuAction or MenuItem, others should not close popup
