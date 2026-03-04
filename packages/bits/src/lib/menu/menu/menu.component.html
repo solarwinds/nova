@@ -4,6 +4,7 @@
     [appendToBody]="appendToBody"
     [width]="widthOfPopup"
     [contextClass]="contextClass + ' nui-menu-popup-host'"
+    role="presentation"
 >
     <button
         #menuToggle
@@ -22,7 +23,7 @@
     >
         <span>{{ title }}</span>
     </button>
-    <div popupAreaContent role="menu">
+    <div popupAreaContent role="menu" (keydown)="onPopupKeyDown($event)">
         <nui-menu-popup
             *ngIf="itemsSource"
             [itemsSource]="itemsSource"

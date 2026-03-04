@@ -50,7 +50,6 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
             (click)="handleClick($event)"
             [ngClass]="'nui-menu-item__action-' + type"
             #menuAction
-            tabindex="-1"
         >
             <nui-icon
                 *ngIf="icon"
@@ -68,7 +67,10 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     ],
     styleUrls: ["./menu-action.component.less"],
     encapsulation: ViewEncapsulation.None,
-    host: { role: "menuitem" },
+    host: {
+        role: "menuitem",
+        tabindex: "-1",
+    },
     standalone: false,
 })
 export class MenuActionComponent extends MenuItemBaseComponent {

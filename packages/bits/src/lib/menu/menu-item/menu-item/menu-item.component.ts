@@ -45,7 +45,6 @@ import { MenuGroupComponent } from "../menu-group/menu-group.component";
             class="nui-menu-item__default"
             (click)="handleClick($event)"
             #menuItemDefault
-            tabIndex="-1"
         >
             <ng-content></ng-content>
         </span>
@@ -58,7 +57,10 @@ import { MenuGroupComponent } from "../menu-group/menu-group.component";
         },
     ],
     encapsulation: ViewEncapsulation.None,
-    host: { role: "menuitem" },
+    host: {
+        role: "menuitem",
+        tabindex: "-1",
+    },
     standalone: false,
 })
 export class MenuItemComponent extends MenuItemBaseComponent {

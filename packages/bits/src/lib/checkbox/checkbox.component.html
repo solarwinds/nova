@@ -2,12 +2,12 @@
     <label
         class="nui-checkbox__label"
         #checkboxLabel
-        role="checkbox"
+        [attr.role]="role"
         [attr.aria-label]="ariaLabel || null"
         [attr.aria-labelledby]="ariaLabelledby"
-        [attr.aria-checked]="getAriaChecked()"
+        [attr.aria-checked]="role !== 'presentation' ? getAriaChecked() : null"
         [attr.aria-describedby]="ariaDescribedby"
-        [attr.tabindex]="!disabled ? 0 : -1"
+        [attr.tabindex]="(role !== 'presentation' && !disabled) ? 0 : null"
         [title]="title"
         [class.nui-checkbox__translucent]="disabled"
         (mouseenter)="hoverHandler()"
@@ -19,6 +19,8 @@
                 class="nui-checkbox__input"
                 type="checkbox"
                 [attr.name]="name"
+                [attr.tabindex]="-1"
+                [attr.aria-hidden]="role === 'presentation' ? 'true' : null"
                 [value]="value"
                 [checked]="checked"
                 [disabled]="disabled"
@@ -27,7 +29,7 @@
                 (click)="onClick($event)"
                 (change)="changeHandler($event)"
             />
-            <div class="nui-checkbox__mark">
+            <div class="nui-checkbox__mark" [attr.aria-hidden]="role === 'presentation' ? 'true' : null">
                 <i class="nui-checkbox__glyph"></i>
             </div>
             <div #checkboxContent class="nui-checkbox__transclude">

@@ -26,8 +26,9 @@ import { Subject, Subscription } from "rxjs";
 import { MenuGroupComponent } from "./menu-item/menu-group/menu-group.component";
 import { MenuItemComponent } from "./menu-item/menu-item/menu-item.component";
 import { MenuPopupComponent } from "./menu-popup/menu-popup.component";
-import { KEYBOARD_CODE } from "../../constants/keycode.constants";
+import { KEYBOARD_CODE, KEY_CODE } from "../../constants/keycode.constants";
 import { MenuActionComponent } from "../menu/menu-item/menu-action/menu-action.component";
+import { MenuLinkComponent } from "./menu-item/menu-link/menu-link.component";
 import { MenuItemBaseComponent } from "../menu/menu-item/menu-item/menu-item-base";
 import { PopupComponent } from "../popup-adapter/popup-adapter.component";
 import { IPopupActiveOptions } from "../public-api";
@@ -111,6 +112,13 @@ export class MenuKeyControlService implements OnDestroy {
             this.keyboardEventsManager.change.subscribe((activeIndex) => {
                 // when the navigation item changes, we get new activeIndex
                 if (this.popup.isOpen && this.hasActiveItem()) {
+                    const itemEl = this.keyboardEventsManager.activeItem?.menuItem.nativeElement;
+                    // Focus the semantic menu item host, not inner controls, so SR keeps menu navigation mode.
+                    const focusTarget: HTMLElement | null =
+                        itemEl?.closest?.('[role="menuitem"], [role="menuitemcheckbox"]') ??
+                        itemEl?.closest?.('[tabindex="-1"]') ??
+                        itemEl;
+                    focusTarget?.focus();
                     this.scrollActiveOptionIntoView({
                         scrollContainer:
                             this.scrollContainer ||
@@ -139,7 +147,8 @@ export class MenuKeyControlService implements OnDestroy {
         return (
             this.keyboardEventsManager.activeItem instanceof
                 MenuActionComponent ||
-            this.keyboardEventsManager.activeItem instanceof MenuItemComponent
+            this.keyboardEventsManager.activeItem instanceof MenuItemComponent ||
+            this.keyboardEventsManager.activeItem instanceof MenuLinkComponent
         );
     }
 
@@ -158,32 +167,30 @@ export class MenuKeyControlService implements OnDestroy {
 
     private handleOpenKeyDown(event: KeyboardEvent): void {
         if (
-            event.code === KEYBOARD_CODE.ARROW_DOWN ||
-            event.code === KEYBOARD_CODE.ARROW_UP
+            this.isArrowDown(event) ||
+            this.isArrowUp(event)
         ) {
+            event.preventDefault();
             // passing the event to key manager so we get a change fired
             this.keyboardEventsManager.onKeydown(event);
-            this.announceCurrentItem();
         }
         if (
-            event.code === KEYBOARD_CODE.PAGE_UP ||
-            event.code === KEYBOARD_CODE.HOME ||
-            (event.metaKey && event.code === KEYBOARD_CODE.ARROW_UP)
+            this.isPageUp(event) ||
+            this.isHome(event) ||
+            (event.metaKey && this.isArrowUp(event))
         ) {
             event.preventDefault();
             this.keyboardEventsManager.onKeydown(event);
             this.keyboardEventsManager.setFirstItemActive();
-            this.announceCurrentItem();
         }
         if (
-            event.code === KEYBOARD_CODE.PAGE_DOWN ||
-            event.code === KEYBOARD_CODE.END ||
-            (event.metaKey && event.code === KEYBOARD_CODE.ARROW_DOWN)
+            this.isPageDown(event) ||
+            this.isEnd(event) ||
+            (event.metaKey && this.isArrowDown(event))
         ) {
             event.preventDefault();
             this.keyboardEventsManager.onKeydown(event);
             this.keyboardEventsManager.setLastItemActive();
-            this.announceCurrentItem();
         }
 
         // This keeps the active item visible within the visible area of the menu popup. In case there are disabled items in the list,
@@ -194,16 +201,16 @@ export class MenuKeyControlService implements OnDestroy {
         );
 
         // prevent page scrolling on space
-        if (event.code === KEYBOARD_CODE.SPACE) {
+        if (this.isSpace(event)) {
             event.preventDefault();
         }
 
         // prevent closing on enter
-        if (!this.hasActiveItem() && (event.code === KEYBOARD_CODE.ENTER || event.code === KEYBOARD_CODE.SPACE)) {
+        if (!this.hasActiveItem() && (this.isEnter(event) || this.isSpace(event))) {
             event.preventDefault();
         }
 
-        if (this.hasActiveItem() && (event.code === KEYBOARD_CODE.ENTER || event.code === KEYBOARD_CODE.SPACE)) {
+        if (this.hasActiveItem() && (this.isEnter(event) || this.isSpace(event))) {
             // perform action in menu item(select, switch, check etc).
             this.keyboardEventsManager.activeItem?.doAction(event);
             // closing items only if they are MenuAction or MenuItem, others should not close popup
@@ -212,31 +219,111 @@ export class MenuKeyControlService implements OnDestroy {
                 return;
             }
             this.popup.toggleOpened(event);
+            this.menuToggle.nativeElement.focus();
         }
         if (
-            event.code === KEYBOARD_CODE.TAB ||
-            event.code === KEYBOARD_CODE.ESCAPE
+            this.isTab(event) ||
+            this.isEscape(event)
         ) {
             this.popup.toggleOpened(event);
+            this.menuToggle.nativeElement.focus();
         }
     }
 
     private handleClosedKeyDown(event: KeyboardEvent): void {
-        // prevent opening on enter and prevent scrolling page on key down/key up when focused
-        if (this.shouldBePrevented(event)) {
+        if (this.isArrowDown(event) || this.isEnter(event) || this.isSpace(event)) {
             event.preventDefault();
-        }
-
-        if (event.code === KEYBOARD_CODE.ARROW_DOWN) {
             this.popup.toggleOpened(event);
         }
     }
 
     private shouldBePrevented(event: KeyboardEvent) {
         return (
+            this.isArrowUp(event)
+        );
+    }
+
+    private isArrowDown(event: KeyboardEvent): boolean {
+        return (
             event.code === KEYBOARD_CODE.ARROW_DOWN ||
+            event.key === KEYBOARD_CODE.ARROW_DOWN ||
+            event.key === "Down" ||
+            event.keyCode === KEY_CODE.DOWN_ARROW
+        );
+    }
+
+    private isArrowUp(event: KeyboardEvent): boolean {
+        return (
             event.code === KEYBOARD_CODE.ARROW_UP ||
-            event.code === KEYBOARD_CODE.ENTER
+            event.key === KEYBOARD_CODE.ARROW_UP ||
+            event.key === "Up" ||
+            event.keyCode === KEY_CODE.UP_ARROW
+        );
+    }
+
+    private isEnter(event: KeyboardEvent): boolean {
+        return (
+            event.code === KEYBOARD_CODE.ENTER ||
+            event.key === KEYBOARD_CODE.ENTER ||
+            event.keyCode === KEY_CODE.ENTER
+        );
+    }
+
+    private isSpace(event: KeyboardEvent): boolean {
+        return (
+            event.code === KEYBOARD_CODE.SPACE ||
+            event.key === " " ||
+            event.key === "Spacebar" ||
+            event.keyCode === KEY_CODE.SPACE
+        );
+    }
+
+    private isTab(event: KeyboardEvent): boolean {
+        return (
+            event.code === KEYBOARD_CODE.TAB ||
+            event.key === KEYBOARD_CODE.TAB ||
+            event.keyCode === KEY_CODE.TAB
+        );
+    }
+
+    private isEscape(event: KeyboardEvent): boolean {
+        return (
+            event.code === KEYBOARD_CODE.ESCAPE ||
+            event.key === KEYBOARD_CODE.ESCAPE ||
+            event.key === "Esc" ||
+            event.keyCode === KEY_CODE.ESCAPE
+        );
+    }
+
+    private isHome(event: KeyboardEvent): boolean {
+        return (
+            event.code === KEYBOARD_CODE.HOME ||
+            event.key === KEYBOARD_CODE.HOME ||
+            event.keyCode === KEY_CODE.HOME
+        );
+    }
+
+    private isEnd(event: KeyboardEvent): boolean {
+        return (
+            event.code === KEYBOARD_CODE.END ||
+            event.key === KEYBOARD_CODE.END ||
+            event.keyCode === KEY_CODE.END
+        );
+    }
+
+    private isPageUp(event: KeyboardEvent): boolean {
+        return (
+            event.code === KEYBOARD_CODE.PAGE_UP ||
+            event.key === KEYBOARD_CODE.PAGE_UP ||
+            event.keyCode === KEY_CODE.PAGE_UP
+        );
+    }
+
+    private isPageDown(event: KeyboardEvent): boolean {
+        return (
+            event.code === KEYBOARD_CODE.PAGE_DOWN ||
+            event.key === KEYBOARD_CODE.PAGE_DOWN ||
+            event.keyCode === KEY_CODE.PAGE_DOWN
         );
     }
 
@@ -299,15 +386,6 @@ export class MenuKeyControlService implements OnDestroy {
                 options.scrollContainer.nativeElement.scrollTop,
                 300
             );
-    }
-
-    private announceCurrentItem() {
-        const activeItemText =
-            this.keyboardEventsManager?.activeItem?.menuItem?.nativeElement
-                ?.innerText || "";
-        this.live.announce(
-            $localize`:@@nuiMenuActiveItem:Active item ${activeItemText}:activeItemText:.`
-        );
     }
 
     public ngOnDestroy(): void {

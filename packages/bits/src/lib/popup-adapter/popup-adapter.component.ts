@@ -66,7 +66,7 @@ const ADAPTER_OVERLAY_CONFIG: OverlayConfig = {
     encapsulation: ViewEncapsulation.None,
     host: {
         class: "nui-popup",
-        role: "dialog",
+        "[attr.role]": "role",
         "[attr.aria-label]": "ariaLabel",
     },
     standalone: false,
@@ -76,6 +76,8 @@ export class PopupComponent
 {
     @ContentChild(PopupToggleDirective)
     public popupToggle: PopupToggleDirective;
+
+    @Input() public role: string = "dialog";
 
     @Input() public width: string = "auto";
     @Input() public get overlayConfig(): OverlayConfig {

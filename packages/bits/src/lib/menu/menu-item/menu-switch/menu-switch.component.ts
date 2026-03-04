@@ -31,6 +31,7 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 
+import { MenuKeyControlService } from "../../menu-key-control.service";
 import { MenuGroupComponent } from "../menu-group/menu-group.component";
 import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
 
@@ -45,12 +46,8 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
 @Component({
     selector: "nui-menu-switch",
     template: `
-        <div
-            class="nui-menu-item__switch"
-            #menuSwitch
-            tabIndex="-1"
-        >
-            <nui-switch [value]="checked" [disabled]="disabled">
+        <div class="nui-menu-item__switch" #menuSwitch>
+            <nui-switch [value]="checked" [disabled]="disabled" role="presentation">
                 <ng-content></ng-content>
             </nui-switch>
         </div>
@@ -66,6 +63,8 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     host: {
         role: "menuitemcheckbox",
         "[attr.aria-checked]": "checked",
+        "class": "nui-menu-item",
+        tabindex: "-1",
     },
     standalone: false,
 })
@@ -85,6 +84,7 @@ export class MenuSwitchComponent extends MenuItemBaseComponent {
             event.preventDefault();
             this.checked = !this.checked;
             this.actionDone.emit(this.checked);
+            this.cd.markForCheck();
         }
     }
 
@@ -94,6 +94,7 @@ export class MenuSwitchComponent extends MenuItemBaseComponent {
     }
 
     constructor(
+        private menuKeyControlService: MenuKeyControlService,
         @Optional() readonly group: MenuGroupComponent,
         cd: ChangeDetectorRef
     ) {
@@ -107,5 +108,6 @@ export class MenuSwitchComponent extends MenuItemBaseComponent {
     public doAction(): void {
         this.checked = !this.checked;
         this.actionDone.emit(this.checked);
+        this.cd.markForCheck();
     }
 }

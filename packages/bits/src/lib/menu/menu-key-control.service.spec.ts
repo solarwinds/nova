@@ -61,6 +61,32 @@ describe("components >", () => {
                 expect(event.preventDefault).toHaveBeenCalled();
                 expect(activeItemSpy.doAction).toHaveBeenCalledWith(event);
             });
+
+            it("should open closed menu on ENTER", () => {
+                (subject as any).popup = jasmine.createSpyObj("popup", ["toggleOpened"]);
+                const event = {
+                    code: KEYBOARD_CODE.ENTER,
+                    preventDefault: jasmine.createSpy("preventDefault"),
+                } as any;
+
+                (subject as any).handleClosedKeyDown(event);
+
+                expect(event.preventDefault).toHaveBeenCalled();
+                expect((subject as any).popup.toggleOpened).toHaveBeenCalledWith(event);
+            });
+
+            it("should open closed menu on SPACE", () => {
+                (subject as any).popup = jasmine.createSpyObj("popup", ["toggleOpened"]);
+                const event = {
+                    code: KEYBOARD_CODE.SPACE,
+                    preventDefault: jasmine.createSpy("preventDefault"),
+                } as any;
+
+                (subject as any).handleClosedKeyDown(event);
+
+                expect(event.preventDefault).toHaveBeenCalled();
+                expect((subject as any).popup.toggleOpened).toHaveBeenCalledWith(event);
+            });
         });
 
         it("should return true for menu action active item", () => {
@@ -96,6 +122,7 @@ describe("components >", () => {
 
         it("should return false for menu switch active item", () => {
             (subject.keyboardEventsManager as any).activeItem = new MenuSwitchComponent(
+                subject,
                 new MenuGroupComponent(),
                 new MockedChangeDetectorRef()
             );

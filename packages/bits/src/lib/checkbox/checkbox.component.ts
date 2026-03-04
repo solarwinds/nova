@@ -191,9 +191,15 @@ export class CheckboxComponent
     private rendererListener: () => void;
     private sub: Subscription;
 
-    private _ariaLabel: string = "Checkbox";
+    private _ariaLabel: string;
 
     private keysAction = [KEYBOARD_CODE.SPACE, KEYBOARD_CODE.ENTER].map(String);
+
+    /**
+     * Sets proper role for accessibility. Defaults to "checkbox".
+     * If set to "presentation", the input is hidden from a11y.
+     */
+    @Input() public role: string = "checkbox";
 
     constructor(
         private changeDetector: ChangeDetectorRef,

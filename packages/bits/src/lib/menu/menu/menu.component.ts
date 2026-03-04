@@ -119,7 +119,9 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     @ViewChild("menuToggle", { read: ElementRef }) menuToggle: ElementRef;
 
     private menuKeyControlListeners: Function[] = [];
+    private _openedByKeyboard = false;
     private focusMonitorSubscription: Subscription;
+
     constructor(
         private keyControlService: MenuKeyControlService,
         private renderer: Renderer2,
@@ -154,17 +156,15 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
                 }
             )
         );
-        // opening menu on focusin
-        // The FocusMonitor is an injectable service that can be used to listen for changes in the focus state of an element.
-        // It's more powerful than just listening for focus or blur events because it tells you how the element was focused
-        // (via mouse, keyboard, touch, or programmatically).
+
+        // Track focus origin to determine if the menu is being interacted with via keyboard.
+        // This sets a flag so that when the menu opens (via Enter/Space/ArrowDown), we know to move focus inside.
+        // We do NOT automatically open the menu on focus anymore (per A11y best practices).
         this.focusMonitorSubscription = this.focusMonitor
             .monitor(this.menuToggle)
             .subscribe((origin: FocusOrigin) => {
                 if (origin === "keyboard") {
-                    if (!this.popup.popupToggle.disabled) {
-                        this.popup.toggleOpened(new FocusEvent("focusin"));
-                    }
+                    this._openedByKeyboard = true;
                 }
             });
     }
@@ -181,8 +181,55 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.blurred.emit(event);
     }
 
+    public onPopupKeyDown(event: KeyboardEvent): void {
+        if (this.popup?.isOpen) {
+            this.keyControlService.handleKeydown(event);
+        }
+    }
+
     public onMenuOpen(): void {
         this.menuOpenStream.next();
+        // Move focus into the menu only when opened via keyboard so screen readers
+        // enter application mode and arrow key navigation stays within the menu.
+        // For mouse-triggered opens, focus stays on the toggle button.
+        if (this._openedByKeyboard) {
+            this._openedByKeyboard = false;
+            requestAnimationFrame(() => {
+                this.focusFirstMenuItem();
+                // itemsSource menus can render one tick later, retry once
+                requestAnimationFrame(() => {
+                    this.focusFirstMenuItem();
+                });
+            });
+        }
+    }
+
+    private focusFirstMenuItem(): void {
+        const hasItems = this.keyControlService.keyControlItemsSource
+            ? !!this.menuPopup?.menuItems?.length
+            : !!this.menuItems?.length;
+
+        if (hasItems) {
+            this.keyControlService.setActiveItem(0);
+        }
+
+        const container = this.popup?.popupAreaContainer?.nativeElement as
+            | HTMLElement
+            | undefined;
+        if (!container) {
+            return;
+        }
+
+        const activeElement = document.activeElement as Node | null;
+        if (activeElement && container.contains(activeElement)) {
+            return;
+        }
+
+        const firstFocusable = container.querySelector(
+            "[tabindex='-1'], [role='menuitem'], [role='menuitemcheckbox'], a[href], button"
+        ) as HTMLElement | null;
+
+        firstFocusable?.focus();
     }
 
     public isJustified(): boolean {
@@ -205,3 +252,4 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.focusMonitor.stopMonitoring(this.menuToggle);
     }
 }
+

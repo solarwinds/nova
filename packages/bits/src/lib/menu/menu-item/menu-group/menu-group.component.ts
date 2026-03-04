@@ -37,6 +37,7 @@ import { Component, Input, ViewEncapsulation } from "@angular/core";
         <div
             (click)="stopClickPropagation($event)"
             class="nui-menu-group-divider--container"
+            role="presentation"
         >
             <nui-divider size="extra-small"></nui-divider>
         </div>

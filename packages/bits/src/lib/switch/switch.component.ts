@@ -62,6 +62,12 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
      */
     @Input() public ariaLabel: string = "Switch";
 
+    /**
+     * Sets proper role for accessibility. Defaults to "checkbox".
+     * If set to "presentation", the component is hidden from a11y.
+     */
+    @Input() public role: string = "checkbox";
+
     @Output() valueChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     toggle(): void {

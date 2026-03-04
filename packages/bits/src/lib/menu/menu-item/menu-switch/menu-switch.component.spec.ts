@@ -21,6 +21,7 @@
 import { MenuSwitchComponent } from "./menu-switch.component";
 import { MockedChangeDetectorRef } from "../../../../spec-helpers/angular";
 import { MenuGroupComponent } from "../menu-group/menu-group.component";
+import { MenuKeyControlService } from "../../menu-key-control.service";
 
 describe("components >", () => {
     describe("menu-switch >", () => {
@@ -28,13 +29,16 @@ describe("components >", () => {
             let mockEvent: MouseEvent;
             let spyForSwitchEmit: jasmine.Spy;
             let menuSwitch: MenuSwitchComponent;
+            let keyControlService: MenuKeyControlService;
 
             beforeEach(() => {
                 mockEvent = jasmine.createSpyObj("event", [
                     "preventDefault",
                     "stopPropagation",
                 ]);
+                keyControlService = jasmine.createSpyObj("MenuKeyControlService", ["handleKeydown"]);
                 menuSwitch = new MenuSwitchComponent(
+                    keyControlService,
                     new MenuGroupComponent(),
                     new MockedChangeDetectorRef()
                 );

@@ -10,10 +10,11 @@
             (click)="toggle()"
             (keyup.enter)="toggle()"
             (keyup.space)="toggle()"
-            tabindex="{{ disabled ? -1 : 0 }}"
-            role="checkbox"
-            [attr.aria-checked]="value"
-            [attr.aria-label]="ariaLabel"
+            [attr.tabindex]="(role !== 'presentation' && !disabled) ? 0 : null"
+            [attr.role]="role"
+            [attr.aria-checked]="role !== 'presentation' ? value : null"
+            [attr.aria-label]="role !== 'presentation' ? ariaLabel : null"
+            [attr.aria-hidden]="role === 'presentation' ? 'true' : null"
         >
             <div class="nui-switch__on">
                 <svg

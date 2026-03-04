@@ -62,7 +62,10 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     ],
     styleUrls: ["./menu-link.component.less"],
     encapsulation: ViewEncapsulation.None,
-    host: { role: "menuitem" },
+    host: {
+        role: "menuitem",
+        tabindex: "-1",
+    },
     standalone: false,
 })
 export class MenuLinkComponent extends MenuItemBaseComponent {

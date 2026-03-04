@@ -67,7 +67,7 @@ export abstract class MenuItemBaseComponent
 
     constructor(
         @Optional() readonly group: MenuGroupComponent,
-        private cd: ChangeDetectorRef
+        public cd: ChangeDetectorRef
     ) {}
 
     public ngOnChanges(changes: SimpleChanges): void {
