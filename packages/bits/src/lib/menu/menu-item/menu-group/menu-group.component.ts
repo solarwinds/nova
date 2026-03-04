@@ -27,6 +27,7 @@ import { Component, Input, ViewEncapsulation } from "@angular/core";
         <ng-container *ngIf="header">
             <div
                 class="nui-menu-item nui-menu-item--header"
+                role="presentation"
                 (click)="stopClickPropagation($event)"
             >
                 {{ header }}
