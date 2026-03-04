@@ -63,7 +63,10 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     ],
     styleUrls: ["./menu-switch.component.less"],
     encapsulation: ViewEncapsulation.None,
-    host: { role: "menuitemcheckbox" },
+    host: {
+        role: "menuitemcheckbox",
+        "[attr.aria-checked]": "checked",
+    },
     standalone: false,
 })
 export class MenuSwitchComponent extends MenuItemBaseComponent {
