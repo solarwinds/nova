@@ -29,6 +29,8 @@ export class TimeseriesAtom extends Atom {
         const legendLocator = this.getLocator().locator(
             `.${LegendSeriesAtom.CSS_CLASS}`
         );
+        // Ensure legends are rendered before counting
+        await legendLocator.first().waitFor({ state: "visible" });
         const count = await legendLocator.count();
         return new Array(count).fill(0).map((_, index) => {
             return new LegendSeriesAtom(legendLocator.nth(index));
