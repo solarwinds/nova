@@ -35,12 +35,12 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 
-import { SelectV2Component } from "../select-v2/select/select-v2.component";
 
 import { ColorService } from "./color.service";
-import { getColorValueByName } from "../../functions/color.helper";
 import { IPaletteColor } from "../../constants/color-picker.constants";
+import { getColorValueByName } from "../../functions/color.helper";
 import { getOverlayPositions, IOptionValueObject, IResizeConfig, NuiFormFieldControl, OverlayUtilitiesService } from "../public-api";
+import { SelectV2Component } from "../select-v2/select/select-v2.component";
 
 // Left and right paddings of .color-picker-container element
 const CONTAINER_SIDE_PADDINGS_PX: number = 20;

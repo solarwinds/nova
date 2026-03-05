@@ -25,10 +25,10 @@ import { Subject, Subscription } from "rxjs";
 
 import { MenuGroupComponent } from "./menu-item/menu-group/menu-group.component";
 import { MenuItemComponent } from "./menu-item/menu-item/menu-item.component";
+import { MenuLinkComponent } from "./menu-item/menu-link/menu-link.component";
 import { MenuPopupComponent } from "./menu-popup/menu-popup.component";
 import { KEYBOARD_CODE, KEY_CODE } from "../../constants/keycode.constants";
 import { MenuActionComponent } from "../menu/menu-item/menu-action/menu-action.component";
-import { MenuLinkComponent } from "./menu-item/menu-link/menu-link.component";
 import { MenuItemBaseComponent } from "../menu/menu-item/menu-item/menu-item-base";
 import { PopupComponent } from "../popup-adapter/popup-adapter.component";
 import { IPopupActiveOptions } from "../public-api";
@@ -115,8 +115,8 @@ export class MenuKeyControlService implements OnDestroy {
                     const itemEl = this.keyboardEventsManager.activeItem?.menuItem.nativeElement;
                     // Focus the semantic menu item host, not inner controls, so SR keeps menu navigation mode.
                     const focusTarget: HTMLElement | null =
-                        itemEl?.closest?.('[role="menuitem"], [role="menuitemcheckbox"]') ??
-                        itemEl?.closest?.('[tabindex="-1"]') ??
+                        itemEl?.closest?.("[role=\"menuitem\"], [role=\"menuitemcheckbox\"]") ??
+                        itemEl?.closest?.("[tabindex=\"-1\"]") ??
                         itemEl;
                     focusTarget?.focus();
                     this.scrollActiveOptionIntoView({

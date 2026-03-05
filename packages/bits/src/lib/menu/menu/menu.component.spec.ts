@@ -160,7 +160,7 @@ describe("components >", () => {
         it("should render single menu role container", () => {
             testComponent.menu.popup.toggleOpened(new FocusEvent("focusin"));
             fixture.detectChanges();
-            const menuRoleContainers = el.querySelectorAll('[role="menu"]');
+            const menuRoleContainers = el.querySelectorAll("[role=\"menu\"]");
             expect(menuRoleContainers.length).toBe(1);
         });
     });

@@ -20,8 +20,8 @@
 
 import { MenuSwitchComponent } from "./menu-switch.component";
 import { MockedChangeDetectorRef } from "../../../../spec-helpers/angular";
-import { MenuGroupComponent } from "../menu-group/menu-group.component";
 import { MenuKeyControlService } from "../../menu-key-control.service";
+import { MenuGroupComponent } from "../menu-group/menu-group.component";
 
 describe("components >", () => {
     describe("menu-switch >", () => {
