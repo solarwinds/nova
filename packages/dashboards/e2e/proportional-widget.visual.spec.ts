@@ -18,18 +18,31 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { By, ElementFinder } from "protractor";
+import { Atom, Camera, Helpers, test } from "@nova-ui/bits/sdk/atoms-playwright";
 
-import { Atom } from "@nova-ui/bits/sdk/atoms";
+const name: string = "Proportional Widget";
 
-export class ProportionalWidgetAtom extends Atom {
-    public static CSS_CLASS = "proportional-widget";
+test.describe(`Visual tests: Dashboards - ${name}`, () => {
+    let camera: Camera;
 
-    public getLegendSeries(): ElementFinder {
-        return this.getElement()
-            .all(By.css("nui-widget"))
-            .get(2)
-            .all(By.css("nui-legend-series"))
-            .last();
-    }
-}
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("test/proportional", page);
+        camera = new Camera().loadFilm(page, name, "Dashboards");
+    });
+
+    test(`${name} - Default look`, async ({ page }) => {
+        await camera.turn.on();
+
+        await camera.say.cheese(`${name} - Default`);
+
+        // Hover on the last legend series inside the 3rd nui-widget
+        // (mirrors old Protractor: .all(nui-widget).get(2).all(nui-legend-series).last())
+        const thirdWidget = page.locator("#proportional-widget nui-widget").nth(2);
+        const lastLegendSeries = thirdWidget.locator("nui-legend-series").last();
+        await lastLegendSeries.hover();
+
+        await camera.say.cheese(`${name} - Hover on legend`);
+
+        await camera.turn.off();
+    });
+});

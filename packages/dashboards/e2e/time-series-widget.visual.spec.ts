@@ -18,43 +18,47 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser, ElementFinder } from "protractor";
+import { Atom, Camera, Helpers, test } from "@nova-ui/bits/sdk/atoms-playwright";
 
-import { Atom, Camera } from "@nova-ui/bits/sdk/atoms";
-import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
-import { ChartAtom } from "@nova-ui/charts/sdk/atoms/chart/atoms/chart.atom";
-
-import { TestPage } from "./test.po";
+import { DashboardAtom } from "./dashboard.atom";
 
 const name: string = "Time Series Widget";
+const BAR_CHART_WIDGET_TITLE: string = "Bar Chart with Time Interval Scale";
 
-describe(`Visual tests: Dashboards - ${name}`, () => {
+test.describe(`Visual tests: Dashboards - ${name}`, () => {
     let camera: Camera;
-    const page = new TestPage();
+    let dashboard: DashboardAtom;
 
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("test/timeseries");
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("test/timeseries", page);
 
-        camera = new Camera().loadFilm(browser, name);
+        dashboard = Atom.findIn<DashboardAtom>(
+            DashboardAtom,
+            page.locator(`.${DashboardAtom.CSS_CLASS}`)
+        );
+
+        camera = new Camera().loadFilm(page, name, "Dashboards");
     });
 
-    it(`${name} - Default look`, async () => {
+    test(`${name} - Default look`, async () => {
         await camera.turn.on();
 
+        // Step 2: Take screenshot of the default state
         await camera.say.cheese(`${name} - Default`);
 
-        const barWidget = await page.dashboard.getWidgetByHeaderTitleText(
-            "Bar Chart with Time Interval Scale"
+        // Step 3: Find the widget titled "Bar Chart with Time Interval Scale" and scroll it into view
+        const barChartWidget = await dashboard.getWidgetByHeaderTitleText(
+            BAR_CHART_WIDGET_TITLE
         );
-        await barWidget?.scrollTo();
-        const barChart = Atom.findIn(
-            ChartAtom,
-            barWidget?.getElement() as ElementFinder
-        );
-        await barChart?.hover();
+        await barChartWidget?.getLocator().scrollIntoViewIfNeeded();
 
-        await camera.say.cheese(`${name} - Chart hovered in right hand column`);
+        // Step 4: Find the chart inside that widget and hover over it
+        const chart = barChartWidget?.getLocator().locator(".nui-chart");
+        await chart?.hover();
+
+        // Step 5: Take screenshot of the hovered chart state
+        await camera.say.cheese(`${name} - ${BAR_CHART_WIDGET_TITLE} Hovered`);
 
         await camera.turn.off();
-    }, 100000);
+    });
 });

@@ -18,58 +18,66 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser } from "protractor";
-import { by, element } from "protractor";
-
-import { Atom, Camera } from "@nova-ui/bits/sdk/atoms";
-import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
+import { Atom, Camera, Helpers, test } from "@nova-ui/bits/sdk/atoms-playwright";
 
 import { ConfiguratorAtom } from "./configurator/configurator.atom";
-import { TestPage } from "./test.po";
+import { DashboardAtom } from "./dashboard.atom";
 
 const name: string = "Table Widget";
 
-describe(`Visual tests: Dashboards - ${name}`, () => {
+test.describe(`Visual tests: Dashboards - ${name}`, () => {
     let camera: Camera;
     let configurator: ConfiguratorAtom;
-    const page = new TestPage();
+    let dashboard: DashboardAtom;
 
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("test/table");
-        configurator = Atom.findIn(
-            ConfiguratorAtom,
-            element(by.className(ConfiguratorAtom.CSS_CLASS))
-        );
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("test/table", page);
 
-        camera = new Camera().loadFilm(browser, name);
+        configurator = Atom.findIn<ConfiguratorAtom>(ConfiguratorAtom);
+
+        dashboard = Atom.findIn<DashboardAtom>(DashboardAtom);
+
+        camera = new Camera().loadFilm(page, name, "Dashboards");
     });
 
-    it(`${name} - Default look`, async () => {
+    test(`${name} - Default look`, async ({ page }) => {
         await camera.turn.on();
 
         await camera.say.cheese(`${name} - Default`);
 
-        await page.enableEditMode();
-        await page.editWidget(`Table Widget!`);
+        // Step 3: Enable edit mode
+        await page.locator("#edit-mode").click();
 
-        const accordion = await configurator?.getAccordion(
+        // Step 4: Open configurator for widget titled "Table Widget!"
+        const tableWidget = await dashboard.getWidgetByHeaderTitleText("Table Widget!");
+        await tableWidget?.hover();
+        await tableWidget?.header.clickEdit();
+
+        // Step 5-6: Find accordion (section "Column 1", label "Description") and toggle it open
+        const accordion = await configurator.getAccordion(
             "Column 1",
             "Description"
         );
         await accordion?.toggle();
+
+        // Step 7: Fill width input with "70"
         const widthInput = accordion?.getTextBoxNumberInput(
             "description-configuration__accordion-content__width-input"
         );
         await widthInput?.clearText();
         await widthInput?.acceptText("70");
+
         await camera.say.cheese(`${name} - Column width update in preview`);
 
-        await configurator.wizard.finish();
-        await page.disableEditMode();
-        await camera.say.cheese(
-            `${name} - Column width update after configurator submit`
-        );
+        // Step 9: Submit configurator and wait for it to close
+        await page.locator(".nui-dashwiz-buttons__finish-button").click();
+        await page.locator(`.${ConfiguratorAtom.CSS_CLASS}`).waitFor({ state: "hidden" });
+
+        // Step 10: Disable edit mode
+        await page.locator("#edit-mode").click();
+
+        await camera.say.cheese(`${name} - Column width update after configurator submit`);
 
         await camera.turn.off();
-    }, 100000);
+    });
 });
