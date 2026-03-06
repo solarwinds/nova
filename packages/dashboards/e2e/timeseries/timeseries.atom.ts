@@ -18,18 +18,32 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Atom, ButtonAtom, MenuAtom } from "@nova-ui/bits/sdk/atoms-playwright";
+import { Atom } from "@nova-ui/bits/sdk/atoms-playwright";
 
-export class WidgetHeaderAtom extends Atom {
-    public static CSS_CLASS = "nui-widget-header";
+import { LegendSeriesAtom } from "./legend-series.atom";
 
-    public get menu(): MenuAtom {
-        return Atom.findIn<MenuAtom>(MenuAtom, this.getLocator());
+export class TimeseriesAtom extends Atom {
+    public static CSS_CLASS = "timeseries-widget-content";
+
+    public async getLegendSeries(): Promise<LegendSeriesAtom[]> {
+        const legendLocator = this.getLocator().locator(
+            `.${LegendSeriesAtom.CSS_CLASS}`
+        );
+        // Ensure legends are rendered before counting
+        await legendLocator.first().waitFor({ state: "visible" });
+        const count = await legendLocator.count();
+        return new Array(count).fill(0).map((_, index) => {
+            return new LegendSeriesAtom(legendLocator.nth(index));
+        });
     }
 
-    public async clickEdit(): Promise<void> {
-        await this.getLocator()
-            .locator(".nui-widget-header__action-edit")
-            .click();
+    public async transformSeries(
+        transformName: string,
+        index: number
+    ): Promise<void> {
+        const legends = await this.getLegendSeries();
+        const legend = legends[index];
+        const transform = await legend.getTransform(transformName);
+        await transform?.clickItem();
     }
 }

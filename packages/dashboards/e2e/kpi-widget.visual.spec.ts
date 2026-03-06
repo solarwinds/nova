@@ -18,37 +18,24 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser } from "protractor";
+import { Camera, Helpers, test } from "@nova-ui/bits/sdk/atoms-playwright";
 
-import { Atom, Camera } from "@nova-ui/bits/sdk/atoms";
-import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
+const name: string = "Kpi Widget";
 
-import { ProportionalWidgetAtom } from "./proportional-widget.atom";
-
-const name: string = "Proportional Widget";
-
-describe(`Visual tests: Dashboards - ${name}`, () => {
+test.describe(`Visual tests: Dashboards - ${name}`, () => {
     let camera: Camera;
-    let proportionalWidget: ProportionalWidgetAtom;
 
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("test/proportional");
-        proportionalWidget = Atom.find(
-            ProportionalWidgetAtom,
-            "proportional-widget"
-        );
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("test/kpi", page);
 
-        camera = new Camera().loadFilm(browser, name);
+        camera = new Camera().loadFilm(page, name, "Dashboards");
     });
 
-    it(`${name} - Default look`, async () => {
+    test(`${name} - Default look`, async () => {
         await camera.turn.on();
 
         await camera.say.cheese(`${name} - Default`);
 
-        await proportionalWidget.hover(proportionalWidget.getLegendSeries());
-        await camera.say.cheese(`${name} - Hover on legend`);
-
         await camera.turn.off();
-    }, 100000);
+    });
 });

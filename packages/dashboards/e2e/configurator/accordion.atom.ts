@@ -18,27 +18,38 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser } from "protractor";
+import {
+    Atom,
+    SelectV2Atom,
+    TextboxNumberAtom,
+} from "@nova-ui/bits/sdk/atoms-playwright";
 
-import { Camera } from "@nova-ui/bits/sdk/atoms";
-import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
+export class AccordionAtom extends Atom {
+    public static CSS_CLASS = "nui-widget-editor-accordion";
 
-const name: string = "Kpi Widget";
+    public async toggle(): Promise<void> {
+        await this.getLocator()
+            .locator(".nui-expander__header")
+            .first()
+            .click();
+    }
 
-describe(`Visual tests: Dashboards - ${name}`, () => {
-    let camera: Camera;
+    public getSelectByIndex(index: number): SelectV2Atom {
+        return Atom.findIn<SelectV2Atom>(SelectV2Atom, this.getLocator()).nth<SelectV2Atom>(
+            SelectV2Atom,
+            index
+        );
+    }
 
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("test/kpi");
+    public getSelect(className: string): SelectV2Atom {
+        return new SelectV2Atom(
+            this.getLocator().locator(`.${className}.nui-select-v2`)
+        );
+    }
 
-        camera = new Camera().loadFilm(browser, name);
-    });
-
-    it(`${name} - Default look`, async () => {
-        await camera.turn.on();
-
-        await camera.say.cheese(`${name} - Default`);
-
-        await camera.turn.off();
-    }, 100000);
-});
+    public getTextBoxNumberInput(className: string): TextboxNumberAtom {
+        return new TextboxNumberAtom(
+            this.getLocator().locator(`.${className}`).locator(`.nui-textbox-number`)
+        );
+    }
+}

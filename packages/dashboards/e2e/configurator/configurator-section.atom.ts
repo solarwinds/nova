@@ -18,43 +18,36 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { browser, ElementFinder } from "protractor";
+import { Atom } from "@nova-ui/bits/sdk/atoms-playwright";
 
-import { Atom, Camera } from "@nova-ui/bits/sdk/atoms";
-import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
-import { ChartAtom } from "@nova-ui/charts/sdk/atoms/chart/atoms/chart.atom";
+import { AccordionAtom } from "./accordion.atom";
 
-import { TestPage } from "./test.po";
+export class ConfiguratorSectionAtom extends Atom {
+    public static CSS_CLASS = "nui-widget-configurator-section";
 
-const name: string = "Time Series Widget";
-
-describe(`Visual tests: Dashboards - ${name}`, () => {
-    let camera: Camera;
-    const page = new TestPage();
-
-    beforeAll(async () => {
-        await Helpers.prepareBrowser("test/timeseries");
-
-        camera = new Camera().loadFilm(browser, name);
-    });
-
-    it(`${name} - Default look`, async () => {
-        await camera.turn.on();
-
-        await camera.say.cheese(`${name} - Default`);
-
-        const barWidget = await page.dashboard.getWidgetByHeaderTitleText(
-            "Bar Chart with Time Interval Scale"
+    public getAccordionByIndex(index: number): AccordionAtom {
+        return Atom.findIn<AccordionAtom>(AccordionAtom, this.getLocator()).nth<AccordionAtom>(
+            AccordionAtom,
+            index
         );
-        await barWidget?.scrollTo();
-        const barChart = Atom.findIn(
-            ChartAtom,
-            barWidget?.getElement() as ElementFinder
+    }
+
+    public async getAccordionByLabel(
+        label: string
+    ): Promise<AccordionAtom | undefined> {
+        const accordions = this.getLocator().locator(
+            ".nui-widget-editor-accordion"
         );
-        await barChart?.hover();
+        const count = await accordions.count();
 
-        await camera.say.cheese(`${name} - Chart hovered in right hand column`);
-
-        await camera.turn.off();
-    }, 100000);
-});
+        for (let i = 0; i < count; i++) {
+            const accordion = accordions.nth(i);
+            const text = await accordion
+                .locator(".nui-text-label")
+                .innerText();
+            if (text === label) {
+                return new AccordionAtom(accordion);
+            }
+        }
+    }
+}
