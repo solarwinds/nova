@@ -18,13 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    Component,
-    Inject,
-    OnDestroy,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, ViewChild, inject } from "@angular/core";
 import _get from "lodash/get";
 import _isEmpty from "lodash/isEmpty";
 import { Subscription } from "rxjs";
@@ -117,6 +111,8 @@ const RANDOM_ARRAY = [
 export class DepreacatedDataSourceClientSideFilteringExampleComponent
     implements AfterViewInit, OnDestroy
 {
+    dataSourceService = inject(DataSourceService) as DataSourceService<ExampleItem>;
+
     public panelOptions: PanelOptions = {
         panelMode: "collapsible",
         heading: "Filters",
@@ -205,10 +201,7 @@ export class DepreacatedDataSourceClientSideFilteringExampleComponent
 
     private outputsSubscription: Subscription;
 
-    constructor(
-        @Inject(DataSourceService)
-        public dataSourceService: DataSourceService<ExampleItem>
-    ) {
+    constructor() {
         (
             this.dataSourceService as LocalFilteringDataSource<ExampleItem>
         ).setData(RANDOM_ARRAY);

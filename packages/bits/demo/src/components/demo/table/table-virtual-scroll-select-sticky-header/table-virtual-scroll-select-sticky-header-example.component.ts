@@ -19,13 +19,7 @@
 //  THE SOFTWARE.
 
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    Component,
-    TrackByFunction,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, Component, TrackByFunction, ViewChild, inject } from "@angular/core";
 import sample from "lodash/sample";
 import { Observable } from "rxjs";
 // eslint-disable-next-line import/no-deprecated
@@ -58,6 +52,8 @@ interface IRandomUserTableModel {
 export class TableVirtualScrollSelectStickyHeaderExampleComponent
     implements AfterViewInit
 {
+    dataSourceService = inject<ClientSideDataSource<IRandomUserTableModel>>(ClientSideDataSource);
+
     @ViewChild(CdkVirtualScrollViewport)
     public viewport: CdkVirtualScrollViewport;
     // Note: Mock items list is used to fake that the data is already loaded
@@ -87,9 +83,7 @@ export class TableVirtualScrollSelectStickyHeaderExampleComponent
         item: IRandomUserTableModel
     ): number => item?.no;
 
-    constructor(
-        public dataSourceService: ClientSideDataSource<IRandomUserTableModel>
-    ) {
+    constructor() {
         // Note: Initiating data source with data to be displayed
         this.dataSourceService.setData(generateUsers(100000));
     }

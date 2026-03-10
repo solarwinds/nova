@@ -18,16 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    Directive,
-    ElementRef,
-    EventEmitter,
-    HostListener,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-} from "@angular/core";
+import { Directive, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, inject } from "@angular/core";
 import _isNil from "lodash/isNil";
 import throttle from "lodash/throttle";
 import { Subscription } from "rxjs";
@@ -99,6 +90,9 @@ import {
     standalone: false,
 })
 export class DroppableDirective implements OnInit, OnDestroy {
+    private elRef = inject(ElementRef);
+    private dragAndDropService = inject(DragAndDropService);
+
     @Input() dragOverClass = "nui-drag--over";
     @Input() invalidDragOverClass: string;
     @Input() dropIndicatorClass: string;
@@ -193,11 +187,6 @@ export class DroppableDirective implements OnInit, OnDestroy {
         event.stopPropagation();
         return false;
     }
-
-    constructor(
-        private elRef: ElementRef,
-        private dragAndDropService: DragAndDropService
-    ) {}
     public ngOnInit(): void {
         this.onDragStateChangedSubscription =
             this.dragAndDropService.onDragStateChanged.subscribe(

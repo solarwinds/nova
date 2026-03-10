@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Directive, Input, TemplateRef, ViewContainerRef } from "@angular/core";
+import { Directive, Input, TemplateRef, ViewContainerRef, inject } from "@angular/core";
 /** @ignore */
 @Directive({
     selector: "[nuiTabHeadingCustomTemplateRef]",
@@ -42,7 +42,9 @@ export class TabHeadingCustomTemplateRefDirective {
         return this._tabHeadingCustomTemplateRef;
     }
 
-    constructor(viewRef: ViewContainerRef) {
+    constructor() {
+        const viewRef = inject(ViewContainerRef);
+
         this.viewRef = viewRef;
     }
 }

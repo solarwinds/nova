@@ -18,20 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterContentChecked,
-    Attribute,
-    ChangeDetectionStrategy,
-    Component,
-    ElementRef,
-    HostBinding,
-    Input,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterContentChecked, ChangeDetectionStrategy, Component, ElementRef, HostBinding, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef, ViewEncapsulation, HostAttributeToken, inject } from "@angular/core";
 import { fromEvent, merge, Subject, timer } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
 
@@ -54,6 +41,10 @@ import { LoggerService } from "../../services/log-service";
     standalone: false,
 })
 export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
+    private type = inject(new HostAttributeToken("type"));
+    private el = inject(ElementRef);
+    private logger = inject(LoggerService);
+
     /**
      * Optionally, specify the display style. Supported values are "default", "primary", "action", and "destructive".
      */
@@ -176,11 +167,10 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
     private _isContentEmpty: boolean;
     private _size: ButtonSizeType;
 
-    constructor(
-        @Attribute("type") private type: string,
-        private el: ElementRef,
-        private logger: LoggerService
-    ) {
+    constructor() {
+        const type = this.type;
+        const el = this.el;
+
         if (this.getHostElement().tagName === "BUTTON" && !type) {
             this.logger.error(
                 `No type specified for button element. To avoid potential problems, the "type" attribute \

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnDestroy, ViewChild } from "@angular/core";
+import { Component, OnDestroy, ViewChild, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -35,6 +35,8 @@ import {
     standalone: false,
 })
 export class WizardStepsExampleComponent implements OnDestroy {
+    private formBuilder = inject(FormBuilder);
+
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;
     @ViewChild("dynamicStep") dynamicStep: WizardStepComponent;
 
@@ -42,7 +44,7 @@ export class WizardStepsExampleComponent implements OnDestroy {
     public myForm;
     private readonly destroy$ = new Subject<void>();
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor() {
         this.myForm = this.formBuilder.group({
             name: ["", Validators.required],
             email: [

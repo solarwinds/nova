@@ -18,14 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    TemplateRef,
-    ViewChild,
-} from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, TemplateRef, ViewChild, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
 import {
@@ -45,17 +38,17 @@ import {
     standalone: false,
 })
 export class WizardWithConfirmationDialogOnCancelExampleComponent {
+    private dialogService = inject<DialogService>(DialogService);
+    private toastService = inject(ToastService);
+    private formBuilder = inject(FormBuilder);
+    cd = inject(ChangeDetectorRef);
+
     public confirmationDialog: NuiDialogRef;
     public form;
 
     @ViewChild("wizard") private wizard: WizardHorizontalComponent;
 
-    constructor(
-        @Inject(DialogService) private dialogService: DialogService,
-        private toastService: ToastService,
-        private formBuilder: FormBuilder,
-        public cd: ChangeDetectorRef
-    ) {
+    constructor() {
         this.form = this.formBuilder.group({
             personDetails: this.formBuilder.group({
                 firstName: ["", [Validators.required, Validators.minLength(3)]],

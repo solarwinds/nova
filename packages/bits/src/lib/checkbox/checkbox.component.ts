@@ -18,22 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnDestroy,
-    Output,
-    Renderer2,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, Output, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation, inject } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { Subscription } from "rxjs";
 
@@ -84,6 +69,10 @@ export class CheckboxComponent
         ControlValueAccessor,
         OnDestroy
 {
+    private changeDetector = inject(ChangeDetectorRef);
+    private eventBusService = inject(EventBusService);
+    private renderer = inject(Renderer2);
+
     private _checked: boolean;
     private _disabled: boolean;
 
@@ -194,12 +183,6 @@ export class CheckboxComponent
     private _ariaLabel: string = "Checkbox";
 
     private keysAction = [KEYBOARD_CODE.SPACE, KEYBOARD_CODE.ENTER].map(String);
-
-    constructor(
-        private changeDetector: ChangeDetectorRef,
-        private eventBusService: EventBusService,
-        private renderer: Renderer2
-    ) {}
 
     public ngAfterViewInit(): void {
         this.rendererListener = this.renderer.listen(

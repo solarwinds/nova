@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, inject } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 
@@ -30,14 +30,12 @@ import { BreadcrumbItem, BreadcrumbStateService } from "@nova-ui/bits";
     standalone: false,
 })
 export class BreadcrumbVisualTestComponent implements OnInit, OnDestroy {
+    private router = inject(Router);
+    private routerState = inject(ActivatedRoute);
+    private breadcrumbStateService = inject(BreadcrumbStateService);
+
     public breadcrumbSource: Array<BreadcrumbItem>;
     private routerSubscription: Subscription;
-
-    constructor(
-        private router: Router,
-        private routerState: ActivatedRoute,
-        private breadcrumbStateService: BreadcrumbStateService
-    ) {}
 
     public ngOnInit(): void {
         this.breadcrumbSource = this.breadcrumbStateService.getBreadcrumbState(
@@ -89,7 +87,9 @@ export class BreadcrumbVisualTestComponent implements OnInit, OnDestroy {
     standalone: false,
 })
 export class BreadcrumbFirstSubviewLevelComponent {
-    constructor(private router: Router, private routerState: ActivatedRoute) {}
+    private router = inject(Router);
+    private routerState = inject(ActivatedRoute);
+
 
     goNext(): void {
         this.router.navigate(["second-subroute"], {

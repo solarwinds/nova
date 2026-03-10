@@ -19,15 +19,7 @@
 //  THE SOFTWARE.
 
 import { HttpClient, HttpParams } from "@angular/common/http";
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    Injectable,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit, ViewChild, inject } from "@angular/core";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
 import { BehaviorSubject, firstValueFrom, Observable, of, Subject } from "rxjs";
@@ -106,6 +98,9 @@ export class GBooksDataSourceWithSearch
     extends DataSourceService<IGBookFrontendDTO>
     implements IDataSource
 {
+    private logger = inject(LoggerService);
+    private http = inject(HttpClient);
+
     public busy = new BehaviorSubject(false);
 
     // cache used to store our previous fetched results while scrolling
@@ -115,7 +110,7 @@ export class GBooksDataSourceWithSearch
 
     private applyFilters$ = new Subject<IFilters>();
 
-    constructor(private logger: LoggerService, private http: HttpClient) {
+    constructor() {
         super();
 
         this.applyFilters$
@@ -249,6 +244,10 @@ export class GBooksDataSourceWithSearch
 export class RepeatWithViewportManagerExampleComponent
     implements OnInit, OnDestroy, AfterViewInit
 {
+    private viewportManager = inject(VirtualViewportManager);
+    private cd = inject(ChangeDetectorRef);
+    private dataSource = inject(GBooksDataSourceWithSearch);
+
     public books$ = new BehaviorSubject<IGBookBackendDTO[]>([]);
     public busy: boolean = false;
 
@@ -256,12 +255,6 @@ export class RepeatWithViewportManagerExampleComponent
     @ViewChild(SearchComponent) private search: SearchComponent;
 
     private readonly destroy$ = new Subject<void>();
-
-    constructor(
-        private viewportManager: VirtualViewportManager,
-        private cd: ChangeDetectorRef,
-        private dataSource: GBooksDataSourceWithSearch
-    ) {}
 
     public ngOnInit(): void {
         this.dataSource.busy

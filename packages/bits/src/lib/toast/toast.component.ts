@@ -18,14 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    Component,
-    HostBinding,
-    HostListener,
-    NgZone,
-    OnDestroy,
-    ViewEncapsulation,
-} from "@angular/core";
+import { Component, HostBinding, HostListener, NgZone, OnDestroy, ViewEncapsulation, inject } from "@angular/core";
 import { SafeHtml } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 
@@ -59,6 +52,10 @@ enum ToastState {
     standalone: false,
 })
 export class ToastComponent implements OnDestroy {
+    private toastService = inject(ToastServiceBase);
+    private toastPackage = inject(ToastPackage);
+    private ngZone = inject(NgZone);
+
     public body?: string | SafeHtml | null;
     public title?: string;
     public options: IToastConfig;
@@ -93,11 +90,9 @@ export class ToastComponent implements OnDestroy {
         success: "severity_ok",
     };
 
-    constructor(
-        private toastService: ToastServiceBase,
-        private toastPackage: ToastPackage,
-        private ngZone: NgZone
-    ) {
+    constructor() {
+        const toastPackage = this.toastPackage;
+
         this.title = toastPackage.title;
         this.body = toastPackage.body;
         this.options = toastPackage.config;

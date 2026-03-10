@@ -22,7 +22,7 @@ import {
     FlexibleConnectedPositionStrategy,
     OverlayRef,
 } from "@angular/cdk/overlay";
-import { Component, ViewChild, ViewEncapsulation } from "@angular/core";
+import { Component, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 
 import { DialogService, NuiDialogRef, OverlayComponent } from "@nova-ui/bits";
 
@@ -34,13 +34,13 @@ import { DialogService, NuiDialogRef, OverlayComponent } from "@nova-ui/bits";
     standalone: false,
 })
 export class OverlayCustomDialogComponent {
+    private dialogService = inject(DialogService);
+
     private overlayRef: OverlayRef;
     private activeDialog: NuiDialogRef;
 
     @ViewChild("overlay1") overlay1: OverlayComponent;
     @ViewChild("overlay2") overlay2: OverlayComponent;
-
-    constructor(private dialogService: DialogService) {}
 
     triggerOverlay(ref: HTMLElement, overlay: OverlayComponent): void {
         // Here we set the new element reference to the overlay conponent. The overlay will now connect to it

@@ -18,17 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    OnDestroy,
-    QueryList,
-    ViewChild,
-    ViewChildren,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, QueryList, ViewChild, ViewChildren, inject } from "@angular/core";
 import _pull from "lodash/pull";
 import { Subscription } from "rxjs";
 
@@ -68,6 +58,9 @@ import { IFilterable, IServer, ServerStatus } from "./types";
 export class FilteredViewTableWithCustomVirtualScrollComponent
     implements AfterViewInit, OnDestroy
 {
+    private dataSource = inject(DataSourceService) as FilteredViewTableWithCustomVirtualScrollDataSource<IServer>;
+    private cd = inject(ChangeDetectorRef);
+
     public filterGroupItems: IFilterGroupItem[] = [
         {
             id: "status",
@@ -129,14 +122,6 @@ export class FilteredViewTableWithCustomVirtualScrollComponent
     @ViewChild("child") private child: IFilterable;
     @ViewChildren(FilterGroupComponent)
     private filterGroups: QueryList<FilterGroupComponent>;
-
-    constructor(
-        // inject dataSource providers only to share the same instance
-        // using DI descendants inheritance with child components
-        @Inject(DataSourceService)
-        private dataSource: FilteredViewTableWithCustomVirtualScrollDataSource<IServer>,
-        private cd: ChangeDetectorRef
-    ) {}
 
     public ngAfterViewInit(): void {
         this.outputsSubscription = this.dataSource.outputsSubject.subscribe(

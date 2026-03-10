@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import moment from "moment/moment";
 
 import { HistoryStorage, ITimeframe, TimeframeService } from "@nova-ui/bits";
@@ -55,12 +55,12 @@ class TestBar {
     standalone: false,
 })
 export class TimeFrameBarVisualTestComponent implements OnInit {
+    private timeframeService = inject(TimeframeService);
+
     public bars: TestBar[] = ["first", "second", "third"].map(
         (id) => new TestBar(id)
     );
     public barNoQuickPick = new TestBar("bar-no-quick-pick");
-
-    constructor(private timeframeService: TimeframeService) {}
 
     public ngOnInit(): void {
         setTimeout(() => {

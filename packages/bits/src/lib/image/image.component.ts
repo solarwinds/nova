@@ -18,19 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    Inject,
-    Input,
-    OnChanges,
-    OnInit,
-    SimpleChanges,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation, inject } from "@angular/core";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import _find from "lodash/find";
 import _has from "lodash/has";
@@ -61,6 +49,13 @@ import { UtilService } from "../../services/util.service";
     standalone: false,
 })
 export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
+    private logger = inject(LoggerService);
+    private utilService = inject(UtilService);
+    private changeDetector = inject(ChangeDetectorRef);
+    private images = inject<Array<IImagesPresetItem>>(imagesPresetToken);
+    private domSanitizer = inject(DomSanitizer);
+    private el = inject(ElementRef);
+
     /**
      * Image name from nui image preset or external source
      */
@@ -99,15 +94,6 @@ export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
     public imageTemplate: SafeHtml;
     public imageName: string | null;
     public hasAlt: boolean;
-
-    constructor(
-        private logger: LoggerService,
-        private utilService: UtilService,
-        private changeDetector: ChangeDetectorRef,
-        @Inject(imagesPresetToken) private images: Array<IImagesPresetItem>,
-        private domSanitizer: DomSanitizer,
-        private el: ElementRef
-    ) {}
 
     public ngOnInit(): void {
         const dimensionImputs: string[] = [this.height, this.width];

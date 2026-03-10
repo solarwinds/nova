@@ -26,20 +26,7 @@ import {
     OverlaySizeConfig,
 } from "@angular/cdk/overlay";
 import { CdkPortal } from "@angular/cdk/portal";
-import {
-    AfterContentChecked,
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterContentChecked, AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 import set from "lodash/set";
 import some from "lodash/some";
 import { Observable, Subject, Subscription } from "rxjs";
@@ -91,6 +78,11 @@ export class OverlayComponent
         AfterViewInit,
         OnChanges
 {
+    overlayPositionService = inject(OverlayPositionService);
+    protected overlayService = inject(OverlayService);
+    protected cdkOverlay = inject(Overlay);
+    private eventBusService = inject(EventBusService);
+
     /** Sets overlay config in accordance with [Material CDK]{@link https://material.angular.io/cdk/overlay/api#OverlayConfig} */
     @Input() public overlayConfig: OverlayConfig;
 
@@ -129,12 +121,7 @@ export class OverlayComponent
 
     private positionStrategySubscription: Subscription;
 
-    constructor(
-        public overlayPositionService: OverlayPositionService,
-        protected overlayService: OverlayService,
-        protected cdkOverlay: Overlay,
-        private eventBusService: EventBusService
-    ) {
+    constructor() {
         this.show$ = this.overlayService.show$;
         this.hide$ = this.overlayService.hide$;
     }

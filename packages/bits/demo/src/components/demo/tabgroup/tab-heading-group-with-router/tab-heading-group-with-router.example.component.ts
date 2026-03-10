@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Input, OnDestroy } from "@angular/core";
+import { Component, Input, OnDestroy, inject } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
 
 @Component({
@@ -28,6 +28,8 @@ import { NavigationEnd, Router } from "@angular/router";
     standalone: false,
 })
 export class TabHeadingGroupWithRouterExampleComponent implements OnDestroy {
+    private _router = inject(Router);
+
     public currentTabRoute: string;
 
     @Input() public icon: boolean = false;
@@ -66,8 +68,6 @@ export class TabHeadingGroupWithRouterExampleComponent implements OnDestroy {
             this.currentTabRoute = path[path.length - 1];
         }
     });
-
-    constructor(private _router: Router) {}
 
     public ngOnDestroy(): void {
         this.routeSubscription?.unsubscribe();

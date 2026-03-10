@@ -19,24 +19,7 @@
 //  THE SOFTWARE.
 
 import { LiveAnnouncer } from "@angular/cdk/a11y";
-import {
-    AfterContentInit,
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    QueryList,
-    SimpleChanges,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterContentInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, ElementRef, EventEmitter, forwardRef, Input, OnChanges, OnDestroy, Output, QueryList, SimpleChanges, ViewEncapsulation, inject } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 import includes from "lodash/includes";
 import isEqual from "lodash/isEqual";
@@ -92,6 +75,9 @@ export class ComboboxV2Component
     extends BaseSelectV2
     implements AfterContentInit, OnDestroy, OnChanges, AfterViewInit
 {
+    private selectedItemsKeyControlService = inject(SelectedItemsKeyControlService);
+    liveAnnouncer: LiveAnnouncer;
+
     /** Function that maps an Option's control value to its display value */
     @Input() public displayWith: ((value: any) => string) | null = null;
 
@@ -122,14 +108,15 @@ export class ComboboxV2Component
     /** Text of the Clear Button tooltip */
     public clearValueButtonTooltip: string;
 
-    constructor(
-        elRef: ElementRef,
-        optionKeyControlService: OptionKeyControlService<SelectV2OptionComponent>,
-        cdRef: ChangeDetectorRef,
-        private selectedItemsKeyControlService: SelectedItemsKeyControlService,
-        public liveAnnouncer: LiveAnnouncer
-    ) {
+    constructor() {
+        const elRef = inject(ElementRef);
+        const optionKeyControlService = inject<OptionKeyControlService<SelectV2OptionComponent>>(OptionKeyControlService);
+        const cdRef = inject(ChangeDetectorRef);
+        const liveAnnouncer = inject(LiveAnnouncer);
+
         super(optionKeyControlService, cdRef, elRef, liveAnnouncer);
+    
+        this.liveAnnouncer = liveAnnouncer;
     }
 
     public ngAfterContentInit(): void {
