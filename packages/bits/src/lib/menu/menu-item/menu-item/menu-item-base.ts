@@ -92,4 +92,8 @@ export abstract class MenuItemBaseComponent
     }
 
     abstract doAction(event?: any): void;
+
+    public get shouldCloseMenuOnAction(): boolean {
+        return true;
+    }
 }
