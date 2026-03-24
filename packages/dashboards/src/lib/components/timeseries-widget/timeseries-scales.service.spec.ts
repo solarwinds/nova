@@ -88,6 +88,20 @@ describe("TimeseriesScalesService > ", () => {
             expect(scale.isDomainFixed).toEqual(true);
         });
 
+        it("should extend percent domain beyond 100 when domain max exceeds 100", () => {
+            scaleConfig.properties = {
+                axisUnits: "percent",
+                domain: {
+                    min: 0,
+                    max: 130,
+                },
+            };
+            service.updateConfiguration(scale, scaleConfig, widgetConfig);
+
+            expect(scale.fixDomainValues).toEqual([0, 25, 50, 75, 100, 125, 150]);
+            expect(scale.isDomainFixed).toEqual(true);
+        });
+
         it("should adjust domain for stacked bar chart", () => {
             widgetConfig.preset = TimeseriesChartPreset.StackedBar;
             scaleConfig.properties = {
