@@ -149,7 +149,7 @@ describe("Side Indicator Renderer >", () => {
             expect(svg.select("rect").attr("fill")).toEqual(expectedColor);
             expect(
                 svg.select("rect").node().attributeStyleMap.get("filter")
-            ).toBeNull();
+            ).toBeUndefined();
         });
 
         it("should set the 'rect' position and 'width'", () => {
