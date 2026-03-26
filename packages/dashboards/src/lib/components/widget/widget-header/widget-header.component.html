@@ -37,18 +37,20 @@
                 "
             >
                 <!-- text only header with no url defined -->
-                <div
+                <h2
                     class="nui-text-widget nui-widget__header__content-title"
                     [title]="title"
                     *ngIf="!url || editMode"
-                    role="heading"
-                    aria-level="2"
                 >
                     {{ title }}
-                </div>
+                </h2>
 
                 <!-- link version of the header -->
-                <div *ngIf="url && !editMode">
+                <h2
+                    *ngIf="url && !editMode"
+                    class="nui-text-widget nui-widget__header__content-title"
+                    [title]="title"
+                >
                     <a
                         [href]="url"
                         (click)="prepareLink($event)"
@@ -56,13 +58,10 @@
                         (mousedown)="
                             $event.stopPropagation(); $event.preventDefault()
                         "
-                        class="nui-text-widget nui-widget__header__content-title"
                         [nuiTooltip]="linkTooltip"
-                        role="heading"
-                        aria-level="2"
                         >{{ title }}</a
                     >
-                </div>
+                </h2>
 
                 <div
                     *ngIf="subtitle"
