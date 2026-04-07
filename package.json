@@ -30,7 +30,7 @@
     "@percy/cli": "1.31.11",
     "@percy/playwright": "1.0.10",
     "@playwright/test": "1.58.1",
-    "@schematics/angular": "20.3.15",
+    "@schematics/angular": "20.3.22",
     "@stackblitz/sdk": "1.11.0",
     "@stylistic/eslint-plugin-ts": "3.1.0",
     "@types/jasmine": "5.1.4",
