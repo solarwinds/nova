@@ -86,12 +86,12 @@ describe("metricsSeriesMeasurementsMinMax", () => {
                 makeSeries({
                     id: "s2",
                     metricUnits: "percent",
-                    data: [{ x: 1, y: 200 }],
+                    data: [{ x: 1, y: 201 }],
                 }),
             ];
             expect(metricsSeriesMeasurementsMinMax(series, "percent")).toEqual({
                 min: 0,
-                max: 200,
+                max: 201,
             });
         });
     });
