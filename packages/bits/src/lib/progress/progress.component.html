@@ -47,6 +47,8 @@
             *ngIf="allowCancel && !compactMode"
             (click)="cancelProgress()"
             displayStyle="action"
+            ariaLabel="Cancel"
+            i18n-ariaLabel="@@progress.cancelButton.ariaLabel|Progress cancel button ARIA label"
             [nuiTooltip]="'Cancel'"
         ></button>
     </div>

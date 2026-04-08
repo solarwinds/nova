@@ -4,8 +4,10 @@
     (@dismiss.start)="animationStart($event)"
     class="nui-flex-container nui-flex--nowrap nui-message {{ messageClass }}"
     [ngClass]="{ 'nui-message-allow-dismiss': allowDismiss }"
+    aria-live="polite"
+    role="status"
 >
-    <nui-icon class="nui-message-icon" [icon]="icon"></nui-icon>
+    <nui-icon class="nui-message-icon" [icon]="icon" aria-hidden="true"></nui-icon>
 
     <div class="nui-message-content">
         <span class="nui-message-content-text">
@@ -20,6 +22,8 @@
             displayStyle="action"
             size="default"
             icon="close"
+            ariaLabel="Dismiss"
+            i18n-ariaLabel="@@message.dismissButton.ariaLabel|Message dismiss button ARIA label"
             (click)="dismissMessage()"
         ></button>
     </div>

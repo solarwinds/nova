@@ -48,6 +48,8 @@
                             displayStyle="action"
                             [icon]="mainIcon"
                             [disabled]="isAnimating"
+                            ariaLabel="Toggle panel"
+                            i18n-ariaLabel="@@panel.toggleButton.ariaLabel|Panel toggle button ARIA label"
                             (click)="toggleCollapsedOnClick()"
                             *ngIf="isCollapsible"
                         ></button>
@@ -59,6 +61,8 @@
                             class="nui-panel__header-btn nui-panel__header-btn--close"
                             type="button"
                             icon="close"
+                            ariaLabel="Close panel"
+                            i18n-ariaLabel="@@panel.closeButton.ariaLabel|Panel close button ARIA label"
                             (click)="toggleCollapsedOnClick()"
                         ></button>
                     </ng-container>

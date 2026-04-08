@@ -16,7 +16,12 @@
             class="nui-timepicker__icon"
             icon="clock"
             tabindex="0"
+            role="button"
+            aria-label="Open time picker"
+            i18n-aria-label="@@timePicker.icon.ariaLabel|Time picker calendar icon ARIA label"
             (click)="focusOnForm()"
+            (keydown.enter)="focusOnForm()"
+            (keydown.space)="$event.preventDefault(); focusOnForm()"
             [iconColor]="getIconColor()"
         >
         </nui-icon>

@@ -12,6 +12,8 @@
                     type="button"
                     displayStyle="action"
                     icon="caret-left"
+                    ariaLabel="Previous month"
+                    i18n-ariaLabel="@@datePicker.prevMonth.ariaLabel|Date picker previous month ARIA label"
                     (click)="datePicker.move(-1, $event)"
                     tabindex="-1"
                 ></button>
@@ -42,6 +44,8 @@
                     type="button"
                     displayStyle="action"
                     icon="caret-right"
+                    ariaLabel="Next month"
+                    i18n-ariaLabel="@@datePicker.nextMonth.ariaLabel|Date picker next month ARIA label"
                     (click)="datePicker.move(1, $event)"
                     tabindex="-1"
                 ></button>
@@ -51,7 +55,7 @@
             <th *ngIf="datePicker.showWeeks"></th>
             <th *ngFor="let label of labels" class="text-center">
                 <div class="day-label">
-                    <span aria-label="label.full">{{ label.abbr }}</span>
+                    <span [attr.aria-label]="label.full">{{ label.abbr }}</span>
                 </div>
             </th>
         </tr>

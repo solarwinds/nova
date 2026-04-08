@@ -1,9 +1,16 @@
 <div class="nui-tab-headings__holder" (click)="$event.preventDefault()">
     <div
         class="btn-caret-left"
+        role="button"
         [class.disabled]="!rightTraverseEnabled"
+        [attr.tabindex]="rightTraverseEnabled ? 0 : -1"
+        [attr.aria-disabled]="!rightTraverseEnabled"
+        aria-label="Scroll tabs left"
+        i18n-aria-label="@@tabHeadingGroup.scrollLeft.ariaLabel|Tab heading group scroll left button ARIA label"
         *ngIf="hasTraverse"
         (click)="traverseRight()"
+        (keydown.enter)="traverseRight()"
+        (keydown.space)="$event.preventDefault(); traverseRight()"
     >
         <nui-icon
             iconSize="default"
@@ -22,9 +29,16 @@
     </div>
     <div
         class="btn-caret-right"
+        role="button"
         [class.disabled]="!leftTraverseEnabled"
+        [attr.tabindex]="leftTraverseEnabled ? 0 : -1"
+        [attr.aria-disabled]="!leftTraverseEnabled"
+        aria-label="Scroll tabs right"
+        i18n-aria-label="@@tabHeadingGroup.scrollRight.ariaLabel|Tab heading group scroll right button ARIA label"
         *ngIf="hasTraverse"
         (click)="traverseLeft()"
+        (keydown.enter)="traverseLeft()"
+        (keydown.space)="$event.preventDefault(); traverseLeft()"
     >
         <nui-icon
             iconSize="default"

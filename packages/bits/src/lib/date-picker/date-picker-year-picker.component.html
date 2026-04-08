@@ -7,6 +7,8 @@
                     type="button"
                     icon="caret-left"
                     displayStyle="action"
+                    ariaLabel="Previous year range"
+                    i18n-ariaLabel="@@datePicker.prevYearRange.ariaLabel|Date picker previous year range ARIA label"
                     (click)="datePicker.move(-1, $event)"
                     tabindex="-1"
                 ></button>
@@ -37,6 +39,8 @@
                     type="button"
                     icon="caret-right"
                     displayStyle="action"
+                    ariaLabel="Next year range"
+                    i18n-ariaLabel="@@datePicker.nextYearRange.ariaLabel|Date picker next year range ARIA label"
                     (click)="datePicker.move(1, $event)"
                     tabindex="-1"
                 ></button>

@@ -3,10 +3,16 @@
         class="nui-wizard__header"
         [class.nui-wizard__header--lines-stretched]="stretchStepLines"
     >
-        <ul class="nui-wizard__header-steps" *ngIf="steps">
+        <ul class="nui-wizard__header-steps" role="tablist" *ngIf="steps">
             <li
                 *ngFor="let step of steps; let first = first; let last = last"
+                role="tab"
+                [attr.tabindex]="step.disabled || !step.visited || currentStep?.busyConfig.busy ? -1 : 0"
+                [attr.aria-selected]="step.active"
+                [attr.aria-disabled]="step.disabled || !step.visited || currentStep?.busyConfig.busy"
                 (click)="selectStep(step)"
+                (keydown.enter)="selectStep(step)"
+                (keydown.space)="$event.preventDefault(); selectStep(step)"
                 [ngClass]="{
                     'nui-wizard__header-step--first': first,
                     'nui-wizard__header-step--last': last,

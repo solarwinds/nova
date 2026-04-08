@@ -8,6 +8,8 @@
                 class="nui-search__button-cancel"
                 displayStyle="action"
                 icon="close"
+                ariaLabel="Cancel search"
+                i18n-ariaLabel="@@search.cancelButton.ariaLabel|Cancel search button ARIA label"
                 (click)="onCancel()"
             ></button>
             <button
@@ -16,6 +18,8 @@
                 class="nui-search__button-search"
                 displayStyle="action"
                 icon="search"
+                ariaLabel="Search"
+                i18n-ariaLabel="@@search.searchButton.ariaLabel|Search button ARIA label"
                 [disabled]="isButtonDisabled()"
                 (click)="onSearch()"
             ></button>
@@ -31,6 +35,8 @@
             [(ngModel)]="value"
             [placeholder]="getPlaceholder()"
             (keyup)="onKeyup($event)"
+            aria-label="Search input"
+            i18n-aria-label="@@search.input.ariaLabel|Search input ARIA label"
             [attr.aria-invalid]="isInErrorState"
         />
     </div>

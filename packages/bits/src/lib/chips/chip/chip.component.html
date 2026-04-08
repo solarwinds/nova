@@ -10,10 +10,16 @@
     </span>
     <nui-icon
         (click)="onRemove()"
+        (keydown.enter)="onRemove()"
+        (keydown.space)="$event.preventDefault(); onRemove()"
         [nuiTooltip]="closeButtonTooltip"
         icon="remove"
         iconSize="small"
         cssClass="nui-chip__value-remove"
+        tabindex="0"
+        role="button"
+        [attr.aria-label]="'Remove ' + (item?.label || '')"
+        i18n-aria-label="@@chip.removeButton.ariaLabel|Chip remove button ARIA label"
     ></nui-icon>
 </div>
 

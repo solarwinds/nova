@@ -1,4 +1,5 @@
 <nui-popup
+    #popup
     [class.nui-menu--compact]="isMenuCompact()"
     (opened)="onMenuOpen()"
     [appendToBody]="appendToBody"
@@ -10,7 +11,8 @@
         nui-button
         nuiPopupToggle
         [disabled]="isDisabled"
-        aria-haspopup="true"
+        aria-haspopup="menu"
+        [attr.aria-expanded]="popup.isOpen"
         type="button"
         (blur)="onBlur($event)"
         [displayStyle]="displayStyle"

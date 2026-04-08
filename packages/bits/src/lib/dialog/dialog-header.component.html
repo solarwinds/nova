@@ -1,6 +1,6 @@
 <div class="dialog-header {{ severityClass }}">
     <div class="severity-text">
-        <nui-icon *ngIf="severityIcon" [icon]="severityIcon"></nui-icon>
+        <nui-icon *ngIf="severityIcon" [icon]="severityIcon" aria-hidden="true"></nui-icon>
         <h1 class="dialog-title">{{ title }}</h1>
     </div>
     <div class="btn-group">
@@ -14,6 +14,7 @@
             displayStyle="action"
             icon="close"
             ariaLabel="Close"
+            i18n-ariaLabel="@@dialog.closeButton.ariaLabel|Dialog close button ARIA label"
             (click)="innerClose($event)"
         ></button>
     </div>

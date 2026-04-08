@@ -6,9 +6,13 @@
     >
         <div
             class="btn-caret-left"
+            role="button"
             [class.disabled]="!rightTraverseEnabled"
+            [attr.tabindex]="rightTraverseEnabled ? 0 : -1"
             *ngIf="hasTraverse"
             (click)="traverseRight()"
+            (keydown.enter)="traverseRight()"
+            (keydown.space)="$event.preventDefault(); traverseRight()"
         >
             <nui-icon
                 [icon]="'caret-left'"
@@ -39,9 +43,13 @@
         </div>
         <div
             class="btn-caret-right"
+            role="button"
             [class.disabled]="!leftTraverseEnabled"
+            [attr.tabindex]="leftTraverseEnabled ? 0 : -1"
             *ngIf="hasTraverse"
             (click)="traverseLeft()"
+            (keydown.enter)="traverseLeft()"
+            (keydown.space)="$event.preventDefault(); traverseLeft()"
         >
             <nui-icon
                 [icon]="'caret-right'"

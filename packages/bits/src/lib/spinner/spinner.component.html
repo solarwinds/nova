@@ -65,6 +65,8 @@
             *ngIf="allowCancel"
             (click)="cancelProgress()"
             displayStyle="action"
+            ariaLabel="Cancel"
+            i18n-ariaLabel="@@spinner.cancelButton.ariaLabel|Spinner cancel button ARIA label"
             [nuiTooltip]="tooltipText"
         ></button>
     </div>

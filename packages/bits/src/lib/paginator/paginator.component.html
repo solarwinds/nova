@@ -4,6 +4,7 @@
             class="nui-paginator__list"
             role="listbox"
             aria-label="List of pages"
+            i18n-aria-label="@@paginator.pageList.ariaLabel|Paginator page list ARIA label"
         >
             <li
                 role="option"
@@ -11,6 +12,7 @@
                 [ngClass]="item.style"
                 *ngFor="let item of itemsList"
                 value="{{ item.value }}"
+                [attr.aria-selected]="item.style === activeClass"
             >
                 <button
                     nui-button
@@ -20,6 +22,7 @@
                     *ngIf="item.iconName"
                     class="move-icon"
                     [icon]="item.iconName"
+                    [ariaLabel]="item.title"
                     (click)="item.action($event)"
                 ></button>
                 <button
@@ -44,7 +47,7 @@
                         displayStyle="action"
                         [ngClass]="item.imageClass"
                         [isEmpty]="false"
-                        aria-haspopup="true"
+                        aria-haspopup="listbox"
                         (click)="handleDotsClick()"
                         class="nui-paginator__dots"
                     >
@@ -105,6 +108,7 @@
 
         <nui-select-v2
             ariaLabel="Items per page"
+            i18n-ariaLabel="@@paginator.itemsPerPage.ariaLabel|Paginator items per page select ARIA label"
             [value]="pageSize"
             (valueSelected)="onPageSizeChange($event)"
         >
