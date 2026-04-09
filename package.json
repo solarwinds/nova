@@ -2,10 +2,10 @@
   "author": "SolarWinds <nova-ui@solarwinds.com>",
   "description": "SolarWinds Nova Framework",
   "devDependencies": {
-    "@angular-devkit/build-angular": "20.3.22",
-    "@angular-devkit/core": "20.3.22",
-    "@angular-devkit/schematics": "20.3.22",
-    "@angular-devkit/schematics-cli": "20.3.22",
+    "@angular-devkit/build-angular": "20.3.23",
+    "@angular-devkit/core": "20.3.23",
+    "@angular-devkit/schematics": "20.3.23",
+    "@angular-devkit/schematics-cli": "20.3.23",
     "@angular-eslint/builder": "20.7.0",
     "@angular-eslint/eslint-plugin": "20.7.0",
     "@angular-eslint/eslint-plugin-template": "20.7.0",
@@ -13,7 +13,7 @@
     "@angular-eslint/template-parser": "20.7.0",
     "@angular/animations": "20.3.18",
     "@angular/cdk": "20.2.14",
-    "@angular/cli": "20.3.22",
+    "@angular/cli": "20.3.23",
     "@angular/common": "20.3.18",
     "@angular/compiler": "20.3.18",
     "@angular/compiler-cli": "20.3.18",
@@ -85,9 +85,7 @@
   },
   "resolutions": {
     "d3-color": "3.1.0",
-    "tablesort": "5.5.0",
-    "vite": "7.3.2",
-    "picomatch": "4.0.4"
+    "tablesort": "5.5.0"
   },
   "engines": {
     "node": ">=20"
