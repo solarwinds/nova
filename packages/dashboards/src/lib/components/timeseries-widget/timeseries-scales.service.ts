@@ -145,7 +145,17 @@ export class TimeseriesScalesService {
                     scaleConfig.properties?.axisUnits === "percent" &&
                     scale.setFixDomainValues
                 ) {
-                    scale.setFixDomainValues([0, 25, 50, 75, 100]);
+                    const domainMax =
+                        scaleConfig.properties?.domain?.max ?? 100;
+                    const upperBound = Math.max(
+                        100,
+                        Math.ceil(domainMax / 25) * 25
+                    );
+                    const points: number[] = [];
+                    for (let i = 0; i <= upperBound; i += 25) {
+                        points.push(i);
+                    }
+                    scale.setFixDomainValues(points);
                 }
                 if (
                     scaleConfig.properties?.axisUnits !== "percent" &&
