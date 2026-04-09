@@ -83,10 +83,6 @@
     "webpack": "5.104.1",
     "zone.js": "0.15.0"
   },
-  "resolutions": {
-    "d3-color": "3.1.0",
-    "tablesort": "5.5.0"
-  },
   "engines": {
     "node": ">=20"
   },
@@ -99,14 +95,19 @@
     "type": "git",
     "url": "https://github.com/solarwinds/nova.git"
   },
+  "resolutions": {
+    "d3-color": "3.1.0",
+    "picomatch": "4.0.4",
+    "tablesort": "5.5.0"
+  },
   "scripts": {
     "bash": "bash scripts/runner",
     "build-all": "cd packages/bits && yarn && yarn assemble-dev && cd ../charts && yarn && yarn symlink && yarn assemble-dev && cd ../dashboards && yarn && yarn symlink && yarn assemble-dev",
     "build-watch:bits": "yarn run in-bits build-lib:watch",
     "build-watch:charts": "yarn run in-charts build-lib:watch",
     "clean-docs-ci": "bash scripts/clean-docs",
-    "compute-version-local": "bash scripts/compute-version-local",
     "compute-version-ci": "bash scripts/compute-version",
+    "compute-version-local": "bash scripts/compute-version-local",
     "deploy-docs-ci": "bash scripts/deploy-docs",
     "in-bits": "yarn run --cwd=packages/bits",
     "in-charts": "yarn run --cwd=packages/charts",
@@ -126,7 +127,5 @@
     "verify-ci": "bash scripts/verify-published"
   },
   "version": "20.0.0",
-  "workspaces": [
-    "packages/*"
-  ]
+  "workspaces": ["packages/*"]
 }
