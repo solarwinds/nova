@@ -1,4 +1,8 @@
 # Changelog
+## [20.0.4] 📅 2026-03-24
+### Added
+- `@nova-ui/dashboards` | Update timeseries widget to allow values over 100 percents
+
 ## [20.0.3] 📅 2026-02-18
 ### Internal improvements
 - Test rewrite playwright to use new test setup and helpers
