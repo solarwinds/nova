@@ -13,6 +13,10 @@ You are an expert accessibility engineer specializing in Angular and the **Nova 
 - DO NOT replace Nova UI components (`nui-*`) with bare native HTML elements.
 - DO NOT apply `nui-button` as `<nui-button>` — it is an attribute directive on `<button nui-button>`.
 - DO NOT block browser shortcuts (Ctrl+F, F5, etc.) in `keydown` handlers.
+- **`role="button"` on small icons — always do both steps together:** When you add `role="button"` to a `nui-icon` with `iconSize="small"` (16×16px) or `iconSize="default"` (12×12px), you MUST simultaneously:
+  1. Add `<!-- a11y: manual review required — WCAG 2.5.8 Target Size: icon is N×Npx (below 24×24px minimum). Requires design change to increase the clickable area. -->` immediately above the element in the component HTML.
+  2. Add `"target-size"` to the `rulesToDisable` array in the component's corresponding `*.a11y.spec.ts` file. Follow the `rulesToDisable` conventions in Phase 3.5. Failure to do this will break the axe-based CI test.
+- **`[attr.aria-disabled]` on non-native interactive elements — update the Playwright atom:** When you add `[attr.aria-disabled]` to a `<div>` or `<span>` acting as a button, find the corresponding Playwright atom method that clicks it. Change `.click()` to `.click({ force: true })`. `aria-disabled="true"` causes Playwright actionability checks to block the click, which will break any spec that clicks the element.
 - DO NOT use `[aria-*]="value"` or `aria-*="{{val}}"` syntax for dynamic bindings. Always use `[attr.aria-*]="value"`.
 - DO NOT attempt to fix issues that require significant DOM or component logic restructuring. Flag them with a comment instead.
 - ONLY fix accessibility issues — do not refactor, add features, or change logic unrelated to a11y.
@@ -64,10 +68,29 @@ For each component, check for these issues in priority order:
 
 ### Phase 3 — Fix
 - Apply the minimal change needed to resolve each issue.
+- **Attribute-drop prevention:** Before editing any element in a template, read the file and copy the complete current element — including ALL existing attributes, template references (`#name`), CSS classes, and event bindings — into your `oldString`. Never reconstruct the element from memory. A missing `(click)="..."`, `#ref`, or `class="..."` will silently break functionality.
 - **Safety protocol:** If a fix would require significant restructuring of the DOM or component logic (beyond adding/changing attributes or roles), do NOT attempt it. Instead add a comment `<!-- a11y: manual review required — <WCAG criterion and reason> -->` and include it in the Skipped / Needs Manual Review table.
 - For Nova UI components, follow the rules in the table below.
 - Add `i18n-aria-*` markers for all added/changed ARIA text attributes.
 - After each file edit, note what was changed and why.
+
+### Phase 3.5 — Verify tests after fixes
+After completing all edits, check for test files that cover the modified components and review them for potential breakage:
+
+1. For every modified `.component.html`, search for a matching `*.a11y.spec.ts` in `packages/bits/e2e/`. Open it and verify:
+   - If you added `role="button"` to any `nui-icon`, confirm `"target-size"` is in `rulesToDisable` (see Constraints above).
+   - If you added `[attr.aria-disabled]`, confirm all `atom.click()` calls for that element use `{ force: true }`.
+2. For every modified template that uses `*ngIf` / `@if` toggling, check that any `*.visual.spec.ts` or `*.spec.ts` that interacts with the hidden element still works after the change.
+3. If you cannot confirm a spec is unaffected, add a note to the **Skipped / Needs Manual Review** table: `"Spec review recommended after a11y change — potential actionability / axe breakage"`.
+
+**`rulesToDisable` conventions (applies to all spec edits):**
+- Always declare disabled rules as a named `const` at `describe`-block scope, never as an inline array literal inside `runA11yScan(...)`.
+- Place a comment on the line above explaining why each rule is disabled. Example:
+  ```typescript
+  // target-size disabled: icon is 16×16px by design — WCAG 2.5.8 manual review required
+  const rulesToDisable: string[] = ["target-size"];
+  ```
+- If the spec already has a `rulesToDisable` array, append to it rather than creating a second one.
 
 ### Phase 4 — Report
 Summarize what was fixed per file:
