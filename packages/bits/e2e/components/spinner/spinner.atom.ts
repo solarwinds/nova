@@ -36,13 +36,13 @@ export class SpinnerAtom extends Atom {
     }
 
     public async waitForDisplayed(
-        timeout: number = SpinnerAtom.defaultDelay * 1.5
+        timeout: number = SpinnerAtom.defaultDelay * 5
     ): Promise<void> {
         await expect(this.root).toBeVisible();
     }
 
     public async waitForHidden(
-        timeout: number = SpinnerAtom.defaultDelay * 1.5
+        timeout: number = SpinnerAtom.defaultDelay * 5
     ): Promise<void> {
         await expect(this.root).toBeHidden();
     }

@@ -47,12 +47,12 @@ describe("components >", () => {
         let fixture: ComponentFixture<TestWrapperComponent>;
         beforeEach(() => {
             TestBed.configureTestingModule({
+                imports: [IconComponent],
                 declarations: [
                     TestWrapperComponent,
                     ButtonComponent,
                     WizardComponent,
                     WizardStepComponent,
-                    IconComponent,
                 ],
                 schemas: [NO_ERRORS_SCHEMA],
                 providers: [IconService, LoggerService],
