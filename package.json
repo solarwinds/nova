@@ -2,35 +2,35 @@
   "author": "SolarWinds <nova-ui@solarwinds.com>",
   "description": "SolarWinds Nova Framework",
   "devDependencies": {
-    "@angular-devkit/build-angular": "20.3.21",
-    "@angular-devkit/core": "20.3.15",
-    "@angular-devkit/schematics": "20.3.15",
-    "@angular-devkit/schematics-cli": "20.3.15",
+    "@angular-devkit/build-angular": "20.3.23",
+    "@angular-devkit/core": "20.3.23",
+    "@angular-devkit/schematics": "20.3.23",
+    "@angular-devkit/schematics-cli": "20.3.23",
     "@angular-eslint/builder": "20.7.0",
     "@angular-eslint/eslint-plugin": "20.7.0",
     "@angular-eslint/eslint-plugin-template": "20.7.0",
     "@angular-eslint/schematics": "20.7.0",
     "@angular-eslint/template-parser": "20.7.0",
-    "@angular/animations": "20.3.16",
+    "@angular/animations": "20.3.18",
     "@angular/cdk": "20.2.14",
-    "@angular/cli": "20.3.21",
-    "@angular/common": "20.3.16",
+    "@angular/cli": "20.3.23",
+    "@angular/common": "20.3.18",
     "@angular/compiler": "20.3.18",
-    "@angular/compiler-cli": "20.3.16",
+    "@angular/compiler-cli": "20.3.18",
     "@angular/core": "20.3.18",
-    "@angular/forms": "20.3.16",
-    "@angular/language-service": "20.3.16",
-    "@angular/localize": "20.3.16",
-    "@angular/platform-browser": "20.3.16",
-    "@angular/platform-browser-dynamic": "20.3.16",
-    "@angular/router": "20.3.16",
+    "@angular/forms": "20.3.18",
+    "@angular/language-service": "20.3.18",
+    "@angular/localize": "20.3.18",
+    "@angular/platform-browser": "20.3.18",
+    "@angular/platform-browser-dynamic": "20.3.18",
+    "@angular/router": "20.3.18",
     "@axe-core/playwright": "4.10.1",
     "@axe-core/webdriverjs": "4.10.1",
-    "@compodoc/compodoc": "1.1.26",
-    "@percy/cli": "1.31.10",
+    "@compodoc/compodoc": "1.1.32",
+    "@percy/cli": "1.31.11",
     "@percy/playwright": "1.0.10",
     "@playwright/test": "1.58.1",
-    "@schematics/angular": "20.3.15",
+    "@schematics/angular": "20.3.22",
     "@stackblitz/sdk": "1.11.0",
     "@stylistic/eslint-plugin-ts": "3.1.0",
     "@types/jasmine": "5.1.4",
@@ -62,7 +62,7 @@
     "karma-junit-reporter": "2.0.1",
     "karma-spec-reporter": "0.0.34",
     "less": "4.2.0",
-    "lodash": "4.17.23",
+    "lodash": "4.18.1",
     "lz-string": "1.5.0",
     "moment": "2.30.1",
     "moment-timezone": "0.5.46",
@@ -83,10 +83,6 @@
     "webpack": "5.104.1",
     "zone.js": "0.15.0"
   },
-  "resolutions": {
-    "d3-color": "3.1.0",
-    "tablesort": "5.5.0"
-  },
   "engines": {
     "node": ">=20"
   },
@@ -99,14 +95,19 @@
     "type": "git",
     "url": "https://github.com/solarwinds/nova.git"
   },
+  "resolutions": {
+    "d3-color": "3.1.0",
+    "picomatch": "4.0.4",
+    "tablesort": "5.5.0"
+  },
   "scripts": {
     "bash": "bash scripts/runner",
     "build-all": "cd packages/bits && yarn && yarn assemble-dev && cd ../charts && yarn && yarn symlink && yarn assemble-dev && cd ../dashboards && yarn && yarn symlink && yarn assemble-dev",
     "build-watch:bits": "yarn run in-bits build-lib:watch",
     "build-watch:charts": "yarn run in-charts build-lib:watch",
     "clean-docs-ci": "bash scripts/clean-docs",
-    "compute-version-local": "bash scripts/compute-version-local",
     "compute-version-ci": "bash scripts/compute-version",
+    "compute-version-local": "bash scripts/compute-version-local",
     "deploy-docs-ci": "bash scripts/deploy-docs",
     "in-bits": "yarn run --cwd=packages/bits",
     "in-charts": "yarn run --cwd=packages/charts",
@@ -126,7 +127,5 @@
     "verify-ci": "bash scripts/verify-published"
   },
   "version": "20.0.0",
-  "workspaces": [
-    "packages/*"
-  ]
+  "workspaces": ["packages/*"]
 }

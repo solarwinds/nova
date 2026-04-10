@@ -2,7 +2,7 @@
 
 The Nova Nui Framework provides a set of common UI-based components and services to assist with rapid web application development. Nui is built on the latest Angular and follows modern UX design principles and front-end software development practices.
 
-## Style Guide
+## Style Guides
 
 The Nova UI coding Style Guide can be found [here](./docs/STYLE_GUIDE.md#style-guide).
 
