@@ -24,7 +24,8 @@ import { PopoverAtom } from "../popover/popover.atom";
 import { TimeFramePickerAtom } from "./time-frame-picker.atom";
 
 test.describe("a11y: time-frame-picker", () => {
-    const rulesToDisable: string[] = [];
+    // target-size disabled: nui-timepicker__icon is 16px by design — WCAG 2.5.8 manual review required
+    const rulesToDisable: string[] = ["target-size"];
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser(

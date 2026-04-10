@@ -8,6 +8,7 @@
             <ng-container *ngTemplateOutlet="projection"></ng-container>
         </ng-container>
     </span>
+    <!-- a11y: manual review required — WCAG 2.5.8 Target Size: remove icon is 16×16px (below 24×24px minimum). Requires design change to increase the clickable area. -->
     <nui-icon
         (click)="onRemove()"
         (keydown.enter)="onRemove()"

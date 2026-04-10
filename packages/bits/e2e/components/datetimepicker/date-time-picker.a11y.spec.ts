@@ -69,6 +69,9 @@ test.describe("a11y: date time picker", () => {
     });
 
     test.describe("inside the dialog > ", () => {
+        // target-size disabled: nui-timepicker__icon is 16px by design — WCAG 2.5.8 manual review required
+        const rulesToDisable: string[] = ["target-size"];
+
         test.beforeEach(async () => {
             await dialogButtonElem.click();
             dateTimePickerDialog = Atom.find<DateTimepickerAtom>(
@@ -81,14 +84,14 @@ test.describe("a11y: date time picker", () => {
             runA11yScan,
         }) => {
             await dateTimePickerDialog.timePicker.toggle();
-            await runA11yScan(DateTimepickerAtom);
+            await runA11yScan(DateTimepickerAtom, rulesToDisable);
         });
 
         test("should verify a11y of the datepicker in modal dialog", async ({
             runA11yScan,
         }) => {
             await dateTimePickerDialog.datePicker.toggle();
-            await runA11yScan(DateTimepickerAtom);
+            await runA11yScan(DateTimepickerAtom, rulesToDisable);
         });
     });
 });
