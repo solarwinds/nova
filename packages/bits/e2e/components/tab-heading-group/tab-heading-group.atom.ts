@@ -61,14 +61,14 @@ export class TabHeadingGroupAtom extends Atom {
 
     public async clickCaretLeft(times: number = 1): Promise<void> {
         while (times > 0) {
-            await this.getCaretLeft().click();
+            await this.getCaretLeft().click({ force: true });
             times--;
         }
     }
 
     public async clickCaretRight(times: number = 1): Promise<void> {
         while (times > 0) {
-            await this.getCaretRight().click();
+            await this.getCaretRight().click({ force: true });
             times--;
         }
     }
