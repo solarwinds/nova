@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Locator } from "@playwright/test";
+import { expect, Locator } from "@playwright/test";
 
 import { Atom, IAtomClass } from "@nova-ui/bits/sdk/atoms-playwright";
 
@@ -40,7 +40,11 @@ export class ChartAtom extends Atom {
     }
 
     public async getLayer(name: string): Promise<Locator[]> {
-        return this.lasagna.layer(name);
+        await expect(this.grid).toBeVisible();
+        this.lasagna.toBeVisible();
+        const [layer] = await this.lasagna.layer(name);
+        await expect(layer).toBeVisible();
+        return [layer];
     }
 
     public async getNumberOfVisibleBackgroundSeries(): Promise<number> {
