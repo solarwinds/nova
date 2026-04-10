@@ -24,13 +24,7 @@ import {
     CdkTree,
     NestedTreeControl,
 } from "@angular/cdk/tree";
-import {
-    Component,
-    Injectable,
-    IterableDiffer,
-    IterableDiffers,
-    ViewChild,
-} from "@angular/core";
+import { Component, Injectable, IterableDiffer, IterableDiffers, ViewChild, inject } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { delay } from "rxjs/operators";
 
@@ -78,14 +72,15 @@ class HttpMock {
     standalone: false,
 })
 export class TreeLazyExampleComponent {
+    private http = inject(HttpMock);
+    private differ = inject(IterableDiffers);
+
     treeControl = new NestedTreeControl<FoodNode>((node) => node.children);
     dataSource = new ArrayDataSource(TREE_DATA);
 
     @ViewChild(CdkTree) private cdkTree: CdkTree<FoodNode>;
 
     hasChild = (_: number, node: FoodNode): boolean => !!node.length;
-
-    constructor(private http: HttpMock, private differ: IterableDiffers) {}
 
     loadMore(node: FoodNode, nestedNode: CdkNestedTreeNode<any>): void {
         const differ: IterableDiffer<FoodNode> = this.differ

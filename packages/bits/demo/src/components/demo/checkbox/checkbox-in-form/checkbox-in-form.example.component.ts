@@ -17,7 +17,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import {
     FormBuilder,
     FormControl,
@@ -33,12 +33,10 @@ import { ToastService } from "@nova-ui/bits";
     standalone: false,
 })
 export class CheckboxInFormExampleComponent implements OnInit {
-    public myForm: FormGroup<{ checkbox: FormControl<boolean | null> }>;
+    private formBuilder = inject(FormBuilder);
+    private toastService = inject(ToastService);
 
-    constructor(
-        private formBuilder: FormBuilder,
-        private toastService: ToastService
-    ) {}
+    public myForm: FormGroup<{ checkbox: FormControl<boolean | null> }>;
 
     public ngOnInit(): void {
         this.myForm = this.formBuilder.group({

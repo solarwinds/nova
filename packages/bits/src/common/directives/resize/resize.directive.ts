@@ -18,14 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    OnDestroy,
-    Output,
-} from "@angular/core";
+import { AfterViewInit, Directive, ElementRef, EventEmitter, OnDestroy, Output, inject } from "@angular/core";
 import filter from "lodash/filter";
 import forEach from "lodash/forEach";
 
@@ -75,6 +68,8 @@ interface IResizeElement extends HTMLElement {
     standalone: false,
 })
 export class ResizeDirective implements AfterViewInit, OnDestroy {
+    private element = inject(ElementRef);
+
     /**
      * Event to be triggered on element resize
      */
@@ -102,8 +97,6 @@ export class ResizeDirective implements AfterViewInit, OnDestroy {
             );
         }
     };
-
-    constructor(private element: ElementRef) {}
 
     public ngAfterViewInit(): void {
         this.attachResizeEvent(this.element.nativeElement, this.resizeEmit);

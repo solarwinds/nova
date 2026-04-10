@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
 import { ISelectChangedEvent, ToastService } from "@nova-ui/bits";
@@ -29,6 +29,9 @@ import { ISelectChangedEvent, ToastService } from "@nova-ui/bits";
     standalone: false,
 })
 export class SelectReactiveFormExampleComponent implements OnInit {
+    private formBuilder = inject(FormBuilder);
+    private toastService = inject<ToastService>(ToastService);
+
     public dataset = {
         items: [
             $localize`Item 1`,
@@ -41,10 +44,7 @@ export class SelectReactiveFormExampleComponent implements OnInit {
     };
     public myForm;
 
-    constructor(
-        private formBuilder: FormBuilder,
-        @Inject(ToastService) private toastService: ToastService
-    ) {
+    constructor() {
         this.myForm = this.formBuilder.group({
             item: this.formBuilder.control(this.dataset.selectedItem, [
                 Validators.required,

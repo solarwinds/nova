@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
@@ -27,6 +27,8 @@ import { FormBuilder, Validators } from "@angular/forms";
     standalone: false,
 })
 export class RadioGroupInFormExampleComponent {
+    private formBuilder = inject(FormBuilder);
+
     public vegetables = [
         $localize`Cabbage`,
         $localize`Potato`,
@@ -35,7 +37,7 @@ export class RadioGroupInFormExampleComponent {
     ];
     public fancyForm;
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor() {
         this.fancyForm = this.formBuilder.group({
             radioGroup: this.formBuilder.control(this.vegetables[1], [
                 Validators.required,

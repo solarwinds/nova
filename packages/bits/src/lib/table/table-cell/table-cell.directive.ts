@@ -19,18 +19,7 @@
 //  THE SOFTWARE.
 
 import { CdkCell } from "@angular/cdk/table";
-import {
-    ChangeDetectorRef,
-    Directive,
-    ElementRef,
-    HostBinding,
-    HostListener,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    SimpleChanges,
-} from "@angular/core";
+import { ChangeDetectorRef, Directive, ElementRef, HostBinding, HostListener, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, inject } from "@angular/core";
 import { Subscription } from "rxjs";
 import { filter } from "rxjs/operators";
 
@@ -54,6 +43,11 @@ export class TableCellDirective
     extends CdkCell
     implements OnInit, OnDestroy, OnChanges
 {
+    private columnDef: TableColumnDefDirective;
+    private elementRef: ElementRef;
+    private tableStateHandlerService = inject(TableStateHandlerService);
+    private cd = inject(ChangeDetectorRef);
+
     @Input() tooltipText: string;
     @Input() alignment: TableAlignmentOptions;
     public currentCellIndex: number;
@@ -79,13 +73,14 @@ export class TableCellDirective
         }
     }
 
-    constructor(
-        private columnDef: TableColumnDefDirective,
-        private elementRef: ElementRef,
-        private tableStateHandlerService: TableStateHandlerService,
-        private cd: ChangeDetectorRef
-    ) {
+    constructor() {
+        const columnDef = inject(TableColumnDefDirective);
+        const elementRef = inject(ElementRef);
+
         super(columnDef, elementRef);
+    
+        this.columnDef = columnDef;
+        this.elementRef = elementRef;
     }
 
     public ngOnInit(): void {

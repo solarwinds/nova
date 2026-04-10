@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectorRef, Component } from "@angular/core";
+import { ChangeDetectorRef, Component, inject } from "@angular/core";
 import { AbstractControl, FormBuilder, Validators } from "@angular/forms";
 
 @Component({
@@ -51,10 +51,10 @@ export class FormFieldComplexExampleComponent {
 
     public fancyForm;
 
-    constructor(
-        private formBuilder: FormBuilder,
-        private changeDetector: ChangeDetectorRef
-    ) {
+    private formBuilder = inject(FormBuilder);
+    private changeDetector = inject(ChangeDetectorRef);
+
+    constructor() {
         this.fancyForm = this.formBuilder.group(
             {
                 password: this.formBuilder.control("", Validators.required),

@@ -20,13 +20,7 @@
 
 import { ListRange } from "@angular/cdk/collections";
 import { ScrollingModule } from "@angular/cdk/scrolling";
-import {
-    AfterViewInit,
-    Component,
-    NO_ERRORS_SCHEMA,
-    OnDestroy,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, Component, NO_ERRORS_SCHEMA, OnDestroy, ViewChild, inject } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import {
@@ -69,14 +63,14 @@ import { NuiRepeatModule } from "../lib/repeat/repeat.module";
     standalone: false,
 })
 class ViewportInRepeatComponent implements AfterViewInit, OnDestroy {
+    viewportManager = inject(VirtualViewportManager);
+
     @ViewChild(RepeatComponent) public repeat: RepeatComponent;
     public pageSize: number = 20;
     public items$ = new BehaviorSubject<number[]>([]);
     public nextPage$: Observable<ListRange>;
     public destroy$ = new Subject<void>();
     public totalItems: number = 132;
-
-    constructor(public viewportManager: VirtualViewportManager) {}
 
     public ngAfterViewInit(): void {
         this.nextPage$ = this.viewportManager

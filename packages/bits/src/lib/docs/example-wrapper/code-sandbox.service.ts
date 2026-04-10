@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { DOCUMENT } from "@angular/common";
-import { Inject, Injectable, Optional } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { compressToBase64 } from "lz-string";
 
 import { createAngularApp } from "./code-sandbox-files";
@@ -31,10 +31,9 @@ import {FileMetadata} from "../services/sources.service";
     providedIn: "root",
 })
 export class CodeSandboxService {
-    constructor(
-        @Inject(DOCUMENT) private document: Document,
-        @Optional() @Inject(DEMO_PATH_TOKEN) private config: any
-    ) {}
+    private document = inject<Document>(DOCUMENT);
+    private config = inject(DEMO_PATH_TOKEN, { optional: true })!;
+
 
     async open(prefix: string, sources: any): Promise<void> {
         async function mainVersion(packageName: string) {

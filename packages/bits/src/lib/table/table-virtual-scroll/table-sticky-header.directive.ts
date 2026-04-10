@@ -22,14 +22,7 @@ import {
     CdkVirtualForOf,
     CdkVirtualScrollViewport,
 } from "@angular/cdk/scrolling";
-import {
-    AfterViewInit,
-    ContentChild,
-    Directive,
-    Input,
-    OnDestroy,
-    Renderer2,
-} from "@angular/core";
+import { AfterViewInit, ContentChild, Directive, Input, OnDestroy, Renderer2, inject } from "@angular/core";
 import isBoolean from "lodash/isBoolean";
 import isEmpty from "lodash/isEmpty";
 import { asyncScheduler, EMPTY, merge, Observable, Subject } from "rxjs";
@@ -62,6 +55,9 @@ export enum TableVirtualScrollHeaderPosition {
     standalone: false,
 })
 export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
+    private renderer = inject(Renderer2);
+    private viewport = inject(CdkVirtualScrollViewport);
+
     @ContentChild(TableComponent) public table: TableComponent<unknown>;
     @ContentChild(CdkVirtualForOf) public virtualFor: CdkVirtualForOf<unknown>;
 
@@ -103,11 +99,6 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
     private get isInitialized(): boolean {
         return !!this.tableElRef;
     }
-
-    constructor(
-        private renderer: Renderer2,
-        private viewport: CdkVirtualScrollViewport
-    ) {}
 
     public ngAfterViewInit(): void {
         this.assignRequiredProperties();

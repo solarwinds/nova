@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, TemplateRef } from "@angular/core";
+import { Component, TemplateRef, inject } from "@angular/core";
 
 import { DialogService, NuiDialogRef } from "@nova-ui/bits";
 
@@ -28,6 +28,8 @@ import { DialogService, NuiDialogRef } from "@nova-ui/bits";
     standalone: false,
 })
 export class DialogInsideOverlayExampleComponent {
+    private dialogService = inject(DialogService);
+
     public options1 = Array.from({ length: 25 }).map(
         (_, i) => $localize`Item ${i}`
     );
@@ -36,8 +38,6 @@ export class DialogInsideOverlayExampleComponent {
     );
 
     private activeDialog: NuiDialogRef;
-
-    constructor(private dialogService: DialogService) {}
 
     /**
      * Notice that the 'useOverlay' option is being passed in here

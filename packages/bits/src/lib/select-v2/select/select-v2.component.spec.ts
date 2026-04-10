@@ -19,15 +19,7 @@
 //  THE SOFTWARE.
 
 import { LiveAnnouncer } from "@angular/cdk/a11y";
-import {
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    NO_ERRORS_SCHEMA,
-    QueryList,
-    SimpleChange,
-    ViewChild,
-} from "@angular/core";
+import { ChangeDetectorRef, Component, ElementRef, NO_ERRORS_SCHEMA, QueryList, SimpleChange, ViewChild, inject } from "@angular/core";
 import {
     ComponentFixture,
     fakeAsync,
@@ -57,10 +49,11 @@ import { InputValueTypes } from "../types";
     standalone: false,
 })
 class SelectV2WrapperWithFormControlComponent {
+    elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
     public items = Array.from({ length: 10 }).map((_, i) => `Item ${i}`);
     public selectControl = new FormControl();
     @ViewChild(SelectV2Component) select: SelectV2Component;
-    constructor(public elRef: ElementRef<HTMLElement>) {}
 }
 
 @Component({
@@ -74,10 +67,11 @@ class SelectV2WrapperWithFormControlComponent {
     standalone: false,
 })
 class SelectV2WrapperWithValueComponent {
+    elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
     public items = Array.from({ length: 10 }).map((_, i) => `Item ${i}`);
     public value: InputValueTypes = this.items[0];
     @ViewChild(SelectV2Component) select: SelectV2Component;
-    constructor(public elRef: ElementRef<HTMLElement>) {}
 }
 
 @Component({
@@ -93,10 +87,11 @@ class SelectV2WrapperWithValueComponent {
     standalone: false,
 })
 class SelectV2WrapperAsyncComponent {
+    elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
     public items: any[];
     public selectControl = new FormControl();
     @ViewChild(SelectV2Component) select: SelectV2Component;
-    constructor(public elRef: ElementRef<HTMLElement>) {}
 
     public setItems() {
         setTimeout(() => {

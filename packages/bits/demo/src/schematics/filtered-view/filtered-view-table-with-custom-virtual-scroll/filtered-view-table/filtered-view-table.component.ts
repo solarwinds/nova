@@ -19,16 +19,7 @@
 //  THE SOFTWARE.
 
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 
@@ -65,6 +56,11 @@ import { IServer } from "../types";
 export class FilteredViewTableComponent
     implements OnInit, OnDestroy, AfterViewInit
 {
+    private dataSource = inject(DataSourceService) as FilteredViewTableWithCustomVirtualScrollDataSource<IServer>;
+    private viewportManager = inject(VirtualViewportManager);
+    private customVirtualScrollStrategyService = inject(VirtualScrollCustomStrategyService);
+    private changeDetection = inject(ChangeDetectorRef);
+
     public items: IServer[] = [];
     public isBusy: boolean = false;
 
@@ -81,14 +77,6 @@ export class FilteredViewTableComponent
     private previouslyLoadedCount: number;
 
     private readonly destroy$ = new Subject<void>();
-
-    constructor(
-        @Inject(DataSourceService)
-        private dataSource: FilteredViewTableWithCustomVirtualScrollDataSource<IServer>,
-        private viewportManager: VirtualViewportManager,
-        private customVirtualScrollStrategyService: VirtualScrollCustomStrategyService,
-        private changeDetection: ChangeDetectorRef
-    ) {}
 
     public ngOnInit(): void {
         this.dataSource.busy

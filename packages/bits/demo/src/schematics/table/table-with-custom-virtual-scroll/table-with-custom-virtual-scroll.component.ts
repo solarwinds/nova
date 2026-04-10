@@ -19,16 +19,7 @@
 //  THE SOFTWARE.
 
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 import { Subject } from "rxjs";
 import { debounceTime, takeUntil, tap } from "rxjs/operators";
 
@@ -72,6 +63,11 @@ import { VirtualScrollCustomStrategyService } from "./virtual-scroll-custom-stra
 export class TableWithCustomVirtualScrollComponent
     implements OnInit, OnDestroy, AfterViewInit
 {
+    private dataSource = inject(DataSourceService) as TableWithCustomVirtualScrollDataSource<IServer>;
+    private viewportManager = inject(VirtualViewportManager);
+    private customVirtualScrollStrategyService = inject(VirtualScrollCustomStrategyService);
+    private changeDetection = inject(ChangeDetectorRef);
+
     public items: IServer[] = [];
     public isBusy: boolean = false;
 
@@ -99,14 +95,6 @@ export class TableWithCustomVirtualScrollComponent
     private previouslyLoadedCount: number;
 
     private readonly destroy$ = new Subject<void>();
-
-    constructor(
-        @Inject(DataSourceService)
-        private dataSource: TableWithCustomVirtualScrollDataSource<IServer>,
-        private viewportManager: VirtualViewportManager,
-        private customVirtualScrollStrategyService: VirtualScrollCustomStrategyService,
-        private changeDetection: ChangeDetectorRef
-    ) {}
 
     public ngOnInit(): void {
         this.dataSource.busy

@@ -18,13 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    ApplicationRef,
-    ComponentFactoryResolver,
-    ComponentRef,
-    EmbeddedViewRef,
-    Injectable,
-} from "@angular/core";
+import { ApplicationRef, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, Injectable, inject } from "@angular/core";
 import isNil from "lodash/isNil";
 
 import { ToastInjector } from "./toast-injector";
@@ -40,12 +34,6 @@ interface IToastContainers {
  */
 @Injectable({ providedIn: "root" })
 export class ToastContainerService {
-    constructor(
-        private componentFactoryResolver: ComponentFactoryResolver,
-        private overlayService: OverlayContainerService,
-        private appRef: ApplicationRef
-    ) {}
-
     private static getComponentRootNode(
         componentRef: ComponentRef<any>
     ): HTMLElement {
@@ -54,6 +42,10 @@ export class ToastContainerService {
     }
     private containers: IToastContainers = {};
     private containerElement: HTMLElement;
+
+    private componentFactoryResolver = inject(ComponentFactoryResolver);
+    private overlayService = inject(OverlayContainerService);
+    private appRef = inject(ApplicationRef);
 
     /**
      * Creates container element for position, if container already exists - returns it
