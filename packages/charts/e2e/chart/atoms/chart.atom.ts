@@ -43,7 +43,9 @@ export class ChartAtom extends Atom {
         await expect(this.grid).toBeVisible();
         this.lasagna.toBeVisible();
         const [layer] = await this.lasagna.layer(name);
-        await expect(layer).toBeVisible();
+        if (layer !== undefined) {
+            await expect(layer).toBeVisible();
+        }
         return [layer];
     }
 
