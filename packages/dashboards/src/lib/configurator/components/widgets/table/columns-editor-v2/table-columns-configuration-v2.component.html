@@ -24,11 +24,12 @@
 
                 <ng-template #headerText>
                     <ng-container>
+                        <!-- a11y: manual review required — WCAG 2.5.7 Dragging: no keyboard reorder alternative. Requires a design change (e.g. up/down buttons). -->
                         <div
                             class="nui-table-columns-configuration__drag-handler"
                             cdkDragHandle
                         >
-                            <nui-icon icon="drag"></nui-icon>
+                            <nui-icon icon="drag" aria-hidden="true"></nui-icon>
                         </div>
                     </ng-container>
                     <span
@@ -57,6 +58,8 @@
                             type="button"
                             icon="delete"
                             displayStyle="action"
+                            aria-label="Remove column"
+                            i18n-aria-label="@@tableColumnsConfigurationV2.deleteButton.ariaLabel|Table column remove button ARIA label"
                             (click)="removeItem(i)"
                         ></button>
                     </div>

@@ -22,7 +22,7 @@
                 *ngIf="editMode"
                 class="nui-widget__header__content-drag-icon nui-dashboard__widget--drag-handle"
             >
-                <nui-icon icon="drag" iconColor="gray"></nui-icon>
+                <nui-icon icon="drag" iconColor="gray" aria-hidden="true"></nui-icon>
             </div>
             <div
                 #widgetHeaderCustomElement
@@ -78,6 +78,8 @@
                     (mouseenter)="prepareLink($event)"
                     icon="external-link"
                     [nuiTooltip]="linkTooltip"
+                    [attr.aria-label]="linkTooltip"
+                    i18n-aria-label="@@widgetHeader.externalLinkButton.ariaLabel|Widget header external link button ARIA label"
                     (mousedown)="
                         $event.stopPropagation(); $event.preventDefault()
                     "
@@ -92,6 +94,8 @@
                     icon="edit"
                     nuiTooltip="Edit widget"
                     i18n-nuiTooltip
+                    aria-label="Edit widget"
+                    i18n-aria-label="@@widgetHeader.editButton.ariaLabel|Widget header edit button ARIA label"
                     (click)="onEditWidget()"
                 ></button>
                 <button
@@ -102,6 +106,8 @@
                     displayStyle="action"
                     nuiTooltip="Collapse header"
                     icon="double-caret-up"
+                    aria-label="Collapse header"
+                    i18n-aria-label="@@widgetHeader.collapseButton.ariaLabel|Widget header collapse button ARIA label"
                     (click)="toggleCollapsed()"
                 ></button>
                 <nui-menu
@@ -109,6 +115,8 @@
                     class="nui-widget__header__content-actions__menu"
                     icon="menu"
                     displayStyle="action"
+                    ariaLabel="Widget actions"
+                    i18n-ariaLabel="@@widgetHeader.actionsMenu.ariaLabel|Widget header actions menu ARIA label"
                     [appendToBody]="true"
                 >
                     <nui-menu-action
@@ -133,6 +141,8 @@
                             icon="remove"
                             iconColor="red"
                             displayStyle="action"
+                            aria-label="Remove widget"
+                            i18n-aria-label="@@widgetHeader.removeButton.ariaLabel|Widget header remove button ARIA label"
                             i18n
                         ></button>
                     </span>

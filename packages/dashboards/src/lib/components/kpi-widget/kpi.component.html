@@ -6,7 +6,13 @@
     </ng-container>
 
     <ng-container *ngIf="!widgetData?.link">
-        <div class="nui-kpi-indicator" (click)="onInteraction()">
+        <div class="nui-kpi-indicator"
+             (click)="onInteraction()"
+             (keydown.enter)="onInteraction()"
+             (keydown.space)="$event.preventDefault(); onInteraction()"
+             [attr.role]="interactive ? 'button' : null"
+             [attr.tabindex]="interactive ? 0 : null"
+             [attr.aria-label]="widgetData?.label">
             <ng-container [ngTemplateOutlet]="kpiContent"></ng-container>
         </div>
     </ng-container>

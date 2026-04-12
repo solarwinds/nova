@@ -29,10 +29,12 @@
                         <div
                             class="kpi-color-rule__control justify-content-center d-flex"
                         >
+                            <!-- a11y: manual review required — WCAG 2.5.7 Dragging: no keyboard reorder alternative. Requires a design change (e.g. up/down buttons). -->
                             <nui-icon
                                 icon="drag"
                                 class="kpi-color-rule__drag align-items-center"
                                 cdkDragHandle
+                                aria-hidden="true"
                             ></nui-icon>
                         </div>
                         <div class="d-flex flex-grow-1 flex-wrap">
@@ -84,6 +86,8 @@
                             displayStyle="action"
                             type="button"
                             class="kpi-color-rule__control"
+                            aria-label="Remove rule"
+                            i18n-aria-label="@@backgroundColorRules.deleteButton.ariaLabel|Background color rule delete button ARIA label"
                             (click)="removeRule(i)"
                         ></button>
                         <nui-drop-area

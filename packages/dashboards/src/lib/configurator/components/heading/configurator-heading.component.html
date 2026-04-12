@@ -10,6 +10,8 @@
         displayStyle="action"
         icon="close"
         [disabled]="disableCloseButton"
+        aria-label="Close"
+        i18n-aria-label="@@configuratorHeading.closeButton.ariaLabel|Configurator close button ARIA label"
         (click)="this.close.emit()"
     ></button>
 </div>

@@ -21,6 +21,8 @@
             icon="details"
             title="Inspect selection in the data explorer"
             i18n-title
+            aria-label="Inspect selection in the data explorer"
+            i18n-aria-label="@@timeseriesInspectionMenu.exploreButton.ariaLabel|Timeseries inspection menu explore button ARIA label"
             (click)="explore(true)"
         ></button>
         <button
@@ -30,6 +32,8 @@
             icon="zoom-in"
             title="Zoom In"
             i18n-title
+            aria-label="Zoom In"
+            i18n-aria-label="@@timeseriesInspectionMenu.zoomInButton.ariaLabel|Timeseries inspection menu zoom in button ARIA label"
             (click)="zoomIn()"
         ></button>
         <button
@@ -38,6 +42,8 @@
             icon="zoom-out"
             title="Zoom Out"
             i18n-title
+            aria-label="Zoom Out"
+            i18n-aria-label="@@timeseriesInspectionMenu.zoomOutButton.ariaLabel|Timeseries inspection menu zoom out button ARIA label"
             (click)="zoomOut()"
         ></button>
         <button
@@ -46,6 +52,8 @@
             icon="remove"
             title="Clear selection"
             i18n-title
+            aria-label="Clear selection"
+            i18n-aria-label="@@timeseriesInspectionMenu.clearButton.ariaLabel|Timeseries inspection menu clear selection button ARIA label"
             (click)="clearZoom()"
         ></button>
     </div>
