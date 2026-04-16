@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { GridsterItem } from "angular-gridster2";
+import { GridsterItemConfig } from "angular-gridster2";
 
 import {
     WidgetUpdateOperation,
@@ -28,7 +28,7 @@ import { IWidgets } from "../widget/types";
 
 export interface IDashboard {
     widgets: IWidgets;
-    positions: Record<string, GridsterItem>;
+    positions: Record<string, GridsterItemConfig>;
 }
 
 export interface IDashboardBelowFoldLazyLoadingConfig {

@@ -87,7 +87,7 @@ export class FilteredViewWithTreeDataSource<T>
 
             // transform backend API response (IServersApiResponse)
             // to our frontend items collection (IServersCollection)
-            map((mainResponse) => mainResponse.data),
+            map((mainResponse) => mainResponse.data!),
 
             // error handle in case of any error
             catchError((e) => {

@@ -35,11 +35,10 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 import {
-    GridsterComponent,
+    Gridster,
     GridsterConfig,
     GridsterItem,
-    GridsterItemComponent,
-    GridsterItemComponentInterface,
+    GridsterItemConfig,
 } from "angular-gridster2";
 import _defaultsDeep from "lodash/defaultsDeep";
 
@@ -98,11 +97,11 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
         return true;
     }
 
-    @ViewChild(GridsterComponent)
-    public gridster: GridsterComponent;
+    @ViewChild(Gridster)
+    public gridster: Gridster;
 
-    @ViewChildren(GridsterItemComponent)
-    public gridsterItems: QueryList<GridsterItemComponent>;
+    @ViewChildren(GridsterItem)
+    public gridsterItems: QueryList<GridsterItem>;
 
     public gridsterItemsVisibilityMap: Record<string, boolean> = {};
 
@@ -247,8 +246,8 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
     }
 
     private updateWidgetPosition = (
-        item: GridsterItem,
-        itemComponent: GridsterItemComponentInterface
+        item: GridsterItemConfig,
+        itemComponent: GridsterItem
     ): void => {
         const widgetId = String((itemComponent as any).widgetId);
         const dashboard = immutableSet(
@@ -266,8 +265,8 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
     };
 
     private emitWidgetResize = (
-        item: GridsterItem,
-        itemComponent: GridsterItemComponentInterface
+        item: GridsterItemConfig,
+        itemComponent: GridsterItem
     ): void => {
         const widgetId = (itemComponent as any).widgetId;
 
@@ -285,14 +284,14 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
         options: GridsterConfig,
         eventName: string,
         invoke: (
-            item: GridsterItem,
-            itemComponent: GridsterItemComponentInterface
+            item: GridsterItemConfig,
+            itemComponent: GridsterItem
         ) => void
     ) {
         const prevEvent = options[eventName];
         options[eventName] = (
-            item: GridsterItem,
-            itemComponent: GridsterItemComponentInterface
+            item: GridsterItemConfig,
+            itemComponent: GridsterItem
         ) => {
             invoke(item, itemComponent);
 

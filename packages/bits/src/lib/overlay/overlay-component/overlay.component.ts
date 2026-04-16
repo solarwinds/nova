@@ -62,7 +62,7 @@ const isMouseEvent = (event: Event): event is MouseEvent =>
 /* @dynamic */
 @Component({
     selector: "nui-overlay",
-    template: ` <ng-template cdk-portal>
+    template: ` <ng-template cdkPortal>
         <div
             id="nui-overlay"
             class="nui-overlay"

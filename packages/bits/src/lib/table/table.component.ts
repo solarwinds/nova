@@ -19,18 +19,11 @@
 //  THE SOFTWARE.
 
 import { Directionality } from "@angular/cdk/bidi";
-import {
-    _DisposeViewRepeaterStrategy,
-    _VIEW_REPEATER_STRATEGY,
-    _ViewRepeater,
-} from "@angular/cdk/collections";
 import { Platform } from "@angular/cdk/platform";
 import { CdkVirtualForOf, ViewportRuler } from "@angular/cdk/scrolling";
 import {
     CDK_TABLE,
     CdkTable,
-    RenderRow,
-    RowContext,
     STICKY_POSITIONING_LISTENER,
     StickyPositioningListener,
 } from "@angular/cdk/table";
@@ -108,10 +101,6 @@ import { ISortedItem, SorterDirection } from "../sorter/public-api";
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         TableStateHandlerService,
-        {
-            provide: _VIEW_REPEATER_STRATEGY,
-            useClass: _DisposeViewRepeaterStrategy,
-        },
         { provide: CdkTable, useExisting: TableComponent },
         { provide: CDK_TABLE, useExisting: TableComponent },
     ],
@@ -173,16 +162,13 @@ export class TableComponent<T>
         private tableStateHandlerService: TableStateHandlerService,
         @Inject(DOCUMENT) private document: Document,
         private platform: Platform,
-        @Inject(_VIEW_REPEATER_STRATEGY)
-        viewRepeater: _ViewRepeater<T, RenderRow<T>, RowContext<T>>,
         viewportRuler: ViewportRuler,
         @Optional()
         @SkipSelf()
         @Inject(STICKY_POSITIONING_LISTENER)
         stickyPositioningListener: StickyPositioningListener
     ) {
-        // The _ViewRepeater and _CoalescedStyleScheduler parameters were optional before Angular v12.
-        // They're included here for compatibility with Angular v12 and later.
+        // CdkTable in CDK 21 uses inject() internally; pass remaining known args.
         super(
             _differs,
             _changeDetectorRef,
@@ -191,7 +177,6 @@ export class TableComponent<T>
             _dir,
             document,
             platform,
-            viewRepeater,
             viewportRuler,
             stickyPositioningListener
         );
