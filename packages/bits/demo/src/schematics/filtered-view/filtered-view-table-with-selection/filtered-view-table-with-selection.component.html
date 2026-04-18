@@ -2,11 +2,13 @@
     <nui-panel>
         <div nuiPanelEmbeddedBody>
             <app-filter-groups-wrapper>
+                @for (filterGroupItem of filterGroupItems; track
+                filterGroupItem) {
                 <app-filter-group-with-selection
-                    *ngFor="let filterGroupItem of filterGroupItems"
                     [filterGroupItem]="filterGroupItem"
                     (filterChanged)="applyFilters()"
                 ></app-filter-group-with-selection>
+                }
             </app-filter-groups-wrapper>
         </div>
         <div class="ml-2">
@@ -18,11 +20,8 @@
                     (removeAll)="onClearAll($event)"
                     (chipsOverflowed)="onChipsOverflow($event)"
                 >
-                    <div
-                        class="nui-chips-overflowed"
-                        #overflowCounterLabel
-                        *ngIf="overflowCounter > 0"
-                    >
+                    @if (overflowCounter > 0) {
+                    <div class="nui-chips-overflowed" #overflowCounterLabel>
                         <nui-popover
                             trigger="click"
                             [popoverOverlayPosition]="overflowPopoverPosition"
@@ -33,6 +32,7 @@
                             >
                         </nui-popover>
                     </div>
+                    }
                 </nui-chips>
 
                 <ng-template #popoverWithClickTrigger>

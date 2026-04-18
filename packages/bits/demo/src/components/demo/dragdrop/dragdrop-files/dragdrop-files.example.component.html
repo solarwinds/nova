@@ -4,22 +4,21 @@
     (leave)="invalidateFiles()"
     [state]="fileDropState"
 >
-    <ng-container *ngIf="gifError">
-        <nui-validation-message [show]="true">
-            Please upload GIF only!</nui-validation-message
+    @if (gifError) {
+    <nui-validation-message [show]="true">
+        Please upload GIF only!</nui-validation-message
+    >
+    } @if (!gifError) {
+    <nui-icon icon="upload" class="pr-2" iconColor="gray"></nui-icon>
+    <span class="nui-text-small-secondary">
+        Drop only <b>GIF images</b> to upload, or
+        <label
+            for="uniqueOne"
+            class="nui-text-link-small nui-demo-drop-area__browse"
+            >browse</label
         >
-    </ng-container>
-    <ng-container *ngIf="!gifError">
-        <nui-icon icon="upload" class="pr-2" iconColor="gray"></nui-icon>
-        <span class="nui-text-small-secondary">
-            Drop only <b>GIF images</b> to upload, or
-            <label
-                for="uniqueOne"
-                class="nui-text-link-small nui-demo-drop-area__browse"
-                >browse</label
-            >
-        </span>
-    </ng-container>
+    </span>
+    }
 
     <!--this is hidden file input to handle browse button-->
     <input
@@ -34,7 +33,8 @@
 
 <span class="nui-text-small-secondary">File types: GIF</span>
 
-<div class="nui-demo-file-area d-flex" *ngFor="let file of files">
+@for (file of files; track file) {
+<div class="nui-demo-file-area d-flex">
     <div class="py-2 px-3 flex-grow-1 flex-row">
         <span class="nui-text-label">{{ file.name }}</span>
         <nui-progress
@@ -56,3 +56,4 @@
         ></button>
     </div>
 </div>
+}

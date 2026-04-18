@@ -4,13 +4,14 @@
     i18n-placeholder
     [popupViewportMargin]="100"
 >
+    @for (option of options1; track option) {
     <nui-select-v2-option
-        *ngFor="let option of options1"
         [value]="option"
         (click)="openInOverlay(headerButtonsContent)"
     >
         {{ option }}
     </nui-select-v2-option>
+    }
 </nui-select-v2>
 
 <ng-template #headerButtonsContent let-close="close">
@@ -22,12 +23,11 @@
     <div class="dialog-body">
         <p>
             <nui-select-v2 placeholder="Select an item" i18n-placeholder>
-                <nui-select-v2-option
-                    *ngFor="let option of options2"
-                    [value]="option"
-                >
+                @for (option of options2; track option) {
+                <nui-select-v2-option [value]="option">
                     {{ option }}
                 </nui-select-v2-option>
+                }
             </nui-select-v2>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
             maximus faucibus bibendum. Aenean feugiat interdum leo sed posuere.

@@ -25,48 +25,54 @@
         #sidePaneContainer
     >
         <div class="nui-panel__container" #paneContainer>
+            @if (displayPanelHeader) {
             <div
-                *ngIf="displayPanelHeader"
                 class="nui-panel__header"
                 [class.nui-panel__header--no-padding]="!headerPadding"
                 #headerContent
             >
                 <ng-content select="[nuiPanelEmbeddedIcon]"></ng-content>
-                <ng-container *ngIf="!heading; else defaultTitle">
-                    <ng-content select="[nuiPanelEmbeddedHeading]"></ng-content>
-                </ng-container>
-
+                @if (!heading) {
+                <ng-content select="[nuiPanelEmbeddedHeading]"></ng-content>
+                } @else {
+                <div class="nui-panel__header-content">
+                    <span class="nui-panel__header-content-default">
+                        <h4 class="nui-panel__header-default-title">
+                            {{ heading }}
+                        </h4>
+                    </span>
+                </div>
+                } @if (showDefaultIcon) {
                 <div
-                    *ngIf="showDefaultIcon"
                     class="nui-panel__header-container nui-panel__header-container--default"
                 >
-                    <ng-container *ngIf="!isClosable">
-                        <button
-                            nui-button
-                            class="nui-panel__header-btn"
-                            type="button"
-                            displayStyle="action"
-                            [icon]="mainIcon"
-                            [disabled]="isAnimating"
-                            (click)="toggleCollapsedOnClick()"
-                            *ngIf="isCollapsible"
-                        ></button>
-                    </ng-container>
-                    <ng-container *ngIf="isClosable">
-                        <button
-                            nui-button
-                            displayStyle="action"
-                            class="nui-panel__header-btn nui-panel__header-btn--close"
-                            type="button"
-                            icon="close"
-                            (click)="toggleCollapsedOnClick()"
-                        ></button>
-                    </ng-container>
+                    @if (!isClosable) { @if (isCollapsible) {
+                    <button
+                        nui-button
+                        class="nui-panel__header-btn"
+                        type="button"
+                        displayStyle="action"
+                        [icon]="mainIcon"
+                        [disabled]="isAnimating"
+                        (click)="toggleCollapsedOnClick()"
+                    ></button>
+                    } } @if (isClosable) {
+                    <button
+                        nui-button
+                        displayStyle="action"
+                        class="nui-panel__header-btn nui-panel__header-btn--close"
+                        type="button"
+                        icon="close"
+                        (click)="toggleCollapsedOnClick()"
+                    ></button>
+                    }
                 </div>
+                }
             </div>
+            }
             <div class="nui-panel__side-pane-body-wrapper nui-scroll-shadows">
+                @if (!isCollapsed) {
                 <div
-                    *ngIf="!isCollapsed"
                     class="nui-panel__side-pane-body"
                     [class.nui-panel__side-pane-body--no-padding]="
                         !sidePaneBodyPadding
@@ -75,10 +81,13 @@
                 >
                     <ng-content select="[nuiPanelEmbeddedBody]"></ng-content>
                 </div>
+                }
             </div>
-            <div *ngIf="displayFooter" class="nui-panel__footer" #footerContent>
+            @if (displayFooter) {
+            <div class="nui-panel__footer" #footerContent>
                 <ng-content select="[nuiPanelEmbeddedFooter]"></ng-content>
             </div>
+            }
         </div>
     </div>
     <div class="nui-panel__center-pane media-body" #mainContent>
@@ -89,11 +98,3 @@
         </div>
     </div>
 </div>
-
-<ng-template #defaultTitle>
-    <div class="nui-panel__header-content">
-        <span class="nui-panel__header-content-default">
-            <h4 class="nui-panel__header-default-title">{{ heading }}</h4>
-        </span>
-    </div>
-</ng-template>

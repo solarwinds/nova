@@ -230,12 +230,11 @@ export class CustomDonutContentFormatterComponent
                             configuratorHeading.height$ | async
                         "
                     >
-                        <nui-select-v2-option
-                            *ngFor="let itemValue of dsOutput?.result"
-                            [value]="itemValue?.id"
-                        >
+                        @for (itemValue of dsOutput?.result; track itemValue) {
+                        <nui-select-v2-option [value]="itemValue?.id">
                             {{ itemValue?.name }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                     <nui-validation-message for="required" i18n>
                         This field is required
@@ -256,12 +255,11 @@ export class CustomDonutContentFormatterComponent
                             configuratorHeading.height$ | async
                         "
                     >
-                        <nui-select-v2-option
-                            *ngFor="let itemValue of availableUnits"
-                            [value]="itemValue"
-                        >
+                        @for (itemValue of availableUnits; track itemValue) {
+                        <nui-select-v2-option [value]="itemValue">
                             {{ itemValue }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                     <nui-validation-message for="required" i18n>
                         This field is required

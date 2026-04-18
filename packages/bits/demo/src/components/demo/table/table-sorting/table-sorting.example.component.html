@@ -32,11 +32,9 @@
         <ng-container nuiColumnDef="features">
             <th nui-header-cell *nuiHeaderCellDef i18n>Features</th>
             <td nui-cell *nuiCellDef="let element">
-                <nui-icon
-                    *ngFor="let icon of element.features"
-                    [icon]="icon"
-                    class="icon-margin"
-                ></nui-icon>
+                @for (icon of element.features; track icon) {
+                <nui-icon [icon]="icon" class="icon-margin"></nui-icon>
+                }
             </td>
         </ng-container>
 
@@ -70,10 +68,10 @@
                 Checks
             </th>
             <td nui-cell *nuiCellDef="let element">
-                <ng-container *ngFor="let check of element.checks">
-                    <nui-icon [icon]="check.icon"></nui-icon>
-                    {{ check.num }}
-                </ng-container>
+                @for (check of element.checks; track check) {
+                <nui-icon [icon]="check.icon"></nui-icon>
+                {{ check.num }}
+                }
             </td>
         </ng-container>
         <tr nui-header-row *nuiHeaderRowDef="displayedColumns"></tr>

@@ -108,13 +108,14 @@ import {
                         "
                         formControlName="bookId"
                     >
+                        @for (book of books; track book) {
                         <nui-select-v2-option
-                            *ngFor="let book of books"
                             [value]="book.id"
                             [displayValueContext]="book"
                         >
                             {{ book.title }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                 </nui-form-field>
             </div>
@@ -134,12 +135,11 @@ import {
                         i18n-placeholder
                         formControlName="metric"
                     >
-                        <nui-select-v2-option
-                            *ngFor="let metric of metrics"
-                            [value]="metric.id"
-                        >
+                        @for (metric of metrics; track metric) {
+                        <nui-select-v2-option [value]="metric.id">
                             {{ metric.label }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                 </nui-form-field>
             </div>

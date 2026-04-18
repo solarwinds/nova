@@ -8,7 +8,9 @@
     id="nui-demo-form-field"
 >
     <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
-    <nui-textbox *ngIf="true"></nui-textbox>
+    @if (true) {
+    <nui-textbox></nui-textbox>
+    }
     <nui-validation-message [show]="true" i18n
         >Some error message</nui-validation-message
     >
@@ -30,11 +32,12 @@
         [control]="dynamicForm.controls['textbox']"
     >
         <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
+        @if (true) {
         <nui-textbox
-            *ngIf="true"
             id="nui-form-field-test-textbox"
             formControlName="textbox"
         ></nui-textbox>
+        }
         <nui-validation-message for="required" i18n>
             This is required
         </nui-validation-message>
@@ -46,11 +49,12 @@
         [control]="dynamicForm.controls['textboxNumber']"
     >
         <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
+        @if (true) {
         <nui-textbox-number
-            *ngIf="true"
             id="nui-form-field-test-textbox-number"
             formControlName="textboxNumber"
         ></nui-textbox-number>
+        }
         <nui-validation-message for="required" i18n>
             This is required
         </nui-validation-message>
@@ -62,11 +66,12 @@
         [control]="dynamicForm.controls['switch']"
     >
         <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
+        @if (true) {
         <nui-switch
-            *ngIf="true"
             id="nui-form-field-test-switch"
             formControlName="switch"
         ></nui-switch>
+        }
     </nui-form-field>
 
     <nui-form-field
@@ -75,13 +80,11 @@
         [control]="dynamicForm.controls['radio']"
     >
         <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
-        <nui-radio-group
-            *ngIf="true"
-            id="nui-form-field-test-radio"
-            formControlName="radio"
-        >
+        @if (true) {
+        <nui-radio-group id="nui-form-field-test-radio" formControlName="radio">
             <nui-radio ariaLabel="Radio">Radio</nui-radio>
         </nui-radio-group>
+        }
     </nui-form-field>
 
     <nui-form-field
@@ -90,12 +93,13 @@
         [control]="dynamicForm.controls['checkbox']"
     >
         <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
+        @if (true) {
         <nui-checkbox
-            *ngIf="true"
             formControlName="checkbox"
             id="nui-form-field-test-checkbox"
             >Checkbox</nui-checkbox
         >
+        }
     </nui-form-field>
 
     <nui-form-field
@@ -104,18 +108,18 @@
         [control]="dynamicForm.controls['checkboxGroup']"
     >
         <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
+        @if (true) {
         <nui-checkbox-group
-            *ngIf="true"
             id="nui-form-field-test-checkbox-group"
             formControlName="checkboxGroup"
         >
-            <nui-checkbox
-                *ngFor="let vegetable of vegetables"
-                [ariaLabel]="vegetable"
-                [value]="vegetable"
+            @for (vegetable of vegetables; track vegetable) {
+            <nui-checkbox [ariaLabel]="vegetable" [value]="vegetable"
                 >{{ vegetable }}
             </nui-checkbox>
+            }
         </nui-checkbox-group>
+        }
     </nui-form-field>
 
     <nui-form-field
@@ -124,12 +128,13 @@
         [control]="dynamicForm.controls['datepicker']"
     >
         <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
+        @if (true) {
         <nui-date-picker
-            *ngIf="true"
             id="nui-form-field-test-datepicker"
             formControlName="datepicker"
             [inline]="false"
         ></nui-date-picker>
+        }
     </nui-form-field>
 
     <nui-form-field
@@ -138,11 +143,12 @@
         [control]="dynamicForm.controls['timepicker']"
     >
         <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
+        @if (true) {
         <nui-time-picker
-            *ngIf="true"
             id="nui-form-field-test-timepicker"
             formControlName="timepicker"
         ></nui-time-picker>
+        }
     </nui-form-field>
 
     <nui-form-field
@@ -152,12 +158,13 @@
         [control]="dynamicForm.controls['dateTimePicker']"
     >
         <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
+        @if (true) {
         <nui-date-time-picker
-            *ngIf="true"
             id="nui-form-field-test-datetimepicker"
             formControlName="dateTimePicker"
         >
         </nui-date-time-picker>
+        }
         <nui-validation-message>
             This field is required
         </nui-validation-message>
@@ -172,17 +179,18 @@
         [control]="dynamicForm.controls['selectV2']"
     >
         <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
+        @if (true) {
         <nui-select-v2
-            *ngIf="true"
             formControlName="selectV2"
             id="nui-form-field-test-select"
         >
-            <nui-select-v2-option
-                *ngFor="let item of ['orange', 'apple']"
-                [value]="item"
-                >{{ item }}</nui-select-v2-option
-            >
+            @for (item of ['orange', 'apple']; track item) {
+            <nui-select-v2-option [value]="item">{{
+                item
+            }}</nui-select-v2-option>
+            }
         </nui-select-v2>
+        }
     </nui-form-field>
 
     <nui-form-field
@@ -191,17 +199,18 @@
         [control]="dynamicForm.controls['comboboxV2']"
     >
         <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
+        @if (true) {
         <nui-combobox-v2
-            *ngIf="true"
             formControlName="comboboxV2"
             id="nui-form-field-test-combobox"
         >
-            <nui-select-v2-option
-                *ngFor="let item of ['orange', 'apple']"
-                [value]="item"
-                >{{ item }}</nui-select-v2-option
-            >
+            @for (item of ['orange', 'apple']; track item) {
+            <nui-select-v2-option [value]="item">{{
+                item
+            }}</nui-select-v2-option>
+            }
         </nui-combobox-v2>
+        }
     </nui-form-field>
 </form>
 
@@ -214,7 +223,9 @@
     id="nui-demo-form-field-with-template"
 >
     <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
-    <nui-textbox *ngIf="true"></nui-textbox>
+    @if (true) {
+    <nui-textbox></nui-textbox>
+    }
     <nui-validation-message [show]="true" i18n
         >Some error message</nui-validation-message
     >
@@ -230,7 +241,9 @@
     id="nui-demo-form-field-hint-with-template"
 >
     <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
-    <nui-textbox *ngIf="true"></nui-textbox>
+    @if (true) {
+    <nui-textbox></nui-textbox>
+    }
 </nui-form-field>
 
 <ng-template #hintTemplate>

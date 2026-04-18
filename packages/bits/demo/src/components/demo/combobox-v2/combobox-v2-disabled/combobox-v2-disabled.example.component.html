@@ -7,13 +7,11 @@
     class="w-50 d-inline-flex"
     #combobox
 >
-    <nui-select-v2-option
-        *ngFor="let item of items"
-        [value]="item"
-        [isDisabled]="item.disabled"
-    >
+    @for (item of items; track item) {
+    <nui-select-v2-option [value]="item" [isDisabled]="item.disabled">
         <span class="mr-3" [nuiComboboxV2OptionHighlight]="item.name"></span>
     </nui-select-v2-option>
+    }
 </nui-combobox-v2>
 
 <nui-switch

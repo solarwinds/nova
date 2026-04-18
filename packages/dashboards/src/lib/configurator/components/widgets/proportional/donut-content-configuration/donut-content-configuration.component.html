@@ -1,4 +1,5 @@
-<ng-container *ngIf="shown" [formGroup]="form">
+@if (shown) {
+<ng-container [formGroup]="form">
     <nui-widget-editor-accordion
         [state]="form | nuiWidgetEditorAccordionFormState | async"
     >
@@ -16,7 +17,6 @@
                 </div>
             </div>
         </div>
-
         <div class="donut-content-configuration__accordion-content">
             <!-- aggregator -->
             <div class="mb-4" formGroupName="aggregator">
@@ -30,17 +30,17 @@
                         i18n-placeholder
                         formControlName="aggregatorType"
                     >
+                        @for (aggregator of aggregators; track aggregator) {
                         <nui-select-v2-option
-                            *ngFor="let aggregator of aggregators"
                             [displayValueContext]="aggregator.label"
                             [value]="aggregator.aggregatorType"
                         >
                             {{ aggregator.label }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                 </nui-form-field>
             </div>
-
             <!-- formatter -->
             <div class="mb-4" formGroupName="formatter">
                 <nui-form-field
@@ -53,20 +53,20 @@
                         i18n-placeholder
                         formControlName="componentType"
                     >
+                        @for (formatter of formatters; track formatter) {
                         <nui-select-v2-option
-                            *ngFor="let formatter of formatters"
                             [displayValueContext]="formatter.label"
                             [value]="formatter.componentType"
                         >
                             {{ formatter.label }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                 </nui-form-field>
             </div>
-
             <!-- aggregator configuration component -->
+            @if (currentAggregatorDefinition?.configurationComponent) {
             <ng-container
-                *ngIf="currentAggregatorDefinition?.configurationComponent"
                 nuiComponentPortal
                 componentId="formatterConfigurator"
                 [componentType]="
@@ -82,10 +82,10 @@
                     (attached)="componentPortal.attached($event)"
                 ></ng-template>
             </ng-container>
-
+            }
             <!-- formatter configuration component -->
+            @if (currentFormatterDefinition?.configurationComponent) {
             <ng-container
-                *ngIf="currentFormatterDefinition?.configurationComponent"
                 nuiComponentPortal
                 componentId="formatterConfigurator"
                 [componentType]="
@@ -101,6 +101,8 @@
                     (attached)="componentPortal.attached($event)"
                 ></ng-template>
             </ng-container>
+            }
         </div>
     </nui-widget-editor-accordion>
 </ng-container>
+}

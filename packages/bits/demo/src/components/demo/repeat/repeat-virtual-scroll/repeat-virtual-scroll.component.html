@@ -15,9 +15,11 @@
 <ng-template #listRepeatItemTemplate let-item="item">
     <div class="container">
         <div class="row">
-            <div *ngFor="let field of item | keyvalue" class="col-sm">
+            @for (field of item | keyvalue; track field) {
+            <div class="col-sm">
                 {{ field.value }}
             </div>
+            }
         </div>
     </div>
 </ng-template>

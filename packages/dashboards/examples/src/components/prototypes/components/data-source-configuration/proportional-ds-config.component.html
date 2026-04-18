@@ -21,12 +21,12 @@
                     [popupViewportMargin]="configuratorHeading.height$ | async"
                     (valueSelected)="onDataSourceChange($event)"
                 >
-                    <nui-select-v2-option
-                        *ngFor="let dataSourceProvider of dataSourceProviders"
-                        [value]="dataSourceProvider"
-                    >
+                    @for (dataSourceProvider of dataSourceProviders; track
+                    dataSourceProvider) {
+                    <nui-select-v2-option [value]="dataSourceProvider">
                         {{ dataSourceProvider }}
                     </nui-select-v2-option>
+                    }
                 </nui-select-v2>
                 <nui-validation-message for="required" i18n>
                     This field is required

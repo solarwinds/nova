@@ -3,7 +3,7 @@
     i18n-placeholder
     [formControl]="selectControl"
 >
-    <nui-select-v2-option *ngFor="let item of items" [value]="item">{{
-        item
-    }}</nui-select-v2-option>
+    @for (item of items; track item) {
+    <nui-select-v2-option [value]="item">{{ item }}</nui-select-v2-option>
+    }
 </nui-select-v2>

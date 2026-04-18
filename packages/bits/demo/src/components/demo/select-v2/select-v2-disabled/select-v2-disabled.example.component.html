@@ -4,13 +4,11 @@
     i18n-placeholder
     class="w-50 d-inline-flex"
 >
-    <nui-select-v2-option
-        *ngFor="let item of items"
-        [value]="item"
-        [isDisabled]="item.disabled"
-    >
+    @for (item of items; track item) {
+    <nui-select-v2-option [value]="item" [isDisabled]="item.disabled">
         {{ item.name }}
     </nui-select-v2-option>
+    }
 </nui-select-v2>
 
 <nui-switch

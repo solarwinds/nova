@@ -136,12 +136,11 @@ export class CustomWidgetBodyContentComponent implements IHasChangeDetector {
                         "
                         (valueSelected)="onChanged($event)"
                     >
-                        <nui-select-v2-option
-                            *ngFor="let item of imageItems"
-                            [value]="item.url"
-                        >
+                        @for (item of imageItems; track item) {
+                        <nui-select-v2-option [value]="item.url">
                             {{ item.title }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                 </nui-form-field>
             </div>

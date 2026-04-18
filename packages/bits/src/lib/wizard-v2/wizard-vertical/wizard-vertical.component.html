@@ -1,7 +1,5 @@
-<div
-    class="nui-wizard-vertical-header-container"
-    *ngFor="let step of steps; let i = index; let isLast = last"
->
+@for (step of steps; track step; let i = $index; let isLast = $last) {
+<div class="nui-wizard-vertical-header-container">
     <nui-wizard-step-header
         class="nui-wizard-vertical-header"
         (click)="step.select()"
@@ -23,7 +21,6 @@
         [errorMessage]="step.errorMessage"
     >
     </nui-wizard-step-header>
-
     <div
         class="nui-wizard-vertical-content-container"
         [class.nui-wizard-vertical-line]="!isLast"
@@ -42,7 +39,8 @@
         </div>
     </div>
 </div>
-
-<div *ngIf="selected.stepFooter" class="nui-wizard-vertical-footer-container">
+} @if (selected.stepFooter) {
+<div class="nui-wizard-vertical-footer-container">
     <wizard-footer [footer]="selected.stepFooter"></wizard-footer>
 </div>
+}

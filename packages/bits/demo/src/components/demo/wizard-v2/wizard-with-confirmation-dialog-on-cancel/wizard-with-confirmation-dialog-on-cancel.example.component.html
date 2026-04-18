@@ -1,4 +1,5 @@
-<form [formGroup]="form" *ngIf="form">
+@if (form) {
+<form [formGroup]="form">
     <nui-wizard-horizontal #wizard>
         <!--  This defines the first step of the wizard -->
         <nui-wizard-step-v2
@@ -19,18 +20,13 @@
                         formControlName="firstName"
                         customBoxWidth="150px"
                     ></nui-textbox>
-                    <nui-validation-message
-                        for="required"
-                        *ngIf="
-                            form.get(['personDetails', 'firstName'])?.errors
-                                ?.required
-                        "
-                        i18n
-                    >
+                    @if ( form.get(['personDetails', 'firstName'])?.errors
+                    ?.required ) {
+                    <nui-validation-message for="required" i18n>
                         First name is required
                     </nui-validation-message>
+                    }
                 </nui-form-field>
-
                 <nui-form-field
                     [control]="form.get(['personDetails', 'lastName'])"
                     i18n-caption
@@ -40,16 +36,12 @@
                         formControlName="lastName"
                         customBoxWidth="150px"
                     ></nui-textbox>
-                    <nui-validation-message
-                        for="required"
-                        *ngIf="
-                            form.get(['personDetails', 'lastName'])?.errors
-                                ?.required
-                        "
-                        i18n
-                    >
+                    @if ( form.get(['personDetails', 'lastName'])?.errors
+                    ?.required ) {
+                    <nui-validation-message for="required" i18n>
                         Last name is required
                     </nui-validation-message>
+                    }
                 </nui-form-field>
                 <!-- content of the footer -->
                 <ng-template nuiWizardStepFooter>
@@ -65,7 +57,6 @@
                 </ng-template>
             </div>
         </nui-wizard-step-v2>
-
         <nui-wizard-step-v2
             i18n-label
             label="Contact Details"
@@ -84,26 +75,17 @@
                         formControlName="email"
                         customBoxWidth="150px"
                     ></nui-textbox>
-                    <nui-validation-message
-                        for="required"
-                        *ngIf="
-                            form.get(['contactDetails', 'email'])?.errors
-                                ?.required
-                        "
-                        i18n
-                    >
+                    @if ( form.get(['contactDetails', 'email'])?.errors
+                    ?.required ) {
+                    <nui-validation-message for="required" i18n>
                         This is required
                     </nui-validation-message>
-
-                    <nui-validation-message
-                        for="email"
-                        *ngIf="
-                            form.get(['contactDetails', 'email'])?.errors?.email
-                        "
-                        i18n
-                    >
+                    } @if ( form.get(['contactDetails', 'email'])?.errors?.email
+                    ) {
+                    <nui-validation-message for="email" i18n>
                         Invalid email
                     </nui-validation-message>
+                    }
                 </nui-form-field>
                 <nui-form-field
                     [control]="form.get(['contactDetails', 'phone'])"
@@ -115,18 +97,13 @@
                         formControlName="phone"
                         customBoxWidth="150px"
                     ></nui-textbox>
-                    <nui-validation-message
-                        for="required"
-                        *ngIf="
-                            form.get(['contactDetails', 'phone'])?.errors
-                                ?.required
-                        "
-                        i18n
-                    >
+                    @if ( form.get(['contactDetails', 'phone'])?.errors
+                    ?.required ) {
+                    <nui-validation-message for="required" i18n>
                         This is required
                     </nui-validation-message>
+                    }
                 </nui-form-field>
-
                 <ng-template nuiWizardStepFooter>
                     <ng-container
                         *ngTemplateOutlet="wizardCancel"
@@ -143,7 +120,6 @@
                 </ng-template>
             </div>
         </nui-wizard-step-v2>
-
         <nui-wizard-step-v2
             i18n-label
             label="Final step"
@@ -164,9 +140,11 @@
                     <li>
                         Email: {{ form.get(["contactDetails", "email"]).value }}
                     </li>
-                    <li *ngIf="form.get(['contactDetails', 'phone']).value">
+                    @if (form.get(['contactDetails', 'phone']).value) {
+                    <li>
                         Phone: {{ form.get(["contactDetails", "phone"]).value }}
                     </li>
+                    }
                 </ul>
                 <nui-form-field [control]="form.get(['confirm', 'confirmed'])">
                     <nui-checkbox formControlName="confirmed" i18n required>
@@ -176,7 +154,6 @@
                         Confirmation is required
                     </nui-validation-message>
                 </nui-form-field>
-
                 <ng-template nuiWizardStepFooter>
                     <ng-container
                         *ngTemplateOutlet="wizardCancel"
@@ -193,7 +170,6 @@
                 </ng-template>
             </div>
         </nui-wizard-step-v2>
-
         <!-- content of the confirmation dialog -->
         <ng-template #confirmDialog let-close="close">
             <nui-dialog-header
@@ -227,7 +203,6 @@
                 </button>
             </nui-dialog-footer>
         </ng-template>
-
         <!-- content of the cancel button -->
         <ng-template #wizardCancel>
             <button
@@ -240,7 +215,6 @@
                 Cancel
             </button>
         </ng-template>
-
         <!-- content of the previous button -->
         <ng-template #wizardPrevious>
             <button
@@ -253,7 +227,6 @@
                 Back
             </button>
         </ng-template>
-
         <!-- content of the next button -->
         <ng-template #wizardNext let-form="form">
             <button
@@ -269,7 +242,6 @@
                 Next
             </button>
         </ng-template>
-
         <!-- content of the submit button -->
         <ng-template #wizardSubmit let-formControlName="formControlName">
             <button
@@ -284,3 +256,4 @@
         </ng-template>
     </nui-wizard-horizontal>
 </form>
+}

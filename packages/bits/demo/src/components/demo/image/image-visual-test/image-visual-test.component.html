@@ -77,7 +77,8 @@
     <h3>Available images</h3>
     <div>
         <div class="nui-clearfix row align-items-baseline">
-            <div class="mb-3 col-md-3 col-6" *ngFor="let image of images">
+            @for (image of images; track image) {
+            <div class="mb-3 col-md-3 col-6">
                 <figure class="d-flex flex-column align-items-center">
                     <nui-image
                         [image]="image.name"
@@ -88,6 +89,7 @@
                     <figcaption class="mt-2">{{ image.name }}</figcaption>
                 </figure>
             </div>
+            }
         </div>
     </div>
     <hr />

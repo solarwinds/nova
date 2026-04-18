@@ -24,14 +24,14 @@ import { Component, Input, ViewEncapsulation } from "@angular/core";
 @Component({
     selector: "nui-menu-group",
     template: `
-        <ng-container *ngIf="header">
-            <div
-                class="nui-menu-item nui-menu-item--header"
-                (click)="stopClickPropagation($event)"
-            >
-                {{ header }}
-            </div>
-        </ng-container>
+        @if (header) {
+        <div
+            class="nui-menu-item nui-menu-item--header"
+            (click)="stopClickPropagation($event)"
+        >
+            {{ header }}
+        </div>
+        }
         <ng-content></ng-content>
         <div
             (click)="stopClickPropagation($event)"

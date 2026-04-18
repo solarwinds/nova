@@ -33,18 +33,20 @@
             >
                 <ng-content select="[nuiExpanderHeader]"></ng-content>
             </div>
+            @if (isCustomHeaderContentEmpty) {
             <div
                 class="nui-expander__header-content"
-                *ngIf="isCustomHeaderContentEmpty"
                 [class.nui-expander__header-content--with-icon]="!!icon"
             >
+                @if (!!icon) {
                 <nui-icon
                     class="nui-expander__header-content-icon"
                     [icon]="icon"
-                    *ngIf="!!icon"
                 ></nui-icon>
+                }
                 <span class="nui-expander__header-title">{{ header }}</span>
             </div>
+            }
         </div>
     </div>
     <div
@@ -52,13 +54,14 @@
         role="region"
         [attr.aria-label]="header || null"
     >
+        @if (open) {
         <div
             class="nui-expander__body"
             [class.hide-left-border]="hideLeftBorder"
-            *ngIf="open"
             @expandContent
         >
             <ng-content></ng-content>
         </div>
+        }
     </div>
 </div>

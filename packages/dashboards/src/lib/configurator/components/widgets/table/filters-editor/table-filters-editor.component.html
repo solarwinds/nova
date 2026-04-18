@@ -19,12 +19,11 @@
                     formControlName="sortBy"
                     class="table-filters-configuration__accordion-content__sort-by-input"
                 >
-                    <nui-select-v2-option
-                        *ngFor="let column of sortableColumns"
-                        [value]="column.id"
-                    >
+                    @for (column of sortableColumns; track column) {
+                    <nui-select-v2-option [value]="column.id">
                         {{ column.label }}
                     </nui-select-v2-option>
+                    }
                 </nui-select-v2>
             </nui-form-field>
             <div class="ml-2">
@@ -36,13 +35,11 @@
             </div>
         </div>
     </div>
-    <div class="p-5" *ngIf="!sortableColumns.length">
-        <nui-message
-            type="info"
-            [allowDismiss]="false"
-            i18n
-        >
+    @if (!sortableColumns.length) {
+    <div class="p-5">
+        <nui-message type="info" [allowDismiss]="false" i18n>
             <b>No columns are sortable.</b>
         </nui-message>
     </div>
+    }
 </nui-widget-editor-accordion>

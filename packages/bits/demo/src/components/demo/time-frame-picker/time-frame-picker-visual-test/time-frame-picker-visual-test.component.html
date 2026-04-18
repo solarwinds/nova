@@ -30,7 +30,8 @@
                         </nui-time-frame-picker>
                     </nui-quick-picker>
                 </div>
-                <nui-dialog-footer *ngIf="showFooter">
+                @if (showFooter) {
+                <nui-dialog-footer>
                     <button
                         nui-button
                         type="button"
@@ -50,6 +51,7 @@
                         Use
                     </button>
                 </nui-dialog-footer>
+                }
             </ng-template>
         </div>
         <div class="col">

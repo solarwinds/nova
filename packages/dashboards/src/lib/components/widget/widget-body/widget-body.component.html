@@ -1,4 +1,6 @@
-<nui-preview-overlay *ngIf="editMode"></nui-preview-overlay>
+@if (editMode) {
+<nui-preview-overlay></nui-preview-overlay>
+}
 <ng-container
     nuiComponentPortal
     #componentPortal="nuiComponentPortal"

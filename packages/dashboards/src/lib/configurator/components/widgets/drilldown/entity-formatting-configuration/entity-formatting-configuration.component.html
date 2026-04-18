@@ -31,12 +31,11 @@
                         i18n-placeholder
                         formControlName="icon"
                     >
-                        <nui-select-v2-option
-                            *ngFor="let item of mappingKeys"
-                            [value]="item"
-                        >
+                        @for (item of mappingKeys; track item) {
+                        <nui-select-v2-option [value]="item">
                             {{ item }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                 </nui-form-field>
             </div>
@@ -53,12 +52,11 @@
                         i18n-placeholder
                         formControlName="status"
                     >
-                        <nui-select-v2-option
-                            *ngFor="let item of mappingKeys"
-                            [value]="item"
-                        >
+                        @for (item of mappingKeys; track item) {
+                        <nui-select-v2-option [value]="item">
                             {{ item }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                 </nui-form-field>
             </div>
@@ -75,12 +73,11 @@
                         i18n-placeholder
                         formControlName="detailedUrl"
                     >
-                        <nui-select-v2-option
-                            *ngFor="let item of mappingKeys"
-                            [value]="item"
-                        >
+                        @for (item of mappingKeys; track item) {
+                        <nui-select-v2-option [value]="item">
                             {{ item }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                 </nui-form-field>
             </div>
@@ -97,12 +94,11 @@
                         i18n-placeholder
                         formControlName="label"
                     >
-                        <nui-select-v2-option
-                            *ngFor="let item of mappingKeys"
-                            [value]="item"
-                        >
+                        @for (item of mappingKeys; track item) {
+                        <nui-select-v2-option [value]="item">
                             {{ item }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                 </nui-form-field>
             </div>
@@ -119,12 +115,11 @@
                         i18n-placeholder
                         formControlName="url"
                     >
-                        <nui-select-v2-option
-                            *ngFor="let item of mappingKeys"
-                            [value]="item"
-                        >
+                        @for (item of mappingKeys; track item) {
+                        <nui-select-v2-option [value]="item">
                             {{ item }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                 </nui-form-field>
             </div>

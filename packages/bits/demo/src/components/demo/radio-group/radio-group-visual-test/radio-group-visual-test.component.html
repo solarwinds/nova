@@ -5,14 +5,15 @@
         name="fruit"
         [(value)]="selectedFruit"
     >
+        @for (fruit of fruits; track fruit) {
         <nui-radio
-            *ngFor="let fruit of fruits"
             [value]="fruit"
             [checked]="fruit === 'Orange'"
             [disabled]="fruit === 'Kiwi'"
         >
             {{ fruit }}
         </nui-radio>
+        }
     </nui-radio-group>
     <hr />
 
@@ -22,8 +23,8 @@
         name="color"
         [(value)]="selectedColor"
     >
+        @for (color of colors; track color) {
         <nui-radio
-            *ngFor="let color of colors"
             [value]="color"
             [hint]="colorHints[color]"
             [disabled]="color === 'Blue'"
@@ -31,6 +32,7 @@
         >
             {{ color }}
         </nui-radio>
+        }
     </nui-radio-group>
     <hr />
 
@@ -41,8 +43,8 @@
         name="color"
         [(value)]="selectedColor"
     >
+        @for (color of colors; track color) {
         <nui-radio
-            *ngFor="let color of colors"
             [value]="color"
             [hint]="colorHints[color]"
             [disabled]="color === 'Red'"
@@ -50,6 +52,7 @@
         >
             {{ color }}
         </nui-radio>
+        }
     </nui-radio-group>
     <hr />
 
@@ -69,9 +72,11 @@
                 formControlName="radioGroup"
                 name="fruit-disabled"
             >
-                <nui-radio *ngFor="let fruit of fruits" [value]="fruit">
+                @for (fruit of fruits; track fruit) {
+                <nui-radio [value]="fruit">
                     {{ fruit }}
                 </nui-radio>
+                }
             </nui-radio-group>
         </nui-form-field>
     </form>

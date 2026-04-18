@@ -41,6 +41,9 @@ export interface IMenuItem {
     isSelected?: boolean;
     icon?: string;
     displayFormat?: string;
+    removed?: boolean;
+    hidden?: boolean;
+    target?: string;
 }
 
 export interface IMenuGroup {

@@ -1,15 +1,16 @@
 <div class="nui-search__group input-group" [class.has-error]="isInErrorState">
     <div class="nui-search__input">
         <div class="nui-search__button input-group-btn">
+            @if (!!value) {
             <button
                 nui-button
                 type="button"
-                *ngIf="!!value"
                 class="nui-search__button-cancel"
                 displayStyle="action"
                 icon="close"
                 (click)="onCancel()"
             ></button>
+            }
             <button
                 nui-button
                 type="button"

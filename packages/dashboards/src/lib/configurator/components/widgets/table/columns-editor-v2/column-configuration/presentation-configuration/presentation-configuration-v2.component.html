@@ -22,18 +22,19 @@
                         "
                         formControlName="componentType"
                     >
+                        @for (formatter of formatters; track formatter) {
                         <nui-select-v2-option
-                            *ngFor="let formatter of formatters"
                             [displayValueContext]="formatter.label"
                             [value]="formatter.componentType"
                         >
                             {{ formatter.label }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                 </nui-form-field>
             </div>
+            @if (formatterConfigurator) {
             <ng-container
-                *ngIf="formatterConfigurator"
                 nuiComponentPortal
                 componentId="formatterConfigurator"
                 [componentType]="formatterConfigurator"
@@ -47,6 +48,7 @@
                     (attached)="componentPortal.attached($event)"
                 ></ng-template>
             </ng-container>
+            }
         </div>
     </nui-widget-editor-accordion>
 </ng-container>

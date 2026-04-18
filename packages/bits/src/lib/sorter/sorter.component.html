@@ -1,5 +1,7 @@
 <div>
-    <label *ngIf="caption" class="nui-sorter__label">{{ caption }}</label>
+    @if (caption) {
+    <label class="nui-sorter__label">{{ caption }}</label>
+    }
     <div class="btn-group nui-sorter__popup" #toggleRef>
         <button
             nui-button

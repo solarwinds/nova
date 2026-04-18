@@ -43,7 +43,7 @@ import {
     IHasForm,
     PIZZAGNA_EVENT_BUS,
 } from "../../../../../types";
-import { LegendPlacement } from "../../../../../widget-types/common/widget/legend";
+import { ILegendPlacementOption, LegendPlacement } from "../../../../../widget-types/common/widget/legend";
 import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
 
 export interface ITimeseriesChartTypeOption {
@@ -67,7 +67,7 @@ export class TimeseriesMetadataConfigurationComponent
 {
     static lateLoadKey = "TimeseriesMetadataConfigurationComponent";
 
-    @Input() legendPlacements: LegendPlacement[] = [];
+    @Input() legendPlacements: ILegendPlacementOption[] = [];
     @Input() timeSpans: ITimeSpanOption[] = [];
     @Input() startingTimespan: any;
     @Input() legendPlacement: LegendPlacement;

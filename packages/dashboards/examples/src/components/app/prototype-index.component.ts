@@ -31,21 +31,27 @@ import { WidgetTypesRoute } from "../docs/widget-types/widget-types.module";
         <h1>Dashboard Developer Links</h1>
         <h2>Docs</h2>
         <ul>
-            <li *ngFor="let link of docs">
+            @for (link of docs; track link) {
+            <li>
                 <a [routerLink]="link.path">{{ link.title }}</a>
             </li>
+            }
         </ul>
         <h2>Prototypes</h2>
         <ul>
-            <li *ngFor="let link of prototypes">
+            @for (link of prototypes; track link) {
+            <li>
                 <a [routerLink]="link.path">{{ link.title }}</a>
             </li>
+            }
         </ul>
         <h2>Visual Tests</h2>
         <ul>
-            <li *ngFor="let link of visualTests">
+            @for (link of visualTests; track link) {
+            <li>
                 <a [routerLink]="link.path">{{ link.title }}</a>
             </li>
+            }
         </ul>
         <h2>Schematics</h2>
         <ul>

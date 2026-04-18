@@ -3,8 +3,8 @@
         <div class="col-md-3">
             <h4>Legend in Default State with Rich Tile</h4>
             <nui-legend class="rich-tile-legend-default-state">
+                @for (data of seriesData; track data) {
                 <nui-legend-series
-                    *ngFor="let data of seriesData"
                     [descriptionPrimary]="data.descriptionPrimary"
                     [descriptionSecondary]="data.descriptionSecondary"
                 >
@@ -13,12 +13,13 @@
                         [unitLabel]="data.unitLabel"
                     ></nui-rich-legend-tile>
                 </nui-legend-series>
+                }
             </nui-legend>
 
             <h4>Legend in Active State with Rich Tile</h4>
             <nui-legend class="rich-tile-legend-active-state" [active]="true">
+                @for (data of seriesData; track data) {
                 <nui-legend-series
-                    *ngFor="let data of seriesData"
                     [descriptionPrimary]="data.descriptionPrimary"
                     [descriptionSecondary]="data.descriptionSecondary"
                 >
@@ -27,6 +28,7 @@
                         [unitLabel]="data.unitLabel"
                     ></nui-rich-legend-tile>
                 </nui-legend-series>
+                }
             </nui-legend>
 
             <h4>
@@ -37,8 +39,8 @@
                 [active]="true"
                 orientation="horizontal"
             >
+                @for (data of seriesData; track data) {
                 <nui-legend-series
-                    *ngFor="let data of seriesData"
                     [descriptionPrimary]="data.descriptionPrimary"
                     [descriptionSecondary]="data.descriptionSecondary"
                 >
@@ -47,6 +49,7 @@
                         [unitLabel]="data.unitLabel"
                     ></nui-rich-legend-tile>
                 </nui-legend-series>
+                }
             </nui-legend>
 
             <h4>Legend Interactive Mode in Default State with Rich Tile</h4>
@@ -54,8 +57,8 @@
                 class="rich-tile-interactive-legend-default-state"
                 [interactive]="true"
             >
+                @for (data of seriesData; track data) {
                 <nui-legend-series
-                    *ngFor="let data of seriesData"
                     [descriptionPrimary]="data.descriptionPrimary"
                     [descriptionSecondary]="data.descriptionSecondary"
                 >
@@ -66,6 +69,7 @@
                         [color]="tileColor"
                     ></nui-rich-legend-tile>
                 </nui-legend-series>
+                }
             </nui-legend>
 
             <h4>Legend Interactive Mode in Active State with Rich Tile</h4>
@@ -74,8 +78,8 @@
                 [active]="true"
                 [interactive]="true"
             >
+                @for (data of seriesData; track data) {
                 <nui-legend-series
-                    *ngFor="let data of seriesData"
                     [descriptionPrimary]="data.descriptionPrimary"
                     [descriptionSecondary]="data.descriptionSecondary"
                 >
@@ -86,6 +90,7 @@
                         [color]="tileColor"
                     ></nui-rich-legend-tile>
                 </nui-legend-series>
+                }
             </nui-legend>
 
             <h4>Legend Series Render States</h4>
@@ -106,8 +111,8 @@
                         [color]="tileColor"
                     ></nui-rich-legend-tile>
                 </nui-legend-series>
+                @for (renderState of renderStates; track renderState) {
                 <nui-legend-series
-                    *ngFor="let renderState of renderStates"
                     [descriptionPrimary]="renderState"
                     [descriptionSecondary]="renderState"
                     [seriesRenderState]="renderState"
@@ -119,6 +124,7 @@
                         [color]="tileColor"
                     ></nui-rich-legend-tile>
                 </nui-legend-series>
+                }
             </nui-legend>
 
             <h4 class="text-style-roboto">Testing Roboto Font</h4>
@@ -126,12 +132,14 @@
         <div class="col-md-3">
             <h4>Rich Tile Legend Compact Mode</h4>
             <nui-legend class="rich-tile-legend-compact-mode-test">
-                <nui-legend-series *ngFor="let data of seriesData">
+                @for (data of seriesData; track data) {
+                <nui-legend-series>
                     <nui-rich-legend-tile
                         [value]="data.value"
                         [unitLabel]="data.unitLabel"
                     ></nui-rich-legend-tile>
                 </nui-legend-series>
+                }
             </nui-legend>
 
             <h4>Rich Tile Legend Compact Mode Active State</h4>
@@ -139,12 +147,14 @@
                 class="rich-tile-legend-compact-mode-active-state-test"
                 [active]="true"
             >
-                <nui-legend-series *ngFor="let data of seriesData">
+                @for (data of seriesData; track data) {
+                <nui-legend-series>
                     <nui-rich-legend-tile
                         [value]="data.value"
                         [unitLabel]="data.unitLabel"
                     ></nui-rich-legend-tile>
                 </nui-legend-series>
+                }
             </nui-legend>
 
             <h4>
@@ -156,12 +166,14 @@
                 [active]="true"
                 orientation="horizontal"
             >
-                <nui-legend-series *ngFor="let data of seriesData">
+                @for (data of seriesData; track data) {
+                <nui-legend-series>
                     <nui-rich-legend-tile
                         [value]="data.value"
                         [unitLabel]="data.unitLabel"
                     ></nui-rich-legend-tile>
                 </nui-legend-series>
+                }
             </nui-legend>
 
             <h4>Rich Tile Legend Compact Interactive Mode</h4>
@@ -169,7 +181,8 @@
                 class="rich-tile-compact-interactive-legend-test"
                 [interactive]="true"
             >
-                <nui-legend-series *ngFor="let data of seriesData">
+                @for (data of seriesData; track data) {
+                <nui-legend-series>
                     <nui-rich-legend-tile
                         [value]="data.value"
                         [unitLabel]="data.unitLabel"
@@ -177,6 +190,7 @@
                         [color]="tileColor"
                     ></nui-rich-legend-tile>
                 </nui-legend-series>
+                }
             </nui-legend>
 
             <h4>Rich Tile Legend Compact Mode with Markers in Active State</h4>
@@ -184,7 +198,8 @@
                 class="rich-tile-compact-interactive-legend-active-state"
                 [active]="true"
             >
-                <nui-legend-series *ngFor="let data of seriesData">
+                @for (data of seriesData; track data) {
+                <nui-legend-series>
                     <nui-rich-legend-tile
                         [value]="data.value"
                         [unitLabel]="data.unitLabel"
@@ -198,6 +213,7 @@
                         ></nui-chart-marker>
                     </nui-rich-legend-tile>
                 </nui-legend-series>
+                }
             </nui-legend>
 
             <h4>
@@ -278,11 +294,13 @@
         <div class="col-md-3">
             <h4>Rich Tile Legend Compact Mode No Label</h4>
             <nui-legend class="rich-tile-legend-compact-mode-test">
-                <nui-legend-series *ngFor="let data of seriesData">
+                @for (data of seriesData; track data) {
+                <nui-legend-series>
                     <nui-rich-legend-tile
                         [value]="data.value"
                     ></nui-rich-legend-tile>
                 </nui-legend-series>
+                }
             </nui-legend>
 
             <h4>Rich Tile Legend Compact Mode Active State No Label</h4>
@@ -290,11 +308,13 @@
                 class="rich-tile-legend-compact-mode-active-state-test"
                 [active]="true"
             >
-                <nui-legend-series *ngFor="let data of seriesData">
+                @for (data of seriesData; track data) {
+                <nui-legend-series>
                     <nui-rich-legend-tile
                         [value]="data.value"
                     ></nui-rich-legend-tile>
                 </nui-legend-series>
+                }
             </nui-legend>
 
             <h4>
@@ -306,11 +326,13 @@
                 [active]="true"
                 orientation="horizontal"
             >
-                <nui-legend-series *ngFor="let data of seriesData">
+                @for (data of seriesData; track data) {
+                <nui-legend-series>
                     <nui-rich-legend-tile
                         [value]="data.value"
                     ></nui-rich-legend-tile>
                 </nui-legend-series>
+                }
             </nui-legend>
 
             <h4>Rich Tile Legend Compact Interactive Mode No Label</h4>
@@ -318,36 +340,40 @@
                 class="rich-tile-compact-interactive-legend-test"
                 [interactive]="true"
             >
-                <nui-legend-series *ngFor="let data of seriesData">
+                @for (data of seriesData; track data) {
+                <nui-legend-series>
                     <nui-rich-legend-tile
                         [value]="data.value"
                         [backgroundColor]="tileBackgroundColor"
                         [color]="tileColor"
                     ></nui-rich-legend-tile>
                 </nui-legend-series>
+                }
             </nui-legend>
             <h4>Legend in Default State with Rich Tile No Label</h4>
             <nui-legend class="rich-tile-legend-default-state">
+                @for (data of seriesData; track data) {
                 <nui-legend-series
-                    *ngFor="let data of seriesData"
                     [descriptionPrimary]="data.descriptionPrimary"
                 >
                     <nui-rich-legend-tile
                         [value]="data.value"
                     ></nui-rich-legend-tile>
                 </nui-legend-series>
+                }
             </nui-legend>
 
             <h4>Legend in Active State with Rich Tile No Label</h4>
             <nui-legend class="rich-tile-legend-active-state" [active]="true">
+                @for (data of seriesData; track data) {
                 <nui-legend-series
-                    *ngFor="let data of seriesData"
                     [descriptionPrimary]="data.descriptionPrimary"
                 >
                     <nui-rich-legend-tile
                         [value]="data.value"
                     ></nui-rich-legend-tile>
                 </nui-legend-series>
+                }
             </nui-legend>
 
             <h4>
@@ -359,14 +385,15 @@
                 [active]="true"
                 orientation="horizontal"
             >
+                @for (data of seriesData; track data) {
                 <nui-legend-series
-                    *ngFor="let data of seriesData"
                     [descriptionPrimary]="data.descriptionPrimary"
                 >
                     <nui-rich-legend-tile
                         [value]="data.value"
                     ></nui-rich-legend-tile>
                 </nui-legend-series>
+                }
             </nui-legend>
 
             <h4>
@@ -376,8 +403,8 @@
                 class="rich-tile-interactive-legend-default-state"
                 [interactive]="true"
             >
+                @for (data of seriesData; track data) {
                 <nui-legend-series
-                    *ngFor="let data of seriesData"
                     [descriptionPrimary]="data.descriptionPrimary"
                 >
                     <nui-rich-legend-tile
@@ -386,6 +413,7 @@
                         [color]="tileColor"
                     ></nui-rich-legend-tile>
                 </nui-legend-series>
+                }
             </nui-legend>
 
             <h4>
@@ -396,8 +424,8 @@
                 [active]="true"
                 [interactive]="true"
             >
+                @for (data of seriesData; track data) {
                 <nui-legend-series
-                    *ngFor="let data of seriesData"
                     [descriptionPrimary]="data.descriptionPrimary"
                 >
                     <nui-rich-legend-tile
@@ -406,6 +434,7 @@
                         [color]="tileColor"
                     ></nui-rich-legend-tile>
                 </nui-legend-series>
+                }
             </nui-legend>
         </div>
     </div>

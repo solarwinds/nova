@@ -1,6 +1,8 @@
 <div class="dialog-header {{ severityClass }}">
     <div class="severity-text">
-        <nui-icon *ngIf="severityIcon" [icon]="severityIcon"></nui-icon>
+        @if (severityIcon) {
+        <nui-icon [icon]="severityIcon"></nui-icon>
+        }
         <h1 class="dialog-title">{{ title }}</h1>
     </div>
     <div class="btn-group">

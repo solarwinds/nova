@@ -102,22 +102,24 @@
                 <tr nui-row density="tiny"></tr>
             </ng-template>
         </table>
-        <div *ngIf="!makeSticky">
+        @if (!makeSticky) {
+        <div>
             <ng-container *ngTemplateOutlet="footer"></ng-container>
         </div>
+        }
     </cdk-virtual-scroll-viewport>
 </div>
-<div *ngIf="makeSticky">
+@if (makeSticky) {
+<div>
     <ng-container *ngTemplateOutlet="footer"></ng-container>
 </div>
+}
 
 <ng-template #footer>
     <footer class="nui-demo-scrolling-footer mt-1">
         <div class="h-100 w-100">
-            <div
-                *ngIf="isBusy; else defaultText"
-                class="d-flex justify-content-center align-items-center"
-            >
+            @if (isBusy) {
+            <div class="d-flex justify-content-center align-items-center">
                 <nui-spinner
                     class="mr-2 d-inline-flex"
                     [show]="isBusy"
@@ -125,59 +127,49 @@
                 ></nui-spinner>
                 <span>Loading next {{ itemsToLoad }} items...</span>
             </div>
-            <ng-template #defaultText>
-                <div
-                    class="h-100 d-flex justify-content-center align-items-center"
-                >
-                    Showing
-                    <span class="px-2">
-                        {{ users.value.length }}
-                    </span>
-                    of
-                    <span class="pl-2">
-                        {{ totalItems }}
-                    </span>
-                    <span
-                        *ngIf="
-                            users.value.length !== totalItems;
-                            else endOfData
-                        "
-                        >.
-                    </span>
-
-                    <div
-                        *ngIf="isChunkLoaded() && !isAllLoaded()"
-                        class="d-flex justify-content-center"
+            } @else {
+            <div class="h-100 d-flex justify-content-center align-items-center">
+                Showing
+                <span class="px-2">
+                    {{ users.value.length }}
+                </span>
+                of
+                <span class="pl-2">
+                    {{ totalItems }}
+                </span>
+                @if ( users.value.length !== totalItems) {
+                <span>. </span>
+                } @else {
+                <strong>. All items loaded.</strong>
+                } @if (isChunkLoaded() && !isAllLoaded()) {
+                <div class="d-flex justify-content-center">
+                    <button
+                        btn
+                        nui-button
+                        type="button"
+                        size="compact"
+                        displayStyle="action"
+                        (click)="loadMore()"
                     >
-                        <button
-                            btn
-                            nui-button
-                            type="button"
-                            size="compact"
-                            displayStyle="action"
-                            (click)="loadMore()"
-                        >
-                            <div class="px-2">
-                                Load
-                                {{
-                                    totalItems - loadedItems < itemsToLoad
-                                        ? "last"
-                                        : "next"
-                                }}
-                                {{
-                                    totalItems - loadedItems < itemsToLoad
-                                        ? totalItems - loadedItems
-                                        : itemsToLoad
-                                }}
-                                items
-                            </div>
-                        </button>
-                    </div>
+                        <div class="px-2">
+                            Load
+                            {{
+                                totalItems - loadedItems < itemsToLoad
+                                    ? "last"
+                                    : "next"
+                            }}
+                            {{
+                                totalItems - loadedItems < itemsToLoad
+                                    ? totalItems - loadedItems
+                                    : itemsToLoad
+                            }}
+                            items
+                        </div>
+                    </button>
                 </div>
-                <ng-template #endOfData
-                    ><strong>. All items loaded.</strong></ng-template
-                >
-            </ng-template>
+                }
+            </div>
+            }
         </div>
     </footer>
 </ng-template>

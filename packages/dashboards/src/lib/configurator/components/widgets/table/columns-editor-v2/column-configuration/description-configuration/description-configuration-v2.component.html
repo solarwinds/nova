@@ -28,42 +28,39 @@
                 >
             </nui-form-field>
 
-            <ng-container *ngIf="form.get('isActive')?.value">
-                <ng-container *ngIf="!isWidthMessageDisplayedForThisColumn()">
-                    <div class="mt-4">
-                        <nui-form-field
-                            caption="Column width (px)"
-                            i18n-caption
-                            class="mb-3"
-                            [control]="form.controls['width']"
-                        >
-                            <!-- TODO: Remove this valueChange stub after NUI-3442 is finished-->
-                            <nui-textbox-number
-                                class="description-configuration__accordion-content__width-input"
-                                (valueChange)="stub()"
-                                placeholder="Auto width"
-                                i18n-placeholder
-                                formControlName="width"
-                            ></nui-textbox-number>
-                            <nui-validation-message
-                                [show]="form.controls['width'].invalid"
-                                for="min"
-                                i18n
-                            >
-                                Minimum width of the column is 62px
-                            </nui-validation-message>
-                        </nui-form-field>
-                    </div>
-                </ng-container>
-                <div
-                    *ngIf="isWidthMessageDisplayedForThisColumn()"
-                    class="mt-4"
+            @if (form.get('isActive')?.value) { @if
+            (!isWidthMessageDisplayedForThisColumn()) {
+            <div class="mt-4">
+                <nui-form-field
+                    caption="Column width (px)"
+                    i18n-caption
+                    class="mb-3"
+                    [control]="form.controls['width']"
                 >
-                    <nui-message type="info" [allowDismiss]="false" i18n>
-                        <b>All columns cannot have fixed width.</b>
-                    </nui-message>
-                </div>
-            </ng-container>
+                    <!-- TODO: Remove this valueChange stub after NUI-3442 is finished-->
+                    <nui-textbox-number
+                        class="description-configuration__accordion-content__width-input"
+                        (valueChange)="stub()"
+                        placeholder="Auto width"
+                        i18n-placeholder
+                        formControlName="width"
+                    ></nui-textbox-number>
+                    <nui-validation-message
+                        [show]="form.controls['width'].invalid"
+                        for="min"
+                        i18n
+                    >
+                        Minimum width of the column is 62px
+                    </nui-validation-message>
+                </nui-form-field>
+            </div>
+            } @if (isWidthMessageDisplayedForThisColumn()) {
+            <div class="mt-4">
+                <nui-message type="info" [allowDismiss]="false" i18n>
+                    <b>All columns cannot have fixed width.</b>
+                </nui-message>
+            </div>
+            } }
         </div>
     </nui-widget-editor-accordion>
 </ng-container>

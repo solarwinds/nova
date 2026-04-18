@@ -7,13 +7,15 @@
         [contextClass]="getPopupContextClass()"
         [appendToBody]="appendToBody"
     >
-        <div class="nui-combobox__icon" *ngIf="!!icon">
+        @if (!!icon) {
+        <div class="nui-combobox__icon">
             <nui-icon
                 [icon]="icon"
                 aria-hidden="true"
                 [iconColor]="getIconColor()"
             ></nui-icon>
         </div>
+        }
         <div
             class="nui-combobox__container"
             [class.has-error]="isInErrorState"
@@ -39,9 +41,9 @@
                 #comboboxToggle
             >
             </nui-textbox>
+            @if (isRemoveValueDisplayed()) {
             <button
                 tabindex="-1"
-                *ngIf="isRemoveValueDisplayed()"
                 nui-button
                 class="nui-combobox__remove-value"
                 (click)="clearValue($event)"
@@ -51,6 +53,7 @@
                 displayStyle="action"
                 type="button"
             ></button>
+            }
             <button
                 tabindex="-1"
                 class="nui-combobox__toggle"
@@ -66,53 +69,49 @@
         </div>
         <div popupAreaContent>
             <div #scrollContainer class="nui-menu nui-combobox__menu">
-                <ng-container *ngFor="let item of itemsSource">
-                    <nui-menu-action
+                @for (item of itemsSource; track item) { @if (!item.items) {
+                <nui-menu-action
+                    tabindex="-1"
+                    [class.item-selected]="isItemSelected(item)"
+                    (actionDone)="select(item)"
+                >
+                    @if (!customTemplate) {
+                    <span
                         tabindex="-1"
-                        *ngIf="!item.items"
-                        [class.item-selected]="isItemSelected(item)"
-                        (actionDone)="select(item)"
+                        [innerHTML]="
+                            getItemDisplay(item)
+                                | nuiHighlight
+                                    : (isItemSelected(item) ? '' : inputValue)
+                        "
+                    ></span>
+                    }
+                    <ng-container
+                        [ngTemplateOutlet]="customTemplate"
+                        [ngTemplateOutletContext]="{ context: item }"
+                    >
+                    </ng-container>
+                </nui-menu-action>
+                } @if (item.items) {
+                <nui-menu-group tabindex="-1" [header]="item.header">
+                    @for (groupedItem of item.items; track groupedItem) {
+                    <nui-menu-action
+                        [class.item-selected]="isItemSelected(groupedItem)"
+                        (actionDone)="select(groupedItem)"
                     >
                         <span
                             tabindex="-1"
-                            *ngIf="!customTemplate"
                             [innerHTML]="
-                                getItemDisplay(item)
+                                getItemDisplay(groupedItem)
                                     | nuiHighlight
-                                        : (isItemSelected(item)
+                                        : (isItemSelected(groupedItem)
                                               ? ''
                                               : inputValue)
                             "
                         ></span>
-                        <ng-container
-                            [ngTemplateOutlet]="customTemplate"
-                            [ngTemplateOutletContext]="{ context: item }"
-                        >
-                        </ng-container>
                     </nui-menu-action>
-                    <nui-menu-group
-                        tabindex="-1"
-                        *ngIf="item.items"
-                        [header]="item.header"
-                    >
-                        <nui-menu-action
-                            *ngFor="let groupedItem of item.items"
-                            [class.item-selected]="isItemSelected(groupedItem)"
-                            (actionDone)="select(groupedItem)"
-                        >
-                            <span
-                                tabindex="-1"
-                                [innerHTML]="
-                                    getItemDisplay(groupedItem)
-                                        | nuiHighlight
-                                            : (isItemSelected(groupedItem)
-                                                  ? ''
-                                                  : inputValue)
-                                "
-                            ></span>
-                        </nui-menu-action>
-                    </nui-menu-group>
-                </ng-container>
+                    }
+                </nui-menu-group>
+                } }
             </div>
         </div>
     </nui-popup>

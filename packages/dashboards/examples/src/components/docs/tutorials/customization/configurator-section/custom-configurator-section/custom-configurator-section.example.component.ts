@@ -117,7 +117,8 @@ import {
                 </div>
                 <!-- End custom layout content -->
 
-                <div class="mt-4" *ngIf="configurableUnits">
+                @if (configurableUnits) {
+                <div class="mt-4">
                     <nui-form-field
                         caption="Units"
                         i18n-caption
@@ -131,6 +132,7 @@ import {
                         ></nui-textbox>
                     </nui-form-field>
                 </div>
+                }
             </div>
         </nui-widget-editor-accordion>
     `,

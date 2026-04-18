@@ -1,24 +1,20 @@
 <ng-template #showOptional>
-    <span *ngIf="showOptionalText" class="nui-form-field__state-text" i18n
-        >(optional)</span
-    >
+    @if (showOptionalText) {
+    <span class="nui-form-field__state-text" i18n>(optional)</span>
+    }
 </ng-template>
 
 <div class="nui-form-field" [ngStyle]="{ width: getWidth() }">
-    <div class="nui-form-field__control-label-container" *ngIf="caption">
+    @if (caption) {
+    <div class="nui-form-field__control-label-container">
         <div class="nui-form-field__control-label-container-description">
             <label class="nui-form-field__control-label">{{ caption }}</label>
-            <span
-                *ngIf="controlIsOptional"
-                class="nui-form-field__state-text"
-                i18n
-                >(optional)</span
-            >
+            @if (controlIsOptional) {
+            <span class="nui-form-field__state-text" i18n>(optional)</span>
+            }
         </div>
-        <div
-            *ngIf="info || infoTemplate"
-            class="nui-form-field__control-label-container-info"
-        >
+        @if (info || infoTemplate) {
+        <div class="nui-form-field__control-label-container-info">
             <nui-popover
                 [template]="infoTemplatePlain"
                 class="d-inline-flex"
@@ -27,26 +23,30 @@
                 <nui-icon [icon]="'severity_info'"></nui-icon>
             </nui-popover>
         </div>
+        }
     </div>
+    }
     <ng-content></ng-content>
     <div class="nui-form-field__help">
         <div>
             <ng-content select="nui-validation-message"> </ng-content>
         </div>
-        <span class="nui-help-hint" *ngIf="hint || hintTemplate">
-            <ng-container *ngIf="hint && !hintTemplate">{{
-                hint
-            }}</ng-container>
-            <ng-container
-                *ngIf="hintTemplate && !hint"
-                [ngTemplateOutlet]="hintTemplate"
-            ></ng-container>
+        @if (hint || hintTemplate) {
+        <span class="nui-help-hint">
+            @if (hint && !hintTemplate) {
+            {{ hint }}
+            } @if (hintTemplate && !hint) {
+            <ng-container [ngTemplateOutlet]="hintTemplate"></ng-container>
+            }
         </span>
+        }
     </div>
 </div>
 
 <ng-template #infoTemplatePlain>
-    <ng-container *ngIf="info; else infoTemplate">
-        {{ info }}
-    </ng-container>
+    @if (info) {
+    {{ info }}
+    } @else {
+    <ng-template [ngTemplateOutlet]="infoTemplate"></ng-template>
+    }
 </ng-template>

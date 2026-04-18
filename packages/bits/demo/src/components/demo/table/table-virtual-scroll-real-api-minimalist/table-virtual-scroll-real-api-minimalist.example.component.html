@@ -94,15 +94,18 @@
     </cdk-virtual-scroll-viewport>
 </div>
 
+@if (users.length !== totalItems) {
 <footer
-    *ngIf="users.length !== totalItems"
     style="color: #767676; height: 20px"
     [style.max-width.px]="1285"
     class="d-flex justify-content-center align-items-center"
 >
     <div class="h-100 w-100">
-        <div *ngIf="isBusy">
+        @if (isBusy) {
+        <div>
             <nui-progress [show]="isBusy" compactMode="true"></nui-progress>
         </div>
+        }
     </div>
 </footer>
+}

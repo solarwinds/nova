@@ -44,7 +44,8 @@
             </nui-color-picker>
         </nui-form-field>
 
-        <div class="mt-4" *ngIf="configurableUnits">
+        @if (configurableUnits) {
+        <div class="mt-4">
             <nui-form-field
                 caption="Units"
                 i18n-caption
@@ -58,5 +59,6 @@
                 ></nui-textbox>
             </nui-form-field>
         </div>
+        }
     </div>
 </nui-widget-editor-accordion>

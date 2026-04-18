@@ -14,9 +14,11 @@
                 [appendToBody]="true"
                 displayStyle="action"
             >
-                <nui-menu-action *ngFor="let item of items">
+                @for (item of items; track item) {
+                <nui-menu-action>
                     {{ item }}
                 </nui-menu-action>
+                }
             </nui-menu>
         </cdk-nested-tree-node>
         <cdk-nested-tree-node

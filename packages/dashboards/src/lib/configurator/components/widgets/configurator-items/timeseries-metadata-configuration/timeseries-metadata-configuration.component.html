@@ -21,12 +21,11 @@
                     [popupViewportMargin]="configuratorHeading.height$ | async"
                     formControlName="startingTimespan"
                 >
-                    <nui-select-v2-option
-                        *ngFor="let timeSpan of timeSpans"
-                        [value]="timeSpan"
-                    >
+                    @for (timeSpan of timeSpans; track timeSpan) {
+                    <nui-select-v2-option [value]="timeSpan">
                         {{ timeSpan.name }}
                     </nui-select-v2-option>
+                    }
                 </nui-select-v2>
                 <nui-validation-message for="required" i18n>
                     This field is required
@@ -46,12 +45,12 @@
                     [popupViewportMargin]="configuratorHeading.height$ | async"
                     formControlName="legendPlacement"
                 >
-                    <nui-select-v2-option
-                        *ngFor="let legendPlacement of legendPlacements"
-                        [value]="legendPlacement.id"
-                    >
+                    @for (legendPlacement of legendPlacements; track
+                    legendPlacement) {
+                    <nui-select-v2-option [value]="legendPlacement.id">
                         {{ legendPlacement.label }}
                     </nui-select-v2-option>
+                    }
                 </nui-select-v2>
                 <nui-validation-message for="required" i18n>
                     This field is required
@@ -88,11 +87,11 @@
                 [popupViewportMargin]="configuratorHeading.height$ | async"
                 formControlName="preset"
             >
-                <nui-select-v2-option
-                    *ngFor="let option of availableChartTypes"
-                    [value]="option.value"
-                    >{{ option.label }}</nui-select-v2-option
-                >
+                @for (option of availableChartTypes; track option) {
+                <nui-select-v2-option [value]="option.value">{{
+                    option.label
+                }}</nui-select-v2-option>
+                }
             </nui-select-v2>
 
             <nui-validation-message for="required" i18n>

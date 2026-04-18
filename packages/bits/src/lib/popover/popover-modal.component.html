@@ -10,18 +10,19 @@
     >
         <div class="nui-popover-container__arrow arrow"></div>
         <div class="nui-popover-container__frame">
+            @if (context.icon || context.title) {
             <div
-                *ngIf="context.icon || context.title"
                 class="nui-popover-container__header"
                 [class.nui-popover-container__header--with-border]="
                     context.title
                 "
             >
-                <div class="nui-popover-container__icon" *ngIf="context.icon">
+                @if (context.icon) {
+                <div class="nui-popover-container__icon">
                     <nui-icon [icon]="context.icon"></nui-icon>
                 </div>
+                } @if (context.title) {
                 <div
-                    *ngIf="context.title"
                     class="nui-popover-container__title"
                     [class.nui-popover-container__title--with-icon]="
                         context.icon
@@ -30,7 +31,9 @@
                 >
                     <span>{{ context.title }}</span>
                 </div>
+                }
             </div>
+            }
             <div
                 class="nui-popover-container__content"
                 [class.noPadding]="!hasPadding"

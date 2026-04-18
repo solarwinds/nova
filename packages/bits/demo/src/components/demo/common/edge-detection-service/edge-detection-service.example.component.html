@@ -73,12 +73,11 @@
             </p>
             <div class="col-md-12">
                 <h3>
-                    <strong *ngIf="!addEdgeDefinerClass"
-                        >Placement within window</strong
-                    >
-                    <strong *ngIf="addEdgeDefinerClass"
-                        >Placement within specified component</strong
-                    >
+                    @if (!addEdgeDefinerClass) {
+                    <strong>Placement within window</strong>
+                    } @if (addEdgeDefinerClass) {
+                    <strong>Placement within specified component</strong>
+                    }
                 </h3>
                 <div class="results">
                     <div>

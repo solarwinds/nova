@@ -10,8 +10,8 @@
             (valueChange)="onToggleClickHandling($event)"
             >Enable Click Handling</nui-switch
         >
+        @if (renderer.config.markerInteraction?.clickable) {
         <button
-            *ngIf="renderer.config.markerInteraction?.clickable"
             class="ml-3"
             type="button"
             displayStyle="action"
@@ -20,6 +20,7 @@
         >
             Reset Popover
         </button>
+        }
     </div>
 
     <nui-chart-popover
@@ -29,7 +30,8 @@
 
     <ng-template let-dataPoints="dataPoints" #popoverTemplate>
         <div class="p-3">
-            <div *ngFor="let item of dataPoints | keyvalue">
+            @for (item of dataPoints | keyvalue; track item) {
+            <div>
                 <div>
                     <strong>{{ item.key }}:</strong>
                 </div>
@@ -40,6 +42,7 @@
                     <code>Position: {{ item.value.position | json }}</code>
                 </div>
             </div>
+            }
         </div>
     </ng-template>
 </nui-example-wrapper>

@@ -1,4 +1,5 @@
-<div *ngIf="form" [formGroup]="form">
+@if (form) {
+<div [formGroup]="form">
     <div formGroupName="dataFieldIds">
         <nui-form-field
             caption="Value"
@@ -12,13 +13,14 @@
                 placeholder="Select Value"
                 i18n-placeholder
             >
+                @for (itemValue of dropdownItems.value; track itemValue) {
                 <nui-select-v2-option
-                    *ngFor="let itemValue of dropdownItems.value"
                     [displayValueContext]="itemValue.label"
                     [value]="itemValue.id"
                 >
                     {{ itemValue.label }}
                 </nui-select-v2-option>
+                }
             </nui-select-v2>
             <nui-validation-message for="required" i18n>
                 This field is required
@@ -26,3 +28,4 @@
         </nui-form-field>
     </div>
 </div>
+}

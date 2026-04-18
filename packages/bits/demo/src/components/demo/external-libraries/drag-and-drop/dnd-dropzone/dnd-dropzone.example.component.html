@@ -11,8 +11,8 @@
         >
             <!-- display list of items -->
             <div class="items-container">
+                @for (item of sourceItems; track item) {
                 <div
-                    *ngFor="let item of sourceItems"
                     class="draggable-item"
                     cdkDrag
                     [cdkDragData]="item"
@@ -20,6 +20,7 @@
                 >
                     {{ item }}
                 </div>
+                }
             </div>
         </div>
     </div>
@@ -39,13 +40,14 @@
             <!-- display list of items -->
             <div class="items-container">
                 <!-- make items invisible while a drag operation is in progress and dropzone is active-->
+                @for (item of destinationItems; track item) {
                 <div
-                    *ngFor="let item of destinationItems"
                     class="item"
                     [class.invisible]="destinationTarget.isDropZoneActive"
                 >
                     {{ item }}
                 </div>
+                }
             </div>
 
             <!-- highlight dropzone area -->
@@ -61,9 +63,11 @@
 
 <!-- template to highlight a dropzone and inform user about the drag operation outcome (accept item or not) -->
 <ng-template #highlightDropzoneTemplate let-target="target">
-    <div *ngIf="target.isDropZoneActive" class="centered-overlay text-center">
+    @if (target.isDropZoneActive) {
+    <div class="centered-overlay text-center">
         <!-- default state, highlight item placeholder when dragging starts -->
-        <div *ngIf="(target.showDropZone$ | async) !== true">
+        @if ((target.showDropZone$ | async) !== true) {
+        <div>
             <!-- This is a drop zone area where you can drag your items -->
             <nui-icon
                 icon="plus"
@@ -71,9 +75,10 @@
                 cssClass="drop-circle-permanent"
             ></nui-icon>
         </div>
-
+        }
         <!-- accepted item placeholder -->
-        <div *ngIf="target.canLastDragItemBeDropped$ | async">
+        @if (target.canLastDragItemBeDropped$ | async) {
+        <div>
             <!-- The item currently dragged is accepted in this dropzone -->
             <nui-icon
                 icon="plus"
@@ -81,9 +86,10 @@
                 cssClass="drop-circle-allowed"
             ></nui-icon>
         </div>
-
+        }
         <!-- reject item placeholder-->
-        <div *ngIf="(target.canLastDragItemBeDropped$ | async) === false">
+        @if ((target.canLastDragItemBeDropped$ | async) === false) {
+        <div>
             <!-- The item currently dragged is NOT accepted in this dropzone -->
             <div class="centered-overlay text-nowrap text-special" i18n>
                 Not allowed
@@ -94,5 +100,7 @@
                 cssClass="drop-circle-not-allowed"
             ></nui-icon>
         </div>
+        }
     </div>
+    }
 </ng-template>

@@ -1,15 +1,13 @@
-<div
-    *ngFor="let spark of chartAssist.sparks; trackBy: chartAssist.trackByFn"
-    class="d-flex"
->
+@for (spark of chartAssist.sparks; track chartAssist.trackByFn($index, spark)) {
+<div class="d-flex">
     <nui-chart
         class="w-100"
         [chart]="spark.chart"
         nuiChartCollectionId="example-collection-id"
     ></nui-chart>
     <div class="d-flex flex-column pl-2">
+        @if (spark.chartSeriesSet[0]; as lineSeries) {
         <nui-legend-series
-            *ngIf="spark.chartSeriesSet[0]; let lineSeries"
             [interactive]="false"
             [descriptionSecondary]="lineSeries.name"
         >
@@ -25,16 +23,17 @@
                     chartAssist.getHighlightedValue(lineSeries, 'status')
                 "
             >
+                @if ( chartAssist.getHighlightedValue(lineSeries, 'status'); as
+                status ) {
                 <nui-icon
-                    *ngIf="
-                        chartAssist.getHighlightedValue(lineSeries, 'status');
-                        let status
-                    "
                     iconSize="small"
                     [icon]="statusIcons[status]"
                     leftEdge
                 ></nui-icon>
+                }
             </nui-rich-legend-tile>
         </nui-legend-series>
+        }
     </div>
 </div>
+}

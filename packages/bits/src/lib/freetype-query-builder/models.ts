@@ -54,6 +54,9 @@ export interface HintEntry {
     displayValue: string;
     value: string;
     icon?: string;
+    items?: undefined;
+    header?: undefined;
+    notice?: undefined;
 }
 
 export type HelpEntry = HelpEntryCategory | HintEntry;
@@ -62,6 +65,8 @@ export interface HelpEntryCategory {
     notice?: boolean;
     header?: string;
     items?: any[];
+    displayValue?: string;
+    icon?: string;
 }
 
 export interface Tokenizer<T extends QueryToken> {

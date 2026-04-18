@@ -37,14 +37,15 @@
         >
             <div nui-busy [busy]="node.isLoading" style="min-height: 20px">
                 <ng-container cdkTreeNodeOutlet></ng-container>
+                @if (node.hasPagination && nodesTotalItems[node.name]) {
                 <nui-paginator
-                    *ngIf="node.hasPagination && nodesTotalItems[node.name]"
                     [page]="1"
                     [pageSize]="pageSize"
                     (pagerAction)="loadNodeItems(node, nestedNode, $event)"
                     [total]="nodesTotalItems[node.name]"
                 >
                 </nui-paginator>
+                }
             </div>
         </div>
     </cdk-nested-tree-node>

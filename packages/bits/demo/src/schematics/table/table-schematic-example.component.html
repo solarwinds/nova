@@ -74,8 +74,8 @@
                 <code>nui-table</code> with a remote data source.
             </p>
             <nui-schematic-docs-command
-                >ng g &#64;nova-ui/bits:table --name=table-with-pagination --p=app
-                --pagingMode=pagination
+                >ng g &#64;nova-ui/bits:table --name=table-with-pagination
+                --p=app --pagingMode=pagination
                 --dataSource=serverSide</nui-schematic-docs-command
             >
             <nui-schematic-docs-example
@@ -92,8 +92,8 @@
                 <code>nui-table</code> with a remote data source.
             </p>
             <nui-schematic-docs-command
-                >ng g &#64;nova-ui/bits:table --name=table-with-pagination --p=app
-                --pagingMode=pagination --dataSource=serverSide
+                >ng g &#64;nova-ui/bits:table --name=table-with-pagination
+                --p=app --pagingMode=pagination --dataSource=serverSide
                 <strong
                     >--selectionMode=multi</strong
                 ></nui-schematic-docs-command
@@ -125,9 +125,9 @@
             <nui-schematic-docs-example
                 exampleFolderName="table/table-with-virtual-scroll"
             >
-                <app-table-with-virtual-scroll
-                    *ngIf="vs.active"
-                ></app-table-with-virtual-scroll>
+                @if (vs.active) {
+                <app-table-with-virtual-scroll></app-table-with-virtual-scroll>
+                }
             </nui-schematic-docs-example>
         </nui-tab>
 
@@ -141,9 +141,9 @@
             <nui-schematic-docs-example
                 exampleFolderName="table/table-with-custom-virtual-scroll"
             >
-                <app-table-with-custom-virtual-scroll
-                    *ngIf="cvs.active"
-                ></app-table-with-custom-virtual-scroll>
+                @if (cvs.active) {
+                <app-table-with-custom-virtual-scroll></app-table-with-custom-virtual-scroll>
+                }
             </nui-schematic-docs-example>
         </nui-tab>
     </nui-tab-group>

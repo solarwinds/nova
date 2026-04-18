@@ -43,13 +43,14 @@
                         class="color-picker-option__color-box"
                         [ngStyle]="setStyles(item?.color)"
                     >
+                        @if (option?.selected) {
                         <div
                             class="color-picker-option__glyph"
                             [class.black-tick]="
                                 isBlackTick || item?.color === defaultColor
                             "
-                            *ngIf="option?.selected"
                         ></div>
+                        }
                     </div>
                 </div>
             </nui-select-v2-option>

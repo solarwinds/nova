@@ -119,16 +119,12 @@
             <form [formGroup]="myForm">
                 <div class="form-group">
                     <div class="dialog-body">
-                        <nui-message
-                            [allowDismiss]="true"
-                            type="critical"
-                            *ngIf="
-                                !myForm.controls['checkboxGroup'].valid &&
-                                myForm.controls['checkboxGroup'].touched
-                            "
-                        >
+                        @if ( !myForm.controls['checkboxGroup'].valid &&
+                        myForm.controls['checkboxGroup'].touched ) {
+                        <nui-message [allowDismiss]="true" type="critical">
                             <b i18n>Select minimum 3 checkboxes!</b>
                         </nui-message>
+                        }
 
                         <h5 i18n>Available columns</h5>
                         <nui-checkbox-group
@@ -138,14 +134,16 @@
                             formControlName="checkboxGroup"
                             required
                         >
+                            @for (availableColumn of availableColumns; track
+                            availableColumn) {
                             <nui-checkbox
-                                *ngFor="let availableColumn of availableColumns"
                                 [value]="availableColumn"
                                 class="text-capitalize"
                                 [checked]="isChecked(availableColumn)"
                             >
                                 {{ availableColumn }}
                             </nui-checkbox>
+                            }
                         </nui-checkbox-group>
 
                         <nui-divider></nui-divider>
@@ -261,12 +259,9 @@
                 Features
             </th>
             <td nui-cell *nuiCellDef="let element" [alignment]="alignment">
-                <nui-icon
-                    *ngFor="let icon of element.features"
-                    [icon]="icon"
-                    class="icon-margin"
-                >
-                </nui-icon>
+                @for (icon of element.features; track icon) {
+                <nui-icon [icon]="icon" class="icon-margin"> </nui-icon>
+                }
             </td>
         </ng-container>
 
@@ -311,10 +306,10 @@
                 Checks
             </th>
             <td nui-cell *nuiCellDef="let element" [alignment]="alignment">
-                <ng-container *ngFor="let check of element.checks">
-                    <nui-icon [icon]="check.icon"></nui-icon>
-                    {{ check.num }}
-                </ng-container>
+                @for (check of element.checks; track check) {
+                <nui-icon [icon]="check.icon"></nui-icon>
+                {{ check.num }}
+                }
             </td>
         </ng-container>
 

@@ -64,12 +64,11 @@ export const BREW_API_URL = "https://api.punkapi.com/v2/beers";
     host: { class: "d-flex" },
     template: `
         <div class="d-inline-flex w-100">
-            <div
-                class="mr-2 d-flex align-items-center"
-                *ngIf="icon && isAboveThreshold()"
-            >
+            @if (icon && isAboveThreshold()) {
+            <div class="mr-2 d-flex align-items-center">
                 <nui-icon [icon]="icon"></nui-icon>
             </div>
+            }
             <div [attr.data-value]="data.value">
                 {{ data.value }}
             </div>
@@ -111,12 +110,11 @@ export class CustomFormatterComponent implements IHasChangeDetector {
                         "
                         formControlName="value"
                     >
-                        <nui-select-v2-option
-                            *ngFor="let item of dropdownItems.value"
-                            [value]="item.id"
-                        >
+                        @for (item of dropdownItems.value; track item) {
+                        <nui-select-v2-option [value]="item.id">
                             {{ item.label }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                     <nui-validation-message for="required" i18n>
                         This field is required
@@ -141,14 +139,15 @@ export class CustomFormatterComponent implements IHasChangeDetector {
                         formControlName="icon"
                         [overlayConfig]="{ width: 36 }"
                     >
+                        @for (item of options; track item) {
                         <nui-select-v2-option
                             class="d-flex align-items-center"
-                            *ngFor="let item of options"
                             [value]="item"
                             i18n
                         >
                             <nui-icon [icon]="item"></nui-icon>
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                     <nui-validation-message
                         for="required"
@@ -190,22 +189,21 @@ export class CustomFormatterComponent implements IHasChangeDetector {
         </form>
         <ng-template #iconSelectTemplate let-item let-open="open">
             <div class="nui-select-v2__value">
+                @if (item) {
                 <div
-                    *ngIf="item; else empty"
                     class="d-flex align-items-center nui-select-v2__value-content"
                 >
                     <nui-icon [icon]="item"></nui-icon>
                 </div>
+                } @else {
+                <span class="nui-select-v2__placeholder">Select Item</span>
+                }
 
                 <nui-icon
                     [style.transform]="open ? 'rotate(180deg)' : ''"
                     icon="caret-down"
                 ></nui-icon>
             </div>
-
-            <ng-template #empty>
-                <span class="nui-select-v2__placeholder">Select Item</span>
-            </ng-template>
         </ng-template>
     `,
     standalone: false,

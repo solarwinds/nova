@@ -4,11 +4,11 @@
     i18n-placeholder
     class="w-50 d-inline-flex"
 >
-    <ng-container *ngFor="let item of items">
-        <nui-select-v2-option [value]="item">
-            {{ item }}
-        </nui-select-v2-option>
-    </ng-container>
+    @for (item of items; track item) {
+    <nui-select-v2-option [value]="item">
+        {{ item }}
+    </nui-select-v2-option>
+    }
 </nui-select-v2>
 
 <nui-switch

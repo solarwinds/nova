@@ -38,11 +38,15 @@ import { NuiOverlayModule } from "../overlay.module";
 
 @Component({
     template: `
-        <nui-overlay [toggleReference]="elRef.nativeElement" *ngIf="!destroyed">
-            <nui-select-v2-option *ngFor="let item of items" [value]="item">
+        @if (!destroyed) {
+        <nui-overlay [toggleReference]="elRef.nativeElement">
+            @for (item of items; track item) {
+            <nui-select-v2-option [value]="item">
                 <span class="mr-3">{{ item }}</span>
             </nui-select-v2-option>
+            }
         </nui-overlay>
+        }
     `,
     standalone: false,
 })

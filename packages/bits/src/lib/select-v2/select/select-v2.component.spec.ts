@@ -49,9 +49,11 @@ import { InputValueTypes } from "../types";
 @Component({
     template: `
         <nui-select-v2 placeholder="Select Item" [formControl]="selectControl">
-            <nui-select-v2-option *ngFor="let item of items" [value]="item">{{
+            @for (item of items; track item) {
+            <nui-select-v2-option [value]="item">{{
                 item
             }}</nui-select-v2-option>
+            }
         </nui-select-v2>
     `,
     standalone: false,
@@ -66,9 +68,11 @@ class SelectV2WrapperWithFormControlComponent {
 @Component({
     template: `
         <nui-select-v2 [value]="value" placeholder="Select Item">
-            <nui-select-v2-option *ngFor="let item of items" [value]="item">{{
+            @for (item of items; track item) {
+            <nui-select-v2-option [value]="item">{{
                 item
             }}</nui-select-v2-option>
+            }
         </nui-select-v2>
     `,
     standalone: false,
@@ -83,11 +87,11 @@ class SelectV2WrapperWithValueComponent {
 @Component({
     template: `
         <nui-select-v2 placeholder="Select Item" [formControl]="selectControl">
-            <nui-select-v2-option
-                *ngFor="let item of items"
-                [value]="item.id"
-                >{{ item.name }}</nui-select-v2-option
-            >
+            @for (item of items; track item) {
+            <nui-select-v2-option [value]="item.id">{{
+                item.name
+            }}</nui-select-v2-option>
+            }
         </nui-select-v2>
     `,
     standalone: false,

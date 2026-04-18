@@ -19,19 +19,20 @@
                 name="showThresholds"
                 required
             >
-                <nui-radio
-                    *ngFor="let thresholdOption of thresholdOptions"
-                    [value]="thresholdOption.value"
-                >
+                @for (thresholdOption of thresholdOptions; track
+                thresholdOption) {
+                <nui-radio [value]="thresholdOption.value">
                     {{ thresholdOption.displayValue }}
                 </nui-radio>
+                }
             </nui-radio-group>
             <nui-validation-message for="required" i18n>
                 This field is required
             </nui-validation-message>
         </nui-form-field>
 
-        <div class="mt-4" *ngIf="form.get('showThresholds')?.value">
+        @if (form.get('showThresholds')?.value) {
+        <div class="mt-4">
             <div class="mb-4">
                 <nui-form-field
                     caption="Warning value"
@@ -56,7 +57,6 @@
                     </nui-validation-message>
                 </nui-form-field>
             </div>
-
             <div class="mb-4">
                 <nui-form-field
                     caption="Critical value"
@@ -81,7 +81,6 @@
                     </nui-validation-message>
                 </nui-form-field>
             </div>
-
             <div class="mb-4">
                 <nui-form-field
                     [control]="form.get('reversedThresholds')"
@@ -99,5 +98,6 @@
                 </nui-form-field>
             </div>
         </div>
+        }
     </div>
 </nui-widget-editor-accordion>

@@ -113,12 +113,11 @@
                         formControlName="checkboxGroup"
                         name="vegetable"
                     >
-                        <nui-checkbox
-                            *ngFor="let vegetable of vegetables"
-                            [value]="vegetable"
-                        >
+                        @for (vegetable of vegetables; track vegetable) {
+                        <nui-checkbox [value]="vegetable">
                             {{ vegetable }}
                         </nui-checkbox>
+                        }
                     </nui-checkbox-group>
                     <nui-validation-message for="required">
                         This field is required
@@ -138,12 +137,11 @@
                         name="vegetable"
                         required
                     >
-                        <nui-radio
-                            *ngFor="let vegetable of vegetables"
-                            [value]="vegetable"
-                        >
+                        @for (vegetable of vegetables; track vegetable) {
+                        <nui-radio [value]="vegetable">
                             {{ vegetable }}
                         </nui-radio>
+                        }
                     </nui-radio-group>
                     <nui-validation-message for="required">
                         This field is required

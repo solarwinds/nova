@@ -98,25 +98,25 @@
     class="d-flex justify-content-center align-items-center nui-demo-scrolling-footer"
 >
     <div class="h-100 w-100">
-        <div *ngIf="isBusy; else defaultText">
+        @if (isBusy) {
+        <div>
             <nui-progress [show]="isBusy" compactMode="true"></nui-progress>
             <div class="d-flex justify-content-center align-items-center">
                 Loading next {{ range }} items...
             </div>
         </div>
-        <ng-template #defaultText>
-            <div class="h-100 d-flex justify-content-center align-items-center">
-                Showing
-                <span class="px-2">{{ users.length }}</span>
-                of
-                <span class="pl-2">{{ totalItems }}</span>
-                <span *ngIf="users.length !== totalItems; else endOfData"
-                    >, scroll down for more.</span
-                >
-            </div>
-            <ng-template #endOfData
-                ><strong>. All items loaded.</strong></ng-template
-            >
-        </ng-template>
+        } @else {
+        <div class="h-100 d-flex justify-content-center align-items-center">
+            Showing
+            <span class="px-2">{{ users.length }}</span>
+            of
+            <span class="pl-2">{{ totalItems }}</span>
+            @if (users.length !== totalItems) {
+            <span>, scroll down for more.</span>
+            } @else {
+            <strong>. All items loaded.</strong>
+            }
+        </div>
+        }
     </div>
 </footer>

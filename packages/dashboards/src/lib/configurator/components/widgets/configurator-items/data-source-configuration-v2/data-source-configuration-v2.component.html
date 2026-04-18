@@ -18,13 +18,15 @@
                 (valueSelected)="onDataSourceSelected($event)"
                 class="datasource-configuration__accordion-content__datasource-input"
             >
+                @for (dataSourceProvider of dataSourceProviders; track
+                dataSourceProvider) {
                 <nui-select-v2-option
-                    *ngFor="let dataSourceProvider of dataSourceProviders"
                     [title]="dataSourceProvider?.label"
                     [value]="dataSourceProvider"
                 >
                     {{ dataSourceProvider.label }}
                 </nui-select-v2-option>
+                }
             </nui-select-v2>
         </nui-form-field>
         <ng-container

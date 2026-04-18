@@ -59,30 +59,28 @@
     </cdk-virtual-scroll-viewport>
 
     <footer class="app-table-with-virtual-scroll-scrolling-footer">
-        <div *ngIf="isBusy; else defaultText">
+        @if (isBusy) {
+        <div>
             <nui-progress [show]="true" [compactMode]="true"></nui-progress>
             <div class="d-flex justify-content-center align-items-center">
                 Loading next {{ pageSize }} items...
             </div>
         </div>
-        <ng-template #defaultText>
-            <div class="d-flex justify-content-center align-items-center">
-                <div class="p-1 d-flex">
-                    <div class="d-flex pt-3 pb-3" i18n>
-                        Showing {{ items.length }} of {{ totalItems }}
-                    </div>
-                    <div class="d-flex pt-3 pb-3">
-                        <ng-container
-                            i18n
-                            *ngIf="items.length !== totalItems; else endOfData"
-                            >, scroll down for more.</ng-container
-                        >
-                        <ng-template #endOfData
-                            ><strong>. All items loaded.</strong></ng-template
-                        >
-                    </div>
+        } @else {
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="p-1 d-flex">
+                <div class="d-flex pt-3 pb-3" i18n>
+                    Showing {{ items.length }} of {{ totalItems }}
+                </div>
+                <div class="d-flex pt-3 pb-3">
+                    @if (items.length !== totalItems) {
+                    <ng-container i18n>, scroll down for more.</ng-container>
+                    } @else {
+                    <strong>. All items loaded.</strong>
+                    }
                 </div>
             </div>
-        </ng-template>
+        </div>
+        }
     </footer>
 </div>

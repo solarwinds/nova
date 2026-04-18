@@ -229,22 +229,23 @@
                     title="Add"
                 >
                 </nui-toolbar-item>
+                @if (showFirst) {
                 <nui-toolbar-item
                     type="primary"
                     icon="add"
                     i18n-title
                     title="Add First"
-                    *ngIf="showFirst"
                 >
                 </nui-toolbar-item>
+                } @if (!showFirst) {
                 <nui-toolbar-item
                     type="primary"
                     icon="add"
                     i18n-title
                     title="Add Second"
-                    *ngIf="!showFirst"
                 >
                 </nui-toolbar-item>
+                }
             </nui-toolbar-group>
             <nui-toolbar-group>
                 <nui-toolbar-item
@@ -297,29 +298,28 @@
             [selectedItems]="select"
             [noEmptyMessage]="noEmptyMessage.value"
         >
-            <ng-container *ngIf="showItems.value">
-                <nui-toolbar-group>
-                    <nui-toolbar-item
-                        type="primary"
-                        icon="add"
-                        i18n-title
-                        title="Add"
-                    >
-                    </nui-toolbar-item>
-                </nui-toolbar-group>
-                <nui-toolbar-group>
-                    <nui-toolbar-item
-                        type="secondary"
-                        icon="remove"
-                        i18n-title
-                        title="Remove"
-                    >
-                    </nui-toolbar-item>
-                </nui-toolbar-group>
-            </ng-container>
-            <nui-toolbar-message *ngIf="showExtraMessage.value"
-                >extra message</nui-toolbar-message
-            >
+            @if (showItems.value) {
+            <nui-toolbar-group>
+                <nui-toolbar-item
+                    type="primary"
+                    icon="add"
+                    i18n-title
+                    title="Add"
+                >
+                </nui-toolbar-item>
+            </nui-toolbar-group>
+            <nui-toolbar-group>
+                <nui-toolbar-item
+                    type="secondary"
+                    icon="remove"
+                    i18n-title
+                    title="Remove"
+                >
+                </nui-toolbar-item>
+            </nui-toolbar-group>
+            } @if (showExtraMessage.value) {
+            <nui-toolbar-message>extra message</nui-toolbar-message>
+            }
         </nui-toolbar>
     </section>
 </div>

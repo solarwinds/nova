@@ -16,31 +16,32 @@
             </div>
         </div>
     </div>
+    @if (hasInputDescription()) {
     <div
-        *ngIf="hasInputDescription(); else descriptionTemplate"
         class="description-container nui-text-small d-flex flex-column justify-content-center"
     >
+        @if (!!descriptionPrimary) {
         <div
-            *ngIf="!!descriptionPrimary"
             class="description description-primary"
             [title]="descriptionPrimary"
         >
             {{ descriptionPrimary }}
         </div>
+        } @if (!!descriptionSecondary) {
         <div
-            *ngIf="!!descriptionSecondary"
             class="description description-secondary"
             [title]="descriptionSecondary"
         >
             {{ descriptionSecondary }}
         </div>
+        }
     </div>
+    } @else {
+    <div class="d-flex" #projectedDescription>
+        <ng-content select="[description]"></ng-content>
+    </div>
+    }
     <div class="legend-menu">
         <ng-content select="[legendMenu]"></ng-content>
     </div>
 </div>
-<ng-template #descriptionTemplate>
-    <div class="d-flex" #projectedDescription>
-        <ng-content select="[description]"></ng-content>
-    </div>
-</ng-template>

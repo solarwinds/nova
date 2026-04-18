@@ -56,11 +56,10 @@
     </cdk-tree>
 
     <ul class="list-group list-group-striped" style="flex: 50%">
-        <li
-            class="list-group-item"
-            *ngFor="let selected of selectionModel.selected"
-        >
+        @for (selected of selectionModel.selected; track selected) {
+        <li class="list-group-item">
             {{ selected.name }}
         </li>
+        }
     </ul>
 </div>

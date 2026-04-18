@@ -25,8 +25,10 @@ import _sortBy from "lodash/sortBy";
 @Component({
     selector: "nui-recursive-object-view",
     template: `
-        <div class="ml-5" *ngFor="let key of orderOfKeys">
-            <div *ngIf="checkInstance(key); else notObject">
+        @for (key of orderOfKeys; track key) {
+        <div class="ml-5">
+            @if (checkInstance(key)) {
+            <div>
                 <nui-expander [header]="key" icon="group">
                     <nui-recursive-object-view
                         [object]="object[key]"
@@ -40,13 +42,14 @@ import _sortBy from "lodash/sortBy";
                     </nui-recursive-object-view>
                 </nui-expander>
             </div>
-            <ng-template #notObject>
-                <ng-container
-                    [ngTemplateOutlet]="notObjectTemplate"
-                    [ngTemplateOutletContext]="{ item: key }"
-                ></ng-container>
-            </ng-template>
+            } @else {
+            <ng-container
+                [ngTemplateOutlet]="notObjectTemplate"
+                [ngTemplateOutletContext]="{ item: key }"
+            ></ng-container>
+            }
         </div>
+        }
     `,
     standalone: false,
 })

@@ -24,13 +24,13 @@
         <span>{{ title }}</span>
     </button>
     <div popupAreaContent>
+        @if (itemsSource) {
         <nui-menu-popup
-            *ngIf="itemsSource"
             [itemsSource]="itemsSource"
             [size]="size"
         ></nui-menu-popup>
-        <ng-container *ngIf="!itemsSource">
-            <ng-content></ng-content>
-        </ng-container>
+        } @if (!itemsSource) {
+        <ng-content></ng-content>
+        }
     </div>
 </nui-popup>

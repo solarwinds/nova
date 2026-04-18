@@ -1,12 +1,14 @@
 <div class="nui-dashwiz d-flex flex-column h-100">
+    @if (!hideHeader) {
     <div
         class="nui-dashwiz__header"
-        *ngIf="!hideHeader"
         [class.nui-dashwiz__header--lines-stretched]="stretchStepLines"
     >
-        <ul class="nui-dashwiz__header-steps" *ngIf="steps">
+        @if (steps) {
+        <ul class="nui-dashwiz__header-steps">
+            @for (step of steps; track step; let first = $first; let last =
+            $last) {
             <li
-                *ngFor="let step of steps; let first = first; let last = last"
                 (click)="selectStep(step)"
                 [ngClass]="{
                     'nui-dashwiz__header-step--first': first,
@@ -21,10 +23,8 @@
                 }"
                 class="nui-dashwiz__header-step"
             >
-                <div
-                    class="nui-dashwiz__header-step-container"
-                    *ngIf="!step.hidden"
-                >
+                @if (!step.hidden) {
+                <div class="nui-dashwiz__header-step-container">
                     <div class="nui-dashwiz__header-step-row">
                         <div class="nui-dashwiz__header-step-col">
                             <div class="nui-dashwiz__header-step-content">
@@ -70,19 +70,20 @@
                         </div>
                     </div>
                 </div>
+                }
             </li>
+            }
         </ul>
+        }
     </div>
+    }
 
     <div class="flex-grow-1 overflow-auto">
         <ng-content></ng-content>
         <ng-template #container></ng-template>
     </div>
 
-    <div
-        class="nui-dashwiz__footer"
-        [class.shadow]="scrolled"
-    >
+    <div class="nui-dashwiz__footer" [class.shadow]="scrolled">
         <ng-container
             nuiComponentPortal
             componentId="dashwizButtons"

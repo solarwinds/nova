@@ -1,7 +1,5 @@
-<div
-    *ngIf="themeSwitcher.showThemeSwitcherSubject | async"
-    class="nui-theme-switcher-container"
->
+@if (themeSwitcher.showThemeSwitcherSubject | async) {
+<div class="nui-theme-switcher-container">
     <nui-switch
         (valueChange)="themeSwitcher.setDarkTheme($event)"
         [value]="themeSwitcher.isDarkModeEnabledSubject | async"
@@ -10,6 +8,7 @@
         Dark Theme
     </nui-switch>
 </div>
+}
 
 <nui-srlc-indicator></nui-srlc-indicator>
 

@@ -17,11 +17,9 @@
             [interactive]="true"
             (mouseleave)="chartAssist.resetVisibleSeries()"
         >
+            @for ( legendSeries of chartAssist.legendSeriesSet; track
+            chartAssist.seriesTrackByFn($index, legendSeries)) {
             <nui-legend-series
-                *ngFor="
-                    let legendSeries of chartAssist.legendSeriesSet;
-                    trackBy: chartAssist.seriesTrackByFn
-                "
                 [descriptionPrimary]="legendSeries['name']"
                 (mouseenter)="chartAssist.emphasizeSeries(legendSeries.id)"
                 [seriesRenderState]="
@@ -54,6 +52,7 @@
                     </nui-chart-marker>
                 </nui-rich-legend-tile>
             </nui-legend-series>
+            }
         </nui-legend>
     </div>
 </div>

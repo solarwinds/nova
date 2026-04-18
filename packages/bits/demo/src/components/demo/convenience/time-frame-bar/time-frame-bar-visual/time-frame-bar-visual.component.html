@@ -1,6 +1,6 @@
+@for (bar of bars; track bar) {
 <nui-time-frame-bar
     [id]="bar.id"
-    *ngFor="let bar of bars"
     [timeFrame]="bar.timeFrame"
     (timeFrameChange)="changeTimeFrame($event, bar)"
     (undo)="bar.undo()"
@@ -13,6 +13,7 @@
         <nui-time-frame-picker></nui-time-frame-picker>
     </nui-quick-picker>
 </nui-time-frame-bar>
+}
 
 <nui-time-frame-bar
     [id]="barNoQuickPick.id"

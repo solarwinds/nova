@@ -30,11 +30,8 @@
                 <nui-form-field [control]="form.get('overrideDefaultSettings')">
                     <nui-switch formControlName="overrideDefaultSettings"
                         >{{ overrideDefaultSettingsCaption }}
-                        <div
-                            class="nui-help-hint"
-                            *ngIf="!form.get('overrideDefaultSettings')?.value"
-                            i18n
-                        >
+                        @if (!form.get('overrideDefaultSettings')?.value) {
+                        <div class="nui-help-hint" i18n>
                             By default, the widget will refresh every
                             {{
                                 getDurationLabel(
@@ -42,6 +39,7 @@
                                 )
                             }}.
                         </div>
+                        }
                     </nui-switch>
                 </nui-form-field>
             </div>

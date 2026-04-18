@@ -3,12 +3,8 @@
     class="draggable-container"
     (cdkDropListDropped)="onItemDropped($event)"
 >
-    <div
-        cdkDrag
-        cdkDragPreviewClass="dnd-drag-preview"
-        class="draggable-item"
-        *ngFor="let item of listItems"
-    >
+    @for (item of listItems; track item) {
+    <div cdkDrag cdkDragPreviewClass="dnd-drag-preview" class="draggable-item">
         {{ item.title }}
         <div *cdkDragPreview>
             <p>This is the preview for {{ item.title }}</p>
@@ -20,4 +16,5 @@
             />
         </div>
     </div>
+    }
 </div>

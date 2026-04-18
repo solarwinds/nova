@@ -15,8 +15,8 @@
         >
             <div class="nui-configurator__preview-area">
                 <nui-preview-overlay></nui-preview-overlay>
+                @if (previewWidget?.pizzagna) {
                 <nui-pizzagna
-                    *ngIf="previewWidget?.pizzagna"
                     #previewPizzagnaComponent
                     class="flex-grow-1 w-100"
                     [rootNode]="previewWidget | nuiPizzagnaRoot : 'widget'"
@@ -24,6 +24,7 @@
                     (pizzagnaChange)="onPizzagnaChange($event)"
                 >
                 </nui-pizzagna>
+                }
             </div>
         </div>
         <div nuiPanelEmbeddedBody class="nui-configurator__body">

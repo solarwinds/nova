@@ -5,9 +5,9 @@
             <nui-popup id="nui-demo-popup-simple">
                 <button nuiPopupToggle>Click</button>
                 <div popupAreaContent>
-                    <ng-container *ngFor="let item of itemsSource">
-                        <nui-menu-item tabindex="0">{{ item }}</nui-menu-item>
-                    </ng-container>
+                    @for (item of itemsSource; track item) {
+                    <nui-menu-item tabindex="0">{{ item }}</nui-menu-item>
+                    }
                 </div>
             </nui-popup>
         </div>
@@ -16,9 +16,9 @@
             <nui-popup [width]="width" id="nui-demo-popup-custom-width">
                 <button nuiPopupToggle>Click</button>
                 <div popupAreaContent>
-                    <ng-container *ngFor="let item of itemsSource">
-                        <nui-menu-item tabindex="0">{{ item }}</nui-menu-item>
-                    </ng-container>
+                    @for (item of itemsSource; track item) {
+                    <nui-menu-item tabindex="0">{{ item }}</nui-menu-item>
+                    }
                 </div>
             </nui-popup>
         </div>
@@ -32,9 +32,9 @@
             >
                 <button nuiPopupToggle>Click</button>
                 <div popupAreaContent>
-                    <ng-container *ngFor="let item of itemsSource">
-                        <nui-menu-item tabindex="0">{{ item }}</nui-menu-item>
-                    </ng-container>
+                    @for (item of itemsSource; track item) {
+                    <nui-menu-item tabindex="0">{{ item }}</nui-menu-item>
+                    }
                 </div>
             </nui-popup>
         </div>
@@ -48,9 +48,9 @@
             >
                 <button nuiPopupToggle>Click</button>
                 <div popupAreaContent>
-                    <ng-container *ngFor="let item of itemsSource">
-                        <nui-menu-item tabindex="0">{{ item }}</nui-menu-item>
-                    </ng-container>
+                    @for (item of itemsSource; track item) {
+                    <nui-menu-item tabindex="0">{{ item }}</nui-menu-item>
+                    }
                 </div>
             </nui-popup>
         </div>
@@ -63,9 +63,9 @@
             >
                 <button nuiPopupToggle>Click</button>
                 <div popupAreaContent>
-                    <ng-container *ngFor="let item of itemsSource">
-                        <nui-menu-item tabindex="0">{{ item }}</nui-menu-item>
-                    </ng-container>
+                    @for (item of itemsSource; track item) {
+                    <nui-menu-item tabindex="0">{{ item }}</nui-menu-item>
+                    }
                 </div>
             </nui-popup>
         </div>
@@ -74,9 +74,9 @@
             <nui-popup id="nui-demo-popup-isOpen-true" [isOpen]="true">
                 <button nuiPopupToggle>Click</button>
                 <div popupAreaContent>
-                    <ng-container *ngFor="let item of itemsSource">
-                        <nui-menu-item tabindex="0">{{ item }}</nui-menu-item>
-                    </ng-container>
+                    @for (item of itemsSource; track item) {
+                    <nui-menu-item tabindex="0">{{ item }}</nui-menu-item>
+                    }
                 </div>
             </nui-popup>
         </div>

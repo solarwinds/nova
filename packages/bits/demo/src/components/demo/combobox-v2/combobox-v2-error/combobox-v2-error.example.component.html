@@ -7,9 +7,11 @@
     style="width: 50%"
     #combobox
 >
-    <nui-select-v2-option *ngFor="let item of items" [value]="item">
+    @for (item of items; track item) {
+    <nui-select-v2-option [value]="item">
         <span class="mr-3" [nuiComboboxV2OptionHighlight]="item"></span>
     </nui-select-v2-option>
+    }
 </nui-combobox-v2>
 
 <nui-switch

@@ -2,8 +2,8 @@
 <div>
     All schematics work in similar way. To use them, you can call it by first
     doing <code>ng add &#64;nova-ui/bits</code> then
-    <code>ng g &#64;nova-ui/bits:SCHEMATICNAME</code> and add option, available for
-    each schematic. <b>Note:</b> for most of the schematics, name can be set
+    <code>ng g &#64;nova-ui/bits:SCHEMATICNAME</code> and add option, available
+    for each schematic. <b>Note:</b> for most of the schematics, name can be set
     without specifying option, just type it as the first argument in command
     line.
 </div>
@@ -14,7 +14,8 @@
         Bootstraps nova-composites for consumption in your project. Adds it
         package.json and does <code>npm install</code>.
     </p>
-    <div *ngFor="let key of objectKeys(addJsonScheme)">
+    @for (key of objectKeys(addJsonScheme); track key) {
+    <div>
         <nui-expander [header]="key">
             <div>
                 <i>Description: </i
@@ -23,17 +24,22 @@
             <div>
                 <i>Type: </i><span>{{ addJsonScheme[key].type }}</span>
             </div>
-            <div *ngIf="addJsonScheme[key].enum">
+            @if (addJsonScheme[key].enum) {
+            <div>
                 <i>Enum: </i><span>{{ addJsonScheme[key].enum }}</span>
             </div>
-            <div *ngIf="addJsonScheme[key].alias">
+            } @if (addJsonScheme[key].alias) {
+            <div>
                 <i>Alias: </i><span>{{ addJsonScheme[key].alias }}</span>
             </div>
-            <div *ngIf="addJsonScheme[key].default">
+            } @if (addJsonScheme[key].default) {
+            <div>
                 <i>Default: </i><span>{{ addJsonScheme[key].default }}</span>
             </div>
+            }
         </nui-expander>
     </div>
+    }
 </div>
 <div>
     <h2>Layout schematic guide</h2>
@@ -45,7 +51,8 @@
         Use the following options in the command line to modify schematic's
         execution:
     </p>
-    <div *ngFor="let key of objectKeys(layoutJsonScheme)">
+    @for (key of objectKeys(layoutJsonScheme); track key) {
+    <div>
         <nui-expander [header]="key">
             <div>
                 <i>Description: </i
@@ -54,17 +61,22 @@
             <div>
                 <i>Type: </i><span>{{ layoutJsonScheme[key].type }}</span>
             </div>
-            <div *ngIf="layoutJsonScheme[key].enum">
+            @if (layoutJsonScheme[key].enum) {
+            <div>
                 <i>Enum: </i><span>{{ layoutJsonScheme[key].enum }}</span>
             </div>
-            <div *ngIf="layoutJsonScheme[key].alias">
+            } @if (layoutJsonScheme[key].alias) {
+            <div>
                 <i>Alias: </i><span>{{ layoutJsonScheme[key].alias }}</span>
             </div>
-            <div *ngIf="layoutJsonScheme[key].default">
+            } @if (layoutJsonScheme[key].default) {
+            <div>
                 <i>Default: </i><span>{{ layoutJsonScheme[key].default }}</span>
             </div>
+            }
         </nui-expander>
     </div>
+    }
 </div>
 <div>
     <h2>Table schematic guide</h2>
@@ -72,7 +84,8 @@
         In your command line, type <code>ng g &#64;nova-ui/bits:table</code>to
         generate table.
     </p>
-    <div *ngFor="let key of objectKeys(tableJsonScheme)">
+    @for (key of objectKeys(tableJsonScheme); track key) {
+    <div>
         <nui-expander [header]="key">
             <div>
                 <i>Description: </i
@@ -81,15 +94,20 @@
             <div>
                 <i>Type: </i><span>{{ tableJsonScheme[key].type }}</span>
             </div>
-            <div *ngIf="tableJsonScheme[key].enum">
+            @if (tableJsonScheme[key].enum) {
+            <div>
                 <i>Enum: </i><span>{{ tableJsonScheme[key].enum }}</span>
             </div>
-            <div *ngIf="tableJsonScheme[key].alias">
+            } @if (tableJsonScheme[key].alias) {
+            <div>
                 <i>Alias: </i><span>{{ tableJsonScheme[key].alias }}</span>
             </div>
-            <div *ngIf="tableJsonScheme[key].default">
+            } @if (tableJsonScheme[key].default) {
+            <div>
                 <i>Default: </i><span>{{ tableJsonScheme[key].default }}</span>
             </div>
+            }
         </nui-expander>
     </div>
+    }
 </div>

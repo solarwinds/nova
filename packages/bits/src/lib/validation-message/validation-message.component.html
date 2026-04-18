@@ -1,4 +1,5 @@
-<div class="nui-validation-message" *ngIf="show">
+@if (show) {
+<div class="nui-validation-message">
     <nui-icon
         icon="status_critical"
         iconSize="small"
@@ -8,3 +9,4 @@
     </nui-icon>
     <ng-content></ng-content>
 </div>
+}

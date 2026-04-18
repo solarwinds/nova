@@ -63,9 +63,11 @@ const nonExistentItem = { id: "item-101", name: "Item 101" };
             [formControl]="comboboxControl"
             #combobox
         >
-            <nui-select-v2-option *ngFor="let item of items" [value]="item">
+            @for (item of items; track item) {
+            <nui-select-v2-option [value]="item">
                 <span [nuiComboboxV2OptionHighlight]="item"></span>
             </nui-select-v2-option>
+            }
         </nui-combobox-v2>
     `,
     standalone: false,

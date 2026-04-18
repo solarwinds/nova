@@ -23,13 +23,14 @@
                     formControlName="type"
                     i18n-placeholder
                 >
+                    @for (chartType of chartTypes; track chartType) {
                     <nui-select-v2-option
-                        *ngFor="let chartType of chartTypes"
                         [displayValueContext]="chartType.label"
                         [value]="chartType.id"
                     >
                         {{ chartType.label }}
                     </nui-select-v2-option>
+                    }
                 </nui-select-v2>
                 <nui-validation-message for="required" i18n>
                     This field is required
@@ -49,12 +50,11 @@
                     formControlName="legendPlacement"
                     [popupViewportMargin]="configuratorHeading.height$ | async"
                 >
-                    <nui-select-v2-option
-                        *ngFor="let option of legendPlacementOptions"
-                        [value]="option.id"
-                    >
+                    @for (option of legendPlacementOptions; track option) {
+                    <nui-select-v2-option [value]="option.id">
                         {{ option.label }}
                     </nui-select-v2-option>
+                    }
                 </nui-select-v2>
                 <nui-validation-message for="required" i18n>
                     This field is required
@@ -77,12 +77,14 @@
                             configuratorHeading.height$ | async
                         "
                     >
+                        @for (legendFormatter of legendFormatters; track
+                        legendFormatter) {
                         <nui-select-v2-option
-                            *ngFor="let legendFormatter of legendFormatters"
                             [value]="legendFormatter.componentType"
                         >
                             {{ legendFormatter.label }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                     <nui-validation-message for="required" i18n>
                         This field is required

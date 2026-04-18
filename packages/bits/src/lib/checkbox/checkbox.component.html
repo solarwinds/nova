@@ -34,6 +34,8 @@
                 <ng-content></ng-content>
             </div>
         </div>
-        <div class="nui-help-hint" *ngIf="hint">{{ hint }}</div>
+        @if (hint) {
+        <div class="nui-help-hint">{{ hint }}</div>
+        }
     </label>
 </div>

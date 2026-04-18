@@ -36,5 +36,7 @@
     [viewportMargin]="viewportMargin"
     [overlayConfig]="overlayConfig"
 >
-    <nui-menu-item *ngFor="let item of items">{{ item }}</nui-menu-item>
+    @for (item of items; track item) {
+    <nui-menu-item>{{ item }}</nui-menu-item>
+    }
 </nui-overlay>

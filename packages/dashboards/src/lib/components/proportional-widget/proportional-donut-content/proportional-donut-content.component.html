@@ -1,5 +1,5 @@
+@if (contentFormatter?.componentType) {
 <ng-container
-    *ngIf="contentFormatter?.componentType"
     nuiComponentPortal
     [componentType]="contentFormatter?.componentType"
     [properties]="contentFormatterProperties"
@@ -10,3 +10,4 @@
         (attached)="componentPortal.attached($event)"
     ></ng-template>
 </ng-container>
+}

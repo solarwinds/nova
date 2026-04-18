@@ -17,9 +17,9 @@
             </nui-checkbox>
         </div>
     </button>
+    @if (items?.length) {
     <button
         nui-button
-        *ngIf="items?.length"
         type="button"
         class="nui-selector__toggle"
         ariaLabel="Open Selector Menu"
@@ -27,6 +27,7 @@
         [icon]="'caret-down'"
         (click)="overlay.toggle()"
     ></button>
+    }
 </div>
 
 <div #popupArea></div>

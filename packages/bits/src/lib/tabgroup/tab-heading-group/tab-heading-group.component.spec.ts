@@ -37,17 +37,15 @@ import { TabHeadingComponent } from "../tab-heading/tab-heading.component";
 @Component({
     selector: "nui-test-tab-heading-group-cmp",
     template: ` <nui-tab-heading-group (selected)="updateContent($event)">
-        <nui-tab-heading
-            *ngFor="let tab of tabsetContent"
-            [tabId]="tab.id"
-            [active]="currentTabId === tab.id"
-        >
+        @for (tab of tabsetContent; track tab) {
+        <nui-tab-heading [tabId]="tab.id" [active]="currentTabId === tab.id">
             <div class="d-flex align-content-center">
                 <div class="d-inline-flex align-items-center">
                     <span [title]="tab.title">{{ tab.title }}</span>
                 </div>
             </div>
         </nui-tab-heading>
+        }
     </nui-tab-heading-group>`,
     standalone: false,
 })

@@ -34,8 +34,8 @@
     </nui-draggable>
     <pre>{{ draggableObjPreview | json }}</pre>
 
+    @for (item of draggableList; track item) {
     <nui-draggable
-        *ngFor="let item of draggableList"
         [payload]="item"
         [dropTarget]="droppable"
         (dragStart)="onDragStart($event)"
@@ -44,6 +44,7 @@
     >
         <div class="drag">drag me ({{ item }})</div>
     </nui-draggable>
+    }
 </section>
 
 <section class="drop-section">
@@ -62,14 +63,14 @@
 
 <ng-template #dragPreview>
     <pre>
-         _,(_)._
+    _,(_)._
     ___,(_______).
-  ,'__.           \    /\_
- /,' /             \  /  /
-| | |              |,'  /
- \`.|                  /
-  `. :           :    /
+    ,'__.           \    /\_
+    /,' /             \  /  /
+    | | |              |,'  /
+    \`.|                  /
+    `. :           :    /
     `.            :.,'
-      `-.________,-'</pre
+    `-.________,-'</pre
     >
 </ng-template>

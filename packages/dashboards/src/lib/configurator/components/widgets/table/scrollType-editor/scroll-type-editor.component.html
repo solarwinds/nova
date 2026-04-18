@@ -24,18 +24,17 @@
                     formControlName="scrollType"
                     class="table-filters-configuration__accordion-content__sort-by-input"
                 >
-                    <nui-select-v2-option
-                        *ngFor="
-                            let column of scrollTypeEditorService.loadStrategies
-                        "
-                        [value]="column.id"
-                    >
+                    @for ( column of scrollTypeEditorService.loadStrategies ;
+                    track column) {
+                    <nui-select-v2-option [value]="column.id">
                         {{ column.title }}
                     </nui-select-v2-option>
+                    }
                 </nui-select-v2>
             </nui-form-field>
         </div>
-        <div *ngIf="hasPaginator">
+        @if (hasPaginator) {
+        <div>
             <div class="page-size-set-menu">
                 <nui-form-field
                     class=""
@@ -49,13 +48,14 @@
                         i18n-title
                     >
                         <nui-menu-group header="Item Types" i18n-header>
+                            @for (option of pageSizeSetOptions; track option) {
                             <nui-menu-option
-                                *ngFor="let option of pageSizeSetOptions"
                                 (actionDone)="onPageSizeSetChange(option)"
                                 [checked]="option.checked"
                                 i18n
                                 >{{ option.value }}
                             </nui-menu-option>
+                            }
                         </nui-menu-group>
                     </nui-menu>
                     <nui-validation-message
@@ -66,10 +66,8 @@
                     </nui-validation-message>
                 </nui-form-field>
             </div>
-            <div
-                *ngIf="pageSizeOptions.length > 0"
-                class="d-flex align-items-end"
-            >
+            @if (pageSizeOptions.length > 0) {
+            <div class="d-flex align-items-end">
                 <nui-form-field
                     caption="Default page size"
                     i18n-caption
@@ -85,12 +83,11 @@
                         formControlName="pageSize"
                         class="table-filters-configuration__accordion-content__sort-by-input"
                     >
-                        <nui-select-v2-option
-                            *ngFor="let option of pageSizeOptions"
-                            [value]="option"
-                        >
+                        @for (option of pageSizeOptions; track option) {
+                        <nui-select-v2-option [value]="option">
                             {{ option }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                     <nui-validation-message
                         [show]="displayPageSizeErrorMessage"
@@ -100,6 +97,8 @@
                     </nui-validation-message>
                 </nui-form-field>
             </div>
+            }
         </div>
+        }
     </div>
 </nui-widget-editor-accordion>

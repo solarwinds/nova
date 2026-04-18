@@ -1,7 +1,7 @@
 <h3>Basic Legend</h3>
 <nui-legend id="basic-tile-legend-default-state">
+    @for (legendSeries of seriesData; track legendSeries) {
     <nui-legend-series
-        *ngFor="let legendSeries of seriesData"
         [descriptionPrimary]="legendSeries.descriptionPrimary"
         [descriptionSecondary]="legendSeries.descriptionSecondary"
     >
@@ -13,6 +13,7 @@
             ></nui-chart-marker>
         </nui-basic-legend-tile>
     </nui-legend-series>
+    }
 </nui-legend>
 
 <h3>Basic Interactive Legend</h3>
@@ -21,8 +22,8 @@
     [interactive]="true"
     (mouseleave)="chartAssist.resetVisibleSeries()"
 >
+    @for (legendSeries of seriesData; track legendSeries) {
     <nui-legend-series
-        *ngFor="let legendSeries of seriesData"
         [descriptionPrimary]="legendSeries.descriptionPrimary"
         [descriptionSecondary]="legendSeries.descriptionSecondary"
         [seriesRenderState]="
@@ -42,14 +43,13 @@
             ></nui-chart-marker>
         </nui-basic-legend-tile>
     </nui-legend-series>
+    }
 </nui-legend>
 
 <h3>Legend with Horizontal Orientation</h3>
 <nui-legend orientation="horizontal">
-    <nui-legend-series
-        *ngFor="let data of seriesData"
-        [descriptionPrimary]="data.descriptionPrimary"
-    >
+    @for (data of seriesData; track data) {
+    <nui-legend-series [descriptionPrimary]="data.descriptionPrimary">
         <nui-basic-legend-tile>
             <nui-chart-marker
                 [marker]="markers.get(data.seriesId)"
@@ -58,12 +58,13 @@
             ></nui-chart-marker>
         </nui-basic-legend-tile>
     </nui-legend-series>
+    }
 </nui-legend>
 
 <h3>Rich Tile Legend</h3>
 <nui-legend id="rich-tile-legend-default-state">
+    @for (data of seriesData; track data) {
     <nui-legend-series
-        *ngFor="let data of seriesData"
         [descriptionPrimary]="data.descriptionPrimary"
         [descriptionSecondary]="data.descriptionSecondary"
     >
@@ -79,11 +80,13 @@
             ></nui-chart-marker>
         </nui-rich-legend-tile>
     </nui-legend-series>
+    }
 </nui-legend>
 
 <h3>Rich Tile Legend with Projected Description, Value, and Unit Label</h3>
 <nui-legend id="rich-tile-legend-with-projected-description-default-state">
-    <nui-legend-series *ngFor="let data of seriesData">
+    @for (data of seriesData; track data) {
+    <nui-legend-series>
         <nui-rich-legend-tile
             [backgroundColor]="palette.standardColors.get(data.seriesId)"
         >
@@ -100,11 +103,13 @@
             <div>{{ data.descriptionSecondary }}</div>
         </div>
     </nui-legend-series>
+    }
 </nui-legend>
 
 <h3>Rich Tile Legend Compact Mode</h3>
 <nui-legend class="rich-tile-legend-compact-mode-test">
-    <nui-legend-series *ngFor="let data of seriesData">
+    @for (data of seriesData; track data) {
+    <nui-legend-series>
         <nui-rich-legend-tile
             [value]="data.value"
             [unitLabel]="data.unitLabel"
@@ -117,12 +122,13 @@
             ></nui-chart-marker>
         </nui-rich-legend-tile>
     </nui-legend-series>
+    }
 </nui-legend>
 
 <h3>Rich Tile Legend Active State</h3>
 <nui-legend class="rich-tile-legend-active-state-test" [active]="true">
+    @for (data of seriesData; track data) {
     <nui-legend-series
-        *ngFor="let data of seriesData"
         [descriptionPrimary]="data.descriptionPrimary"
         [descriptionSecondary]="data.descriptionSecondary"
     >
@@ -138,6 +144,7 @@
             ></nui-chart-marker>
         </nui-rich-legend-tile>
     </nui-legend-series>
+    }
 </nui-legend>
 
 <h3>Rich Tile Legend Active State with Horizontal Orientation</h3>
@@ -146,8 +153,8 @@
     [active]="true"
     orientation="horizontal"
 >
+    @for (data of seriesData; track data) {
     <nui-legend-series
-        *ngFor="let data of seriesData"
         [descriptionPrimary]="data.descriptionPrimary"
         [descriptionSecondary]="data.descriptionSecondary"
     >
@@ -163,6 +170,7 @@
             ></nui-chart-marker>
         </nui-rich-legend-tile>
     </nui-legend-series>
+    }
 </nui-legend>
 
 <h3>Rich Tile Legend Compact Mode Active State</h3>
@@ -170,7 +178,8 @@
     class="rich-tile-legend-compact-mode-active-state-test"
     [active]="true"
 >
-    <nui-legend-series *ngFor="let data of seriesData">
+    @for (data of seriesData; track data) {
+    <nui-legend-series>
         <nui-rich-legend-tile
             [value]="data.value"
             [unitLabel]="data.unitLabel"
@@ -183,6 +192,7 @@
             ></nui-chart-marker>
         </nui-rich-legend-tile>
     </nui-legend-series>
+    }
 </nui-legend>
 
 <h3>Rich Tile Legend Compact Mode Active State with Horizontal Orientation</h3>
@@ -191,7 +201,8 @@
     [active]="true"
     orientation="horizontal"
 >
-    <nui-legend-series *ngFor="let data of seriesData">
+    @for (data of seriesData; track data) {
+    <nui-legend-series>
         <nui-rich-legend-tile
             [value]="data.value"
             [unitLabel]="data.unitLabel"
@@ -204,6 +215,7 @@
             ></nui-chart-marker>
         </nui-rich-legend-tile>
     </nui-legend-series>
+    }
 </nui-legend>
 
 <h3>Rich Tile Legend Interactive Mode with Icons</h3>
@@ -212,8 +224,8 @@
     [interactive]="true"
     (mouseleave)="chartAssist.resetVisibleSeries()"
 >
+    @for (data of seriesData; track data) {
     <nui-legend-series
-        *ngFor="let data of seriesData"
         [descriptionPrimary]="data.descriptionPrimary"
         [descriptionSecondary]="data.descriptionSecondary"
         [seriesRenderState]="
@@ -240,6 +252,7 @@
             ></nui-chart-marker>
         </nui-rich-legend-tile>
     </nui-legend-series>
+    }
 </nui-legend>
 
 <h3>Rich Tile Legend Compact Interactive Mode</h3>
@@ -248,8 +261,8 @@
     [interactive]="true"
     (mouseleave)="chartAssist.resetVisibleSeries()"
 >
+    @for (data of seriesData; track data) {
     <nui-legend-series
-        *ngFor="let data of seriesData"
         [seriesRenderState]="
             chartAssist.renderStatesIndex[data.seriesId]?.state
         "
@@ -269,6 +282,7 @@
             ></nui-chart-marker>
         </nui-rich-legend-tile>
     </nui-legend-series>
+    }
 </nui-legend>
 
 <h3>Rich Tile Legend Interactive Mode Active State</h3>
@@ -277,8 +291,8 @@
     [active]="true"
     [interactive]="true"
 >
+    @for (data of seriesData; track data) {
     <nui-legend-series
-        *ngFor="let data of seriesData"
         [descriptionPrimary]="data.descriptionPrimary"
         [descriptionSecondary]="data.descriptionSecondary"
     >
@@ -294,4 +308,5 @@
             ></nui-chart-marker>
         </nui-rich-legend-tile>
     </nui-legend-series>
+    }
 </nui-legend>

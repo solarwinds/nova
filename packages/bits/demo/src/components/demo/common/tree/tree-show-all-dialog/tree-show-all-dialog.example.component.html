@@ -47,12 +47,11 @@
             >
                 <div nui-busy [busy]="node.isLoading" style="min-height: 20px">
                     <ng-container cdkTreeNodeOutlet></ng-container>
-                    <a
-                        *ngIf="node.hasChildren && nodesTotalItems[node.name]"
-                        class="nui-tree__show-all"
-                        (click)="showAll(node)"
+                    @if (node.hasChildren && nodesTotalItems[node.name]) {
+                    <a class="nui-tree__show-all" (click)="showAll(node)"
                         >Show All ({{ nodesTotalItems[node.name] }})</a
                     >
+                    }
                 </div>
             </div>
         </cdk-nested-tree-node>

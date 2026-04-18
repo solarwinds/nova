@@ -7,11 +7,8 @@
     (chipsOverflowed)="onChipsOverflow($event)"
     (removeAll)="onClearAll($event)"
 >
-    <div
-        class="nui-chips-overflowed"
-        #overflowCounterLabel
-        *ngIf="overflowCounter > 0"
-    >
+    @if (overflowCounter > 0) {
+    <div class="nui-chips-overflowed" #overflowCounterLabel>
         <nui-popover
             trigger="click"
             [popoverOverlayPosition]="overflowPopoverPosition"
@@ -20,6 +17,7 @@
             <a class="nui-chips-overflowed__counter">+{{ overflowCounter }}</a>
         </nui-popover>
     </div>
+    }
 </nui-chips>
 
 <ng-template #popoverWithClickTrigger>

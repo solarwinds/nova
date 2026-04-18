@@ -62,9 +62,11 @@ class TestAppButtonOnDivNoTypeComponent {}
     selector: "nui-button-in-repeater",
     template: `
         <ul>
-            <li *ngFor="let label of buttonLabels">
+            @for (label of buttonLabels; track label) {
+            <li>
                 <button nui-button type="button">{{ label }}</button>
             </li>
+            }
         </ul>
     `,
     standalone: false,

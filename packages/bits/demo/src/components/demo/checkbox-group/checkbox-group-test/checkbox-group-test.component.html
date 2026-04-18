@@ -5,14 +5,15 @@
             name="vegetable"
             [values]="selectedVegetables"
         >
+            @for (vegetable of vegetables; track vegetable) {
             <nui-checkbox
-                *ngFor="let vegetable of vegetables"
                 [value]="vegetable"
                 hint="This is some help text"
                 [checked]="isChecked(vegetable)"
             >
                 {{ vegetable }}
             </nui-checkbox>
+            }
             <nui-checkbox
                 hint="If it's not disabled ring the alarm!"
                 id="nui-demo-checkbox-group-1-disabled-checkbox"
@@ -29,8 +30,8 @@
             name="vegetable"
             [values]="selectedVegetables"
         >
+            @for (vegetable of vegetables; track vegetable) {
             <nui-checkbox
-                *ngFor="let vegetable of vegetables"
                 [value]="vegetable"
                 [hint]="
                     hints.indexOf(vegetable) >= 0
@@ -42,6 +43,7 @@
             >
                 {{ vegetable }}
             </nui-checkbox>
+            }
         </nui-checkbox-group>
     </div>
     <div class="d-flex flex-column mt-5">

@@ -10,20 +10,19 @@
         "
         [@expandedState]="state"
     >
-        <div
-            *ngIf="collapsed && collapsible"
-            class="collapse-container"
-            (click)="toggleCollapsed()"
-        >
+        @if (collapsed && collapsible) {
+        <div class="collapse-container" (click)="toggleCollapsed()">
             <span class="collapse-container__line"></span>
         </div>
+        }
         <div class="nui-widget__header__content">
+            @if (editMode) {
             <div
-                *ngIf="editMode"
                 class="nui-widget__header__content-drag-icon nui-dashboard__widget--drag-handle"
             >
                 <nui-icon icon="drag" iconColor="gray"></nui-icon>
             </div>
+            }
             <div
                 #widgetHeaderCustomElement
                 class="nui-widget__header__content-custom-element"
@@ -37,16 +36,18 @@
                 "
             >
                 <!-- text only header with no url defined -->
+                @if (!url || editMode) {
                 <div
                     class="nui-text-widget nui-widget__header__content-title"
                     [title]="title"
-                    *ngIf="!url || editMode"
                 >
                     {{ title }}
                 </div>
+                }
 
                 <!-- link version of the header -->
-                <div *ngIf="url && !editMode">
+                @if (url && !editMode) {
+                <div>
                     <a
                         [href]="url"
                         (click)="prepareLink($event)"
@@ -59,18 +60,18 @@
                         >{{ title }}</a
                     >
                 </div>
-
+                } @if (subtitle) {
                 <div
-                    *ngIf="subtitle"
                     class="nui-text-hint nui-widget__header__content-help-hint"
                     [title]="subtitle"
                 >
                     {{ subtitle }}
                 </div>
+                }
             </div>
             <div class="nui-widget__header__content-actions">
+                @if (url && !editMode) {
                 <a
-                    *ngIf="url && !editMode"
                     nui-button
                     displayStyle="action"
                     [href]="url"
@@ -83,8 +84,8 @@
                     "
                 >
                 </a>
+                } @if (editable && editMode) {
                 <button
-                    *ngIf="editable && editMode"
                     class="nui-widget-header__action-edit"
                     nui-button
                     type="button"
@@ -94,8 +95,8 @@
                     i18n-nuiTooltip
                     (click)="onEditWidget()"
                 ></button>
+                } @if (collapsible && !editMode) {
                 <button
-                    *ngIf="collapsible && !editMode"
                     class="nui-widget-header__action-toggle-collapsed"
                     nui-button
                     type="button"
@@ -104,26 +105,26 @@
                     icon="double-caret-up"
                     (click)="toggleCollapsed()"
                 ></button>
+                } @if (!hideMenu && !editMode) {
                 <nui-menu
-                    *ngIf="!hideMenu && !editMode"
                     class="nui-widget__header__content-actions__menu"
                     icon="menu"
                     displayStyle="action"
                     [appendToBody]="true"
                 >
-                    <nui-menu-action
-                        *ngIf="reloadable"
-                        (actionDone)="onReloadData()"
-                    >
+                    @if (reloadable) {
+                    <nui-menu-action (actionDone)="onReloadData()">
                         <nui-icon icon="reload"></nui-icon>
                         <span i18n>Reload data</span>
                     </nui-menu-action>
+                    }
                 </nui-menu>
+                }
                 <!--TODO: After NUI-3431 should be changed to regular menu instead of popup-->
+                @if (removable && editMode) {
                 <nui-popup
                     class="nui-widget-header__action-remove"
                     [appendToBody]="true"
-                    *ngIf="removable && editMode"
                 >
                     <span nuiTooltip="Remove widget" i18n-nuiTooltip>
                         <button
@@ -145,8 +146,11 @@
                         >
                     </div>
                 </nui-popup>
+                }
             </div>
         </div>
     </div>
-    <div *ngIf="collapsible" class="collapse-spacer"></div>
+    @if (collapsible) {
+    <div class="collapse-spacer"></div>
+    }
 </div>

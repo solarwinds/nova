@@ -52,7 +52,8 @@ class CustomSpyService {
 }
 
 @Component({
-    selector: "nui-custom-injector-cmpt", template: "Some content",
+    selector: "nui-custom-injector-cmpt",
+    template: "Some content",
     standalone: false,
 })
 export class CustomInjectorComponent implements OnDestroy {
@@ -64,7 +65,8 @@ export class CustomInjectorComponent implements OnDestroy {
 }
 
 @Component({
-    selector: "nui-destroyable-cmpt", template: "Some content",
+    selector: "nui-destroyable-cmpt",
+    template: "Some content",
     standalone: false,
 })
 export class DestroyableComponent implements OnDestroy {
@@ -77,7 +79,8 @@ export class DestroyableComponent implements OnDestroy {
 
 @Component({
     selector: "nui-dialog-content-cmpt",
-    template: "<button type='button' class='closeFromInside' (click)='close()'>Close</button>",
+    template:
+        "<button type='button' class='closeFromInside' (click)='close()'>Close</button>",
     standalone: false,
 })
 export class WithActiveDialogComponent {
@@ -97,7 +100,9 @@ export class WithActiveDialogComponent {
             ><nui-destroyable-cmpt></nui-destroyable-cmpt
         ></ng-template>
         <ng-template #contentWithClose let-close="close">
-            <button type="button" id="close" (click)="close('myResult')">Close me</button>
+            <button type="button" id="close" (click)="close('myResult')">
+                Close me
+            </button>
         </ng-template>
         <ng-template #contentWithDismiss let-dismiss="dismiss">
             <button type="button" id="dismiss" (click)="dismiss('myReason')">
@@ -105,11 +110,15 @@ export class WithActiveDialogComponent {
             </button>
         </ng-template>
         <ng-template #contentWithIf>
-            <ng-template [ngIf]="show">
-                <button type="button" id="if" (click)="show = false">Click me</button>
-            </ng-template>
+            @if (show) {
+            <button type="button" id="if" (click)="show = false">
+                Click me
+            </button>
+            }
         </ng-template>
-        <button type="button" id="open" (click)="open('from button')">Open</button>
+        <button type="button" id="open" (click)="open('from button')">
+            Open
+        </button>
         <div id="open-no-focus" (click)="open('from non focusable element')">
             Open
         </div>
