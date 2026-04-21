@@ -41,6 +41,7 @@ import { NuiButtonModule } from "../button/button.module";
     host: {
         class: "nui-search",
         role: "searchbox",
+        "[attr.aria-label]": "inputAriaLabel",
     },
     templateUrl: "./search.component.html",
     styleUrls: ["./search.component.less"],
@@ -73,7 +74,7 @@ export class SearchComponent implements IFilterPub {
     /** Watermark text (placeholder) displayed when empty. */
     public placeholder = input<string>();
     /** Custom id for the input. */
-    public inputId = input<string>("search input");
+    public inputId = input<string>("search-input");
     /** Value of the input field. */
     public value = model<string>("");
 
