@@ -3,16 +3,6 @@ orbs:
     browser-tools: circleci/browser-tools@1.4.0
 
 commands:
-    install-deps:
-        description: "Install deps"
-        steps:
-            - *cache_restore
-            - run:
-                name: Add GitHub to known hosts
-                command: mkdir -p ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
-            - *install_dependencies
-            - *cache_save
-
     reuse-cache:
         description: "Reuse cache among the builds"
         steps:
