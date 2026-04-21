@@ -96,35 +96,62 @@ test.describe("USERCONTROL Menu", () => {
 
     test.describe("> key navigation", () => {
         test.describe("> basic", () => {
-            test("should open menu immediately if focused by TAB key", async () => {
-                // Focus the menu button using TAB
+            test("should NOT open menu when focused by TAB key", async () => {
+                // Focus the menu button using TAB - should only move focus, not open menu
                 await Helpers.pressKey("Tab");
-                await menu.isMenuOpened();
+                await menu.isMenuClosed();
             });
 
             test("should close menu when navigating from it by TAB key", async () => {
-                await Helpers.pressKey("Tab");
+                await menu.toggleMenu();
                 await menu.isMenuOpened();
                 await Helpers.pressKey("Tab");
                 await menu.isMenuClosed();
             });
 
-            test("should open and close menu by ENTER key if focused on toggle", async () => {
+            test("should open menu and focus first item by ENTER key", async () => {
                 // Focus the toggle first
                 await Helpers.pressKey("Tab");
                 await Helpers.pressKey("Enter");
                 await menu.isMenuOpened();
+                // First menu item should be active
+                expect(await menu.getMenuItemByIndex(0).isActiveItem()).toBe(true);
+                // ENTER on active menu item should close menu
                 await Helpers.pressKey("Enter");
                 await menu.isMenuClosed();
             });
 
-            test("should open and close menu by SPACE key if focused on toggle", async () => {
+            test("should open menu and focus first item by SPACE key", async () => {
                 // Focus the toggle first
                 await Helpers.pressKey("Tab");
                 await Helpers.pressKey("Space");
                 await menu.isMenuOpened();
+                // First menu item should be active
+                expect(await menu.getMenuItemByIndex(0).isActiveItem()).toBe(true);
+                // SPACE on active menu item should close menu
                 await Helpers.pressKey("Space");
                 await menu.isMenuClosed();
+            });
+
+            test("should open menu and focus first item by ARROW_DOWN key", async () => {
+                // Focus the toggle first
+                await menu.getMenuButton().getLocator().focus();
+                await Helpers.pressKey("ArrowDown");
+                await menu.isMenuOpened();
+                // First menu item should be active
+                expect(await menu.getMenuItemByIndex(0).isActiveItem()).toBe(true);
+                await menu.toggleMenu(); // cleanup
+            });
+
+            test("should open menu and focus last item by ARROW_UP key", async () => {
+                // Focus the toggle first
+                await menu.getMenuButton().getLocator().focus();
+                await Helpers.pressKey("ArrowUp");
+                await menu.isMenuOpened();
+                // Last menu item should be active
+                const itemCount = await menu.getAllMenuItems().count();
+                expect(await menu.getMenuItemByIndex(itemCount - 1).isActiveItem()).toBe(true);
+                await menu.toggleMenu(); // cleanup
             });
 
             test("should open and NOT close menu by Shift + DOWN-ARROW key if focused on toggle", async () => {
@@ -139,10 +166,13 @@ test.describe("USERCONTROL Menu", () => {
                 await menu.isMenuOpened();
             });
 
-            test("should close menu on ESC key", async () => {
+            test("should close menu on ESC key and return focus to button", async () => {
                 await menu.toggleMenu();
+                await menu.isMenuOpened();
                 await Helpers.pressKey("Escape");
                 await menu.isMenuClosed();
+                // Focus should return to the menu button
+                await expect(menu.getMenuButton().getLocator()).toBeFocused();
             });
 
             test.describe("arrow navigation and menu item types >", async () => {

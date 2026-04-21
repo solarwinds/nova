@@ -120,6 +120,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     @ViewChild("menuToggle", { read: ElementRef }) menuToggle: ElementRef;
 
     public readonly menuTriggerId = _uniqueId("nui-menu-trigger-");
+    public readonly popupContentId = _uniqueId("nui-menu-content-");
 
     private menuKeyControlListeners: Function[] = [];
     private focusMonitorSubscription: Subscription;
@@ -157,18 +158,16 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
                 }
             )
         );
-        // opening menu on focusin
-        // The FocusMonitor is an injectable service that can be used to listen for changes in the focus state of an element.
-        // It's more powerful than just listening for focus or blur events because it tells you how the element was focused
-        // (via mouse, keyboard, touch, or programmatically).
+        // Monitor focus changes for accessibility purposes
+        // The FocusMonitor tracks how the element was focused (mouse, keyboard, touch, programmatically)
+        // For keyboard accessibility, we only monitor focus but don't auto-open the menu
+        // Menu opening is handled by specific key events (ENTER, SPACE, ARROW_DOWN, ARROW_UP) in the keyboard service
         this.focusMonitorSubscription = this.focusMonitor
             .monitor(this.menuToggle)
             .subscribe((origin: FocusOrigin) => {
-                if (origin === "keyboard") {
-                    if (!this.popup.popupToggle.disabled) {
-                        this.popup.toggleOpened(new FocusEvent("focusin"));
-                    }
-                }
+                // We track focus origin for accessibility purposes but don't auto-open menu
+                // TAB key should only move focus, not open menu (violates WCAG 2.1 guidelines)
+                // Menu opens only on explicit activation keys: ENTER, SPACE, ARROW_DOWN, ARROW_UP
             });
     }
 

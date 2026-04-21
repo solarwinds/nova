@@ -48,6 +48,8 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
         <div class="nui-menu-item__option" #menuOption tabindex="-1" title>
             <nui-checkbox
                 class="nui-menu-item__checkbox"
+                [attr.tabindex]="-1"
+                role="presentation"
                 [name]="name"
                 [value]="value"
                 [checked]="checked"
@@ -97,6 +99,11 @@ export class MenuOptionComponent extends MenuItemBaseComponent {
     @HostBinding("class.checked")
     public get checkedClass(): boolean {
         return this.checked;
+    }
+
+    @HostBinding("attr.aria-checked")
+    public get ariaChecked(): string {
+        return `${!!this.checked}`;
     }
 
     constructor(
