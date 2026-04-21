@@ -1,0 +1,178 @@
+{
+  "generatedAt": "2026-04-21",
+  "package": "charts",
+  "inventoryFilePresent": false,
+  "instrumentedCoveragePresent": false,
+  "a11ySpecsPresent": false,
+  "coverageType": "estimated",
+  "namingMismatches": [
+    "thresholds-summary -> Thresholds public area",
+    "tooltips -> ChartTooltips*",
+    "popover -> ChartPopoverComponent",
+    "status-chart/spark-chart/bucketed-bar-chart/waterfall-chart/time-frame-bar -> shared renderer exports",
+    "donut-chart -> indirect coverage for ChartDonutContentComponent"
+  ],
+  "strongestAreas": [
+    "Legend",
+    "Renderers - Line & Spark",
+    "Renderers - Radial (Pie / Donut)",
+    "Thresholds"
+  ],
+  "weakestAreas": [
+    "Core/Common technical exports",
+    "Renderers - Area",
+    "Tooltips",
+    "Gauge",
+    "Popover",
+    "Chart Collection",
+    "Marker",
+    "Chart shell & assists"
+  ],
+  "zeroCoverage": [
+    "Gauge",
+    "Tooltips",
+    "Popover",
+    "Renderers - Area",
+    "Core/Common technical exports"
+  ],
+  "effectiveNoDirectCoverage": [
+    "Chart Collection",
+    "Marker",
+    "Donut Content",
+    "Chart shell & assists"
+  ],
+  "visualOnlyAreas": [
+    "Gauge",
+    "Tooltips",
+    "Popover",
+    "Renderers - Area",
+    "TimeFrame Bar",
+    "Waterfall"
+  ],
+  "recommendedNextTests": [
+    "GaugeUtil clamp, threshold, label, and update coverage",
+    "Tooltip collision, orientation, hidden-series, and out-of-view coverage",
+    "Popover invalid-data close path and coordinate/update coverage",
+    "TimeFrame Bar zoom, undo, clear, and change-event coverage",
+    "Area renderer stacking, highlight, and interaction coverage",
+    "Chart Collection rebroadcast, cleanup, and id-change coverage",
+    "Thresholds interval, side-indicator, collision, and dynamic-zone coverage",
+    "Radial renderer geometry and event payload coverage",
+    "Legend keyboard and accessibility coverage",
+    "Chart shell lifecycle coverage"
+  ],
+  "areas": [
+    {
+      "name": "Chart shell & assists",
+      "lineCoverage": 35,
+      "branchCoverage": 25,
+      "confidence": "low",
+      "status": "partial E2E coverage",
+      "mainGap": "Lifecycle, resize, rebuild not directly tested"
+    },
+    {
+      "name": "Legend",
+      "lineCoverage": 70,
+      "branchCoverage": 60,
+      "confidence": "high",
+      "status": "broad E2E coverage",
+      "mainGap": "No keyboard/a11y coverage"
+    },
+    {
+      "name": "Thresholds",
+      "lineCoverage": 55,
+      "branchCoverage": 45,
+      "confidence": "medium",
+      "status": "partial E2E coverage",
+      "mainGap": "Most exported threshold APIs untested"
+    },
+    {
+      "name": "Gauge",
+      "lineCoverage": 25,
+      "branchCoverage": 20,
+      "confidence": "low",
+      "status": "no E2E coverage",
+      "mainGap": "Visual-only"
+    },
+    {
+      "name": "Tooltips",
+      "lineCoverage": 20,
+      "branchCoverage": 15,
+      "confidence": "low",
+      "status": "no E2E coverage",
+      "mainGap": "Visual-only"
+    },
+    {
+      "name": "Popover",
+      "lineCoverage": 30,
+      "branchCoverage": 20,
+      "confidence": "low",
+      "status": "no E2E coverage",
+      "mainGap": "Visual-only"
+    },
+    {
+      "name": "Donut Content",
+      "lineCoverage": 45,
+      "branchCoverage": 35,
+      "confidence": "medium",
+      "status": "partial E2E coverage",
+      "mainGap": "Resize/reposition logic untested"
+    },
+    {
+      "name": "Marker",
+      "lineCoverage": 35,
+      "branchCoverage": 25,
+      "confidence": "medium",
+      "status": "partial E2E coverage",
+      "mainGap": "Sizing and drawing branches untested"
+    },
+    {
+      "name": "Chart Collection",
+      "lineCoverage": 30,
+      "branchCoverage": 25,
+      "confidence": "low",
+      "status": "partial E2E coverage",
+      "mainGap": "Add/remove/destroy sync logic untested"
+    },
+    {
+      "name": "Renderers - Line & Spark",
+      "lineCoverage": 65,
+      "branchCoverage": 55,
+      "confidence": "medium",
+      "status": "broad E2E coverage",
+      "mainGap": "Non-default line branches missing"
+    },
+    {
+      "name": "Renderers - Bar / Status / TimeFrame / Waterfall",
+      "lineCoverage": 40,
+      "branchCoverage": 30,
+      "confidence": "medium",
+      "status": "partial E2E coverage",
+      "mainGap": "Mostly visual outside status chart"
+    },
+    {
+      "name": "Renderers - Area",
+      "lineCoverage": 20,
+      "branchCoverage": 15,
+      "confidence": "low",
+      "status": "no E2E coverage",
+      "mainGap": "Visual-only"
+    },
+    {
+      "name": "Renderers - Radial (Pie / Donut)",
+      "lineCoverage": 55,
+      "branchCoverage": 45,
+      "confidence": "medium",
+      "status": "partial E2E coverage",
+      "mainGap": "Geometry and config branches weak"
+    },
+    {
+      "name": "Core/Common technical exports",
+      "lineCoverage": 15,
+      "branchCoverage": 10,
+      "confidence": "low",
+      "status": "no E2E coverage",
+      "mainGap": "Large exported surface only exercised incidentally"
+    }
+  ]
+}
