@@ -30,8 +30,9 @@ test.describe(`Visual tests: ${name}`, () => {
     let startProgressBasic: ButtonAtom;
 
     test.beforeEach(async ({ page }) => {
-        await Helpers.prepareBrowser("progress/progress-visual-test", page);
+        Helpers.setPage(page);
         await Helpers.disableCSSAnimations(Animations.ALL);
+        await Helpers.prepareBrowser("progress/progress-visual-test", page);
 
         startProgressBasic = Atom.find<ButtonAtom>(
             ButtonAtom,

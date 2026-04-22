@@ -43,7 +43,7 @@ test.describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese(`Default`);
 
         await searchWithInput.getSearchButton().click();
-        await page.keyboard.press("Tab");
+        await searchWithInput.getLocator().locator(".nui-search__input-control").click();
         await searchWithInput.getSearchButton().hover();
         await camera.say.cheese(
             `Search with input text is focused and Search button is hovered`
