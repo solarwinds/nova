@@ -94,23 +94,24 @@
                 "
             >
                 <div
-                    description
                     *ngIf="
                         legendFormatter && legendFormatter.componentType;
                         else legendDefaultTile
                     "
                 >
-                    <ng-container
-                        nuiComponentPortal
-                        [componentType]="legendFormatter.componentType"
-                        [properties]="{ data: widgetData[i] }"
-                        #componentPortal="nuiComponentPortal"
-                    >
-                        <ng-template
-                            [cdkPortalOutlet]="componentPortal.portal"
-                            (attached)="componentPortal.attached($event)"
-                        ></ng-template>
-                    </ng-container>
+                    <div description>
+                        <ng-container
+                            nuiComponentPortal
+                            [componentType]="legendFormatter.componentType"
+                            [properties]="{ data: widgetData[i] }"
+                            #componentPortal="nuiComponentPortal"
+                        >
+                            <ng-template
+                                [cdkPortalOutlet]="componentPortal.portal"
+                                (attached)="componentPortal.attached($event)"
+                            ></ng-template>
+                        </ng-container>
+                    </div>
                 </div>
                 <ng-template #legendDefaultTile>
                     <nui-rich-legend-tile

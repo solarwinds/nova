@@ -136,10 +136,6 @@ export const widgets: IWidget[] = [
                             chartOptions: {
                                 type: ProportionalWidgetChartTypes.VerticalBarChart,
                                 legendPlacement: LegendPlacement.Bottom,
-                                legendFormatter: {
-                                    componentType:
-                                        LinkFormatterComponent.lateLoadKey,
-                                },
                             } as IProportionalWidgetChartOptions,
                         },
                     },

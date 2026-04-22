@@ -41,11 +41,12 @@ export class Atom {
         if (!parentLocator) {
             return create(Atom.getFromRoot(selector));
         }
-        const sibling = Helpers.page.locator(selector);
+        if (root) {
+            const sibling = Helpers.page.locator(selector);
+            return create(parentLocator.and(sibling));
+        }
 
-        const operation = root ? "and" : "locator";
-
-        return create(parentLocator[operation](sibling));
+        return create(parentLocator.locator(selector));
     }
 
     public static getFromRoot(selector: string): Locator {
