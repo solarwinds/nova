@@ -65,8 +65,6 @@ test.describe(`Visual tests: ${name}`, () => {
         await (await comboboxForm.getLastOption()).click();
         await comboboxForm.removeAll();
         await Helpers.pressKey("Tab");
-        // Open dropdown to trigger text selection, then type to replace selected text
-        await comboboxBasic.toggle();
         await ComboboxV2Atom.type("Item 3");
         await (await comboboxBasic.getOption(33)).hover();
         await camera.say.cheese("State 1");
