@@ -21,22 +21,22 @@ Generated from repository contents on 2026-04-21.
 
 ## Executive summary
 
-| Component/Area | E2E specs | A11y specs | Visual specs | Line coverage % | Branch coverage % | Confidence | Status | Main gap |
-| --- | ---: | ---: | ---: | ---: | ---: | --- | --- | --- |
-| Chart shell & assists | 0 direct; 6 indirect | 0 | 0 direct; 14 indirect | 35 | 25 | low | partial E2E coverage | Lifecycle, resize, rebuild not directly tested |
-| Legend | 1 | 0 | 1 | 70 | 60 | high | broad E2E coverage | No keyboard/a11y coverage |
-| Thresholds | 1 | 0 | 1 | 55 | 45 | medium | partial E2E coverage | Most exported threshold APIs untested |
-| Gauge | 0 | 0 | 1 | 25 | 20 | low | no E2E coverage | Visual-only |
-| Tooltips | 0 | 0 | 1 | 20 | 15 | low | no E2E coverage | Visual-only |
-| Popover | 0 | 0 | 1 | 30 | 20 | low | no E2E coverage | Visual-only |
-| Donut Content | 0 direct; 1 indirect | 0 | 0 | 45 | 35 | medium | partial E2E coverage | Resize/reposition logic untested |
-| Marker | 0 direct; 2 indirect | 0 | 0 direct; 2 indirect | 35 | 25 | medium | partial E2E coverage | Sizing and drawing branches untested |
-| Chart Collection | 0 direct; 2 indirect | 0 | 0 | 30 | 25 | low | partial E2E coverage | Add/remove/destroy sync logic untested |
-| Renderers - Line & Spark | 2 | 0 | 2 | 65 | 55 | medium | broad E2E coverage | Non-default line branches missing |
-| Renderers - Bar / Status / TimeFrame / Waterfall | 1 | 0 | 5 | 40 | 30 | medium | partial E2E coverage | Mostly visual outside status chart |
-| Renderers - Area | 0 | 0 | 2 | 20 | 15 | low | no E2E coverage | Visual-only |
-| Renderers - Radial (Pie / Donut) | 2 | 0 | 2 | 55 | 45 | medium | partial E2E coverage | Geometry and config branches weak |
-| Core/Common technical exports | 0 direct | 0 | 0 direct | 15 | 10 | low | no E2E coverage | Large exported surface only exercised incidentally |
+| Component/Area                                   |            E2E specs | A11y specs |          Visual specs | Line coverage % | Branch coverage % | Confidence | Status               | Main gap                                           |
+| ------------------------------------------------ | -------------------: | ---------: | --------------------: | --------------: | ----------------: | ---------- | -------------------- | -------------------------------------------------- |
+| Chart shell & assists                            | 0 direct; 6 indirect |          0 | 0 direct; 14 indirect |              35 |                25 | low        | partial E2E coverage | Lifecycle, resize, rebuild not directly tested     |
+| Legend                                           |                    1 |          0 |                     1 |              70 |                60 | high       | broad E2E coverage   | No keyboard/a11y coverage                          |
+| Thresholds                                       |                    1 |          0 |                     1 |              55 |                45 | medium     | partial E2E coverage | Most exported threshold APIs untested              |
+| Gauge                                            |                    0 |          0 |                     1 |              25 |                20 | low        | no E2E coverage      | Visual-only                                        |
+| Tooltips                                         |                    0 |          0 |                     1 |              20 |                15 | low        | no E2E coverage      | Visual-only                                        |
+| Popover                                          |                    0 |          0 |                     1 |              30 |                20 | low        | no E2E coverage      | Visual-only                                        |
+| Donut Content                                    | 0 direct; 1 indirect |          0 |                     0 |              45 |                35 | medium     | partial E2E coverage | Resize/reposition logic untested                   |
+| Marker                                           | 0 direct; 2 indirect |          0 |  0 direct; 2 indirect |              35 |                25 | medium     | partial E2E coverage | Sizing and drawing branches untested               |
+| Chart Collection                                 | 0 direct; 2 indirect |          0 |                     0 |              30 |                25 | low        | partial E2E coverage | Add/remove/destroy sync logic untested             |
+| Renderers - Line & Spark                         |                    2 |          0 |                     2 |              65 |                55 | medium     | broad E2E coverage   | Non-default line branches missing                  |
+| Renderers - Bar / Status / TimeFrame / Waterfall |                    1 |          0 |                     5 |              40 |                30 | medium     | partial E2E coverage | Mostly visual outside status chart                 |
+| Renderers - Area                                 |                    0 |          0 |                     2 |              20 |                15 | low        | no E2E coverage      | Visual-only                                        |
+| Renderers - Radial (Pie / Donut)                 |                    2 |          0 |                     2 |              55 |                45 | medium     | partial E2E coverage | Geometry and config branches weak                  |
+| Core/Common technical exports                    |             0 direct |          0 |              0 direct |              15 |                10 | low        | no E2E coverage      | Large exported surface only exercised incidentally |
 
 ## Per-area reports
 
