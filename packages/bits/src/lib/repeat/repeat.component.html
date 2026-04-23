@@ -96,7 +96,7 @@
         @if (!virtualScroll) {
         <div>
             @for ( sourceItem of itemsSource; track
-            itemConfig?.trackBy(itemIndex, sourceItem); let itemIndex = $index)
+            (itemConfig?.trackBy?.(itemIndex, sourceItem) ?? itemIndex); let itemIndex = $index)
             {
             <ng-container
                 [ngTemplateOutlet]="repeatItems"

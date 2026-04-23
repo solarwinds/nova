@@ -64,7 +64,7 @@ export class WizardStepHeaderComponent
     implements AfterViewInit, OnDestroy, OnChanges
 {
     /** State of the given step. */
-    public stepState: StepState;
+    public stepState: StepState = STEP_STATE.NUMBER;
 
     /** Custom icon config received from the wizard step. Allows to customize state icons for a particular wizard step */
     @Input() stepStateConfig: Partial<WizardStepStateConfig>;

@@ -19,7 +19,6 @@
 //  THE SOFTWARE.
 
 import {
-    ChangeDetectorRef,
     Component,
     QueryList,
     ViewChild,
@@ -58,14 +57,13 @@ class TestTabHeadingComponent {
     @ViewChildren(TabHeadingComponent)
     tabHeadings: QueryList<TabHeadingComponent>;
 
-    constructor(private changeDetector: ChangeDetectorRef) {
+    constructor() {
         this.addTab();
         this.addTab();
     }
 
     public updateContent(tabId: string) {
         this.currentTabId = tabId;
-        this.changeDetector.detectChanges();
     }
     public addTab() {
         const nextIndex = this.tabsetContent.length + 1;
@@ -103,52 +101,79 @@ describe("components >", () => {
                 });
         }));
 
-        it("should add tabs initially", () => {
+        it("should add tabs initially", waitForAsync(() => {
             componentFixture.detectChanges();
-            expect(subject.tabHeadings.toArray().length).toEqual(2);
-        });
+            componentFixture.whenStable().then(() => {
+                componentFixture.detectChanges();
+                expect(subject.tabHeadings.toArray().length).toEqual(2);
+            });
+        }));
 
-        it("should subscribe and unsubscribe from child tabs", () => {
+        it("should subscribe and unsubscribe from child tabs", waitForAsync(() => {
             componentFixture.detectChanges();
-            expect(
-                (subject.tabHeadingGroup as any)._tabSelectedSubscriptions
-                    .length
-            ).toEqual(2);
-            subject.addTab();
-            componentFixture.detectChanges();
-            expect(
-                (subject.tabHeadingGroup as any)._tabSelectedSubscriptions
-                    .length
-            ).toEqual(3);
-            subject.popTab();
-            subject.popTab();
-            componentFixture.detectChanges();
-            expect(
-                (subject.tabHeadingGroup as any)._tabSelectedSubscriptions
-                    .length
-            ).toEqual(1);
-            spyOn(
-                (subject.tabHeadingGroup as any)._tabSelectedSubscriptions[0],
-                "unsubscribe"
-            );
-            subject.tabHeadingGroup.ngOnDestroy();
-            expect(
-                (subject.tabHeadingGroup as any)._tabSelectedSubscriptions[0]
-                    .unsubscribe
-            ).toHaveBeenCalled();
-        });
+            componentFixture.whenStable().then(() => {
+                componentFixture.detectChanges();
+                expect(
+                    (subject.tabHeadingGroup as any)._tabSelectedSubscriptions
+                        .length
+                ).toEqual(2);
+                subject.addTab();
+                // markForCheck() is required in Angular 21: synchronizeOnce() only
+                // processes DIRTY views in UPDATE PASS. DEFAULT CD views with array
+                // mutations are not dirty → @for creates new views in NOCHANGES PASS
+                // → NG0100 ("view created in CD hook"). markForCheck sets LViewFlags.Dirty.
+                componentFixture.changeDetectorRef.markForCheck();
+                componentFixture.detectChanges();
+                componentFixture.whenStable().then(() => {
+                    componentFixture.detectChanges();
+                    expect(
+                        (subject.tabHeadingGroup as any)._tabSelectedSubscriptions
+                            .length
+                    ).toEqual(3);
+                    subject.popTab();
+                    subject.popTab();
+                    componentFixture.changeDetectorRef.markForCheck();
+                    componentFixture.detectChanges();
+                    componentFixture.whenStable().then(() => {
+                        componentFixture.detectChanges();
+                        expect(
+                            (subject.tabHeadingGroup as any)._tabSelectedSubscriptions
+                                .length
+                        ).toEqual(1);
+                        spyOn(
+                            (subject.tabHeadingGroup as any)._tabSelectedSubscriptions[0],
+                            "unsubscribe"
+                        );
+                        subject.tabHeadingGroup.ngOnDestroy();
+                        expect(
+                            (subject.tabHeadingGroup as any)._tabSelectedSubscriptions[0]
+                                .unsubscribe
+                        ).toHaveBeenCalled();
+                    });
+                });
+            });
+        }));
 
-        it("should publish tabId of new tab", () => {
+        it("should publish tabId of new tab", waitForAsync(() => {
             componentFixture.detectChanges();
-            expect(subject.currentTabId).toBe("1");
-            subject.tabHeadings.toArray()[1].selectTab();
-            componentFixture.detectChanges();
-            expect(subject.currentTabId).toBe("2");
-            subject.addTab();
-            componentFixture.detectChanges();
-            subject.tabHeadings.toArray()[2].selectTab();
-            componentFixture.detectChanges();
-            expect(subject.currentTabId).toBe("3");
-        });
+            componentFixture.whenStable().then(() => {
+                componentFixture.detectChanges();
+                expect(subject.currentTabId).toBe("1");
+                subject.tabHeadings.toArray()[1].selectTab();
+                componentFixture.detectChanges();
+                expect(subject.currentTabId).toBe("2");
+                subject.addTab();
+                // markForCheck() required in Angular 21: see comment in
+                // "should subscribe and unsubscribe from child tabs" test
+                componentFixture.changeDetectorRef.markForCheck();
+                componentFixture.detectChanges();
+                componentFixture.whenStable().then(() => {
+                    componentFixture.detectChanges();
+                    subject.tabHeadings.toArray()[2].selectTab();
+                    componentFixture.detectChanges();
+                    expect(subject.currentTabId).toBe("3");
+                });
+            });
+        }));
     });
 });

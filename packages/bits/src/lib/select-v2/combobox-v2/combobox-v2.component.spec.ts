@@ -117,7 +117,7 @@ describe("components >", () => {
                 (c) => c.componentInstance
             );
             optionComponentMocks.forEach((c, i) => {
-                c.componentInstance.value = selectedValuesMock[i];
+                c.componentRef.setInput("value", selectedValuesMock[i]);
                 (<HTMLElement>c.elementRef.nativeElement).textContent = (<
                     IOptionValueObject
                 >selectedValuesMock[i]).name;
@@ -129,7 +129,13 @@ describe("components >", () => {
             );
             wrapperComponent = wrapperFixture.componentInstance;
             wrapperFixture.detectChanges();
+            wrapperFixture.detectChanges();
         }));
+
+        afterEach(() => {
+            fixture.destroy();
+            wrapperFixture.destroy();
+        });
 
         it("should create", () => {
             expect(component).toBeTruthy();

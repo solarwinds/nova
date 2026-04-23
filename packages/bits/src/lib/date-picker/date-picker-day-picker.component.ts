@@ -146,6 +146,8 @@ export class DayPickerComponent implements OnInit {
             },
             "day"
         );
+
+        this.datePicker.refreshView();
     }
 
     protected getDates(startDate: Moment, n: number): Moment[] {

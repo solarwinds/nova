@@ -18,9 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { DebugElement, NO_ERRORS_SCHEMA, SimpleChange } from "@angular/core";
+import { Component, DebugElement, forwardRef, NO_ERRORS_SCHEMA, SimpleChange } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 
 import { SelectComponent } from "./select.component";
@@ -157,7 +157,9 @@ describe("components >", () => {
         });
 
         it("should respect 'disabled' attribute", () => {
-            componentInstance.isDisabled = true;
+            // Use setInput + two detectChanges() for Angular 21 NG0100 fix
+            fixture.componentRef.setInput("isDisabled", true);
+            fixture.detectChanges();
             fixture.detectChanges();
             const button = debugElement.query(By.css(".menu-button[disabled]"));
             expect(button).toBeDefined();
@@ -202,19 +204,25 @@ describe("components >", () => {
         });
 
         it("should has 'nui-select--inline' class if 'inline' attribute is set to 'true'", () => {
-            componentInstance.inline = true;
+            // Use setInput + two detectChanges() for Angular 21 NG0100 fix
+            fixture.componentRef.setInput("inline", true);
+            fixture.detectChanges();
             fixture.detectChanges();
             expect(debugElement.classes["nui-select--inline"]).toEqual(true);
         });
 
         it("should has 'nui-select--justified' class if 'justified' attribute is set to 'true'", () => {
-            componentInstance.justified = true;
+            // Use setInput + two detectChanges() for Angular 21 NG0100 fix
+            fixture.componentRef.setInput("justified", true);
+            fixture.detectChanges();
             fixture.detectChanges();
             expect(debugElement.classes["nui-select--justified"]).toEqual(true);
         });
 
         it("should add 'has-error' class if 'isInErrorState' is 'true' and value is not selected", () => {
-            componentInstance.isInErrorState = true;
+            // Use setInput + two detectChanges() for Angular 21 NG0100 fix
+            fixture.componentRef.setInput("isInErrorState", true);
+            fixture.detectChanges();
             fixture.detectChanges();
             const button = debugElement.query(By.css(".menu-button.has-error"));
             expect(button).toBeDefined();
@@ -241,19 +249,41 @@ describe("components >", () => {
     });
 
     describe("select with reactive form >", () => {
+        /**
+         * Stub for <nui-select> that registers as NG_VALUE_ACCESSOR.
+         * Required in Angular 21 which throws NG01203 (instead of warning) when
+         * formControlName is used on an element with no registered value accessor.
+         */
+        @Component({
+            selector: "nui-select",
+            template: "",
+            providers: [
+                {
+                    provide: NG_VALUE_ACCESSOR,
+                    useExisting: forwardRef(() => NuiSelectStub),
+                    multi: true,
+                },
+            ],
+            standalone: false,
+        })
+        class NuiSelectStub implements ControlValueAccessor {
+            writeValue(): void {}
+            registerOnChange(): void {}
+            registerOnTouched(): void {}
+        }
+
         let fixture: ComponentFixture<SelectReactiveFormTestComponent>;
         let componentInstance: SelectReactiveFormTestComponent;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [FormsModule, ReactiveFormsModule],
-                declarations: [SelectReactiveFormTestComponent],
+                declarations: [SelectReactiveFormTestComponent, NuiSelectStub],
                 providers: [
                     ToastService,
                     ToastContainerService,
                     NotificationService,
                 ],
-                schemas: [NO_ERRORS_SCHEMA],
             });
 
             fixture = TestBed.createComponent(SelectReactiveFormTestComponent);

@@ -18,8 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, NO_ERRORS_SCHEMA } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { Component, Input, NO_ERRORS_SCHEMA } from "@angular/core";
+import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
 import { IWizardSelectionEvent } from "./public-api";
@@ -32,14 +32,17 @@ import { LoggerService } from "../../services/log-service";
 
 @Component({
     selector: "nui-test-cmp",
-    template: ` <nui-wizard finishText="Finish">
+    template: ` <nui-wizard finishText="Finish" [bodyContainerHeight]="bodyContainerHeight" [enableScroll]="enableScroll">
         <nui-wizard-step [title]="'step1'"></nui-wizard-step>
         <nui-wizard-step [title]="'step2'"></nui-wizard-step>
         <nui-wizard-step [title]="'step3'"></nui-wizard-step>
     </nui-wizard>`,
     standalone: false,
 })
-class TestWrapperComponent {}
+class TestWrapperComponent {
+    @Input() public bodyContainerHeight: string;
+    @Input() public enableScroll: boolean = false;
+}
 
 describe("components >", () => {
     describe("wizard >", () => {
@@ -62,6 +65,9 @@ describe("components >", () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(TestWrapperComponent);
             component = fixture.debugElement.children[0].componentInstance;
+            fixture.detectChanges();
+            // Double detectChanges to fully settle WizardComponent state after ngAfterContentInit
+            // (Angular 21 NG0100 prevention pattern).
             fixture.detectChanges();
         });
 
@@ -91,10 +97,17 @@ describe("components >", () => {
         });
 
         describe("addStepDynamic >", () => {
-            it("should add wizard step to wizard", () => {
-                component.addStepDynamic(component.steps.toArray()[0], 1);
+            it("should add wizard step to wizard", fakeAsync(() => {
+                // Wrap in ngZone.run so the new component view is created within Angular's zone,
+                // preventing NG0100 "view created after dirty check" in Angular 21.
+                fixture.ngZone!.run(() =>
+                    component.addStepDynamic(component.steps.toArray()[0], 1)
+                );
+                tick();
+                fixture.detectChanges();
+                fixture.detectChanges();
                 expect(component.steps.toArray().length).toBe(4);
-            });
+            }));
         });
 
         describe("disableStep >", () => {
@@ -187,7 +200,6 @@ describe("components >", () => {
         describe("onBackClick >", () => {
             it("should move to previous wizard step", () => {
                 component.onNextClick();
-
                 component.onBackClick();
                 expect(component.currentStep).toBe(
                     component.steps.toArray()[0]
@@ -205,7 +217,8 @@ describe("components >", () => {
 
         describe("constant height >", () => {
             it("should set height of wizard body container to 200px", () => {
-                component.bodyContainerHeight = "200px";
+                fixture.componentRef.setInput("bodyContainerHeight", "200px");
+                fixture.detectChanges();
                 fixture.detectChanges();
                 const wizardBodyContainer = fixture.debugElement.query(
                     By.css(".nui-wizard__container")
@@ -214,7 +227,8 @@ describe("components >", () => {
             });
 
             it("should apply show-scroll class", () => {
-                component.enableScroll = true;
+                fixture.componentRef.setInput("enableScroll", true);
+                fixture.detectChanges();
                 fixture.detectChanges();
                 const wizardBodyContainer = fixture.debugElement.query(
                     By.css(".nui-wizard__container")
@@ -223,25 +237,29 @@ describe("components >", () => {
             });
 
             it("should dynamically change height when input changes", () => {
-                component.bodyContainerHeight = "200px";
+                fixture.componentRef.setInput("bodyContainerHeight", "200px");
+                fixture.detectChanges();
                 fixture.detectChanges();
                 const wizardBodyContainer = fixture.debugElement.query(
                     By.css(".nui-wizard__container")
                 ).nativeElement;
                 expect(wizardBodyContainer.style.height).toEqual("200px");
-                component.bodyContainerHeight = "300px";
+                fixture.componentRef.setInput("bodyContainerHeight", "300px");
+                fixture.detectChanges();
                 fixture.detectChanges();
                 expect(wizardBodyContainer.style.height).toEqual("300px");
             });
 
             it("should accept different CSS units", () => {
-                component.bodyContainerHeight = "5vh";
+                fixture.componentRef.setInput("bodyContainerHeight", "5vh");
+                fixture.detectChanges();
                 fixture.detectChanges();
                 const wizardBodyContainer = fixture.debugElement.query(
                     By.css(".nui-wizard__container")
                 ).nativeElement;
                 expect(wizardBodyContainer.style.height).toEqual("5vh");
-                component.bodyContainerHeight = "10%";
+                fixture.componentRef.setInput("bodyContainerHeight", "10%");
+                fixture.detectChanges();
                 fixture.detectChanges();
                 expect(wizardBodyContainer.style.height).toEqual("10%");
             });

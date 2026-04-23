@@ -35,7 +35,12 @@ import {
 class LayoutResizerTestingComponent implements AfterViewInit {
     constructor(public elRef: ElementRef) {}
     public ngAfterViewInit(): void {
-        this.elRef.nativeElement.parentElement = document.createElement("div");
+        // parentElement is read-only on DOM nodes; use Object.defineProperty to mock it
+        const mockParent = document.createElement("div");
+        Object.defineProperty(this.elRef.nativeElement, "parentElement", {
+            get: () => mockParent,
+            configurable: true,
+        });
     }
 }
 
@@ -69,7 +74,8 @@ describe("Components >", () => {
         });
 
         it("should have correct classes", () => {
-            resizerComponent.resizeDirection = ResizeDirection.right;
+            fixture.componentRef.setInput("resizeDirection", ResizeDirection.right);
+            fixture.detectChanges();
             fixture.detectChanges();
             const layoutResizer = fixture.elementRef.nativeElement;
             expect(layoutResizer.classList).toContain(
@@ -77,7 +83,8 @@ describe("Components >", () => {
             );
         });
         it("should have correct classes", () => {
-            resizerComponent.resizeDirection = ResizeDirection.bottom;
+            fixture.componentRef.setInput("resizeDirection", ResizeDirection.bottom);
+            fixture.detectChanges();
             fixture.detectChanges();
             const layoutResizer = fixture.elementRef.nativeElement;
             expect(layoutResizer.classList).toContain(

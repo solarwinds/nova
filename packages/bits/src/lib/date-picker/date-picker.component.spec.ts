@@ -97,6 +97,7 @@ describe("components >", () => {
             componentInstance.value = moment();
             debugElement = fixture.debugElement;
             fixture.detectChanges();
+            fixture.detectChanges();
         });
 
         it("should contain nui-overlay when not inline option", () => {
@@ -108,7 +109,7 @@ describe("components >", () => {
         });
 
         it("should NOT contain nui-overlay when inline option is set", () => {
-            componentInstance.inline = true;
+            fixture.componentRef.setInput("inline", true);
             fixture.detectChanges();
             const noOverlay =
                 debugElement.queryAll(By.css("nui-overlay")).length === 0;
@@ -116,10 +117,10 @@ describe("components >", () => {
         });
 
         it("should have only 10 elements for the year mode", () => {
-            componentInstance.datepickerMode = "year";
-            componentInstance.yearRange = 10;
+            fixture.componentRef.setInput("inline", true);
+            fixture.componentRef.setInput("datepickerMode", "year");
+            fixture.componentRef.setInput("yearRange", 10);
             fixture.detectChanges();
-            componentInstance.overlay.toggle();
             fixture.detectChanges();
             const numberOfYearTiles = debugElement.queryAll(
                 By.css("table .year")
@@ -129,7 +130,7 @@ describe("components >", () => {
 
         it("should load with selected date being today", () => {
             const activeDate = moment();
-            componentInstance.writeValue(activeDate);
+            fixture.componentRef.setInput("value", activeDate);
             componentInstance.overlay.toggle();
             fixture.detectChanges();
             const activeDateTile = debugElement.query(
@@ -166,8 +167,8 @@ describe("components >", () => {
         }));
 
         it("should set innerDatePicker.value to 'undefined' if popup is closed", () => {
-            componentInstance.ngOnInit();
-            componentInstance.value = moment("");
+            // Use setInput so Angular marks the view dirty before detectChanges (Angular 21 NG0100 fix)
+            fixture.componentRef.setInput("value", moment(""));
             fixture.detectChanges();
             componentInstance.overlay.hide$.next();
             expect(componentInstance._datePicker.value).toBeUndefined();
@@ -197,10 +198,10 @@ describe("components >", () => {
             const australiaTimezone = "Australia/Sydney";
             const marchDateISO = "2020-03-01T11:00:00.000+11:00";
 
-            componentInstance.ngOnInit();
-            componentInstance.value = momentTz().tz(
-                australiaTimezone
-            ) as unknown as moment.Moment;
+            fixture.componentRef.setInput(
+                "value",
+                momentTz().tz(australiaTimezone) as unknown as moment.Moment
+            );
             fixture.detectChanges();
 
             componentInstance._datePicker.select(marchDateISO, eventMock);
@@ -212,8 +213,7 @@ describe("components >", () => {
         it("should keep timezone value if 'handleTimezone' set to 'true'", () => {
             const dateISO = "2020-03-18T11:00:00.000+11:00";
 
-            componentInstance.ngOnInit();
-            componentInstance.handleTimezone = true;
+            fixture.componentRef.setInput("handleTimezone", true);
             fixture.detectChanges();
 
             componentInstance._datePicker.select(dateISO, eventMock);
@@ -231,8 +231,7 @@ describe("components >", () => {
             const dateISOMoment = moment("2020-03-18T11:00:00.000+11:00");
             const invalidMoment = moment.invalid();
 
-            componentInstance.ngAfterViewInit();
-            componentInstance.value = invalidMoment;
+            fixture.componentRef.setInput("value", invalidMoment);
             fixture.detectChanges();
 
             componentInstance._datePicker.selectionDone.next(dateISOMoment);

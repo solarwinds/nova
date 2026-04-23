@@ -18,9 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectorRef, Component, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, ViewChild } from "@angular/core";
 
-import { TableSelectionConfig } from "@nova-ui/bits";
+import { TableSelectionConfig, TableSelectionMode } from "@nova-ui/bits";
 
 import { ISelection } from "../../../services/public-api";
 import { TableComponent } from "../table.component";
@@ -165,8 +165,8 @@ export class TableSelectTestComponent {
     public dataSource = ELEMENT_DATA;
     public selectedItems: ISelection;
     public isSticky = false;
-    public selectable = true;
-    public selectionConfig: TableSelectionConfig | null = null;
+    @Input() public selectable: boolean | TableSelectionMode = true;
+    @Input() public selectionConfig: TableSelectionConfig | null = null;
 
     @ViewChild(TableComponent, { static: true })
     tableComponent: TableComponent<any>;

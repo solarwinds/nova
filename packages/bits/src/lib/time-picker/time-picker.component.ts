@@ -199,7 +199,7 @@ export class TimePickerComponent
             this.overlay,
             this.menuTrigger.nativeElement
         );
-        this.cdr.detectChanges();
+        this.cdr.markForCheck();
     }
 
     onChange(value: any): void {}
@@ -272,6 +272,7 @@ export class TimePickerComponent
     writeValue(value: any): void {
         this.textbox.writeValue(this.formatValue(value));
         this.updateInnerModel(this.formatValue(value));
+        this.cdr.markForCheck();
     }
 
     setErrorState(value: string): void {

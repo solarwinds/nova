@@ -140,7 +140,9 @@ export class SelectV2Component
     /** Sets value to the model */
     public writeValue(value: OptionValueType | OptionValueType[]): void {
         super.writeValue(value);
-        this.defineDisplayText();
+        if (!this.multiselect) {
+            this.defineDisplayText();
+        }
         this.cdRef.markForCheck();
     }
 

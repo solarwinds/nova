@@ -24,7 +24,7 @@ import {
     TRANSLATIONS,
     TRANSLATIONS_FORMAT,
 } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, fakeAsync, flush, TestBed } from "@angular/core/testing";
 import noop from "lodash/noop";
 
 import { IToolbarSelectionState, ToolbarItemType } from "./public-api";
@@ -96,27 +96,29 @@ describe("components >", () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(TestWrapperComponent);
             component = fixture.debugElement.children[0].componentInstance;
+            // Double detectChanges to fully settle ngAfterContentInit's splitToolbarItems()
+            // and ngAfterViewInit's moveToolbarItems() before each test (Angular 21 pattern).
+            fixture.detectChanges();
             fixture.detectChanges();
         });
 
         describe("ngAfterViewInit >", () => {
             it("should add visible group to commandGroups array", () => {
-                spyOn(component, "splitToolbarItems").and.callFake(noop);
+                // splitToolbarItems runs in ngAfterContentInit (already done in beforeEach).
+                // ngAfterViewInit subscribes to ngZone.onStable to call moveToolbarItems.
+                // In Angular 21, detectChanges() does not emit onStable — trigger it manually.
                 spyOn(component, "moveToolbarItems").and.callFake(noop);
                 component.ngAfterViewInit();
-                fixture.detectChanges();
+                fixture.ngZone!.onStable.emit(null);
                 expect(component.commandGroups.length).toBe(2);
-                expect(component.splitToolbarItems).toHaveBeenCalled();
                 expect(component.moveToolbarItems).toHaveBeenCalled();
             });
 
             it("should visible group contain 3 items", () => {
-                spyOn(component, "splitToolbarItems").and.callFake(noop);
                 spyOn(component, "moveToolbarItems").and.callFake(noop);
                 component.ngAfterViewInit();
-                fixture.detectChanges();
+                fixture.ngZone!.onStable.emit(null);
                 expect(component.commandGroups[0].items.length).toBe(3);
-                expect(component.splitToolbarItems).toHaveBeenCalled();
                 expect(component.moveToolbarItems).toHaveBeenCalled();
             });
         });

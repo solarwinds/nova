@@ -219,6 +219,7 @@ export class PanelComponent
 
     private _isCollapsed: boolean;
     private _isHidden: boolean = false;
+    private _viewInitialized = false;
     private toggles = new Subject<boolean>();
     private togglesSubscription: Subscription;
     private _expandAnimationFactory?: AnimationFactory;
@@ -255,9 +256,16 @@ export class PanelComponent
         if (changes["isHidden"] && changes["isHidden"].isFirstChange()) {
             this.isHidden = changes.isHidden.currentValue;
         }
+        // Re-apply margin when relevant inputs change after the view is initialized
+        if (this._viewInitialized &&
+            (changes["displacePrimaryContent"] || changes["isClosable"] ||
+             changes["orientation"] || changes["panelMode"])) {
+            this.handleContentMargin();
+        }
     }
 
     public ngAfterViewInit(): void {
+        this._viewInitialized = true;
         if (this.orientation === panelMap.bottom.orientation) {
             this.isResizable = false;
         }
@@ -468,7 +476,7 @@ export class PanelComponent
     private checkPanelEmbeddedContent(): void {
         this.displayPanelHeader =
             this.headerContent.element.nativeElement.children.length !== 0;
-        this.changeDetectorRef.detectChanges();
+        this.changeDetectorRef.markForCheck();
     }
 
     private updatePaneContainerSizeWithoutAnimation(): void {

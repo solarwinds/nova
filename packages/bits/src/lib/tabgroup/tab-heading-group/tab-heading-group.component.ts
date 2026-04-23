@@ -90,9 +90,10 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
             this._ro.observe(this.el.nativeElement);
         });
 
-        // Making the first tab in group active by default
-        this.setActiveTab();
-        this.subscribeToSelection();
+        queueMicrotask(() => {
+            this.setActiveTab();
+            this.subscribeToSelection();
+        });
 
         this._changesSubscription = this._tabs.changes.subscribe(
             (changedTabs: any) => {

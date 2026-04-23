@@ -55,6 +55,18 @@ describe("components >", () => {
             });
             fixture = TestBed.createComponent(PopoverModalComponent);
             subject = fixture.componentInstance;
+            // Set required inputs so ngOnInit/template doesn't crash if Angular triggers CD
+            // via zone events (e.g., from zone.run() in ngAfterViewInit test)
+            subject.displayChange = new BehaviorSubject<boolean>(true);
+            subject.popoverBeforeHiddenSubject = new Subject<void>();
+            subject.popoverModalEventSubject = new Subject<PopoverModalEvents>();
+            subject.context = {
+                arrowMarginTop: 0,
+                icon: "add",
+                popoverPosition: "left",
+                title: "title",
+                placement: "left",
+            };
             debugElement = fixture.debugElement;
         });
 

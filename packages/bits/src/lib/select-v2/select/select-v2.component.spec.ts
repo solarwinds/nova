@@ -23,6 +23,7 @@ import {
     ChangeDetectorRef,
     Component,
     ElementRef,
+    Input,
     NO_ERRORS_SCHEMA,
     QueryList,
     SimpleChange,
@@ -79,7 +80,7 @@ class SelectV2WrapperWithFormControlComponent {
 })
 class SelectV2WrapperWithValueComponent {
     public items = Array.from({ length: 10 }).map((_, i) => `Item ${i}`);
-    public value: InputValueTypes = this.items[0];
+    @Input() public value: InputValueTypes = this.items[0];
     @ViewChild(SelectV2Component) select: SelectV2Component;
     constructor(public elRef: ElementRef<HTMLElement>) {}
 }
@@ -87,7 +88,7 @@ class SelectV2WrapperWithValueComponent {
 @Component({
     template: `
         <nui-select-v2 placeholder="Select Item" [formControl]="selectControl">
-            @for (item of items; track item) {
+            @for (item of items; track $index) {
             <nui-select-v2-option [value]="item.id">{{
                 item.name
             }}</nui-select-v2-option>
@@ -204,6 +205,9 @@ describe("components >", () => {
                 component.selectedOptions = [];
                 // @ts-ignore: Suppressing error for testing purposes
                 component.options = null;
+                // Reset displayText to prevent state pollution between tests
+                // (destroyAfterEach: false means component instance persists)
+                component.displayText = undefined as any;
             });
             describe("if is not muiltiselect", () => {
                 beforeEach(() => {
@@ -235,6 +239,9 @@ describe("components >", () => {
             });
 
             it("should not set displayText, if is muiltiselect", fakeAsync(() => {
+                // Reset displayText — beforeEach's synchronizeOnce fires ngAfterContentInit's
+                // deferred timer which sets displayText='' (since multiselect=false at that time).
+                component.displayText = undefined as any;
                 component.multiselect = true;
                 component.options = new QueryList<SelectV2OptionComponent>();
                 component.options.reset([selectedOptionsMock]);
@@ -242,7 +249,8 @@ describe("components >", () => {
                     selectedOptionsMock[0],
                     selectedOptionsMock[1],
                 ];
-                fixture.detectChanges();
+                // Do NOT call fixture.detectChanges() here — it re-runs synchronizeOnce()
+                // which processes other fixtures and may queue timers that reset displayText.
                 component.ngAfterContentInit();
                 tick();
                 expect(component.displayText).toBeUndefined();
@@ -324,6 +332,8 @@ describe("components >", () => {
                 });
 
                 it("should not set displayText, if is muiltiselect", () => {
+                    // Reset displayText — previous tests may have set it to '' or a string.
+                    component.displayText = undefined as any;
                     component.selectOption(selectedOptionsMock[0]);
                     expect(component.displayText).toBeUndefined();
                 });
@@ -830,8 +840,16 @@ describe("components >", () => {
                 wrapperFixtureAsync.detectChanges();
 
                 tick(200); // wrapperComponentAsync.setItems setTimeout
+                // markForCheck() is required in Angular 21: synchronizeOnce() only
+                // processes DIRTY views in UPDATE PASS. DEFAULT CD views with direct
+                // array/property mutations are not marked dirty → @for creates new
+                // embedded views in NOCHANGES PASS → NG0100 (prev=undefined, curr=item.id).
+                // markForCheck() sets LViewFlags.Dirty so the view IS processed in UPDATE
+                // PASS first, where @for creates and initializes the new views correctly.
+                wrapperFixtureAsync.changeDetectorRef.markForCheck();
                 wrapperFixtureAsync.detectChanges();
-                tick(0); // selectV2.optionsChanged delay
+                tick(0); // selectV2.optionsChanged delay(0)
+                wrapperFixtureAsync.detectChanges();
                 expect(wrapperComponentAsync.select.displayText).toEqual(
                     "Item 3"
                 );
@@ -885,8 +903,12 @@ describe("components >", () => {
 
         it("update selected value, if value change in code", fakeAsync(() => {
             const itemToSet = wrapperWithValueComponent.items[9];
-            wrapperWithValueComponent.value = itemToSet;
-            expect(wrapperWithValueComponent.value).toEqual(itemToSet);
+            // Use setInput() instead of direct assignment. In Angular 21,
+            // synchronizeOnce() only processes DIRTY views in the UPDATE PASS.
+            // Direct assignment doesn't mark the DEFAULT CD view dirty, so Angular
+            // only sees the change in NOCHANGES PASS → NG0100. setInput() marks
+            // the view dirty (LViewFlags.Dirty) so it is processed in UPDATE PASS first.
+            wrapperWithValueFixture.componentRef.setInput("value", itemToSet);
             wrapperWithValueFixture.detectChanges();
             tick(0);
             expect(wrapperWithValueComponent.select.displayText).toEqual(

@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 import {
+    AfterContentInit,
     AfterViewInit,
     ChangeDetectorRef,
     Component,
@@ -71,7 +72,7 @@ import { MenuComponent } from "../menu";
     providers: [ToolbarKeyboardService],
     standalone: false,
 })
-export class ToolbarComponent implements AfterViewInit, OnDestroy {
+export class ToolbarComponent implements AfterViewInit, AfterContentInit, OnDestroy {
     @ContentChildren(ToolbarGroupComponent)
     public groups: QueryList<ToolbarGroupComponent>;
 
@@ -136,8 +137,14 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
         this.keyboardService.onKeyDown(event);
     }
 
-    public ngAfterViewInit(): void {
+    public ngAfterContentInit(): void {
+        // Initial split must run in ngAfterContentInit (not ngAfterViewInit) to avoid
+        // NG0100 "view created in CD hook": @ContentChildren are available here, and
+        // the @for-bound commandGroups array is populated before the view is first rendered.
         this.splitToolbarItems();
+    }
+
+    public ngAfterViewInit(): void {
         this.childrenSubscription = merge(
             this.groups.changes,
             this.items.changes
@@ -259,7 +266,6 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
         });
         this.showMenu = this.menuGroups.length > 0;
         this.allItemsHidden = this.commandGroups.length === 0;
-        this.changeDetector.detectChanges();
     }
 
     public makeAllItemsVisible(): void {

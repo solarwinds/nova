@@ -79,7 +79,7 @@ export class SelectV2OptionComponent
     /** Whether the Option selected */
     @HostBinding("class.selected")
     public get selected(): boolean | undefined {
-        if (!this.select.multiselect && this.select?.selectedOptions[0]) {
+        if (!this.select?.multiselect && this.select?.selectedOptions[0]) {
             return !isNaN(this.index)
                 ? this.select.selectedOptions[0]?.index === this.index
                 : this.select.selectedOptions[0] === this;

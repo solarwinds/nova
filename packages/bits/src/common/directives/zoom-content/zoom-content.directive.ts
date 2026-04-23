@@ -151,7 +151,10 @@ export class ZoomContentDirective
         }
     }
 
-    private applyZoom() {
+    private applyZoom(): void {
+        if (!this.elementRect || !this.parentRect) {
+            return;
+        }
         const widthZoom = this.parentRect.width / this.elementRect.width;
         const heightZoom = this.parentRect.height / this.elementRect.height;
 

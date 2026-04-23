@@ -18,9 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { DebugElement, NO_ERRORS_SCHEMA } from "@angular/core";
+import { Component, DebugElement, forwardRef, NO_ERRORS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ControlValueAccessor, FormBuilder, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 import _debounce from "lodash/debounce";
 import _each from "lodash/each";
@@ -118,7 +118,9 @@ describe("components >", () => {
         });
 
         it("should change selected element", () => {
-            componentInstance.overlay.toggle();
+            // Wrap overlay.toggle in zone.run so Angular marks the view dirty (Angular 21 NG0100 fix)
+            fixture.ngZone!.run(() => componentInstance.overlay.toggle());
+            fixture.detectChanges();
             fixture.detectChanges();
             const initialState = debugElement.query(
                 By.css(".nui-menu-item--selected")
@@ -138,7 +140,9 @@ describe("components >", () => {
                 componentInstance.timeFormat
             );
             expect(movedTimeFormatted).not.toBe(initialState);
-            componentInstance.writeValue(movedTime);
+            // Wrap writeValue in zone.run so Angular marks the view dirty (Angular 21 NG0100 fix)
+            fixture.ngZone!.run(() => componentInstance.writeValue(movedTime));
+            fixture.detectChanges();
             fixture.detectChanges();
             const changedState = debugElement
                 .query(By.css(".nui-menu-item--selected"))
@@ -205,9 +209,13 @@ describe("components >", () => {
         });
 
         it("should check if item is selected", () => {
-            componentInstance.writeValue(
-                componentInstance.itemsSource[0].itemsSource[0].title
+            // Wrap writeValue in zone.run so Angular marks the view dirty (Angular 21 NG0100 fix)
+            fixture.ngZone!.run(() =>
+                componentInstance.writeValue(
+                    componentInstance.itemsSource[0].itemsSource[0].title
+                )
             );
+            fixture.detectChanges();
             fixture.detectChanges();
             const isSelected =
                 componentInstance.itemsSource[0].itemsSource[4].isSelected;
@@ -279,19 +287,41 @@ describe("components >", () => {
     });
 
     describe("timepicker with reactive form >", () => {
+        /**
+         * Stub for <nui-time-picker> that registers as NG_VALUE_ACCESSOR.
+         * Required in Angular 21 which throws NG01203 (instead of warning) when
+         * formControlName is used on an element with no registered value accessor.
+         */
+        @Component({
+            selector: "nui-time-picker",
+            template: "",
+            providers: [
+                {
+                    provide: NG_VALUE_ACCESSOR,
+                    useExisting: forwardRef(() => NuiTimePickerStub),
+                    multi: true,
+                },
+            ],
+            standalone: false,
+        })
+        class NuiTimePickerStub implements ControlValueAccessor {
+            writeValue(): void {}
+            registerOnChange(): void {}
+            registerOnTouched(): void {}
+        }
+
         let fixture: ComponentFixture<TimePickerReactiveFormTestComponent>;
         let componentInstance: TimePickerReactiveFormTestComponent;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [FormsModule, ReactiveFormsModule],
-                declarations: [TimePickerReactiveFormTestComponent],
+                declarations: [TimePickerReactiveFormTestComponent, NuiTimePickerStub],
                 providers: [
                     ToastService,
                     ToastContainerService,
                     NotificationService,
                 ],
-                schemas: [NO_ERRORS_SCHEMA],
             });
 
             fixture = TestBed.createComponent(

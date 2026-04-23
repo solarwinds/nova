@@ -20,7 +20,7 @@
 
 import { SimpleChange, SimpleChanges } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { GridsterItem } from "angular-gridster2";
+import { GridsterItemConfig } from "angular-gridster2";
 
 import { DashboardComponent } from "./dashboard.component";
 import { DEFAULT_GRIDSTER_CONFIG } from "./default-gridster-config";
@@ -98,7 +98,7 @@ describe("DashboardComponent", () => {
     });
 
     describe("orderWidgets > ", () => {
-        const testPositions: Record<string, GridsterItem> = {
+        const testPositions: Record<string, GridsterItemConfig> = {
             widget_1: { x: 2, y: 0, cols: 2, rows: 3 },
             widget_2: { x: 1, y: 0, cols: 2, rows: 3 },
             widget_3: { x: 8, y: 0, cols: 2, rows: 3 },
@@ -161,7 +161,7 @@ describe("DashboardComponent", () => {
     });
 
     describe("updateWidgetPosition > ", () => {
-        const testGridsterItem: GridsterItem = {
+        const testGridsterItem: GridsterItemConfig = {
             x: 0,
             y: 0,
             rows: 10,

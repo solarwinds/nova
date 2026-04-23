@@ -21,6 +21,7 @@
 import {
     AfterContentInit,
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     ElementRef,
     EventEmitter,
@@ -139,13 +140,17 @@ export class LegendSeriesComponent implements AfterContentInit {
     private _active = false;
     private _interactive: boolean;
 
-    constructor(@Optional() @Host() private legend: LegendComponent) {}
+    constructor(
+        @Optional() @Host() private legend: LegendComponent,
+        private cd: ChangeDetectorRef
+    ) {}
 
     public ngAfterContentInit(): void {
         if (this.legend) {
-            this.legend.activeChanged.subscribe(
-                (active: boolean) => (this._active = active)
-            );
+            this.legend.activeChanged.subscribe((active: boolean) => {
+                this._active = active;
+                this.cd.markForCheck();
+            });
 
             this.icon = this.icon || this.legend.seriesIcon;
             this._active = this.legend.active;

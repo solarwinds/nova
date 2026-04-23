@@ -22,7 +22,7 @@ import { PortalModule } from "@angular/cdk/portal";
 import { Component, Injectable } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
-import { GridsterModule } from "angular-gridster2";
+import { Gridster, GridsterItem } from "angular-gridster2";
 import { Observable } from "rxjs";
 
 import { LoggerService } from "@nova-ui/bits";
@@ -112,7 +112,7 @@ describe("WidgetEditorDirective >", () => {
 
         TestBed.configureTestingModule({
             imports: [
-                GridsterModule,
+                Gridster, GridsterItem,
                 PortalModule,
                 RouterTestingModule.withRoutes([]),
             ],
