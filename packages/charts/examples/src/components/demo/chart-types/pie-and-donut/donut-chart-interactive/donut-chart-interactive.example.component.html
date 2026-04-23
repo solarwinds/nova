@@ -28,7 +28,11 @@
                     backgroundColor="transparent"
                 >
                 </nui-rich-legend-tile>
-                <nui-icon [icon]="'status_' + legendSeries['name']"></nui-icon>
+                <nui-icon
+                    [icon]="'status_' + legendSeries['name']"
+                    [decorative]="false"
+                    [ariaLabel]="'Status ' + legendSeries['name']"
+                ></nui-icon>
             </nui-legend-series>
         </nui-legend>
     </div>

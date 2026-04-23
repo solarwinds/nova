@@ -6,7 +6,11 @@
 
 <ng-template let-dataPoint="dataPoint" #donutTooltipTemplate>
     <div class="p-1 d-flex align-items-center">
-        <nui-icon [icon]="'status_' + dataPoint.dataSeries.name"></nui-icon>
+        <nui-icon
+            [icon]="'status_' + dataPoint.dataSeries.name"
+            [decorative]="false"
+            [ariaLabel]="'Status ' + dataPoint.dataSeries.name"
+        ></nui-icon>
         <span class="pl-2">{{ dataPoint.data.data | number }}</span>
     </div>
 </ng-template>

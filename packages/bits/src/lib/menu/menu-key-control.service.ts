@@ -19,18 +19,19 @@
 //  THE SOFTWARE.
 
 import { ActiveDescendantKeyManager, LiveAnnouncer } from "@angular/cdk/a11y";
-import { ElementRef, Injectable, OnDestroy, QueryList } from "@angular/core";
+import { DOCUMENT } from "@angular/common";
+import { ElementRef, Injectable, OnDestroy, QueryList, Renderer2, Inject } from "@angular/core";
 import isNull from "lodash/isNull";
 import { Subject, Subscription } from "rxjs";
 
+import { PopupComponent } from "../popup-adapter/popup-adapter.component";
+import { MenuActionComponent } from "./menu-item/menu-action/menu-action.component";
 import { MenuGroupComponent } from "./menu-item/menu-group/menu-group.component";
+import { MenuItemBaseComponent } from "./menu-item/menu-item/menu-item-base";
 import { MenuItemComponent } from "./menu-item/menu-item/menu-item.component";
 import { MenuPopupComponent } from "./menu-popup/menu-popup.component";
+import { IPopupActiveOptions } from "./public-api";
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
-import { MenuActionComponent } from "../menu/menu-item/menu-action/menu-action.component";
-import { MenuItemBaseComponent } from "../menu/menu-item/menu-item/menu-item-base";
-import { PopupComponent } from "../popup-adapter/popup-adapter.component";
-import { IPopupActiveOptions } from "../public-api";
 
 @Injectable()
 export class MenuKeyControlService implements OnDestroy {
@@ -45,6 +46,7 @@ export class MenuKeyControlService implements OnDestroy {
     public menuOpenListenerSubscription: Subscription;
     private keyboardEventsSubscription: Subscription;
     private _scrollContainer: ElementRef;
+    private pendingInitialActivation: "first" | "last" | null = null;
 
     public set scrollContainer(container: ElementRef) {
         this._scrollContainer = container;
@@ -54,9 +56,20 @@ export class MenuKeyControlService implements OnDestroy {
         return this._scrollContainer || this.popup?.popupAreaContainer;
     }
 
-    constructor(private live: LiveAnnouncer) {}
+    constructor(
+        private live: LiveAnnouncer,
+        private renderer: Renderer2,
+        @Inject(DOCUMENT) private document: Document
+    ) {}
 
     public initKeyboardManager(): void {
+        // Guard: For itemsSource menus, menuPopup must be available first
+        // MenuPopup is only rendered when menu is opened, so we need to defer initialization
+        if (this.keyControlItemsSource && !this.menuPopup) {
+            return;
+        }
+
+        // Initialize keyboard manager
         this.keyboardEventsManager = this.keyControlItemsSource
             ? new ActiveDescendantKeyManager(
                   this.menuPopup.menuItems
@@ -64,29 +77,28 @@ export class MenuKeyControlService implements OnDestroy {
             : new ActiveDescendantKeyManager(
                   this.menuItems
               ).withVerticalOrientation();
+
         if (this.keyboardEventsSubscription) {
             this.keyboardEventsSubscription.unsubscribe();
         }
+
         this.initKeyManagerHandlers();
 
         // when opening menu key 'focus' should disappear from items
         if (this.menuOpenListener) {
             this.menuOpenListenerSubscription = this.menuOpenListener.subscribe(
                 () => {
-                    // Uncomment in the scope of NUI-6104
-                    // this.keyboardEventsManager.setFirstItemActive();
+                    // Use timeout to ensure DOM is ready
+                    setTimeout(() => {
+                        this.activatePendingItem();
+                    }, 0);
 
-                    // Remove this in the scope of NUI-6104 in favor of the line above
-                    this.keyboardEventsManager.setActiveItem(-1);
                     this.live.announce(`
                     ${
                         this.keyControlItemsSource
-                            ? this.menuPopup.menuItems.length
-                            : this.menuItems.length
+                            ? this.menuPopup?.menuItems?.length || 0
+                            : this.menuItems?.length || 0
                     } menu items available.`);
-
-                    // Uncomment in the scope of NUI-6104 and adjust this to be the part of the announcer's string above
-                    // Active item ${this.keyboardEventsManager?.activeItem?.menuItem.nativeElement.innerText}.`);
                 }
             );
         }
@@ -104,6 +116,17 @@ export class MenuKeyControlService implements OnDestroy {
 
     public getActiveItemIndex(): number | null {
         return this.keyboardEventsManager.activeItemIndex;
+    }
+
+    private activatePendingItem(): void {
+        if (this.pendingInitialActivation === "first") {
+            this.keyboardEventsManager.setFirstItemActive();
+        } else if (this.pendingInitialActivation === "last") {
+            this.keyboardEventsManager.setLastItemActive();
+        } else {
+            this.keyboardEventsManager.setActiveItem(-1);
+        }
+        this.pendingInitialActivation = null;
     }
 
     private initKeyManagerHandlers(): void {
@@ -127,9 +150,10 @@ export class MenuKeyControlService implements OnDestroy {
     }
 
     private shouldCloseOnEnter(): boolean {
+        const activeItem = this.keyboardEventsManager.activeItem;
         return (
-            this.keyboardEventsManager.activeItem instanceof
-            (MenuActionComponent || MenuItemComponent)
+            activeItem instanceof MenuActionComponent ||
+            activeItem instanceof MenuItemComponent
         );
     }
 
@@ -188,7 +212,11 @@ export class MenuKeyControlService implements OnDestroy {
             event.preventDefault();
         }
 
-        if (this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER) {
+        if (
+            this.hasActiveItem() &&
+            (event.code === KEYBOARD_CODE.ENTER ||
+                event.code === KEYBOARD_CODE.SPACE)
+        ) {
             // perform action in menu item(select, switch, check etc).
             this.keyboardEventsManager.activeItem?.doAction(event);
             // closing items only if they are MenuAction or MenuItem, others should not close popup
@@ -212,7 +240,17 @@ export class MenuKeyControlService implements OnDestroy {
             event.preventDefault();
         }
 
-        if (event.code === KEYBOARD_CODE.ARROW_DOWN) {
+        if (
+            event.code === KEYBOARD_CODE.ENTER ||
+            event.code === KEYBOARD_CODE.SPACE ||
+            event.code === KEYBOARD_CODE.ARROW_DOWN
+        ) {
+            this.pendingInitialActivation = "first";
+            this.popup.toggleOpened(event);
+        }
+
+        if (event.code === KEYBOARD_CODE.ARROW_UP) {
+            this.pendingInitialActivation = "last";
             this.popup.toggleOpened(event);
         }
     }
@@ -221,7 +259,8 @@ export class MenuKeyControlService implements OnDestroy {
         return (
             event.code === KEYBOARD_CODE.ARROW_DOWN ||
             event.code === KEYBOARD_CODE.ARROW_UP ||
-            event.code === KEYBOARD_CODE.ENTER
+            event.code === KEYBOARD_CODE.ENTER ||
+            event.code === KEYBOARD_CODE.SPACE
         );
     }
 
@@ -293,12 +332,7 @@ export class MenuKeyControlService implements OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if (this.keyboardEventsSubscription) {
-            this.keyboardEventsSubscription.unsubscribe();
-        }
-
-        if (this.menuOpenListenerSubscription) {
-            this.menuOpenListenerSubscription.unsubscribe();
-        }
+        this.keyboardEventsSubscription?.unsubscribe();
+        this.menuOpenListenerSubscription?.unsubscribe();
     }
 }
