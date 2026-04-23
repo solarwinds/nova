@@ -9,8 +9,11 @@
         #menuToggle
         nui-button
         nuiPopupToggle
+        [toggleOnKey]="false"
         [disabled]="isDisabled"
         aria-haspopup="true"
+        [attr.aria-expanded]="(popup?.isOpen ?? false).toString()"
+        [attr.aria-controls]="popup?.isOpen ? popupContentId : null"
         type="button"
         (blur)="onBlur($event)"
         [displayStyle]="displayStyle"
@@ -19,11 +22,11 @@
         [iconRight]="isTitlePresent()"
         class="menu-button no-shadow"
         [isEmpty]="!isTitlePresent()"
-        [attr.aria-label]="title || ariaLabel"
+        [ariaLabel]="title || ariaLabel || 'Menu'"
     >
         <span>{{ title }}</span>
     </button>
-    <div popupAreaContent>
+    <div popupAreaContent [id]="popupContentId">
         <nui-menu-popup
             *ngIf="itemsSource"
             [itemsSource]="itemsSource"

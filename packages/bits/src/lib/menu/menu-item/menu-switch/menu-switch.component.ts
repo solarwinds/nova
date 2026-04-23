@@ -47,12 +47,15 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     template: `
         <div
             class="nui-menu-item__switch"
-            tabindex="0"
             #menuSwitch
-            tabIndex="-1"
+            tabindex="-1"
             title
         >
-            <nui-switch [value]="checked" [disabled]="disabled">
+            <nui-switch
+                [value]="checked"
+                [disabled]="disabled"
+                role="presentation"
+                tabindex="-1">
                 <ng-content></ng-content>
             </nui-switch>
         </div>
@@ -65,7 +68,10 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     ],
     styleUrls: ["./menu-switch.component.less"],
     encapsulation: ViewEncapsulation.None,
-    host: { role: "menuitemcheckbox" },
+    host: {
+        role: "menuitemcheckbox",
+        "[attr.aria-checked]": "checked",
+    },
     standalone: false,
 })
 export class MenuSwitchComponent extends MenuItemBaseComponent {

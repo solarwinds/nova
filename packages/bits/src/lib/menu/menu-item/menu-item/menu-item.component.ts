@@ -23,6 +23,7 @@ import {
     Component,
     ElementRef,
     forwardRef,
+    Input,
     Optional,
     ViewChild,
     ViewEncapsulation,
@@ -44,8 +45,10 @@ import { MenuGroupComponent } from "../menu-group/menu-group.component";
         <span
             class="nui-menu-item__default"
             (click)="handleClick($event)"
+            (keydown.enter)="handleClick($event)"
+            (keydown.space)="handleClick($event)"
             #menuItemDefault
-            tabIndex="-1"
+            tabindex="0"
             title
         >
             <ng-content></ng-content>
@@ -63,7 +66,7 @@ import { MenuGroupComponent } from "../menu-group/menu-group.component";
     standalone: false,
 })
 export class MenuItemComponent extends MenuItemBaseComponent {
-    @ViewChild("menuItemDefault") menuItem: ElementRef;
+    @ViewChild("menuItemDefault", { static: true }) menuItem: ElementRef;
 
     constructor(
         @Optional() readonly group: MenuGroupComponent,

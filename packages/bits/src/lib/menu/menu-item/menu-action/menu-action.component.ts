@@ -48,6 +48,8 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
             href="#"
             role="button"
             (click)="handleClick($event)"
+            (keydown.enter)="handleClick($event)"
+            (keydown.space)="handleClick($event)"
             [ngClass]="'nui-menu-item__action-' + type"
             #menuAction
             tabindex="-1"

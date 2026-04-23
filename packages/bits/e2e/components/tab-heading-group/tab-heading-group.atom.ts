@@ -39,13 +39,19 @@ export class TabHeadingGroupAtom extends Atom {
     }
 
     public async getFirstTab(): Promise<TabHeadingAtom> {
-        const tabs = await this.getTabs();
-        return tabs[0];
+        const firstLocator = this.getLocator()
+            .locator(`.${TabHeadingAtom.CSS_CLASS}`)
+            .first();
+        await firstLocator.waitFor({ state: "attached" });
+        return new TabHeadingAtom(firstLocator);
     }
 
     public async getLastTab(): Promise<TabHeadingAtom> {
-        const tabs = await this.getTabs();
-        return tabs[tabs.length - 1];
+        const lastLocator = this.getLocator()
+            .locator(`.${TabHeadingAtom.CSS_CLASS}`)
+            .last();
+        await lastLocator.waitFor({ state: "attached" });
+        return new TabHeadingAtom(lastLocator);
     }
 
     public async getTabByText(text: string): Promise<TabHeadingAtom> {
