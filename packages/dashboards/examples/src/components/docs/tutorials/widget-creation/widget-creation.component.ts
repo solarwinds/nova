@@ -28,7 +28,7 @@ import {
     Output,
     ViewChild,
 } from "@angular/core";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { finalize, take, takeUntil } from "rxjs/operators";
 
@@ -356,7 +356,7 @@ export class WidgetCreationComponent implements OnInit {
         // Setting the widget dimensions and position (this is for gridster)
         // Note: If no position is given for a widget the 'defaultItemCols' and 'defaultItemRows' properties
         // from the gridsterConfig will be used for the dimensions
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             [kpiWidget.id]: {
                 cols: 3,
                 rows: 5,

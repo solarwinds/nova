@@ -16,8 +16,8 @@
     <ng-container
         nuiComponentPortal
         #componentPortal="nuiComponentPortal"
-        [componentId]="configuration.componentType"
-        [componentType]="configuration.componentType"
+        [componentId]="configuration?.componentType"
+        [componentType]="configuration?.componentType"
         [properties]="getPropsFor(item)"
         [outputs]="['navigated']"
         (output)="onListItemEvent(item)"

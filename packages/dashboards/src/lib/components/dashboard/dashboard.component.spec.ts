@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -47,6 +47,10 @@ describe("DashboardComponent", () => {
         fixture.detectChanges();
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     it("should create", () => {
         expect(component).toBeTruthy();
     });
@@ -85,15 +89,10 @@ describe("DashboardComponent", () => {
             expect(component.gridsterConfigChange.emit).toHaveBeenCalled();
         });
 
-        it("should invoke optionsChanged on gridsterConfig.api", () => {
-            spyOn(
-                component.gridsterConfig.api ?? {},
-                "optionsChanged" as never
-            );
+        it("should invoke calculateLayout on gridster.api when config changes", () => {
+            spyOn(component.gridster.api, "calculateLayout");
             component.ngOnChanges(changes);
-            expect(
-                component.gridsterConfig.api?.optionsChanged
-            ).toHaveBeenCalled();
+            expect(component.gridster.api.calculateLayout).toHaveBeenCalled();
         });
     });
 
@@ -241,12 +240,12 @@ describe("DashboardComponent", () => {
             const expectedPositions = {
                 x: 0,
                 y: 0,
-                rows: DEFAULT_GRIDSTER_CONFIG.defaultItemRows,
-                cols: DEFAULT_GRIDSTER_CONFIG.defaultItemCols,
+                rows: DEFAULT_GRIDSTER_CONFIG.defaultItemRows as number,
+                cols: DEFAULT_GRIDSTER_CONFIG.defaultItemCols as number,
             };
 
             const spy = spyOn(
-                (component as any).gridsterConfig.api ?? {},
+                component.gridster.api,
                 "getFirstPossiblePosition"
             );
 

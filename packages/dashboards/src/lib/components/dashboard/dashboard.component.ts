@@ -141,9 +141,7 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
                 this.gridsterConfigChange.emit(gridsterConfig);
             }
 
-            if (this.gridsterConfig?.api) {
-                this.gridsterConfig.api.optionsChanged?.();
-            }
+            this.gridster?.api?.calculateLayout?.();
         }
 
         if (changes.editMode) {
@@ -200,9 +198,9 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
 
     public updateWidget(widget: IWidget): void {
         let dashboard: IDashboard = this.dashboard;
-        if (!this.dashboard.positions[widget.id] && this.gridsterConfig?.api) {
+        if (!this.dashboard.positions[widget.id] && this.gridster?.api) {
             const gridsterItem =
-                this.gridsterConfig.api.getFirstPossiblePosition?.({
+                this.gridster.api.getFirstPossiblePosition({
                     x: 0,
                     y: 0,
                     rows: this.gridsterConfig?.defaultItemRows as number,

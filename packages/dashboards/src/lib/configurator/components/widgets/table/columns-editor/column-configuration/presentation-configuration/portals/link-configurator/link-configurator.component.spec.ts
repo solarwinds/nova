@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -19,7 +19,15 @@
 //  THE SOFTWARE.
 
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder, ReactiveFormsModule } from "@angular/forms";
+
+import {
+    LoggerService,
+    NuiFormFieldModule,
+    NuiSelectV2Module,
+    NuiSwitchModule,
+    NuiValidationMessageModule,
+} from "@nova-ui/bits";
 
 import {
     ConfiguratorHeadingService,
@@ -33,17 +41,36 @@ describe(LinkConfiguratorComponent.name, () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [LinkConfiguratorComponent],
-            imports: [],
-            providers: [ConfiguratorHeadingService, FormBuilder],
-        }).compileComponents();
-
+            imports: [
+                ReactiveFormsModule,
+                NuiFormFieldModule,
+                NuiSelectV2Module,
+                NuiSwitchModule,
+                NuiValidationMessageModule,
+            ],
+            providers: [
+                ConfiguratorHeadingService,
+                FormBuilder,
+                {
+                    provide: LoggerService,
+                    useValue: { warn: () => {}, error: () => {}, debug: () => {} },
+                },
+            ],
+        })
+            .compileComponents();
         fixture = TestBed.createComponent(LinkConfiguratorComponent);
         component = fixture.componentInstance;
+        component.initForm();
+        fixture.detectChanges();
     }));
 
     it("Creates targetSelf component", () => {
         component.initForm();
         const targetControl = component.form.controls["targetSelf"];
         expect(targetControl).toBeTruthy();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 });

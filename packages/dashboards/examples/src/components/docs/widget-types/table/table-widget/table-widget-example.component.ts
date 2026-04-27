@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 import orderBy from "lodash/orderBy";
 import { BehaviorSubject, firstValueFrom, from } from "rxjs";
 import { map, tap } from "rxjs/operators";
@@ -262,7 +262,7 @@ export class TableWidgetExampleComponent implements OnInit {
         };
 
         // Setting the widget dimensions and position (this is for gridster)
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             [tableWidget.id]: {
                 cols: 12,
                 rows: 6,

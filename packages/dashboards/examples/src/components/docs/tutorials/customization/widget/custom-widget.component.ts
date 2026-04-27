@@ -31,7 +31,7 @@ import {
     SimpleChanges,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 
 import { IMenuItem } from "@nova-ui/bits";
 import {
@@ -283,7 +283,7 @@ export class CustomWidgetComponent implements OnInit {
         };
 
         // Setting the widget dimensions and position (this is for gridster)
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             [widget.id]: {
                 cols: 4,
                 rows: 11,

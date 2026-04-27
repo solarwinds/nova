@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -62,6 +62,10 @@ describe("BaseLayout", () => {
     let dynamicComponentCreator: DynamicComponentCreator;
     let pizzagnaService: PizzagnaService;
     const testComponents: IPizza = {
+        myId: {
+            id: "myId",
+            componentType: "myType",
+        },
         component1: {
             id: "component1",
             componentType: "compType1",
@@ -100,6 +104,10 @@ describe("BaseLayout", () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(TestLayoutComponent);
         component = fixture.componentInstance;
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it("should create", () => {

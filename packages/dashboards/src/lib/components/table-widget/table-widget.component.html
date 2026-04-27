@@ -126,24 +126,33 @@
                 </ng-container>
                 }
                 <tr nui-header-row *nuiHeaderRowDef="headers"></tr>
-                <ng-template
-                    nuiRowDef
-                    cdkVirtualFor
-                    let-row
-                    [nuiRowDefColumns]="headers"
-                    [cdkVirtualForOf]="tableData"
-                    [cdkVirtualForTemplateCacheSize]="10"
-                    [cdkVirtualForTrackBy]="dataTrackBy()"
-                >
-                    <tr
-                        nui-row
-                        (click)="onInteraction(row, $event)"
-                        [attr.role]="interactive ? 'button' : ''"
-                        density="tiny"
-                        [rowObject]="row.__record"
-                        [clickableRow]="clickableRow"
-                    ></tr>
-                </ng-template>
+                <tr
+                    nui-row
+                    *nuiRowDef="let row; columns: headers"
+                    (click)="onInteraction(row, $event)"
+                    [attr.role]="interactive ? 'button' : ''"
+                    density="tiny"
+                    [rowObject]="row.__record"
+                    [clickableRow]="clickableRow"
+                ></tr>
+<!--                <ng-template-->
+<!--                    nuiRowDef-->
+<!--                    cdkVirtualFor-->
+<!--                    let-row-->
+<!--                    [nuiRowDefColumns]="headers"-->
+<!--                    [cdkVirtualForOf]="tableData"-->
+<!--                    [cdkVirtualForTemplateCacheSize]="10"-->
+<!--                    [cdkVirtualForTrackBy]="dataTrackBy()"-->
+<!--                >-->
+<!--                    <tr-->
+<!--                        nui-row-->
+<!--                        (click)="onInteraction(row, $event)"-->
+<!--                        [attr.role]="interactive ? 'button' : ''"-->
+<!--                        density="tiny"-->
+<!--                        [rowObject]="row.__record"-->
+<!--                        [clickableRow]="clickableRow"-->
+<!--                    ></tr>-->
+<!--                </ng-template>-->
             </table>
         </cdk-virtual-scroll-viewport>
     </div>

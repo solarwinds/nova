@@ -1,4 +1,4 @@
-// © 2023 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2023 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -40,6 +40,10 @@ describe("RiskScoreTileDescriptionConfigurationComponent", () => {
             RiskScoreTileDescriptionConfigurationComponent
         );
         component = fixture.componentInstance;
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it("should create", () => {

@@ -18,9 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, DebugElement, forwardRef, NO_ERRORS_SCHEMA, SimpleChange } from "@angular/core";
+import { DebugElement, SimpleChange } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 
 import { SelectComponent } from "./select.component";
@@ -249,37 +249,44 @@ describe("components >", () => {
     });
 
     describe("select with reactive form >", () => {
-        /**
-         * Stub for <nui-select> that registers as NG_VALUE_ACCESSOR.
-         * Required in Angular 21 which throws NG01203 (instead of warning) when
-         * formControlName is used on an element with no registered value accessor.
-         */
-        @Component({
-            selector: "nui-select",
-            template: "",
-            providers: [
-                {
-                    provide: NG_VALUE_ACCESSOR,
-                    useExisting: forwardRef(() => NuiSelectStub),
-                    multi: true,
-                },
-            ],
-            standalone: false,
-        })
-        class NuiSelectStub implements ControlValueAccessor {
-            writeValue(): void {}
-            registerOnChange(): void {}
-            registerOnTouched(): void {}
-        }
-
         let fixture: ComponentFixture<SelectReactiveFormTestComponent>;
         let componentInstance: SelectReactiveFormTestComponent;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [FormsModule, ReactiveFormsModule],
-                declarations: [SelectReactiveFormTestComponent, NuiSelectStub],
+                imports: [FormsModule, ReactiveFormsModule, NuiOverlayModule],
+                declarations: [
+                    ButtonComponent,
+                    CheckboxComponent,
+                    DividerComponent,
+                    HighlightPipe,
+                    IconComponent,
+                    MenuActionComponent,
+                    MenuComponent,
+                    MenuGroupComponent,
+                    MenuItemComponent,
+                    MenuLinkComponent,
+                    MenuOptionComponent,
+                    MenuPopupComponent,
+                    MenuSwitchComponent,
+                    PopoverComponent,
+                    PopupComponent,
+                    PopupToggleDirective,
+                    RepeatItemComponent,
+                    SelectComponent,
+                    SelectReactiveFormTestComponent,
+                    SpinnerComponent,
+                    SwitchComponent,
+                    TextboxComponent,
+                    TooltipDirective,
+                    ValidationMessageComponent,
+                ],
                 providers: [
+                    UtilService,
+                    EdgeDetectionService,
+                    DomUtilService,
+                    LoggerService,
+                    IconService,
                     ToastService,
                     ToastContainerService,
                     NotificationService,

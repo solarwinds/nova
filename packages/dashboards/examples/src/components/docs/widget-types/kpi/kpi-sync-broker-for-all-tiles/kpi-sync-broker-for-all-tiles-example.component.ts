@@ -26,7 +26,7 @@ import {
     OnDestroy,
     OnInit,
 } from "@angular/core";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 import keyBy from "lodash/keyBy";
 import { BehaviorSubject, of } from "rxjs";
 import { delay, finalize, take } from "rxjs/operators";
@@ -285,7 +285,7 @@ export class KpiSyncBrokerForAllTilesExampleComponent implements OnInit {
         );
         const widgetsIndex = keyBy(widgetsWithStructure, (w: IWidget) => w.id);
 
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             kpiWidgetId: {
                 cols: 3,
                 rows: 6,

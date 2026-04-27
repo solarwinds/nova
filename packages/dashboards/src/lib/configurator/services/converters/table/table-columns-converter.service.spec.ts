@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -86,6 +86,7 @@ describe("TableColumnsConverterService >", () => {
     it("should have component set", () => {
         expect(service.component).toBeDefined();
     });
+
 
     it("should properly build form", () => {
         const columnsInFormPizzagna =

@@ -318,11 +318,19 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             tap(() => this.updateNativeHeaderPlaceholder())
         );
 
-        if (!this.virtualFor) {
-            throw new Error("Unable to find CdkVirtualForOf");
+        const dataStream = this.virtualFor?.dataStream || this.table.dataSource;
+
+        // if (!this.virtualFor) {
+        //     throw new Error("Unable to find CdkVirtualForOf");
+        // }
+
+        if (!dataStream?.pipe) {
+            console.warn("Unable to find DataSource stream");
+            return;
+            // throw new Error("Unable to find DataSource stream");
         }
 
-        const dataStream$ = this.virtualFor.dataStream.pipe(
+        const dataStream$ = dataStream.pipe(
           // give CDK some time to render rows after a change
           delay(0, asyncScheduler),
           tap(() => this.updateNativeHeaderPlaceholder())

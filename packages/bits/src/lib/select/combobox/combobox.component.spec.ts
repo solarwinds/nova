@@ -18,20 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    Component,
-    DebugElement,
-    forwardRef,
-    NO_ERRORS_SCHEMA,
-    SimpleChange,
-} from "@angular/core";
+import { DebugElement, SimpleChange } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import {
-    ControlValueAccessor,
-    FormsModule,
-    NG_VALUE_ACCESSOR,
-    ReactiveFormsModule,
-} from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 
 import { ComboboxComponent } from "./combobox.component";
@@ -404,37 +393,44 @@ describe("components >", () => {
     });
 
     describe("combobox with reactive form >", () => {
-        /**
-         * Stub for <nui-combobox> that registers as NG_VALUE_ACCESSOR.
-         * Required in Angular 21 which throws NG01203 (instead of warning) when
-         * formControlName is used on an element with no registered value accessor.
-         */
-        @Component({
-            selector: "nui-combobox",
-            template: "",
-            providers: [
-                {
-                    provide: NG_VALUE_ACCESSOR,
-                    useExisting: forwardRef(() => NuiComboboxStub),
-                    multi: true,
-                },
-            ],
-            standalone: false,
-        })
-        class NuiComboboxStub implements ControlValueAccessor {
-            writeValue(): void {}
-            registerOnChange(): void {}
-            registerOnTouched(): void {}
-        }
-
         let fixture: ComponentFixture<ComboboxReactiveFormTestComponent>;
         let componentInstance: ComboboxReactiveFormTestComponent;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [FormsModule, ReactiveFormsModule],
-                declarations: [ComboboxReactiveFormTestComponent, NuiComboboxStub],
+                imports: [FormsModule, ReactiveFormsModule, PopupAdapterModule],
+                declarations: [
+                    ButtonComponent,
+                    CheckboxComponent,
+                    ComboboxComponent,
+                    DividerComponent,
+                    HighlightPipe,
+                    IconComponent,
+                    MenuActionComponent,
+                    MenuComponent,
+                    MenuGroupComponent,
+                    MenuItemComponent,
+                    MenuLinkComponent,
+                    MenuOptionComponent,
+                    MenuPopupComponent,
+                    MenuSwitchComponent,
+                    PopoverComponent,
+                    PopupComponent,
+                    PopupToggleDirective,
+                    RepeatItemComponent,
+                    SpinnerComponent,
+                    SwitchComponent,
+                    TextboxComponent,
+                    TooltipDirective,
+                    ValidationMessageComponent,
+                    ComboboxReactiveFormTestComponent,
+                ],
                 providers: [
+                    UtilService,
+                    EdgeDetectionService,
+                    DomUtilService,
+                    LoggerService,
+                    IconService,
                     ToastService,
                     ToastContainerService,
                     NotificationService,

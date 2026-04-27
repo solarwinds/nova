@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { GridsterItem } from "angular-gridster2";
+import { GridsterItemConfig } from "angular-gridster2";
 
 import {
     IProviderConfiguration,
@@ -69,9 +69,9 @@ const getKpiWidgetCfg = (id: string) => ({
 
 function generateKpiWidgets(
     quantity: number
-): [IWidget[], Record<string, GridsterItem>] {
+): [IWidget[], Record<string, GridsterItemConfig>] {
     const _widgets: IWidget[] = [];
-    const _positions: Record<string, GridsterItem> = {};
+    const _positions: Record<string, GridsterItemConfig> = {};
 
     const initPosition = {
         cols: 8,

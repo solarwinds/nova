@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -146,6 +146,10 @@ describe("WidgetEditorDirective >", () => {
             fixture.debugElement.childNodes[0].injector.get<DashboardComponent>(
                 DashboardComponent
             );
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     afterEach(() => {
