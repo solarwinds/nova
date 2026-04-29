@@ -20,7 +20,7 @@
 
 import { Directionality } from "@angular/cdk/bidi";
 import { Platform } from "@angular/cdk/platform";
-import { CdkVirtualForOf, ViewportRuler } from "@angular/cdk/scrolling";
+import { CdkVirtualScrollViewport, ViewportRuler } from "@angular/cdk/scrolling";
 import {
     CDK_TABLE,
     CdkTable,
@@ -49,6 +49,7 @@ import {
     Output,
     SkipSelf,
     ViewEncapsulation,
+    inject,
 } from "@angular/core";
 import _isEqual from "lodash/isEqual";
 import _keys from "lodash/keys";
@@ -151,7 +152,11 @@ export class TableComponent<T>
     private stickyChangedSubscription: Subscription;
     private tableColumnsWidthSubscription: Subscription;
     @HostBinding("class.nui-table__table-fixed") layoutFixed = false;
-    @ContentChild(CdkVirtualForOf) public virtualFor?: CdkVirtualForOf<unknown>;
+
+    private readonly virtualScrollViewport = inject(CdkVirtualScrollViewport, {
+        optional: true,
+        skipSelf: true,
+    });
 
     constructor(
         protected _differs: IterableDiffers,
@@ -399,6 +404,6 @@ export class TableComponent<T>
         // @ts-ignore: Call parent method in case cdk adds it later
         super.ngAfterContentInit?.();
         // Note: Identifying if table is using virtual scroll.
-        this.tableStateHandlerService.hasVirtualScroll = !!this.virtualFor && !this.paginatorUsed;
+        this.tableStateHandlerService.hasVirtualScroll = !!this.virtualScrollViewport && !this.paginatorUsed;
     }
 }

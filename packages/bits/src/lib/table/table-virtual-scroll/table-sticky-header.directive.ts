@@ -318,19 +318,18 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             tap(() => this.updateNativeHeaderPlaceholder())
         );
 
-        const dataStream = this.virtualFor?.dataStream || this.table.dataSource;
+        // Note: When cdkVirtualFor is present, use its dataStream.
+        // When it is absent (e.g. after Angular CDK v21 migration where cdkVirtualFor was
+        // removed from the table row template), fall back to the viewport's renderedRangeStream which
+        // fires whenever the visible item range changes (data loads, sorting, filtering, etc.).
+        const dataSource = this.virtualFor?.dataStream ?? this.viewport.renderedRangeStream;
+        // const resolvedDataStream: Observable<unknown> =
+        //     rawDataSource != null && typeof (rawDataSource as any).pipe === "function"
+        //         ? (rawDataSource as Observable<unknown>)
+        //         : this.viewport.renderedRangeStream;
 
-        // if (!this.virtualFor) {
-        //     throw new Error("Unable to find CdkVirtualForOf");
-        // }
 
-        if (!dataStream?.pipe) {
-            console.warn("Unable to find DataSource stream");
-            return;
-            // throw new Error("Unable to find DataSource stream");
-        }
-
-        const dataStream$ = dataStream.pipe(
+        const dataStream$ = dataSource.pipe(
           // give CDK some time to render rows after a change
           delay(0, asyncScheduler),
           tap(() => this.updateNativeHeaderPlaceholder())

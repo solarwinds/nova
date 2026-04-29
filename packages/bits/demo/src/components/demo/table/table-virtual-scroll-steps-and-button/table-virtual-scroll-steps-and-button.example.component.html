@@ -15,12 +15,14 @@
     <cdk-virtual-scroll-viewport
         class="h-100"
         [itemSize]="24"
+        [maxBufferPx]="1200"
+        [minBufferPx]="400"
         #viewport
         [tableStickyHeader]="makeSticky"
     >
         <table
             nui-table
-            [dataSource]="users"
+            [dataSource]="users | async"
             [resizable]="false"
             [reorderable]="true"
         >
@@ -91,14 +93,6 @@
             </ng-container>
 
             <tr nui-header-row *nuiHeaderRowDef="displayedColumns"></tr>
-<!--            <ng-template-->
-<!--                nuiRowDef-->
-<!--                cdkVirtualFor-->
-<!--                [nuiRowDefColumns]="displayedColumns"-->
-<!--                [cdkVirtualForOf]="users"-->
-<!--            >-->
-<!--                <tr nui-row density="tiny"></tr>-->
-<!--            </ng-template>-->
             <tr nui-row density="tiny" *nuiRowDef="let row; columns: displayedColumns"></tr>
         </table>
         @if (!makeSticky) {

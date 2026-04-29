@@ -99,7 +99,6 @@ export class TableVirtualScrollStepsAndButtonExampleComponent
                 if (!outputs) {
                     return;
                 }
-
                 this.users.next(outputs.repeat.itemsSource);
                 this._loadedItems = outputs.itemsToLoad;
                 this.totalItems = outputs.totalItems;

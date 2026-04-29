@@ -19,11 +19,12 @@
         tableStickyHeader
         class="h-100"
         [itemSize]="itemSize"
+        [maxBufferPx]="1200"
+        [minBufferPx]="400"
     >
-        <!-- IMPORTANT Bind only visible rows to the table, otherwise, the table will render all rows in the DOM -->
         <table
             nui-table
-            [dataSource]="visibleItems$ | async"
+            [dataSource]="items$ | async"
             [trackBy]="trackByNo"
             [sortable]="true"
         >
@@ -59,19 +60,7 @@
             }
 
             <tr nui-header-row *nuiHeaderRowDef="displayedColumns"></tr>
-            <!-- IMPORTANT The actual difference between normal table and virtualized one-->
-            <!-- ∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨ -->
-            <ng-template
-                nuiRowDef
-                cdkVirtualFor
-                let-context
-                [nuiRowDefColumns]="displayedColumns"
-                [cdkVirtualForOf]="placeholderItems"
-                [cdkVirtualForTrackBy]="trackByNo"
-            >
-                <tr nui-row [rowObject]="context"></tr>
-            </ng-template>
-            <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
+            <tr nui-row *nuiRowDef="let row; columns: displayedColumns" [rowObject]="row"></tr>
         </table>
     </cdk-virtual-scroll-viewport>
 </div>

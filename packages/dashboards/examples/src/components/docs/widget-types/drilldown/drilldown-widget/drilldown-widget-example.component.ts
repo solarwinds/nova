@@ -182,6 +182,7 @@ export class DrilldownDataSourceRealApi<T = any>
         return mainRequest.valueChanges.pipe(
             // mock delay
             delay(300),
+            filter((res) => !res.loading && !!res.data),
             // data mapping, !DS specific!
             map((res) => res.data!.countries),
             // adds mock icons to be displayed on leaf nodes !DS specific!

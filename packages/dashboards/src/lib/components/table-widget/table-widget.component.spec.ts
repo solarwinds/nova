@@ -481,6 +481,21 @@ describe("TableWidgetComponent", () => {
             fixture.detectChanges();
         });
 
+        it("should expose the full loaded table length to the viewport", () => {
+            configuration.columns = oneDataFieldColumns;
+            component.range = 2;
+
+            component.ngOnChanges(
+                createSimpleChanges(configuration, tableData, dataFields)
+            );
+            fixture.detectChanges();
+
+            expect(component.tableData.length).toBe(3);
+            expect(component.vscrollViewport?.getDataLength()).toBe(
+                component.tableData.length
+            );
+        });
+
         // TODO: Add back after NUI-5893
         xit("should trigger the datasource if the viewport size is larger than the number of items per fetch", (done: DoneFn) => {
             component.ngOnChanges(createWidgetDataSimpleChanges(tableData));

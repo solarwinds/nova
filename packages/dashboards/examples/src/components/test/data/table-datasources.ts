@@ -59,8 +59,6 @@ export class TestTableDataSource
     public static providerId = "TestTableDataSource";
     public static mockError = false;
 
-    private cache: any[] = [];
-
     public dataFields: Array<IDataField> = [
         { id: "position", label: $localize`Position`, dataType: "number" },
         { id: "name", label: $localize`Name`, dataType: "string" },
@@ -90,21 +88,7 @@ export class TestTableDataSource
     public async getFilteredData(
         filters: INovaFilters
     ): Promise<IDataSourceOutput<ITableDataSourceOutput>> {
-        const virtualScrollFilter =
-            filters.virtualScroll && filters.virtualScroll.value;
-
-        if (virtualScrollFilter) {
-            // The multiplier used here is a way to fetch more items per scroll
-            const start = filters.virtualScroll?.value.start;
-            const end = filters.virtualScroll?.value.end;
-            const nextChunk = TABLE_DATA.slice(start, end);
-            // We identify here whether the cached array does already contain some of the fetched data.
-            // Then we update the cached array with the only values it doesn't contain
-            this.cache = this.cache.concat(
-                nextChunk.filter((item) => !this.cache.includes(item))
-            );
-            super.setData(this.cache);
-        }
+        super.setData(TABLE_DATA);
 
         const filteredData = await super.getFilteredData(filters);
         if (filteredData.paginator) {
@@ -136,8 +120,6 @@ export class TestTableDataSource2
     public static providerId = "TestTableDataSource2";
     public static mockError = false;
 
-    private cache: any[] = [];
-
     public busy = new BehaviorSubject(false);
     public dataFields: Array<IDataField> = [
         { id: "position", label: $localize`Position`, dataType: "number" },
@@ -163,21 +145,7 @@ export class TestTableDataSource2
     public async getFilteredData(
         filters: INovaFilters
     ): Promise<IDataSourceOutput<ITableDataSourceOutput>> {
-        const virtualScrollFilter =
-            filters.virtualScroll && filters.virtualScroll.value;
-
-        if (virtualScrollFilter) {
-            // The multiplier used here is a way to fetch more items per scroll
-            const start = filters.virtualScroll?.value.start;
-            const end = filters.virtualScroll?.value.end;
-            const nextChunk = TABLE_DATA2.slice(start, end);
-            // We identify here whether the cached array does already contain some of the fetched data.
-            // Then we update the cached array with the only values it doesn't contain
-            this.cache = this.cache.concat(
-                nextChunk.filter((item) => !this.cache.includes(item))
-            );
-            super.setData(this.cache);
-        }
+        super.setData(TABLE_DATA2);
 
         const filteredData = await super.getFilteredData(filters);
         if (filteredData.paginator) {

@@ -39,6 +39,8 @@ export class VirtualViewportManager implements IFilterPub {
     private _viewportRef: CdkVirtualScrollViewport;
     private _currentPageRange: ListRange = DEFAULT_RANGE;
     private _pageSize: number;
+    private resetPending: boolean = false;
+    private reuseCurrentPageOnNextEmission: boolean = false;
 
     /**
      * Entry point for VirtualViewportManager
@@ -79,7 +81,6 @@ export class VirtualViewportManager implements IFilterPub {
         }
 
         this._pageSize = config.pageSize;
-
         this.updateCurrentPage({ start: 0, end: config.pageSize });
 
         // Note: renderedRangeStream does not emit "first page" which can be a problem
@@ -129,6 +130,13 @@ export class VirtualViewportManager implements IFilterPub {
             ...DEFAULT_RANGE,
             end: options.emitFirstPage ? 0 : this._pageSize,
         };
+        if (options.emitFirstPage === false) {
+            this.resetPending = true;
+            this.reuseCurrentPageOnNextEmission = true;
+        } else {
+            this.resetPending = false;
+            this.reuseCurrentPageOnNextEmission = false;
+        }
         // Note: Skipping one tick to let CDK Viewport update his internal properties
         setTimeout(() => {
             // Note: Resetting the viewport to initial state
@@ -160,13 +168,46 @@ export class VirtualViewportManager implements IFilterPub {
     ): MonoTypeOperatorFunction<ListRange> {
         return (source: Observable<ListRange>) =>
             source.pipe(
+                filter((renderedRange: ListRange) => {
+                    if (!this.resetPending) {
+                        return true;
+                    }
+
+                    const isResetRange =
+                        renderedRange.start === DEFAULT_RANGE.start &&
+                        renderedRange.end === DEFAULT_RANGE.end;
+
+                    if (!isResetRange) {
+                        return false;
+                    }
+
+                    this.resetPending = false;
+
+                    return true;
+                }),
                 // Note: We have to reduce number of events to only pagination related,
                 // By emitting only when previous page range was scrolled to the end
                 filter(
                     (renderedRange: ListRange) =>
                         this.currentPageRange.end <= renderedRange.end
                 ),
+                filter(() => {
+                    if (!this.reuseCurrentPageOnNextEmission) {
+                        return true;
+                    }
+
+                    return (this._viewportRef?.getDataLength() ?? 0) > 0;
+                }),
                 map((range, index) => {
+                    if (this.reuseCurrentPageOnNextEmission) {
+                        this.reuseCurrentPageOnNextEmission = false;
+
+                        return this.updateCurrentPage({
+                            start: this.currentPageRange.end,
+                            end: this.currentPageRange.end + pageSize,
+                        });
+                    }
+
                     // Note: Avoiding incrementation for the first emission
                     if (index === 0) {
                         return this.currentPageRange;

@@ -109,6 +109,11 @@ class ViewportInRepeatComponent implements AfterViewInit, OnDestroy {
         this.items$.next(this.getMockData(this.pageSize));
     }
 
+    public resetWithoutEmitFirstPage(): void {
+        this.viewportManager.reset({ emitFirstPage: false });
+        this.items$.next(this.getMockData(this.pageSize));
+    }
+
     public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
@@ -261,6 +266,45 @@ describe("services >", () => {
                                 expect(range.end).toEqual(
                                     component.pageSize * 2
                                 );
+                                done();
+                            })
+                        );
+                    })
+                )
+                .subscribe();
+        });
+
+        it("should keep the first page after reset when emitFirstPage is false", (done) => {
+            const pagesToScroll = 5;
+
+            component.items$
+                .pipe(
+                    tap(() => {
+                        fixture.detectChanges();
+                        component.repeat.viewportRef.scrollToIndex(
+                            component.repeat.viewportRef.getDataLength()
+                        );
+                    }),
+                    skip(pagesToScroll - 1),
+                    take(1),
+                    tap((users) => {
+                        expect(users.length).toEqual(
+                            component.pageSize * pagesToScroll
+                        );
+                    }),
+                    switchMap(() => {
+                        component.resetWithoutEmitFirstPage();
+                        fixture.detectChanges();
+
+                        return component.nextPage$.pipe(
+                            take(1),
+                            tap(() => {
+                                expect(
+                                    component.viewportManager.currentPageRange
+                                ).toEqual({
+                                    start: 0,
+                                    end: component.pageSize,
+                                });
                                 done();
                             })
                         );
