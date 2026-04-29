@@ -292,8 +292,13 @@ export class TableWidgetComponent
             ScrollType.virtual
         ) as ScrollType;
 
-        this.scrollType = newHasVirtualScroll ? ScrollType.virtual : scrollType;
-        this.initPrefetchAddon();
+        const newScrollType = newHasVirtualScroll ? ScrollType.virtual : scrollType;
+        const scrollTypeActuallyChanged = newScrollType !== this.scrollType;
+        this.scrollType = newScrollType;
+
+        if (scrollTypeActuallyChanged) {
+            this.initPrefetchAddon();
+        }
 
         if (this.scrollTypeChanged(changes.configuration)) {
             this.dataSource.applyFilters();
@@ -813,15 +818,18 @@ export class TableWidgetComponent
     }
 
     private resolveSearch(changes: SimpleChanges) {
-        if (
-            !isEqual(
-                (changes.configuration.currentValue as ITableWidgetConfig)
-                    ?.searchConfiguration,
-                (changes.configuration.previousValue as ITableWidgetConfig)
-                    ?.searchConfiguration
-            )
-        ) {
-           this.searchAddon.initWidget(this);
+        const prev = omit(
+            (changes.configuration.previousValue as ITableWidgetConfig)
+                ?.searchConfiguration,
+            "searchTerm"
+        );
+        const curr = omit(
+            (changes.configuration.currentValue as ITableWidgetConfig)
+                ?.searchConfiguration,
+            "searchTerm"
+        );
+        if (!isEqual(curr, prev)) {
+            this.searchAddon.initWidget(this);
         }
     }
 }

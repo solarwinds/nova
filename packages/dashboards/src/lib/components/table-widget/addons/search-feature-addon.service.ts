@@ -20,6 +20,7 @@
 
 import { Injectable } from "@angular/core";
 import isNil from "lodash/isNil";
+import { merge, Subject } from "rxjs";
 import { debounceTime, takeUntil } from "rxjs/operators";
 
 import { IFilter } from "@nova-ui/bits";
@@ -33,8 +34,10 @@ export class SearchFeatureAddonService {
     private widget: TableWidgetComponent; // TODO: generic widget
 
     private searchDebounceTime = 500;
+    private reinit$ = new Subject<void>();
 
     public initWidget(widget: TableWidgetComponent): void {
+        this.reinit$.next();
         this.widget = widget;
         this.initSearch();
     }
@@ -46,7 +49,7 @@ export class SearchFeatureAddonService {
             this.widget.dataSource?.features?.featuresChanged;
         if (dsFeaturesChange) {
             dsFeaturesChange
-                .pipe(takeUntil(this.widget.onDestroy$))
+                .pipe(takeUntil(merge(this.reinit$, this.widget.onDestroy$)))
                 .subscribe(() => {
                     this.defineSearch();
                 });
@@ -104,7 +107,7 @@ export class SearchFeatureAddonService {
         this.widget.searchTerm$
             .pipe(
                 debounceTime(this.searchDebounceTime),
-                takeUntil(this.widget.onDestroy$)
+                takeUntil(merge(this.reinit$, this.widget.onDestroy$))
             )
             .subscribe(() => {
                 this.widget.pizzagnaService.setProperty(

@@ -24,7 +24,10 @@ import { BehaviorSubject, Subject } from "rxjs";
 
 import {
     ClientSideDataSource,
+    DataSourceFeatures,
     IDataField,
+    IDataSourceFeatures,
+    IDataSourceFeaturesConfiguration,
     INovaFilters,
     LocalFilteringDataSource,
     SearchService,
@@ -40,6 +43,12 @@ export class AcmeTableMockDataSource extends LocalFilteringDataSource<BasicTable
     private cache: any[] = [];
 
     public busy = new BehaviorSubject(false);
+    public features: IDataSourceFeaturesConfiguration;
+
+    private supportedFeatures: IDataSourceFeatures = {
+        search: { enabled: true },
+    };
+
     public dataFields: Array<IDataField> = [
         { id: "position", label: "Position", dataType: "number" },
         { id: "name", label: "Name", dataType: "string" },
@@ -61,6 +70,8 @@ export class AcmeTableMockDataSource extends LocalFilteringDataSource<BasicTable
     constructor(@Inject(SearchService) searchService: SearchService) {
         super(searchService);
         super.setData([]);
+        this.features = new DataSourceFeatures(this.supportedFeatures);
+        this.setSearchProperties(["position", "name", "status"]);
     }
 
     /**
@@ -78,9 +89,6 @@ export class AcmeTableMockDataSource extends LocalFilteringDataSource<BasicTable
                 super.setData(TABLE_DATA);
 
                 const filteredData = await super.getFilteredData(filters);
-                if (filteredData.paginator) {
-                    filteredData.paginator.total = TABLE_DATA.length;
-                }
                 resolve({
                     ...filteredData,
                     dataFields: this.dataFields,

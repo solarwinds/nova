@@ -148,6 +148,8 @@ export interface IDataSource<T extends IFilteringOutputs = IFilteringOutputs> {
     applyFilters(): Promise<void>;
     registerComponent(components: Partial<IFilteringParticipants>): void;
     deregisterComponent?(componentKey: string): void;
+    getFilters?(): IFilters;
+    resetFilterComponent?(componentName: string): boolean;
 }
 
 export interface IDataSourceFeaturesConfiguration {
