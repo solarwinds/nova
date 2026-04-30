@@ -1,5 +1,10 @@
 # Changelog
 
+## [19.0.4] 📅 2026-04-29
+### Fixes
+- `@nova-ui/bits` | Add `resetFilterComponent` method for datasource
+- `@nova-ui/dashboards` | Fix unsubscribes for paginator and search in table widget
+
 ## [19.0.3] 📅 2026-02-25
 ### Fixes
 - `@nova-ui/bits` | Fix the search in toolbar
