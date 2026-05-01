@@ -154,7 +154,7 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
         const formatter =
             thresholdsSeries?.scales.r.formatters[
                 this.config.formatterName as string
-            ] ?? ((d) => d);
+            ] ?? (d => d);
 
         const data = cloneDeep(
             this.config.disableThresholdLabels ? [] : thresholdsSeries?.data
@@ -175,13 +175,10 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
             .append("text")
             .attr("class", GAUGE_THRESHOLD_LABEL_CLASS)
             .merge(labelSelection as any)
-            .attr(
-                "transform",
-                (d) => `translate(${labelGenerator.centroid(d)})`
-            )
+            .attr("transform", d => `translate(${labelGenerator.centroid(d)})`)
             .attr("title", (d, i) => formatter(data[i].value))
-            .style("text-anchor", (d) => this.getTextAnchor(d.startAngle))
-            .style("dominant-baseline", (d) =>
+            .style("text-anchor", d => this.getTextAnchor(d.startAngle))
+            .style("dominant-baseline", d =>
                 this.getAlignmentBaseline(d.startAngle)
             )
             .text((d, i) => formatter(data[i].value));

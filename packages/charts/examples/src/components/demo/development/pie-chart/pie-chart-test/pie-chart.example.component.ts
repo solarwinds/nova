@@ -103,11 +103,11 @@ export class PieChartTestComponent implements OnInit {
             ["Chrome", "Firefox", "Edge"],
             layers
         );
-        donutSeriesSet.forEach((s) => {
+        donutSeriesSet.forEach(s => {
             s.id += `-${Math.round(Math.random() * 100)}`;
         });
 
-        return donutSeriesSet.map((dataSeries) => ({
+        return donutSeriesSet.map(dataSeries => ({
             ...dataSeries,
             accessors: {
                 data: {

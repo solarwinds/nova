@@ -8,14 +8,12 @@
                 [value]="searchTerm"
                 (inputChange)="onSearch()"
                 (cancel)="onSearch()"
-                #filteringSearch
-            >
+                #filteringSearch>
             </nui-search>
             <nui-repeat
                 [itemsSource]="state.repeat?.itemsSource"
                 [repeatItemTemplateRef]="repeatItemTemplate"
-                #filteringRepeat
-            >
+                #filteringRepeat>
             </nui-repeat>
             <nui-paginator
                 [page]="page"
@@ -24,8 +22,7 @@
                 disabledClass="disabled"
                 showPrevNext="true"
                 (pagerAction)="changePagination()"
-                #filteringPaginator
-            >
+                #filteringPaginator>
             </nui-paginator>
         </div>
     </div>

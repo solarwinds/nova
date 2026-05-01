@@ -149,7 +149,7 @@ export abstract class BaseSelect
                     | ISelectGroup[];
 
                 const itemToSelect = newItemsSource.find(
-                    (i) => i[this.modelValue] === this.selectedItem
+                    i => i[this.modelValue] === this.selectedItem
                 );
                 if (itemToSelect) {
                     this.select(itemToSelect);
@@ -250,7 +250,7 @@ export abstract class BaseSelect
         let selectedItem: any;
         if (this.modelValue && this.itemsSource && this.itemsSource.length) {
             selectedItem = this.itemsSource.find(
-                (item) => this.getItemModel(item) === value
+                item => this.getItemModel(item) === value
             );
         } else {
             selectedItem = value;

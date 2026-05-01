@@ -17,8 +17,7 @@
                     <nui-icon
                         *ngFor="let icon of element.features"
                         [icon]="icon"
-                        class="icon-margin"
-                    >
+                        class="icon-margin">
                     </nui-icon>
                 </div>
             </td>
@@ -63,12 +62,10 @@
         <tr
             nui-header-row
             *nuiHeaderRowDef="displayedColumns"
-            [density]="density"
-        ></tr>
+            [density]="density"></tr>
         <tr
             nui-row
             *nuiRowDef="let row; columns: displayedColumns"
-            [density]="density"
-        ></tr>
+            [density]="density"></tr>
     </table>
 </div>

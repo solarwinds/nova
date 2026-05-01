@@ -82,7 +82,7 @@ export class AggregatorMetricSelectorConfigurationComponent
                 ?.setValue(changes.activeMetricId.currentValue);
 
             const currentMetricConfig = this.metrics.find(
-                (m) => m.id === changes.activeMetricId.currentValue
+                m => m.id === changes.activeMetricId.currentValue
             );
             if (!currentMetricConfig) {
                 this.logger.warn(

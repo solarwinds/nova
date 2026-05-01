@@ -9,13 +9,13 @@ The goal is that **tests don't talk to the test framework** (Playwright) and don
 - timing / waiting details
 - Angular internals
 
-Instead, tests use **Atoms** that expose *semantic actions* ("open the menu") and *semantic assertions* ("should be disabled").
+Instead, tests use **Atoms** that expose _semantic actions_ ("open the menu") and _semantic assertions_ ("should be disabled").
 
 ---
 
 ## What an Atom is
 
-An Atom is a class that wraps a *root element* (a Playwright `Locator` in the current implementation) and provides:
+An Atom is a class that wraps a _root element_ (a Playwright `Locator` in the current implementation) and provides:
 
 - a stable way to **find** the component in the DOM (`CSS_CLASS` / `CSS_SELECTOR`)
 - methods to **interact** with the component (click, hover, type, select…)
@@ -62,6 +62,7 @@ test("default dialog button is visible", async ({ page }) => {
 ```
 
 Notes:
+
 - `Atom.find(AtomClass, id)` finds by **element id** and then resolves the Atom inside it.
 - `Atom.findIn(AtomClass, parentLocator)` finds an Atom within a parent context.
 
@@ -145,9 +146,11 @@ If you need a locator for a rare case, expose it via `getLocator()` as the escap
 ### Prefer semantic actions
 
 Bad (leaks HTML details):
+
 - `clickChevronIcon()`
 
 Good (user intent):
+
 - `expand()` / `open()` / `selectItem(label)`
 
 ### Prefer stable selectors

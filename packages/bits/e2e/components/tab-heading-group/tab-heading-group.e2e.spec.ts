@@ -56,9 +56,7 @@ test.describe("USERCONTROL tab heading group", () => {
         const tabs = await tabGroupHorizontal.getTabs();
 
         for (let i = 0; i < tabs.length; i++) {
-            await expect(tabs[i].getLocator()).toHaveText(
-                tabContent[i]
-            );
+            await expect(tabs[i].getLocator()).toHaveText(tabContent[i]);
         }
     });
 

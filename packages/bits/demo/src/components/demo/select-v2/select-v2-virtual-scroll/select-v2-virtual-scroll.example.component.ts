@@ -67,7 +67,7 @@ export class SelectV2VirtualScrollExampleComponent
     public ngOnInit(): void {
         this.selectControl.valueChanges
             .pipe(takeUntil(this.destroy$))
-            .subscribe((value) => {
+            .subscribe(value => {
                 console.log("Value from Select", value);
             });
     }
@@ -75,7 +75,7 @@ export class SelectV2VirtualScrollExampleComponent
     public ngAfterViewInit(): void {
         this.select.valueSelected
             .pipe(takeUntil(this.destroy$))
-            .subscribe((selectionText) => {
+            .subscribe(selectionText => {
                 this.scrollOffset = this.viewport.measureScrollOffset();
             });
     }

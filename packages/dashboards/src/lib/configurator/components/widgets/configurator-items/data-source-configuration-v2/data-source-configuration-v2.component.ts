@@ -115,7 +115,7 @@ export class DataSourceConfigurationV2Component
 
         this.form
             .get("dataSource")
-            ?.valueChanges.subscribe((selectedDataSource) => {
+            ?.valueChanges.subscribe(selectedDataSource => {
                 this.form
                     .get("providerId")
                     ?.setValue(selectedDataSource?.providerId);
@@ -142,7 +142,7 @@ export class DataSourceConfigurationV2Component
                 previousProperties !== this.properties
             ) {
                 const dataSource = this.dataSourceProviders.find(
-                    (provider) =>
+                    provider =>
                         provider.providerId === this.providerId &&
                         isEqual(
                             provider.properties ?? {},

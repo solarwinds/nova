@@ -56,7 +56,7 @@ export class BasicHorizontalBarChartTestComponent implements AfterViewInit {
 
         const scales = barScales(this.config);
 
-        const seriesSet: IChartSeries<IBarAccessors>[] = getData().map((d) => ({
+        const seriesSet: IChartSeries<IBarAccessors>[] = getData().map(d => ({
             ...d,
             accessors,
             renderer,

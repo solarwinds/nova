@@ -113,8 +113,7 @@
 </p>
 <nui-example-wrapper
     filenamePrefix="widget-error-handling.component"
-    exampleTitle="Widget Error Handling"
->
+    exampleTitle="Widget Error Handling">
     <widget-error-handling></widget-error-handling>
 </nui-example-wrapper>
 
@@ -130,7 +129,9 @@
     definition by changing the retrieving the definitions for the body content
     nodes in the method <code>widgetBodyContentNodes</code>. You can see below
     the declaration of that method:
-    <nui-example-code language="typescript" [code]="widgetBodyContentNodesSignature" />
+    <nui-example-code
+        language="typescript"
+        [code]="widgetBodyContentNodesSignature" />
     So, you can modify any parameter:
     <code>fallbackAdapterId, fallbackMap, fallbackNodes</code> to your own
     widget error handling.

@@ -143,7 +143,7 @@ export class OverlayComponent
         const overlayPropsToMap = ["toggleReference", "customContainer"];
 
         if (changes) {
-            overlayPropsToMap.forEach((key) => {
+            overlayPropsToMap.forEach(key => {
                 if (changes[key]) {
                     set(this.overlayService, key, changes[key].currentValue);
                 }
@@ -195,11 +195,11 @@ export class OverlayComponent
     private overlayClickOutside(): Observable<MouseEvent> {
         return this.eventBusService.getStream(DOCUMENT_CLICK_EVENT).pipe(
             filter(isMouseEvent),
-            filter((event) => {
+            filter(event => {
                 const clickTarget = event.target as HTMLElement;
                 const notOrigin = !some(
                     event.composedPath(),
-                    (p) => p === this.toggleReference
+                    p => p === this.toggleReference
                 ); // the toggle elem
                 const notOverlay =
                     this.overlayService
@@ -218,7 +218,7 @@ export class OverlayComponent
 
         clicksOutsideStream$
             .pipe(takeUntil(this.hide$))
-            .subscribe((v) => this.clickOutside.emit(v));
+            .subscribe(v => this.clickOutside.emit(v));
     }
 
     private setOverlayConfig(): void {

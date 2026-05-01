@@ -72,7 +72,7 @@ export class AverageRatingKpiDataSource
     // provider definition in the widget configuration below to see how the interval is set)
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             // *** Make a resource request to an external API (if needed)
             this.http
                 .get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
@@ -153,7 +153,7 @@ export class ErrorForbiddenDataSource
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
         // generate a 403
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             this.http
                 .get(
                     "http://www.mocky.io/v2/5ecc724a3200000f0023614a?mocky-delay=4000ms"
@@ -197,7 +197,7 @@ export class ErrorNotFoundDataSource
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
         // generate a 404
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             this.http
                 .get(
                     "http://www.mocky.io/v2/5ec6bfd93200007800d75100?mocky-delay=1000ms"

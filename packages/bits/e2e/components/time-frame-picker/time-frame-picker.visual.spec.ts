@@ -40,7 +40,9 @@ test.describe(`Visual tests: ${name}`, () => {
             "time-frame-picker/time-frame-picker-visual-test",
             page
         );
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
 
         popoverWithTimeframePicker = Atom.find<PopoverAtom>(
             PopoverAtom,
@@ -84,8 +86,7 @@ test.describe(`Visual tests: ${name}`, () => {
 
         await timeFramePicker
             .getEndDatetimePicker()
-            .timePicker
-            .menuPopup.clickItemByText("1:00 AM");
+            .timePicker.menuPopup.clickItemByText("1:00 AM");
         await camera.say.cheese(
             "Checking the confirmation buttons alignment and styling"
         );

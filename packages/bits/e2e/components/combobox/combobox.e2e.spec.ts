@@ -155,7 +155,9 @@ test.describe("USERCONTROL Combobox >", () => {
                 test("should display selected item, change input value and model after clicking on dropdown item", async () => {
                     const target = /^Item 1$/;
                     await comboboxBasic.select(target);
-                    expect(await comboboxBasic.getInputValue()).toEqual("Item 1");
+                    expect(await comboboxBasic.getInputValue()).toEqual(
+                        "Item 1"
+                    );
                 });
 
                 test("should mark the selected item in the combobox menu", async () => {
@@ -195,13 +197,17 @@ test.describe("USERCONTROL Combobox >", () => {
             test("should clear input on blur if it's value is not in source array", async () => {
                 await comboClearOnBlur.acceptInput("Not in a source array");
                 await comboboxBasic.toggleMenu();
-                await expect(comboClearOnBlur.getSelectedItems()).toHaveCount(0);
+                await expect(comboClearOnBlur.getSelectedItems()).toHaveCount(
+                    0
+                );
             });
 
             test("should keep input value in input on blur if it's value is in source array", async () => {
                 await comboClearOnBlur.acceptInput("Item 1");
                 await comboboxBasic.toggleMenu();
-                expect(await comboClearOnBlur.getInputValue()).toEqual("Item 1");
+                expect(await comboClearOnBlur.getInputValue()).toEqual(
+                    "Item 1"
+                );
             });
         });
 
@@ -237,10 +243,14 @@ test.describe("USERCONTROL Combobox >", () => {
                 const componentWidth = (await component.boundingBox())?.width;
                 const containerOuterWidth = (await parent.boundingBox())?.width;
                 const containerLeftPadding = parseFloat(
-                    (await parent.evaluate((el) => getComputedStyle(el).paddingLeft)) as string
+                    (await parent.evaluate(
+                        el => getComputedStyle(el).paddingLeft
+                    )) as string
                 );
                 const containerRightPadding = parseFloat(
-                    (await parent.evaluate((el) => getComputedStyle(el).paddingRight)) as string
+                    (await parent.evaluate(
+                        el => getComputedStyle(el).paddingRight
+                    )) as string
                 );
                 if (componentWidth == null || containerOuterWidth == null) {
                     throw new Error("Unable to measure element widths");
@@ -257,21 +267,35 @@ test.describe("USERCONTROL Combobox >", () => {
 
         test.describe("required >", () => {
             test("should display selection-required hints when focused when is-required is true", async () => {
-                expect(await comboboxRequired.isRequiredStyleDisplayed()).toEqual(true);
+                expect(
+                    await comboboxRequired.isRequiredStyleDisplayed()
+                ).toEqual(true);
                 await comboboxRequired.toggleMenu();
-                expect(await comboboxRequired.isRequiredStyleDisplayed()).toEqual(true);
+                expect(
+                    await comboboxRequired.isRequiredStyleDisplayed()
+                ).toEqual(true);
             });
 
             test("should not indicate error state if item is selected", async () => {
-                expect(await comboboxRequired.isRequiredStyleDisplayed()).toEqual(true);
+                expect(
+                    await comboboxRequired.isRequiredStyleDisplayed()
+                ).toEqual(true);
                 await comboboxRequired.select("Item 5");
-                expect(await comboboxRequired.isRequiredStyleDisplayed()).toEqual(false);
+                expect(
+                    await comboboxRequired.isRequiredStyleDisplayed()
+                ).toEqual(false);
                 await comboboxBasic.toggleMenu();
-                expect(await comboboxRequired.isRequiredStyleDisplayed()).toEqual(false);
+                expect(
+                    await comboboxRequired.isRequiredStyleDisplayed()
+                ).toEqual(false);
                 await comboboxRequired.toggleMenu();
-                expect(await comboboxRequired.isRequiredStyleDisplayed()).toEqual(false);
+                expect(
+                    await comboboxRequired.isRequiredStyleDisplayed()
+                ).toEqual(false);
                 await comboboxBasic.toggleMenu();
-                expect(await comboboxRequired.isRequiredStyleDisplayed()).toEqual(false);
+                expect(
+                    await comboboxRequired.isRequiredStyleDisplayed()
+                ).toEqual(false);
             });
         });
 
@@ -279,7 +303,7 @@ test.describe("USERCONTROL Combobox >", () => {
             test("should have proper styles", async () => {
                 const display = await inlineCombobox
                     .getLayoutBlock()
-                    .evaluate((el) => getComputedStyle(el).display);
+                    .evaluate(el => getComputedStyle(el).display);
                 expect(display).toEqual("inline-flex");
             });
         });
@@ -301,25 +325,39 @@ test.describe("USERCONTROL Combobox >", () => {
 
         test.describe("reactive form >", () => {
             test("should not have error class when form is submitted and control is valid", async () => {
-                const submitButton = Helpers.page.locator("button[type='submit']");
+                const submitButton = Helpers.page.locator(
+                    "button[type='submit']"
+                );
                 await submitButton.click();
-                expect(await reactiveFormCombobox.isRequiredStyleDisplayed()).toBe(false);
+                expect(
+                    await reactiveFormCombobox.isRequiredStyleDisplayed()
+                ).toBe(false);
             });
 
             test("should set value both in textbox and menu when item is set from reactive form", async () => {
-                const submitButton = Helpers.page.locator("button[type='submit']");
+                const submitButton = Helpers.page.locator(
+                    "button[type='submit']"
+                );
                 await submitButton.click();
                 await reactiveFormCombobox.toggleMenu();
-                expect(await reactiveFormCombobox.getInputValue()).toEqual("Item 2");
-                await expect(reactiveFormCombobox.getSelectedItems()).toHaveCount(1);
+                expect(await reactiveFormCombobox.getInputValue()).toEqual(
+                    "Item 2"
+                );
+                await expect(
+                    reactiveFormCombobox.getSelectedItems()
+                ).toHaveCount(1);
             });
 
             test("should have error class when form is submitted and control is not valid", async () => {
-                const submitButton = Helpers.page.locator("button[type='submit']");
+                const submitButton = Helpers.page.locator(
+                    "button[type='submit']"
+                );
                 await submitButton.click();
                 await reactiveFormCombobox.textbox.deleteTextManually();
                 await submitButton.click();
-                expect(await reactiveFormCombobox.isRequiredStyleDisplayed()).toBe(true);
+                expect(
+                    await reactiveFormCombobox.isRequiredStyleDisplayed()
+                ).toBe(true);
             });
         });
 
@@ -338,20 +376,28 @@ test.describe("USERCONTROL Combobox >", () => {
                 await comboboxBasic.waitElementVisible();
                 await comboboxBasic.toggleMenu();
                 await comboboxBasic.acceptInput("Item");
-                expect(await comboboxBasic.getHighlightedItemsCount()).toEqual(15);
+                expect(await comboboxBasic.getHighlightedItemsCount()).toEqual(
+                    15
+                );
                 await comboboxBasic.clearText();
                 await comboboxBasic.acceptInput("Item 1");
-                expect(await comboboxBasic.getHighlightedItemsCount()).toEqual(6);
+                expect(await comboboxBasic.getHighlightedItemsCount()).toEqual(
+                    6
+                );
             });
 
             test("should highlight appropriate items in dropdown for combobox with groups", async () => {
                 await comboboxSeparators.waitElementVisible();
                 await comboboxSeparators.toggleMenu();
                 await comboboxSeparators.acceptInput("Item");
-                expect(await comboboxSeparators.getHighlightedItemsCount()).toEqual(9);
+                expect(
+                    await comboboxSeparators.getHighlightedItemsCount()
+                ).toEqual(9);
                 await comboboxSeparators.clearText();
                 await comboboxSeparators.acceptInput("Item 1");
-                expect(await comboboxSeparators.getHighlightedItemsCount()).toEqual(3);
+                expect(
+                    await comboboxSeparators.getHighlightedItemsCount()
+                ).toEqual(3);
             });
         });
 
@@ -361,14 +407,18 @@ test.describe("USERCONTROL Combobox >", () => {
                 await comboboxTypeahead.select("Item 111", true);
                 await comboboxTypeahead.toggleMenu();
                 expect(await comboboxTypeahead.getItemsCount()).toEqual(2);
-                expect(await comboboxTypeahead.getInputValue()).toEqual("Item 111");
+                expect(await comboboxTypeahead.getInputValue()).toEqual(
+                    "Item 111"
+                );
             });
 
             test("should clear value if it's not in source array and re-render dropdown", async () => {
                 await comboboxTypeahead.waitElementVisible();
                 await comboboxTypeahead.acceptInput("Not in a source array");
                 await comboboxTypeahead.toggleMenu();
-                await expect(comboboxTypeahead.getSelectedItems()).toHaveCount(0);
+                await expect(comboboxTypeahead.getSelectedItems()).toHaveCount(
+                    0
+                );
                 await comboboxTypeahead.toggleMenu();
                 await Helpers.page.waitForTimeout(500); // wait for dropdown to re-render
                 expect(await comboboxTypeahead.getInputValue()).toEqual("");
@@ -397,15 +447,25 @@ test.describe("USERCONTROL Combobox >", () => {
 
             test("should be focused via keyboard", async () => {
                 await Helpers.pressKey("Tab");
-                const inputClass = await comboboxBasic.getInput().getAttribute("class");
-                const activeElementClass = await Helpers.page.evaluate(() => document.activeElement?.getAttribute("class"));
+                const inputClass = await comboboxBasic
+                    .getInput()
+                    .getAttribute("class");
+                const activeElementClass = await Helpers.page.evaluate(() =>
+                    document.activeElement?.getAttribute("class")
+                );
                 expect(activeElementClass).toBe(inputClass);
             });
 
             test("should be focused via js", async () => {
-                await comboboxBasic.getInput().evaluate((el: any) => el.focus());
-                const inputClass = await comboboxBasic.getInput().getAttribute("class");
-                const activeElementClass = await Helpers.page.evaluate(() => document.activeElement?.getAttribute("class"));
+                await comboboxBasic
+                    .getInput()
+                    .evaluate((el: any) => el.focus());
+                const inputClass = await comboboxBasic
+                    .getInput()
+                    .getAttribute("class");
+                const activeElementClass = await Helpers.page.evaluate(() =>
+                    document.activeElement?.getAttribute("class")
+                );
                 expect(activeElementClass).toBe(inputClass);
             });
 
@@ -436,25 +496,35 @@ test.describe("USERCONTROL Combobox >", () => {
                 await comboboxRemoveValueButton.waitElementVisible();
             });
             test("should display removeValue button when text is typed", async () => {
-                await expect(comboboxRemoveValueButton.clearButton.getLocator()).toHaveCount(0);
+                await expect(
+                    comboboxRemoveValueButton.clearButton.getLocator()
+                ).toHaveCount(0);
                 const inputText = "Some text";
                 await comboboxRemoveValueButton.acceptText(inputText);
-                await expect(comboboxRemoveValueButton.clearButton.getLocator()).toHaveCount(1);
+                await expect(
+                    comboboxRemoveValueButton.clearButton.getLocator()
+                ).toHaveCount(1);
             });
 
             test("should clear input value when clicking the button", async () => {
                 const inputText = "Some text";
                 await comboboxRemoveValueButton.acceptText(inputText);
                 await comboboxRemoveValueButton.clearButton.click();
-                expect(await comboboxRemoveValueButton.getInputValue()).toEqual("");
+                expect(await comboboxRemoveValueButton.getInputValue()).toEqual(
+                    ""
+                );
             });
 
             test("should have removalValue button when selected item and clear value when clicking the button", async () => {
                 await comboboxRemoveValueButton.select("Item 1");
-                await expect(comboboxRemoveValueButton.clearButton.getLocator()).toHaveCount(1);
+                await expect(
+                    comboboxRemoveValueButton.clearButton.getLocator()
+                ).toHaveCount(1);
 
                 await comboboxRemoveValueButton.clearButton.click();
-                expect(await comboboxRemoveValueButton.getInputValue()).toEqual("");
+                expect(await comboboxRemoveValueButton.getInputValue()).toEqual(
+                    ""
+                );
             });
         });
     });

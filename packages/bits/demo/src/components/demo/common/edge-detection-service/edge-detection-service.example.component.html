@@ -13,8 +13,7 @@
                                 caption="Width in pixels"
                                 name="element-name"
                                 [(value)]="deposit.width"
-                                ngDefaultControl
-                            >
+                                ngDefaultControl>
                             </nui-textbox-number>
                         </li>
                         <li>
@@ -22,8 +21,7 @@
                                 caption="Height in pixels"
                                 name="element-height"
                                 [(value)]="deposit.height"
-                                ngDefaultControl
-                            >
+                                ngDefaultControl>
                             </nui-textbox-number>
                         </li>
                     </ul>
@@ -43,8 +41,7 @@
                                 name="width"
                                 [(value)]="parentComponent.width"
                                 [disabled]="!addEdgeDefinerClass"
-                                ngDefaultControl
-                            >
+                                ngDefaultControl>
                             </nui-textbox-number>
                         </li>
                         <li>
@@ -53,8 +50,7 @@
                                 name="height"
                                 [(value)]="parentComponent.height"
                                 [disabled]="!addEdgeDefinerClass"
-                                ngDefaultControl
-                            >
+                                ngDefaultControl>
                             </nui-textbox-number>
                         </li>
                     </ul>
@@ -86,50 +82,43 @@
                         <ul>
                             <li
                                 (mouseover)="showPlaced.top = true"
-                                (mouseleave)="showPlaced.top = false"
-                            >
+                                (mouseleave)="showPlaced.top = false">
                                 <b>Top: </b>
                                 <span
                                     class="label label-success"
                                     [ngClass]="{
                                         'label-danger': !canBe?.placed.top
-                                    }"
-                                >
+                                    }">
                                     {{ canBe?.placed.top }}
                                 </span>
                             </li>
                             <li
                                 (mouseover)="showPlaced.right = true"
-                                (mouseleave)="showPlaced.right = false"
-                            >
+                                (mouseleave)="showPlaced.right = false">
                                 <b>Right: </b>
                                 <span
                                     class="label label-success"
                                     [ngClass]="{
                                         'label-danger': !canBe?.placed.right
-                                    }"
-                                >
+                                    }">
                                     {{ canBe?.placed.right }}
                                 </span>
                             </li>
                             <li
                                 (mouseover)="showPlaced.bottom = true"
-                                (mouseleave)="showPlaced.bottom = false"
-                            >
+                                (mouseleave)="showPlaced.bottom = false">
                                 <b>Bottom: </b>
                                 <span
                                     class="label label-success"
                                     [ngClass]="{
                                         'label-danger': !canBe?.placed.bottom
-                                    }"
-                                >
+                                    }">
                                     {{ canBe?.placed.bottom }}
                                 </span>
                             </li>
                             <li
                                 (mouseover)="showPlaced.left = true"
-                                (mouseleave)="showPlaced.left = false"
-                            >
+                                (mouseleave)="showPlaced.left = false">
                                 <b>Left: </b>
                                 <span
                                     class="label label-success"
@@ -137,8 +126,7 @@
                                         'label-danger': !canBe?.placed.left
                                     }"
                                     (mouseover)="showPlaced.left = true"
-                                    (mouseleave)="showPlaced.left = false"
-                                >
+                                    (mouseleave)="showPlaced.left = false">
                                     {{ canBe?.placed.left }}
                                 </span>
                             </li>
@@ -149,57 +137,49 @@
                         <ul>
                             <li
                                 (mouseover)="showAligned.top = true"
-                                (mouseleave)="showAligned.top = false"
-                            >
+                                (mouseleave)="showAligned.top = false">
                                 <b>Top: </b>
                                 <span
                                     class="label label-success"
                                     [ngClass]="{
                                         'label-danger': !canBe?.aligned.top
-                                    }"
-                                >
+                                    }">
                                     {{ canBe?.aligned.top }}
                                 </span>
                             </li>
                             <li
                                 (mouseover)="showAligned.right = true"
-                                (mouseleave)="showAligned.right = false"
-                            >
+                                (mouseleave)="showAligned.right = false">
                                 <b>Right: </b>
                                 <span
                                     class="label label-success"
                                     [ngClass]="{
                                         'label-danger': !canBe?.aligned.right
-                                    }"
-                                >
+                                    }">
                                     {{ canBe?.aligned.right }}
                                 </span>
                             </li>
                             <li
                                 (mouseover)="showAligned.bottom = true"
-                                (mouseleave)="showAligned.bottom = false"
-                            >
+                                (mouseleave)="showAligned.bottom = false">
                                 <b>Bottom: </b>
                                 <span
                                     class="label label-success"
                                     [ngClass]="{
                                         'label-danger': !canBe?.aligned.bottom
-                                    }"
-                                >
+                                    }">
                                     {{ canBe?.aligned.bottom }}
                                 </span>
                             </li>
                             <li
                                 (mouseover)="showAligned.left = true"
-                                (mouseleave)="showAligned.left = false"
-                            >
+                                (mouseleave)="showAligned.left = false">
                                 <b>Left: </b>
                                 <span
                                     class="label label-success"
                                     [ngClass]="{
                                         'label-danger': !canBe?.aligned.left
-                                    }"
-                                >
+                                    }">
                                     {{ canBe?.aligned.left }}
                                 </span>
                             </li>
@@ -214,8 +194,7 @@
                     name="parent-class"
                     [value]="addEdgeDefinerClass"
                     (valueChange)="switchCheckbox()"
-                    ngDefaultControl
-                >
+                    ngDefaultControl>
                     Add nui-edge-definer class to parent component
                 </nui-checkbox>
             </div>
@@ -226,8 +205,7 @@
                 [ngStyle]="{
                     width: parentComponent.width + 'px',
                     height: parentComponent.height + 'px'
-                }"
-            >
+                }">
                 <div class="base-point">
                     <button nui-button type="button" class="base-point-element">
                         Basepoint of the place investigation
@@ -237,8 +215,7 @@
                         [ngStyle]="{
                             height: deposit.height + 'px',
                             display: showPlaced.top ? 'flex' : 'none'
-                        }"
-                    >
+                        }">
                         <div class="arrow arrow-up"></div>
                         <div class="line"></div>
                     </div>
@@ -247,8 +224,7 @@
                         [ngStyle]="{
                             width: deposit.width + 'px',
                             display: showPlaced.left ? 'flex' : 'none'
-                        }"
-                    >
+                        }">
                         <div class="arrow arrow-left"></div>
                         <div class="line"></div>
                     </div>
@@ -257,8 +233,7 @@
                         [ngStyle]="{
                             width: deposit.width + 'px',
                             display: showPlaced.right ? 'flex' : 'none'
-                        }"
-                    >
+                        }">
                         <div class="arrow arrow-right"></div>
                         <div class="line"></div>
                     </div>
@@ -267,8 +242,7 @@
                         [ngStyle]="{
                             height: deposit.height + 'px',
                             display: showPlaced.bottom ? 'flex' : 'none'
-                        }"
-                    >
+                        }">
                         <div class="arrow arrow-down"></div>
                         <div class="line"></div>
                     </div>
@@ -277,8 +251,7 @@
                         [ngStyle]="{
                             height: deposit.height + 'px',
                             display: showAligned.top ? 'flex' : 'none'
-                        }"
-                    >
+                        }">
                         <div class="arrow arrow-down"></div>
                         <div class="line"></div>
                     </div>
@@ -287,8 +260,7 @@
                         [ngStyle]="{
                             width: deposit.width + 'px',
                             display: showAligned.left ? 'flex' : 'none'
-                        }"
-                    >
+                        }">
                         <div class="arrow arrow-right"></div>
                         <div class="line"></div>
                     </div>
@@ -297,8 +269,7 @@
                         [ngStyle]="{
                             width: deposit.width + 'px',
                             display: showAligned.right ? 'flex' : 'none'
-                        }"
-                    >
+                        }">
                         <div class="arrow arrow-left"></div>
                         <div class="line"></div>
                     </div>
@@ -307,8 +278,7 @@
                         [ngStyle]="{
                             height: deposit.height + 'px',
                             display: showAligned.bottom ? 'flex' : 'none'
-                        }"
-                    >
+                        }">
                         <div class="arrow arrow-up"></div>
                         <div class="line"></div>
                     </div>
@@ -318,8 +288,7 @@
                             width: deposit.width + 'px',
                             height: deposit.height + 'px'
                         }"
-                        #placementElement
-                    ></div>
+                        #placementElement></div>
                 </div>
             </div>
         </div>

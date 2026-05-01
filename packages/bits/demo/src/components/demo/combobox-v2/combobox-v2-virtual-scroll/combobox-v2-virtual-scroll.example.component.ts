@@ -74,10 +74,10 @@ export class ComboboxV2VirtualScrollExampleComponent
 
         this.combobox.valueChanged
             .pipe(
-                filter((v) => v !== undefined),
+                filter(v => v !== undefined),
                 // eslint-disable-next-line import/no-deprecated
                 tap(
-                    (v) =>
+                    v =>
                         (this.filteredItems = of(this.filterItems(v as string)))
                 ),
                 delay(0),
@@ -99,7 +99,7 @@ export class ComboboxV2VirtualScrollExampleComponent
         }
         const filterValue = value?.toLowerCase();
 
-        return this.items.filter((option) =>
+        return this.items.filter(option =>
             option.toLowerCase().includes(filterValue)
         );
     }

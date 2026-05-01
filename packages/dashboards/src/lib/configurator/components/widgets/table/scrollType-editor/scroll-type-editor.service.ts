@@ -33,7 +33,7 @@ export class ScrollTypeEditorService {
 
     public getScrollTypeTitle(scrollType: ScrollType): string {
         const result =
-            this.loadStrategies.find((ls) => ls.id === scrollType)?.title ||
+            this.loadStrategies.find(ls => ls.id === scrollType)?.title ||
             $localize`Unknown`;
 
         return result;

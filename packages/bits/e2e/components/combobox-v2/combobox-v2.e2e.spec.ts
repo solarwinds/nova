@@ -56,7 +56,9 @@ test.describe("USERCONTROL Combobox v2 >", () => {
             });
 
             test.afterEach(async () => {
-                await Helpers.page.locator(".focus-drop").click({ force: true });
+                await Helpers.page
+                    .locator(".focus-drop")
+                    .click({ force: true });
             });
 
             test("should toggle", async () => {
@@ -70,7 +72,7 @@ test.describe("USERCONTROL Combobox v2 >", () => {
             test("should navigate with UP and DOWN buttons", async () => {
                 await Helpers.pressKey("ArrowDown", 5);
 
-                await (await comboboxError.getOption(5)).toBeActive()
+                await (await comboboxError.getOption(5)).toBeActive();
 
                 await Helpers.pressKey("ArrowUp");
                 await (await comboboxError.getOption(4)).toBeActive();
@@ -89,7 +91,7 @@ test.describe("USERCONTROL Combobox v2 >", () => {
             test("should open on DOWN button", async () => {
                 await Helpers.pressKey("Escape");
                 await Helpers.pressKey("ArrowDown");
-                await Helpers.pressKey("ArrowDown",5);
+                await Helpers.pressKey("ArrowDown", 5);
                 await (await comboboxError.getOption(5)).toBeActive();
             });
 
@@ -107,7 +109,9 @@ test.describe("USERCONTROL Combobox v2 >", () => {
                 await Helpers.pressKey("PageDown");
                 await Helpers.pressKey("Enter");
 
-                expect(await comboboxError.getInputValue()).toEqual(lastItemText);
+                expect(await comboboxError.getInputValue()).toEqual(
+                    lastItemText
+                );
             });
 
             test("should reach the top of the list on PAGE_UP button pressed", async () => {
@@ -118,11 +122,15 @@ test.describe("USERCONTROL Combobox v2 >", () => {
                 await Helpers.pressKey("PageUp");
                 await Helpers.pressKey("Enter");
 
-                expect(await comboboxError.getInputValue()).toEqual(firstItemText);
+                expect(await comboboxError.getInputValue()).toEqual(
+                    firstItemText
+                );
             });
 
             test("should be able to navigate through the items if toggled using the toggle button", async () => {
-                await Helpers.page.locator(".focus-drop").click({ force: true });
+                await Helpers.page
+                    .locator(".focus-drop")
+                    .click({ force: true });
                 await (await comboboxError.getFirstOption()).click();
                 await comboboxError.toggleButton.click();
                 await Helpers.pressKey("ArrowDown", 3);
@@ -186,10 +194,12 @@ test.describe("USERCONTROL Combobox v2 >", () => {
                 const container = comboboxBasic.getPopupElement;
 
                 const containerHeight = (await container.boundingBox())?.height;
-                const containerTop = await container.evaluate((el) => (el as HTMLElement).scrollTop);
+                const containerTop = await container.evaluate(
+                    el => (el as HTMLElement).scrollTop
+                );
                 const optionTop = await option
                     .getLocator()
-                    .evaluate((el) => (el as HTMLElement).offsetTop);
+                    .evaluate(el => (el as HTMLElement).offsetTop);
 
                 if (containerHeight == null) {
                     throw new Error("Unable to measure popup container height");
@@ -204,18 +214,30 @@ test.describe("USERCONTROL Combobox v2 >", () => {
         });
 
         test.describe("when popup follows the dimensions of its toggle reference", () => {
-            const checkComboboxOverlayWidthEquality = async ()=>{
+            const checkComboboxOverlayWidthEquality = async () => {
                 await expect
                     .poll(async () => {
-                        const comboboxWidth = (await comboboxCustomControl.getLocator().first().boundingBox())?.width;
-                        const overlayWidth = (await comboboxCustomControl.getPopupElement.first().boundingBox())?.width;
+                        const comboboxWidth = (
+                            await comboboxCustomControl
+                                .getLocator()
+                                .first()
+                                .boundingBox()
+                        )?.width;
+                        const overlayWidth = (
+                            await comboboxCustomControl.getPopupElement
+                                .first()
+                                .boundingBox()
+                        )?.width;
                         if (comboboxWidth == null || overlayWidth == null) {
                             return false;
                         }
-                        return Math.round(comboboxWidth) === Math.round(overlayWidth);
+                        return (
+                            Math.round(comboboxWidth) ===
+                            Math.round(overlayWidth)
+                        );
                     })
                     .toBe(true);
-            }
+            };
             test("width should match", async () => {
                 await Helpers.page.locator("#toggle").click();
                 await checkComboboxOverlayWidthEquality();
@@ -226,17 +248,20 @@ test.describe("USERCONTROL Combobox v2 >", () => {
                 await comboboxCustomControl.removeAll();
                 await checkComboboxOverlayWidthEquality();
                 await Helpers.page.locator("#hide").click();
-
             });
         });
 
         test.describe("selected items keyboard navigation", () => {
             test.beforeEach(async () => {
                 // on small screen combobox input has small space to click
-                await Helpers.page.setViewportSize({ width: 1900, height: 890 });
+                await Helpers.page.setViewportSize({
+                    width: 1900,
+                    height: 890,
+                });
 
                 const removeButtonMulti = comboboxMulti.removeAllButton;
-                const removeButtonManual = comboboxCustomControl.removeAllButton;
+                const removeButtonManual =
+                    comboboxCustomControl.removeAllButton;
 
                 if ((await removeButtonMulti.count()) > 0) {
                     await removeButtonMulti.click();
@@ -246,7 +271,9 @@ test.describe("USERCONTROL Combobox v2 >", () => {
                 }
 
                 await Helpers.page.locator("#hide").click();
-                await Helpers.page.locator(".focus-drop").click({ force: true });
+                await Helpers.page
+                    .locator(".focus-drop")
+                    .click({ force: true });
             });
 
             test("should delete selected item on backspace", async () => {
@@ -304,11 +331,15 @@ test.describe("USERCONTROL Combobox v2 >", () => {
                 await comboboxMulti.toggleButton.click();
                 await Helpers.pressKey("ArrowLeft", 7);
 
-                await expect(comboboxMulti.chips.nth(0)).toHaveClass(/\bactive\b/);
+                await expect(comboboxMulti.chips.nth(0)).toHaveClass(
+                    /\bactive\b/
+                );
 
                 await Helpers.pressKey("ArrowRight");
 
-                await expect(comboboxMulti.chips.nth(1)).toHaveClass(/\bactive\b/);
+                await expect(comboboxMulti.chips.nth(1)).toHaveClass(
+                    /\bactive\b/
+                );
             });
 
             test("it should deactivate active option", async () => {
@@ -338,7 +369,9 @@ test.describe("USERCONTROL Combobox v2 >", () => {
                 await comboboxCustomControl.toggleButton.click();
                 await Helpers.pressKey("ArrowLeft");
 
-                await expect(comboboxCustomControl.getPopupElement).toHaveCount(1);
+                await expect(comboboxCustomControl.getPopupElement).toHaveCount(
+                    1
+                );
             });
 
             test("should mark the first unfiltered item as active on open in multiselect", async () => {
@@ -355,8 +388,11 @@ test.describe("USERCONTROL Combobox v2 >", () => {
                 await virtualCombobox.type("Item 2");
 
                 await expect
-                    .poll(async () =>
-                        await (await virtualCombobox.getFirstOption()).getText()
+                    .poll(
+                        async () =>
+                            await (
+                                await virtualCombobox.getFirstOption()
+                            ).getText()
                     )
                     .toBe("Item 2");
             });

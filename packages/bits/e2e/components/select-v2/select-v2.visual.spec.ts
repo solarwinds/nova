@@ -41,11 +41,20 @@ test.describe(`Visual tests: ${name}`, () => {
 
         selectBasic = Atom.find<SelectV2Atom>(SelectV2Atom, "basic");
         selectErrorState = Atom.find<SelectV2Atom>(SelectV2Atom, "error-state");
-        selectDisplayValueSmall = Atom.find<SelectV2Atom>(SelectV2Atom, "display-value-mw200");
-        selectDisplayValue = Atom.find<SelectV2Atom>(SelectV2Atom, "display-value");
+        selectDisplayValueSmall = Atom.find<SelectV2Atom>(
+            SelectV2Atom,
+            "display-value-mw200"
+        );
+        selectDisplayValue = Atom.find<SelectV2Atom>(
+            SelectV2Atom,
+            "display-value"
+        );
         selectGrouped = Atom.find<SelectV2Atom>(SelectV2Atom, "grouped");
         selectInForm = Atom.find<SelectV2Atom>(SelectV2Atom, "reactive-form");
-        selectOverlayStyles = Atom.find<SelectV2Atom>(SelectV2Atom, "overlay-styles");
+        selectOverlayStyles = Atom.find<SelectV2Atom>(
+            SelectV2Atom,
+            "overlay-styles"
+        );
 
         camera = new Camera().loadFilm(page, name, "Bits");
     });

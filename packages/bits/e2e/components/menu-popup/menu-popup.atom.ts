@@ -19,7 +19,10 @@ export class MenuPopupAtom extends Atom {
         return super.getLocator().locator(".nui-menu-item--selected").first();
     }
 
-    public async clickItemByText(title: string, exact: boolean = true): Promise<void> {
+    public async clickItemByText(
+        title: string,
+        exact: boolean = true
+    ): Promise<void> {
         const items = this.items;
         if ((await items.count()) === 0) {
             return;

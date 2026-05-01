@@ -19,20 +19,18 @@
             [nuiSetFocus]="captureFocus()"
             (focusChange)="onFocusChange($event)"
             (input)="onInputChange()"
-            (keyup)="onKeyup($event)"
-        />
+            (keyup)="onKeyup($event)" />
         <div class="nui-search__button input-group-btn">
             @if (value()) {
-                <button
-                    nui-button
-                    type="reset"
-                    [ariaLabel]="cancelAriaLabel"
-                    [attr.aria-controls]="resolvedInputId()"
-                    class="nui-search__button-cancel"
-                    displayStyle="action"
-                    icon="close"
-                    (click)="onCancel()"
-                ></button>
+            <button
+                nui-button
+                type="reset"
+                [ariaLabel]="cancelAriaLabel"
+                [attr.aria-controls]="resolvedInputId()"
+                class="nui-search__button-cancel"
+                displayStyle="action"
+                icon="close"
+                (click)="onCancel()"></button>
             }
             <button
                 nui-button
@@ -44,8 +42,7 @@
                 icon="search"
                 [disabled]="isButtonDisabled()"
                 [attr.aria-hidden]="isButtonDisabled() ? 'true' : null"
-                (click)="onSearch()"
-            ></button>
+                (click)="onSearch()"></button>
         </div>
     </div>
 </div>

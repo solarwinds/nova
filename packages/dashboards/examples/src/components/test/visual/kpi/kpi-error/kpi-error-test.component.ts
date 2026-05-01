@@ -85,7 +85,7 @@ export class KpiErrorTestComponent implements OnInit {
             TestKpiDataSource,
             TestKpiDataSource2,
             TestKpiDataSourceBigNumber,
-        ].forEach((dataSource) => {
+        ].forEach(dataSource => {
             dataSource.mockError = true;
         });
         this.providerRegistry.setProviders({

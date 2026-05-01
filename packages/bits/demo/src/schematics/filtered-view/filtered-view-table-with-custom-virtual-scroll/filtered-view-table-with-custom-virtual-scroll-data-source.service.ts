@@ -150,7 +150,7 @@ export class FilteredViewTableWithCustomVirtualScrollDataSource<T>
 
         // cleans any filter that we don't need
         let filterRequestParams = requestParams;
-        ["page", "pageSize", "sortField", "sortOrder"].forEach((f) => {
+        ["page", "pageSize", "sortField", "sortOrder"].forEach(f => {
             filterRequestParams = filterRequestParams.delete(f);
         });
 
@@ -159,7 +159,7 @@ export class FilteredViewTableWithCustomVirtualScrollDataSource<T>
         // perform additional requests to retrieve the count for each filter group (eg: status, location)
         FilteredViewTableWithCustomVirtualScrollDataSource.getMultiFiltersNames(
             filters
-        ).forEach((filterName) => {
+        ).forEach(filterName => {
             const serverFilters = Object.assign({}, JSON.parse(lastFilters));
             // always removes the current filter before the API call
             if (serverFilters[filterName]) {
@@ -208,7 +208,7 @@ export class FilteredViewTableWithCustomVirtualScrollDataSource<T>
             // to our frontend items collection (IServersCollection)
             map(([mainResponse, statusResponse, locationResponse]) => ({
                 items:
-                    mainResponse.items?.map((item) => ({
+                    mainResponse.items?.map(item => ({
                         name: item.name,
                         location: item.location,
                         status: item.status,
@@ -219,7 +219,7 @@ export class FilteredViewTableWithCustomVirtualScrollDataSource<T>
             })),
 
             // error handle in case of any error
-            catchError((e) => {
+            catchError(e => {
                 this.logger.error(e);
                 return of({
                     items: [],

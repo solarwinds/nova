@@ -87,10 +87,10 @@ export class FilteredViewWithTreeDataSource<T>
 
             // transform backend API response (IServersApiResponse)
             // to our frontend items collection (IServersCollection)
-            map((mainResponse) => mainResponse.data),
+            map(mainResponse => mainResponse.data),
 
             // error handle in case of any error
-            catchError((e) => {
+            catchError(e => {
                 this.logger.error(e);
                 return of({} as ISubregion);
             })
@@ -103,14 +103,12 @@ export class FilteredViewWithTreeDataSource<T>
         let subregion = "";
 
         filters.language?.value.forEach(
-            (i) => (languages += `{officialLanguages_some: {name: "${i}"}},`)
+            i => (languages += `{officialLanguages_some: {name: "${i}"}},`)
         );
         filters.currency?.value.forEach(
-            (i) => (currencies += `{currencies_some: {code: "${i}"}},`)
+            i => (currencies += `{currencies_some: {code: "${i}"}},`)
         );
-        filters.subregion?.value.forEach(
-            (i) => (subregion += `{name: "${i}"},`)
-        );
+        filters.subregion?.value.forEach(i => (subregion += `{name: "${i}"},`));
 
         const queryString = `query {
           Subregion(filter: {AND: [{region: {name: "Americas"}}], ${

@@ -5,44 +5,37 @@
     style="z-index: 1"
     [formControl]="selectControl"
     [manualDropdownControl]="true"
-    [displayValueTemplate]="customTemplate"
->
+    [displayValueTemplate]="customTemplate">
     <ng-container
         *ngFor="
             let item of readonly ? [] : currentHelp;
             let idx = index;
             let last = last;
             let first = first
-        "
-    >
+        ">
         <nui-select-v2-option
             tabindex="-1"
             *ngIf="!item.items"
             [displayValueContext]="item"
-            [value]="item"
-        >
+            [value]="item">
             <div class="d-inline-flex align-items-center">
                 <nui-icon
                     class="mr-2"
                     *ngIf="item.icon"
-                    [icon]="item.icon"
-                ></nui-icon>
+                    [icon]="item.icon"></nui-icon>
                 <span
                     tabindex="-1"
                     [innerHTML]="
                         item.displayValue | nuiHighlight : focusedTokenValue
-                    "
-                ></span>
+                    "></span>
             </div>
         </nui-select-v2-option>
         <nui-select-v2-option-group
             tabindex="-1"
-            *ngIf="item.items && item.items !== []"
-        >
+            *ngIf="item.items && item.items !== []">
             <nui-divider
                 *ngIf="last && idx > 1"
-                size="extra-small"
-            ></nui-divider>
+                size="extra-small"></nui-divider>
             <span
                 *ngIf="item.header"
                 class="nui-select-v2-option-group--header"
@@ -53,16 +46,14 @@
                     *ngFor="let groupedItem of item.items"
                     tabindex="-1"
                     [displayValueContext]="groupedItem"
-                    [value]="groupedItem"
-                >
+                    [value]="groupedItem">
                     <span
                         tabindex="-1"
                         *ngIf="!customTemplate"
                         [innerHTML]="
                             groupedItem.displayValue
                                 | nuiHighlight : focusedTokenValue
-                        "
-                    ></span>
+                        "></span>
                 </nui-select-v2-option>
             </ng-container>
             <ng-container *ngIf="item.notice">
@@ -75,8 +66,7 @@
                                     (groupedItem['severity']
                                         ? groupedItem['severity']
                                         : 'info')
-                            }}"
-                        ></nui-icon>
+                            }}"></nui-icon>
                         <span class="options-group__item" tabindex="-1">{{
                             groupedItem.message.displayValue
                         }}</span>
@@ -106,14 +96,12 @@
                         class="message-textarea form-control input-control"
                         formControlName="body"
                         [placeholder]="placeholder"
-                        [maxLength]="maxLength"
-                    >
+                        [maxLength]="maxLength">
                     </textarea>
                     <div class="overlay-holder" #textHighlightOverlayHolder>
                         <nui-text-highlight-overlay
                             [model]="highlightModel"
-                            [renderConfigurator]="renderer"
-                        ></nui-text-highlight-overlay>
+                            [renderConfigurator]="renderer"></nui-text-highlight-overlay>
                     </div>
                 </div>
             </form>

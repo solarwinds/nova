@@ -47,15 +47,38 @@ test.describe(`Visual tests: ${name}`, () => {
             "freetype-query/freetype-query-builder-visual-test",
             page
         );
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
 
-        example1 = Atom.find<FreetypeQueryBuilderAtom>(FreetypeQueryBuilderAtom, "example1");
-        example2 = Atom.find<FreetypeQueryBuilderAtom>(FreetypeQueryBuilderAtom, "example2");
-        example3 = Atom.find<FreetypeQueryBuilderAtom>(FreetypeQueryBuilderAtom, "example3");
-        example4 = Atom.find<FreetypeQueryBuilderAtom>(FreetypeQueryBuilderAtom, "example4");
-        example5 = Atom.find<FreetypeQueryBuilderAtom>(FreetypeQueryBuilderAtom, "example5");
-        example6 = Atom.find<FreetypeQueryBuilderAtom>(FreetypeQueryBuilderAtom, "example6");
-        example7 = Atom.find<FreetypeQueryBuilderAtom>(FreetypeQueryBuilderAtom, "example7");
+        example1 = Atom.find<FreetypeQueryBuilderAtom>(
+            FreetypeQueryBuilderAtom,
+            "example1"
+        );
+        example2 = Atom.find<FreetypeQueryBuilderAtom>(
+            FreetypeQueryBuilderAtom,
+            "example2"
+        );
+        example3 = Atom.find<FreetypeQueryBuilderAtom>(
+            FreetypeQueryBuilderAtom,
+            "example3"
+        );
+        example4 = Atom.find<FreetypeQueryBuilderAtom>(
+            FreetypeQueryBuilderAtom,
+            "example4"
+        );
+        example5 = Atom.find<FreetypeQueryBuilderAtom>(
+            FreetypeQueryBuilderAtom,
+            "example5"
+        );
+        example6 = Atom.find<FreetypeQueryBuilderAtom>(
+            FreetypeQueryBuilderAtom,
+            "example6"
+        );
+        example7 = Atom.find<FreetypeQueryBuilderAtom>(
+            FreetypeQueryBuilderAtom,
+            "example7"
+        );
     });
 
     test.skip(`${name} visual test`, async ({ page }) => {
@@ -68,7 +91,9 @@ test.describe(`Visual tests: ${name}`, () => {
 
         await example2.type(extraLongInputValue);
         await Helpers.pressKey("Escape");
-        await example2.getLocator().evaluate((el) => el.scrollTo({ top: el.scrollHeight }));
+        await example2
+            .getLocator()
+            .evaluate(el => el.scrollTo({ top: el.scrollHeight }));
         await camera.say.cheese("Example 2");
 
         await example3.type(threeTypeValuesInput);

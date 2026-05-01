@@ -188,7 +188,7 @@ export class WidgetToDashboardEventProxyService
         handleEvent: (stream: IEventDefinition, event: IEvent) => void
     ) {
         const streamsIndex: Record<string, string> | null = streams
-            ? keyBy(streams, (x) => x)
+            ? keyBy(streams, x => x)
             : null;
 
         // remove subscriptions that are not valid anymore
@@ -201,7 +201,7 @@ export class WidgetToDashboardEventProxyService
 
         // add subscriptions that were not registered before
         for (const streamId of Object.keys(streamsIndex ?? {}).filter(
-            (s) => !subscriptions[s]
+            s => !subscriptions[s]
         )) {
             const eventDefinition = this.eventRegistry.getEvent(streamId);
             subscriptions[streamId] = (

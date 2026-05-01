@@ -62,7 +62,7 @@ export class UtilityService {
         );
         if (typeof needle === "string") {
             return haystack.findIndex(
-                (straw) => valueAccessor(straw, 0) === needle
+                straw => valueAccessor(straw, 0) === needle
             );
         }
 
@@ -116,7 +116,7 @@ export class UtilityService {
         let dt = new Date().getTime();
         const uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
             /[xy]/g,
-            (c) => {
+            c => {
                 // eslint-disable-next-line
                 const r = (dt + Math.random() * 16) % 16 | 0;
                 dt = Math.floor(dt / 16);

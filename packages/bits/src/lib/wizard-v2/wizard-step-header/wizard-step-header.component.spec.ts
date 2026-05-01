@@ -95,10 +95,7 @@ describe("components >", () => {
             });
 
             it("should call createStepStateConfigMap method", () => {
-                const spy = spyOn(
-                    component as any,
-                    "createStepStateConfigMap"
-                );
+                const spy = spyOn(component as any, "createStepStateConfigMap");
 
                 component.ngOnChanges(config);
                 expect(spy).toHaveBeenCalled();

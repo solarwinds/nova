@@ -68,10 +68,7 @@ describe("components >", () => {
                 );
 
                 component.isErrorState(control, form);
-                expect(spy).toHaveBeenCalledWith(
-                    control,
-                    form
-                );
+                expect(spy).toHaveBeenCalledWith(control, form);
             });
 
             it("should return true if control invalid and errorState is true", () => {

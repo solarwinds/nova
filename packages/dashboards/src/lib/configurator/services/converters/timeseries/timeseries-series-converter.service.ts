@@ -69,7 +69,7 @@ export class TimeseriesSeriesConverterService
 
         this.subscribeToAvailableDataFieldsChange();
 
-        this.eventBus.subscribeUntil(DATA_SOURCE_CHANGE, this.destroy$, (v) => {
+        this.eventBus.subscribeUntil(DATA_SOURCE_CHANGE, this.destroy$, v => {
             const nodesPath = `${PizzagnaLayer.Structure}.series.properties.nodes`;
             const nodes = get(
                 this.pizzagnaService.pizzagna,
@@ -183,13 +183,13 @@ export class TimeseriesSeriesConverterService
             []
         ) as ITimeseriesWidgetSeries[];
         const seriesToSet = series.map(
-            (s) =>
+            s =>
                 ({
                     id: s.id,
                     selectedSeriesId: s.selectedSeriesId,
                 } as ITimeseriesItemConfiguration)
         );
-        const seriesIds = series.map((s) => s.id);
+        const seriesIds = series.map(s => s.id);
 
         this.pizzagnaService.createComponentsFromTemplate("series", seriesIds);
         const editorPizzagna = this.pizzagnaService.pizzagna;
@@ -200,16 +200,14 @@ export class TimeseriesSeriesConverterService
         );
 
         this.updateFormPizzagna(pizzagnaWithSeries);
-        this.selectedSeriesIds$.next(
-            seriesToSet.map((s) => s.selectedSeriesId)
-        );
+        this.selectedSeriesIds$.next(seriesToSet.map(s => s.selectedSeriesId));
         setTimeout(() => (this.shouldReadForm = true));
     }
 
     public toPreview(form: FormGroup): void {
         form.valueChanges
             .pipe(takeUntil(this.destroy$))
-            .subscribe((formSeries) => {
+            .subscribe(formSeries => {
                 if (!this.shouldReadForm) {
                     return;
                 }
@@ -226,7 +224,7 @@ export class TimeseriesSeriesConverterService
                         id: s.id,
                         selectedSeriesId: s.selectedSeriesId,
                         ...seriesFromPreview.find(
-                            (previewSeries) => previewSeries.id === s.id
+                            previewSeries => previewSeries.id === s.id
                         ),
                     })
                 );
@@ -307,7 +305,7 @@ export class TimeseriesSeriesConverterService
                 takeUntil(this.destroy$),
                 map(([dsSeries, usedSeriesIds]) =>
                     dsSeries.filter(
-                        (ds) => !usedSeriesIds.find((id) => id === ds.id)
+                        ds => !usedSeriesIds.find(id => id === ds.id)
                     )
                 ),
                 distinctUntilChanged(isEqual)

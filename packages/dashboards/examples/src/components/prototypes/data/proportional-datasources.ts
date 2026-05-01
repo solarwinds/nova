@@ -63,7 +63,7 @@ export class AcmeProportionalDataSource
             const citiesToInclude = this.properties.isEuropeOnly
                 ? [EUROPEAN_CITIES]
                 : [];
-            return new Promise((resolve) => {
+            return new Promise(resolve => {
                 setTimeout(() => {
                     resolve({
                         result: getRandomProportionalWidgetData(
@@ -75,7 +75,7 @@ export class AcmeProportionalDataSource
             });
         } else {
             // generate a 404
-            return new Promise((resolve) => {
+            return new Promise(resolve => {
                 this.http
                     .get(
                         "http://www.mocky.io/v2/5ec6bfd93200007800d75100?mocky-delay=1000ms"
@@ -126,7 +126,7 @@ export class AcmeProportionalDataSource2
         const citiesToInclude = this.properties.isEuropeOnly
             ? [EUROPEAN_CITIES]
             : [];
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             setTimeout(() => {
                 resolve({
                     result: getFixedProportionalWidgetData(...citiesToInclude),

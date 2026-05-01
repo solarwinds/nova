@@ -128,8 +128,8 @@ describe("Area Renderer >", () => {
                 accessors,
             };
 
-            accessors.data.y0 = (d) => d.start;
-            accessors.data.y1 = (d) => d.end;
+            accessors.data.y0 = d => d.start;
+            accessors.data.y1 = d => d.end;
         });
 
         it("should not filter out data whose y0 and y1 are fully within the domain", () => {
@@ -196,8 +196,8 @@ describe("Area Renderer >", () => {
                 accessors,
             };
 
-            accessors.data.y0 = (d) => d.start;
-            accessors.data.y1 = (d) => d.end;
+            accessors.data.y0 = d => d.start;
+            accessors.data.y1 = d => d.end;
         });
 
         it("works with Date types", () => {

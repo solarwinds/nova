@@ -80,7 +80,7 @@ describe("pipes >", () => {
             },
         ];
 
-        testCases.forEach((testCase) => {
+        testCases.forEach(testCase => {
             it(`should return ${testCase.condition}`, () => {
                 expect(pipe.transform(...testCase.arguments)).toBe(
                     testCase.expectation

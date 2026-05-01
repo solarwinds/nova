@@ -207,7 +207,7 @@ export class ZoomPlugin extends ChartPlugin {
                 result[next.id] = [
                     selection[0],
                     (selection[1] as number) + widthCorrection,
-                ].map((x) => next.invert(x as number));
+                ].map(x => next.invert(x as number));
                 return result;
             },
             <ISetDomainEventPayload>{}

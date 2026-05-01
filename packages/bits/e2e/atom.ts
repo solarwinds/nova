@@ -140,9 +140,12 @@ export class Atom {
         await this.locator.click();
     }
 
-    public async hover(target?: Locator, force: boolean = false): Promise<void> {
+    public async hover(
+        target?: Locator,
+        force: boolean = false
+    ): Promise<void> {
         if (target) {
-            await target.hover( { force });
+            await target.hover({ force });
             return;
         }
         await this.locator.hover({ force });

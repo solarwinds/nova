@@ -183,7 +183,7 @@ export class FilteredViewWithTreeComponent implements AfterViewInit {
             _pull(this.chipsDataSource.flatItems || [], event.item);
         }
         const group = this.filterGroups.find(
-            (i) => event.group?.id === i.filterGroupItem.id
+            i => event.group?.id === i.filterGroupItem.id
         );
         group?.deselectFilterItemByValue(event.item.label);
     }
@@ -191,14 +191,14 @@ export class FilteredViewWithTreeComponent implements AfterViewInit {
     public onClearAll(e: MouseEvent): void {
         this.chipsDataSource.groupedItems = [];
         this.popover?.onClick(e);
-        this.filterGroups.forEach((i) => i.deselectAllFilterItems());
+        this.filterGroups.forEach(i => i.deselectAllFilterItems());
     }
 
     private updateChips() {
-        this.chipsDataSource.groupedItems = this.filterGroupItems.map((i) => ({
+        this.chipsDataSource.groupedItems = this.filterGroupItems.map(i => ({
             id: i.id,
             label: i.title,
-            items: i.selectedFilterValues.map((selected) => ({
+            items: i.selectedFilterValues.map(selected => ({
                 label: selected,
             })),
         }));

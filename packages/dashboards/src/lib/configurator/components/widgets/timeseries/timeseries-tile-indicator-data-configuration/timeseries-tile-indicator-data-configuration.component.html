@@ -1,34 +1,29 @@
 <ng-container [formGroup]="form">
     <nui-widget-editor-accordion
-        [state]="form.get('id') | nuiWidgetEditorAccordionFormState | async"
-    >
+        [state]="form.get('id') | nuiWidgetEditorAccordionFormState | async">
         <nui-widget-editor-accordion-header
             [headerIcon]="
                 form.get('id') | nuiFormHeaderIconPipe : 'database' | async
             "
             [subtitle]="selectedSeries?.description"
-            headerTitle="Indicator data"
-        />
+            headerTitle="Indicator data" />
         <div class="timeseries-tile-data-configuration__accordion-content">
             <nui-form-field
                 caption="Series data"
                 i18n-caption
-                [control]="form.get('id')"
-            >
+                [control]="form.get('id')">
                 <nui-select-v2
                     placeholder="Series data"
                     i18n-placeholder
                     [value]="selectedSeries"
                     [popupViewportMargin]="configuratorHeading.height$ | async"
-                    (valueSelected)="onSelect($event)"
-                >
+                    (valueSelected)="onSelect($event)">
                     <nui-select-v2-option
                         *ngFor="
                             let series of availableSeries
                                 | nuiAddData : selectedSeries
                         "
-                        [value]="series"
-                    >
+                        [value]="series">
                         {{ series.description }}
                     </nui-select-v2-option>
                 </nui-select-v2>

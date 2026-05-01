@@ -111,7 +111,7 @@ export class TimeseriesMetadataConfigurationComponent
         this.form
             .get("startingTimespan")
             ?.valueChanges.pipe(takeUntil(this.destroy$))
-            .subscribe((value) => {
+            .subscribe(value => {
                 // this is to wait until the value of 'startingTimespan' is converted to the preview
                 setTimeout(() => {
                     this.eventBus.next(PREVIEW_EVENT, {

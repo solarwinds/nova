@@ -17,14 +17,12 @@
 
         <tr
             nui-header-row
-            *nuiHeaderRowDef="displayedColumns; sticky: true"
-        ></tr>
+            *nuiHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr nui-row *nuiRowDef="let row; columns: displayedColumns"></tr>
     </table>
 
     <footer
-        class="app-filtered-view-table-with-pagination-table-scrolling-footer"
-    >
+        class="app-filtered-view-table-with-pagination-table-scrolling-footer">
         <div *ngIf="isBusy; else defaultText">
             <nui-progress [show]="true" [compactMode]="true"></nui-progress>
             <div class="d-flex justify-content-center align-items-center">
@@ -48,6 +46,5 @@
     [pageSize]="pageSize"
     [pageSizeSet]="[10, 20, 50, 100]"
     [total]="totalItems"
-    (pagerAction)="changePagination($event)"
->
+    (pagerAction)="changePagination($event)">
 </nui-paginator>

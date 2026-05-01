@@ -71,14 +71,12 @@ export class LineChartWithTooltipsExampleComponent implements OnInit {
             y: new LinearScale(),
         };
 
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
-            (d) => ({
-                ...d,
-                accessors,
-                renderer,
-                scales,
-            })
-        );
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
+            ...d,
+            accessors,
+            renderer,
+            scales,
+        }));
 
         // chart assist needs to be used to update the chart's data
         this.chartAssist.update(seriesSet);

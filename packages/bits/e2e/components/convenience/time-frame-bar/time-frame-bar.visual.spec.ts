@@ -36,12 +36,20 @@ test.describe(`Visual tests: ${name}`, () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("convenience/time-frame-bar/visual", page);
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
 
         camera = new Camera().loadFilm(page, name, "Bits");
 
-        timeFrameBarFirst = Atom.find(TimeFrameBarAtom, "first") as TimeFrameBarAtom;
-        timeFrameBarSecond = Atom.find(TimeFrameBarAtom, "second") as TimeFrameBarAtom;
+        timeFrameBarFirst = Atom.find(
+            TimeFrameBarAtom,
+            "first"
+        ) as TimeFrameBarAtom;
+        timeFrameBarSecond = Atom.find(
+            TimeFrameBarAtom,
+            "second"
+        ) as TimeFrameBarAtom;
         timeFrameBarNoQuickPick = Atom.find(
             TimeFrameBarAtom,
             "bar-no-quick-pick"

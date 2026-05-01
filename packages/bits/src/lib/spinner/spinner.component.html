@@ -4,14 +4,12 @@
     }}"
     *ngIf="showSpinner"
     [ngClass]="{ 'nui-spinner--determinate': isDeterminate }"
-    [@spinnerAppear]
->
+    [@spinnerAppear]>
     <div class="nui-spinner__container">
         <svg
             class="nui-spinner__circular"
             viewBox="25 25 50 50"
-            *ngIf="!isDeterminate"
-        >
+            *ngIf="!isDeterminate">
             <circle
                 class="nui-spinner__path-under"
                 cx="50"
@@ -19,8 +17,7 @@
                 r="22"
                 fill="none"
                 stroke-width="5"
-                stroke-miterlimit="10"
-            />
+                stroke-miterlimit="10" />
             <circle
                 class="nui-spinner__path"
                 cx="50"
@@ -28,14 +25,12 @@
                 r="22"
                 fill="none"
                 stroke-width="5"
-                stroke-miterlimit="10"
-            />
+                stroke-miterlimit="10" />
         </svg>
         <svg
             class="nui-spinner__circular"
             viewBox="0 0 36 36"
-            *ngIf="isDeterminate"
-        >
+            *ngIf="isDeterminate">
             <circle
                 class="nui-spinner__path-under"
                 cx="18"
@@ -43,8 +38,7 @@
                 r="15.9155"
                 fill="none"
                 stroke-width="4"
-                stroke-miterlimit="10"
-            />
+                stroke-miterlimit="10" />
             <circle
                 class="nui-spinner__path"
                 cx="18"
@@ -53,8 +47,7 @@
                 fill="none"
                 stroke-width="4"
                 stroke-miterlimit="10"
-                [ngStyle]="{ 'stroke-dasharray': percent + ', 100' }"
-            />
+                [ngStyle]="{ 'stroke-dasharray': percent + ', 100' }" />
         </svg>
 
         <button
@@ -65,8 +58,7 @@
             *ngIf="allowCancel"
             (click)="cancelProgress()"
             displayStyle="action"
-            [nuiTooltip]="tooltipText"
-        ></button>
+            [nuiTooltip]="tooltipText"></button>
     </div>
 
     <div class="nui-spinner__text-content" *ngIf="showText">
@@ -77,8 +69,7 @@
         </div>
         <span
             class="nui-spinner__hint nui-help-hint"
-            *ngIf="helpText !== undefined"
-        >
+            *ngIf="helpText !== undefined">
             {{ helpText }}
         </span>
     </div>

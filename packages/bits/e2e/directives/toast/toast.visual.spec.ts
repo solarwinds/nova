@@ -38,7 +38,9 @@ test.describe(`Visual tests: ${name}`, () => {
             "#nui-toast-button-all-positions"
         );
         const buttonFW = page.locator("#nui-toast-position-fw");
-        const buttonClearAllToasts = page.locator("#nui-toast-clear-all-toasts");
+        const buttonClearAllToasts = page.locator(
+            "#nui-toast-clear-all-toasts"
+        );
         const buttonCallStickyToast = page.locator("#nui-toast-sticky");
         const buttonAdjustSize = page.locator("#nui-toast-adjust-size");
         const buttonNoHeader = page.locator("#nui-toast-no-header");

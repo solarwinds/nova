@@ -16,38 +16,31 @@
         "
         [class.nui-dnd-raised-state]="
             isItemDraggable(item) && mousedOver[itemIndex]
-        "
-    >
+        ">
         <div
             *ngIf="dragHandleTemplateRef && !virtualScroll"
             [class.hide]="!draggable"
             [class.invisible]="!isItemDraggable(item)"
-            class="nui-repeat-item__controls-drag-handle align-self-center"
-        >
+            class="nui-repeat-item__controls-drag-handle align-self-center">
             <div
                 cdkDragHandle
                 (mouseover)="mousedOver[itemIndex] = true"
                 (mouseout)="mousedOver[itemIndex] = false"
-                [class.nui-dnd-handle]="!drag.disabled"
-            >
+                [class.nui-dnd-handle]="!drag.disabled">
                 <ng-container
                     [ngTemplateOutlet]="dragHandleTemplateRef"
-                    [ngTemplateOutletContext]="{ item: item }"
-                ></ng-container>
+                    [ngTemplateOutletContext]="{ item: item }"></ng-container>
             </div>
         </div>
         <div
             *ngIf="dragPreviewTemplateRef && !virtualScroll"
-            class="nui-repeat-item__controls-drag-handle"
-        >
+            class="nui-repeat-item__controls-drag-handle">
             <div
                 *cdkDragPreview
-                [class.nui-dnd-preview]="!isItemDisabled(item)"
-            >
+                [class.nui-dnd-preview]="!isItemDisabled(item)">
                 <ng-container
                     [ngTemplateOutlet]="dragPreviewTemplateRef"
-                    [ngTemplateOutletContext]="{ item: item }"
-                ></ng-container>
+                    [ngTemplateOutletContext]="{ item: item }"></ng-container>
             </div>
         </div>
         <div class="nui-repeat-item__controls-container">
@@ -57,8 +50,7 @@
                 [value]="item"
                 [checked]="isItemSelected(item)"
                 [disabled]="isItemDisabled(item)"
-                (valueChange)="itemClicked($event, item)"
-            >
+                (valueChange)="itemClicked($event, item)">
             </nui-checkbox>
             <nui-radio
                 *ngIf="isModeRadio()"
@@ -66,24 +58,20 @@
                 [value]="item"
                 [checked]="isItemSelected(item)"
                 [disabled]="isItemDisabled(item)"
-                (click)="itemClicked($event, item)"
-            >
+                (click)="itemClicked($event, item)">
             </nui-radio>
         </div>
         <div class="nui-repeat-item__content-container">
             <ng-container
                 [ngTemplateOutlet]="repeatItemTemplateRef"
-                [ngTemplateOutletContext]="{ item: item }"
-            ></ng-container>
+                [ngTemplateOutletContext]="{ item: item }"></ng-container>
         </div>
         <div
             class="nui-repeat-item__actions-container"
-            *ngIf="actionsTemplateRef"
-        >
+            *ngIf="actionsTemplateRef">
             <ng-container
                 [ngTemplateOutlet]="actionsTemplateRef"
-                [ngTemplateOutletContext]="{ item: item }"
-            >
+                [ngTemplateOutletContext]="{ item: item }">
             </ng-container>
         </div>
     </nui-repeat-item>
@@ -105,23 +93,19 @@
                 [ngTemplateOutletContext]="{
                     item: sourceItem,
                     itemIndex: itemIndex
-                }"
-            ></ng-container>
+                }"></ng-container>
         </div>
         <cdk-virtual-scroll-viewport
             [itemSize]="itemSize"
-            *ngIf="virtualScroll && itemSize"
-        >
+            *ngIf="virtualScroll && itemSize">
             <ng-container
                 *cdkVirtualFor="
                     let sourceItem of itemsSource;
                     templateCacheSize: 0
-                "
-            >
+                ">
                 <ng-container
                     [ngTemplateOutlet]="repeatItems"
-                    [ngTemplateOutletContext]="{ item: sourceItem }"
-                ></ng-container>
+                    [ngTemplateOutletContext]="{ item: sourceItem }"></ng-container>
             </ng-container>
         </cdk-virtual-scroll-viewport>
     </ul>

@@ -46,11 +46,15 @@ test.describe("a11y: form-field", () => {
         );
     });
 
-    test("should check a11y of form-field disabled state", async ({ runA11yScan }) => {
+    test("should check a11y of form-field disabled state", async ({
+        runA11yScan,
+    }) => {
         await runA11yScan(FormFieldAtom, rulesToDisable);
     });
 
-    test("should check a11y of form-field enabled state", async ({ runA11yScan }) => {
+    test("should check a11y of form-field enabled state", async ({
+        runA11yScan,
+    }) => {
         await toggleButton.click();
         await runA11yScan(FormFieldAtom, rulesToDisable);
     });

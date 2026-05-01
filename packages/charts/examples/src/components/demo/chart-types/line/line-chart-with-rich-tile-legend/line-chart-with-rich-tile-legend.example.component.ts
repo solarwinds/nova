@@ -59,14 +59,12 @@ export class LineChartWithRichTileLegendExampleComponent implements OnInit {
             y: new LinearScale(),
         };
 
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
-            (d) => ({
-                ...d,
-                scales,
-                renderer,
-                accessors,
-            })
-        );
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
+            ...d,
+            scales,
+            renderer,
+            accessors,
+        }));
 
         // chart assist needs to be used to update data
         this.chartAssist.update(seriesSet);

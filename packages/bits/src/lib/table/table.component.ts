@@ -263,7 +263,7 @@ export class TableComponent<T>
         const columns: string[] = _keys(firstRow);
         this.tableStateHandlerService.tableColumns = columns;
 
-        columns.forEach((column) => {
+        columns.forEach(column => {
             const alignment = this.tableStateHandlerService.defineAlignment(
                 firstRow[column as keyof T]
             );
@@ -278,10 +278,12 @@ export class TableComponent<T>
                     }
                 );
             const parentWidth =
-                this._elementRef.nativeElement.parentElement.getBoundingClientRect().width ?
-                    this._elementRef.nativeElement.parentElement.getBoundingClientRect()
-                        .width : this._elementRef.nativeElement.parentElement.parentElement.getBoundingClientRect()
-                        .width;
+                this._elementRef.nativeElement.parentElement.getBoundingClientRect()
+                    .width
+                    ? this._elementRef.nativeElement.parentElement.getBoundingClientRect()
+                          .width
+                    : this._elementRef.nativeElement.parentElement.parentElement.getBoundingClientRect()
+                          .width;
             this.layoutFixed = true;
             this.tableStateHandlerService.tableParentWidth = parentWidth;
         }
@@ -414,6 +416,7 @@ export class TableComponent<T>
         // @ts-ignore: Call parent method in case cdk adds it later
         super.ngAfterContentInit?.();
         // Note: Identifying if table is using virtual scroll.
-        this.tableStateHandlerService.hasVirtualScroll = !!this.virtualFor && !this.paginatorUsed;
+        this.tableStateHandlerService.hasVirtualScroll =
+            !!this.virtualFor && !this.paginatorUsed;
     }
 }

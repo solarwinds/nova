@@ -92,7 +92,7 @@ export class Chart implements IChart {
 
     public removePlugin(classRef: typeof ChartPlugin): void {
         const pluginIndex = this.plugins.findIndex(
-            (plugin) => plugin instanceof classRef
+            plugin => plugin instanceof classRef
         );
         if (-1 !== pluginIndex) {
             this.plugins[pluginIndex].destroy();
@@ -114,8 +114,7 @@ export class Chart implements IChart {
 
     public hasPlugin(classRef: typeof ChartPlugin): boolean {
         return (
-            -1 !==
-            this.plugins.findIndex((plugin) => plugin instanceof classRef)
+            -1 !== this.plugins.findIndex(plugin => plugin instanceof classRef)
         );
     }
 
@@ -214,7 +213,7 @@ export class Chart implements IChart {
         this.eventBus.getStream(DESTROY_EVENT).next({ data: null });
         this.eventBus.destroy();
 
-        this.plugins.forEach((p) => p.destroy());
+        this.plugins.forEach(p => p.destroy());
 
         this.target?.remove();
         this.target = undefined;
@@ -234,7 +233,7 @@ export class Chart implements IChart {
         this.dataManager.updateScaleDomains();
         this.grid.updateRanges();
 
-        this.plugins.forEach((p) => p.update());
+        this.plugins.forEach(p => p.update());
     }
 
     private onUpdateDimensions() {
@@ -252,7 +251,7 @@ export class Chart implements IChart {
         }
         this.grid.updateDimensions(dimensions);
 
-        this.plugins.forEach((p) => p.updateDimensions());
+        this.plugins.forEach(p => p.updateDimensions());
     }
 
     private updateTargetDimensions(dimensionConfig: IDimensionConfig) {

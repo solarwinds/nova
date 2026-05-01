@@ -32,8 +32,8 @@ Each package serves up the docs on a different port. To see the app running in a
 To get your locally built library to be used as a dependency of another library or app you will need to do
 two things:
 
--   Build the child library
--   Link build output so it will be consumed instead of the package installed from artifactory
+- Build the child library
+- Link build output so it will be consumed instead of the package installed from artifactory
 
 ### Building
 
@@ -47,9 +47,9 @@ it's running in watch mode too. Make sure to have separate terminal windows for 
 
 #### Caveats
 
--   The dev build of the library does not include schematics. Do the full `assemble` for this.
--   For updating global less and atoms or for regenerating css/fonts, you will need to restart the build
-    task. These types of changes will not be picked up automatically.
+- The dev build of the library does not include schematics. Do the full `assemble` for this.
+- For updating global less and atoms or for regenerating css/fonts, you will need to restart the build
+  task. These types of changes will not be picked up automatically.
 
 ### Linking
 
@@ -58,12 +58,12 @@ symbolic linked folders (junction for Windows file system).
 
 To link things with each other we have some scripts in the `package.json` file.
 
--   **`charts-link:bits`** - removes the _`@nova-ui/bits`_ folder from charts' _`node_modules`_ and
-    replaces it with a symlink to the _`dist`_ folder from bits.
--   **`dashboards-link:bits`** - does the same replacement for dashboards
--   **`dashboards-link:charts`** - links charts' _`dist`_ folder into dashboards' _`node_modules`_ in
-    the same way as above
--   **`link:all`** - runs all the previous scripts that will link the internal dependencies
+- **`charts-link:bits`** - removes the _`@nova-ui/bits`_ folder from charts' _`node_modules`_ and
+  replaces it with a symlink to the _`dist`_ folder from bits.
+- **`dashboards-link:bits`** - does the same replacement for dashboards
+- **`dashboards-link:charts`** - links charts' _`dist`_ folder into dashboards' _`node_modules`_ in
+  the same way as above
+- **`link:all`** - runs all the previous scripts that will link the internal dependencies
 
 ### Unlinking
 

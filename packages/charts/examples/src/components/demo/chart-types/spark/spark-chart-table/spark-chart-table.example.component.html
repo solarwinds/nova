@@ -10,13 +10,11 @@
             <div class="d-flex">
                 <nui-chart
                     class="d-flex w-100"
-                    [chart]="element.chartAssist.sparks[0].chart"
-                ></nui-chart>
+                    [chart]="element.chartAssist.sparks[0].chart"></nui-chart>
                 <div class="d-flex flex-column pl-2">
                     <nui-legend-series
                         [interactive]="false"
-                        [active]="element.chartAssist.isLegendActive"
-                    >
+                        [active]="element.chartAssist.isLegendActive">
                         <nui-rich-legend-tile
                             unitLabel="sec"
                             i18n-unitLabel
@@ -39,8 +37,7 @@
                                     element.chartAssist.sparks[0]
                                         .chartSeriesSet[0].id
                                 )
-                            "
-                        >
+                            ">
                             <nui-chart-marker
                                 [marker]="
                                     element.chartAssist.markers.get(
@@ -54,8 +51,7 @@
                                             .chartSeriesSet[0].id
                                     )
                                 "
-                                rightEdge
-                            >
+                                rightEdge>
                             </nui-chart-marker>
                         </nui-rich-legend-tile>
                     </nui-legend-series>
@@ -66,8 +62,7 @@
                  will have separate positioning data provided through it's plugin -->
             <nui-chart-popover
                 [plugin]="element.popoverPlugin"
-                [template]="popoverTemplate"
-            ></nui-chart-popover>
+                [template]="popoverTemplate"></nui-chart-popover>
         </td>
     </ng-container>
 

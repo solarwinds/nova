@@ -131,13 +131,13 @@ export class RadioGroupComponent
     }
 
     public ngAfterContentInit(): void {
-        this.children.toArray().forEach((child) => this.registerChild(child));
+        this.children.toArray().forEach(child => this.registerChild(child));
         this.children.changes.subscribe(
             (radioComponentQueryList: QueryList<RadioComponent>) => {
-                this.subscriptions.forEach((sub) => sub.unsubscribe());
+                this.subscriptions.forEach(sub => sub.unsubscribe());
                 radioComponentQueryList
                     .toArray()
-                    .forEach((child) => this.registerChild(child));
+                    .forEach(child => this.registerChild(child));
             }
         );
     }
@@ -166,7 +166,7 @@ export class RadioGroupComponent
     }
 
     public ngOnDestroy(): void {
-        this.subscriptions.forEach((sub) => sub.unsubscribe());
+        this.subscriptions.forEach(sub => sub.unsubscribe());
     }
 
     private setChildDisabled = (child: RadioComponent) => {
@@ -187,7 +187,7 @@ export class RadioGroupComponent
             this.selectedRadio !== null &&
             this.selectedRadio.value === this._value;
         if (this.children && !isAlreadySelected) {
-            this.children.forEach((radio) => {
+            this.children.forEach(radio => {
                 radio.checked = this.value === radio.value;
                 if (radio.checked) {
                     this.selectedRadio = radio;
@@ -221,7 +221,7 @@ export class RadioGroupComponent
     host: {
         "[class.nui-radio--hovered]": "hovered",
         "[class.nui-radio--checked]": "checked",
-        role: "radio",
+        "role": "radio",
     },
     standalone: false,
 })

@@ -26,11 +26,11 @@ defining its type and properties, like this:
 
 We can immediately identify a few design problems here, especially:
 
--   From the consumer point of view, the widget is a monolith, and some parts are likely duplicated in
-    other widgets.
--   The presence of a dataSource is hardwired into the widget.
--   Data visualized by the widget is not present here (It could be passed as a separate input, but let's
-    presume it's just stored inside the widget as internal state).
+- From the consumer point of view, the widget is a monolith, and some parts are likely duplicated in
+  other widgets.
+- The presence of a dataSource is hardwired into the widget.
+- Data visualized by the widget is not present here (It could be passed as a separate input, but let's
+  presume it's just stored inside the widget as internal state).
 
 We'll now try to address all of these issues and see where it takes us.
 
@@ -152,12 +152,12 @@ purposes of properties.
 
 Pizzagna can contain any number of layers, but we currently just use 3 layers:
 
--   `structure`: defines the structure of a widget, i.e. what components the widget consists of and their
-    initial setup.
--   `configuration`: defines the storable configuration for a widget instance--things such as title, data
-    source, property values, etc.
--   `data`: defines the transient state of a widget as it's displayed in the browser--includes displayed
-    data as well as other transient properties that are not intended to be persisted anywhere.
+- `structure`: defines the structure of a widget, i.e. what components the widget consists of and their
+  initial setup.
+- `configuration`: defines the storable configuration for a widget instance--things such as title, data
+  source, property values, etc.
+- `data`: defines the transient state of a widget as it's displayed in the browser--includes displayed
+  data as well as other transient properties that are not intended to be persisted anywhere.
 
 ### Pizzagna Service
 

@@ -5,8 +5,7 @@
         [totalItems]="paginationTotal"
         [(selection)]="selection"
         [selectionConfig]="selectionConfig"
-        [trackBy]="trackBy"
-    >
+        [trackBy]="trackBy">
         <ng-container nuiColumnDef="position">
             <th nui-header-cell *nuiHeaderCellDef i18n>No.</th>
             <td nui-cell *nuiCellDef="let element">{{ element.position }}</td>
@@ -22,8 +21,7 @@
             <td
                 nui-cell
                 *nuiCellDef="let element"
-                [tooltipText]="element.description"
-            >
+                [tooltipText]="element.description">
                 {{ element.description }}
             </td>
         </ng-container>
@@ -50,8 +48,7 @@
         <tr
             nui-row
             *nuiRowDef="let row; columns: displayedColumns"
-            [rowObject]="row"
-        ></tr>
+            [rowObject]="row"></tr>
     </table>
 </div>
 <nui-paginator
@@ -63,8 +60,7 @@
     disabledClass="disabled"
     showPrevNext="true"
     (pagerAction)="changePagination($event)"
-    #filteringPaginator
->
+    #filteringPaginator>
 </nui-paginator>
 <nui-divider></nui-divider>
 <h2>Selection result</h2>

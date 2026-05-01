@@ -8,8 +8,7 @@
                     displayStyle="action"
                     icon="caret-left"
                     (click)="datePicker.move(-1, $event)"
-                    tabindex="-1"
-                ></button>
+                    tabindex="-1"></button>
             </th>
             <th>
                 <button
@@ -23,8 +22,7 @@
                         disabled: datePicker.datepickerMode === maxMode
                     }"
                     (click)="datePicker.toggleMode($event)"
-                    tabindex="-1"
-                >
+                    tabindex="-1">
                     <span>{{ title }}</span>
                 </button>
             </th>
@@ -35,8 +33,7 @@
                     displayStyle="action"
                     icon="caret-right"
                     (click)="datePicker.move(1, $event)"
-                    tabindex="-1"
-                ></button>
+                    tabindex="-1"></button>
             </th>
         </tr>
     </thead>
@@ -45,8 +42,7 @@
             <td
                 *ngFor="let cell of row"
                 class="text-center month"
-                id="{{ cell.uid }}"
-            >
+                id="{{ cell.uid }}">
                 <button
                     nui-button
                     type="button"
@@ -57,8 +53,7 @@
                     }"
                     [disabled]="cell.disabled"
                     (click)="datePicker.select(cell.date, $event)"
-                    tabindex="-1"
-                >
+                    tabindex="-1">
                     <span [ngClass]="{ 'text-info': cell.current }">{{
                         cell.label
                     }}</span>

@@ -30,7 +30,9 @@ test.describe(`Visual tests: ${name}`, () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("busy/busy-visual-test", page);
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
 
         camera = new Camera().loadFilm(page, name, "Bits");
         switchBusyState = Atom.find(Atom, "nui-busy-test-button");

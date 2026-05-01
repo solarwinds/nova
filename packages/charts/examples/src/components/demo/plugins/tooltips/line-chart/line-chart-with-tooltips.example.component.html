@@ -7,8 +7,7 @@
             seriesUnitLabel="sec"
             [active]="chartAssist.isLegendActive"
             [interactive]="true"
-            (mouseleave)="chartAssist.resetVisibleSeries()"
-        >
+            (mouseleave)="chartAssist.resetVisibleSeries()">
             <nui-legend-series
                 *ngFor="
                     let legendSeries of chartAssist.legendSeriesSet;
@@ -22,8 +21,7 @@
                 [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
                 (isSelectedChange)="
                     chartAssist.toggleSeries(legendSeries.id, $event)
-                "
-            >
+                ">
                 <nui-rich-legend-tile
                     [value]="chartAssist.getHighlightedValue(legendSeries, 'y')"
                     [backgroundColor]="
@@ -31,8 +29,7 @@
                     "
                     [color]="
                         chartAssist.palette.textColors.get(legendSeries.id)
-                    "
-                >
+                    ">
                     <nui-chart-marker
                         rightEdge
                         [marker]="chartAssist.markers.get(legendSeries.id)"
@@ -40,8 +37,7 @@
                             chartAssist.palette.standardColors.get(
                                 legendSeries.id
                             )
-                        "
-                    >
+                        ">
                     </nui-chart-marker>
                 </nui-rich-legend-tile>
             </nui-legend-series>
@@ -51,15 +47,13 @@
 
 <nui-chart-tooltips
     [plugin]="tooltipsPlugin"
-    [template]="tooltipTemplate"
-></nui-chart-tooltips>
+    [template]="tooltipTemplate"></nui-chart-tooltips>
 
 <ng-template let-dataPoint="dataPoint" #tooltipTemplate>
     <div class="p-1 d-flex align-items-center">
         <nui-chart-marker
             [marker]="chartAssist.markers.get(dataPoint.seriesId)"
-            [color]="chartAssist.palette.standardColors.get(dataPoint.seriesId)"
-        ></nui-chart-marker>
+            [color]="chartAssist.palette.standardColors.get(dataPoint.seriesId)"></nui-chart-marker>
         <span class="pl-2">{{ dataPoint.data.y }}</span>
     </div>
 </ng-template>

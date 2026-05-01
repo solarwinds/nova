@@ -48,9 +48,7 @@ export class Lasagna {
     }
 
     public removeLayer(layerName: string): void {
-        const index = this.layers.findIndex(
-            (layer) => layer.name === layerName
-        );
+        const index = this.layers.findIndex(layer => layer.name === layerName);
         if (index === -1) {
             return;
         }
@@ -77,7 +75,7 @@ export class Lasagna {
             .enter()
             .append("g")
             .attrs({
-                class: (d: ILasagnaLayer) =>
+                "class": (d: ILasagnaLayer) =>
                     `${Lasagna.LAYER_CLASS} ${Lasagna.LAYER_CLASS}-${d.name}`,
                 "clip-path": (d: ILasagnaLayer) =>
                     d.clipped ? `url(#${this.clipPath})` : "",

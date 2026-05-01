@@ -74,7 +74,7 @@ describe("TransformerDifference", () => {
         const actualTransformedDataY = transformDifference(
             mockTimeSeriesData,
             false
-        ).map((d) => d.y);
+        ).map(d => d.y);
         expect(actualTransformedDataY).toEqual(expectedTransformedDataY);
     });
 });

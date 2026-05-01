@@ -21,8 +21,8 @@ module.exports = function (config) {
             },
         },
         junitReporter: {
-            outputDir: 'test-results', // Directory for test results
-            outputFile: 'karma-results.xml', // Optional: file name for JUnit XML results
+            outputDir: "test-results", // Directory for test results
+            outputFile: "karma-results.xml", // Optional: file name for JUnit XML results
             useBrowserName: false,
         },
         coverageReporter: {

@@ -6,22 +6,19 @@
                 filteringState.selector?.selectorState?.checkboxStatus
             "
             [items]="filteringState.selector?.selectorState?.selectorItems"
-            (selectionChange)="onSelectorOutput($event)"
-        >
+            (selectionChange)="onSelectorOutput($event)">
         </nui-selector>
         <nui-sorter
             class="app-selection-list-sorter"
             [itemsSource]="sorterItems"
             [selectedItem]="sortBy"
             [sortDirection]="initialSortDirection"
-            (sorterAction)="onSorterAction($event)"
-        >
+            (sorterAction)="onSorterAction($event)">
         </nui-sorter>
         <nui-search
             class="d-flex justify-content-end app-selection-list-search"
             (search)="onSearch()"
-            (cancel)="onCancelSearch()"
-        >
+            (cancel)="onCancelSearch()">
         </nui-search>
     </div>
 
@@ -37,8 +34,7 @@
             [repeatItemTemplateRef]="listRepeatItemTemplate"
             [selection]="filteringState.repeat?.selectedItems"
             [itemsSource]="filteringState.repeat?.itemsSource"
-            (selectionChange)="onRepeatOutput($event)"
-        >
+            (selectionChange)="onRepeatOutput($event)">
         </nui-repeat>
     </div>
 
@@ -49,8 +45,7 @@
             [pageSize]="pageSize"
             [pageSizeSet]="[10, 20, 30, 40]"
             [total]="filteringState.paginator?.total"
-            (pagerAction)="applyFilters()"
-        >
+            (pagerAction)="applyFilters()">
         </nui-paginator>
     </div>
 </div>

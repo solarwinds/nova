@@ -48,17 +48,15 @@ export class BaseGridAutoMarginsExampleComponent implements OnInit {
         gridConfig.axis.left.fit = false;
 
         this.chart = new Chart(new XYGrid(gridConfig));
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
-            (d) => ({
-                ...d,
-                accessors: new LineAccessors(),
-                renderer: new LineRenderer(),
-                scales: {
-                    x: new LinearScale(),
-                    y: new LinearScale(),
-                },
-            })
-        );
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
+            ...d,
+            accessors: new LineAccessors(),
+            renderer: new LineRenderer(),
+            scales: {
+                x: new LinearScale(),
+                y: new LinearScale(),
+            },
+        }));
 
         this.chart.update(seriesSet);
     }

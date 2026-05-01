@@ -29,9 +29,17 @@ test.describe(`Visual tests: ${name}`, () => {
     let fruitGroup: RadioGroupAtom;
 
     test.beforeEach(async ({ page }) => {
-        await Helpers.prepareBrowser("radio-group/radio-group-visual-test", page);
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
-        fruitGroup = Atom.find<RadioGroupAtom>(RadioGroupAtom, "fruit-radio-group");
+        await Helpers.prepareBrowser(
+            "radio-group/radio-group-visual-test",
+            page
+        );
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
+        fruitGroup = Atom.find<RadioGroupAtom>(
+            RadioGroupAtom,
+            "fruit-radio-group"
+        );
     });
 
     test(`${name} visual test`, async ({ page }) => {

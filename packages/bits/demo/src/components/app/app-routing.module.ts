@@ -64,7 +64,8 @@ const appRoutes: Routes = [
     },
     {
         path: "color-picker",
-        loadChildren: async () => import("../demo/color-picker/color-picker.module"),
+        loadChildren: async () =>
+            import("../demo/color-picker/color-picker.module"),
     },
     {
         path: "combobox",

@@ -2,11 +2,11 @@
     "compilerOptions": {
         "baseUrl": ".",
         "declaration": false,
-        "useDefineForClassFields": false,
         "lib": ["ES2019", "DOM"],
         "paths": {
             "@nova-ui/dashboards": ["./src/public-api.ts"]
-        }
+        },
+        "useDefineForClassFields": false
     },
     "extends": "../../tsconfig.main.json"
 }

@@ -29,13 +29,14 @@
                     },
                     "defaultConfiguration": "",
                     "options": {
+                        "allowedCommonJsDependencies": ["lodash"],
+                        "browser": "./examples/src/index.ts",
+                        "extractLicenses": false,
+                        "index": "./examples/src/index.html",
                         "loader": {
                             ".html": "text",
                             ".less": "text"
                         },
-                        "extractLicenses": false,
-                        "index": "./examples/src/index.html",
-                        "browser": "./examples/src/index.ts",
                         "namedChunks": true,
                         "optimization": false,
                         "outputPath": {
@@ -43,7 +44,6 @@
                             "browser": ""
                         },
                         "polyfills": ["./examples/src/polyfills.ts"],
-                        "allowedCommonJsDependencies": ["lodash"],
                         "preserveSymlinks": true,
                         "scripts": [],
                         "sourceMap": true,
@@ -152,17 +152,17 @@
         }
     },
     "schematics": {
-        "@schematics/angular:component": {
-            "prefix": "nui"
-        },
-        "@schematics/angular:directive": {
-            "prefix": "nui"
-        },
         "@angular-eslint/schematics:application": {
             "setParserOptionsProject": true
         },
         "@angular-eslint/schematics:library": {
             "setParserOptionsProject": true
+        },
+        "@schematics/angular:component": {
+            "prefix": "nui"
+        },
+        "@schematics/angular:directive": {
+            "prefix": "nui"
         }
     },
     "version": 1

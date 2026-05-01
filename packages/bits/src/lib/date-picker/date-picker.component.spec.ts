@@ -66,7 +66,12 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [ReactiveFormsModule, FormsModule, NuiOverlayModule, IconComponent],
+                imports: [
+                    ReactiveFormsModule,
+                    FormsModule,
+                    NuiOverlayModule,
+                    IconComponent,
+                ],
                 declarations: [
                     DatePickerComponent,
                     DatePickerInnerComponent,
@@ -259,7 +264,7 @@ describe("components >", () => {
                 componentInstance.ngOnInit();
             });
 
-            validDatesTestCases.forEach((date) => {
+            validDatesTestCases.forEach(date => {
                 it(`${date} should be a valid date`, fakeAsync(() => {
                     const dateMoment = moment(
                         date,
@@ -277,7 +282,7 @@ describe("components >", () => {
                 }));
             });
 
-            invalidDatesTestCases.forEach((date) => {
+            invalidDatesTestCases.forEach(date => {
                 it(`${date} should be an invalid date`, fakeAsync(() => {
                     componentInstance.onInputActiveDateChanged(date);
                     tick(inputChangeDebounceTime);
@@ -293,7 +298,7 @@ describe("components >", () => {
             const invalidDateFormatsTestCases =
                 DatePickerSpecHelpers.getInvalidDateFormatsTestCases();
 
-            validDateFormatsTestCases.forEach((format) => {
+            validDateFormatsTestCases.forEach(format => {
                 it(`${format} should be a valid date format`, () => {
                     componentInstance.dateFormat = format;
                     componentInstance.ngOnInit();
@@ -303,7 +308,7 @@ describe("components >", () => {
                 });
             });
 
-            invalidDateFormatsTestCases.forEach((format) => {
+            invalidDateFormatsTestCases.forEach(format => {
                 it(`${format} should be an invalid date format`, () => {
                     componentInstance.dateFormat = format;
                     componentInstance.ngOnInit();

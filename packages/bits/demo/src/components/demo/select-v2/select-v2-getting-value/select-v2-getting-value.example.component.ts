@@ -43,9 +43,7 @@ export class SelectV2GettingValueExampleComponent implements AfterViewInit {
     public ngAfterViewInit(): void {
         this.selectValueSelectedExample.valueSelected
             .pipe(
-                tap(
-                    (value) => (this.selectValueSelectedValue = value as string)
-                ),
+                tap(value => (this.selectValueSelectedValue = value as string)),
                 takeUntil(this.destroy$)
             )
             .subscribe();

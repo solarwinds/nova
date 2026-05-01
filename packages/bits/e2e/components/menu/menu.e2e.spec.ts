@@ -115,7 +115,9 @@ test.describe("USERCONTROL Menu", () => {
                 await Helpers.pressKey("Enter");
                 await menu.isMenuOpened();
                 // First menu item should be active
-                expect(await menu.getMenuItemByIndex(0).isActiveItem()).toBe(true);
+                expect(await menu.getMenuItemByIndex(0).isActiveItem()).toBe(
+                    true
+                );
                 // ENTER on active menu item should close menu
                 await Helpers.pressKey("Enter");
                 await menu.isMenuClosed();
@@ -127,7 +129,9 @@ test.describe("USERCONTROL Menu", () => {
                 await Helpers.pressKey("Space");
                 await menu.isMenuOpened();
                 // First menu item should be active
-                expect(await menu.getMenuItemByIndex(0).isActiveItem()).toBe(true);
+                expect(await menu.getMenuItemByIndex(0).isActiveItem()).toBe(
+                    true
+                );
                 // SPACE on active menu item should close menu
                 await Helpers.pressKey("Space");
                 await menu.isMenuClosed();
@@ -139,7 +143,9 @@ test.describe("USERCONTROL Menu", () => {
                 await Helpers.pressKey("ArrowDown");
                 await menu.isMenuOpened();
                 // First menu item should be active
-                expect(await menu.getMenuItemByIndex(0).isActiveItem()).toBe(true);
+                expect(await menu.getMenuItemByIndex(0).isActiveItem()).toBe(
+                    true
+                );
                 await menu.toggleMenu(); // cleanup
             });
 
@@ -150,7 +156,9 @@ test.describe("USERCONTROL Menu", () => {
                 await menu.isMenuOpened();
                 // Last menu item should be active
                 const itemCount = await menu.getAllMenuItems().count();
-                expect(await menu.getMenuItemByIndex(itemCount - 1).isActiveItem()).toBe(true);
+                expect(
+                    await menu.getMenuItemByIndex(itemCount - 1).isActiveItem()
+                ).toBe(true);
                 await menu.toggleMenu(); // cleanup
             });
 

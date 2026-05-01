@@ -90,7 +90,7 @@ export class CategoryChartUtilService {
         renderer: Renderer<IAccessors>,
         scales: Scales
     ): IChartAssistSeries<IAccessors>[] {
-        const result = (data || []).map((s) => ({
+        const result = (data || []).map(s => ({
             ...s,
             accessors,
             renderer,

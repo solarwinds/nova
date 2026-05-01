@@ -78,9 +78,9 @@ test.describe("USERCONTROL Toast", () => {
         const toast = await page.asertWaitForToastDisplayed();
         await toast.hover();
         await Helpers.page.waitForTimeout(toastConfig.options.timeOut * 2);
-        expect((await toast.isPresent()) && (await toast.isDisplayed())).toEqual(
-            true
-        );
+        expect(
+            (await toast.isPresent()) && (await toast.isDisplayed())
+        ).toEqual(true);
     });
 
     test("should honor the timeout specified", async () => {
@@ -124,7 +124,9 @@ test.describe("USERCONTROL Toast", () => {
             endPoint - startPoint - ToastAtom.animationTimeout,
             -3
         );
-        expect(timeBenchmark - 1000).toEqual(toastConfig.options.extendedTimeOut);
+        expect(timeBenchmark - 1000).toEqual(
+            toastConfig.options.extendedTimeOut
+        );
     });
 
     test("should add a custom class", async () => {
@@ -220,9 +222,9 @@ test.describe("USERCONTROL Toast", () => {
             const toast = await page.asertWaitForToastDisplayed();
 
             await toast.click();
-            expect((await toast.isPresent()) && (await toast.isDisplayed())).toEqual(
-                true
-            );
+            expect(
+                (await toast.isPresent()) && (await toast.isDisplayed())
+            ).toEqual(true);
         });
     });
 

@@ -93,7 +93,7 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
             this.widgetData.series
         ) {
             this.widgetData.series.forEach(
-                (serie) => (serie.rawData = serie.data)
+                serie => (serie.rawData = serie.data)
             );
         }
     }
@@ -193,7 +193,7 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
 
     protected applyPreviousTransformer(previousData: any): void {
         // save original data and transform it
-        this.widgetData.series.forEach((serie) => {
+        this.widgetData.series.forEach(serie => {
             serie.rawData = serie.data;
             serie.transformer = previousData?.series.find(
                 (prevSerie: ITimeseriesWidgetData) => prevSerie.id === serie.id

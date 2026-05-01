@@ -66,7 +66,7 @@ export class WaterfallChartSimpleComponent implements OnInit {
         );
 
         // Step 3 - Adjust the color accessor, to retrieve the color or the bar by the corresponding data type.
-        accessors.data.color = (d) => colorProvider.get(d.type);
+        accessors.data.color = d => colorProvider.get(d.type);
 
         // Step 4 - Configure the format of the bottom label by setting custom scales.x.formatter function.
         scales.x.formatters.tick = (value: number) =>
@@ -76,7 +76,7 @@ export class WaterfallChartSimpleComponent implements OnInit {
         (<BandScale>scales.y).padding(0.5);
 
         this.chart.update(
-            getData().map((s) => ({
+            getData().map(s => ({
                 ...s,
                 accessors,
                 scales,

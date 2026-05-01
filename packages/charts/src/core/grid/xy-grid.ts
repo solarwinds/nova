@@ -151,7 +151,7 @@ export class XYGrid extends Grid implements IGrid {
         this._scales = scales;
 
         if (this._scales) {
-            Object.keys(this._scales).forEach((scaleKey) => {
+            Object.keys(this._scales).forEach(scaleKey => {
                 // Defaulting to left
                 let config: IAxisConfig = this.config().axis.left;
                 let axisGenerator: any;
@@ -159,8 +159,8 @@ export class XYGrid extends Grid implements IGrid {
                     return;
                 }
                 this._scales[scaleKey]?.list
-                    ?.filter((scale) => scale instanceof LinearScale)
-                    .forEach((scale) => {
+                    ?.filter(scale => scale instanceof LinearScale)
+                    .forEach(scale => {
                         if (scale?.id === this.leftScaleId) {
                             config = this.config().axis.left;
                             axisGenerator = axisLeft;
@@ -286,14 +286,14 @@ export class XYGrid extends Grid implements IGrid {
         const renderStates = e.data as IRenderStateData[];
 
         const emphasizedSeries = renderStates
-            .filter((rs) => rs.state === RenderState.emphasized && rs.series)
-            .map((rs) => rs.series);
+            .filter(rs => rs.state === RenderState.emphasized && rs.series)
+            .map(rs => rs.series);
 
         if (emphasizedSeries.length > 0) {
             const emphasizedYScales = uniq(
                 emphasizedSeries
-                    .map((s) => s?.scales["y"] as IScale<any>)
-                    .filter((s) => !!s)
+                    .map(s => s?.scales["y"] as IScale<any>)
+                    .filter(s => !!s)
             );
             if (emphasizedYScales.length <= 0) {
                 return {};
@@ -442,12 +442,12 @@ export class XYGrid extends Grid implements IGrid {
         const padding = dimension.padding;
 
         if (this.scales.x) {
-            each(this.scales.x.list, (xScale) => {
+            each(this.scales.x.list, xScale => {
                 xScale.range([padding.left, dimension.width() - padding.right]);
             });
         }
         if (this.scales.y) {
-            each(this.scales.y.list, (yScale) => {
+            each(this.scales.y.list, yScale => {
                 yScale.range([
                     dimension.height() - padding.bottom,
                     padding.top,
@@ -841,9 +841,7 @@ export class XYGrid extends Grid implements IGrid {
             }
             return textInsideNext;
         }, elementsToFilter[0] && select(elementsToFilter[0]).text());
-        return elementsToFilter.filter(
-            (element) => arr.indexOf(element) === -1
-        );
+        return elementsToFilter.filter(element => arr.indexOf(element) === -1);
     }
 
     private getElementsToHide(
@@ -874,7 +872,7 @@ export class XYGrid extends Grid implements IGrid {
         );
 
         return elementsToFilter.filter(
-            (element) => elementsToDisplay.indexOf(element) === -1
+            element => elementsToDisplay.indexOf(element) === -1
         );
     }
 

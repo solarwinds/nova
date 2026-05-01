@@ -1,162 +1,162 @@
 [
     {
-        "title": "Overview",
-        "file": "../pages/overview/overview.md"
+        "file": "../pages/overview/overview.md",
+        "title": "Overview"
     },
     {
-        "title": "Getting Started",
-        "file": "../../../README.md"
+        "file": "../../../README.md",
+        "title": "Getting Started"
     },
     {
-        "title": "Anatomy",
-        "file": "../pages/anatomy/overview.md",
         "children": [
             {
-                "title": "Pizzagna",
-                "file": "../pages/anatomy/pizzagna.md"
+                "file": "../pages/anatomy/pizzagna.md",
+                "title": "Pizzagna"
             },
             {
-                "title": "Configurator",
-                "file": "../pages/anatomy/configurator.md"
+                "file": "../pages/anatomy/configurator.md",
+                "title": "Configurator"
             },
             {
-                "title": "Data Sources",
-                "file": "../pages/anatomy/data-sources.md"
+                "file": "../pages/anatomy/data-sources.md",
+                "title": "Data Sources"
             }
-        ]
+        ],
+        "file": "../pages/anatomy/overview.md",
+        "title": "Anatomy"
     },
     {
-        "title": "Tips and Tricks",
-        "file": "../pages/tips-and-tricks/overview.md"
+        "file": "../pages/tips-and-tricks/overview.md",
+        "title": "Tips and Tricks"
     },
     {
-        "title": "Tutorials",
-        "file": "../pages/tutorials/overview.md",
         "children": [
             {
-                "title": "Hello Dashboards",
-                "file": "../pages/tutorials/hello-dashboards.md"
+                "file": "../pages/tutorials/hello-dashboards.md",
+                "title": "Hello Dashboards"
             },
             {
-                "title": "Adding a Data Source",
-                "file": "../pages/tutorials/data-source.md"
+                "file": "../pages/tutorials/data-source.md",
+                "title": "Adding a Data Source"
             },
             {
-                "title": "Widget and Dashboard Editing",
-                "file": "../pages/tutorials/widget-editor.md"
+                "file": "../pages/tutorials/widget-editor.md",
+                "title": "Widget and Dashboard Editing"
             },
             {
-                "title": "Persistence",
-                "file": "../pages/tutorials/persistence-handler.md"
+                "file": "../pages/tutorials/persistence-handler.md",
+                "title": "Persistence"
             },
             {
-                "title": "Widget Creation",
-                "file": "../pages/tutorials/widget-creation.md"
+                "file": "../pages/tutorials/widget-creation.md",
+                "title": "Widget Creation"
             },
             {
-                "title": "Customization",
-                "file": "../pages/tutorials/customization/overview.md",
                 "children": [
                     {
-                        "title": "Configurator Section",
-                        "file": "../pages/tutorials/customization/configurator-section.md"
+                        "file": "../pages/tutorials/customization/configurator-section.md",
+                        "title": "Configurator Section"
                     },
                     {
-                        "title": "Data Source Configurator",
-                        "file": "../pages/tutorials/customization/data-source-configurator.md"
+                        "file": "../pages/tutorials/customization/data-source-configurator.md",
+                        "title": "Data Source Configurator"
                     },
                     {
-                        "title": "Formatter",
-                        "file": "../pages/tutorials/customization/formatter/overview.md",
                         "children": [
                             {
-                                "title": "Custom Table Formatter",
-                                "file": "../pages/tutorials/customization/formatter/formatter-table.md"
+                                "file": "../pages/tutorials/customization/formatter/formatter-table.md",
+                                "title": "Custom Table Formatter"
                             },
                             {
-                                "title": "Custom Donut Chart Content Formatter",
-                                "file": "../pages/tutorials/customization/formatter/formatter-donut-content.md"
+                                "file": "../pages/tutorials/customization/formatter/formatter-donut-content.md",
+                                "title": "Custom Donut Chart Content Formatter"
                             }
-                        ]
+                        ],
+                        "file": "../pages/tutorials/customization/formatter/overview.md",
+                        "title": "Formatter"
                     },
                     {
-                        "title": "Widget",
-                        "file": "../pages/tutorials/customization/widget.md"
+                        "file": "../pages/tutorials/customization/widget.md",
+                        "title": "Widget"
                     }
-                ]
+                ],
+                "file": "../pages/tutorials/customization/overview.md",
+                "title": "Customization"
             },
             {
-                "title": "Widget Error Handling",
-                "file": "../pages/tutorials/widget-error-handling.md"
+                "file": "../pages/tutorials/widget-error-handling.md",
+                "title": "Widget Error Handling"
             },
             {
-                "title": "Dynamic Header Links",
-                "file": "../pages/tutorials/dynamic-header-links.md"
+                "file": "../pages/tutorials/dynamic-header-links.md",
+                "title": "Dynamic Header Links"
             }
-        ]
+        ],
+        "file": "../pages/tutorials/overview.md",
+        "title": "Tutorials"
     },
     {
-        "title": "Widget Types",
-        "file": "../pages/widget-types/overview.md",
         "children": [
             {
-                "title": "KPI",
+                "children": [
+                    {
+                        "file": "../pages/widget-types/kpi/background-color.md",
+                        "title": "Setting a Background Color"
+                    },
+                    {
+                        "file": "../pages/widget-types/kpi/sync-broker.md",
+                        "title": "Syncing the Scale Values of KPI Tiles"
+                    }
+                ],
                 "file": "../pages/widget-types/kpi/kpi.md",
+                "title": "KPI"
+            },
+            {
+                "file": "../pages/widget-types/risk-score/risk-score.md",
+                "title": "Risk Score"
+            },
+            {
                 "children": [
                     {
-                        "title": "Setting a Background Color",
-                        "file": "../pages/widget-types/kpi/background-color.md"
-                    },
-                    {
-                        "title": "Syncing the Scale Values of KPI Tiles",
-                        "file": "../pages/widget-types/kpi/sync-broker.md"
+                        "file": "../pages/widget-types/proportional/proportional-donut-content-formatters.md",
+                        "title": "Proportional Donut Content Configuration"
                     }
-                ]
-            },
-            {
-                "title": "Risk Score",
-                "file": "../pages/widget-types/risk-score/risk-score.md"
-            },
-            {
-                "title": "Proportional",
+                ],
                 "file": "../pages/widget-types/proportional/proportional.md",
-                "children": [
-                    {
-                        "title": "Proportional Donut Content Configuration",
-                        "file": "../pages/widget-types/proportional/proportional-donut-content-formatters.md"
-                    }
-                ]
+                "title": "Proportional"
             },
             {
-                "title": "Table",
+                "children": [
+                    {
+                        "file": "../pages/widget-types/table-search.md",
+                        "title": "Table with Search"
+                    },
+                    {
+                        "file": "../pages/widget-types/table-paginator.md",
+                        "title": "Table with Paginator"
+                    },
+                    {
+                        "file": "../pages/widget-types/table-selectable.md",
+                        "title": "Table with Select"
+                    }
+                ],
                 "file": "../pages/widget-types/table.md",
-                "children": [
-                    {
-                        "title": "Table with Search",
-                        "file": "../pages/widget-types/table-search.md"
-                    },
-                    {
-                        "title": "Table with Paginator",
-                        "file": "../pages/widget-types/table-paginator.md"
-                    },
-                    {
-                        "title": "Table with Select",
-                        "file": "../pages/widget-types/table-selectable.md"
-                    }
-                ]
+                "title": "Table"
             },
             {
-                "title": "Timeseries",
-                "file": "../pages/widget-types/timeseries.md"
+                "file": "../pages/widget-types/timeseries.md",
+                "title": "Timeseries"
             },
             {
-                "title": "Embedded Content",
-                "file": "../pages/widget-types/embedded.md"
+                "file": "../pages/widget-types/embedded.md",
+                "title": "Embedded Content"
             },
             {
-                "title": "Drilldown",
-                "file": "../pages/widget-types/drilldown.md"
+                "file": "../pages/widget-types/drilldown.md",
+                "title": "Drilldown"
             }
-        ]
+        ],
+        "file": "../pages/widget-types/overview.md",
+        "title": "Widget Types"
     }
 ]

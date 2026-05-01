@@ -1,20 +1,17 @@
 <ng-container [formGroup]="form">
     <nui-widget-editor-accordion
-        [state]="form | nuiWidgetEditorAccordionFormState | async"
-    >
+        [state]="form | nuiWidgetEditorAccordionFormState | async">
         <nui-widget-editor-accordion-header
             [headerIcon]="form | nuiFormHeaderIconPipe : 'widget_list' | async"
             [subtitle]="form.controls['label'].value"
-            headerTitle="Description"
-        />
+            headerTitle="Description" />
         <div class="description-configuration__accordion-content">
             <div class="mb-4">
                 <nui-form-field
                     caption="Label"
                     i18n-caption
                     class="mb-3"
-                    [control]="form.controls['label']"
-                >
+                    [control]="form.controls['label']">
                     <nui-textbox formControlName="label"></nui-textbox>
                     <nui-validation-message for="required" i18n>
                         This field is required
@@ -35,21 +32,18 @@
                             caption="Column width (px)"
                             i18n-caption
                             class="mb-3"
-                            [control]="form.controls['width']"
-                        >
+                            [control]="form.controls['width']">
                             <!-- TODO: Remove this valueChange stub after NUI-3442 is finished-->
                             <nui-textbox-number
                                 class="description-configuration__accordion-content__width-input"
                                 (valueChange)="stub()"
                                 placeholder="Auto width"
                                 i18n-placeholder
-                                formControlName="width"
-                            ></nui-textbox-number>
+                                formControlName="width"></nui-textbox-number>
                             <nui-validation-message
                                 [show]="form.controls['width'].invalid"
                                 for="min"
-                                i18n
-                            >
+                                i18n>
                                 Minimum width of the column is 62px
                             </nui-validation-message>
                         </nui-form-field>
@@ -57,8 +51,7 @@
                 </ng-container>
                 <div
                     *ngIf="isWidthMessageDisplayedForThisColumn()"
-                    class="mt-4"
-                >
+                    class="mt-4">
                     <nui-message type="info" [allowDismiss]="false" i18n>
                         <b>All columns cannot have fixed width.</b>
                     </nui-message>

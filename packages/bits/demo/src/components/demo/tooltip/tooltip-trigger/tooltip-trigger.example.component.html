@@ -8,8 +8,7 @@
         [nuiTooltipDisabled]="isDisabled"
         (click)="tooltip.toggle()"
         (mouseenter)="disableTooltip(true)"
-        i18n
-    >
+        i18n>
         <strong>Toggle</strong> Tooltip
     </button>
 
@@ -20,8 +19,7 @@
             size="compact"
             displayStyle="action"
             (click)="handleClick($event, tooltip)"
-            i18n
-        >
+            i18n>
             Click to <strong>show</strong> tooltip
         </button>
 
@@ -31,8 +29,7 @@
             size="compact"
             displayStyle="action"
             (click)="tooltip.hide()"
-            i18n
-        >
+            i18n>
             Click to <strong>hide</strong> tooltip
         </button>
     </div>

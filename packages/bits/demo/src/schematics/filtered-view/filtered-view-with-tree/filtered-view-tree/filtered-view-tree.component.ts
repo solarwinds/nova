@@ -50,7 +50,7 @@ import { IServer } from "../types";
     standalone: false,
 })
 export class FilteredViewTreeComponent implements OnDestroy, AfterViewInit {
-    treeControl = new NestedTreeControl<any>((node) => node.children);
+    treeControl = new NestedTreeControl<any>(node => node.children);
     dataSourceTree: ArrayDataSource<any>;
 
     public readonly sorterItems: IMenuItem[] = [

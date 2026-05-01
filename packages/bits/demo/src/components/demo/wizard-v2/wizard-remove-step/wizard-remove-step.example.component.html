@@ -1,7 +1,6 @@
 <nui-wizard-horizontal #wizard>
     <nui-wizard-step-v2
-        *ngFor="let step of steps; let i = index; let isLast = last"
-    >
+        *ngFor="let step of steps; let i = index; let isLast = last">
         <ng-template nuiWizardStepLabel>{{
             step.title + " (" + i + ")"
         }}</ng-template>
@@ -13,8 +12,7 @@
                     displayStyle="action"
                     nui-button
                     (click)="resetWizard()"
-                    i18n
-                >
+                    i18n>
                     Cancel
                 </button>
             </ng-container>
@@ -23,8 +21,7 @@
                     type="button"
                     nuiWizardPrevious
                     nui-button
-                    icon="caret-left"
-                >
+                    icon="caret-left">
                     Back
                 </button>
             </ng-container>
@@ -35,8 +32,7 @@
                     nui-button
                     displayStyle="primary"
                     icon="caret-right"
-                    iconRight="true"
-                >
+                    iconRight="true">
                     Next
                 </button>
             </ng-container>
@@ -46,8 +42,7 @@
                     displayStyle="primary"
                     nui-button
                     (click)="finishWizard()"
-                    i18n
-                >
+                    i18n>
                     Finish
                 </button>
             </ng-container>
@@ -86,8 +81,7 @@
         type="button"
         [disabled]="+number.value < 1"
         (click)="removeStep(+number.value)"
-        i18n
-    >
+        i18n>
         Remove step dynamically
     </button>
 </div>

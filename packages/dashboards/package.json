@@ -5,33 +5,6 @@
       "name": "SolarWinds Nova Team"
     }
   ],
-  "exports": {
-    "./sdk/atoms-playwright": {
-      "types": "./sdk/atmos-playwright/index.d.ts",
-      "default": "./sdk/atoms-playwright/index.js"
-    },
-    "./sdk/atoms-playwright/*": {
-      "types": "./sdk/atoms-playwright/*.d.ts",
-      "default": "./sdk/atoms-playwright/*.js"
-    },
-    "./sdk/schematics": {
-      "types": "./sdk/schematics/index.d.ts",
-      "default": "./sdk/schematics/index.js"
-    },
-    "./sdk/schematics/*": {
-      "types": "./sdk/schematics/*.d.ts",
-      "default": "./sdk/schematics/*.js"
-    },
-    "./sdk/*": "./sdk/*"
-  },
-  "keywords": [
-    "dashboard",
-    "nova",
-    "nova-ui",
-    "solarwinds"
-  ],
-  "license": "Apache-2.0",
-  "name": "@nova-ui/dashboards",
   "dependencies": {
     "@nova-ui/bits": "~20.0.0",
     "@nova-ui/charts": "~20.0.0"
@@ -41,6 +14,33 @@
     "angular-gridster2": "^20.0.0",
     "apollo-angular": "11.0.0"
   },
+  "exports": {
+    "./sdk/*": "./sdk/*",
+    "./sdk/atoms-playwright": {
+      "default": "./sdk/atoms-playwright/index.js",
+      "types": "./sdk/atmos-playwright/index.d.ts"
+    },
+    "./sdk/atoms-playwright/*": {
+      "default": "./sdk/atoms-playwright/*.js",
+      "types": "./sdk/atoms-playwright/*.d.ts"
+    },
+    "./sdk/schematics": {
+      "default": "./sdk/schematics/index.js",
+      "types": "./sdk/schematics/index.d.ts"
+    },
+    "./sdk/schematics/*": {
+      "default": "./sdk/schematics/*.js",
+      "types": "./sdk/schematics/*.d.ts"
+    }
+  },
+  "keywords": [
+    "dashboard",
+    "nova",
+    "nova-ui",
+    "solarwinds"
+  ],
+  "license": "Apache-2.0",
+  "name": "@nova-ui/dashboards",
   "peerDependencies": {
     "angular-gridster2": "^20.0.0"
   },
@@ -73,8 +73,8 @@
     "ng": "ng",
     "playwright:base": "yarn playwright test",
     "playwright:ci": "yarn playwright:base",
-    "playwright:ui": "yarn playwright:base --ui",
     "playwright:report": "yarn playwright show-report",
+    "playwright:ui": "yarn playwright:base --ui",
     "prebuild-examples": "yarn run compile-demo-paths",
     "prettier": "prettier --config ./.prettierrc.js",
     "prettier-check": "yarn run prettier --check .",

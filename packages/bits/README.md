@@ -6,10 +6,10 @@ In Bits, the philosophy is all about flexibility – it provides the Legos, plum
 
 Before you begin, make sure your development environment includes the following:
 
--   Node.js®
--   A package manager such as [npm](https://www.npmjs.com/get-npm)
--   Angular CLI v15
--   Angular CDK v15 as a devDependency
+- Node.js®
+- A package manager such as [npm](https://www.npmjs.com/get-npm)
+- Angular CLI v15
+- Angular CDK v15 as a devDependency
 
 ### Installing NodeJS and `npm`
 
@@ -153,37 +153,37 @@ To add styling for Bits, you need to modify angular.json corresponding to the ta
 
 1. Add the styles path to stylePreprocessorOptions.includePaths:
 
-    ```json
-    "architect": {
-        "build": {
-            "builder": "@angular-devkit/build-angular:browser",
-            "options": {
-                "stylePreprocessorOptions": {
-                "includePaths": [
-                    "./node_modules/@nova-ui/bits/sdk/less"
-                ]
-                },
-                ...
-            }
-        }
-    }
-    ```
+   ```json
+   "architect": {
+       "build": {
+           "builder": "@angular-devkit/build-angular:browser",
+           "options": {
+               "stylePreprocessorOptions": {
+               "includePaths": [
+                   "./node_modules/@nova-ui/bits/sdk/less"
+               ]
+               },
+               ...
+           }
+       }
+   }
+   ```
 
 2. Add the styles path to the source paths:
 
-    ```json
-    "architect": {
-        "build": {
-            "options": {
-                "styles": [
-                    "./node_modules/@nova-ui/bits/bundles/css/styles.css"
-                    ...
-                ],
-                ...
-            }
-        }
-    }
-    ```
+   ```json
+   "architect": {
+       "build": {
+           "options": {
+               "styles": [
+                   "./node_modules/@nova-ui/bits/bundles/css/styles.css"
+                   ...
+               ],
+               ...
+           }
+       }
+   }
+   ```
 
 **FYI - Bits does not use the Bootstrap component library nor does it include custom fonts.**
 

@@ -92,7 +92,7 @@ export class ResizeDirective implements AfterViewInit, OnDestroy {
         }
 
         public call() {
-            forEach(this.events, (event) => event.call());
+            forEach(this.events, event => event.call());
         }
 
         public remove(event: Function) {

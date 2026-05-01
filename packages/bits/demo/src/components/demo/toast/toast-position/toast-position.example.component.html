@@ -5,8 +5,7 @@
                 *ngFor="let position of toastPositions"
                 id="{{ 'nui-toast-position-' + position.className }}"
                 [checked]="position.className === 'nui-toast--top-right'"
-                [value]="position.className"
-            >
+                [value]="position.className">
                 {{ position.displayValue }}
             </nui-radio>
         </nui-radio-group>
@@ -17,7 +16,6 @@
     type="button"
     id="nui-toast-position-example"
     (click)="onShowToast($event)"
-    i18n
->
+    i18n>
     Show Toast
 </button>

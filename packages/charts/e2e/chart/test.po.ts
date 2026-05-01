@@ -41,7 +41,10 @@ export class TestPage {
         await page.mouse.move(0, 0);
     }
 
-    private async updateSelectable(input: Locator, value: boolean): Promise<void> {
+    private async updateSelectable(
+        input: Locator,
+        value: boolean
+    ): Promise<void> {
         // For checkboxes, Playwright exposes isChecked().
         const currentValue = await input.isChecked();
         if (currentValue === value) {

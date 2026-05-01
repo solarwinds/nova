@@ -4,13 +4,11 @@
         caption="Password"
         i18n-caption
         [control]="dynamicForm.controls['password']"
-        id="nui-form-field-dynamic-disabling"
-    >
+        id="nui-form-field-dynamic-disabling">
         <nui-textbox
             id="nui-form-field-dynamic-disabling-password"
             formControlName="password"
-            (textChange)="onPasswordBlurred()"
-        ></nui-textbox>
+            (textChange)="onPasswordBlurred()"></nui-textbox>
         <nui-validation-message for="required" i18n>
             This is required
         </nui-validation-message>
@@ -18,12 +16,10 @@
     <nui-form-field
         caption="Confirm Password"
         i18n-caption
-        [control]="dynamicForm.controls['confirmPassword']"
-    >
+        [control]="dynamicForm.controls['confirmPassword']">
         <nui-textbox
             id="nui-form-field-dynamic-disabling-confirm-password"
-            formControlName="confirmPassword"
-        ></nui-textbox>
+            formControlName="confirmPassword"></nui-textbox>
         <nui-validation-message for="required" i18n>
             This is required
         </nui-validation-message>

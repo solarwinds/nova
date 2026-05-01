@@ -72,13 +72,13 @@ export class KpiScaleSyncBroker implements IConfigurable {
     public subscribeToBrokers(): void {
         this.destroy();
 
-        this.brokers.forEach((broker) => {
+        this.brokers.forEach(broker => {
             broker.in$
                 .pipe(
-                    filter((_) => !!broker.in$.observers.length),
+                    filter(_ => !!broker.in$.observers.length),
                     distinctUntilChanged(),
-                    tap((data) => this.configureValueModel(data)),
-                    tap((data) => this.processAndEmitSyncedValue(data, broker)),
+                    tap(data => this.configureValueModel(data)),
+                    tap(data => this.processAndEmitSyncedValue(data, broker)),
                     takeUntil(this.destroySubscriptions$)
                 )
                 .subscribe();
@@ -105,8 +105,8 @@ export class KpiScaleSyncBroker implements IConfigurable {
         const valuesToCompare: (number | undefined)[] = this.valuesObject[
             broker.id
         ]
-            .filter((item) => item.targetID && item.targetValue)
-            .map((item) => item.targetValue);
+            .filter(item => item.targetID && item.targetValue)
+            .map(item => item.targetValue);
 
         broker.out$.next({
             ...data,
@@ -116,7 +116,7 @@ export class KpiScaleSyncBroker implements IConfigurable {
 
     private configureValueModel(data: IBrokerValue) {
         const targetObj = this.valuesObject[data.id].filter(
-            (obj) => obj.targetID === data.targetID
+            obj => obj.targetID === data.targetID
         );
 
         targetObj.length
@@ -141,7 +141,7 @@ export class KpiScaleSyncBroker implements IConfigurable {
             // remove brokers that are not in the scaleSyncConfig
             this.brokers
                 .filter(
-                    (broker) => !scaleSyncConfig.find((s) => s.id === broker.id)
+                    broker => !scaleSyncConfig.find(s => s.id === broker.id)
                 )
                 .forEach(({ id }) => this.builder.removeBroker(id));
 
@@ -174,9 +174,7 @@ class KpiScaleSyncBrokerBuilder {
 
     public addBroker(broker: IBrokerUserConfig): KpiScaleSyncBrokerBuilder {
         if (
-            this.brokers.find(
-                (existingBroker) => existingBroker.id === broker.id
-            )
+            this.brokers.find(existingBroker => existingBroker.id === broker.id)
         ) {
             // Prevent adding the same broker multiple times
             return this;
@@ -196,7 +194,7 @@ class KpiScaleSyncBrokerBuilder {
     }
 
     public removeBroker(brokerId: string): void {
-        const brokerIndex = this.brokers.findIndex((b) => b.id === brokerId);
+        const brokerIndex = this.brokers.findIndex(b => b.id === brokerId);
         if (brokerIndex !== -1) {
             this.brokers.splice(brokerIndex, 1);
             delete this.valuesObject[brokerId];

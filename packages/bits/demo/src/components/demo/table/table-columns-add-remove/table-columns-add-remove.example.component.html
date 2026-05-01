@@ -1,7 +1,6 @@
 <div
     class="nui-edge-definer nui-table__container"
-    id="nui-demo-table-columns-add-remove"
->
+    id="nui-demo-table-columns-add-remove">
     <section class="demo-options-section mb-3">
         <button
             type="button"
@@ -9,8 +8,7 @@
             nui-button
             icon="edit"
             (click)="open(content)"
-            i18n
-        >
+            i18n>
             Edit columns
         </button>
 
@@ -18,8 +16,7 @@
             <nui-dialog-header
                 i18n-title
                 title="Edit columns"
-                (closed)="close()"
-            ></nui-dialog-header>
+                (closed)="close()"></nui-dialog-header>
             <form [formGroup]="myForm">
                 <div class="form-group">
                     <div class="dialog-body">
@@ -29,8 +26,7 @@
                             *ngIf="
                                 !myForm.controls['checkboxGroup'].valid &&
                                 myForm.controls['checkboxGroup'].touched
-                            "
-                        >
+                            ">
                             <b i18n>Select minimum 3 checkboxes!</b>
                         </nui-message>
 
@@ -40,14 +36,12 @@
                             [values]="displayedColumnsCopy"
                             (valuesChange)="columnsChanged($event)"
                             formControlName="checkboxGroup"
-                            required
-                        >
+                            required>
                             <nui-checkbox
                                 *ngFor="let availableColumn of availableColumns"
                                 [value]="availableColumn"
                                 class="text-capitalize"
-                                [checked]="isChecked(availableColumn)"
-                            >
+                                [checked]="isChecked(availableColumn)">
                                 {{ availableColumn }}
                             </nui-checkbox>
                         </nui-checkbox-group>
@@ -62,8 +56,7 @@
                                     [value]="newColumn"
                                     (textChange)="updateNewColumnValue($event)"
                                     i18n-placeholder
-                                    placeholder="Enter new column title"
-                                >
+                                    placeholder="Enter new column title">
                                 </nui-textbox>
                             </div>
                             <div class="col col-auto">
@@ -74,8 +67,7 @@
                                     id="nui-demo-table-add-remove-new-column-btn"
                                     class="ml-3"
                                     (click)="addNewColumn()"
-                                    i18n
-                                >
+                                    i18n>
                                     Add new column
                                 </button>
                             </div>
@@ -86,8 +78,7 @@
                             nui-button
                             type="button"
                             (click)="close('Cancel')"
-                            i18n
-                        >
+                            i18n>
                             Cancel
                         </button>
                         <button
@@ -99,8 +90,7 @@
                             [disabled]="
                                 myForm.controls['checkboxGroup'].invalid
                             "
-                            i18n
-                        >
+                            i18n>
                             Update columns
                         </button>
                     </nui-dialog-footer>
@@ -108,19 +98,20 @@
             </form>
         </ng-template>
     </section>
-    <table nui-table [dataSource]="dataSource" id="nui-demo-custom-table-actions">
+    <table
+        nui-table
+        [dataSource]="dataSource"
+        id="nui-demo-custom-table-actions">
         <ng-container
             *ngFor="let column of displayedColumns"
-            nuiColumnDef="{{ column }}"
-        >
+            nuiColumnDef="{{ column }}">
             <th nui-header-cell *nuiHeaderCellDef class="text-capitalize">
                 {{ column }}
             </th>
             <td
                 nui-cell
                 *nuiCellDef="let element"
-                [class.overflow-visible]="columnIsActions(column)"
-            >
+                [class.overflow-visible]="columnIsActions(column)">
                 <span *ngIf="!columnIsActions(column)">{{
                     element[column]
                 }}</span>

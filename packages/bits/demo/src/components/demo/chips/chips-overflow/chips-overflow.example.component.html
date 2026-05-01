@@ -5,18 +5,15 @@
     [overflow]="true"
     (chipRemoved)="onClear($event)"
     (chipsOverflowed)="onChipsOverflow($event)"
-    (removeAll)="onClearAll($event)"
->
+    (removeAll)="onClearAll($event)">
     <div
         class="nui-chips-overflowed"
         #overflowCounterLabel
-        *ngIf="overflowCounter > 0"
-    >
+        *ngIf="overflowCounter > 0">
         <nui-popover
             trigger="click"
             [popoverOverlayPosition]="overflowPopoverPosition"
-            [template]="popoverWithClickTrigger"
-        >
+            [template]="popoverWithClickTrigger">
             <a class="nui-chips-overflowed__counter">+{{ overflowCounter }}</a>
         </nui-popover>
     </div>
@@ -27,7 +24,6 @@
         [overflowSource]="overflowSource"
         [itemsSource]="horizontalGroupedItemsSource"
         (chipRemoved)="onClear($event)"
-        orientation="vertical"
-    >
+        orientation="vertical">
     </nui-chips-overflow>
 </ng-template>

@@ -105,9 +105,9 @@ test.describe("USERCONTROL Checkbox", () => {
 
             await Helpers.page.keyboard.press("Tab");
             const active = await Helpers.getActiveElement();
-            const id = await active?.evaluate((el) => el.id);
+            const id = await active?.evaluate(el => el.id);
             const checkboxId = await atomIndeterminate.getLabel.evaluate(
-                (el) => el.id
+                el => el.id
             );
             expect(id).toBeDefined();
             expect(checkboxId).toBeDefined();

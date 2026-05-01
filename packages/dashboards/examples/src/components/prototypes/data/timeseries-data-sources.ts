@@ -65,7 +65,7 @@ export class AcmeTimeseriesDataSource
     ): Promise<IDataSourceOutput<ITimeseriesOutput>> {
         this.busy.next(true);
         if (!AcmeTimeseriesDataSource.mockError) {
-            return new Promise((resolve) => {
+            return new Promise(resolve => {
                 setTimeout(() => {
                     this.busy.next(false);
                     resolve({
@@ -80,7 +80,7 @@ export class AcmeTimeseriesDataSource
             });
         } else {
             // generate a 404
-            return new Promise((resolve) => {
+            return new Promise(resolve => {
                 this.http
                     .get(
                         "http://www.mocky.io/v2/5ec6bfd93200007800d75100?mocky-delay=1000ms"

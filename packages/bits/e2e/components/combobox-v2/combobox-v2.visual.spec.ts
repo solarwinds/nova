@@ -97,7 +97,7 @@ test.describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese("State 4");
 
         // State 5
-        await Helpers.page.locator(".focus-drop").click({force: true});
+        await Helpers.page.locator(".focus-drop").click({ force: true });
         await Helpers.page.locator("#toggle").click();
         await comboboxCustomControl.selectFirst(24);
         await comboboxCustomControl.removeChips(1);

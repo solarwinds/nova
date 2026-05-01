@@ -169,7 +169,7 @@ export class DataPointSelectionPrototypeComponent implements OnInit {
 
         // Initialize the bar chart
         this.barChart.update(
-            getData().map((s) => ({
+            getData().map(s => ({
                 ...s,
                 accessors,
                 renderer: this.renderer,
@@ -213,7 +213,7 @@ export class DataPointSelectionPrototypeComponent implements OnInit {
 
         // Initializing the status chart
         this.statusChart.update(
-            getStatusData().map((d) => ({
+            getStatusData().map(d => ({
                 ...d,
                 accessors: myStatusAccessors,
                 renderer: this.renderer,

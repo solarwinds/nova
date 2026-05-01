@@ -61,7 +61,9 @@ export class ChartAtom extends Atom {
         return this.getNumberOfVisibleSeriesInLayer("foreground");
     }
 
-    public async getNumberOfVisibleSeriesInLayer(layerName: string): Promise<number> {
+    public async getNumberOfVisibleSeriesInLayer(
+        layerName: string
+    ): Promise<number> {
         const [layer] = await this.getLayer(layerName);
         if (!layer) {
             return 0;
@@ -78,7 +80,9 @@ export class ChartAtom extends Atom {
         return visibleCount;
     }
 
-    public async getMarkerSeriesById(seriesId: string): Promise<MarkerSeriesAtom | undefined> {
+    public async getMarkerSeriesById(
+        seriesId: string
+    ): Promise<MarkerSeriesAtom | undefined> {
         const [layer] = await this.getLayer("foreground");
         return layer
             ? Atom.findIn<MarkerSeriesAtom>(
@@ -89,11 +93,15 @@ export class ChartAtom extends Atom {
             : undefined;
     }
 
-    public async getAllVisibleDataSeries<T extends SeriesAtom>(atomClass: IAtomClass<T>): Promise<T[]> {
+    public async getAllVisibleDataSeries<T extends SeriesAtom>(
+        atomClass: IAtomClass<T>
+    ): Promise<T[]> {
         return this.getAllVisibleSeriesInLayer("data", atomClass);
     }
 
-    public async getAllVisibleBackgroundSeries<T extends SeriesAtom>(atomClass: IAtomClass<T>): Promise<T[]> {
+    public async getAllVisibleBackgroundSeries<T extends SeriesAtom>(
+        atomClass: IAtomClass<T>
+    ): Promise<T[]> {
         return this.getAllVisibleSeriesInLayer("background", atomClass);
     }
 
@@ -125,30 +133,53 @@ export class ChartAtom extends Atom {
         return result;
     }
 
-    public async getDataSeriesById<T extends SeriesAtom>(atomClass: IAtomClass<T>, seriesId: string): Promise<T | undefined> {
+    public async getDataSeriesById<T extends SeriesAtom>(
+        atomClass: IAtomClass<T>,
+        seriesId: string
+    ): Promise<T | undefined> {
         return this.getSeriesInLayerById(atomClass, "data", seriesId);
     }
 
-    public async getBackgroundSeriesById<T extends SeriesAtom>(atomClass: IAtomClass<T>, seriesId: string): Promise<T | undefined> {
+    public async getBackgroundSeriesById<T extends SeriesAtom>(
+        atomClass: IAtomClass<T>,
+        seriesId: string
+    ): Promise<T | undefined> {
         return this.getSeriesInLayerById(atomClass, "background", seriesId);
     }
 
-    public async getSeriesInLayerById<T extends SeriesAtom>(atomClass: IAtomClass<T>, layerName: string, seriesId: string): Promise<T | undefined> {
+    public async getSeriesInLayerById<T extends SeriesAtom>(
+        atomClass: IAtomClass<T>,
+        layerName: string,
+        seriesId: string
+    ): Promise<T | undefined> {
         const [layer] = await this.getLayer(layerName);
         if (!layer) {
             return undefined;
         }
 
-        return Atom.findIn(atomClass, layer.locator(`#${layerName}-${seriesId}`), true);
+        return Atom.findIn(
+            atomClass,
+            layer.locator(`#${layerName}-${seriesId}`),
+            true
+        );
     }
 
-    public async clickElementByCoordinates(coordinates: { x: number; y: number }): Promise<void> {
-        await this.getLocator().page().mouse.click(coordinates.x, coordinates.y);
+    public async clickElementByCoordinates(coordinates: {
+        x: number;
+        y: number;
+    }): Promise<void> {
+        await this.getLocator()
+            .page()
+            .mouse.click(coordinates.x, coordinates.y);
     }
 
     private async isVisible(el: Locator): Promise<boolean> {
-        const visibility = await el.evaluate((e) => getComputedStyle(e).visibility);
-        const opacity = await el.evaluate((e) => parseFloat(getComputedStyle(e).opacity || "0"));
+        const visibility = await el.evaluate(
+            e => getComputedStyle(e).visibility
+        );
+        const opacity = await el.evaluate(e =>
+            parseFloat(getComputedStyle(e).opacity || "0")
+        );
         return visibility !== "hidden" && opacity > 0;
     }
 }

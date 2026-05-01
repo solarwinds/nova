@@ -71,33 +71,63 @@ test.describe("USERCONTROL popover", () => {
         await Helpers.prepareBrowser("popover/popover-test", page);
         await Helpers.disableCSSAnimations(Animations.ALL);
 
-        popoverMouseEnterTrigger = Atom.find<PopoverAtom>(PopoverAtom, onHoverParentId);
+        popoverMouseEnterTrigger = Atom.find<PopoverAtom>(
+            PopoverAtom,
+            onHoverParentId
+        );
         popoverMouseEnterTrigger.popoverModalId =
             "nui-demo-popover-modal-mouseenter";
-        popoverClickTrigger = Atom.find<PopoverAtom>(PopoverAtom, onClickParentId);
+        popoverClickTrigger = Atom.find<PopoverAtom>(
+            PopoverAtom,
+            onClickParentId
+        );
         popoverClickTrigger.popoverModalId = "nui-demo-popover-modal-click";
-        popoverFocusTrigger = Atom.find<PopoverAtom>(PopoverAtom, focusParentId);
+        popoverFocusTrigger = Atom.find<PopoverAtom>(
+            PopoverAtom,
+            focusParentId
+        );
         popoverFocusTrigger.popoverModalId = "nui-demo-popover-modal-focus";
-        popoverPreventClosing = Atom.find<PopoverAtom>(PopoverAtom, preventOnclickParentId);
+        popoverPreventClosing = Atom.find<PopoverAtom>(
+            PopoverAtom,
+            preventOnclickParentId
+        );
         popoverPreventClosing.popoverModalId = "nui-demo-popover-modal-prevent";
-        inContainer = Atom.find<PopoverAtom>(PopoverAtom, popoverWithContainerId);
-        popoverLeftPlacement = Atom.find<PopoverAtom>(PopoverAtom, leftPlacementParentId);
-        popoverRightPlacement = Atom.find<PopoverAtom>(PopoverAtom, rightPlacementParentId);
+        inContainer = Atom.find<PopoverAtom>(
+            PopoverAtom,
+            popoverWithContainerId
+        );
+        popoverLeftPlacement = Atom.find<PopoverAtom>(
+            PopoverAtom,
+            leftPlacementParentId
+        );
+        popoverRightPlacement = Atom.find<PopoverAtom>(
+            PopoverAtom,
+            rightPlacementParentId
+        );
         popoverBottomPlacement = Atom.find<PopoverAtom>(
             PopoverAtom,
             bottomPlacementParentId
         );
-        popoverTopPlacement = Atom.find<PopoverAtom>(PopoverAtom, topPlacementParentId);
+        popoverTopPlacement = Atom.find<PopoverAtom>(
+            PopoverAtom,
+            topPlacementParentId
+        );
         modalBtn = Atom.find<ButtonAtom>(ButtonAtom, modalPopoverBtnId);
         checkbox = Atom.find<CheckboxAtom>(CheckboxAtom, checkboxInPopover);
         disableButton = Atom.find<ButtonAtom>(ButtonAtom, disableButtonId);
-        disabledPopover = Atom.find<PopoverAtom>(PopoverAtom, disabledPopoverId);
+        disabledPopover = Atom.find<PopoverAtom>(
+            PopoverAtom,
+            disabledPopoverId
+        );
         disabledPopover.popoverModalId = "nui-demo-popover-modal-disabled";
         popoverOpenCloseProgrammatically = Atom.find<PopoverAtom>(
             PopoverAtom,
             popoverOpenCloseProgrammaticallyId
         );
-        popoverDebounce1 = Atom.find<PopoverAtom>(PopoverAtom, popoverDebounce1Id);
+        popoverDebounce1 = Atom.find<PopoverAtom>(
+            PopoverAtom,
+            popoverDebounce1Id
+        );
         popoverDebounce1.popoverModalId = "nui-demo-popover-modal-debounce-1";
         openProgrammaticallyButton = Atom.find<ButtonAtom>(
             ButtonAtom,
@@ -174,16 +204,24 @@ test.describe("USERCONTROL popover", () => {
 
         test.describe("should honor 'mouseenter' trigger as default trigger", () => {
             test("without any delays", async () => {
-                await expect(popoverMouseEnterTrigger.getPopoverBody()).toBeHidden();
+                await expect(
+                    popoverMouseEnterTrigger.getPopoverBody()
+                ).toBeHidden();
                 await popoverMouseEnterTrigger.openByHover();
-                await expect(popoverMouseEnterTrigger.getPopoverBody()).toBeVisible();
+                await expect(
+                    popoverMouseEnterTrigger.getPopoverBody()
+                ).toBeVisible();
                 // ensure click has no effect
                 await popoverMouseEnterTrigger.clickTarget();
-                await expect(popoverMouseEnterTrigger.getPopoverBody()).toBeVisible();
+                await expect(
+                    popoverMouseEnterTrigger.getPopoverBody()
+                ).toBeVisible();
                 // move away from parent and ensure the popover disappears
                 await popoverClickTrigger.hover();
                 await popoverMouseEnterTrigger.waitForClosed();
-                await expect(popoverMouseEnterTrigger.getPopoverBody()).toBeHidden();
+                await expect(
+                    popoverMouseEnterTrigger.getPopoverBody()
+                ).toBeHidden();
             });
 
             test("with a " + delay + "ms delay", async () => {
@@ -226,7 +264,9 @@ test.describe("USERCONTROL popover", () => {
                 await expect(bodyPopover).toHaveCount(1);
             });
 
-            test("should append to container if specified", async ({ page }) => {
+            test("should append to container if specified", async ({
+                page,
+            }) => {
                 const containerPopover = page.locator(
                     "#nui-demo-popover-container .nui-popover-container"
                 );
@@ -258,9 +298,7 @@ test.describe("USERCONTROL popover", () => {
         test("should not close when clicked outside", async ({ page }) => {
             await popoverPreventClosing.open();
             await expect(popoverPreventClosing.getPopoverBody()).toBeVisible();
-            const box = await popoverPreventClosing
-                .getLocator()
-                .boundingBox();
+            const box = await popoverPreventClosing.getLocator().boundingBox();
             if (box) {
                 await page.mouse.move(box.x - 1, box.y - 1);
                 await page.mouse.click(box.x - 1, box.y - 1);
@@ -305,14 +343,18 @@ test.describe("USERCONTROL popover", () => {
         test("should open popover by clicking on button", async () => {
             await openProgrammaticallyButton.click();
             await popoverOpenCloseProgrammatically.waitForOpen();
-            await expect(popoverOpenCloseProgrammatically.getPopoverBody()).toBeVisible();
+            await expect(
+                popoverOpenCloseProgrammatically.getPopoverBody()
+            ).toBeVisible();
         });
 
         test("should close popover by clicking on button", async () => {
             await openProgrammaticallyButton.click();
             await closeProgrammaticallyButton.click();
             await popoverOpenCloseProgrammatically.waitForClosed();
-            await expect(popoverOpenCloseProgrammatically.getPopoverBody()).toBeHidden();
+            await expect(
+                popoverOpenCloseProgrammatically.getPopoverBody()
+            ).toBeHidden();
         });
     });
 });

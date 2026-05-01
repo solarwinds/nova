@@ -18,7 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable, OnDestroy, Renderer2, RendererFactory2 } from "@angular/core";
+import {
+    Injectable,
+    OnDestroy,
+    Renderer2,
+    RendererFactory2,
+} from "@angular/core";
 
 import { EventBus } from "./event-bus";
 import { DOCUMENT_CLICK_EVENT } from "../constants/event.constants";
@@ -39,10 +44,14 @@ export class EventBusService extends EventBus<Event> implements OnDestroy {
         // This is moved from popup code.
         // Every event that is triggered for document should be handled by popup,
         // but we should register listener only once
-        this.listenerUnsubscriber = this.renderer.listen("document", "click", (event: MouseEvent) => {
-            // separate stream to detect document-body clicks in case of popup in popover
-            this.getStream(DOCUMENT_CLICK_EVENT).next(event);
-        });
+        this.listenerUnsubscriber = this.renderer.listen(
+            "document",
+            "click",
+            (event: MouseEvent) => {
+                // separate stream to detect document-body clicks in case of popup in popover
+                this.getStream(DOCUMENT_CLICK_EVENT).next(event);
+            }
+        );
     }
 
     public ngOnDestroy(): void {

@@ -145,7 +145,7 @@ export class AcmeDashboardComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        const widgetsWithStructure = widgetConfigs.map((w) =>
+        const widgetsWithStructure = widgetConfigs.map(w =>
             this.widgetTypesService.mergeWithWidgetType(w)
         );
         const widgetsIndex = keyBy(widgetsWithStructure, (w: IWidget) => w.id);

@@ -24,9 +24,9 @@ export function getColorValueByName(colorVariable: string): string {
     }
 
     const colorName = colorVariable
-    .replace(/^var\(/, "")
-    .replace(/\)$/, "")
-    .trim();
+        .replace(/^var\(/, "")
+        .replace(/\)$/, "")
+        .trim();
 
     return getComputedStyle(document.body).getPropertyValue(colorName);
 }

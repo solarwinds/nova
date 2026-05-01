@@ -121,8 +121,8 @@ export class AcmeTableGBooksDataSource
 
         this.applyFilters$
             // eslint-disable-next-line import/no-deprecated
-            .pipe(switchMap((filters) => this.getData(filters)))
-            .subscribe(async (res) => {
+            .pipe(switchMap(filters => this.getData(filters)))
+            .subscribe(async res => {
                 this.outputsSubject.next(await this.getFilteredData(res));
             });
     }
@@ -132,10 +132,10 @@ export class AcmeTableGBooksDataSource
     ): Promise<IDataSourceOutput<INovaFilteringOutputs>> {
         return firstValueFrom(
             of(booksData).pipe(
-                tap((response) => {
+                tap(response => {
                     this.cache = this.cache.concat(response.books);
                 }),
-                map((response) => ({
+                map(response => ({
                     result: {
                         repeat: { itemsSource: this.cache },
                         paginator: { total: response.totalItems },
@@ -158,16 +158,16 @@ export class AcmeTableGBooksDataSource
             .get<IGBooksApiResponse>(this.getComposedUrl(filters))
             .pipe(
                 delay(300), // mock
-                map((response) => ({
+                map(response => ({
                     books:
-                        response.items?.map((volume) => ({
+                        response.items?.map(volume => ({
                             title: volume.volumeInfo.title,
                             authors:
                                 volume.volumeInfo.authors?.join(", ") || "",
                         })) || [],
                     totalItems: response.totalItems,
                 })),
-                catchError((e) => {
+                catchError(e => {
                     this.logger.error(e);
                     this.busy.next(false);
                     return of({

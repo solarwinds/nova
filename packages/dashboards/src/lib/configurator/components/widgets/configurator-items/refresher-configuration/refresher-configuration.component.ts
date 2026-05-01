@@ -101,7 +101,7 @@ export class RefresherConfigurationComponent
             this.form.controls["overrideDefaultSettings"].valueChanges,
         ])
             .pipe(
-                filter((values) => values.some((v) => !v)),
+                filter(values => values.some(v => !v)),
                 tap(this.resetInterval),
                 takeUntil(this.destroyed$)
             )

@@ -57,9 +57,10 @@ export class PanelAtom extends Atom {
     }
 
     public async toggle(): Promise<void> {
-        const wasCollapsed = await this.getLocator().first()
+        const wasCollapsed = await this.getLocator()
+            .first()
             .getAttribute("class")
-            .then((cls) => (cls ?? "").includes(PanelAtom.COLLAPSED_CSS));
+            .then(cls => (cls ?? "").includes(PanelAtom.COLLAPSED_CSS));
 
         await this.toggleButton.first().click();
 
@@ -100,17 +101,17 @@ export class PanelAtom extends Atom {
 
     public async toHavePaneVisible(orientation: string): Promise<void> {
         await expect(
-            this.getLocator().and(Helpers.page.locator(`.nui-panel--${orientation}`)).locator(
-                `.nui-panel__side-pane`
-            )
+            this.getLocator()
+                .and(Helpers.page.locator(`.nui-panel--${orientation}`))
+                .locator(`.nui-panel__side-pane`)
         ).toBeVisible();
     }
 
     public async toHavePaneHidden(orientation: string): Promise<void> {
         await expect(
-            this.getLocator().and(Helpers.page.locator(`.nui-panel--${orientation}`)).locator(
-                `.nui-panel__side-pane`
-            )
+            this.getLocator()
+                .and(Helpers.page.locator(`.nui-panel--${orientation}`))
+                .locator(`.nui-panel__side-pane`)
         ).toBeHidden();
     }
 

@@ -407,7 +407,7 @@ export abstract class BaseSelectV2
         options = this.selectedOptions
     ): OptionValueType | OptionValueType[] | null {
         return this.multiselect
-            ? options.map((o) => o.value)
+            ? options.map(o => o.value)
             : options[0]?.value || "";
     }
 
@@ -427,18 +427,18 @@ export abstract class BaseSelectV2
             // Using type assertion to avoid compilation error, undefined elements are filtered but compiler do not infer the type properly
             this._selectedOptions = <SelectV2OptionComponent[]>(
                 value
-                    .map((v) =>
-                        this.options?.find((option) => isEqual(option.value, v))
+                    .map(v =>
+                        this.options?.find(option => isEqual(option.value, v))
                     )
-                    .filter((_) => _)
+                    .filter(_ => _)
             );
             // removes 'undefined' elements out of the array if any
             this._selectedOptions.forEach(
-                (option) => (option.outfiltered = true)
+                option => (option.outfiltered = true)
             );
         } else {
             const modelValue: OptionValueType = value;
-            const selectedValue = this.options?.find((option) =>
+            const selectedValue = this.options?.find(option =>
                 isEqual(option.value, modelValue)
             );
             this._selectedOptions = selectedValue ? [selectedValue] : [];
@@ -463,7 +463,7 @@ export abstract class BaseSelectV2
 
     private validateValueWithSelectedOptions() {
         const selectedOptionValues = this.selectedOptions.map(
-            (option) => option.value
+            option => option.value
         );
         const valuePropToCompare = !isUndefined(this.value)
             ? this.multiselect
@@ -506,7 +506,7 @@ export abstract class BaseSelectV2
     private setActiveItemOnDropdown(): void {
         let selectedValue;
         if (!this.multiselect) {
-            selectedValue = this.options?.find((option) =>
+            selectedValue = this.options?.find(option =>
                 isEqual(option.value, this.value)
             );
         }
@@ -520,7 +520,7 @@ export abstract class BaseSelectV2
     private initClosingOnClicksOutside() {
         this.dropdown.clickOutside
             .pipe(takeUntil(this.destroy$))
-            .subscribe((v) => {
+            .subscribe(v => {
                 if (!this.manualDropdownControl) {
                     this.hideDropdown();
                 }
@@ -577,7 +577,7 @@ export abstract class BaseSelectV2
             ...this.overlayConfig,
             ...{ minHeight },
         };
-        this.virtualScrollResizeObserver = new ResizeObserver((entries) => {
+        this.virtualScrollResizeObserver = new ResizeObserver(entries => {
             for (const entry of entries) {
                 const content = entry.contentRect;
                 const minHeight = content.height

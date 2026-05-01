@@ -27,29 +27,31 @@ See `docs/E2E/ATOMS.md`.
 
 ## 🔁 Protractor vs Playwright Equivalents
 
-| Protractor                                                  | Playwright                                      |
-|-------------------------------------------------------------|-------------------------------------------------|
-| `browser.get(url)`                                          | `page.goto(url)`                                |
-| `element(by.css('#my-id'))`                                 | `page.locator('#my-id')`                        |
-| `element(by.id('my-id'))`                                   | `page.locator('#my-id')`                        |
-| `element(by.cssContainingText(...))`                        | `page.getByText(...)` or `locator.filter(...)` |
-| `await elem.getText()`                                      | `await locator.textContent()`                  |
-| `await elem.isVisible()`                                    | `await locator.isVisible()`                  |
-| `await elem.click()`                                        | `await locator.click()`                         |
-| `await elem.sendKeys(Key.ENTER)`                            | `await locator.press('Enter')`                 |
-| `expect(await elem.getAttribute('class')).toContain('btn')` | `expect(locator).toHaveClass(/btn/)` |
-| `browser.waitForAngular()`                                  | 🔥 *Not needed (Playwright doesn't rely on Angular internals)* |
+| Protractor                                                  | Playwright                                                     |
+| ----------------------------------------------------------- | -------------------------------------------------------------- |
+| `browser.get(url)`                                          | `page.goto(url)`                                               |
+| `element(by.css('#my-id'))`                                 | `page.locator('#my-id')`                                       |
+| `element(by.id('my-id'))`                                   | `page.locator('#my-id')`                                       |
+| `element(by.cssContainingText(...))`                        | `page.getByText(...)` or `locator.filter(...)`                 |
+| `await elem.getText()`                                      | `await locator.textContent()`                                  |
+| `await elem.isVisible()`                                    | `await locator.isVisible()`                                    |
+| `await elem.click()`                                        | `await locator.click()`                                        |
+| `await elem.sendKeys(Key.ENTER)`                            | `await locator.press('Enter')`                                 |
+| `expect(await elem.getAttribute('class')).toContain('btn')` | `expect(locator).toHaveClass(/btn/)`                           |
+| `browser.waitForAngular()`                                  | 🔥 _Not needed (Playwright doesn't rely on Angular internals)_ |
 
 ---
 
 ## 🧰 Helpers mapping
 
 ### Protractor
+
 ```ts
 await Helpers.prepareBrowser("button/button-test");
 ```
 
 ### Playwright equivalent
+
 ```ts
 await Helpers.prepareBrowser("button/button-test", page);
 ```
@@ -61,16 +63,19 @@ await Helpers.prepareBrowser("button/button-test", page);
 ### Class checks
 
 Protractor:
+
 ```ts
 expect(await btn.hasClass("btn")).toBe(true);
 ```
 
 Playwright (preferred):
+
 ```ts
 await btn.toContainClass("btn");
 ```
 
 If you’re not using Atoms yet:
+
 ```ts
 await expect(page.locator(".btn")).toHaveClass(/btn/);
 ```

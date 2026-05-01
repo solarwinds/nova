@@ -4,8 +4,7 @@
     message="Task Label"
     [show]="show"
     [helpTemplateRef]="helpTemplate"
-    [percent]="percent"
->
+    [percent]="percent">
 </nui-progress>
 <ng-template #helpTemplate>
     <span i18n>
@@ -22,7 +21,6 @@
     type="button"
     (click)="toggleProgress()"
     displayStyle="primary"
-    i18n
->
+    i18n>
     Start/stop progress
 </button>

@@ -3,12 +3,10 @@
     <nui-radio-group
         class="nui-radio-group-inline"
         [(value)]="mainCategory"
-        (valueChange)="updateMainCategory()"
-    >
+        (valueChange)="updateMainCategory()">
         <nui-radio
             *ngFor="let category of mainCategoryOptions"
-            [value]="category"
-        >
+            [value]="category">
             {{ category | titlecase }}
         </nui-radio>
     </nui-radio-group>
@@ -21,8 +19,7 @@
         <nui-legend
             [active]="chartAssist.isLegendActive"
             [interactive]="false"
-            (mouseleave)="chartAssist.resetVisibleSeries()"
-        >
+            (mouseleave)="chartAssist.resetVisibleSeries()">
             <nui-legend-series
                 *ngFor="
                     let legendSeries of chartAssist.legendSeriesSet;
@@ -36,8 +33,7 @@
                 [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
                 (isSelectedChange)="
                     chartAssist.toggleSeries(legendSeries.id, $event)
-                "
-            >
+                ">
                 <nui-rich-legend-tile
                     [value]="
                         accessors.data['value'](
@@ -52,14 +48,12 @@
                     "
                     [color]="
                         chartAssist.palette.textColors.get(legendSeries.id)
-                    "
-                >
+                    ">
                 </nui-rich-legend-tile>
                 <nui-icon
                     [icon]="iconMap[legendSeries.id]"
                     *ngIf="iconMap[legendSeries.id]"
-                    class="mt-1 ml-3"
-                ></nui-icon>
+                    class="mt-1 ml-3"></nui-icon>
             </nui-legend-series>
         </nui-legend>
     </div>
@@ -67,8 +61,7 @@
         <nui-radio-group
             class="nui-radio-group-inline"
             [(value)]="chartType"
-            (valueChange)="updateChartType()"
-        >
+            (valueChange)="updateChartType()">
             <nui-radio *ngFor="let type of chartTypes" [value]="type">
                 {{ type | titlecase }}
             </nui-radio>

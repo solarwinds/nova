@@ -82,7 +82,7 @@ export class IconService {
 
     private updateIconStatusesAndNames() {
         this.statuses = this.icons
-            .filter((iconData) => {
+            .filter(iconData => {
                 if (iconData.cat_namespace === IconCategoryNamespace.Status) {
                     return iconData;
                 }

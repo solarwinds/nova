@@ -37,7 +37,8 @@ import {
 
 @Component({
     selector: "nui-bar-chart-tick-label-max-width-with-margin-test",
-    templateUrl: "./bar-chart-tick-label-max-width-with-margin-test.component.html",
+    templateUrl:
+        "./bar-chart-tick-label-max-width-with-margin-test.component.html",
     standalone: false,
 })
 export class BarChartTickLabelMaxWidthWithMarginTestComponent
@@ -61,7 +62,7 @@ export class BarChartTickLabelMaxWidthWithMarginTestComponent
         gridConfig.dimension.margin.left = 100;
         gridConfig.axis.left.tickLabel.maxWidth = 50;
 
-        const seriesSet: IChartSeries<IBarAccessors>[] = getData().map((d) => ({
+        const seriesSet: IChartSeries<IBarAccessors>[] = getData().map(d => ({
             ...d,
             accessors,
             renderer,

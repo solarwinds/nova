@@ -49,7 +49,7 @@ test.describe(`Visual tests: ${name}`, () => {
         );
         dragToggle = Atom.find<SwitchAtom>(
             SwitchAtom,
-           "nui-demo-reorder-config"
+            "nui-demo-reorder-config"
         );
         camera = new Camera().loadFilm(page, name, "Bits");
     });

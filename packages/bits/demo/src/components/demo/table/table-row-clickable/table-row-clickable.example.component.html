@@ -4,8 +4,7 @@
         [dataSource]="dataSource"
         [(selection)]="selection"
         [selectionConfig]="selectionConfig"
-        [trackBy]="trackBy"
-    >
+        [trackBy]="trackBy">
         <ng-container nuiColumnDef="position">
             <th nui-header-cell *nuiHeaderCellDef i18n>No.</th>
             <td nui-cell *nuiCellDef="let element">{{ element.position }}</td>
@@ -16,8 +15,7 @@
             <td
                 nui-cell
                 *nuiCellDef="let element"
-                [tooltipText]="element.description"
-            >
+                [tooltipText]="element.description">
                 {{ element.description }}
             </td>
         </ng-container>
@@ -59,8 +57,7 @@
             nui-row
             *nuiRowDef="let row; columns: displayedColumns"
             [rowObject]="row"
-            [clickableRow]="true"
-        ></tr>
+            [clickableRow]="true"></tr>
     </table>
 </div>
 <h2>Selection result</h2>

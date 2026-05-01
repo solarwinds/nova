@@ -108,7 +108,7 @@ export class TableWithVirtualScrollComponent
     public ngOnInit(): void {
         this.dataSource.busy
             .pipe(
-                tap((val) => {
+                tap(val => {
                     this.isBusy = val;
                     this.changeDetection.detectChanges();
                 }),
@@ -161,10 +161,7 @@ export class TableWithVirtualScrollComponent
 
         // listen for input change in order to perform the search
         this.search.inputChange
-            .pipe(
-                debounceTime(500),
-                takeUntil(this.destroy$)
-            )
+            .pipe(debounceTime(500), takeUntil(this.destroy$))
             .subscribe(async () => this.onSearch());
     }
 

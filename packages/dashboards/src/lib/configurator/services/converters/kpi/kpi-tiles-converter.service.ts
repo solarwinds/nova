@@ -68,7 +68,7 @@ export class KpiTilesConverterService
                         componentType: preview[id].componentType,
                     } as IKpiItemConfiguration)
             ) || [];
-        const tileIds = tiles?.map((tile) => tile.id);
+        const tileIds = tiles?.map(tile => tile.id);
 
         this.pizzagnaService.createComponentsFromTemplate("tiles", tileIds);
         let updatedPizzagna = this.pizzagnaService.pizzagna;
@@ -86,7 +86,7 @@ export class KpiTilesConverterService
     public toPreview(form: FormGroup): void {
         form.get("tiles")
             ?.valueChanges.pipe(takeUntil(this.destroy$))
-            .subscribe((kpiTiles) => {
+            .subscribe(kpiTiles => {
                 if (!this.shouldReadForm) {
                     return;
                 }
@@ -101,7 +101,7 @@ export class KpiTilesConverterService
                 if (idDifference.length) {
                     preview = omit(preview, idDifference);
                 }
-                const tilesIndex = keyBy(kpiTiles, (t) => t.id); // this helps us to access the actual tile forms
+                const tilesIndex = keyBy(kpiTiles, t => t.id); // this helps us to access the actual tile forms
                 preview = immutableSet(
                     preview,
                     "tiles.properties.nodes",

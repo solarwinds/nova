@@ -66,7 +66,7 @@ export class ToolbarKeyboardService {
         // - role="searchbox"
         // - a class/data attribute containing "search"
         const el = target.closest?.(
-            "input[type=\"search\"], [role=\"searchbox\"], .search, [class*=\"search\"], [data-testid*=\"search\"], [data-automation-id*=\"search\"]"
+            `input[type="search"], [role="searchbox"], .search, [class*="search"], [data-testid*="search"], [data-automation-id*="search"]`
         ) as HTMLElement | null;
 
         return !!el;

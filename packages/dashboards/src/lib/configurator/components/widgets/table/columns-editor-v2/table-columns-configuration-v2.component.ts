@@ -217,7 +217,7 @@ export class TableColumnsConfigurationV2Component
         emitEvent: boolean = true
     ): void {
         const cols = this.form.controls["columns"] as FormArray;
-        cols.controls = columns.map((c) => {
+        cols.controls = columns.map(c => {
             const fc = new FormControl(c);
             fc.setParent(cols);
 
@@ -259,7 +259,7 @@ export class TableColumnsConfigurationV2Component
     public resetColumns(confirmation: boolean): void {
         const reset = () => {
             const columns: ITableWidgetColumnConfig[] =
-                this.dataSourceFields?.map((df) => ({
+                this.dataSourceFields?.map(df => ({
                     id: uuid("column"),
                     formatter: {
                         componentType: "RawFormatterComponent",
@@ -286,7 +286,7 @@ export class TableColumnsConfigurationV2Component
             });
 
             dialog.result.then(
-                (result) => {
+                result => {
                     if (result) {
                         reset();
                     }
@@ -311,9 +311,9 @@ export class TableColumnsConfigurationV2Component
         columns: ITableWidgetColumnConfig[]
     ): ITableWidgetColumnConfig[] {
         const currentDatafieldIds = currentDatafields.map(
-            (datafield) => datafield.id
+            datafield => datafield.id
         );
-        return columns.filter((column) => {
+        return columns.filter(column => {
             if (!column.formatter?.properties?.dataFieldIds) {
                 return false;
             }

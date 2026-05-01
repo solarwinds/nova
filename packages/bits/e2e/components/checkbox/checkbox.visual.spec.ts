@@ -32,9 +32,17 @@ test.describe(`Visual tests: ${name}`, () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("checkbox/checkbox-visual-test", page);
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
-        checkboxBasic = Atom.find<CheckboxAtom>(CheckboxAtom, "nui-demo-checkbox");
-        checkboxSpecial = Atom.find<CheckboxAtom>(CheckboxAtom, "nui-demo-checkbox-special");
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
+        checkboxBasic = Atom.find<CheckboxAtom>(
+            CheckboxAtom,
+            "nui-demo-checkbox"
+        );
+        checkboxSpecial = Atom.find<CheckboxAtom>(
+            CheckboxAtom,
+            "nui-demo-checkbox-special"
+        );
         camera = new Camera().loadFilm(page, name, "Bits");
     });
 

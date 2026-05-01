@@ -126,7 +126,7 @@ export class LineTimeSeriesTestComponent implements OnInit {
                     },
                 ],
             },
-        ].map((s) => ({
+        ].map(s => ({
             ...s,
             scales,
             renderer,
@@ -141,8 +141,8 @@ export class LineTimeSeriesTestComponent implements OnInit {
             undefined,
             this.palette.backgroundColors
         );
-        accessors.data.start = (d) => d.value / 2;
-        accessors.data.end = (d) => d.value * 1.5;
+        accessors.data.start = d => d.value / 2;
+        accessors.data.end = d => d.value * 1.5;
 
         return [
             {
@@ -227,7 +227,7 @@ export class LineTimeSeriesTestComponent implements OnInit {
                     },
                 ],
             },
-        ].map((s) => ({
+        ].map(s => ({
             ...s,
             scales,
             renderer,

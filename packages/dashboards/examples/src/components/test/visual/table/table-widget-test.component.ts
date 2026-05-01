@@ -92,7 +92,7 @@ export class AcmeDashboardComponent implements OnInit {
                 false;
         }
 
-        const widgetsWithStructure = widgets.map((w) => ({
+        const widgetsWithStructure = widgets.map(w => ({
             ...w,
             pizzagna: {
                 ...this.widgetTypesService.getWidgetType(w.type, w.version)

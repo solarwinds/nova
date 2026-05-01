@@ -166,7 +166,7 @@ export class TableScrollTypeEditorComponent
 
         this.form.valueChanges
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((val) => {
+            .subscribe(val => {
                 this.displayPageSizeErrorMessage =
                     !val.paginatorConfiguration.pageSize;
             });
@@ -175,7 +175,7 @@ export class TableScrollTypeEditorComponent
 
         this.scrollTypeFormControl?.valueChanges
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((val) => {
+            .subscribe(val => {
                 this.updateSubtitle();
                 this.updateValidators();
             });
@@ -185,14 +185,14 @@ export class TableScrollTypeEditorComponent
 
     public onPageSizeSetChange(item: IPageSizeSetMenuOption): void {
         const option = this.pageSizeSetOptions.find(
-            (n) => n.value === item.value
+            n => n.value === item.value
         );
         if (option) {
             option.checked = !item.checked;
         }
 
         this.displayPageSizeSetErrorMessage =
-            this.pageSizeSetOptions.filter((o) => o.checked).length === 0;
+            this.pageSizeSetOptions.filter(o => o.checked).length === 0;
 
         this.emitUpdatedSelectedOptions();
     }
@@ -229,8 +229,8 @@ export class TableScrollTypeEditorComponent
 
     private emitUpdatedSelectedOptions() {
         const filteredPageSizeSet = this.pageSizeSetOptions
-            .filter((o) => o.checked)
-            .map((o) => o.value);
+            .filter(o => o.checked)
+            .map(o => o.value);
 
         this.updateDefaultPageSizeOptions(filteredPageSizeSet);
         this.pageSizeSetFormControl?.setValue(filteredPageSizeSet, {
@@ -248,8 +248,8 @@ export class TableScrollTypeEditorComponent
     ) {
         this.clearPageSizeSetOptions();
 
-        options.forEach((o) => {
-            const option = this.pageSizeSetOptions.find((po) => po.value === o);
+        options.forEach(o => {
+            const option = this.pageSizeSetOptions.find(po => po.value === o);
             if (option) {
                 option.checked = isChecked;
             } else {
@@ -262,7 +262,7 @@ export class TableScrollTypeEditorComponent
     }
 
     private clearPageSizeSetOptions() {
-        this.pageSizeSetOptions.forEach((option) => {
+        this.pageSizeSetOptions.forEach(option => {
             option.checked = false;
         });
     }

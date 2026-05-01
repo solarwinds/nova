@@ -31,7 +31,9 @@ describe("components >", () => {
 
         describe("code", () => {
             it("should call hljs highlight method", () => {
-                const spy = spyOn(hljs, "highlight").and.returnValue({value: "div"} as any);
+                const spy = spyOn(hljs, "highlight").and.returnValue({
+                    value: "div",
+                } as any);
                 subject.code = "<div>test</div>";
                 subject.language = "html";
                 expect(spy).toHaveBeenCalled();

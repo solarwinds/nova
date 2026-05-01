@@ -30,14 +30,12 @@ export class TabHeadingAtom extends Atom {
     }
 
     public async isDisabled(): Promise<boolean> {
-        const classes =
-            (await this.getLocator().getAttribute("class")) ?? "";
+        const classes = (await this.getLocator().getAttribute("class")) ?? "";
         return classes.split(" ").includes("disabled");
     }
 
     public async isActive(): Promise<boolean> {
-        const classes =
-            (await this.getLocator().getAttribute("class")) ?? "";
+        const classes = (await this.getLocator().getAttribute("class")) ?? "";
         return classes.split(" ").includes("active");
     }
 

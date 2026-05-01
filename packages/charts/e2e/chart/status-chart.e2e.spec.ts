@@ -123,7 +123,13 @@ test.describe("Status chart", () => {
                 0
             );
 
-            await expect.poll(() => bar.getLocator().boundingBox().then(b => b?.height ?? 0))
+            await expect
+                .poll(() =>
+                    bar
+                        .getLocator()
+                        .boundingBox()
+                        .then(b => b?.height ?? 0)
+                )
                 .toBeLessThan(minIconSize);
 
             await bar.toNotHaveIcon();
@@ -131,8 +137,13 @@ test.describe("Status chart", () => {
     });
 
     test.describe("resize", () => {
-        test("should hide icons on page or container resize", async ({ page }) => {
-            const originalViewport = page.viewportSize() ?? { width: 1280, height: 720 };
+        test("should hide icons on page or container resize", async ({
+            page,
+        }) => {
+            const originalViewport = page.viewportSize() ?? {
+                width: 1280,
+                height: 720,
+            };
 
             const bars = [
                 await statusChartWithIcons.getStatusBarDataPointByIndex(

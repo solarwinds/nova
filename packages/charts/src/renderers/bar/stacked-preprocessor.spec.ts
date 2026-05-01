@@ -47,7 +47,7 @@ const seriesGenerator = (
             renderer,
             scales,
             preprocess: innerData[index][2],
-            data: innerData.map((d) => ({
+            data: innerData.map(d => ({
                 category: d[0],
                 value: d[1],
             })),
@@ -107,7 +107,7 @@ describe("stacked preprocessor", () => {
             seriesGenerator(sparseSeriesData),
             allVisible
         );
-        const barMetadata = preprocessed.map((s) => s.data.map((d) => d.__bar));
+        const barMetadata = preprocessed.map(s => s.data.map(d => d.__bar));
         expect(barMetadata).toEqual([
             [
                 { start: 0, end: 23 },
@@ -127,7 +127,7 @@ describe("stacked preprocessor", () => {
             allExceptSecondVisible
         );
         preprocessed.forEach((s, i) => {
-            s.data.forEach((d) => {
+            s.data.forEach(d => {
                 if (i === 1) {
                     expect(d.__bar.end - d.__bar.start).toEqual(0);
                 } else {
@@ -142,7 +142,7 @@ describe("stacked preprocessor", () => {
             allVisible
         );
         preprocessed.forEach((s, i) => {
-            s.data.forEach((d) => {
+            s.data.forEach(d => {
                 if (s.preprocess !== undefined && !s.preprocess) {
                     expect(d.__bar).toBeUndefined();
                 } else {

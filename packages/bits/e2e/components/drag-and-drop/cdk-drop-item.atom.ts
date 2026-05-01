@@ -68,12 +68,16 @@ export class CdkDraggableItemAtom extends Atom {
         const sourceBox = await this.getLocator().boundingBox();
         const targetBox = await target.boundingBox();
         if (!sourceBox || !targetBox) {
-            throw new Error("Source or target element not found or not visible");
+            throw new Error(
+                "Source or target element not found or not visible"
+            );
         }
         const sourceCenterX = sourceBox.x + sourceBox.width / 2;
         const sourceCenterY = sourceBox.y + sourceBox.height / 2;
-        const targetCenterX = targetBox.x + targetBox.width / 2 + (offset?.x ?? 0);
-        const targetCenterY = targetBox.y + targetBox.height / 2 + (offset?.y ?? 0);
+        const targetCenterX =
+            targetBox.x + targetBox.width / 2 + (offset?.x ?? 0);
+        const targetCenterY =
+            targetBox.y + targetBox.height / 2 + (offset?.y ?? 0);
 
         await Helpers.page.mouse.move(sourceCenterX, sourceCenterY);
         await Helpers.page.mouse.down();
@@ -88,8 +92,10 @@ export class CdkDraggableItemAtom extends Atom {
         if (!targetBox) {
             throw new Error("Target element not found or not visible");
         }
-        const targetCenterX = targetBox.x + targetBox.width / 2 + (offset?.x ?? 0);
-        const targetCenterY = targetBox.y + targetBox.height / 2 + (offset?.y ?? 0);
+        const targetCenterX =
+            targetBox.x + targetBox.width / 2 + (offset?.x ?? 0);
+        const targetCenterY =
+            targetBox.y + targetBox.height / 2 + (offset?.y ?? 0);
         await Helpers.page.mouse.move(targetCenterX, targetCenterY);
     };
 

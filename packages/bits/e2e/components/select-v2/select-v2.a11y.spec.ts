@@ -44,24 +44,34 @@ test.describe("a11y: select-v2", () => {
             SelectV2Atom,
             "display-value-mw200"
         );
-        selectDisplayValue = Atom.find<SelectV2Atom>(SelectV2Atom, "display-value");
+        selectDisplayValue = Atom.find<SelectV2Atom>(
+            SelectV2Atom,
+            "display-value"
+        );
         selectGrouped = Atom.find<SelectV2Atom>(SelectV2Atom, "grouped");
         selectInForm = Atom.find<SelectV2Atom>(SelectV2Atom, "reactive-form");
-        selectOverlayStyles = Atom.find<SelectV2Atom>(SelectV2Atom, "overlay-styles");
+        selectOverlayStyles = Atom.find<SelectV2Atom>(
+            SelectV2Atom,
+            "overlay-styles"
+        );
     });
 
     test("should check a11y of select-v2", async ({ runA11yScan }) => {
         await runA11yScan(SelectV2Atom, rulesToDisable);
     });
 
-    test("should check a11y of select-v2 after keyboard and hover", async ({ runA11yScan }) => {
+    test("should check a11y of select-v2 after keyboard and hover", async ({
+        runA11yScan,
+    }) => {
         await Helpers.pressKey("Tab", 3);
         const option = await selectBasic.getOption(3);
         await option.hover();
         await runA11yScan(SelectV2Atom, rulesToDisable);
     });
 
-    test("should check a11y of select-v2 in dark theme and with interactions", async ({ runA11yScan }) => {
+    test("should check a11y of select-v2 in dark theme and with interactions", async ({
+        runA11yScan,
+    }) => {
         await Helpers.switchDarkTheme("on");
         await selectErrorState.toggle();
         await (await selectErrorState.getFirstOption()).click();
@@ -75,7 +85,9 @@ test.describe("a11y: select-v2", () => {
         await Helpers.switchDarkTheme("off");
     });
 
-    test("should check a11y of select-v2 after grouped hover", async ({ runA11yScan }) => {
+    test("should check a11y of select-v2 after grouped hover", async ({
+        runA11yScan,
+    }) => {
         await Helpers.switchDarkTheme("off");
         await selectGrouped.toggle();
         const lastOption = await selectGrouped.getLastOption();
@@ -83,7 +95,9 @@ test.describe("a11y: select-v2", () => {
         await runA11yScan(SelectV2Atom, rulesToDisable);
     });
 
-    test("should check a11y of select-v2 overlay styles", async ({ runA11yScan }) => {
+    test("should check a11y of select-v2 overlay styles", async ({
+        runA11yScan,
+    }) => {
         await selectOverlayStyles.toggle();
         await runA11yScan(SelectV2Atom, rulesToDisable);
     });

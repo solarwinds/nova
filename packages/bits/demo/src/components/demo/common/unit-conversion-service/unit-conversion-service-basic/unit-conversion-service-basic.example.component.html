@@ -6,14 +6,12 @@
     class="d-block mt-5"
     caption="Bytes"
     i18n-caption
-    [showOptionalText]="false"
->
+    [showOptionalText]="false">
     <nui-textbox-number
         type="number"
         [ngModel]="num"
         (ngModelChange)="onNumberChange($event)"
         [minValue]="0"
         [step]="10"
-        customBoxWidth="200px"
-    ></nui-textbox-number>
+        customBoxWidth="200px"></nui-textbox-number>
 </nui-form-field>

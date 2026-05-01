@@ -124,7 +124,7 @@ export class ThresholdsSummaryExampleComponent implements OnInit {
         // These series are also used in the creation of the corresponding main chart threshold series
         // and summary chart series.
         const mainChartDataSeriesSet: IChartSeries<ILineAccessors>[] =
-            getData().map((d) => ({
+            getData().map(d => ({
                 ...d,
                 accessors,
                 renderer,
@@ -249,7 +249,7 @@ export class ThresholdsSummaryExampleComponent implements OnInit {
 
         const summarySeriesSet: IChartAssistSeries<IAccessors>[] = [
             ...seriesSet,
-        ].map((s) => {
+        ].map(s => {
             // It's possible to manually define zones by area-like data series with start/end values for every data point. We don't do that
             // here, but what we do instead is use simplified zones that are defined by a start value and/or an end value. (A missing
             // start or end value indicates an infinite zone.)

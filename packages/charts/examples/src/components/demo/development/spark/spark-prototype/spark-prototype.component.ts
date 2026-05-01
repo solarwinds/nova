@@ -80,7 +80,7 @@ export class SparkPrototypeComponent implements OnInit {
 
         for (let i = 0; i < numSparks; ++i) {
             const sparkYScale = new LinearScale();
-            sparkYScale.formatters.value = (v) => Number(v).toPrecision(4);
+            sparkYScale.formatters.value = v => Number(v).toPrecision(4);
             const sparkScales = {
                 x: this.sparkXScale,
                 y: sparkYScale,

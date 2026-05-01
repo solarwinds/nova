@@ -47,20 +47,43 @@ test.describe(`Visual tests: ${name}`, () => {
         await Helpers.prepareBrowser("popover/popover-visual-test", page);
         await Helpers.disableCSSAnimations(Animations.ALL);
 
-        buttonPreventClosing = Helpers.page.locator("#nui-demo-button-prevent-onclick");
+        buttonPreventClosing = Helpers.page.locator(
+            "#nui-demo-button-prevent-onclick"
+        );
         placementCheckButtons = Helpers.page.locator(".placement-check-btn");
 
-        popoverPreventClosing = Atom.find<PopoverAtom>(PopoverAtom, "nui-demo-popover-prevent-closing");
-        popoverBasic = Atom.find<PopoverAtom>(PopoverAtom, "nui-demo-popover-basic");
-        popoverNoRestrictions = Atom.find<PopoverAtom>(PopoverAtom, "nui-demo-popover-no-limits");
-        popoverNoPadding = Atom.find<PopoverAtom>(PopoverAtom, "nui-demo-popover-no-padding");
-        popoverBasicMultiline = Atom.find<PopoverAtom>(PopoverAtom, "nui-demo-popover-limited-and-multiline");
-        popoverModal = Atom.find<PopoverAtom>(PopoverAtom, "nui-demo-popover-modal");
+        popoverPreventClosing = Atom.find<PopoverAtom>(
+            PopoverAtom,
+            "nui-demo-popover-prevent-closing"
+        );
+        popoverBasic = Atom.find<PopoverAtom>(
+            PopoverAtom,
+            "nui-demo-popover-basic"
+        );
+        popoverNoRestrictions = Atom.find<PopoverAtom>(
+            PopoverAtom,
+            "nui-demo-popover-no-limits"
+        );
+        popoverNoPadding = Atom.find<PopoverAtom>(
+            PopoverAtom,
+            "nui-demo-popover-no-padding"
+        );
+        popoverBasicMultiline = Atom.find<PopoverAtom>(
+            PopoverAtom,
+            "nui-demo-popover-limited-and-multiline"
+        );
+        popoverModal = Atom.find<PopoverAtom>(
+            PopoverAtom,
+            "nui-demo-popover-modal"
+        );
         checkboxInPopover = Atom.find<CheckboxAtom>(
             CheckboxAtom,
             "nui-demo-checkbox-in-popover"
         );
-        comboboxV2InPopover = Atom.find<ComboboxV2Atom>(ComboboxV2Atom, "nui-demo-combobox-v2-in-popover");
+        comboboxV2InPopover = Atom.find<ComboboxV2Atom>(
+            ComboboxV2Atom,
+            "nui-demo-combobox-v2-in-popover"
+        );
 
         camera = new Camera().loadFilm(page, name, "Bits");
     });
@@ -84,12 +107,16 @@ test.describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese(`Dark theme`);
         await Helpers.switchDarkTheme("off");
         for (let i = 0; i < count; i++) {
-            await placementCheckButtons.nth(i).click({position: {x: 0, y: 0}, force: true});
+            await placementCheckButtons
+                .nth(i)
+                .click({ position: { x: 0, y: 0 }, force: true });
         }
         await popoverPreventClosing.click();
-        
+
         // await all popovers to be hiden
-        const popovers  = await Helpers.page.locator(`.${OverlayAtom.CSS_CLASS}`).all();
+        const popovers = await Helpers.page
+            .locator(`.${OverlayAtom.CSS_CLASS}`)
+            .all();
 
         for (const popover of popovers) {
             popover.waitFor({ state: "hidden" });

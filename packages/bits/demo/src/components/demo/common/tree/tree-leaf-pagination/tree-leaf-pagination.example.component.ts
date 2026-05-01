@@ -78,9 +78,7 @@ export class TreeLeafPaginationExampleComponent {
     public pageSize = 25; // used for 'nui-paginator'
     public nodesTotalItems: { [key: string]: number } = {};
 
-    public treeControl = new NestedTreeControl<FoodNode>(
-        (node) => node.children
-    );
+    public treeControl = new NestedTreeControl<FoodNode>(node => node.children);
     public dataSource = new ArrayDataSource(TREE_DATA);
 
     @ViewChild(CdkTree) private cdkTree: CdkTree<FoodNode>;

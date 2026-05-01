@@ -4,8 +4,7 @@
         trigger="click"
         icon="application"
         [template]="popoverTemplate"
-        [preventClosing]="true"
-    >
+        [preventClosing]="true">
         <button class="placement-check-btn">Show top left popover</button>
     </nui-popover>
 
@@ -14,8 +13,7 @@
         trigger="click"
         icon="application"
         [template]="popoverTemplate"
-        [preventClosing]="true"
-    >
+        [preventClosing]="true">
         <button class="placement-check-btn">Show top right popover</button>
     </nui-popover>
 </div>
@@ -31,8 +29,7 @@
             <div class="d-flex">
                 <nui-popover
                     id="nui-demo-popover-basic"
-                    [template]="popoverWithBasicUsage"
-                >
+                    [template]="popoverWithBasicUsage">
                     Hover over me!
                 </nui-popover>
 
@@ -57,8 +54,7 @@
                     id="nui-demo-popover-prevent-closing"
                     [template]="popoverPreventClose"
                     [closePopover]="closePopoverSubject"
-                    [preventClosing]="true"
-                >
+                    [preventClosing]="true">
                     <button id="nui-demo-button-prevent-onclick">
                         <span>Click me!</span>
                     </button>
@@ -74,13 +70,11 @@
                         <nui-combobox
                             id="nui-demo-popover-combobox"
                             [itemsSource]="dataset.items"
-                            placeholder="Select item combo"
-                        ></nui-combobox>
+                            placeholder="Select item combo"></nui-combobox>
                         <nui-combobox-v2
                             [overlayConfig]="overlayConfig"
                             id="nui-demo-combobox-v2-in-popover"
-                            placeholder="Select item combo v2"
-                        >
+                            placeholder="Select item combo v2">
                             <nui-select-v2-option
                                 *ngFor="let item of dataset.items"
                                 [value]="item"
@@ -93,8 +87,7 @@
                             nui-button
                             type="button"
                             displayStyle="action"
-                            (click)="closePopover()"
-                        >
+                            (click)="closePopover()">
                             Close
                         </button>
                         <button
@@ -102,8 +95,7 @@
                             class="ml-3"
                             type="button"
                             displayStyle="primary"
-                            (click)="closePopover()"
-                        >
+                            (click)="closePopover()">
                             Confirm
                         </button>
                     </div>
@@ -117,8 +109,7 @@
                     placement="left"
                     trigger="click"
                     [template]="popoverLeftPlacement"
-                    [preventClosing]="true"
-                >
+                    [preventClosing]="true">
                     <button class="placement-check-btn">
                         <span>Click me!</span>
                     </button>
@@ -144,8 +135,7 @@
                     [hasPadding]="false"
                     id="nui-demo-popover-no-padding"
                     popoverTitle="My body has no padding"
-                    [template]="popoverNoPadding"
-                >
+                    [template]="popoverNoPadding">
                     Hover over me!
                 </nui-popover>
 
@@ -166,8 +156,7 @@
                 <div>
                     <nui-popover
                         icon="application"
-                        [template]="iconPopoverTemplateNoTitle"
-                    >
+                        [template]="iconPopoverTemplateNoTitle">
                         Hover over me!
                     </nui-popover>
                 </div>
@@ -175,8 +164,7 @@
                     <nui-popover
                         popoverTitle="Popover with Icon"
                         icon="application"
-                        [template]="iconPopoverTemplateWithTitle"
-                    >
+                        [template]="iconPopoverTemplateWithTitle">
                         Hover over me, too!
                     </nui-popover>
                 </div>
@@ -203,8 +191,7 @@
                         [template]="popoverUnlimited"
                         [unlimited]="true"
                         icon="application"
-                        id="nui-demo-popover-no-limits"
-                    >
+                        id="nui-demo-popover-no-limits">
                         Hover over me!
                     </nui-popover>
                 </div>
@@ -212,8 +199,7 @@
                 <div>
                     <nui-popover
                         [template]="popoverDefaultRestrictions"
-                        id="nui-demo-popover-limited-and-multiline"
-                    >
+                        id="nui-demo-popover-limited-and-multiline">
                         Hover over me!
                     </nui-popover>
                 </div>
@@ -250,8 +236,7 @@
                     placement="right"
                     icon="application"
                     [template]="popoverTemplate"
-                    [modal]="true"
-                >
+                    [modal]="true">
                     <button>Show modal popover</button>
                 </nui-popover>
             </div>
@@ -270,8 +255,7 @@
                     placement="top"
                     [template]="popoverTemplate"
                     trigger="click"
-                    [preventClosing]="true"
-                >
+                    [preventClosing]="true">
                     <button class="large-height placement-check-btn">
                         open top
                     </button>
@@ -282,8 +266,7 @@
                     placement="bottom"
                     [template]="popoverTemplate"
                     trigger="click"
-                    [preventClosing]="true"
-                >
+                    [preventClosing]="true">
                     <button class="large-height placement-check-btn">
                         open bottom
                     </button>
@@ -300,8 +283,7 @@
         trigger="click"
         icon="application"
         [template]="popoverTemplate"
-        [preventClosing]="true"
-    >
+        [preventClosing]="true">
         <button class="placement-check-btn">Show bottom-left popover</button>
     </nui-popover>
     <nui-popover
@@ -310,8 +292,7 @@
         trigger="click"
         icon="application"
         [template]="popoverTemplate"
-        [preventClosing]="true"
-    >
+        [preventClosing]="true">
         <button class="placement-check-btn">Show bottom-right popover</button>
     </nui-popover>
 </div>

@@ -52,7 +52,7 @@ export class DynamicComponentCreator {
         template: Partial<IComponentConfiguration>[],
         parentPath: string
     ) {
-        const children = componentIds.map((id) => ({
+        const children = componentIds.map(id => ({
             id,
             componentType: CHILD_ELEM_COMPONENT_TYPE,
         })) as IComponentConfiguration[];
@@ -81,7 +81,7 @@ export class DynamicComponentCreator {
             child
         );
 
-        const nodes = template.map((node) => ({
+        const nodes = template.map(node => ({
             ...node,
             id: `${child.id}/${node.id}`,
         }));
@@ -95,7 +95,7 @@ export class DynamicComponentCreator {
             updatedPizzagna
         );
 
-        const nodesIDs = nodes.map((node) => node.id);
+        const nodesIDs = nodes.map(node => node.id);
         updatedPizzagna = this.getPizzagnaWithNodesSet(
             updatedPizzagna,
             child.id,

@@ -41,14 +41,14 @@ export const percentageAggregator: IProportionalAggregatorFn = (
     origin: IProportionalAggregatorOrigin,
     properties?: IPercentageAggregatorProperties
 ): string => {
-    const data = origin.map((v) => v.data[0]);
+    const data = origin.map(v => v.data[0]);
     const { activeMetricId, base100 } = properties || {};
 
     const summed = sum(data);
 
     let metric = data[0];
     if (activeMetricId) {
-        metric = origin.find((entry) => entry.id === activeMetricId)?.data[0];
+        metric = origin.find(entry => entry.id === activeMetricId)?.data[0];
 
         if (!metric) {
             console.warn(

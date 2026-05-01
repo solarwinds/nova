@@ -52,6 +52,6 @@ export class FilterGroupCompositeDialogComponent {
     }
 
     public onSelectionChanged(selection: IFilterGroupOption[]): void {
-        this.selectedValues = selection.map((item) => item.value);
+        this.selectedValues = selection.map(item => item.value);
     }
 }

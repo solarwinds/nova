@@ -1,19 +1,15 @@
 <nui-widget-editor-accordion
     [formGroup]="form"
-    [state]="form | nuiWidgetEditorAccordionFormState | async"
->
+    [state]="form | nuiWidgetEditorAccordionFormState | async">
     <nui-widget-editor-accordion-header
         [headerIcon]="'tag'"
         [subtitle]="getSubtitle()"
-        headerTitle="Grouping"
-    />
+        headerTitle="Grouping" />
     <div
         class="grouping-configuration__accordion-content"
-        formArrayName="groupBy"
-    >
+        formArrayName="groupBy">
         <ng-container
-            *ngFor="let group of getGroupByControl.controls; index as i"
-        >
+            *ngFor="let group of getGroupByControl.controls; index as i">
             <label *ngIf="i !== 0" class="d-flex nui-text-secondary mb-1" i18n
                 >Then</label
             >
@@ -25,12 +21,10 @@
                     <nui-select-v2
                         placeholder="Select Item"
                         i18n-placeholder
-                        [formControlName]="i"
-                    >
+                        [formControlName]="i">
                         <nui-select-v2-option
                             *ngFor="let item of selectData[i]"
-                            [value]="item"
-                        >
+                            [value]="item">
                             {{ item }}
                         </nui-select-v2-option>
                     </nui-select-v2>
@@ -41,8 +35,7 @@
                         icon="delete"
                         displayStyle="action"
                         type="button"
-                        (click)="removeRule(i)"
-                    ></button>
+                        (click)="removeRule(i)"></button>
                 </div>
             </div>
         </ng-container>
@@ -53,8 +46,7 @@
             type="button"
             i18n
             *ngIf="!this.isAddRestricted()"
-            (click)="addGrouping()"
-        >
+            (click)="addGrouping()">
             Add another level
         </button>
     </div>

@@ -57,7 +57,7 @@ export class RepeatVirtualScrollDataSource<T>
     ): Observable<IServersCollection> {
         return of({
             items:
-                DATA?.map((item) => ({
+                DATA?.map(item => ({
                     name: item.name,
                     location: item.location,
                     status: item.status,

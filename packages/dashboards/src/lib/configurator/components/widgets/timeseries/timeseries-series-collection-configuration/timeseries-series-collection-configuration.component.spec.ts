@@ -94,7 +94,7 @@ describe("TimeseriesSeriesCollectionConfigurationComponent", () => {
 
             expect(spy).toHaveBeenCalledWith(
                 "series",
-                component.series.map((config) => config.id)
+                component.series.map(config => config.id)
             );
         });
 

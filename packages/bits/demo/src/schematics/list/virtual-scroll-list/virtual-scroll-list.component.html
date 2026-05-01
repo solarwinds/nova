@@ -6,14 +6,12 @@
             [itemsSource]="sorterItems"
             [selectedItem]="sortBy"
             [sortDirection]="initialSortDirection"
-            (sorterAction)="onSorterAction($event)"
-        >
+            (sorterAction)="onSorterAction($event)">
         </nui-sorter>
         <nui-search
             class="d-flex justify-content-end app-virtual-scroll-list-search"
             (search)="onSearch()"
-            (cancel)="onCancelSearch()"
-        >
+            (cancel)="onCancelSearch()">
         </nui-search>
     </div>
 
@@ -30,8 +28,7 @@
             [selection]="filteringState.repeat?.selectedItems"
             [itemsSource]="listItems$ | async"
             [virtualScroll]="true"
-            [itemSize]="30"
-        >
+            [itemSize]="30">
         </nui-repeat>
     </div>
 

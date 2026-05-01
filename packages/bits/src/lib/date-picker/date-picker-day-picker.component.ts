@@ -105,7 +105,7 @@ export class DayPickerComponent implements OnInit {
             }
 
             this.title = picker.formatDate(value, picker.formatDayTitle);
-            this.rows = picker.split(days, 7).map((row) => ({
+            this.rows = picker.split(days, 7).map(row => ({
                 days: row,
                 isRowVisible: !(
                     picker.onlyCurrentMonth &&

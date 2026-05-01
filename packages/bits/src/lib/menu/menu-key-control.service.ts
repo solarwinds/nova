@@ -20,7 +20,14 @@
 
 import { ActiveDescendantKeyManager, LiveAnnouncer } from "@angular/cdk/a11y";
 import { DOCUMENT } from "@angular/common";
-import { ElementRef, Injectable, OnDestroy, QueryList, Renderer2, Inject } from "@angular/core";
+import {
+    ElementRef,
+    Injectable,
+    OnDestroy,
+    QueryList,
+    Renderer2,
+    Inject,
+} from "@angular/core";
 import isNull from "lodash/isNull";
 import { Subject, Subscription } from "rxjs";
 
@@ -131,7 +138,7 @@ export class MenuKeyControlService implements OnDestroy {
 
     private initKeyManagerHandlers(): void {
         this.keyboardEventsSubscription =
-            this.keyboardEventsManager.change.subscribe((activeIndex) => {
+            this.keyboardEventsManager.change.subscribe(activeIndex => {
                 // when the navigation item changes, we get new activeIndex
                 if (this.popup.isOpen && this.hasActiveItem()) {
                     this.scrollActiveOptionIntoView({

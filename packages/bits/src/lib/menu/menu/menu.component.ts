@@ -55,7 +55,7 @@ import { IMenuGroup } from "../public-api";
 @Component({
     selector: "nui-menu",
     host: {
-        class: "nui-menu",
+        "class": "nui-menu",
         "[attr.aria-label]": "title || ariaLabel",
     },
     templateUrl: "./menu.component.html",
@@ -202,7 +202,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        this.menuKeyControlListeners.forEach((listener) => listener());
+        this.menuKeyControlListeners.forEach(listener => listener());
         this.focusMonitorSubscription.unsubscribe();
         this.focusMonitor.stopMonitoring(this.menuToggle);
     }

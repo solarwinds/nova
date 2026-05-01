@@ -68,14 +68,12 @@ export class SparkChartBasicExampleComponent implements OnInit {
         };
 
         // Assemble the series set
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
-            (d) => ({
-                ...d,
-                accessors,
-                renderer,
-                scales,
-            })
-        );
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
+            ...d,
+            accessors,
+            renderer,
+            scales,
+        }));
 
         // Invoke the chart's update method with the IChartSeries collection as the argument
         this.chart.update(seriesSet);

@@ -33,7 +33,11 @@ test.describe("USERCONTROL Wizard V2: ", () => {
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("wizard-v2/test", page);
 
-        wizard = Atom.find<WizardV2Atom>(WizardV2Atom, "nui-wizard-v2-horizontal", true);
+        wizard = Atom.find<WizardV2Atom>(
+            WizardV2Atom,
+            "nui-wizard-v2-horizontal",
+            true
+        );
         wizardDialog = Atom.find<WizardV2Atom>(
             WizardV2Atom,
             "nui-wizard-v2-horizontal-dialog",
@@ -73,7 +77,9 @@ test.describe("USERCONTROL Wizard V2: ", () => {
             await wizard.selectStep(0);
             await wizard.next();
 
-            await wizard.getHeader(1).toContainClass("nui-wizard-step-header--selected");
+            await wizard
+                .getHeader(1)
+                .toContainClass("nui-wizard-step-header--selected");
         });
     });
 
@@ -91,7 +97,9 @@ test.describe("USERCONTROL Wizard V2: ", () => {
         });
 
         test("should wizard disappear when CANCEL button is pressed", async () => {
-            const cancelBtn = wizardDialog.footer.getLocator().locator(".cancel");
+            const cancelBtn = wizardDialog.footer
+                .getLocator()
+                .locator(".cancel");
             await cancelBtn.click();
 
             await wizardDialog.toBeHidden();
@@ -109,7 +117,9 @@ test.describe("USERCONTROL Wizard V2: ", () => {
             await firstStepHeader.click();
             await wizardDialog.moveToFinalStep();
 
-            const finishButton = wizardDialog.footer.getLocator().locator(".complete");
+            const finishButton = wizardDialog.footer
+                .getLocator()
+                .locator(".complete");
             await finishButton.click();
 
             await openWizardDialogBtn.click();
@@ -123,7 +133,6 @@ test.describe("USERCONTROL Wizard V2: ", () => {
 
     test.describe("wizard with dynamic steps > ", () => {
         let addButton: ButtonAtom;
-        
 
         test.beforeEach(async () => {
             await wizardDynamic.toBeVisible();

@@ -399,14 +399,14 @@ export class TableSpecHelpers {
         actualTableContent.push(TableSpecHelpers.getHeaderCells(headerRow));
 
         // Check data row cells
-        const rows = TableSpecHelpers.getRows(tableElement).map((row) =>
+        const rows = TableSpecHelpers.getRows(tableElement).map(row =>
             TableSpecHelpers.getCells(row)
         );
         actualTableContent = actualTableContent.concat(rows);
 
         // Convert the nodes into their text content;
-        return actualTableContent.map((row) =>
-            row.map((cell) => cell.textContent?.trim() ?? "")
+        return actualTableContent.map(row =>
+            row.map(cell => cell.textContent?.trim() ?? "")
         );
     }
 

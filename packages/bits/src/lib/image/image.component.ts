@@ -106,14 +106,22 @@ export class ImageComponent {
 
     public hasAlt = computed<boolean>(() => {
         const img = this.image();
-        const hasCode = !!(img && typeof img === "object" && typeof (img as any).code === "string");
+        const hasCode = !!(
+            img &&
+            typeof img === "object" &&
+            typeof (img as any).code === "string"
+        );
         return !hasCode;
     });
 
     public imageTemplate = computed<SafeHtml>(() => {
         const img = this.image();
         let html = "";
-        if (img && typeof img === "object" && typeof (img as any).code === "string") {
+        if (
+            img &&
+            typeof img === "object" &&
+            typeof (img as any).code === "string"
+        ) {
             html = (img as any).code;
         } else if (typeof img === "string") {
             const fromPreset = this.getImage(img);
@@ -151,7 +159,7 @@ export class ImageComponent {
         effect(() => {
             const h = this.height();
             const w = this.width();
-            [h, w].forEach((item) => {
+            [h, w].forEach(item => {
                 if (item !== undefined && !this.isImageSizeValid(item)) {
                     this.logger.error(
                         "Image size should be specified in 'px', '%', or 'auto"
@@ -174,10 +182,15 @@ export class ImageComponent {
             }
 
             // Fix bug for Safari with wrong alignment of floated SVG images
-            if (this.float() && !this.width() && this.utilService.browser?.isSafari()) {
+            if (
+                this.float() &&
+                !this.width() &&
+                this.utilService.browser?.isSafari()
+            ) {
                 const svg = this.el.nativeElement.querySelector("svg");
                 if (svg) {
-                    (this.el.nativeElement as HTMLElement).style.width = svg.width.baseVal.value + "px";
+                    (this.el.nativeElement as HTMLElement).style.width =
+                        svg.width.baseVal.value + "px";
                     this.changeDetector.detectChanges();
                 }
             }
@@ -185,12 +198,14 @@ export class ImageComponent {
     }
 
     private getImage = (imageName: string): IImagesPresetItem | undefined =>
-        this.images.find((img) => img.name === imageName);
+        this.images.find(img => img.name === imageName);
 
     private isImageSizeValid(value: string): boolean {
         return (
             !isNaN(parseFloat(value)) &&
-            (value.includes("px") || value.includes("%") || value.includes("auto"))
+            (value.includes("px") ||
+                value.includes("%") ||
+                value.includes("auto"))
         );
     }
 }

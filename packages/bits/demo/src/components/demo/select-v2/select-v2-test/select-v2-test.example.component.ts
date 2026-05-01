@@ -148,7 +148,7 @@ export class SelectV2TestExampleComponent
     public ngOnInit(): void {
         this.selectControl.valueChanges
             .pipe(takeUntil(this.destroy$))
-            .subscribe((value) => {
+            .subscribe(value => {
                 this.selectedItem = value;
             });
     }

@@ -82,22 +82,20 @@ export class KpiSectionConverterService extends BaseConverter {
     }
 
     public toPreview(form: FormGroup): void {
-        form.valueChanges
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((formData) => {
-                const updatedPreview = this.formParts.reduce((p, v) => {
-                    let outPath = v.previewOutputPath || v.previewPath;
-                    outPath = `${this.previewComponentId}.${outPath}`;
+        form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(formData => {
+            const updatedPreview = this.formParts.reduce((p, v) => {
+                let outPath = v.previewOutputPath || v.previewPath;
+                outPath = `${this.previewComponentId}.${outPath}`;
 
-                    const preview = get(p, outPath) as any[];
+                const preview = get(p, outPath) as any[];
 
-                    const fromForm = pick(formData, v.keys);
-                    const merged = { ...preview, ...fromForm };
+                const fromForm = pick(formData, v.keys);
+                const merged = { ...preview, ...fromForm };
 
-                    return immutableSet(p, `${outPath}`, merged);
-                }, this.getPreview());
+                return immutableSet(p, `${outPath}`, merged);
+            }, this.getPreview());
 
-                this.updatePreview(updatedPreview);
-            });
+            this.updatePreview(updatedPreview);
+        });
     }
 }

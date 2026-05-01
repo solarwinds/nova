@@ -6,8 +6,7 @@
             class="overflow-left"
             [template]="overflowStart"
             [completed]="true"
-            [value]="overflownStepsStart.length"
-        >
+            [value]="overflownStepsStart.length">
         </nui-wizard-overflow>
 
         <ng-template #overflowStart>
@@ -20,8 +19,7 @@
                     let step of overflownStepsStart;
                     let i = index;
                     let isFirst = first
-                "
-            >
+                ">
                 <ng-template
                     *ngTemplateOutlet="
                         stepHeaderWithLines;
@@ -31,8 +29,7 @@
                             i: i,
                             isFirst: isFirst
                         }
-                    "
-                ></ng-template>
+                    "></ng-template>
             </div>
         </ng-template>
     </ng-container>
@@ -44,8 +41,7 @@
             let step of isInResponsiveMode ? visibleSteps : steps;
             let i = index;
             let isFirst = first
-        "
-    >
+        ">
         <ng-template
             *ngTemplateOutlet="
                 stepHeaderWithLines;
@@ -55,8 +51,7 @@
                     i: overflownStepsStart.length + i,
                     isFirst: isFirst
                 }
-            "
-        ></ng-template>
+            "></ng-template>
     </div>
 
     <!--  Right overflow container -->
@@ -67,8 +62,7 @@
             [class.overflow-right-completed]="allStepsCompleted"
             [template]="overflowEnd"
             [completed]="allStepsCompleted"
-            [value]="overflownStepsEnd.length"
-        >
+            [value]="overflownStepsEnd.length">
         </nui-wizard-overflow>
 
         <ng-template #overflowEnd>
@@ -81,8 +75,7 @@
                     let step of overflownStepsEnd;
                     let i = index;
                     let isFirst = first
-                "
-            >
+                ">
                 <ng-template
                     *ngTemplateOutlet="
                         stepHeaderWithLines;
@@ -95,8 +88,7 @@
                                 i,
                             isFirst: isFirst
                         }
-                    "
-                ></ng-template>
+                    "></ng-template>
             </div>
         </ng-template>
     </ng-container>
@@ -109,15 +101,13 @@
         role="tabpanel"
         [id]="stepContentIds[i]"
         [attr.aria-labelledby]="labelIds[i]"
-        [attr.aria-expanded]="selectedIndex === i"
-    >
+        [attr.aria-expanded]="selectedIndex === i">
         <ng-container [ngTemplateOutlet]="step.content"></ng-container>
     </div>
 </div>
 <div
     *ngIf="selected?.stepFooter"
-    class="nui-wizard-horizontal-footer-container"
->
+    class="nui-wizard-horizontal-footer-container">
     <wizard-footer [footer]="selected?.stepFooter"></wizard-footer>
 </div>
 
@@ -126,8 +116,7 @@
     let-steps
     let-step="step"
     let-i="i"
-    let-isFirst="isFirst"
->
+    let-isFirst="isFirst">
     <div
         *ngIf="!isFirst"
         class="nui-wizard-horizontal__step-connector-line"
@@ -135,8 +124,7 @@
             'nui-wizard-horizontal__step-connector-line--completed':
                 (stepsArray[i - 1]?.completed && step.completed) ||
                 selectedIndex === i
-        }"
-    ></div>
+        }"></div>
     <nui-wizard-step-header
         #stepHeaders
         class="nui-wizard-horizontal-header"
@@ -158,7 +146,6 @@
         [selected]="selectedIndex === i"
         [active]="step.completed || selectedIndex === i || !linear"
         [step]="step"
-        [errorMessage]="step.errorMessage"
-    >
+        [errorMessage]="step.errorMessage">
     </nui-wizard-step-header>
 </ng-template>

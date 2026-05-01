@@ -49,13 +49,21 @@ test.describe(`Visual tests: ${name}`, () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("form-field/form-field-visual-test", page);
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
         nickname = Atom.find<TextboxAtom>(
             TextboxAtom,
             "nui-form-field-visual-test-nickname"
         );
-        city = Atom.find<TextboxAtom>(TextboxAtom, "nui-form-field-visual-test-city");
-        textbox = Atom.find<TextboxAtom>(TextboxAtom, "nui-form-field-visual-test-textbox");
+        city = Atom.find<TextboxAtom>(
+            TextboxAtom,
+            "nui-form-field-visual-test-city"
+        );
+        textbox = Atom.find<TextboxAtom>(
+            TextboxAtom,
+            "nui-form-field-visual-test-textbox"
+        );
         checkbox = Atom.find<CheckboxAtom>(
             CheckboxAtom,
             "nui-form-field-visual-test-checkbox"
@@ -77,7 +85,11 @@ test.describe(`Visual tests: ${name}`, () => {
             "nui-form-field-visual-test-combobox",
             true
         );
-        select = Atom.find<SelectAtom>(SelectAtom, "nui-form-field-visual-test-select", true);
+        select = Atom.find<SelectAtom>(
+            SelectAtom,
+            "nui-form-field-visual-test-select",
+            true
+        );
         timepicker = Atom.find<TimepickerAtom>(
             TimepickerAtom,
             "nui-form-field-visual-test-timepicker"

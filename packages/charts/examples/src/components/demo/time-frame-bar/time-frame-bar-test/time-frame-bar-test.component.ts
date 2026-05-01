@@ -89,7 +89,7 @@ export class TimeFrameBarTestComponent implements AfterContentInit, OnDestroy {
         this.chart
             .getEventBus()
             .getStream(SET_DOMAIN_EVENT)
-            .subscribe((event) => {
+            .subscribe(event => {
                 const payload = <ISetDomainEventPayload>event.data;
                 const newDomain = payload[this.xScale.id];
 
@@ -155,7 +155,7 @@ export class TimeFrameBarTestComponent implements AfterContentInit, OnDestroy {
                 const end = data.timeframe.value.endDatetime;
                 this.dataService
                     .getChartData(start, end, this.addDelay ? 1000 : 0)
-                    .subscribe((series) => {
+                    .subscribe(series => {
                         this.chartAssist.update(
                             Object.keys(series).map((key: string) => ({
                                 id: key,

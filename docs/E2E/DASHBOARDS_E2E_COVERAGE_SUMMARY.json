@@ -1,165 +1,162 @@
 {
-  "generatedAt": "2026-04-22",
-  "package": "dashboards",
-  "inventoryFilePresent": false,
-  "instrumentedCoveragePresent": false,
-  "a11ySpecsPresent": false,
-  "coverageType": "estimated",
-  "namingMismatches": [
-    "time-series-widget.visual.spec.ts -> timeseries-widget public area",
-    "overview.visual.spec.ts -> dashboard shell/layout coverage",
-    "kpi-widget.visual.spec.ts and kpi-error.visual.spec.ts -> kpi public area",
-    "drilldown.visual.spec.ts -> list-widget/configurator drilldown areas",
-    "table-widget.e2e.ts -> legacy non-Playwright file beside table-widget.e2e.spec.ts"
-  ],
-  "strongestAreas": [
-    "Table Widget",
-    "Timeseries Widget",
-    "Configurator / Wizard"
-  ],
-  "weakestAreas": [
-    "Risk Score Tile",
-    "Time Frame Selection",
-    "Loading / Errors / Embedded Content",
-    "Services / Providers / Common / Functions / Constants",
-    "Proportional Widget",
-    "List Widget / Drilldown",
-    "Dashboard shell / layouts",
-    "Pizzagna / Widget Types / Directives"
-  ],
-  "zeroCoverage": [
-    "Risk Score Tile",
-    "Time Frame Selection"
-  ],
-  "effectiveNoDirectCoverage": [
-    "Embedded Content",
-    "Loading",
-    "Template Load Error",
-    "Widget Search",
-    "Risk Score Tile",
-    "Time Frame Selection"
-  ],
-  "visualOnlyAreas": [
-    "Proportional Widget",
-    "KPI Widget",
-    "List Widget / Drilldown"
-  ],
-  "recommendedNextTests": [
-    "Table runtime sorting, search, selection, paginator, and virtual scroll coverage",
-    "Timeseries inspection and zoom menu behavior coverage",
-    "Dashboard shell resize, reorder, and below-fold lazy-loading coverage",
-    "Time Frame Selection set, undo, clear, and refresh coverage",
-    "Risk Score Tile functional coverage",
-    "Proportional interaction and responsive layout coverage",
-    "Configurator cancel, submit-error, route-close, and remove-widget coverage",
-    "List/drilldown search, back/home, and event semantics coverage",
-    "Embedded content and loading/error fallback coverage",
-    "Direct Pizzagna, widget-type, and event-proxy contract coverage"
-  ],
-  "areas": [
-    {
-      "name": "Dashboard shell / layouts",
-      "lineCoverage": 15,
-      "branchCoverage": 10,
-      "confidence": "medium",
-      "status": "partial E2E coverage",
-      "mainGap": "Reorder, lazy-load, resize, and layout reflow are effectively unowned"
-    },
-    {
-      "name": "Widget base / common / header / search",
-      "lineCoverage": 20,
-      "branchCoverage": 15,
-      "confidence": "medium",
-      "status": "partial E2E coverage",
-      "mainGap": "Remove, reload, collapse, link, and search behavior are largely untested"
-    },
-    {
-      "name": "Table Widget",
-      "lineCoverage": 25,
-      "branchCoverage": 20,
-      "confidence": "high",
-      "status": "partial E2E coverage",
-      "mainGap": "Runtime table behavior is far broader than current configurator-focused tests"
-    },
-    {
-      "name": "Timeseries Widget",
-      "lineCoverage": 30,
-      "branchCoverage": 20,
-      "confidence": "medium",
-      "status": "partial E2E coverage",
-      "mainGap": "Zoom, inspection menu, presets, and transformer correctness are weakly owned"
-    },
-    {
-      "name": "Proportional Widget",
-      "lineCoverage": 15,
-      "branchCoverage": 10,
-      "confidence": "low",
-      "status": "no E2E coverage",
-      "mainGap": "Visual-only; interaction, color, and layout-switch logic are unasserted"
-    },
-    {
-      "name": "KPI Widget",
-      "lineCoverage": 20,
-      "branchCoverage": 15,
-      "confidence": "low",
-      "status": "no E2E coverage",
-      "mainGap": "Visual-only; formatter, interaction, busy, and empty-state branches are untested"
-    },
-    {
-      "name": "Risk Score Tile",
-      "lineCoverage": 0,
-      "branchCoverage": 0,
-      "confidence": "low",
-      "status": "no E2E coverage",
-      "mainGap": "Completely untested"
-    },
-    {
-      "name": "List Widget / Drilldown",
-      "lineCoverage": 15,
-      "branchCoverage": 10,
-      "confidence": "medium",
-      "status": "no E2E coverage",
-      "mainGap": "Only a visual drill step exists; search, back/home, and event semantics are uncovered"
-    },
-    {
-      "name": "Time Frame Selection",
-      "lineCoverage": 0,
-      "branchCoverage": 0,
-      "confidence": "low",
-      "status": "no E2E coverage",
-      "mainGap": "Set/undo/clear/history and data-source filter registration are untested"
-    },
-    {
-      "name": "Configurator / Wizard",
-      "lineCoverage": 30,
-      "branchCoverage": 25,
-      "confidence": "medium",
-      "status": "partial E2E coverage",
-      "mainGap": "Huge exported surface is represented mostly by table edit flows and KPI error snapshots"
-    },
-    {
-      "name": "Loading / Errors / Embedded Content",
-      "lineCoverage": 10,
-      "branchCoverage": 5,
-      "confidence": "low",
-      "status": "no E2E coverage",
-      "mainGap": "Sanitization, loading, fallback, and widget error presentation lack owned tests"
-    },
-    {
-      "name": "Pizzagna / Widget Types / Directives",
-      "lineCoverage": 15,
-      "branchCoverage": 10,
-      "confidence": "low",
-      "status": "partial E2E coverage",
-      "mainGap": "Dynamic composition and registry contracts are exercised only incidentally"
-    },
-    {
-      "name": "Services / Providers / Common / Functions / Constants",
-      "lineCoverage": 10,
-      "branchCoverage": 5,
-      "confidence": "low",
-      "status": "no E2E coverage",
-      "mainGap": "Exported registries, adapters, handlers, and helpers have almost no component-owned E2E accountability"
-    }
-  ]
+    "a11ySpecsPresent": false,
+    "areas": [
+        {
+            "branchCoverage": 10,
+            "confidence": "medium",
+            "lineCoverage": 15,
+            "mainGap": "Reorder, lazy-load, resize, and layout reflow are effectively unowned",
+            "name": "Dashboard shell / layouts",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 15,
+            "confidence": "medium",
+            "lineCoverage": 20,
+            "mainGap": "Remove, reload, collapse, link, and search behavior are largely untested",
+            "name": "Widget base / common / header / search",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 20,
+            "confidence": "high",
+            "lineCoverage": 25,
+            "mainGap": "Runtime table behavior is far broader than current configurator-focused tests",
+            "name": "Table Widget",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 20,
+            "confidence": "medium",
+            "lineCoverage": 30,
+            "mainGap": "Zoom, inspection menu, presets, and transformer correctness are weakly owned",
+            "name": "Timeseries Widget",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 10,
+            "confidence": "low",
+            "lineCoverage": 15,
+            "mainGap": "Visual-only; interaction, color, and layout-switch logic are unasserted",
+            "name": "Proportional Widget",
+            "status": "no E2E coverage"
+        },
+        {
+            "branchCoverage": 15,
+            "confidence": "low",
+            "lineCoverage": 20,
+            "mainGap": "Visual-only; formatter, interaction, busy, and empty-state branches are untested",
+            "name": "KPI Widget",
+            "status": "no E2E coverage"
+        },
+        {
+            "branchCoverage": 0,
+            "confidence": "low",
+            "lineCoverage": 0,
+            "mainGap": "Completely untested",
+            "name": "Risk Score Tile",
+            "status": "no E2E coverage"
+        },
+        {
+            "branchCoverage": 10,
+            "confidence": "medium",
+            "lineCoverage": 15,
+            "mainGap": "Only a visual drill step exists; search, back/home, and event semantics are uncovered",
+            "name": "List Widget / Drilldown",
+            "status": "no E2E coverage"
+        },
+        {
+            "branchCoverage": 0,
+            "confidence": "low",
+            "lineCoverage": 0,
+            "mainGap": "Set/undo/clear/history and data-source filter registration are untested",
+            "name": "Time Frame Selection",
+            "status": "no E2E coverage"
+        },
+        {
+            "branchCoverage": 25,
+            "confidence": "medium",
+            "lineCoverage": 30,
+            "mainGap": "Huge exported surface is represented mostly by table edit flows and KPI error snapshots",
+            "name": "Configurator / Wizard",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 5,
+            "confidence": "low",
+            "lineCoverage": 10,
+            "mainGap": "Sanitization, loading, fallback, and widget error presentation lack owned tests",
+            "name": "Loading / Errors / Embedded Content",
+            "status": "no E2E coverage"
+        },
+        {
+            "branchCoverage": 10,
+            "confidence": "low",
+            "lineCoverage": 15,
+            "mainGap": "Dynamic composition and registry contracts are exercised only incidentally",
+            "name": "Pizzagna / Widget Types / Directives",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 5,
+            "confidence": "low",
+            "lineCoverage": 10,
+            "mainGap": "Exported registries, adapters, handlers, and helpers have almost no component-owned E2E accountability",
+            "name": "Services / Providers / Common / Functions / Constants",
+            "status": "no E2E coverage"
+        }
+    ],
+    "coverageType": "estimated",
+    "effectiveNoDirectCoverage": [
+        "Embedded Content",
+        "Loading",
+        "Template Load Error",
+        "Widget Search",
+        "Risk Score Tile",
+        "Time Frame Selection"
+    ],
+    "generatedAt": "2026-04-22",
+    "instrumentedCoveragePresent": false,
+    "inventoryFilePresent": false,
+    "namingMismatches": [
+        "time-series-widget.visual.spec.ts -> timeseries-widget public area",
+        "overview.visual.spec.ts -> dashboard shell/layout coverage",
+        "kpi-widget.visual.spec.ts and kpi-error.visual.spec.ts -> kpi public area",
+        "drilldown.visual.spec.ts -> list-widget/configurator drilldown areas",
+        "table-widget.e2e.ts -> legacy non-Playwright file beside table-widget.e2e.spec.ts"
+    ],
+    "package": "dashboards",
+    "recommendedNextTests": [
+        "Table runtime sorting, search, selection, paginator, and virtual scroll coverage",
+        "Timeseries inspection and zoom menu behavior coverage",
+        "Dashboard shell resize, reorder, and below-fold lazy-loading coverage",
+        "Time Frame Selection set, undo, clear, and refresh coverage",
+        "Risk Score Tile functional coverage",
+        "Proportional interaction and responsive layout coverage",
+        "Configurator cancel, submit-error, route-close, and remove-widget coverage",
+        "List/drilldown search, back/home, and event semantics coverage",
+        "Embedded content and loading/error fallback coverage",
+        "Direct Pizzagna, widget-type, and event-proxy contract coverage"
+    ],
+    "strongestAreas": [
+        "Table Widget",
+        "Timeseries Widget",
+        "Configurator / Wizard"
+    ],
+    "visualOnlyAreas": [
+        "Proportional Widget",
+        "KPI Widget",
+        "List Widget / Drilldown"
+    ],
+    "weakestAreas": [
+        "Risk Score Tile",
+        "Time Frame Selection",
+        "Loading / Errors / Embedded Content",
+        "Services / Providers / Common / Functions / Constants",
+        "Proportional Widget",
+        "List Widget / Drilldown",
+        "Dashboard shell / layouts",
+        "Pizzagna / Widget Types / Directives"
+    ],
+    "zeroCoverage": ["Risk Score Tile", "Time Frame Selection"]
 }

@@ -103,7 +103,7 @@ export class ZoomContentDirective
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.scaleOUT$ && this.scaleOUT$) {
-            this.scaleIN$.pipe(takeUntil(this.destroy$)).subscribe((data) => {
+            this.scaleIN$.pipe(takeUntil(this.destroy$)).subscribe(data => {
                 this.latestDataFromBroker = { ...data };
                 this.element.style.transform = `scale(${data.targetValue})`;
                 this.checkScaleBoundaries(data.targetValue);

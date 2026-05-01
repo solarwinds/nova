@@ -220,12 +220,12 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
     public ngOnInit(): void {
         this.comboboxControl.valueChanges
             .pipe(takeUntil(this.destroy$))
-            .subscribe((value) => {
+            .subscribe(value => {
                 this.selectedItem = value;
             });
         this.comboboxControlSingle.valueChanges
             .pipe(takeUntil(this.destroy$))
-            .subscribe((value) => {
+            .subscribe(value => {
                 this.selectedSingleItem = value;
             });
     }
@@ -239,10 +239,10 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
 
         this.virtualCombobox.valueChanged
             .pipe(
-                filter((v) => v !== undefined),
+                filter(v => v !== undefined),
                 // eslint-disable-next-line import/no-deprecated
                 tap(
-                    (v) =>
+                    v =>
                         (this.filteredItems = of(this.filterItems(v as string)))
                 ),
                 delay(0),
@@ -303,7 +303,7 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
         }
         const filterValue = value?.toLowerCase();
 
-        return this.virtualItems.filter((option) =>
+        return this.virtualItems.filter(option =>
             option.toLowerCase().includes(filterValue)
         );
     }

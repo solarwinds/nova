@@ -143,7 +143,7 @@ describe("Grid >", () => {
                 `.${testBorderConfig.className}`
             );
             expect(borderSelections.nodes().length).toEqual(4);
-            borderSelections.nodes().forEach((borderNode) => {
+            borderSelections.nodes().forEach(borderNode => {
                 // @ts-ignore: Disabled for testing purposes
                 expect(borderNode.style.stroke).toEqual(testBorderConfig.color);
                 expect(borderNode.style.strokeWidth).toEqual(

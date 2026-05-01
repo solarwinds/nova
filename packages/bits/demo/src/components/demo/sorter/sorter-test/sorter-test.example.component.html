@@ -5,8 +5,7 @@
     [itemsSource]="columns"
     [selectedItem]="sortBy"
     [sortDirection]="sortDirection"
-    (sorterAction)="onSorterAction($event)"
->
+    (sorterAction)="onSorterAction($event)">
 </nui-sorter>
 <button (click)="resetSorter()">reset sorter</button>
 <button (click)="updateSorterByProperty()">update sorter by property</button>
@@ -19,8 +18,7 @@
             <div class="sorter-flex-row">
                 <div
                     class="sorter-flex-item header-item"
-                    *ngFor="let col of columns"
-                >
+                    *ngFor="let col of columns">
                     {{ col.title }}
                 </div>
             </div>

@@ -7,8 +7,7 @@
             class="dragzone draggable-list"
             [cdkDropListData]="sourceItems"
             [cdkDropListSortingDisabled]="true"
-            [cdkDropListEnterPredicate]="sourceAcceptsItem"
-        >
+            [cdkDropListEnterPredicate]="sourceAcceptsItem">
             <!-- display list of items -->
             <div class="items-container">
                 <div
@@ -16,8 +15,7 @@
                     class="draggable-item"
                     cdkDrag
                     [cdkDragData]="item"
-                    cdkDragPreviewClass="nui-dnd-preview"
-                >
+                    cdkDragPreviewClass="nui-dnd-preview">
                     {{ item }}
                 </div>
             </div>
@@ -34,16 +32,14 @@
             #destinationTarget="nuiDndDropTarget"
             [cdkDropListData]="destinationItems"
             [canBeDropped]="destinationAcceptsItem"
-            (cdkDropListDropped)="onItemDropped($event)"
-        >
+            (cdkDropListDropped)="onItemDropped($event)">
             <!-- display list of items -->
             <div class="items-container">
                 <!-- make items invisible while a drag operation is in progress and dropzone is active-->
                 <div
                     *ngFor="let item of destinationItems"
                     class="item"
-                    [class.invisible]="destinationTarget.isDropZoneActive"
-                >
+                    [class.invisible]="destinationTarget.isDropZoneActive">
                     {{ item }}
                 </div>
             </div>
@@ -53,8 +49,7 @@
                 *ngTemplateOutlet="
                     highlightDropzoneTemplate;
                     context: { target: destinationTarget }
-                "
-            ></ng-container>
+                "></ng-container>
         </div>
     </div>
 </div>
@@ -68,8 +63,7 @@
             <nui-icon
                 icon="plus"
                 iconSize="medium"
-                cssClass="drop-circle-permanent"
-            ></nui-icon>
+                cssClass="drop-circle-permanent"></nui-icon>
         </div>
 
         <!-- accepted item placeholder -->
@@ -78,8 +72,7 @@
             <nui-icon
                 icon="plus"
                 iconSize="medium"
-                cssClass="drop-circle-allowed"
-            ></nui-icon>
+                cssClass="drop-circle-allowed"></nui-icon>
         </div>
 
         <!-- reject item placeholder-->
@@ -91,8 +84,7 @@
             <nui-icon
                 icon="close"
                 iconSize="medium"
-                cssClass="drop-circle-not-allowed"
-            ></nui-icon>
+                cssClass="drop-circle-not-allowed"></nui-icon>
         </div>
     </div>
 </ng-template>

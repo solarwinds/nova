@@ -64,7 +64,7 @@ describe("Stacked Area Preprocessor >", () => {
             },
         ];
 
-        const seriesSet: IChartSeries<IAreaAccessors>[] = data.map((d) => ({
+        const seriesSet: IChartSeries<IAreaAccessors>[] = data.map(d => ({
             ...d,
             accessors,
             renderer,
@@ -104,7 +104,7 @@ describe("Stacked Area Preprocessor >", () => {
             },
         ];
 
-        const seriesSet: IChartSeries<IAreaAccessors>[] = data.map((d) => ({
+        const seriesSet: IChartSeries<IAreaAccessors>[] = data.map(d => ({
             ...d,
             accessors,
             renderer,
@@ -139,7 +139,7 @@ describe("Stacked Area Preprocessor >", () => {
             },
         ];
 
-        const seriesSet: IChartSeries<IAreaAccessors>[] = data.map((d) => ({
+        const seriesSet: IChartSeries<IAreaAccessors>[] = data.map(d => ({
             ...d,
             accessors,
             renderer,

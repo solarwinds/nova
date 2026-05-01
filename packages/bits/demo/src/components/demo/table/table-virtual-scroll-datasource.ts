@@ -56,7 +56,7 @@ export class RandomuserTableDataSource extends DataSourceService<IRandomUserTabl
 
         // We're returning Promise with setTimeout here to make the response from the server longer, as the API being used sends responses
         // almost immediately. We need it longer to be able the show the spinner component on data load
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             setTimeout(() => {
                 this.getData(start, end).then(
                     (response: UsersQueryResponse | undefined) => {

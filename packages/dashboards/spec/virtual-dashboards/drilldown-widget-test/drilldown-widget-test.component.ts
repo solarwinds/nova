@@ -84,8 +84,8 @@ export class DrilldownDataSource
         super();
         this.applyFilters$
             // eslint-disable-next-line import/no-deprecated
-            .pipe(switchMap((filters) => this.getData(filters)))
-            .subscribe(async (res) => {
+            .pipe(switchMap(filters => this.getData(filters)))
+            .subscribe(async res => {
                 this.outputsSubject.next(await this.getFilteredData(res));
             });
     }
@@ -98,7 +98,7 @@ export class DrilldownDataSource
         return of(data)
             .pipe(
                 // eslint-disable-next-line import/no-deprecated
-                map((countries) => {
+                map(countries => {
                     const widgetInput = this.getOutput(countries);
 
                     if (this.isDrillDown()) {
@@ -136,17 +136,17 @@ export class DrilldownDataSource
         return of(this.cache || GRAPH_DATA_MOCK).pipe(
             // delay(1000),
             // eslint-disable-next-line import/no-deprecated
-            tap((data) => (this.cache = data)),
+            tap(data => (this.cache = data)),
             // eslint-disable-next-line import/no-deprecated
-            map((data) => data.data.countries),
-            catchError((e) => of([])),
+            map(data => data.data.countries),
+            catchError(e => of([])),
             finalize(() => this.busy.next(false))
         );
     }
 
     private getTransformedDataForGroup(data: any, groupName: string) {
         const groupedDict = groupBy(data, groupName);
-        const dataArr = Object.keys(groupedDict).map((property) => ({
+        const dataArr = Object.keys(groupedDict).map(property => ({
             id: property,
             label: property,
             // TODO: apply groups mapping here

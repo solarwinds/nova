@@ -15,17 +15,14 @@
                             ng-class="item.color | limitTo:1000:1"
                             nui-clipboard="::item.color"
                             on-clipboard-success="ctrl.onClipboardSuccess()"
-                            role="button"
-                        ></div>
+                            role="button"></div>
 
                         <div
-                            class="doc-color-swatch-label doc-color-swatch-label-primary"
-                        >
+                            class="doc-color-swatch-label doc-color-swatch-label-primary">
                             {{::item.color}}
                         </div>
                         <div
-                            class="doc-color-swatch-label doc-color-swatch-label-secondary"
-                        >
+                            class="doc-color-swatch-label doc-color-swatch-label-secondary">
                             {{::item.secondary}}
                         </div>
                     </div>

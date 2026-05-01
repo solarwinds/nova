@@ -73,7 +73,7 @@ export class ChartCollection {
             this.initializeEventBus();
         }
 
-        each(this.events, (event) => {
+        each(this.events, event => {
             this.subscribe(
                 index,
                 chart.getEventBus().getStream(event),
@@ -173,7 +173,7 @@ export class ChartCollection {
      * @param {string} chartKey
      */
     private unsubscribeChart(chartKey: string) {
-        each(this.subscriptions[chartKey], (sub) => {
+        each(this.subscriptions[chartKey], sub => {
             sub.unsubscribe();
         });
         delete this.subscriptions[chartKey];

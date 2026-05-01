@@ -64,7 +64,7 @@ export abstract class DonutChartFormatterConfiguratorComponent
         }
         // In case we have already stored some values in the configuration we want to retreive them
         if (this.contentFormatterProperties) {
-            Object.keys(this.contentFormatterProperties).forEach((p) => {
+            Object.keys(this.contentFormatterProperties).forEach(p => {
                 this.form?.get(p)?.setValue(this.contentFormatterProperties[p]);
             });
         } else {

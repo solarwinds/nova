@@ -66,7 +66,7 @@ export class BarChartGroupedExampleComponent implements OnInit {
         ];
 
         this.chartAssist.update(
-            getData().map((s) => ({
+            getData().map(s => ({
                 ...s,
                 accessors,
                 renderer,

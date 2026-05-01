@@ -82,7 +82,7 @@ export class ProportionalVerticalBarChartTestComponent implements OnInit {
             });
         });
 
-        const chartSeriesSet = dataSeriesSet.map((d) => ({
+        const chartSeriesSet = dataSeriesSet.map(d => ({
             ...d,
             accessors,
             renderer,

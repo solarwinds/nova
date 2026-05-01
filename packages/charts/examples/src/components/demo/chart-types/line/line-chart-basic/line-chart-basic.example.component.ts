@@ -57,14 +57,12 @@ export class LineChartBasicExampleComponent implements OnInit {
         };
 
         // Here we assemble the complete chart series.
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
-            (d) => ({
-                ...d,
-                accessors,
-                renderer,
-                scales,
-            })
-        );
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
+            ...d,
+            accessors,
+            renderer,
+            scales,
+        }));
 
         // Finally, pass the series set to the chart's update method
         this.chart.update(seriesSet);

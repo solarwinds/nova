@@ -69,7 +69,7 @@ export class ReviewCountsByCityMockDataSource
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             setTimeout(() => {
                 this.outputsSubject.next({
                     result: getMockBeerReviewCountsByCity(),
@@ -159,7 +159,7 @@ export class ProportionalWidgetInteractiveExampleComponent implements OnInit {
     public initializeDashboard(): void {
         // We're using a static configuration object for this example, but this is where
         // the widget's configuration could potentially be populated from a database
-        const widgetsWithStructure = widgetConfigs.map((w) =>
+        const widgetsWithStructure = widgetConfigs.map(w =>
             this.widgetTypesService.mergeWithWidgetType(w)
         );
         const widgetsIndex = keyBy(widgetsWithStructure, (w: IWidget) => w.id);

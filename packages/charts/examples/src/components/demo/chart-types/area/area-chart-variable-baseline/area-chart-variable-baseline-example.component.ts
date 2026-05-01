@@ -52,11 +52,11 @@ export class AreaChartVariableBaselineExampleComponent implements OnInit {
         // Area accessors let the renderer know how to access x and y domain data respectively from a chart's input data set(s).
         const accessors = new AreaAccessors();
         // 'x' defines access for values in the data that correspond to the horizontal axis
-        accessors.data.x = (d) => d.timeStamp;
+        accessors.data.x = d => d.timeStamp;
         // 'y0' defines access to the baseline values we want to visualize, in other words, where the area starts
-        accessors.data.y0 = (d) => d.start;
+        accessors.data.y0 = d => d.start;
         // 'y1' defines access to the top line values we want to visualize, in other words, where the area ends
-        accessors.data.y1 = (d) => d.end;
+        accessors.data.y1 = d => d.end;
 
         // The area renderer will make the chart look like an area chart.
         const renderer = new AreaRenderer();
@@ -72,14 +72,12 @@ export class AreaChartVariableBaselineExampleComponent implements OnInit {
         scales.y.fixDomain([-100, 100]);
 
         // Here we assemble the complete chart series.
-        const seriesSet: IChartSeries<IAreaAccessors>[] = getData().map(
-            (d) => ({
-                ...d,
-                accessors,
-                renderer,
-                scales,
-            })
-        );
+        const seriesSet: IChartSeries<IAreaAccessors>[] = getData().map(d => ({
+            ...d,
+            accessors,
+            renderer,
+            scales,
+        }));
 
         // Finally, pass the series set to the chart's update method.
         this.chart.update(seriesSet);

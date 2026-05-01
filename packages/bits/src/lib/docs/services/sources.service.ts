@@ -46,20 +46,20 @@ export class SourcesService {
         }
 
         const contentFiles = await Promise.all(
-            this.config.files.map(async (file) =>
-                file.content().then((content) => ({
+            this.config.files.map(async file =>
+                file.content().then(content => ({
                     content,
                     path: file.path,
                 }))
             )
         );
         const filteredContentFiles = contentFiles.filter(
-            (file) =>
+            file =>
                 file.path.includes(`${filenamePrefix}/`) ||
                 file.path.includes("package.json")
         );
 
-        return filteredContentFiles.map((file) => ({
+        return filteredContentFiles.map(file => ({
             filePath: this.getTrimmedFilePath(file.path, filenamePrefix),
             fileContent: file.content,
             fileType: this.getFileType(file.path),

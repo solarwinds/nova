@@ -33,8 +33,13 @@ test.describe(`Visual tests: ${name}`, () => {
     let requiredTimepicker: TimepickerAtom;
 
     test.beforeEach(async ({ page }) => {
-        await Helpers.prepareBrowser("time-picker/time-picker-visual-test", page);
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.prepareBrowser(
+            "time-picker/time-picker-visual-test",
+            page
+        );
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
         basicTimepicker = Atom.find<TimepickerAtom>(
             TimepickerAtom,
             "nui-visual-test-timepicker-basic"

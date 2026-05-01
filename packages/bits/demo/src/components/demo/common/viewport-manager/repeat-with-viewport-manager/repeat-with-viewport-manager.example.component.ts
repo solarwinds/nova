@@ -122,9 +122,9 @@ export class GBooksDataSourceWithSearch
             .pipe(
                 // cancel any previous requests
                 // eslint-disable-next-line import/no-deprecated
-                switchMap((filters) => this.getData(filters))
+                switchMap(filters => this.getData(filters))
             )
-            .subscribe(async (res) => {
+            .subscribe(async res => {
                 this.outputsSubject.next(await this.getFilteredData(res));
             });
     }
@@ -183,9 +183,9 @@ export class GBooksDataSourceWithSearch
                 // transform backend API response (IGBooksApiResponse)
                 // to our frontend books collection (IGBooksFrontendCollection)
                 // eslint-disable-next-line import/no-deprecated
-                map((response) => ({
+                map(response => ({
                     books:
-                        response.items?.map((volume) => ({
+                        response.items?.map(volume => ({
                             title: volume.volumeInfo.title,
                             authors:
                                 volume.volumeInfo.authors?.join(", ") || "",
@@ -194,7 +194,7 @@ export class GBooksDataSourceWithSearch
                 })),
 
                 // error handle in case of any error
-                catchError((e) => {
+                catchError(e => {
                     this.logger.error(e);
                     return of({
                         books: [],
@@ -267,7 +267,7 @@ export class RepeatWithViewportManagerExampleComponent
         this.dataSource.busy
             .pipe(
                 // eslint-disable-next-line import/no-deprecated
-                tap((val) => {
+                tap(val => {
                     this.busy = val;
                     this.cd.detectChanges();
                 }),

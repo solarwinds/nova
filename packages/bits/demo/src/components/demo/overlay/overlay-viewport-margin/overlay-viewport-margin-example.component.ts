@@ -56,7 +56,7 @@ export class OverlayViewportMarginExampleComponent
     public ngAfterViewInit(): void {
         this.overlay.clickOutside
             .pipe(takeUntil(this.destroy$))
-            .subscribe((_) => this.overlay.hide());
+            .subscribe(_ => this.overlay.hide());
     }
 
     public setViewportMargin(margin: number): void {

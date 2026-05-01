@@ -60,7 +60,7 @@ export class TabHeadingGroupWithRouterExampleComponent implements OnDestroy {
             },
         },
     ];
-    private routeSubscription = this._router?.events.subscribe((event) => {
+    private routeSubscription = this._router?.events.subscribe(event => {
         if (event instanceof NavigationEnd) {
             const path: string[] = event.urlAfterRedirects.split("/");
             this.currentTabRoute = path[path.length - 1];

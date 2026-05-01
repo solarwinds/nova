@@ -8,8 +8,7 @@
             adornerDragClass="demo-drag-class"
             (dragStart)="onDragStart($event)"
             (dragEnd)="onDragEnd($event)"
-            i18n
-        >
+            i18n>
             drag me (object)
         </div>
         <pre>{{ draggableObj | json }}</pre>
@@ -27,8 +26,7 @@
             (dragOver)="onDragOver($event)"
             (dragEnter)="onDragEnter($event)"
             (dragLeave)="onDragLeave($event)"
-            i18n
-        >
+            i18n>
             drop here - object
         </div>
         <pre>{{ destObject | json }}</pre>
@@ -43,8 +41,7 @@
             adornerDragClass="demo-drag-class"
             (dragStart)="onDragStart($event)"
             (dragEnd)="onDragEnd($event)"
-            i18n
-        >
+            i18n>
             drag me (string)
         </div>
         <pre>{{ draggableString }}</pre>
@@ -62,8 +59,7 @@
             (dragOver)="onDragOver($event)"
             (dragEnter)="onDragEnter($event)"
             (dragLeave)="onDragLeave($event)"
-            i18n
-        >
+            i18n>
             drop here - string
         </div>
         <pre>{{ destString }}</pre>
@@ -77,8 +73,7 @@
             [payload]="draggableExcel"
             (dragStart)="onDragStart($event)"
             (dragEnd)="onDragEnd($event)"
-            i18n
-        >
+            i18n>
             drag me to Excel (htmlTable)
         </div>
         <pre>{{ draggableExcel }}</pre>
@@ -96,8 +91,7 @@
             (dragEnter)="onDragEnter($event)"
             (dragLeave)="onDragLeave($event)"
             (dropSuccess)="onDropAnything($event)"
-            i18n
-        >
+            i18n>
             drop anything
         </div>
         <pre>{{ destAnything | json }}</pre>

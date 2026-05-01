@@ -39,8 +39,8 @@ import { NuiButtonModule } from "../button/button.module";
     standalone: true,
     imports: [FormsModule, NuiCommonModule, NuiButtonModule],
     host: {
-        class: "nui-search",
-        role: "searchbox",
+        "class": "nui-search",
+        "role": "searchbox",
         "[attr.aria-label]": "inputAriaLabel",
     },
     templateUrl: "./search.component.html",
@@ -114,12 +114,12 @@ export class SearchComponent implements IFilterPub {
     /** Unique generated ID for fallback. */
     private generatedInputId = `nui-search-input-${SearchComponent.nextUniqueId++}`;
     /** Resolved input id (provided or generated). */
-    public resolvedInputId = computed(() =>
-        this.inputId() || this.generatedInputId
+    public resolvedInputId = computed(
+        () => this.inputId() || this.generatedInputId
     );
     /** Resolved placeholder text. */
-    public resolvedPlaceholder = computed(() =>
-        this.placeholder() || `${this.defaultPlaceholder}...`
+    public resolvedPlaceholder = computed(
+        () => this.placeholder() || `${this.defaultPlaceholder}...`
     );
     /** Whether the search button should be disabled (empty value). */
     public isButtonDisabled = computed(() => !this.value()?.trim());

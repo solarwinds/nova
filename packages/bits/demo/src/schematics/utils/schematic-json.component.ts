@@ -61,12 +61,14 @@ export class SchematicJsonComponent implements OnInit {
     ];
 
     public async ngOnInit(): Promise<void> {
-        const schemaJson = await import(`../../../../schematics/src/${this.schematicFolderName}/schema.json`);
+        const schemaJson = await import(
+            `../../../../schematics/src/${this.schematicFolderName}/schema.json`
+        );
         this.fillViewData(schemaJson.properties);
     }
 
     private fillViewData(schemaJsonFields: any) {
-        Object.keys(schemaJsonFields).forEach((fieldName) => {
+        Object.keys(schemaJsonFields).forEach(fieldName => {
             const {
                 description,
                 type,

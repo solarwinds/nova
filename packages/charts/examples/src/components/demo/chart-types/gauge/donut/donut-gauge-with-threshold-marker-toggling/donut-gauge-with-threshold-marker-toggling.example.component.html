@@ -4,22 +4,19 @@
             class="d-block mb-5"
             caption="Value"
             i18n-caption
-            [showOptionalText]="false"
-        >
+            [showOptionalText]="false">
             <nui-textbox-number
                 type="number"
                 [ngModel]="value"
                 (ngModelChange)="onValueChange($event)"
                 [minValue]="0"
                 [maxValue]="gaugeConfig.max"
-                customBoxWidth="75px"
-            ></nui-textbox-number>
+                customBoxWidth="75px"></nui-textbox-number>
         </nui-form-field>
         <nui-checkbox
             [ngModel]="markersEnabled"
             (ngModelChange)="onMarkersEnabledChange($event)"
-            i18n
-        >
+            i18n>
             Markers Enabled
         </nui-checkbox>
     </div>

@@ -11,8 +11,7 @@
         [title]="title"
         [class.nui-checkbox__translucent]="disabled"
         (mouseenter)="hoverHandler()"
-        (mouseleave)="hoverHandler()"
-    >
+        (mouseleave)="hoverHandler()">
         <div class="nui-checkbox__content">
             <input
                 #inputViewContainer
@@ -25,8 +24,7 @@
                 [required]="required"
                 [indeterminate]="indeterminate"
                 (click)="onClick($event)"
-                (change)="changeHandler($event)"
-            />
+                (change)="changeHandler($event)" />
             <div class="nui-checkbox__mark">
                 <i class="nui-checkbox__glyph"></i>
             </div>

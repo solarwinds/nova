@@ -43,7 +43,9 @@ test.describe(`Visual tests: ${name}`, () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("dialog/dialog-visual-test", page);
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
 
         buttonCriticalDialog = Atom.find<Atom>(
             Atom,
@@ -86,7 +88,11 @@ test.describe(`Visual tests: ${name}`, () => {
             "nui-visual-test-responsive-dialog-btn"
         );
 
-        select = Atom.find<SelectAtom>(SelectAtom, "nui-visual-basic-select", true);
+        select = Atom.find<SelectAtom>(
+            SelectAtom,
+            "nui-visual-basic-select",
+            true
+        );
 
         camera = new Camera().loadFilm(page, name, "Bits");
     });

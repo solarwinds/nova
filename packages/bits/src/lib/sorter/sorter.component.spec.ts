@@ -52,7 +52,12 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [ScrollingModule, OverlayModule, IconComponent, ImageComponent],
+                imports: [
+                    ScrollingModule,
+                    OverlayModule,
+                    IconComponent,
+                    ImageComponent,
+                ],
                 declarations: [
                     ButtonComponent,
                     SorterComponent,

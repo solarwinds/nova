@@ -152,7 +152,7 @@ export class BeerReviewCountsByCityMockDataSource
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             setTimeout(() => {
                 this.outputsSubject.next({
                     result: getMockBeerReviewCountsByCity(),
@@ -172,7 +172,8 @@ export class BeerReviewCountsByCityMockDataSource
  */
 @Component({
     selector: "proportional-widget-donut-content-formatters-example",
-    templateUrl: "./proportional-donut-content-formatters-example.component.html",
+    templateUrl:
+        "./proportional-donut-content-formatters-example.component.html",
     styleUrls: [
         "./proportional-donut-content-formatters-example.component.less",
     ],

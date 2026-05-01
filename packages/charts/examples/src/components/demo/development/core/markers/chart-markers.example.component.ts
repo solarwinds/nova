@@ -148,7 +148,7 @@ export class ChartMarkersExampleComponent implements OnInit {
             this.markers
         );
 
-        return lineSeriesSet.map((dataSeries) => ({
+        return lineSeriesSet.map(dataSeries => ({
             ...dataSeries,
             accessors,
             scales,

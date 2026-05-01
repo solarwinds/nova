@@ -1,112 +1,472 @@
 {
-  "generatedAt": "2026-04-20",
-  "package": "bits",
-  "inventoryFilePresent": false,
-  "instrumentedCoveragePresent": false,
-  "coverageType": "estimated",
-  "namingMismatches": [
-    "date-picker -> datepicker",
-    "date-time-picker -> datetimepicker",
-    "time-picker -> timepicker",
-    "dragdrop/dnd -> drag-and-drop",
-    "radio -> radio-group",
-    "tabgroup -> tab-heading-group",
-    "public-api.ts -> public_api.ts"
-  ],
-  "strongestAreas": [
-    "Table",
-    "Button",
-    "Dialog",
-    "Select V2",
-    "Combobox V2",
-    "Wizard"
-  ],
-  "weakestAreas": [
-    "Toast",
-    "Color Picker",
-    "Select (legacy)",
-    "Tooltip",
-    "Overlay",
-    "Validation Message",
-    "Risk Score",
-    "DragDrop / DnD"
-  ],
-  "zeroCoverage": [
-    "Color Picker",
-    "Risk Score",
-    "Toast"
-  ],
-  "effectiveNoDirectCoverage": [
-    "Select (legacy)",
-    "Tooltip",
-    "Validation Message",
-    "DragDrop / DnD",
-    "Overlay"
-  ],
-  "recommendedNextTests": [
-    "Toast lifecycle and dismissal",
-    "Legacy Select migration or removal",
-    "Tooltip direct interaction coverage",
-    "Color Picker functional coverage",
-    "DragDrop functional coverage",
-    "Overlay direct contract coverage",
-    "Validation Message direct coverage",
-    "Risk Score functional coverage",
-    "Time Picker AM/PM parsing coverage",
-    "Textbox async validation coverage"
-  ],
-  "components": [
-    {"name":"Breadcrumb","lineCoverage":55,"branchCoverage":50,"confidence":"high","status":"partial E2E coverage","mainGap":"No keyboard/overflow coverage"},
-    {"name":"Busy","lineCoverage":60,"branchCoverage":55,"confidence":"medium","status":"partial E2E coverage","mainGap":"Busy-state permutations thin"},
-    {"name":"Button","lineCoverage":80,"branchCoverage":75,"confidence":"high","status":"broad E2E coverage","mainGap":"Limited focus/disabled-click matrix"},
-    {"name":"Checkbox","lineCoverage":75,"branchCoverage":70,"confidence":"high","status":"broad E2E coverage","mainGap":"Validation interplay limited"},
-    {"name":"Checkbox Group","lineCoverage":60,"branchCoverage":55,"confidence":"medium","status":"partial E2E coverage","mainGap":"Weak keyboard/group ARIA coverage"},
-    {"name":"Color Picker","lineCoverage":0,"branchCoverage":0,"confidence":"low","status":"no E2E coverage","mainGap":"Completely untested"},
-    {"name":"Chips","lineCoverage":75,"branchCoverage":70,"confidence":"high","status":"broad E2E coverage","mainGap":"No keyboard interaction coverage"},
-    {"name":"Content","lineCoverage":45,"branchCoverage":35,"confidence":"high","status":"partial E2E coverage","mainGap":"No a11y/visual and few branches"},
-    {"name":"Date Picker","lineCoverage":75,"branchCoverage":70,"confidence":"medium","status":"broad E2E coverage","mainGap":"No direct a11y scan"},
-    {"name":"Date Time Picker","lineCoverage":55,"branchCoverage":50,"confidence":"medium","status":"partial E2E coverage","mainGap":"Base a11y tests skipped"},
-    {"name":"DragDrop / DnD","lineCoverage":10,"branchCoverage":5,"confidence":"low","status":"no E2E coverage","mainGap":"No functional drag/drop tests"},
-    {"name":"Dialog","lineCoverage":80,"branchCoverage":75,"confidence":"high","status":"broad E2E coverage","mainGap":"Stacked/service coverage thin"},
-    {"name":"Divider","lineCoverage":65,"branchCoverage":60,"confidence":"high","status":"partial E2E coverage","mainGap":"No visual suite"},
-    {"name":"Expander","lineCoverage":70,"branchCoverage":65,"confidence":"high","status":"partial E2E coverage","mainGap":"No keyboard/focus coverage"},
-    {"name":"Form Field","lineCoverage":75,"branchCoverage":65,"confidence":"high","status":"broad E2E coverage","mainGap":"Some enable-path gaps skipped"},
-    {"name":"Freetype Query Builder","lineCoverage":70,"branchCoverage":60,"confidence":"medium","status":"partial E2E coverage","mainGap":"Visual suite skipped"},
-    {"name":"Icon","lineCoverage":60,"branchCoverage":55,"confidence":"high","status":"partial E2E coverage","mainGap":"Semantic/accessibility permutations thin"},
-    {"name":"Image","lineCoverage":55,"branchCoverage":50,"confidence":"high","status":"partial E2E coverage","mainGap":"Error/fallback/loading states absent"},
-    {"name":"Layout","lineCoverage":45,"branchCoverage":35,"confidence":"medium","status":"partial E2E coverage","mainGap":"Resizing only; weak variant coverage"},
-    {"name":"Menu","lineCoverage":75,"branchCoverage":70,"confidence":"high","status":"broad E2E coverage","mainGap":"HOME/END cases skipped"},
-    {"name":"Message","lineCoverage":60,"branchCoverage":55,"confidence":"high","status":"partial E2E coverage","mainGap":"No live-region/timing coverage"},
-    {"name":"Overlay","lineCoverage":35,"branchCoverage":25,"confidence":"low","status":"partial E2E coverage","mainGap":"No direct public-contract tests"},
-    {"name":"Paginator","lineCoverage":60,"branchCoverage":55,"confidence":"medium","status":"partial E2E coverage","mainGap":"Keyboard behavior thin"},
-    {"name":"Panel","lineCoverage":70,"branchCoverage":65,"confidence":"medium","status":"partial E2E coverage","mainGap":"Few nested/combined cases"},
-    {"name":"Popover","lineCoverage":75,"branchCoverage":70,"confidence":"high","status":"broad E2E coverage","mainGap":"Keyboard-only dismissal thin"},
-    {"name":"Popup","lineCoverage":50,"branchCoverage":40,"confidence":"medium","status":"partial E2E coverage","mainGap":"Deprecated path under-covered"},
-    {"name":"Progress","lineCoverage":55,"branchCoverage":50,"confidence":"medium","status":"partial E2E coverage","mainGap":"Minimal state matrix"},
-    {"name":"Radio Group","lineCoverage":50,"branchCoverage":45,"confidence":"medium","status":"partial E2E coverage","mainGap":"Keyboard/event coverage thin"},
-    {"name":"Repeat","lineCoverage":70,"branchCoverage":65,"confidence":"medium","status":"broad E2E coverage","mainGap":"No direct a11y suite"},
-    {"name":"Risk Score","lineCoverage":0,"branchCoverage":0,"confidence":"low","status":"no E2E coverage","mainGap":"Completely untested"},
-    {"name":"Search","lineCoverage":60,"branchCoverage":55,"confidence":"medium","status":"partial E2E coverage","mainGap":"Debounce/empty-state matrix missing"},
-    {"name":"Select (legacy)","lineCoverage":5,"branchCoverage":0,"confidence":"low","status":"no E2E coverage","mainGap":"Dedicated suite not migrated"},
-    {"name":"Combobox (legacy)","lineCoverage":75,"branchCoverage":70,"confidence":"medium","status":"broad E2E coverage","mainGap":"No a11y/visual on deprecated path"},
-    {"name":"Select V2","lineCoverage":80,"branchCoverage":75,"confidence":"high","status":"broad E2E coverage","mainGap":"Variant matrix not exhaustive"},
-    {"name":"Combobox V2","lineCoverage":80,"branchCoverage":75,"confidence":"high","status":"broad E2E coverage","mainGap":"No async/create-option coverage"},
-    {"name":"Selector","lineCoverage":60,"branchCoverage":55,"confidence":"medium","status":"partial E2E coverage","mainGap":"No a11y/visual suites"},
-    {"name":"Sorter","lineCoverage":65,"branchCoverage":60,"confidence":"high","status":"partial E2E coverage","mainGap":"Programmatic states thin"},
-    {"name":"Spinner","lineCoverage":50,"branchCoverage":45,"confidence":"medium","status":"partial E2E coverage","mainGap":"Delayed-display case skipped"},
-    {"name":"Switch","lineCoverage":60,"branchCoverage":55,"confidence":"high","status":"partial E2E coverage","mainGap":"Form/label states thin"},
-    {"name":"Tab Group / Tab Heading Group","lineCoverage":60,"branchCoverage":55,"confidence":"medium","status":"partial E2E coverage","mainGap":"Arrow/Home/End coverage missing"},
-    {"name":"Table","lineCoverage":85,"branchCoverage":80,"confidence":"high","status":"broad E2E coverage","mainGap":"Combined-state cases thin"},
-    {"name":"Textbox","lineCoverage":50,"branchCoverage":40,"confidence":"medium","status":"partial E2E coverage","mainGap":"Async validation commented out"},
-    {"name":"Textbox Number","lineCoverage":75,"branchCoverage":70,"confidence":"high","status":"broad E2E coverage","mainGap":"One decrement case skipped"},
-    {"name":"Time Frame Bar","lineCoverage":60,"branchCoverage":55,"confidence":"medium","status":"partial E2E coverage","mainGap":"No keyboard/ARIA state coverage"},
-    {"name":"Time Frame Picker","lineCoverage":65,"branchCoverage":60,"confidence":"medium","status":"partial E2E coverage","mainGap":"Timezone/preset edge cases missing"},
-    {"name":"Time Picker","lineCoverage":65,"branchCoverage":55,"confidence":"medium","status":"partial E2E coverage","mainGap":"AM/PM parsing cases commented out"},
-    {"name":"Toast","lineCoverage":0,"branchCoverage":0,"confidence":"low","status":"no E2E coverage","mainGap":"Lifecycle/dismiss/progress untested"},
-    {"name":"Toolbar","lineCoverage":70,"branchCoverage":65,"confidence":"medium","status":"partial E2E coverage","mainGap":"Overflow keyboard/menu behavior thin"},
-    {"name":"Tooltip","lineCoverage":15,"branchCoverage":10,"confidence":"low","status":"no E2E coverage","mainGap":"No direct trigger/ellipsis/ESC tests"},
-    {"name":"Validation Message","lineCoverage":10,"branchCoverage":5,"confidence":"low","status":"no E2E coverage","mainGap":"show/for behavior untested directly"},
-    {"name":"Wizard","lineCoverage":80,"branchCoverage":75,"confidence":"high","status":"broad E2E coverage","mainGap":"Keyboard-only step navigation thin"},
-    {"name":"Wizard V2","lineCoverage":60,"branchCoverage":55,"confidence":"medium","status":"partial E2E coverage","mainGap":"No a11y suite"}
-  ]
+    "components": [
+        {
+            "branchCoverage": 50,
+            "confidence": "high",
+            "lineCoverage": 55,
+            "mainGap": "No keyboard/overflow coverage",
+            "name": "Breadcrumb",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 55,
+            "confidence": "medium",
+            "lineCoverage": 60,
+            "mainGap": "Busy-state permutations thin",
+            "name": "Busy",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 75,
+            "confidence": "high",
+            "lineCoverage": 80,
+            "mainGap": "Limited focus/disabled-click matrix",
+            "name": "Button",
+            "status": "broad E2E coverage"
+        },
+        {
+            "branchCoverage": 70,
+            "confidence": "high",
+            "lineCoverage": 75,
+            "mainGap": "Validation interplay limited",
+            "name": "Checkbox",
+            "status": "broad E2E coverage"
+        },
+        {
+            "branchCoverage": 55,
+            "confidence": "medium",
+            "lineCoverage": 60,
+            "mainGap": "Weak keyboard/group ARIA coverage",
+            "name": "Checkbox Group",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 0,
+            "confidence": "low",
+            "lineCoverage": 0,
+            "mainGap": "Completely untested",
+            "name": "Color Picker",
+            "status": "no E2E coverage"
+        },
+        {
+            "branchCoverage": 70,
+            "confidence": "high",
+            "lineCoverage": 75,
+            "mainGap": "No keyboard interaction coverage",
+            "name": "Chips",
+            "status": "broad E2E coverage"
+        },
+        {
+            "branchCoverage": 35,
+            "confidence": "high",
+            "lineCoverage": 45,
+            "mainGap": "No a11y/visual and few branches",
+            "name": "Content",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 70,
+            "confidence": "medium",
+            "lineCoverage": 75,
+            "mainGap": "No direct a11y scan",
+            "name": "Date Picker",
+            "status": "broad E2E coverage"
+        },
+        {
+            "branchCoverage": 50,
+            "confidence": "medium",
+            "lineCoverage": 55,
+            "mainGap": "Base a11y tests skipped",
+            "name": "Date Time Picker",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 5,
+            "confidence": "low",
+            "lineCoverage": 10,
+            "mainGap": "No functional drag/drop tests",
+            "name": "DragDrop / DnD",
+            "status": "no E2E coverage"
+        },
+        {
+            "branchCoverage": 75,
+            "confidence": "high",
+            "lineCoverage": 80,
+            "mainGap": "Stacked/service coverage thin",
+            "name": "Dialog",
+            "status": "broad E2E coverage"
+        },
+        {
+            "branchCoverage": 60,
+            "confidence": "high",
+            "lineCoverage": 65,
+            "mainGap": "No visual suite",
+            "name": "Divider",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 65,
+            "confidence": "high",
+            "lineCoverage": 70,
+            "mainGap": "No keyboard/focus coverage",
+            "name": "Expander",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 65,
+            "confidence": "high",
+            "lineCoverage": 75,
+            "mainGap": "Some enable-path gaps skipped",
+            "name": "Form Field",
+            "status": "broad E2E coverage"
+        },
+        {
+            "branchCoverage": 60,
+            "confidence": "medium",
+            "lineCoverage": 70,
+            "mainGap": "Visual suite skipped",
+            "name": "Freetype Query Builder",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 55,
+            "confidence": "high",
+            "lineCoverage": 60,
+            "mainGap": "Semantic/accessibility permutations thin",
+            "name": "Icon",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 50,
+            "confidence": "high",
+            "lineCoverage": 55,
+            "mainGap": "Error/fallback/loading states absent",
+            "name": "Image",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 35,
+            "confidence": "medium",
+            "lineCoverage": 45,
+            "mainGap": "Resizing only; weak variant coverage",
+            "name": "Layout",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 70,
+            "confidence": "high",
+            "lineCoverage": 75,
+            "mainGap": "HOME/END cases skipped",
+            "name": "Menu",
+            "status": "broad E2E coverage"
+        },
+        {
+            "branchCoverage": 55,
+            "confidence": "high",
+            "lineCoverage": 60,
+            "mainGap": "No live-region/timing coverage",
+            "name": "Message",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 25,
+            "confidence": "low",
+            "lineCoverage": 35,
+            "mainGap": "No direct public-contract tests",
+            "name": "Overlay",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 55,
+            "confidence": "medium",
+            "lineCoverage": 60,
+            "mainGap": "Keyboard behavior thin",
+            "name": "Paginator",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 65,
+            "confidence": "medium",
+            "lineCoverage": 70,
+            "mainGap": "Few nested/combined cases",
+            "name": "Panel",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 70,
+            "confidence": "high",
+            "lineCoverage": 75,
+            "mainGap": "Keyboard-only dismissal thin",
+            "name": "Popover",
+            "status": "broad E2E coverage"
+        },
+        {
+            "branchCoverage": 40,
+            "confidence": "medium",
+            "lineCoverage": 50,
+            "mainGap": "Deprecated path under-covered",
+            "name": "Popup",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 50,
+            "confidence": "medium",
+            "lineCoverage": 55,
+            "mainGap": "Minimal state matrix",
+            "name": "Progress",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 45,
+            "confidence": "medium",
+            "lineCoverage": 50,
+            "mainGap": "Keyboard/event coverage thin",
+            "name": "Radio Group",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 65,
+            "confidence": "medium",
+            "lineCoverage": 70,
+            "mainGap": "No direct a11y suite",
+            "name": "Repeat",
+            "status": "broad E2E coverage"
+        },
+        {
+            "branchCoverage": 0,
+            "confidence": "low",
+            "lineCoverage": 0,
+            "mainGap": "Completely untested",
+            "name": "Risk Score",
+            "status": "no E2E coverage"
+        },
+        {
+            "branchCoverage": 55,
+            "confidence": "medium",
+            "lineCoverage": 60,
+            "mainGap": "Debounce/empty-state matrix missing",
+            "name": "Search",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 0,
+            "confidence": "low",
+            "lineCoverage": 5,
+            "mainGap": "Dedicated suite not migrated",
+            "name": "Select (legacy)",
+            "status": "no E2E coverage"
+        },
+        {
+            "branchCoverage": 70,
+            "confidence": "medium",
+            "lineCoverage": 75,
+            "mainGap": "No a11y/visual on deprecated path",
+            "name": "Combobox (legacy)",
+            "status": "broad E2E coverage"
+        },
+        {
+            "branchCoverage": 75,
+            "confidence": "high",
+            "lineCoverage": 80,
+            "mainGap": "Variant matrix not exhaustive",
+            "name": "Select V2",
+            "status": "broad E2E coverage"
+        },
+        {
+            "branchCoverage": 75,
+            "confidence": "high",
+            "lineCoverage": 80,
+            "mainGap": "No async/create-option coverage",
+            "name": "Combobox V2",
+            "status": "broad E2E coverage"
+        },
+        {
+            "branchCoverage": 55,
+            "confidence": "medium",
+            "lineCoverage": 60,
+            "mainGap": "No a11y/visual suites",
+            "name": "Selector",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 60,
+            "confidence": "high",
+            "lineCoverage": 65,
+            "mainGap": "Programmatic states thin",
+            "name": "Sorter",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 45,
+            "confidence": "medium",
+            "lineCoverage": 50,
+            "mainGap": "Delayed-display case skipped",
+            "name": "Spinner",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 55,
+            "confidence": "high",
+            "lineCoverage": 60,
+            "mainGap": "Form/label states thin",
+            "name": "Switch",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 55,
+            "confidence": "medium",
+            "lineCoverage": 60,
+            "mainGap": "Arrow/Home/End coverage missing",
+            "name": "Tab Group / Tab Heading Group",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 80,
+            "confidence": "high",
+            "lineCoverage": 85,
+            "mainGap": "Combined-state cases thin",
+            "name": "Table",
+            "status": "broad E2E coverage"
+        },
+        {
+            "branchCoverage": 40,
+            "confidence": "medium",
+            "lineCoverage": 50,
+            "mainGap": "Async validation commented out",
+            "name": "Textbox",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 70,
+            "confidence": "high",
+            "lineCoverage": 75,
+            "mainGap": "One decrement case skipped",
+            "name": "Textbox Number",
+            "status": "broad E2E coverage"
+        },
+        {
+            "branchCoverage": 55,
+            "confidence": "medium",
+            "lineCoverage": 60,
+            "mainGap": "No keyboard/ARIA state coverage",
+            "name": "Time Frame Bar",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 60,
+            "confidence": "medium",
+            "lineCoverage": 65,
+            "mainGap": "Timezone/preset edge cases missing",
+            "name": "Time Frame Picker",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 55,
+            "confidence": "medium",
+            "lineCoverage": 65,
+            "mainGap": "AM/PM parsing cases commented out",
+            "name": "Time Picker",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 0,
+            "confidence": "low",
+            "lineCoverage": 0,
+            "mainGap": "Lifecycle/dismiss/progress untested",
+            "name": "Toast",
+            "status": "no E2E coverage"
+        },
+        {
+            "branchCoverage": 65,
+            "confidence": "medium",
+            "lineCoverage": 70,
+            "mainGap": "Overflow keyboard/menu behavior thin",
+            "name": "Toolbar",
+            "status": "partial E2E coverage"
+        },
+        {
+            "branchCoverage": 10,
+            "confidence": "low",
+            "lineCoverage": 15,
+            "mainGap": "No direct trigger/ellipsis/ESC tests",
+            "name": "Tooltip",
+            "status": "no E2E coverage"
+        },
+        {
+            "branchCoverage": 5,
+            "confidence": "low",
+            "lineCoverage": 10,
+            "mainGap": "show/for behavior untested directly",
+            "name": "Validation Message",
+            "status": "no E2E coverage"
+        },
+        {
+            "branchCoverage": 75,
+            "confidence": "high",
+            "lineCoverage": 80,
+            "mainGap": "Keyboard-only step navigation thin",
+            "name": "Wizard",
+            "status": "broad E2E coverage"
+        },
+        {
+            "branchCoverage": 55,
+            "confidence": "medium",
+            "lineCoverage": 60,
+            "mainGap": "No a11y suite",
+            "name": "Wizard V2",
+            "status": "partial E2E coverage"
+        }
+    ],
+    "coverageType": "estimated",
+    "effectiveNoDirectCoverage": [
+        "Select (legacy)",
+        "Tooltip",
+        "Validation Message",
+        "DragDrop / DnD",
+        "Overlay"
+    ],
+    "generatedAt": "2026-04-20",
+    "instrumentedCoveragePresent": false,
+    "inventoryFilePresent": false,
+    "namingMismatches": [
+        "date-picker -> datepicker",
+        "date-time-picker -> datetimepicker",
+        "time-picker -> timepicker",
+        "dragdrop/dnd -> drag-and-drop",
+        "radio -> radio-group",
+        "tabgroup -> tab-heading-group",
+        "public-api.ts -> public_api.ts"
+    ],
+    "package": "bits",
+    "recommendedNextTests": [
+        "Toast lifecycle and dismissal",
+        "Legacy Select migration or removal",
+        "Tooltip direct interaction coverage",
+        "Color Picker functional coverage",
+        "DragDrop functional coverage",
+        "Overlay direct contract coverage",
+        "Validation Message direct coverage",
+        "Risk Score functional coverage",
+        "Time Picker AM/PM parsing coverage",
+        "Textbox async validation coverage"
+    ],
+    "strongestAreas": [
+        "Table",
+        "Button",
+        "Dialog",
+        "Select V2",
+        "Combobox V2",
+        "Wizard"
+    ],
+    "weakestAreas": [
+        "Toast",
+        "Color Picker",
+        "Select (legacy)",
+        "Tooltip",
+        "Overlay",
+        "Validation Message",
+        "Risk Score",
+        "DragDrop / DnD"
+    ],
+    "zeroCoverage": ["Color Picker", "Risk Score", "Toast"]
 }

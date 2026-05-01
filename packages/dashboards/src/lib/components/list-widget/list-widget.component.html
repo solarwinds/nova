@@ -1,8 +1,7 @@
 <nui-repeat
     *ngIf="shouldDisplayRepeat()"
     [itemsSource]="data"
-    [repeatItemTemplateRef]="repeatItemTemplate"
->
+    [repeatItemTemplateRef]="repeatItemTemplate">
 </nui-repeat>
 
 <div class="empty" *ngIf="!shouldDisplayRepeat()">
@@ -20,11 +19,9 @@
         [componentType]="configuration.componentType"
         [properties]="getPropsFor(item)"
         [outputs]="['navigated']"
-        (output)="onListItemEvent(item)"
-    >
+        (output)="onListItemEvent(item)">
         <ng-template
             [cdkPortalOutlet]="componentPortal.portal"
-            (attached)="componentPortal.attached($event)"
-        ></ng-template>
+            (attached)="componentPortal.attached($event)"></ng-template>
     </ng-container>
 </ng-template>

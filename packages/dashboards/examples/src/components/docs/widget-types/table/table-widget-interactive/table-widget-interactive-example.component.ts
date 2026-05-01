@@ -123,7 +123,7 @@ export class MockBeerDataSource extends DataSourceService<IBrewInfo> {
         // filters.sorterValue.sortBy; filters.sorterValue.direction
         return firstValueFrom(
             from(this.fetch(start, end)).pipe(
-                tap((response) => {
+                tap(response => {
                     if (!response) {
                         return;
                     }

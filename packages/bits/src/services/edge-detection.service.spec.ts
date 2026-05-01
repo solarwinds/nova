@@ -30,8 +30,8 @@ import { LoggerService } from "./log-service";
 describe("services >", () => {
     describe("edge-detection-service >", () => {
         @Component({
-    standalone: false,
-})
+            standalone: false,
+        })
         class EdgeDetectionTestComponent {}
 
         let edgeDetectionService: EdgeDetectionService,

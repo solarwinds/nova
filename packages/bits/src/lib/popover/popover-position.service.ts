@@ -214,7 +214,7 @@ export class PopoverPositionService {
         let result;
         for (const panelClassKey in PanelClass) {
             if (PanelClass.hasOwnProperty(panelClassKey)) {
-                result = panelClass.find((i) => i === panelClassKey);
+                result = panelClass.find(i => i === panelClassKey);
             }
         }
         return result || "";

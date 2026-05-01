@@ -59,7 +59,7 @@ export class BreadcrumbStateService {
 
     public getNavigationSubscription(router: Router): Observable<Event> {
         return router.events.pipe(
-            filter((event) => event instanceof NavigationEnd)
+            filter(event => event instanceof NavigationEnd)
         );
     }
 }

@@ -52,7 +52,8 @@ class CustomSpyService {
 }
 
 @Component({
-    selector: "nui-custom-injector-cmpt", template: "Some content",
+    selector: "nui-custom-injector-cmpt",
+    template: "Some content",
     standalone: false,
 })
 export class CustomInjectorComponent implements OnDestroy {
@@ -64,7 +65,8 @@ export class CustomInjectorComponent implements OnDestroy {
 }
 
 @Component({
-    selector: "nui-destroyable-cmpt", template: "Some content",
+    selector: "nui-destroyable-cmpt",
+    template: "Some content",
     standalone: false,
 })
 export class DestroyableComponent implements OnDestroy {
@@ -77,7 +79,8 @@ export class DestroyableComponent implements OnDestroy {
 
 @Component({
     selector: "nui-dialog-content-cmpt",
-    template: "<button type='button' class='closeFromInside' (click)='close()'>Close</button>",
+    template:
+        "<button type='button' class='closeFromInside' (click)='close()'>Close</button>",
     standalone: false,
 })
 export class WithActiveDialogComponent {
@@ -388,7 +391,7 @@ describe("nui-dialog", () => {
             let resolvedResult: any;
             fixture.componentInstance
                 .openTplClose()
-                .result.then((result) => (resolvedResult = result));
+                .result.then(result => (resolvedResult = result));
 
             // const resolvedResult = await fixture.componentInstance.openTplClose().result;
             fixture.detectChanges();
@@ -406,7 +409,7 @@ describe("nui-dialog", () => {
             let rejectReason: any;
             fixture.componentInstance
                 .openTplDismiss()
-                .result.catch((reason) => (rejectReason = reason));
+                .result.catch(reason => (rejectReason = reason));
             fixture.detectChanges();
             expect(fixture.nativeElement).toHaveDialog();
 

@@ -110,7 +110,7 @@ export class KpiComponent implements IHasChangeDetector, OnChanges {
 
     public getScaleBroker(id: string): IBroker | undefined {
         if (this.syncValuesBroker) {
-            return this.syncValuesBroker.find((b) => b.id === id);
+            return this.syncValuesBroker.find(b => b.id === id);
         }
     }
 

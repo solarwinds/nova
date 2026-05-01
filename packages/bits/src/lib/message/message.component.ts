@@ -47,9 +47,12 @@ import { Subject, Subscription } from "rxjs";
     animations: [
         trigger("dismiss", [
             state("initial", style({})),
-            state("dismissed", style({
-                opacity: 0,
-            })),
+            state(
+                "dismissed",
+                style({
+                    opacity: 0,
+                })
+            ),
             transition("initial <=> dismissed", animate(`0.3s linear`)),
         ]),
     ],

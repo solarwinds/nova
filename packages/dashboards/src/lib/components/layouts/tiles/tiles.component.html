@@ -1,8 +1,7 @@
 <div
     #gridItemsContainer
     class="nui-grid-layout"
-    [ngClass]="{ 'prioritize-rows': prioritizeGridRows }"
->
+    [ngClass]="{ 'prioritize-rows': prioritizeGridRows }">
     <ng-container *ngFor="let node of nodeConfigs; trackBy: trackByFn">
         <ng-container
             nuiComponentPortal
@@ -10,12 +9,10 @@
             [componentId]="node.id"
             [componentType]="node.componentType"
             [properties]="node.properties"
-            [providers]="node.providers"
-        >
+            [providers]="node.providers">
             <ng-template
                 [cdkPortalOutlet]="componentPortal.portal"
-                (attached)="componentPortal.attached($event)"
-            ></ng-template>
+                (attached)="componentPortal.attached($event)"></ng-template>
         </ng-container>
     </ng-container>
     <div *ngIf="nodeConfigs.length === 0" class="is-empty">

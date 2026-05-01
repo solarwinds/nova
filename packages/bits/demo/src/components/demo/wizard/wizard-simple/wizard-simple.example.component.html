@@ -5,8 +5,7 @@
         name="hint"
         [value]="hint"
         customBoxWidth="150px"
-        (textChange)="onOptionChange($event)"
-    >
+        (textChange)="onOptionChange($event)">
     </nui-textbox>
 </ng-template>
 <ng-template #step2>
@@ -27,17 +26,14 @@
     #wizardComponent
     id="nui-demo-wizard"
     finishText="Finish"
-    i18n-finishText
->
+    i18n-finishText>
     <nui-wizard-step
         id="nui-demo-wizard-step"
         i18n-title
         title="First"
-        [stepTemplate]="step1"
-    ></nui-wizard-step>
+        [stepTemplate]="step1"></nui-wizard-step>
     <nui-wizard-step
         i18n-title
         title="Final"
-        [stepTemplate]="step2"
-    ></nui-wizard-step>
+        [stepTemplate]="step2"></nui-wizard-step>
 </nui-wizard>

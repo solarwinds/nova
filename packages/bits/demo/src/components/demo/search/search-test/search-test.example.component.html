@@ -7,8 +7,7 @@
     (focusChange)="onFocusChange($event)"
     (inputChange)="onInputChange($event)"
     (search)="onSearch($event)"
-    (cancel)="onCancel($event)"
->
+    (cancel)="onCancel($event)">
 </nui-search>
 <div>
     <h3>Search Result:</h3>
@@ -28,8 +27,7 @@
             type="button"
             id="nui-demo-search-set-focus-btn"
             displayStyle="default"
-            (click)="setFocus()"
-        >
+            (click)="setFocus()">
             Set Focus for {{ interval / 1000 }} sec.
         </button>
     </div>

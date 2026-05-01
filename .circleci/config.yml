@@ -31,8 +31,8 @@ commands:
         steps:
             - *cache_restore
             - run:
-                name: Add GitHub to known hosts
-                command: mkdir -p ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
+                  name: Add GitHub to known hosts
+                  command: mkdir -p ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
             - *install_dependencies
             - *cache_save
 

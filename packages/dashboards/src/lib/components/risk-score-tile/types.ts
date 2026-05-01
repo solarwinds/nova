@@ -46,11 +46,13 @@ export interface IRiskScoreConfiguration {
 }
 
 export type IRiskScoreFormattersConfiguration = Partial<
-        Record<
-            RiskScoreFormatterTypes | string,
-            {
-                formatter: IFormatter;
-            }
-        >
-    >;
-export type IRiskScoreFormatterProperties = Partial<Record<RiskScoreFormatterTypes | string, any>>;
+    Record<
+        RiskScoreFormatterTypes | string,
+        {
+            formatter: IFormatter;
+        }
+    >
+>;
+export type IRiskScoreFormatterProperties = Partial<
+    Record<RiskScoreFormatterTypes | string, any>
+>;

@@ -8,8 +8,7 @@
             i18n-seriesUnitLabel
             [active]="chartAssist.isLegendActive"
             [interactive]="true"
-            (mouseleave)="chartAssist.resetVisibleSeries()"
-        >
+            (mouseleave)="chartAssist.resetVisibleSeries()">
             <nui-legend-series
                 *ngFor="
                     let legendSeries of chartAssist.legendSeriesSet;
@@ -23,8 +22,7 @@
                 [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
                 (isSelectedChange)="
                     chartAssist.toggleSeries(legendSeries.id, $event)
-                "
-            >
+                ">
                 <!-- Specify the 'tick' formatter to display positive values for both series in the legend. -->
                 <!-- Specify the 'y1' data accessor to let the chart assist know how to access the data for the legend. -->
                 <nui-rich-legend-tile
@@ -41,8 +39,7 @@
                     "
                     [color]="
                         chartAssist.palette.textColors.get(legendSeries.id)
-                    "
-                >
+                    ">
                     <nui-chart-marker
                         rightEdge
                         [marker]="chartAssist.markers.get(legendSeries.id)"
@@ -50,8 +47,7 @@
                             chartAssist.palette.standardColors.get(
                                 legendSeries.id
                             )
-                        "
-                    >
+                        ">
                     </nui-chart-marker>
                 </nui-rich-legend-tile>
             </nui-legend-series>

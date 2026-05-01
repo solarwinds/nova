@@ -53,7 +53,7 @@ export class TimeseriesZoomPluginsSyncService {
         }
 
         const collection = [...this.collections[collectionId]];
-        const idx = collection.findIndex((p) => p === plugin);
+        const idx = collection.findIndex(p => p === plugin);
         if (idx === -1) {
             return;
         }
@@ -70,7 +70,7 @@ export class TimeseriesZoomPluginsSyncService {
         const collection = this.getPlugins(collectionId);
 
         setTimeout(() => {
-            collection.forEach((plugin) => {
+            collection.forEach(plugin => {
                 plugin.moveBrushByDate(startDate, endDate);
             });
         });
@@ -79,7 +79,7 @@ export class TimeseriesZoomPluginsSyncService {
     public clearZoomInsideCollection(collectionId: string): void {
         const collection = this.getPlugins(collectionId);
 
-        collection.forEach((plugin) => {
+        collection.forEach(plugin => {
             plugin.clearBrush();
         });
     }

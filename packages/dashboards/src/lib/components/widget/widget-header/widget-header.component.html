@@ -8,40 +8,34 @@
         [class.nui-widget__header__container--expanded]="
             collapsible && !collapsed
         "
-        [@expandedState]="state"
-    >
+        [@expandedState]="state">
         <div
             *ngIf="collapsed && collapsible"
             class="collapse-container"
-            (click)="toggleCollapsed()"
-        >
+            (click)="toggleCollapsed()">
             <span class="collapse-container__line"></span>
         </div>
         <div class="nui-widget__header__content">
             <div
                 *ngIf="editMode"
-                class="nui-widget__header__content-drag-icon nui-dashboard__widget--drag-handle"
-            >
+                class="nui-widget__header__content-drag-icon nui-dashboard__widget--drag-handle">
                 <nui-icon icon="drag" iconColor="gray"></nui-icon>
             </div>
             <div
                 #widgetHeaderCustomElement
-                class="nui-widget__header__content-custom-element"
-            >
+                class="nui-widget__header__content-custom-element">
                 <ng-content></ng-content>
             </div>
             <div
                 class="nui-widget__header__content-title-container nui-dashboard__widget--drag-handle"
                 [class.nui-widget__header__content-title-with-additional-content]="
                     withCustomElement || editMode
-                "
-            >
+                ">
                 <!-- text only header with no url defined -->
                 <div
                     class="nui-text-widget nui-widget__header__content-title"
                     [title]="title"
-                    *ngIf="!url || editMode"
-                >
+                    *ngIf="!url || editMode">
                     {{ title }}
                 </div>
 
@@ -63,8 +57,7 @@
                 <div
                     *ngIf="subtitle"
                     class="nui-text-hint nui-widget__header__content-help-hint"
-                    [title]="subtitle"
-                >
+                    [title]="subtitle">
                     {{ subtitle }}
                 </div>
             </div>
@@ -80,8 +73,7 @@
                     [nuiTooltip]="linkTooltip"
                     (mousedown)="
                         $event.stopPropagation(); $event.preventDefault()
-                    "
-                >
+                    ">
                 </a>
                 <button
                     *ngIf="editable && editMode"
@@ -92,8 +84,7 @@
                     icon="edit"
                     nuiTooltip="Edit widget"
                     i18n-nuiTooltip
-                    (click)="onEditWidget()"
-                ></button>
+                    (click)="onEditWidget()"></button>
                 <button
                     *ngIf="collapsible && !editMode"
                     class="nui-widget-header__action-toggle-collapsed"
@@ -102,19 +93,16 @@
                     displayStyle="action"
                     nuiTooltip="Collapse header"
                     icon="double-caret-up"
-                    (click)="toggleCollapsed()"
-                ></button>
+                    (click)="toggleCollapsed()"></button>
                 <nui-menu
                     *ngIf="!hideMenu && !editMode"
                     class="nui-widget__header__content-actions__menu"
                     icon="menu"
                     displayStyle="action"
-                    [appendToBody]="true"
-                >
+                    [appendToBody]="true">
                     <nui-menu-action
                         *ngIf="reloadable"
-                        (actionDone)="onReloadData()"
-                    >
+                        (actionDone)="onReloadData()">
                         <nui-icon icon="reload"></nui-icon>
                         <span i18n>Reload data</span>
                     </nui-menu-action>
@@ -123,8 +111,7 @@
                 <nui-popup
                     class="nui-widget-header__action-remove"
                     [appendToBody]="true"
-                    *ngIf="removable && editMode"
-                >
+                    *ngIf="removable && editMode">
                     <span nuiTooltip="Remove widget" i18n-nuiTooltip>
                         <button
                             nui-button
@@ -133,8 +120,7 @@
                             icon="remove"
                             iconColor="red"
                             displayStyle="action"
-                            i18n
-                        ></button>
+                            i18n></button>
                     </span>
                     <div popupAreaContent class="nui-menu">
                         <nui-menu-action

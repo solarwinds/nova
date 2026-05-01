@@ -116,7 +116,7 @@ export class FilterGroupComponent implements IFilterPub, OnInit, OnDestroy {
     }
 
     public deselectFilterItemByValue(value: any): void {
-        const checkbox = this.filterItems.find((i) => i.value === value);
+        const checkbox = this.filterItems.find(i => i.value === value);
         if (checkbox) {
             this.deselectFilterItem(checkbox);
         }
@@ -124,8 +124,8 @@ export class FilterGroupComponent implements IFilterPub, OnInit, OnDestroy {
 
     public deselectAllFilterItems(): void {
         this.filterItems
-            .filter((i) => i.checked)
-            .forEach((i) => this.deselectFilterItem(i));
+            .filter(i => i.checked)
+            .forEach(i => this.deselectFilterItem(i));
     }
 
     private deselectFilterItem(checkbox: CheckboxComponent) {
@@ -138,7 +138,7 @@ export class FilterGroupComponent implements IFilterPub, OnInit, OnDestroy {
     private getAllFilterOptionsList(
         filterGroupItems: IFilterGroupOption[]
     ): string[] {
-        return filterGroupItems.map((item) => item.value);
+        return filterGroupItems.map(item => item.value);
     }
 
     public ngOnDestroy(): void {

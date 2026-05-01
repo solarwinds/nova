@@ -18,7 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Atom, Camera, Helpers, test } from "@nova-ui/bits/sdk/atoms-playwright";
+import {
+    Atom,
+    Camera,
+    Helpers,
+    test,
+} from "@nova-ui/bits/sdk/atoms-playwright";
 
 import { DrilldownAtom } from "./drilldown.atom";
 
@@ -33,7 +38,7 @@ test.describe(`Visual tests: Dashboards - ${name}`, () => {
         drilldownWidget = Atom.find<DrilldownAtom>(
             DrilldownAtom,
             "drilldown-widget",
-             true
+            true
         );
 
         camera = new Camera().loadFilm(page, name, "Dashboards");

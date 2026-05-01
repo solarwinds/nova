@@ -279,7 +279,7 @@ export class TableHeaderCellComponent
             this.subscriptions.push(
                 this.tableStateHandlerService.shouldHighlightEdge
                     .pipe(
-                        filter((value) => {
+                        filter(value => {
                             // When resize is in progress on other columns this one shouldn't be highlighted
                             this.resizeInProgress =
                                 value.columnIndex !== this.currentCellIndex &&
@@ -301,7 +301,11 @@ export class TableHeaderCellComponent
                         this.columnDef.name
                     );
                 if (columnWidth > 45) {
-                    this.renderer.setStyle(this.elementRef.nativeElement, "width", columnWidth + "px");
+                    this.renderer.setStyle(
+                        this.elementRef.nativeElement,
+                        "width",
+                        columnWidth + "px"
+                    );
                 }
             })
         );
@@ -320,7 +324,7 @@ export class TableHeaderCellComponent
         if (this.isReorderable) {
             this.subscriptions.push(
                 this.tableStateHandlerService.draggedOverCell.subscribe(
-                    (draggedOverCell) => {
+                    draggedOverCell => {
                         this.rightEdgeActive = this.leftEdgeActive = false;
                         if (
                             draggedOverCell?.cellIndex === this.currentCellIndex
@@ -368,7 +372,9 @@ export class TableHeaderCellComponent
     }
 
     public onColumnWidthChange(offset: number): void {
-        const currentWidth = this.tableStateHandlerService.getColumnWidth(this.columnDef.name);
+        const currentWidth = this.tableStateHandlerService.getColumnWidth(
+            this.columnDef.name
+        );
         const resultWidth = currentWidth + offset;
 
         // resultWidth must be more than 45 because minimum width of the column is 46px
@@ -381,8 +387,6 @@ export class TableHeaderCellComponent
     }
 
     public ngOnDestroy(): void {
-        this.subscriptions.forEach((subscription) =>
-            subscription.unsubscribe()
-        );
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
 }

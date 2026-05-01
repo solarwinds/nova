@@ -25,7 +25,8 @@ import { Pipe, PipeTransform } from "@angular/core";
 import { nameof } from "../../../functions/nameof";
 
 @Pipe({
-    name: "sliceRange", pure: false,
+    name: "sliceRange",
+    pure: false,
     standalone: false,
 })
 export class SliceRangePipe implements PipeTransform {

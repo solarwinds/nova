@@ -37,8 +37,16 @@ test.describe(`Visual tests: ${name}`, () => {
         await Helpers.disableCSSAnimations(Animations.ALL);
 
         basicWizard = Atom.find<WizardAtom>(WizardAtom, "nui-demo-wizard");
-        busyButton = Atom.find<ButtonAtom>(ButtonAtom, "nui-demo-busy-button", true);
-        dialogButton = Atom.find<ButtonAtom>(ButtonAtom, "nui-demo-dialog-wizard-btn", true);
+        busyButton = Atom.find<ButtonAtom>(
+            ButtonAtom,
+            "nui-demo-busy-button",
+            true
+        );
+        dialogButton = Atom.find<ButtonAtom>(
+            ButtonAtom,
+            "nui-demo-dialog-wizard-btn",
+            true
+        );
     });
 
     test(`${name} visual test`, async ({ page }) => {
@@ -70,7 +78,10 @@ test.describe(`Visual tests: ${name}`, () => {
         );
 
         await dialogButton.click();
-        dialogWizard = Atom.find<WizardAtom>(WizardAtom, "nui-demo-wizard-dialog");
+        dialogWizard = Atom.find<WizardAtom>(
+            WizardAtom,
+            "nui-demo-wizard-dialog"
+        );
         await camera.say.cheese("Default wizard in dialog");
 
         await dialogWizard.next();

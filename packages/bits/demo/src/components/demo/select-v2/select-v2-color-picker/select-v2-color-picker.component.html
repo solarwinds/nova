@@ -6,29 +6,24 @@
     class="color-picker-select"
     [overlayConfig]="overlayConfig"
     [syncWidth]="false"
-    [displayValueTemplate]="colorSelectTemplate"
->
+    [displayValueTemplate]="colorSelectTemplate">
     <!-- The following block (along with the corresponding ng-template below) builds the markup of the color picker boxes inside the overlay. -->
     <div class="color-picker-container">
         <div
             class="d-inline-flex flex-wrap box"
-            *ngFor="let item of backgroundColors"
-        >
+            *ngFor="let item of backgroundColors">
             <nui-select-v2-option
                 [value]="item"
                 [displayValueContext]="item"
                 class="w-100 h-100 reset-box-sizes"
-                #option
-            >
+                #option>
                 <!-- This block defines the overlay color boxes markup -->
                 <div
                     class="color-picker-option"
-                    [class.color-picker-option--selected]="option?.selected"
-                >
+                    [class.color-picker-option--selected]="option?.selected">
                     <div
                         class="color-picker-option__color-box"
-                        [style.background-color]="item"
-                    >
+                        [style.background-color]="item">
                         <!-- Notice here how 'mix-blend-mode' is used conditionally. Since the glyph sign is always white and is being set as a background image, 
                                             we need a way to make it visible on white background. Since white background is default for the light theme, we bind to that and
                                             apply the property to mix and differ two backgrounds - the glyph and the underlaying box color background -->
@@ -37,8 +32,7 @@
                             [style.mix-blend-mode]="
                                 item === defaultColor ? 'difference' : null
                             "
-                            *ngIf="option?.selected"
-                        ></div>
+                            *ngIf="option?.selected"></div>
                     </div>
                 </div>
             </nui-select-v2-option>
@@ -52,14 +46,12 @@
         <div class="color-picker-input__box">
             <div
                 class="color-picker-input__color-box"
-                [style.background-color]="item"
-            ></div>
+                [style.background-color]="item"></div>
         </div>
         <div class="color-picker-input__toggle">
             <nui-icon
                 [style.transform]="open ? 'rotate(180deg)' : ''"
-                icon="caret-down"
-            ></nui-icon>
+                icon="caret-down"></nui-icon>
         </div>
     </div>
 </ng-template>

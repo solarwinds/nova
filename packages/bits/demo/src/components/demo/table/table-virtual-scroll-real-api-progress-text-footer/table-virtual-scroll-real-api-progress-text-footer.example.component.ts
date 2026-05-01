@@ -43,7 +43,8 @@ import { RandomuserTableDataSource } from "../table-virtual-scroll-datasource";
 
 @Component({
     selector: "nui-table-virtual-scroll-real-api-progress-text-footer-example",
-    templateUrl: "./table-virtual-scroll-real-api-progress-text-footer.example.component.html",
+    templateUrl:
+        "./table-virtual-scroll-real-api-progress-text-footer.example.component.html",
     styleUrls: [
         "./table-virtual-scroll-real-api-progress-text-footer.example.component.less",
     ],
@@ -101,7 +102,7 @@ export class TableVirtualScrollRealApiProgressTextFooterExampleComponent
     public ngOnInit(): void {
         this.dataSource.busy
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((busy) => {
+            .subscribe(busy => {
                 this._isBusy = busy;
             });
     }
@@ -118,10 +119,10 @@ export class TableVirtualScrollRealApiProgressTextFooterExampleComponent
             .pipe(
                 // Note: In case we know the total number of items we can stop the stream when dataset end is reached
                 // Otherwise we can let VirtualViewportManager to stop when last received page range will not match requested range
-                filter((range) =>
+                filter(range =>
                     this.totalItems ? this.totalItems >= range.end : true
                 ),
-                tap((range) => {
+                tap(range => {
                     // Note: Keeping backward compatibility with RandomuserTableDataSource which requires page number to be set by consumer
                     // It also can be calculated directly on the Datasource level
                     this.dataSource.page =

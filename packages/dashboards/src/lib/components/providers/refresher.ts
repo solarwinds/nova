@@ -59,7 +59,7 @@ export class Refresher implements OnDestroy, IConfigurable {
     ) {
         this.refresherSettings.refreshRateSeconds$
             .pipe(takeUntil(this.destroy$))
-            .subscribe((systemRefreshRate) => {
+            .subscribe(systemRefreshRate => {
                 if (!this.overrideDefaultSettings) {
                     this.initializeInterval();
                 }

@@ -53,7 +53,7 @@ export class SparkChartAreaMultipleExampleComponent implements OnInit {
         const renderer = new AreaRenderer({ strokeWidth: 0 });
 
         const seriesSet: IChartAssistSeries<IAreaAccessors>[] = getData().map(
-            (d) => ({
+            d => ({
                 ...d,
                 accessors,
                 renderer,

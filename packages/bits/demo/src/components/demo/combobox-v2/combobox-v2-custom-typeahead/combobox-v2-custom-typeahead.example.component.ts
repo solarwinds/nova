@@ -64,7 +64,7 @@ export class ComboboxV2CustomTypeaheadExampleComponent {
     private filterItems(value: string): IExampleItem[] {
         const filterValue = value.toLowerCase();
 
-        return this.items.filter((option) =>
+        return this.items.filter(option =>
             option.name.toLowerCase().includes(filterValue)
         );
     }

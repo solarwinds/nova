@@ -258,7 +258,7 @@ export class TimeseriesWidgetStatusBarExampleComponent implements OnInit {
     public initializeDashboard(): void {
         // We're using a static configuration object for this example, but this is where
         // the widget's configuration could potentially be populated from a database
-        const widgetsWithStructure = widgetConfigs.map((w) =>
+        const widgetsWithStructure = widgetConfigs.map(w =>
             this.widgetTypesService.mergeWithWidgetType(w)
         );
         const widgetsIndex = keyBy(widgetsWithStructure, (w: IWidget) => w.id);

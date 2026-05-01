@@ -47,8 +47,7 @@
             nui-button
             type="button"
             id="nui-demo-busy-button"
-            (click)="makeStepBusy()"
-        >
+            (click)="makeStepBusy()">
             Make current step busy
         </button>
     </ng-template>
@@ -57,18 +56,15 @@
         <nui-wizard-step
             id="nui-demo-wizard-step1"
             [title]="'First'"
-            [stepTemplate]="step1"
-        ></nui-wizard-step>
+            [stepTemplate]="step1"></nui-wizard-step>
         <nui-wizard-step
             id="nui-demo-wizard-step2"
             [title]="'Second'"
-            [stepTemplate]="step2"
-        ></nui-wizard-step>
+            [stepTemplate]="step2"></nui-wizard-step>
         <nui-wizard-step
             id="nui-demo-wizard-step3"
             [title]="'Summary'"
-            [stepTemplate]="step3"
-        ></nui-wizard-step>
+            [stepTemplate]="step3"></nui-wizard-step>
         <button nui-button type="button" id="nui-demo-additional-button">
             Additional button
         </button>
@@ -79,26 +75,21 @@
     <ng-template #dialogWizard>
         <nui-dialog-header
             title="Wizard dialog"
-            (closed)="closeDialog()"
-        ></nui-dialog-header>
+            (closed)="closeDialog()"></nui-dialog-header>
         <div class="dialog-body compact-mode">
             <nui-wizard id="nui-demo-wizard-dialog" (cancel)="closeDialog()">
                 <nui-wizard-step
                     title="Completed"
-                    [stepTemplate]="step1"
-                ></nui-wizard-step>
+                    [stepTemplate]="step1"></nui-wizard-step>
                 <nui-wizard-step
                     title="Active"
-                    [stepTemplate]="step2"
-                ></nui-wizard-step>
+                    [stepTemplate]="step2"></nui-wizard-step>
                 <nui-wizard-step
                     title="Not visited"
-                    [stepTemplate]="step3"
-                ></nui-wizard-step>
+                    [stepTemplate]="step3"></nui-wizard-step>
                 <nui-wizard-step
                     title="Summary"
-                    [stepTemplate]="step4"
-                ></nui-wizard-step>
+                    [stepTemplate]="step4"></nui-wizard-step>
             </nui-wizard>
         </div>
     </ng-template>
@@ -106,8 +97,7 @@
         id="nui-demo-dialog-wizard-btn"
         nui-button
         type="button"
-        (click)="openDialog(dialogWizard)"
-    >
+        (click)="openDialog(dialogWizard)">
         Open dialog wizard
     </button>
     <hr />
@@ -119,13 +109,11 @@
                 <nui-wizard-step
                     id="nui-demo-wizard-step1"
                     [title]="'First'"
-                    [stepTemplate]="busy"
-                ></nui-wizard-step>
+                    [stepTemplate]="busy"></nui-wizard-step>
                 <nui-wizard-step
                     id="nui-demo-wizard-step2"
                     [title]="'Second'"
-                    [stepTemplate]="step1"
-                ></nui-wizard-step>
+                    [stepTemplate]="step1"></nui-wizard-step>
             </nui-wizard>
         </div>
     </div>

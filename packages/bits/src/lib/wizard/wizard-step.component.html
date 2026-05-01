@@ -2,8 +2,7 @@
     class="nui-wizard__step animated"
     [ngClass]="{ 'nui-wizard__step--active': active }"
     nui-busy
-    [busy]="busyConfig.busy"
->
+    [busy]="busyConfig.busy">
     <div>
         <h2 class="nui-wizard__step-title">{{ title }}</h2>
         <ng-container *ngTemplateOutlet="stepTemplate"></ng-container>
@@ -11,7 +10,6 @@
     <nui-spinner
         [percent]="busyConfig.percent"
         [allowCancel]="busyConfig.allowCancel"
-        [message]="busyConfig.message"
-    >
+        [message]="busyConfig.message">
     </nui-spinner>
 </div>

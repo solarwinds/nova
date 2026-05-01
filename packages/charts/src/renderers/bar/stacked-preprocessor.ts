@@ -35,7 +35,7 @@ export function stackedPreprocessor(
     }
     const categories = gatherCategories(
         chartSeriesSet.filter(
-            (chartSeries) =>
+            chartSeries =>
                 isUndefined(chartSeries.preprocess) || chartSeries.preprocess
         )
     );

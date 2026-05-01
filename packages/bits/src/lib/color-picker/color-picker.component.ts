@@ -35,7 +35,13 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 
-import { getOverlayPositions, IOptionValueObject, IResizeConfig, NuiFormFieldControl, OverlayUtilitiesService } from "../public-api";
+import {
+    getOverlayPositions,
+    IOptionValueObject,
+    IResizeConfig,
+    NuiFormFieldControl,
+    OverlayUtilitiesService,
+} from "../public-api";
 import { SelectV2Component } from "../select-v2/select/select-v2.component";
 import { IPaletteColor } from "./../../constants/color-picker.constants";
 import { getColorValueByName } from "./../../functions/color.helper";
@@ -138,17 +144,17 @@ export class ColorPickerComponent
         }
 
         this.palette =
-            this.colorPalette || this.colors.map((color) => ({ color }));
+            this.colorPalette || this.colors.map(color => ({ color }));
 
         this.initOverlayUtilities();
 
         this.select.valueSelected
             .pipe(
-                tap((value) => this.writeValue(value as any)),
-                tap((value) => this.onChange(value)),
+                tap(value => this.writeValue(value as any)),
+                tap(value => this.onChange(value)),
                 takeUntil(this.destroy$)
             )
-            .subscribe((value) => {
+            .subscribe(value => {
                 if (value) {
                     this.isBlackTick = this.determineBlackTick(
                         value.toString()
@@ -195,7 +201,7 @@ export class ColorPickerComponent
     public registerOnChange(fn: () => void): void {
         this.onChange = fn;
     }
-    
+
     public registerOnTouched(fn: () => void): void {
         this._onTouched = fn;
     }

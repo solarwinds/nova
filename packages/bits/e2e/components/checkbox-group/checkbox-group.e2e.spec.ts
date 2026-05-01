@@ -83,7 +83,7 @@ test.describe("USERCONTROL Checkbox Group", () => {
         const componentBox = await component.boundingBox();
         // Get the computed width from CSS
         const cssWidth = await parentElement.evaluate(
-            (el) => window.getComputedStyle(el).width
+            el => window.getComputedStyle(el).width
         );
         const widthValue = parseFloat(cssWidth);
         expect(widthValue).toBeGreaterThanOrEqual(componentBox!.width - 5);
